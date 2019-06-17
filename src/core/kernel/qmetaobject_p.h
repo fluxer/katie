@@ -174,7 +174,7 @@ typedef QHash<quint16, QByteArray> QNormalizedTypeHash;
 Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
 
 // This code is shared with moc.cpp
-static inline QByteArray normalizeTypeInternal(const char *t, const char *e, bool adjustConst = true)
+static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 {
     int len = e - t;
     quint16 cachekey = qChecksum(t, len);
@@ -210,7 +210,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
     }
 
     // convert const reference to value and const value to value
-    if (adjustConst && e > t + 6 && strncmp("const ", t, 6) == 0) {
+    if (e > t + 6 && strncmp("const ", t, 6) == 0) {
         if (*(e-1) == '&') {
             t += 6;
             --e;
