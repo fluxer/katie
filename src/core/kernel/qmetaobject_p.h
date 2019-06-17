@@ -170,20 +170,28 @@ static const optionalkeywords optional[] = {
 };
 static const int optionalkeywordssize = 3;
 
+typedef QHash<quint16, QByteArray> QNormalizedTypeHash;
+Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
+
 // This code is shared with moc.cpp
 static inline QByteArray normalizeTypeInternal(const char *t, const char *e, bool adjustConst = true)
 {
     int len = e - t;
+    quint16 cachekey = qChecksum(t, len);
+    QByteArray cached = qGlobalNormalizedTypeHash()->value(cachekey);
+    if (!cached.isEmpty()) {
+        return cached;
+    }
+
     /*
       Convert 'char const *' into 'const char *'. Start at index 1,
       not 0, because 'const char *' is already OK.
     */
-    QByteArray constbuf;
     for (int i = 1; i < len; i++) {
         if (strncmp(t + i, "const", 5) == 0
             && (i + 5 >= len || !is_ident_char(t[i + 5]))
             && !is_ident_char(t[i-1])) {
-            constbuf = QByteArray::fromRawData(t, len);
+            QByteArray constbuf = QByteArray::fromRawData(t, len);
             if (is_space(t[i-1]))
                 constbuf.remove(i-1, 6);
             else
@@ -247,9 +255,10 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
     }
 
     while (t != e) {
-        char c = *t++;
-        result += c;
+        result += *t++;
     }
+
+    qGlobalNormalizedTypeHash()->insert(cachekey, result);
 
     return result;
 }
