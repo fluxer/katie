@@ -52,7 +52,7 @@
 #  include "qx11info_x11.h"
 #  include "qt_x11_p.h"
 
-static bool allowX11ColorNames = false;
+static bool qAllowX11ColorNames = false;
 
 #endif
 
@@ -550,7 +550,7 @@ bool QColor::setNamedColor(const QString &name)
 
 #ifndef QT_NO_COLORNAMES
     QRgb rgb;
-    if (qt_get_named_rgb(name.toLatin1(), &rgb)) {
+    if (qt_get_named_rgb(name.toLower().toLatin1(), &rgb)) {
         setRgba(rgb);
         return true;
     } else
@@ -2393,7 +2393,7 @@ QColor::operator QVariant() const
 */
 bool QColor::allowX11ColorNames()
 {
-    return ::allowX11ColorNames;
+    return qAllowX11ColorNames;
 }
 
 /*!
@@ -2407,7 +2407,7 @@ bool QColor::allowX11ColorNames()
 */
 void QColor::setAllowX11ColorNames(bool enabled)
 {
-    ::allowX11ColorNames = enabled;
+    qAllowX11ColorNames = enabled;
 }
 #endif
 

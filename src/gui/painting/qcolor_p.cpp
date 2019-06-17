@@ -268,10 +268,9 @@ inline bool operator<(const char *name, const RGBData &data)
 inline bool operator<(const RGBData &data, const char *name)
 { return qstrcmp(data.name, name) < 0; }
 
-static bool get_named_rgb(const char *name_no_space, QRgb *rgb)
+bool qt_get_named_rgb(const char *name, QRgb* rgb)
 {
-    QByteArray name = QByteArray::fromRawData(name_no_space, qstrlen(name_no_space)).toLower();
-    const RGBData *r = qBinaryFind(rgbTbl, rgbTbl + rgbTblSize, name.constData());
+    const RGBData *r = qBinaryFind(rgbTbl, rgbTbl + rgbTblSize, name);
     if (r != rgbTbl + rgbTblSize) {
         *rgb = r->value;
         return true;
@@ -279,36 +278,12 @@ static bool get_named_rgb(const char *name_no_space, QRgb *rgb)
     return false;
 }
 
-bool qt_get_named_rgb(const char *name, QRgb* rgb)
-{
-    int len = int(strlen(name));
-    if(len > 255)
-        return false;
-    char name_no_space[256];
-    int pos = 0;
-    for(int i = 0; i < len; i++) {
-        if(name[i] != '\t' && name[i] != ' ')
-            name_no_space[pos++] = name[i];
-    }
-    name_no_space[pos] = 0;
-
-    return get_named_rgb(name_no_space, rgb);
-}
-
-uint qt_get_rgb_val(const char *name)
-{
-    QRgb r = 0;
-    qt_get_named_rgb(name,&r);
-    return r;
-}
-
 QStringList qt_get_colornames()
 {
-    int i = 0;
     static QStringList lst;
     if (lst.isEmpty()) {
-        for (i = 0; i < rgbTblSize; i++)
-            lst << QLatin1String(rgbTbl[i].name);
+        for (int i = 0; i < rgbTblSize; i++)
+            lst << QString::fromLatin1(rgbTbl[i].name);
     }
     return lst;
 }
@@ -320,10 +295,6 @@ bool qt_get_named_rgb(const char *, QRgb*)
     return false;
 }
 
-uint qt_get_rgb_val(const char *)
-{
-    return 0;
-}
 QStringList qt_get_colornames()
 {
     return QStringList();
