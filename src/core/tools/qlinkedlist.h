@@ -50,7 +50,7 @@ struct Q_CORE_EXPORT QLinkedListData
     QLinkedListData *n, *p;
     QAtomicInt ref;
     int size;
-    uint sharable : 1;
+    bool sharable;
 
     static QLinkedListData shared_null;
 };
