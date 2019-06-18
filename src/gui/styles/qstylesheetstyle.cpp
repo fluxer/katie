@@ -95,7 +95,7 @@ class QStyleSheetStylePrivate : public QWindowsStylePrivate
 {
     Q_DECLARE_PUBLIC(QStyleSheetStyle)
 public:
-    QStyleSheetStylePrivate() { }
+    QStyleSheetStylePrivate() : QWindowsStylePrivate() { }
 };
 
 
@@ -110,20 +110,20 @@ static QStyleSheetStyleCaches *styleSheetCaches = 0;
  * The first instance of QStyleSheetStyle will set globalStyleSheetStyle to itself. The second one
  * will notice the globalStyleSheetStyle is not istelf and call its base style directly.
  */
-static const QStyleSheetStyle *globalStyleSheetStyle = 0;
+static const QStyleSheetStyle *globalStyleSheetStyle = Q_NULLPTR;
 class QStyleSheetStyleRecursionGuard
 {
     public:
         QStyleSheetStyleRecursionGuard(const QStyleSheetStyle *that)
-            :  guarded(globalStyleSheetStyle == 0)
+            :  guarded(globalStyleSheetStyle == Q_NULLPTR)
             {
                 if (guarded) globalStyleSheetStyle = that;
             }
         ~QStyleSheetStyleRecursionGuard() { if (guarded) globalStyleSheetStyle = 0; }
-        bool guarded;
+        const bool guarded;
 };
 #define RECURSION_GUARD(RETURN) \
-    if (globalStyleSheetStyle != 0 && globalStyleSheetStyle != this) { RETURN; } \
+    if (globalStyleSheetStyle != Q_NULLPTR && globalStyleSheetStyle != this) { RETURN; } \
     QStyleSheetStyleRecursionGuard recursion_guard(this);
 
 #define ceilInt(x) ((int)(x) + ((x) > 0 && (x) != (int)(x)))
@@ -213,91 +213,91 @@ enum PseudoElement {
 };
 
 struct PseudoElementInfo {
-    QStyle::SubControl subControl;
-    const char *name;
+    const QStyle::SubControl subControl;
+    const QString name;
 };
 
 static const PseudoElementInfo knownPseudoElements[NumPseudoElements] = {
-    { QStyle::SC_None, "" },
-    { QStyle::SC_None, "down-arrow" },
-    { QStyle::SC_None, "up-arrow" },
-    { QStyle::SC_None, "left-arrow" },
-    { QStyle::SC_None, "right-arrow" },
-    { QStyle::SC_None, "indicator" },
-    { QStyle::SC_None, "indicator" },
-    { QStyle::SC_None, "menu-indicator" },
-    { QStyle::SC_ComboBoxArrow, "drop-down" },
-    { QStyle::SC_ComboBoxArrow, "down-arrow" },
-    { QStyle::SC_None, "item" },
-    { QStyle::SC_SpinBoxUp, "up-button" },
-    { QStyle::SC_SpinBoxUp, "up-arrow" },
-    { QStyle::SC_SpinBoxDown, "down-button" },
-    { QStyle::SC_SpinBoxDown, "down-arrow" },
-    { QStyle::SC_GroupBoxLabel, "title" },
-    { QStyle::SC_GroupBoxCheckBox, "indicator" },
-    { QStyle::SC_ToolButtonMenu, "menu-button" },
-    { QStyle::SC_ToolButtonMenu, "menu-arrow" },
-    { QStyle::SC_None, "menu-indicator" },
-    { QStyle::SC_None, "tab" },
-    { QStyle::SC_ScrollBarSlider, "handle" },
-    { QStyle::SC_ScrollBarAddPage, "add-page" },
-    { QStyle::SC_ScrollBarSubPage, "sub-page" },
-    { QStyle::SC_ScrollBarAddLine, "add-line" },
-    { QStyle::SC_ScrollBarSubLine, "sub-line" },
-    { QStyle::SC_ScrollBarFirst, "first" },
-    { QStyle::SC_ScrollBarLast, "last" },
-    { QStyle::SC_ScrollBarSubLine, "up-arrow" },
-    { QStyle::SC_ScrollBarAddLine, "down-arrow" },
-    { QStyle::SC_ScrollBarSubLine, "left-arrow" },
-    { QStyle::SC_ScrollBarAddLine, "right-arrow" },
-    { QStyle::SC_None, "handle" },
-    { QStyle::SC_None, "handle" },
-    { QStyle::SC_None, "separator" },
-    { QStyle::SC_None, "scroller" },
-    { QStyle::SC_None, "tearoff" },
-    { QStyle::SC_None, "indicator" },
-    { QStyle::SC_None, "separator" },
-    { QStyle::SC_None, "icon" },
-    { QStyle::SC_None, "right-arrow" },
-    { QStyle::SC_None, "branch" },
-    { QStyle::SC_None, "section" },
-    { QStyle::SC_None, "down-arrow" },
-    { QStyle::SC_None, "up-arrow" },
-    { QStyle::SC_None, "chunk" },
-    { QStyle::SC_None, "tab" },
-    { QStyle::SC_None, "scroller" },
-    { QStyle::SC_None, "tear" },
-    { QStyle::SC_SliderGroove, "groove" },
-    { QStyle::SC_SliderHandle, "handle" },
-    { QStyle::SC_None, "add-page" },
-    { QStyle::SC_None, "sub-page"},
-    { QStyle::SC_SliderTickmarks, "tick-mark" },
-    { QStyle::SC_None, "pane" },
-    { QStyle::SC_None, "tab-bar" },
-    { QStyle::SC_None, "left-corner" },
-    { QStyle::SC_None, "right-corner" },
-    { QStyle::SC_None, "title" },
-    { QStyle::SC_None, "close-button" },
-    { QStyle::SC_None, "float-button" },
-    { QStyle::SC_None, "separator" },
-    { QStyle::SC_MdiCloseButton, "close-button" },
-    { QStyle::SC_MdiMinButton, "minimize-button" },
-    { QStyle::SC_MdiNormalButton, "normal-button" },
-    { QStyle::SC_TitleBarLabel, "title" },
-    { QStyle::SC_TitleBarCloseButton, "close-button" },
-    { QStyle::SC_TitleBarMinButton, "minimize-button" },
-    { QStyle::SC_TitleBarMaxButton, "maximize-button" },
-    { QStyle::SC_TitleBarShadeButton, "shade-button" },
-    { QStyle::SC_TitleBarUnshadeButton, "unshade-button" },
-    { QStyle::SC_TitleBarNormalButton, "normal-button" },
-    { QStyle::SC_TitleBarContextHelpButton, "contexthelp-button" },
-    { QStyle::SC_TitleBarSysMenu, "sys-menu" },
-    { QStyle::SC_None, "item" },
-    { QStyle::SC_None, "icon" },
-    { QStyle::SC_None, "text" },
-    { QStyle::SC_None, "indicator" },
-    { QStyle::SC_None, "corner" },
-    { QStyle::SC_None, "close-button" },
+    { QStyle::SC_None, QLatin1String("") },
+    { QStyle::SC_None, QLatin1String("down-arrow") },
+    { QStyle::SC_None, QLatin1String("up-arrow") },
+    { QStyle::SC_None, QLatin1String("left-arrow") },
+    { QStyle::SC_None, QLatin1String("right-arrow") },
+    { QStyle::SC_None, QLatin1String("indicator") },
+    { QStyle::SC_None, QLatin1String("indicator") },
+    { QStyle::SC_None, QLatin1String("menu-indicator") },
+    { QStyle::SC_ComboBoxArrow, QLatin1String("drop-down") },
+    { QStyle::SC_ComboBoxArrow, QLatin1String("down-arrow") },
+    { QStyle::SC_None, QLatin1String("item") },
+    { QStyle::SC_SpinBoxUp, QLatin1String("up-button") },
+    { QStyle::SC_SpinBoxUp, QLatin1String("up-arrow") },
+    { QStyle::SC_SpinBoxDown, QLatin1String("down-button") },
+    { QStyle::SC_SpinBoxDown, QLatin1String("down-arrow") },
+    { QStyle::SC_GroupBoxLabel, QLatin1String("title") },
+    { QStyle::SC_GroupBoxCheckBox, QLatin1String("indicator") },
+    { QStyle::SC_ToolButtonMenu, QLatin1String("menu-button") },
+    { QStyle::SC_ToolButtonMenu, QLatin1String("menu-arrow") },
+    { QStyle::SC_None, QLatin1String("menu-indicator") },
+    { QStyle::SC_None, QLatin1String("tab") },
+    { QStyle::SC_ScrollBarSlider, QLatin1String("handle") },
+    { QStyle::SC_ScrollBarAddPage, QLatin1String("add-page") },
+    { QStyle::SC_ScrollBarSubPage, QLatin1String("sub-page") },
+    { QStyle::SC_ScrollBarAddLine, QLatin1String("add-line") },
+    { QStyle::SC_ScrollBarSubLine, QLatin1String("sub-line") },
+    { QStyle::SC_ScrollBarFirst, QLatin1String("first") },
+    { QStyle::SC_ScrollBarLast, QLatin1String("last") },
+    { QStyle::SC_ScrollBarSubLine, QLatin1String("up-arrow") },
+    { QStyle::SC_ScrollBarAddLine, QLatin1String("down-arrow") },
+    { QStyle::SC_ScrollBarSubLine, QLatin1String("left-arrow") },
+    { QStyle::SC_ScrollBarAddLine, QLatin1String("right-arrow") },
+    { QStyle::SC_None, QLatin1String("handle") },
+    { QStyle::SC_None, QLatin1String("handle") },
+    { QStyle::SC_None, QLatin1String("separator") },
+    { QStyle::SC_None, QLatin1String("scroller") },
+    { QStyle::SC_None, QLatin1String("tearoff") },
+    { QStyle::SC_None, QLatin1String("indicator") },
+    { QStyle::SC_None, QLatin1String("separator") },
+    { QStyle::SC_None, QLatin1String("icon") },
+    { QStyle::SC_None, QLatin1String("right-arrow") },
+    { QStyle::SC_None, QLatin1String("branch") },
+    { QStyle::SC_None, QLatin1String("section") },
+    { QStyle::SC_None, QLatin1String("down-arrow") },
+    { QStyle::SC_None, QLatin1String("up-arrow") },
+    { QStyle::SC_None, QLatin1String("chunk") },
+    { QStyle::SC_None, QLatin1String("tab") },
+    { QStyle::SC_None, QLatin1String("scroller") },
+    { QStyle::SC_None, QLatin1String("tear") },
+    { QStyle::SC_SliderGroove, QLatin1String("groove") },
+    { QStyle::SC_SliderHandle, QLatin1String("handle") },
+    { QStyle::SC_None, QLatin1String("add-page") },
+    { QStyle::SC_None, QLatin1String("sub-page") },
+    { QStyle::SC_SliderTickmarks, QLatin1String("tick-mark") },
+    { QStyle::SC_None, QLatin1String("pane") },
+    { QStyle::SC_None, QLatin1String("tab-bar") },
+    { QStyle::SC_None, QLatin1String("left-corner") },
+    { QStyle::SC_None, QLatin1String("right-corner") },
+    { QStyle::SC_None, QLatin1String("title") },
+    { QStyle::SC_None, QLatin1String("close-button") },
+    { QStyle::SC_None, QLatin1String("float-button") },
+    { QStyle::SC_None, QLatin1String("separator") },
+    { QStyle::SC_MdiCloseButton, QLatin1String("close-button") },
+    { QStyle::SC_MdiMinButton, QLatin1String("minimize-button") },
+    { QStyle::SC_MdiNormalButton, QLatin1String("normal-button") },
+    { QStyle::SC_TitleBarLabel, QLatin1String("title") },
+    { QStyle::SC_TitleBarCloseButton, QLatin1String("close-button") },
+    { QStyle::SC_TitleBarMinButton, QLatin1String("minimize-button") },
+    { QStyle::SC_TitleBarMaxButton, QLatin1String("maximize-button") },
+    { QStyle::SC_TitleBarShadeButton, QLatin1String("shade-button") },
+    { QStyle::SC_TitleBarUnshadeButton, QLatin1String("unshade-button") },
+    { QStyle::SC_TitleBarNormalButton, QLatin1String("normal-button") },
+    { QStyle::SC_TitleBarContextHelpButton, QLatin1String("contexthelp-button") },
+    { QStyle::SC_TitleBarSysMenu, QLatin1String("sys-menu") },
+    { QStyle::SC_None, QLatin1String("item") },
+    { QStyle::SC_None, QLatin1String("icon") },
+    { QStyle::SC_None, QLatin1String("text") },
+    { QStyle::SC_None, QLatin1String("indicator") },
+    { QStyle::SC_None, QLatin1String("corner") },
+    { QStyle::SC_None, QLatin1String("close-button") },
 };
 
 
@@ -311,7 +311,6 @@ struct QStyleSheetBorderImageData : public QSharedData
     }
     int cuts[4];
     QPixmap pixmap;
-    QImage image;
     QCss::TileMode horizStretch, vertStretch;
 };
 
@@ -326,13 +325,13 @@ struct QStyleSheetBackgroundData : public QSharedData
             return !brush.isOpaque();
         return pixmap.isNull() ? false : pixmap.hasAlpha();
     }
-    QBrush brush;
-    QPixmap pixmap;
-    QCss::Repeat repeat;
-    Qt::Alignment position;
-    QCss::Origin origin;
-    QCss::Attachment attachment;
-    QCss::Origin clip;
+    const QBrush brush;
+    const QPixmap pixmap;
+    const QCss::Repeat repeat;
+    const Qt::Alignment position;
+    const QCss::Origin origin;
+    const QCss::Attachment attachment;
+    const QCss::Origin clip;
 };
 
 struct QStyleSheetBorderData : public QSharedData
@@ -1723,7 +1722,7 @@ QRenderRule QStyleSheetStyle::renderRule(const QWidget *w, int element, quint64 
     }
 
 
-    const QString part = QLatin1String(knownPseudoElements[element].name);
+    const QString part = knownPseudoElements[element].name;
     QVector<Declaration> decls = declarations(rules, part, state);
     QRenderRule newRule(decls, w);
     cache[state] = newRule;
@@ -2025,7 +2024,7 @@ bool QStyleSheetStyle::hasStyleRule(const QWidget *w, int part) const
         return result;
     }
 
-    QString pseudoElement = QLatin1String(knownPseudoElements[part].name);
+    const QString pseudoElement = knownPseudoElements[part].name;
     QVector<Declaration> declarations;
     for (int i = 0; i < rules.count(); i++) {
         const Selector& selector = rules.at(i).selectors.at(0);
