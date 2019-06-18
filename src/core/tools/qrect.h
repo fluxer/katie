@@ -138,9 +138,6 @@ public:
 
 
 private:
-#if defined(Q_WS_X11)
-    friend void qt_setCoords(QRect *r, int xp1, int yp1, int xp2, int yp2);
-#endif
     int x1;
     int y1;
     int x2;
