@@ -51,7 +51,9 @@
 #  include <QtCore/qobject_p.h>
 #endif
 
-#ifndef QT_NO_COMPRESS
+#define QT_CACHE_NORMALIZED_TYPE
+
+#if !defined(QT_NO_COMPRESS) && defined(QT_CACHE_NORMALIZED_TYPE)
 #  include <zlib.h>
 #endif
 
@@ -163,18 +165,7 @@ static inline bool is_space(char s)
 }
 #endif
 
-struct optionalkeywords {
-    const char *keyword;
-    const int len;
-};
-static const optionalkeywords optional[] = {
-    { "struct ", 7 },
-    { "class ", 6 },
-    { "enum ", 5 }
-};
-static const int optionalkeywordssize = 3;
-
-#ifndef QT_NO_COMPRESS
+#if !defined(QT_NO_COMPRESS) && defined(QT_CACHE_NORMALIZED_TYPE)
 static inline quint32 qCRC32(const char *data, uint len)
 {
     quint32 crc_32 = ::crc32(0, 0, 0);
@@ -188,93 +179,70 @@ Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
 // This code is shared with moc.cpp
 static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 {
-    int len = e - t;
-#ifndef QT_NO_COMPRESS
-    quint32 cachekey = qCRC32(t, len);
+    const int len = e - t;
+#if !defined(QT_NO_COMPRESS) && defined(QT_CACHE_NORMALIZED_TYPE)
+    const quint32 cachekey = qCRC32(t, len);
     QByteArray cached = qGlobalNormalizedTypeHash()->value(cachekey);
     if (!cached.isEmpty()) {
         return cached;
     }
 #endif
 
+    QByteArray result = QByteArray(t, len);
+
     /*
       Convert 'char const *' into 'const char *'. Start at index 1,
-      not 0, because 'const char *' is already OK.
+      not 0, because 'const char *' is already OK. We musn't convert
+      'char * const *' into 'const char **' and we must beware of
+      'Bar<const Bla>'.
     */
-    for (int i = 1; i < len; i++) {
-        if (strncmp(t + i, "const", 5) == 0
-            && (i + 5 >= len || !is_ident_char(t[i + 5]))
-            && !is_ident_char(t[i-1])) {
-            QByteArray constbuf = QByteArray::fromRawData(t, len);
-            if (is_space(t[i-1]))
-                constbuf.remove(i-1, 6);
-            else
-                constbuf.remove(i, 5);
-            constbuf.prepend("const ");
-            t = constbuf.data();
-            e = constbuf.data() + constbuf.length();
-            break;
+    int searchindex = 1;
+    while (searchindex > 0) {
+        searchindex = result.indexOf(" const", searchindex);
+        if (searchindex > 1) {
+            char prevchar = result.at(searchindex - 1);
+            if (prevchar != '*') {
+                result.remove(searchindex, 6);
+                if (!result.startsWith("const ")) {
+                    result.prepend("const ");
+                }
+            }
         }
-        /*
-          We musn't convert 'char * const *' into 'const char **'
-          and we must beware of 'Bar<const Bla>'.
-        */
-        if (t[i] == '&' || t[i] == '*' ||t[i] == '<')
-            break;
     }
 
     // convert const reference to value and const value to value
-    if (e > t + 6 && strncmp("const ", t, 6) == 0) {
-        if (*(e-1) == '&') {
-            t += 6;
-            --e;
-        } else if (is_ident_char(*(e-1)) || *(e-1) == '>') {
-            t += 6;
+    if (result.startsWith("const ")) {
+        char lastchar = result.at(result.size()-1);
+        if (lastchar == '&') {
+            result.remove(0, 6);
+            result.chop(1);
+        } else if (is_ident_char(lastchar) || lastchar == '>') {
+            result.remove(0, 6);
         }
     }
 
-    QByteArray result;
-    result.reserve(len);
-
-    // some type substitutions for 'unsigned x'
-    if (strncmp("unsigned", t, 8) == 0) {
-        // make sure "unsigned" is an isolated word before making substitutions
-        if (!t[8] || !is_ident_char(t[8])) {
-            if (strncmp(" int", t+8, 4) == 0) {
-                t += 8+4;
-                result += "uint";
-            } else if (strncmp(" long", t+8, 5) == 0) {
-                if ((strlen(t + 8 + 5) < 4 || strncmp(t + 8 + 5, " int", 4) != 0) // preserve '[unsigned] long int'
-                    && (strlen(t + 8 + 5) < 5 || strncmp(t + 8 + 5, " long", 5) != 0) // preserve '[unsigned] long long'
-                   ) {
-                    t += 8+5;
-                    result += "ulong";
-                }
-            } else if (strncmp(" short", t+8, 6) != 0  // preserve unsigned short
-                && strncmp(" char", t+8, 5) != 0) {    // preserve unsigned char
-                //  treat rest (unsigned) as uint
-                t += 8;
-                result += "uint";
-            }
-        }
-    } else {
-        // discard 'struct', 'class', and 'enum'; they are optional
-        // and we don't want them in the normalized signature
-        for (int i = 0; i < optionalkeywordssize; i++) {
-            if (strncmp(optional[i].keyword, t, optional[i].len) == 0) {
-                t += optional[i].len;
-                break;
-            }
-        }
+    // discard 'struct', 'class', and 'enum'; they are optional
+    // and we don't want them in the normalized signature
+    if (result.startsWith("struct ")) {
+        result.remove(0, 7);
+    } else if (result.startsWith("class ")) {
+        result.remove(0, 6);
+    } else if (result.startsWith("enum ")) {
+        result.remove(0, 5);
     }
 
-    while (t != e) {
-        result += *t++;
-    }
+    /// substitutions for 'unsigned x' with those defined in global header
+    result.replace("unsigned int", "uint");
+    result.replace("unsigned long long", "ulonglong");
+    result.replace("unsigned long", "ulong");
+    result.replace("unsigned short", "ushort");
+    result.replace("unsigned char", "uchar");
 
-#ifndef QT_NO_COMPRESS
+#if !defined(QT_NO_COMPRESS) && defined(QT_CACHE_NORMALIZED_TYPE)
     qGlobalNormalizedTypeHash()->insert(cachekey, result);
 #endif
+
+    // qDebug() << "t" << t << "e" << e << "result" << result;
 
     return result;
 }
