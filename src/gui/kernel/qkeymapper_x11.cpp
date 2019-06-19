@@ -435,10 +435,11 @@ extern bool qt_sm_blockUserInput;
 //
 
 // keyboard mapping table
-static const unsigned int KeyTbl[] = {
-
+static const struct KeyTblData {
+    const uint x11key;
+    const Qt::Key qtkey;
+} KeyTbl[] = {
     // misc keys
-
     XK_Escape,                  Qt::Key_Escape,
     XK_Tab,                     Qt::Key_Tab,
     XK_ISO_Left_Tab,            Qt::Key_Backtab,
@@ -453,7 +454,6 @@ static const unsigned int KeyTbl[] = {
     0x1007ff00,                 Qt::Key_SysReq,         // hardcoded X386 SysReq
 
     // cursor movement
-
     XK_Home,                    Qt::Key_Home,
     XK_End,                     Qt::Key_End,
     XK_Left,                    Qt::Key_Left,
@@ -464,7 +464,6 @@ static const unsigned int KeyTbl[] = {
     XK_Next,                    Qt::Key_PageDown,
 
     // modifiers
-
     XK_Shift_L,                 Qt::Key_Shift,
     XK_Shift_R,                 Qt::Key_Shift,
     XK_Shift_Lock,              Qt::Key_Shift,
@@ -488,7 +487,6 @@ static const unsigned int KeyTbl[] = {
     0x1005FF11,                 Qt::Key_F12,            // hardcoded Sun F37 (labeled F12)
 
     // numeric and function keypad keys
-
     XK_KP_Space,                Qt::Key_Space,
     XK_KP_Tab,                  Qt::Key_Tab,
     XK_KP_Enter,                Qt::Key_Enter,
@@ -737,21 +735,20 @@ static const unsigned int KeyTbl[] = {
     XF86XK_LaunchE,             Qt::Key_LaunchE,
     XF86XK_LaunchF,             Qt::Key_LaunchF,
     // XF86XK_LaunchH,             Qt::Key_LaunchH,
-
-    0,                          0
 };
+static const int KeyTblSize = sizeof(KeyTbl) / sizeof(KeyTblData);
 
-static int translateKeySym(uint key)
+static int translateKeySym(const uint key)
 {
     int code = -1;
-    int i = 0;                                // any other keys
-    while (KeyTbl[i]) {
-        if (key == KeyTbl[i]) {
-            code = (int)KeyTbl[i+1];
+    for (int i = 0; i < KeyTblSize; i++) {
+        const KeyTblData data = KeyTbl[i];
+        if (data.x11key == key) {
+            code = data.qtkey;
             break;
         }
-        i += 2;
     }
+
     if (qt_meta_mask) {
         // translate Super/Hyper keys to Meta if we're using them as the MetaModifier
         if (qt_meta_mask == qt_super_mask && (code == Qt::Key_Super_L || code == Qt::Key_Super_R)) {
