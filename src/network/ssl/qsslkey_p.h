@@ -66,10 +66,9 @@ public:
     inline ~QSslKeyPrivate()
     { clear(); }
 
-    void clear(bool deep = true);
+    void clear();
 
-    void decodePem(const QByteArray &pem, const QByteArray &passPhrase,
-                   bool deepClear = true);
+    void decodePem(const QByteArray &pem, const QByteArray &passPhrase);
     QByteArray pemHeader() const;
     QByteArray pemFooter() const;
     QByteArray pemFromDer(const QByteArray &der) const;

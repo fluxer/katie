@@ -136,7 +136,8 @@ private:
     static bool s_loadedCiphersAndCerts;
 protected:
     static bool s_loadRootCertsOnDemand;
-    static QList<QByteArray> unixRootCertDirectories();
+    static QByteArray unixRootCertDirectory();
+    static QByteArray unixRootCertFile();
 };
 
 QT_END_NAMESPACE

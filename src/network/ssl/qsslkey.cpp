@@ -74,19 +74,17 @@ QT_BEGIN_NAMESPACE
 /*!
     \internal
  */
-void QSslKeyPrivate::clear(bool deep)
+void QSslKeyPrivate::clear()
 {
     isNull = true;
     if (!QSslSocket::supportsSsl())
         return;
     if (rsa) {
-        if (deep)
-            RSA_free(rsa);
+        RSA_free(rsa);
         rsa = 0;
     }
     if (dsa) {
-        if (deep)
-            DSA_free(dsa);
+        DSA_free(dsa);
         dsa = 0;
     }
 }
@@ -97,20 +95,15 @@ void QSslKeyPrivate::clear(bool deep)
     Allocates a new rsa or dsa struct and decodes \a pem into it
     according to the current algorithm and type.
 
-    If \a deepClear is true, the rsa/dsa struct is freed if it is was
-    already allocated, otherwise we "leak" memory (which is exactly
-    what we want for copy construction).
-
     If \a passPhrase is non-empty, it will be used for decrypting
     \a pem.
 */
-void QSslKeyPrivate::decodePem(const QByteArray &pem, const QByteArray &passPhrase,
-                               bool deepClear)
+void QSslKeyPrivate::decodePem(const QByteArray &pem, const QByteArray &passPhrase)
 {
     if (pem.isEmpty())
         return;
 
-    clear(deepClear);
+    clear();
 
     if (!QSslSocket::supportsSsl())
         return;
@@ -153,12 +146,11 @@ QSslKey::QSslKey()
 */
 QByteArray QSslKeyPrivate::pemHeader() const
 {
-    // ### use QByteArray::fromRawData() instead
     if (type == QSsl::PublicKey)
-        return QByteArray("-----BEGIN PUBLIC KEY-----\n");
+        return QByteArray::fromRawData("-----BEGIN PUBLIC KEY-----\n", 27);
     else if (algorithm == QSsl::Rsa)
-        return QByteArray("-----BEGIN RSA PRIVATE KEY-----\n");
-    return QByteArray("-----BEGIN DSA PRIVATE KEY-----\n");
+        return QByteArray::fromRawData("-----BEGIN RSA PRIVATE KEY-----\n", 32);
+    return QByteArray::fromRawData("-----BEGIN DSA PRIVATE KEY-----\n", 32);
 }
 
 /*!
@@ -166,12 +158,11 @@ QByteArray QSslKeyPrivate::pemHeader() const
 */
 QByteArray QSslKeyPrivate::pemFooter() const
 {
-    // ### use QByteArray::fromRawData() instead
     if (type == QSsl::PublicKey)
-        return QByteArray("-----END PUBLIC KEY-----\n");
+        return QByteArray::fromRawData("-----END PUBLIC KEY-----\n", 25);
     else if (algorithm == QSsl::Rsa)
-        return QByteArray("-----END RSA PRIVATE KEY-----\n");
-    return QByteArray("-----END DSA PRIVATE KEY-----\n");
+        return QByteArray::fromRawData("-----END RSA PRIVATE KEY-----\n", 30);
+    return QByteArray::fromRawData("-----END DSA PRIVATE KEY-----\n", 30);
 }
 
 /*!

@@ -92,7 +92,7 @@ QSslCipher::QSslCipher(const QString &name, QSsl::SslProtocol protocol)
     foreach (const QSslCipher &cipher, QSslSocket::supportedCiphers()) {
         if (cipher.name() == name && cipher.protocol() == protocol) {
             *this = cipher;
-            return;
+            break;
         }
     }
 }

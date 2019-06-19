@@ -350,10 +350,8 @@ init_context:
     }
 
     if (s_loadRootCertsOnDemand && allowRootCertOnDemandLoading) {
-        // tell OpenSSL the directories where to look up the root certs on demand
-        QList<QByteArray> unixDirs = unixRootCertDirectories();
-        for (int a = 0; a < unixDirs.count(); ++a)
-            SSL_CTX_load_verify_locations(ctx, 0, unixDirs.at(a).constData());
+        // tell OpenSSL the directory where to look up the root certs on demand
+        SSL_CTX_load_verify_locations(ctx, 0, unixRootCertDirectory().constData());
     }
 
     if (!configuration.localCertificate.isNull()) {
@@ -558,14 +556,10 @@ void QSslSocketPrivate::ensureCiphersAndCertsLoaded()
     resetDefaultCiphers();
 
     // check whether we can enable on-demand root-cert loading (i.e. check whether the sym links are there)
-    const QList<QByteArray> dirs = unixRootCertDirectories();
     const QStringList symLinkFilter = QStringList() << QLatin1String("[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].[0-9]");
-    for (int a = 0; a < dirs.count(); ++a) {
-        QDirIterator iterator(QLatin1String(dirs.at(a)), symLinkFilter, QDir::Files);
-        if (iterator.hasNext()) {
-            s_loadRootCertsOnDemand = true;
-            break;
-        }
+    QDirIterator iterator(unixRootCertDirectory(), symLinkFilter, QDir::Files);
+    if (iterator.hasNext()) {
+        s_loadRootCertsOnDemand = true;
     }
     // if on-demand loading was not enabled, load the certs now
     if (!s_loadRootCertsOnDemand)
@@ -636,27 +630,16 @@ QList<QSslCertificate> QSslSocketPrivate::systemCaCertificates()
 #endif
     QList<QSslCertificate> systemCerts;
 
-    QSet<QString> certFiles;
-    QList<QByteArray> directories = unixRootCertDirectories();
-    QDir currentDir;
-    QStringList nameFilters;
-    nameFilters << QLatin1String("*.pem") << QLatin1String("*.crt");
+    QDir currentDir(unixRootCertDirectory());
+    QStringList nameFilters = QStringList() << QLatin1String("*.pem") << QLatin1String("*.crt");
     currentDir.setNameFilters(nameFilters);
-    for (int a = 0; a < directories.count(); a++) {
-        currentDir.setPath(QLatin1String(directories.at(a)));
-        QDirIterator it(currentDir);
-        while(it.hasNext()) {
-            it.next();
-            // use canonical path here to not load the same certificate twice if symlinked
-            certFiles.insert(it.fileInfo().canonicalFilePath());
-        }
-    }
-    QSetIterator<QString> it(certFiles);
+    QDirIterator it(currentDir);
     while(it.hasNext()) {
-        systemCerts.append(QSslCertificate::fromPath(it.next()));
+        it.next();
+        // use canonical path here to not load the same certificate twice if symlinked
+        systemCerts.append(QSslCertificate::fromPath(it.fileInfo().canonicalFilePath()));
     }
-    systemCerts.append(QSslCertificate::fromPath(QLatin1String("/etc/pki/tls/certs/ca-bundle.crt"), QSsl::Pem)); // Fedora, Mandriva
-    systemCerts.append(QSslCertificate::fromPath(QLatin1String("/usr/local/share/certs/ca-root-nss.crt"), QSsl::Pem)); // FreeBSD's ca_root_nss
+    systemCerts.append(QSslCertificate::fromPath(unixRootCertFile(), QSsl::Pem));
 
 #ifdef QSSLSOCKET_DEBUG
     qDebug() << "systemCaCertificates retrieval time " << timer.elapsed() << "ms";

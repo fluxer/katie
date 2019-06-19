@@ -2300,15 +2300,35 @@ bool QSslSocketPrivate::rootCertOnDemandLoadingSupported()
 /*!
     \internal
 */
-QList<QByteArray> QSslSocketPrivate::unixRootCertDirectories()
+QByteArray QSslSocketPrivate::unixRootCertDirectory()
 {
-    return QList<QByteArray>() <<  "/etc/ssl/certs/" // (K)ubuntu, OpenSUSE, Mandriva ...
-                               << "/usr/lib/ssl/certs/" // Gentoo, Mandrake
-                               << "/usr/share/ssl/" // Centos, Redhat, SuSE
-                               << "/usr/local/ssl/" // Normal OpenSSL Tarball
-                               << "/var/ssl/certs/" // AIX
-                               << "/usr/local/ssl/certs/" // Solaris
-                               << "/opt/openssl/certs/"; // HP-UX
+    static QByteArray certdir;
+    if (certdir.isEmpty()) {
+        QByteArray fromenv = qgetenv(X509_get_default_cert_dir_env());
+        if (!fromenv.isEmpty()) {
+            certdir = fromenv;
+        } else {
+            certdir = QByteArray(X509_get_default_cert_dir());
+        }
+    }
+    return certdir;
+}
+
+/*!
+    \internal
+*/
+QByteArray QSslSocketPrivate::unixRootCertFile()
+{
+    static QByteArray certfile;
+    if (certfile.isEmpty()) {
+        QByteArray fromenv = qgetenv(X509_get_default_cert_file_env());
+        if (!fromenv.isEmpty()) {
+            certfile = fromenv;
+        } else {
+            certfile = QByteArray(X509_get_default_cert_file());
+        }
+    }
+    return certfile;
 }
 
 QT_END_NAMESPACE
