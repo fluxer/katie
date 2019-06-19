@@ -102,7 +102,6 @@ public:
     bool removeFile(const QString &file);
     void storeItem(QCacheItem *item);
     void prepareLayout();
-    static quint32 crc32(const char *data, uint len);
 
     mutable QCacheItem lastItem;
     QString cacheDirectory;

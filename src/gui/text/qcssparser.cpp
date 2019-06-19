@@ -60,7 +60,7 @@ namespace QCss {
 struct QCssKnownValue
 {
     const char *name;
-    quint64 id;
+    const quint64 id;
 };
 
 static const QCssKnownValue properties[NumProperties - 1] = {

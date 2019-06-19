@@ -4010,7 +4010,8 @@ QString QRegExp::escape(const QString &str)
     quoted.reserve(count * 2);
     const QLatin1Char backslash('\\');
     for (int i = 0; i < count; i++) {
-        switch (str.at(i).toLatin1()) {
+        const QChar c = str.at(i);
+        switch (c.toLatin1()) {
         case '$':
         case '(':
         case ')':
@@ -4027,7 +4028,7 @@ QString QRegExp::escape(const QString &str)
         case '}':
             quoted.append(backslash);
         }
-        quoted.append(str.at(i));
+        quoted.append(c);
     }
     return quoted;
 }
