@@ -63,7 +63,7 @@ public:
     };
     enum ClassId { RasterClass, X11Class };
 
-    QPixmapData(PixelType pixelType, int classId);
+    QPixmapData(PixelType pixelType, ClassId classId);
     virtual ~QPixmapData();
 
     virtual QPixmapData *createCompatiblePixmapData() const;
@@ -98,7 +98,7 @@ public:
     inline int serialNumber() const { return ser_no; }
 
     inline PixelType pixelType() const { return type; }
-    inline ClassId classId() const { return static_cast<ClassId>(id); }
+    inline ClassId classId() const { return id; }
 
     virtual QImage* buffer();
 
@@ -108,19 +108,15 @@ public:
     inline int depth() const { return d; }
     inline bool isNull() const { return is_null; }
     inline qint64 cacheKey() const {
-        int classKey = id;
-        if (classKey >= 1024)
-            classKey = -(classKey >> 10);
-        return ((((qint64) classKey) << 56)
-                | (((qint64) ser_no) << 32)
-                | ((qint64) detach_no));
+        return ((static_cast<qint64>(id) << 56)
+                | (static_cast<qint64>(ser_no) << 32)
+                | (static_cast<qint64>(detach_no)));
     }
 
 
     static QPixmapData *create(int w, int h, PixelType type);
 
 protected:
-
     void setSerialNumber(int serNo);
     int w;
     int h;
@@ -136,12 +132,12 @@ private:
     int detach_no;
 
     PixelType type;
-    int id;
+    ClassId id;
     int ser_no;
 };
 
-#  define QT_XFORM_TYPE_MSBFIRST 0
-#  define QT_XFORM_TYPE_LSBFIRST 1
+#define QT_XFORM_TYPE_MSBFIRST 0
+#define QT_XFORM_TYPE_LSBFIRST 1
 extern bool qt_xForm_helper(const QTransform&, int, int, int, uchar*, int, int, int, const uchar*, int, int, int);
 
 QT_END_NAMESPACE

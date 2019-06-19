@@ -418,7 +418,7 @@ void QX11PixmapData::fromImage(const QImage &img,
         return;
     }
 
-    if (uint(w) >= 32768 || uint(h) >= 32768) {
+    if (w >= 32768 || h >= 32768) {
         w = h = 0;
         is_null = true;
         return;

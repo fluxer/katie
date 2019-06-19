@@ -62,7 +62,7 @@ QPixmapData *QPixmapData::create(int w, int h, PixelType type)
 }
 
 
-QPixmapData::QPixmapData(PixelType pixelType, int objectId)
+QPixmapData::QPixmapData(PixelType pixelType, ClassId objectId)
     : w(0),
       h(0),
       d(0),
@@ -247,11 +247,7 @@ void QPixmapData::setSerialNumber(int serNo)
 
 QImage QPixmapData::toImage(const QRect &rect) const
 {
-    QImage image = toImage();
-    if (rect.isNull())
-        return image;
-
-    return image.copy(rect);
+    return toImage().copy(rect);
 }
 
 QImage* QPixmapData::buffer()
