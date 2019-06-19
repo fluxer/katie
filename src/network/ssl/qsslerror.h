@@ -35,8 +35,7 @@
 #ifndef QSSLERROR_H
 #define QSSLERROR_H
 
-#include <QtCore/qvariant.h>
-#include <QtCore/qscopedpointer.h>
+#include <QtCore/qstring.h>
 #include <QtNetwork/qsslcertificate.h>
 
 QT_BEGIN_HEADER
@@ -44,6 +43,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QSslErrorPrivate;
+
 class Q_NETWORK_EXPORT QSslError
 {
 public:
@@ -93,9 +93,9 @@ public:
     SslError error() const;
     QString errorString() const;
     QSslCertificate certificate() const;
-    
+
 private:
-    QScopedPointer<QSslErrorPrivate> d;
+    QSslErrorPrivate *d;
 };
 
 #ifndef QT_NO_DEBUG_STREAM
