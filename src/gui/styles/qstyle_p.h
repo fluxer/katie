@@ -70,8 +70,9 @@ public:
     QImage imageCache; \
     QPainter *p = painter; \
     QString unique = QStyleHelper::uniqueName((a), option, option->rect.size()); \
-    int txType = painter->deviceTransform().type() | painter->worldTransform().type(); \
-    bool doPixmapCache = txType <= QTransform::TxTranslate; \
+    QTransform::TransformationType devTxType = painter->deviceTransform().type(); \
+    QTransform::TransformationType worldTxType = painter->worldTransform().type(); \
+    bool doPixmapCache = (devTxType <= QTransform::TxTranslate && worldTxType <= QTransform::TxTranslate); \
     if (doPixmapCache && QPixmapCache::find(unique, internalPixmapCache)) { \
         painter->drawPixmap(option->rect.topLeft(), internalPixmapCache); \
     } else { \
