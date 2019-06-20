@@ -36,10 +36,6 @@
 
 #include <QtGui/qpixmap.h>
 
-#ifdef Q_TEST_QPIXMAPCACHE
-#include <QtCore/qpair.h>
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
@@ -48,23 +44,7 @@ QT_BEGIN_NAMESPACE
 class Q_GUI_EXPORT QPixmapCache
 {
 public:
-    class KeyData;
-    class Q_GUI_EXPORT Key
-    {
-    public:
-        Key();
-        Key(const Key &other);
-        ~Key();
-        bool operator ==(const Key &key) const;
-        inline bool operator !=(const Key &key) const
-        { return !operator==(key); }
-        Key &operator =(const Key &other);
-
-    private:
-        KeyData *d;
-        friend class QPMCache;
-        friend class QPixmapCache;
-    };
+    typedef QString Key;
 
     static int cacheLimit();
     static void setCacheLimit(int);
@@ -73,19 +53,11 @@ public:
     // ### get rid of this function
     static inline bool find(const QString &key, QPixmap &pixmap)
         { return find(key, &pixmap); };
-    static bool find(const Key &key, QPixmap *pixmap);
     static bool insert(const QString &key, const QPixmap &pixmap);
     static Key insert(const QPixmap &pixmap);
     static bool replace(const Key &key, const QPixmap &pixmap);
     static void remove(const QString &key);
-    static void remove(const Key &key);
     static void clear();
-
-#ifdef Q_TEST_QPIXMAPCACHE
-    static void flushDetachedPixmaps();
-    static int totalUsed();
-    static QList< QPair<QString,QPixmap> > allPixmaps();
-#endif
 };
 
 QT_END_NAMESPACE

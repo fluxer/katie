@@ -16,7 +16,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qbmphandler_p.h

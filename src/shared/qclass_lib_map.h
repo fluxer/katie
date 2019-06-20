@@ -224,7 +224,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QMovie", "QtGui/qmovie.h"},
     { "QPixmap", "QtGui/qpixmap.h"},
     { "QPixmapCache", "QtGui/qpixmapcache.h"},
-    { "Key", "QtGui/qpixmapcache.h"},
     { "QAccessible", "QtGui/qaccessible.h"},
     { "QAccessibleInterface", "QtGui/qaccessible.h"},
     { "QAccessibleEvent", "QtGui/qaccessible.h"},
@@ -693,6 +692,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QFormBuilder", "QtUiTools/formbuilder.h"},
     { "QUiLoader", "QtUiTools/quiloader.h"},
 };
-static const int qclass_lib_count = 687;
+static const int qclass_lib_count = 686;
 
 #endif
