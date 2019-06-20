@@ -350,9 +350,7 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
         return *v_cast<QPalette>(a) == *v_cast<QPalette>(b);
 #ifndef QT_NO_ICON
     case QVariant::Icon:
-        /* QIcon::operator==() cannot be reasonably implemented for QIcon,
-         * so we always return false. */
-        return false;
+        return v_cast<QIcon>(a)->cacheKey() == v_cast<QIcon>(b)->cacheKey();
 #endif
     case QVariant::Matrix:
         return *v_cast<QMatrix>(a) == *v_cast<QMatrix>(b);
