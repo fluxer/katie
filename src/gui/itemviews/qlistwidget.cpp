@@ -243,10 +243,9 @@ bool QListModel::insertRows(int row, int count, const QModelIndex &parent)
 
     beginInsertRows(QModelIndex(), row, row + count - 1);
     QListWidget *view = qobject_cast<QListWidget*>(QObject::parent());
-    QListWidgetItem *itm = 0;
 
     for (int r = row; r < row + count; ++r) {
-        itm = new QListWidgetItem;
+        QListWidgetItem *itm = new QListWidgetItem;
         itm->view = view;
         itm->d->theid = r;
         items.insert(r, itm);
@@ -262,9 +261,8 @@ bool QListModel::removeRows(int row, int count, const QModelIndex &parent)
         return false;
 
     beginRemoveRows(QModelIndex(), row, row + count - 1);
-    QListWidgetItem *itm = 0;
     for (int r = row; r < row + count; ++r) {
-        itm = items.takeAt(row);
+        QListWidgetItem *itm = items.takeAt(row);
         itm->view = 0;
         itm->d->theid = -1;
         delete itm;
