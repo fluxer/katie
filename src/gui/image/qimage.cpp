@@ -3870,24 +3870,11 @@ template<class T> inline void do_mirror_data(QImageData *dst, QImageData *src,
                                              int dstXIncr, int dstYIncr,
                                              int w, int h)
 {
-    if (dst == src) {
-        // When mirroring in-place, stop in the middle for one of the directions, since we
-        // are swapping the bytes instead of merely copying.
-        const int srcXEnd = dstX0 ? w / 2 : w;
-        const int srcYEnd = !dstX0 && dstY0 ? h / 2 : h;
-        for (int srcY = 0, dstY = dstY0; srcY < srcYEnd; ++srcY, dstY += dstYIncr) {
-            T *srcPtr = (T *) (src->data + srcY * src->bytes_per_line);
-            T *dstPtr = (T *) (dst->data + dstY * dst->bytes_per_line);
-            for (int srcX = 0, dstX = dstX0; srcX < srcXEnd; ++srcX, dstX += dstXIncr)
-                qSwap(srcPtr[srcX], dstPtr[dstX]);
-        }
-    } else {
-        for (int srcY = 0, dstY = dstY0; srcY < h; ++srcY, dstY += dstYIncr) {
-            T *srcPtr = (T *) (src->data + srcY * src->bytes_per_line);
-            T *dstPtr = (T *) (dst->data + dstY * dst->bytes_per_line);
-            for (int srcX = 0, dstX = dstX0; srcX < w; ++srcX, dstX += dstXIncr)
-                dstPtr[dstX] = srcPtr[srcX];
-        }
+    for (int srcY = 0, dstY = dstY0; srcY < h; ++srcY, dstY += dstYIncr) {
+        T *srcPtr = (T *) (src->data + srcY * src->bytes_per_line);
+        T *dstPtr = (T *) (dst->data + dstY * dst->bytes_per_line);
+        for (int srcX = 0, dstX = dstX0; srcX < w; ++srcX, dstX += dstXIncr)
+            dstPtr[dstX] = srcPtr[srcX];
     }
 }
 
