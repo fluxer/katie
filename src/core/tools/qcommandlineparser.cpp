@@ -249,8 +249,9 @@ bool QCommandLineParser::addOption(const QCommandLineOption &option)
       d->commandLineOptionList.append(option);
 
       const int offset = d->commandLineOptionList.size() - 1;
-      foreach (const QString & name, optionNames)
-      d->nameHash.insert(name, offset);
+      foreach (const QString & name, optionNames) {
+          d->nameHash.insert(name, offset);
+      }
 
       return true;
    }

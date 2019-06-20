@@ -104,20 +104,20 @@ static const int MaxWriteBufferSize = 128*1024;
 static QString s5StateToString(QSocks5SocketEnginePrivate::Socks5State s)
 {
     switch (s) {
-    case QSocks5SocketEnginePrivate::Uninitialized: return QLatin1String("Uninitialized");
-    case QSocks5SocketEnginePrivate::ConnectError: return QLatin1String("ConnectError");
-    case QSocks5SocketEnginePrivate::AuthenticationMethodsSent: return QLatin1String("AuthenticationMethodsSent");
-    case QSocks5SocketEnginePrivate::Authenticating: return QLatin1String("Authenticating");
-    case QSocks5SocketEnginePrivate::AuthenticatingError: return QLatin1String("AuthenticatingError");
-    case QSocks5SocketEnginePrivate::RequestMethodSent: return QLatin1String("RequestMethodSent");
-    case QSocks5SocketEnginePrivate::RequestError: return QLatin1String("RequestError");
-    case QSocks5SocketEnginePrivate::Connected: return QLatin1String("Connected");
-    case QSocks5SocketEnginePrivate::UdpAssociateSuccess: return QLatin1String("UdpAssociateSuccess");
-    case QSocks5SocketEnginePrivate::BindSuccess: return QLatin1String("BindSuccess");
-    case QSocks5SocketEnginePrivate::ControlSocketError: return QLatin1String("ControlSocketError");
-    case QSocks5SocketEnginePrivate::SocksError: return QLatin1String("SocksError");
-    case QSocks5SocketEnginePrivate::HostNameLookupError: return QLatin1String("HostNameLookupError");
-    default: break;
+        case QSocks5SocketEnginePrivate::Uninitialized: return QLatin1String("Uninitialized");
+        case QSocks5SocketEnginePrivate::ConnectError: return QLatin1String("ConnectError");
+        case QSocks5SocketEnginePrivate::AuthenticationMethodsSent: return QLatin1String("AuthenticationMethodsSent");
+        case QSocks5SocketEnginePrivate::Authenticating: return QLatin1String("Authenticating");
+        case QSocks5SocketEnginePrivate::AuthenticatingError: return QLatin1String("AuthenticatingError");
+        case QSocks5SocketEnginePrivate::RequestMethodSent: return QLatin1String("RequestMethodSent");
+        case QSocks5SocketEnginePrivate::RequestError: return QLatin1String("RequestError");
+        case QSocks5SocketEnginePrivate::Connected: return QLatin1String("Connected");
+        case QSocks5SocketEnginePrivate::UdpAssociateSuccess: return QLatin1String("UdpAssociateSuccess");
+        case QSocks5SocketEnginePrivate::BindSuccess: return QLatin1String("BindSuccess");
+        case QSocks5SocketEnginePrivate::ControlSocketError: return QLatin1String("ControlSocketError");
+        case QSocks5SocketEnginePrivate::SocksError: return QLatin1String("SocksError");
+        case QSocks5SocketEnginePrivate::HostNameLookupError: return QLatin1String("HostNameLookupError");
+        default: break;
     }
     return QLatin1String("unknown state");
 }

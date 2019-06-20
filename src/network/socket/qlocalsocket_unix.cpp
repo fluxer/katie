@@ -461,33 +461,33 @@ QLocalSocket::LocalSocketError QLocalSocket::error() const
 {
     Q_D(const QLocalSocket);
     switch (d->unixSocket.error()) {
-    case QAbstractSocket::ConnectionRefusedError:
-        return QLocalSocket::ConnectionRefusedError;
-    case QAbstractSocket::RemoteHostClosedError:
-        return QLocalSocket::PeerClosedError;
-    case QAbstractSocket::HostNotFoundError:
-        return QLocalSocket::ServerNotFoundError;
-    case QAbstractSocket::SocketAccessError:
-        return QLocalSocket::SocketAccessError;
-    case QAbstractSocket::SocketResourceError:
-        return QLocalSocket::SocketResourceError;
-    case QAbstractSocket::SocketTimeoutError:
-        return QLocalSocket::SocketTimeoutError;
-    case QAbstractSocket::DatagramTooLargeError:
-        return QLocalSocket::DatagramTooLargeError;
-    case QAbstractSocket::NetworkError:
-        return QLocalSocket::ConnectionError;
-    case QAbstractSocket::UnsupportedSocketOperationError:
-        return QLocalSocket::UnsupportedSocketOperationError;
-    case QAbstractSocket::UnknownSocketError:
-        return QLocalSocket::UnknownSocketError;
-    default:
+        case QAbstractSocket::ConnectionRefusedError:
+            return QLocalSocket::ConnectionRefusedError;
+        case QAbstractSocket::RemoteHostClosedError:
+            return QLocalSocket::PeerClosedError;
+        case QAbstractSocket::HostNotFoundError:
+            return QLocalSocket::ServerNotFoundError;
+        case QAbstractSocket::SocketAccessError:
+            return QLocalSocket::SocketAccessError;
+        case QAbstractSocket::SocketResourceError:
+            return QLocalSocket::SocketResourceError;
+        case QAbstractSocket::SocketTimeoutError:
+            return QLocalSocket::SocketTimeoutError;
+        case QAbstractSocket::DatagramTooLargeError:
+            return QLocalSocket::DatagramTooLargeError;
+        case QAbstractSocket::NetworkError:
+            return QLocalSocket::ConnectionError;
+        case QAbstractSocket::UnsupportedSocketOperationError:
+            return QLocalSocket::UnsupportedSocketOperationError;
+        case QAbstractSocket::UnknownSocketError:
+            return QLocalSocket::UnknownSocketError;
+        default:
 #if defined QLOCALSOCKET_DEBUG
-        qWarning() << "QLocalSocket error not handled:" << d->unixSocket.error();
+            qWarning() << "QLocalSocket error not handled:" << d->unixSocket.error();
 #endif
-        break;
+            break;
     }
-    return UnknownSocketError;
+    return QLocalSocket::UnknownSocketError;
 }
 
 bool QLocalSocket::isValid() const
