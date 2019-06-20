@@ -263,17 +263,13 @@ static const struct RGBData {
 
 static const int rgbTblSize = sizeof(rgbTbl) / sizeof(RGBData);
 
-inline bool operator<(const char *name, const RGBData &data)
-{ return qstrcmp(name, data.name) < 0; }
-inline bool operator<(const RGBData &data, const char *name)
-{ return qstrcmp(data.name, name) < 0; }
-
 bool qt_get_named_rgb(const char *name, QRgb* rgb)
 {
-    const RGBData *r = qBinaryFind(rgbTbl, rgbTbl + rgbTblSize, name);
-    if (r != rgbTbl + rgbTblSize) {
-        *rgb = r->value;
-        return true;
+    for (int i = 0; i < rgbTblSize; i++) {
+        if (qstrcmp(rgbTbl[i].name, name) == 0) {
+            *rgb = rgbTbl[i].value;
+            return true;
+        }
     }
     return false;
 }

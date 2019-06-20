@@ -231,7 +231,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
         result.remove(0, 5);
     }
 
-    /// substitutions for 'unsigned x' with those defined in global header
+    // substitute 'unsigned x' with those defined in global header
     result.replace("unsigned int", "uint");
     result.replace("unsigned long long", "ulonglong");
     result.replace("unsigned long", "ulong");

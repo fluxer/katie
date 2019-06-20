@@ -742,9 +742,8 @@ static int translateKeySym(const uint key)
 {
     int code = -1;
     for (int i = 0; i < KeyTblSize; i++) {
-        const KeyTblData data = KeyTbl[i];
-        if (data.x11key == key) {
-            code = data.qtkey;
+        if (KeyTbl[i].x11key == key) {
+            code = KeyTbl[i].qtkey;
             break;
         }
     }

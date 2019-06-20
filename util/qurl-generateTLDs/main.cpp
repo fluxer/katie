@@ -76,8 +76,8 @@ int main(int argc, char **argv) {
         printf("file, do the following:\n\n");
         printf("       wget https://publicsuffix.org/list/effective_tld_names.dat -O effective_tld_names.dat\n");
         printf("       grep '^[^\\/\\/]' effective_tld_names.dat > effective_tld_names.dat.trimmed\n");
-        printf("       %s effective_tld_names.dat.trimmed effective_tld_names.dat.qt\n\n", argv[0]);
-        printf("Now copy the data from effective_tld_names.dat.qt to the file src/core/io/qurltlds_p.h in your Qt repo\n\n");
+        printf("       %s effective_tld_names.dat.trimmed effective_tld_names.dat.txt\n\n", argv[0]);
+        printf("Now copy the data from effective_tld_names.dat.txt to the file src/core/io/qurltlds_p.h in your Qt repo\n\n");
         exit(1);
     }
     QFile file(QString::fromLatin1(argv[1]));
@@ -85,76 +85,33 @@ int main(int argc, char **argv) {
     file.open(QIODevice::ReadOnly);
     outFile.open(QIODevice::WriteOnly);
 
-    QByteArray outIndicesBufferBA;
-    QBuffer outIndicesBuffer(&outIndicesBufferBA);
-    outIndicesBuffer.open(QIODevice::WriteOnly);
-
     QByteArray outDataBufferBA;
     QBuffer outDataBuffer(&outDataBufferBA);
     outDataBuffer.open(QIODevice::WriteOnly);
 
     int lineCount = 0;
     while (!file.atEnd()) {
-        file.readLine();
-        lineCount++;
-    }
-    file.reset();
-    QVector<QString> strings(lineCount);
-    while (!file.atEnd()) {
         QString s = QString::fromUtf8(file.readLine());
         QString st = s.trimmed();
-        int num = qHash(st) % lineCount;
 
         QString utf8String = utf8encode(st.toUtf8());
 
-        // for domain 1.com, we could get something like
-        // a.com\01.com, which would be interpreted as octal 01,
-        // so we need to separate those strings with quotes
-        QRegExp regexpOctalEscape(QLatin1String("^[0-9]"));
-        if (!strings.at(num).isEmpty() && st.contains(regexpOctalEscape))
-            strings[num].append(QLatin1String("\"\""));
+        outDataBuffer.write("    \"");
+        outDataBuffer.write(utf8String.toUtf8());
+        outDataBuffer.write("\\0\",\n");
 
-        strings[num].append(utf8String);
-        strings[num].append(QLatin1String("\\0"));
+        lineCount++;
     }
-
-    outIndicesBuffer.write("static const quint32 tldCount = ");
-    outIndicesBuffer.write(QByteArray::number(lineCount));
-    outIndicesBuffer.write(";\n");
-    outIndicesBuffer.write("static const quint32 tldIndices[");
-//    outIndicesBuffer.write(QByteArray::number(lineCount+1)); // not needed
-    outIndicesBuffer.write("] = {\n");
-
-    int utf8Size = 0;
-//    int charSize = 0;
-    for (int a = 0; a < lineCount; a++) {
-        bool lineIsEmpty = strings.at(a).isEmpty();
-        if (!lineIsEmpty) {
-            strings[a].prepend(QLatin1Char('"'));
-            strings[a].append(QLatin1Char('"'));
-        }
-        int zeroCount = strings.at(a).count(QLatin1String("\\0"));
-        int utf8CharsCount = strings.at(a).count(QLatin1String("\\x"));
-        int quoteCount = strings.at(a).count(QLatin1Char('"'));
-        outDataBuffer.write(strings.at(a).toUtf8());
-        if (!lineIsEmpty)
-            outDataBuffer.write("\n");
-        outIndicesBuffer.write(QByteArray::number(utf8Size));
-        outIndicesBuffer.write(",\n");
-        utf8Size += strings.at(a).count() - (zeroCount + quoteCount + utf8CharsCount * 3);
-//        charSize += strings.at(a).count();
-    }
-    outIndicesBuffer.write(QByteArray::number(utf8Size));
-    outIndicesBuffer.write("};\n");
-    outIndicesBuffer.close();
-    outFile.write(outIndicesBufferBA);
 
     outDataBuffer.close();
-    outFile.write("\nstatic const char tldData[");
+    outFile.write("\nstatic const char* TLDTbl[");
 //    outFile.write(QByteArray::number(charSize)); // not needed
     outFile.write("] = {\n");
     outFile.write(outDataBufferBA);
-    outFile.write("};\n");
+    outFile.write("};\n\n");
+    outFile.write("static const qint32 TLDTblSize = ");
+    outFile.write(QByteArray::number(lineCount));
+    outFile.write(";\n");
     outFile.close();
     printf("data generated to %s . Now copy the data from this file to src/core/io/qurltlds_p.h in your Qt repo\n", argv[2]);
     exit(0);
