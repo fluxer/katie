@@ -1221,9 +1221,9 @@ bool QDeclarativePropertyPrivate::write(QObject *object, const QDeclarativePrope
             v = QDeclarativeStringConverters::variantFromString(value.toString(), propertyType, &ok);
         if (!ok) {
             v = value;
-            if (v.convert((QVariant::Type)propertyType)) {
+            if (v.convert(static_cast<QVariant::Type>(propertyType))) {
                 ok = true;
-            } else if ((uint)propertyType >= QVariant::UserType && variantType == QVariant::String) {
+            } else if (propertyType >= QVariant::UserType && variantType == QVariant::String) {
                 QDeclarativeMetaType::StringConverter con = QDeclarativeMetaType::customStringConverter(propertyType);
                 if (con) {
                     v = con(value.toString());

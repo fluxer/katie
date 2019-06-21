@@ -327,9 +327,9 @@ class Q_CORE_EXPORT QVariant
             void *ptr;
             PrivateShared *shared;
         } data;
-        uint type : 30;
-        uint is_shared : 1;
-        uint is_null : 1;
+        int type;
+        bool is_shared;
+        bool is_null;
     };
  public:
     typedef void (*f_construct)(Private *, const void *);
@@ -410,9 +410,9 @@ template <typename T>
 inline void qVariantSetValue(QVariant &v, const T &t)
 {
     //if possible we reuse the current QVariant private
-    const uint type = qMetaTypeId<T>(reinterpret_cast<T *>(0));
+    const int type = qMetaTypeId<T>(reinterpret_cast<T *>(0));
     QVariant::Private &d = v.data_ptr();
-    if (v.isDetached() && (type == d.type || (type <= uint(QVariant::Char) && d.type <= uint(QVariant::Char)))) {
+    if (v.isDetached() && (type == d.type || (type <= int(QVariant::Char) && d.type <= int(QVariant::Char)))) {
         d.type = type;
         d.is_null = false;
         T *old = reinterpret_cast<T*>(d.is_shared ? d.data.shared->ptr : &d.data.ptr);
@@ -462,7 +462,6 @@ template<> inline QVariant qvariant_cast<QVariant>(const QVariant &v)
         return *reinterpret_cast<const QVariant *>(v.constData());
     return v;
 }
-
 #endif // QT_MOC
 
 Q_DECLARE_SHARED(QVariant)

@@ -81,19 +81,19 @@ int qmlRegisterValueTypeEnums(const char *uri, int versionMajor, int versionMino
 QDeclarativeValueTypeFactory::QDeclarativeValueTypeFactory()
 {
     // ### Optimize
-    for (unsigned int ii = 0; ii < (QVariant::UserType - 1); ++ii)
+    for (int ii = 0; ii < (QVariant::UserType - 1); ++ii)
         valueTypes[ii] = valueType(ii);
 }
 
 QDeclarativeValueTypeFactory::~QDeclarativeValueTypeFactory()
 {
-    for (unsigned int ii = 0; ii < (QVariant::UserType - 1); ++ii)
+    for (int ii = 0; ii < (QVariant::UserType - 1); ++ii)
         delete valueTypes[ii];
 }
 
 bool QDeclarativeValueTypeFactory::isValueType(int idx)
 {
-    if ((uint)idx < QVariant::UserType)
+    if (idx < QVariant::UserType)
         return true;
     return false;
 }

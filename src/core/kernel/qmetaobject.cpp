@@ -2206,7 +2206,7 @@ QVariant QMetaProperty::read(const QObject *object) const
     if (!object || !mobj)
         return QVariant();
 
-    uint t = QVariant::Int;
+    int t = QVariant::Int;
     if (isEnumType()) {
         /*
           try to create a QVariant that can be converted to this enum
@@ -2255,7 +2255,7 @@ QVariant QMetaProperty::read(const QObject *object) const
         return value;
     if (t != QVariant::LastType && argv[0] != value.data())
         // pointer or reference
-        return QVariant((QVariant::Type)t, argv[0]);
+        return QVariant(static_cast<QVariant::Type>(t), argv[0]);
     return value;
 }
 
@@ -2271,7 +2271,7 @@ bool QMetaProperty::write(QObject *object, const QVariant &value) const
         return false;
 
     QVariant v = value;
-    uint t = QVariant::Invalid;
+    int t = QVariant::Invalid;
     if (isEnumType()) {
         if (v.type() == QVariant::String) {
             const char* cValue = value.toByteArray().constData();
@@ -2302,7 +2302,7 @@ bool QMetaProperty::write(QObject *object, const QVariant &value) const
         }
         if (t == QVariant::Invalid)
             return false;
-        if (t != QVariant::LastType && t != (uint)value.userType() && (t < QMetaType::User && !v.convert((QVariant::Type)t)))
+        if (t != QVariant::LastType && t != value.userType() && (t < QMetaType::User && !v.convert(static_cast<QVariant::Type>(t))))
             return false;
     }
 
