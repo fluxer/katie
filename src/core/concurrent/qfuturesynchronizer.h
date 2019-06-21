@@ -69,13 +69,13 @@ public:
     void waitForFinished()
     {
         if (m_cancelOnWait) {
-            for (int i = 0; i < m_futures.count(); ++i) {
-                 m_futures[i].cancel();
+            foreach (QFuture<T> future, m_futures) {
+                 future.cancel();
             }
         }
-        
-        for (int i = 0; i < m_futures.count(); ++i) {
-             m_futures[i].waitForFinished();
+
+        foreach (QFuture<T> future, m_futures) {
+             future.waitForFinished();
          }
     }
 
@@ -99,7 +99,7 @@ public:
         return m_cancelOnWait;
     }
 
-protected:
+private:
     QList<QFuture<T> > m_futures;
     bool m_cancelOnWait;
 };
