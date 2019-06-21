@@ -1894,7 +1894,7 @@ void QTreeWidgetItem::insertChild(int index, QTreeWidgetItem *child)
         if (view->isSortingEnabled()) {
             // do a delayed sort instead
             if (!model->sortPendingTimer.isActive())
-                model->sortPendingTimer.start(0, model);
+                model->sortPendingTimer.start(100, model);
         }
         model->beginInsertItems(this, index, 1);
         int cols = model->columnCount();
@@ -2071,11 +2071,10 @@ void QTreeWidgetItemPrivate::sortChildren(int column, Qt::SortOrder order, bool 
         return;
     model->sortItems(&q->children, column, order);
     if (climb) {
-        QList<QTreeWidgetItem*>::iterator it = q->children.begin();
-        for (; it != q->children.end(); ++it) {
+        foreach (QTreeWidgetItem* it, q->children) {
             //here we call the private object's method to avoid emitting
             //the layoutAboutToBeChanged and layoutChanged signals
-            (*it)->d->sortChildren(column, order, climb);
+            it->d->sortChildren(column, order, climb);
         }
     }
 }
