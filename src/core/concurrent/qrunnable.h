@@ -42,12 +42,6 @@ QT_BEGIN_NAMESPACE
 
 class QRunnable
 {
-    int ref;
-
-    friend class QThreadPool;
-    friend class QThreadPoolPrivate;
-    friend class QThreadPoolThread;
-
 public:
     virtual void run() = 0;
 
@@ -56,6 +50,12 @@ public:
 
     bool autoDelete() const { return ref != -1; }
     void setAutoDelete(bool _autoDelete) { ref = _autoDelete ? 0 : -1; }
+
+private:
+    int ref;
+
+    friend class QThreadPoolPrivate;
+    friend class QThreadPoolThread;
 };
 
 QT_END_NAMESPACE
