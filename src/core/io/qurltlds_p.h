@@ -8830,7 +8830,7 @@ static const char* TLDTbl[] = {
     "zone.id\0",
 };
 
-static const qint32 TLDTblSize = 8767;
+static const qint16 TLDTblSize = 8767;
 
 QT_END_NAMESPACE
 

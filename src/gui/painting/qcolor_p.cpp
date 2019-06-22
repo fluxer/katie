@@ -261,11 +261,11 @@ static const struct RGBData {
 };
 #undef RGBCOLOR
 
-static const int rgbTblSize = sizeof(rgbTbl) / sizeof(RGBData);
+static const qint16 rgbTblSize = sizeof(rgbTbl) / sizeof(RGBData);
 
 bool qt_get_named_rgb(const char *name, QRgb* rgb)
 {
-    for (int i = 0; i < rgbTblSize; i++) {
+    for (qint16 i = 0; i < rgbTblSize; i++) {
         if (qstrcmp(rgbTbl[i].name, name) == 0) {
             *rgb = rgbTbl[i].value;
             return true;
@@ -278,7 +278,7 @@ QStringList qt_get_colornames()
 {
     static QStringList lst;
     if (lst.isEmpty()) {
-        for (int i = 0; i < rgbTblSize; i++)
+        for (qint16 i = 0; i < rgbTblSize; i++)
             lst << QString::fromLatin1(rgbTbl[i].name);
     }
     return lst;

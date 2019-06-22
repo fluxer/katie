@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
 
 static bool containsTLDEntry(const QString &entry)
 {
-    for (int i = 0; i < TLDTblSize; i++) {
+    for (qint16 i = 0; i < TLDTblSize; i++) {
         QString currentEntry = QString::fromUtf8(TLDTbl[i]);
         if (currentEntry == entry)
             return true;

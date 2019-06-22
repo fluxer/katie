@@ -736,12 +736,12 @@ static const struct KeyTblData {
     XF86XK_LaunchF,             Qt::Key_LaunchF,
     // XF86XK_LaunchH,             Qt::Key_LaunchH,
 };
-static const int KeyTblSize = sizeof(KeyTbl) / sizeof(KeyTblData);
+static const qint16 KeyTblSize = sizeof(KeyTbl) / sizeof(KeyTblData);
 
 static int translateKeySym(const uint key)
 {
     int code = -1;
-    for (int i = 0; i < KeyTblSize; i++) {
+    for (qint16 i = 0; i < KeyTblSize; i++) {
         if (KeyTbl[i].x11key == key) {
             code = KeyTbl[i].qtkey;
             break;

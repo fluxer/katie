@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
     outFile.write("] = {\n");
     outFile.write(outDataBufferBA);
     outFile.write("};\n\n");
-    outFile.write("static const qint32 TLDTblSize = ");
+    outFile.write("static const qint16 TLDTblSize = ");
     outFile.write(QByteArray::number(lineCount));
     outFile.write(";\n");
     outFile.close();
