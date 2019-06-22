@@ -1118,8 +1118,9 @@ void QGraphicsOpacityEffect::setOpacity(qreal opacity)
         return;
 
     d->opacity = opacity;
-    if ((d->isFullyTransparent = qFuzzyIsNull(d->opacity)))
-        d->isFullyOpaque = 0;
+    d->isFullyTransparent = qFuzzyIsNull(d->opacity);
+    if (d->isFullyTransparent)
+        d->isFullyOpaque = false;
     else
         d->isFullyOpaque = qFuzzyIsNull(d->opacity - 1);
     update();

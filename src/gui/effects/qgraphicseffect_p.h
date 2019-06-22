@@ -176,7 +176,7 @@ public:
     ~QGraphicsColorizeEffectPrivate() { delete filter; }
 
     QPixmapColorizeFilter *filter;
-    bool opaque : 1;
+    bool opaque;
 };
 
 class QGraphicsBlurEffectPrivate : public QGraphicsEffectPrivate
@@ -204,14 +204,14 @@ class QGraphicsOpacityEffectPrivate : public QGraphicsEffectPrivate
     Q_DECLARE_PUBLIC(QGraphicsOpacityEffect)
 public:
     QGraphicsOpacityEffectPrivate()
-        : opacity(qreal(0.7)), isFullyTransparent(0), isFullyOpaque(0), hasOpacityMask(0) {}
+        : opacity(qreal(0.7)), isFullyTransparent(false), isFullyOpaque(false), hasOpacityMask(false) {}
     ~QGraphicsOpacityEffectPrivate() {}
 
     qreal opacity;
     QBrush opacityMask;
-    uint isFullyTransparent : 1;
-    uint isFullyOpaque : 1;
-    uint hasOpacityMask : 1;
+    bool isFullyTransparent;
+    bool isFullyOpaque;
+    bool hasOpacityMask;
 };
 
 QT_END_NAMESPACE
