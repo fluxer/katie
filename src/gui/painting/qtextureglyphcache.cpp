@@ -213,9 +213,9 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
     }
 
     // now actually use the coords and paint the wanted glyps into cache.
-    QHash<GlyphAndSubPixelPosition, Coord>::iterator iter = listItemCoordinates.begin();
+    QHash<GlyphAndSubPixelPosition, Coord>::const_iterator iter = listItemCoordinates.constBegin();
     int requiredWidth = m_w;
-    while (iter != listItemCoordinates.end()) {
+    while (iter != listItemCoordinates.constEnd()) {
         Coord c = iter.value();
 
         m_currentRowHeight = qMax(m_currentRowHeight, c.h + margin * 2);
@@ -260,8 +260,8 @@ void QTextureGlyphCache::fillInPendingGlyphs()
     int requiredHeight = m_h;
     int requiredWidth = m_w; // Use a minimum size to avoid a lot of initial reallocations
     {
-        QHash<GlyphAndSubPixelPosition, Coord>::iterator iter = m_pendingGlyphs.begin();
-        while (iter != m_pendingGlyphs.end()) {
+        QHash<GlyphAndSubPixelPosition, Coord>::const_iterator iter = m_pendingGlyphs.constBegin();
+        while (iter != m_pendingGlyphs.constEnd()) {
             Coord c = iter.value();
             requiredHeight = qMax(requiredHeight, c.y + c.h);
             requiredWidth = qMax(requiredWidth, c.x + c.w);
@@ -277,8 +277,8 @@ void QTextureGlyphCache::fillInPendingGlyphs()
     }
 
     {
-        QHash<GlyphAndSubPixelPosition, Coord>::iterator iter = m_pendingGlyphs.begin();
-        while (iter != m_pendingGlyphs.end()) {
+        QHash<GlyphAndSubPixelPosition, Coord>::const_iterator iter = m_pendingGlyphs.constBegin();
+        while (iter != m_pendingGlyphs.constEnd()) {
             GlyphAndSubPixelPosition key = iter.key();
             fillTexture(iter.value(), key.glyph, key.subPixelPosition);
 
