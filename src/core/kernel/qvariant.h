@@ -412,7 +412,7 @@ inline void qVariantSetValue(QVariant &v, const T &t)
     //if possible we reuse the current QVariant private
     const int type = qMetaTypeId<T>(reinterpret_cast<T *>(0));
     QVariant::Private &d = v.data_ptr();
-    if (v.isDetached() && (type == d.type || (type <= int(QVariant::Char) && d.type <= int(QVariant::Char)))) {
+    if (v.isDetached() && (type == d.type || (type <= QVariant::Char && d.type <= QVariant::Char))) {
         d.type = type;
         d.is_null = false;
         T *old = reinterpret_cast<T*>(d.is_shared ? d.data.shared->ptr : &d.data.ptr);

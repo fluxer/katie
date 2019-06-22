@@ -42,7 +42,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 struct QX11InfoData;
 class QX11Info;
 class QPaintDevice;
@@ -85,7 +84,7 @@ public:
     static void setAppUserTime(unsigned long time);
     static bool isCompositingManagerRunning();
 
-protected:
+private:
     void copyX11Data(const QPaintDevice *);
     void cloneX11Data(const QPaintDevice *);
     void setX11Data(const QX11InfoData *);
@@ -93,14 +92,10 @@ protected:
 
     QX11InfoData *x11data;
 
-    friend class QX11PaintEngine;
     friend class QPixmap;
+    friend class QX11PaintEngine;
     friend class QX11PixmapData;
-    friend class QWidget;
     friend class QWidgetPrivate;
-    friend void qt_init(QApplicationPrivate *priv, int, Display *display, Qt::HANDLE visual,
-                        Qt::HANDLE colormap);
-    friend void qt_cleanup();
     friend void qt_x11_getX11InfoForWindow(QX11Info *xinfo, const void *att);
 };
 

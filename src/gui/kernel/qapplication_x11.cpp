@@ -1156,7 +1156,7 @@ bool runningUnderDebugger()
 // ### it because "storage class specifiers invalid in friend function
 // ### declarations" :-) Ideas anyone?
 void qt_init(QApplicationPrivate *priv, int,
-	     Display *display, Qt::HANDLE visual, Qt::HANDLE colormap)
+             Display *display, Qt::HANDLE visual, Qt::HANDLE colormap)
 {
     qt_x11Data = new QX11Data;
     qt_x11Data->display = display;

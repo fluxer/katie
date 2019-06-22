@@ -427,6 +427,30 @@ static QVector<Atom> getNetWmState(QWidget *w)
     return returnValue;
 }
 
+void qt_x11_getX11InfoForWindow(QX11Info *xinfo, const void *att)
+{
+    QX11InfoData* xd = xinfo->getX11Data(true);
+    const XWindowAttributes *a = static_cast<const XWindowAttributes*>(att);
+    // find which screen the window is on...
+    xd->screen = QX11Info::appScreen(); // by default, use the default :)
+    int i;
+    for (i = 0; i < ScreenCount(qt_x11Data->display); i++) {
+        if (RootWindow(qt_x11Data->display, i) == a->root) {
+            xd->screen = i;
+            break;
+        }
+    }
+
+    xd->depth = a->depth;
+    xd->cells = DisplayCells(qt_x11Data->display, xd->screen);
+    xd->visual = a->visual;
+    xd->defaultVisual = (XVisualIDFromVisual((Visual *) a->visual) ==
+    XVisualIDFromVisual((Visual *) QX11Info::appVisual(xinfo->screen())));
+    xd->colormap = a->colormap;
+    xd->defaultColormap = (a->colormap == QX11Info::appColormap(xinfo->screen()));
+    xinfo->setX11Data(xd);
+}
+
 void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyOldWindow)
 {
     Q_Q(QWidget);
@@ -2945,30 +2969,6 @@ Picture QX11Data::getSolidFill(int screen, const QColor &c)
     return qt_x11Data->solid_fills[i].picture;
 }
 #endif
-
-void qt_x11_getX11InfoForWindow(QX11Info *xinfo, const void *att)
-{
-    QX11InfoData* xd = xinfo->getX11Data(true);
-    const XWindowAttributes *a = static_cast<const XWindowAttributes*>(att);
-    // find which screen the window is on...
-    xd->screen = QX11Info::appScreen(); // by default, use the default :)
-    int i;
-    for (i = 0; i < ScreenCount(qt_x11Data->display); i++) {
-        if (RootWindow(qt_x11Data->display, i) == a->root) {
-            xd->screen = i;
-            break;
-        }
-    }
-
-    xd->depth = a->depth;
-    xd->cells = DisplayCells(qt_x11Data->display, xd->screen);
-    xd->visual = a->visual;
-    xd->defaultVisual = (XVisualIDFromVisual((Visual *) a->visual) ==
-    XVisualIDFromVisual((Visual *) QX11Info::appVisual(xinfo->screen())));
-    xd->colormap = a->colormap;
-    xd->defaultColormap = (a->colormap == QX11Info::appColormap(xinfo->screen()));
-    xinfo->setX11Data(xd);
-}
 
 void QWidgetPrivate::updateX11AcceptFocus()
 {
