@@ -157,26 +157,9 @@ inline void qStableSort(Container &c)
 }
 
 template <typename RandomAccessIterator, typename T>
-Q_OUTOFLINE_TEMPLATE RandomAccessIterator qLowerBound(RandomAccessIterator begin, RandomAccessIterator end, const T &value)
+inline RandomAccessIterator qLowerBound(RandomAccessIterator begin, RandomAccessIterator end, const T &value)
 {
-    // Implementation is duplicated from QAlgorithmsPrivate to keep existing code
-    // compiling. We have to allow using *begin and value with different types,
-    // and then implementing operator< for those types.
-    RandomAccessIterator middle;
-    int n = end - begin;
-    int half;
-
-    while (n > 0) {
-        half = n >> 1;
-        middle = begin + half;
-        if (*middle < value) {
-            begin = middle + 1;
-            n -= half + 1;
-        } else {
-            n = half;
-        }
-    }
-    return begin;
+    return std::lower_bound(begin, end, value);
 }
 
 template <typename RandomAccessIterator, typename T, typename LessThan>
@@ -192,24 +175,9 @@ inline typename Container::const_iterator qLowerBound(const Container &container
 }
 
 template <typename RandomAccessIterator, typename T>
-Q_OUTOFLINE_TEMPLATE RandomAccessIterator qUpperBound(RandomAccessIterator begin, RandomAccessIterator end, const T &value)
+inline RandomAccessIterator qUpperBound(RandomAccessIterator begin, RandomAccessIterator end, const T &value)
 {
-    // Implementation is duplicated from QAlgorithmsPrivate.
-    RandomAccessIterator middle;
-    int n = end - begin;
-    int half;
-
-    while (n > 0) {
-        half = n >> 1;
-        middle = begin + half;
-        if (value < *middle) {
-            n = half;
-        } else {
-            begin = middle + 1;
-            n -= half + 1;
-        }
-    }
-    return begin;
+    return std::upper_bound(begin, end, value);
 }
 
 template <typename RandomAccessIterator, typename T, typename LessThan>
@@ -238,7 +206,6 @@ inline RandomAccessIterator qBinaryFindHelper(RandomAccessIterator begin, Random
 template <typename RandomAccessIterator, typename T>
 inline RandomAccessIterator qBinaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T &value)
 {
-    // Implementation is duplicated from QAlgorithmsPrivate.
     RandomAccessIterator it = qLowerBound(begin, end, value);
 
     if (it == end || value < *it)
