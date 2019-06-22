@@ -274,65 +274,6 @@ inline void qDeleteAll(const Container &c)
     qDeleteAll(c.begin(), c.end());
 }
 
-/*
-    Warning: The contents of QAlgorithmsPrivate is not a part of the public Qt API
-    and may be changed from version to version or even be completely removed.
-*/
-namespace QAlgorithmsPrivate {
-
-template <typename RandomAccessIterator>
-inline void qReverse(RandomAccessIterator begin, RandomAccessIterator end)
-{
-    --end;
-    while (begin < end)
-        qSwap(*begin++, *end--);
-}
-
-template <typename RandomAccessIterator>
-inline void qRotate(RandomAccessIterator begin, RandomAccessIterator middle, RandomAccessIterator end)
-{
-    qReverse(begin, middle);
-    qReverse(middle, end);
-    qReverse(begin, end);
-}
-
-template <typename RandomAccessIterator, typename T, typename LessThan>
-Q_OUTOFLINE_TEMPLATE void qMerge(RandomAccessIterator begin, RandomAccessIterator pivot, RandomAccessIterator end, T &t, LessThan lessThan)
-{
-    const int len1 = pivot - begin;
-    const int len2 = end - pivot;
-
-    if (len1 == 0 || len2 == 0)
-        return;
-
-    if (len1 + len2 == 2) {
-        if (lessThan(*(begin + 1), *(begin)))
-            qSwap(*begin, *(begin + 1));
-        return;
-    }
-
-    RandomAccessIterator firstCut;
-    RandomAccessIterator secondCut;
-    int len2Half;
-    if (len1 > len2) {
-        const int len1Half = len1 / 2;
-        firstCut = begin + len1Half;
-        secondCut = qLowerBound(pivot, end, *firstCut, lessThan);
-        len2Half = secondCut - pivot;
-    } else {
-        len2Half = len2 / 2;
-        secondCut = pivot + len2Half;
-        firstCut = qUpperBound(begin, pivot, *secondCut, lessThan);
-    }
-
-    qRotate(firstCut, pivot, secondCut);
-    const RandomAccessIterator newPivot = firstCut + len2Half;
-    qMerge(begin, firstCut, newPivot, t, lessThan);
-    qMerge(newPivot, secondCut, end, t, lessThan);
-}
-
-} //namespace QAlgorithmsPrivate
-
 QT_END_NAMESPACE
 
 QT_END_HEADER
