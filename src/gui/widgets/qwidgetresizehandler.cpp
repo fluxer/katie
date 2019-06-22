@@ -236,7 +236,6 @@ void QWidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
     if (widget->testAttribute(Qt::WA_WState_ConfigPending))
         return;
 
-
     QPoint globalPos = (!widget->isWindow() && widget->parentWidget()) ?
                        widget->parentWidget()->mapFromGlobal(e->globalPos()) : e->globalPos();
     if (!widget->isWindow() && !widget->parentWidget()->rect().contains(globalPos)) {
@@ -327,7 +326,7 @@ void QWidgetResizeHandler::mouseMoveEvent(QMouseEvent *e)
             widget->setGeometry(geom);
     }
 
-    QApplication::syncX();
+    // QApplication::syncX();
 }
 
 void QWidgetResizeHandler::setMouseCursor(MousePosition m)
