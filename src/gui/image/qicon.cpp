@@ -136,12 +136,12 @@ static inline int area(const QSize &s) { return s.width() * s.height(); }
 static QPixmapIconEngineEntry *bestSizeMatch( const QSize &size, QPixmapIconEngineEntry *pa, QPixmapIconEngineEntry *pb)
 {
     int s = area(size);
-    if (pa->size == QSize() && pa->pixmap.isNull()) {
+    if (pa->size.isNull() && pa->pixmap.isNull()) {
         pa->pixmap = QPixmap(pa->fileName);
         pa->size = pa->pixmap.size();
     }
     int a = area(pa->size);
-    if (pb->size == QSize() && pb->pixmap.isNull()) {
+    if (pb->size.isNull() && pb->pixmap.isNull()) {
         pb->pixmap = QPixmap(pb->fileName);
         pb->size = pb->pixmap.size();
     }
@@ -321,11 +321,11 @@ void QPixmapIconEngine::addFile(const QString &fileName, const QSize &_size, QIc
         for (int i = 0; i < pixmaps.count(); ++i) {
             if (pixmaps.at(i).mode == mode && pixmaps.at(i).state == state) {
                 QPixmapIconEngineEntry *pe = &pixmaps[i];
-                if(size == QSize()) {
+                if(size.isNull()) {
                     pixmap = QPixmap(abs);
                     size = pixmap.size();
                 }
-                if (pe->size == QSize() && pe->pixmap.isNull()) {
+                if (pe->size.isNull() && pe->pixmap.isNull()) {
                     pe->pixmap = QPixmap(pe->fileName);
                     pe->size = pe->pixmap.size();
                 }
