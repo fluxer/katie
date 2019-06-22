@@ -143,7 +143,6 @@ private:
 #endif
     friend bool qt_region_strictContains(const QRegion &region,
                                          const QRect &rect);
-    friend struct QRegionPrivate;
 
 #ifndef QT_NO_DATASTREAM
     void exec(const QByteArray &ba, QDataStream::Version ver = QDataStream::Qt_Default, QDataStream::ByteOrder byteOrder = QDataStream::BigEndian);
@@ -156,8 +155,8 @@ private:
         QRegionPrivate *qt_rgn;
 #endif
     };
-    struct QRegionData *d;
-    static struct QRegionData shared_empty;
+    QRegionData *d;
+    static QRegionData shared_empty;
     static void cleanUp(QRegionData *x);
 };
 

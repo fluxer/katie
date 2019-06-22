@@ -65,8 +65,6 @@ public:
     virtual ~QTessellator();
 
     QRectF tessellate(const QPointF *points, int nPoints);
-    void tessellateConvex(const QPointF *points, int nPoints);
-    void tessellateRect(const QPointF &a, const QPointF &b, qreal width);
 
     void setWinding(bool w);
 
