@@ -61,11 +61,6 @@ class QX11PaintEnginePrivate;
 class QFontEngineFT;
 class QXRenderTessellator;
 
-struct qt_float_point
-{
-    qreal x, y;
-};
-
 class QX11PaintEngine : public QPaintEngine
 {
     Q_DECLARE_PRIVATE(QX11PaintEngine)
@@ -221,7 +216,7 @@ public:
     QPointF bg_origin;
     QTransform::TransformationType txop;
     qreal xform_scale;
-    QPolygonClipper<qt_float_point, qt_float_point, float> polygonClipper;
+    QPolygonClipper polygonClipper;
 
     int xlibMaxLinePoints;
 #ifndef QT_NO_XRENDER

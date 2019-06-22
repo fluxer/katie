@@ -85,7 +85,6 @@ public:
     virtual void addTrap(const Trapezoid &trap) = 0;
 
 private:
-    friend class QTessellatorPrivate;
     QTessellatorPrivate *d;
 };
 

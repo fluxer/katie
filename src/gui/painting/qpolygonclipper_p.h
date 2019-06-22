@@ -51,9 +51,13 @@ QT_BEGIN_NAMESPACE
 
 /* based on sutherland-hodgman line-by-line clipping, as described in
    Computer Graphics and Principles */
-template <typename InType, typename OutType, typename CastType> class QPolygonClipper
+class QPolygonClipper
 {
 public:
+    typedef QPointF InType;
+    typedef QPointF OutType;
+    typedef float CastType;
+
     QPolygonClipper() :
         buffer1(0), buffer2(0)
     {
@@ -80,9 +84,9 @@ public:
     inline OutType intersectLeft(const OutType &p1, const OutType &p2)
     {
         OutType t;
-        qreal dy = (p1.y - p2.y) / qreal(p1.x - p2.x);
-        t.x = x1;
-        t.y = static_cast<CastType>(p2.y + (x1 - p2.x) * dy);
+        qreal dy = (p1.y() - p2.y()) / qreal(p1.x() - p2.x());
+        t.setX(x1);
+        t.setY(static_cast<CastType>(p2.y() + (x1 - p2.x()) * dy));
         return t;
     }
 
@@ -90,9 +94,9 @@ public:
     inline OutType intersectRight(const OutType &p1, const OutType &p2)
     {
         OutType t;
-        qreal dy = (p1.y - p2.y) / qreal(p1.x - p2.x);
-        t.x = x2;
-        t.y = static_cast<CastType>(p2.y + (x2 - p2.x) * dy);
+        qreal dy = (p1.y() - p2.y()) / qreal(p1.x() - p2.x());
+        t.setX(x2);
+        t.setY(static_cast<CastType>(p2.y() + (x2 - p2.x()) * dy));
         return t;
     }
 
@@ -100,9 +104,9 @@ public:
     inline OutType intersectTop(const OutType &p1, const OutType &p2)
     {
         OutType t;
-        qreal dx = (p1.x - p2.x) / qreal(p1.y - p2.y);
-        t.x = static_cast<CastType>(p2.x + (y1 - p2.y) * dx);
-        t.y = y1;
+        qreal dx = (p1.x() - p2.x()) / qreal(p1.y() - p2.y());
+        t.setX(static_cast<CastType>(p2.x() + (y1 - p2.y()) * dx));
+        t.setY(y1);
         return t;
     }
 
@@ -110,9 +114,9 @@ public:
     inline OutType intersectBottom(const OutType &p1, const OutType &p2)
     {
         OutType t;
-        qreal dx = (p1.x - p2.x) / qreal(p1.y - p2.y);
-        t.x = static_cast<CastType>(p2.x + (y2 - p2.y) * dx);
-        t.y = y2;
+        qreal dx = (p1.x() - p2.x()) / qreal(p1.y() - p2.y());
+        t.setX(static_cast<CastType>(p2.x() + (y2 - p2.y()) * dx));
+        t.setY(y2);
         return t;
     }
 
@@ -141,13 +145,13 @@ public:
             ot = inPoints[i];
             clipped->add(ot);
 
-            if (ot.x < x1)
+            if (ot.x() < x1)
                 doLeft = true;
-            else if (ot.x > x2)
+            else if (ot.x() > x2)
                 doRight = true;
-            if (ot.y < y1)
+            if (ot.y() < y1)
                 doTop = true;
-            else if (ot.y > y2)
+            else if (ot.y() > y2)
                 doBottom = true;
         }
 
@@ -163,21 +167,21 @@ public:
             } else {
                 lastPos = 0;
                 start = 1;
-                if (source->at(0).x >= x1)
+                if (source->at(0).x() >= x1)
                     clipped->add(source->at(0));
             }
             for (int i=start; i<inCount; ++i) {
                 const OutType &cpt = source->at(i);
                 const OutType &ppt = source->at(lastPos);
 
-                if (cpt.x >= x1) {
-                    if (ppt.x >= x1) {
+                if (cpt.x() >= x1) {
+                    if (ppt.x() >= x1) {
                         clipped->add(cpt);
                     } else {
                         clipped->add(intersectLeft(cpt, ppt));
                         clipped->add(cpt);
                     }
-                } else if (ppt.x >= x1) {
+                } else if (ppt.x() >= x1) {
                     clipped->add(intersectLeft(cpt, ppt));
                 }
                 lastPos = i;
@@ -196,21 +200,21 @@ public:
             } else {
                 lastPos = 0;
                 start = 1;
-                if (source->at(0).x <= x2)
+                if (source->at(0).x() <= x2)
                     clipped->add(source->at(0));
             }
             for (int i=start; i<source->size(); ++i) {
                 const OutType &cpt = source->at(i);
                 const OutType &ppt = source->at(lastPos);
 
-                if (cpt.x <= x2) {
-                    if (ppt.x <= x2) {
+                if (cpt.x() <= x2) {
+                    if (ppt.x() <= x2) {
                         clipped->add(cpt);
                     } else {
                         clipped->add(intersectRight(cpt, ppt));
                         clipped->add(cpt);
                     }
-                } else if (ppt.x <= x2) {
+                } else if (ppt.x() <= x2) {
                     clipped->add(intersectRight(cpt, ppt));
                 }
 
@@ -231,21 +235,21 @@ public:
             } else {
                 lastPos = 0;
                 start = 1;
-                if (source->at(0).y >= y1)
+                if (source->at(0).y() >= y1)
                     clipped->add(source->at(0));
             }
             for (int i=start; i<source->size(); ++i) {
                 const OutType &cpt = source->at(i);
                 const OutType &ppt = source->at(lastPos);
 
-                if (cpt.y >= y1) {
-                    if (ppt.y >= y1) {
+                if (cpt.y() >= y1) {
+                    if (ppt.y() >= y1) {
                         clipped->add(cpt);
                     } else {
                         clipped->add(intersectTop(cpt, ppt));
                         clipped->add(cpt);
                     }
-                } else if (ppt.y >= y1) {
+                } else if (ppt.y() >= y1) {
                     clipped->add(intersectTop(cpt, ppt));
                 }
 
@@ -265,21 +269,21 @@ public:
             } else {
                 lastPos = 0;
                 start = 1;
-                if (source->at(0).y <= y2)
+                if (source->at(0).y() <= y2)
                     clipped->add(source->at(0));
             }
             for (int i=start; i<source->size(); ++i) {
                 const OutType &cpt = source->at(i);
                 const OutType &ppt = source->at(lastPos);
 
-                if (cpt.y <= y2) {
-                    if (ppt.y <= y2) {
+                if (cpt.y() <= y2) {
+                    if (ppt.y() <= y2) {
                         clipped->add(cpt);
                     } else {
                         clipped->add(intersectBottom(cpt, ppt));
                         clipped->add(cpt);
                     }
-                } else if (ppt.y <= y2) {
+                } else if (ppt.y() <= y2) {
                     clipped->add(intersectBottom(cpt, ppt));
                 }
                 lastPos = i;
@@ -288,8 +292,8 @@ public:
 
         if (closePolygon && clipped->size() > 0) {
             // close clipped polygon
-            if (clipped->at(0).x != clipped->at(clipped->size()-1).x ||
-                clipped->at(0).y != clipped->at(clipped->size()-1).y) {
+            if (clipped->at(0).x() != clipped->at(clipped->size()-1).x() ||
+                clipped->at(0).y() != clipped->at(clipped->size()-1).y()) {
                 OutType ot = clipped->at(0);
                 clipped->add(ot);
             }

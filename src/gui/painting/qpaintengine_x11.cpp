@@ -369,12 +369,12 @@ void QX11PaintEnginePrivate::resetAdaptedOrigin()
 void QX11PaintEnginePrivate::clipPolygon_dev(const QPolygonF &poly, QPolygonF *clipped_poly)
 {
     int clipped_count = 0;
-    qt_float_point *clipped_points = 0;
-    polygonClipper.clipPolygon((qt_float_point *) poly.data(), poly.size(),
+    QPointF *clipped_points = 0;
+    polygonClipper.clipPolygon(poly.data(), poly.size(),
                                &clipped_points, &clipped_count);
     clipped_poly->resize(clipped_count);
     for (int i=0; i<clipped_count; ++i)
-        (*clipped_poly)[i] = *((QPointF *)(&clipped_points[i]));
+        (*clipped_poly)[i] = *(&clipped_points[i]);
 }
 
 void QX11PaintEnginePrivate::systemStateChanged()
@@ -1528,7 +1528,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
     Q_Q(QX11PaintEngine);
 
     int clippedCount = 0;
-    qt_float_point *clippedPoints = 0;
+    QPointF *clippedPoints = Q_NULLPTR;
 
 #ifndef QT_NO_XRENDER
     //can change if we switch to pen if gcMode != BrushGC
@@ -1563,7 +1563,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
 #endif
     }
 
-    polygonClipper.clipPolygon((qt_float_point *) polygonPoints, pointCount,
+    polygonClipper.clipPolygon(polygonPoints, pointCount,
                                &clippedPoints, &clippedCount);
 
 #ifndef QT_NO_XRENDER
@@ -1582,7 +1582,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
         && (fill.style() != Qt::NoBrush)
         && ((has_fill_texture && fill.texture().hasAlpha()) || antialias || !solid_fill || has_alpha_pen != has_alpha_brush))
     {
-        tessellator->tessellate((QPointF *)clippedPoints, clippedCount,
+        tessellator->tessellate(clippedPoints, clippedCount,
                                 mode == QPaintEngine::WindingMode);
         if (tessellator->size > 0) {
             XRenderPictureAttributes attrs;
@@ -1604,7 +1604,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
             if (clippedCount > 200000) {
                 QPolygon poly;
                 for (int i = 0; i < clippedCount; ++i)
-                    poly << QPoint(qFloor(clippedPoints[i].x), qFloor(clippedPoints[i].y));
+                    poly << QPoint(qFloor(clippedPoints[i].x()), qFloor(clippedPoints[i].y()));
 
                 const QRect bounds = poly.boundingRect();
                 const QRect aligned = bounds
@@ -1626,8 +1626,8 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
             } else if (clippedCount > 0) {
                 QVarLengthArray<XPoint> xpoints(clippedCount);
                 for (int i = 0; i < clippedCount; ++i) {
-                    xpoints[i].x = qFloor(clippedPoints[i].x);
-                    xpoints[i].y = qFloor(clippedPoints[i].y);
+                    xpoints[i].x = qFloor(clippedPoints[i].x());
+                    xpoints[i].y = qFloor(clippedPoints[i].y());
                 }
                 if (mode == QPaintEngine::WindingMode)
                     XSetFillRule(dpy, fill_gc, WindingRule);
@@ -1654,15 +1654,15 @@ void QX11PaintEnginePrivate::strokePolygon_translated(const QPointF *polygonPoin
 void QX11PaintEnginePrivate::strokePolygon_dev(const QPointF *polygonPoints, int pointCount, bool close)
 {
     int clippedCount = 0;
-    qt_float_point *clippedPoints = 0;
-    polygonClipper.clipPolygon((qt_float_point *) polygonPoints, pointCount,
+    QPointF *clippedPoints = Q_NULLPTR;
+    polygonClipper.clipPolygon(polygonPoints, pointCount,
                                &clippedPoints, &clippedCount, close);
 
     if (clippedCount > 0) {
         QVarLengthArray<XPoint> xpoints(clippedCount);
         for (int i = 0; i < clippedCount; ++i) {
-            xpoints[i].x = qRound(clippedPoints[i].x + aliasedCoordinateDelta);
-            xpoints[i].y = qRound(clippedPoints[i].y + aliasedCoordinateDelta);
+            xpoints[i].x = qRound(clippedPoints[i].x() + aliasedCoordinateDelta);
+            xpoints[i].y = qRound(clippedPoints[i].y() + aliasedCoordinateDelta);
         }
         uint numberPoints = qMin(clippedCount, xlibMaxLinePoints);
         XPoint *pts = xpoints.data();
