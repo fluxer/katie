@@ -792,7 +792,7 @@ static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, cons
     // if we pass a value of 0.0 to QPainterPathStroker::setWidth()
     const qreal penWidthZero = qreal(0.00000001);
 
-    if (path == QPainterPath())
+    if (path.isEmpty())
         return path;
     QPainterPathStroker ps;
     ps.setCapStyle(pen.capStyle());
@@ -9048,7 +9048,7 @@ QPainterPath QGraphicsLineItem::shape() const
 {
     Q_D(const QGraphicsLineItem);
     QPainterPath path;
-    if (d->line == QLineF())
+    if (d->line.isNull())
         return path;
 
     path.moveTo(d->line.p1());

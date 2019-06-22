@@ -1817,7 +1817,7 @@ void QDeclarativeTextInput::q_textChanged()
 void QDeclarativeTextInput::updateRect(const QRect &r)
 {
     Q_D(QDeclarativeTextInput);
-    if(r == QRect())
+    if(r.isNull())
         clearCache();
     else
         dirtyCache(QRect(r.x() - d->hscroll, r.y(), r.width(), r.height()));
