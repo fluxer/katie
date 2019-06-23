@@ -157,27 +157,6 @@ inline QHashData::Node *QHashData::firstNode()
     return e;
 }
 
-struct QHashDummyValue
-{
-};
-
-inline bool operator==(const QHashDummyValue & /* v1 */, const QHashDummyValue & /* v2 */)
-{
-    return true;
-}
-
-Q_DECLARE_TYPEINFO(QHashDummyValue, Q_MOVABLE_TYPE | Q_DUMMY_TYPE);
-
-template <class Key, class T>
-struct QHashDummyNode
-{
-    QHashDummyNode *next;
-    uint h;
-    Key key;
-
-    inline QHashDummyNode(const Key &key0) : key(key0) {}
-};
-
 template <class Key, class T>
 struct QHashNode
 {
@@ -192,14 +171,6 @@ struct QHashNode
 
 
 #define Q_HASH_DECLARE_INT_NODES(key_type) \
-    template <class T> \
-    struct QHashDummyNode<key_type, T> { \
-        QHashDummyNode *next; \
-        union { uint h; key_type key; }; \
-\
-        inline QHashDummyNode(key_type /* key0 */) {} \
-    }; \
-\
     template <class T> \
     struct QHashNode<key_type, T> { \
         QHashNode *next; \
@@ -222,7 +193,6 @@ Q_HASH_DECLARE_INT_NODES(uint);
 template <class Key, class T>
 class QHash
 {
-    typedef QHashDummyNode<Key, T> DummyNode;
     typedef QHashNode<Key, T> Node;
 
     union {
@@ -468,11 +438,7 @@ template <class Key, class T>
 Q_INLINE_TEMPLATE void QHash<Key, T>::duplicateNode(QHashData::Node *node, void *newNode)
 {
     Node *concreteNode = concrete(node);
-    if (QTypeInfo<T>::isDummy) {
-        (void) new (newNode) DummyNode(concreteNode->key);
-    } else {
-        (void) new (newNode) Node(concreteNode->key, concreteNode->value);
-    }
+    (void) new (newNode) Node(concreteNode->key, concreteNode->value);
 }
 
 template <class Key, class T>
@@ -483,11 +449,7 @@ QHash<Key, T>::createNode(uint ah, const Key &akey, const T &avalue, Node **anex
 
     void *nodeptr = malloc(d->nodeSize);
     Q_CHECK_PTR(nodeptr);
-    if (QTypeInfo<T>::isDummy) {
-        node = reinterpret_cast<Node *>(new (nodeptr) DummyNode(akey));
-    } else {
-        node = new (nodeptr) Node(akey, avalue);
-    }
+    node = new (nodeptr) Node(akey, avalue);
 
     node->h = ah;
     node->next = *anextNode;
@@ -523,8 +485,7 @@ Q_INLINE_TEMPLATE void QHash<Key, T>::clear()
 template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE void QHash<Key, T>::detach_helper()
 {
-    QHashData *x = d->detach_helper(duplicateNode, deleteNode2,
-        QTypeInfo<T>::isDummy ? sizeof(DummyNode) : sizeof(Node));
+    QHashData *x = d->detach_helper(duplicateNode, deleteNode2, sizeof(Node));
     if (!d->ref.deref())
         freeData(d);
     d = x;
@@ -706,8 +667,7 @@ Q_INLINE_TEMPLATE typename QHash<Key, T>::iterator QHash<Key, T>::insert(const K
         return iterator(createNode(h, akey, avalue, node));
     }
 
-    if (!QTypeInfo<T>::isDummy)
-        (*node)->value = avalue;
+    (*node)->value = avalue;
     return iterator(*node);
 }
 
@@ -854,7 +814,7 @@ Q_OUTOFLINE_TEMPLATE bool QHash<Key, T>::operator==(const QHash<Key, T> &other) 
         do {
             if (it2 == other.end() || !(it2.key() == akey))
                 return false;
-            if (!QTypeInfo<T>::isDummy && !(it.value() == it2.value()))
+            if (!(it.value() == it2.value()))
                 return false;
             ++it;
             ++it2;

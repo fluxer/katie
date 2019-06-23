@@ -44,7 +44,7 @@ QT_BEGIN_NAMESPACE
 template <class T>
 class QSet
 {
-    typedef QHash<T, QHashDummyValue> Hash;
+    typedef QHash<T, bool> Hash;
 
 public:
     inline QSet() {}
@@ -87,7 +87,7 @@ public:
 
     class iterator
     {
-        typedef QHash<T, QHashDummyValue> Hash;
+        typedef QHash<T, bool> Hash;
         typename Hash::iterator i;
         friend class const_iterator;
 
@@ -122,7 +122,7 @@ public:
 
     class const_iterator
     {
-        typedef QHash<T, QHashDummyValue> Hash;
+        typedef QHash<T, bool> Hash;
         typename Hash::const_iterator i;
         friend class iterator;
 
@@ -168,7 +168,7 @@ public:
     typedef const_iterator ConstIterator;
     inline int count() const { return q_hash.count(); }
     inline iterator insert(const T &value)
-        { return static_cast<typename Hash::iterator>(q_hash.insert(value, QHashDummyValue())); }
+        { return static_cast<typename Hash::iterator>(q_hash.insert(value, false)); }
     iterator find(const T &value) { return q_hash.find(value); }
     const_iterator find(const T &value) const { return q_hash.find(value); }
     inline const_iterator constFind(const T &value) const { return find(value); }
