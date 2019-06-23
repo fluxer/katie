@@ -68,7 +68,8 @@ public:
     inline bool isEmpty() const { return q_hash.isEmpty(); }
 
     inline int capacity() const { return q_hash.capacity(); }
-    inline void reserve(int size);
+    inline void reserve(int size) { q_hash.reserve(size); }
+
     inline void squeeze() { q_hash.squeeze(); }
 
     inline void detach() { q_hash.detach(); }
@@ -215,9 +216,6 @@ public:
 private:
     Hash q_hash;
 };
-
-template <class T>
-Q_INLINE_TEMPLATE void QSet<T>::reserve(int asize) { q_hash.reserve(asize); }
 
 template <class T>
 Q_INLINE_TEMPLATE QSet<T> &QSet<T>::unite(const QSet<T> &other)
