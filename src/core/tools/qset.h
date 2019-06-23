@@ -220,9 +220,8 @@ private:
 template <class T>
 Q_INLINE_TEMPLATE QSet<T> &QSet<T>::unite(const QSet<T> &other)
 {
-    QSet<T> copy(other);
-    typename QSet<T>::const_iterator i = copy.constEnd();
-    while (i != copy.constBegin()) {
+    typename QSet<T>::const_iterator i = other.constEnd();
+    while (i != other.constBegin()) {
         --i;
         insert(*i);
     }
@@ -232,12 +231,11 @@ Q_INLINE_TEMPLATE QSet<T> &QSet<T>::unite(const QSet<T> &other)
 template <class T>
 Q_INLINE_TEMPLATE QSet<T> &QSet<T>::intersect(const QSet<T> &other)
 {
-    QSet<T> copy1(*this);
-    QSet<T> copy2(other);
-    typename QSet<T>::const_iterator i = copy1.constEnd();
-    while (i != copy1.constBegin()) {
+    QSet<T> copy(*this);
+    typename QSet<T>::const_iterator i = copy.constEnd();
+    while (i != copy.constBegin()) {
         --i;
-        if (!copy2.contains(*i))
+        if (!other.contains(*i))
             remove(*i);
     }
     return *this;
@@ -246,12 +244,11 @@ Q_INLINE_TEMPLATE QSet<T> &QSet<T>::intersect(const QSet<T> &other)
 template <class T>
 Q_INLINE_TEMPLATE QSet<T> &QSet<T>::subtract(const QSet<T> &other)
 {
-    QSet<T> copy1(*this);
-    QSet<T> copy2(other);
-    typename QSet<T>::const_iterator i = copy1.constEnd();
-    while (i != copy1.constBegin()) {
+    QSet<T> copy(*this);
+    typename QSet<T>::const_iterator i = copy.constEnd();
+    while (i != copy.constBegin()) {
         --i;
-        if (copy2.contains(*i))
+        if (other.contains(*i))
             remove(*i);
     }
     return *this;
