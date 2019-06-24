@@ -369,6 +369,16 @@ public:
         return qba;        
     }
 
+    // append bytes from data to the end
+    void append(const char *data, qint64 size)
+    {
+        char *writePointer = reserve(size);
+        if (size == 1)
+            *writePointer = *data;
+        else if (size)
+            ::memcpy(writePointer, data, size);
+    }
+
     // append a new buffer to the end
     inline void append(const QByteArray &qba) {
         buffers[tailBuffer].resize(tail);

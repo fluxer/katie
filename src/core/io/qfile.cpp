@@ -1520,11 +1520,7 @@ QFile::writeData(const char *data, qint64 len)
     }
 
     // Write to the buffer.
-    char *writePointer = d->writeBuffer.reserve(len);
-    if (len == 1)
-        *writePointer = *data;
-    else
-        ::memcpy(writePointer, data, len);
+    d->writeBuffer.append(data, len);
     return len;
 }
 

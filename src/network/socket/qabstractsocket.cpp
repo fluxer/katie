@@ -2223,8 +2223,7 @@ qint64 QAbstractSocket::writeData(const char *data, qint64 size)
             return written;
         } else if (written < size) {
             // Buffer what was not written yet
-            char *ptr = d->writeBuffer.reserve(size - written);
-            memcpy(ptr, data + written, size - written);
+            d->writeBuffer.append(data + written, size - written);
             if (d->socketEngine)
                 d->socketEngine->setWriteNotificationEnabled(true);
         }
@@ -2255,12 +2254,7 @@ qint64 QAbstractSocket::writeData(const char *data, qint64 size)
     // We just write to our write buffer and enable the write notifier
     // The write notifier then flush()es the buffer.
 
-    char *ptr = d->writeBuffer.reserve(size);
-    if (size == 1)
-        *ptr = *data;
-    else
-        memcpy(ptr, data, size);
-
+    d->writeBuffer.append(data, size);
     qint64 written = size;
 
     if (d->socketEngine && !d->writeBuffer.isEmpty())

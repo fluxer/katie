@@ -736,7 +736,8 @@ void QSslSocketBackendPrivate::transmit()
         // Check if we've got any data to be written to the socket.
         QVarLengthArray<char, 4096> data;
         int pendingBytes;
-        while (plainSocket->isValid() && (pendingBytes = BIO_pending(writeBio)) > 0) {
+        while (plainSocket->isValid() && (pendingBytes = BIO_pending(writeBio)) > 0
+            && plainSocket->openMode() != QIODevice::NotOpen) {
             // Read encrypted data from the write BIO into a buffer.
             data.resize(pendingBytes);
             int encryptedBytesRead = BIO_read(writeBio, data.data(), pendingBytes);
@@ -818,16 +819,15 @@ void QSslSocketBackendPrivate::transmit()
         // we have a readBufferMaxSize. There's no point in leaving data there
         // just so that readBuffer.size() == readBufferMaxSize.
         int readBytes = 0;
-        data.resize(4096);
-        ::memset(data.data(), 0, data.size());
+        const int bytesToRead = 4096;
         do {
             // Don't use SSL_pending(). It's very unreliable.
-            if ((readBytes = SSL_read(ssl, data.data(), data.size())) > 0) {
+            readBytes = SSL_read(ssl, buffer.reserve(bytesToRead), bytesToRead);
+            if (readBytes > 0) {
 #ifdef QSSLSOCKET_DEBUG
                 qDebug() << "QSslSocketBackendPrivate::transmit: decrypted" << readBytes << "bytes";
 #endif
-                char *ptr = readBuffer.reserve(readBytes);
-                ::memcpy(ptr, data.data(), readBytes);
+                buffer.chop(bytesToRead - readBytes);
 
                 if (readyReadEmittedPointer)
                     *readyReadEmittedPointer = true;
@@ -835,6 +835,7 @@ void QSslSocketBackendPrivate::transmit()
                 transmitting = true;
                 continue;
             }
+            buffer.chop(bytesToRead);
 
             // Error.
             switch (SSL_get_error(ssl, readBytes)) {
