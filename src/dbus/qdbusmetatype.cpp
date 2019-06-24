@@ -223,7 +223,6 @@ Q_GLOBAL_STATIC(QReadWriteLock, customTypesLock)
 void QDBusMetaType::registerMarshallOperators(int id, MarshallFunction mf,
                                               DemarshallFunction df)
 {
-    QByteArray var;
     QVector<QDBusCustomTypeInfo> *ct = customTypes();
     if (id < 0 || !mf || !df || !ct)
         return;                 // error!

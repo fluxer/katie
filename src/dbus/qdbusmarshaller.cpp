@@ -194,7 +194,7 @@ inline bool QDBusMarshaller::append(const QDBusVariant &arg)
                  "Use qDBusRegisterMetaType to register it",
                  QVariant::typeToName( id ), id);
         error(QString::fromLatin1("Unregistered type %1 passed in arguments")
-              .arg(QLatin1String(QVariant::typeToName(id))));
+              .arg(QString::fromLatin1(QVariant::typeToName(id))));
         return false;
     }
 

@@ -585,7 +585,7 @@ bool QMetaType::isRegistered(int type)
     }
     QReadLocker locker(customTypesLock());
     const QVector<QCustomTypeInfo> * const ct = customTypes();
-    return ((type >= User) && (ct && ct->count() > type - User) && !ct->at(type - User).typeName.isEmpty());
+    return ((ct && ct->count() > type - User) && !ct->at(type - User).typeName.isEmpty());
 }
 
 /*!
