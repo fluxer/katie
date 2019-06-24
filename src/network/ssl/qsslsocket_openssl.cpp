@@ -521,26 +521,12 @@ bool QSslSocketPrivate::ensureLibraryLoaded()
 
         // Initialize OpenSSL's random seed.
         if (!RAND_status()) {
-            struct {
-                int msec;
-                int sec;
-                void *stack;
-            } randomish;
-
-            int attempts = 500;
-            do {
-                if (attempts < 500) {
-                    struct timespec ts = {0, 33333333};
-                    nanosleep(&ts, 0);
-                    randomish.msec = attempts;
-                }
-                randomish.stack = (void *)&randomish;
-                randomish.msec = QTime::currentTime().msec();
-                randomish.sec = QTime::currentTime().second();
-                RAND_seed((const char *)&randomish, sizeof(randomish));
-            } while (!RAND_status() && --attempts);
-            if (!attempts)
+            int randomish = qrand();
+            RAND_seed(&randomish, sizeof(randomish));
+            if (!RAND_status()) {
+                qWarning("Random number generator not seeded, disabling SSL support");
                 return false;
+            }
 
             s_libraryLoaded = true;
         }
