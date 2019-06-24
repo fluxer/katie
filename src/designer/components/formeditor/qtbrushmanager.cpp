@@ -49,8 +49,6 @@ namespace qdesigner_internal {
 
 class QtBrushManagerPrivate
 {
-    QtBrushManager *q_ptr;
-    Q_DECLARE_PUBLIC(QtBrushManager)
 public:
     QMap<QString, QBrush> theBrushMap;
     QString theCurrentBrush;
@@ -59,7 +57,6 @@ public:
 QtBrushManager::QtBrushManager(QObject *parent)
     : QDesignerBrushManagerInterface(parent), d_ptr(new QtBrushManagerPrivate)
 {
-    d_ptr->q_ptr = this;
 }
 
 QtBrushManager::~QtBrushManager()
@@ -68,9 +65,7 @@ QtBrushManager::~QtBrushManager()
 
 QBrush QtBrushManager::brush(const QString &name) const
 {
-    if (d_ptr->theBrushMap.contains(name))
-        return d_ptr->theBrushMap[name];
-    return QBrush();
+    return d_ptr->theBrushMap.value(name);
 }
 
 QMap<QString, QBrush> QtBrushManager::brushes() const
