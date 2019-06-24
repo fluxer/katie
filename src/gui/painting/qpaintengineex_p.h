@@ -190,13 +190,6 @@ public:
     virtual void beginNativePainting() {}
     virtual void endNativePainting() {}
 
-    // Return a pixmap filter of "type" that can render the parameters
-    // in "prototype".  The returned filter is owned by the engine and
-    // will be destroyed when the engine is destroyed.  The "prototype"
-    // allows the engine to pick different filters based on the parameters
-    // that will be requested, and not just the "type".
-    virtual QPixmapFilter *pixmapFilter(int /*type*/, const QPixmapFilter * /*prototype*/) { return 0; }
-
     virtual bool supportsTransformations(const qreal pixelSize, const QTransform &m) const;
 
 protected:

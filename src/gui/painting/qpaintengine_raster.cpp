@@ -3003,7 +3003,7 @@ QRasterBuffer::~QRasterBuffer()
 }
 
 QRasterBuffer::QRasterBuffer()
-    : m_width(0), m_height(0), m_buffer(0)
+    : m_width(0), m_height(0), m_buffer(Q_NULLPTR)
 {
     compositionMode = QPainter::CompositionMode_SourceOver;
     monoDestinationWithClut = false;
@@ -3013,7 +3013,7 @@ QRasterBuffer::QRasterBuffer()
 
 QImage::Format QRasterBuffer::prepare(QImage *image)
 {
-    m_buffer = (uchar *)image->bits();
+    m_buffer = image->bits();
     m_width = qMin(RASTER_COORD_LIMIT, image->width());
     m_height = qMin(RASTER_COORD_LIMIT, image->height());
     bytes_per_pixel = image->depth()/8;
