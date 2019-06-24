@@ -588,13 +588,8 @@ void QPaintEngine::drawTiledPixmap(const QRectF &rect, const QPixmap &pixmap, co
 void QPaintEngine::drawImage(const QRectF &r, const QImage &image, const QRectF &sr,
                              Qt::ImageConversionFlags flags)
 {
-    QRectF baseSize(0, 0, image.width(), image.height());
-    QImage im = image;
-    if (baseSize != sr)
-        im = im.copy(qFloor(sr.x()), qFloor(sr.y()),
-                     qCeil(sr.width()), qCeil(sr.height()));
-    QPixmap pm = QPixmap::fromImage(im, flags);
-    drawPixmap(r, pm, QRectF(QPointF(0, 0), pm.size()));
+    QPixmap pm = QPixmap::fromImage(image.copy(sr.toRect()), flags);
+    drawPixmap(r, pm, QRectF(QPoint(0, 0), pm.size()));
 }
 
 /*!
