@@ -159,25 +159,25 @@ void QPaintEngineExPrivate::replayClipOperations()
         }
 
         switch (info.clipType) {
-        case QPainterClipInfo::RegionClip:
-            q->clip(info.region, info.operation);
-            break;
-        case QPainterClipInfo::PathClip:
-            q->clip(info.path, info.operation);
-            break;
-        case QPainterClipInfo::RectClip:
-            q->clip(info.rect, info.operation);
-            break;
-        case QPainterClipInfo::RectFClip: {
-            qreal right = info.rectf.x() + info.rectf.width();
-            qreal bottom = info.rectf.y() + info.rectf.height();
-            qreal pts[] = { info.rectf.x(), info.rectf.y(),
-                            right, info.rectf.y(),
-                            right, bottom,
-                            info.rectf.x(), bottom };
-            QVectorPath vp(pts, 4, 0, QVectorPath::RectangleHint);
-            q->clip(vp, info.operation);
-            break;
+            case QPainterClipInfo::RegionClip:
+                q->clip(info.region, info.operation);
+                break;
+            case QPainterClipInfo::PathClip:
+                q->clip(info.path, info.operation);
+                break;
+            case QPainterClipInfo::RectClip:
+                q->clip(info.rect, info.operation);
+                break;
+            case QPainterClipInfo::RectFClip: {
+                qreal right = info.rectf.x() + info.rectf.width();
+                qreal bottom = info.rectf.y() + info.rectf.height();
+                qreal pts[] = { info.rectf.x(), info.rectf.y(),
+                                right, info.rectf.y(),
+                                right, bottom,
+                                info.rectf.x(), bottom };
+                QVectorPath vp(pts, 4, 0, QVectorPath::RectangleHint);
+                q->clip(vp, info.operation);
+                break;
             }
         }
     }

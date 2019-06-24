@@ -345,9 +345,9 @@ public:
     QRect clipRect;
     QRegion clipRegion;
 
-    uint enabled : 1;
-    uint hasRectClip : 1;
-    uint hasRegionClip : 1;
+    bool enabled;
+    bool hasRectClip;
+    bool hasRegionClip;
 
     void appendSpan(const int x, const int length, const int y, const int coverage);
     void appendSpans(const QSpan *s, const int num);

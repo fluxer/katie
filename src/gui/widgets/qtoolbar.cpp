@@ -615,9 +615,9 @@ void QToolBar::setOrientation(Qt::Orientation orientation)
     d->orientation = orientation;
 
     if (orientation == Qt::Vertical)
- 	setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred));
+        setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred));
     else
- 	setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
+        setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
 
     d->layout->invalidate();
     d->layout->activate();
@@ -626,7 +626,10 @@ void QToolBar::setOrientation(Qt::Orientation orientation)
 }
 
 Qt::Orientation QToolBar::orientation() const
-{ Q_D(const QToolBar); return d->orientation; }
+{
+    Q_D(const QToolBar);
+    return d->orientation;
+}
 
 /*!
     \property QToolBar::iconSize
@@ -639,7 +642,10 @@ Qt::Orientation QToolBar::orientation() const
 */
 
 QSize QToolBar::iconSize() const
-{ Q_D(const QToolBar); return d->iconSize; }
+{
+    Q_D(const QToolBar);
+    return d->iconSize;
+}
 
 void QToolBar::setIconSize(const QSize &iconSize)
 {
@@ -684,7 +690,10 @@ void QToolBar::setIconSize(const QSize &iconSize)
 */
 
 Qt::ToolButtonStyle QToolBar::toolButtonStyle() const
-{ Q_D(const QToolBar); return d->toolButtonStyle; }
+{
+    Q_D(const QToolBar);
+    return d->toolButtonStyle;
+}
 
 void QToolBar::setToolButtonStyle(Qt::ToolButtonStyle toolButtonStyle)
 {
@@ -959,7 +968,7 @@ void QToolBar::paintEvent(QPaintEvent *)
     initStyleOption(&opt);
 
     if (d->layout->expanded || d->layout->animating || isWindow()) {
-        //if the toolbar is expended, we need to fill the background with the window color
+        //if the toolbar is expanded, we need to fill the background with the window color
         //because some styles may expects that.
         p.fillRect(opt.rect, palette().background());
         style->drawControl(QStyle::CE_ToolBar, &opt, &p, this);
