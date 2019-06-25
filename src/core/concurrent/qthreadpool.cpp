@@ -579,7 +579,6 @@ void QThreadPool::setMaxThreadCount(int maxThreadCount)
 int QThreadPool::activeThreadCount() const
 {
     Q_D(const QThreadPool);
-    QMutexLocker locker(&d->mutex);
     return d->activeThreadCount();
 }
 

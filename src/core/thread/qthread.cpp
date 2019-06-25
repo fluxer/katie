@@ -425,7 +425,6 @@ QThread::~QThread()
 bool QThread::isFinished() const
 {
     Q_D(const QThread);
-    QMutexLocker locker(&d->mutex);
     return d->finished || d->isInFinish;
 }
 
@@ -437,7 +436,6 @@ bool QThread::isFinished() const
 bool QThread::isRunning() const
 {
     Q_D(const QThread);
-    QMutexLocker locker(&d->mutex);
     return d->running && !d->isInFinish;
 }
 
@@ -471,7 +469,6 @@ void QThread::setStackSize(uint stackSize)
 uint QThread::stackSize() const
 {
     Q_D(const QThread);
-    QMutexLocker locker(&d->mutex);
     return d->stackSize;
 }
 
@@ -610,8 +607,6 @@ void QThread::run()
 QThread::Priority QThread::priority() const
 {
     Q_D(const QThread);
-    QMutexLocker locker(&d->mutex);
-
     // mask off the high bits that are used for flags
     return Priority(d->priority & 0xffff);
 }

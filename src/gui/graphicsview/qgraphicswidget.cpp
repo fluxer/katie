@@ -207,8 +207,7 @@ class QGraphicsWidgetStyles
 public:
     QStyle *styleForWidget(const QGraphicsWidget *widget) const
     {
-        QMutexLocker locker(&mutex);
-        return styles.value(widget, 0);
+        return styles.value(widget, Q_NULLPTR);
     }
 
     void setStyleForWidget(QGraphicsWidget *widget, QStyle *style)
@@ -222,7 +221,7 @@ public:
 
 private:
     QMap<const QGraphicsWidget *, QStyle *> styles;
-    mutable QMutex mutex;
+    QMutex mutex;
 };
 Q_GLOBAL_STATIC(QGraphicsWidgetStyles, widgetStyles)
 

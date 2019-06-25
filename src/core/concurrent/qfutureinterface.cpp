@@ -175,19 +175,16 @@ int QFutureInterfaceBase::progressMaximum() const
 
 int QFutureInterfaceBase::resultCount() const
 {
-    QMutexLocker lock(&d->m_mutex);
     return d->internal_resultCount();
 }
 
 QString QFutureInterfaceBase::progressText() const
 {
-    QMutexLocker locker(&d->m_mutex);
     return d->m_progressText;
 }
 
 bool QFutureInterfaceBase::isProgressUpdateNeeded() const
 {
-    QMutexLocker locker(&d->m_mutex);
     return !d->progressTime.isValid() || (d->progressTime.elapsed() > (1000 / MaxProgressEmitsPerSecond));
 }
 

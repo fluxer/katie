@@ -78,7 +78,7 @@ public:
     bool startFrontRunnable();
     void stealRunnable(QRunnable *);
 
-    mutable QMutex mutex;
+    QMutex mutex;
     QSet<QThreadPoolThread *> allThreads;
     QQueue<QThreadPoolThread *> waitingThreads;
     QQueue<QThreadPoolThread *> expiredThreads;

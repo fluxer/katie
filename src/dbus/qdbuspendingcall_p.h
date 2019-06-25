@@ -78,7 +78,7 @@ public:
 
     // }
 
-    mutable QMutex mutex;
+    QMutex mutex;
     QWaitCondition waitForFinishedCondition;
 
     // {

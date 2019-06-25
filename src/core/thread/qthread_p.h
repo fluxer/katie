@@ -129,7 +129,7 @@ public:
     QThreadPrivate(QThreadData *d = Q_NULLPTR);
     ~QThreadPrivate();
 
-    mutable QMutex mutex;
+    QMutex mutex;
 
     bool running;
     bool finished;

@@ -326,7 +326,6 @@ bool QDBusPendingCall::isFinished() const
     if (!d)
         return true; // considered finished
 
-    QMutexLocker locker(&d->mutex);
     return d->replyMessage.type() != QDBusMessage::InvalidMessage;
 }
 
@@ -348,7 +347,6 @@ bool QDBusPendingCall::isValid() const
 {
     if (!d)
         return false;
-    QMutexLocker locker(&d->mutex);
     return d->replyMessage.type() == QDBusMessage::ReplyMessage;
 }
 
@@ -365,7 +363,6 @@ bool QDBusPendingCall::isError() const
 {
     if (!d)
         return true; // considered finished and an error
-    QMutexLocker locker(&d->mutex);
     return d->replyMessage.type() == QDBusMessage::ErrorMessage;
 }
 
@@ -380,14 +377,12 @@ bool QDBusPendingCall::isError() const
 QDBusError QDBusPendingCall::error() const
 {
     if (d) {
-        QMutexLocker locker(&d->mutex);
         return d->replyMessage;
     }
 
     // not connected, return an error
-    QDBusError err = QDBusError(QDBusError::Disconnected,
-                                QLatin1String("Not connected to D-Bus server"));
-    return err;
+    return QDBusError(QDBusError::Disconnected,
+                      QLatin1String("Not connected to D-Bus server"));
 }
 
 /*!
@@ -405,7 +400,6 @@ QDBusMessage QDBusPendingCall::reply() const
 {
     if (!d)
         return QDBusMessage::createError(error());
-    QMutexLocker locker(&d->mutex);
     return d->replyMessage;
 }
 
