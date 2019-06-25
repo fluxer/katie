@@ -299,10 +299,10 @@ void Q_GUI_EXPORT qt_set_sequence_auto_mnemonic(bool b) { qt_sequence_no_mnemoni
     similar to the native text on Windows and X11.
 */
 
-static const struct {
-    int key;
+static const struct KeyNameTblData {
+    const Qt::Key key;
     const char* name;
-} keyname[] = {
+} KeyNameTbl[] = {
     //: This and all following "incomprehensible" strings in QShortcut context
     //: are key names. Please use the localized names appearing on actual
     //: keyboards or whatever is commonly used.
@@ -547,9 +547,9 @@ static const struct {
     { Qt::Key_Hangul_PreHanja, QT_TRANSLATE_NOOP("QShortcut", "Hangul PreHanja") },
     { Qt::Key_Hangul_PostHanja,QT_TRANSLATE_NOOP("QShortcut", "Hangul PostHanja") },
     { Qt::Key_Hangul_Special,  QT_TRANSLATE_NOOP("QShortcut", "Hangul Special") },
-
-    { 0, 0 }
 };
+
+static const short KeyNameTblSize = sizeof(KeyNameTbl) * sizeof(KeyNameTblData);
 
 //Table of key bindings. It must be sorted on key sequence.
 //A priority of 1 indicates that this is the primary key binding when multiple are defined.
@@ -628,7 +628,7 @@ const QKeyBinding QKeySequencePrivate::keyBindings[] = {
     {QKeySequence::Forward,                 1,          Qt::ALT  | Qt::Key_Right},
 };
 
-const uint QKeySequencePrivate::numberOfKeyBindings = sizeof(QKeySequencePrivate::keyBindings)/(sizeof(QKeyBinding));
+const short QKeySequencePrivate::numberOfKeyBindings = sizeof(QKeySequencePrivate::keyBindings)/(sizeof(QKeyBinding));
 
 
 /*!
@@ -806,14 +806,13 @@ QKeySequence::QKeySequence(const QKeySequence& keysequence)
 QList<QKeySequence> QKeySequence::keyBindings(StandardKey key)
 {
     QList <QKeySequence> list;
-    for (uint i = 0; i < QKeySequencePrivate::numberOfKeyBindings ; ++i) {
+    for (short i = 0; i < QKeySequencePrivate::numberOfKeyBindings ; ++i) {
         QKeyBinding keyBinding = QKeySequencePrivate::keyBindings[i];
         if (keyBinding.standardKey == key) {
-            const uint shortcut = QKeySequencePrivate::keyBindings[i].shortcut;
             if (keyBinding.priority > 0)
-                list.prepend(QKeySequence(shortcut));
+                list.prepend(QKeySequence(keyBinding.shortcut));
             else
-                list.append(QKeySequence(shortcut));
+                list.append(QKeySequence(keyBinding.shortcut));
         }
     }
     return list;
@@ -1056,12 +1055,12 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
         for (int tran = 0; tran < 2; ++tran) {
             if (!nativeText)
                 ++tran;
-            for (int i = 0; keyname[i].name; ++i) {
+            for (ushort i = 0; i < KeyNameTblSize; ++i) {
                 QString keyName(tran == 0
-                                ? QShortcut::tr(keyname[i].name)
-                                : QString::fromLatin1(keyname[i].name));
+                                ? QShortcut::tr(KeyNameTbl[i].name)
+                                : QString::fromLatin1(KeyNameTbl[i].name));
                 if (accel == keyName.toLower()) {
-                    ret |= keyname[i].key;
+                    ret |= KeyNameTbl[i].key;
                     found = true;
                     break;
                 }
@@ -1120,20 +1119,20 @@ QString QKeySequencePrivate::encodeString(int key, QKeySequence::SequenceFormat 
             p = nativeText ? QShortcut::tr("F%1").arg(key - Qt::Key_F1 + 1)
                            : QString::fromLatin1("F%1").arg(key - Qt::Key_F1 + 1);
     } else if (key) {
-        int i=0;
-        while (keyname[i].name) {
-            if (key == keyname[i].key) {
-                p = nativeText ? QShortcut::tr(keyname[i].name)
-                                : QString::fromLatin1(keyname[i].name);
+        bool foundmatch = false;
+        for (ushort i = 0; i < KeyNameTblSize; i++) {
+            if (KeyNameTbl[i].key == key) {
+                p = nativeText ? QShortcut::tr(KeyNameTbl[i].name)
+                                : QString::fromLatin1(KeyNameTbl[i].name);
+                foundmatch = true;
                 break;
             }
-            ++i;
         }
         // If we can't find the actual translatable keyname,
         // fall back on the unicode representation of it...
         // Or else characters like Qt::Key_aring may not get displayed
         // (Really depends on you locale)
-        if (!keyname[i].name) {
+        if (!foundmatch) {
             if (!QChar::requiresSurrogates(key)) {
                 p = QChar(ushort(key)).toUpper();
             } else {
@@ -1154,8 +1153,8 @@ QString QKeySequencePrivate::encodeString(int key, QKeySequence::SequenceFormat 
 */
 QKeySequence::SequenceMatch QKeySequence::matches(const QKeySequence &seq) const
 {
-    uint userN = count(),
-          seqN = seq.count();
+    int userN = count();
+    int seqN = seq.count();
 
     if (userN > seqN)
         return NoMatch;
@@ -1164,7 +1163,7 @@ QKeySequence::SequenceMatch QKeySequence::matches(const QKeySequence &seq) const
     // else we already know it can only be partial.
     SequenceMatch match = (userN == seqN ? ExactMatch : PartialMatch);
 
-    for (uint i = 0; i < userN; ++i) {
+    for (int i = 0; i < userN; ++i) {
         int userKey = (*this)[i],
             sequenceKey = seq[i];
         if (userKey != sequenceKey)

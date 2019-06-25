@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
 struct Q_AUTOTEST_EXPORT QKeyBinding
 {
     QKeySequence::StandardKey standardKey;
-    uchar priority;
+    short priority;
     uint shortcut;
 };
 
@@ -79,7 +79,7 @@ public:
     static int decodeString(const QString &keyStr, QKeySequence::SequenceFormat format);
 
     static const QKeyBinding keyBindings[];
-    static const uint numberOfKeyBindings;
+    static const short numberOfKeyBindings;
 
 };
 #endif // QT_NO_SHORTCUT

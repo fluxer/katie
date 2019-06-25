@@ -791,48 +791,13 @@ bool QKeyEvent::matches(QKeySequence::StandardKey matchKey) const
 {
     uint searchkey = (modifiers() | key()) & ~(Qt::KeypadModifier); //The keypad modifier should not make a difference
 
-    uint N = QKeySequencePrivate::numberOfKeyBindings;
-    int first = 0;
-    int last = N - 1;
-
-    while (first <= last) {
-        int mid = (first + last) / 2;
-        QKeyBinding midVal = QKeySequencePrivate::keyBindings[mid];
-
-        if (searchkey > midVal.shortcut){
-            first = mid + 1;  // Search in top half
-        }
-        else if (searchkey < midVal.shortcut){
-            last = mid - 1; // Search in bottom half
-        }
-        else {
-            //found correct shortcut value
-            if (midVal.standardKey == matchKey) {
-                return true;
-            } else { //We may have several equal values, so we must search in both directions
-
-                //search forward
-                for ( unsigned int i = mid + 1 ; i < N - 1 ; ++i) {
-                    QKeyBinding current = QKeySequencePrivate::keyBindings[i];
-                    if (current.shortcut != searchkey)
-                        break;
-                    else if (current.standardKey == matchKey)
-                        return true;
-                }
-
-                //search back
-                for ( int i = mid - 1 ; i >= 0 ; --i) {
-                    QKeyBinding current = QKeySequencePrivate::keyBindings[i];
-                    if (current.shortcut != searchkey)
-                        break;
-                    else if (current.standardKey == matchKey)
-                        return true;
-                }
-                return false; //we could not find it among the matching keySequences
-            }
+    for (ushort i = 0; i < QKeySequencePrivate::numberOfKeyBindings; i++) {
+        if (QKeySequencePrivate::keyBindings[i].standardKey == matchKey
+            && QKeySequencePrivate::keyBindings[i].shortcut == searchkey) {
+            return true;
         }
     }
-    return false; //we could not find matching keySequences at all
+    return false;
 }
 #endif // QT_NO_SHORTCUT
 
