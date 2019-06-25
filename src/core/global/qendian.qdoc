@@ -53,7 +53,7 @@
     \sa qToLittleEndian()
 */
 /*!
-    \fn T qFromBigEndian(T src)
+    \fn T qFromBigEndian(const T src)
     \since 4.3
     \relates <QtEndian>
     \overload
@@ -84,7 +84,7 @@
     \sa qToLittleEndian()
 */
 /*!
-    \fn T qFromLittleEndian(T src)
+    \fn T qFromLittleEndian(const T src)
     \since 4.3
     \relates <QtEndian>
     \overload
@@ -96,7 +96,7 @@
     unmodified.
 */
 /*!
-    \fn void qToBigEndian(T src, uchar *dest)
+    \fn void qToBigEndian(const T src, uchar *dest)
     \since 4.3
     \relates <QtEndian>
 
@@ -112,7 +112,7 @@
     \sa qToLittleEndian()
 */
 /*!
-    \fn T qToBigEndian(T src)
+    \fn T qToBigEndian(const T src)
     \since 4.3
     \relates <QtEndian>
     \overload
@@ -124,7 +124,7 @@
     unmodified.
 */
 /*!
-    \fn void qToLittleEndian(T src, uchar *dest)
+    \fn void qToLittleEndian(const T src, uchar *dest)
     \since 4.3
     \relates <QtEndian>
 
@@ -140,7 +140,7 @@
     \sa qToBigEndian()
 */
 /*!
-    \fn T qToLittleEndian(T src)
+    \fn T qToLittleEndian(const T src)
     \since 4.3
     \relates <QtEndian>
     \overload

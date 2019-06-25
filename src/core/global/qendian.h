@@ -170,23 +170,23 @@ template <> inline qint16 qFromBigEndian<qint16>(const uchar *src)
  * This function can be used if you are not concerned about alignment issues,
  * and it is therefore a bit more convenient and in most cases more efficient.
 */
-template <typename T> T qbswap(T source);
+template <typename T> T qbswap(const T source);
 
 #ifdef __GLIBC__
-template <> inline quint64 qbswap<quint64>(quint64 source)
+template <> inline quint64 qbswap<quint64>(const quint64 source)
 {
     return bswap_64(source);
 }
-template <> inline quint32 qbswap<quint32>(quint32 source)
+template <> inline quint32 qbswap<quint32>(const quint32 source)
 {
     return bswap_32(source);
 }
-template <> inline quint16 qbswap<quint16>(quint16 source)
+template <> inline quint16 qbswap<quint16>(const quint16 source)
 {
     return bswap_16(source);
 }
 #else
-template <> inline quint64 qbswap<quint64>(quint64 source)
+template <> inline quint64 qbswap<quint64>(const quint64 source)
 {
     return 0
         | ((source & Q_UINT64_C(0x00000000000000ff)) << 56)
@@ -199,7 +199,7 @@ template <> inline quint64 qbswap<quint64>(quint64 source)
         | ((source & Q_UINT64_C(0xff00000000000000)) >> 56);
 }
 
-template <> inline quint32 qbswap<quint32>(quint32 source)
+template <> inline quint32 qbswap<quint32>(const quint32 source)
 {
     return 0
         | ((source & 0x000000ff) << 24)
@@ -208,7 +208,7 @@ template <> inline quint32 qbswap<quint32>(quint32 source)
         | ((source & 0xff000000) >> 24);
 }
 
-template <> inline quint16 qbswap<quint16>(quint16 source)
+template <> inline quint16 qbswap<quint16>(const quint16 source)
 {
     return quint16( 0
                     | ((source & 0x00ff) << 8)
@@ -217,53 +217,53 @@ template <> inline quint16 qbswap<quint16>(quint16 source)
 #endif // __GLIBC__
 
 // signed specializations
-template <> inline qint64 qbswap<qint64>(qint64 source)
+template <> inline qint64 qbswap<qint64>(const qint64 source)
 {
     return qbswap<quint64>(quint64(source));
 }
 
-template <> inline qint32 qbswap<qint32>(qint32 source)
+template <> inline qint32 qbswap<qint32>(const qint32 source)
 {
     return qbswap<quint32>(quint32(source));
 }
 
-template <> inline qint16 qbswap<qint16>(qint16 source)
+template <> inline qint16 qbswap<qint16>(const qint16 source)
 {
     return qbswap<quint16>(quint16(source));
 }
 
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
 
-template <typename T> inline T qToBigEndian(T source)
+template <typename T> inline T qToBigEndian(const T source)
 { return source; }
-template <typename T> inline T qFromBigEndian(T source)
+template <typename T> inline T qFromBigEndian(const T source)
 { return source; }
-template <typename T> inline T qToLittleEndian(T source)
+template <typename T> inline T qToLittleEndian(const T source)
 { return qbswap<T>(source); }
-template <typename T> inline T qFromLittleEndian(T source)
+template <typename T> inline T qFromLittleEndian(const T source)
 { return qbswap<T>(source); }
-template <typename T> inline void qToBigEndian(T src, uchar *dest)
+template <typename T> inline void qToBigEndian(const T src, uchar *dest)
 { qToUnaligned<T>(src, dest); }
-template <typename T> inline void qToLittleEndian(T src, uchar *dest)
+template <typename T> inline void qToLittleEndian(const T src, uchar *dest)
 { qbswap<T>(src, dest); }
 #else // Q_LITTLE_ENDIAN
 
-template <typename T> inline T qToBigEndian(T source)
+template <typename T> inline T qToBigEndian(const T source)
 { return qbswap<T>(source); }
-template <typename T> inline T qFromBigEndian(T source)
+template <typename T> inline T qFromBigEndian(const T source)
 { return qbswap<T>(source); }
-template <typename T> inline T qToLittleEndian(T source)
+template <typename T> inline T qToLittleEndian(const T source)
 { return source; }
-template <typename T> inline T qFromLittleEndian(T source)
+template <typename T> inline T qFromLittleEndian(const T source)
 { return source; }
-template <typename T> inline void qToBigEndian(T src, uchar *dest)
+template <typename T> inline void qToBigEndian(const T src, uchar *dest)
 { qbswap<T>(src, dest); }
-template <typename T> inline void qToLittleEndian(T src, uchar *dest)
+template <typename T> inline void qToLittleEndian(const T src, uchar *dest)
 { qToUnaligned<T>(src, dest); }
 
 #endif // Q_BYTE_ORDER == Q_BIG_ENDIAN
 
-template <> inline quint8 qbswap<quint8>(quint8 source)
+template <> inline quint8 qbswap<quint8>(const quint8 source)
 {
     return source;
 }
