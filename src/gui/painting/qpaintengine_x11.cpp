@@ -1208,35 +1208,35 @@ void QX11PaintEngine::updatePen(const QPen &pen)
     case Qt::NoPen:
     case Qt::SolidLine:
         xStyle = LineSolid;
-	break;
+        break;
     case Qt::DashLine:
-	dashes[0] = dash;
-	dashes[1] = space;
-	dash_len = 2;
+        dashes[0] = dash;
+        dashes[1] = space;
+        dash_len = 2;
         xStyle = LineOnOffDash;
-	break;
+        break;
     case Qt::DotLine:
-	dashes[0] = dot;
-	dashes[1] = space;
-	dash_len = 2;
+        dashes[0] = dot;
+        dashes[1] = space;
+        dash_len = 2;
         xStyle = LineOnOffDash;
-	break;
+        break;
     case Qt::DashDotLine:
-	dashes[0] = dash;
-	dashes[1] = space;
-	dashes[2] = dot;
-	dashes[3] = space;
-	dash_len = 4;
+        dashes[0] = dash;
+        dashes[1] = space;
+        dashes[2] = dot;
+        dashes[3] = space;
+        dash_len = 4;
         xStyle = LineOnOffDash;
-	break;
+        break;
     case Qt::DashDotDotLine:
-	dashes[0] = dash;
-	dashes[1] = space;
-	dashes[2] = dot;
-	dashes[3] = space;
-	dashes[4] = dot;
-	dashes[5] = space;
-	dash_len = 6;
+        dashes[0] = dash;
+        dashes[1] = space;
+        dashes[2] = dot;
+        dashes[3] = space;
+        dashes[4] = dot;
+        dashes[5] = space;
+        dash_len = 6;
         xStyle = LineOnOffDash;
         break;
     case Qt::CustomDashLine:
