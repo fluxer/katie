@@ -45,7 +45,6 @@
 // We mean it.
 //
 
-#include "QtCore/qglobal.h"
 #include "QtGui/qcolor.h"
 #include "QtGui/qpainter.h"
 #include "QtGui/qimage.h"

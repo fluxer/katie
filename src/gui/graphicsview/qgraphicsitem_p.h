@@ -178,55 +178,55 @@ public:
         subFocusItem(0),
         focusScopeItem(0),
         panelModality(QGraphicsItem::NonModal),
-        acceptedMouseButtons(0x1f),
-        visible(1),
-        explicitlyHidden(0),
-        enabled(1),
-        explicitlyDisabled(0),
-        selected(0),
-        acceptsHover(0),
-        acceptDrops(0),
-        isMemberOfGroup(0),
-        handlesChildEvents(0),
-        itemDiscovered(0),
-        hasCursor(0),
-        ancestorFlags(0),
-        cacheMode(0),
-        hasBoundingRegionGranularity(0),
-        isWidget(0),
-        dirty(0),
-        dirtyChildren(0),
-        localCollisionHack(0),
-        inSetPosHelper(0),
-        needSortChildren(0),
-        allChildrenDirty(0),
-        fullUpdatePending(0),
-        dirtyChildrenBoundingRect(1),
+        visible(true),
+        explicitlyHidden(false),
+        enabled(true),
+        explicitlyDisabled(false),
+        selected(false),
+        acceptsHover(false),
+        acceptDrops(false),
+        isMemberOfGroup(false),
+        handlesChildEvents(false),
+        itemDiscovered(false),
+        hasCursor(false),
+        hasBoundingRegionGranularity(false),
+        isWidget(false),
+        dirty(false),
+        dirtyChildren(false),
+        localCollisionHack(false),
+        inSetPosHelper(false),
+        needSortChildren(false),
+        allChildrenDirty(false),
+        fullUpdatePending(false),
+        dirtyChildrenBoundingRect(true),
+        paintedViewBoundingRectsNeedRepaint(false),
+        dirtySceneTransform(true),
+        geometryChanged(true),
+        inDestructor(false),
+        isObject(false),
+        ignoreVisible(false),
+        ignoreOpacity(false),
+        acceptTouchEvents(false),
+        acceptedTouchBeginEvent(false),
+        filtersDescendantEvents(false),
+        sceneTransformTranslateOnly(false),
+        notifyBoundingRectChanged(false),
+        notifyInvalidated(false),
+        mouseSetsFocus(true),
+        explicitActivate(false),
+        wantsActive(false),
+        holesInSiblingIndex(false),
+        sequentialOrdering(true),
+        updateDueToGraphicsEffect(false),
+        scenePosDescendants(false),
+        pendingPolish(false),
+        mayHaveChildWithGraphicsEffect(false),
+        isDeclarativeItem(false),
+        sendParentChangeNotification(false),
+        cacheMode(QGraphicsItem::NoCache),
+        acceptedMouseButtons(Qt::LeftButton | Qt::RightButton | Qt::MiddleButton | Qt::XButton1 | Qt::XButton2),
         flags(0),
-        paintedViewBoundingRectsNeedRepaint(0),
-        dirtySceneTransform(1),
-        geometryChanged(1),
-        inDestructor(0),
-        isObject(0),
-        ignoreVisible(0),
-        ignoreOpacity(0),
-        acceptTouchEvents(0),
-        acceptedTouchBeginEvent(0),
-        filtersDescendantEvents(0),
-        sceneTransformTranslateOnly(0),
-        notifyBoundingRectChanged(0),
-        notifyInvalidated(0),
-        mouseSetsFocus(1),
-        explicitActivate(0),
-        wantsActive(0),
-        holesInSiblingIndex(0),
-        sequentialOrdering(1),
-        updateDueToGraphicsEffect(0),
-        scenePosDescendants(0),
-        pendingPolish(0),
-        mayHaveChildWithGraphicsEffect(0),
-        isDeclarativeItem(0),
-        sendParentChangeNotification(0),
+        ancestorFlags(0),
         globalStackingOrder(-1),
         q_ptr(0)
     {
@@ -381,7 +381,7 @@ public:
     inline void invalidateChildrenSceneTransform()
     {
         for (int i = 0; i < children.size(); ++i)
-            children.at(i)->d_ptr->dirtySceneTransform = 1;
+            children.at(i)->d_ptr->dirtySceneTransform = true;
     }
 
     inline qreal calcEffectiveOpacity() const
@@ -517,60 +517,56 @@ public:
     QMap<Qt::GestureType, Qt::GestureFlags> gestureContext;
 #endif
 
-    // Packed 32 bits
-    quint32 acceptedMouseButtons : 5;
-    quint32 visible : 1;
-    quint32 explicitlyHidden : 1;
-    quint32 enabled : 1;
-    quint32 explicitlyDisabled : 1;
-    quint32 selected : 1;
-    quint32 acceptsHover : 1;
-    quint32 acceptDrops : 1;
-    quint32 isMemberOfGroup : 1;
-    quint32 handlesChildEvents : 1;
-    quint32 itemDiscovered : 1;
-    quint32 hasCursor : 1;
-    quint32 ancestorFlags : 4;
-    quint32 cacheMode : 2;
-    quint32 hasBoundingRegionGranularity : 1;
-    quint32 isWidget : 1;
-    quint32 dirty : 1;
-    quint32 dirtyChildren : 1;
-    quint32 localCollisionHack : 1;
-    quint32 inSetPosHelper : 1;
-    quint32 needSortChildren : 1;
-    quint32 allChildrenDirty : 1;
-    quint32 fullUpdatePending : 1;
-    quint32 dirtyChildrenBoundingRect : 1;
+    bool visible;
+    bool explicitlyHidden;
+    bool enabled;
+    bool explicitlyDisabled;
+    bool selected;
+    bool acceptsHover;
+    bool acceptDrops;
+    bool isMemberOfGroup;
+    bool handlesChildEvents;
+    bool itemDiscovered;
+    bool hasCursor;
+    bool hasBoundingRegionGranularity;
+    bool isWidget;
+    bool dirty;
+    bool dirtyChildren;
+    bool localCollisionHack;
+    bool inSetPosHelper;
+    bool needSortChildren;
+    bool allChildrenDirty;
+    bool fullUpdatePending;
+    bool dirtyChildrenBoundingRect;
+    bool paintedViewBoundingRectsNeedRepaint;
+    bool dirtySceneTransform;
+    bool geometryChanged;
+    bool inDestructor;
+    bool isObject;
+    bool ignoreVisible;
+    bool ignoreOpacity;
+    bool acceptTouchEvents;
+    bool acceptedTouchBeginEvent;
+    bool filtersDescendantEvents;
+    bool sceneTransformTranslateOnly;
+    bool notifyBoundingRectChanged;
+    bool notifyInvalidated;
+    bool mouseSetsFocus;
+    bool explicitActivate;
+    bool wantsActive;
+    bool holesInSiblingIndex;
+    bool sequentialOrdering;
+    bool updateDueToGraphicsEffect;
+    bool scenePosDescendants;
+    bool pendingPolish;
+    bool mayHaveChildWithGraphicsEffect;
+    bool isDeclarativeItem ;
+    bool sendParentChangeNotification;
 
-    // Packed 32 bits
-    quint32 flags : 19;
-    quint32 paintedViewBoundingRectsNeedRepaint : 1;
-    quint32 dirtySceneTransform : 1;
-    quint32 geometryChanged : 1;
-    quint32 inDestructor : 1;
-    quint32 isObject : 1;
-    quint32 ignoreVisible : 1;
-    quint32 ignoreOpacity : 1;
-    quint32 acceptTouchEvents : 1;
-    quint32 acceptedTouchBeginEvent : 1;
-    quint32 filtersDescendantEvents : 1;
-    quint32 sceneTransformTranslateOnly : 1;
-    quint32 notifyBoundingRectChanged : 1;
-    quint32 notifyInvalidated : 1;
-
-    // New 32 bits
-    quint32 mouseSetsFocus : 1;
-    quint32 explicitActivate : 1;
-    quint32 wantsActive : 1;
-    quint32 holesInSiblingIndex : 1;
-    quint32 sequentialOrdering : 1;
-    quint32 updateDueToGraphicsEffect : 1;
-    quint32 scenePosDescendants : 1;
-    quint32 pendingPolish : 1;
-    quint32 mayHaveChildWithGraphicsEffect : 1;
-    quint32 isDeclarativeItem : 1;
-    quint32 sendParentChangeNotification : 1;
+    QGraphicsItem::CacheMode cacheMode;
+    Qt::MouseButtons acceptedMouseButtons;
+    QGraphicsItem::GraphicsItemFlags flags;
+    uint ancestorFlags;
 
     // Optional stacking order
     int globalStackingOrder;
@@ -808,14 +804,14 @@ inline QTransform QGraphicsItemPrivate::transformToParent() const
 inline void QGraphicsItemPrivate::ensureSortedChildren()
 {
     if (needSortChildren) {
-        needSortChildren = 0;
-        sequentialOrdering = 1;
+        needSortChildren = false;
+        sequentialOrdering = true;
         if (children.isEmpty())
             return;
         qSort(children.begin(), children.end(), qt_notclosestLeaf);
         for (int i = 0; i < children.size(); ++i) {
             if (children.at(i)->d_ptr->siblingIndex != i) {
-                sequentialOrdering = 0;
+                sequentialOrdering = false;
                 break;
             }
         }
@@ -838,7 +834,7 @@ inline void QGraphicsItemPrivate::markParentDirty(bool updateBoundingRect)
     QGraphicsItemPrivate *parentp = this;
 #ifndef QT_NO_GRAPHICSEFFECT
     if (updateBoundingRect && parentp->graphicsEffect && !parentp->inSetPosHelper) {
-        parentp->notifyInvalidated = 1;
+        parentp->notifyInvalidated = true;
         static_cast<QGraphicsItemEffectSourcePrivate *>(parentp->graphicsEffect->d_func()
                                                         ->source->d_func())->invalidateCache();
     }
@@ -848,20 +844,20 @@ inline void QGraphicsItemPrivate::markParentDirty(bool updateBoundingRect)
         parentp->dirtyChildren = 1;
 
         if (updateBoundingRect) {
-            parentp->dirtyChildrenBoundingRect = 1;
+            parentp->dirtyChildrenBoundingRect = true;
             // ### Only do this if the parent's effect applies to the entire subtree.
-            parentp->notifyBoundingRectChanged = 1;
+            parentp->notifyBoundingRectChanged = true;
         }
 #ifndef QT_NO_GRAPHICSEFFECT
         if (parentp->graphicsEffect) {
             if (updateBoundingRect) {
                 static_cast<QGraphicsItemEffectSourcePrivate *>(parentp->graphicsEffect->d_func()
                                                                 ->source->d_func())->invalidateCache();
-                parentp->notifyInvalidated = 1;
+                parentp->notifyInvalidated = true;
             }
             if (parentp->scene && parentp->graphicsEffect->isEnabled()) {
-                parentp->dirty = 1;
-                parentp->fullUpdatePending = 1;
+                parentp->dirty = true;
+                parentp->fullUpdatePending = true;
             }
         }
 #endif
