@@ -424,11 +424,6 @@ public:
 
     QPaintEngine *paintEngine() const;
 
-    static void setRedirected(const QPaintDevice *device, QPaintDevice *replacement,
-                              const QPoint& offset = QPoint());
-    static QPaintDevice *redirected(const QPaintDevice *device, QPoint *offset = Q_NULLPTR);
-    static void restoreRedirected(const QPaintDevice *device);
-
     void beginNativePainting();
     void endNativePainting();
 

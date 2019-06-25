@@ -4926,8 +4926,6 @@ void QWidgetPrivate::render(QPaintDevice *target, const QPoint &targetOffset,
 
     if (target->devType() == QInternal::Widget)
         redirected = static_cast<QWidget *>(target)->d_func()->redirected(&redirectionOffset);
-    if (!redirected)
-        redirected = QPainter::redirected(target, &redirectionOffset);
 
     if (redirected) {
         target = redirected;
