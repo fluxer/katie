@@ -8015,9 +8015,9 @@ static const unsigned short uc_ligature_map[] = {
 };
 
 struct NormalizationCorrection {
-    uint ucs4;
-    uint old_mapping;
-    int version;
+    const uint ucs4;
+    const uint old_mapping;
+    const int version;
 };
 
 static const NormalizationCorrection uc_normalization_corrections[] = {

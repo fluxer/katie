@@ -52,8 +52,8 @@ QT_BEGIN_NAMESPACE
  */
 struct CountryLanguage
 {
-    quint16 languageId;
-    quint16 countryId;
+    const quint16 languageId;
+    const quint16 countryId;
 };
 static const CountryLanguage ImperialMeasurementSystems[] = {
     { 31, 225 },
@@ -61,7 +61,7 @@ static const CountryLanguage ImperialMeasurementSystems[] = {
     { 111, 225 },
     { 163, 225 }
 };
-static const int ImperialMeasurementSystemsCount =
+static const short ImperialMeasurementSystemsCount =
     sizeof(ImperialMeasurementSystems)/sizeof(ImperialMeasurementSystems[0]);
 
 // GENERATED PART STARTS HERE
