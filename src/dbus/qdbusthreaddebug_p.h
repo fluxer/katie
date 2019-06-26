@@ -202,18 +202,14 @@ struct QDBusDispatchLocker: QDBusMutexLocker
 
 #if QDBUS_THREAD_DEBUG
 # define SEM_ACQUIRE(action, sem)                                       \
-    do {                                                                \
     QDBusLockerBase::reportThreadAction(action, QDBusLockerBase::BeforeAcquire, this); \
     sem.acquire();                                                      \
-    QDBusLockerBase::reportThreadAction(action, QDBusLockerBase::AfterAcquire, this); \
-    } while (0)
+    QDBusLockerBase::reportThreadAction(action, QDBusLockerBase::AfterAcquire, this);
 
 # define SEM_RELEASE(action, sem)                                       \
-    do {                                                                \
     QDBusLockerBase::reportThreadAction(action, QDBusLockerBase::BeforeRelease, that); \
     sem.release();                                                      \
-    QDBusLockerBase::reportThreadAction(action, QDBusLockerBase::AfterRelease, that); \
-    } while (0)
+    QDBusLockerBase::reportThreadAction(action, QDBusLockerBase::AfterRelease, that);
 
 #else
 # define SEM_ACQUIRE(action, sem)       sem.acquire()
