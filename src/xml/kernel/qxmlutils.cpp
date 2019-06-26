@@ -49,60 +49,30 @@ QT_BEGIN_NAMESPACE
 /* TODO:
  * - isNameChar() doesn't have to be public, it's only needed in
  *   qdom.cpp -- refactor fixedXmlName() to use isNCName()
- * - A lot of functions can be inlined.
  */
 
-class QXmlCharRange
+struct QXmlCharRange
 {
-public:
-    ushort min;
-    ushort max;
+    const ushort min;
+    const ushort max;
 };
-typedef const QXmlCharRange *RangeIter;
 
 /*!
-  Performs a binary search between \a begin and \a end inclusive, to check whether \a
-  c is contained. Remember that the QXmlCharRange instances must be in numeric order.
+  Performs a binary search on \a iter which has size passed as \a size to check whether \a c is contained.
  */
-bool QXmlUtils::rangeContains(RangeIter begin, RangeIter end, const QChar c)
+static inline bool rangeContains(const QXmlCharRange* iter, const short size, const ushort c)
 {
-    const ushort cp(c.unicode());
-
-    // check the first two ranges "manually" as characters in that
-    // range are checked very often and we avoid the binary search below.
- 
-    if (cp <= begin->max)
-        return cp >= begin->min;
-
-    ++begin;
-
-    if (begin == end)
-        return false;
-
-    if (cp <= begin->max)
-        return cp >= begin->min;
-
-    while (begin != end) {
-        int delta = (end - begin) / 2;
-        RangeIter mid = begin + delta;
-
-        if (mid->min > cp)
-            end = mid;
-        else if (mid->max < cp)
-            begin = mid;
-        else
+    for (short i = 0; i < size; i++) {
+        if (c >= iter[i].min && c <= iter[i].max) {
             return true;
-
-        if (delta == 0)
-            break;
+        }
     }
 
     return false;
 }
 
 // [85] BaseChar ::= ...
-
-static const QXmlCharRange g_base_begin[] =
+static const QXmlCharRange g_base_iter[] =
 {
     {0x0041, 0x005A}, {0x0061, 0x007A}, {0x00C0, 0x00D6}, {0x00D8, 0x00F6}, {0x00F8, 0x00FF},
     {0x0100, 0x0131}, {0x0134, 0x013E}, {0x0141, 0x0148}, {0x014A, 0x017E}, {0x0180, 0x01C3},
@@ -146,20 +116,53 @@ static const QXmlCharRange g_base_begin[] =
     {0x212A, 0x212B}, {0x212E, 0x212E}, {0x2180, 0x2182}, {0x3041, 0x3094}, {0x30A1, 0x30FA},
     {0x3105, 0x312C}, {0xAC00, 0xD7A3}
 };
-static const RangeIter g_base_end = g_base_begin + sizeof(g_base_begin) / sizeof(QXmlCharRange);
+static const short g_base_size = sizeof(g_base_iter) / sizeof(QXmlCharRange);
 
-static const QXmlCharRange g_ideographic_begin[] =
+static inline bool isBaseChar(const QChar c)
+{
+    return rangeContains(g_base_iter, g_base_size, c.unicode());
+}
+
+// [88] Digit ::= ...
+static const QXmlCharRange g_digit_iter[] =
+{
+    {0x0030, 0x0039}, {0x0660, 0x0669}, {0x06F0, 0x06F9}, {0x0966, 0x096F}, {0x09E6, 0x09EF},
+    {0x0A66, 0x0A6F}, {0x0AE6, 0x0AEF}, {0x0B66, 0x0B6F}, {0x0BE7, 0x0BEF}, {0x0C66, 0x0C6F},
+    {0x0CE6, 0x0CEF}, {0x0D66, 0x0D6F}, {0x0E50, 0x0E59}, {0x0ED0, 0x0ED9}, {0x0F20, 0x0F29}
+};
+static const short g_digit_size = sizeof(g_digit_iter) / sizeof(QXmlCharRange);
+
+static inline bool isDigit(const QChar c)
+{
+    return rangeContains(g_digit_iter, g_digit_size, c.unicode());
+}
+
+// [89] Extender ::= ...
+static const QXmlCharRange g_extender_iter[] =
+{
+    {0x00B7, 0x00B7}, {0x02D0, 0x02D0}, {0x02D1, 0x02D1}, {0x0387, 0x0387}, {0x0640, 0x0640},
+    {0x0E46, 0x0E46}, {0x0EC6, 0x0EC6}, {0x3005, 0x3005}, {0x3031, 0x3035}, {0x309D, 0x309E},
+    {0x30FC, 0x30FE}
+};
+static const short g_extender_size = sizeof(g_extender_iter) / sizeof(QXmlCharRange);
+
+static inline bool isExtender(const QChar c)
+{
+    return rangeContains(g_extender_iter, g_extender_size, c.unicode());
+}
+
+static const QXmlCharRange g_ideographic_iter[] =
 {
     {0x3007, 0x3007}, {0x3021, 0x3029}, {0x4E00, 0x9FA5}
 };
-static const RangeIter g_ideographic_end = g_ideographic_begin + sizeof(g_ideographic_begin) / sizeof(QXmlCharRange);
+static const short g_ideographic_size = sizeof(g_ideographic_iter) / sizeof(QXmlCharRange);
 
-bool QXmlUtils::isIdeographic(const QChar c)
+static inline bool isIdeographic(const QChar c)
 {
-    return rangeContains(g_ideographic_begin, g_ideographic_end, c);
+    return rangeContains(g_ideographic_iter, g_ideographic_size, c.unicode());
 }
 
-static const QXmlCharRange g_combining_begin[] =
+static const QXmlCharRange g_combining_iter[] =
 {
     {0x0300, 0x0345}, {0x0360, 0x0361}, {0x0483, 0x0486}, {0x0591, 0x05A1}, {0x05A3, 0x05B9},
     {0x05BB, 0x05BD}, {0x05BF, 0x05BF}, {0x05C1, 0x05C2}, {0x05C4, 0x05C4}, {0x064B, 0x0652},
@@ -181,44 +184,11 @@ static const QXmlCharRange g_combining_begin[] =
     {0x0F90, 0x0F95}, {0x0F97, 0x0F97}, {0x0F99, 0x0FAD}, {0x0FB1, 0x0FB7}, {0x0FB9, 0x0FB9},
     {0x20D0, 0x20DC}, {0x20E1, 0x20E1}, {0x302A, 0x302F}, {0x3099, 0x3099}, {0x309A, 0x309A}
 };
-static const RangeIter g_combining_end = g_combining_begin + sizeof(g_combining_begin) / sizeof(QXmlCharRange);
+static const short g_combining_size = sizeof(g_combining_iter) / sizeof(QXmlCharRange);
 
-bool QXmlUtils::isCombiningChar(const QChar c)
+static inline bool isCombiningChar(const QChar c)
 {
-    return rangeContains(g_combining_begin, g_combining_end, c);
-}
-
-// [88] Digit ::= ...
-static const QXmlCharRange g_digit_begin[] =
-{
-    {0x0030, 0x0039}, {0x0660, 0x0669}, {0x06F0, 0x06F9}, {0x0966, 0x096F}, {0x09E6, 0x09EF},
-    {0x0A66, 0x0A6F}, {0x0AE6, 0x0AEF}, {0x0B66, 0x0B6F}, {0x0BE7, 0x0BEF}, {0x0C66, 0x0C6F},
-    {0x0CE6, 0x0CEF}, {0x0D66, 0x0D6F}, {0x0E50, 0x0E59}, {0x0ED0, 0x0ED9}, {0x0F20, 0x0F29}
-};
-static const RangeIter g_digit_end = g_digit_begin + sizeof(g_digit_begin) / sizeof(QXmlCharRange);
-
-bool QXmlUtils::isDigit(const QChar c)
-{
-    return rangeContains(g_digit_begin, g_digit_end, c);
-}
-
-// [89] Extender ::= ...
-static const QXmlCharRange g_extender_begin[] =
-{
-    {0x00B7, 0x00B7}, {0x02D0, 0x02D0}, {0x02D1, 0x02D1}, {0x0387, 0x0387}, {0x0640, 0x0640},
-    {0x0E46, 0x0E46}, {0x0EC6, 0x0EC6}, {0x3005, 0x3005}, {0x3031, 0x3035}, {0x309D, 0x309E},
-    {0x30FC, 0x30FE}
-};
-static const RangeIter g_extender_end = g_extender_begin + sizeof(g_extender_begin) / sizeof(QXmlCharRange);
-
-bool QXmlUtils::isExtender(const QChar c)
-{
-    return rangeContains(g_extender_begin, g_extender_end, c);
-}
-
-bool QXmlUtils::isBaseChar(const QChar c)
-{
-    return rangeContains(g_base_begin, g_base_end, c);
+    return rangeContains(g_combining_iter, g_combining_size, c.unicode());
 }
 
 /*!

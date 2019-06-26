@@ -51,7 +51,6 @@ QT_BEGIN_NAMESPACE
 
 class QString;
 class QChar;
-class QXmlCharRange;
 
 /*!
   \internal
@@ -68,15 +67,6 @@ public:
     static bool isNCName(const QStringRef &ncName);
     static inline bool isNCName(const QString &ncName) { return isNCName(&ncName); }
     static bool isPublicID(const QString &candidate);
-
-private:
-    typedef const QXmlCharRange *RangeIter;
-    static bool rangeContains(RangeIter begin, RangeIter end, const QChar c);
-    static bool isBaseChar(const QChar c);
-    static bool isDigit(const QChar c);
-    static bool isExtender(const QChar c);
-    static bool isIdeographic(const QChar c);
-    static bool isCombiningChar(const QChar c);
 };
 
 QT_END_NAMESPACE
