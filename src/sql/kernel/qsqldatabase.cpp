@@ -102,8 +102,7 @@ Q_GLOBAL_STATIC(QConnectionDict, dbDict)
 class QSqlDatabasePrivate
 {
 public:
-    QSqlDatabasePrivate(QSqlDatabase *d, QSqlDriver *dr = 0):
-        q(d),
+    QSqlDatabasePrivate(QSqlDriver *dr = 0):
         driver(dr),
         port(-1)
     {
@@ -141,7 +140,6 @@ public:
 QSqlDatabasePrivate::QSqlDatabasePrivate(const QSqlDatabasePrivate &other)
 {
     ref = 1;
-    q = other.q;
     dbname = other.dbname;
     uname = other.uname;
     pword = other.pword;
@@ -195,7 +193,7 @@ DriverDict &QSqlDatabasePrivate::driverDict()
 QSqlDatabasePrivate *QSqlDatabasePrivate::shared_null()
 {
     static QSqlNullDriver dr;
-    static QSqlDatabasePrivate n(NULL, &dr);
+    static QSqlDatabasePrivate n(&dr);
     return &n;
 }
 
@@ -618,8 +616,8 @@ QStringList QSqlDatabase::connectionNames()
 */
 
 QSqlDatabase::QSqlDatabase(const QString &type)
+    : d(new QSqlDatabasePrivate())
 {
-    d = new QSqlDatabasePrivate(this);
     d->init(type);
 }
 
@@ -630,8 +628,8 @@ QSqlDatabase::QSqlDatabase(const QString &type)
 */
 
 QSqlDatabase::QSqlDatabase(QSqlDriver *driver)
+    : d(new QSqlDatabasePrivate(driver))
 {
-    d = new QSqlDatabasePrivate(this, driver);
 }
 
 /*!

@@ -67,10 +67,8 @@ public:
     virtual ~QSqlDriverPrivate();
 
 public:
-    // @CHECK: this member is never used. It was named q, which expanded to q_func().
-    QSqlDriver *q_func();
-    uint isOpen : 1;
-    uint isOpenError : 1;
+    bool isOpen;
+    bool isOpenError;
     QSqlError error;
     QSql::NumericalPrecisionPolicy precisionPolicy;
 };

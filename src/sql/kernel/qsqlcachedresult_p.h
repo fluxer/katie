@@ -70,8 +70,8 @@ protected:
 
     virtual bool gotoNext(ValueCache &values, int index) = 0;
 
-    QVariant data(int i);
-    bool isNull(int i);
+    QVariant data(int i) const;
+    bool isNull(int i) const;
     bool fetch(int i);
     bool fetchNext();
     bool fetchPrevious();

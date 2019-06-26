@@ -59,7 +59,7 @@ QT_BEGIN_NAMESPACE
    to indicate that we are not interested in the actual values.
 */
 
-static const uint initial_cache_size = 128;
+static const int initial_cache_size = 128;
 
 class QSqlCachedResultPrivate
 {
@@ -241,7 +241,7 @@ bool QSqlCachedResult::fetchLast()
     }
 }
 
-QVariant QSqlCachedResult::data(int i)
+QVariant QSqlCachedResult::data(int i) const
 {
     int idx = d->forwardOnly ? i : at() * d->colCount + i;
     if (i >= d->colCount || i < 0 || at() < 0 || idx >= d->rowCacheEnd)
@@ -250,7 +250,7 @@ QVariant QSqlCachedResult::data(int i)
     return d->cache.at(idx);
 }
 
-bool QSqlCachedResult::isNull(int i)
+bool QSqlCachedResult::isNull(int i) const
 {
     int idx = d->forwardOnly ? i : at() * d->colCount + i;
     if (i >= d->colCount || i < 0 || at() < 0 || idx >= d->rowCacheEnd)
