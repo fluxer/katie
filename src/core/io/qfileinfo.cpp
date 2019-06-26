@@ -368,16 +368,6 @@ const QFileInfoPrivate* QFileInfo::d_func() const
     return d_ptr.constData();
 }
 
-
-/*!
-    \fn bool QFileInfo::operator!=(const QFileInfo &fileinfo)
-
-    Returns true if this QFileInfo object refers to a different file
-    than the one specified by \a fileinfo; otherwise returns false.
-
-    \sa operator==()
-*/
-
 /*!
     \overload
     \fn bool QFileInfo::operator!=(const QFileInfo &fileinfo) const
