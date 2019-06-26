@@ -73,11 +73,11 @@ protected:
     bool fetchNext();
     bool fetchLast();
     bool fetchFirst();
-    QVariant data(int field);
-    bool isNull(int field);
+    QVariant data(int field) const;
+    bool isNull(int field) const;
     bool reset (const QString& query);
-    int size();
-    int numRowsAffected();
+    int size() const;
+    int numRowsAffected() const;
     QVariant lastInsertId() const;
     QSqlRecord record() const;
     void virtual_hook(int id, void *data);

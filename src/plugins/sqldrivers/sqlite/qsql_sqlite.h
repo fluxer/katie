@@ -67,8 +67,8 @@ protected:
     bool reset(const QString &query);
     bool prepare(const QString &query);
     bool exec();
-    int size();
-    int numRowsAffected();
+    int size() const;
+    int numRowsAffected() const;
     QVariant lastInsertId() const;
     QSqlRecord record() const;
     void virtual_hook(int id, void *data);

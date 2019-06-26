@@ -586,7 +586,7 @@ bool QMYSQLResult::fetchFirst()
     return fetch(0);
 }
 
-QVariant QMYSQLResult::data(int field)
+QVariant QMYSQLResult::data(int field) const
 {
 
     if (!isSelect() || field >= d->fields.count()) {
@@ -675,7 +675,7 @@ QVariant QMYSQLResult::data(int field)
     return QVariant();
 }
 
-bool QMYSQLResult::isNull(int field)
+bool QMYSQLResult::isNull(int field) const
 {
    if (d->preparedQuery)
        return d->fields.at(field).nullIndicator;
@@ -720,7 +720,7 @@ bool QMYSQLResult::reset (const QString& query)
     return isActive();
 }
 
-int QMYSQLResult::size()
+int QMYSQLResult::size() const
 {
     if (d->driver && isSelect())
         if (d->preparedQuery)
@@ -735,7 +735,7 @@ int QMYSQLResult::size()
         return -1;
 }
 
-int QMYSQLResult::numRowsAffected()
+int QMYSQLResult::numRowsAffected() const
 {
     return d->rowsAffected;
 }

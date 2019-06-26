@@ -78,10 +78,10 @@ protected:
     bool fetchPrevious();
     bool fetch(int i);
     bool reset (const QString& query);
-    QVariant data(int field);
-    bool isNull(int field);
-    int size();
-    int numRowsAffected();
+    QVariant data(int field) const;
+    bool isNull(int field) const;
+    int size() const;
+    int numRowsAffected() const;
     QSqlRecord record() const;
     void virtual_hook(int id, void *data);
     bool nextResult();

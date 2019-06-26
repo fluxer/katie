@@ -84,15 +84,15 @@ public:
 
     QAtomicInt ref;
     QString nm;
-    uint ro: 1;
+    bool ro;
     QVariant::Type type;
     QSqlField::RequiredStatus req;
     int len;
     int prec;
     QVariant def;
     int tp;
-    uint gen: 1;
-    uint autoval: 1;
+    bool gen;
+    bool autoval;
 };
 
 
@@ -241,6 +241,8 @@ void QSqlField::setRequiredStatus(RequiredStatus required)
 */
 void QSqlField::setLength(int fieldLength)
 {
+    if (d->len == fieldLength)
+        return;
     detach();
     d->len = fieldLength;
 }
@@ -252,6 +254,8 @@ void QSqlField::setLength(int fieldLength)
 */
 void QSqlField::setPrecision(int precision)
 {
+    if (d->prec == precision)
+        return;
     detach();
     d->prec = precision;
 }
@@ -263,6 +267,8 @@ void QSqlField::setPrecision(int precision)
 */
 void QSqlField::setDefaultValue(const QVariant &value)
 {
+    if (d->def == value)
+        return;
     detach();
     d->def = value;
 }
@@ -272,6 +278,8 @@ void QSqlField::setDefaultValue(const QVariant &value)
 */
 void QSqlField::setSqlType(int type)
 {
+    if (d->tp = type)
+        return;
     detach();
     d->tp = type;
 }
@@ -286,6 +294,8 @@ void QSqlField::setSqlType(int type)
 */
 void QSqlField::setGenerated(bool gen)
 {
+    if (d->gen == gen)
+        return;
     detach();
     d->gen = gen;
 }
@@ -334,6 +344,8 @@ void QSqlField::clear()
 
 void QSqlField::setName(const QString& name)
 {
+    if (d->nm == name)
+        return;
     detach();
     d->nm = name;
 }
@@ -345,6 +357,8 @@ void QSqlField::setName(const QString& name)
 */
 void QSqlField::setReadOnly(bool readOnly)
 {
+    if (d->ro == readOnly)
+        return;
     detach();
     d->ro = readOnly;
 }
@@ -388,6 +402,8 @@ QVariant::Type QSqlField::type() const
 */
 void QSqlField::setType(QVariant::Type type)
 {
+    if (d->type == type)
+        return;
     detach();
     d->type = type;
     if (!val.isValid())
@@ -553,6 +569,8 @@ bool QSqlField::isAutoValue() const
  */
 void QSqlField::setAutoValue(bool autoVal)
 {
+    if (d->autoval == autoVal)
+        return;
     detach();
     d->autoval = autoVal;
 }

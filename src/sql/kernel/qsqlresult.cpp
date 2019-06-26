@@ -317,7 +317,7 @@ bool QSqlResult::isValid() const
 }
 
 /*!
-    \fn bool QSqlResult::isNull(int index)
+    \fn bool QSqlResult::isNull(int index) const
 
     Returns true if the field at position \a index in the current row
     is null; otherwise returns false.
@@ -421,7 +421,7 @@ QSqlError QSqlResult::lastError() const
 }
 
 /*!
-    \fn int QSqlResult::size()
+    \fn int QSqlResult::size() const
 
     Returns the size of the \c SELECT result, or -1 if it cannot be
     determined or if the query is not a \c SELECT statement.
@@ -430,7 +430,7 @@ QSqlError QSqlResult::lastError() const
 */
 
 /*!
-    \fn int QSqlResult::numRowsAffected()
+    \fn int QSqlResult::numRowsAffected() const
 
     Returns the number of rows affected by the last query executed, or
     -1 if it cannot be determined or if the query is a \c SELECT
@@ -440,7 +440,7 @@ QSqlError QSqlResult::lastError() const
 */
 
 /*!
-    \fn QVariant QSqlResult::data(int index)
+    \fn QVariant QSqlResult::data(int index) const
 
     Returns the data for field \a index in the current row as
     a QVariant. This function is only called if the result is in

@@ -104,16 +104,16 @@ protected:
 
     BindingSyntax bindingSyntax() const;
 
-    virtual QVariant data(int i) = 0;
-    virtual bool isNull(int i) = 0;
+    virtual QVariant data(int i) const = 0;
+    virtual bool isNull(int i) const = 0;
     virtual bool reset(const QString& sqlquery) = 0;
     virtual bool fetch(int i) = 0;
     virtual bool fetchNext();
     virtual bool fetchPrevious();
     virtual bool fetchFirst() = 0;
     virtual bool fetchLast() = 0;
-    virtual int size() = 0;
-    virtual int numRowsAffected() = 0;
+    virtual int size() const = 0;
+    virtual int numRowsAffected() const = 0;
     virtual QSqlRecord record() const;
     virtual QVariant lastInsertId() const;
 

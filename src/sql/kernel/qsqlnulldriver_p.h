@@ -59,14 +59,14 @@ public:
     { QSqlResult::setLastError(
             QSqlError(QLatin1String("Driver not loaded"), QLatin1String("Driver not loaded"), QSqlError::ConnectionError)); }
 protected:
-    inline QVariant data(int) { return QVariant(); }
+    inline QVariant data(int) const { return QVariant(); }
     inline bool reset (const QString&) { return false; }
     inline bool fetch(int) { return false; }
     inline bool fetchFirst() { return false; }
     inline bool fetchLast() { return false; }
-    inline bool isNull(int) { return false; }
-    inline int size()  { return -1; }
-    inline int numRowsAffected() { return 0; }
+    inline bool isNull(int) const { return false; }
+    inline int size() const { return -1; }
+    inline int numRowsAffected() const { return 0; }
 
     inline void setAt(int) {}
     inline void setActive(bool) {}

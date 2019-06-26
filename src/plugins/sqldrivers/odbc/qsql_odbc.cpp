@@ -1088,7 +1088,7 @@ bool QODBCResult::fetchLast()
     return true;
 }
 
-QVariant QODBCResult::data(int field)
+QVariant QODBCResult::data(int field) const
 {
     if (field >= d->rInf.count() || field < 0) {
         qWarning() << "QODBCResult::data: column" << field << "out of range";
@@ -1188,7 +1188,7 @@ QVariant QODBCResult::data(int field)
     return d->fieldCache[field];
 }
 
-bool QODBCResult::isNull(int field)
+bool QODBCResult::isNull(int field) const
 {
     if (field < 0 || field > d->fieldCache.size())
         return true;
@@ -1201,12 +1201,12 @@ bool QODBCResult::isNull(int field)
     return d->fieldCache.at(field).isNull();
 }
 
-int QODBCResult::size()
+int QODBCResult::size() const
 {
     return -1;
 }
 
-int QODBCResult::numRowsAffected()
+int QODBCResult::numRowsAffected() const
 {
     SQLLEN affectedRowCount = 0;
     SQLRETURN r = SQLRowCount(d->hStmt, &affectedRowCount);

@@ -456,12 +456,12 @@ bool QSQLiteResult::gotoNext(QSqlCachedResult::ValueCache& row, int idx)
     return d->fetchNext(row, idx, false);
 }
 
-int QSQLiteResult::size()
+int QSQLiteResult::size() const
 {
     return -1;
 }
 
-int QSQLiteResult::numRowsAffected()
+int QSQLiteResult::numRowsAffected() const
 {
     return sqlite3_changes(d->access);
 }
