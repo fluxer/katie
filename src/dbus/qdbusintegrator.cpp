@@ -1499,10 +1499,11 @@ void QDBusConnectionPrivate::handleObjectCall(const QDBusMessage &msg)
         }
     } // release the lock
 
-    if (semWait)
+    if (semWait) {
         SEM_ACQUIRE(HandleObjectCallSemaphoreAction, sem);
-    else
+    } else {
         activateObject(result, msg, usedLength);
+    }
 }
 
 QDBusActivateObjectEvent::~QDBusActivateObjectEvent()
