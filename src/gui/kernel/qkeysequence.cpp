@@ -549,7 +549,7 @@ static const struct KeyNameTblData {
     { Qt::Key_Hangul_Special,  QT_TRANSLATE_NOOP("QShortcut", "Hangul Special") },
 };
 
-static const short KeyNameTblSize = sizeof(KeyNameTbl) * sizeof(KeyNameTblData);
+static const short KeyNameTblSize = sizeof(KeyNameTbl) / sizeof(KeyNameTblData);
 
 //Table of key bindings. It must be sorted on key sequence.
 //A priority of 1 indicates that this is the primary key binding when multiple are defined.
@@ -628,8 +628,7 @@ const QKeyBinding QKeySequencePrivate::keyBindings[] = {
     {QKeySequence::Forward,                 1,          Qt::ALT  | Qt::Key_Right},
 };
 
-const short QKeySequencePrivate::numberOfKeyBindings = sizeof(QKeySequencePrivate::keyBindings)/(sizeof(QKeyBinding));
-
+const short QKeySequencePrivate::numberOfKeyBindings = sizeof(QKeySequencePrivate::keyBindings) / sizeof(QKeyBinding);
 
 /*!
     \enum QKeySequence::StandardKey
@@ -806,7 +805,7 @@ QKeySequence::QKeySequence(const QKeySequence& keysequence)
 QList<QKeySequence> QKeySequence::keyBindings(StandardKey key)
 {
     QList <QKeySequence> list;
-    for (short i = 0; i < QKeySequencePrivate::numberOfKeyBindings ; ++i) {
+    for (short i = 0; i < QKeySequencePrivate::numberOfKeyBindings; ++i) {
         QKeyBinding keyBinding = QKeySequencePrivate::keyBindings[i];
         if (keyBinding.standardKey == key) {
             if (keyBinding.priority > 0)
@@ -1051,22 +1050,14 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
         // For NativeText, check the traslation table first,
         // if we don't find anything then try it out with just the untranlated stuff.
         // PortableText will only try the untranlated table.
-        bool found = false;
-        for (int tran = 0; tran < 2; ++tran) {
-            if (!nativeText)
-                ++tran;
-            for (ushort i = 0; i < KeyNameTblSize; ++i) {
-                QString keyName(tran == 0
-                                ? QShortcut::tr(KeyNameTbl[i].name)
-                                : QString::fromLatin1(KeyNameTbl[i].name));
-                if (accel == keyName.toLower()) {
-                    ret |= KeyNameTbl[i].key;
-                    found = true;
-                    break;
-                }
-            }
-            if (found)
+        for (ushort i = 0; i < KeyNameTblSize; ++i) {
+            QString keyName(nativeText
+                            ? QShortcut::tr(KeyNameTbl[i].name)
+                            : QString::fromLatin1(KeyNameTbl[i].name));
+            if (accel == keyName.toLower()) {
+                ret |= KeyNameTbl[i].key;
                 break;
+            }
         }
     }
     return ret;
