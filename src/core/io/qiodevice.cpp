@@ -937,7 +937,7 @@ QByteArray QIODevice::read(qint64 maxSize)
     Q_UNUSED(d);
 #endif
 
-    if (quint64(maxSize) >= QBYTEARRAY_MAX) {
+    if (maxSize >= QBYTEARRAY_MAX) {
         qWarning("QIODevice::read: maxSize argument exceeds QByteArray size limit");
         maxSize = QBYTEARRAY_MAX - 1;
     }
@@ -991,7 +991,7 @@ QByteArray QIODevice::readAll()
 
     // flush internal read buffer
     if (!(d->openMode & Text) && !d->buffer.isEmpty()) {
-        if (quint64(d->buffer.size()) >= QBYTEARRAY_MAX)
+        if (d->buffer.size() >= QBYTEARRAY_MAX)
             return QByteArray();
         result = d->buffer.readAll();
         readBytes = result.size();
@@ -1004,7 +1004,7 @@ QByteArray QIODevice::readAll()
         // Size is unknown, read incrementally.
         qint64 readResult;
         do {
-            if (quint64(readBytes) + QIODEVICE_BUFFERSIZE >= QBYTEARRAY_MAX) {
+            if (readBytes + QIODEVICE_BUFFERSIZE >= QBYTEARRAY_MAX) {
                 // If resize would fail, don't read more, return what we have.
                 break;
             }
@@ -1016,7 +1016,7 @@ QByteArray QIODevice::readAll()
     } else {
         // Read it all in one go.
         // If resize fails, don't read anything.
-        if (quint64(readBytes + theSize - d->pos) >= QBYTEARRAY_MAX)
+        if ((readBytes + theSize - d->pos) >= QBYTEARRAY_MAX)
             return QByteArray();
         result.resize(int(readBytes + theSize - d->pos));
         readBytes += read(result.data() + readBytes, result.size() - readBytes);
@@ -1174,7 +1174,7 @@ QByteArray QIODevice::readLine(qint64 maxSize)
     Q_UNUSED(d);
 #endif
 
-    if (quint64(maxSize) >= QBYTEARRAY_MAX) {
+    if (maxSize >= QBYTEARRAY_MAX) {
         qWarning("QIODevice::read: maxSize argument exceeds QByteArray size limit");
         maxSize = QBYTEARRAY_MAX - 1;
     }
