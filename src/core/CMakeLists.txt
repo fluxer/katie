@@ -93,7 +93,6 @@ set(CORE_PUBLIC_HEADERS
     QTextBoundaryFinder
     QExplicitlySharedDataPointer
     QTimerEvent
-    QObjectUserData
     QTimer
     QElapsedTimer
     QUrl
@@ -149,7 +148,6 @@ set(CORE_PUBLIC_HEADERS
     QMapNode
     QLinkedListData
     QLatin1Char
-    QBBSystemLocaleData
     QDir
     QObject
     QFactoryInterface
