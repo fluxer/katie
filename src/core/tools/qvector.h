@@ -335,8 +335,7 @@ template <typename T>
 inline void QVector<T>::replace(int i, const T &t)
 {
     Q_ASSERT_X(i >= 0 && i < d->size, "QVector<T>::replace", "index out of range");
-    const T copy(t);
-    data()[i] = copy;
+    data()[i] = t;
 }
 
 template <typename T>
@@ -524,13 +523,12 @@ template <typename T>
 void QVector<T>::append(const T &t)
 {
     if (d->ref != 1 || d->size + 1 > d->alloc) {
-        const T copy(t);
         realloc(d->size, QVectorData::grow(sizeOfTypedData(), d->size + 1, sizeof(T),
                                            QTypeInfo<T>::isStatic));
         if (QTypeInfo<T>::isComplex)
-            new (p->array + d->size) T(copy);
+            new (p->array + d->size) T(t);
         else
-            p->array[d->size] = copy;
+            p->array[d->size] = t;
     } else {
         if (QTypeInfo<T>::isComplex)
             new (p->array + d->size) T(t);
@@ -545,7 +543,6 @@ Q_TYPENAME QVector<T>::iterator QVector<T>::insert(iterator before, size_type n,
 {
     int offset = int(before - p->array);
     if (n != 0) {
-        const T copy(t);
         if (d->ref != 1 || d->size + n > d->alloc)
             realloc(d->size, QVectorData::grow(sizeOfTypedData(), d->size + n, sizeof(T),
                                                QTypeInfo<T>::isStatic));
@@ -561,13 +558,13 @@ Q_TYPENAME QVector<T>::iterator QVector<T>::insert(iterator before, size_type n,
                 *--j = *--i;
             i = b+n;
             while (i != b)
-                *--i = copy;
+                *--i = t;
         } else {
             T *b = p->array + offset;
             T *i = b + n;
             memmove(i, b, (d->size - offset) * sizeof(T));
             while (i != b)
-                new (--i) T(copy);
+                new (--i) T(t);
         }
         d->size += n;
     }
@@ -615,13 +612,12 @@ bool QVector<T>::operator==(const QVector<T> &v) const
 template <typename T>
 QVector<T> &QVector<T>::fill(const T &from, int asize)
 {
-    const T copy(from);
     resize(asize < 0 ? d->size : asize);
     if (d->size) {
         T *i = p->array + d->size;
         T *b = p->array;
         while (i != b)
-            *--i = copy;
+            *--i = from;
     }
     return *this;
 }
