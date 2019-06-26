@@ -84,7 +84,7 @@ public:
     explicit QVector(int size);
     QVector(int size, const T &t);
     inline QVector(const QVector<T> &v) : d(v.d) { d->ref.ref(); if (!d->sharable) detach_helper(); }
-    inline ~QVector() { if (!d) return; if (!d->ref.deref()) free(p); }
+    inline ~QVector() { if (!d->ref.deref()) free(p); }
     QVector<T> &operator=(const QVector<T> &v);
 #ifdef Q_COMPILER_RVALUE_REFS
     inline QVector<T> operator=(QVector<T> &&other)

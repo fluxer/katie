@@ -159,7 +159,7 @@ public:
     inline QMap() : d(&QMapData::shared_null) { d->ref.ref(); }
     inline QMap(const QMap<Key, T> &other) : d(other.d)
     { d->ref.ref(); if (!d->sharable) detach(); }
-    inline ~QMap() { if (!d) return; if (!d->ref.deref()) freeData(d); }
+    inline ~QMap() { if (!d->ref.deref()) freeData(d); }
 
     QMap<Key, T> &operator=(const QMap<Key, T> &other);
 #ifdef Q_COMPILER_RVALUE_REFS
