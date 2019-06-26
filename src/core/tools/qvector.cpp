@@ -59,7 +59,8 @@ QVectorData *QVectorData::reallocate(QVectorData *x, int newsize)
 
 void QVectorData::freeData(QVectorData *x)
 {
-    free(x);
+    if(x != &shared_null)
+        free(x);
 }
 
 int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive)
