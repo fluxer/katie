@@ -932,7 +932,7 @@ static void qt_get_net_supported()
                                False, XA_ATOM, &type, &format, &nitems, &after, &data);
 
             if (type == XA_ATOM && format == 32) {
-                buffer.setRawData(reinterpret_cast<char *>(data), nitems * sizeof(long));
+                buffer = QByteArray(reinterpret_cast<char *>(data), nitems * sizeof(long));
                 offset += nitems;
             } else
                 after = 0;
@@ -1001,7 +1001,7 @@ static void qt_get_net_virtual_roots()
                                False, XA_ATOM, &type, &format, &nitems, &after, &data);
 
             if (type == XA_ATOM && format == 32) {
-                buffer.setRawData(reinterpret_cast<char *>(data), nitems * 4);
+                buffer = QByteArray(reinterpret_cast<char *>(data), nitems * 4);
                 offset += nitems;
             } else
                 after = 0;
