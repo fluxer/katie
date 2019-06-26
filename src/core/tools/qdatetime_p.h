@@ -241,7 +241,7 @@ public:
     virtual QString getAmPmText(AmPm ap, Case cs) const;
     virtual QLocale locale() const { return defaultLocale; }
 
-    mutable int currentSectionIndex;
+    int currentSectionIndex;
     Sections display;
     mutable int cachedDay;
     mutable QString text;
