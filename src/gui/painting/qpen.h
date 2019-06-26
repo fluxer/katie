@@ -103,7 +103,7 @@ public:
     inline bool operator!=(const QPen &p) const { return !(operator==(p)); }
     operator QVariant() const;
 
-    bool isDetached();
+    bool isDetached() const;
 private:
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QPen &);
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QPen &);

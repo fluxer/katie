@@ -857,12 +857,12 @@ bool QPen::operator==(const QPen &p) const
 
 
 /*!
-    \fn bool QPen::isDetached()
+    \fn bool QPen::isDetached() const
 
     \internal
 */
 
-bool QPen::isDetached()
+bool QPen::isDetached() const
 {
     return d->ref == 1;
 }
