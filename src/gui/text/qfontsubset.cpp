@@ -107,7 +107,10 @@ static const char * const agl =
 "sigma\0tau\0upsilon\0phi\0chi\0psi\0omega\0iotadieresis\0upsilondieresis\0"
 ;
 
-static const struct { quint16 u; quint16 index; } unicode_to_aglindex[] = {
+static const struct UnicodeAglData {
+    const quint16 u;
+    const quint16 index;
+} unicode_to_aglindex[] = {
     {0x0000, 0}, {0x0020, 8}, {0x0021, 14}, {0x0022, 21},
     {0x0023, 30}, {0x0024, 41}, {0x0025, 48}, {0x0026, 56},
     {0x0027, 66}, {0x0028, 78}, {0x0029, 88}, {0x002A, 99},

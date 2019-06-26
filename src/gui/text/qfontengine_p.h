@@ -169,8 +169,8 @@ public:
 
     virtual void removeGlyphFromCache(glyph_t);
 
-    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) = 0;
-    virtual glyph_metrics_t boundingBox(glyph_t glyph) = 0;
+    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const = 0;
+    virtual glyph_metrics_t boundingBox(glyph_t glyph) const = 0;
     virtual glyph_metrics_t boundingBox(glyph_t glyph, const QTransform &matrix);
     glyph_metrics_t tightBoundingBox(const QGlyphLayout &glyphs);
 
@@ -278,8 +278,8 @@ public:
 #endif
     virtual void addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs, QPainterPath *path, QTextItem::RenderFlags flags);
 
-    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs);
-    virtual glyph_metrics_t boundingBox(glyph_t glyph);
+    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
+    virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
 
     virtual QFixed ascent() const;
     virtual QFixed descent() const;
@@ -313,8 +313,8 @@ public:
     virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs,
                       QTextEngine::ShaperFlags flags) const;
 
-    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs);
-    virtual glyph_metrics_t boundingBox(glyph_t glyph);
+    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const;
+    virtual glyph_metrics_t boundingBox(glyph_t glyph) const;
 
     virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const;
     virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags) const;

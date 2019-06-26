@@ -243,7 +243,7 @@ QFixed QFontEngine::xHeight() const
     QChar x((ushort)'x');
     stringToCMap(&x, 1, &glyphs, &nglyphs, QTextEngine::GlyphIndicesOnly);
 
-    glyph_metrics_t bb = const_cast<QFontEngine *>(this)->boundingBox(glyphs.glyphs[0]);
+    glyph_metrics_t bb = boundingBox(glyphs.glyphs[0]);
     return bb.height;
 }
 
@@ -254,7 +254,7 @@ QFixed QFontEngine::averageCharWidth() const
     QChar x((ushort)'x');
     stringToCMap(&x, 1, &glyphs, &nglyphs, QTextEngine::GlyphIndicesOnly);
 
-    glyph_metrics_t bb = const_cast<QFontEngine *>(this)->boundingBox(glyphs.glyphs[0]);
+    glyph_metrics_t bb = boundingBox(glyphs.glyphs[0]);
     return bb.xoff;
 }
 
@@ -1189,7 +1189,7 @@ void QFontEngineBox::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyp
         path->addRect(QRectF(positions[k].toPointF(), s));
 }
 
-glyph_metrics_t QFontEngineBox::boundingBox(const QGlyphLayout &glyphs)
+glyph_metrics_t QFontEngineBox::boundingBox(const QGlyphLayout &glyphs) const
 {
     glyph_metrics_t overall;
     overall.width = _size*glyphs.numGlyphs;
@@ -1198,7 +1198,7 @@ glyph_metrics_t QFontEngineBox::boundingBox(const QGlyphLayout &glyphs)
     return overall;
 }
 
-glyph_metrics_t QFontEngineBox::boundingBox(glyph_t)
+glyph_metrics_t QFontEngineBox::boundingBox(glyph_t) const
 {
     return glyph_metrics_t(0, -_size, _size, _size, _size, 0);
 }
@@ -1343,7 +1343,7 @@ bool QFontEngineMulti::stringToCMap(const QChar *str, int len,
     return true;
 }
 
-glyph_metrics_t QFontEngineMulti::boundingBox(const QGlyphLayout &glyphs)
+glyph_metrics_t QFontEngineMulti::boundingBox(const QGlyphLayout &glyphs) const
 {
     if (glyphs.numGlyphs <= 0)
         return glyph_metrics_t();
@@ -1565,7 +1565,7 @@ void QFontEngineMulti::doKerning(QGlyphLayout *glyphs, QTextEngine::ShaperFlags 
         glyphs->glyphs[i] = hi | glyphs->glyphs[i];
 }
 
-glyph_metrics_t QFontEngineMulti::boundingBox(glyph_t glyph)
+glyph_metrics_t QFontEngineMulti::boundingBox(glyph_t glyph) const
 {
     const int which = highByte(glyph);
     Q_ASSERT(which < engines.size());

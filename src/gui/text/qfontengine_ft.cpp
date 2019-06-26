@@ -1210,7 +1210,7 @@ qreal QFontEngineFT::minRightBearing() const
         stringToCMap(ch, char_table_entries, &glyphs, &ng, QTextEngine::GlyphIndicesOnly);
         while (--ng) {
             if (glyphs.glyphs[ng]) {
-                glyph_metrics_t gi = const_cast<QFontEngineFT *>(this)->boundingBox(glyphs.glyphs[ng]);
+                glyph_metrics_t gi = boundingBox(glyphs.glyphs[ng]);
                 lbearing = qMin(lbearing, gi.x);
                 rbearing = qMin(rbearing, (gi.xoff - gi.x - gi.width));
             }
@@ -1579,7 +1579,7 @@ void QFontEngineFT::recalcAdvances(QGlyphLayout *glyphs, QTextEngine::ShaperFlag
         unlockFace();
 }
 
-glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs)
+glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs) const
 {
 
     FT_Face face = 0;
@@ -1630,7 +1630,7 @@ glyph_metrics_t QFontEngineFT::boundingBox(const QGlyphLayout &glyphs)
     return overall;
 }
 
-glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph)
+glyph_metrics_t QFontEngineFT::boundingBox(glyph_t glyph) const
 {
     FT_Face face = 0;
     glyph_metrics_t overall;
