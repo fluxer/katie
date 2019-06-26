@@ -451,10 +451,7 @@ template <typename T>
 Q_OUTOFLINE_TEMPLATE void QList<T>::reserve(int alloc)
 {
     if (d->alloc < alloc) {
-        if (d->ref != 1)
-            detach_helper(alloc);
-        else
-            p.reallocData(alloc);
+        detach_helper(alloc);
     }
 }
 
