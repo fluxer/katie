@@ -5643,12 +5643,6 @@ QIcon QCommonStyle::standardIcon(StandardPixmap standardicon, const QStyleOption
     return icon;
 }
 
-static inline uint qt_intensity(uint r, uint g, uint b)
-{
-    // 30% red, 59% green, 11% blue
-    return (77 * r + 150 * g + 28 * b) / 255;
-}
-
 // in qpixmapfilter.cpp
 extern Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest, const QRect& rect);
 
