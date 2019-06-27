@@ -56,7 +56,7 @@ public:
     QSqlRecordPrivate();
     QSqlRecordPrivate(const QSqlRecordPrivate &other);
 
-    inline bool contains(int index) { return index >= 0 && index < fields.count(); }
+    inline bool contains(int index) const { return index >= 0 && index < fields.count(); }
     QString createField(int index, const QString &prefix) const;
 
     QVector<QSqlField> fields;
@@ -126,8 +126,8 @@ QString QSqlRecordPrivate::createField(int index, const QString &prefix) const
 */
 
 QSqlRecord::QSqlRecord()
+    : d(new QSqlRecordPrivate())
 {
-    d = new QSqlRecordPrivate();
 }
 
 /*!

@@ -64,8 +64,8 @@ struct QHolder {
 class QSqlResultPrivate
 {
 public:
-    QSqlResultPrivate(QSqlResult* d)
-    : q(d), idx(QSql::BeforeFirstRow), active(false),
+    QSqlResultPrivate()
+    : idx(QSql::BeforeFirstRow), active(false),
       isSel(false), forwardOnly(false), precisionPolicy(QSql::LowPrecisionDouble), bindCount(0), binds(QSqlResult::PositionalBinding)
     {}
 
@@ -98,7 +98,6 @@ public:
     QString holderAt(int index) const;
 
 public:
-    QSqlResult* q;
     QPointer<QSqlDriver> sqldriver;
     int idx;
     QString sql;
@@ -249,8 +248,8 @@ QString QSqlResultPrivate::namedToPositionalBinding()
 */
 
 QSqlResult::QSqlResult(const QSqlDriver *db)
+    : d(new QSqlResultPrivate())
 {
-    d = new QSqlResultPrivate(this);
     d->sqldriver = const_cast<QSqlDriver *>(db);
     if(db) {
         setNumericalPrecisionPolicy(db->numericalPrecisionPolicy());
