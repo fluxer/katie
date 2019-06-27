@@ -63,9 +63,6 @@ public:
     static QBitmap fromData(const QSize &size, const uchar *bits,
                             QImage::Format monoFormat = QImage::Format_MonoLSB);
 
-    QBitmap transformed(const QMatrix &) const;
-    QBitmap transformed(const QTransform &matrix) const;
-
     typedef QExplicitlySharedDataPointer<QPixmapData> DataPtr;
 };
 Q_DECLARE_SHARED(QBitmap)

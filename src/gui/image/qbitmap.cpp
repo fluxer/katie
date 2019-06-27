@@ -192,15 +192,14 @@ QBitmap::QBitmap(const QString& fileName, const char *format)
 
 QBitmap &QBitmap::operator=(const QPixmap &pixmap)
 {
-    if (pixmap.isNull()) {                        // a null pixmap
+    if (pixmap.isNull()) {                           // a null pixmap
         QBitmap bm(0, 0);
         QBitmap::operator=(bm);
     } else if (pixmap.depth() == 1) {                // 1-bit pixmap
-        QPixmap::operator=(pixmap);                // shallow assignment
-    } else {                                        // n-bit depth pixmap
-        QImage image;
-        image = pixmap.toImage();                                // convert pixmap to image
-        *this = fromImage(image);                                // will dither image
+        QPixmap::operator=(pixmap);                  // shallow assignment
+    } else {                                         // n-bit depth pixmap
+        QImage image = pixmap.toImage();             // convert pixmap to image
+        *this = fromImage(image);                    // will dither image
     }
     return *this;
 }
@@ -298,30 +297,6 @@ QBitmap QBitmap::fromData(const QSize &size, const uchar *bits, QImage::Format m
         memcpy(image.scanLine(y), bits + bytesPerLine * y, bytesPerLine);
     return QBitmap::fromImage(image);
 }
-
-/*!
-    Returns a copy of this bitmap, transformed according to the given
-    \a matrix.
-
-    \sa QPixmap::transformed()
- */
-QBitmap QBitmap::transformed(const QTransform &matrix) const
-{
-    return QPixmap::transformed(matrix);
-}
-
-/*!
-  \overload
-  \obsolete
-
-  This convenience function converts the \a matrix to a QTransform
-  and calls the overloaded function.
-*/
-QBitmap QBitmap::transformed(const QMatrix &matrix) const
-{
-    return transformed(QTransform(matrix));
-}
-
 
 QT_END_NAMESPACE
 
