@@ -89,13 +89,13 @@ public:
         QReadLocker locker(&lock);
         return contains(key);
     }
-    inline QStringList keys_ts() const
+    inline QStringList keys_ts()
     {
         QReadLocker locker(&lock);
         return keys();
     }
 
-    mutable QReadWriteLock lock;
+    QReadWriteLock lock;
 };
 Q_GLOBAL_STATIC(QConnectionDict, dbDict)
 
@@ -238,7 +238,7 @@ void QSqlDatabasePrivate::addDatabase(const QSqlDatabase &db, const QString &nam
 */
 QSqlDatabase QSqlDatabasePrivate::database(const QString& name, bool open)
 {
-    const QConnectionDict *dict = dbDict();
+    QConnectionDict *dict = dbDict();
     Q_ASSERT(dict);
 
     dict->lock.lockForRead();

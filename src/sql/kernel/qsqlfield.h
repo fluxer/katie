@@ -89,7 +89,6 @@ public:
     bool isGenerated() const;
     bool isValid() const;
 
-
 private:
     void detach();
     QVariant val;
