@@ -193,6 +193,7 @@ public:
 public:
     typedef QExplicitlySharedDataPointer<QPixmapData> DataPtr;
     inline DataPtr &data_ptr() { return data; }
+    inline const DataPtr &data_ptr() const { return data; }
 };
 
 Q_DECLARE_SHARED(QPixmap)
