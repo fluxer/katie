@@ -46,7 +46,6 @@
 //
 
 #include <QtCore/QList>
-#include <QtCore/qglobal.h>
 #include <QtCore/QString>
 
 QT_BEGIN_NAMESPACE
