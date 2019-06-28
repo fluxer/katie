@@ -132,7 +132,7 @@ QList<QToolBar *>  MainWindowBase::createToolBars(const QDesignerActions *action
 
 QString MainWindowBase::mainWindowTitle()
 {
-    return tr("Qt Designer");
+    return tr("Katie Designer");
 }
 
 // Use the minor Qt version as settings versions to avoid conflicts
