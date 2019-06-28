@@ -117,10 +117,10 @@ public:
 protected:
     inline void reallocateStack();
 
-    inline Value &sym(int index)
+    inline Value &sym(int index) const
     { return sym_stack [tos + index - 1]; }
 
-    inline Location &loc(int index)
+    inline Location &loc(int index) const
     { return location_stack [tos + index - 2]; }
 
 protected:
