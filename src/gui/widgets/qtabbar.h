@@ -52,6 +52,7 @@ class Q_GUI_EXPORT QTabBar: public QWidget
     Q_OBJECT
 
     Q_ENUMS(Shape)
+    Q_ENUMS(SelectionBehavior)
     Q_PROPERTY(Shape shape READ shape WRITE setShape)
     Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentChanged)
     Q_PROPERTY(int count READ count)
@@ -69,8 +70,15 @@ public:
     explicit QTabBar(QWidget* parent = Q_NULLPTR);
     ~QTabBar();
 
-    enum Shape { RoundedNorth, RoundedSouth, RoundedWest, RoundedEast,
-                 TriangularNorth, TriangularSouth, TriangularWest, TriangularEast
+    enum Shape {
+        RoundedNorth,
+        RoundedSouth,
+        RoundedWest,
+        RoundedEast,
+        TriangularNorth,
+        TriangularSouth,
+        TriangularWest,
+        TriangularEast
     };
 
     enum ButtonPosition {
