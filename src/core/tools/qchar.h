@@ -314,7 +314,7 @@ public:
 
     static UnicodeVersion QT_FASTCALL currentUnicodeVersion();
 
-    static QString QT_FASTCALL decomposition(uint ucs4);
+    static QString QT_FASTCALL decomposition(const uint ucs4);
 
 
 private:
