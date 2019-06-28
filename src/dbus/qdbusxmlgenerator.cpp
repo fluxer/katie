@@ -233,12 +233,11 @@ QString qDBusGenerateMetaObjectXml(QString interface, const QMetaObject *mo,
         // generate the interface name from the meta object
         interface = qDBusInterfaceFromMetaObject(mo);
 
-    QString xml;
     int idx = mo->indexOfClassInfo(QCLASSINFO_DBUS_INTROSPECTION);
     if (idx >= mo->classInfoOffset())
         return QString::fromUtf8(mo->classInfo(idx).value());
-    else
-        xml = generateInterfaceXml(mo, flags, base->methodCount(), base->propertyCount());
+
+    QString xml = generateInterfaceXml(mo, flags, base->methodCount(), base->propertyCount());
 
     if (xml.isEmpty())
         return QString();       // don't add an empty interface
@@ -281,12 +280,11 @@ QString qDBusGenerateMetaObjectXml(QString interface, const QMetaObject *mo, con
         }
     }
 
-    QString xml;
     int idx = mo->indexOfClassInfo(QCLASSINFO_DBUS_INTROSPECTION);
     if (idx >= mo->classInfoOffset())
         return QString::fromUtf8(mo->classInfo(idx).value());
-    else
-        xml = generateInterfaceXml(mo, flags, base->methodCount(), base->propertyCount());
+
+    QString xml = generateInterfaceXml(mo, flags, base->methodCount(), base->propertyCount());
 
     if (xml.isEmpty())
         return QString();       // don't add an empty interface
