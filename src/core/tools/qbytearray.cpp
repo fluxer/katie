@@ -50,13 +50,24 @@
 #include "qscopedpointer.h"
 #include "qdatastream.h"
 
-#ifndef QT_NO_COMPRESS
-#include <zlib.h>
-#endif
 #include <ctype.h>
 #include <limits.h>
 #include <string.h>
 #include <stdlib.h>
+
+// #define QT_FAST_COMPRESS
+
+#ifndef QT_NO_COMPRESS
+#include <zlib.h>
+#include <zstd.h>
+#include <zstd_errors.h>
+
+// ZSTD_getErrorString and ZSTD_getErrorCode are not exported in versions prior to v1.1.3
+#if !defined(QT_VISIBILITY_AVAILABLE) || (ZSTD_VERSION_MAJOR + ZSTD_VERSION_MINOR + ZSTD_VERSION_RELEASE) >= 5
+#  define QT_USE_ZSTD_ERROR
+#endif
+
+#endif // QT_NO_COMPRESS
 
 #define IS_RAW_DATA(d) ((d)->data != (d)->array)
 
@@ -415,6 +426,9 @@ quint16 qChecksum(const char *data, uint len)
 #ifndef QT_NO_COMPRESS
 QByteArray qCompress(const uchar* data, int nbytes, int compressionLevel)
 {
+#ifdef QT_FAST_COMPRESS
+    return qFastCompress(reinterpret_cast<const char*>(data), nbytes, compressionLevel);
+#else
     if (nbytes == 0) {
         return QByteArray(4, '\0');
     }
@@ -451,8 +465,8 @@ QByteArray qCompress(const uchar* data, int nbytes, int compressionLevel)
     } while (res == Z_BUF_ERROR);
 
     return bazip;
+#endif // QT_FAST_COMPRESS
 }
-#endif
 
 /*!
     \fn QByteArray qUncompress(const QByteArray &data)
@@ -485,9 +499,11 @@ QByteArray qCompress(const uchar* data, int nbytes, int compressionLevel)
     array with the uncompressed data.
 */
 
-#ifndef QT_NO_COMPRESS
 QByteArray qUncompress(const uchar* data, int nbytes)
 {
+#ifdef QT_FAST_COMPRESS
+    return qFastUncompress(reinterpret_cast<const char*>(data), nbytes);
+#else
     if (!data) {
         qWarning("qUncompress: Data is null");
         return QByteArray();
@@ -558,8 +574,124 @@ QByteArray qUncompress(const uchar* data, int nbytes)
             return QByteArray();
         }
     }
+#endif // QT_FAST_COMPRESS
 }
+
+/*!
+    \fn QByteArray qFastCompress(const QByteArray& data, int compressionLevel)
+
+    \relates QByteArray
+
+    Compresses the \a data byte array and returns the compressed data
+    in a new byte array.
+
+    The \a compressionLevel parameter specifies how much compression
+    should be used. Valid values are between 0 and 9, with 9
+    corresponding to the greatest compression (i.e. smaller compressed
+    data) at the cost of using a slower algorithm. Smaller values (8,
+    7, ..., 1) provide successively less compression at slightly
+    faster speeds. The value 0 corresponds to no compression at all.
+    The default value is -1, which specifies ZSTD's default
+    compression.
+
+    \sa qFastUncompress()
+*/
+
+/*! \relates QByteArray
+
+    \overload
+
+    Compresses the first \a nbytes of \a data and returns the
+    compressed data in a new byte array.
+*/
+
+QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel)
+{
+    if (!data) {
+        qWarning("qFastCompress: Data is null");
+        return QByteArray();
+    } else if (nbytes <= 0) {
+        qWarning("qFastUncompress: Data size is negative or zero");
+        return QByteArray();
+    }
+
+    const size_t bndresult = ZSTD_compressBound(nbytes);
+    if (bndresult <= 0) {
+        qWarning("qFastUncompress: compression bound is negative or zero");
+        return QByteArray();
+    }
+
+    QByteArray result(bndresult, Qt::Uninitialized);
+    const size_t cmpresult = ZSTD_compress(result.data(), result.size(), data, nbytes, compressionLevel);
+    if (ZSTD_isError(cmpresult)) {
+#ifdef QT_USE_ZSTD_ERROR
+        qWarning("qFastCompress: Could not compress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(cmpresult)));
+#else
+        qWarning("qFastCompress: Could not compress data");
 #endif
+        return QByteArray();
+    }
+    result.resize(cmpresult);
+
+    return result;
+}
+
+/*!
+    \fn QByteArray qFastUncompress(const QByteArray &data)
+
+    \relates QByteArray
+
+    Uncompresses the \a data byte array and returns a new byte array
+    with the uncompressed data.
+
+    Returns an empty QByteArray if the input data was corrupt.
+
+    This function will uncompress data compressed with qFastCompress().
+
+    \bold{Note:} This function uses format different from that used by
+    qCompress and cannot decompress zlib data.
+
+    \sa qFastCompress()
+*/
+
+/*! \relates QByteArray
+
+    \overload
+
+    Uncompresses the first \a nbytes of \a data and returns a new byte
+    array with the uncompressed data.
+*/
+
+QByteArray qFastUncompress(const char* data, int nbytes)
+{
+    if (!data) {
+        qWarning("qFastUncompress: Data is null");
+        return QByteArray();
+    } else if (nbytes <= 0) {
+        qWarning("qFastUncompress: Data size is negative or zero");
+        return QByteArray();
+    }
+
+    const unsigned long long uncompressedsize = ZSTD_getDecompressedSize(data, nbytes);
+    if (uncompressedsize <= 0) {
+        qWarning("qFastUncompress: uncompression size is negative or zero");
+        return QByteArray();
+    }
+
+    QByteArray result(uncompressedsize, Qt::Uninitialized);
+    const size_t decresult = ZSTD_decompress(result.data(), result.size(), data, nbytes);
+    if (ZSTD_isError(decresult)) {
+#ifdef QT_USE_ZSTD_ERROR
+        qWarning("qFastCompress: Could not uncompress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(decresult)));
+#else
+        qWarning("qFastCompress: Could not uncompress data");
+#endif
+        return QByteArray();
+    }
+
+    return result;
+}
+#endif // QT_NO_COMPRESS
 
 QByteArray::Data QByteArray::shared_null = { QAtomicInt(1),
                                              0, 0, shared_null.array, {0} };

@@ -520,6 +520,13 @@ inline QByteArray qCompress(const QByteArray& data, int compressionLevel = -1)
 { return qCompress(reinterpret_cast<const uchar *>(data.constData()), data.size(), compressionLevel); }
 inline QByteArray qUncompress(const QByteArray& data)
 { return qUncompress(reinterpret_cast<const uchar*>(data.constData()), data.size()); }
+
+Q_CORE_EXPORT QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel = -1);
+Q_CORE_EXPORT QByteArray qFastUncompress(const char* data, int nbytes);
+inline QByteArray qFastCompress(const QByteArray& data, int compressionLevel = -1)
+{ return qFastCompress(data.constData(), data.size(), compressionLevel); }
+inline QByteArray qFastUncompress(const QByteArray& data)
+{ return qFastUncompress(data.constData(), data.size()); }
 #endif
 
 Q_DECLARE_TYPEINFO(QByteArray, Q_MOVABLE_TYPE);

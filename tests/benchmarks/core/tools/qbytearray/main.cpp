@@ -47,12 +47,20 @@
 
 QT_USE_NAMESPACE
 
+static const QByteArray lorem = QByteArray("Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.");
+
 class tst_qbytearray : public QObject
 {
     Q_OBJECT
 private slots:
     void append();
     void append_data();
+    void compress_uncompress_1();
+    void compress_uncompress_9();
+    void fast_compress_uncompress_1();
+    void fast_compress_uncompress_9();
+    void compress_uncompress_diff_1();
+    void compress_uncompress_diff_9();
 };
 
 
@@ -82,6 +90,57 @@ void tst_qbytearray::append()
     }
 }
 
+void tst_qbytearray::compress_uncompress_1() {
+    QBENCHMARK {
+        QByteArray compressed = qCompress(lorem, 1);
+        QVERIFY(!compressed.isEmpty());
+        QByteArray decompressed = qUncompress(compressed);
+        QVERIFY(decompressed == lorem);
+    }
+}
+
+void tst_qbytearray::compress_uncompress_9() {
+    QBENCHMARK {
+        QByteArray compressed = qCompress(lorem, 9);
+        QVERIFY(!compressed.isEmpty());
+        QByteArray decompressed = qUncompress(compressed);
+        QVERIFY(decompressed == lorem);
+    }
+}
+
+void tst_qbytearray::fast_compress_uncompress_1() {
+    QBENCHMARK {
+        QByteArray compressed = qFastCompress(lorem, 1);
+        QVERIFY(!compressed.isEmpty());
+        QByteArray decompressed = qFastUncompress(compressed);
+        QVERIFY(decompressed == lorem);
+    }
+}
+
+void tst_qbytearray::fast_compress_uncompress_9() {
+    QBENCHMARK {
+        QByteArray compressed = qFastCompress(lorem, 9);
+        QVERIFY(!compressed.isEmpty());
+        QByteArray decompressed = qFastUncompress(compressed);
+        QVERIFY(decompressed == lorem);
+    }
+}
+
+void tst_qbytearray::compress_uncompress_diff_1() {
+    QByteArray compressed = qCompress(lorem, 1);
+    QVERIFY(!compressed.isEmpty());
+    QByteArray fastcompressed = qFastCompress(lorem, 1);
+    QVERIFY(!fastcompressed.isEmpty());
+    qDebug() << "compressed" << compressed.size() << "fastcompressed" << fastcompressed.size();
+}
+
+void tst_qbytearray::compress_uncompress_diff_9() {
+    QByteArray compressed = qCompress(lorem, 9);
+    QVERIFY(!compressed.isEmpty());
+    QByteArray fastcompressed = qFastCompress(lorem, 9);
+    QVERIFY(!fastcompressed.isEmpty());
+    qDebug() << "compressed" << compressed.size() << "fastcompressed" << fastcompressed.size();
+}
 
 QTEST_MAIN(tst_qbytearray)
 

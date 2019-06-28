@@ -250,6 +250,15 @@ set_package_properties(ZLIB PROPERTIES
     TYPE REQUIRED
 )
 
+# v0.7.3+ required for ZSTD_getDecompressedSize()
+find_package(ZSTD 0.7.3)
+set_package_properties(ZSTD PROPERTIES
+    PURPOSE "Required for compression support"
+    DESCRIPTION "Fast real-time compression algorithm"
+    URL "https://github.com/facebook/zstd"
+    TYPE REQUIRED
+)
+
 find_package(OpenSSL)
 set_package_properties(OpenSSL PROPERTIES
     PURPOSE "Required for HTTPS support"

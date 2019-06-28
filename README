@@ -50,6 +50,7 @@ There are several things you should be aware before considering Katie:
   - building without resolv is possible
   - alternative libc implementations support
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
+  - faster alternatives to qCompress() and qUncompress()
   - brief manual pages for all command-line tools
   - desktop files, Shell profile and dynamic linker/loader config
   - automatic async DBus calls based on return type, no Q_NOREPLY needed
