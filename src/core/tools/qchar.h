@@ -345,12 +345,12 @@ inline void QChar::setCell(const uchar acell)
 inline void QChar::setRow(const uchar arow)
 { ucs = ushort((ushort(arow)<<8) + (ucs&0xff)); }
 
-inline bool operator==(QChar c1, QChar c2) { return c1.unicode() == c2.unicode(); }
-inline bool operator!=(QChar c1, QChar c2) { return c1.unicode() != c2.unicode(); }
-inline bool operator<=(QChar c1, QChar c2) { return c1.unicode() <= c2.unicode(); }
-inline bool operator>=(QChar c1, QChar c2) { return c1.unicode() >= c2.unicode(); }
-inline bool operator<(QChar c1, QChar c2) { return c1.unicode() < c2.unicode(); }
-inline bool operator>(QChar c1, QChar c2) { return c1.unicode() > c2.unicode(); }
+inline bool operator==(const QChar c1, const QChar c2) { return c1.unicode() == c2.unicode(); }
+inline bool operator!=(const QChar c1, const QChar c2) { return c1.unicode() != c2.unicode(); }
+inline bool operator<=(const QChar c1, const QChar c2) { return c1.unicode() <= c2.unicode(); }
+inline bool operator>=(const QChar c1, const QChar c2) { return c1.unicode() >= c2.unicode(); }
+inline bool operator<(const QChar c1, const QChar c2) { return c1.unicode() < c2.unicode(); }
+inline bool operator>(const QChar c1, const QChar c2) { return c1.unicode() > c2.unicode(); }
 
 #ifndef QT_NO_DATASTREAM
 Q_CORE_EXPORT QDataStream &operator<<(QDataStream &, const QChar &);
