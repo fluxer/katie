@@ -320,8 +320,7 @@ public:
     }
 
     inline QByteArray read(int maxLength) {
-        QByteArray tmp;
-        tmp.resize(qMin(maxLength, size()));
+        QByteArray tmp(qMin(maxLength, size()), Qt::Uninitialized);
         read(tmp.data(), tmp.size());
         return tmp;
     }
@@ -392,8 +391,7 @@ public:
         int bytesToRead = qMin(size(), maxLength);
         if(maxLength <= 0)
             return QByteArray();
-        QByteArray ret;
-        ret.resize(bytesToRead);
+        QByteArray ret(bytesToRead, Qt::Uninitialized);
         int readSoFar = 0;
         for (int i = 0; readSoFar < bytesToRead && i < buffers.size(); ++i) {
             int start = 0;
