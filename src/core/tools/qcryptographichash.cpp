@@ -220,37 +220,37 @@ QByteArray QCryptographicHash::result() const
 
     switch (d->method) {
         case QCryptographicHash::Md4: {
-            d->result.resize(16);
+            d->result.resize(MD4_DIGEST_LENGTH);
             MD4_Final(reinterpret_cast<unsigned char *>(d->result.data()), &d->md4Context);
             break;
         }
         case QCryptographicHash::Md5: {
-            d->result.resize(16);
+            d->result.resize(MD5_DIGEST_LENGTH);
             MD5_Final(reinterpret_cast<unsigned char *>(d->result.data()), &d->md5Context);
             break;
         }
         case QCryptographicHash::Sha1: {
-            d->result.resize(20);
+            d->result.resize(SHA_DIGEST_LENGTH);
             SHA1_Final(reinterpret_cast<unsigned char *>(d->result.data()), &d->sha1Context);
             break;
         }
         case QCryptographicHash::Sha224: {
-            d->result.resize(57);
+            d->result.resize(SHA224_DIGEST_LENGTH);
             SHA224_Final(reinterpret_cast<unsigned char *>(d->result.data()), &d->sha224Context);
             break;
         }
         case QCryptographicHash::Sha256:{
-            d->result.resize(65);
+            d->result.resize(SHA256_DIGEST_LENGTH);
             SHA256_Final(reinterpret_cast<unsigned char *>(d->result.data()), &d->sha256Context);
             break;
         }
         case QCryptographicHash::Sha384:{
-            d->result.resize(97);
+            d->result.resize(SHA384_DIGEST_LENGTH);
             SHA384_Final(reinterpret_cast<unsigned char *>(d->result.data()), &d->sha384Context);
             break;
         }
         case QCryptographicHash::Sha512:{
-            d->result.resize(129);
+            d->result.resize(SHA512_DIGEST_LENGTH);
             SHA512_Final(reinterpret_cast<unsigned char *>(d->result.data()), &d->sha512Context);
             break;
         }
