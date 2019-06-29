@@ -160,9 +160,6 @@ QT_BEGIN_NAMESPACE
     It is generally advisable to explicitly enable or disable the
     socket notifier, especially for write notifiers.
 
-    \bold{Note for Windows users:} The socket passed to QSocketNotifier
-    will become non-blocking, even if it was created as a blocking socket.
-
     \sa setEnabled(), isEnabled()
 */
 
@@ -266,21 +263,19 @@ void QSocketNotifier::setEnabled(bool enable)
 */
 bool QSocketNotifier::event(QEvent *e)
 {
-    // Emits the activated() signal when a QEvent::SockAct is
-    // received.
     if (e->type() == QEvent::ThreadChange) {
         if (snenabled) {
             QMetaObject::invokeMethod(this, "setEnabled", Qt::QueuedConnection,
                                       Q_ARG(bool, snenabled));
             setEnabled(false);
         }
-    }
-    QObject::event(e);                        // will activate filters
-    if (e->type() == QEvent::SockAct) {
+        return true;
+    } else if (e->type() == QEvent::SockAct) {
         emit activated(sockfd);
         return true;
     }
-    return false;
+
+    return QObject::event(e);
 }
 
 #include "moc_qsocketnotifier.h"
