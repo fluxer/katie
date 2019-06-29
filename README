@@ -26,8 +26,6 @@ There are several things you should be aware before considering Katie:
   - moc, uic, rcc, lrelease, lupdate, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
   - updated bundled FFTW and Valgrind from upstream
-  - improved signal/slot template arguments handling
-  - improved OpenSSL default certificate and certificates directory detection
   - Symbian, QWS, QPA, Mac and Windows are no longer supported platforms
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine
@@ -55,6 +53,8 @@ There are several things you should be aware before considering Katie:
   - desktop files, Shell profile and dynamic linker/loader config
   - automatic async DBus calls based on return type, no Q_NOREPLY needed
   - more reliable qrand(), seeded per thread
+  - improved signal/slot template arguments handling
+  - improved OpenSSL default certificate and certificates directory detection
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - script component relies on PCRE instead of internal copy
 
