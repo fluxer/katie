@@ -263,9 +263,67 @@ QByteArray QCryptographicHash::result() const
 */
 QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::Algorithm method)
 {
-    QCryptographicHash hash(method);
-    hash.addData(data);
-    return hash.result();
+    switch (method) {
+        case QCryptographicHash::Md4: {
+            QByteArray result(MD4_DIGEST_LENGTH, Qt::Uninitialized);
+            MD4_CTX md4Context;
+            MD4_Init(&md4Context);
+            MD4_Update(&md4Context, data.constData(), data.length());
+            MD4_Final(reinterpret_cast<unsigned char *>(result.data()), &md4Context);
+            return result;
+        }
+        case QCryptographicHash::Md5: {
+            QByteArray result(MD5_DIGEST_LENGTH, Qt::Uninitialized);
+            MD5_CTX md5Context;
+            MD5_Init(&md5Context);
+            MD5_Update(&md5Context, data.constData(), data.length());
+            MD5_Final(reinterpret_cast<unsigned char *>(result.data()), &md5Context);
+            return result;
+        }
+        case QCryptographicHash::Sha1: {
+            QByteArray result(SHA_DIGEST_LENGTH, Qt::Uninitialized);
+            SHA_CTX sha1Context;
+            SHA1_Init(&sha1Context);
+            SHA1_Update(&sha1Context, data.constData(), data.length());
+            SHA1_Final(reinterpret_cast<unsigned char *>(result.data()), &sha1Context);
+            return result;
+        }
+        case QCryptographicHash::Sha224: {
+            QByteArray result(SHA224_DIGEST_LENGTH, Qt::Uninitialized);
+            SHA256_CTX sha224Context;
+            SHA224_Init(&sha224Context);
+            SHA224_Update(&sha224Context, data.constData(), data.length());
+            SHA224_Final(reinterpret_cast<unsigned char *>(result.data()), &sha224Context);
+            return result;
+        }
+        case QCryptographicHash::Sha256: {
+            QByteArray result(SHA256_DIGEST_LENGTH, Qt::Uninitialized);
+            SHA256_CTX sha256Context;
+            SHA256_Init(&sha256Context);
+            SHA256_Update(&sha256Context, data.constData(), data.length());
+            SHA256_Final(reinterpret_cast<unsigned char *>(result.data()), &sha256Context);
+            return result;
+        }
+        case QCryptographicHash::Sha384: {
+            QByteArray result(SHA384_DIGEST_LENGTH, Qt::Uninitialized);
+            SHA512_CTX sha384Context;
+            SHA384_Init(&sha384Context);
+            SHA384_Update(&sha384Context, data.constData(), data.length());
+            SHA384_Final(reinterpret_cast<unsigned char *>(result.data()), &sha384Context);
+            return result;
+        }
+        case QCryptographicHash::Sha512: {
+            QByteArray result(SHA512_DIGEST_LENGTH, Qt::Uninitialized);
+            SHA512_CTX sha512Context;
+            SHA512_Init(&sha512Context);
+            SHA512_Update(&sha512Context, data.constData(), data.length());
+            SHA512_Final(reinterpret_cast<unsigned char *>(result.data()), &sha512Context);
+            return result;
+        }
+    }
+
+    // unreachable
+    return QByteArray();
 }
 
 QT_END_NAMESPACE
