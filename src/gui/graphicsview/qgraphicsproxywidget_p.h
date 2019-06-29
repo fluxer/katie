@@ -57,7 +57,7 @@ class QGraphicsProxyWidgetPrivate : public QGraphicsWidgetPrivate
     Q_DECLARE_PUBLIC(QGraphicsProxyWidget)
 public:
     QGraphicsProxyWidgetPrivate()
-        : dragDropWidget(0),
+        : dragDropWidget(Q_NULLPTR),
           posChangeMode(NoMode),
           sizeChangeMode(NoMode),
           visibleChangeMode(NoMode),
@@ -65,7 +65,8 @@ public:
           styleChangeMode(NoMode),
           paletteChangeMode(NoMode),
           tooltipChangeMode(NoMode),
-          focusFromWidgetToProxy(0)
+          focusFromWidgetToProxy(false),
+          proxyIsGivingFocus(false)
     { }
     void init();
     void sendWidgetMouseEvent(QGraphicsSceneMouseEvent *event);
@@ -99,15 +100,15 @@ public:
         ProxyToWidgetMode,
         WidgetToProxyMode
     };
-    quint32 posChangeMode : 2;
-    quint32 sizeChangeMode : 2;
-    quint32 visibleChangeMode : 2;
-    quint32 enabledChangeMode : 2;
-    quint32 styleChangeMode : 2;
-    quint32 paletteChangeMode : 2;
-    quint32 tooltipChangeMode : 2;
-    quint32 focusFromWidgetToProxy : 1;
-    quint32 proxyIsGivingFocus : 1;
+    ChangeMode posChangeMode;
+    ChangeMode sizeChangeMode;
+    ChangeMode visibleChangeMode;
+    ChangeMode enabledChangeMode;
+    ChangeMode styleChangeMode;
+    ChangeMode paletteChangeMode;
+    ChangeMode tooltipChangeMode;
+    bool focusFromWidgetToProxy;
+    bool proxyIsGivingFocus;
 };
 
 QT_END_NAMESPACE

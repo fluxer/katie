@@ -5652,9 +5652,9 @@ void QWidget::setFocus(Qt::FocusReason reason)
     // Update proxy state
     if (QWExtra *topData = window()->d_func()->extra) {
         if (topData->proxyWidget && !topData->proxyWidget->hasFocus()) {
-            topData->proxyWidget->d_func()->focusFromWidgetToProxy = 1;
+            topData->proxyWidget->d_func()->focusFromWidgetToProxy = true;
             topData->proxyWidget->setFocus(reason);
-            topData->proxyWidget->d_func()->focusFromWidgetToProxy = 0;
+            topData->proxyWidget->d_func()->focusFromWidgetToProxy = false;
         }
     }
 #endif
