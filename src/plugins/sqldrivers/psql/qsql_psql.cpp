@@ -350,7 +350,7 @@ bool QPSQLResult::fetchLast()
     return fetch(PQntuples(d->result) - 1);
 }
 
-QVariant QPSQLResult::data(int i)
+QVariant QPSQLResult::data(int i)  const
 {
     if (i >= PQnfields(d->result)) {
         qWarning("QPSQLResult::data: column %d out of range", i);
@@ -450,13 +450,13 @@ QVariant QPSQLResult::data(int i)
     return QVariant();
 }
 
-bool QPSQLResult::isNull(int field)
+bool QPSQLResult::isNull(int field) const
 {
     PQgetvalue(d->result, at(), field);
     return PQgetisnull(d->result, at(), field);
 }
 
-bool QPSQLResult::reset (const QString& query)
+bool QPSQLResult::reset(const QString& query)
 {
     cleanup();
     if (!driver())
@@ -467,12 +467,12 @@ bool QPSQLResult::reset (const QString& query)
     return d->processResults();
 }
 
-int QPSQLResult::size()
+int QPSQLResult::size() const
 {
     return d->currentSize;
 }
 
-int QPSQLResult::numRowsAffected()
+int QPSQLResult::numRowsAffected() const
 {
     return QString::fromLatin1(PQcmdTuples(d->result)).toInt();
 }

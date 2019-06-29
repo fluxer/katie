@@ -70,11 +70,11 @@ protected:
     bool fetch(int i);
     bool fetchFirst();
     bool fetchLast();
-    QVariant data(int i);
-    bool isNull(int field);
+    QVariant data(int i) const;
+    bool isNull(int field) const;
     bool reset (const QString& query);
-    int size();
-    int numRowsAffected();
+    int size() const;
+    int numRowsAffected() const;
     QSqlRecord record() const;
     QVariant lastInsertId() const;
     bool prepare(const QString& query);
