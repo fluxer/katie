@@ -77,7 +77,7 @@ public:
 
     QMap<unsigned int, QNetworkConfigurationPrivatePointer> serviceNetworkMembers;
 
-    mutable QMutex mutex;
+    QMutex mutex;
 
     QString name;
     QString id;

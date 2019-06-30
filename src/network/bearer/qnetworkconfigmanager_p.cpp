@@ -280,15 +280,11 @@ QNetworkConfiguration QNetworkConfigurationManagerPrivate::configurationFromIden
 
 bool QNetworkConfigurationManagerPrivate::isOnline() const
 {
-    QMutexLocker locker(&mutex);
-
     return !onlineConfigurations.isEmpty();
 }
 
 QNetworkConfigurationManager::Capabilities QNetworkConfigurationManagerPrivate::capabilities() const
 {
-    QMutexLocker locker(&mutex);
-
     QNetworkConfigurationManager::Capabilities capFlags;
 
     foreach (QBearerEngine *engine, sessionEngines)
@@ -454,8 +450,6 @@ void QNetworkConfigurationManagerPrivate::performAsyncConfigurationUpdate()
 
 QList<QBearerEngine *> QNetworkConfigurationManagerPrivate::engines() const
 {
-    QMutexLocker locker(&mutex);
-
     return sessionEngines;
 }
 

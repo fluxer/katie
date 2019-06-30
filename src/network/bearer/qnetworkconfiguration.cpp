@@ -259,8 +259,6 @@ QString QNetworkConfiguration::name() const
 {
     if (!d)
         return QString();
-
-    QMutexLocker locker(&d->mutex);
     return d->name;
 }
 
@@ -272,8 +270,6 @@ QString QNetworkConfiguration::identifier() const
 {
     if (!d)
         return QString();
-
-    QMutexLocker locker(&d->mutex);
     return d->id;
 }
 
@@ -289,8 +285,6 @@ QNetworkConfiguration::Type QNetworkConfiguration::type() const
 {
     if (!d)
         return QNetworkConfiguration::Invalid;
-
-    QMutexLocker locker(&d->mutex);
     return d->type;
 }
 
@@ -308,8 +302,6 @@ bool QNetworkConfiguration::isValid() const
 {
     if (!d)
         return false;
-
-    QMutexLocker locker(&d->mutex);
     return d->isValid;
 }
 
@@ -320,8 +312,6 @@ QNetworkConfiguration::StateFlags QNetworkConfiguration::state() const
 {
     if (!d)
         return QNetworkConfiguration::Undefined;
-
-    QMutexLocker locker(&d->mutex);
     return d->state;
 }
 
@@ -336,8 +326,6 @@ QNetworkConfiguration::Purpose QNetworkConfiguration::purpose() const
 {
     if (!d)
         return QNetworkConfiguration::UnknownPurpose;
-
-    QMutexLocker locker(&d->mutex);
     return d->purpose;
 }
 
@@ -348,8 +336,6 @@ bool QNetworkConfiguration::isRoamingAvailable() const
 {
     if (!d)
         return false;
-
-    QMutexLocker locker(&d->mutex);
     return d->roamingSupported;
 }
 
@@ -416,9 +402,6 @@ QNetworkConfiguration::BearerType QNetworkConfiguration::bearerType() const
 {
     if (!isValid())
         return BearerUnknown;
-
-    QMutexLocker locker(&d->mutex);
-
     return d->bearerType;
 }
 
@@ -475,8 +458,6 @@ QString QNetworkConfiguration::bearerTypeName() const
 {
     if (!isValid())
         return QString();
-
-    QMutexLocker locker(&d->mutex);
 
     if (d->type == QNetworkConfiguration::ServiceNetwork ||
         d->type == QNetworkConfiguration::UserChoice)
