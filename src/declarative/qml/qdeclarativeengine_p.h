@@ -215,22 +215,17 @@ public:
     QNetworkAccessManager *createNetworkAccessManager(QObject *parent) const;
     QNetworkAccessManager *getNetworkAccessManager() const;
     mutable QNetworkAccessManager *networkAccessManager;
-    mutable QDeclarativeNetworkAccessManagerFactory *networkAccessManagerFactory;
+    QDeclarativeNetworkAccessManagerFactory *networkAccessManagerFactory;
 
     QHash<QString,QSharedPointer<QDeclarativeImageProvider> > imageProviders;
     QDeclarativeImageProvider::ImageType getImageProviderType(const QUrl &url) const;
     QImage getImageFromProvider(const QUrl &url, QSize *size, const QSize& req_size) const;
     QPixmap getPixmapFromProvider(const QUrl &url, QSize *size, const QSize& req_size) const;
 
-    mutable QMutex mutex;
+    QMutex mutex;
 
     QDeclarativeTypeLoader typeLoader;
     QDeclarativeImportDatabase importDatabase;
-
-    mutable quint32 uniqueId;
-    quint32 getUniqueId() const {
-        return uniqueId++;
-    }
 
     QDeclarativeValueTypeFactory valueTypes;
 
