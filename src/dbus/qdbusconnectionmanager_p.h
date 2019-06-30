@@ -65,7 +65,7 @@ public:
     QDBusConnectionPrivate *sender() const;
     void setSender(const QDBusConnectionPrivate *s);
 
-    mutable QMutex mutex;
+    QMutex mutex;
 private:
     QHash<QString, QDBusConnectionPrivate *> connectionHash;
 
