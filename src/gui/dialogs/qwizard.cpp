@@ -555,7 +555,7 @@ public:
     QList<QWizard::WizardButton> buttonsCustomLayout;
     Qt::TextFormat titleFmt;
     Qt::TextFormat subTitleFmt;
-    mutable QPixmap defaultPixmaps[QWizard::NPixmaps];
+    QPixmap defaultPixmaps[QWizard::NPixmaps];
 
     union {
         // keep in sync with QWizard::WizardButton
