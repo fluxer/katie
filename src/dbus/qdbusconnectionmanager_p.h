@@ -69,7 +69,7 @@ public:
 private:
     QHash<QString, QDBusConnectionPrivate *> connectionHash;
 
-    mutable QMutex senderMutex;
+    QMutex senderMutex;
     QString senderName; // internal; will probably change
 };
 

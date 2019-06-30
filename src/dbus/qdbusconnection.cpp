@@ -64,7 +64,6 @@ Q_GLOBAL_STATIC(QDBusConnectionManager, _q_manager)
 
 QDBusConnectionPrivate *QDBusConnectionManager::sender() const
 {
-    QMutexLocker locker(&senderMutex);
     return connection(senderName);
 }
 
