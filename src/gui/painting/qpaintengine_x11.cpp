@@ -81,7 +81,7 @@
 
 QT_BEGIN_NAMESPACE
 
-extern Drawable qt_x11Handle(const QPaintDevice *pd);
+extern Qt::HANDLE qt_x11Handle(const QPaintDevice *pd);
 extern const QX11Info *qt_x11Info(const QPaintDevice *pd);
 extern QPixmap qt_pixmapForBrush(int brushStyle, bool invert); //in qbrush.cpp
 extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap);

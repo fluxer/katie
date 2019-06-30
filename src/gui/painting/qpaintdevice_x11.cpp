@@ -51,11 +51,11 @@ QT_BEGIN_NAMESPACE
 
 /*! \internal
 
-    Returns the X11 Drawable of the paint device. 0 is returned if it
+    Returns the X11 handle of the paint device. 0 is returned if it
     can't be obtained.
 */
 
-Drawable Q_GUI_EXPORT qt_x11Handle(const QPaintDevice *pd)
+Qt::HANDLE Q_GUI_EXPORT qt_x11Handle(const QPaintDevice *pd)
 {
     if (!pd) return 0;
     if (pd->devType() == QInternal::Widget)
@@ -73,18 +73,12 @@ Drawable Q_GUI_EXPORT qt_x11Handle(const QPaintDevice *pd)
 */
 const Q_GUI_EXPORT QX11Info *qt_x11Info(const QPaintDevice *pd)
 {
-    if (!pd) return 0;
+    if (!pd) return Q_NULLPTR;
     if (pd->devType() == QInternal::Widget)
         return &static_cast<const QWidget *>(pd)->x11Info();
     else if (pd->devType() == QInternal::Pixmap)
         return &static_cast<const QPixmap *>(pd)->x11Info();
-    return 0;
+    return Q_NULLPTR;
 }
 
-
-
-
-
 QT_END_NAMESPACE
-
-
