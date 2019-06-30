@@ -669,15 +669,11 @@ QDeclarativeNetworkAccessManagerFactory *QDeclarativeEngine::networkAccessManage
 
 QNetworkAccessManager *QDeclarativeEnginePrivate::createNetworkAccessManager(QObject *parent) const
 {
-    QMutexLocker locker(&mutex);
-    QNetworkAccessManager *nam;
     if (networkAccessManagerFactory) {
-        nam = networkAccessManagerFactory->create(parent);
-    } else {
-        nam = new QNetworkAccessManager(parent);
+        return networkAccessManagerFactory->create(parent);
     }
 
-    return nam;
+    return new QNetworkAccessManager(parent);
 }
 
 QNetworkAccessManager *QDeclarativeEnginePrivate::getNetworkAccessManager() const
@@ -734,7 +730,6 @@ void QDeclarativeEngine::addImageProvider(const QString &providerId, QDeclarativ
 QDeclarativeImageProvider *QDeclarativeEngine::imageProvider(const QString &providerId) const
 {
     Q_D(const QDeclarativeEngine);
-    QMutexLocker locker(&d->mutex);
     return d->imageProviders.value(providerId).data();
 }
 
@@ -752,40 +747,32 @@ void QDeclarativeEngine::removeImageProvider(const QString &providerId)
     d->imageProviders.take(providerId);
 }
 
-QDeclarativeImageProvider::ImageType QDeclarativeEnginePrivate::getImageProviderType(const QUrl &url)
+QDeclarativeImageProvider::ImageType QDeclarativeEnginePrivate::getImageProviderType(const QUrl &url) const
 {
-    QMutexLocker locker(&mutex);
     QSharedPointer<QDeclarativeImageProvider> provider = imageProviders.value(url.host());
-    locker.unlock();
     if (provider)
         return provider->imageType();
     return static_cast<QDeclarativeImageProvider::ImageType>(-1);
 }
 
-QImage QDeclarativeEnginePrivate::getImageFromProvider(const QUrl &url, QSize *size, const QSize& req_size)
+QImage QDeclarativeEnginePrivate::getImageFromProvider(const QUrl &url, QSize *size, const QSize& req_size) const
 {
-    QMutexLocker locker(&mutex);
-    QImage image;
     QSharedPointer<QDeclarativeImageProvider> provider = imageProviders.value(url.host());
-    locker.unlock();
     if (provider) {
         QString imageId = url.toString(QUrl::RemoveScheme | QUrl::RemoveAuthority).mid(1);
-        image = provider->requestImage(imageId, size, req_size);
+        return provider->requestImage(imageId, size, req_size);
     }
-    return image;
+    return QImage();
 }
 
-QPixmap QDeclarativeEnginePrivate::getPixmapFromProvider(const QUrl &url, QSize *size, const QSize& req_size)
+QPixmap QDeclarativeEnginePrivate::getPixmapFromProvider(const QUrl &url, QSize *size, const QSize& req_size) const
 {
-    QMutexLocker locker(&mutex);
-    QPixmap pixmap;
     QSharedPointer<QDeclarativeImageProvider> provider = imageProviders.value(url.host());
-    locker.unlock();
     if (provider) {
         QString imageId = url.toString(QUrl::RemoveScheme | QUrl::RemoveAuthority).mid(1);
-        pixmap = provider->requestPixmap(imageId, size, req_size);
+        return provider->requestPixmap(imageId, size, req_size);
     }
-    return pixmap;
+    return QPixmap();
 }
 
 /*!

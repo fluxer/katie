@@ -218,9 +218,9 @@ public:
     mutable QDeclarativeNetworkAccessManagerFactory *networkAccessManagerFactory;
 
     QHash<QString,QSharedPointer<QDeclarativeImageProvider> > imageProviders;
-    QDeclarativeImageProvider::ImageType getImageProviderType(const QUrl &url);
-    QImage getImageFromProvider(const QUrl &url, QSize *size, const QSize& req_size);
-    QPixmap getPixmapFromProvider(const QUrl &url, QSize *size, const QSize& req_size);
+    QDeclarativeImageProvider::ImageType getImageProviderType(const QUrl &url) const;
+    QImage getImageFromProvider(const QUrl &url, QSize *size, const QSize& req_size) const;
+    QPixmap getPixmapFromProvider(const QUrl &url, QSize *size, const QSize& req_size) const;
 
     mutable QMutex mutex;
 
