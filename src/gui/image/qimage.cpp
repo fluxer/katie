@@ -1699,7 +1699,7 @@ void QImage::fill(const QColor &color)
         uint pixel = color.rgba();
         if (d->format == QImage::Format_ARGB32_Premultiplied)
             pixel = PREMUL(pixel);
-        fill((uint) pixel);
+        fill(pixel);
 
     } else if (d->depth == 16 && d->format == QImage::Format_RGB16) {
         qrgb565 p(color.rgba());
@@ -1807,12 +1807,12 @@ void QImage::setColorCount(int colorCount)
     if (!d) {
         qWarning("QImage::setColorCount: null image");
         return;
+    } else if (colorCount == d->colortable.size()) {
+        return;
     }
 
     detach();
 
-    if (colorCount == d->colortable.size())
-        return;
     if (colorCount <= 0) {                        // use no color table
         d->colortable = QVector<QRgb>();
         return;
