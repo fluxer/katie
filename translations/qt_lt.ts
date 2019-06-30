@@ -297,7 +297,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+273"/>
+        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+274"/>
         <source>Displays version information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3725,7 +3725,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
         <source>Name</source>
         <translation>Vardas</translation>
     </message>
@@ -3784,7 +3784,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+304"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
         <source>Centimeters (cm)</source>
         <translation>Centimetrai (cm)</translation>
     </message>
@@ -3900,13 +3900,13 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>Spausdinimas</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-232"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-217"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
@@ -4422,7 +4422,7 @@ Ar norite jį perrašyti?</translation>
         <translation>Procesas užstrigo</translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+897"/>
         <source>No program defined</source>
         <translation>Nenurodyta programa</translation>
     </message>
@@ -6193,26 +6193,26 @@ Ar norite jį perrašyti?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+466"/>
-        <location line="+87"/>
+        <location line="+464"/>
+        <location line="+79"/>
         <source>Ctrl</source>
         <translation>Vald</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+90"/>
+        <location line="-78"/>
+        <location line="+82"/>
         <source>Shift</source>
         <translation>Lyg2</translation>
     </message>
     <message>
-        <location line="-89"/>
-        <location line="+87"/>
+        <location line="-81"/>
+        <location line="+79"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+82"/>
+        <location line="-78"/>
+        <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
@@ -6344,117 +6344,117 @@ Ar norite jį perrašyti?</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+217"/>
         <source>No error</source>
         <translation>Klaidų nėra</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate could not be found</source>
         <translation>Liudijimo išdavėjo liudijimas nerastas</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate signature could not be decrypted</source>
         <translation>Liudijimo parašo iššifruoti nepavyko</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The public key in the certificate could not be read</source>
         <translation>Liudijime esančio viešojo rakto nepavyko perskaityti</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The signature of the certificate is invalid</source>
         <translation>Liudijimo parašas negaliojantis</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is not yet valid</source>
         <translation>Liudijimas dar negalioja</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate has expired</source>
         <translation>Liudijimo galiojimo laikas pasibaigęs</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notBefore field contains an invalid time</source>
         <translation>Liudijimo „notBefore“ lauke nurodytas negalimas laikas</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notAfter field contains an invalid time</source>
         <translation>Liudijimo „notAfter“ lauke nurodytas negalimas laikas</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is self-signed, and untrusted</source>
         <translation>Liudijimas pasirašytas pačiu savimi, todėl juo nepasitikima</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root certificate of the certificate chain is self-signed, and untrusted</source>
         <translation>Liudijimų grandinės šakninis liudijimas pasirašytas pačiu savimi, todėl juo nepasitikima</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
         <translation>Lokaliai rasto liudijimo išdavėjo liudijimo nepavyko rasti</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No certificates could be verified</source>
         <translation>Liudijimų patikrinti nepavyko</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>One of the CA certificates is invalid</source>
         <translation>Vienas liudijimų įstaigos liudijimų yra negaliojantis</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The basicConstraints path length parameter has been exceeded</source>
         <translation>Viršytas „basicConstraints“ kelio ilgio parametras</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The supplied certificate is unsuitable for this purpose</source>
         <translation>Pateikto liudijimo paskirtis netinkama</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is not trusted for this purpose</source>
         <translation>Liudijimų įstaigos šakninio liudijimo paskirtis netinkama</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is marked to reject the specified purpose</source>
         <translation>Liudijimų įstaigos šakniniame liudijime nurodyta atmesti šią paskirtį</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
         <translation>Potencialus išdavėjo liudijimas atmestas, nes jo subjekto pavadinimas nesutampa su tikrinamo liudijimo išdavėjo pavadinimu</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
         <translation>Potencialus išdavėjo liudijimas atmestas, nes jame nurodytas išdavėjo pavadinimas ir serijinis numeris, kurie nesutampa su tikrinamo liudijimo autoriteto rakto identifikatoriumi</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>The peer did not present any certificate</source>
         <translation>Partnerinis kompiuteris nepateikė jokio liudijimo</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The host name did not match any of the valid hosts for this certificate</source>
         <translation>Mazgo vardas nesutampa su nė vienu šiam liudijimui tinkamu mazgo vardu</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
         <source>Unknown error</source>
         <translation>Nežinoma klaida</translation>
     </message>
@@ -6469,7 +6469,7 @@ Ar norite jį perrašyti?</translation>
         <translation>Netinkamas arba tuščias šifrų sąrašas (%1)</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+32"/>
         <source>Cannot provide a certificate with no key, %1</source>
         <translation>Negalima pateikti liudijimo, neturint rakto; %1</translation>
     </message>
@@ -6499,12 +6499,12 @@ Ar norite jį perrašyti?</translation>
         <translation>Klaida kuriant SSL sesiją: %1</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+249"/>
         <source>Unable to write data: %1</source>
         <translation>Nepavyko rašyti duomenų: %1</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Unable to decrypt data: %1</source>
         <translation>Nepavyko iššifruoti duomenų: %1</translation>
     </message>
@@ -6525,7 +6525,7 @@ Ar norite jį perrašyti?</translation>
         <translation>Klaida SSL pasisveikinimo metu: %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="-3"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="-4"/>
         <source>The peer certificate is blacklisted</source>
         <translation>Partnerinio kompiuterio liudijimas įtrauktas į juodąjį sąrašą</translation>
     </message>
@@ -6891,7 +6891,7 @@ Ar norite jį perrašyti?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7141,7 +7141,7 @@ Ar norite jį perrašyti?</translation>
     <name>QXmlStream</name>
     <message>
         <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1770"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
         <source>Extra content at end of document.</source>
         <translation>Papildomas turinys dokumento pabaigoje.</translation>
     </message>
@@ -7255,12 +7255,12 @@ Ar norite jį perrašyti?</translation>
         <translation>Laukta simbolinių duomenų.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-969"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-967"/>
         <source>Recursive entity detected.</source>
         <translation>Aptikta rekursyvi esybė.</translation>
     </message>
     <message>
-        <location line="+516"/>
+        <location line="+514"/>
         <source>Start tag expected.</source>
         <translation>Laukta atveriančiosios gairės.</translation>
     </message>

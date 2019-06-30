@@ -297,7 +297,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+273"/>
+        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+274"/>
         <source>Displays version information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3725,7 +3725,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
         <source>Name</source>
         <translation>نام</translation>
     </message>
@@ -3784,7 +3784,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+304"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
         <source>Centimeters (cm)</source>
         <translation>سانتی‌متر (cm)</translation>
     </message>
@@ -3900,13 +3900,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>چاپ</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-232"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-217"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
@@ -4422,7 +4422,7 @@ Do you want to overwrite it?</source>
         <translation>پردازش خراب‌ شد</translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+897"/>
         <source>No program defined</source>
         <translation>هیچ برنامه‌ای تعریف نشده است</translation>
     </message>
@@ -6193,26 +6193,26 @@ Do you want to overwrite it?</source>
         <translation>Hangul Special</translation>
     </message>
     <message>
-        <location line="+466"/>
-        <location line="+87"/>
+        <location line="+464"/>
+        <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+90"/>
+        <location line="-78"/>
+        <location line="+82"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-89"/>
-        <location line="+87"/>
+        <location line="-81"/>
+        <location line="+79"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+82"/>
+        <location line="-78"/>
+        <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
@@ -6344,117 +6344,117 @@ Do you want to overwrite it?</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+217"/>
         <source>No error</source>
         <translation>خطا وجود ندارد</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate could not be found</source>
         <translation>گواهینامهٔ درخواست‌کننده پیدا نمی‌شود</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate signature could not be decrypted</source>
         <translation>نمی‌توان امضای گواهی‌نامه را رمزگشایی نمود</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The public key in the certificate could not be read</source>
         <translation>کلید عمومی تأییدیه خوانده نمی‌شود</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The signature of the certificate is invalid</source>
         <translation>امضای گواهی‌نامه نامعتبر است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is not yet valid</source>
         <translation>گواهی‌نامه هنوز معتبر نیست</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate has expired</source>
         <translation>گواهی‌نامه باطل شده است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notBefore field contains an invalid time</source>
         <translation>رشتهٔ notBefore گواهی‌نامه شامل یک آیتم نامعتبر است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notAfter field contains an invalid time</source>
         <translation>رشتهٔ notAfter گواهی‌نامه شامل یک آیتم نامعتبر است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is self-signed, and untrusted</source>
         <translation>گواهی‌نامه، خود-امضا و غیرقابل اعتماد است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root certificate of the certificate chain is self-signed, and untrusted</source>
         <translation>گواهی‌نامهٔ ریشه در زنجیرهٔ گواهی‌نامه‌ها خود-امضا و غیرقابل اعتماد است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
         <translation>گواهی‌نامهٔ درخواست‌کنندهٔ یک گواهی‌نامهٔ جستجو شدهٔ محلی، پیدا نمی‌شود</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No certificates could be verified</source>
         <translation>هیچ گواهی‌نامه‌ای قابل تأیید نیست</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>One of the CA certificates is invalid</source>
         <translation>یکی از گواهی‌نامه‌های CA نامعتبر است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The basicConstraints path length parameter has been exceeded</source>
         <translation>پارامتر طول مسیر basicConstraints از حد تجاوز کرده است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The supplied certificate is unsuitable for this purpose</source>
         <translation>تأییدیهٔ تهیه‌شده برای این هدف نامناسب است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is not trusted for this purpose</source>
         <translation>تأییدیهٔ ریشهٔ CA برای این هدف غیر‌قابل‌اطمینان است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is marked to reject the specified purpose</source>
         <translation>تأییدیهٔ ریشهٔ CA برای رد هدف مشخص‌ شده‌ای مارک شده است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
         <translation>شمارهٔ تأییدیهٔ داوطلب جاری پذیرفته نشد زیرا موضوع نام آن با شمارهٔ نام تأییدیهٔ جاری هم‌خوانی ندارد</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
         <translation>شمارهٔ تأییدیهٔ داوطلب جاری پذیرفته نشد زیرا شمارهٔ نام و شمارهٔ سریال ارائه شده با کلید مجوز تأییدیهٔ جاری هم‌خوانی ندارد</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>The peer did not present any certificate</source>
         <translation>جفت تأییدیه‌ای ارائه نداده است</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The host name did not match any of the valid hosts for this certificate</source>
         <translation>نام میزبان با نام هیچ یک از میزبان‌های معتبر برای این تأییدیه هم‌خوانی ندارد</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
         <source>Unknown error</source>
         <translation>خطای ناشناخته</translation>
     </message>
@@ -6469,7 +6469,7 @@ Do you want to overwrite it?</source>
         <translation>لیست رمز تهی یا نامعتبر (%1)</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+32"/>
         <source>Cannot provide a certificate with no key, %1</source>
         <translation>نمی‌توان بدون کلید یک تأییدیه تهیه کرد، %1</translation>
     </message>
@@ -6499,12 +6499,12 @@ Do you want to overwrite it?</source>
         <translation>خطای ایجاد جلسهٔ SSL: %1</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+249"/>
         <source>Unable to write data: %1</source>
         <translation>نمی‌توان روی داده نوشت: %1</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Unable to decrypt data: %1</source>
         <translation>نمی‌توان داده را رمزگشایی کرد: %1</translation>
     </message>
@@ -6525,7 +6525,7 @@ Do you want to overwrite it?</source>
         <translation>خطا در هنگام دست‌دهی SSL: %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="-3"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="-4"/>
         <source>The peer certificate is blacklisted</source>
         <translation>گواهی‌نامهٔ جفت در لیست سیاه قرار دارد</translation>
     </message>
@@ -6891,7 +6891,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7141,7 +7141,7 @@ Do you want to overwrite it?</source>
     <name>QXmlStream</name>
     <message>
         <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1770"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
         <source>Extra content at end of document.</source>
         <translation>محتویات اضافه در انتهای سند.</translation>
     </message>
@@ -7255,12 +7255,12 @@ Do you want to overwrite it?</source>
         <translation>دادهٔ نویسه مورد انتظار است.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-969"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-967"/>
         <source>Recursive entity detected.</source>
         <translation>موجودیت بازگشتی پیدا‌ شد.</translation>
     </message>
     <message>
-        <location line="+516"/>
+        <location line="+514"/>
         <source>Start tag expected.</source>
         <translation>نشانهٔ شروع مورد انتظار.</translation>
     </message>

@@ -297,7 +297,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+273"/>
+        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+274"/>
         <source>Displays version information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3725,7 +3725,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
@@ -3784,7 +3784,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+304"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
         <source>Centimeters (cm)</source>
         <translation>Centimetre (cm)</translation>
     </message>
@@ -3900,13 +3900,13 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>Tlačiť</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-232"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-217"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
@@ -4422,7 +4422,7 @@ Má sa prepísať?</translation>
         <translation>Proces spadol</translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+897"/>
         <source>No program defined</source>
         <translation>Žiadny program nie je definovaný</translation>
     </message>
@@ -6193,26 +6193,26 @@ Má sa prepísať?</translation>
         <translation>Hangul špeciálny</translation>
     </message>
     <message>
-        <location line="+466"/>
-        <location line="+87"/>
+        <location line="+464"/>
+        <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+90"/>
+        <location line="-78"/>
+        <location line="+82"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-89"/>
-        <location line="+87"/>
+        <location line="-81"/>
+        <location line="+79"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+82"/>
+        <location line="-78"/>
+        <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
@@ -6344,122 +6344,122 @@ Má sa prepísať?</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+217"/>
         <source>No error</source>
         <translation>Žiadna chyba</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate could not be found</source>
         <translation>Certifikát vydavateľa sa nepodarilo nájsť</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate signature could not be decrypted</source>
         <translation>Podpis certifikátu sa nepodarilo rozlúštiť</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The public key in the certificate could not be read</source>
         <translation>Verejný kľúč v certifikáte nie je možné prečítať</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The signature of the certificate is invalid</source>
         <translation>Podpis v certifikáte nie je platný</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is not yet valid</source>
         <translation>Certifikát ešte nie je platný</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate has expired</source>
         <translation>Platnosť certifikátu vypršala</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notBefore field contains an invalid time</source>
         <translation>Pole certifikátu &apos;notBefore&apos; obsahuje neplatný čas</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notAfter field contains an invalid time</source>
         <translation>Pole certifikátu &apos;notAfter&apos; obsahuje neplatný čas</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is self-signed, and untrusted</source>
         <translation>Certifikát je podpísaný sám sebou a preto je nedôveryhodný</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root certificate of the certificate chain is self-signed, and untrusted</source>
         <translation>Koreňový certifikát certifikátu je podpísaný sám sebou a preto je nedôveryhodný</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
         <translation>Nepodarilo sa nájsť vydavateľa certifikátu k miestne nájdenému certifikátu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No certificates could be verified</source>
         <translation>Ani jeden certifikát nie je možné overiť</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>One of the CA certificates is invalid</source>
         <translation>Jedna z CA certifikátov je neplatná</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The basicConstraints path length parameter has been exceeded</source>
         <translation>Dĺžka cesty &apos;basicConstraints&apos; bola prekročená</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The supplied certificate is unsuitable for this purpose</source>
         <translation>Poskytnutý certifikát nie je vhodný pre tento účel</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is not trusted for this purpose</source>
         <translation>Koreňový certifikát CA nie je dôveryhodný pre tento účel</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is marked to reject the specified purpose</source>
         <translation>Koreňový certifikát CA je označený na zamietnutie pre konkrétny účel</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
         <translation>Súčasný kandidát vydavateľa certifikátu bol zamietnutý, pretože jeho názov nezodpovedá názvu vydavateľa aktuálneho certifikátu</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
         <translation>Súčasný kandidát vydavateľa certifikátu bol zamietnutý, pretože jeho názov a sériové číslo, ktoré boli prezentované, nezodpovedajú identifikátoru kľúča autority aktuálneho certifikátu</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>The peer did not present any certificate</source>
         <translation>Druhá strana neposkytla žiadny certifikát</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The host name did not match any of the valid hosts for this certificate</source>
         <translation>Názov hostiteľa nezodpovedá žiadnemu z platných hostiteľov pre tento certifikát</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>The peer certificate is blacklisted</source>
         <translation>Certifikát druhej strany je na čiernej listine</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Unknown error</source>
         <translation>Neznáma chyba</translation>
     </message>
@@ -6474,7 +6474,7 @@ Má sa prepísať?</translation>
         <translation>Neplatný alebo prázdny zoznam šifier (%1)</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+32"/>
         <source>Cannot provide a certificate with no key, %1</source>
         <translation>Nemôžem poskytnúť certifikát bez kľúča, %1</translation>
     </message>
@@ -6504,12 +6504,12 @@ Má sa prepísať?</translation>
         <translation>Chyba pri vytváraní sedenia SSL: %1</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+249"/>
         <source>Unable to write data: %1</source>
         <translation>Nepodarilo sa zapísať dáta: %1</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Unable to decrypt data: %1</source>
         <translation>Nepodarilo sa rozlúštiť dáta:%1</translation>
     </message>
@@ -6891,7 +6891,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7141,7 +7141,7 @@ Má sa prepísať?</translation>
     <name>QXmlStream</name>
     <message>
         <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1770"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
         <source>Extra content at end of document.</source>
         <translation>Extra obsah na konci dokumentu.</translation>
     </message>
@@ -7255,12 +7255,12 @@ Má sa prepísať?</translation>
         <translation>Boli očakávané znakové údaje.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-969"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-967"/>
         <source>Recursive entity detected.</source>
         <translation>Zistené rekurzívne entity.</translation>
     </message>
     <message>
-        <location line="+516"/>
+        <location line="+514"/>
         <source>Start tag expected.</source>
         <translation>Očakáva sa štartovacia značka.</translation>
     </message>

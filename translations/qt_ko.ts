@@ -297,7 +297,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+273"/>
+        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+274"/>
         <source>Displays version information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3725,7 +3725,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
         <source>Name</source>
         <translation>이름</translation>
     </message>
@@ -3784,7 +3784,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+304"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
         <source>Centimeters (cm)</source>
         <translation>센티미터 (cm)</translation>
     </message>
@@ -3900,13 +3900,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>인쇄</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-232"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-217"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
@@ -4422,7 +4422,7 @@ Do you want to overwrite it?</source>
         <translation>프로세스가 충돌함</translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+897"/>
         <source>No program defined</source>
         <translation>프로그램이 지정되지 않음</translation>
     </message>
@@ -6193,26 +6193,26 @@ Do you want to overwrite it?</source>
         <translation>한글 특수 기호</translation>
     </message>
     <message>
-        <location line="+466"/>
-        <location line="+87"/>
+        <location line="+464"/>
+        <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+90"/>
+        <location line="-78"/>
+        <location line="+82"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-89"/>
-        <location line="+87"/>
+        <location line="-81"/>
+        <location line="+79"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+82"/>
+        <location line="-78"/>
+        <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
@@ -6344,122 +6344,122 @@ Do you want to overwrite it?</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+217"/>
         <source>No error</source>
         <translation>오류 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate could not be found</source>
         <translation>발급자 인증서를 찾을 수 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate signature could not be decrypted</source>
         <translation>인증서 서명을 복호화할 수 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The public key in the certificate could not be read</source>
         <translation>인증서의 공개 키를 읽을 수 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The signature of the certificate is invalid</source>
         <translation>인증서의 서명이 올바르지 않음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is not yet valid</source>
         <translation>인증서가 아직 유효하지 않음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate has expired</source>
         <translation>인증서가 만료됨</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notBefore field contains an invalid time</source>
         <translation>인증서의 notBefore 필드에 올바르지 않은 시간이 들어 있음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notAfter field contains an invalid time</source>
         <translation>인증서의 notAfter 필드에 올바르지 않은 시간이 들어 있음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is self-signed, and untrusted</source>
         <translation>인증서가 자가 서명되었고 믿을 수 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root certificate of the certificate chain is self-signed, and untrusted</source>
         <translation>인증서 체인의 루트 인증서가 자가 서명되었고 믿을 수 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
         <translation>로컬에서 찾은 인증서의 발급자 인증서를 찾을 수 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No certificates could be verified</source>
         <translation>아무 인증서도 검증할 수 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>One of the CA certificates is invalid</source>
         <translation>CA 인증서 중 하나 이상이 올바르지 않음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The basicConstraints path length parameter has been exceeded</source>
         <translation>basicConstraints 경로 길이 인자가 초과됨</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The supplied certificate is unsuitable for this purpose</source>
         <translation>지정한 인증서를 이 목적으로는 사용할 수 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is not trusted for this purpose</source>
         <translation>루트 CA 인증서를 이 목적으로 신뢰할 수 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is marked to reject the specified purpose</source>
         <translation>루트 CA 인증서는 이 목적으로 사용이 거부됨</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
         <translation>현재 인증서의 발급자 이름과 상위 인증서의 이름이 일치하지 않아서 현재 후보 발급자 인증서가 거부되었습니다</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
         <translation>현재 인증서의 인증자 키 식별자와 발급자 이름 및 시리얼 번호가 일치하지 않아서 현재 후보 발급자 인증서가 거부되었습니다</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>The peer did not present any certificate</source>
         <translation>동료 측이 인증서를 제시하지 않았음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The host name did not match any of the valid hosts for this certificate</source>
         <translation>호스트 이름이 이 인증서에서 지정한 유효한 호스트 중 아무 것도 일치하지 않음</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>The peer certificate is blacklisted</source>
         <translation>동료 인증서가 블랙리스트에 포함됨</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Unknown error</source>
         <translation>알 수 없는 오류</translation>
     </message>
@@ -6474,7 +6474,7 @@ Do you want to overwrite it?</source>
         <translation>잘못되거나 비어 있는 암호화 키 목록 (%1)</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+32"/>
         <source>Cannot provide a certificate with no key, %1</source>
         <translation>키가 없는 인증서를 제공할 수 없음, %1</translation>
     </message>
@@ -6504,12 +6504,12 @@ Do you want to overwrite it?</source>
         <translation>SSL 세션을 만드는 중 오류 발생: %1</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+249"/>
         <source>Unable to write data: %1</source>
         <translation>데이터를 쓸 수 없음: %1</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Unable to decrypt data: %1</source>
         <translation>데이터를 복호화할 수 없음: %1</translation>
     </message>
@@ -6891,7 +6891,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7141,7 +7141,7 @@ Do you want to overwrite it?</source>
     <name>QXmlStream</name>
     <message>
         <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1770"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
         <source>Extra content at end of document.</source>
         <translation>문서의 끝에 내용이 더 있습니다.</translation>
     </message>
@@ -7255,12 +7255,12 @@ Do you want to overwrite it?</source>
         <translation>예상하지 못한 문자열 데이터입니다.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-969"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-967"/>
         <source>Recursive entity detected.</source>
         <translation type="unfinished">재귀적 엔티티가 감지되었습니다.</translation>
     </message>
     <message>
-        <location line="+516"/>
+        <location line="+514"/>
         <source>Start tag expected.</source>
         <translation type="unfinished">시작 태그가 필요합니다.</translation>
     </message>

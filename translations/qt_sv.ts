@@ -297,7 +297,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+273"/>
+        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+274"/>
         <source>Displays version information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3725,7 +3725,7 @@ Vill du ta bort den ändå?</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
         <source>Name</source>
         <translation type="unfinished">Namn</translation>
     </message>
@@ -3784,7 +3784,7 @@ Vill du ta bort den ändå?</translation>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+304"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
         <source>Centimeters (cm)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3917,7 +3917,7 @@ Vill du ta bort den ändå?</translation>
         <translation>okänt</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>Skriv ut</translation>
@@ -3948,7 +3948,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-232"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-217"/>
         <source>A0</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4444,7 +4444,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+897"/>
         <source>No program defined</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6187,26 +6187,26 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+466"/>
-        <location line="+87"/>
+        <location line="+464"/>
+        <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+90"/>
+        <location line="-78"/>
+        <location line="+82"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-89"/>
-        <location line="+87"/>
+        <location line="-81"/>
+        <location line="+79"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+82"/>
+        <location line="-78"/>
+        <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
@@ -6221,7 +6221,7 @@ Please choose a different file name.</source>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-761"/>
+        <location line="-751"/>
         <source>Home Page</source>
         <translation>Hemsida</translation>
     </message>
@@ -6343,12 +6343,12 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+721"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+694"/>
         <source>Unable to write data: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Unable to decrypt data: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6369,7 +6369,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-703"/>
+        <location line="-677"/>
         <source>Error creating SSL context (%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6379,7 +6379,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+61"/>
         <source>Private key does not certify public key, %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6409,122 +6409,122 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+217"/>
         <source>No error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate could not be found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate signature could not be decrypted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The public key in the certificate could not be read</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The signature of the certificate is invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is not yet valid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate has expired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notBefore field contains an invalid time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notAfter field contains an invalid time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is self-signed, and untrusted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root certificate of the certificate chain is self-signed, and untrusted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No certificates could be verified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>One of the CA certificates is invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The basicConstraints path length parameter has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The supplied certificate is unsuitable for this purpose</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is not trusted for this purpose</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is marked to reject the specified purpose</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>The peer did not present any certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The host name did not match any of the valid hosts for this certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>The peer certificate is blacklisted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Unknown error</source>
         <translation type="unfinished">Okänt fel</translation>
     </message>
@@ -6890,7 +6890,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7140,7 +7140,7 @@ Please choose a different file name.</source>
     <name>QXmlStream</name>
     <message>
         <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1770"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
         <source>Extra content at end of document.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7235,12 +7235,12 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-995"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-993"/>
         <source>Recursive entity detected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+516"/>
+        <location line="+514"/>
         <source>Start tag expected.</source>
         <translation type="unfinished"></translation>
     </message>

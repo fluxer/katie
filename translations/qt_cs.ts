@@ -297,7 +297,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+273"/>
+        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+274"/>
         <source>Displays version information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3725,7 +3725,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -3784,7 +3784,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+304"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
         <source>Centimeters (cm)</source>
         <translation>Centimetry (cm)</translation>
     </message>
@@ -3900,7 +3900,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-232"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-217"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
@@ -4025,7 +4025,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>US Legal</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>Tisk</translation>
@@ -4411,7 +4411,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Zápis do procesu se nezdařil</translation>
     </message>
     <message>
-        <location line="+972"/>
+        <location line="+960"/>
         <source>No program defined</source>
         <translation>Nestanoven žádný program</translation>
     </message>
@@ -4421,7 +4421,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Potíže se zdroji (selhání rozcestí - &quot;fork failure&quot;): %1</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-1071"/>
+        <location filename="../src/core/io/qprocess.cpp" line="-1059"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Čtení z procesu se nezdařilo</translation>
@@ -5122,12 +5122,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1089"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1079"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location line="-598"/>
+        <location line="-588"/>
         <source>No</source>
         <translation>Ne</translation>
     </message>
@@ -5137,8 +5137,8 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Nahoru</translation>
     </message>
     <message>
-        <location line="+693"/>
-        <location line="+87"/>
+        <location line="+691"/>
+        <location line="+79"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
@@ -5148,7 +5148,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-803"/>
+        <location line="-793"/>
         <source>Del</source>
         <translation>Delete</translation>
     </message>
@@ -5189,13 +5189,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Volání</translation>
     </message>
     <message>
-        <location line="+515"/>
-        <location line="+87"/>
+        <location line="+513"/>
+        <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-776"/>
+        <location line="-766"/>
         <source>Down</source>
         <translation>Dolů</translation>
     </message>
@@ -5405,13 +5405,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Hangul zvláštní</translation>
     </message>
     <message>
-        <location line="+469"/>
-        <location line="+82"/>
+        <location line="+467"/>
+        <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location line="-773"/>
+        <location line="-763"/>
         <source>PgUp</source>
         <translation>PgUp</translation>
     </message>
@@ -5441,13 +5441,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location line="+691"/>
-        <location line="+90"/>
+        <location line="+689"/>
+        <location line="+82"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-797"/>
+        <location line="-787"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Mezerník</translation>
@@ -6344,7 +6344,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+447"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+445"/>
         <source>Error creating SSL session: %1</source>
         <translation>Nepodařilo se vytvořit sezení SSL: %1</translation>
     </message>
@@ -6364,12 +6364,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Soukromý klíč nedosvědčuje veřejný klíč, %1</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+305"/>
         <source>Unable to write data: %1</source>
         <translation>Data se nepodařilo zapsat: %1</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Unable to decrypt data: %1</source>
         <translation>Data se nepodařilo rozluštit: %1</translation>
     </message>
@@ -6384,12 +6384,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Během startu SSL protokolu se vyskytla chyba: %1</translation>
     </message>
     <message>
-        <location line="-608"/>
+        <location line="-584"/>
         <source>Error loading local certificate, %1</source>
         <translation>Nepodařilo se nahrát místní osvědčení, %1</translation>
     </message>
     <message>
-        <location line="-41"/>
+        <location line="-39"/>
         <source>Invalid or empty cipher list (%1)</source>
         <translation>Neplatný či prázdný seznam se šifrovacími klíči (%1)</translation>
     </message>
@@ -6399,133 +6399,133 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Nepodařilo se vytvořit žádný kontext SSL (%1)</translation>
     </message>
     <message>
-        <location line="+598"/>
+        <location line="+572"/>
         <location line="+10"/>
         <source>Error while reading: %1</source>
         <translation>Při čtení se vyskytla chyba: %1</translation>
     </message>
     <message>
-        <location line="-498"/>
+        <location line="-474"/>
         <source>Error loading private key, %1</source>
         <translation>Soukromý klíč se nepodařilo nahrát, %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+217"/>
         <source>No error</source>
         <translation>Žádná chyba</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate could not be found</source>
         <translation>Osvědčení od vydavatele se nepodařilo nalézt</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate signature could not be decrypted</source>
         <translation>Podpis osvědčení se nepodařilo rozluštit</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The public key in the certificate could not be read</source>
         <translation>Veřejný klíč v osvědčení se nepodařilo přečíst</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The signature of the certificate is invalid</source>
         <translation>Podpis osvědčení je neplatný</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is not yet valid</source>
         <translation>Osvědčení ještě není platné</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate has expired</source>
         <translation>Platnost osvědčení uplynula</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notBefore field contains an invalid time</source>
         <translation>Pole osvědčení &apos;notBefore&apos; obsahuje neplatný čas</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notAfter field contains an invalid time</source>
         <translation>Pole osvědčení &apos;notAfter&apos; obsahuje neplatný čas</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is self-signed, and untrusted</source>
         <translation>Osvědčení je podepsáno samo sebou, a proto není důvěryhodné</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root certificate of the certificate chain is self-signed, and untrusted</source>
         <translation>Kořenové osvědčení řetězce osvědčení je podepsáno samo sebou, a proto není důvěryhodné</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
         <translation>Osvědčení od vydavatele místně nalezeného osvědčení se nepodařilo najít</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No certificates could be verified</source>
         <translation>Žádný z osvědčení se nepodařilo ověřit</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>One of the CA certificates is invalid</source>
         <translation>Jedno z osvědčení osvědčovacího místa (CA) je neplatné</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The basicConstraints path length parameter has been exceeded</source>
         <translation>Délka cesty &apos;basicConstraints&apos;byla překročena</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The supplied certificate is unsuitable for this purpose</source>
         <translation>Poskytnuté osvědčení nelze v tomto případě použít; není vhodné pro tento účel</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is not trusted for this purpose</source>
         <translation>Kořenové osvědčení osvědčovacího místa není pro tento případ důvěryhodné</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is marked to reject the specified purpose</source>
         <translation>Kořenové osvědčení osvědčovacího místa odmítá tento případ na základě zvláštního označení</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
         <translation>Osvědčení sledovaného vydavatele bylo odmítnuto, protože jeho předmětný název neodpovídá názvu vydavatele současného osvědčení</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
         <translation>Osvědčení sledovaného vydavatele bylo odmítnuto, protože název vydavatele a sériové číslo jsou přítomny a neodpovídají identifikátoru osvědčovacího místa současného osvědčení</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>The peer did not present any certificate</source>
         <translation>Protější místo neudalo žádné osvědčení</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The host name did not match any of the valid hosts for this certificate</source>
         <translation>Název hostitelského počítače neodpovídá žádnému z hostitelů platných pro toto osvědčení, kteří jsou na seznamu</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>The peer certificate is blacklisted</source>
         <translation>Osvědčení protějšího místa je na černé listině</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
@@ -6891,7 +6891,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7140,7 +7140,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1800"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1788"/>
         <source>Reference to unparsed entity &apos;%1&apos;.</source>
         <translation>Odkaz na nevyhodnocenou entitu &apos;%1&apos;.</translation>
     </message>
@@ -7292,7 +7292,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Deklarace XML se nenachází na začátku dokumentu.</translation>
     </message>
     <message>
-        <location line="-738"/>
+        <location line="-736"/>
         <source>Recursive entity detected.</source>
         <translation>Byla zjištěna rekurzivní entita.</translation>
     </message>
@@ -7317,7 +7317,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Kódování %1 není podporováno</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+707"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+705"/>
         <source>NDATA in parameter entity declaration.</source>
         <translation>Deklarace parametrické entity nesmí obsahovat NDATA.</translation>
     </message>

@@ -297,7 +297,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+273"/>
+        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+274"/>
         <source>Displays version information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3727,7 +3727,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
@@ -3786,7 +3786,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+304"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
         <source>Centimeters (cm)</source>
         <translation>Centymetry (cm)</translation>
     </message>
@@ -3919,7 +3919,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>nieznany</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>Drukowanie</translation>
@@ -3951,7 +3951,7 @@ Please choose a different file name.</source>
 Proszę wybrać inną nazwę pliku.</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-232"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-217"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
@@ -4447,7 +4447,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Wystąpił błąd w procesie - proces zakończony</translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+897"/>
         <source>No program defined</source>
         <translation>Nie zdefiniowano programu</translation>
     </message>
@@ -5124,18 +5124,18 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1089"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1079"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location line="-72"/>
-        <location line="+87"/>
+        <location line="-64"/>
+        <location line="+79"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-766"/>
+        <location line="-756"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
@@ -5838,13 +5838,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Hangul Special</translation>
     </message>
     <message>
-        <location line="+466"/>
-        <location line="+87"/>
+        <location line="+464"/>
+        <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-785"/>
+        <location line="-775"/>
         <source>Del</source>
         <translation>Del</translation>
     </message>
@@ -5879,12 +5879,12 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Escape</translation>
     </message>
     <message>
-        <location line="+636"/>
+        <location line="+626"/>
         <source>F%1</source>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-760"/>
+        <location line="-750"/>
         <source>Favorites</source>
         <translation>Ulubione</translation>
     </message>
@@ -6055,13 +6055,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Menu</translation>
     </message>
     <message>
-        <location line="+686"/>
-        <location line="+82"/>
+        <location line="+684"/>
+        <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location line="-609"/>
+        <location line="-599"/>
         <source>No</source>
         <translation>Nie</translation>
     </message>
@@ -6157,13 +6157,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Wybierz</translation>
     </message>
     <message>
-        <location line="+527"/>
-        <location line="+90"/>
+        <location line="+525"/>
+        <location line="+82"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-797"/>
+        <location line="-787"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Spacja</translation>
@@ -6346,12 +6346,12 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+721"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+694"/>
         <source>Unable to write data: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Unable to decrypt data: %1</source>
         <translation>Nie można odszyfrować danych: %1</translation>
     </message>
@@ -6372,7 +6372,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Błąd podczas nawiązania sesji SSL: %1</translation>
     </message>
     <message>
-        <location line="-703"/>
+        <location line="-677"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Błąd tworzenia kontekstu (%1)</translation>
     </message>
@@ -6382,7 +6382,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Niepoprawna lub pusta lista szyfrów (%1)</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+61"/>
         <source>Private key does not certify public key, %1</source>
         <translation>Prywatny klucz nie uwiarygodnia publicznego, %1</translation>
     </message>
@@ -6397,7 +6397,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Błąd tworzenia sesji SSL: %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+286"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+265"/>
         <source>The peer certificate is blacklisted</source>
         <translation>Element równorzędny widnieje na czarnej liście</translation>
     </message>
@@ -6417,117 +6417,117 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Błąd ładowania prywatnego klucza, %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="-72"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="-48"/>
         <source>No error</source>
         <translation>Brak błędu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate could not be found</source>
         <translation>Nie można odnaleźć wydawcy certyfikatu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate signature could not be decrypted</source>
         <translation>Nie można odszyfrować podpisu certyfikatu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The public key in the certificate could not be read</source>
         <translation>Nie można odczytać publicznego klucza w certyfikacie</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The signature of the certificate is invalid</source>
         <translation>Niepoprawny podpis certyfikatu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is not yet valid</source>
         <translation>Certyfikat nie jest jeszcze ważny</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate has expired</source>
         <translation>Certyfikat utracił ważność</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notBefore field contains an invalid time</source>
         <translation>Pole &quot;notBefore&quot; certyfikatu zawiera niepoprawną datę</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notAfter field contains an invalid time</source>
         <translation>Pole &quot;notAfter&quot; certyfikatu zawiera niepoprawną datę</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is self-signed, and untrusted</source>
         <translation>Niewiarygodny certyfikat z podpisem własnym</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root certificate of the certificate chain is self-signed, and untrusted</source>
         <translation>Główny certyfikat łańcucha zaufania ma własny podpis i jest niewiarygodny</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
         <translation>Nie można odnaleźć certyfikatu wydawcy wyszukanego lokalnie certyfikatu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No certificates could be verified</source>
         <translation>Nie można zweryfikować żadnych certyfikatów</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>One of the CA certificates is invalid</source>
         <translation>Jeden z certyfikatów urzędu certyfikacji jest nieprawidłowy</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The basicConstraints path length parameter has been exceeded</source>
         <translation>Długość ścieżki określona w podstawowych warunkach ograniczających została przekroczona</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The supplied certificate is unsuitable for this purpose</source>
         <translation>Dostarczony certyfikat jest nieodpowiedni dla tego przeznaczenia</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is not trusted for this purpose</source>
         <translation>Główny certyfikat urzędu certyfikacji nie jest wiarygodny dla tego przeznaczenia</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is marked to reject the specified purpose</source>
         <translation>Główny certyfikat urzędu certyfikacji jest wyznaczony do odrzucania podanego przeznaczenia</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
         <translation>Certyfikat wydawcy obecnego kandydata został odrzucony, ponieważ nazwa podmiotu nie odpowiadała nazwie wydawcy obecnego certyfikatu</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
         <translation>Certyfikat wydawcy obecnego kandydata został odrzucony, ponieważ nazwa wydawcy i przedstawiony numer seryjny nie odpowiadały identyfikatorowi klucza urzędu certyfikacji obecnego certyfikatu</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>The peer did not present any certificate</source>
         <translation>Element równorzędny nie przedstawił żadnego certyfikatu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The host name did not match any of the valid hosts for this certificate</source>
         <translation>Nazwa hosta nie odpowiadała żadnemu z poprawnych hostów dla tego certyfikatu</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
         <source>Unknown error</source>
         <translation>Nieznany błąd</translation>
     </message>
@@ -6893,7 +6893,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7143,7 +7143,7 @@ Proszę wybrać inną nazwę pliku.</translation>
     <name>QXmlStream</name>
     <message>
         <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1770"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
         <source>Extra content at end of document.</source>
         <translation>Dodatkowa treść na końcu dokumentu.</translation>
     </message>
@@ -7238,12 +7238,12 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Oczekiwana dana znakowa.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-995"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-993"/>
         <source>Recursive entity detected.</source>
         <translation>Wykryto jednostkę rekurencyjną.</translation>
     </message>
     <message>
-        <location line="+516"/>
+        <location line="+514"/>
         <source>Start tag expected.</source>
         <translation>Oczekiwano rozpoczęcia tagu.</translation>
     </message>

@@ -299,7 +299,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+273"/>
+        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+274"/>
         <source>Displays version information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3728,7 +3728,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
@@ -3787,7 +3787,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+304"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
         <source>Centimeters (cm)</source>
         <translation>センチメートル (cm)</translation>
     </message>
@@ -3920,7 +3920,7 @@ Do you want to delete it anyway?</source>
         <translation>不明</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>印刷</translation>
@@ -3952,7 +3952,7 @@ Please choose a different file name.</source>
 ファイル名を指定してください。</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-232"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-217"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
@@ -4448,7 +4448,7 @@ Please choose a different file name.</source>
         <translation>プロセスがクラッシュしました</translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+897"/>
         <source>No program defined</source>
         <translation>プログラム名が指定されていません</translation>
     </message>
@@ -6198,26 +6198,26 @@ Please choose a different file name.</source>
         <translation>Hangul Special</translation>
     </message>
     <message>
-        <location line="+466"/>
-        <location line="+87"/>
+        <location line="+464"/>
+        <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+90"/>
+        <location line="-78"/>
+        <location line="+82"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-89"/>
-        <location line="+87"/>
+        <location line="-81"/>
+        <location line="+79"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+82"/>
+        <location line="-78"/>
+        <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
@@ -6360,7 +6360,7 @@ Please choose a different file name.</source>
         <translation>暗号方式リストが不正または空です (%1)</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+32"/>
         <source>Cannot provide a certificate with no key, %1</source>
         <translation>鍵が指定されていないため、証明書を扱えません。 %1</translation>
     </message>
@@ -6390,12 +6390,12 @@ Please choose a different file name.</source>
         <translation>SSL セッションを作成できません: %1</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+249"/>
         <source>Unable to write data: %1</source>
         <translation>書き込みできません: %1</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Unable to decrypt data: %1</source>
         <translation>データを解読できません: %1</translation>
     </message>
@@ -6416,122 +6416,122 @@ Please choose a different file name.</source>
         <translation>SSL ハンドシェーク時にエラーが発生しました: %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+286"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+265"/>
         <source>The peer certificate is blacklisted</source>
         <translation>通信相手の証明書がブラックリストに載っています</translation>
     </message>
     <message>
-        <location line="-72"/>
+        <location line="-48"/>
         <source>No error</source>
         <translation>エラーはありません</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate could not be found</source>
         <translation>発行者証明書が見つかりません</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate signature could not be decrypted</source>
         <translation>証明書の署名が復号できません</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The public key in the certificate could not be read</source>
         <translation>証明書の公開鍵が読めません</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The signature of the certificate is invalid</source>
         <translation>証明書の署名が不正です</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is not yet valid</source>
         <translation>証明書が有効ではありません</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate has expired</source>
         <translation>証明書の有効期限が切れています</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notBefore field contains an invalid time</source>
         <translation>証明書の notBefore フィールドに不正な時刻が含まれています</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notAfter field contains an invalid time</source>
         <translation>証明書の notAfter フィールドに不正な時刻が含まれています</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is self-signed, and untrusted</source>
         <translation>この証明書は自己証明書であり、信頼されていません</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root certificate of the certificate chain is self-signed, and untrusted</source>
         <translation>証明書チェインのルート証明書が自己証明書であり、信頼されていません</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
         <translation>ローカルで発見した証明書の発行者証明書が見つかりません</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No certificates could be verified</source>
         <translation>どの証明書も検証できませんでした</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>One of the CA certificates is invalid</source>
         <translation>CA 証明書に不正な証明書があります</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The basicConstraints path length parameter has been exceeded</source>
         <translation>基本制約(basicConstraints)で制限されたパスの長さを超えています</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The supplied certificate is unsuitable for this purpose</source>
         <translation>与えられた証明書はこの目的には利用できません</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is not trusted for this purpose</source>
         <translation>ルートCA証明書はこの目的には信頼されていません</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is marked to reject the specified purpose</source>
         <translation>ルートCA証明書を指定された目的に使用することは拒否されています</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
         <translation>更新用に準備された発行者証明書は、その所有者名が現在の証明書の発行者名と異なるため拒否されました</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
         <translation>更新用に準備された発行者証明書は、その発行者名とシリアル番号が現在の証明書の機関鍵識別子と異なるため拒否されました</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>The peer did not present any certificate</source>
         <translation>通信相手は証明書を提示しませんでした</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The host name did not match any of the valid hosts for this certificate</source>
         <translation>ホスト名がこの証明書のどの有効なホストとも一致しませんでした</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
     </message>
@@ -6897,7 +6897,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7147,7 +7147,7 @@ Please choose a different file name.</source>
     <name>QXmlStream</name>
     <message>
         <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1770"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
         <source>Extra content at end of document.</source>
         <translation>ドキュメントの末尾に余計なものがついています。</translation>
     </message>
@@ -7255,12 +7255,12 @@ Please choose a different file name.</source>
         <translation>予期していた文字列。</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-304"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-302"/>
         <source>Recursive entity detected.</source>
         <translation>再帰しているエンティティを発見しました。</translation>
     </message>
     <message>
-        <location line="+516"/>
+        <location line="+514"/>
         <source>Start tag expected.</source>
         <translation>開始タグを予期していましたが、みつかりません。</translation>
     </message>

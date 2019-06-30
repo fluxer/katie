@@ -297,7 +297,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCommandLineParser</name>
     <message>
-        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+273"/>
+        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+274"/>
         <source>Displays version information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3725,7 +3725,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
         <source>Name</source>
         <translation>Izena</translation>
     </message>
@@ -3784,7 +3784,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+304"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
         <source>Centimeters (cm)</source>
         <translation>Metroehunen (me)</translation>
     </message>
@@ -3962,7 +3962,7 @@ Do you want to overwrite it?</source>
 Gainidaztea nahi duzu?</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-232"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-217"/>
         <source>A0</source>
         <translation>A0</translation>
     </message>
@@ -4117,7 +4117,7 @@ Gainidaztea nahi duzu?</translation>
         <translation>Norberea</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>Irarkitu</translation>
@@ -4422,7 +4422,7 @@ Gainidaztea nahi duzu?</translation>
         <translation>Garapena matxuratuta</translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+897"/>
         <source>No program defined</source>
         <translation>Ez da programarik zehaztu</translation>
     </message>
@@ -6193,26 +6193,26 @@ Gainidaztea nahi duzu?</translation>
         <translation>Hangul Berezia</translation>
     </message>
     <message>
-        <location line="+466"/>
-        <location line="+87"/>
+        <location line="+464"/>
+        <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ktrl</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+90"/>
+        <location line="-78"/>
+        <location line="+82"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-89"/>
-        <location line="+87"/>
+        <location line="-81"/>
+        <location line="+79"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+82"/>
+        <location line="-78"/>
+        <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
@@ -6344,122 +6344,122 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+217"/>
         <source>No error</source>
         <translation>Ez dago akatsik</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate could not be found</source>
         <translation>Jaulkitzaile egiaztagira ezin da aurkitu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate signature could not be decrypted</source>
         <translation>Egiaztagiri sinadura ezin da dekriptatu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The public key in the certificate could not be read</source>
         <translation>Egiaztagiriko giltza publikoa ezin da irakurri</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The signature of the certificate is invalid</source>
         <translation>Egiaztagiriaren sinadura baliogabea da</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is not yet valid</source>
         <translation>Egiaztagiria ez da baliozkoa</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate has expired</source>
         <translation>Egiaztagiria epezkanpo dago</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notBefore field contains an invalid time</source>
         <translation>Egiaztagiriaren ez-Lehenago eremuak denbora baliogabea du</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate&apos;s notAfter field contains an invalid time</source>
         <translation>Egiaztagiriaren ez-Geroago eremuak denbora baliogabea du</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The certificate is self-signed, and untrusted</source>
         <translation>Egiaztagiria berak-sinatua, eta ez-fidagarria da</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root certificate of the certificate chain is self-signed, and untrusted</source>
         <translation>Egiaztagiri katearen erro egiaztagiria berak-sinatua, eta ez-fidagarria da</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
         <translation>Tokian bilatutako egiaztagiri jaulkitzaile egiaztagiria ez da aurkitu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No certificates could be verified</source>
         <translation>Egiaztagiriak ezin dira egiaztatu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>One of the CA certificates is invalid</source>
         <translation>CA egiaztagirietako bat baliogabea da</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The basicConstraints path length parameter has been exceeded</source>
         <translation>basicConstraints helburu luzera parametroa gainditu da</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The supplied certificate is unsuitable for this purpose</source>
         <translation>Emandako egiaztagiria erabiltezina da asmo honetarako</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is not trusted for this purpose</source>
         <translation>CA egiaztagiri erroa ez dago asmo honetarako egiaztatua</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The root CA certificate is marked to reject the specified purpose</source>
         <translation>CA egiaztagiri erroa adierazitako asmoa baztertzeko markatuta dago</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
         <translation>Oraingo jaulkitzaile egiaztagiri hautagarria baztertua izan da bere izena ez datorrelako bat oraingo egiaztagiri jaulkiltzaile izenarekin</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
         <translation>Oraingo jaulkitzaile egiaztagiri hautagarria baztertua izan da bere izena eta serie zenbakia aurkeztu eta ez datorrelako bat oraingo egiaztagiriaren agintaritza giltza ezagutarazlearekin</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>The peer did not present any certificate</source>
         <translation>Hartzaileak ez du egiaztagiririk aurkeztu</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>The host name did not match any of the valid hosts for this certificate</source>
         <translation>Hostalari izena ez dator bat egiaztagiri honentzako baliozko hostalariekin </translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>The peer certificate is blacklisted</source>
         <translation>Hartzaile egiaztagiria zerrenda-beltzean dago</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Unknown error</source>
         <translation>Akats ezezaguna</translation>
     </message>
@@ -6474,7 +6474,7 @@ Gainidaztea nahi duzu?</translation>
         <translation>Zifra zerrenda baliogabea edo hutsik (%1)</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+32"/>
         <source>Cannot provide a certificate with no key, %1</source>
         <translation>Ezin da egiaztagiri bat eman giltza gabe, %1</translation>
     </message>
@@ -6504,12 +6504,12 @@ Gainidaztea nahi duzu?</translation>
         <translation>Akatsa SSL saioa sortzerakoan, %1</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+249"/>
         <source>Unable to write data: %1</source>
         <translation>Ezinezkoa datuak idaztea: %1</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Unable to decrypt data: %1</source>
         <translation>Ezinezkoa datuak deskriptatzea: %1</translation>
     </message>
@@ -6891,7 +6891,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7141,7 +7141,7 @@ Gainidaztea nahi duzu?</translation>
     <name>QXmlStream</name>
     <message>
         <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1770"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
         <source>Extra content at end of document.</source>
         <translation>Eduki gehigarria agiriaren amaieran.</translation>
     </message>
@@ -7255,12 +7255,12 @@ Gainidaztea nahi duzu?</translation>
         <translation>Itxarondako hizki datua.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-969"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-967"/>
         <source>Recursive entity detected.</source>
         <translation>Entitate errekursiboa atzemanda.</translation>
     </message>
     <message>
-        <location line="+516"/>
+        <location line="+514"/>
         <source>Start tag expected.</source>
         <translation>Itxarondako etiketa hasiera.</translation>
     </message>

@@ -316,7 +316,7 @@ Options:
 <context>
     <name>LU</name>
     <message>
-        <location filename="../src/tools/lupdate/qscript.cpp" line="+1503"/>
+        <location filename="../src/tools/lupdate/qscript.cpp" line="+1493"/>
         <source>Illegal character</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1279,7 +1279,7 @@ Options:
     </message>
     <message>
         <location line="+7"/>
-        <source>Qt Designer</source>
+        <source>Katie Designer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
