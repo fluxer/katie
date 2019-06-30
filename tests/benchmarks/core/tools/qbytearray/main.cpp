@@ -55,12 +55,12 @@ class tst_qbytearray : public QObject
 private slots:
     void append();
     void append_data();
-    void compress_uncompress_1();
-    void compress_uncompress_9();
-    void fast_compress_uncompress_1();
-    void fast_compress_uncompress_9();
-    void compress_uncompress_diff_1();
-    void compress_uncompress_diff_9();
+    void compress_uncompress_data();
+    void compress_uncompress();
+    void fast_compress_uncompress_data();
+    void fast_compress_uncompress();
+    void compress_uncompress_diff_data();
+    void compress_uncompress_diff();
 };
 
 
@@ -90,54 +90,59 @@ void tst_qbytearray::append()
     }
 }
 
-void tst_qbytearray::compress_uncompress_1() {
+void tst_qbytearray::compress_uncompress_data()
+{
+    QTest::addColumn<int>("level");
+    QTest::newRow("-1") << int(-1);
+    QTest::newRow("0")  << int(0);
+    QTest::newRow("1")  << int(1);
+    QTest::newRow("2")  << int(2);
+    QTest::newRow("3")  << int(3);
+    QTest::newRow("4")  << int(4);
+    QTest::newRow("5")  << int(5);
+    QTest::newRow("6")  << int(6);
+    QTest::newRow("7")  << int(7);
+    QTest::newRow("8")  << int(8);
+    QTest::newRow("9")  << int(9);
+}
+
+void tst_qbytearray::compress_uncompress()
+{
+    QFETCH(int, level);
+
     QBENCHMARK {
-        QByteArray compressed = qCompress(lorem, 1);
+        QByteArray compressed = qCompress(lorem, level);
         QVERIFY(!compressed.isEmpty());
         QByteArray decompressed = qUncompress(compressed);
         QVERIFY(decompressed == lorem);
     }
 }
 
-void tst_qbytearray::compress_uncompress_9() {
-    QBENCHMARK {
-        QByteArray compressed = qCompress(lorem, 9);
-        QVERIFY(!compressed.isEmpty());
-        QByteArray decompressed = qUncompress(compressed);
-        QVERIFY(decompressed == lorem);
-    }
+void tst_qbytearray::fast_compress_uncompress_data() {
+    compress_uncompress_data();
 }
 
-void tst_qbytearray::fast_compress_uncompress_1() {
+void tst_qbytearray::fast_compress_uncompress() {
+    QFETCH(int, level);
+
     QBENCHMARK {
-        QByteArray compressed = qFastCompress(lorem, 1);
+        QByteArray compressed = qFastCompress(lorem, level);
         QVERIFY(!compressed.isEmpty());
         QByteArray decompressed = qFastUncompress(compressed);
         QVERIFY(decompressed == lorem);
     }
 }
 
-void tst_qbytearray::fast_compress_uncompress_9() {
-    QBENCHMARK {
-        QByteArray compressed = qFastCompress(lorem, 9);
-        QVERIFY(!compressed.isEmpty());
-        QByteArray decompressed = qFastUncompress(compressed);
-        QVERIFY(decompressed == lorem);
-    }
+void tst_qbytearray::compress_uncompress_diff_data() {
+    compress_uncompress_data();
 }
 
-void tst_qbytearray::compress_uncompress_diff_1() {
-    QByteArray compressed = qCompress(lorem, 1);
-    QVERIFY(!compressed.isEmpty());
-    QByteArray fastcompressed = qFastCompress(lorem, 1);
-    QVERIFY(!fastcompressed.isEmpty());
-    qDebug() << "compressed" << compressed.size() << "fastcompressed" << fastcompressed.size();
-}
+void tst_qbytearray::compress_uncompress_diff() {
+    QFETCH(int, level);
 
-void tst_qbytearray::compress_uncompress_diff_9() {
-    QByteArray compressed = qCompress(lorem, 9);
+    QByteArray compressed = qCompress(lorem, level);
     QVERIFY(!compressed.isEmpty());
-    QByteArray fastcompressed = qFastCompress(lorem, 9);
+    QByteArray fastcompressed = qFastCompress(lorem, level);
     QVERIFY(!fastcompressed.isEmpty());
     qDebug() << "compressed" << compressed.size() << "fastcompressed" << fastcompressed.size();
 }
