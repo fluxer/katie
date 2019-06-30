@@ -1449,7 +1449,7 @@ bool QPainter::begin(QPaintDevice *pd)
 
     d->device = pd;
 
-    d->extended = d->engine->isExtended() ? static_cast<QPaintEngineEx *>(d->engine) : 0;
+    d->extended = d->engine->isExtended() ? static_cast<QPaintEngineEx *>(d->engine) : Q_NULLPTR;
 
     // Setup new state...
     Q_ASSERT(!d->state);
@@ -1629,7 +1629,7 @@ bool QPainter::end()
     }
 
     if (d->extended) {
-        d->extended = 0;
+        d->extended = Q_NULLPTR;
     }
 
     qt_cleanup_painter_state(d);
@@ -5119,7 +5119,7 @@ void QPainter::drawStaticText(const QPointF &topLeftPosition, const QStaticText 
 
     // If we don't have an extended paint engine, or if the painter is projected,
     // we go through standard code path
-    if (d->extended == 0 || !d->state->matrix.isAffine()) {
+    if (d->extended == Q_NULLPTR || !d->state->matrix.isAffine()) {
         staticText_d->paintText(topLeftPosition, this);
         return;
     }
@@ -6197,8 +6197,6 @@ void QPainter::fillRect(const QRect &r, const QBrush &brush)
     setBrush(oldBrush);
     setPen(oldPen);
 }
-
-
 
 /*!
     \fn void QPainter::fillRect(const QRect &rectangle, const QColor &color)
@@ -7869,11 +7867,6 @@ QPainter::PixmapFragment QPainter::PixmapFragment::create(const QPointF &pos, co
 
     \sa QPainter::drawPixmapFragments(), QPainter::PixmapFragment
 */
-
-void qt_draw_helper(QPainterPrivate *p, const QPainterPath &path, QPainterPrivate::DrawOperation operation)
-{
-    p->draw_helper(path, operation);
-}
 
 /*! \fn Display *QPaintDevice::x11Display() const
     Use QX11Info::display() instead.

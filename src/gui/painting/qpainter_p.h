@@ -152,8 +152,10 @@ class QPainterPrivate
     Q_DECLARE_PUBLIC(QPainter)
 public:
     QPainterPrivate(QPainter *painter)
-    : q_ptr(painter), d_ptrs(0), state(0), dummyState(0), txinv(0), inDestructor(false), d_ptrs_size(0),
-        refcount(1), device(0), original_device(0), helper_device(0), engine(0), extended(0)
+    : q_ptr(painter), d_ptrs(Q_NULLPTR), state(Q_NULLPTR), dummyState(Q_NULLPTR), txinv(false),
+        inDestructor(false), d_ptrs_size(0), refcount(1), device(Q_NULLPTR),
+        original_device(Q_NULLPTR), helper_device(Q_NULLPTR), engine(Q_NULLPTR),
+        extended(Q_NULLPTR)
     {
     }
 
@@ -168,14 +170,15 @@ public:
     mutable QPainterDummyState *dummyState;
 
     QTransform invMatrix;
-    uint txinv:1;
-    uint inDestructor : 1;
-    uint d_ptrs_size;
+    bool txinv;
+    bool inDestructor;
+    int d_ptrs_size;
     uint refcount;
 
-    enum DrawOperation { StrokeDraw        = 0x1,
-                         FillDraw          = 0x2,
-                         StrokeAndFillDraw = 0x3
+    enum DrawOperation {
+        StrokeDraw        = 0x1,
+        FillDraw          = 0x2,
+        StrokeAndFillDraw = 0x3
     };
 
     QPainterDummyState *fakeState() const {
@@ -214,8 +217,6 @@ public:
     QPaintEngineEx *extended;
     QBrush colorBrush;          // for fill with solid color
 };
-
-Q_GUI_EXPORT void qt_draw_helper(QPainterPrivate *p, const QPainterPath &path, QPainterPrivate::DrawOperation operation);
 
 QString qt_generate_brush_key(const QBrush &brush);
 
