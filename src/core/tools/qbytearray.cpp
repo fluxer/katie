@@ -591,8 +591,8 @@ QByteArray qUncompress(const uchar* data, int nbytes)
     data) at the cost of using a slower algorithm. Smaller values (8,
     7, ..., 1) provide successively less compression at slightly
     faster speeds. The value 0 corresponds to no compression at all.
-    The default value is -1, which specifies ZSTD's default
-    compression.
+    The default value is 1, which results in good trade-off between
+    compression ratio and speed.
 
     \sa qFastUncompress()
 */
