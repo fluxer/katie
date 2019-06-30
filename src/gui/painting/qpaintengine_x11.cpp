@@ -1118,8 +1118,7 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
         }
 #if !defined(QT_NO_XRENDER)
         else {
-            d->composition_mode =
-            qpainterOpToXrender(state.compositionMode());
+            d->composition_mode = qpainterOpToXrender(state.compositionMode());
         }
 #endif
         XSetFunction(qt_x11Data->display, d->gc, function);

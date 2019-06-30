@@ -442,7 +442,9 @@ QDebug operator<<(QDebug s, const QRegion &r)
     \sa united(), operator+()
 */
 const QRegion QRegion::operator|(const QRegion &r) const
-    { return united(r); }
+{
+    return united(r);
+}
 
 /*!
     Applies the united() function to this region and \a r. \c r1+r2 is
@@ -451,14 +453,18 @@ const QRegion QRegion::operator|(const QRegion &r) const
     \sa united(), operator|()
 */
 const QRegion QRegion::operator+(const QRegion &r) const
-    { return united(r); }
+{
+    return united(r);
+}
 
 /*!
    \overload
    \since 4.4
  */
 const QRegion QRegion::operator+(const QRect &r) const
-    { return united(r); }
+{
+    return united(r);
+}
 
 /*!
     Applies the intersected() function to this region and \a r. \c r1&r2
@@ -467,7 +473,9 @@ const QRegion QRegion::operator+(const QRect &r) const
     \sa intersected()
 */
 const QRegion QRegion::operator&(const QRegion &r) const
-    { return intersected(r); }
+{
+    return intersected(r);
+}
 
 /*!
    \overload
@@ -485,7 +493,9 @@ const QRegion QRegion::operator&(const QRect &r) const
     \sa subtracted()
 */
 const QRegion QRegion::operator-(const QRegion &r) const
-    { return subtracted(r); }
+{
+    return subtracted(r);
+}
 
 /*!
     Applies the xored() function to this region and \a r. \c r1^r2 is
@@ -494,7 +504,9 @@ const QRegion QRegion::operator-(const QRegion &r) const
     \sa xored()
 */
 const QRegion QRegion::operator^(const QRegion &r) const
-    { return xored(r); }
+{
+    return xored(r);
+}
 
 /*!
     Applies the united() function to this region and \a r and assigns
@@ -504,7 +516,9 @@ const QRegion QRegion::operator^(const QRegion &r) const
     \sa united()
 */
 QRegion& QRegion::operator|=(const QRegion &r)
-    { return *this = *this | r; }
+{
+    return *this = *this | r;
+}
 
 /*!
     \fn QRegion& QRegion::operator+=(const QRect &rect)
@@ -539,7 +553,9 @@ QRegion& QRegion::operator+=(const QRect &r)
   \sa intersected()
 */
 QRegion& QRegion::operator&=(const QRegion &r)
-    { return *this = *this & r; }
+{
+    return *this = *this & r;
+}
 
 /*!
    \overload
@@ -567,7 +583,9 @@ QRegion& QRegion::operator&=(const QRect &r)
   \sa subtracted()
 */
 QRegion& QRegion::operator-=(const QRegion &r)
-    { return *this = *this - r; }
+{
+    return *this = *this - r;
+}
 
 /*!
     Applies the xored() function to this region and \a r and
@@ -577,7 +595,9 @@ QRegion& QRegion::operator-=(const QRegion &r)
     \sa xored()
 */
 QRegion& QRegion::operator^=(const QRegion &r)
-    { return *this = *this ^ r; }
+{
+    return *this = *this ^ r;
+}
 
 /*!
     \fn bool QRegion::operator!=(const QRegion &other) const
@@ -639,8 +659,7 @@ QRegion::operator QVariant() const
     \sa translate()
 */
 
-QRegion
-QRegion::translated(int dx, int dy) const
+QRegion QRegion::translated(int dx, int dy) const
 {
     QRegion ret(*this);
     ret.translate(dx, dy);
