@@ -555,11 +555,11 @@ public:
     QFixed minWidth;
     QFixed maxWidth;
     QPointF position;
-    uint ignoreBidi : 1;
-    uint cacheGlyphs : 1;
-    uint stackEngine : 1;
-    uint forceJustification : 1;
-    uint visualMovement : 1;
+    bool ignoreBidi;
+    bool cacheGlyphs;
+    bool stackEngine;
+    bool forceJustification;
+    bool visualMovement;
 
     int *underlinePositions;
 
