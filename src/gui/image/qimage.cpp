@@ -1377,13 +1377,9 @@ int QImage::colorCount() const
 */
 void QImage::setColorTable(const QVector<QRgb> &colors)
 {
-    if (!d)
+    if (!d || d->colortable == colors)
         return;
     detach();
-
-    // In case detach() ran out of memory
-    if (!d)
-        return;
 
     d->colortable = colors;
     d->has_alpha_clut = false;
@@ -1470,10 +1466,6 @@ void QImage::setColor(int i, QRgb c)
     }
     detach();
 
-    // In case detach() run out of memory
-    if (!d)
-        return;
-
     if (i >= d->colortable.size())
         setColorCount(i+1);
     d->colortable[i] = c;
@@ -1502,10 +1494,6 @@ uchar *QImage::scanLine(int i)
         return 0;
 
     detach();
-
-    // In case detach() ran out of memory
-    if (!d)
-        return 0;
 
     return d->data + i * d->bytes_per_line;
 }
@@ -1561,10 +1549,6 @@ uchar *QImage::bits()
     if (!d)
         return 0;
     detach();
-
-    // In case detach ran out of memory...
-    if (!d)
-        return 0;
 
     return d->data;
 }
@@ -1640,10 +1624,6 @@ void QImage::fill(uint pixel)
 
     detach();
 
-    // In case detach() ran out of memory
-    if (!d)
-        return;
-
     if (d->depth == 1 || d->depth == 8) {
         int w = d->width;
         if (d->depth == 1) {
@@ -1715,10 +1695,6 @@ void QImage::fill(const QColor &color)
         return;
     detach();
 
-    // In case we run out of memory
-    if (!d)
-        return;
-
     if (d->depth == 32) {
         uint pixel = color.rgba();
         if (d->format == QImage::Format_ARGB32_Premultiplied)
@@ -1775,10 +1751,6 @@ void QImage::invertPixels(InvertMode mode)
         return;
 
     detach();
-
-    // In case detach() ran out of memory
-    if (!d)
-        return;
 
     if (depth() != 32) {
         // number of used bytes pr line
@@ -1838,10 +1810,6 @@ void QImage::setColorCount(int colorCount)
     }
 
     detach();
-
-    // In case detach() ran out of memory
-    if (!d)
-        return;
 
     if (colorCount == d->colortable.size())
         return;
@@ -4524,8 +4492,7 @@ void QImage::setDotsPerMeterX(int x)
         return;
     detach();
 
-    if (d)
-        d->dpmx = x;
+    d->dpmx = x;
 }
 
 /*!
@@ -4546,8 +4513,7 @@ void QImage::setDotsPerMeterY(int y)
         return;
     detach();
 
-    if (d)
-        d->dpmy = y;
+    d->dpmy = y;
 }
 
 /*!
@@ -4578,8 +4544,7 @@ void QImage::setOffset(const QPoint& p)
         return;
     detach();
 
-    if (d)
-        d->offset = p;
+    d->offset = p;
 }
 
 /*
