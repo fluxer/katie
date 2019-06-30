@@ -139,84 +139,25 @@ bool QRasterPixmapData::scroll(int dx, int dy, const QRect &rect)
 
 void QRasterPixmapData::fill(const QColor &color)
 {
-    uint pixel;
-
-    if (image.depth() == 1) {
-        int gray = qGray(color.rgba());
-        // Pick the best approximate color in the image's colortable.
-        if (qAbs(qGray(image.color(0)) - gray) < qAbs(qGray(image.color(1)) - gray))
-            pixel = 0;
-        else
-            pixel = 1;
-    } else if (image.depth() >= 15) {
-        int alpha = color.alpha();
-        if (alpha != 255) {
-            if (!image.hasAlphaChannel()) {
-                QImage::Format toFormat;
-                if (image.format() == QImage::Format_RGB16)
-                    toFormat = QImage::Format_ARGB8565_Premultiplied;
-                else if (image.format() == QImage::Format_RGB666)
-                    toFormat = QImage::Format_ARGB6666_Premultiplied;
-                else if (image.format() == QImage::Format_RGB555)
-                    toFormat = QImage::Format_ARGB8555_Premultiplied;
-                else if (image.format() == QImage::Format_RGB444)
-                    toFormat = QImage::Format_ARGB4444_Premultiplied;
-                else
-                    toFormat = QImage::Format_ARGB32_Premultiplied;
-
-                if (!image.isNull() && qt_depthForFormat(image.format()) == qt_depthForFormat(toFormat)) {
-                    image.detach();
-                    image.d->format = toFormat;
-                } else {
-                    image = QImage(image.width(), image.height(), toFormat);
-                }
-            }
-
-            switch (image.format()) {
-            case QImage::Format_ARGB8565_Premultiplied:
-                pixel = qargb8565(color.rgba()).rawValue();
-                break;
-            case QImage::Format_ARGB8555_Premultiplied:
-                pixel = qargb8555(color.rgba()).rawValue();
-                break;
-            case QImage::Format_ARGB6666_Premultiplied:
-                pixel = qargb6666(color.rgba()).rawValue();
-                break;
-            case QImage::Format_ARGB4444_Premultiplied:
-                pixel = qargb4444(color.rgba()).rawValue();
-                break;
-            default:
-                pixel = PREMUL(color.rgba());
+    QImage::Format format = image.format();
+    if (color.alpha() != 255 && !image.hasAlphaChannel()) {
+        switch (format) {
+            case QImage::Format_RGB666: {
+                image = image.convertToFormat(QImage::Format_ARGB6666_Premultiplied);
                 break;
             }
-        } else {
-            switch (image.format()) {
-            case QImage::Format_RGB16:
-                pixel = qt_colorConvert<quint16, quint32>(color.rgba(), 0);
+            case QImage::Format_RGB444: {
+                image = image.convertToFormat(QImage::Format_ARGB4444_Premultiplied);
                 break;
-            case QImage::Format_RGB444:
-                pixel = qrgb444(color.rgba()).rawValue();
-                break;
-            case QImage::Format_RGB555:
-                pixel = qrgb555(color.rgba()).rawValue();
-                break;
-            case QImage::Format_RGB666:
-                pixel = qrgb666(color.rgba()).rawValue();
-                break;
-            case QImage::Format_RGB888:
-                pixel = qrgb888(color.rgba()).rawValue();
-                break;
-            default:
-                pixel = color.rgba();
+            }
+            default: {
+                image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
                 break;
             }
         }
-    } else {
-        pixel = 0;
-        // ### what about 8 bits
     }
 
-    image.fill(pixel);
+    image.fill(color);
 }
 
 void QRasterPixmapData::setMask(const QBitmap &mask)
