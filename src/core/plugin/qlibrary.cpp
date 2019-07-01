@@ -386,8 +386,9 @@ static LibraryMap *libraryMap()
 }
 
 QLibraryPrivate::QLibraryPrivate(const QString &canonicalFileName, const QString &version)
-    :pHnd(0), fileName(canonicalFileName), fullVersion(version), instance(0), qt_version(0),
-     libraryRefCount(1), libraryUnloadCount(0), pluginState(MightBeAPlugin)
+    : did_load(false), pHnd(0), fileName(canonicalFileName), fullVersion(version),
+     instance(0), qt_version(0), libraryRefCount(1), libraryUnloadCount(0),
+     pluginState(MightBeAPlugin)
 { libraryMap()->insert(canonicalFileName, this); }
 
 QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QString &version)
@@ -698,9 +699,9 @@ bool QLibrary::load()
 {
     if (!d)
         return false;
-    if (did_load)
+    if (d->did_load)
         return d->pHnd;
-    did_load = true;
+    d->did_load = true;
     return d->load();
 }
 
@@ -719,8 +720,8 @@ bool QLibrary::load()
 */
 bool QLibrary::unload()
 {
-    if (did_load) {
-        did_load = false;
+    if (d->did_load) {
+        d->did_load = false;
         return d->unload();
     }
     return false;
@@ -741,7 +742,7 @@ bool QLibrary::isLoaded() const
     Constructs a library with the given \a parent.
  */
 QLibrary::QLibrary(QObject *parent)
-    :QObject(parent), d(0), did_load(false)
+    :QObject(parent), d(0)
 {
 }
 
@@ -757,7 +758,7 @@ QLibrary::QLibrary(QObject *parent)
 
  */
 QLibrary::QLibrary(const QString& fileName, QObject *parent)
-    :QObject(parent), d(0), did_load(false)
+    :QObject(parent), d(0)
 {
     setFileName(fileName);
 }
@@ -774,7 +775,7 @@ QLibrary::QLibrary(const QString& fileName, QObject *parent)
     ".dylib" on Mac OS X, and ".dll" on Windows. (See \l{fileName}.)
 */
 QLibrary::QLibrary(const QString& fileName, int verNum, QObject *parent)
-    :QObject(parent), d(0), did_load(false)
+    :QObject(parent), d(0)
 {
     setFileNameAndVersion(fileName, verNum);
 }
@@ -790,7 +791,7 @@ QLibrary::QLibrary(const QString& fileName, int verNum, QObject *parent)
     ".dylib" on Mac OS X, and ".dll" on Windows. (See \l{fileName}.)
  */
 QLibrary::QLibrary(const QString& fileName, const QString &version, QObject *parent)
-    :QObject(parent), d(0), did_load(false)
+    :QObject(parent), d(0)
 {
     setFileNameAndVersion(fileName, version);
 }
@@ -838,10 +839,10 @@ void QLibrary::setFileName(const QString &fileName)
         lh = d->loadHints;
         d->release();
         d = 0;
-        did_load = false;
     }
     d = QLibraryPrivate::findOrCreate(fileName);
     d->loadHints = lh;
+    d->did_load = false;
 }
 
 QString QLibrary::fileName() const
@@ -867,10 +868,10 @@ void QLibrary::setFileNameAndVersion(const QString &fileName, int verNum)
         lh = d->loadHints;
         d->release();
         d = 0;
-        did_load = false;
     }
     d = QLibraryPrivate::findOrCreate(fileName, verNum >= 0 ? QString::number(verNum) : QString());
     d->loadHints = lh;
+    d->did_load = false;
 }
 
 /*!
@@ -889,10 +890,10 @@ void QLibrary::setFileNameAndVersion(const QString &fileName, const QString &ver
         lh = d->loadHints;
         d->release();
         d = 0;
-        did_load = false;
     }
     d = QLibraryPrivate::findOrCreate(fileName, version);
     d->loadHints = lh;
+    d->did_load = false;
 }
 
 /*!

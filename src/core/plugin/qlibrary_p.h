@@ -59,6 +59,8 @@ class QSettings;
 class QLibraryPrivate
 {
 public:
+    bool did_load;
+
     void *pHnd;
 
     QString fileName;
@@ -82,7 +84,6 @@ public:
     QLibrary::LoadHints loadHints;
 
     bool isPlugin(QSettings *settings = 0);
-
 
 private:
     explicit QLibraryPrivate(const QString &canonicalFileName, const QString &version);
