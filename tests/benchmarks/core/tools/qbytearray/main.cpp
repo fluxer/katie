@@ -44,7 +44,6 @@
 #include <QString>
 #include <qtest.h>
 
-
 QT_USE_NAMESPACE
 
 static const QByteArray lorem = QByteArray("Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.");
@@ -61,6 +60,8 @@ private slots:
     void fast_compress_uncompress();
     void compress_uncompress_ratio_data();
     void compress_uncompress_ratio();
+    void to_from_base64();
+    void to_from_hex();
 };
 
 
@@ -148,6 +149,25 @@ void tst_qbytearray::compress_uncompress_ratio() {
     const QByteArray favoured = QByteArray(ratio < 0 ? "qCompress" : "qFastCompress");
     qDebug() << "ratio in favour of:" << favoured << ratio;
 }
+
+void tst_qbytearray::to_from_base64() {
+    QBENCHMARK {
+        QByteArray base64 = lorem.toBase64();
+        QVERIFY(!base64.isEmpty());
+        QByteArray original = QByteArray::fromBase64(base64);
+        QVERIFY(original == lorem);
+    }
+}
+
+void tst_qbytearray::to_from_hex() {
+    QBENCHMARK {
+        QByteArray hex = lorem.toHex();
+        QVERIFY(!hex.isEmpty());
+        QByteArray original = QByteArray::fromHex(hex);
+        QVERIFY(original == lorem);
+    }
+}
+
 
 QTEST_MAIN(tst_qbytearray)
 
