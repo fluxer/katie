@@ -25,12 +25,6 @@ static inline QString fromstrerror_helper(const char *str, const QByteArray &)
 }
 #endif
 
-static inline void report_error(int code, const char *where, const char *what)
-{
-    if (code != 0)
-        qWarning("%s: %s failure: %s", where, what, qPrintable(qt_error_string(code)));
-}
-
 QT_END_NAMESPACE
 
 #endif // QCORECOMMON_P_H
