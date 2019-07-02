@@ -39,13 +39,12 @@
 //  -------------
 //
 // This file is not part of the Katie API.  It exists for the convenience
-// of qDecodeDataUrl. This header file may change from version to
-// version without notice, or even be removed.
+// of QUrl. This header file may change from version to version without
+// notice, or even be removed.
 //
 // We mean it.
 //
 
-#include "QtCore/qurl.h"
 #include "QtCore/qstring.h"
 
 QT_BEGIN_NAMESPACE
