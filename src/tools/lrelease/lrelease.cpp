@@ -76,7 +76,7 @@ static void printUsage()
     printOut(LR::tr(
         "Usage:\n"
         "    lrelease [options] ts-files [-qm qm-file]\n\n"
-        "lrelease is part of Qt's Linguist tool chain. It can be used as a\n"
+        "lrelease is part of Katie's Linguist tool chain. It can be used as a\n"
         "stand-alone tool to convert XML-based translations files in the TS\n"
         "format into the 'compiled' QM format used by QTranslator objects.\n\n"
         "Options:\n"

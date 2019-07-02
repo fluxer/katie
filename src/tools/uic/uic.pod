@@ -1,6 +1,6 @@
 =head1 NAME
 
-uic - Qt User Interface Compiler
+uic - Katie User Interface Compiler
 
 =head1 SYNOPSIS
 

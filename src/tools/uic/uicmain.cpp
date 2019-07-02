@@ -95,7 +95,7 @@ int runUic(int argc, char *argv[])
         } else if (opt == QLatin1String("-d") || opt == QLatin1String("-dependencies")) {
             driver.option().dependencies = true;
         } else if (opt == QLatin1String("-v") || opt == QLatin1String("-version")) {
-            fprintf(stderr, "Qt User Interface Compiler version %s\n", QT_VERSION_STR);
+            fprintf(stderr, "Katie User Interface Compiler version %s\n", QT_VERSION_STR);
             return 0;
         } else if (opt == QLatin1String("-o") || opt == QLatin1String("-output")) {
             ++arg;

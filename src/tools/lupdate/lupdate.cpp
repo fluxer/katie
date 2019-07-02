@@ -88,7 +88,7 @@ static void printUsage()
     printOut(LU::tr(
         "Usage:\n"
         "    lupdate [options] [source-file|path|@lst-file]... -ts ts-files|@lst-file\n\n"
-        "lupdate is part of Qt's Linguist tool chain. It extracts translatable\n"
+        "lupdate is part of Katie's Linguist tool chain. It extracts translatable\n"
         "messages from Qt UI files, C++ and JavaScript/QtScript source code.\n"
         "Extracted messages are stored in textual translation source files (typically\n"
         "Qt TS XML). New and modified messages can be merged into existing TS files.\n\n"

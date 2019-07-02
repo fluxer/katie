@@ -1,6 +1,6 @@
 =head1 NAME
 
-lrelease - part of Qt's Linguist tool chain
+lrelease - part of Katie's Linguist tool chain
 
 =head1 SYNOPSIS
 

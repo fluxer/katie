@@ -1,6 +1,6 @@
 =head1 NAME
 
-moc - Qt meta object support code generator
+moc - Katie meta object support code generator
 
 =head1 SYNOPSIS
 

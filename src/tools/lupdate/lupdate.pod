@@ -1,6 +1,6 @@
 =head1 NAME
 
-lupdate - part of Qt's Linguist tool chain
+lupdate - part of Katie's Linguist tool chain
 
 =head1 SYNOPSIS
 

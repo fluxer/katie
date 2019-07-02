@@ -448,7 +448,7 @@ QActionGroup *QDesignerActions::createHelpActions()
     connect(aboutPluginsAction, SIGNAL(triggered()), m_core->formWindowManager(), SLOT(aboutPlugins()));
     helpActions->addAction(aboutPluginsAction);
 
-    QAction *aboutDesignerAction = new QAction(tr("About Qt Designer"), this);
+    QAction *aboutDesignerAction = new QAction(tr("About Katie Designer"), this);
     aboutDesignerAction->setMenuRole(QAction::AboutRole);
     aboutDesignerAction->setObjectName(QLatin1String("__qt_about_designer_action"));
     connect(aboutDesignerAction, SIGNAL(triggered()), this, SLOT(aboutDesigner()));
@@ -1019,7 +1019,7 @@ QAction *QDesignerActions::minimizeAction() const
 void QDesignerActions::aboutDesigner()
 {
     VersionDialog mb(core()->topLevel());
-    mb.setWindowTitle(tr("About Qt Designer"));
+    mb.setWindowTitle(tr("About Katie Designer"));
     if (mb.exec()) {
         QMessageBox messageBox(QMessageBox::Information, QLatin1String("Easter Egg"),
                                QLatin1String("Easter Egg"), QMessageBox::Ok, core()->topLevel());

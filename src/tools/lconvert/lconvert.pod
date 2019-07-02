@@ -1,6 +1,6 @@
 =head1 NAME
 
-lconvert - part of Qt's Linguist tool chain
+lconvert - part of Katie's Linguist tool chain
 
 =head1 SYNOPSIS
 

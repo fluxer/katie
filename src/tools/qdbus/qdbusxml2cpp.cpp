@@ -124,7 +124,7 @@ static void showHelp()
 static void showVersion()
 {
     printf("%s version %s\n", PROGRAMNAME, PROGRAMVERSION);
-    printf("D-Bus binding tool for Qt\n");
+    printf("D-Bus binding tool for Katie\n");
     exit(0);
 }
 

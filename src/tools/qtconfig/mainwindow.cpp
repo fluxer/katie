@@ -756,15 +756,15 @@ void MainWindow::helpAbout()
                    "<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
                    "<br/><br/>Copyright (C) 2016-2019 Ivailo Monev"
                     )
-                   .arg(tr("Qt Configuration")).arg(QLatin1String(QT_VERSION_STR)));
-    box.setWindowTitle(tr("Qt Configuration"));
+                   .arg(tr("Katie Configuration")).arg(QLatin1String(QT_VERSION_STR)));
+    box.setWindowTitle(tr("Katie Configuration"));
     box.setIcon(QMessageBox::NoIcon);
     box.exec();
 }
 
 void MainWindow::helpAboutQt()
 {
-    QMessageBox::aboutQt(this, tr("Qt Configuration"));
+    QMessageBox::aboutQt(this, tr("Katie Configuration"));
 }
 
 void MainWindow::pageChanged(int pageNumber)

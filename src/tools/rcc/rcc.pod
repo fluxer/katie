@@ -1,6 +1,6 @@
 =head1 NAME
 
-rcc - Qt resource compiler
+rcc - Katie resource compiler
 
 =head1 SYNOPSIS
 

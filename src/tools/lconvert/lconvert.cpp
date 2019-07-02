@@ -67,7 +67,7 @@ static int usage(const QStringList &args)
 
     std::cout << qPrintable(LC::tr("\nUsage:\n"
         "    lconvert [options] <infile> [<infile>] ...\n\n"
-        "lconvert is part of Qt's Linguist tool chain. It can be used as a\n"
+        "lconvert is part of Katie's Linguist tool chain. It can be used as a\n"
         "stand-alone tool to convert and filter translation data files.\n"
         "The following file formats are supported:\n\n%1\n"
         "If multiple input files are specified, they are merged with\n"
