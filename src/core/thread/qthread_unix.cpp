@@ -34,7 +34,7 @@
 #include "qthread.h"
 
 #include "qplatformdefs.h"
-#include <qcoreapplication_p.h>
+#include "qcoreapplication_p.h"
 #include "qthread_p.h"
 #include "qdebug.h"
 
@@ -45,14 +45,6 @@
 
 #include <sched.h>
 #include <errno.h>
-
-#ifdef Q_OS_BSD4
-#include <sys/sysctl.h>
-#endif
-
-#ifdef Q_OS_HPUX
-#include <sys/pstat.h>
-#endif
 
 #if defined(Q_OS_LINUX) && !defined(QT_LINUXBASE)
 #include <sys/prctl.h>
@@ -67,6 +59,8 @@
 #define QT_HAS_THREAD_PRIORITY_SCHEDULING
 #endif
 
+#include <chrono>
+#include <thread>
 
 QT_BEGIN_NAMESPACE
 
@@ -318,99 +312,29 @@ Qt::HANDLE QThread::currentThreadId()
     return (Qt::HANDLE)pthread_self();
 }
 
-#if defined(QT_LINUXBASE) && !defined(_SC_NPROCESSORS_ONLN)
-// LSB doesn't define _SC_NPROCESSORS_ONLN.
-#  define _SC_NPROCESSORS_ONLN 84
-#endif
-
 int QThread::idealThreadCount()
 {
-    int cores = -1;
-
-#if defined(Q_OS_HPUX)
-    // HP-UX
-    struct pst_dynamic psd;
-    if (pstat_getdynamic(&psd, sizeof(psd), 1, 0) == -1) {
-        perror("pstat_getdynamic");
-        cores = -1;
-    } else {
-        cores = (int)psd.psd_proc_cnt;
-    }
-#elif defined(Q_OS_BSD4)
-    // FreeBSD, OpenBSD, NetBSD, BSD/OS
-    size_t len = sizeof(cores);
-    int mib[2];
-    mib[0] = CTL_HW;
-    mib[1] = HW_NCPU;
-    if (sysctl(mib, 2, &cores, &len, Q_NULLPTR, 0) != 0) {
-        perror("sysctl");
-        cores = -1;
-    }
-#else
-    // the rest: Linux, Solaris, AIX, Tru64
-    cores = (int)sysconf(_SC_NPROCESSORS_ONLN);
-#endif
-
-    return cores;
+    return std::thread::hardware_concurrency();
 }
 
 void QThread::yieldCurrentThread()
 {
-    sched_yield();
-}
-
-/*  \internal
-    helper function to do thread sleeps, since usleep()/nanosleep()
-    aren't reliable enough (in terms of behavior and availability)
-*/
-static void thread_sleep(struct timespec *ti)
-{
-    pthread_mutex_t mtx;
-    pthread_cond_t cnd;
-
-    pthread_mutex_init(&mtx, Q_NULLPTR);
-    pthread_cond_init(&cnd, Q_NULLPTR);
-
-    pthread_mutex_lock(&mtx);
-    (void) pthread_cond_timedwait(&cnd, &mtx, ti);
-    pthread_mutex_unlock(&mtx);
-
-    pthread_cond_destroy(&cnd);
-    pthread_mutex_destroy(&mtx);
+    std::this_thread::yield();
 }
 
 void QThread::sleep(unsigned long secs)
 {
-    struct timeval tv;
-    gettimeofday(&tv, Q_NULLPTR);
-    struct timespec ti;
-    ti.tv_sec = tv.tv_sec + secs;
-    ti.tv_nsec = (tv.tv_usec * 1000);
-    thread_sleep(&ti);
+    std::this_thread::sleep_for(std::chrono::seconds(secs));
 }
 
 void QThread::msleep(unsigned long msecs)
 {
-    struct timeval tv;
-    gettimeofday(&tv, Q_NULLPTR);
-    struct timespec ti;
-
-    ti.tv_nsec = (tv.tv_usec + (msecs % 1000) * 1000) * 1000;
-    ti.tv_sec = tv.tv_sec + (msecs / 1000) + (ti.tv_nsec / 1000000000);
-    ti.tv_nsec %= 1000000000;
-    thread_sleep(&ti);
+    std::this_thread::sleep_for(std::chrono::milliseconds(msecs));
 }
 
 void QThread::usleep(unsigned long usecs)
 {
-    struct timeval tv;
-    gettimeofday(&tv, Q_NULLPTR);
-    struct timespec ti;
-
-    ti.tv_nsec = (tv.tv_usec + (usecs % 1000000)) * 1000;
-    ti.tv_sec = tv.tv_sec + (usecs / 1000000) + (ti.tv_nsec / 1000000000);
-    ti.tv_nsec %= 1000000000;
-    thread_sleep(&ti);
+    std::this_thread::sleep_for(std::chrono::microseconds(usecs));
 }
 
 #ifdef QT_HAS_THREAD_PRIORITY_SCHEDULING
