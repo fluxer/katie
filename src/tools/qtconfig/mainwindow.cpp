@@ -207,7 +207,7 @@ MainWindow::MainWindow()
 
     modified = true;
     desktopThemeName = tr("Desktop Settings (Default)");
-    setWindowIcon(QPixmap(QLatin1String(":/trolltech/qtconfig/images/qtconfig.png")));
+    setWindowIcon(QPixmap(QLatin1String(":/trolltech/qtconfig/qtconfig.png")));
     QStringList gstyles = QStyleFactory::keys();
     gstyles.sort();
     ui->guiStyleCombo->addItem(desktopThemeName);

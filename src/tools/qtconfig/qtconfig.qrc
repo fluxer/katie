@@ -1,5 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/trolltech/qtconfig/">
-  <file>images/qtconfig.png</file>
+  <file>qtconfig.png</file>
 </qresource>
 </RCC>
