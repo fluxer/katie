@@ -161,7 +161,6 @@ void QSemaphore::release(int n)
 */
 int QSemaphore::available() const
 {
-    QMutexLocker locker(&d->mutex);
     return d->avail;
 }
 
