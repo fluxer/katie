@@ -2848,7 +2848,7 @@ Deseja apagar de qualquer forma?</translation>
         <translation>Dados de verificação do plugin incorrectos em &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>O plugin  &apos;%1&apos; usa uma biblioteca Qt incompatível. (%2.%3.%4) [%5]</translation>
     </message>

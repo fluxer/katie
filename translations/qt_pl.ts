@@ -2850,7 +2850,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Niezgodność podczas weryfikacji danych we wtyczce &quot;%1&quot;</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Wtyczka &apos;%1&apos; używa niepoprawnej wersji biblioteki QT. (%2.%3.%4) [%5]</translation>
     </message>

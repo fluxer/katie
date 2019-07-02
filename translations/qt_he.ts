@@ -2850,7 +2850,7 @@ Do you want to delete it anyway?</source>
         <translation>חוסר התאמה במידע אימות תוסף בתוך &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>התוסף &apos;%1&apos; משתמש בספריית Qt שאינה תואמת (%2.%3.%4) [%5]</translation>
     </message>

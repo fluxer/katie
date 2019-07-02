@@ -2848,7 +2848,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Overenie dát modulu nesúhlasí v &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+217"/>
+        <location line="+218"/>
         <location line="+64"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>

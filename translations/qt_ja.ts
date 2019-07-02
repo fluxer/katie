@@ -2850,7 +2850,7 @@ Do you want to delete it anyway?</source>
         <translation>&apos;%1&apos; でプラグイン検証データが一致しません</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>プラグイン &apos;%1&apos; は、互換性のない Qt ライブラリを使用しています。(%2.%3.%4) [%5]</translation>
     </message>

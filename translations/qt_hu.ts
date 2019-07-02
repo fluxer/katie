@@ -2853,7 +2853,7 @@ Biztosan törölni akarja?</translation>
         <translation>Plugin ellenőrző adat eltérés: &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>A(z) &apos;%1&apos; plugin inkompatíbilis Qt függvénykönyvtárat használ. (%2.%3.%4) [%5]</translation>
     </message>

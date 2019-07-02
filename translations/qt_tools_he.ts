@@ -158,7 +158,7 @@
 Usage:
     lconvert [options] &lt;infile&gt; [&lt;infile&gt;] ...
 
-lconvert is part of Qt&apos;s Linguist tool chain. It can be used as a
+lconvert is part of Katie&apos;s Linguist tool chain. It can be used as a
 stand-alone tool to convert and filter translation data files.
 The following file formats are supported:
 
@@ -246,7 +246,7 @@ Long options can be specified with only one leading dash, too.
         <source>Usage:
     lrelease [options] ts-files [-qm qm-file]
 
-lrelease is part of Qt&apos;s Linguist tool chain. It can be used as a
+lrelease is part of Katie&apos;s Linguist tool chain. It can be used as a
 stand-alone tool to convert XML-based translations files in the TS
 format into the &apos;compiled&apos; QM format used by QTranslator objects.
 
@@ -622,7 +622,7 @@ Options:
         <source>Usage:
     lupdate [options] [source-file|path|@lst-file]... -ts ts-files|@lst-file
 
-lupdate is part of Qt&apos;s Linguist tool chain. It extracts translatable
+lupdate is part of Katie&apos;s Linguist tool chain. It extracts translatable
 messages from Qt UI files, C++ and JavaScript/QtScript source code.
 Extracted messages are stored in textual translation source files (typically
 Qt TS XML). New and modified messages can be merged into existing TS files.
@@ -839,9 +839,6 @@ Options:
     </message>
     <message>
         <location filename="../src/tools/qtconfig/mainwindow.ui"/>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+759"/>
-        <location line="+1"/>
-        <location line="+7"/>
         <source>Qt Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1171,7 +1168,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="-692"/>
+        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+75"/>
         <source>&lt;p&gt;&lt;b&gt;&lt;font size+=2&gt;Appearance&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p&gt;Use this tab to customize the appearance of your Qt applications.&lt;/p&gt;&lt;p&gt;You can select the default GUI Style from the drop down list and customize the colors.&lt;/p&gt;&lt;p&gt;Any GUI Style plugins in your plugin path will automatically be added to the list of built-in Qt styles. (See the Library Paths tab for information on adding new plugin paths.)&lt;/p&gt;&lt;p&gt;When you choose 3-D Effects and Window Background colors, the Qt Configuration program will automatically generate a palette for you. To customize colors further, press the Tune Palette button to open the advanced palette editor.&lt;p&gt;The Preview Window shows what the selected Style and colors look like.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1231,7 +1228,14 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+5"/>
+        <location line="+1"/>
+        <location line="+7"/>
+        <source>Katie Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Save Changes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1847,7 +1851,7 @@ Do you want to replace it?</source>
     <message>
         <location line="+6"/>
         <location line="+571"/>
-        <source>About Qt Designer</source>
+        <source>About Katie Designer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2245,7 +2249,7 @@ Would you like to retry?</source>
     <name>QtDBusViewer</name>
     <message>
         <location line="-19"/>
-        <source>Qt D-Bus Viewer</source>
+        <source>Katie D-Bus Viewer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2848,7 +2848,7 @@ Do you want to delete it anyway?</source>
         <translation>Plugin-verifikationsdata er sat forkert sammen i &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Plugin &apos;%1&apos; bruger inkompatibelt Qt-bibliotek. (%2.%3.%4) [%5]</translation>
     </message>

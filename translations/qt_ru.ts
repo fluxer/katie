@@ -2849,7 +2849,7 @@ Please verify the correct directory name was given.</source>
         <translation>Проверочная информация для модуля «%1» не совпадает</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Модуль «%1» использует несоместимую библиотеку Qt. (%2.%3.%4) [%5]</translation>
     </message>

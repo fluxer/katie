@@ -2848,7 +2848,7 @@ Do you want to delete it anyway?</source>
         <translation>“%1“中的插件验证数据不匹配</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>插件“%1”使用了不兼容的Qt库。(%2.%3.%4) [%5]</translation>
     </message>

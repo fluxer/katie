@@ -2848,7 +2848,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Neujemanje podatkov za potrjevanje vstavkov v »%1«</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Vstavek »%1« uporablja nezdružljivo knjižnico Qt. (%2.%3.%4) [%5]</translation>
     </message>

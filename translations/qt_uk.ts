@@ -2848,7 +2848,7 @@ Do you want to delete it anyway?</source>
         <translation>Дані верифікації додатку не збігаються для ’%1’</translation>
     </message>
     <message>
-        <location line="+217"/>
+        <location line="+218"/>
         <location line="+64"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>

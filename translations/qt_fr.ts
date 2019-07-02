@@ -2857,7 +2857,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Données de vérification du plugin différente dans &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Le plugin &apos;%1&apos; utilise une bibliothèque Qt incompatible. (%2.%3.%4) [%5]</translation>
     </message>

@@ -2848,7 +2848,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
         <translation>Die Prüfdaten des Plugins &apos;%1&apos; stimmen nicht überein</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Das Plugin &apos;%1&apos; verwendet eine inkompatible Qt-Bibliothek. (%2.%3.%4) [%5]</translation>
     </message>

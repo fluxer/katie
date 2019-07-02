@@ -2848,7 +2848,7 @@ Do you want to delete it anyway?</source>
         <translation>在 %1 中的外掛程式確認資料不符合</translation>
     </message>
     <message>
-        <location line="+298"/>
+        <location line="+299"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>外掛程式 %1 使用不相容的 Qt 函式庫（%2.%3.%4）【%5】</translation>
     </message>

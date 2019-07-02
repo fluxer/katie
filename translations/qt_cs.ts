@@ -2853,7 +2853,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Knihovnu %1 nelze nahrát: %2</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+664"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+665"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Přídavný modul &apos;%1&apos; používá neslučitelnou Qt knihovnu. (%2.%3.%4) [%5]</translation>
     </message>
@@ -2863,12 +2863,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Symbol &quot;%1&quot; nelze v %2 vyřešit: %3</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="-298"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="-299"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Ověřovací data přídavného nesouhlasí v &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+307"/>
+        <location line="+308"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
         <translation>Přídavný modul &apos;%1&apos; používá neslučitelnou Qt knihovnu. (Knihovny vytvořené v režimu ladění a vydání nemohou být používány společně.)</translation>
     </message>

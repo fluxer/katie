@@ -2848,7 +2848,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Plugin egiaztapen datuak ez datoz bat hemen, &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+217"/>
+        <location line="+218"/>
         <location line="+64"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
