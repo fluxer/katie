@@ -2482,12 +2482,12 @@ Do you want overwrite the template?</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Qt Designer</source>
+        <source>Katie Designer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>&lt;br/&gt;Qt Designer is a graphical user interface designer for Qt applications.&lt;br/&gt;</source>
+        <source>&lt;br/&gt;Katie Designer is a graphical user interface designer for Qt applications.&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
