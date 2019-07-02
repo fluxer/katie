@@ -4391,7 +4391,7 @@ bool QImage::operator==(const QImage & i) const
         if (d->format >= Format_ARGB32) { // all bits defined
             const int n = d->width * d->depth / 8;
             if (n == d->bytes_per_line && n == i.d->bytes_per_line) {
-                if (memcmp(bits(), i.bits(), d->nbytes))
+                if (memcmp(bits(), i.constBits(), d->nbytes))
                     return false;
             } else {
                 for (int y = 0; y < d->height; ++y) {
@@ -5136,7 +5136,7 @@ static QImage rotated90(const QImage &image) {
     case QImage::Format_RGB32:
     case QImage::Format_ARGB32:
     case QImage::Format_ARGB32_Premultiplied:
-        qt_memrotate270(reinterpret_cast<const quint32*>(image.bits()),
+        qt_memrotate270(reinterpret_cast<const quint32*>(image.constBits()),
                         w, h, image.bytesPerLine(),
                         reinterpret_cast<quint32*>(out.bits()),
                         out.bytesPerLine());
@@ -5146,7 +5146,7 @@ static QImage rotated90(const QImage &image) {
     case QImage::Format_ARGB8565_Premultiplied:
     case QImage::Format_ARGB8555_Premultiplied:
     case QImage::Format_RGB888:
-        qt_memrotate270(reinterpret_cast<const quint24*>(image.bits()),
+        qt_memrotate270(reinterpret_cast<const quint24*>(image.constBits()),
                         w, h, image.bytesPerLine(),
                         reinterpret_cast<quint24*>(out.bits()),
                         out.bytesPerLine());
@@ -5154,13 +5154,13 @@ static QImage rotated90(const QImage &image) {
     case QImage::Format_RGB555:
     case QImage::Format_RGB16:
     case QImage::Format_ARGB4444_Premultiplied:
-        qt_memrotate270(reinterpret_cast<const quint16*>(image.bits()),
+        qt_memrotate270(reinterpret_cast<const quint16*>(image.constBits()),
                         w, h, image.bytesPerLine(),
                         reinterpret_cast<quint16*>(out.bits()),
                         out.bytesPerLine());
         break;
     case QImage::Format_Indexed8:
-        qt_memrotate270(reinterpret_cast<const quint8*>(image.bits()),
+        qt_memrotate270(reinterpret_cast<const quint8*>(image.constBits()),
                         w, h, image.bytesPerLine(),
                         reinterpret_cast<quint8*>(out.bits()),
                         out.bytesPerLine());
@@ -5196,7 +5196,7 @@ static QImage rotated270(const QImage &image) {
     case QImage::Format_RGB32:
     case QImage::Format_ARGB32:
     case QImage::Format_ARGB32_Premultiplied:
-        qt_memrotate90(reinterpret_cast<const quint32*>(image.bits()),
+        qt_memrotate90(reinterpret_cast<const quint32*>(image.constBits()),
                        w, h, image.bytesPerLine(),
                        reinterpret_cast<quint32*>(out.bits()),
                        out.bytesPerLine());
@@ -5206,7 +5206,7 @@ static QImage rotated270(const QImage &image) {
     case QImage::Format_ARGB8565_Premultiplied:
     case QImage::Format_ARGB8555_Premultiplied:
     case QImage::Format_RGB888:
-        qt_memrotate90(reinterpret_cast<const quint24*>(image.bits()),
+        qt_memrotate90(reinterpret_cast<const quint24*>(image.constBits()),
                        w, h, image.bytesPerLine(),
                        reinterpret_cast<quint24*>(out.bits()),
                        out.bytesPerLine());
@@ -5214,13 +5214,13 @@ static QImage rotated270(const QImage &image) {
     case QImage::Format_RGB555:
     case QImage::Format_RGB16:
     case QImage::Format_ARGB4444_Premultiplied:
-       qt_memrotate90(reinterpret_cast<const quint16*>(image.bits()),
+       qt_memrotate90(reinterpret_cast<const quint16*>(image.constBits()),
                        w, h, image.bytesPerLine(),
                        reinterpret_cast<quint16*>(out.bits()),
                        out.bytesPerLine());
         break;
     case QImage::Format_Indexed8:
-        qt_memrotate90(reinterpret_cast<const quint8*>(image.bits()),
+        qt_memrotate90(reinterpret_cast<const quint8*>(image.constBits()),
                        w, h, image.bytesPerLine(),
                        reinterpret_cast<quint8*>(out.bits()),
                        out.bytesPerLine());

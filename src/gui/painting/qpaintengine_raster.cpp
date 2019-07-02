@@ -762,7 +762,7 @@ void QRasterPaintEnginePrivate::drawImage(const QPointF &pt,
     Q_ASSERT(img.depth() >= 8);
 
     const int srcBPL = img.bytesPerLine();
-    const uchar *srcBits = img.bits();
+    const uchar *srcBits = img.constBits();
     const int srcSize = img.depth() >> 3; // This is the part that is incompatible with lower than 8-bit..
     int iw = img.width();
     int ih = img.height();
@@ -2384,7 +2384,7 @@ bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
             rightShift = 3; // divide by 8
 
         int margin = cache->glyphMargin();
-        const uchar *bits = image.bits();
+        const uchar *bits = image.constBits();
         for (int i=0; i<numGlyphs; ++i) {
 
             QFixed subPixelPosition = cache->subPixelPositionForX(positions[i].x);
