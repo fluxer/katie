@@ -2076,10 +2076,11 @@ bool QObject::connect(const QObject *sender, const char *signal,
                  (method && *method) ? method+1 : "(null)");
         return false;
     }
-    QByteArray tmp_signal_name;
 
     if (!check_signal_macro(sender, signal, "connect", "bind"))
         return false;
+
+    QByteArray tmp_signal_name;
     const QMetaObject *smeta = sender->metaObject();
     const char *signal_arg = signal;
     ++signal; //skip code
@@ -2103,7 +2104,6 @@ bool QObject::connect(const QObject *sender, const char *signal,
     int signal_absolute_index = signal_index + methodOffset;
     signal_index += signalOffset;
 
-    QByteArray tmp_method_name;
     int membcode = extract_code(method);
 
     if (!check_method_code(membcode, receiver, method, "connect"))
@@ -2122,6 +2122,7 @@ bool QObject::connect(const QObject *sender, const char *signal,
         break;
     }
 
+    QByteArray tmp_method_name;
     if (method_index_relative < 0) {
         // check for normalized methods
         tmp_method_name = QMetaObject::normalizedSignature(method);
