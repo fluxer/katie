@@ -90,7 +90,7 @@ QDesigner::QDesigner(int &argc, char **argv)
     setApplicationName(QLatin1String(designerApplicationName));
     QDesignerComponents::initializeResources();
 
-    setWindowIcon(QIcon(QLatin1String(":/trolltech/designer/images/designer.png")));
+    setWindowIcon(QIcon(QLatin1String(":/trolltech/designer/designer.png")));
     initialize();
 }
 

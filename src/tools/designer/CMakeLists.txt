@@ -98,7 +98,7 @@ install(
     COMPONENT Tools
 )
 install(
-    FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/designer.png
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/designer.png
     DESTINATION ${KATIE_PIXMAPS_RELATIVE}
     RENAME designer${KATIE_TOOLS_SUFFIX}.png
     COMPONENT Tools
