@@ -2143,66 +2143,6 @@ bool QInternal::activateCallbacks(Callback cb, void **parameters)
     return false;
 }
 
-extern void qt_set_current_thread_to_main_thread();
-
-bool QInternal::callFunction(InternalFunction func, void **args)
-{
-    Q_ASSERT_X(func >= 0,
-               "QInternal::callFunction()", "Callback id must be a valid id");
-#ifndef QT_NO_QOBJECT
-    switch (func) {
-#ifndef QT_NO_THREAD
-    case QInternal::CreateThreadForAdoption:
-        *args = QAdoptedThread::createThreadForAdoption();
-        return true;
-#endif
-    case QInternal::RefAdoptedThread:
-        QThreadData::get2((QThread *) *args)->ref();
-        return true;
-    case QInternal::DerefAdoptedThread:
-        QThreadData::get2((QThread *) *args)->deref();
-        return true;
-    case QInternal::SetCurrentThreadToMainThread:
-        qt_set_current_thread_to_main_thread();
-        return true;
-    case QInternal::SetQObjectSender: {
-        QObject *receiver = (QObject *) args[0];
-        QObjectPrivate::Sender *sender = new QObjectPrivate::Sender;
-        sender->sender = (QObject *) args[1];
-        sender->signal = *(int *) args[2];
-        sender->ref = 1;
-
-        // Store the old sender as "return value"
-        args[3] = QObjectPrivate::setCurrentSender(receiver, sender);
-        args[4] = sender;
-        return true;
-    }
-    case QInternal::GetQObjectSender: {
-        QObject *receiver = (QObject *) args[0];
-        QObjectPrivate *d = QObjectPrivate::get(receiver);
-        args[1] = d->currentSender ? d->currentSender->sender : 0;
-        return true;
-    }
-    case QInternal::ResetQObjectSender: {
-        QObject *receiver = (QObject *) args[0];
-        QObjectPrivate::Sender *oldSender = (QObjectPrivate::Sender *) args[1];
-        QObjectPrivate::Sender *sender = (QObjectPrivate::Sender *) args[2];
-        QObjectPrivate::resetCurrentSender(receiver, sender, oldSender);
-        delete sender;
-        return true;
-    }
-
-    default:
-        break;
-    }
-#else
-    Q_UNUSED(args);
-    Q_UNUSED(func);
-#endif
-
-    return false;
-}
-
 /*!
     \macro Q_BYTE_ORDER
     \relates <QtGlobal>

@@ -1378,22 +1378,8 @@ public:
     };
 
     enum Callback {
-        ConnectCallback,
-        DisconnectCallback,
-        AdoptCurrentThread,
         EventNotifyCallback,
         LastCallback
-    };
-
-    enum InternalFunction {
-        CreateThreadForAdoption,
-        RefAdoptedThread,
-        DerefAdoptedThread,
-        SetCurrentThreadToMainThread,
-        SetQObjectSender,
-        GetQObjectSender,
-        ResetQObjectSender,
-        LastInternalFunction
     };
 
     enum DockPosition {
@@ -1408,7 +1394,6 @@ public:
     static bool unregisterCallback(Callback, qInternalCallback);
 
     static bool activateCallbacks(Callback, void **);
-    static bool callFunction(InternalFunction func, void **);
 };
 
 QT_END_NAMESPACE

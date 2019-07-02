@@ -2068,12 +2068,6 @@ bool QObject::connect(const QObject *sender, const char *signal,
                       const QObject *receiver, const char *method,
                       Qt::ConnectionType type)
 {
-    {
-        const void *cbdata[] = { sender, signal, receiver, method, &type };
-        if (QInternal::activateCallbacks(QInternal::ConnectCallback, (void **) cbdata))
-            return true;
-    }
-
     if (sender == 0 || receiver == 0 || signal == 0 || method == 0) {
         qWarning("QObject::connect: Cannot connect %s::%s to %s::%s",
                  sender ? sender->metaObject()->className() : "(null)",
@@ -2206,18 +2200,6 @@ bool QObject::connect(const QObject *sender, const QMetaMethod &signal,
     QVarLengthArray<char> signalSignature;
     QObjectPrivate::signalSignature(signal, &signalSignature);
 
-    {
-        QByteArray methodSignature;
-        methodSignature.reserve(qstrlen(method.signature())+1);
-        methodSignature.append((char)(method.methodType() == QMetaMethod::Slot ? QSLOT_CODE
-                                    : method.methodType() == QMetaMethod::Signal ? QSIGNAL_CODE : 0  + '0'));
-        methodSignature.append(method.signature());
-        const void *cbdata[] = { sender, signalSignature.constData(), receiver, methodSignature.constData(), &type };
-        if (QInternal::activateCallbacks(QInternal::ConnectCallback, (void **) cbdata))
-            return true;
-    }
-
-
     int signal_index;
     int method_index;
     {
@@ -2341,12 +2323,6 @@ bool QObject::disconnect(const QObject *sender, const char *signal,
     if (sender == 0 || (receiver == 0 && method != 0)) {
         qWarning("Object::disconnect: Unexpected null parameter");
         return false;
-    }
-
-    {
-        const void *cbdata[] = { sender, signal, receiver, method };
-        if (QInternal::activateCallbacks(QInternal::DisconnectCallback, (void **) cbdata))
-            return true;
     }
 
     const char *signal_arg = signal;
@@ -2490,20 +2466,6 @@ bool QObject::disconnect(const QObject *sender, const QMetaMethod &signal,
     QVarLengthArray<char> signalSignature;
     if (signal.mobj)
         QObjectPrivate::signalSignature(signal, &signalSignature);
-
-    {
-        QByteArray methodSignature;
-        if (method.mobj) {
-            methodSignature.reserve(qstrlen(method.signature())+1);
-            methodSignature.append((char)(method.methodType() == QMetaMethod::Slot ? QSLOT_CODE
-                                        : method.methodType() == QMetaMethod::Signal ? QSIGNAL_CODE : 0  + '0'));
-            methodSignature.append(method.signature());
-        }
-        const void *cbdata[] = { sender, signal.mobj ? signalSignature.constData() : 0,
-                                 receiver, method.mobj ? methodSignature.constData() : 0 };
-        if (QInternal::activateCallbacks(QInternal::DisconnectCallback, (void **) cbdata))
-            return true;
-    }
 
     int signal_index;
     int method_index;
