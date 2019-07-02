@@ -489,7 +489,7 @@ static void fromBytes(const char *str, int len, QTextCodec *codec, QTextCodec *u
 bool loadQM(Translator &translator, QIODevice &dev, ConversionData &cd)
 {
     QByteArray ba = dev.readAll();
-    const uchar *data = (uchar*)ba.data();
+    const uchar *data = (const uchar*)ba.data();
     int len = ba.size();
     if (len < MagicLength || memcmp(data, magic, MagicLength) != 0) {
         cd.appendError(QLatin1String("QM-Format error: magic marker missing"));
