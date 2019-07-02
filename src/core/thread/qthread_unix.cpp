@@ -138,7 +138,6 @@ QThreadData *QThreadData::current()
 {
     QThreadData *data = currentThreadData;
     if (!data) {
-        void *a;
         data = new QThreadData;
         QT_TRY {
             set_thread_data(data);
