@@ -3091,7 +3091,7 @@ static QImage convertWithPalette(const QImage &src, QImage::Format format,
 
     if (format == QImage::Format_Indexed8) {
         for (int y=0; y<h; ++y) {
-            QRgb *src_pixels = (QRgb *) src.scanLine(y);
+            const QRgb *src_pixels = (const QRgb *) src.constScanLine(y);
             uchar *dest_pixels = (uchar *) dest.scanLine(y);
             for (int x=0; x<w; ++x) {
                 int src_pixel = src_pixels[x];
@@ -3107,7 +3107,7 @@ static QImage convertWithPalette(const QImage &src, QImage::Format format,
         QVector<QRgb> table = clut;
         table.resize(2);
         for (int y=0; y<h; ++y) {
-            QRgb *src_pixels = (QRgb *) src.scanLine(y);
+            const QRgb *src_pixels = (const QRgb *) src.constScanLine(y);
             for (int x=0; x<w; ++x) {
                 int src_pixel = src_pixels[x];
                 int value = cache.value(src_pixel, -1);
@@ -3199,7 +3199,7 @@ int QImage::pixelIndex(int x, int y) const
         qWarning("QImage::pixelIndex: coordinate (%d,%d) out of range", x, y);
         return -12345;
     }
-    const uchar * s = scanLine(y);
+    const uchar *s = constScanLine(y);
     switch(d->format) {
     case Format_Mono:
         return (*(s + (x >> 3)) >> (7- (x & 7))) & 1;
@@ -3239,7 +3239,7 @@ QRgb QImage::pixel(int x, int y) const
         qWarning("QImage::pixel: coordinate (%d,%d) out of range", x, y);
         return 12345;
     }
-    const uchar * s = scanLine(y);
+    const uchar *s = constScanLine(y);
     switch(d->format) {
     case Format_Mono:
         return d->colortable.at((*(s + (x >> 3)) >> (7- (x & 7))) & 1);
@@ -3701,7 +3701,7 @@ QImage QImage::createHeuristicMask(bool clipTight) const
         return img32.createHeuristicMask(clipTight);
     }
 
-#define PIX(x,y)  (*((QRgb*)scanLine(y)+x) & 0x00ffffff)
+#define PIX(x,y)  (*((const QRgb*)constScanLine(y)+x) & 0x00ffffff)
 
     int w = width();
     int h = height();
@@ -3735,7 +3735,7 @@ QImage QImage::createHeuristicMask(bool clipTight) const
             ypp = ypc;
             ypc = ypn;
             ypn = (y == h-1) ? 0 : m.scanLine(y+1);
-            QRgb *p = (QRgb *)scanLine(y);
+            const QRgb *p = (const QRgb *)constScanLine(y);
             for (x = 0; x < w; x++) {
                 // slowness here - it's possible to do six of these tests
                 // together in one go. oh well.
@@ -3761,7 +3761,7 @@ QImage QImage::createHeuristicMask(bool clipTight) const
             ypp = ypc;
             ypc = ypn;
             ypn = (y == h-1) ? 0 : m.scanLine(y+1);
-            QRgb *p = (QRgb *)scanLine(y);
+            const QRgb *p = (const QRgb *)constScanLine(y);
             for (x = 0; x < w; x++) {
                 if ((*p & 0x00ffffff) != background) {
                     if (x > 0)
@@ -3805,7 +3805,7 @@ QImage QImage::createMaskFromColor(QRgb color, Qt::MaskMode mode) const
 
     if (depth() == 32) {
         for (int h = 0; h < d->height; h++) {
-            const uint *sl = (uint *) scanLine(h);
+            const uint *sl = (const uint *) constScanLine(h);
             for (int w = 0; w < d->width; w++) {
                 if (sl[w] == color)
                     *(s + (w >> 3)) |= (1 << (w & 7));
