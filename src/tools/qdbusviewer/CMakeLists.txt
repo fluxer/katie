@@ -62,7 +62,7 @@ install(
 )
 
 install(
-    FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qdbusviewer.png
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.png
     DESTINATION ${KATIE_PIXMAPS_RELATIVE}
     RENAME qdbusviewer${KATIE_TOOLS_SUFFIX}.png
     COMPONENT Tools

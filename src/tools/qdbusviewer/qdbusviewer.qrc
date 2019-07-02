@@ -1,5 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource prefix="/trolltech/qdbusviewer" >
-        <file>images/qdbusviewer.png</file>
+        <file>qdbusviewer.png</file>
     </qresource>
 </RCC>

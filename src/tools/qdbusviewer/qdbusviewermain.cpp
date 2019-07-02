@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     QMainWindow mw;
-    app.setWindowIcon(QIcon(QLatin1String(":/trolltech/qdbusviewer/images/qdbusviewer.png")));
+    app.setWindowIcon(QIcon(QLatin1String(":/trolltech/qdbusviewer/qdbusviewer.png")));
     mw.setWindowTitle(app.translate("QtDBusViewer", "Katie D-Bus Viewer"));
 
 
