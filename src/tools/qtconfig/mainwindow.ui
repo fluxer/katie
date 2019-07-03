@@ -51,7 +51,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Qt Configuration</string>
+   <string>Katie Configuration</string>
   </property>
   <widget class="QWidget" name="widget">
    <layout class="QGridLayout" name="gridLayout">
