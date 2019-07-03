@@ -1858,7 +1858,7 @@ static void convert_ARGB_to_ARGB_PM(QImageData *dest, const QImageData *src, Qt:
 
     const int src_pad = (src->bytes_per_line >> 2) - src->width;
     const int dest_pad = (dest->bytes_per_line >> 2) - dest->width;
-    const QRgb *src_data = (QRgb *) src->data;
+    const QRgb *src_data = (const QRgb *) src->data;
     QRgb *dest_data = (QRgb *) dest->data;
 
     for (int i = 0; i < src->height; ++i) {
@@ -1882,7 +1882,7 @@ static void convert_ARGB_PM_to_ARGB(QImageData *dest, const QImageData *src, Qt:
 
     const int src_pad = (src->bytes_per_line >> 2) - src->width;
     const int dest_pad = (dest->bytes_per_line >> 2) - dest->width;
-    const QRgb *src_data = (QRgb *) src->data;
+    const QRgb *src_data = (const QRgb *) src->data;
     QRgb *dest_data = (QRgb *) dest->data;
 
     for (int i = 0; i < src->height; ++i) {
@@ -1906,7 +1906,7 @@ static void convert_ARGB_PM_to_RGB(QImageData *dest, const QImageData *src, Qt::
 
     const int src_pad = (src->bytes_per_line >> 2) - src->width;
     const int dest_pad = (dest->bytes_per_line >> 2) - dest->width;
-    const QRgb *src_data = (QRgb *) src->data;
+    const QRgb *src_data = (const QRgb *) src->data;
     QRgb *dest_data = (QRgb *) dest->data;
 
     for (int i = 0; i < src->height; ++i) {
@@ -3393,19 +3393,19 @@ bool QImage::allGray() const
 
     if (d->depth == 32) {
         int p = width()*height();
-        const QRgb* b = (const QRgb*)bits();
+        const QRgb* b = (const QRgb*)constBits();
         while (p--)
             if (!qIsGray(*b++))
                 return false;
     } else if (d->depth == 16) {
         int p = width()*height();
-        const ushort* b = (const ushort *)bits();
+        const ushort* b = (const ushort *)constBits();
         while (p--)
             if (!qIsGray(qt_colorConvert<quint32, quint16>(*b++, 0)))
                 return false;
     } else if (d->format == QImage::Format_RGB888) {
         int p = width()*height();
-        const qrgb888* b = (const qrgb888 *)bits();
+        const qrgb888* b = (const qrgb888 *)constBits();
         while (p--)
             if (!qIsGray(qt_colorConvert<quint32, qrgb888>(*b++, 0)))
                 return false;
@@ -5269,7 +5269,7 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
     int bpp = depth();
 
     int sbpl = bytesPerLine();
-    const uchar *sptr = bits();
+    const uchar *sptr = constBits();
 
     QImage dImage(wd, hd, d->format);
     QIMAGE_SANITYCHECK_MEMORY(dImage);
