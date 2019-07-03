@@ -1162,16 +1162,12 @@ QImage QImage::copy(const QRect& r) const
         if (image.isNull())
             return image;
 
-        // Qt for Embedded Linux can create images with non-default bpl
-        // make sure we don't crash.
-        if (image.d->nbytes != d->nbytes) {
-            int bpl = qMin(bytesPerLine(), image.bytesPerLine());
-            for (int i = 0; i < height(); i++)
-                memcpy(image.scanLine(i), constScanLine(i), bpl);
-        } else {
-            // using bits() to detach
-            memcpy(image.bits(), d->data, d->nbytes);
-        }
+        // Qt for Embedded Linux used to create images with non-default bpl
+        Q_ASSERT_X(image.d->depth == d->depth, "QImage::copy", "non-default depth");
+
+        // using bits() to detach
+        memcpy(image.bits(), d->data, d->nbytes);
+
         image.d->colortable = d->colortable;
         image.d->dpmx = d->dpmx;
         image.d->dpmy = d->dpmy;
@@ -1180,84 +1176,21 @@ QImage QImage::copy(const QRect& r) const
         return image;
     }
 
-    int x = r.x();
-    int y = r.y();
-    int w = r.width();
-    int h = r.height();
-
-    int dx = 0;
-    int dy = 0;
-    if (w <= 0 || h <= 0)
-        return QImage();
+    QRect b = r.united(rect());
+    int x = b.x();
+    int y = b.y();
+    int w = b.width();
+    int h = b.height();
 
     QImage image(w, h, d->format);
     if (image.isNull())
         return image;
 
-    if (x < 0 || y < 0 || x + w > d->width || y + h > d->height) {
-        // bitBlt will not cover entire image - clear it.
-        image.fill(0);
-        if (x < 0) {
-            dx = -x;
-            x = 0;
-        }
-        if (y < 0) {
-            dy = -y;
-            y = 0;
-        }
-    }
+    // Qt for Embedded Linux used to create images with non-default bpl
+    Q_ASSERT_X(image.d->depth == d->depth, "QImage::copy", "non-default depth");
 
-    int pixels_to_copy = qMax(w - dx, 0);
-    if (x > d->width)
-        pixels_to_copy = 0;
-    else if (pixels_to_copy > d->width - x)
-        pixels_to_copy = d->width - x;
-    int lines_to_copy = qMax(h - dy, 0);
-    if (y > d->height)
-        lines_to_copy = 0;
-    else if (lines_to_copy > d->height - y)
-        lines_to_copy = d->height - y;
-
-    bool byteAligned = true;
-    if (d->format == Format_Mono || d->format == Format_MonoLSB)
-        byteAligned = !(dx & 7) && !(x & 7) && !(pixels_to_copy & 7);
-
-    if (byteAligned) {
-        const uchar *src = d->data + ((x * d->depth) >> 3) + y * d->bytes_per_line;
-        uchar *dest = image.d->data + ((dx * d->depth) >> 3) + dy * image.d->bytes_per_line;
-        const int bytes_to_copy = (pixels_to_copy * d->depth) >> 3;
-        for (int i = 0; i < lines_to_copy; ++i) {
-            memcpy(dest, src, bytes_to_copy);
-            src += d->bytes_per_line;
-            dest += image.d->bytes_per_line;
-        }
-    } else if (d->format == Format_Mono) {
-        const uchar *src = d->data + y * d->bytes_per_line;
-        uchar *dest = image.d->data + dy * image.d->bytes_per_line;
-        for (int i = 0; i < lines_to_copy; ++i) {
-            for (int j = 0; j < pixels_to_copy; ++j) {
-                if (src[(x + j) >> 3] & (0x80 >> ((x + j) & 7)))
-                    dest[(dx + j) >> 3] |= (0x80 >> ((dx + j) & 7));
-                else
-                    dest[(dx + j) >> 3] &= ~(0x80 >> ((dx + j) & 7));
-            }
-            src += d->bytes_per_line;
-            dest += image.d->bytes_per_line;
-        }
-    } else { // Format_MonoLSB
-        Q_ASSERT(d->format == Format_MonoLSB);
-        const uchar *src = d->data + y * d->bytes_per_line;
-        uchar *dest = image.d->data + dy * image.d->bytes_per_line;
-        for (int i = 0; i < lines_to_copy; ++i) {
-            for (int j = 0; j < pixels_to_copy; ++j) {
-                if (src[(x + j) >> 3] & (0x1 << ((x + j) & 7)))
-                    dest[(dx + j) >> 3] |= (0x1 << ((dx + j) & 7));
-                else
-                    dest[(dx + j) >> 3] &= ~(0x1 << ((dx + j) & 7));
-            }
-            src += d->bytes_per_line;
-            dest += image.d->bytes_per_line;
-        }
+    for (int i = 0; i < h; i++) {
+        memcpy(image.scanLine(i), constScanLine(i + x), w);
     }
 
     image.d->colortable = d->colortable;
