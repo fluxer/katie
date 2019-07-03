@@ -247,7 +247,6 @@ bool QProcessEnvironment::operator==(const QProcessEnvironment &other) const
     if (d == other.d)
         return true;
     if (d && other.d) {
-        QProcessEnvironmentPrivate::OrderedMutexLocker locker(d, other.d);
         return d->hash == other.d->hash;
     }
     return false;

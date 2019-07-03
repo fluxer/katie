@@ -130,13 +130,6 @@ public:
     {
         MutexLocker(const QProcessEnvironmentPrivate *d) : QMutexLocker(&d->mutex) {}
     };
-    struct OrderedMutexLocker : public QOrderedMutexLocker
-    {
-        OrderedMutexLocker(const QProcessEnvironmentPrivate *d1,
-                           const QProcessEnvironmentPrivate *d2) :
-            QOrderedMutexLocker(&d1->mutex, &d2->mutex)
-        {}
-    };
 
     QProcessEnvironmentPrivate() : QSharedData() {}
     QProcessEnvironmentPrivate(const QProcessEnvironmentPrivate &other) :
