@@ -225,18 +225,21 @@ public:
 
     inline int propertyIndex(qint32 key) const
     {
-        for (int i = 0; i < props.count(); ++i)
+        for (int i = 0; i < props.count(); ++i) {
             if (props.at(i).key == key)
                 return i;
+        }
         return -1;
     }
 
     inline QVariant property(qint32 key) const
     {
-        const int idx = propertyIndex(key);
-        if (idx < 0)
-            return QVariant();
-        return props.at(idx).value;
+        for (int i = 0; i < props.count(); ++i) {
+            Property p = props.at(i);
+            if (p.key == key)
+                return p.value;
+        }
+        return QVariant();
     }
 
     inline bool hasProperty(qint32 key) const
