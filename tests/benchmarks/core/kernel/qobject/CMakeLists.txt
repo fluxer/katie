@@ -1,4 +1,4 @@
-katie_test(tst_bench_qobject
+katie_gui_test(tst_bench_qobject
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/object.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/object.h
