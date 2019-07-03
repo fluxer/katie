@@ -64,6 +64,8 @@
 #include "QtGui/qx11info_x11.h"
 #endif
 
+#include <bitset>
+
 QT_BEGIN_NAMESPACE
 
 // Extra QWidget data
@@ -611,7 +613,7 @@ public:
 #endif
 
     // Bit fields.
-    uint high_attributes[4]; // the low ones are in QWidget::widget_attributes
+    std::bitset<Qt::WA_AttributeCount> widget_attributes;
     QPalette::ColorRole fg_role;
     QPalette::ColorRole bg_role;
     bool dirtyOpaqueChildren;

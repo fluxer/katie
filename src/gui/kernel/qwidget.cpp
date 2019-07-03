@@ -241,7 +241,7 @@ QWidgetPrivate::QWidgetPrivate(int version)
         qFatal("Cannot mix incompatible Qt libraries");
 
     isWidget = true;
-    memset(high_attributes, 0, sizeof(high_attributes));
+    widget_attributes = 0;
 #ifdef QWIDGET_EXTRA_DEBUG
     static int count = 0;
     qDebug() << "widgets" << ++count;
@@ -1070,7 +1070,6 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
     data.fstrut_dirty = true;
 
     data.winid = 0;
-    data.widget_attributes = 0;
     data.window_flags = f;
     data.window_state = 0;
     data.focus_policy = Qt::NoFocus;
@@ -9262,22 +9261,9 @@ void QWidget::update(const QRegion &rgn)
 
   This just sets the corresponding attribute bit to 1 or 0
  */
-static void setAttribute_internal(Qt::WidgetAttribute attribute, bool on, QWidgetData *data,
-                                  QWidgetPrivate *d)
+static inline void setAttribute_internal(Qt::WidgetAttribute attribute, bool on, QWidgetPrivate *d)
 {
-    if (attribute < int(8*sizeof(uint))) {
-        if (on)
-            data->widget_attributes |= (1<<attribute);
-        else
-            data->widget_attributes &= ~(1<<attribute);
-    } else {
-        const int x = attribute - 8*sizeof(uint);
-        const int int_off = x / (8*sizeof(uint));
-        if (on)
-            d->high_attributes[int_off] |= (1<<(x-(int_off*8*sizeof(uint))));
-        else
-            d->high_attributes[int_off] &= ~(1<<(x-(int_off*8*sizeof(uint))));
-    }
+    d->widget_attributes.set(attribute, on);
 }
 
 /*!
@@ -9292,11 +9278,8 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         return;
 
     Q_D(QWidget);
-    Q_ASSERT_X(sizeof(d->high_attributes)*8 >= (Qt::WA_AttributeCount - sizeof(uint)*8),
-               "QWidget::setAttribute(WidgetAttribute, bool)",
-               "QWidgetPrivate::high_attributes[] too small to contain all attributes in WidgetAttribute");
 
-    setAttribute_internal(attribute, on, data, d);
+    setAttribute_internal(attribute, on, d);
 
     switch (attribute) {
 
@@ -9465,7 +9448,7 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
             // We can only have one of these set at a time
             for (int i = 0; i < 3; ++i) {
                 if (orientations[i] != attribute)
-                    setAttribute_internal(orientations[i], false, data, d);
+                    setAttribute_internal(orientations[i], false, d);
             }
         }
         break;
@@ -9475,19 +9458,16 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
     }
 }
 
-/*! \fn bool QWidget::testAttribute(Qt::WidgetAttribute attribute) const
-
+/*!
   Returns true if attribute \a attribute is set on this widget;
   otherwise returns false.
 
   \sa setAttribute()
- */
-bool QWidget::testAttribute_helper(Qt::WidgetAttribute attribute) const
+*/
+bool QWidget::testAttribute(Qt::WidgetAttribute attribute) const
 {
     Q_D(const QWidget);
-    const int x = attribute - 8*sizeof(uint);
-    const int int_off = x / (8*sizeof(uint));
-    return (d->high_attributes[int_off] & (1<<(x-(int_off*8*sizeof(uint)))));
+    return d->widget_attributes.test(attribute);
 }
 
 /*!

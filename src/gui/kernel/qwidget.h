@@ -88,7 +88,6 @@ public:
     Qt::WindowStates window_state;
     Qt::FocusPolicy focus_policy;
     Qt::ContextMenuPolicy context_menu_policy;
-    uint widget_attributes;
     bool is_closing;
     bool in_show;
     bool in_destructor;
@@ -539,7 +538,7 @@ public:
     Qt::HANDLE handle() const;
 
     void setAttribute(Qt::WidgetAttribute, bool on = true);
-    inline bool testAttribute(Qt::WidgetAttribute) const;
+    bool testAttribute(Qt::WidgetAttribute) const;
 
     QPaintEngine *paintEngine() const;
 
@@ -791,14 +790,6 @@ inline QWidget *QWidget::parentWidget() const
 
 inline void QWidget::setSizePolicy(QSizePolicy::Policy hor, QSizePolicy::Policy ver)
 { setSizePolicy(QSizePolicy(hor, ver)); }
-
-inline bool QWidget::testAttribute(Qt::WidgetAttribute attribute) const
-{
-    if (attribute < int(8*sizeof(uint)))
-        return data->widget_attributes & (1<<attribute);
-    return testAttribute_helper(attribute);
-}
-
 
 #define QWIDGETSIZE_MAX ((1<<24)-1)
 

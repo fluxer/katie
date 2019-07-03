@@ -53,6 +53,8 @@
 #include <QtGui/qsizepolicy.h>
 #include <QtGui/qstyle.h>
 
+#include <bitset>
+
 QT_BEGIN_NAMESPACE
 
 class QGraphicsLayout;
@@ -136,50 +138,48 @@ public:
     void setGeometryFromSetPos();
 
     // State
-    inline int attributeToBitIndex(Qt::WidgetAttribute att) const
+    inline bool attributeSupported(Qt::WidgetAttribute att) const
     {
-        int bit = -1;
         switch (att) {
-        case Qt::WA_SetLayoutDirection: bit = 0; break;
-        case Qt::WA_RightToLeft: bit = 1; break;
-        case Qt::WA_SetStyle: bit = 2; break;
-        case Qt::WA_Resized: bit = 3; break;
-        case Qt::WA_DeleteOnClose: bit = 4; break;
-        case Qt::WA_NoSystemBackground: bit = 5; break;
-        case Qt::WA_OpaquePaintEvent: bit = 6; break;
-        case Qt::WA_SetPalette: bit = 7; break;
-        case Qt::WA_SetFont: bit = 8; break;
-        case Qt::WA_WindowPropagation: bit = 9; break;
-        default: break;
+            case Qt::WA_SetLayoutDirection:
+            case Qt::WA_RightToLeft:
+            case Qt::WA_SetStyle:
+            case Qt::WA_Resized:
+            case Qt::WA_DeleteOnClose:
+            case Qt::WA_NoSystemBackground:
+            case Qt::WA_OpaquePaintEvent:
+            case Qt::WA_SetPalette:
+            case Qt::WA_SetFont:
+            case Qt::WA_WindowPropagation:
+                return true;
+            default:
+                return false;
         }
-        return bit;
+        return false;
     }
+
     inline void setAttribute(Qt::WidgetAttribute att, bool value)
     {
-        int bit = attributeToBitIndex(att);
-        if (bit == -1) {
+        if (!attributeSupported(att)) {
             qWarning("QGraphicsWidget::setAttribute: unsupported attribute %d", int(att));
             return;
         }
-        if (value)
-            attributes |= (1 << bit);
-        else
-            attributes &= ~(1 << bit);
+        attributes.set(att, value);
     }
+
     inline bool testAttribute(Qt::WidgetAttribute att) const
     {
-        int bit = attributeToBitIndex(att);
-        if (bit == -1)
+        if (!attributeSupported(att))
             return false;
-        return (attributes & (1 << bit)) != 0;
+        return attributes.test(att);
     }
-    // 32 bits
-    quint32 attributes : 10;
+
+    std::bitset<Qt::WA_AttributeCount> attributes;
     quint32 polished: 1;
-    quint32 inSetGeometry : 1;
-    quint32 inSetPos : 1;
-    quint32 autoFillBackground : 1;
-    quint32 refCountInvokeRelayout : 18;
+    quint32 inSetGeometry;
+    quint32 inSetPos ;
+    quint32 autoFillBackground;
+    quint32 refCountInvokeRelayout;
 
     // Focus
     Qt::FocusPolicy focusPolicy;
