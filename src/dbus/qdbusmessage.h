@@ -90,7 +90,7 @@ public:
 
     bool isReplyRequired() const;
 
-    void setDelayedReply(bool enable) const;
+    void setDelayedReply(bool enable);
     bool isDelayedReply() const;
 
     void setAutoStartService(bool enable);

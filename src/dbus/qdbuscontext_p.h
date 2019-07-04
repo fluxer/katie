@@ -58,11 +58,11 @@ class QDBusContext;
 class QDBusContextPrivate
 {
 public:
-    inline QDBusContextPrivate(const QDBusConnection &conn, const QDBusMessage &msg)
+    inline QDBusContextPrivate(const QDBusConnection &conn, QDBusMessage msg)
         : connection(conn), message(msg) {}
 
     QDBusConnection connection;
-    const QDBusMessage &message;
+    QDBusMessage message;
 
     static QDBusContextPrivate *set(QObject *obj, QDBusContextPrivate *newContext);
 };
