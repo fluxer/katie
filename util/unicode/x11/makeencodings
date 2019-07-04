@@ -73,14 +73,16 @@ while (<IN>) {
 
 }
 
-print out "struct XlfdEncoding {\n    const char *name;\n    int id;\n    int mib;\n};\n\n";
-
-print out "static const XlfdEncoding xlfd_encoding[] = {\n";
+print out "static const struct XlfdTblData {
+    const char *name;
+    const int id;
+    const int mib;
+} XlfdTbl[] = {\n";
 $i = 0;
 while( $i < $num ) {
   print out "    { \"".$xlfd[$i]."\", ".$i.", ".$mib[$i]." },\n";
   $i = $i + 1;
 }
-print out "    { 0, 0, 0 }\n};\n\n";
+print out "};\n\n";
 
 close out;

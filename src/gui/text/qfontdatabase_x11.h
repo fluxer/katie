@@ -86,13 +86,11 @@ static inline void capitalize (char *s)
 */
 // ----- begin of generated code -----
 
-struct XlfdEncoding {
+static const struct XlfdTblData {
     const char *name;
-    int id;
-    int mib;
-};
-
-static const XlfdEncoding xlfd_encoding[] = {
+    const int id;
+    const int mib;
+} XlfdTbl[] = {
     { "iso8859-1", 0, 4 },
     { "iso8859-2", 1, 5 },
     { "iso8859-3", 2, 6 },
@@ -129,21 +127,19 @@ static const XlfdEncoding xlfd_encoding[] = {
     { "unicode-*", 33, 0 },
     { "*-symbol", 34, 0 },
     { "*-fontspecific", 35, 0 },
-    { "fontspecific-*", 36, 0 },
-    { 0, 0, 0 }
+    { "fontspecific-*", 36, 0 }
 };
 
 // ----- end of generated code -----
 
 
-const int numEncodings = sizeof(xlfd_encoding) / sizeof(XlfdEncoding) - 1;
+const qint16 XlfdTblSize = sizeof(XlfdTbl) / sizeof(XlfdTblData);
 
 int qt_encoding_id_for_mib(int mib)
 {
-    const XlfdEncoding *enc = xlfd_encoding;
-    for (; enc->name; ++enc) {
-        if (enc->mib == mib)
-            return enc->id;
+    for (qint16 i = 0; i < XlfdTblSize; i++) {
+        if (XlfdTbl[i].mib == mib)
+            return XlfdTbl[i].id;
     }
     return -1;
 }
@@ -154,9 +150,9 @@ static const char * xlfd_for_id(int id)
 {
     // special case: -1 returns the "*-*" encoding, allowing us to do full
     // database population in a single X server round trip.
-    if (id < 0 || id > numEncodings)
+    if (id < 0 || id > XlfdTblSize)
         return "*-*";
-    return xlfd_encoding[id].name;
+    return XlfdTbl[i].name;
 }
 #endif
 
