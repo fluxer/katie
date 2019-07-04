@@ -103,8 +103,7 @@ static QPointF calcRadialPos(const QStyleOptionSlider *dial, qreal offset)
     qreal yc = height / 2.0;
     qreal len = r - QStyleHelper::calcBigLineSize(r) - 3;
     qreal back = offset * len;
-    QPointF pos(QPointF(xc + back * qCos(a), yc - back * qSin(a)));
-    return pos;
+    return QPointF(xc + back * qCos(a), yc - back * qSin(a));
 }
 
 qreal angle(const QPointF &p1, const QPointF &p2)
