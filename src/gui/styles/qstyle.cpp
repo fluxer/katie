@@ -456,19 +456,17 @@ void QStyle::polish(QPalette & /* pal */)
 QRect QStyle::itemTextRect(const QFontMetrics &metrics, const QRect &rect, int alignment, bool enabled,
                        const QString &text) const
 {
-    QRect result;
     int x, y, w, h;
     rect.getRect(&x, &y, &w, &h);
     if (!text.isEmpty()) {
-        result = metrics.boundingRect(x, y, w, h, alignment, text);
+        QRect result = metrics.boundingRect(x, y, w, h, alignment, text);
         if (!enabled && proxy()->styleHint(SH_EtchDisabledText)) {
             result.setWidth(result.width()+1);
             result.setHeight(result.height()+1);
         }
-    } else {
-        result = QRect(x, y, w, h);
+        return result;
     }
-    return result;
+    return QRect(x, y, w, h);
 }
 
 /*!
