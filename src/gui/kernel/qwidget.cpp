@@ -9255,17 +9255,6 @@ void QWidget::update(const QRegion &rgn)
         tlwExtra->backingStore->markDirty(r, this);
 }
 
-
- /*!
-  \internal
-
-  This just sets the corresponding attribute bit to 1 or 0
- */
-static inline void setAttribute_internal(Qt::WidgetAttribute attribute, bool on, QWidgetPrivate *d)
-{
-    d->widget_attributes.set(attribute, on);
-}
-
 /*!
     Sets the attribute \a attribute on this widget if \a on is true;
     otherwise clears the attribute.
@@ -9279,7 +9268,7 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
 
     Q_D(QWidget);
 
-    setAttribute_internal(attribute, on, d);
+    d->widget_attributes.set(attribute, on);
 
     switch (attribute) {
 
@@ -9448,7 +9437,7 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
             // We can only have one of these set at a time
             for (int i = 0; i < 3; ++i) {
                 if (orientations[i] != attribute)
-                    setAttribute_internal(orientations[i], false, d);
+                    d->widget_attributes.set(orientations[i], false);
             }
         }
         break;
