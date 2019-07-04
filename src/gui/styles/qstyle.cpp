@@ -479,7 +479,6 @@ QRect QStyle::itemTextRect(const QFontMetrics &metrics, const QRect &rect, int a
 */
 QRect QStyle::itemPixmapRect(const QRect &rect, int alignment, const QPixmap &pixmap) const
 {
-    QRect result;
     int x, y, w, h;
     rect.getRect(&x, &y, &w, &h);
     if ((alignment & Qt::AlignVCenter) == Qt::AlignVCenter)
@@ -492,8 +491,7 @@ QRect QStyle::itemPixmapRect(const QRect &rect, int alignment, const QPixmap &pi
         x += w/2 - pixmap.width()/2;
     else if ((alignment & Qt::AlignLeft) != Qt::AlignLeft && QApplication::isRightToLeft())
         x += w - pixmap.width();
-    result = QRect(x, y, pixmap.width(), pixmap.height());
-    return result;
+    return QRect(x, y, pixmap.width(), pixmap.height());
 }
 
 /*!
