@@ -236,7 +236,6 @@ QNetworkSession::QNetworkSession(const QNetworkConfiguration &connectionConfig, 
         foreach (QBearerEngine *engine, qNetworkConfigurationManagerPrivate()->engines()) {
             if (engine->hasIdentifier(connectionConfig.identifier())) {
                 d = engine->createSessionBackend();
-                d->q = this;
                 d->publicConfig = connectionConfig;
                 d->syncStateWithInterface();
                 connect(d, SIGNAL(quitPendingWaitsForOpened()), this, SIGNAL(opened()));

@@ -119,8 +119,6 @@ Q_SIGNALS:
     void preferredConfigurationChanged(const QNetworkConfiguration &config, bool isSeamless);
 
 protected:
-    QNetworkSession *q;
-
     // The config set on QNetworkSession.
     QNetworkConfiguration publicConfig;
 
