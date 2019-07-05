@@ -241,7 +241,7 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 class QImageWriterPrivate
 {
 public:
-    QImageWriterPrivate(QImageWriter *qq);
+    QImageWriterPrivate();
 
     // device
     QByteArray format;
@@ -257,14 +257,12 @@ public:
     // error
     QImageWriter::ImageWriterError imageWriterError;
     QString errorString;
-
-    QImageWriter *q;
 };
 
 /*!
     \internal
 */
-QImageWriterPrivate::QImageWriterPrivate(QImageWriter *qq)
+QImageWriterPrivate::QImageWriterPrivate()
 {
     device = 0;
     deleteDevice = false;
@@ -274,8 +272,6 @@ QImageWriterPrivate::QImageWriterPrivate(QImageWriter *qq)
     gamma = 0.0;
     imageWriterError = QImageWriter::UnknownError;
     errorString = QT_TRANSLATE_NOOP(QImageWriter, QLatin1String("Unknown error"));
-
-    q = qq;
 }
 
 /*!
@@ -284,7 +280,7 @@ QImageWriterPrivate::QImageWriterPrivate(QImageWriter *qq)
     setFileName().
 */
 QImageWriter::QImageWriter()
-    : d(new QImageWriterPrivate(this))
+    : d(new QImageWriterPrivate())
 {
 }
 
@@ -293,7 +289,7 @@ QImageWriter::QImageWriter()
     image format \a format.
 */
 QImageWriter::QImageWriter(QIODevice *device, const QByteArray &format)
-    : d(new QImageWriterPrivate(this))
+    : d(new QImageWriterPrivate())
 {
     d->device = device;
     d->format = format;
@@ -306,7 +302,7 @@ QImageWriter::QImageWriter(QIODevice *device, const QByteArray &format)
     by inspecting the extension of \a fileName.
 */
 QImageWriter::QImageWriter(const QString &fileName, const QByteArray &format)
-    : d(new QImageWriterPrivate(this))
+    : d(new QImageWriterPrivate())
 {
     QFile *file = new QFile(fileName);
     d->device = file;
