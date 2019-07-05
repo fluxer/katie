@@ -55,11 +55,6 @@ endif()
 set(CPACK_PACKAGE_FILE_NAME "Katie-4.9.0-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_BUILD_TYPE}")
 include(CPack)
 
-# 9 minutes timeout for the tests, Travis timeouts on 10min if there is no
-# output and I do not want some tests to be skipped because of one test. Like
-# the qpainter test - it does a lot of tests and can take more then 10min.
-set(CTEST_TEST_TIMEOUT 540)
-
 if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
     cmake_policy(SET CMP0063 NEW)
 endif()
