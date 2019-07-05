@@ -77,7 +77,6 @@ public:
     enum BenchmarkType {
         QFileBenchmark = 1,
         QFSFileEngineBenchmark,
-        Win32Benchmark,
         PosixBenchmark,
         QFileFromPosixBenchmark
     };
@@ -93,22 +92,18 @@ private slots:
     void readSmallFiles_QFile();
     void readSmallFiles_QFSFileEngine();
     void readSmallFiles_posix();
-    void readSmallFiles_Win32();
 
     void readSmallFiles_QFile_data();
     void readSmallFiles_QFSFileEngine_data();
     void readSmallFiles_posix_data();
-    void readSmallFiles_Win32_data();
 
     void readBigFile_QFile_data();
     void readBigFile_QFSFileEngine_data();
     void readBigFile_posix_data();
-    void readBigFile_Win32_data();
 
     void readBigFile_QFile();
     void readBigFile_QFSFileEngine();
     void readBigFile_posix();
-    void readBigFile_Win32();
 
     void writeFileSequential_data();
     void writeFileSequential();
@@ -182,7 +177,6 @@ void tst_qfile::readBigFile_posix()
 { 
     readBigFile(); 
 }
-void tst_qfile::readBigFile_Win32() { readBigFile(); }
 
 void tst_qfile::readBigFile_QFile_data()
 {
@@ -205,12 +199,6 @@ void tst_qfile::readBigFile_posix_data()
 {
     readBigFile_data(PosixBenchmark, QIODevice::NotOpen, QIODevice::NotOpen);
 }
-
-void tst_qfile::readBigFile_Win32_data()
-{
-    readBigFile_data(Win32Benchmark, QIODevice::NotOpen, QIODevice::NotOpen);
-}
-
 
 void tst_qfile::readBigFile_data(BenchmarkType type, QIODevice::OpenModeFlag t, QIODevice::OpenModeFlag b)
 {
@@ -237,11 +225,6 @@ void tst_qfile::readBigFile()
     QFETCH(int, blockSize);
     QFETCH(QFile::OpenModeFlag, textMode);
     QFETCH(QFile::OpenModeFlag, bufferedMode);
-
-#ifndef Q_OS_WIN
-    if (testType == Win32Benchmark)
-        QSKIP("This is Windows only benchmark.", SkipSingle);
-#endif
 
     char *buffer = new char[BUFSIZE];
     createFile();
@@ -286,31 +269,6 @@ void tst_qfile::readBigFile()
             // No gain in benchmarking this case
         }
         break;
-        case(Win32Benchmark): {
-#ifdef Q_OS_WIN
-            HANDLE hndl;
-
-            // ensure we don't account string conversion
-            wchar_t* cfilename = (wchar_t*)filename.utf16();
-
-            hndl = CreateFile(cfilename, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
-            Q_ASSERT(hndl);
-            wchar_t* nativeBuffer = new wchar_t[BUFSIZE];
-            DWORD numberOfBytesRead;
-
-            QBENCHMARK {
-                do {
-                   ReadFile(hndl, nativeBuffer, blockSize, &numberOfBytesRead, NULL);
-                } while(numberOfBytesRead != 0);
-                SetFilePointer(hndl, 0, NULL, FILE_BEGIN);
-            }
-            delete[] nativeBuffer;
-            CloseHandle(hndl);
-#else
-            QFAIL("Not running on a non-Windows platform!");
-#endif
-        }
-        break;
     }
 
     removeFile();
@@ -323,9 +281,6 @@ void tst_qfile::seek_data()
     QTest::newRow("QFile") << QFileBenchmark;
     QTest::newRow("QFSFileEngine") << QFSFileEngineBenchmark;
     QTest::newRow("Posix FILE*") << PosixBenchmark;
-#ifdef Q_OS_WIN
-    QTest::newRow("Win32 API") << Win32Benchmark;
-#endif
 }
 
 void tst_qfile::seek()
@@ -372,25 +327,6 @@ void tst_qfile::seek()
             // No gain in benchmarking this case
         }
         break;
-        case(Win32Benchmark): {
-#ifdef Q_OS_WIN
-            HANDLE hndl;
-
-            // ensure we don't account string conversion
-            wchar_t* cfilename = (wchar_t*)filename.utf16();
-
-            hndl = CreateFile(cfilename, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
-            Q_ASSERT(hndl);
-            QBENCHMARK {
-                i=(i+1)%sp_size;
-                SetFilePointer(hndl, seekpos[i], NULL, 0);
-            }
-            CloseHandle(hndl);
-#else
-            QFAIL("Not running on a Windows plattform!");
-#endif
-        }
-        break;
     }
 
     removeFile();
@@ -403,9 +339,6 @@ void tst_qfile::open_data()
     QTest::newRow("QFSFileEngine") << QFSFileEngineBenchmark;
     QTest::newRow("Posix FILE*") << PosixBenchmark;
     QTest::newRow("QFile from FILE*") << QFileFromPosixBenchmark;
-#ifdef Q_OS_WIN
-    QTest::newRow("Win32 API") << Win32Benchmark;
-#endif
 }
 
 void tst_qfile::open()
@@ -457,23 +390,6 @@ void tst_qfile::open()
             ::fclose(cfile);
         }
         break;
-        case(Win32Benchmark): {
-#ifdef Q_OS_WIN
-            HANDLE hndl;
-
-            // ensure we don't account string conversion
-            wchar_t* cfilename = (wchar_t*)filename.utf16();
-
-            QBENCHMARK {
-                hndl = CreateFile(cfilename, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
-                Q_ASSERT(hndl);
-                CloseHandle(hndl);
-            }
-#else
-        QFAIL("Not running on a non-Windows platform!");
-#endif
-        }
-        break;
     }
 
     removeFile();
@@ -484,10 +400,6 @@ void tst_qfile::readSmallFiles_QFile() { readSmallFiles(); }
 void tst_qfile::readSmallFiles_QFSFileEngine() { readSmallFiles(); }
 void tst_qfile::readSmallFiles_posix() 
 {
-    readSmallFiles(); 
-}
-void tst_qfile::readSmallFiles_Win32() 
-{ 
     readSmallFiles(); 
 }
 
@@ -512,12 +424,6 @@ void tst_qfile::readSmallFiles_posix_data()
 {
     readSmallFiles_data(PosixBenchmark, QIODevice::NotOpen, QIODevice::NotOpen);
 }
-
-void tst_qfile::readSmallFiles_Win32_data()
-{
-    readSmallFiles_data(Win32Benchmark, QIODevice::NotOpen, QIODevice::NotOpen);
-}
-
 
 void tst_qfile::readSmallFiles_data(BenchmarkType type, QIODevice::OpenModeFlag t, QIODevice::OpenModeFlag b)
 {
@@ -575,11 +481,6 @@ void tst_qfile::readSmallFiles()
     QFETCH(int, blockSize);
     QFETCH(QFile::OpenModeFlag, textMode);
     QFETCH(QFile::OpenModeFlag, bufferedMode);
-
-#ifndef Q_OS_WIN
-    if (testType == Win32Benchmark)
-        QSKIP("This is Windows only benchmark.", SkipSingle);
-#endif
 
     createSmallFiles();
 
@@ -651,29 +552,6 @@ void tst_qfile::readSmallFiles()
         break;
         case(QFileFromPosixBenchmark): {
             // No gain in benchmarking this case
-        }
-        break;
-        case(Win32Benchmark): {
-#ifdef Q_OS_WIN
-            HANDLE hndl;
-
-            // ensure we don't account string conversion
-            wchar_t* cfilename = (wchar_t*)filename.utf16();
-
-            hndl = CreateFile(cfilename, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
-            Q_ASSERT(hndl);
-            wchar_t* nativeBuffer = new wchar_t[BUFSIZE];
-            DWORD numberOfBytesRead;
-            QBENCHMARK {
-                do {
-                   ReadFile(hndl, nativeBuffer, blockSize, &numberOfBytesRead, NULL);
-                } while(numberOfBytesRead != 0);
-            }
-            delete nativeBuffer;
-            CloseHandle(hndl);
-#else
-            QFAIL("Not running on a non-Windows platform!");
-#endif
         }
         break;
     }
