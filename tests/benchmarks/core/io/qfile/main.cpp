@@ -563,13 +563,12 @@ void tst_qfile::readSmallFiles()
 void tst_qfile::writeFileSequential_data()
 {
     QTest::addColumn<int>("blockSize");
-    QTest::addColumn<QString>("path");
 
-    QTest::newRow("internal 16b") << 16 << QDir::tempPath();
-    QTest::newRow("internal 512b") << 512 << QDir::tempPath();
-    QTest::newRow("internal 4k") << 4096 << QDir::tempPath();
-    QTest::newRow("internal 16k") << 16384 << QDir::tempPath();
-    QTest::newRow("internal 64k") << 65536 << QDir::tempPath();
+    QTest::newRow("internal 16b") << 16;
+    QTest::newRow("internal 512b") << 512;
+    QTest::newRow("internal 4k") << 4096;
+    QTest::newRow("internal 16k") << 16384;
+    QTest::newRow("internal 64k") << 65536;
 
     //slow media (e.g. SD card)
     QString externalPath;
@@ -589,9 +588,7 @@ void tst_qfile::writeFileSequential()
 {
     const qint64 limit = 1024 * 1024;
     QFETCH(int, blockSize);
-    QFETCH(QString, path);
     QTemporaryFile f;
-    f.setFileTemplate(path);
     QByteArray block;
     block.fill('@', blockSize);
     QBENCHMARK {
@@ -614,9 +611,7 @@ void tst_qfile::writeFileBackwards()
 {
     const qint64 limit = 1024 * 1024;
     QFETCH(int, blockSize);
-    QFETCH(QString, path);
     QTemporaryFile f;
-    f.setFileTemplate(path);
     QByteArray block;
     block.fill('@', blockSize);
     QBENCHMARK {
@@ -640,9 +635,7 @@ void tst_qfile::writeFileSequentialWithSeeks()
 {
     const qint64 limit = 1024 * 1024;
     QFETCH(int, blockSize);
-    QFETCH(QString, path);
     QTemporaryFile f;
-    f.setFileTemplate(path);
     QByteArray block;
     block.fill('@', blockSize);
     QBENCHMARK {
