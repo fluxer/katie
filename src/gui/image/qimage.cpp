@@ -4201,12 +4201,10 @@ bool QImage::load(QIODevice* device, const char* format)
 
 bool QImage::loadFromData(const char *data, int len, const char *format)
 {
-    QImage image = fromData(data, len, format);
-    if (!image.isNull()) {
-        operator=(image);
-        return true;
-    }
-    return false;
+    QBuffer b;
+    b.setData(data, len);
+    b.open(QIODevice::ReadOnly);
+    return QImageReader(&b, format).read(this);
 }
 
 /*!
