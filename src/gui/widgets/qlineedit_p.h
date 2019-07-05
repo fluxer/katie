@@ -101,7 +101,7 @@ public:
     bool clickCausedFocus;
     int hscroll;
     int vscroll;
-    uint alignment;
+    Qt::Alignment alignment;
     static const int verticalMargin;
     static const int horizontalMargin;
 

@@ -654,7 +654,7 @@ int QLineEdit::cursorPositionAt(const QPoint &pos)
 Qt::Alignment QLineEdit::alignment() const
 {
     Q_D(const QLineEdit);
-    return QFlag(d->alignment);
+    return d->alignment;
 }
 
 void QLineEdit::setAlignment(Qt::Alignment alignment)
@@ -1642,7 +1642,7 @@ void QLineEdit::paintEvent(QPaintEvent *)
     p.setClipRect(r);
 
     QFontMetrics fm = fontMetrics();
-    Qt::Alignment va = QStyle::visualAlignment(d->control->layoutDirection(), QFlag(d->alignment));
+    Qt::Alignment va = QStyle::visualAlignment(d->control->layoutDirection(), d->alignment);
     switch (va & Qt::AlignVertical_Mask) {
      case Qt::AlignBottom:
          d->vscroll = r.y() + r.height() - fm.height() - d->verticalMargin;
