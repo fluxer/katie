@@ -124,7 +124,6 @@ void tst_QTextCodec::fromUnicode_data() const
     QTest::newRow("utf-16") << QTextCodec::codecForName("utf16"); ;
     QTest::newRow("utf-32") << QTextCodec::codecForName("utf32");
     QTest::newRow("latin15") << QTextCodec::codecForName("iso-8859-15");
-    QTest::newRow("eucKr") << QTextCodec::codecForName("eucKr");
 }
 
 
