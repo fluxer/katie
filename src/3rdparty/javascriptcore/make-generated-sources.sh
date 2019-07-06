@@ -8,5 +8,5 @@ rm -rf generated
 mkdir generated
 cd generated
 
-make -f ../DerivedSources.make JavaScriptCore=.. BUILT_PRODUCTS_DIR=..
+make -f ../DerivedSources.make JavaScriptCore=.. BUILT_PRODUCTS_DIR=.. V=1
 cd ..
