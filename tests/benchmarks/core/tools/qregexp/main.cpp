@@ -446,13 +446,13 @@ void tst_qregexp::simpleFindJSC()
 {
     QScriptValue r;
     QScriptEngine engine;
-    engine.globalObject().setProperty("happy", str1);
-    QScriptValue findFunc = engine.evaluate("(function() { return s.find('pp')  } )");
+    engine.globalObject().setProperty("s", "happy");
+    QScriptValue findFunc = engine.evaluate("(function() { return s.search('pp')  } )");
     QVERIFY(findFunc.isFunction());
     QBENCHMARK{
         r = findFunc.call(QScriptValue());
     }
-    QCOMPARE(r.toInt32(), 1);
+    QCOMPARE(r.toInt32(), 2);
 }
 
 void tst_qregexp::rangeReplaceJSC()
