@@ -448,14 +448,10 @@ void tst_QGraphicsView::deepNesting_data()
     QTest::addColumn<bool>("rotate");
     QTest::addColumn<bool>("bsp");
 
-    QTest::newRow("bsp, no transform") << false << false << true;
-    QTest::newRow("bsp, rotation") << true << false << true;
-    QTest::newRow("bsp, no transform, sort cache") << false << true << true;
-    QTest::newRow("bsp, rotation, sort cache") << true << true << true;
-    QTest::newRow("no transform") << false << false << false;
-    QTest::newRow("rotation") << true << false << false;
-    QTest::newRow("no transform, sort cache") << false << true << false;
-    QTest::newRow("rotation, sort cache") << true << true << false;
+    QTest::newRow("bsp, no transform") << false << true;
+    QTest::newRow("bsp, rotation") << true << true;
+    QTest::newRow("no transform") << false << false;
+    QTest::newRow("rotation") << true << false;
 }
 
 void tst_QGraphicsView::deepNesting()
