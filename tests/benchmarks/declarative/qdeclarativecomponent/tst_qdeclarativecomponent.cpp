@@ -93,7 +93,6 @@ void tst_qmlcomponent::creation_data()
     QTest::newRow("MyQmlObject: basic binding") << SRCDIR "/data/myqmlobject_binding.qml";
     QTest::newRow("Synthesized properties") << SRCDIR "/data/synthesized_properties.qml";
     QTest::newRow("Synthesized properties.2") << SRCDIR "/data/synthesized_properties.2.qml";
-    QTest::newRow("SameGame - BoomBlock") << SRCDIR "/data/samegame/BoomBlock.qml";
 }
 
 void tst_qmlcomponent::creation()
