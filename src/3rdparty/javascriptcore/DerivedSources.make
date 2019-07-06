@@ -37,7 +37,6 @@ VPATH = \
 .PHONY : all
 all : \
     ArrayPrototype.lut.h \
-    chartables.c \
     DatePrototype.lut.h \
     Grammar.cpp \
     JSONObject.lut.h \
@@ -66,11 +65,6 @@ Grammar.cpp: Grammar.y
 	touch Grammar.hpp
 	cat Grammar.cpp.h Grammar.hpp > Grammar.h
 	rm -f Grammar.cpp.h Grammar.hpp bison_out.txt
-
-# character tables for PCRE
-
-chartables.c : dftables
-	$^ $@
 
 docs/bytecode.html: make-bytecode-docs.pl Interpreter.cpp 
 	perl $^ $@
