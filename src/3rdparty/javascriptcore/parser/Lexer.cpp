@@ -209,9 +209,17 @@ inline bool Lexer::lastTokenWasRestrKeyword() const
 
 static NEVER_INLINE bool isNonASCIIIdentStart(int c)
 {
-    QChar qc(c);
-    return qc.category() & (QChar::Letter_Uppercase | QChar::Letter_Lowercase | QChar::Letter_Titlecase
-        | QChar::Letter_Modifier | QChar::Letter_Other);
+    switch (QChar::category(uint(c))) {
+        case QChar::Letter_Uppercase:
+        case QChar::Letter_Lowercase:
+        case QChar::Letter_Titlecase:
+        case QChar::Letter_Modifier:
+        case QChar::Letter_Other:
+            return true;
+        default:
+            return false;
+    }
+    return false;
 }
 
 static inline bool isIdentStart(int c)
@@ -221,10 +229,21 @@ static inline bool isIdentStart(int c)
 
 static NEVER_INLINE bool isNonASCIIIdentPart(int c)
 {
-    QChar qc(c);
-    return qc.category() & (QChar::Letter_Uppercase | QChar::Letter_Lowercase | QChar::Letter_Titlecase
-        | QChar::Letter_Modifier | QChar::Letter_Other | QChar::Mark_NonSpacing | QChar::Mark_SpacingCombining
-        | QChar::Number_DecimalDigit | QChar::Punctuation_Connector);
+    switch (QChar::category(uint(c))) {
+        case QChar::Letter_Uppercase:
+        case QChar::Letter_Lowercase:
+        case QChar::Letter_Titlecase:
+        case QChar::Letter_Modifier:
+        case QChar::Letter_Other:
+        case QChar::Mark_NonSpacing:
+        case QChar::Mark_SpacingCombining:
+        case QChar::Number_DecimalDigit:
+        case QChar::Punctuation_Connector:
+            return true;
+        default:
+            return false;
+    }
+    return false;
 }
 
 static inline bool isIdentPart(int c)
