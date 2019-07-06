@@ -201,7 +201,7 @@ void tst_creation::qobject_10tree_cpp()
 
 void tst_creation::qobject_qmltype()
 {
-    QDeclarativeType *t = QDeclarativeMetaType::qmlType("Qt/QtObject", 4, 7);
+    QDeclarativeType *t = QDeclarativeMetaType::qmlType("QtQuick/QtObject", 1, 0);
 
     QBENCHMARK {
         QObject *obj = t->create();

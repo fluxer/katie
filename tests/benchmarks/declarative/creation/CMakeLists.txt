@@ -1,4 +1,4 @@
-katie_test(tst_creation
+katie_gui_test(tst_creation
     ${CMAKE_CURRENT_SOURCE_DIR}/tst_creation.cpp
 )
 

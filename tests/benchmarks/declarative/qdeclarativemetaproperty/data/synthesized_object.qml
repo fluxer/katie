@@ -41,7 +41,7 @@
 
 import QtQuick 1.0
 
-QtObject {
+Item {
     property int blah
 }
 

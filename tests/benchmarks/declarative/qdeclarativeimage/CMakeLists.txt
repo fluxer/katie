@@ -1,4 +1,4 @@
-katie_test(tst_qdeclarativeimage
+katie_gui_test(tst_qdeclarativeimage
     ${CMAKE_CURRENT_SOURCE_DIR}/tst_qdeclarativeimage.cpp
 )
 

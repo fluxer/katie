@@ -1,5 +1,4 @@
 katie_test(tst_qmltime
-    ${CMAKE_CURRENT_SOURCE_DIR}/qmltime.sh
     ${CMAKE_CURRENT_SOURCE_DIR}/qmltime.cpp
 )
 
