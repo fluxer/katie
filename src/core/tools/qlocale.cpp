@@ -621,7 +621,6 @@ static quint16 localePrivateIndex(const QLocalePrivate *p)
 */
 
 QLocale::QLocale(const QString &name)
-    : v(0)
 {
     p.numberOptions = 0;
     p.index = localePrivateIndex(findLocale(name));
@@ -636,7 +635,6 @@ QLocale::QLocale(const QString &name)
 */
 
 QLocale::QLocale()
-    : v(0)
 {
     p.numberOptions = default_number_options;
     p.index = localePrivateIndex(defaultPrivate());
@@ -662,7 +660,6 @@ QLocale::QLocale()
 */
 
 QLocale::QLocale(Language language, Country country)
-    : v(0)
 {
     const QLocalePrivate *d = QLocalePrivate::findLocale(language, QLocale::AnyScript, country);
 
@@ -701,7 +698,6 @@ QLocale::QLocale(Language language, Country country)
 */
 
 QLocale::QLocale(Language language, Script script, Country country)
-    : v(0)
 {
     const QLocalePrivate *d = QLocalePrivate::findLocale(language, script, country);
 
@@ -721,7 +717,7 @@ QLocale::QLocale(Language language, Script script, Country country)
 
 QLocale::QLocale(const QLocale &other)
 {
-    v = other.v;
+    p = other.p;
 }
 
 const QLocalePrivate *QLocale::d() const
@@ -736,7 +732,7 @@ const QLocalePrivate *QLocale::d() const
 
 QLocale &QLocale::operator=(const QLocale &other)
 {
-    v = other.v;
+    p = other.p;
     return *this;
 }
 
