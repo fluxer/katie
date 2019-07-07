@@ -7,7 +7,7 @@ if len(sys.argv) < 3:
     print("usage: <path to Katie test> <path to Qt4 test>")
     sys.exit(1)
 
-commonargs = ['-iterations', '1000', '-tickcounter', '-xml']
+commonargs = ['-iterations', '100', '-tickcounter', '-xml']
 katieargs = [sys.argv[1], '-o', '/tmp/katie-bench.xml']
 qt4args = [sys.argv[2], '-o', '/tmp/qt4-bench.xml']
 katieargs.extend(commonargs)
@@ -63,9 +63,9 @@ for ktag in katiemap:
         # print('    filtering Katie tag: %s' % tag)
         continue
     kvalue = katiemap[ktag]
-    ikvalue = int(kvalue)
+    ikvalue = float(kvalue)
     qvalue = qt4map[ktag]
-    iqvalue = int(qvalue)
+    iqvalue = float(qvalue)
     tagalign = tagmax - len(ktag) + 1
     winner = 'Katie'
     if ikvalue > iqvalue:
