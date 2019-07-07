@@ -51,6 +51,10 @@ for ktag in katiemap:
     if taglen > tagmax:
         tagmax = taglen
 
+if tagmax == 0:
+    print('No common benchmarks')
+    sys.exit(2)
+
 infomax = (tagmax + 30)
 infoalign = (tagmax - 2)
 print('*' * infomax)
@@ -80,5 +84,5 @@ if ktotal > qtotal:
     totalwinner = 'Qt4'
 print('')
 print('*' * infomax)
-print('Total%s: %d/%d (%s)' % (' ' * totalalign, ktotal, qtotal, winner))
+print('Total%s: %d/%d (%s)' % (' ' * totalalign, ktotal, qtotal, totalwinner))
 print('*' * infomax)
