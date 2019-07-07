@@ -121,9 +121,11 @@ private slots:
     void standaloneMonthName();
 
     // QSystemLocale tests
+#ifndef QT_NO_SYSTEMLOCALE
     void queryDateTime();
     void queryMeasureSystem_data();
     void queryMeasureSystem();
+#endif
 
     // defaultNumberingSystem test
     void defaultNumeringSystem();
@@ -1392,6 +1394,7 @@ void tst_QLocale::systemMeasurementSystems()
     qputenv("LANG", oldLang.toLocal8Bit());
 }
 
+#ifndef QT_NO_SYSTEMLOCALE
 class SystemLocale : public QSystemLocale
 {
 public:
@@ -1429,7 +1432,6 @@ void tst_QLocale::queryDateTime()
              QString("01121974010203004"));
 }
 
-#ifndef QT_NO_SYSTEMLOCALE
 void tst_QLocale::queryMeasureSystem_data()
 {
     QTest::addColumn<QString>("lcAllLocale");
