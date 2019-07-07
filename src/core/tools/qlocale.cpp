@@ -213,11 +213,7 @@ QString QLocalePrivate::bcp47Name() const
 
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
 {
-    const unsigned language_id = language;
-    const unsigned script_id = script;
-    const unsigned country_id = country;
-
-    uint idx = locale_index[language_id];
+    uint idx = locale_index[language];
 
     const QLocalePrivate *d = locale_data + idx;
 
@@ -227,23 +223,23 @@ const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLo
     if (script == QLocale::AnyScript && country == QLocale::AnyCountry)
         return d;
 
-    Q_ASSERT(d->languageId() == language_id);
+    Q_ASSERT(d->languageId() == language);
 
     if (country == QLocale::AnyCountry) {
-        while (d->m_language_id == language_id && d->m_script_id != script_id)
+        while (d->m_language_id == language && d->m_script_id != script)
             ++d;
-        if (d->m_language_id == language_id && d->m_script_id == script_id)
+        if (d->m_language_id == language && d->m_script_id == script)
             return d;
     } else if (script == QLocale::AnyScript) {
-        while (d->m_language_id == language_id) {
-            if (d->m_script_id == script_id && d->m_country_id == country_id)
+        while (d->m_language_id == language) {
+            if (d->m_script_id == script && d->m_country_id == country)
                 return d;
             ++d;
         }
     } else {
         // both script and country are explicitly specified
-        while (d->m_language_id == language_id) {
-            if (d->m_script_id == script_id && d->m_country_id == country_id)
+        while (d->m_language_id == language) {
+            if (d->m_script_id == script && d->m_country_id == country)
                 return d;
             ++d;
         }
@@ -1814,8 +1810,7 @@ QList<QLocale::Country> QLocale::countriesForLanguage(Language language)
 {
     QList<Country> result;
 
-    unsigned language_id = language;
-    uint idx = locale_index[language_id];
+    uint idx = locale_index[language];
 
     if (language == C) {
         result << AnyCountry;
@@ -1824,7 +1819,7 @@ QList<QLocale::Country> QLocale::countriesForLanguage(Language language)
 
     const QLocalePrivate *d = locale_data + idx;
 
-    while (d->languageId() == language_id) {
+    while (d->languageId() == language) {
         result << static_cast<Country>(d->countryId());
         ++d;
     }
