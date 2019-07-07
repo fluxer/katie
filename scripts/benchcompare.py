@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, sys, subprocess
+import sys, subprocess
 import xml.etree.ElementTree as ET
 
 if len(sys.argv) < 3:
@@ -24,22 +24,28 @@ katiemap = {}
 tree = ET.parse('/tmp/katie-bench.xml')
 root = tree.getroot()
 for testfunc in root:
+    name = testfunc.get('name')
     for testresult in testfunc:
         tag = testresult.get('tag')
         if not tag:
-            continue
+            tag = name
         value = testresult.get('value')
+        if not value:
+            continue
         katiemap[tag] = value
 
 qt4map = {}
 tree = ET.parse('/tmp/qt4-bench.xml')
 root = tree.getroot()
 for testfunc in root:
+    name = testfunc.get('name')
     for testresult in testfunc:
         tag = testresult.get('tag')
         if not tag:
-            continue
+            tag = name
         value = testresult.get('value')
+        if not value:
+            continue
         qt4map[tag] = value
 
 print('Comparing benchmark results..')
