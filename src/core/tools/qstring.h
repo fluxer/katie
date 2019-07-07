@@ -883,6 +883,7 @@ inline QString QString::fromStdString(const std::string &s)
 inline QStdWString QString::toStdWString() const
 {
     QStdWString str;
+    str.resize(length());
     str.resize(toWCharArray(&(*str.begin())));
     return str;
 }
