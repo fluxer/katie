@@ -82,7 +82,7 @@ uint qvariant_nameToType(const char* name)
         return 0;
 
     if (strcmp(name, "QVariant") == 0)
-        return 0xffffffff;
+        return QVariant::LastType;
 
     uint tp = QMetaType::type(name);
     return tp < QMetaType::User ? tp : 0;
