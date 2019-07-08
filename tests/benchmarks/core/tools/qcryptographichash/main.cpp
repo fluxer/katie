@@ -60,9 +60,10 @@ private slots:
 void tst_qcryptographichash::append_data()
 {
     QTest::addColumn<int>("size");
-    QTest::newRow("1")         << int(1);
-    QTest::newRow("10")        << int(10);
-    QTest::newRow("100")       << int(100);
+    QTest::newRow("10")  << int(10);
+    QTest::newRow("100") << int(100);
+    QTest::newRow("250") << int(250);
+    QTest::newRow("500") << int(500);
 }
 
 void tst_qcryptographichash::append()
