@@ -39,8 +39,6 @@
 **
 ****************************************************************************/
 #include <QDebug>
-#include <QIODevice>
-#include <QFile>
 #include <QString>
 #include <qtest.h>
 
