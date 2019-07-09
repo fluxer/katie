@@ -167,7 +167,7 @@ Q_GUI_EXPORT int qt_defaultDpi()
 QFontPrivate::QFontPrivate()
     : engineData(0), dpi(qt_defaultDpi()), screen(0),
       underline(false), overline(false), strikeOut(false), kerning(true),
-      capital(0), letterSpacingIsAbsolute(false), scFont(0)
+      capital(QFont::MixedCase), letterSpacingIsAbsolute(false), scFont(0)
 {
 #ifdef Q_WS_X11
     if (QX11Info::display())

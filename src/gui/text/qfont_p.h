@@ -163,12 +163,12 @@ public:
     int dpi;
     int screen;
 
-    uint underline  :  1;
-    uint overline   :  1;
-    uint strikeOut  :  1;
-    uint kerning    :  1;
-    uint capital    :  3;
-    bool letterSpacingIsAbsolute : 1;
+    bool underline;
+    bool overline;
+    bool strikeOut;
+    bool kerning;
+    QFont::Capitalization capital;
+    bool letterSpacingIsAbsolute;
 
     QFixed letterSpacing;
     QFixed wordSpacing;
