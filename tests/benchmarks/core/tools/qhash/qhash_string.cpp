@@ -82,6 +82,7 @@ private slots:
     void qhash_qt4();
     void qhash_faster();
     void qhash_simple();
+    void qhash_simple_reserve();
 
 private:
     QString data();
@@ -128,6 +129,18 @@ void tst_QHash::qhash_faster()
 void tst_QHash::qhash_simple()
 {
     QHash<int, int> hash;
+
+    QBENCHMARK {
+        for (int i = 0; i < N; i++) {
+            hash[i] = N;
+        }
+    }
+}
+
+void tst_QHash::qhash_simple_reserve()
+{
+    QHash<int, int> hash;
+    hash.reserve(N);
 
     QBENCHMARK {
         for (int i = 0; i < N; i++) {
