@@ -157,23 +157,18 @@ private:
     int a;      // capacity
     int s;      // size
     T *ptr;     // data
-    union {
-        // ### Qt 5: Use 'Prealloc * sizeof(T)' as array size
-        char array[sizeof(qint64) * (((Prealloc * sizeof(T)) / sizeof(qint64)) + 1)];
-        qint64 q_for_alignment_1;
-        double q_for_alignment_2;
-    };
+    T array[Prealloc];
 };
 
 template <class T, int Prealloc>
 Q_INLINE_TEMPLATE QVarLengthArray<T, Prealloc>::QVarLengthArray(int asize)
     : s(asize) {
     if (s > Prealloc) {
-        ptr = reinterpret_cast<T *>(malloc(s * sizeof(T)));
+        ptr = static_cast<T *>(malloc(s * sizeof(T)));
         Q_CHECK_PTR(ptr);
         a = s;
     } else {
-        ptr = reinterpret_cast<T *>(array);
+        ptr = array;
         a = Prealloc;
     }
     if (QTypeInfo<T>::isComplex) {
@@ -222,7 +217,7 @@ Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::realloc(int asize, int a
 
     const int copySize = qMin(asize, osize);
     if (aalloc != a) {
-        ptr = reinterpret_cast<T *>(malloc(aalloc * sizeof(T)));
+        ptr = static_cast<T *>(malloc(aalloc * sizeof(T)));
         Q_CHECK_PTR(ptr);
         if (ptr) {
             s = 0;
@@ -241,7 +236,7 @@ Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::realloc(int asize, int a
                     int sClean = s;
                     while (sClean < osize)
                         (oldPtr+(sClean++))->~T();
-                    if (oldPtr != reinterpret_cast<T *>(array) && oldPtr != ptr)
+                    if (oldPtr != array && oldPtr != ptr)
                         free(oldPtr);
                     QT_RETHROW;
                 }
