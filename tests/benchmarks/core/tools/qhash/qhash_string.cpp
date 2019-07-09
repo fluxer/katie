@@ -81,6 +81,7 @@ class tst_QHash : public QObject
 private slots:
     void qhash_qt4();
     void qhash_faster();
+    void qhash_simple();
 
 private:
     QString data();
@@ -120,6 +121,17 @@ void tst_QHash::qhash_faster()
     QBENCHMARK {
         for (int i = 0, n = items.size(); i != n; ++i) {
             hash[items.at(i)] = i;
+        }
+    }
+}
+
+void tst_QHash::qhash_simple()
+{
+    QHash<int, int> hash;
+
+    QBENCHMARK {
+        for (int i = 0; i < N; i++) {
+            hash[i] = N;
         }
     }
 }
