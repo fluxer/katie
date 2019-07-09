@@ -368,7 +368,7 @@ QString QStringList::join(const QString &sep) const
 
     QString res;
     if (totalLength == 0)
-	return res;
+        return res;
     res.reserve(totalLength);
     for (int i = 0; i < size(); ++i) {
         if (i)
