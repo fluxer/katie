@@ -54,8 +54,14 @@ public:
         Wildcard,
         FixedString,
         RegExp2,
-        WildcardUnix };
-    enum CaretMode { CaretAtZero, CaretAtOffset, CaretWontMatch };
+        WildcardUnix
+    };
+
+    enum CaretMode {
+        CaretAtZero,
+        CaretAtOffset,
+        CaretWontMatch
+    };
 
     QRegExp();
     explicit QRegExp(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive,
