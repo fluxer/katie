@@ -3,7 +3,7 @@
 import os, re
 
 # generated via find /usr/include/katie/ -name 'Q*' -printf '    "%f",\n' | sort -u
-classlist = {
+classlist = [
     "QAbstractAnimation",
     "QAbstractButton",
     "QAbstractEventDispatcher",
@@ -865,7 +865,7 @@ classlist = {
     "QXmlStreamNotationDeclarations",
     "QXmlStreamReader",
     "QXmlStreamWriter",
-}
+]
 regex = re.compile('((?:class|struct|template.*) (%s);)' % '|'.join(classlist))
 
 cppfiles = []
