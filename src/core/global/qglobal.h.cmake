@@ -691,8 +691,6 @@ public:
         ByteOrder = BigEndian
 #elif Q_BYTE_ORDER == Q_LITTLE_ENDIAN
         ByteOrder = LittleEndian
-#else
-#  error "Undefined byte order"
 #endif
     };
 };
