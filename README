@@ -57,6 +57,7 @@ There are several things you should be aware before considering Katie:
   - improved OpenSSL default certificate and certificates directory detection
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - script component relies on PCRE instead of internal copy
+  - tests and benchmarks can be run without prior installation
 
 Bugs fixed in Katie, some of which in Qt5 too:
 QTBUG-23502, QTBUG-37115, QTBUG-15052, QTBUG-23522, QTBUG-6139, QTBUG-26889,
