@@ -28,11 +28,11 @@ for testfunc in root:
     for testresult in testfunc:
         tag = testresult.get('tag')
         if not tag:
-            tag = name
+            tag = "notag"
         value = testresult.get('value')
         if not value:
             continue
-        katiemap[tag] = value
+        katiemap['%s_%s' % (name, tag)] = value
 
 qt4map = {}
 tree = ET.parse('/tmp/qt4-bench.xml')
@@ -42,11 +42,11 @@ for testfunc in root:
     for testresult in testfunc:
         tag = testresult.get('tag')
         if not tag:
-            tag = name
+            tag = "notag"
         value = testresult.get('value')
         if not value:
             continue
-        qt4map[tag] = value
+        qt4map['%s_%s' % (name, tag)] = value
 
 print('Comparing benchmark results..')
 tagmax = 0
