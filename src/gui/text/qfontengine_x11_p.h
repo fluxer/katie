@@ -44,7 +44,6 @@
 //
 // We mean it.
 //
-#include <qt_x11_p.h>
 
 #include <qfontengine_ft_p.h>
 
