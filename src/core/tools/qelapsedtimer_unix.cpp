@@ -189,9 +189,4 @@ qint64 QElapsedTimer::secsTo(const QElapsedTimer &other) const
     return other.t1 - t1;
 }
 
-bool operator<(const QElapsedTimer &v1, const QElapsedTimer &v2)
-{
-    return v1.t1 < v2.t1 || (v1.t1 == v2.t1 && v1.t2 < v2.t2);
-}
-
 QT_END_NAMESPACE

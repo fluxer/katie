@@ -46,10 +46,7 @@ class Q_CORE_EXPORT QElapsedTimer
 public:
     enum ClockType {
         SystemTime,
-        MonotonicClock,
-        TickCounter,
-        MachAbsoluteTime,
-        PerformanceCounter
+        MonotonicClock
     };
     static ClockType clockType();
     static bool isMonotonic();
@@ -71,8 +68,6 @@ public:
     { return t1 == other.t1 && t2 == other.t2; }
     bool operator!=(const QElapsedTimer &other) const
     { return !(*this == other); }
-
-    friend bool Q_CORE_EXPORT operator<(const QElapsedTimer &v1, const QElapsedTimer &v2);
 
 private:
     qint64 t1;

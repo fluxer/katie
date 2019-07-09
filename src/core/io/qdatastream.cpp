@@ -37,10 +37,11 @@
 #if !defined(QT_NO_DATASTREAM)
 #include "qbuffer.h"
 #include "qstring.h"
+#include "qendian.h"
+
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "qendian.h"
 
 QT_BEGIN_NAMESPACE
 
