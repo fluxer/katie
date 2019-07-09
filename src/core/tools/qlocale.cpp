@@ -211,41 +211,32 @@ QString QLocalePrivate::bcp47Name() const
     return name;
 }
 
+static const int locale_data_size = sizeof(locale_data)/sizeof(QLocalePrivate) - 1;
+
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
 {
-    uint idx = locale_index[language];
-
-    const QLocalePrivate *d = locale_data + idx;
-
-    if (idx == 0) // default language has no associated country
-        return d;
-
-    if (script == QLocale::AnyScript && country == QLocale::AnyCountry)
-        return d;
-
-    Q_ASSERT(d->languageId() == language);
-
     if (country == QLocale::AnyCountry) {
-        while (d->m_language_id == language && d->m_script_id != script)
-            ++d;
-        if (d->m_language_id == language && d->m_script_id == script)
-            return d;
-    } else if (script == QLocale::AnyScript) {
-        while (d->m_language_id == language) {
-            if (d->m_script_id == script && d->m_country_id == country)
+        for (int i = 0; i < locale_data_size; i++) {
+            const QLocalePrivate *d = locale_data + i;
+            if (d->m_language_id == language && d->m_script_id == script)
                 return d;
-            ++d;
+        }
+    } else if (script == QLocale::AnyScript) {
+        for (int i = 0; i < locale_data_size; i++) {
+            const QLocalePrivate *d = locale_data + i;
+            if (d->m_language_id == language && d->m_country_id == country)
+                return d;
         }
     } else {
         // both script and country are explicitly specified
-        while (d->m_language_id == language) {
+        for (int i = 0; i < locale_data_size; i++) {
+            const QLocalePrivate *d = locale_data + i;
             if (d->m_script_id == script && d->m_country_id == country)
                 return d;
-            ++d;
         }
     }
 
-    return locale_data + idx;
+    return locale_data + locale_index[language];;
 }
 
 static bool parse_locale_tag(const QString &input, int &i, QString *result, const QString &separators)
@@ -556,9 +547,6 @@ QDataStream &operator>>(QDataStream &ds, QLocale &l)
     return ds;
 }
 #endif // QT_NO_DATASTREAM
-
-
-static const int locale_data_size = sizeof(locale_data)/sizeof(QLocalePrivate) - 1;
 
 static const QLocalePrivate *dataPointerHelper(quint16 index)
 {
@@ -959,7 +947,7 @@ QString QLocale::bcp47Name() const
 
 QString QLocale::languageToString(Language language)
 {
-    if (uint(language) > uint(QLocale::LastLanguage))
+    if (language > QLocale::LastLanguage)
         return QLatin1String("Unknown");
     return QLatin1String(language_name_list + language_name_index[language]);
 }
@@ -972,7 +960,7 @@ QString QLocale::languageToString(Language language)
 
 QString QLocale::countryToString(Country country)
 {
-    if (uint(country) > uint(QLocale::LastCountry))
+    if (country > QLocale::LastCountry)
         return QLatin1String("Unknown");
     return QLatin1String(country_name_list + country_name_index[country]);
 }
@@ -986,7 +974,7 @@ QString QLocale::countryToString(Country country)
 */
 QString QLocale::scriptToString(QLocale::Script script)
 {
-    if (uint(script) > uint(QLocale::LastScript))
+    if (script > QLocale::LastScript)
         return QLatin1String("Unknown");
     return QLatin1String(script_name_list + script_name_index[script]);
 }
@@ -1406,7 +1394,7 @@ QString QLocale::dateFormat(FormatType format) const
     }
 #endif
 
-    quint32 idx, size;
+    quint16 idx, size;
     switch (format) {
     case LongFormat:
         idx = d()->m_long_date_format_idx;
@@ -1443,7 +1431,7 @@ QString QLocale::timeFormat(FormatType format) const
     }
 #endif
 
-    quint32 idx, size;
+    quint16 idx, size;
     switch (format) {
     case LongFormat:
         idx = d()->m_long_time_format_idx;
@@ -1776,8 +1764,8 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
                                         QLocale::Script script,
                                         QLocale::Country country)
 {
-    if (uint(language) > QLocale::LastLanguage || uint(script) > QLocale::LastScript ||
-            uint(country) > QLocale::LastCountry)
+    if (language > QLocale::LastLanguage || script > QLocale::LastScript ||
+            country > QLocale::LastCountry)
         return QList<QLocale>();
 
     QList<QLocale> result;
@@ -1787,7 +1775,7 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
     if (language != QLocale::C)
         d += locale_index[language];
     while ( (d != locale_data + locale_data_size)
-            && (language == QLocale::AnyLanguage || d->m_language_id == uint(language))) {
+            && (language == QLocale::AnyLanguage || d->m_language_id == language)) {
         QLocale locale(QLocale::C);
         locale.p.index = localePrivateIndex(d);
         result.append(locale);
@@ -1810,18 +1798,16 @@ QList<QLocale::Country> QLocale::countriesForLanguage(Language language)
 {
     QList<Country> result;
 
-    uint idx = locale_index[language];
-
     if (language == C) {
         result << AnyCountry;
         return result;
     }
 
-    const QLocalePrivate *d = locale_data + idx;
-
-    while (d->languageId() == language) {
-        result << static_cast<Country>(d->countryId());
-        ++d;
+    for (int i = 0; i < locale_data_size; i++) {
+        const QLocalePrivate *d = locale_data + i;
+        if (d->m_language_id == language) {
+            result << static_cast<Country>(d->m_language_id);
+        }
     }
 
     return result;
@@ -1850,7 +1836,7 @@ QString QLocale::monthName(int month, FormatType type) const
     }
 #endif
 
-    quint32 idx, size;
+    quint16 idx, size;
     switch (type) {
     case QLocale::LongFormat:
         idx = d()->m_long_month_names_idx;
@@ -1896,7 +1882,7 @@ QString QLocale::standaloneMonthName(int month, FormatType type) const
     }
 #endif
 
-    quint32 idx, size;
+    quint16 idx, size;
     switch (type) {
     case QLocale::LongFormat:
         idx = d()->m_standalone_long_month_names_idx;
@@ -1945,7 +1931,7 @@ QString QLocale::dayName(int day, FormatType type) const
     if (day == 7)
         day = 0;
 
-    quint32 idx, size;
+    quint16 idx, size;
     switch (type) {
     case QLocale::LongFormat:
         idx = d()->m_long_day_names_idx;
@@ -1994,7 +1980,7 @@ QString QLocale::standaloneDayName(int day, FormatType type) const
     if (day == 7)
         day = 0;
 
-    quint32 idx, size;
+    quint16 idx, size;
     switch (type) {
     case QLocale::LongFormat:
         idx = d()->m_standalone_long_day_names_idx;
@@ -3028,7 +3014,7 @@ QString QLocale::currencySymbol(QLocale::CurrencySymbolFormat format) const
             return res.toString();
     }
 #endif
-    quint32 idx, size;
+    quint16 idx, size;
     switch (format) {
     case CurrencySymbol:
         idx = d()->m_currency_symbol_idx;
