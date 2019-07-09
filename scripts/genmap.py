@@ -49,7 +49,7 @@ for component in components:
     mapdata += exportscan('src/%s' % component.lower(), pattern, 'Qt%s' % component)
 
 mapdata += '};\n'
-mapdata += 'static const int qclass_lib_count = %d;\n\n' % classcount
+mapdata += 'static const qint16 qclass_lib_count = %d;\n\n' % classcount
 mapdata += '#endif\n'
 
 with open(mapoutput, 'wb') as f:

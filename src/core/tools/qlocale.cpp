@@ -388,7 +388,7 @@ int qt_repeatCount(const QString &s, int i)
 }
 
 static const QLocalePrivate *default_lp = 0;
-static uint default_number_options = 0;
+static quint16 default_number_options = 0;
 
 #ifndef QT_NO_SYSTEMLOCALE
 

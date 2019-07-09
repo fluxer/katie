@@ -69,7 +69,7 @@ namespace CPP {
 WriteIncludes::WriteIncludes(Uic *uic)
     : m_uic(uic), m_output(uic->output()), m_scriptsActivated(false), m_laidOut(false)
 {
-    for(int i = 0; i != qclass_lib_count; i++) {
+    for(qint16 i = 0; i != qclass_lib_count; i++) {
         const QLatin1String klass = QLatin1String(qclass_lib_map[i].klass);
         const QLatin1String header = QLatin1String(qclass_lib_map[i].header);
         m_classToHeader.insert(klass, header);
