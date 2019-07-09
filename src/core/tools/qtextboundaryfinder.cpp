@@ -110,6 +110,7 @@ QTextBoundaryFinder::QTextBoundaryFinder()
 {
     d->type = QTextBoundaryFinder::Grapheme;
     d->pos = -1;
+    d->length = -1;
 }
 
 /*!
