@@ -40,8 +40,6 @@
 ****************************************************************************/
 
 #include "QtTest/qtestresult_p.h"
-#include <QtCore/qglobal.h>
-
 #include "QtTest/qtestlog_p.h"
 #include "QtTest/qtestdata.h"
 #include "QtTest/qtestassert.h"
