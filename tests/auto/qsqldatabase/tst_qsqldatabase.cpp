@@ -473,8 +473,8 @@ void tst_QSqlDatabase::tables()
 
 
     if (!q.exec("CREATE VIEW " + qtest_view + " as select * from " + qtest)) {
-        qDebug(QString("DBMS '%1' cannot handle VIEWs: %2").arg(
-                tst_Databases::dbToString(db)).arg(QString(tst_Databases::printError(q.lastError()))).toLatin1());
+        qDebug() << "DBMS '" << tst_Databases::dbToString(db) << "' cannot handle VIEWs:"
+            << tst_Databases::printError(q.lastError());
         views = false;
     }
 
@@ -897,11 +897,11 @@ void tst_QSqlDatabase::transaction()
     QCOMPARE(q.value(0).toInt(), 41);
     q.clear(); // for SQLite which does not allow any references on rows that shall be rolled back
     if (!db.rollback()) {
-    if (db.driverName().startsWith("QMYSQL")) {
-        qDebug("MySQL: " + tst_Databases::printError(db.lastError()));
-        QSKIP("MySQL transaction failed ", SkipSingle); //non-fatal
-    } else {
-        QFAIL("Could not rollback transaction: " + tst_Databases::printError(db.lastError()));
+        if (db.driverName().startsWith("QMYSQL")) {
+            qDebug() << "MySQL:" <<  tst_Databases::printError(db.lastError());
+            QSKIP("MySQL transaction failed ", SkipSingle); //non-fatal
+        } else {
+            QFAIL("Could not rollback transaction: " + tst_Databases::printError(db.lastError()));
         }
     }
 
