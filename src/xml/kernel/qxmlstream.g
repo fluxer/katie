@@ -266,11 +266,11 @@ public:
         static inline Entity createLiteral(const QString &entity)
             { Entity result(entity); result.literal = result.hasBeenParsed = true; return result; }
         QString value;
-        uint external : 1;
-        uint unparsed : 1;
-        uint literal : 1;
-        uint hasBeenParsed : 1;
-        uint isCurrentlyReferenced : 1;
+        bool external;
+        bool unparsed;
+        bool literal;
+        bool hasBeenParsed;
+        bool isCurrentlyReferenced;
     };
     QHash<QString, Entity> entityHash;
     QHash<QString, Entity> parameterEntityHash;
@@ -369,19 +369,19 @@ public:
     QStringRef processingInstructionTarget, processingInstructionData;
     QStringRef dtdName, dtdPublicId, dtdSystemId;
     QStringRef documentVersion, documentEncoding;
-    uint isEmptyElement : 1;
-    uint isWhitespace : 1;
-    uint isCDATA : 1;
-    uint standalone : 1;
-    uint hasCheckedStartDocument : 1;
-    uint normalizeLiterals : 1;
-    uint hasSeenTag : 1;
-    uint inParseEntity : 1;
-    uint referenceToUnparsedEntityDetected : 1;
-    uint referenceToParameterEntityDetected : 1;
-    uint hasExternalDtdSubset : 1;
-    uint lockEncoding : 1;
-    uint namespaceProcessing : 1;
+    bool isEmptyElement;
+    bool isWhitespace;
+    bool isCDATA;
+    bool standalone;
+    bool hasCheckedStartDocument;
+    bool normalizeLiterals;
+    bool hasSeenTag;
+    bool inParseEntity;
+    bool referenceToUnparsedEntityDetected;
+    bool referenceToParameterEntityDetected;
+    bool hasExternalDtdSubset;
+    bool lockEncoding;
+    bool namespaceProcessing;
 
     int resumeReduction;
     void resume(int rule);
