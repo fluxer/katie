@@ -596,7 +596,7 @@ inline QScriptValuePrivate *QScriptEnginePrivate::allocateScriptValuePrivate(siz
         --freeScriptValuesCount;
         return p;
     }
-    return reinterpret_cast<QScriptValuePrivate*>(malloc(size));
+    return static_cast<QScriptValuePrivate*>(::malloc(size));
 }
 
 inline void QScriptEnginePrivate::freeScriptValuePrivate(QScriptValuePrivate *p)
@@ -606,7 +606,7 @@ inline void QScriptEnginePrivate::freeScriptValuePrivate(QScriptValuePrivate *p)
         freeScriptValues = p;
         ++freeScriptValuesCount;
     } else {
-        free(p);
+        ::free(p);
     }
 }
 

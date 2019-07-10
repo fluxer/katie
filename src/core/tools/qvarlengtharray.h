@@ -169,7 +169,7 @@ template <class T, int Prealloc>
 Q_INLINE_TEMPLATE QVarLengthArray<T, Prealloc>::QVarLengthArray(int asize)
     : s(asize) {
     if (s > Prealloc) {
-        ptr = reinterpret_cast<T *>(malloc(s * sizeof(T)));
+        ptr = static_cast<T *>(malloc(s * sizeof(T)));
         Q_CHECK_PTR(ptr);
         a = s;
     } else {
@@ -222,7 +222,7 @@ Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::realloc(int asize, int a
 
     const int copySize = qMin(asize, osize);
     if (aalloc != a) {
-        ptr = reinterpret_cast<T *>(malloc(aalloc * sizeof(T)));
+        ptr = static_cast<T *>(malloc(aalloc * sizeof(T)));
         Q_CHECK_PTR(ptr);
         if (ptr) {
             s = 0;

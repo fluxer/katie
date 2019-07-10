@@ -134,10 +134,10 @@ struct QTestCharBuffer
         char *newBuf = 0;
         if (buf == staticBuf) {
             // if we point to our internal buffer, we need to malloc first
-            newBuf = reinterpret_cast<char *>(malloc(newSize));
+            newBuf = static_cast<char *>(::malloc(newSize));
         } else {
             // if we already malloc'ed, just realloc
-            newBuf = reinterpret_cast<char *>(realloc(buf, newSize));
+            newBuf = static_cast<char *>(::realloc(buf, newSize));
         }
 
         // if the allocation went wrong (newBuf == 0), we leave the object as is
