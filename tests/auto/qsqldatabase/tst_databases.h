@@ -44,17 +44,9 @@
 #include <QVariant>
 #include <QDebug>
 #include <QSqlTableModel>
+#include <QtTest>
 
-#include <QtTest/QtTest>
-
-#if defined (Q_OS_WIN) || defined (Q_OS_WIN32)
-#  include <qt_windows.h>
-#  if defined (Q_OS_WINCE)
-#    include <winsock2.h>
-#  endif
-#else
 #include <unistd.h>
-#endif
 
 #define CHECK_DATABASE( db ) \
     if ( !db.isValid() ) { qFatal( "db is Invalid" ); }
