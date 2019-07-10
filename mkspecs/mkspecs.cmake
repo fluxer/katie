@@ -1,4 +1,4 @@
-# KatieConfig overrides those
+# KatieConfig overrides KATIE_MKSPECS_DIR, KATIE_TYPE and KATIE_KEY
 if(NOT KATIE_MKSPECS_DIR)
     set(KATIE_MKSPECS_DIR ${CMAKE_SOURCE_DIR}/mkspecs)
 endif()
