@@ -57,6 +57,8 @@
 
 //#define QPROCESS_DEBUG
 
+extern char **environ;
+
 QT_BEGIN_NAMESPACE
 
 #if defined QPROCESS_DEBUG
@@ -91,8 +93,6 @@ static QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
     return out;
 }
 #endif
-
-extern char **environ;
 
 // POSIX requires PIPE_BUF to be 512 or larger
 // so we will use 512
