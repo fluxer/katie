@@ -81,7 +81,6 @@ endif()
 # also affected, which KDE uses for visibility check for an example
 if(KATIE_COMPILER STREQUAL "gcc")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-    # TODO: set CMAKE_CXX_EXTENSIONS to OFF so it does not append the flag again?
 elseif(KATIE_COMPILER STREQUAL "clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif()
