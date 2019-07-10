@@ -22,4 +22,4 @@ script:
     - if [ "$CXX" == "clang++" ];then cmake ../ -GNinja -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -Wno-dev ;fi
     - if [ "$CXX" == "g++" ];then cmake ../ -GNinja -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON -Wno-dev ;fi
     - ninja
-    - if [ "$CXX" == "g++" ];then ninja test ;fi
+#    - if [ "$CXX" == "g++" ];then ninja test ;fi
