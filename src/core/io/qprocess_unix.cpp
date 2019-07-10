@@ -31,20 +31,41 @@
 **
 ****************************************************************************/
 
-//#define QPROCESS_DEBUG
 #include "qdebug.h"
 
 #ifndef QT_NO_PROCESS
 
-#if defined QPROCESS_DEBUG
-#include "qstring.h"
-#include <ctype.h>
+#include "qplatformdefs.h"
+#include "qprocess.h"
+#include "qprocess_p.h"
+#include "qcore_unix_p.h"
+#include <qcoreapplication_p.h>
+#include <qthread_p.h>
+#include <qfile.h>
+#include <qfileinfo.h>
+#include <qlist.h>
+#include <qhash.h>
+#include <qmutex.h>
+#include <qsemaphore.h>
+#include <qsocketnotifier.h>
+#include <qthread.h>
+#include <qelapsedtimer.h>
 
+#include <errno.h>
+#include <stdlib.h>
+#include <string.h>
+
+//#define QPROCESS_DEBUG
+
+QT_BEGIN_NAMESPACE
+
+#if defined QPROCESS_DEBUG
+#include <ctype.h>
 /*
     Returns a human readable representation of the first \a len
     characters in \a data.
 */
-QT_BEGIN_NAMESPACE
+
 static QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
 {
     if (!data) return "(null)";
@@ -69,33 +90,9 @@ static QByteArray qt_prettyDebug(const char *data, int len, int maxSize)
 
     return out;
 }
-QT_END_NAMESPACE
 #endif
 
-#include "qplatformdefs.h"
-
-#include "qprocess.h"
-#include "qprocess_p.h"
-#include "qcore_unix_p.h"
-#include <qcoreapplication_p.h>
-#include <qthread_p.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qlist.h>
-#include <qhash.h>
-#include <qmutex.h>
-#include <qsemaphore.h>
-#include <qsocketnotifier.h>
-#include <qthread.h>
-#include <qelapsedtimer.h>
-
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
-
 extern char **environ;
-
-QT_BEGIN_NAMESPACE
 
 // POSIX requires PIPE_BUF to be 512 or larger
 // so we will use 512
@@ -285,6 +282,7 @@ static QAtomicInt idCounter = QAtomicInt(1);
 
 void QProcessManager::add(pid_t pid, QProcess *process)
 {
+    // locked by startProcess()
 #if defined (QPROCESS_DEBUG)
     qDebug() << "QProcessManager::add() adding pid" << pid << "process" << process;
 #endif
