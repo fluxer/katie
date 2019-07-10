@@ -311,8 +311,7 @@ template <class T, int Prealloc>
 inline void QVarLengthArray<T, Prealloc>::replace(int i, const T &t)
 {
     Q_ASSERT_X(i >= 0 && i < s, "QVarLengthArray::replace", "index out of range");
-    const T copy(t);
-    data()[i] = copy;
+    data()[i] = t;
 }
 
 
@@ -322,7 +321,6 @@ Q_OUTOFLINE_TEMPLATE typename QVarLengthArray<T, Prealloc>::iterator QVarLengthA
     int offset = int(before - ptr);
     if (n != 0) {
         resize(s + n);
-        const T copy(t);
         if (QTypeInfo<T>::isStatic) {
             T *b = ptr + offset;
             T *j = ptr + s;
@@ -331,13 +329,13 @@ Q_OUTOFLINE_TEMPLATE typename QVarLengthArray<T, Prealloc>::iterator QVarLengthA
                 *--j = *--i;
             i = b + n;
             while (i != b)
-                *--i = copy;
+                *--i = t;
         } else {
             T *b = ptr + offset;
             T *i = b + n;
             memmove(i, b, (s - offset - n) * sizeof(T));
             while (i != b)
-                new (--i) T(copy);
+                new (--i) T(t);
         }
     }
     return ptr + offset;
