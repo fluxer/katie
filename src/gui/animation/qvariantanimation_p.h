@@ -92,7 +92,7 @@ public:
 
     void updateInterpolator();
 
-    //XXX this is needed by dui
+    // this is needed by declarative animations
     static Q_GUI_EXPORT QVariantAnimation::Interpolator getInterpolator(int interpolationType);
 };
 
