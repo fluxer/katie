@@ -94,15 +94,7 @@ uint qHash(const QStringRef &key)
 
 uint qHash(const QBitArray &bitArray)
 {
-    int m = bitArray.d.size() - 1;
-    uint result = hash(reinterpret_cast<const uchar *>(bitArray.d.constData()), qMax(0, m));
-
-    // deal with the last 0 to 7 bits manually, because we can't trust that
-    // the padding is initialized to 0 in bitArray.d
-    int n = bitArray.size();
-    if (n & 0x7)
-        result = ((result << 4) + bitArray.d.at(m)) & ((1 << n) - 1);
-    return result;
+    return hash(reinterpret_cast<const uchar *>(bitArray.d.constData()), qMax(0, bitArray.d.size() - 1));
 }
 
 /*
