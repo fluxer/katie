@@ -331,9 +331,8 @@ private:
 //-------------------------------------------------------------------
 class QTextStreamPrivate
 {
-    Q_DECLARE_PUBLIC(QTextStream)
 public:
-    QTextStreamPrivate(QTextStream *q_ptr);
+    QTextStreamPrivate();
     ~QTextStreamPrivate();
     void reset();
 
@@ -414,13 +413,11 @@ public:
     QTextStream::TextStatus status;
 
     QLocale locale;
-
-    QTextStream *q_ptr;
 };
 
 /*! \internal
 */
-QTextStreamPrivate::QTextStreamPrivate(QTextStream *q_ptr)
+QTextStreamPrivate::QTextStreamPrivate()
     :
 #ifndef QT_NO_TEXTCODEC
     readConverterSavedState(0),
@@ -428,7 +425,6 @@ QTextStreamPrivate::QTextStreamPrivate(QTextStream *q_ptr)
     readConverterSavedStateOffset(0),
     locale(QLocale::c())
 {
-    this->q_ptr = q_ptr;
     reset();
 }
 
@@ -954,7 +950,7 @@ inline void QTextStreamPrivate::putString(const QString &s, bool number)
     \sa setDevice(), setString()
 */
 QTextStream::QTextStream()
-    : d_ptr(new QTextStreamPrivate(this))
+    : d_ptr(new QTextStreamPrivate())
 {
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStream::QTextStream()");
@@ -967,7 +963,7 @@ QTextStream::QTextStream()
     Constructs a QTextStream that operates on \a device.
 */
 QTextStream::QTextStream(QIODevice *device)
-    : d_ptr(new QTextStreamPrivate(this))
+    : d_ptr(new QTextStreamPrivate())
 {
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStream::QTextStream(QIODevice *device == *%p)",
@@ -986,7 +982,7 @@ QTextStream::QTextStream(QIODevice *device)
     openMode to define the open mode.
 */
 QTextStream::QTextStream(QString *string, QIODevice::OpenMode openMode)
-    : d_ptr(new QTextStreamPrivate(this))
+    : d_ptr(new QTextStreamPrivate())
 {
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStream::QTextStream(QString *string == *%p, openMode = %d)",
@@ -1004,7 +1000,7 @@ QTextStream::QTextStream(QString *string, QIODevice::OpenMode openMode)
     by a QBuffer.
 */
 QTextStream::QTextStream(QByteArray *array, QIODevice::OpenMode openMode)
-    : d_ptr(new QTextStreamPrivate(this))
+    : d_ptr(new QTextStreamPrivate())
 {
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStream::QTextStream(QByteArray *array == *%p, openMode = %d)",
@@ -1031,7 +1027,7 @@ QTextStream::QTextStream(QByteArray *array, QIODevice::OpenMode openMode)
     \snippet doc/src/snippets/code/src_corelib_io_qtextstream.cpp 3
 */
 QTextStream::QTextStream(const QByteArray &array, QIODevice::OpenMode openMode)
-    : d_ptr(new QTextStreamPrivate(this))
+    : d_ptr(new QTextStreamPrivate())
 {
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStream::QTextStream(const QByteArray &array == *(%p), openMode = %d)",
@@ -1062,7 +1058,7 @@ QTextStream::QTextStream(const QByteArray &array, QIODevice::OpenMode openMode)
 */
 
 QTextStream::QTextStream(FILE *fileHandle, QIODevice::OpenMode openMode)
-    : d_ptr(new QTextStreamPrivate(this))
+    : d_ptr(new QTextStreamPrivate())
 {
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStream::QTextStream(FILE *fileHandle = %p, openMode = %d)",
