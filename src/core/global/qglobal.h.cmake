@@ -56,22 +56,21 @@
 
      ALPHA     - ...
      ARM       - ...
-     !ARMV6     - ...
+     ARMV6     - ...
      AVR32     - ...
      BFIN      - ...
-     !GENERIC   - ...
      I386      - ...
      IA64      - ...
      M68K      - ...
      MIPS      - ...
+     NACL      - ...
      !PARISC    - ...
-     !POWERPC   - ...
+     POWERPC   - ...
      S390      - ...
      SPARC     - ...
-     X86_64    - ...
      SH        - ...
-     !SH4A      - ...
-     NACL      - ...
+     SH4A      - ...
+     X86_64    - ...
 
    Useful hyper-links:
 
@@ -79,32 +78,40 @@
      https://en.wikipedia.org/wiki/GNU_Compiler_Collection#Architectures
 */
 
-#if defined(__alpha__) || defined(_M_ALPHA)
+#if defined(__alpha__)
 #  define QT_ARCH_ALPHA
-#elif defined(__arm__) || defined(_M_ARM)
+#elif defined(__arm__)
 #  define QT_ARCH_ARM
+#  if defined(__ARM_ARCH_6__)
+#    define QT_ARCH_ARMV6
+#  endif
 #elif defined(__avr__)
 #  define QT_ARCH_AVR32
 #elif defined(__bfin__)
 #  define QT_ARCH_BFIN
-#elif defined(__ia64__) || defined(_M_IA64)
+#elif defined(__i386__)
+#  define QT_ARCH_I386
+#elif defined(__ia64__)
 #  define QT_ARCH_IA64
 #elif defined(__m68k__)
 #  define QT_ARCH_M68K
 #elif defined(__mips__)
 #  define QT_ARCH_MIPS
+#elif defined(__native_client__)
+#  define QT_ARCH_NACL
 #elif defined(__s390__)
 #  define QT_ARCH_S390
+#elif defined(__powerpc__) || defined(__powerpc64__)
+#  define QT_ARCH_POWERPC
 #elif defined(__sparc__)
 #  define QT_ARCH_SPARC
 #elif defined(__sh__)
 #  define QT_ARCH_SH
-#elif defined(__native_client__)
-#  define QT_ARCH_NACL
-#elif defined(__x86_64__) || defined(_M_X64)
+#  if defined(__SH4__)
+#    define QT_ARCH_SH4A
+#  endif
+#elif defined(__x86_64__)
 #  define QT_ARCH_X86_64
-#elif defined(__i386__) || defined(_M_IX86)
-#  define QT_ARCH_I386
 #else
 # error Unable to detect architecture, please update above list
 #endif
@@ -189,7 +196,6 @@ QT_USE_NAMESPACE
      DGUX     - DG/UX
      RELIANT  - Reliant UNIX
      DYNIX    - DYNIX/ptx
-     QNX      - QNX
      LYNX     - LynxOS
      BSD4     - Any BSD 4.4 system
      UNIX     - Any UNIX BSD/SYSV system

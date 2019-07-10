@@ -1195,13 +1195,6 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_OS_QNX
-    \relates <QtGlobal>
-
-    Defined on QNX Neutrino.
-*/
-
-/*!
     \macro Q_OS_LYNX
     \relates <QtGlobal>
 
