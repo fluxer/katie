@@ -36,8 +36,3 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.qrc
 )
-
-add_definitions(-DQT_STYLE_MOTIF -DQT_STYLE_WINDOWS -DQT_STYLE_CLEANLOOKS)
-
-# TODO: get rid of these conditionals
-# add_definitions(-DQT_NO_STYLE_PLASTIQUE -DQT_NO_STYLE_MOTIF)
