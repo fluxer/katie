@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
     "a", "aa", "aaa", "aaaa", ...
 */
 
-static uint hash(const uchar *p, int n)
+static inline uint hash(const uchar *p, int n)
 {
     uint h = 0;
 
@@ -65,7 +65,7 @@ static uint hash(const uchar *p, int n)
     return h;
 }
 
-static uint hash(const QChar *p, int n)
+static inline uint hash(const QChar *p, int n)
 {
     uint h = 0;
 
