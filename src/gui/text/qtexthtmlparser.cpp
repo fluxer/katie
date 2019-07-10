@@ -1406,8 +1406,8 @@ void QTextHtmlParserNode::applyBackgroundImage(const QString &url, const QTextDo
                 QImage image = qvariant_cast<QImage>(val);
                 charFormat.setBackground(image);
             } else if (val.type() == QVariant::ByteArray) {
-                QImage image;
-                if (image.loadFromData(val.toByteArray())) {
+                QImage image = QImage::fromData(val.toByteArray());
+                if (!image.isNull()) {
                     charFormat.setBackground(image);
                 }
             }

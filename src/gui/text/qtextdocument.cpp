@@ -2012,8 +2012,7 @@ QVariant QTextDocument::loadResource(int type, const QUrl &name)
         if (type == ImageResource && r.type() == QVariant::ByteArray) {
             if (qApp->thread() != QThread::currentThread()) {
                 // must use images in non-GUI threads
-                QImage image;
-                image.loadFromData(r.toByteArray());
+                QImage image = QImage::fromData(r.toByteArray());
                 if (!image.isNull())
                     r = image;
             } else {
