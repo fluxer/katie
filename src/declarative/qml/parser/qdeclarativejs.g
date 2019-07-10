@@ -327,10 +327,10 @@ protected:
 
     void reallocateStack();
 
-    inline Value &sym(int index)
+    inline Value &sym(int index) const
     { return sym_stack [tos + index - 1]; }
 
-    inline AST::SourceLocation &loc(int index)
+    inline AST::SourceLocation &loc(int index) const
     { return location_stack [tos + index - 1]; }
 
     AST::UiQualifiedId *reparseAsQualifiedId(AST::ExpressionNode *expr);
