@@ -1208,8 +1208,8 @@ void QTextTable::splitCell(int row, int column, int numRows, int numCols)
     for (int r = row + 1; r < row + rowSpan; ++r) {
         // find the cell before which to insert the new cell markers
         int gridIndex = r * d->nCols + column;
-        QVector<int>::iterator it = qUpperBound(d->cellIndices.begin(), d->cellIndices.end(), gridIndex);
-        int cellIndex = it - d->cellIndices.begin();
+        QVector<int>::const_iterator it = qUpperBound(d->cellIndices.constBegin(), d->cellIndices.constEnd(), gridIndex);
+        int cellIndex = it - d->cellIndices.constBegin();
         int fragment = d->cells.value(cellIndex, d->fragment_end);
         rowPositions[r - row] = p->fragmentMap().position(fragment);
     }
