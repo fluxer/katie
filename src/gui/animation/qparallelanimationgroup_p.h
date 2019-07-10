@@ -47,7 +47,7 @@
 
 #include "qparallelanimationgroup.h"
 #include "qanimationgroup_p.h"
-#include <QtCore/qhash.h>
+#include "qhash.h"
 
 #ifndef QT_NO_ANIMATION
 

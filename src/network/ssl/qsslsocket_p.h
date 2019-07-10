@@ -51,7 +51,6 @@
 #include "qtcpsocket_p.h"
 #include "qsslkey.h"
 #include "qsslconfiguration_p.h"
-#include "qringbuffer_p.h"
 #include "qstringlist.h"
 
 QT_BEGIN_NAMESPACE

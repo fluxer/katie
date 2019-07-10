@@ -72,7 +72,6 @@ static const unsigned char gz_magic[2] = {0x1f, 0x8b}; // gzip magic header
 #include <qhttpnetworkheader_p.h>
 #include <qhttpnetworkrequest_p.h>
 #include <qauthenticator_p.h>
-#include <qringbuffer_p.h>
 #include <qbytedata_p.h>
 
 QT_BEGIN_NAMESPACE
