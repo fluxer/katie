@@ -201,11 +201,6 @@ public:
         return state->pen.style() != Qt::NoPen && state->pen.width() == 0 ? 1 : 0;
     }
 
-    static QPainterPrivate *get(QPainter *painter)
-    {
-        return painter->d_ptr.data();
-    }
-
     QTransform viewTransform() const;
     static bool attachPainterPrivate(QPainter *q, QPaintDevice *pdev);
     void detachPainterPrivate(QPainter *q);
