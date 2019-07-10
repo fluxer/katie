@@ -40,15 +40,16 @@
 
     For atomic operations on pointers, see the QAtomicPointer class.
 
-    An \e atomic operation is a complex operation that completes without interruption. 
-    The QAtomicInt class provides atomic reference counting, test-and-set, fetch-and-store,
-    and fetch-and-add for integers.
+    An \e atomic operation is a complex operation that completes
+    without interruption. The QAtomicInt class provides atomic
+    reference counting, test-and-set, fetch-and-store, and
+    fetch-and-add for integers.
 
     \section1 Non-atomic convenience operators
 
-    For convenience, QAtomicInt provides integer comparison, cast, and
-    assignment operators. Note that a combination of these operators
-    is \e not an atomic operation.
+    For convenience, QAtomicInt provides integer comparison, cast,
+    and assignment operators. Note that a combination of these
+    operators is \e not an atomic operation.
 
     \section1 The Atomic API
 
@@ -81,8 +82,8 @@
     \o Acquire - memory access following the atomic operation (in
     program order) may not be re-ordered before the atomic operation.
 
-    \o Release - memory access before the atomic operation (in program
-    order) may not be re-ordered after the atomic operation.
+    \o Release - memory access before the atomic operation (in
+    program order) may not be re-ordered after the atomic operation.
 
     \o Ordered - the same Acquire and Release semantics combined.
 
@@ -134,65 +135,10 @@
 
     Providing a platform-independent atomic API that works on all
     processors is challenging. The API provided by QAtomicInt is
-    guaranteed to work atomically on all processors. However, since
-    not all processors implement support for every operation provided
-    by QAtomicInt, it is necessary to expose information about the
-    processor.
+    guaranteed to work atomically on all processors.
 
-    You can check at compile time which features are supported on your
-    hardware using various macros. These will tell you if your
-    hardware always, sometimes, or does not support a particular
-    operation. The macros have the form
-    Q_ATOMIC_INT_\e{OPERATION}_IS_\e{HOW}_NATIVE. \e{OPERATION}
-    is one of REFERENCE_COUNTING, TEST_AND_SET,
-    FETCH_AND_STORE, or FETCH_AND_ADD, and \e{HOW} is one of
-    ALWAYS, SOMETIMES, or NOT. There will always be exactly one
-    defined macro per operation. For example, if
-    Q_ATOMIC_INT_REFERENCE_COUNTING_IS_ALWAYS_NATIVE is defined,
-    neither Q_ATOMIC_INT_REFERENCE_COUNTING_IS_SOMETIMES_NATIVE nor
-    Q_ATOMIC_INT_REFERENCE_COUNTING_IS_NOT_NATIVE will be defined.
-
-    An operation that completes in constant time is said to be
-    wait-free. Such operations are not implemented using locks or
-    loops of any kind. For atomic operations that are always
-    supported, and that are wait-free, Qt defines the
-    Q_ATOMIC_INT_\e{OPERATION}_IS_WAIT_FREE in addition to the
-    Q_ATOMIC_INT_\e{OPERATION}_IS_ALWAYS_NATIVE.
-
-    In cases where an atomic operation is only supported in newer
-    generations of the processor, QAtomicInt also provides a way to
-    check at runtime what your hardware supports with the
-    isReferenceCountingNative(), isTestAndSetNative(),
-    isFetchAndStoreNative(), and isFetchAndAddNative()
-    functions. Wait-free implementations can be detected using the
-    isReferenceCountingWaitFree(), isTestAndSetWaitFree(),
-    isFetchAndStoreWaitFree(), and isFetchAndAddWaitFree() functions.
-
-    Below is a complete list of all feature macros for QAtomicInt:
-
-    \list
-
-    \o Q_ATOMIC_INT_REFERENCE_COUNTING_IS_ALWAYS_NATIVE
-    \o Q_ATOMIC_INT_REFERENCE_COUNTING_IS_SOMETIMES_NATIVE
-    \o Q_ATOMIC_INT_REFERENCE_COUNTING_IS_NOT_NATIVE
-    \o Q_ATOMIC_INT_REFERENCE_COUNTING_IS_WAIT_FREE
-
-    \o Q_ATOMIC_INT_TEST_AND_SET_IS_ALWAYS_NATIVE
-    \o Q_ATOMIC_INT_TEST_AND_SET_IS_SOMETIMES_NATIVE
-    \o Q_ATOMIC_INT_TEST_AND_SET_IS_NOT_NATIVE
-    \o Q_ATOMIC_INT_TEST_AND_SET_IS_WAIT_FREE
-
-    \o Q_ATOMIC_INT_FETCH_AND_STORE_IS_ALWAYS_NATIVE
-    \o Q_ATOMIC_INT_FETCH_AND_STORE_IS_SOMETIMES_NATIVE
-    \o Q_ATOMIC_INT_FETCH_AND_STORE_IS_NOT_NATIVE
-    \o Q_ATOMIC_INT_FETCH_AND_STORE_IS_WAIT_FREE
-
-    \o Q_ATOMIC_INT_FETCH_AND_ADD_IS_ALWAYS_NATIVE
-    \o Q_ATOMIC_INT_FETCH_AND_ADD_IS_SOMETIMES_NATIVE
-    \o Q_ATOMIC_INT_FETCH_AND_ADD_IS_NOT_NATIVE
-    \o Q_ATOMIC_INT_FETCH_AND_ADD_IS_WAIT_FREE
-
-    \endlist
+    QAtomicInt also provides a way to check at runtime if the
+    operations are wait-free via isLockFree() function.
 
     \sa QAtomicPointer
 */
