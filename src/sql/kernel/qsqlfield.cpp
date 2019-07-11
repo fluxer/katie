@@ -278,7 +278,7 @@ void QSqlField::setDefaultValue(const QVariant &value)
 */
 void QSqlField::setSqlType(int type)
 {
-    if (d->tp = type)
+    if (d->tp == type)
         return;
     detach();
     d->tp = type;
