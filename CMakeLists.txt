@@ -182,9 +182,9 @@ add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
 include(mkspecs/mkspecs.cmake)
 
 add_definitions(
-    -DQT_ASCII_CAST_WARNINGS
     -DQT_POSIX_IPC
     # -DQT_STRICT_ITERATORS
+    # -DQT_ASCII_CAST_WARNINGS
     # maybe one day, this forces it onto other projects which (most likely)
     # means source code adjustments!
     # -DQT_NO_CAST_FROM_ASCII
