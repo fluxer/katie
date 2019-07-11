@@ -45,16 +45,15 @@
 // We mean it.
 //
 
-#include <QtCore/qobjectdefs.h>
+#include <qobjectdefs.h>
+#include <qcorecommon_p.h>
 
 #ifndef QT_NO_QOBJECT
-#  include <QtCore/qobject_p.h>
+#  include <qobject_p.h>
 #endif
 
+#ifndef QT_NO_COMPRESS
 #define QT_CACHE_NORMALIZED_TYPE
-
-#if !defined(QT_NO_COMPRESS) && defined(QT_CACHE_NORMALIZED_TYPE)
-#  include <zlib.h>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -165,13 +164,7 @@ static inline bool is_space(char s)
 }
 #endif
 
-#if !defined(QT_NO_COMPRESS) && defined(QT_CACHE_NORMALIZED_TYPE)
-static inline quint32 qCRC32(const char *data, uint len)
-{
-    quint32 crc_32 = ::crc32(0, 0, 0);
-    return ::crc32(crc_32, reinterpret_cast<const uchar *>(data), len);
-}
-
+#ifdef QT_CACHE_NORMALIZED_TYPE
 typedef QHash<quint32, QByteArray> QNormalizedTypeHash;
 Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
 #endif
@@ -180,7 +173,7 @@ Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
 static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 {
     const int len = e - t;
-#if !defined(QT_NO_COMPRESS) && defined(QT_CACHE_NORMALIZED_TYPE)
+#ifdef QT_CACHE_NORMALIZED_TYPE
     const quint32 cachekey = qCRC32(t, len);
     QByteArray cached = qGlobalNormalizedTypeHash()->value(cachekey);
     if (!cached.isEmpty()) {
@@ -238,7 +231,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
     result.replace("unsigned short", "ushort");
     result.replace("unsigned char", "uchar");
 
-#if !defined(QT_NO_COMPRESS) && defined(QT_CACHE_NORMALIZED_TYPE)
+#ifdef QT_CACHE_NORMALIZED_TYPE
     qGlobalNormalizedTypeHash()->insert(cachekey, result);
 #endif
 
