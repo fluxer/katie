@@ -50,7 +50,7 @@ QPaintDevice::QPaintDevice()
 
 QPaintDevice::~QPaintDevice()
 {
-    if (paintingActive())
+    if (Q_UNLIKELY(paintingActive()))
         qWarning("QPaintDevice: Cannot destroy paint device that is being "
                   "painted");
 }

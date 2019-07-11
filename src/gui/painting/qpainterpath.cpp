@@ -636,7 +636,7 @@ void QPainterPath::moveTo(const QPointF &p)
     printf("QPainterPath::moveTo() (%.2f,%.2f)\n", p.x(), p.y());
 #endif
 
-    if (!qIsFinite(p.x()) || !qIsFinite(p.y())) {
+    if (Q_UNLIKELY(!qIsFinite(p.x()) || !qIsFinite(p.y()))) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::moveTo: Adding point where x or y is NaN or Inf, ignoring call");
 #endif
@@ -686,7 +686,7 @@ void QPainterPath::lineTo(const QPointF &p)
     printf("QPainterPath::lineTo() (%.2f,%.2f)\n", p.x(), p.y());
 #endif
 
-    if (!qIsFinite(p.x()) || !qIsFinite(p.y())) {
+    if (Q_UNLIKELY(!qIsFinite(p.x()) || !qIsFinite(p.y()))) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::lineTo: Adding point where x or y is NaN or Inf, ignoring call");
 #endif
@@ -745,8 +745,8 @@ void QPainterPath::cubicTo(const QPointF &c1, const QPointF &c2, const QPointF &
            c1.x(), c1.y(), c2.x(), c2.y(), e.x(), e.y());
 #endif
 
-    if (!qIsFinite(c1.x()) || !qIsFinite(c1.y()) || !qIsFinite(c2.x()) || !qIsFinite(c2.y())
-        || !qIsFinite(e.x()) || !qIsFinite(e.y())) {
+    if (Q_UNLIKELY(!qIsFinite(c1.x()) || !qIsFinite(c1.y()) || !qIsFinite(c2.x()) || !qIsFinite(c2.y())
+        || !qIsFinite(e.x()) || !qIsFinite(e.y()))) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::cubicTo: Adding point where x or y is NaN or Inf, ignoring call");
 #endif
@@ -802,7 +802,7 @@ void QPainterPath::quadTo(const QPointF &c, const QPointF &e)
            c.x(), c.y(), e.x(), e.y());
 #endif
 
-    if (!qIsFinite(c.x()) || !qIsFinite(c.y()) || !qIsFinite(e.x()) || !qIsFinite(e.y())) {
+    if (Q_UNLIKELY(!qIsFinite(c.x()) || !qIsFinite(c.y()) || !qIsFinite(e.x()) || !qIsFinite(e.y()))) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::quadTo: Adding point where x or y is NaN or Inf, ignoring call");
 #endif
@@ -873,8 +873,8 @@ void QPainterPath::arcTo(const QRectF &rect, qreal startAngle, qreal sweepLength
            rect.x(), rect.y(), rect.width(), rect.height(), startAngle, sweepLength);
 #endif
 
-    if ((!qIsFinite(rect.x()) && !qIsFinite(rect.y())) || !qIsFinite(rect.width()) || !qIsFinite(rect.height())
-        || !qIsFinite(startAngle) || !qIsFinite(sweepLength)) {
+    if (Q_UNLIKELY((!qIsFinite(rect.x()) && !qIsFinite(rect.y())) || !qIsFinite(rect.width()) || !qIsFinite(rect.height())
+        || !qIsFinite(startAngle) || !qIsFinite(sweepLength))) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::arcTo: Adding arc where a parameter is NaN or Inf, ignoring call");
 #endif
@@ -979,7 +979,7 @@ QPointF QPainterPath::currentPosition() const
 */
 void QPainterPath::addRect(const QRectF &r)
 {
-    if (!qIsFinite(r.x()) || !qIsFinite(r.y()) || !qIsFinite(r.width()) || !qIsFinite(r.height())) {
+    if (Q_UNLIKELY(!qIsFinite(r.x()) || !qIsFinite(r.y()) || !qIsFinite(r.width()) || !qIsFinite(r.height()))) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::addRect: Adding rect where a parameter is NaN or Inf, ignoring call");
 #endif
@@ -1062,8 +1062,8 @@ void QPainterPath::addPolygon(const QPolygonF &polygon)
 */
 void QPainterPath::addEllipse(const QRectF &boundingRect)
 {
-    if (!qIsFinite(boundingRect.x()) || !qIsFinite(boundingRect.y())
-        || !qIsFinite(boundingRect.width()) || !qIsFinite(boundingRect.height())) {
+    if (Q_UNLIKELY(!qIsFinite(boundingRect.x()) || !qIsFinite(boundingRect.y())
+        || !qIsFinite(boundingRect.width()) || !qIsFinite(boundingRect.height()))) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::addEllipse: Adding ellipse where a parameter is NaN or Inf, ignoring call");
 #endif
@@ -2391,7 +2391,7 @@ QDataStream &operator>>(QDataStream &s, QPainterPath &p)
         s >> x;
         s >> y;
         Q_ASSERT(type >= 0 && type <= 3);
-        if (!qIsFinite(x) || !qIsFinite(y)) {
+        if (Q_UNLIKELY(!qIsFinite(x) || !qIsFinite(y))) {
 #ifndef QT_NO_DEBUG
             qWarning("QDataStream::operator>>: NaN or Inf element found in path, skipping it");
 #endif
@@ -2917,7 +2917,7 @@ static inline QBezier bezierAtT(const QPainterPath &path, qreal t, qreal *starti
 */
 QPointF QPainterPath::pointAtPercent(qreal t) const
 {
-    if (t < 0 || t > 1) {
+    if (Q_UNLIKELY(t < 0 || t > 1)) {
         qWarning("QPainterPath::pointAtPercent accepts only values between 0 and 1");
         return QPointF();
     }
@@ -2951,7 +2951,7 @@ QPointF QPainterPath::pointAtPercent(qreal t) const
 */
 qreal QPainterPath::angleAtPercent(qreal t) const
 {
-    if (t < 0 || t > 1) {
+    if (Q_UNLIKELY(t < 0 || t > 1)) {
         qWarning("QPainterPath::angleAtPercent accepts only values between 0 and 1");
         return 0;
     }
@@ -2979,7 +2979,7 @@ qreal QPainterPath::angleAtPercent(qreal t) const
 */
 qreal QPainterPath::slopeAtPercent(qreal t) const
 {
-    if (t < 0 || t > 1) {
+    if (Q_UNLIKELY(t < 0 || t > 1)) {
         qWarning("QPainterPath::slopeAtPercent accepts only values between 0 and 1");
         return 0;
     }

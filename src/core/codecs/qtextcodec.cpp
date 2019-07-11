@@ -438,7 +438,7 @@ static void setup()
 
 
 #ifdef Q_DEBUG_TEXTCODEC
-    if (destroying_is_ok)
+    if (Q_UNLIKELY(destroying_is_ok))
         qWarning("QTextCodec: Creating new codec during codec cleanup");
 #endif
     all = new QList<QTextCodec*>;
@@ -655,7 +655,7 @@ QTextCodec::QTextCodec()
 QTextCodec::~QTextCodec()
 {
 #ifdef Q_DEBUG_TEXTCODEC
-    if (!destroying_is_ok)
+    if (Q_UNLIKELY(!destroying_is_ok))
         qWarning("QTextCodec::~QTextCodec: Called by application");
 #endif
     if (all) {

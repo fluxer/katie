@@ -693,7 +693,7 @@ static char *aargv[] = { (char*)"unknown", 0 };
 QApplication::QApplication(Display* dpy, Qt::HANDLE visual, Qt::HANDLE colormap)
     : QCoreApplication(*new QApplicationPrivate(aargc, aargv, QApplication::Gui))
 {
-    if (! dpy)
+    if (Q_UNLIKELY(!dpy))
         qWarning("QApplication: Invalid Display* argument");
     Q_D(QApplication);
     d->construct(dpy, visual, colormap);
@@ -717,7 +717,7 @@ QApplication::QApplication(Display *dpy, int &argc, char **argv,
                            Qt::HANDLE visual, Qt::HANDLE colormap)
     : QCoreApplication(*new QApplicationPrivate(argc, argv, QApplication::Gui))
 {
-    if (! dpy)
+    if (Q_UNLIKELY(!dpy))
         qWarning("QApplication: Invalid Display* argument");
     Q_D(QApplication);
     d->construct(dpy, visual, colormap);;
@@ -1277,7 +1277,7 @@ QString QApplication::graphicsSystem()
 
 void QApplication::setGraphicsSystem(const QString &system)
 {
-    if (system == QLatin1String("native")) {
+    if (Q_UNLIKELY(system == QLatin1String("native"))) {
         qWarning() << "Attempt to set native graphicssystem";
         QApplicationPrivate::graphics_system_name = QLatin1String("raster");
     } else {
@@ -2665,7 +2665,7 @@ QDesktopWidget *QApplication::desktop()
 QClipboard *QApplication::clipboard()
 {
     if (qt_clipboard == 0) {
-        if (!qApp) {
+        if (Q_UNLIKELY(!qApp)) {
             qWarning("QApplication: Must construct a QApplication before accessing a QClipboard");
             return 0;
         }
@@ -3202,7 +3202,7 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
     if (QApplicationPrivate::is_app_closing)
         return true;
 
-    if (receiver == 0) {                        // serious error
+    if (Q_UNLIKELY(receiver == 0)) {                        // serious error
         qWarning("QApplication::notify: Unexpected null receiver");
         return true;
     }
@@ -3420,7 +3420,7 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
                         QObject *obj = d->eventFilters.at(i);
                         if (!obj)
                             continue;
-                        if (obj->d_func()->threadData != w->d_func()->threadData) {
+                        if (Q_UNLIKELY(obj->d_func()->threadData != w->d_func()->threadData)) {
                             qWarning("QApplication: Object event filter cannot be in a different thread.");
                             continue;
                         }
