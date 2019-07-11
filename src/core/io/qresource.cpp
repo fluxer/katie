@@ -194,7 +194,7 @@ Q_GLOBAL_STATIC(QStringList, resourceSearchPaths)
 
 class QResourcePrivate {
 public:
-    inline QResourcePrivate(QResource *_q) : q_ptr(_q) { clear(); }
+    inline QResourcePrivate() { clear(); }
     inline ~QResourcePrivate() { clear(); }
 
     void ensureInitialized() const;
@@ -206,25 +206,22 @@ public:
     QLocale locale;
     QString fileName, absoluteFilePath;
     QList<QResourceRoot*> related;
-    uint container : 1;
-    mutable uint compressed : 1;
+    bool container;
+    mutable bool compressed;
     mutable qint64 size;
     mutable const uchar *data;
     mutable QStringList children;
-
-    QResource *q_ptr;
-    Q_DECLARE_PUBLIC(QResource)
 };
 
 void
 QResourcePrivate::clear()
 {
     absoluteFilePath.clear();
-    compressed = 0;
+    container = false;
+    compressed = false;
     data = 0;
     size = 0;
     children.clear();
-    container = 0;
     for(int i = 0; i < related.size(); ++i) {
         QResourceRoot *root = related.at(i);
         if(!root->ref.deref())
@@ -252,7 +249,7 @@ QResourcePrivate::load(const QString &file)
                 } else {
                     data = 0;
                     size = 0;
-                    compressed = 0;
+                    compressed = false;
                 }
             } else if(res->isContainer(node) != container) {
                 qWarning("QResourceInfo: Resource [%s] has both data and children!", file.toLatin1().constData());
@@ -263,7 +260,7 @@ QResourcePrivate::load(const QString &file)
             container = true;
             data = 0;
             size = 0;
-            compressed = 0;
+            compressed = false;
             res->ref.ref();
             related.append(res);
         }
@@ -345,7 +342,7 @@ QResourcePrivate::ensureChildren() const
     \sa QFileInfo, QDir::searchPaths(), setFileName(), setLocale()
 */
 
-QResource::QResource(const QString &file, const QLocale &locale) : d_ptr(new QResourcePrivate(this))
+QResource::QResource(const QString &file, const QLocale &locale) : d_ptr(new QResourcePrivate())
 {
     Q_D(QResource);
     d->fileName = file;
