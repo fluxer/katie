@@ -103,7 +103,7 @@ void tst_QHash::qhash_qt4()
 {
     QStringList items = data().split(QLatin1Char('\n'));
     QHash<QString, int> hash;
-    
+
     QBENCHMARK {
         for (int i = 0, n = items.size(); i != n; ++i) {
             hash[items.at(i)] = i;
@@ -117,7 +117,7 @@ void tst_QHash::qhash_faster()
     foreach (const QString &s, data().split(QLatin1Char('\n')))
         items.append(s);
     QHash<String, int> hash;
-    
+
     QBENCHMARK {
         for (int i = 0, n = items.size(); i != n; ++i) {
             hash[items.at(i)] = i;
