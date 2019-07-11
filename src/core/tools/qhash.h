@@ -424,11 +424,9 @@ template <class Key, class T>
 Q_INLINE_TEMPLATE typename QHash<Key, T>::Node *
 QHash<Key, T>::createNode(uint ah, const Key &akey, const T &avalue, Node **anextNode)
 {
-    Node *node;
-
     void *nodeptr = malloc(d->nodeSize);
     Q_CHECK_PTR(nodeptr);
-    node = new (nodeptr) Node(akey, avalue);
+    Node *node = new (nodeptr) Node(akey, avalue);
 
     node->h = ah;
     node->next = *anextNode;
