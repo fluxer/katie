@@ -440,9 +440,8 @@ QHash<Key, T>::createNode(uint ah, const Key &akey, const T &avalue, Node **anex
 template <class Key, class T>
 Q_INLINE_TEMPLATE QHash<Key, T> &QHash<Key, T>::unite(const QHash<Key, T> &other)
 {
-    QHash<Key, T> copy(other);
-    const_iterator it = copy.constEnd();
-    while (it != copy.constBegin()) {
+    const_iterator it = other.constEnd();
+    while (it != other.constBegin()) {
         --it;
         insertMulti(it.key(), it.value());
     }
