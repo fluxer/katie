@@ -490,13 +490,11 @@ void QHttpCloseRequest::start(QHttp *http)
 
 class QHttpHeaderPrivate
 {
-    Q_DECLARE_PUBLIC(QHttpHeader)
 public:
     inline virtual ~QHttpHeaderPrivate() {}
 
     QList<QPair<QString, QString> > values;
     bool valid;
-    QHttpHeader *q_ptr;
 };
 
 /****************************************************
@@ -559,7 +557,6 @@ QHttpHeader::QHttpHeader()
     : d_ptr(new QHttpHeaderPrivate)
 {
     Q_D(QHttpHeader);
-    d->q_ptr = this;
     d->valid = true;
 }
 
@@ -570,7 +567,6 @@ QHttpHeader::QHttpHeader(const QHttpHeader &header)
     : d_ptr(new QHttpHeaderPrivate)
 {
     Q_D(QHttpHeader);
-    d->q_ptr = this;
     d->valid = header.d_func()->valid;
     d->values = header.d_func()->values;
 }
@@ -587,7 +583,6 @@ QHttpHeader::QHttpHeader(const QString &str)
     : d_ptr(new QHttpHeaderPrivate)
 {
     Q_D(QHttpHeader);
-    d->q_ptr = this;
     d->valid = true;
     parse(str);
 }
@@ -598,7 +593,6 @@ QHttpHeader::QHttpHeader(QHttpHeaderPrivate &dd, const QString &str)
     : d_ptr(&dd)
 {
     Q_D(QHttpHeader);
-    d->q_ptr = this;
     d->valid = true;
     if (!str.isEmpty())
         parse(str);
@@ -610,7 +604,6 @@ QHttpHeader::QHttpHeader(QHttpHeaderPrivate &dd, const QHttpHeader &header)
     : d_ptr(&dd)
 {
     Q_D(QHttpHeader);
-    d->q_ptr = this;
     d->valid = header.d_func()->valid;
     d->values = header.d_func()->values;
 }
@@ -985,7 +978,6 @@ void QHttpHeader::setContentType(const QString &type)
 
 class QHttpResponseHeaderPrivate : public QHttpHeaderPrivate
 {
-    Q_DECLARE_PUBLIC(QHttpResponseHeader)
 public:
     int statCode;
     QString reasonPhr;
@@ -1190,7 +1182,6 @@ QString QHttpResponseHeader::toString() const
 
 class QHttpRequestHeaderPrivate : public QHttpHeaderPrivate
 {
-    Q_DECLARE_PUBLIC(QHttpRequestHeader)
 public:
     QString m;
     QString p;
