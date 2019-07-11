@@ -81,7 +81,6 @@ QT_BEGIN_NAMESPACE
 
 class QScriptContextInfoPrivate : public QSharedData
 {
-    Q_DECLARE_PUBLIC(QScriptContextInfo)
 public:
     QScriptContextInfoPrivate();
     QScriptContextInfoPrivate(const QScriptContext *context);
@@ -100,8 +99,6 @@ public:
     int functionMetaIndex;
 
     QStringList parameterNames;
-
-    QScriptContextInfo *q_ptr;
 };
 
 /*!
@@ -215,11 +212,10 @@ QScriptContextInfoPrivate::~QScriptContextInfoPrivate()
   previously created QScriptContextInfo.
 */
 QScriptContextInfo::QScriptContextInfo(const QScriptContext *context)
-    : d_ptr(0)
+    : d_ptr(Q_NULLPTR)
 {
     if (context) {
         d_ptr = new QScriptContextInfoPrivate(context);
-        d_ptr->q_ptr = this;
     }
 }
 
@@ -237,7 +233,7 @@ QScriptContextInfo::QScriptContextInfo(const QScriptContextInfo &other)
   \sa isNull()
 */
 QScriptContextInfo::QScriptContextInfo()
-    : d_ptr(0)
+    : d_ptr(Q_NULLPTR)
 {
 }
 
