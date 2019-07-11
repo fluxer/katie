@@ -583,7 +583,7 @@ qreal QPen::miterLimit() const
 */
 void QPen::setMiterLimit(qreal limit)
 {
-    if (d->miterLimit = limit)
+    if (d->miterLimit == limit)
         return;
     detach();
     d->miterLimit = limit;

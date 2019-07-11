@@ -265,6 +265,9 @@ void QCursorData::update()
             hcurs = XcursorLibraryLoadCursor(dpy, "dnd-link");
             break;
         }
+        default: {
+            break;
+        }
     }
     if (!hcurs)
         hcurs = XcursorLibraryLoadCursor(dpy, cursorNames[cshape]);
