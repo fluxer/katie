@@ -115,14 +115,11 @@ QT_BEGIN_NAMESPACE
 
 class QScriptClassPrivate
 {
-    Q_DECLARE_PUBLIC(QScriptClass)
 public:
     QScriptClassPrivate() {}
     virtual ~QScriptClassPrivate() {}
 
     QScriptEngine *engine;
-
-    QScriptClass *q_ptr;
 };
 
 /*!
@@ -133,7 +130,6 @@ public:
 QScriptClass::QScriptClass(QScriptEngine *engine)
     : d_ptr(new QScriptClassPrivate)
 {
-    d_ptr->q_ptr = this;
     d_ptr->engine = engine;
 }
 
@@ -143,7 +139,6 @@ QScriptClass::QScriptClass(QScriptEngine *engine)
 QScriptClass::QScriptClass(QScriptEngine *engine, QScriptClassPrivate &dd)
     : d_ptr(&dd)
 {
-    d_ptr->q_ptr = this;
     d_ptr->engine = engine;
 }
 
