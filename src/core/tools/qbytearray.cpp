@@ -424,7 +424,7 @@ QByteArray qCompress(const uchar* data, int nbytes, int compressionLevel)
     if (nbytes == 0) {
         return QByteArray(4, '\0');
     }
-    if (!data) {
+    if (Q_UNLIKELY(!data)) {
         qWarning("qCompress: Data is null");
         return QByteArray();
     }
@@ -496,11 +496,11 @@ QByteArray qUncompress(const uchar* data, int nbytes)
 #ifdef QT_FAST_COMPRESS
     return qFastUncompress(reinterpret_cast<const char*>(data), nbytes);
 #else
-    if (!data) {
+    if (Q_UNLIKELY(!data)) {
         qWarning("qUncompress: Data is null");
         return QByteArray();
     }
-    if (nbytes <= 4) {
+    if (Q_UNLIKELY(nbytes <= 4)) {
         if (nbytes < 4 || (data[0]!=0 || data[1]!=0 || data[2]!=0 || data[3]!=0))
             qWarning("qUncompress: Input data is corrupted");
         return QByteArray();
@@ -512,13 +512,13 @@ QByteArray qUncompress(const uchar* data, int nbytes)
 
     forever {
         ulong alloc = len;
-        if (len  >= ulong(1 << 31) - sizeof(QByteArray::Data)) {
+        if (Q_UNLIKELY(len  >= ulong(1 << 31) - sizeof(QByteArray::Data))) {
             //QByteArray does not support that huge size anyway.
             qWarning("qUncompress: Input data is corrupted");
             return QByteArray();
         }
         QByteArray::Data *p = static_cast<QByteArray::Data *>(realloc(d.data(), sizeof(QByteArray::Data) + alloc));
-        if (!p) {
+        if (!Q_UNLIKELY(p)) {
             // we are not allowed to crash here when compiling with QT_NO_EXCEPTIONS
             qWarning("qUncompress: could not allocate enough memory to uncompress data");
             return QByteArray();
@@ -532,13 +532,13 @@ QByteArray qUncompress(const uchar* data, int nbytes)
         switch (res) {
         case Z_OK:
             if (len != alloc) {
-                if (len  >= ulong(1 << 31) - sizeof(QByteArray::Data)) {
+                if (Q_UNLIKELY(len  >= ulong(1 << 31) - sizeof(QByteArray::Data))) {
                     //QByteArray does not support that huge size anyway.
                     qWarning("qUncompress: Input data is corrupted");
                     return QByteArray();
                 }
                 QByteArray::Data *p = static_cast<QByteArray::Data *>(realloc(d.data(), sizeof(QByteArray::Data) + len));
-                if (!p) {
+                if (Q_UNLIKELY(!p)) {
                     // we are not allowed to crash here when compiling with QT_NO_EXCEPTIONS
                     qWarning("qUncompress: could not allocate enough memory to uncompress data");
                     return QByteArray();
@@ -599,23 +599,23 @@ QByteArray qUncompress(const uchar* data, int nbytes)
 
 QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel)
 {
-    if (!data) {
+    if (Q_UNLIKELY(!data)) {
         qWarning("qFastCompress: Data is null");
         return QByteArray();
-    } else if (nbytes <= 0) {
+    } else if (Q_UNLIKELY(nbytes <= 0)) {
         qWarning("qFastUncompress: Data size is negative or zero");
         return QByteArray();
     }
 
     const size_t bndresult = ZSTD_compressBound(nbytes);
-    if (bndresult <= 0) {
+    if (Q_UNLIKELY(bndresult <= 0)) {
         qWarning("qFastUncompress: compression bound is negative or zero");
         return QByteArray();
     }
 
     QByteArray result(bndresult, Qt::Uninitialized);
     const size_t cmpresult = ZSTD_compress(result.data(), result.size(), data, nbytes, compressionLevel);
-    if (ZSTD_isError(cmpresult)) {
+    if (Q_UNLIKELY(ZSTD_isError(cmpresult))) {
 #ifdef QT_USE_ZSTD_ERROR
         qWarning("qFastCompress: Could not compress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(cmpresult)));
 #else
@@ -656,23 +656,23 @@ QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel)
 
 QByteArray qFastUncompress(const char* data, int nbytes)
 {
-    if (!data) {
+    if (Q_UNLIKELY(!data)) {
         qWarning("qFastUncompress: Data is null");
         return QByteArray();
-    } else if (nbytes <= 0) {
+    } else if (Q_UNLIKELY(nbytes <= 0)) {
         qWarning("qFastUncompress: Data size is negative or zero");
         return QByteArray();
     }
 
     const unsigned long long uncompressedsize = ZSTD_getDecompressedSize(data, nbytes);
-    if (uncompressedsize <= 0) {
+    if (Q_UNLIKELY(uncompressedsize <= 0)) {
         qWarning("qFastUncompress: uncompression size is negative or zero");
         return QByteArray();
     }
 
     QByteArray result(uncompressedsize, Qt::Uninitialized);
     const size_t decresult = ZSTD_decompress(result.data(), result.size(), data, nbytes);
-    if (ZSTD_isError(decresult)) {
+    if (Q_UNLIKELY(ZSTD_isError(decresult))) {
 #ifdef QT_USE_ZSTD_ERROR
         qWarning("qFastCompress: Could not uncompress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(decresult)));
 #else
@@ -3333,7 +3333,7 @@ bool QByteArray::isNull() const { return d == &shared_null; }
 qlonglong QByteArray::toLongLong(bool *ok, int base) const
 {
 #if defined(QT_CHECK_RANGE)
-    if (base != 0 && (base < 2 || base > 36)) {
+    if (Q_UNLIKELY(base != 0 && (base < 2 || base > 36))) {
         qWarning("QByteArray::toLongLong: Invalid base %d", base);
         base = 10;
     }
@@ -3366,7 +3366,7 @@ qlonglong QByteArray::toLongLong(bool *ok, int base) const
 qulonglong QByteArray::toULongLong(bool *ok, int base) const
 {
 #if defined(QT_CHECK_RANGE)
-    if (base != 0 && (base < 2 || base > 36)) {
+    if (Q_UNLIKELY(base != 0 && (base < 2 || base > 36))) {
         qWarning("QByteArray::toULongLong: Invalid base %d", base);
         base = 10;
     }
@@ -3702,7 +3702,7 @@ QByteArray QByteArray::toBase64() const
 QByteArray &QByteArray::setNum(qlonglong n, int base)
 {
 #if defined(QT_CHECK_RANGE)
-    if (base < 2 || base > 36) {
+    if (Q_UNLIKELY(base < 2 || base > 36)) {
         qWarning("QByteArray::setNum: Invalid base %d", base);
         base = 10;
     }
@@ -3721,7 +3721,7 @@ QByteArray &QByteArray::setNum(qlonglong n, int base)
 QByteArray &QByteArray::setNum(qulonglong n, int base)
 {
 #if defined(QT_CHECK_RANGE)
-    if (base < 2 || base > 36) {
+    if (Q_UNLIKELY(base < 2 || base > 36)) {
         qWarning("QByteArray::setNum: Invalid base %d", base);
         base = 10;
     }
