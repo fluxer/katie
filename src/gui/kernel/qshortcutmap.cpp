@@ -119,17 +119,13 @@ static QDebug &operator<<(QDebug &dbg, const QShortcutEntry *se) {
 */
 class QShortcutMapPrivate
 {
-    Q_DECLARE_PUBLIC(QShortcutMap)
-
 public:
-    QShortcutMapPrivate(QShortcutMap* parent)
-        : q_ptr(parent), currentId(0), ambigCount(0), currentState(QKeySequence::NoMatch)
+    QShortcutMapPrivate()
+        : currentId(0), ambigCount(0), currentState(QKeySequence::NoMatch)
     {
         identicals.reserve(10);
         currentSequences.reserve(10);
     }
-    QShortcutMap *q_ptr;                        // Private's parent
-
     QList<QShortcutEntry> sequences;            // All sequences!
 
     int currentId;                              // Global shortcut ID number
@@ -146,7 +142,7 @@ public:
     QShortcutMap constructor.
 */
 QShortcutMap::QShortcutMap()
-    : d_ptr(new QShortcutMapPrivate(this))
+    : d_ptr(new QShortcutMapPrivate())
 {
     resetState();
 }
