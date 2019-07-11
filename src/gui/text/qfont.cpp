@@ -1533,7 +1533,7 @@ void QFont::setCapitalization(Capitalization caps)
 */
 QFont::Capitalization QFont::capitalization() const
 {
-    return static_cast<QFont::Capitalization> (d->capital);
+    return d->capital;
 }
 
 /*!
