@@ -89,7 +89,6 @@ private:
 };
 
 const int N = 1000000;
-extern double s;
 
 ///////////////////// QHash /////////////////////
 
