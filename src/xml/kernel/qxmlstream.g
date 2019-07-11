@@ -245,10 +245,8 @@ public:
 class QXmlStreamEntityResolver;
 #ifndef QT_NO_XMLSTREAMREADER
 class QXmlStreamReaderPrivate : public QXmlStreamReader_Table, public QXmlStreamPrivateTagStack{
-    QXmlStreamReader *q_ptr;
-    Q_DECLARE_PUBLIC(QXmlStreamReader)
 public:
-    QXmlStreamReaderPrivate(QXmlStreamReader *q);
+    QXmlStreamReaderPrivate();
     ~QXmlStreamReaderPrivate();
     void init();
 

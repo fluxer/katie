@@ -362,7 +362,7 @@ QXmlStreamEntityResolver *QXmlStreamReader::entityResolver() const
   \sa setDevice(), addData()
  */
 QXmlStreamReader::QXmlStreamReader()
-    : d_ptr(new QXmlStreamReaderPrivate(this))
+    : d_ptr(new QXmlStreamReaderPrivate())
 {
 }
 
@@ -371,7 +371,7 @@ QXmlStreamReader::QXmlStreamReader()
 \sa setDevice(), clear()
  */
 QXmlStreamReader::QXmlStreamReader(QIODevice *device)
-    : d_ptr(new QXmlStreamReaderPrivate(this))
+    : d_ptr(new QXmlStreamReaderPrivate())
 {
     setDevice(device);
 }
@@ -382,7 +382,7 @@ QXmlStreamReader::QXmlStreamReader(QIODevice *device)
   \sa addData(), clear(), setDevice()
  */
 QXmlStreamReader::QXmlStreamReader(const QByteArray &data)
-    : d_ptr(new QXmlStreamReaderPrivate(this))
+    : d_ptr(new QXmlStreamReaderPrivate())
 {
     Q_D(QXmlStreamReader);
     d->dataBuffer = data;
@@ -394,7 +394,7 @@ QXmlStreamReader::QXmlStreamReader(const QByteArray &data)
   \sa addData(), clear(), setDevice()
  */
 QXmlStreamReader::QXmlStreamReader(const QString &data)
-    : d_ptr(new QXmlStreamReaderPrivate(this))
+    : d_ptr(new QXmlStreamReaderPrivate())
 {
     Q_D(QXmlStreamReader);
 #ifdef QT_NO_TEXTCODEC
@@ -413,7 +413,7 @@ QXmlStreamReader::QXmlStreamReader(const QString &data)
   \sa addData(), clear(), setDevice()
  */
 QXmlStreamReader::QXmlStreamReader(const char *data)
-    : d_ptr(new QXmlStreamReaderPrivate(this))
+    : d_ptr(new QXmlStreamReaderPrivate())
 {
     Q_D(QXmlStreamReader);
     d->dataBuffer = QByteArray(data);
@@ -769,8 +769,7 @@ QXmlStreamPrivateTagStack::QXmlStreamPrivateTagStack()
 
 #ifndef QT_NO_XMLSTREAMREADER
 
-QXmlStreamReaderPrivate::QXmlStreamReaderPrivate(QXmlStreamReader *q)
-    :q_ptr(q)
+QXmlStreamReaderPrivate::QXmlStreamReaderPrivate()
 {
     device = Q_NULLPTR;
     deleteDevice = false;
@@ -847,14 +846,12 @@ void QXmlStreamReaderPrivate::init()
  */
 void QXmlStreamReaderPrivate::parseEntity(const QString &value)
 {
-    Q_Q(QXmlStreamReader);
-
     if (value.isEmpty())
         return;
 
 
     if (!entityParser)
-        entityParser = new QXmlStreamReaderPrivate(q);
+        entityParser = new QXmlStreamReaderPrivate();
     else
         entityParser->init();
     entityParser->inParseEntity = true;
@@ -2876,10 +2873,8 @@ QStringRef QXmlStreamReader::documentEncoding() const
 #ifndef QT_NO_XMLSTREAMWRITER
 
 class QXmlStreamWriterPrivate : public QXmlStreamPrivateTagStack {
-    QXmlStreamWriter *q_ptr;
-    Q_DECLARE_PUBLIC(QXmlStreamWriter)
 public:
-    QXmlStreamWriterPrivate(QXmlStreamWriter *q);
+    QXmlStreamWriterPrivate();
     ~QXmlStreamWriterPrivate() {
         if (deleteDevice)
             delete device;
@@ -2924,10 +2919,9 @@ public:
 };
 
 
-QXmlStreamWriterPrivate::QXmlStreamWriterPrivate(QXmlStreamWriter *q)
-    :autoFormattingIndent(4, ' ')
+QXmlStreamWriterPrivate::QXmlStreamWriterPrivate()
+    : autoFormattingIndent(4, ' ')
 {
-    q_ptr = q;
     device = Q_NULLPTR;
     stringDevice = Q_NULLPTR;
     deleteDevice = false;
@@ -3124,7 +3118,7 @@ void QXmlStreamWriterPrivate::indent(int level)
   \sa setDevice()
  */
 QXmlStreamWriter::QXmlStreamWriter()
-    : d_ptr(new QXmlStreamWriterPrivate(this))
+    : d_ptr(new QXmlStreamWriterPrivate())
 {
 }
 
@@ -3132,7 +3126,7 @@ QXmlStreamWriter::QXmlStreamWriter()
   Constructs a stream writer that writes into \a device;
  */
 QXmlStreamWriter::QXmlStreamWriter(QIODevice *device)
-    : d_ptr(new QXmlStreamWriterPrivate(this))
+    : d_ptr(new QXmlStreamWriterPrivate())
 {
     Q_D(QXmlStreamWriter);
     d->device = device;
@@ -3143,7 +3137,7 @@ QXmlStreamWriter::QXmlStreamWriter(QIODevice *device)
   which in turn operates on \a array.
  */
 QXmlStreamWriter::QXmlStreamWriter(QByteArray *array)
-    : d_ptr(new QXmlStreamWriterPrivate(this))
+    : d_ptr(new QXmlStreamWriterPrivate())
 {
     Q_D(QXmlStreamWriter);
     d->device = new QBuffer(array);
@@ -3155,7 +3149,7 @@ QXmlStreamWriter::QXmlStreamWriter(QByteArray *array)
 /*!  Constructs a stream writer that writes into \a string.
  */
 QXmlStreamWriter::QXmlStreamWriter(QString *string)
-    : d_ptr(new QXmlStreamWriterPrivate(this))
+    : d_ptr(new QXmlStreamWriterPrivate())
 {
     Q_D(QXmlStreamWriter);
     d->stringDevice = string;
