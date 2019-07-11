@@ -109,7 +109,7 @@ void Q_CORE_EXPORT qRegisterStaticPluginInstanceFunction(QtPluginInstanceFunctio
       "version=" QT_VERSION_STR "\n" \
       "debug=" QPLUGIN_DEBUG_STR;
 
-#  if defined (Q_OF_ELF) && defined (Q_CC_GNU)
+#  if defined(Q_OF_ELF) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG))
 #  define Q_PLUGIN_VERIFICATION_SECTION \
     __attribute__ ((section (".ktplugin"))) __attribute__((used))
 #  else

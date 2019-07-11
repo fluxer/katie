@@ -345,7 +345,7 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
     }
 
     /*
-       ELF binaries on GNU, have .qplugin sections.
+       ELF binaries build with GNU or Clang have .ktplugin sections.
     */
     const char pattern[] = "pattern=KT_PLUGIN_VERIFICATION_DATA";
     const ulong plen = qstrlen(pattern);
