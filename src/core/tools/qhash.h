@@ -509,18 +509,17 @@ Q_OUTOFLINE_TEMPLATE QList<Key> QHash<Key, T>::uniqueKeys() const
 {
     QList<Key> res;
     res.reserve(size()); // May be too much, but assume short lifetime
-    const_iterator i = begin();
-    if (i != end()) {
+    const_iterator i = constBegin();
+    if (i != constEnd()) {
         for (;;) {
             const Key &aKey = i.key();
             res.append(aKey);
             do {
-                if (++i == end())
-                    goto break_out_of_outer_loop;
+                if (++i == constEnd())
+                    return res;
             } while (aKey == i.key());
         }
     }
-break_out_of_outer_loop:
     return res;
 }
 
@@ -529,8 +528,8 @@ Q_OUTOFLINE_TEMPLATE QList<Key> QHash<Key, T>::keys() const
 {
     QList<Key> res;
     res.reserve(size());
-    const_iterator i = begin();
-    while (i != end()) {
+    const_iterator i = constBegin();
+    while (i != constEnd()) {
         res.append(i.key());
         ++i;
     }
@@ -541,8 +540,8 @@ template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE QList<Key> QHash<Key, T>::keys(const T &avalue) const
 {
     QList<Key> res;
-    const_iterator i = begin();
-    while (i != end()) {
+    const_iterator i = constBegin();
+    while (i != constEnd()) {
         if (i.value() == avalue)
             res.append(i.key());
         ++i;
@@ -559,8 +558,8 @@ Q_OUTOFLINE_TEMPLATE const Key QHash<Key, T>::key(const T &avalue) const
 template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE const Key QHash<Key, T>::key(const T &avalue, const Key &defaultValue) const
 {
-    const_iterator i = begin();
-    while (i != end()) {
+    const_iterator i = constBegin();
+    while (i != constEnd()) {
         if (i.value() == avalue)
             return i.key();
         ++i;
@@ -574,8 +573,8 @@ Q_OUTOFLINE_TEMPLATE QList<T> QHash<Key, T>::values() const
 {
     QList<T> res;
     res.reserve(size());
-    const_iterator i = begin();
-    while (i != end()) {
+    const_iterator i = constBegin();
+    while (i != constEnd()) {
         res.append(i.value());
         ++i;
     }
@@ -781,20 +780,20 @@ Q_OUTOFLINE_TEMPLATE bool QHash<Key, T>::operator==(const QHash<Key, T> &other) 
     if (d == other.d)
         return true;
 
-    const_iterator it = begin();
+    const_iterator it = constBegin();
 
-    while (it != end()) {
+    while (it != constEnd()) {
         const Key &akey = it.key();
 
         const_iterator it2 = other.find(akey);
         do {
-            if (it2 == other.end() || !(it2.key() == akey))
+            if (it2 == other.constEnd() || !(it2.key() == akey))
                 return false;
             if (!(it.value() == it2.value()))
                 return false;
             ++it;
             ++it2;
-        } while (it != end() && it.key() == akey);
+        } while (it != constEnd() && it.key() == akey);
     }
     return true;
 }
