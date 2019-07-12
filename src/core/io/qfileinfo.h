@@ -43,16 +43,16 @@ QT_BEGIN_NAMESPACE
 
 
 class QDir;
-class QDirIteratorPrivate;
 class QDateTime;
+class QDirIteratorPrivate;
+class QFSFileEngineIterator;
 class QFileInfoPrivate;
 
 class Q_CORE_EXPORT QFileInfo
 {
     friend class QDirIteratorPrivate;
+    friend class QFSFileEngineIterator;
 public:
-    explicit QFileInfo(QFileInfoPrivate *d);
-
     QFileInfo();
     QFileInfo(const QString &file);
     QFileInfo(const QFile &file);
@@ -125,6 +125,8 @@ public:
 protected:
     QSharedDataPointer<QFileInfoPrivate> d_ptr;
 private:
+    explicit QFileInfo(QFileInfoPrivate *d);
+
     QFileInfoPrivate* d_func();
     const QFileInfoPrivate* d_func() const;
 };
