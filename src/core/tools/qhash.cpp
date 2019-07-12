@@ -217,19 +217,17 @@ QHashData *QHashData::detach_helper(void (*node_duplicate)(Node *, void *),
 
 void QHashData::free_helper(void (*node_delete)(Node *))
 {
-    if (node_delete) {
-        Node *this_e = reinterpret_cast<Node *>(this);
-        Node **bucket = reinterpret_cast<Node **>(this->buckets);
+    Node *this_e = reinterpret_cast<Node *>(this);
+    Node **bucket = reinterpret_cast<Node **>(this->buckets);
 
-        int n = numBuckets;
-        while (n--) {
-            Node *cur = *bucket++;
-            while (cur != this_e) {
-                Node *next = cur->next;
-                node_delete(cur);
-                ::free(cur);
-                cur = next;
-            }
+    int n = numBuckets;
+    while (n--) {
+        Node *cur = *bucket++;
+        while (cur != this_e) {
+            Node *next = cur->next;
+            node_delete(cur);
+            ::free(cur);
+            cur = next;
         }
     }
     delete [] buckets;
