@@ -159,13 +159,14 @@ static QPixmapIconEngineEntry *bestSizeMatch( const QSize &size, QPixmapIconEngi
 QPixmapIconEngineEntry *QPixmapIconEngine::tryMatch(const QSize &size, QIcon::Mode mode, QIcon::State state)
 {
     QPixmapIconEngineEntry *pe = 0;
-    for (int i = 0; i < pixmaps.count(); ++i)
+    for (int i = 0; i < pixmaps.count(); ++i) {
         if (pixmaps.at(i).mode == mode && pixmaps.at(i).state == state) {
             if (pe)
                 pe = bestSizeMatch(size, &pixmaps[i], pe);
             else
                 pe = &pixmaps[i];
         }
+    }
     return pe;
 }
 
@@ -894,9 +895,8 @@ QIcon QIcon::fromTheme(const QString &name, const QIcon &fallback)
         return icon;
     }
 
-    if (qtIconCache()->contains(name)) {
-        icon = *qtIconCache()->object(name);
-    } else {
+    icon = *qtIconCache()->object(name);
+    if (icon.isNull()) {
         QIcon *cachedIcon  = new QIcon(new QIconLoaderEngine(name));
         qtIconCache()->insert(name, cachedIcon);
         icon = *cachedIcon;
