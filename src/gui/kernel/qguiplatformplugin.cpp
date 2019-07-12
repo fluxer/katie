@@ -151,6 +151,12 @@ QString QGuiPlatformPlugin::systemIconThemeName()
 QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
 {
     QStringList paths;
+
+    // Add home directory first in search path
+    QDir homeDir(QDir::homePath() + QLatin1String("/.icons"));
+    if (homeDir.exists())
+        paths.append(homeDir.path());
+
     QString xdgDirString = QFile::decodeName(getenv("XDG_DATA_DIRS"));
     if (xdgDirString.isEmpty())
         xdgDirString = QLatin1String("/usr/local/share/:/usr/share/");
@@ -162,11 +168,6 @@ QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
         if (dir.exists())
             paths.append(dir.path() + QLatin1String("/icons"));
     }
-
-    // Add home directory first in search path
-    QDir homeDir(QDir::homePath() + QLatin1String("/.icons"));
-    if (homeDir.exists())
-        paths.prepend(homeDir.path());
 
     return paths;
 }
