@@ -84,11 +84,11 @@ for ktag in katiemap:
     qtotal += iqvalue
     print(' %s%s: %d/%d (%s)' % (ktag, ' ' * tagalign, ikvalue, iqvalue, winner))
 
-totalalign = (tagmax - 3)
+totalalign = (tagmax - 4)
 totalwinner = 'Katie'
 if ktotal > qtotal:
     totalwinner = 'Qt4'
 print('')
 print('*' * infomax)
-print('Total%s: %d/%d (%s)' % (' ' * totalalign, ktotal, qtotal, totalwinner))
+print(' Total%s: %d/%d (%s)' % (' ' * totalalign, ktotal, qtotal, totalwinner))
 print('*' * infomax)
