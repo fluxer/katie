@@ -284,15 +284,11 @@ bool QThreadPoolPrivate::waitForDone(int msecs)
 {
     QMutexLocker locker(&mutex);
     if (msecs < 0) {
-        while (!(queue.isEmpty() && activeThreads == 0))
+        if (!queue.isEmpty() || activeThreads != 0)
             noActiveThreads.wait(locker.mutex());
     } else {
-        QElapsedTimer timer;
-        timer.start();
-        int t;
-        while (!(queue.isEmpty() && activeThreads == 0) && 
-               ((t = msecs - timer.elapsed()) > 0))
-            noActiveThreads.wait(locker.mutex(), t);
+        if (!queue.isEmpty() || activeThreads != 0)
+            noActiveThreads.wait(locker.mutex(), msecs);
     }
     return queue.isEmpty() && activeThreads == 0;
 }
