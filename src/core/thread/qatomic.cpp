@@ -188,13 +188,7 @@
     Returns the value stored by the QAtomicInt object as an integer.
 */
 
-/*! \fn bool QAtomicInt::isReferenceCountingNative()
-
-    Returns true if reference counting is implemented using atomic
-    processor instructions, false otherwise.
-*/
-
-/*! \fn bool QAtomicInt::isReferenceCountingWaitFree()
+/*! \fn bool QAtomicInt::isLockFree()
 
     Returns true if atomic reference counting is wait-free, false
     otherwise.
@@ -222,17 +216,6 @@
     may not be re-ordered.
 
     \sa ref()
-*/
-
-/*! \fn bool QAtomicInt::isTestAndSetNative()
-
-    Returns true if test-and-set is implemented using atomic processor
-    instructions, false otherwise.
-*/
-
-/*! \fn bool QAtomicInt::isTestAndSetWaitFree()
-
-    Returns true if atomic test-and-set is wait-free, false otherwise.
 */
 
 /*! \fn bool QAtomicInt::testAndSetRelaxed(int expectedValue, int newValue)
@@ -294,18 +277,6 @@
     may not be re-ordered.
 */
 
-/*! \fn bool QAtomicInt::isFetchAndStoreNative()
-
-    Returns true if fetch-and-store is implemented using atomic
-    processor instructions, false otherwise.
-*/
-
-/*! \fn bool QAtomicInt::isFetchAndStoreWaitFree()
-
-    Returns true if atomic fetch-and-store is wait-free, false
-    otherwise.
-*/
-
 /*! \fn int QAtomicInt::fetchAndStoreRelaxed(int newValue)
 
     Atomic fetch-and-store.
@@ -355,18 +326,6 @@
     ordering}{memory ordering} semantics, which ensures that memory
     access before and after the atomic operation (in program order)
     may not be re-ordered.
-*/
-
-/*! \fn bool QAtomicInt::isFetchAndAddNative()
-
-    Returns true if fetch-and-add is implemented using atomic
-    processor instructions, false otherwise.
-*/
-
-/*! \fn bool QAtomicInt::isFetchAndAddWaitFree()
-
-    Returns true if atomic fetch-and-add is wait-free, false
-    otherwise.
 */
 
 /*! \fn int QAtomicInt::fetchAndAddRelaxed(int valueToAdd)
@@ -420,147 +379,6 @@
     may not be re-ordered.
 */
 
-/*!
-    \macro Q_ATOMIC_INT_REFERENCE_COUNTING_IS_ALWAYS_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined if and only if all generations of your
-    processor support atomic reference counting.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_REFERENCE_COUNTING_IS_SOMETIMES_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined when only certain generations of the
-    processor support atomic reference counting. Use the
-    QAtomicInt::isReferenceCountingNative() function to check what
-    your processor supports.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_REFERENCE_COUNTING_IS_NOT_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined when the hardware does not support atomic
-    reference counting.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_REFERENCE_COUNTING_IS_WAIT_FREE
-    \relates QAtomicInt
-
-    This macro is defined together with
-    Q_ATOMIC_INT_REFERENCE_COUNTING_IS_ALWAYS_NATIVE to indicate that
-    the reference counting is wait-free.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_TEST_AND_SET_IS_ALWAYS_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined if and only if your processor supports
-    atomic test-and-set on integers.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_TEST_AND_SET_IS_SOMETIMES_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined when only certain generations of the
-    processor support atomic test-and-set on integers. Use the
-    QAtomicInt::isTestAndSetNative() function to check what your
-    processor supports.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_TEST_AND_SET_IS_NOT_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined when the hardware does not support atomic
-    test-and-set on integers.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_TEST_AND_SET_IS_WAIT_FREE
-    \relates QAtomicInt
-
-    This macro is defined together with
-    Q_ATOMIC_INT_TEST_AND_SET_IS_ALWAYS_NATIVE to indicate that the
-    atomic test-and-set on integers is wait-free.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_FETCH_AND_STORE_IS_ALWAYS_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined if and only if your processor supports
-    atomic fetch-and-store on integers.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_FETCH_AND_STORE_IS_SOMETIMES_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined when only certain generations of the
-    processor support atomic fetch-and-store on integers. Use the
-    QAtomicInt::isFetchAndStoreNative() function to check what your
-    processor supports.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_FETCH_AND_STORE_IS_NOT_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined when the hardware does not support atomic
-    fetch-and-store on integers.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_FETCH_AND_STORE_IS_WAIT_FREE
-    \relates QAtomicInt
-
-    This macro is defined together with
-    Q_ATOMIC_INT_FETCH_AND_STORE_IS_ALWAYS_NATIVE to indicate that the
-    atomic fetch-and-store on integers is wait-free.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_FETCH_AND_ADD_IS_ALWAYS_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined if and only if your processor supports
-    atomic fetch-and-add on integers.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_FETCH_AND_ADD_IS_SOMETIMES_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined when only certain generations of the
-    processor support atomic fetch-and-add on integers. Use the
-    QAtomicInt::isFetchAndAddNative() function to check what your
-    processor supports.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_FETCH_AND_ADD_IS_NOT_NATIVE
-    \relates QAtomicInt
-
-    This macro is defined when the hardware does not support atomic
-    fetch-and-add on integers.
-*/
-
-/*!
-    \macro Q_ATOMIC_INT_FETCH_AND_ADD_IS_WAIT_FREE
-    \relates QAtomicInt
-
-    This macro is defined together with
-    Q_ATOMIC_INT_FETCH_AND_ADD_IS_ALWAYS_NATIVE to indicate that the
-    atomic fetch-and-add on integers is wait-free.
-*/
-
-
 
 
 /*!
@@ -583,8 +401,6 @@
 
     \section1 The Atomic API
 
-    \section2 Memory ordering
-
     QAtomicPointer provides several implementations of the atomic
     test-and-set, fetch-and-store, and fetch-and-add functions. Each
     implementation defines a memory ordering semantic that describes
@@ -593,120 +409,6 @@
     out-of-order execution and memory ordering, using the correct
     semantic is necessary to ensure that your application functions
     properly on all processors.
-
-    \list
-
-    \o Relaxed - memory ordering is unspecified, leaving the compiler
-    and processor to freely reorder memory accesses.
-
-    \o Acquire - memory access following the atomic operation (in
-    program order) may not be re-ordered before the atomic operation.
-
-    \o Release - memory access before the atomic operation (in program
-    order) may not be re-ordered after the atomic operation.
-
-    \o Ordered - the same Acquire and Release semantics combined.
-
-    \endlist
-
-    \section2 Test-and-set
-
-    If the current value of the QAtomicPointer is an expected value,
-    the test-and-set functions assign a new value to the
-    QAtomicPointer and return true. If values are \a not the same,
-    these functions do nothing and return false. This operation
-    equates to the following code:
-
-    \snippet doc/src/snippets/code/src_corelib_thread_qatomic.cpp 4
-
-    There are 4 test-and-set functions: testAndSetRelaxed(),
-    testAndSetAcquire(), testAndSetRelease(), and
-    testAndSetOrdered(). See above for an explanation of the different
-    memory ordering semantics.
-
-    \section2 Fetch-and-store
-
-    The atomic fetch-and-store functions read the current value of the
-    QAtomicPointer and then assign a new value, returning the original
-    value. This operation equates to the following code:
-
-    \snippet doc/src/snippets/code/src_corelib_thread_qatomic.cpp 5
-
-    There are 4 fetch-and-store functions: fetchAndStoreRelaxed(),
-    fetchAndStoreAcquire(), fetchAndStoreRelease(), and
-    fetchAndStoreOrdered(). See above for an explanation of the
-    different memory ordering semantics.
-
-    \section2 Fetch-and-add
-
-    The atomic fetch-and-add functions read the current value of the
-    QAtomicPointer and then add the given value to the current value,
-    returning the original value. This operation equates to the
-    following code:
-
-    \snippet doc/src/snippets/code/src_corelib_thread_qatomic.cpp 6
-
-    There are 4 fetch-and-add functions: fetchAndAddRelaxed(),
-    fetchAndAddAcquire(), fetchAndAddRelease(), and
-    fetchAndAddOrdered(). See above for an explanation of the
-    different memory ordering semantics.
-
-    \section1 Feature Tests for the Atomic API
-
-    Providing a platform-independent atomic API that works on all
-    processors is challenging. The API provided by QAtomicPointer is
-    guaranteed to work atomically on all processors. However, since
-    not all processors implement support for every operation provided
-    by QAtomicPointer, it is necessary to expose information about the
-    processor.
-
-    You can check at compile time which features are supported on your
-    hardware using various macros. These will tell you if your
-    hardware always, sometimes, or does not support a particular
-    operation. The macros have the form
-    Q_ATOMIC_POINTER_\e{OPERATION}_IS_\e{HOW}_NATIVE. \e{OPERATION} is
-    one of TEST_AND_SET, FETCH_AND_STORE, or FETCH_AND_ADD, and
-    \e{HOW} is one of ALWAYS, SOMETIMES, or NOT. There will always be
-    exactly one defined macro per operation. For example, if
-    Q_ATOMIC_POINTER_TEST_AND_SET_IS_ALWAYS_NATIVE is defined, neither
-    Q_ATOMIC_POINTER_TEST_AND_SET_IS_SOMETIMES_NATIVE nor
-    Q_ATOMIC_POINTER_TEST_AND_SET_IS_NOT_NATIVE will be defined.
-
-    An operation that completes in constant time is said to be
-    wait-free. Such operations are not implemented using locks or
-    loops of any kind. For atomic operations that are always
-    supported, and that are wait-free, Qt defines the
-    Q_ATOMIC_POINTER_\e{OPERATION}_IS_WAIT_FREE in addition to the
-    Q_ATOMIC_POINTER_\e{OPERATION}_IS_ALWAYS_NATIVE.
-
-    In cases where an atomic operation is only supported in newer
-    generations of the processor, QAtomicPointer also provides a way
-    to check at runtime what your hardware supports with the
-    isTestAndSetNative(), isFetchAndStoreNative(), and
-    isFetchAndAddNative() functions. Wait-free implementations can be
-    detected using the isTestAndSetWaitFree(),
-    isFetchAndStoreWaitFree(), and isFetchAndAddWaitFree() functions.
-
-    Below is a complete list of all feature macros for QAtomicPointer:
-
-    \list
-
-    \o Q_ATOMIC_POINTER_TEST_AND_SET_IS_ALWAYS_NATIVE
-    \o Q_ATOMIC_POINTER_TEST_AND_SET_IS_SOMETIMES_NATIVE
-    \o Q_ATOMIC_POINTER_TEST_AND_SET_IS_NOT_NATIVE
-    \o Q_ATOMIC_POINTER_TEST_AND_SET_IS_WAIT_FREE
-
-    \o Q_ATOMIC_POINTER_FETCH_AND_STORE_IS_ALWAYS_NATIVE
-    \o Q_ATOMIC_POINTER_FETCH_AND_STORE_IS_SOMETIMES_NATIVE
-    \o Q_ATOMIC_POINTER_FETCH_AND_STORE_IS_NOT_NATIVE
-    \o Q_ATOMIC_POINTER_FETCH_AND_STORE_IS_WAIT_FREE
-
-    \o Q_ATOMIC_POINTER_FETCH_AND_ADD_IS_ALWAYS_NATIVE
-    \o Q_ATOMIC_POINTER_FETCH_AND_ADD_IS_SOMETIMES_NATIVE
-    \o Q_ATOMIC_POINTER_FETCH_AND_ADD_IS_NOT_NATIVE
-    \o Q_ATOMIC_POINTER_FETCH_AND_ADD_IS_WAIT_FREE
-
-    \endlist
 
     \sa QAtomicInt
 */
@@ -761,15 +463,10 @@
 
 */
 
-/*! \fn bool QAtomicPointer::isTestAndSetNative()
+/*! \fn bool QAtomicPointer::isLockFree()
 
-    Returns true if test-and-set is implemented using atomic processor
-    instructions, false otherwise.
-*/
-
-/*! \fn bool QAtomicPointer::isTestAndSetWaitFree()
-
-    Returns true if atomic test-and-set is wait-free, false otherwise.
+    Returns true if atomic reference counting is wait-free, false
+    otherwise.
 */
 
 /*! \fn bool QAtomicPointer::testAndSetRelaxed(T *expectedValue, T *newValue)
@@ -831,12 +528,6 @@
     may not be re-ordered.
 */
 
-/*! \fn bool QAtomicPointer::isFetchAndStoreNative()
-
-    Returns true if fetch-and-store is implemented using atomic
-    processor instructions, false otherwise.
-*/
-
 /*! \fn bool QAtomicPointer::isFetchAndStoreWaitFree()
 
     Returns true if atomic fetch-and-store is wait-free, false
@@ -894,18 +585,6 @@
     may not be re-ordered.
 */
 
-/*! \fn bool QAtomicPointer::isFetchAndAddNative()
-
-    Returns true if fetch-and-add is implemented using atomic
-    processor instructions, false otherwise.
-*/
-
-/*! \fn bool QAtomicPointer::isFetchAndAddWaitFree()
-
-    Returns true if atomic fetch-and-add is wait-free, false
-    otherwise.
-*/
-
 /*! \fn T *QAtomicPointer::fetchAndAddRelaxed(qptrdiff valueToAdd)
 
     Atomic fetch-and-add.
@@ -955,109 +634,4 @@
     ordering}{memory ordering} semantics, which ensures that memory
     access before and after the atomic operation (in program order)
     may not be re-ordered.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_TEST_AND_SET_IS_ALWAYS_NATIVE
-    \relates QAtomicPointer
-
-    This macro is defined if and only if your processor supports
-    atomic test-and-set on pointers.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_TEST_AND_SET_IS_SOMETIMES_NATIVE
-    \relates QAtomicPointer
-
-    This macro is defined when only certain generations of the
-    processor support atomic test-and-set on pointers. Use the
-    QAtomicPointer::isTestAndSetNative() function to check what your
-    processor supports.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_TEST_AND_SET_IS_NOT_NATIVE
-    \relates QAtomicPointer
-
-    This macro is defined when the hardware does not support atomic
-    test-and-set on pointers.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_TEST_AND_SET_IS_WAIT_FREE
-    \relates QAtomicPointer
-
-    This macro is defined together with
-    Q_ATOMIC_POINTER_TEST_AND_SET_IS_ALWAYS_NATIVE to indicate that
-    the atomic test-and-set on pointers is wait-free.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_FETCH_AND_STORE_IS_ALWAYS_NATIVE
-    \relates QAtomicPointer
-
-    This macro is defined if and only if your processor supports
-    atomic fetch-and-store on pointers.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_FETCH_AND_STORE_IS_SOMETIMES_NATIVE
-    \relates QAtomicPointer
-
-    This macro is defined when only certain generations of the
-    processor support atomic fetch-and-store on pointers. Use the
-    QAtomicPointer::isFetchAndStoreNative() function to check what
-    your processor supports.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_FETCH_AND_STORE_IS_NOT_NATIVE
-    \relates QAtomicPointer
-
-    This macro is defined when the hardware does not support atomic
-    fetch-and-store on pointers.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_FETCH_AND_STORE_IS_WAIT_FREE
-    \relates QAtomicPointer
-
-    This macro is defined together with
-    Q_ATOMIC_POINTER_FETCH_AND_STORE_IS_ALWAYS_NATIVE to indicate that
-    the atomic fetch-and-store on pointers is wait-free.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_FETCH_AND_ADD_IS_ALWAYS_NATIVE
-    \relates QAtomicPointer
-
-    This macro is defined if and only if your processor supports
-    atomic fetch-and-add on pointers.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_FETCH_AND_ADD_IS_SOMETIMES_NATIVE
-    \relates QAtomicPointer
-
-    This macro is defined when only certain generations of the
-    processor support atomic fetch-and-add on pointers. Use the
-    QAtomicPointer::isFetchAndAddNative() function to check what your
-    processor supports.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_FETCH_AND_ADD_IS_NOT_NATIVE
-    \relates QAtomicPointer
-
-    This macro is defined when the hardware does not support atomic
-    fetch-and-add on pointers.
-*/
-
-/*!
-    \macro Q_ATOMIC_POINTER_FETCH_AND_ADD_IS_WAIT_FREE
-    \relates QAtomicPointer
-
-    This macro is defined together with
-    Q_ATOMIC_POINTER_FETCH_AND_ADD_IS_ALWAYS_NATIVE to indicate that
-    the atomic fetch-and-add on pointers is wait-free.
 */
