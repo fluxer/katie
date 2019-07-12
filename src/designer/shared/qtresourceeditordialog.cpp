@@ -79,7 +79,6 @@ static QString msgTagMismatch(const QString &got, const QString &expected)
     return QApplication::translate("QtResourceEditorDialog", "The file does not appear to be a resource file; element '%1' was found where '%2' was expected.").arg(got).arg(expected);
 }
 
-#warning below 3 data classes should be derived from QSharedData and made implicit shared class
 struct QtResourceFileData {
     QString path;
     QString alias;
