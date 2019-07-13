@@ -634,8 +634,8 @@ struct QGraphicsItemPaintInfo
     QStyleOptionGraphicsItem *option;
     QPainter *painter;
     qreal opacity;
-    quint32 wasDirtySceneTransform : 1;
-    quint32 drawItem : 1;
+    bool wasDirtySceneTransform;
+    bool drawItem;
 };
 
 #ifndef QT_NO_GRAPHICSEFFECT
