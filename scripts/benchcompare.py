@@ -1,23 +1,27 @@
 #!/usr/bin/python
 
-import sys, subprocess
+import os, sys, subprocess
 import xml.etree.ElementTree as ET
 
 if len(sys.argv) < 3:
     print("usage: <path to Katie test> <path to Qt4 test>")
     sys.exit(1)
 
+katietest = sys.argv[1]
+katietestdir = os.path.dirname(katietest)
 commonargs = ['-iterations', '100', '-tickcounter', '-xml']
-katieargs = [sys.argv[1], '-o', '/tmp/katie-bench.xml']
-qt4args = [sys.argv[2], '-o', '/tmp/qt4-bench.xml']
+katieargs = [katietest, '-o', '/tmp/katie-bench.xml']
+qt4test = sys.argv[2]
+qt4testdir = os.path.dirname(qt4test)
+qt4args = [qt4test, '-o', '/tmp/qt4-bench.xml']
 katieargs.extend(commonargs)
 qt4args.extend(commonargs)
 
 print('Running Katie benchmark..')
-subprocess.check_call(katieargs)
+subprocess.check_call(katieargs, cwd=katietestdir)
 
 print('Running Qt4 benchmark..')
-subprocess.check_call(qt4args)
+subprocess.check_call(qt4args, cwd=qt4testdir)
 
 print('Parsing benchmark results..')
 katiemap = {}
