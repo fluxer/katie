@@ -67,7 +67,7 @@ public:
     int maximum;
     int value;
     Qt::Alignment alignment;
-    uint textVisible : 1;
+    bool textVisible;
     int lastPaintedValue;
     Qt::Orientation orientation;
     bool invertedAppearance;
