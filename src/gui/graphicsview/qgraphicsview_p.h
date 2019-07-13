@@ -71,19 +71,19 @@ public:
 
     QGraphicsView::DragMode dragMode;
 
-    quint32 sceneInteractionAllowed : 1;
-    quint32 hasSceneRect : 1;
-    quint32 connectedToScene : 1;
-    quint32 useLastMouseEvent : 1;
-    quint32 identityMatrix : 1;
-    quint32 dirtyScroll : 1;
-    quint32 keepLastCenterPoint : 1;
-    quint32 transforming : 1;
-    quint32 handScrolling : 1;
-    quint32 mustAllocateStyleOptions : 1;
-    quint32 mustResizeBackgroundPixmap : 1;
-    quint32 fullUpdatePending : 1;
-    quint32 hasUpdateClip : 1;
+    bool sceneInteractionAllowed;
+    bool hasSceneRect;
+    bool connectedToScene;
+    bool useLastMouseEvent;
+    bool identityMatrix;
+    bool dirtyScroll;
+    bool keepLastCenterPoint;
+    bool transforming;
+    bool handScrolling;
+    bool mustAllocateStyleOptions;
+    bool mustResizeBackgroundPixmap;
+    bool fullUpdatePending;
+    bool hasUpdateClip;
 
     QRectF sceneRect;
     void updateLastCenterPoint();
