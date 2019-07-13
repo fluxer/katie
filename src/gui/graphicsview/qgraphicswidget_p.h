@@ -71,10 +71,10 @@ public:
           layout(Q_NULLPTR),
           inheritedPaletteResolveMask(0),
           inheritedFontResolveMask(0),
-          polished(0),
-          inSetGeometry(0),
-          inSetPos(0),
-          autoFillBackground(0),
+          polished(false),
+          inSetGeometry(false),
+          inSetPos(false),
+          autoFillBackground(false),
           refCountInvokeRelayout(0),
           focusPolicy(Qt::NoFocus),
           focusNext(Q_NULLPTR),
@@ -175,11 +175,11 @@ public:
     }
 
     std::bitset<Qt::WA_AttributeCount> attributes;
-    quint32 polished: 1;
-    quint32 inSetGeometry;
-    quint32 inSetPos ;
-    quint32 autoFillBackground;
-    quint32 refCountInvokeRelayout;
+    bool polished;
+    bool inSetGeometry;
+    bool inSetPos;
+    bool autoFillBackground;
+    int refCountInvokeRelayout;
 
     // Focus
     Qt::FocusPolicy focusPolicy;
@@ -192,8 +192,8 @@ public:
         QString windowTitle;
         QStyle::SubControl hoveredSubControl;
         Qt::WindowFrameSection grabbedSection;
-        uint buttonMouseOver : 1;
-        uint buttonSunken : 1;
+        bool buttonMouseOver;
+        bool buttonSunken;
         QRectF startGeometry;
         QRect buttonRect;
         WindowData()
