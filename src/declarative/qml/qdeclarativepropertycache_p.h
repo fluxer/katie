@@ -102,8 +102,8 @@ public:
             int notifyIndex; // When !IsFunction
             int relatedIndex; // When IsFunction
         };
-        uint overrideIndexIsProperty : 1;
-        signed int overrideIndex : 31;
+        bool overrideIndexIsProperty;
+        int overrideIndex;
         int revision; 
         int metaObjectOffset;
 
