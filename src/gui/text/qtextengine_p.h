@@ -353,8 +353,8 @@ struct Q_AUTOTEST_EXPORT QScriptLine
     // created and filled in QTextLine::layout_helper
     QScriptLine()
         : from(0), trailingSpaces(0), length(0),
-        justified(0), gridfitted(0),
-        hasTrailingSpaces(0), leadingIncluded(0) {}
+        justified(false), gridfitted(false),
+        hasTrailingSpaces(false), leadingIncluded(false) {}
     QFixed descent;
     QFixed ascent;
     QFixed leading;
@@ -364,12 +364,12 @@ struct Q_AUTOTEST_EXPORT QScriptLine
     QFixed textWidth;
     QFixed textAdvance;
     int from;
-    unsigned short trailingSpaces;
-    signed int length : 28;
-    mutable uint justified : 1;
-    mutable uint gridfitted : 1;
-    uint hasTrailingSpaces : 1;
-    uint leadingIncluded : 1;
+    ushort trailingSpaces;
+    int length;
+    mutable bool justified;
+    mutable bool gridfitted;
+    bool hasTrailingSpaces;
+    bool leadingIncluded;
     QFixed height() const { return (ascent + descent).ceil() + 1
                             + (leadingIncluded?  qMax(QFixed(),leading) : QFixed()); }
     QFixed base() const { return ascent
