@@ -5129,7 +5129,7 @@ QString &QString::vsprintf(const char* cformat, va_list ap)
 qint64 QString::toLongLong(bool *ok, int base) const
 {
 #if defined(QT_CHECK_RANGE)
-    if (base != 0 && (base < 2 || base > 36)) {
+    if (Q_UNLIKELY(base != 0 && (base < 2 || base > 36))) {
         qWarning("QString::toLongLong: Invalid base (%d)", base);
         base = 10;
     }
@@ -5170,7 +5170,7 @@ qint64 QString::toLongLong(bool *ok, int base) const
 quint64 QString::toULongLong(bool *ok, int base) const
 {
 #if defined(QT_CHECK_RANGE)
-    if (base != 0 && (base < 2 || base > 36)) {
+    if (Q_UNLIKELY(base != 0 && (base < 2 || base > 36))) {
         qWarning("QString::toULongLong: Invalid base (%d)", base);
         base = 10;
     }
@@ -5490,7 +5490,7 @@ float QString::toFloat(bool *ok) const
 QString &QString::setNum(qlonglong n, int base)
 {
 #if defined(QT_CHECK_RANGE)
-    if (base < 2 || base > 36) {
+    if (Q_UNLIKELY(base < 2 || base > 36)) {
         qWarning("QString::setNum: Invalid base (%d)", base);
         base = 10;
     }
@@ -5506,7 +5506,7 @@ QString &QString::setNum(qlonglong n, int base)
 QString &QString::setNum(qulonglong n, int base)
 {
 #if defined(QT_CHECK_RANGE)
-    if (base < 2 || base > 36) {
+    if (Q_UNLIKELY(base < 2 || base > 36)) {
         qWarning("QString::setNum: Invalid base (%d)", base);
         base = 10;
     }
@@ -6119,7 +6119,7 @@ QString QString::arg(const QString &a, int fieldWidth, const QChar &fillChar) co
 {
     ArgEscapeData d = findArgEscapes(*this);
 
-    if (d.occurrences == 0) {
+    if (Q_UNLIKELY(d.occurrences == 0)) {
         qWarning("QString::arg: Argument missing: %s, %s", toLocal8Bit().data(),
                   a.toLocal8Bit().data());
         return *this;
@@ -6304,7 +6304,7 @@ QString QString::arg(qlonglong a, int fieldWidth, int base, const QChar &fillCha
 {
     ArgEscapeData d = findArgEscapes(*this);
 
-    if (d.occurrences == 0) {
+    if (Q_UNLIKELY(d.occurrences == 0)) {
         qWarning() << "QString::arg: Argument missing:" << *this << ',' << a;
         return *this;
     }
@@ -6348,7 +6348,7 @@ QString QString::arg(qulonglong a, int fieldWidth, int base, const QChar &fillCh
 {
     ArgEscapeData d = findArgEscapes(*this);
 
-    if (d.occurrences == 0) {
+    if (Q_UNLIKELY(d.occurrences == 0)) {
         qWarning() << "QString::arg: Argument missing:" << *this << ',' << a;
         return *this;
     }
@@ -6460,7 +6460,7 @@ QString QString::arg(double a, int fieldWidth, char fmt, int prec, const QChar &
 {
     ArgEscapeData d = findArgEscapes(*this);
 
-    if (d.occurrences == 0) {
+    if (Q_UNLIKELY(d.occurrences == 0)) {
         qWarning("QString::arg: Argument missing: %s, %g", toLocal8Bit().data(), a);
         return *this;
     }
@@ -6566,7 +6566,7 @@ QString QString::multiArg(int numArgs, const QString **args) const
     }
 
     // sanity
-    if (numArgs > arg) {
+    if (Q_UNLIKELY(numArgs > arg)) {
         qWarning("QString::arg: %d argument(s) missing in %s", numArgs - arg, toLocal8Bit().data());
         numArgs = arg;
     }

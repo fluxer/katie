@@ -3830,7 +3830,7 @@ QDebug operator<<(QDebug dbg, const QDateTime &date)
 
 int QDateTimeParser::getDigit(const QDateTime &t, int index) const
 {
-    if (index < 0 || index >= sectionNodes.size()) {
+    if (Q_UNLIKELY(index < 0 || index >= sectionNodes.size())) {
 #ifndef QT_NO_DATESTRING
         qWarning("QDateTimeParser::getDigit() Internal error (%s %d)",
                  qPrintable(t.toString()), index);
@@ -3878,7 +3878,7 @@ int QDateTimeParser::getDigit(const QDateTime &t, int index) const
 
 bool QDateTimeParser::setDigit(QDateTime &v, int index, int newVal) const
 {
-    if (index < 0 || index >= sectionNodes.size()) {
+    if (Q_UNLIKELY(index < 0 || index >= sectionNodes.size())) {
 #ifndef QT_NO_DATESTRING
         qWarning("QDateTimeParser::setDigit() Internal error (%s %d %d)",
                  qPrintable(v.toString()), index, newVal);
@@ -4051,7 +4051,7 @@ int QDateTimeParser::sectionPos(const SectionNode &sn) const
     case LastSection: return displayText().size() - 1;
     default: break;
     }
-    if (sn.pos == -1) {
+    if (Q_UNLIKELY(sn.pos == -1)) {
         qWarning("QDateTimeParser::sectionPos Internal error (%s)", qPrintable(sectionName(sn.type)));
         return -1;
     }
@@ -4292,7 +4292,7 @@ int QDateTimeParser::sectionSize(int sectionIndex) const
     if (sectionIndex < 0)
         return 0;
 
-    if (sectionIndex >= sectionNodes.size()) {
+    if (Q_UNLIKELY(sectionIndex >= sectionNodes.size())) {
         qWarning("QDateTimeParser::sectionSize Internal error (%d)", sectionIndex);
         return -1;
     }
@@ -4436,7 +4436,7 @@ int QDateTimeParser::parseSection(const QDateTime &currentValue, int sectionInde
     state = Invalid;
     int num = 0;
     const SectionNode &sn = sectionNode(sectionIndex);
-    if ((sn.type & Internal) == Internal) {
+    if (Q_UNLIKELY((sn.type & Internal) == Internal)) {
         qWarning("QDateTimeParser::parseSection Internal error (%s %d)",
                  qPrintable(sectionName(sn.type)), sectionIndex);
         return -1;
@@ -4831,7 +4831,7 @@ end:
     if (newCurrentValue.isValid()) {
         if (context != FromString && state != Invalid && newCurrentValue < minimum) {
             const QLatin1Char space(' ');
-            if (newCurrentValue >= minimum)
+            if (Q_UNLIKELY(newCurrentValue >= minimum))
                 qWarning("QDateTimeParser::parse Internal error 3 (%s %s)",
                          qPrintable(newCurrentValue.toString()), qPrintable(minimum.toString()));
 
@@ -4911,7 +4911,7 @@ end:
                         }
 
                         const int min = getDigit(minimum, i);
-                        if (min == -1) {
+                        if (Q_UNLIKELY(min == -1)) {
                             qWarning("QDateTimeParser::parse Internal error 4 (%s)",
                                      qPrintable(sectionName(sn.type)));
                             state = Invalid;
@@ -4973,7 +4973,7 @@ int QDateTimeParser::findMonth(const QString &str1, int startMonth, int sectionI
     int bestCount = 0;
     if (!str1.isEmpty()) {
         const SectionNode &sn = sectionNode(sectionIndex);
-        if (sn.type != MonthSection) {
+        if (Q_UNLIKELY(sn.type != MonthSection)) {
             qWarning("QDateTimeParser::findMonth Internal error");
             return -1;
         }
@@ -5035,7 +5035,7 @@ int QDateTimeParser::findDay(const QString &str1, int startDay, int sectionIndex
     int bestCount = 0;
     if (!str1.isEmpty()) {
         const SectionNode &sn = sectionNode(sectionIndex);
-        if (!(sn.type & (DaySection|DayOfWeekSection))) {
+        if (Q_UNLIKELY(!(sn.type & (DaySection|DayOfWeekSection)))) {
             qWarning("QDateTimeParser::findDay Internal error");
             return -1;
         }
@@ -5103,7 +5103,7 @@ int QDateTimeParser::findDay(const QString &str1, int startDay, int sectionIndex
 int QDateTimeParser::findAmPm(QString &str, int index, int *used) const
 {
     const SectionNode &s = sectionNode(index);
-    if (s.type != AmPmSection) {
+    if (Q_UNLIKELY(s.type != AmPmSection)) {
         qWarning("QDateTimeParser::findAmPm Internal error");
         return -1;
     }

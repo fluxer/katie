@@ -393,7 +393,7 @@ int QTimeLine::duration() const
 void QTimeLine::setDuration(int duration)
 {
     Q_D(QTimeLine);
-    if (duration <= 0) {
+    if (Q_UNLIKELY(duration <= 0)) {
         qWarning("QTimeLine::setDuration: cannot set duration <= 0");
         return;
     }
@@ -667,7 +667,7 @@ qreal QTimeLine::valueForTime(int msec) const
 void QTimeLine::start()
 {
     Q_D(QTimeLine);
-    if (d->timerId) {
+    if (Q_UNLIKELY(d->timerId)) {
         qWarning("QTimeLine::start: already running");
         return;
     }
@@ -695,7 +695,7 @@ void QTimeLine::start()
 void QTimeLine::resume()
 {
     Q_D(QTimeLine);
-    if (d->timerId) {
+    if (Q_UNLIKELY(d->timerId)) {
         qWarning("QTimeLine::resume: already running");
         return;
     }
@@ -730,7 +730,7 @@ void QTimeLine::stop()
 void QTimeLine::setPaused(bool paused)
 {
     Q_D(QTimeLine);
-    if (d->state == NotRunning) {
+    if (Q_UNLIKELY(d->state == NotRunning)) {
         qWarning("QTimeLine::setPaused: Not running");
         return;
     }

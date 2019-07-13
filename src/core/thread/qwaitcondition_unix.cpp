@@ -131,7 +131,7 @@ bool QWaitCondition::wait(QMutex *mutex, unsigned long time)
 {
     if (!mutex)
         return false;
-    if (mutex->recursive) {
+    if (Q_UNLIKELY(mutex->recursive)) {
         qWarning("QWaitCondition: cannot wait on recursive mutexes");
         return false;
     }
@@ -151,7 +151,7 @@ bool QWaitCondition::wait(QReadWriteLock *readWriteLock, unsigned long time)
 {
     if (!readWriteLock || readWriteLock->d->accessCount == 0)
         return false;
-    if (readWriteLock->d->accessCount < -1) {
+    if (Q_UNLIKELY(readWriteLock->d->accessCount < -1)) {
         qWarning("QWaitCondition: cannot wait on QReadWriteLocks with recursive lockForWrite()");
         return false;
     }

@@ -771,7 +771,7 @@ void QEasingCurve::setType(Type type)
 {
     if (d_ptr->type == type)
         return;
-    if (type < Linear || type >= NCurveTypes - 1) {
+    if (Q_UNLIKELY(type < Linear || type >= NCurveTypes - 1)) {
         qWarning("QEasingCurve: Invalid curve type %d", type);
         return;
     }
@@ -792,7 +792,7 @@ void QEasingCurve::setType(Type type)
 */
 void QEasingCurve::setCustomType(EasingFunction func)
 {
-    if (!func) {
+    if (Q_UNLIKELY(!func)) {
         qWarning("Function pointer must not be null");
         return;
     }

@@ -352,7 +352,7 @@ void QFutureWatcherBase::connectNotify(const char * signal)
     if (qstrcmp(signal, SIGNAL(resultReadyAt(int))) == 0)
         d->resultAtConnected.ref();
 #ifndef QT_NO_DEBUG
-    if (qstrcmp(signal, SIGNAL(finished())) == 0) {
+    if (Q_UNLIKELY(qstrcmp(signal, SIGNAL(finished())) == 0)) {
         if (futureInterface().isRunning()) {
             //connections should be established before calling stFuture to avoid race.
             // (The future could finish before the connection is made.)

@@ -179,19 +179,19 @@ QStringList QCommandLineOption::names() const
 void QCommandLineOptionPrivate::setNames(const QStringList &nameList)
 {
    names.clear();
-   if (nameList.isEmpty()) {
+   if (Q_UNLIKELY(nameList.isEmpty())) {
       qWarning("QCommandLineOption: Options must have at least one name");
    }
    foreach (const QString & name, nameList) {
-      if (name.isEmpty()) {
+      if (Q_UNLIKELY(name.isEmpty())) {
          qWarning("QCommandLineOption: Option names cannot be empty");
       } else {
          const QChar c = name.at(0);
-         if (c == QLatin1Char('-')) {
+         if (Q_UNLIKELY(c == QLatin1Char('-'))) {
             qWarning("QCommandLineOption: Option names cannot start with a '-'");
-         } else if (c == QLatin1Char('/')) {
+         } else if (Q_UNLIKELY(c == QLatin1Char('/'))) {
             qWarning("QCommandLineOption: Option names cannot start with a '/'");
-         } else if (name.contains(QLatin1Char('='))) {
+         } else if (Q_UNLIKELY(name.contains(QLatin1Char('=')))) {
             qWarning("QCommandLineOption: Option names cannot contain a '='");
          } else {
             names.append(name);

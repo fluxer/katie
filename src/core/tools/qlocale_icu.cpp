@@ -53,7 +53,7 @@ bool qt_initIcu(const QString &localeString)
     UErrorCode icuStatus = U_ZERO_ERROR;
     icuCollator = ucol_open(localeString.toLatin1().constData(), &icuStatus);
 
-    if (!icuCollator) {
+    if (Q_UNLIKELY(!icuCollator)) {
         qWarning("Unable to open locale %s in ICU, error code %d", qPrintable(localeString), icuStatus);
         return false;
     }

@@ -394,7 +394,7 @@ void QThread::start(Priority priority)
     default:
         {
             int sched_policy;
-            if (pthread_attr_getschedpolicy(&attr, &sched_policy) != 0) {
+            if (Q_UNLIKELY(pthread_attr_getschedpolicy(&attr, &sched_policy) != 0)) {
                 // failed to get the scheduling policy, don't bother
                 // setting the priority
                 qWarning("QThread::start: Cannot determine default scheduler policy");
@@ -402,7 +402,7 @@ void QThread::start(Priority priority)
             }
 
             int prio;
-            if (!calculateUnixPriority(priority, &sched_policy, &prio)) {
+            if (Q_UNLIKELY(!calculateUnixPriority(priority, &sched_policy, &prio))) {
                 // failed to get the scheduling parameters, don't
                 // bother setting the priority
                 qWarning("QThread::start: Cannot determine scheduler priority range");
@@ -433,7 +433,7 @@ void QThread::start(Priority priority)
         int code = ENOSYS; // stack size not supported, automatically fail
 #endif // _POSIX_THREAD_ATTR_STACKSIZE
 
-        if (code) {
+        if (Q_UNLIKELY(code)) {
             qWarning("QThread::start: Thread stack size error: %s",
                      qPrintable(qt_error_string(code)));
 
@@ -457,7 +457,7 @@ void QThread::start(Priority priority)
 
     pthread_attr_destroy(&attr);
 
-    if (code) {
+    if (Q_UNLIKELY(code)) {
         qWarning("QThread::start: Thread creation error: %s", qPrintable(qt_error_string(code)));
 
         d->running = false;
@@ -475,7 +475,7 @@ void QThread::terminate()
         return;
 
     int code = pthread_cancel(d->thread_id);
-    if (code) {
+    if (Q_UNLIKELY(code)) {
         qWarning("QThread::start: Thread termination error: %s",
                  qPrintable(qt_error_string((code))));
     } else {
@@ -488,7 +488,7 @@ bool QThread::wait(unsigned long time)
     Q_D(QThread);
     QMutexLocker locker(&d->mutex);
 
-    if (d->thread_id == pthread_self()) {
+    if (Q_UNLIKELY(d->thread_id == pthread_self())) {
         qWarning("QThread::wait: Thread tried to wait on itself");
         return false;
     }
@@ -517,7 +517,7 @@ void QThread::setPriority(Priority priority)
 {
     Q_D(QThread);
     QMutexLocker locker(&d->mutex);
-    if (!d->running) {
+    if (Q_UNLIKELY(!d->running)) {
         qWarning("QThread::setPriority: Cannot set priority, thread is not running");
         return;
     }
@@ -530,7 +530,7 @@ void QThread::setPriority(Priority priority)
     int sched_policy;
     sched_param param;
 
-    if (pthread_getschedparam(d->thread_id, &sched_policy, &param) != 0) {
+    if (Q_UNLIKELY(pthread_getschedparam(d->thread_id, &sched_policy, &param) != 0)) {
         // failed to get the scheduling policy, don't bother setting
         // the priority
         qWarning("QThread::setPriority: Cannot get scheduler parameters");
@@ -538,7 +538,7 @@ void QThread::setPriority(Priority priority)
     }
 
     int prio;
-    if (!calculateUnixPriority(priority, &sched_policy, &prio)) {
+    if (Q_UNLIKELY(!calculateUnixPriority(priority, &sched_policy, &prio))) {
         // failed to get the scheduling parameters, don't
         // bother setting the priority
         qWarning("QThread::setPriority: Cannot determine scheduler priority range");

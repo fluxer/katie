@@ -387,7 +387,7 @@ QThread::~QThread()
         wait();
         locker.relock();
     }
-    if (d->running && !d->finished && !d->data->isAdopted)
+    if (Q_UNLIKELY(d->running && !d->finished && !d->data->isAdopted))
         qWarning("QThread: Destroyed while thread is still running");
 
     d->data->thread = 0;
