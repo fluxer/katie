@@ -173,10 +173,10 @@ public:
     QRectF bounds;
     QRectF controlBounds;
 
-    uint require_moveTo : 1;
-    uint dirtyBounds : 1;
-    uint dirtyControlBounds : 1;
-    uint convex : 1;
+    bool require_moveTo;
+    bool dirtyBounds;
+    bool dirtyControlBounds;
+    bool convex;
 
     QVectorPathConverter *pathConverter;
 };
