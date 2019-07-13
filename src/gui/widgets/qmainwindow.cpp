@@ -83,8 +83,8 @@ public:
     QCursor separatorCursor(const QList<int> &path) const;
     void adjustCursor(const QPoint &pos);
     QCursor oldCursor;
-    uint hasOldCursor : 1;
-    uint cursorAdjusted : 1;
+    bool hasOldCursor;
+    bool cursorAdjusted;
 #endif
 
     static inline QMainWindowLayout *mainWindowLayout(const QMainWindow *mainWindow)
