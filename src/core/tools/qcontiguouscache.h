@@ -52,7 +52,7 @@ struct Q_CORE_EXPORT QContiguousCacheData
     int count;
     int start;
     int offset;
-    uint sharable : 1;
+    bool sharable;
 
 #ifdef QT_QCONTIGUOUSCACHE_DEBUG
     void dump() const;
