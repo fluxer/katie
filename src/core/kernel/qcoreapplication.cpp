@@ -225,7 +225,7 @@ struct QCoreApplicationData {
 Q_GLOBAL_STATIC(QCoreApplicationData, coreappdata)
 
 QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
-    : QObjectPrivate(), argc(aargc), argv(aargv), application_type(0), eventFilter(0),
+    : QObjectPrivate(), argc(aargc), argv(aargv), eventFilter(0),
       in_exec(false), aboutToQuitEmitted(false)
 {
     static const char *const empty = "";

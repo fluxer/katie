@@ -111,7 +111,7 @@ QT_BEGIN_NAMESPACE
 
 Q_CORE_EXPORT void qt_call_post_routines();
 
-QApplication::Type qt_appType=QApplication::Tty;
+QApplication::Type qt_appType = QApplication::Tty;
 QApplicationPrivate *QApplicationPrivate::self = 0;
 
 bool QApplicationPrivate::quitOnLastWindowClosed = true;
@@ -120,7 +120,6 @@ bool QApplicationPrivate::autoSipEnabled = true;
 QApplicationPrivate::QApplicationPrivate(int &argc, char **argv, QApplication::Type type)
     : QCoreApplicationPrivate(argc, argv)
 {
-    application_type = type;
     qt_appType = type;
 
 #ifndef QT_NO_SESSIONMANAGER

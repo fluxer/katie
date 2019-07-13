@@ -94,7 +94,6 @@ public:
 #ifndef QT_NO_TRANSLATION
     QTranslatorList translators;
 #endif
-    uint application_type;
 
     QCoreApplication::EventFilter eventFilter;
 
