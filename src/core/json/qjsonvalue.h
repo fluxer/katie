@@ -208,8 +208,8 @@ class Q_CORE_EXPORT QJsonValueRef
       QJsonArray *a;
       QJsonObject *o;
    };
-   uint is_object : 1;
-   uint index : 31;
+   bool is_object;
+   int index;
 };
 
 class Q_CORE_EXPORT QJsonValueRefPtr {
