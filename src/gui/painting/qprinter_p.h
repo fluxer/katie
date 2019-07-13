@@ -114,12 +114,12 @@ public:
     QAbstractPrintDialog::PrintRange printRange;
     int minPage, maxPage, fromPage, toPage;
 
-    uint use_default_engine : 1;
-    uint had_default_engines : 1;
+    bool use_default_engine;
+    bool had_default_engines;
 
-    uint validPrinter : 1;
-    uint hasCustomPageMargins : 1;
-    uint hasUserSetPageSize : 1;
+    bool validPrinter;
+    bool hasCustomPageMargins;
+    bool hasUserSetPageSize;
 
     // Used to remember which properties have been manually set by the user.
     QList<QPrintEngine::PrintEnginePropertyKey> manualSetList;
