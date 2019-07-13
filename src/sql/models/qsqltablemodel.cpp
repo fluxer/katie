@@ -953,7 +953,7 @@ void QSqlTableModel::setPrimaryKey(const QSqlIndex &key)
 QSqlDatabase QSqlTableModel::database() const
 {
     Q_D(const QSqlTableModel);
-     return d->db;
+    return d->db;
 }
 
 /*!
@@ -996,7 +996,7 @@ QString QSqlTableModel::orderByClause() const
     QSqlField f = d->rec.field(d->sortColumn);
     if (!f.isValid())
         return s;
-        
+
     QString table = d->tableName;
     //we can safely escape the field because it would have been obtained from the database
     //and have the correct case
