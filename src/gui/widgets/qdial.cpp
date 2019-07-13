@@ -76,9 +76,9 @@ public:
     }
 
     qreal target;
-    uint showNotches : 1;
-    uint wrapping : 1;
-    uint doNotEmit : 1;
+    bool showNotches;
+    bool wrapping;
+    bool doNotEmit;
 
     int valueFromPoint(const QPoint &) const;
     double angle(const QPoint &, const QPoint &) const;
