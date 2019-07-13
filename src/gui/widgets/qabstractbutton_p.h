@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include "QtCore/qbasictimer.h"
+#include "qbasictimer.h"
 #include "qwidget_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -63,13 +63,13 @@ public:
     QKeySequence shortcut;
     int shortcutId;
 #endif
-    uint checkable :1;
-    uint checked :1;
-    uint autoRepeat :1;
-    uint autoExclusive :1;
-    uint down :1;
-    uint blockRefresh :1;
-    uint pressed : 1;
+    bool checkable;
+    bool checked;
+    bool autoRepeat;
+    bool autoExclusive;
+    bool down;
+    bool blockRefresh;
+    bool pressed;
 
 #ifndef QT_NO_BUTTONGROUP
     QButtonGroup* group;

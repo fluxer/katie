@@ -54,12 +54,12 @@ class QActionGroupPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QActionGroup)
 public:
-    QActionGroupPrivate() : exclusive(1), enabled(1), visible(1)  { }
+    QActionGroupPrivate() : exclusive(true), enabled(true), visible(true)  { }
     QList<QAction *> actions;
     QPointer<QAction> current;
-    uint exclusive : 1;
-    uint enabled : 1;
-    uint visible : 1;
+    bool exclusive;
+    bool enabled;
+    bool visible;
 
 private:
     void _q_actionTriggered();  //private slot
@@ -295,8 +295,8 @@ void QActionGroup::setEnabled(bool b)
 {
     Q_D(QActionGroup);
     d->enabled = b;
-    for(QList<QAction*>::const_iterator it = d->actions.constBegin(); it != d->actions.constEnd(); ++it) {
-        (*it)->setEnabled(b);
+    foreach(QAction* it, d->actions) {
+        it->setEnabled(b);
     }
 }
 
@@ -329,8 +329,8 @@ void QActionGroup::setVisible(bool b)
 {
     Q_D(QActionGroup);
     d->visible = b;
-    for(QList<QAction*>::Iterator it = d->actions.begin(); it != d->actions.end(); ++it) {
-        (*it)->setVisible(b);
+    foreach(QAction* it, d->actions) {
+        it->setVisible(b);
     }
 }
 
