@@ -9456,7 +9456,7 @@ class QGraphicsTextItemPrivate
 {
 public:
     QGraphicsTextItemPrivate()
-        : control(0), pageNumber(0), useDefaultImpl(false), tabChangesFocus(false), clickCausedFocus(0)
+        : control(0), pageNumber(0), useDefaultImpl(false), tabChangesFocus(false), clickCausedFocus(false)
     { }
 
     mutable QTextControl *control;
@@ -9477,7 +9477,7 @@ public:
     bool useDefaultImpl;
     bool tabChangesFocus;
 
-    uint clickCausedFocus : 1;
+    bool clickCausedFocus;
 
     QGraphicsTextItem *qq;
 };
@@ -9856,7 +9856,7 @@ void QGraphicsTextItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if (widget && (dd->control->textInteractionFlags() & Qt::TextEditable) && boundingRect().contains(event->pos())) {
         qt_widget_private(widget)->handleSoftwareInputPanel(event->button(), dd->clickCausedFocus);
     }
-    dd->clickCausedFocus = 0;
+    dd->clickCausedFocus = false;
     dd->sendControlEvent(event);
 }
 
@@ -9909,7 +9909,7 @@ void QGraphicsTextItem::focusInEvent(QFocusEvent *event)
 {
     dd->sendControlEvent(event);
     if (event->reason() == Qt::MouseFocusReason) {
-        dd->clickCausedFocus = 1;
+        dd->clickCausedFocus = true;
     }
     update();
 }
