@@ -53,7 +53,7 @@ public:
     QScriptEngine *engine;
     QScriptDeclarativeClass *q_ptr;
     QScriptContext *context;
-    bool supportsCall:1;
+    bool supportsCall;
 
     static QScriptDeclarativeClassPrivate *get(QScriptDeclarativeClass *c) {
         return c->d_ptr;
