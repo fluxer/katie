@@ -103,36 +103,36 @@ QSvgFillStyle::QSvgFillStyle()
     , m_oldFillRule(Qt::WindingFill)
     , m_fillOpacity(1.0)
     , m_oldFillOpacity(0)
-    , m_gradientResolved(1)
-    , m_fillRuleSet(0)
-    , m_fillOpacitySet(0)
-    , m_fillSet(0)
+    , m_gradientResolved(true)
+    , m_fillRuleSet(false)
+    , m_fillOpacitySet(false)
+    , m_fillSet(false)
 {
 }
 
 void QSvgFillStyle::setFillRule(Qt::FillRule f)
 {
-    m_fillRuleSet = 1;
+    m_fillRuleSet = true;
     m_fillRule = f;
 }
 
 void QSvgFillStyle::setFillOpacity(qreal opacity)
 {
-    m_fillOpacitySet = 1;
+    m_fillOpacitySet = true;
     m_fillOpacity = opacity;
 }
 
 void QSvgFillStyle::setFillStyle(QSvgFillStyleProperty* style)
 {
     m_style = style;
-    m_fillSet = 1;
+    m_fillSet = true;
 }
 
 void QSvgFillStyle::setBrush(QBrush brush)
 {
     m_fill = brush;
     m_style = 0;
-    m_fillSet = 1;
+    m_fillSet = true;
 }
 
 void QSvgFillStyle::apply(QPainter *p, const QSvgNode *, QSvgExtraStates &states)
@@ -182,24 +182,24 @@ void QSvgViewportFillStyle::revert(QPainter *p, QSvgExtraStates &)
 QSvgFontStyle::QSvgFontStyle(QSvgFont *font, QSvgTinyDocument *doc)
     : m_svgFont(font)
     , m_doc(doc)
-    , m_familySet(0)
-    , m_sizeSet(0)
-    , m_styleSet(0)
-    , m_variantSet(0)
-    , m_weightSet(0)
-    , m_textAnchorSet(0)
+    , m_familySet(false)
+    , m_sizeSet(false)
+    , m_styleSet(false)
+    , m_variantSet(false)
+    , m_weightSet(false)
+    , m_textAnchorSet(false)
 {
 }
 
 QSvgFontStyle::QSvgFontStyle()
     : m_svgFont(0)
     , m_doc(0)
-    , m_familySet(0)
-    , m_sizeSet(0)
-    , m_styleSet(0)
-    , m_variantSet(0)
-    , m_weightSet(0)
-    , m_textAnchorSet(0)
+    , m_familySet(false)
+    , m_sizeSet(false)
+    , m_styleSet(false)
+    , m_variantSet(false)
+    , m_weightSet(false)
+    , m_textAnchorSet(false)
 {
 }
 
@@ -276,18 +276,18 @@ QSvgStrokeStyle::QSvgStrokeStyle()
     , m_strokeDashOffset(0)
     , m_oldStrokeDashOffset(0)
     , m_style(0)
-    , m_gradientResolved(1)
-    , m_vectorEffect(0)
-    , m_oldVectorEffect(0)
-    , m_strokeSet(0)
-    , m_strokeDashArraySet(0)
-    , m_strokeDashOffsetSet(0)
-    , m_strokeLineCapSet(0)
-    , m_strokeLineJoinSet(0)
-    , m_strokeMiterLimitSet(0)
-    , m_strokeOpacitySet(0)
-    , m_strokeWidthSet(0)
-    , m_vectorEffectSet(0)
+    , m_gradientResolved(true)
+    , m_vectorEffect(false)
+    , m_oldVectorEffect(false)
+    , m_strokeSet(false)
+    , m_strokeDashArraySet(false)
+    , m_strokeDashOffsetSet(false)
+    , m_strokeLineCapSet(false)
+    , m_strokeLineJoinSet(false)
+    , m_strokeMiterLimitSet(false)
+    , m_strokeOpacitySet(false)
+    , m_strokeWidthSet(false)
+    , m_vectorEffectSet(false)
 {
 }
 
@@ -398,7 +398,7 @@ void QSvgStrokeStyle::setDashArray(const QVector<qreal> &dashes)
     } else {
         m_stroke.setDashPattern(dashes);
     }
-    m_strokeDashArraySet = 1;
+    m_strokeDashArraySet = true;
 }
 
 QSvgSolidColorStyle::QSvgSolidColorStyle(const QColor &color)

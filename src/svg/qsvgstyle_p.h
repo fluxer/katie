@@ -287,11 +287,11 @@ private:
     qreal m_oldFillOpacity;
 
     QString m_gradientId;
-    uint m_gradientResolved : 1;
+    bool m_gradientResolved;
 
-    uint m_fillRuleSet : 1;
-    uint m_fillOpacitySet : 1;
-    uint m_fillSet : 1;
+    bool m_fillRuleSet;
+    bool m_fillOpacitySet;
+    bool m_fillSet;
 };
 
 class QSvgViewportFillStyle : public QSvgStyleProperty
@@ -331,30 +331,30 @@ public:
         // Store the _pixel_ size in the font. Since QFont::setPixelSize() only takes an int, call
         // QFont::SetPointSize() instead. Set proper font size just before rendering.
         m_qfont.setPointSizeF(size);
-        m_sizeSet = 1;
+        m_sizeSet = true;
     }
 
     void setTextAnchor(Qt::Alignment anchor)
     {
         m_textAnchor = anchor;
-        m_textAnchorSet = 1;
+        m_textAnchorSet = true;
     }
 
     void setFamily(const QString &family)
     {
         m_qfont.setFamily(family);
-        m_familySet = 1;
+        m_familySet = true;
     }
 
     void setStyle(QFont::Style fontStyle) {
         m_qfont.setStyle(fontStyle);
-        m_styleSet = 1;
+        m_styleSet = true;
     }
 
     void setVariant(QFont::Capitalization fontVariant)
     {
         m_qfont.setCapitalization(fontVariant);
-        m_variantSet = 1;
+        m_variantSet = true;
     }
 
     static int SVGToQtWeight(int weight);
@@ -362,7 +362,7 @@ public:
     void setWeight(int weight)
     {
         m_weight = weight;
-        m_weightSet = 1;
+        m_weightSet = true;
     }
 
     QSvgFont * svgFont() const
@@ -390,12 +390,12 @@ private:
     Qt::Alignment m_oldTextAnchor;
     int m_oldWeight;
 
-    uint m_familySet : 1;
-    uint m_sizeSet : 1;
-    uint m_styleSet : 1;
-    uint m_variantSet : 1;
-    uint m_weightSet : 1;
-    uint m_textAnchorSet : 1;
+    bool m_familySet;
+    bool m_sizeSet;
+    bool m_styleSet;
+    bool m_variantSet;
+    bool m_weightSet;
+    bool m_textAnchorSet;
 };
 
 class QSvgStrokeStyle : public QSvgStyleProperty
@@ -410,13 +410,13 @@ public:
     {
         m_stroke.setBrush(brush);
         m_style = 0;
-        m_strokeSet = 1;
+        m_strokeSet = true;
     }
 
     void setStyle(QSvgFillStyleProperty *style)
     {
         m_style = style;
-        m_strokeSet = 1;
+        m_strokeSet = true;
     }
 
     void setDashArray(const QVector<qreal> &dashes);
@@ -424,43 +424,43 @@ public:
     void setDashArrayNone()
     {
         m_stroke.setStyle(Qt::SolidLine);
-        m_strokeDashArraySet = 1;
+        m_strokeDashArraySet = true;
     }
 
     void setDashOffset(qreal offset)
     {
         m_strokeDashOffset = offset;
-        m_strokeDashOffsetSet = 1;
+        m_strokeDashOffsetSet = true;
     }
 
     void setLineCap(Qt::PenCapStyle cap)
     {
         m_stroke.setCapStyle(cap);
-        m_strokeLineCapSet = 1;
+        m_strokeLineCapSet = true;
     }
 
     void setLineJoin(Qt::PenJoinStyle join)
     {
         m_stroke.setJoinStyle(join);
-        m_strokeLineJoinSet = 1;
+        m_strokeLineJoinSet = true;
     }
 
     void setMiterLimit(qreal limit)
     {
         m_stroke.setMiterLimit(limit);
-        m_strokeMiterLimitSet = 1;
+        m_strokeMiterLimitSet = true;
     }
 
     void setOpacity(qreal opacity)
     {
         m_strokeOpacity = opacity;
-        m_strokeOpacitySet = 1;
+        m_strokeOpacitySet = true;
     }
 
     void setWidth(qreal width)
     {
         m_stroke.setWidthF(width);
-        m_strokeWidthSet = 1;
+        m_strokeWidthSet = true;
         Q_ASSERT(!m_strokeDashArraySet); // set width before dash array.
     }
 
@@ -472,7 +472,7 @@ public:
     void setVectorEffect(bool nonScalingStroke)
     {
         m_vectorEffect = nonScalingStroke;
-        m_vectorEffectSet = 1;
+        m_vectorEffectSet = true;
     }
 
     QSvgFillStyleProperty* style() const
@@ -523,19 +523,19 @@ private:
 
     QSvgFillStyleProperty *m_style;
     QString m_gradientId;
-    uint m_gradientResolved : 1;
-    uint m_vectorEffect : 1;
-    uint m_oldVectorEffect : 1;
+    bool m_gradientResolved;
+    bool m_vectorEffect;
+    bool m_oldVectorEffect;
 
-    uint m_strokeSet : 1;
-    uint m_strokeDashArraySet : 1;
-    uint m_strokeDashOffsetSet : 1;
-    uint m_strokeLineCapSet : 1;
-    uint m_strokeLineJoinSet : 1;
-    uint m_strokeMiterLimitSet : 1;
-    uint m_strokeOpacitySet : 1;
-    uint m_strokeWidthSet : 1;
-    uint m_vectorEffectSet : 1;
+    bool m_strokeSet;
+    bool m_strokeDashArraySet;
+    bool m_strokeDashOffsetSet;
+    bool m_strokeLineCapSet;
+    bool m_strokeLineJoinSet;
+    bool m_strokeMiterLimitSet;
+    bool m_strokeOpacitySet;
+    bool m_strokeWidthSet;
+    bool m_vectorEffectSet;
 };
 
 class QSvgSolidColorStyle : public QSvgFillStyleProperty
