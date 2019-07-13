@@ -390,10 +390,10 @@ int QTextTablePrivate::findCellIndex(int fragment) const
 {
     QFragmentFindHelper helper(pieceTable->fragmentMap().position(fragment),
                               pieceTable->fragmentMap());
-    QList<int>::ConstIterator it = qBinaryFind(cells.begin(), cells.end(), helper);
-    if (it == cells.end())
+    QList<int>::const_iterator it = qBinaryFind(cells.constBegin(), cells.constEnd(), helper);
+    if (it == cells.constEnd())
         return -1;
-    return it - cells.begin();
+    return it - cells.constBegin();
 }
 
 void QTextTablePrivate::fragmentAdded(const QChar &type, uint fragment)
@@ -405,7 +405,7 @@ void QTextTablePrivate::fragmentAdded(const QChar &type, uint fragment)
         Q_ASSERT(cells.indexOf(fragment) == -1);
         const uint pos = pieceTable->fragmentMap().position(fragment);
         QFragmentFindHelper helper(pos, pieceTable->fragmentMap());
-        QList<int>::Iterator it = qLowerBound(cells.begin(), cells.end(), helper);
+        QList<int>::iterator it = qLowerBound(cells.begin(), cells.end(), helper);
         cells.insert(it, fragment);
         if (!fragment_start || pos < pieceTable->fragmentMap().position(fragment_start))
             fragment_start = fragment;
@@ -1044,10 +1044,10 @@ void QTextTable::mergeCells(int row, int column, int numRows, int numCols)
 
     // find the position at which to insert the contents of the merged cells
     QFragmentFindHelper helper(origCellPosition, p->fragmentMap());
-    QList<int>::Iterator it = qBinaryFind(d->cells.begin(), d->cells.end(), helper);
-    Q_ASSERT(it != d->cells.end());
+    QList<int>::const_iterator it = qBinaryFind(d->cells.constBegin(), d->cells.constEnd(), helper);
+    Q_ASSERT(it != d->cells.constEnd());
     Q_ASSERT(*it == cellFragment);
-    const int insertCellIndex = it - d->cells.begin();
+    const int insertCellIndex = it - d->cells.constBegin();
     int insertFragment = d->cells.value(insertCellIndex + 1, d->fragment_end);
     uint insertPos = p->fragmentMap().position(insertFragment);
 

@@ -307,7 +307,7 @@ void QVariantAnimationPrivate::setCurrentValueForProgress(const qreal progress)
 QVariant QVariantAnimationPrivate::valueAt(qreal step) const
 {
     QVariantAnimation::KeyValues::const_iterator result =
-        qBinaryFind(keyValues.begin(), keyValues.end(), qMakePair(step, QVariant()), animationValueLessThan);
+        qBinaryFind(keyValues.constBegin(), keyValues.constEnd(), qMakePair(step, QVariant()), animationValueLessThan);
     if (result != keyValues.constEnd())
         return result->second;
 
@@ -323,7 +323,8 @@ void QVariantAnimationPrivate::setValueAt(qreal step, const QVariant &value)
 
     QVariantAnimation::KeyValue pair(step, value);
 
-    QVariantAnimation::KeyValues::iterator result = qLowerBound(keyValues.begin(), keyValues.end(), pair, animationValueLessThan);
+    QVariantAnimation::KeyValues::iterator result =
+        qLowerBound(keyValues.begin(), keyValues.end(), pair, animationValueLessThan);
     if (result == keyValues.end() || result->first != step) {
         keyValues.insert(result, pair);
     } else {
