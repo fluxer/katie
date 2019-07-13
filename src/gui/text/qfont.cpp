@@ -1516,7 +1516,7 @@ void QFont::setWordSpacing(qreal spacing)
 void QFont::setCapitalization(Capitalization caps)
 {
     if ((resolve_mask & QFont::CapitalizationResolved) &&
-        capitalization() == caps)
+        d->capital == caps)
         return;
 
     detach();
