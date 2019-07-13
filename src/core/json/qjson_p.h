@@ -774,8 +774,8 @@ class Data
       char *rawData;
       Header *header;
    };
-   uint compactionCounter : 31;
-   uint ownsData : 1;
+   uint compactionCounter;
+   bool ownsData;
 
    inline Data(char *raw, int a)
       : alloc(a), rawData(raw), compactionCounter(0), ownsData(true) {
