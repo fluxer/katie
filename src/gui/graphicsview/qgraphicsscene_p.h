@@ -90,22 +90,22 @@ public:
 
     QRectF sceneRect;
 
-    quint32 hasSceneRect : 1;
-    quint32 dirtyGrowingItemsBoundingRect : 1;
-    quint32 updateAll : 1;
-    quint32 calledEmitUpdated : 1;
-    quint32 processDirtyItemsEmitted : 1;
-    quint32 needSortTopLevelItems : 1;
-    quint32 holesInTopLevelSiblingIndex : 1;
-    quint32 topLevelSequentialOrdering : 1;
-    quint32 scenePosDescendantsUpdatePending : 1;
-    quint32 stickyFocus : 1;
-    quint32 hasFocus : 1;
-    quint32 lastMouseGrabberItemHasImplicitMouseGrab : 1;
-    quint32 allItemsIgnoreHoverEvents : 1;
-    quint32 allItemsUseDefaultCursor : 1;
-    quint32 painterStateProtection : 1;
-    quint32 allItemsIgnoreTouchEvents : 1;
+    bool hasSceneRect;
+    bool dirtyGrowingItemsBoundingRect;
+    bool updateAll;
+    bool calledEmitUpdated;
+    bool processDirtyItemsEmitted;
+    bool needSortTopLevelItems;
+    bool holesInTopLevelSiblingIndex;
+    bool topLevelSequentialOrdering;
+    bool scenePosDescendantsUpdatePending;
+    bool stickyFocus;
+    bool hasFocus;
+    bool lastMouseGrabberItemHasImplicitMouseGrab;
+    bool allItemsIgnoreHoverEvents;
+    bool allItemsUseDefaultCursor;
+    bool painterStateProtection;
+    bool allItemsIgnoreTouchEvents;
 
     QRectF growingItemsBoundingRect;
 
