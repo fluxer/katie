@@ -59,7 +59,7 @@ class QRadioButtonPrivate : public QAbstractButtonPrivate
 public:
     QRadioButtonPrivate() : QAbstractButtonPrivate(QSizePolicy::RadioButton), hovering(true) {}
     void init();
-    uint hovering : 1;
+    bool hovering;
 };
 
 /*
