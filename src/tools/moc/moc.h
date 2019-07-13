@@ -51,8 +51,8 @@ struct Type
     inline Type() : isVolatile(false), isScoped(false), firstToken(NOTOKEN), referenceType(NoReference) {}
     inline explicit Type(const QByteArray &_name) : name(_name), isVolatile(false), isScoped(false), firstToken(NOTOKEN), referenceType(NoReference) {}
     QByteArray name;
-    uint isVolatile : 1;
-    uint isScoped : 1;
+    bool isVolatile;
+    bool isScoped;
     Token firstToken;
     ReferenceType referenceType;
 };
