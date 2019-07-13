@@ -79,9 +79,7 @@ QFSFileEnginePrivate::QFSFileEnginePrivate() : QAbstractFileEnginePrivate()
 void QFSFileEnginePrivate::init()
 {
     is_sequential = 0;
-    tried_stat = 0;
-    need_lstat = 1;
-    is_link = 0;
+    tried_stat = false;
     openMode = QIODevice::NotOpen;
     fd = -1;
     fh = 0;
@@ -171,7 +169,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
 
     d->openMode = openMode;
     d->lastFlushFailed = false;
-    d->tried_stat = 0;
+    d->tried_stat = false;
     d->fh = 0;
     d->fd = -1;
 
@@ -211,7 +209,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh, QFile::FileHand
     d->lastFlushFailed = false;
     d->closeFileHandle = (handleFlags & QFile::AutoCloseHandle);
     d->fileEntry.clear();
-    d->tried_stat = 0;
+    d->tried_stat = false;
     d->fd = -1;
 
     return d->openFh(openMode, fh);
@@ -282,7 +280,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::FileHandle
     d->fileEntry.clear();
     d->fh = 0;
     d->fd = -1;
-    d->tried_stat = 0;
+    d->tried_stat = false;
 
     return d->openFd(openMode, fd);
 }
@@ -342,7 +340,7 @@ bool QFSFileEnginePrivate::closeFdFh()
     // Flush the file if it's buffered, and if the last flush didn't fail.
     bool flushed = !fh || (!lastFlushFailed && q->flush());
     bool closed = true;
-    tried_stat = 0;
+    tried_stat = false;
 
 
     // Close the file if we created the handle.
@@ -433,7 +431,7 @@ qint64 QFSFileEnginePrivate::sizeFdFh() const
     Q_Q(const QFSFileEngine);
     const_cast<QFSFileEngine *>(q)->flush();
 
-    tried_stat = 0;
+    tried_stat = false;
     metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
     if (!doStat(QFileSystemMetaData::SizeAttribute))
         return 0;

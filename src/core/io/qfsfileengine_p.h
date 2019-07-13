@@ -108,11 +108,8 @@ public:
     bool lastFlushFailed;
     bool closeFileHandle;
 
-    mutable uint is_sequential : 2;
-    mutable uint could_stat : 1;
-    mutable uint tried_stat : 1;
-    mutable uint need_lstat : 1;
-    mutable uint is_link : 1;
+    mutable uint is_sequential;
+    mutable bool tried_stat;
 
     bool doStat(QFileSystemMetaData::MetaDataFlags flags = QFileSystemMetaData::PosixStatFlags) const;
     bool isSymlink() const;

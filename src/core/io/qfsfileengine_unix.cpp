@@ -450,7 +450,7 @@ QString QFSFileEngine::tempPath()
 bool QFSFileEnginePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) const
 {
     if (!tried_stat || !metaData.hasFlags(flags)) {
-        tried_stat = 1;
+        tried_stat = true;
 
         int localFd = fd;
         if (fh && fileEntry.isEmpty())
