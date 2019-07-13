@@ -212,7 +212,6 @@ protected:
 private:
     Q_DISABLE_COPY(QPaintEngine)
 
-    friend class QPainterReplayer;
     friend class QFontEngineBox;
     friend class QFontEngineFT;
     friend class QPSPrintEngine;

@@ -288,7 +288,6 @@ private:
     friend class QAlphaPaintEngine;
     friend class QPainterPath;
     friend class QTextItemInt;
-    friend class QPainterReplayer;
     friend class QCommandLinkButtonPrivate;
     friend class QFontEngine;
 
