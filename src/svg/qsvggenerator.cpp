@@ -498,7 +498,7 @@ class QSvgGeneratorPrivate
 public:
     QSvgPaintEngine *engine;
 
-    uint owns_iodevice : 1;
+    bool owns_iodevice;
     QString fileName;
 };
 
