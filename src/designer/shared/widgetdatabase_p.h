@@ -130,10 +130,10 @@ private:
     QString m_extends;
     QString m_addPageMethod;
     QIcon m_icon;
-    uint m_compat: 1;
-    uint m_container: 1;
-    uint m_custom: 1;
-    uint m_promoted: 1;
+    bool m_compat;
+    bool m_container;
+    bool m_custom;
+    bool m_promoted;
     QList<QVariant> m_defaultPropertyValues;
     QStringList m_fakeSlots;
     QStringList m_fakeSignals;

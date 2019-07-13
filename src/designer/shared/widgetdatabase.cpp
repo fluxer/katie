@@ -70,10 +70,10 @@ namespace qdesigner_internal {
 WidgetDataBaseItem::WidgetDataBaseItem(const QString &name, const QString &group)
     : m_name(name),
       m_group(group),
-      m_compat(0),
-      m_container(0),
-      m_custom(0),
-      m_promoted(0)
+      m_compat(false),
+      m_container(false),
+      m_custom(false),
+      m_promoted(false)
 {
 }
 
