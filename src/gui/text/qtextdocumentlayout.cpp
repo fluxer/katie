@@ -438,8 +438,8 @@ public:
     mutable int lazyLayoutStepSize;
     QBasicTimer layoutTimer;
     mutable QBasicTimer sizeChangedTimer;
-    uint showLayoutProgress : 1;
-    uint insideDocumentChange : 1;
+    bool showLayoutProgress;
+    bool insideDocumentChange;
 
     int lastPageCount;
     qreal idealWidth;
