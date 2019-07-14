@@ -223,10 +223,6 @@ public:
         }
     };
 
-private:
-    QAtomicInt _ref;
-
-public:
     bool quitNow;
     bool canWait;
     bool isAdopted;
@@ -238,6 +234,9 @@ public:
     QAbstractEventDispatcher *eventDispatcher;
     QPostEventList postEventList;
     FlaggedDebugSignatures flaggedSignatures;
+
+private:
+    QAtomicInt _ref;
 };
 
 class QScopedLoopLevelCounter
