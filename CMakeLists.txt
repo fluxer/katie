@@ -375,6 +375,7 @@ set_package_properties(Cups PROPERTIES
     TYPE RECOMMENDED
 )
 
+# v2.4.2+ required for Freetype integration
 find_package(Fontconfig 2.4.2)
 set_package_properties(Fontconfig PROPERTIES
     PURPOSE "Required for fonts configuration support"
