@@ -164,23 +164,11 @@ void QAdoptedThread::init()
     Q_D(QThread);
     d->thread_id = pthread_self();
 }
+#endif // QT_NO_THREAD
 
 /*
    QThreadPrivate
 */
-
-#if defined(Q_C_CALLBACKS)
-extern "C" {
-#endif
-
-typedef void*(*QtThreadCallback)(void*);
-
-#if defined(Q_C_CALLBACKS)
-}
-#endif
-
-#endif // QT_NO_THREAD
-
 void QThreadPrivate::createEventDispatcher(QThreadData *data)
 {
     QMutexLocker l(&data->postEventList.mutex);
