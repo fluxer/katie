@@ -187,10 +187,9 @@ void QThreadPrivate::createEventDispatcher(QThreadData *data)
 #ifndef QT_NO_THREAD
 
 #if defined(Q_OS_LINUX)
-static void setCurrentThreadName(pthread_t threadId, const char *name)
+static inline void setCurrentThreadName(const char *name)
 {
 #if defined(Q_OS_LINUX) && !defined(QT_LINUXBASE)
-    Q_UNUSED(threadId);
     prctl(PR_SET_NAME, (unsigned long)name, 0, 0, 0);
 #endif
 }
@@ -226,9 +225,9 @@ void *QThreadPrivate::start(void *arg)
     QString objectName = thr->objectName();
 
     if (Q_LIKELY(objectName.isEmpty()))
-        setCurrentThreadName(thr->d_func()->thread_id, thr->metaObject()->className());
+        setCurrentThreadName(thr->metaObject()->className());
     else
-        setCurrentThreadName(thr->d_func()->thread_id, objectName.toLocal8Bit().constData());
+        setCurrentThreadName(objectName.toLocal8Bit().constData());
 
 #endif
 
