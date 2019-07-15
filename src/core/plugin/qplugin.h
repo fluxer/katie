@@ -106,7 +106,7 @@ void Q_CORE_EXPORT qRegisterStaticPluginInstanceFunction(QtPluginInstanceFunctio
 #  define Q_PLUGIN_VERIFICATION_DATA \
     static const char kt_plugin_verification_data[] = \
       "pattern=KT_PLUGIN_VERIFICATION_DATA\n" \
-      "version=" QT_VERSION_STR "\n" \
+      "version=" QT_VERSION_HEX_STR "\n" \
       "debug=" QPLUGIN_DEBUG_STR;
 
 #  if defined(Q_OF_ELF) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG))

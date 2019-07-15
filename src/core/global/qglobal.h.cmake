@@ -37,7 +37,13 @@
 #include <qconfig.h>
 #include <stddef.h>
 
-#define QT_VERSION_STR   "${KATIE_VERSION}"
+#define QT_VERSION_MAJOR ${KATIE_MAJOR}
+#define QT_VERSION_MINOR ${KATIE_MINOR}
+#define QT_VERSION_MICRO ${KATIE_MICRO}
+
+#define QT_VERSION_STR "${KATIE_VERSION}"
+#define QT_VERSION_HEX_STR "${KATIE_HEX}"
+
 /*
    QT_VERSION is (major << 16) + (minor << 8) + patch.
 */

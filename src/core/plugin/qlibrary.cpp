@@ -256,20 +256,11 @@ static bool qt_parse_pattern(const char *s, uint *version, bool *debug)
         parselen -= advance;
 
         if (qstrncmp("version", pinfo.results[0], pinfo.lengths[0]) == 0) {
-            // parse version string
-            qt_token_info pinfo2("..-", 3);
-            if (qt_tokenize(pinfo.results[1], pinfo.lengths[1],
-                              &advance, pinfo2) != -1) {
-                QByteArray m(pinfo2.results[0], pinfo2.lengths[0]);
-                QByteArray n(pinfo2.results[1], pinfo2.lengths[1]);
-                QByteArray p(pinfo2.results[2], pinfo2.lengths[2]);
-                *version  = (m.toUInt() << 16) | (n.toUInt() << 8) | p.toUInt();
-            } else {
-                ret = false;
-                break;
-            }
+            QByteArray qv(pinfo.results[1], pinfo.lengths[1]);
+            bool ok;
+            *version = qv.toUInt(&ok, 0);
         } else if (qstrncmp("debug", pinfo.results[0], pinfo.lengths[0]) == 0) {
-            *debug = qstrncmp("true", pinfo.results[1], pinfo.lengths[1]) == 0;
+            *debug = (qstrncmp("true", pinfo.results[1], pinfo.lengths[1]) == 0);
         }
     } while (parse == 1 && parselen > 0);
 
@@ -539,22 +530,6 @@ bool QLibrary::isLibrary(const QString &fileName)
     return valid;
 }
 
-typedef const char * (*QtPluginQueryVerificationDataFunction)();
-
-bool qt_get_verificationdata(QtPluginQueryVerificationDataFunction pfn, uint *qt_version, bool *debug, bool *exceptionThrown)
-{
-    *exceptionThrown = false;
-    if (!pfn)
-        return false;
-
-#ifdef QT_NO_PLUGIN_CHECK
-    return true;
-#else
-    const char *szData = pfn();
-    return qt_parse_pattern(szData, qt_version, debug);
-#endif
-}
-
 bool QLibraryPrivate::isPlugin(QSettings *settings)
 {
     errorString.clear();
@@ -584,9 +559,8 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
 #ifndef QT_NO_DATESTRING
     lastModified  = fileinfo.lastModified().toString(Qt::ISODate);
 #endif
-    QString regkey = QString::fromLatin1("Qt Plugin Cache %1.%2.%3/%4")
-                     .arg((QT_VERSION & 0xff0000) >> 16)
-                     .arg((QT_VERSION & 0xff00) >> 8)
+    QString regkey = QString::fromLatin1("Katie Plugin Cache %1.%2/%3")
+                     .arg(QT_VERSION_HEX_STR)
                      .arg(QLIBRARY_AS_DEBUG ? QLatin1String("debug") : QLatin1String("false"))
                      .arg(fileName);
 
@@ -597,37 +571,17 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
     }
     reg = settings->value(regkey).toStringList();
 #endif
-    if (reg.count() == 4 && lastModified == reg.at(3)) {
-        qt_version = reg.at(0).toUInt(0, 16);
+    if (reg.count() == 3 && lastModified == reg.at(2)) {
+        qt_version = reg.at(0).toUInt();
         debug = bool(reg.at(1).toInt());
         success = qt_version != 0;
     } else {
-        if (!pHnd) {
-            // use unix shortcut to avoid loading the library
-            success = qt_unix_query(fileName, &qt_version, &debug, this);
-        } else {
-            bool temporary_load = false;
-            if (!pHnd) {
-                temporary_load =  load_sys();
-            }
-            const QtPluginQueryVerificationDataFunction qtPluginQueryVerificationDataFunction = (QtPluginQueryVerificationDataFunction) resolve("kt_plugin_query_verification_data");
-            bool exceptionThrown = false;
-            bool ret = qt_get_verificationdata(qtPluginQueryVerificationDataFunction,
-                                                &qt_version, &debug, &exceptionThrown);
-            if (!exceptionThrown) {
-                if (!ret) {
-                    qt_version = 0;
-                    if (temporary_load)
-                        unload_sys();
-                } else {
-                    success = true;
-                }
-            }
-        }
+        // use unix shortcut to avoid loading the library
+        success = qt_unix_query(fileName, &qt_version, &debug, this);
 
 #ifndef QT_NO_SETTINGS
         QStringList queried;
-        queried << QString::number(qt_version,16)
+        queried << QString::number(qt_version, 16)
                 << QString::number((int)debug)
                 << lastModified;
         settings->setValue(regkey, queried);
@@ -639,31 +593,27 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
             if (fileName.isEmpty())
                 errorString = QLibrary::tr("The shared library was not found.");
             else
-                errorString = QLibrary::tr("The file '%1' is not a valid Qt plugin.").arg(fileName);
+                errorString = QLibrary::tr("The file '%1' is not a valid Katie plugin.").arg(fileName);
         }
         return false;
     }
 
     pluginState = IsNotAPlugin; // be pessimistic
 
-    if ((qt_version & 0x00ff00) > (QT_VERSION & 0x00ff00) || (qt_version & 0xff0000) != (QT_VERSION & 0xff0000)) {
+    static const uint current = QByteArray(QT_VERSION_HEX_STR).toUInt();
+    if (qt_version < current) {
         if (qt_debug_component()) {
-            qWarning("In %s:\n"
-                 "  Plugin uses incompatible Qt library (%d.%d.%d) [%s]",
-                 QFile::encodeName(fileName).data(),
-                 (qt_version&0xff0000) >> 16, (qt_version&0xff00) >> 8, qt_version&0xff,
-                 debug ? "debug" : "release");
+            qWarning("Plugin uses incompatible Katie library: %s (%d, %d)\n",
+                QFile::encodeName(fileName).data(), qt_version, current);
         }
-        errorString = QLibrary::tr("The plugin '%1' uses incompatible Qt library. (%2.%3.%4) [%5]")
+        errorString = QLibrary::tr("The plugin uses incompatible Katie library: %1 (%2, %3)")
             .arg(fileName)
-            .arg((qt_version&0xff0000) >> 16)
-            .arg((qt_version&0xff00) >> 8)
-            .arg(qt_version&0xff)
-            .arg(debug ? QLatin1String("debug") : QLatin1String("release"));
+            .arg(qt_version)
+            .arg(current);
 #ifndef QT_NO_DEBUG_PLUGIN_CHECK
     } else if(debug != QLIBRARY_AS_DEBUG) {
         //don't issue a qWarning since we will hopefully find a non-debug? --Sam
-        errorString = QLibrary::tr("The plugin '%1' uses incompatible Qt library."
+        errorString = QLibrary::tr("The plugin '%1' uses incompatible Katie library."
                  " (Cannot mix debug and release libraries.)").arg(fileName);
 #endif
     } else {
