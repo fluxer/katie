@@ -42,6 +42,7 @@
 #include "qmath.h"
 
 #include <time.h>
+#include <sys/time.h>
 
 //#define QDATETIMEPARSER_DEBUG
 #if defined (QDATETIMEPARSER_DEBUG) && !defined(QT_NO_DEBUG_STREAM)

@@ -39,34 +39,11 @@
 #include "qconfig.h"
 
 // Set any POSIX/XOPEN defines at the top of this file to turn on specific APIs
-
 #include <unistd.h>
 
-
 // We are hot - unistd.h should have turned on the specific APIs we requested
-
-
-#include <pthread.h>
-#include <dirent.h>
-#include <fcntl.h>
-#include <grp.h>
-#include <pwd.h>
-#include <signal.h>
-#include <dlfcn.h>
-
-#include <sys/param.h>
-#include <sys/types.h>
-#include <sys/ioctl.h>
-#include <sys/ipc.h>
-#include <sys/time.h>
-#include <sys/shm.h>
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <netinet/in.h>
-#ifndef QT_NO_IPV6IFNAME
-#include <net/if.h>
-#endif
+#include <stdio.h> // snprintf, vsnprintf
+#include <sys/socket.h> // socklen_t
 
 #include "common/mkspecs_posix.h"
 
@@ -77,8 +54,8 @@
 // OpenBSD 2.2 - 2.4            int
 // OpenBSD 2.5 - 2.8            socklen_t
 
-#define QT_SNPRINTF		::snprintf
-#define QT_VSNPRINTF		::vsnprintf
+#define QT_SNPRINTF             ::snprintf
+#define QT_VSNPRINTF            ::vsnprintf
 
 // 1003.1c-1995 says on page 38 (2.9.3, paragraph 3) that if _POSIX_THREADS
 // is defined, then _POSIX_THREAD_SAFE_FUNCTIONS must also be defined.

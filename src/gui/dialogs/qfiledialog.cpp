@@ -61,6 +61,7 @@
 #include "ui_qfiledialog.h"
 
 #include <stdlib.h>
+#include <pwd.h>
 
 QT_BEGIN_NAMESPACE
 

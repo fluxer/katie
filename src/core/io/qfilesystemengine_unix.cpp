@@ -42,6 +42,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#include <pwd.h>
+#include <grp.h>
 
 QT_BEGIN_NAMESPACE
 

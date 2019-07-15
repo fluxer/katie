@@ -34,12 +34,11 @@
 #ifndef Q_POSIX_QPLATFORMDEFS_H
 #define Q_POSIX_QPLATFORMDEFS_H
 
+#include <dirent.h>
 #include <signal.h>
-
+#include <fcntl.h>
 #include <sys/types.h>
-#ifndef QT_NO_SOCKET_H
-#  include <sys/socket.h>
-#endif
+#include <sys/socket.h>
 #include <sys/stat.h>
 
 #if defined(QT_USE_XOPEN_LFS_EXTENSIONS) && defined(QT_LARGEFILE_SUPPORT)

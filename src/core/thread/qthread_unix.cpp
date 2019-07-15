@@ -228,7 +228,6 @@ void *QThreadPrivate::start(void *arg)
         setCurrentThreadName(thr->metaObject()->className());
     else
         setCurrentThreadName(objectName.toLocal8Bit().constData());
-
 #endif
 
     emit thr->started();

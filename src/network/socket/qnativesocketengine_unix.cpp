@@ -47,9 +47,12 @@
 #include "qelapsedtimer.h"
 #include "qvarlengtharray.h"
 #include "qnetworkinterface.h"
+
 #include <time.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
+#include <netinet/tcp.h>
 #ifndef QT_NO_IPV6IFNAME
 #include <net/if.h>
 #endif
@@ -61,8 +64,6 @@
 #include <qstring.h>
 #include <ctype.h>
 #endif
-
-#include <netinet/tcp.h>
 
 QT_BEGIN_NAMESPACE
 

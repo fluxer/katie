@@ -48,6 +48,8 @@
 #include "qabstractsocketengine_p.h"
 #include "qplatformdefs.h"
 
+#include <netinet/in.h>
+
 QT_BEGIN_NAMESPACE
 
 // Use our own defines and structs which we know are correct
