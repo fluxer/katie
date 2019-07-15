@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <qdir.h>
+#include "qdir.h"
 #include "qfontdatabase.h"
 #include "qdebug.h"
 #include "qalgorithms.h"

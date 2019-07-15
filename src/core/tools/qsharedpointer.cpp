@@ -1166,8 +1166,8 @@
     compile. Use qSharedPointerConstCast to cast away the constness.
 */
 
-#include <qset.h>
-#include <qmutex.h>
+#include "qset.h"
+#include "qmutex.h"
 
 #if !defined(QT_NO_QOBJECT)
 #include "qobject_p.h"

@@ -44,7 +44,7 @@
 
 #ifndef QT_NO_MOVIE
 
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 #include <qdeclarativeengine_p.h>
 
 #include <QMovie>

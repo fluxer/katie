@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qstring.h>
+#include "qstring.h"
 
 QT_BEGIN_NAMESPACE
 

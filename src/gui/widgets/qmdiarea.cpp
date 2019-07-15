@@ -164,14 +164,14 @@
 #include <QStyle>
 #include <QEvent>
 #include <QScrollBar>
-#include <qalgorithms.h>
+#include "qalgorithms.h"
 #include <QList>
 #include <QPainter>
 #include <QFontMetrics>
 #include <QStyleOption>
 #include <QDesktopWidget>
 #include <QDebug>
-#include <qmath.h>
+#include "qmath.h"
 #include <qlayoutengine_p.h>
 #include <qguicommon_p.h>
 

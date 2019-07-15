@@ -47,8 +47,8 @@
 #include <qdeclarativecustomparser_p.h>
 #include <qdeclarativeparser_p.h>
 #include <qdeclarativeengine_p.h>
-#include <qdeclarativecontext.h>
-#include <qdeclarativeinfo.h>
+#include "qdeclarativecontext.h"
+#include "qdeclarativeinfo.h"
 
 #include <QtCore/qdebug.h>
 #include <QtCore/qstack.h>

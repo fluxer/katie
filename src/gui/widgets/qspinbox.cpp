@@ -40,14 +40,14 @@
 ****************************************************************************/
 
 #include <qabstractspinbox_p.h>
-#include <qspinbox.h>
+#include "qspinbox.h"
 
 #ifndef QT_NO_SPINBOX
 
-#include <qlineedit.h>
-#include <qlocale.h>
-#include <qvalidator.h>
-#include <qdebug.h>
+#include "qlineedit.h"
+#include "qlocale.h"
+#include "qvalidator.h"
+#include "qdebug.h"
 
 #include <math.h>
 #include <float.h>

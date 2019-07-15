@@ -42,20 +42,20 @@
 #include "qpainterpath.h"
 #include "qpainterpath_p.h"
 
-#include <qbitmap.h>
-#include <qdebug.h>
-#include <qiodevice.h>
-#include <qlist.h>
-#include <qmatrix.h>
-#include <qpen.h>
-#include <qpolygon.h>
-#include <qtextlayout.h>
-#include <qvarlengtharray.h>
-#include <qmath.h>
+#include "qbitmap.h"
+#include "qdebug.h"
+#include "qiodevice.h"
+#include "qlist.h"
+#include "qmatrix.h"
+#include "qpen.h"
+#include "qpolygon.h"
+#include "qtextlayout.h"
+#include "qvarlengtharray.h"
+#include "qmath.h"
 
 #include <qbezier_p.h>
 #include <qfontengine_p.h>
-#include <qnumeric.h>
+#include "qnumeric.h"
 #include <qobject_p.h>
 #include <qpathclipper_p.h>
 #include <qstroker_p.h>

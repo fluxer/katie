@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVEFOLDERLISTMODEL_H
 #define QDECLARATIVEFOLDERLISTMODEL_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 #include <QStringList>
 #include <QUrl>
 #include <QAbstractItemModel>

@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#include <qsqldriverplugin.h>
-#include <qstringlist.h>
+#include "qsqldriverplugin.h"
+#include "qstringlist.h"
 #include "qsql_psql.h"
 
 QT_BEGIN_NAMESPACE

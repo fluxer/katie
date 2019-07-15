@@ -48,7 +48,7 @@
 #include "qdeclarativeitem.h"
 #include "qdeclarativeimplicitsizeitem_p_p.h"
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 QT_BEGIN_NAMESPACE
 class QTextLayout;

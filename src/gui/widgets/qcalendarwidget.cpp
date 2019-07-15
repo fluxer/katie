@@ -43,23 +43,23 @@
 
 #ifndef QT_NO_CALENDARWIDGET
 
-#include <qabstractitemmodel.h>
-#include <qitemdelegate.h>
-#include <qdatetime.h>
-#include <qtableview.h>
-#include <qlayout.h>
-#include <qevent.h>
-#include <qtextformat.h>
-#include <qheaderview.h>
+#include "qabstractitemmodel.h"
+#include "qitemdelegate.h"
+#include "qdatetime.h"
+#include "qtableview.h"
+#include "qlayout.h"
+#include "qevent.h"
+#include "qtextformat.h"
+#include "qheaderview.h"
 #include <qwidget_p.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qlabel.h>
-#include <qspinbox.h>
-#include <qmenu.h>
-#include <qapplication.h>
-#include <qbasictimer.h>
-#include <qstylepainter.h>
+#include "qpushbutton.h"
+#include "qtoolbutton.h"
+#include "qlabel.h"
+#include "qspinbox.h"
+#include "qmenu.h"
+#include "qapplication.h"
+#include "qbasictimer.h"
+#include "qstylepainter.h"
 #include <qcalendartextnavigator_p.h>
 
 QT_BEGIN_NAMESPACE

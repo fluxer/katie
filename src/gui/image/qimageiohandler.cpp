@@ -218,9 +218,9 @@
 
 #include "qimageiohandler.h"
 
-#include <qbytearray.h>
-#include <qimage.h>
-#include <qvariant.h>
+#include "qbytearray.h"
+#include "qimage.h"
+#include "qvariant.h"
 
 QT_BEGIN_NAMESPACE
 

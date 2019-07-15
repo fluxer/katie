@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qdbusmetatype.h>
+#include "qdbusmetatype.h"
 
 QT_BEGIN_NAMESPACE
 

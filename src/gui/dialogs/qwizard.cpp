@@ -59,7 +59,7 @@
 #include "qstyle.h"
 #include "qvarlengtharray.h"
 #include "qdialog_p.h"
-#include <qdebug.h>
+#include "qdebug.h"
 
 #include <string.h>     // for memset()
 

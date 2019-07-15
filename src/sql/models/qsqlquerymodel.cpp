@@ -41,9 +41,9 @@
 
 #include "qsqlquerymodel.h"
 
-#include <qdebug.h>
-#include <qsqldriver.h>
-#include <qsqlfield.h>
+#include "qdebug.h"
+#include "qsqldriver.h"
+#include "qsqlfield.h"
 
 #include "qsqlquerymodel_p.h"
 

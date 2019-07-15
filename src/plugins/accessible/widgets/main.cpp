@@ -46,13 +46,13 @@
 #include "complexwidgets.h"
 #include "itemviews.h"
 
-#include <qaccessibleplugin.h>
-#include <qplugin.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qtreeview.h>
-#include <qvariant.h>
-#include <qaccessible.h>
+#include "qaccessibleplugin.h"
+#include "qplugin.h"
+#include "qpushbutton.h"
+#include "qtoolbutton.h"
+#include "qtreeview.h"
+#include "qvariant.h"
+#include "qaccessible.h"
 
 #ifndef QT_NO_ACCESSIBILITY
 

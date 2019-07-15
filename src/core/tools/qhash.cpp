@@ -32,13 +32,10 @@
 ****************************************************************************/
 
 #include "qhash.h"
+#include "qbitarray.h"
+#include "qstring.h"
 
-#include <qbitarray.h>
-#include <qstring.h>
 #include <stdlib.h>
-#ifdef QT_QHASH_DEBUG
-#include <qstring.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 

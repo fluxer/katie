@@ -41,20 +41,20 @@
 #include "qtreeview.h"
 
 #ifndef QT_NO_TREEVIEW
-#include <qheaderview.h>
-#include <qitemdelegate.h>
-#include <qapplication.h>
-#include <qscrollbar.h>
-#include <qpainter.h>
-#include <qstack.h>
-#include <qstyle.h>
-#include <qstyleoption.h>
-#include <qevent.h>
-#include <qpen.h>
-#include <qdebug.h>
+#include "qheaderview.h"
+#include "qitemdelegate.h"
+#include "qapplication.h"
+#include "qscrollbar.h"
+#include "qpainter.h"
+#include "qstack.h"
+#include "qstyle.h"
+#include "qstyleoption.h"
+#include "qevent.h"
+#include "qpen.h"
+#include "qdebug.h"
 #ifndef QT_NO_ACCESSIBILITY
-#include <qaccessible.h>
-#include <qaccessible2.h>
+#include "qaccessible.h"
+#include "qaccessible2.h"
 #endif
 
 #include <qtreeview_p.h>

@@ -27,7 +27,7 @@
 #ifndef WTF_Platform_h
 #define WTF_Platform_h
 
-#include <qglobal.h>
+#include "qglobal.h"
 
 QT_USE_NAMESPACE
 

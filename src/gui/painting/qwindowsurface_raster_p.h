@@ -45,7 +45,6 @@
 // We mean it.
 //
 
-#include <qglobal.h>
 #include "qwindowsurface_p.h"
 
 QT_BEGIN_NAMESPACE

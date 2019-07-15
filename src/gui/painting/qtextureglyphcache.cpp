@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <qmath.h>
+#include "qmath.h"
 #include "qtextureglyphcache_p.h"
 #include "qfontengine_ft_p.h"
 

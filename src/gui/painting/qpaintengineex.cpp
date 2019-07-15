@@ -46,8 +46,8 @@
 #include <qfontengine_p.h>
 #include <qstatictext_p.h>
 
-#include <qvarlengtharray.h>
-#include <qdebug.h>
+#include "qvarlengtharray.h"
+#include "qdebug.h"
 
 
 QT_BEGIN_NAMESPACE

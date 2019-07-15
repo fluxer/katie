@@ -48,7 +48,7 @@
 
 #include "qdbusabstractinterface_p.h"
 #include "qdbusmetaobject_p.h"
-#include <qdbusinterface.h>
+#include "qdbusinterface.h"
 
 
 QT_BEGIN_NAMESPACE

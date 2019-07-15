@@ -35,7 +35,7 @@
 #define QDECLARATIVEAPPLICATION_P_H
 
 #include <QtCore/QObject>
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 #include <qdeclarativeglobal_p.h>
 
 QT_BEGIN_HEADER

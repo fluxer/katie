@@ -53,7 +53,7 @@
 
 #include <QtCore/QMap>
 #include <QtCore/QCoreApplication>
-#include <qdebug.h>
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

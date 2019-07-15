@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVETIMER_H
 #define QDECLARATIVETIMER_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 #include <QtCore/qobject.h>
 #include <QtGui/qabstractanimation.h>

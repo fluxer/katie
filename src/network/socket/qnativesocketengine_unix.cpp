@@ -61,7 +61,7 @@
 #endif
 
 #if defined QNATIVESOCKETENGINE_DEBUG
-#include <qstring.h>
+#include "qstring.h"
 #include <ctype.h>
 #endif
 

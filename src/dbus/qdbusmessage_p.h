@@ -45,10 +45,10 @@
 // We mean it.
 //
 
-#include <qatomic.h>
-#include <qstring.h>
-#include <qdbusmessage.h>
-#include <qdbusconnection.h>
+#include "qatomic.h"
+#include "qstring.h"
+#include "qdbusmessage.h"
+#include "qdbusconnection.h"
 
 struct DBusMessage;
 

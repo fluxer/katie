@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qbytearray.h>
+#include "qbytearray.h"
 
 QT_BEGIN_NAMESPACE
 

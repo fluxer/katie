@@ -50,7 +50,7 @@
 #include <QtCore/qtimer.h>
 #include <QtCore/qelapsedtimer.h>
 #include <qobject_p.h>
-#include <qabstractanimation.h>
+#include "qabstractanimation.h"
 
 #ifndef QT_NO_ANIMATION
 

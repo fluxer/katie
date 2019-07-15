@@ -40,10 +40,10 @@
 ****************************************************************************/
 
 #include "qguiplatformplugin.h"
-#include <qdebug.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qsettings.h>
+#include "qdebug.h"
+#include "qfile.h"
+#include "qdir.h"
+#include "qsettings.h"
 #include "qfactoryloader_p.h"
 #include "qstylefactory.h"
 #include "qapplication.h"

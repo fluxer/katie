@@ -34,13 +34,13 @@
 
 #include "qprocess.h"
 #include "qprocess_p.h"
-#include <qdebug.h>
-#include <qstring.h>
-#include <qbytearray.h>
-#include <qelapsedtimer.h>
-#include <qcoreapplication.h>
-#include <qsocketnotifier.h>
-#include <qtimer.h>
+#include "qdebug.h"
+#include "qstring.h"
+#include "qbytearray.h"
+#include "qelapsedtimer.h"
+#include "qcoreapplication.h"
+#include "qsocketnotifier.h"
+#include "qtimer.h"
 #include <qcore_unix_p.h>
 
 //#define QPROCESS_DEBUG

@@ -36,9 +36,9 @@
 #ifndef QT_NO_LIBRARY
 #include "qfactoryinterface.h"
 #include "qmap.h"
-#include <qdir.h>
-#include <qsettings.h>
-#include <qdebug.h>
+#include "qdir.h"
+#include "qsettings.h"
+#include "qdebug.h"
 #include "qmutex.h"
 #include "qplugin.h"
 #include "qpluginloader.h"

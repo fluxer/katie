@@ -43,7 +43,7 @@
 #include <qpaintengine_raster_p.h>
 #include <qpainter_p.h>
 #include <qmath_p.h>
-#include <qmath.h>
+#include "qmath.h"
 
 QT_BEGIN_NAMESPACE
 

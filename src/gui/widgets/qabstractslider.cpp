@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <qapplication.h>
+#include "qapplication.h"
 #include "qabstractslider.h"
 #include "qevent.h"
 #include "qabstractslider_p.h"

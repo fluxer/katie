@@ -55,31 +55,31 @@
 #include <QtCore/qmetaobject.h>
 #include <QtCore/qbitarray.h>
 #include <QtCore/qreadwritelock.h>
-#include <qfileinfo.h>
-#include <qdir.h>
-#include <qmetatype.h>
-#include <qobjectdefs.h>
-#include <qdatetime.h>
-#include <qbytearray.h>
-#include <qreadwritelock.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qvector.h>
-#include <qlocale.h>
-#include <qcryptographichash.h>
-#include <qscriptvalue.h>
+#include "qfileinfo.h"
+#include "qdir.h"
+#include "qmetatype.h"
+#include "qobjectdefs.h"
+#include "qdatetime.h"
+#include "qbytearray.h"
+#include "qreadwritelock.h"
+#include "qstring.h"
+#include "qstringlist.h"
+#include "qvector.h"
+#include "qlocale.h"
+#include "qcryptographichash.h"
+#include "qscriptvalue.h"
 
 #include <ctype.h>
 
-#include <qbitarray.h>
-#include <qurl.h>
-#include <qvariant.h>
+#include "qbitarray.h"
+#include "qurl.h"
+#include "qvariant.h"
 #ifndef QT_NO_GEOM_VARIANT
-# include <qsize.h>
-# include <qpoint.h>
-# include <qrect.h>
-# include <qline.h>
-# include <qvector3d.h>
+# include "qsize.h"
+# include "qpoint.h"
+# include "qrect.h"
+# include "qline.h"
+# include "qvector3d.h"
 #endif
 #define NS(x) QT_PREPEND_NAMESPACE(x)
 

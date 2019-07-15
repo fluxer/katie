@@ -42,19 +42,19 @@
 #include "qtableview.h"
 
 #ifndef QT_NO_TABLEVIEW
-#include <qheaderview.h>
-#include <qitemdelegate.h>
-#include <qapplication.h>
-#include <qpainter.h>
-#include <qstyle.h>
-#include <qsize.h>
-#include <qevent.h>
-#include <qbitarray.h>
-#include <qscrollbar.h>
-#include <qabstractbutton.h>
+#include "qheaderview.h"
+#include "qitemdelegate.h"
+#include "qapplication.h"
+#include "qpainter.h"
+#include "qstyle.h"
+#include "qsize.h"
+#include "qevent.h"
+#include "qbitarray.h"
+#include "qscrollbar.h"
+#include "qabstractbutton.h"
 #include <qtableview_p.h>
 #ifndef QT_NO_ACCESSIBILITY
-#include <qaccessible.h>
+#include "qaccessible.h"
 #endif
 
 QT_BEGIN_NAMESPACE

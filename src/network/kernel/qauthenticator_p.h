@@ -45,11 +45,11 @@
 // We mean it.
 //
 
-#include <qhash.h>
-#include <qbytearray.h>
-#include <qstring.h>
-#include <qauthenticator.h>
-#include <qvariant.h>
+#include "qhash.h"
+#include "qbytearray.h"
+#include "qstring.h"
+#include "qauthenticator.h"
+#include "qvariant.h"
 
 QT_BEGIN_NAMESPACE
 

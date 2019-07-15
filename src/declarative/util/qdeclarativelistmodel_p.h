@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVELISTMODEL_H
 #define QDECLARATIVELISTMODEL_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 #include <qdeclarativecustomparser_p.h>
 
 #include <QtCore/QObject>

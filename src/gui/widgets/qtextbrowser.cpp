@@ -44,19 +44,19 @@
 
 #ifndef QT_NO_TEXTBROWSER
 
-#include <qstack.h>
-#include <qapplication.h>
-#include <qevent.h>
-#include <qdesktopwidget.h>
-#include <qdebug.h>
-#include <qabstracttextdocumentlayout.h>
+#include "qstack.h"
+#include "qapplication.h"
+#include "qevent.h"
+#include "qdesktopwidget.h"
+#include "qdebug.h"
+#include "qabstracttextdocumentlayout.h"
 #include "qtextdocumentlayout_p.h"
-#include <qtextcodec.h>
-#include <qpainter.h>
-#include <qdir.h>
-#include <qwhatsthis.h>
-#include <qtextobject.h>
-#include <qdesktopservices.h>
+#include "qtextcodec.h"
+#include "qpainter.h"
+#include "qdir.h"
+#include "qwhatsthis.h"
+#include "qtextobject.h"
+#include "qdesktopservices.h"
 
 QT_BEGIN_NAMESPACE
 

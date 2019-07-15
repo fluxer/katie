@@ -49,10 +49,10 @@
 
 #include "qlocalsocket.h"
 #include "qiodevice_p.h"
-#include <qtimer.h>
+#include "qtimer.h"
 #include "qabstractsocketengine_p.h"
-#include <qtcpsocket.h>
-#include <qsocketnotifier.h>
+#include "qtcpsocket.h"
+#include "qsocketnotifier.h"
 
 #include <errno.h>
 

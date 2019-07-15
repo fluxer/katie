@@ -45,8 +45,8 @@
 // We mean it.
 //
 
-#include <qobject.h>
-#include <qmap.h>
+#include "qobject.h"
+#include "qmap.h"
 
 QT_BEGIN_NAMESPACE
 

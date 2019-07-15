@@ -36,7 +36,7 @@
 
 #include "qdeclarativeitem.h"
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 #include <QtCore/QObject>
 

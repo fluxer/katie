@@ -41,7 +41,7 @@
 
 #include <QtDesigner/default_extensionfactory.h>
 #include "qextensionmanager.h"
-#include <qpointer.h>
+#include "qpointer.h"
 #include <QtCore/qdebug.h>
 
 QT_BEGIN_NAMESPACE

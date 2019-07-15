@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <qglobal.h>
+#include "qglobal.h"
 
 #ifndef QT_NO_STYLE_STYLESHEET
 
@@ -50,38 +50,38 @@
 #include "qabstractscrollarea_p.h"
 #include "qwindowsstyle_p.h"
 #include "qwidget_p.h"
-#include <qdebug.h>
-#include <qapplication.h>
-#include <qmenu.h>
-#include <qmenubar.h>
-#include <qpainter.h>
-#include <qstyleoption.h>
-#include <qlineedit.h>
-#include <qwindowsstyle.h>
-#include <qcombobox.h>
-#include <qplastiquestyle.h>
-#include <qabstractscrollarea.h>
-#include <qtooltip.h>
-#include <qshareddata.h>
-#include <qradiobutton.h>
-#include <qtoolbutton.h>
-#include <qscrollbar.h>
-#include <qstring.h>
-#include <qfile.h>
-#include <qcheckbox.h>
-#include <qstatusbar.h>
-#include <qheaderview.h>
-#include <qprogressbar.h>
-#include <qtabbar.h>
-#include <qmetaobject.h>
-#include <qmainwindow.h>
-#include <qdockwidget.h>
-#include <qmdisubwindow.h>
-#include <qdialog.h>
-#include <qabstractspinbox.h>
-#include <qlabel.h>
-#include <qdrawutil.h>
-#include <qtoolbar.h>
+#include "qdebug.h"
+#include "qapplication.h"
+#include "qmenu.h"
+#include "qmenubar.h"
+#include "qpainter.h"
+#include "qstyleoption.h"
+#include "qlineedit.h"
+#include "qwindowsstyle.h"
+#include "qcombobox.h"
+#include "qplastiquestyle.h"
+#include "qabstractscrollarea.h"
+#include "qtooltip.h"
+#include "qshareddata.h"
+#include "qradiobutton.h"
+#include "qtoolbutton.h"
+#include "qscrollbar.h"
+#include "qstring.h"
+#include "qfile.h"
+#include "qcheckbox.h"
+#include "qstatusbar.h"
+#include "qheaderview.h"
+#include "qprogressbar.h"
+#include "qtabbar.h"
+#include "qmetaobject.h"
+#include "qmainwindow.h"
+#include "qdockwidget.h"
+#include "qmdisubwindow.h"
+#include "qdialog.h"
+#include "qabstractspinbox.h"
+#include "qlabel.h"
+#include "qdrawutil.h"
+#include "qtoolbar.h"
 #include <qguicommon_p.h>
 
 #include <limits.h>

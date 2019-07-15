@@ -33,7 +33,6 @@
 
 #include "qsystemsemaphore.h"
 #include "qsystemsemaphore_p.h"
-#include <qglobal.h>
 
 QT_BEGIN_NAMESPACE
 

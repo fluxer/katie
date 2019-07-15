@@ -41,8 +41,8 @@
 #include <stdio.h>
 
 #include <string.h>
-#include <qbytearray.h>
-#include <qlist.h>
+#include "qbytearray.h"
+#include "qlist.h"
 
 QT_USE_NAMESPACE
 

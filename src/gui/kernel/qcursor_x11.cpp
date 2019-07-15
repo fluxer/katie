@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#include <qbitmap.h>
-#include <qcursor.h>
+#include "qbitmap.h"
+#include "qcursor.h"
 #include <qcursor_p.h>
 #include "qx11info_x11.h"
 #include <qpixmap_x11_p.h>

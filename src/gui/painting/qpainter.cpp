@@ -40,9 +40,9 @@
 ****************************************************************************/
 
 // QtCore
-#include <qdebug.h>
-#include <qmath.h>
-#include <qmutex.h>
+#include "qdebug.h"
+#include "qmath.h"
+#include "qmutex.h"
 
 // QtGui
 #include "qbitmap.h"

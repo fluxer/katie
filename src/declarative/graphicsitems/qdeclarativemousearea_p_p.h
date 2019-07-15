@@ -47,9 +47,9 @@
 
 #include "qdeclarativeitem_p.h"
 
-#include <qdatetime.h>
-#include <qbasictimer.h>
-#include <qgraphicssceneevent.h>
+#include "qdatetime.h"
+#include "qbasictimer.h"
+#include "qgraphicssceneevent.h"
 
 QT_BEGIN_NAMESPACE
 

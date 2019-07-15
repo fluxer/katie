@@ -39,10 +39,10 @@
 **
 ****************************************************************************/
 
-#include <qwidget.h>
-#include <qdrag.h>
-#include <qpixmap.h>
-#include <qpoint.h>
+#include "qwidget.h"
+#include "qdrag.h"
+#include "qpixmap.h"
+#include "qpoint.h"
 #include "qdnd_p.h"
 
 #ifndef QT_NO_DRAGANDDROP

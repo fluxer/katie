@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qdatastream.h>
+#include "qdatastream.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -46,10 +46,10 @@
 #include "qdeclarativestateoperations_p.h"
 #include "qdeclarativecontext_p.h"
 
-#include <qdeclarativepropertyvaluesource.h>
-#include <qdeclarative.h>
-#include <qdeclarativeinfo.h>
-#include <qdeclarativeexpression.h>
+#include "qdeclarativepropertyvaluesource.h"
+#include "qdeclarative.h"
+#include "qdeclarativeinfo.h"
+#include "qdeclarativeexpression.h"
 #include <qdeclarativestringconverters_p.h>
 #include <qdeclarativeglobal_p.h>
 #include <qdeclarativemetatype_p.h>
@@ -57,9 +57,9 @@
 #include <qdeclarativeproperty_p.h>
 #include <qdeclarativeengine_p.h>
 
-#include <qvariant.h>
-#include <qcolor.h>
-#include <qfile.h>
+#include "qvariant.h"
+#include "qcolor.h"
+#include "qfile.h"
 #include <QParallelAnimationGroup>
 #include <QSequentialAnimationGroup>
 #include <QtCore/qset.h>

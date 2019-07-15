@@ -54,8 +54,8 @@
 #include <qlayoutengine_p.h>
 #include <qguicommon_p.h>
 
-#include <qpainter.h>
-#include <qstyleoption.h>
+#include "qpainter.h"
+#include "qstyleoption.h"
 
 #ifndef QT_NO_DOCKWIDGET
 

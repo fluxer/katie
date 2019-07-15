@@ -42,11 +42,11 @@
 #include "qprinterinfo.h"
 #include "qprinterinfo_p.h"
 
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qdir.h>
-#include <qprintdialog.h>
-#include <qtextstream.h>
+#include "qfile.h"
+#include "qfileinfo.h"
+#include "qdir.h"
+#include "qprintdialog.h"
+#include "qtextstream.h"
 
 #if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
 #  include <qcups_p.h>

@@ -39,7 +39,6 @@
 #include <QtCore/QPoint>
 #include <QtCore/QSize>
 #include <QtCore/QPointer>
-#include <qglobal.h>
 
 QT_BEGIN_NAMESPACE
 

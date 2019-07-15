@@ -43,12 +43,12 @@
 #include "qhostinfo_p.h"
 
 #include "QtCore/qscopedpointer.h"
-#include <qabstracteventdispatcher.h>
-#include <qcoreapplication.h>
-#include <qmetaobject.h>
-#include <qstringlist.h>
-#include <qthread.h>
-#include <qurl.h>
+#include "qabstracteventdispatcher.h"
+#include "qcoreapplication.h"
+#include "qmetaobject.h"
+#include "qstringlist.h"
+#include "qthread.h"
+#include "qurl.h"
 #include <qnetworksession_p.h>
 
 #ifdef Q_OS_UNIX

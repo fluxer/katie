@@ -41,20 +41,20 @@
 
 #include "complexwidgets.h"
 
-#include <qapplication.h>
-#include <qabstractbutton.h>
-#include <qevent.h>
-#include <qheaderview.h>
-#include <qtabbar.h>
-#include <qcombobox.h>
-#include <qlistview.h>
-#include <qtableview.h>
-#include <qlineedit.h>
-#include <qstyle.h>
-#include <qstyleoption.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-#include <qtreeview.h>
+#include "qapplication.h"
+#include "qabstractbutton.h"
+#include "qevent.h"
+#include "qheaderview.h"
+#include "qtabbar.h"
+#include "qcombobox.h"
+#include "qlistview.h"
+#include "qtableview.h"
+#include "qlineedit.h"
+#include "qstyle.h"
+#include "qstyleoption.h"
+#include "qtooltip.h"
+#include "qwhatsthis.h"
+#include "qtreeview.h"
 #include <qtabbar_p.h>
 #include <QAbstractScrollArea>
 #include <QScrollArea>

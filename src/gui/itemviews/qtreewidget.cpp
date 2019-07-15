@@ -42,11 +42,11 @@
 #include "qtreewidget.h"
 
 #ifndef QT_NO_TREEWIDGET
-#include <qheaderview.h>
-#include <qpainter.h>
-#include <qitemdelegate.h>
-#include <qstack.h>
-#include <qdebug.h>
+#include "qheaderview.h"
+#include "qpainter.h"
+#include "qitemdelegate.h"
+#include "qstack.h"
+#include "qdebug.h"
 #include <qtreewidget_p.h>
 #include <qwidgetitemdata_p.h>
 #include <qtreewidgetitemiterator_p.h>

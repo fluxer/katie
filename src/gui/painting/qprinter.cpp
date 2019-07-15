@@ -44,9 +44,9 @@
 #include "qprintengine.h"
 #include "qprinterinfo.h"
 #include "qlist.h"
-#include <qpagesetupdialog.h>
-#include <qapplication.h>
-#include <qfileinfo.h>
+#include "qpagesetupdialog.h"
+#include "qapplication.h"
+#include "qfileinfo.h"
 #if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
 #include "qcups_p.h"
 #endif
@@ -63,7 +63,7 @@
 #include "qprintengine_pdf_p.h"
 #endif
 
-#include <qimage.h>
+#include "qimage.h"
 #include <qpaintengine_preview_p.h>
 
 

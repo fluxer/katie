@@ -45,10 +45,10 @@
 // We mean it.
 //
 
-#include <qlistwidget.h>
-#include <qstandarditemmodel.h>
-#include <qstyleditemdelegate.h>
-#include <qurl.h>
+#include "qlistwidget.h"
+#include "qstandarditemmodel.h"
+#include "qstyleditemdelegate.h"
+#include "qurl.h"
 
 #ifndef QT_NO_FILEDIALOG
 

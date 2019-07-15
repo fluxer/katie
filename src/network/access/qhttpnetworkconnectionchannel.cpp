@@ -45,8 +45,8 @@
 #include <QtNetwork/qsslkey.h>
 #include <QtNetwork/qsslcipher.h>
 #include <QtNetwork/qsslconfiguration.h>
-#include <qpair.h>
-#include <qdebug.h>
+#include "qpair.h"
+#include "qdebug.h"
 
 #ifndef QT_NO_HTTP
 

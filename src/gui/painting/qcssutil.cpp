@@ -42,7 +42,7 @@
 #include "qcssutil_p.h"
 #include "qcssparser_p.h"
 #include "qpainter.h"
-#include <qmath.h>
+#include "qmath.h"
 #include <QtGui/qpen.h>
 
 #ifndef QT_NO_CSSPARSER

@@ -31,7 +31,7 @@
 **
 ****************************************************************************/
 
-#include <qshareddata.h>
+#include "qshareddata.h"
 
 QT_BEGIN_NAMESPACE
 

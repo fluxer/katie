@@ -50,8 +50,8 @@
 #include "qtextengine_p.h"
 #include "qabstracttextdocumentlayout.h"
 
-#include <qtextlayout.h>
-#include <qdebug.h>
+#include "qtextlayout.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

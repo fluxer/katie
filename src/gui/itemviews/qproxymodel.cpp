@@ -43,8 +43,8 @@
 
 #ifndef QT_NO_PROXYMODEL
 #include <qproxymodel_p.h>
-#include <qsize.h>
-#include <qstringlist.h>
+#include "qsize.h"
+#include "qstringlist.h"
 
 QT_BEGIN_NAMESPACE
 

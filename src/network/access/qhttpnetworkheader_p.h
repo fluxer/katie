@@ -46,8 +46,8 @@
 //
 #ifndef QT_NO_HTTP
 
-#include <qshareddata.h>
-#include <qurl.h>
+#include "qshareddata.h"
+#include "qurl.h"
 
 QT_BEGIN_NAMESPACE
 

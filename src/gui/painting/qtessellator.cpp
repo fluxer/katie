@@ -41,11 +41,11 @@
 
 #include "qtessellator_p.h"
 
-#include <QRect>
-#include <QList>
-#include <QDebug>
+#include "qrect.h"
+#include "qlist.h"
+#include "qdebug.h"
+#include "qmath.h"
 
-#include <qmath.h>
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE

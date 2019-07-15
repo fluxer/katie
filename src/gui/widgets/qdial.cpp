@@ -43,23 +43,23 @@
 
 #ifndef QT_NO_DIAL
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qcolor.h>
-#include <qevent.h>
-#include <qpainter.h>
-#include <qpolygon.h>
-#include <qregion.h>
-#include <qstyle.h>
-#include <qstylepainter.h>
-#include <qstyleoption.h>
-#include <qslider.h>
+#include "qapplication.h"
+#include "qbitmap.h"
+#include "qcolor.h"
+#include "qevent.h"
+#include "qpainter.h"
+#include "qpolygon.h"
+#include "qregion.h"
+#include "qstyle.h"
+#include "qstylepainter.h"
+#include "qstyleoption.h"
+#include "qslider.h"
 #include <qabstractslider_p.h>
 #include <qmath_p.h>
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif
-#include <qmath.h>
+#include "qmath.h"
 
 QT_BEGIN_NAMESPACE
 

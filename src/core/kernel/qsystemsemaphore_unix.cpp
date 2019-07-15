@@ -34,9 +34,9 @@
 #include "qsystemsemaphore.h"
 #include "qsystemsemaphore_p.h"
 
-#include <qcoreapplication.h>
-#include <qdebug.h>
-#include <qfile.h>
+#include "qcoreapplication.h"
+#include "qdebug.h"
+#include "qfile.h"
 
 #ifndef QT_NO_SYSTEMSEMAPHORE
 

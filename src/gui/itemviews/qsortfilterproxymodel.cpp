@@ -44,11 +44,11 @@
 #ifndef QT_NO_SORTFILTERPROXYMODEL
 
 #include "qitemselectionmodel.h"
-#include <qsize.h>
-#include <qdebug.h>
-#include <qdatetime.h>
-#include <qpair.h>
-#include <qstringlist.h>
+#include "qsize.h"
+#include "qdebug.h"
+#include "qdatetime.h"
+#include "qpair.h"
+#include "qstringlist.h"
 #include <qabstractitemmodel_p.h>
 #include <qabstractproxymodel_p.h>
 

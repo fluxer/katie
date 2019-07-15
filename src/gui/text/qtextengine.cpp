@@ -52,7 +52,7 @@
 #include "qfontengine_p.h"
 #include "qunicodetables_p.h"
 #include "qtextdocument_p.h"
-#include <qapplication.h>
+#include "qapplication.h"
 
 #if defined(Q_WS_X11)
 #   include "qfontengine_ft_p.h"

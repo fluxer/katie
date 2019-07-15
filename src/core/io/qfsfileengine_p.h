@@ -46,12 +46,11 @@
 //
 
 #include "qplatformdefs.h"
-#include "QtCore/qfsfileengine.h"
+#include "qfsfileengine.h"
 #include "qabstractfileengine_p.h"
-#include <qfilesystementry_p.h>
-#include <qfilesystemmetadata_p.h>
-#include <qhash.h>
-
+#include "qfilesystementry_p.h"
+#include "qfilesystemmetadata_p.h"
+#include "qhash.h"
 
 #ifndef QT_NO_FSFILEENGINE
 

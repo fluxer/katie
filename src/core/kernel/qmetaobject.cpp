@@ -35,16 +35,16 @@
 #include "qmetatype.h"
 #include "qobject.h"
 
-#include <qcoreapplication.h>
-#include <qcoreevent.h>
-#include <qdatastream.h>
-#include <qstringlist.h>
-#include <qthread.h>
-#include <qvarlengtharray.h>
-#include <qvariant.h>
-#include <qhash.h>
-#include <qdebug.h>
-#include <qsemaphore.h>
+#include "qcoreapplication.h"
+#include "qcoreevent.h"
+#include "qdatastream.h"
+#include "qstringlist.h"
+#include "qthread.h"
+#include "qvarlengtharray.h"
+#include "qvariant.h"
+#include "qhash.h"
+#include "qdebug.h"
+#include "qsemaphore.h"
 
 #include "qobject_p.h"
 #include "qmetaobject_p.h"

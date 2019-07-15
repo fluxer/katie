@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qglobal.h>
+#include "qglobal.h"
 
 QT_BEGIN_NAMESPACE
 

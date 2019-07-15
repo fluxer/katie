@@ -45,10 +45,10 @@
 #include "qvector.h"
 #include "qwidget.h"
 
-#include <qlist.h>
-#include <qalgorithms.h>
+#include "qlist.h"
+#include "qalgorithms.h"
 
-#include <qdebug.h>
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

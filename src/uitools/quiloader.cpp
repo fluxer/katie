@@ -44,7 +44,7 @@
 #include "quiloader_p.h"
 #include "customwidget.h"
 
-#include <formbuilder.h>
+#include "formbuilder.h"
 #include <formbuilderextra_p.h>
 #include <textbuilder_p.h>
 #include <ui4_p.h>

@@ -1,7 +1,7 @@
 #ifndef QSCRIPTTOOLSCOMMON_H
 #define QSCRIPTTOOLSCOMMON_H
 
-#include <qscriptcontextinfo.h>
+#include "qscriptcontextinfo.h"
 #include "qscriptscriptdata_p.h"
 #include "qscriptdebuggerconsolecommand_p.h"
 #include "qscriptdebuggerconsolecommandgroupdata_p.h"

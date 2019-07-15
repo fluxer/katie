@@ -45,10 +45,10 @@
 // We mean it.
 //
 
-#include <qdatetime.h>
-#include <qbasictimer.h>
-#include <qevent.h>
-#include <qgraphicssceneevent.h>
+#include "qdatetime.h"
+#include "qbasictimer.h"
+#include "qevent.h"
+#include "qgraphicssceneevent.h"
 #include "qdeclarativeitem_p.h"
 
 QT_BEGIN_NAMESPACE

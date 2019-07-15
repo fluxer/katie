@@ -42,7 +42,7 @@
 #include "qhttpnetworkreply_p.h"
 #include "qhttpnetworkconnection_p.h"
 
-#include <qbytearraymatcher.h>
+#include "qbytearraymatcher.h"
 
 #ifndef QT_NO_HTTP
 

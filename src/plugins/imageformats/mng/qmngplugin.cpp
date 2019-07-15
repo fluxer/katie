@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#include <qimageiohandler.h>
-#include <qstringlist.h>
+#include "qimageiohandler.h"
+#include "qstringlist.h"
 
 #ifndef QT_NO_IMAGEFORMATPLUGIN
 
@@ -49,8 +49,8 @@
 #endif
 #include <qmnghandler_p.h>
 
-#include <qiodevice.h>
-#include <qbytearray.h>
+#include "qiodevice.h"
+#include "qbytearray.h"
 
 QT_BEGIN_NAMESPACE
 

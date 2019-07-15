@@ -31,8 +31,8 @@
 **
 ****************************************************************************/
 
-#include <qcryptographichash.h>
-#include <qiodevice.h>
+#include "qcryptographichash.h"
+#include "qiodevice.h"
 
 #include <openssl/md5.h>
 #include <openssl/md4.h>

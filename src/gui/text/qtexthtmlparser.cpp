@@ -41,12 +41,12 @@
 
 #include "qtexthtmlparser_p.h"
 
-#include <qbytearray.h>
-#include <qtextcodec.h>
-#include <qapplication.h>
-#include <qstack.h>
-#include <qdebug.h>
-#include <qthread.h>
+#include "qbytearray.h"
+#include "qtextcodec.h"
+#include "qapplication.h"
+#include "qstack.h"
+#include "qdebug.h"
+#include "qthread.h"
 #include "qtextdocument.h"
 #include "qtextformat_p.h"
 #include "qtextdocument_p.h"

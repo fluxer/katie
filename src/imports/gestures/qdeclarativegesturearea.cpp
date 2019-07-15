@@ -41,9 +41,9 @@
 
 #include "qdeclarativegesturearea_p.h"
 
-#include <qdeclarativeexpression.h>
-#include <qdeclarativecontext.h>
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeexpression.h"
+#include "qdeclarativecontext.h"
+#include "qdeclarativeinfo.h"
 #include <qdeclarativeproperty_p.h>
 #include <qdeclarativeitem_p.h>
 

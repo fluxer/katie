@@ -34,8 +34,8 @@
 #ifndef QDECLARATIVESTATE_H
 #define QDECLARATIVESTATE_H
 
-#include <qdeclarative.h>
-#include <qdeclarativeproperty.h>
+#include "qdeclarative.h"
+#include "qdeclarativeproperty.h"
 #include <QtCore/qobject.h>
 #include <QtCore/qsharedpointer.h>
 #include <qdeclarativeglobal_p.h>

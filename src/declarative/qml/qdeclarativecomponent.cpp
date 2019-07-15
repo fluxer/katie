@@ -58,7 +58,7 @@
 #include <QStringList>
 #include <QDebug>
 #include <QApplication>
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 
 QT_BEGIN_NAMESPACE
 

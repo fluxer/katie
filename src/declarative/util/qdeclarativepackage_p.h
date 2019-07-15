@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVEPACKAGE_H
 #define QDECLARATIVEPACKAGE_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 QT_BEGIN_HEADER
 

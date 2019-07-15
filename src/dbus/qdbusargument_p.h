@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qdbusargument.h>
+#include "qdbusargument.h"
 #include "qdbusunixfiledescriptor.h"
 
 #include <dbus/dbus.h>

@@ -41,10 +41,10 @@
 
 #include "qjpeghandler_p.h"
 
-#include <qimage.h>
-#include <qvariant.h>
-#include <qvector.h>
-#include <qbuffer.h>
+#include "qimage.h"
+#include "qvariant.h"
+#include "qvector.h"
+#include "qbuffer.h"
 
 #include <stdio.h>      // jpeglib needs this to be pre-included
 #include <setjmp.h>

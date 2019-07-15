@@ -43,10 +43,10 @@
 
 #ifndef QT_NO_TOOLBAR
 
-#include <qstyle.h>
-#include <qstyleoption.h>
-#include <qtoolbar.h>
-#include <qpainter.h>
+#include "qstyle.h"
+#include "qstyleoption.h"
+#include "qtoolbar.h"
+#include "qpainter.h"
 
 QT_BEGIN_NAMESPACE
 

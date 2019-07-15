@@ -44,17 +44,17 @@
 
 #ifndef QT_NO_TEXTCONTROL
 
-#include <qfont.h>
-#include <qpainter.h>
-#include <qevent.h>
-#include <qdebug.h>
-#include <qmimedata.h>
-#include <qdrag.h>
-#include <qconfig.h>
-#include <qclipboard.h>
-#include <qmenu.h>
-#include <qstyle.h>
-#include <qtimer.h>
+#include "qfont.h"
+#include "qpainter.h"
+#include "qevent.h"
+#include "qdebug.h"
+#include "qmimedata.h"
+#include "qdrag.h"
+#include "qconfig.h"
+#include "qclipboard.h"
+#include "qmenu.h"
+#include "qstyle.h"
+#include "qtimer.h"
 #include "qtextdocumentlayout_p.h"
 #include "qabstracttextdocumentlayout_p.h"
 #include "qtextedit_p.h"
@@ -65,24 +65,24 @@
 #include "qprinter.h"
 #include "qtextdocumentwriter.h"
 #include "qtextcursor_p.h"
-#include <qtextformat.h>
-#include <qdatetime.h>
-#include <qbuffer.h>
-#include <qapplication.h>
+#include "qtextformat.h"
+#include "qdatetime.h"
+#include "qbuffer.h"
+#include "qapplication.h"
 #include <limits.h>
-#include <qtexttable.h>
-#include <qvariant.h>
-#include <qurl.h>
-#include <qdesktopservices.h>
-#include <qtooltip.h>
-#include <qstyleoption.h>
-#include <qlineedit.h>
-#include <qaccessible.h>
+#include "qtexttable.h"
+#include "qvariant.h"
+#include "qurl.h"
+#include "qdesktopservices.h"
+#include "qtooltip.h"
+#include "qstyleoption.h"
+#include "qlineedit.h"
+#include "qaccessible.h"
 
 #ifndef QT_NO_SHORTCUT
 #include "qapplication_p.h"
 #include "qshortcutmap_p.h"
-#include <qkeysequence.h>
+#include "qkeysequence.h"
 #define ACCEL_KEY(k) (!qApp->d_func()->shortcutMap.hasShortcutForKeySequence(k) ? QLatin1Char('\t') + QKeySequence(k).toString() : QString())
 #else
 #define ACCEL_KEY(k) QString()

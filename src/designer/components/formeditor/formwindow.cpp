@@ -55,7 +55,7 @@
 #include <qdesigner_tabwidget_p.h>
 #include <qdesigner_toolbox_p.h>
 #include <qdesigner_stackedbox_p.h>
-#include <qdesigner_resource.h>
+#include "qdesigner_resource.h"
 #include <qdesigner_command_p.h>
 #include <qdesigner_command2_p.h>
 #include <qdesigner_propertycommand_p.h>

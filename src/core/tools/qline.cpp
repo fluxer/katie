@@ -35,7 +35,7 @@
 #include "qdebug.h"
 #include "qdatastream.h"
 #include "qmath.h"
-#include <qnumeric.h>
+#include "qnumeric.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -44,7 +44,7 @@
 
 #include "qdeclarativeanimation_p_p.h"
 
-#include <qdeclarativeproperty.h>
+#include "qdeclarativeproperty.h"
 #include "qdeclarativeproperty_p.h"
 
 #include "qdeclarativeglobal_p.h"

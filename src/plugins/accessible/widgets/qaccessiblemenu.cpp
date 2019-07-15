@@ -41,10 +41,10 @@
 
 #include "qaccessiblemenu.h"
 
-#include <qmenu.h>
-#include <qmenubar.h>
-#include <QtGui/QAction>
-#include <qstyle.h>
+#include "qmenu.h"
+#include "qmenubar.h"
+#include "qaction.h"
+#include "qstyle.h"
 
 #ifndef QT_NO_ACCESSIBILITY
 

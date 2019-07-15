@@ -41,21 +41,21 @@
 
 #include "simplewidgets.h"
 
-#include <qabstractbutton.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
-#include <qprogressbar.h>
-#include <qstatusbar.h>
-#include <qradiobutton.h>
-#include <qtoolbutton.h>
-#include <qlabel.h>
-#include <qgroupbox.h>
-#include <qlcdnumber.h>
-#include <qtextdocument.h>
-#include <qlineedit.h>
+#include "qabstractbutton.h"
+#include "qcheckbox.h"
+#include "qpushbutton.h"
+#include "qprogressbar.h"
+#include "qstatusbar.h"
+#include "qradiobutton.h"
+#include "qtoolbutton.h"
+#include "qlabel.h"
+#include "qgroupbox.h"
+#include "qlcdnumber.h"
+#include "qtextdocument.h"
+#include "qlineedit.h"
 #include <qlineedit_p.h>
-#include <qstyle.h>
-#include <qstyleoption.h>
+#include "qstyle.h"
+#include "qstyleoption.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVEFONTLOADER_H
 #define QDECLARATIVEFONTLOADER_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 #include <QtCore/qobject.h>
 #include <QtCore/qurl.h>

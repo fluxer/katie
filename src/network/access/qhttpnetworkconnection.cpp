@@ -46,14 +46,14 @@
 #include <qnetworkrequest_p.h>
 #include <qobject_p.h>
 #include <qauthenticator_p.h>
-#include <qnetworkproxy.h>
-#include <qauthenticator.h>
-#include <qcoreapplication.h>
+#include "qnetworkproxy.h"
+#include "qauthenticator.h"
+#include "qcoreapplication.h"
 
-#include <qbuffer.h>
-#include <qpair.h>
-#include <qhttp.h>
-#include <qdebug.h>
+#include "qbuffer.h"
+#include "qpair.h"
+#include "qhttp.h"
+#include "qdebug.h"
 
 #ifndef QT_NO_HTTP
 

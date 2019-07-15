@@ -49,7 +49,7 @@
 #include <qlistmodelinterface_p.h>
 #include <QGraphicsSceneEvent>
 
-#include <qmath.h>
+#include "qmath.h"
 #include <math.h>
 
 QT_BEGIN_NAMESPACE

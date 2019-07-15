@@ -40,9 +40,9 @@
 ****************************************************************************/
 
 #include "qfileinfogatherer_p.h"
-#include <qdebug.h>
-#include <qfsfileengine.h>
-#include <qdiriterator.h>
+#include "qdebug.h"
+#include "qfsfileengine.h"
+#include "qdiriterator.h"
 
 #include <unistd.h>
 #include <sys/types.h>

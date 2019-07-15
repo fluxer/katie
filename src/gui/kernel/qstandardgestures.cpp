@@ -45,7 +45,7 @@
 #include "qevent.h"
 #include "qwidget.h"
 #include "qabstractscrollarea.h"
-#include <qgraphicssceneevent.h>
+#include "qgraphicssceneevent.h"
 #include "qdebug.h"
 
 #ifndef QT_NO_GESTURES

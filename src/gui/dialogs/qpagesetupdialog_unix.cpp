@@ -47,7 +47,7 @@
 #include "qpainter.h"
 #include "qprintdialog.h"
 #include "qdialogbuttonbox.h"
-#include <qprinter.h>
+#include "qprinter.h"
 #include <qabstractpagesetupdialog_p.h>
 #include <qprinter_p.h>
 #include "qpagesetupdialog_p.h"

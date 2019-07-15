@@ -65,7 +65,7 @@
 #include <QtGui/qpalette.h>
 #include <QtGui/qstyleoption.h>
 
-#include <qdebug.h>
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

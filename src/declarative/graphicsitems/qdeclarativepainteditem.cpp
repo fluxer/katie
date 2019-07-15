@@ -49,7 +49,7 @@
 #include <QGraphicsSceneEvent>
 #include <QPainter>
 #include <QPaintEngine>
-#include <qmath.h>
+#include "qmath.h"
 
 QT_BEGIN_NAMESPACE
 

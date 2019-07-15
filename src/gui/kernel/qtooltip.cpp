@@ -39,22 +39,22 @@
 **
 ****************************************************************************/
 
-#include <qapplication.h>
-#include <qdesktopwidget.h>
-#include <qevent.h>
-#include <qhash.h>
-#include <qlabel.h>
-#include <qpointer.h>
-#include <qstyle.h>
-#include <qstyleoption.h>
-#include <qstylepainter.h>
-#include <qtimer.h>
-#include <qtooltip.h>
+#include "qapplication.h"
+#include "qdesktopwidget.h"
+#include "qevent.h"
+#include "qhash.h"
+#include "qlabel.h"
+#include "qpointer.h"
+#include "qstyle.h"
+#include "qstyleoption.h"
+#include "qstylepainter.h"
+#include "qtimer.h"
+#include "qtooltip.h"
 #include <qeffects_p.h>
-#include <qtextdocument.h>
-#include <qdebug.h>
+#include "qtextdocument.h"
+#include "qdebug.h"
 #include <qstylesheetstyle_p.h>
-#include <qbasictimer.h>
+#include "qbasictimer.h"
 #ifndef QT_NO_TOOLTIP
 
 QT_BEGIN_NAMESPACE

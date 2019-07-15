@@ -42,7 +42,7 @@
 #include "qdbusabstractinterface.h"
 #include "qdbusabstractinterface_p.h"
 
-#include <qthread.h>
+#include "qthread.h"
 
 #include "qdbusargument.h"
 #include "qdbuspendingcall.h"
@@ -51,7 +51,7 @@
 #include "qdbusmetatype_p.h"
 #include "qdbusutil_p.h"
 
-#include <qdebug.h>
+#include "qdebug.h"
 
 
 QT_BEGIN_NAMESPACE

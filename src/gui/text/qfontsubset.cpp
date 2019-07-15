@@ -38,10 +38,10 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <qdebug.h>
+#include "qdebug.h"
 #include "qfontsubset_p.h"
-#include <qendian.h>
-#include <qpainterpath.h>
+#include "qendian.h"
+#include "qpainterpath.h"
 #include "qpdf_p.h"
 
 #ifdef Q_WS_X11

@@ -42,9 +42,9 @@
 #include "qpathclipper_p.h"
 
 #include <qbezier_p.h>
-#include <qmath.h>
-#include <qnumeric.h>
-#include <qdebug.h>
+#include "qmath.h"
+#include "qnumeric.h"
+#include "qdebug.h"
 
 /**
   The algorithm is as follows:

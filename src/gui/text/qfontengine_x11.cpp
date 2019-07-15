@@ -43,11 +43,11 @@
 
 // #define FONTENGINE_DEBUG
 
-#include <qapplication.h>
-#include <qbytearray.h>
-#include <qdebug.h>
-#include <qtextcodec.h>
-#include <qthread.h>
+#include "qapplication.h"
+#include "qbytearray.h"
+#include "qdebug.h"
+#include "qtextcodec.h"
+#include "qthread.h"
 
 #include "qfontdatabase.h"
 #include "qpaintdevice.h"
@@ -61,7 +61,7 @@
 #include "qfont.h"
 #include "qfont_p.h"
 #include "qfontengine_p.h"
-#include <qhash.h>
+#include "qhash.h"
 
 #include <qpainter_p.h>
 #include <qunicodetables_p.h>

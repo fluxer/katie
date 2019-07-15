@@ -48,14 +48,14 @@
 #include <limits.h>
 #include "qaction.h"
 #include "qclipboard.h"
-#include <qdebug.h>
-#include <qurl.h>
+#include "qdebug.h"
+#include "qurl.h"
 #include "qlabel_p.h"
 #include "qstylesheetstyle_p.h"
-#include <qmath.h>
+#include "qmath.h"
 
 #ifndef QT_NO_ACCESSIBILITY
-#include <qaccessible.h>
+#include "qaccessible.h"
 #endif
 
 

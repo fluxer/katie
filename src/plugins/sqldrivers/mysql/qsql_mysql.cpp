@@ -41,25 +41,22 @@
 
 #include "qsql_mysql.h"
 
-#include <qcoreapplication.h>
-#include <qvariant.h>
-#include <qdatetime.h>
-#include <qsqlerror.h>
-#include <qsqlfield.h>
-#include <qsqlindex.h>
-#include <qsqlquery.h>
-#include <qsqlrecord.h>
-#include <qstringlist.h>
-#include <qtextcodec.h>
-#include <qvector.h>
+#include "qcoreapplication.h"
+#include "qvariant.h"
+#include "qdatetime.h"
+#include "qsqlerror.h"
+#include "qsqlfield.h"
+#include "qsqlindex.h"
+#include "qsqlquery.h"
+#include "qsqlrecord.h"
+#include "qstringlist.h"
+#include "qtextcodec.h"
+#include "qvector.h"
+#include "qdebug.h"
 
-#include <qdebug.h>
-
-#ifdef Q_OS_WIN32
-// comment the next line out if you want to use MySQL/embedded on Win32 systems.
-// note that it will crash if you don't statically link to the mysql/e library!
-# define Q_NO_MYSQL_EMBEDDED
-#endif
+// comment the next line out if you want to use MySQL/embedded.
+// note that it will crash if you don't link to the mysql/e library!
+// #define Q_NO_MYSQL_EMBEDDED
 
 Q_DECLARE_METATYPE(MYSQL_RES*)
 Q_DECLARE_METATYPE(MYSQL*)

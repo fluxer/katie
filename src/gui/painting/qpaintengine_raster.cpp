@@ -46,12 +46,12 @@
 #define QT_FT_END_HEADER
 
 #include <qrasterdefs_p.h>
-#include <qpainterpath.h>
-#include <qdebug.h>
-#include <qcache.h>
-#include <qlabel.h>
-#include <qbitmap.h>
-#include <qmath.h>
+#include "qpainterpath.h"
+#include "qdebug.h"
+#include "qcache.h"
+#include "qlabel.h"
+#include "qbitmap.h"
+#include "qmath.h"
 #include <qfontengine_ft_p.h>
 #include <qmath_p.h>
 #include <qtextengine_p.h>

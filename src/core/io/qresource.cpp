@@ -43,7 +43,7 @@
 #include "qdatetime.h"
 #include "qbytearray.h"
 #include "qstringlist.h"
-#include <qshareddata.h>
+#include "qshareddata.h"
 #include <qplatformdefs.h>
 #include "qabstractfileengine_p.h"
 #include "qcore_unix_p.h"

@@ -46,9 +46,9 @@
 #include "qhostinfo_p.h"
 #include "qnativesocketengine_p.h"
 #include "qiodevice.h"
-#include <qbytearray.h>
-#include <qurl.h>
-#include <qfile.h>
+#include "qbytearray.h"
+#include "qurl.h"
+#include "qfile.h"
 #include <qnet_unix_p.h>
 
 #include <sys/types.h>
@@ -62,7 +62,7 @@
 QT_BEGIN_NAMESPACE
 
 #if defined (QT_NO_GETADDRINFO)
-#include <qmutex.h>
+#include "qmutex.h"
 Q_GLOBAL_STATIC(QMutex, getHostByNameMutex)
 #endif
 

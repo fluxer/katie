@@ -41,18 +41,18 @@
 
 #include "qsql_psql.h"
 
-#include <qcoreapplication.h>
-#include <qvariant.h>
-#include <qdatetime.h>
-#include <qregexp.h>
-#include <qsqlerror.h>
-#include <qsqlfield.h>
-#include <qsqlindex.h>
-#include <qsqlrecord.h>
-#include <qsqlquery.h>
-#include <qsocketnotifier.h>
-#include <qstringlist.h>
-#include <qmutex.h>
+#include "qcoreapplication.h"
+#include "qvariant.h"
+#include "qdatetime.h"
+#include "qregexp.h"
+#include "qsqlerror.h"
+#include "qsqlfield.h"
+#include "qsqlindex.h"
+#include "qsqlrecord.h"
+#include "qsqlquery.h"
+#include "qsocketnotifier.h"
+#include "qstringlist.h"
+#include "qmutex.h"
 
 #include <libpq-fe.h>
 #include <pg_config.h>

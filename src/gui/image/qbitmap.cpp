@@ -43,7 +43,7 @@
 #include "qpixmapdata_p.h"
 #include "qimage.h"
 #include "qvariant.h"
-#include <qpainter.h>
+#include "qpainter.h"
 #include <qgraphicssystem_p.h>
 #include <qapplication_p.h>
 

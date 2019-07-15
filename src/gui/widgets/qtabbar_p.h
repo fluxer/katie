@@ -48,16 +48,16 @@
 #include "qtabbar.h"
 #include "qwidget_p.h"
 
-#include <qicon.h>
-#include <qtoolbutton.h>
-#include <qdebug.h>
-#include <qvariantanimation.h>
+#include "qicon.h"
+#include "qtoolbutton.h"
+#include "qdebug.h"
+#include "qvariantanimation.h"
 
 #ifndef QT_NO_TABBAR
 
 #define ANIMATION_DURATION 250
 
-#include <qstyleoption.h>
+#include "qstyleoption.h"
 
 QT_BEGIN_NAMESPACE
 

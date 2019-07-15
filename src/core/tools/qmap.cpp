@@ -36,8 +36,8 @@
 #include <stdlib.h>
 
 #ifdef QT_QMAP_DEBUG
-# include <qstring.h>
-# include <qvector.h>
+# include "qstring.h"
+# include "qvector.h"
 #endif
 
 QT_BEGIN_NAMESPACE

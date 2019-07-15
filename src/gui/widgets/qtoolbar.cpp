@@ -43,19 +43,19 @@
 
 #ifndef QT_NO_TOOLBAR
 
-#include <qapplication.h>
-#include <qcombobox.h>
-#include <qevent.h>
-#include <qlayout.h>
-#include <qmainwindow.h>
-#include <qmenu.h>
-#include <qmenubar.h>
-#include <qrubberband.h>
-#include <qsignalmapper.h>
-#include <qstylepainter.h>
-#include <qtoolbutton.h>
-#include <qwidgetaction.h>
-#include <qtimer.h>
+#include "qapplication.h"
+#include "qcombobox.h"
+#include "qevent.h"
+#include "qlayout.h"
+#include "qmainwindow.h"
+#include "qmenu.h"
+#include "qmenubar.h"
+#include "qrubberband.h"
+#include "qsignalmapper.h"
+#include "qstylepainter.h"
+#include "qtoolbutton.h"
+#include "qwidgetaction.h"
+#include "qtimer.h"
 #include <qwidgetaction_p.h>
 #include <qmainwindowlayout_p.h>
 

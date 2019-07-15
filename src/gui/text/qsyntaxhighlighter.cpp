@@ -43,15 +43,15 @@
 
 #ifndef QT_NO_SYNTAXHIGHLIGHTER
 #include <qobject_p.h>
-#include <qtextdocument.h>
+#include "qtextdocument.h"
 #include <qtextdocument_p.h>
-#include <qtextlayout.h>
-#include <qpointer.h>
-#include <qtextobject.h>
-#include <qtextcursor.h>
-#include <qdebug.h>
-#include <qtextedit.h>
-#include <qtimer.h>
+#include "qtextlayout.h"
+#include "qpointer.h"
+#include "qtextobject.h"
+#include "qtextcursor.h"
+#include "qdebug.h"
+#include "qtextedit.h"
+#include "qtimer.h"
 
 QT_BEGIN_NAMESPACE
 

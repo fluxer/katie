@@ -42,11 +42,11 @@
 #ifndef QT_NO_QCOLUMNVIEW
 
 #include "qcolumnviewgrip_p.h"
-#include <qstyleoption.h>
-#include <qpainter.h>
-#include <qbrush.h>
-#include <qevent.h>
-#include <qdebug.h>
+#include "qstyleoption.h"
+#include "qpainter.h"
+#include "qbrush.h"
+#include "qevent.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

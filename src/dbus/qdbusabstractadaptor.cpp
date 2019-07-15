@@ -40,15 +40,12 @@
 ****************************************************************************/
 
 #include "qdbusabstractadaptor.h"
-
-#include <QtCore/qcoreapplication.h>
-#include <QtCore/qmetaobject.h>
-#include <QtCore/qset.h>
-#include <QtCore/qtimer.h>
-#include <QtCore/qthread.h>
-
+#include "qcoreapplication.h"
+#include "qmetaobject.h"
+#include "qset.h"
+#include "qtimer.h"
+#include "qthread.h"
 #include "qdbusconnection.h"
-
 #include "qdbusconnection_p.h"  // for qDBusParametersForMethod
 #include "qdbusabstractadaptor_p.h"
 #include "qdbusmetatype_p.h"

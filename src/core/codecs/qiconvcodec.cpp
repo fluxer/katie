@@ -33,8 +33,8 @@
 
 #include "qiconvcodec_p.h"
 #include "qtextcodec_p.h"
-#include <qlibrary.h>
-#include <qdebug.h>
+#include "qlibrary.h"
+#include "qdebug.h"
 
 #include <errno.h>
 #include <locale.h>

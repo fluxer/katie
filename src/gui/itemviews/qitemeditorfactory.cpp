@@ -39,24 +39,24 @@
 **
 ****************************************************************************/
 
-#include <qplatformdefs.h>
+#include "qplatformdefs.h"
 #include "qitemeditorfactory.h"
 #include "qitemeditorfactory_p.h"
 
 #ifndef QT_NO_ITEMVIEWS
 
-#include <qcombobox.h>
-#include <qdatetimeedit.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qspinbox.h>
+#include "qcombobox.h"
+#include "qdatetimeedit.h"
+#include "qlabel.h"
+#include "qlineedit.h"
+#include "qspinbox.h"
+#include "qapplication.h"
+#include "qdebug.h"
+
 #include <limits.h>
 #include <float.h>
-#include <qapplication.h>
-#include <qdebug.h>
 
 QT_BEGIN_NAMESPACE
-
 
 #ifndef QT_NO_COMBOBOX
 

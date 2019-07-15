@@ -44,7 +44,7 @@
 #include "qvariant.h"
 #include "qbrush.h"
 
-#include <qdebug.h>
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

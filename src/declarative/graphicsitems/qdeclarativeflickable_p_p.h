@@ -50,11 +50,11 @@
 #include "qdeclarativeitem_p.h"
 #include "qdeclarativeitemchangelistener_p.h"
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 #include <qdeclarativetimeline_p_p.h>
 #include <qdeclarativeanimation_p_p.h>
 
-#include <qdatetime.h>
+#include "qdatetime.h"
 #include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE

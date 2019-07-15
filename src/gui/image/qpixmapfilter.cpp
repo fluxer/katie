@@ -39,14 +39,9 @@
 **
 ****************************************************************************/
 
-#include <qglobal.h>
-
-#include <QDebug>
-
 #include "qpainter.h"
 #include "qpixmap.h"
 #include "qpixmapfilter_p.h"
-
 #include "qapplication_p.h"
 #include "qgraphicssystem_p.h"
 #include "qpaintengineex_p.h"
@@ -55,6 +50,7 @@
 #include "qmath_p.h"
 #include "qmemrotate_p.h"
 #include "qdrawhelper_p.h"
+#include "qdebug.h"
 
 #ifndef QT_NO_GRAPHICSEFFECT
 QT_BEGIN_NAMESPACE

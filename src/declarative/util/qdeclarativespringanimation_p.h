@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVESPRINGANIMATION_H
 #define QDECLARATIVESPRINGANIMATION_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 #include "qdeclarativeanimation_p.h"
 
 #include <QtCore/qobject.h>

@@ -102,7 +102,7 @@
 #include <pwd.h>
 
 #ifdef QT_RX71_MULTITOUCH
-#  include <qsocketnotifier.h>
+#  include "qsocketnotifier.h"
 #  include <linux/input.h>
 #  include <errno.h>
 #endif

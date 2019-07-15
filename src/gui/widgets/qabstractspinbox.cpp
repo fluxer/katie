@@ -42,22 +42,22 @@
 #include <qplatformdefs.h>
 #include <qabstractspinbox_p.h>
 #include <qlineedit_p.h>
-#include <qabstractspinbox.h>
+#include "qabstractspinbox.h"
 
 #ifndef QT_NO_SPINBOX
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qdatetime.h>
-#include <qdatetimeedit.h>
-#include <qevent.h>
-#include <qmenu.h>
-#include <qpainter.h>
-#include <qpalette.h>
-#include <qstylepainter.h>
-#include <qdebug.h>
+#include "qapplication.h"
+#include "qclipboard.h"
+#include "qdatetime.h"
+#include "qdatetimeedit.h"
+#include "qevent.h"
+#include "qmenu.h"
+#include "qpainter.h"
+#include "qpalette.h"
+#include "qstylepainter.h"
+#include "qdebug.h"
 #ifndef QT_NO_ACCESSIBILITY
-# include <qaccessible.h>
+# include "qaccessible.h"
 #endif
 
 #if defined(Q_WS_X11)

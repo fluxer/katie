@@ -39,10 +39,10 @@
 **
 ****************************************************************************/
 
-#include <qglobal.h>
+#include "qglobal.h"
 
 #ifndef QT_NO_PRINTER
-#include <qdebug.h>
+#include "qdebug.h"
 #include "qpaintengine_alpha_p.h"
 #include "qfont_p.h"
 

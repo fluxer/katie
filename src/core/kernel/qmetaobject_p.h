@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qobjectdefs.h>
+#include "qobjectdefs.h"
 #include <qcorecommon_p.h>
 
 #ifndef QT_NO_QOBJECT

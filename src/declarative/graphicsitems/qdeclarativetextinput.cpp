@@ -43,7 +43,7 @@
 #include "qdeclarativetextinput_p_p.h"
 
 #include <qdeclarativeglobal_p.h>
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 
 #include <QValidator>
 #include <QTextCursor>
@@ -51,7 +51,7 @@
 #include <QFontMetrics>
 #include <QPainter>
 #include <QTextBoundaryFinder>
-#include <qstyle.h>
+#include "qstyle.h"
 
 #ifndef QT_NO_LINEEDIT
 

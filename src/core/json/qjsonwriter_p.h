@@ -26,7 +26,7 @@
 #ifndef QJSONWRITER_P_H
 #define QJSONWRITER_P_H
 
-#include <qjsonvalue.h>
+#include "qjsonvalue.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -56,9 +56,9 @@
 #include <QtGui/qabstractitemdelegate.h>
 #include <QtGui/qabstractitemview.h>
 #include <QtGui/qitemdelegate.h>
-#include <qlistview.h>
-#include <qevent.h>
-#include <qscrollbar.h>
+#include "qlistview.h"
+#include "qevent.h"
+#include "qscrollbar.h"
 
 QT_BEGIN_NAMESPACE
 

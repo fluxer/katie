@@ -47,9 +47,9 @@
 
 #include "qabstractnetworkcache_p.h"
 
-#include <qbuffer.h>
-#include <qhash.h>
-#include <qtemporaryfile.h>
+#include "qbuffer.h"
+#include "qhash.h"
+#include "qtemporaryfile.h"
 
 #ifndef QT_NO_NETWORKDISKCACHE
 

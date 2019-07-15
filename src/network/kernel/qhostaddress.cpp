@@ -47,7 +47,7 @@
 #include "qendian.h"
 #include "qnativesocketengine_p.h"
 #ifndef QT_NO_DATASTREAM
-#include <qdatastream.h>
+#include "qdatastream.h"
 #endif
 
 #ifdef QT_LINUXBASE

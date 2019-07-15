@@ -43,9 +43,9 @@
 
 #ifndef QT_NO_IMAGEFORMAT_BMP
 
-#include <qimage.h>
-#include <qvariant.h>
-#include <qvector.h>
+#include "qimage.h"
+#include "qvariant.h"
+#include "qvector.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <qdebug.h>
+#include "qdebug.h"
 
 #include "qvalidator.h"
 #ifndef QT_NO_VALIDATOR

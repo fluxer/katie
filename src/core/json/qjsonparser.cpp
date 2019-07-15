@@ -23,8 +23,8 @@
 *
 ***********************************************************************/
 
-#include <qcoreapplication.h>
-#include <qdebug.h>
+#include "qcoreapplication.h"
+#include "qdebug.h"
 #include <qjsonparser_p.h>
 #include <qjson_p.h>
 

@@ -40,15 +40,15 @@
 #include "qcoreapplication_p.h"
 #include "qvariant.h"
 #include "qmetaobject.h"
-#include <qregexp.h>
-#include <qthread.h>
+#include "qregexp.h"
+#include "qthread.h"
 #include <qthread_p.h>
-#include <qdebug.h>
-#include <qhash.h>
-#include <qpair.h>
-#include <qset.h>
-#include <qsemaphore.h>
-#include <qsharedpointer.h>
+#include "qdebug.h"
+#include "qhash.h"
+#include "qpair.h"
+#include "qset.h"
+#include "qsemaphore.h"
+#include "qsharedpointer.h"
 
 #include <qorderedmutexlocker_p.h>
 #include <qmutexpool_p.h>

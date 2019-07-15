@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <qglobal.h>
+#include "qglobal.h"
 
 #ifndef QT_NO_TEXTODFWRITER
 
@@ -50,7 +50,7 @@
 #include <QBuffer>
 #include <QUrl>
 
-#include <qtextformat.h>
+#include "qtextformat.h"
 
 #include "qtextdocument_p.h"
 #include "qtexttable.h"

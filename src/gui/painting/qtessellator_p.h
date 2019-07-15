@@ -45,8 +45,8 @@
 // We mean it.
 //
 
-#include <qpoint.h>
-#include <qrect.h>
+#include "qpoint.h"
+#include "qrect.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -51,7 +51,7 @@
 #include "qdebug.h"
 
 #ifdef Q_WS_X11
-#include <qx11info_x11.h>
+#include "qx11info_x11.h"
 #endif
 
 #include <limits.h>

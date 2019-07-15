@@ -39,9 +39,9 @@
 
 #ifndef QT_NO_FILESYSTEMWATCHER
 
-#include <qdebug.h>
-#include <qfile.h>
-#include <qsocketnotifier.h>
+#include "qdebug.h"
+#include "qfile.h"
+#include "qsocketnotifier.h"
 
 #include <sys/types.h>
 #include <sys/event.h>

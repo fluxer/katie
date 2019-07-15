@@ -39,16 +39,16 @@
 **
 ****************************************************************************/
 
-#include <qimageiohandler.h>
-#include <qstringlist.h>
+#include "qimageiohandler.h"
+#include "qstringlist.h"
 
 #if !defined(QT_NO_IMAGEFORMATPLUGIN) && !defined(QT_NO_SVGRENDERER)
 
 #include "qsvgiohandler.h"
 
-#include <qiodevice.h>
-#include <qbytearray.h>
-#include <qdebug.h>
+#include "qiodevice.h"
+#include "qbytearray.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

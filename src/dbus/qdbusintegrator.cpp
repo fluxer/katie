@@ -39,14 +39,14 @@
 **
 ****************************************************************************/
 
-#include <qcoreapplication.h>
-#include <qdebug.h>
-#include <qmetaobject.h>
-#include <qobject.h>
-#include <qsocketnotifier.h>
-#include <qstringlist.h>
-#include <qtimer.h>
-#include <qthread.h>
+#include "qcoreapplication.h"
+#include "qdebug.h"
+#include "qmetaobject.h"
+#include "qobject.h"
+#include "qsocketnotifier.h"
+#include "qstringlist.h"
+#include "qtimer.h"
+#include "qthread.h"
 
 #include "qdbusargument.h"
 #include "qdbusconnection_p.h"

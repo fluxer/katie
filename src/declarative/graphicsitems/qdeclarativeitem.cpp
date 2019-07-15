@@ -46,13 +46,13 @@
 #include <qgraphicsitem_p.h>
 #include <qdeclarativeitem_p.h>
 
-#include <qdeclarativeengine.h>
+#include "qdeclarativeengine.h"
 #include <qdeclarativeopenmetaobject_p.h>
 #include <qdeclarativestate_p.h>
-#include <qdeclarativeview.h>
+#include "qdeclarativeview.h"
 #include <qdeclarativestategroup_p.h>
-#include <qdeclarativecomponent.h>
-#include <qdeclarativeinfo.h>
+#include "qdeclarativecomponent.h"
+#include "qdeclarativeinfo.h"
 
 #include <QDebug>
 #include <QPen>

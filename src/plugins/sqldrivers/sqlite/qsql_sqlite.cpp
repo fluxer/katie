@@ -40,19 +40,17 @@
 ****************************************************************************/
 
 #include "qsql_sqlite.h"
-
-#include <qcoreapplication.h>
-#include <qvariant.h>
-#include <qsqlerror.h>
-#include <qsqlfield.h>
-#include <qsqlindex.h>
-#include <qsqlquery.h>
-#include <qstringlist.h>
-#include <qvector.h>
-#include <qdebug.h>
+#include "qcoreapplication.h"
+#include "qvariant.h"
+#include "qsqlerror.h"
+#include "qsqlfield.h"
+#include "qsqlindex.h"
+#include "qsqlquery.h"
+#include "qstringlist.h"
+#include "qvector.h"
+#include "qdebug.h"
 
 #include <unistd.h>
-
 #include <sqlite3.h>
 
 Q_DECLARE_METATYPE(sqlite3*)

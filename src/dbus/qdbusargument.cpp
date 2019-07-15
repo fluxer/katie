@@ -41,16 +41,16 @@
 
 #include "qdbusargument.h"
 
-#include <qatomic.h>
-#include <qbytearray.h>
-#include <qlist.h>
-#include <qmap.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qvariant.h>
-#include <qdatetime.h>
-#include <qrect.h>
-#include <qline.h>
+#include "qatomic.h"
+#include "qbytearray.h"
+#include "qlist.h"
+#include "qmap.h"
+#include "qstring.h"
+#include "qstringlist.h"
+#include "qvariant.h"
+#include "qdatetime.h"
+#include "qrect.h"
+#include "qline.h"
 
 #include "qdbusargument_p.h"
 #include "qdbusmetatype_p.h"

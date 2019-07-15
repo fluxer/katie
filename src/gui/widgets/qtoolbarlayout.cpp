@@ -39,14 +39,14 @@
 **
 ****************************************************************************/
 
-#include <qaction.h>
-#include <qwidgetaction.h>
-#include <qtoolbar.h>
-#include <qstyleoption.h>
-#include <qtoolbutton.h>
-#include <qmenu.h>
-#include <qdebug.h>
-#include <qmath.h>
+#include "qaction.h"
+#include "qwidgetaction.h"
+#include "qtoolbar.h"
+#include "qstyleoption.h"
+#include "qtoolbutton.h"
+#include "qmenu.h"
+#include "qdebug.h"
+#include "qmath.h"
 
 #include "qmainwindowlayout_p.h"
 #include "qtoolbarextension_p.h"

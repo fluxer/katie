@@ -41,17 +41,17 @@
 
 #include "qplatformdefs.h"
 #include "qx11embed_x11.h"
-#include <qapplication.h>
-#include <qevent.h>
-#include <qpainter.h>
-#include <qlayout.h>
-#include <qstyle.h>
-#include <qstyleoption.h>
-#include <qelapsedtimer.h>
-#include <qpointer.h>
-#include <qdebug.h>
+#include "qapplication.h"
+#include "qevent.h"
+#include "qpainter.h"
+#include "qlayout.h"
+#include "qstyle.h"
+#include "qstyleoption.h"
+#include "qelapsedtimer.h"
+#include "qpointer.h"
+#include "qdebug.h"
 #include <qwidget_p.h>
-#include <qx11info_x11.h>
+#include "qx11info_x11.h"
 #include <qt_x11_p.h>
 
 //#define QX11EMBED_DEBUG

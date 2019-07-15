@@ -42,26 +42,26 @@
 #include "qheaderview.h"
 
 #ifndef QT_NO_ITEMVIEWS
-#include <qbitarray.h>
-#include <qbrush.h>
-#include <qdebug.h>
-#include <qevent.h>
-#include <qpainter.h>
-#include <qscrollbar.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-#include <qstyle.h>
-#include <qstyleoption.h>
-#include <qvector.h>
-#include <qapplication.h>
-#include <qvarlengtharray.h>
-#include <qabstractitemdelegate.h>
-#include <qvariant.h>
+#include "qbitarray.h"
+#include "qbrush.h"
+#include "qdebug.h"
+#include "qevent.h"
+#include "qpainter.h"
+#include "qscrollbar.h"
+#include "qtooltip.h"
+#include "qwhatsthis.h"
+#include "qstyle.h"
+#include "qstyleoption.h"
+#include "qvector.h"
+#include "qapplication.h"
+#include "qvarlengtharray.h"
+#include "qabstractitemdelegate.h"
+#include "qvariant.h"
 #include <qheaderview_p.h>
 #include <qabstractitemmodel_p.h>
 
 #ifndef QT_NO_DATASTREAM
-#include <qdatastream.h>
+#include "qdatastream.h"
 #endif
 
 QT_BEGIN_NAMESPACE

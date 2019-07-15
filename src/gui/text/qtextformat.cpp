@@ -42,11 +42,11 @@
 #include "qtextformat.h"
 #include "qtextformat_p.h"
 
-#include <qvariant.h>
-#include <qdatastream.h>
-#include <qdebug.h>
-#include <qmap.h>
-#include <qhash.h>
+#include "qvariant.h"
+#include "qdatastream.h"
+#include "qdebug.h"
+#include "qmap.h"
+#include "qhash.h"
 
 QT_BEGIN_NAMESPACE
 

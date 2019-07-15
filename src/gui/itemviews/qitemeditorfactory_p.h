@@ -47,7 +47,7 @@
 
 
 
-#include <qlineedit.h>
+#include "qlineedit.h"
 
 #ifndef QT_NO_ITEMVIEWS
 

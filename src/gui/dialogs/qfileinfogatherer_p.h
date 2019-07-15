@@ -45,17 +45,17 @@
 // We mean it.
 //
 
-#include <qthread.h>
-#include <qmutex.h>
-#include <qwaitcondition.h>
-#include <qfilesystemwatcher.h>
-#include <qfileiconprovider.h>
-#include <qfsfileengine.h>
-#include <qpair.h>
-#include <qstack.h>
-#include <qdatetime.h>
-#include <qdir.h>
-#include <qelapsedtimer.h>
+#include "qthread.h"
+#include "qmutex.h"
+#include "qwaitcondition.h"
+#include "qfilesystemwatcher.h"
+#include "qfileiconprovider.h"
+#include "qfsfileengine.h"
+#include "qpair.h"
+#include "qstack.h"
+#include "qdatetime.h"
+#include "qdir.h"
+#include "qelapsedtimer.h"
 
 QT_BEGIN_NAMESPACE
 

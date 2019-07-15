@@ -43,13 +43,14 @@
 
 #ifndef QT_NO_DESKTOPSERVICES
 
-#include <qprocess.h>
-#include <qurl.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qt_x11_p.h>
-#include <qcoreapplication.h>
+#include "qprocess.h"
+#include "qurl.h"
+#include "qdir.h"
+#include "qfile.h"
+#include "qtextstream.h"
+#include "qt_x11_p.h"
+#include "qcoreapplication.h"
+
 #include <stdlib.h>
 
 QT_BEGIN_NAMESPACE

@@ -44,12 +44,12 @@
 // We mean it.
 //
 
-#include <qobject.h>
+#include "qobject.h"
 #include <qobject_p.h>
-#include <qkeysequence.h>
-#include <qlist.h>
-#include <qlocale.h>
-#include <qevent.h>
+#include "qkeysequence.h"
+#include "qlist.h"
+#include "qlocale.h"
+#include "qevent.h"
 
 #if defined(Q_WS_X11)
 #    include "qt_x11_p.h"

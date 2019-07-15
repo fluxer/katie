@@ -43,14 +43,14 @@
 
 #ifndef QT_NO_FONTCOMBOBOX
 
-#include <qstringlistmodel.h>
-#include <qitemdelegate.h>
-#include <qlistview.h>
-#include <qpainter.h>
-#include <qevent.h>
-#include <qapplication.h>
+#include "qstringlistmodel.h"
+#include "qitemdelegate.h"
+#include "qlistview.h"
+#include "qpainter.h"
+#include "qevent.h"
+#include "qapplication.h"
 #include <qcombobox_p.h>
-#include <qdebug.h>
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

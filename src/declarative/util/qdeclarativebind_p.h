@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVEBIND_H
 #define QDECLARATIVEBIND_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 #include <QtCore/qobject.h>
 

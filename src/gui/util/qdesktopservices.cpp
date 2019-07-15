@@ -43,19 +43,16 @@
 
 #ifndef QT_NO_DESKTOPSERVICES
 
-#include <qdebug.h>
+#include "qdebug.h"
+#include "qhash.h"
+#include "qobject.h"
+#include "qcoreapplication.h"
+#include "qurl.h"
+#include "qmutex.h"
 
-#if defined(Q_OS_BLACKBERRY)
-#include "qdesktopservices_blackberry.cpp"
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
 #include "qdesktopservices_x11.cpp"
 #endif
-
-#include <qhash.h>
-#include <qobject.h>
-#include <qcoreapplication.h>
-#include <qurl.h>
-#include <qmutex.h>
 
 QT_BEGIN_NAMESPACE
 

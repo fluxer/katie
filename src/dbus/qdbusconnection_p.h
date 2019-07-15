@@ -46,9 +46,9 @@
 #ifndef QDBUSCONNECTION_P_H
 #define QDBUSCONNECTION_P_H
 
-#include <qdbuserror.h>
-#include <qdbusconnection.h>
-#include <qdbusmessage.h>
+#include "qdbuserror.h"
+#include "qdbusconnection.h"
+#include "qdbusmessage.h"
 
 #include <QtCore/qatomic.h>
 #include <QtCore/qhash.h>

@@ -31,8 +31,8 @@
 **
 ****************************************************************************/
 
-#include <qstringlist.h>
-#include <qset.h>
+#include "qstringlist.h"
+#include "qset.h"
 
 QT_BEGIN_NAMESPACE
 

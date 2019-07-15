@@ -41,19 +41,19 @@
 
 #include <math.h>
 #include <qdatetimeedit_p.h>
-#include <qabstractspinbox.h>
-#include <qapplication.h>
-#include <qdatetimeedit.h>
-#include <qdesktopwidget.h>
-#include <qdebug.h>
-#include <qevent.h>
-#include <qlineedit.h>
+#include "qabstractspinbox.h"
+#include "qapplication.h"
+#include "qdatetimeedit.h"
+#include "qdesktopwidget.h"
+#include "qdebug.h"
+#include "qevent.h"
+#include "qlineedit.h"
 #include <qlineedit_p.h>
-#include <qlocale.h>
-#include <qpainter.h>
-#include <qlayout.h>
-#include <qset.h>
-#include <qstyle.h>
+#include "qlocale.h"
+#include "qpainter.h"
+#include "qlayout.h"
+#include "qset.h"
+#include "qstyle.h"
 
 #ifndef QT_NO_DATETIMEEDIT
 

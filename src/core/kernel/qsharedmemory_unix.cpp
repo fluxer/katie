@@ -36,8 +36,8 @@
 #include "qsharedmemory.h"
 #include "qsharedmemory_p.h"
 
-#include <qdebug.h>
-#include <qfile.h>
+#include "qdebug.h"
+#include "qfile.h"
 
 #ifndef QT_NO_SHAREDMEMORY
 #include <sys/types.h>

@@ -42,20 +42,20 @@
 #include "qdirmodel.h"
 
 #ifndef QT_NO_DIRMODEL
-#include <qstack.h>
-#include <qfile.h>
-#include <qfilesystemmodel.h>
-#include <qurl.h>
-#include <qmimedata.h>
-#include <qpair.h>
-#include <qvector.h>
-#include <qobject.h>
-#include <qdatetime.h>
-#include <qlocale.h>
-#include <qstyle.h>
-#include <qapplication.h>
+#include "qstack.h"
+#include "qfile.h"
+#include "qfilesystemmodel.h"
+#include "qurl.h"
+#include "qmimedata.h"
+#include "qpair.h"
+#include "qvector.h"
+#include "qobject.h"
+#include "qdatetime.h"
+#include "qlocale.h"
+#include "qstyle.h"
+#include "qapplication.h"
 #include <qabstractitemmodel_p.h>
-#include <qdebug.h>
+#include "qdebug.h"
 
 /*!
     \enum QDirModel::Roles

@@ -41,7 +41,7 @@
 
 #include "qdeclarativescalegrid_p_p.h"
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 #include <QBuffer>
 #include <QDebug>

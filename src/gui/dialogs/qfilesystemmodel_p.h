@@ -50,15 +50,15 @@
 #ifndef QT_NO_FILESYSTEMMODEL
 
 #include <qabstractitemmodel_p.h>
-#include <qabstractitemmodel.h>
+#include "qabstractitemmodel.h"
 #include "qfileinfogatherer_p.h"
-#include <qpair.h>
-#include <qdir.h>
-#include <qicon.h>
-#include <qfileinfo.h>
-#include <qtimer.h>
-#include <qhash.h>
-#include <qbasictimer.h>
+#include "qpair.h"
+#include "qdir.h"
+#include "qicon.h"
+#include "qfileinfo.h"
+#include "qtimer.h"
+#include "qhash.h"
+#include "qbasictimer.h"
 
 QT_BEGIN_NAMESPACE
 

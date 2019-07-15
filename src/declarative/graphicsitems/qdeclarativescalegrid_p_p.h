@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVESCALEGRID_H
 #define QDECLARATIVESCALEGRID_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 #include <QtCore/QString>
 #include <QtCore/QObject>

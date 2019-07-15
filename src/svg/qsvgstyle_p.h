@@ -54,7 +54,7 @@
 #include "QtGui/qmatrix.h"
 #include "QtGui/qcolor.h"
 #include "QtGui/qfont.h"
-#include <qdebug.h>
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

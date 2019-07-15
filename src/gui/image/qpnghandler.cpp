@@ -42,13 +42,13 @@
 #include "qpnghandler_p.h"
 
 #ifndef QT_NO_IMAGEFORMAT_PNG
-#include <qcoreapplication.h>
-#include <qiodevice.h>
-#include <qimage.h>
-#include <qlist.h>
-#include <qtextcodec.h>
-#include <qvariant.h>
-#include <qvector.h>
+#include "qcoreapplication.h"
+#include "qiodevice.h"
+#include "qimage.h"
+#include "qlist.h"
+#include "qtextcodec.h"
+#include "qvariant.h"
+#include "qvector.h"
 
 #include <png.h>
 #include <pngconf.h>

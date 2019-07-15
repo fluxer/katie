@@ -49,8 +49,8 @@
 #include "qdeclarativecompiledbindings_p.h"
 #include "qdeclarativeglobalscriptclass_p.h"
 
-#include <qscriptengine.h>
-#include <qdebug.h>
+#include "qscriptengine.h"
+#include "qdebug.h"
 
 #include <qscriptdeclarativeclass_p.h>
 

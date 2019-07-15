@@ -38,9 +38,9 @@
 #include "qdeclarativestate_p.h"
 #include <QtGui/qvector3d.h>
 
-#include <qdeclarativepropertyvaluesource.h>
-#include <qdeclarative.h>
-#include <qdeclarativescriptstring.h>
+#include "qdeclarativepropertyvaluesource.h"
+#include "qdeclarative.h"
+#include "qdeclarativescriptstring.h"
 
 #include <QtCore/qvariant.h>
 #include <QtCore/qeasingcurve.h>

@@ -53,7 +53,7 @@
 #include <qgraphicstransform_p.h>
 
 #include <qgraphicseffect_p.h>
-#include <qgraphicseffect.h>
+#include "qgraphicseffect.h"
 
 #include <QtCore/qpoint.h>
 

@@ -31,7 +31,7 @@
 **
 ****************************************************************************/
 
-#include <qdebug.h>
+#include "qdebug.h"
 #include "qplatformdefs.h"
 #include "qsettings.h"
 

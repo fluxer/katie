@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <qglobal.h>
+#include "qglobal.h"
 
 #ifndef QT_NO_COLUMNVIEW
 
@@ -47,11 +47,11 @@
 #include "qcolumnview_p.h"
 #include "qcolumnviewgrip_p.h"
 
-#include <qlistview.h>
-#include <qabstractitemdelegate.h>
-#include <qscrollbar.h>
-#include <qpainter.h>
-#include <qdebug.h>
+#include "qlistview.h"
+#include "qabstractitemdelegate.h"
+#include "qscrollbar.h"
+#include "qpainter.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

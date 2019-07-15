@@ -56,7 +56,7 @@
 #include "QtGui/qevent.h"
 #include "QtGui/qpainter.h"
 #include "QtGui/qregion.h"
-#include <qvector.h>
+#include "qvector.h"
 
 #ifndef QT_NO_ITEMVIEWS
 

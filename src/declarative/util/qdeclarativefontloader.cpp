@@ -41,8 +41,8 @@
 
 #include "qdeclarativefontloader_p.h"
 
-#include <qdeclarativecontext.h>
-#include <qdeclarativeengine.h>
+#include "qdeclarativecontext.h"
+#include "qdeclarativeengine.h"
 
 #include <QStringList>
 #include <QUrl>
@@ -53,7 +53,7 @@
 
 #include <qobject_p.h>
 #include <qdeclarativeengine_p.h>
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 
 QT_BEGIN_NAMESPACE
 

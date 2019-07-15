@@ -49,7 +49,7 @@
 
 #include <layoutinfo_p.h>
 #include <qdesigner_dnditem_p.h>
-#include <qdesigner_resource.h>
+#include "qdesigner_resource.h"
 
 #include <QtGui/qevent.h>
 #include <QtGui/QAction>

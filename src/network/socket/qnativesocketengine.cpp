@@ -96,9 +96,9 @@
     errorString() can be called to determine the cause of the error.
 */
 
-#include <qabstracteventdispatcher.h>
-#include <qsocketnotifier.h>
-#include <qnetworkinterface.h>
+#include "qabstracteventdispatcher.h"
+#include "qsocketnotifier.h"
+#include "qnetworkinterface.h"
 
 #include "qnativesocketengine_p.h"
 #include <qthread_p.h>

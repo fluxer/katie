@@ -46,12 +46,11 @@
 #ifndef QDBUSPENDINGCALL_P_H
 #define QDBUSPENDINGCALL_P_H
 
-#include <qshareddata.h>
-#include <qpointer.h>
-#include <qlist.h>
-#include <qmutex.h>
-#include <qwaitcondition.h>
-
+#include "qshareddata.h"
+#include "qpointer.h"
+#include "qlist.h"
+#include "qmutex.h"
+#include "qwaitcondition.h"
 #include "qdbusmessage.h"
 
 #include <dbus/dbus.h>

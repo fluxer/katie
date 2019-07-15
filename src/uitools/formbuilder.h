@@ -34,7 +34,7 @@
 #ifndef FORMBUILDER_H
 #define FORMBUILDER_H
 
-#include <abstractformbuilder.h>
+#include "abstractformbuilder.h"
 
 #include <QtCore/QStringList>
 #include <QtCore/QMap>

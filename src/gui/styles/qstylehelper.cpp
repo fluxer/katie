@@ -39,13 +39,13 @@
 **
 ****************************************************************************/
 
-#include <qstyleoption.h>
-#include <qpainter.h>
-#include <qpixmapcache.h>
+#include "qstyleoption.h"
+#include "qpainter.h"
+#include "qpixmapcache.h"
 #include <qmath_p.h>
 #include <qstyle_p.h>
-#include <qmath.h>
-#include <qpen.h>
+#include "qmath.h"
+#include "qpen.h"
 #include "qstylehelper_p.h"
 
 QT_BEGIN_NAMESPACE

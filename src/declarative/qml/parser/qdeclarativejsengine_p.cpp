@@ -43,7 +43,7 @@
 
 #include "qdeclarativejsnodepool_p.h"
 
-#include <qnumeric.h>
+#include "qnumeric.h"
 #include <QHash>
 
 QT_BEGIN_NAMESPACE

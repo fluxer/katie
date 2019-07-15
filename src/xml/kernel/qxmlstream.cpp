@@ -44,14 +44,15 @@
 #ifndef QT_NO_XMLSTREAM
 
 #include "qxmlutils_p.h"
-#include <qdebug.h>
-#include <qfile.h>
-#include <stdio.h>
-#include <qtextcodec.h>
-#include <qstack.h>
-#include <qbuffer.h>
-#include <qcoreapplication.h>
+#include "qdebug.h"
+#include "qfile.h"
+#include "qtextcodec.h"
+#include "qstack.h"
+#include "qbuffer.h"
+#include "qcoreapplication.h"
 #include "qxmlcommon_p.h"
+
+#include <stdio.h>
 
 QT_BEGIN_NAMESPACE
 

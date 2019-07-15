@@ -34,8 +34,8 @@
 #ifndef QDECLARATIVEGESTUREAREA_H
 #define QDECLARATIVEGESTUREAREA_H
 
-#include <qdeclarativeitem.h>
-#include <qdeclarativescriptstring.h>
+#include "qdeclarativeitem.h"
+#include "qdeclarativescriptstring.h"
 #include <qdeclarativecustomparser_p.h>
 
 #include <QtCore/qobject.h>

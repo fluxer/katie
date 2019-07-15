@@ -36,9 +36,9 @@
 
 #include "qdeclarativestate_p.h"
 
-#include <qdeclarativepropertyvaluesource.h>
-#include <qdeclarativepropertyvalueinterceptor.h>
-#include <qdeclarative.h>
+#include "qdeclarativepropertyvaluesource.h"
+#include "qdeclarativepropertyvalueinterceptor.h"
+#include "qdeclarative.h"
 #include <QtGui/QAbstractAnimation>
 
 QT_BEGIN_HEADER

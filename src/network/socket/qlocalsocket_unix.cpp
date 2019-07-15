@@ -52,9 +52,9 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include <qdir.h>
-#include <qdebug.h>
-#include <qelapsedtimer.h>
+#include "qdir.h"
+#include "qdebug.h"
+#include "qelapsedtimer.h"
 
 #define QT_CONNECT_TIMEOUT 30000
 

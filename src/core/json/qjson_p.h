@@ -26,14 +26,14 @@
 #ifndef QJSON_P_H
 #define QJSON_P_H
 
-#include <qjsonobject.h>
-#include <qjsonvalue.h>
-#include <qjsondocument.h>
-#include <qjsonarray.h>
-#include <qatomic.h>
-#include <qstring.h>
-#include <qendian.h>
-#include <qnumeric.h>
+#include "qjsonobject.h"
+#include "qjsonvalue.h"
+#include "qjsondocument.h"
+#include "qjsonarray.h"
+#include "qatomic.h"
+#include "qstring.h"
+#include "qendian.h"
+#include "qnumeric.h"
 #include <limits.h>
 #include <limits>
 

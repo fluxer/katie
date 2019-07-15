@@ -40,18 +40,16 @@
 ****************************************************************************/
 
 #include "qplaintextedit_p.h"
-
-
-#include <qfont.h>
-#include <qpainter.h>
-#include <qevent.h>
-#include <qdebug.h>
-#include <qmimedata.h>
-#include <qdrag.h>
-#include <qclipboard.h>
-#include <qmenu.h>
-#include <qstyle.h>
-#include <qtimer.h>
+#include "qfont.h"
+#include "qpainter.h"
+#include "qevent.h"
+#include "qdebug.h"
+#include "qmimedata.h"
+#include "qdrag.h"
+#include "qclipboard.h"
+#include "qmenu.h"
+#include "qstyle.h"
+#include "qtimer.h"
 #include "qtextdocumentlayout_p.h"
 #include "qabstracttextdocumentlayout_p.h"
 #include "qtextdocument.h"
@@ -59,13 +57,13 @@
 #include "qtextlist.h"
 #include "qtextcontrol_p.h"
 #include "qaccessible.h"
+#include "qtextformat.h"
+#include "qdatetime.h"
+#include "qapplication.h"
+#include "qtexttable.h"
+#include "qvariant.h"
 
-#include <qtextformat.h>
-#include <qdatetime.h>
-#include <qapplication.h>
 #include <limits.h>
-#include <qtexttable.h>
-#include <qvariant.h>
 
 #ifndef QT_NO_TEXTEDIT
 

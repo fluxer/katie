@@ -42,16 +42,16 @@
 #include "qdockwidget.h"
 
 #ifndef QT_NO_DOCKWIDGET
-#include <qaction.h>
-#include <qapplication.h>
-#include <qdesktopwidget.h>
-#include <qevent.h>
-#include <qfontmetrics.h>
-#include <qmainwindow.h>
-#include <qrubberband.h>
-#include <qstylepainter.h>
-#include <qtoolbutton.h>
-#include <qdebug.h>
+#include "qaction.h"
+#include "qapplication.h"
+#include "qdesktopwidget.h"
+#include "qevent.h"
+#include "qfontmetrics.h"
+#include "qmainwindow.h"
+#include "qrubberband.h"
+#include "qstylepainter.h"
+#include "qtoolbutton.h"
+#include "qdebug.h"
 
 #include <qwidgetresizehandler_p.h>
 

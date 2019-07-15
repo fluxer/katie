@@ -44,11 +44,11 @@
 
 #ifndef QT_NO_FILEICONPROVIDER
 
-#include <qfileinfo.h>
-#include <qapplication.h>
-#include <qdir.h>
-#include <qpixmapcache.h>
-#include <qguiplatformplugin.h>
+#include "qfileinfo.h"
+#include "qapplication.h"
+#include "qdir.h"
+#include "qpixmapcache.h"
+#include "qguiplatformplugin.h"
 
 QT_BEGIN_NAMESPACE
 

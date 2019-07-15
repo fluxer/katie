@@ -44,7 +44,7 @@
 
 #include "qdeclarativeevents_p_p.h"
 #include <qdeclarativeglobal_p.h>
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 
 #include <QtCore/qmath.h>
 

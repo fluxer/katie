@@ -41,9 +41,9 @@
 
 #include "qgifhandler_p.h"
 
-#include <qimage.h>
-#include <qiodevice.h>
-#include <qvariant.h>
+#include "qimage.h"
+#include "qiodevice.h"
+#include "qvariant.h"
 
 QT_BEGIN_NAMESPACE
 

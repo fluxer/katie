@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVETYPENOTAVAILABLE_H
 #define QDECLARATIVETYPENOTAVAILABLE_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 QT_BEGIN_HEADER
 

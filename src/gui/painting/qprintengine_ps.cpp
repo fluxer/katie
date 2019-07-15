@@ -64,7 +64,7 @@
 #include "qregion.h"
 #include "qimagewriter.h"
 #include <qpainterpath_p.h>
-#include <qdebug.h>
+#include "qdebug.h"
 #include <qdrawhelper_p.h>
 #include <qmutexpool_p.h>
 

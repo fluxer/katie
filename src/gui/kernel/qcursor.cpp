@@ -43,11 +43,11 @@
 
 #ifndef QT_NO_CURSOR
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qdatastream.h>
-#include <qvariant.h>
+#include "qapplication.h"
+#include "qbitmap.h"
+#include "qimage.h"
+#include "qdatastream.h"
+#include "qvariant.h"
 #include <qcursor_p.h>
 
 QT_BEGIN_NAMESPACE

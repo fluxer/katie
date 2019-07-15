@@ -36,7 +36,7 @@
 
 #include "qdeclarativestate_p.h"
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 #include <QtCore/qobject.h>
 

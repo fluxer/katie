@@ -42,10 +42,10 @@
 #include "qabstractnetworkcache.h"
 #include "qabstractnetworkcache_p.h"
 
-#include <qdatetime.h>
-#include <qurl.h>
+#include "qdatetime.h"
+#include "qurl.h"
 
-#include <qdebug.h>
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

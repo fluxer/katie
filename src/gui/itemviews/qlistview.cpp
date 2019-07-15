@@ -42,19 +42,19 @@
 #include "qlistview.h"
 
 #ifndef QT_NO_LISTVIEW
-#include <qabstractitemdelegate.h>
-#include <qapplication.h>
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qvector.h>
-#include <qstyle.h>
-#include <qevent.h>
-#include <qscrollbar.h>
-#include <qrubberband.h>
+#include "qabstractitemdelegate.h"
+#include "qapplication.h"
+#include "qpainter.h"
+#include "qbitmap.h"
+#include "qvector.h"
+#include "qstyle.h"
+#include "qevent.h"
+#include "qscrollbar.h"
+#include "qrubberband.h"
 #include <qlistview_p.h>
-#include <qdebug.h>
+#include "qdebug.h"
 #ifndef QT_NO_ACCESSIBILITY
-#include <qaccessible.h>
+#include "qaccessible.h"
 #endif
 
 QT_BEGIN_NAMESPACE

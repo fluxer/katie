@@ -42,14 +42,14 @@
 #include "qabstractitemdelegate.h"
 
 #ifndef QT_NO_ITEMVIEWS
-#include <qabstractitemmodel.h>
-#include <qabstractitemview.h>
-#include <qfontmetrics.h>
-#include <qwhatsthis.h>
-#include <qtooltip.h>
-#include <qevent.h>
-#include <qstring.h>
-#include <qdebug.h>
+#include "qabstractitemmodel.h"
+#include "qabstractitemview.h"
+#include "qfontmetrics.h"
+#include "qwhatsthis.h"
+#include "qtooltip.h"
+#include "qevent.h"
+#include "qstring.h"
+#include "qdebug.h"
 #include <qtextengine_p.h>
 
 QT_BEGIN_NAMESPACE

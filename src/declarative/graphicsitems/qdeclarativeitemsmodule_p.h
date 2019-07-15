@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVEITEMMODULE_H
 #define QDECLARATIVEITEMMODULE_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 QT_BEGIN_HEADER
 

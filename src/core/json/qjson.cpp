@@ -24,7 +24,7 @@
 ***********************************************************************/
 
 #include <qjson_p.h>
-#include <qalgorithms.h>
+#include "qalgorithms.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -38,11 +38,11 @@
 
 #include "qcore_unix_p.h"
 
-#include <qdebug.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qsocketnotifier.h>
-#include <qvarlengtharray.h>
+#include "qdebug.h"
+#include "qfile.h"
+#include "qfileinfo.h"
+#include "qsocketnotifier.h"
+#include "qvarlengtharray.h"
 
 #include <sys/syscall.h>
 #include <sys/ioctl.h>

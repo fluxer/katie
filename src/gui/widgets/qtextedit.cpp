@@ -44,27 +44,27 @@
 #include "qtextbrowser.h"
 
 #ifndef QT_NO_TEXTEDIT
-#include <qfont.h>
-#include <qpainter.h>
-#include <qevent.h>
-#include <qdebug.h>
-#include <qmimedata.h>
-#include <qdrag.h>
-#include <qclipboard.h>
-#include <qmenu.h>
-#include <qstyle.h>
-#include <qtimer.h>
+#include "qfont.h"
+#include "qpainter.h"
+#include "qevent.h"
+#include "qdebug.h"
+#include "qmimedata.h"
+#include "qdrag.h"
+#include "qclipboard.h"
+#include "qmenu.h"
+#include "qstyle.h"
+#include "qtimer.h"
 #include "qtextdocumentlayout_p.h"
 #include "qtextdocument.h"
 #include "qtextdocument_p.h"
 #include "qtextlist.h"
 #include "qtextcontrol_p.h"
-#include <qtextformat.h>
-#include <qdatetime.h>
-#include <qapplication.h>
+#include "qtextformat.h"
+#include "qdatetime.h"
+#include "qapplication.h"
 #include <limits.h>
-#include <qtexttable.h>
-#include <qvariant.h>
+#include "qtexttable.h"
+#include "qvariant.h"
 #endif
 
 QT_BEGIN_NAMESPACE

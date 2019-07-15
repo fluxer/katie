@@ -39,20 +39,19 @@
 #ifndef QT_NO_LIBRARY
 
 #include "qlibrary_p.h"
-#include <qstringlist.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qmutex.h>
-#include <qmap.h>
-#include <qsettings.h>
-#include <qdatetime.h>
-#include <qcoreapplication_p.h>
-#ifndef NO_ERRNO_H
+#include "qstringlist.h"
+#include "qfile.h"
+#include "qfileinfo.h"
+#include "qmutex.h"
+#include "qmap.h"
+#include "qsettings.h"
+#include "qdatetime.h"
+#include "qcoreapplication_p.h"
+#include "qdebug.h"
+#include "qvector.h"
+#include "qdir.h"
+
 #include <errno.h>
-#endif // NO_ERROR_H
-#include <qdebug.h>
-#include <qvector.h>
-#include <qdir.h>
 
 QT_BEGIN_NAMESPACE
 

@@ -24,13 +24,13 @@
 *
 ***********************************************************************/
 
-#include <qjsonobject.h>
-#include <qjsonvalue.h>
-#include <qjsonarray.h>
-#include <qjsonarray.h>
-#include <qvariant.h>
-#include <qstringlist.h>
-#include <qdebug.h>
+#include "qjsonobject.h"
+#include "qjsonvalue.h"
+#include "qjsonarray.h"
+#include "qjsonarray.h"
+#include "qvariant.h"
+#include "qstringlist.h"
+#include "qdebug.h"
 
 #include <qjson_p.h>
 

@@ -50,7 +50,7 @@
 #include <qlistmodelinterface_p.h>
 #include <QEvent>
 
-#include <qmath.h>
+#include "qmath.h"
 #include <math.h>
 #include "qplatformdefs.h"
 

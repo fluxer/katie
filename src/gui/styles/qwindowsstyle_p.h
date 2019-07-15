@@ -49,9 +49,9 @@
 #include "qcommonstyle_p.h"
 
 #ifndef QT_NO_STYLE_WINDOWS
-#include <qlist.h>
-#include <qhash.h>
-#include <qelapsedtimer.h>
+#include "qlist.h"
+#include "qhash.h"
+#include "qelapsedtimer.h"
 
 QT_BEGIN_NAMESPACE
 

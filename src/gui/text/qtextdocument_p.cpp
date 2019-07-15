@@ -40,11 +40,11 @@
 ****************************************************************************/
 
 #include <qtools_p.h>
-#include <qdebug.h>
+#include "qdebug.h"
 
 #include "qtextdocument_p.h"
 #include "qtextdocument.h"
-#include <qtextformat.h>
+#include "qtextformat.h"
 #include "qtextformat_p.h"
 #include "qtextobject_p.h"
 #include "qtextcursor.h"

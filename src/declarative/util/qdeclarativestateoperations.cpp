@@ -41,10 +41,10 @@
 
 #include "qdeclarativestateoperations_p.h"
 
-#include <qdeclarative.h>
-#include <qdeclarativecontext.h>
-#include <qdeclarativeexpression.h>
-#include <qdeclarativeinfo.h>
+#include "qdeclarative.h"
+#include "qdeclarativecontext.h"
+#include "qdeclarativeexpression.h"
+#include "qdeclarativeinfo.h"
 #include <qdeclarativeanchors_p_p.h>
 #include <qdeclarativeitem_p.h>
 #include <qdeclarativeguard_p.h>

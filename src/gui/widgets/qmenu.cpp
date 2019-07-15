@@ -68,7 +68,7 @@
 #endif
 
 #ifndef QT_NO_WHATSTHIS
-# include <qwhatsthis.h>
+# include "qwhatsthis.h"
 #endif
 
 

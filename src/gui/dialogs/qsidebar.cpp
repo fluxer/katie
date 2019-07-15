@@ -44,14 +44,14 @@
 
 #ifndef QT_NO_FILEDIALOG
 
-#include <qaction.h>
-#include <qurl.h>
-#include <qmenu.h>
-#include <qmimedata.h>
-#include <qevent.h>
-#include <qdebug.h>
-#include <qfileiconprovider.h>
-#include <qfiledialog.h>
+#include "qaction.h"
+#include "qurl.h"
+#include "qmenu.h"
+#include "qmimedata.h"
+#include "qevent.h"
+#include "qdebug.h"
+#include "qfileiconprovider.h"
+#include "qfiledialog.h"
 
 QT_BEGIN_NAMESPACE
 

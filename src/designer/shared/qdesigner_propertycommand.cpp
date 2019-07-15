@@ -66,7 +66,7 @@
 #include <QtGui/QDialog>
 #include <QtGui/QPushButton>
 #include <QtGui/QLayout>
-#include <qdebug.h>
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

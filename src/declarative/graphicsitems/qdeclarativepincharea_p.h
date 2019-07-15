@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVEPINCHAREA_H
 #define QDECLARATIVEPINCHAREA_H
 
-#include <qdeclarativeitem.h>
+#include "qdeclarativeitem.h"
 
 QT_BEGIN_HEADER
 

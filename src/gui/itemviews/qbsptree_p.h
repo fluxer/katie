@@ -45,8 +45,8 @@
 // We mean it.
 //
 
-#include <qvector.h>
-#include <qrect.h>
+#include "qvector.h"
+#include "qrect.h"
 
 QT_BEGIN_NAMESPACE
 

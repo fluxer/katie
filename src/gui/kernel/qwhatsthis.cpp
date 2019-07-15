@@ -61,7 +61,7 @@
 #endif
 #if defined(Q_WS_X11)
 #include "qx11info_x11.h"
-#include <qwidget.h>
+#include "qwidget.h"
 #endif
 
 QT_BEGIN_NAMESPACE

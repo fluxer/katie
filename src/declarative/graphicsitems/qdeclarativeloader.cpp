@@ -41,7 +41,7 @@
 
 #include "qdeclarativeloader_p_p.h"
 
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 #include <qdeclarativeengine_p.h>
 #include <qdeclarativeglobal_p.h>
 

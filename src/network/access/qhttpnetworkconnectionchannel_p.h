@@ -51,9 +51,9 @@
 #include <QtNetwork/qsslerror.h>
 
 #include <qobject_p.h>
-#include <qauthenticator.h>
-#include <qnetworkproxy.h>
-#include <qbuffer.h>
+#include "qauthenticator.h"
+#include "qnetworkproxy.h"
+#include "qbuffer.h"
 
 #include <qhttpnetworkheader_p.h>
 #include <qhttpnetworkrequest_p.h>

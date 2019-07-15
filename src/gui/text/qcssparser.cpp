@@ -41,13 +41,13 @@
 
 #include "qcssparser_p.h"
 
-#include <qdebug.h>
-#include <qcolor.h>
-#include <qfont.h>
-#include <qfileinfo.h>
-#include <qfontmetrics.h>
-#include <qbrush.h>
-#include <qimagereader.h>
+#include "qdebug.h"
+#include "qcolor.h"
+#include "qfont.h"
+#include "qfileinfo.h"
+#include "qfontmetrics.h"
+#include "qbrush.h"
+#include "qimagereader.h"
 
 #ifndef QT_NO_CSSPARSER
 

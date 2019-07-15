@@ -43,7 +43,7 @@
 
 #include <QtCore/qcoreapplication.h>
 #include <QtGui/qpauseanimation.h>
-#include <qdebug.h>
+#include "qdebug.h"
 
 #include <qobject_p.h>
 

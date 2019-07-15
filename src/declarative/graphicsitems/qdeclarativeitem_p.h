@@ -57,8 +57,8 @@
 #include <qdeclarativenotifier_p.h>
 #include <qdeclarativeglobal_p.h>
 
-#include <qdeclarative.h>
-#include <qdeclarativecontext.h>
+#include "qdeclarative.h"
+#include "qdeclarativecontext.h"
 
 #include <QtCore/qlist.h>
 #include <QtCore/qdebug.h>

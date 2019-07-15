@@ -37,14 +37,14 @@
 
 #ifndef QT_NO_FILESYSTEMWATCHER
 
-#include <qsocketnotifier.h>
-#include <qcoreapplication.h>
-#include <qfileinfo.h>
-#include <qthread.h>
-#include <qtimer.h>
-#include <qwaitcondition.h>
-#include <qmutex.h>
-#include <qdir.h>
+#include "qsocketnotifier.h"
+#include "qcoreapplication.h"
+#include "qfileinfo.h"
+#include "qthread.h"
+#include "qtimer.h"
+#include "qwaitcondition.h"
+#include "qmutex.h"
+#include "qdir.h"
 
 #include <dirent.h>
 #include <sys/types.h>

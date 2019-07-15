@@ -36,12 +36,12 @@
 
 #ifndef QT_NO_FILESYSTEMWATCHER
 
-#include <qdatetime.h>
-#include <qdebug.h>
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qset.h>
-#include <qtimer.h>
+#include "qdatetime.h"
+#include "qdebug.h"
+#include "qdir.h"
+#include "qfileinfo.h"
+#include "qset.h"
+#include "qtimer.h"
 
 #if defined(Q_OS_LINUX)
 #  include "qfilesystemwatcher_inotify_p.h"

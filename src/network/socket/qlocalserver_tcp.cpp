@@ -44,9 +44,9 @@
 #include "qlocalsocket.h"
 #include "qlocalsocket_p.h"
 
-#include <qhostaddress.h>
-#include <qsettings.h>
-#include <qdebug.h>
+#include "qhostaddress.h"
+#include "qsettings.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

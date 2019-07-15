@@ -43,7 +43,7 @@
 #include "qdeclarativepropertycache_p.h"
 #include "qdeclarativedata_p.h"
 #include <qmetaobjectbuilder_p.h>
-#include <qdebug.h>
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

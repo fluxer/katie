@@ -41,7 +41,7 @@
 
 #include "abstractwidgetdatabase.h"
 #include <QtCore/qdebug.h>
-#include <qalgorithms.h>
+#include "qalgorithms.h"
 
 QT_BEGIN_NAMESPACE
 

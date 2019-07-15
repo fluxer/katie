@@ -41,12 +41,12 @@
 
 #include "qdeclarativeconnections_p.h"
 
-#include <qdeclarativeexpression.h>
+#include "qdeclarativeexpression.h"
 #include <qdeclarativeproperty_p.h>
 #include <qdeclarativeboundsignal_p.h>
-#include <qdeclarativecontext.h>
+#include "qdeclarativecontext.h"
 #include <qdeclarativecontext_p.h>
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 
 #include <QtCore/qdebug.h>
 #include <QtCore/qstringlist.h>

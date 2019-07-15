@@ -46,9 +46,9 @@
 #ifndef QDBUSABSTRACTINTERFACEPRIVATE_H
 #define QDBUSABSTRACTINTERFACEPRIVATE_H
 
-#include <qdbusabstractinterface.h>
-#include <qdbusconnection.h>
-#include <qdbuserror.h>
+#include "qdbusabstractinterface.h"
+#include "qdbusconnection.h"
+#include "qdbuserror.h"
 #include "qdbusconnection_p.h"
 #include "qobject_p.h"
 

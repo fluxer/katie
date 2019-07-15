@@ -42,26 +42,26 @@
 #include "qcombobox.h"
 
 #ifndef QT_NO_COMBOBOX
-#include <qstylepainter.h>
-#include <qlineedit.h>
-#include <qapplication.h>
-#include <qdesktopwidget.h>
-#include <qlistview.h>
-#include <qtableview.h>
-#include <qitemdelegate.h>
-#include <qmap.h>
-#include <qmenu.h>
-#include <qevent.h>
-#include <qlayout.h>
-#include <qscrollbar.h>
-#include <qtreeview.h>
-#include <qheaderview.h>
-#include <qmath.h>
+#include "qstylepainter.h"
+#include "qlineedit.h"
+#include "qapplication.h"
+#include "qdesktopwidget.h"
+#include "qlistview.h"
+#include "qtableview.h"
+#include "qitemdelegate.h"
+#include "qmap.h"
+#include "qmenu.h"
+#include "qevent.h"
+#include "qlayout.h"
+#include "qscrollbar.h"
+#include "qtreeview.h"
+#include "qheaderview.h"
+#include "qmath.h"
 #include <qapplication_p.h>
 #include <qcombobox_p.h>
 #include <qabstractitemmodel_p.h>
 #include <qabstractscrollarea_p.h>
-#include <qdebug.h>
+#include "qdebug.h"
 
 #ifndef QT_NO_EFFECTS
 # include <qeffects_p.h>

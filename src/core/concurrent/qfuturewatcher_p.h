@@ -46,7 +46,7 @@
 //
 
 #include "qfutureinterface_p.h"
-#include <qlist.h>
+#include "qlist.h"
 
 #ifndef QT_NO_QFUTURE
 

@@ -34,9 +34,9 @@
 #include "qsharedmemory.h"
 #include "qsharedmemory_p.h"
 #include "qsystemsemaphore.h"
-#include <qdir.h>
-#include <qcryptographichash.h>
-#include <qdebug.h>
+#include "qdir.h"
+#include "qcryptographichash.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

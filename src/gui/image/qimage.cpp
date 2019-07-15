@@ -58,7 +58,7 @@
 #include <qmemrotate_p.h>
 #include <qpixmapdata_p.h>
 
-#include <qhash.h>
+#include "qhash.h"
 
 #include <qpaintengine_raster_p.h>
 

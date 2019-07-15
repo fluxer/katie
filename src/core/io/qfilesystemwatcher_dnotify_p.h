@@ -49,10 +49,10 @@
 
 #ifndef QT_NO_FILESYSTEMWATCHER
 
-#include <qmutex.h>
-#include <qhash.h>
-#include <qdatetime.h>
-#include <qfile.h>
+#include "qmutex.h"
+#include "qhash.h"
+#include "qdatetime.h"
+#include "qfile.h"
 
 QT_BEGIN_NAMESPACE
 

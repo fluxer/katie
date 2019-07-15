@@ -39,10 +39,10 @@
 **
 ****************************************************************************/
 
-#include <qdebug.h>
-#include <qcoreapplication.h>
-#include <qstringlist.h>
-#include <qthread.h>
+#include "qdebug.h"
+#include "qcoreapplication.h"
+#include "qstringlist.h"
+#include "qthread.h"
 
 #include "qdbusconnection.h"
 #include "qdbusconnectioninterface.h"

@@ -50,7 +50,7 @@
 
 #include "qdeclarativeanimation_p_p.h"
 
-#include <qparallelanimationgroup.h>
+#include "qparallelanimationgroup.h"
 
 #include <qobject_p.h>
 #include <QTimer>

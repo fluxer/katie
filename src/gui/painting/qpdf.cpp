@@ -39,14 +39,14 @@
 **
 ****************************************************************************/
 #include "qplatformdefs.h"
-#include <qdebug.h>
+#include "qdebug.h"
 #include "qpdf_p.h"
-#include <qfile.h>
-#include <qtemporaryfile.h>
+#include "qfile.h"
+#include "qtemporaryfile.h"
 #include <qmath_p.h>
 #include "qcups_p.h"
 #include "qprinterinfo.h"
-#include <qnumeric.h>
+#include "qnumeric.h"
 #include "qfont_p.h"
 
 #ifdef Q_OS_UNIX

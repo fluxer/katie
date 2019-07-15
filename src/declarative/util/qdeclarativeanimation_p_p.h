@@ -50,9 +50,9 @@
 #include "qdeclarativenullablevalue_p_p.h"
 #include "qdeclarativetimeline_p_p.h"
 
-#include <qdeclarative.h>
-#include <qdeclarativeitem.h>
-#include <qdeclarativecontext.h>
+#include "qdeclarative.h"
+#include "qdeclarativeitem.h"
+#include "qdeclarativecontext.h"
 
 #include <QtGui/QPauseAnimation>
 #include <QtGui/QVariantAnimation>

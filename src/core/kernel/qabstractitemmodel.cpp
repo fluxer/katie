@@ -33,14 +33,14 @@
 
 #include "qabstractitemmodel.h"
 #include <qabstractitemmodel_p.h>
-#include <qdatastream.h>
-#include <qstringlist.h>
-#include <qsize.h>
-#include <qmimedata.h>
-#include <qdebug.h>
-#include <qvector.h>
-#include <qstack.h>
-#include <qbitarray.h>
+#include "qdatastream.h"
+#include "qstringlist.h"
+#include "qsize.h"
+#include "qmimedata.h"
+#include "qdebug.h"
+#include "qvector.h"
+#include "qstack.h"
+#include "qbitarray.h"
 
 #include <limits.h>
 

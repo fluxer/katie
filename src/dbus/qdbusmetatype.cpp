@@ -40,14 +40,9 @@
 ****************************************************************************/
 
 #include "qdbusmetatype.h"
-
-#include <string.h>
-
-#include <qbytearray.h>
-#include <qglobal.h>
-#include <qreadwritelock.h>
-#include <qvector.h>
-
+#include "qbytearray.h"
+#include "qreadwritelock.h"
+#include "qvector.h"
 #include "qdbusmessage.h"
 #include "qdbusunixfiledescriptor.h"
 #include "qdbusutil_p.h"
@@ -55,6 +50,7 @@
 #include "qdbusargument_p.h"
 
 #include <dbus/dbus.h>
+#include <string.h>
 
 #ifndef DBUS_TYPE_UNIX_FD
 # define DBUS_TYPE_UNIX_FD int('h')

@@ -45,10 +45,10 @@
 // We mean it.
 //
 
-#include <qhash.h>
-#include <qimage.h>
-#include <qobject.h>
-#include <qtransform.h>
+#include "qhash.h"
+#include "qimage.h"
+#include "qobject.h"
+#include "qtransform.h"
 
 #include <qfontengineglyphcache_p.h>
 

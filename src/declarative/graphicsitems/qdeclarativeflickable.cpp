@@ -41,7 +41,7 @@
 
 #include "qdeclarativeflickable_p.h"
 #include "qdeclarativeflickable_p_p.h"
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 #include <QGraphicsSceneEvent>
 #include <QPointer>
 #include <QTimer>

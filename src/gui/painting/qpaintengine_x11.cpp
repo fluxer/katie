@@ -52,11 +52,11 @@
 #include "qtextcodec.h"
 #include "qcoreevent.h"
 #include "qiodevice.h"
-#include <qmath.h>
+#include "qmath.h"
 
 #include "qpainter_p.h"
-#include <qtextlayout.h>
-#include <qvarlengtharray.h>
+#include "qtextlayout.h"
+#include "qvarlengtharray.h"
 #include <qfont_p.h>
 #include <qtextengine_p.h>
 #include <qpaintengine_x11_p.h>

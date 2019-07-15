@@ -44,7 +44,7 @@
 #include "qdeclarativeitem_p.h"
 #include "qdeclarativeguard_p.h"
 
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 
 #include <QtGui/qgraphicstransform.h>
 

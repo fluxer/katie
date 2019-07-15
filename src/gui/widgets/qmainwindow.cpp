@@ -48,13 +48,13 @@
 
 #include "qdockwidget.h"
 #include "qtoolbar.h"
-#include <qapplication.h>
-#include <qmenubar.h>
-#include <qstatusbar.h>
-#include <qevent.h>
-#include <qstyle.h>
-#include <qdebug.h>
-#include <qpainter.h>
+#include "qapplication.h"
+#include "qmenubar.h"
+#include "qstatusbar.h"
+#include "qevent.h"
+#include "qstyle.h"
+#include "qdebug.h"
+#include "qpainter.h"
 #include <qwidget_p.h>
 #include "qtoolbar_p.h"
 #include "qwidgetanimator_p.h"

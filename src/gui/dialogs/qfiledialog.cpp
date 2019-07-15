@@ -39,24 +39,24 @@
 **
 ****************************************************************************/
 
-#include <qvariant.h>
+#include "qvariant.h"
 #include <qwidgetitemdata_p.h>
 #include "qfiledialog.h"
 
 #ifndef QT_NO_FILEDIALOG
 #include "qfiledialog_p.h"
-#include <qfontmetrics.h>
-#include <qaction.h>
-#include <qheaderview.h>
-#include <qshortcut.h>
-#include <qgridlayout.h>
-#include <qmenu.h>
-#include <qmessagebox.h>
-#include <qinputdialog.h>
-#include <qsettings.h>
-#include <qdebug.h>
-#include <qapplication.h>
-#include <qstylepainter.h>
+#include "qfontmetrics.h"
+#include "qaction.h"
+#include "qheaderview.h"
+#include "qshortcut.h"
+#include "qgridlayout.h"
+#include "qmenu.h"
+#include "qmessagebox.h"
+#include "qinputdialog.h"
+#include "qsettings.h"
+#include "qdebug.h"
+#include "qapplication.h"
+#include "qstylepainter.h"
 #include <qfileiconprovider_p.h>
 #include "ui_qfiledialog.h"
 

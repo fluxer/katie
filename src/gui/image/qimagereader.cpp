@@ -114,20 +114,20 @@
 */
 #include "qimagereader.h"
 
-#include <qbytearray.h>
+#include "qbytearray.h"
 #ifdef QIMAGEREADER_DEBUG
-#include <qdebug.h>
+#include "qdebug.h"
 #endif
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qimageiohandler.h>
-#include <qlist.h>
-#include <qrect.h>
-#include <qset.h>
-#include <qsize.h>
-#include <qcolor.h>
-#include <qvariant.h>
+#include "qfile.h"
+#include "qfileinfo.h"
+#include "qimage.h"
+#include "qimageiohandler.h"
+#include "qlist.h"
+#include "qrect.h"
+#include "qset.h"
+#include "qsize.h"
+#include "qcolor.h"
+#include "qvariant.h"
 
 // factory loader
 #include "qcoreapplication.h"

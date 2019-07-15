@@ -43,7 +43,7 @@
 #include <QToolBar>
 #include <QStyleOption>
 #include <QApplication>
-#include <qdebug.h>
+#include "qdebug.h"
 
 #include "qtoolbararealayout_p.h"
 #include "qmainwindowlayout_p.h"

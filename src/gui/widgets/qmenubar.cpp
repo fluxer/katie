@@ -39,24 +39,24 @@
 **
 ****************************************************************************/
 
-#include <qmenubar.h>
+#include "qmenubar.h"
 
-#include <qstyle.h>
-#include <qlayout.h>
-#include <qapplication.h>
-#include <qdesktopwidget.h>
+#include "qstyle.h"
+#include "qlayout.h"
+#include "qapplication.h"
+#include "qdesktopwidget.h"
 #ifndef QT_NO_ACCESSIBILITY
-# include <qaccessible.h>
+# include "qaccessible.h"
 #endif
-#include <qpainter.h>
-#include <qstylepainter.h>
-#include <qevent.h>
-#include <qmainwindow.h>
-#include <qtoolbar.h>
-#include <qtoolbutton.h>
-#include <qwhatsthis.h>
+#include "qpainter.h"
+#include "qstylepainter.h"
+#include "qevent.h"
+#include "qmainwindow.h"
+#include "qtoolbar.h"
+#include "qtoolbutton.h"
+#include "qwhatsthis.h"
 #ifdef Q_WS_X11
-#include <qpluginloader.h>
+#include "qpluginloader.h"
 #endif
 
 #ifndef QT_NO_MENUBAR

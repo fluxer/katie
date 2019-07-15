@@ -47,7 +47,7 @@
 
 #include "qdeclarativeitem.h"
 #include "qdeclarativeimplicitsizeitem_p_p.h"
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 #include <QtGui/qtextlayout.h>
 

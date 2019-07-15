@@ -42,25 +42,25 @@
 #include "qabstractitemview.h"
 
 #ifndef QT_NO_ITEMVIEWS
-#include <qpointer.h>
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qpainter.h>
-#include <qstyle.h>
-#include <qdrag.h>
-#include <qevent.h>
-#include <qscrollbar.h>
-#include <qwhatsthis.h>
-#include <qtooltip.h>
-#include <qdatetime.h>
-#include <qlineedit.h>
-#include <qspinbox.h>
-#include <qstyleditemdelegate.h>
+#include "qpointer.h"
+#include "qapplication.h"
+#include "qclipboard.h"
+#include "qpainter.h"
+#include "qstyle.h"
+#include "qdrag.h"
+#include "qevent.h"
+#include "qscrollbar.h"
+#include "qwhatsthis.h"
+#include "qtooltip.h"
+#include "qdatetime.h"
+#include "qlineedit.h"
+#include "qspinbox.h"
+#include "qstyleditemdelegate.h"
 #include <qabstractitemview_p.h>
 #include <qabstractitemmodel_p.h>
 #ifndef QT_NO_ACCESSIBILITY
-#include <qaccessible.h>
-#include <qaccessible2.h>
+#include "qaccessible.h"
+#include "qaccessible2.h"
 #endif
 
 QT_BEGIN_NAMESPACE

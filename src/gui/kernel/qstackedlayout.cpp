@@ -42,8 +42,8 @@
 #include "qstackedlayout.h"
 #include "qlayout_p.h"
 
-#include <qlist.h>
-#include <qwidget.h>
+#include "qlist.h"
+#include "qwidget.h"
 #include "qlayoutengine_p.h"
 
 QT_BEGIN_NAMESPACE

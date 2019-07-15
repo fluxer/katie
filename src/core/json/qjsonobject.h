@@ -26,7 +26,7 @@
 #ifndef QJSONOBJECT_H
 #define QJSONOBJECT_H
 
-#include <qjsonvalue.h>
+#include "qjsonvalue.h"
 #include <QtCore/qcontainerfwd.h>
 #include <QtCore/qiterator.h>
 

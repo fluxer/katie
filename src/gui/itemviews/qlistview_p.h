@@ -49,8 +49,9 @@
 #include "qrubberband.h"
 #include "qbitarray.h"
 #include "qbsptree_p.h"
+#include "qscrollbar.h"
+
 #include <limits.h>
-#include <qscrollbar.h>
 
 #ifndef QT_NO_LISTVIEW
 

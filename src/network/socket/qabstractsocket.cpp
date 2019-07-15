@@ -370,21 +370,21 @@
 #include "qabstractsocket_p.h"
 #include "qhostinfo_p.h"
 #include "qnetworksession_p.h"
-#include <qabstracteventdispatcher.h>
-#include <qhostaddress.h>
-#include <qhostinfo.h>
-#include <qmetaobject.h>
-#include <qpointer.h>
-#include <qtimer.h>
-#include <qelapsedtimer.h>
-#include <qscopedvaluerollback.h>
-#include <qsslsocket.h>
+#include "qabstracteventdispatcher.h"
+#include "qhostaddress.h"
+#include "qhostinfo.h"
+#include "qmetaobject.h"
+#include "qpointer.h"
+#include "qtimer.h"
+#include "qelapsedtimer.h"
+#include "qscopedvaluerollback.h"
+#include "qsslsocket.h"
 #include <qthread_p.h>
 #include <qcore_unix_p.h>
 #include "qnetworkcommon_p.h"
 
 #ifdef QABSTRACTSOCKET_DEBUG
-#include <qdebug.h>
+#include "qdebug.h"
 #endif
 
 #include <time.h>
@@ -404,7 +404,7 @@ QT_BEGIN_NAMESPACE
 
 #if defined QABSTRACTSOCKET_DEBUG
 QT_BEGIN_INCLUDE_NAMESPACE
-#include <qstring.h>
+#include "qstring.h"
 #include <ctype.h>
 QT_END_INCLUDE_NAMESPACE
 

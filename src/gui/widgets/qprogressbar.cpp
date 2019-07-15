@@ -41,13 +41,13 @@
 
 #include "qprogressbar.h"
 #ifndef QT_NO_PROGRESSBAR
-#include <qevent.h>
-#include <qpainter.h>
-#include <qstylepainter.h>
-#include <qstyleoption.h>
+#include "qevent.h"
+#include "qpainter.h"
+#include "qstylepainter.h"
+#include "qstyleoption.h"
 #include <qwidget_p.h>
 #ifndef QT_NO_ACCESSIBILITY
-#include <qaccessible.h>
+#include "qaccessible.h"
 #endif
 #include <limits.h>
 

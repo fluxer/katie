@@ -44,9 +44,9 @@
 #include "qdeclarativenullablevalue_p_p.h"
 #include "qdeclarativeguard_p.h"
 
-#include <qdeclarativeengine.h>
-#include <qdeclarativecontext.h>
-#include <qdeclarativeproperty.h>
+#include "qdeclarativeengine.h"
+#include "qdeclarativecontext.h"
+#include "qdeclarativeproperty.h"
 
 #include <QtCore/qfile.h>
 #include <QtCore/qdebug.h>

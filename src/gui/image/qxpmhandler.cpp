@@ -44,10 +44,10 @@
 #ifndef QT_NO_IMAGEFORMAT_XPM
 
 #include <qcolor_p.h>
-#include <qimage.h>
-#include <qmap.h>
-#include <qtextstream.h>
-#include <qvariant.h>
+#include "qimage.h"
+#include "qmap.h"
+#include "qtextstream.h"
+#include "qvariant.h"
 
 QT_BEGIN_NAMESPACE
 

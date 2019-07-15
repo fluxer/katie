@@ -28,11 +28,11 @@
 ** Copyright (C) 2013 David Faure <faure@kde.org>
 *****************************************************/
 
-#include <qcommandlineparser.h>
+#include "qcommandlineparser.h"
+#include "qcoreapplication.h"
+#include "qhash.h"
+#include "qvector.h"
 
-#include <qcoreapplication.h>
-#include <qhash.h>
-#include <qvector.h>
 #include <stdio.h>
 #include <stdlib.h>
 

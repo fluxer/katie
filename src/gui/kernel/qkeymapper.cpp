@@ -44,7 +44,7 @@
 
 #include <qobject_p.h>
 #include "qkeymapper_p.h"
-#include <qwidget.h>
+#include "qwidget.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -42,7 +42,7 @@
 #include "qdeclarativetext_p.h"
 #include "qdeclarativetext_p_p.h"
 #include <qdeclarativestyledtext_p.h>
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 #include <qdeclarativepixmapcache_p.h>
 
 #include <QSet>
@@ -51,7 +51,7 @@
 #include <QGraphicsSceneEvent>
 #include <QPainter>
 #include <QAbstractTextDocumentLayout>
-#include <qmath.h>
+#include "qmath.h"
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE

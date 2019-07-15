@@ -66,7 +66,7 @@ static const unsigned char gz_magic[2] = {0x1f, 0x8b}; // gzip magic header
 
 #include <QtNetwork/qnetworkrequest.h>
 #include <QtNetwork/qnetworkreply.h>
-#include <qbuffer.h>
+#include "qbuffer.h"
 
 #include <qobject_p.h>
 #include <qhttpnetworkheader_p.h>

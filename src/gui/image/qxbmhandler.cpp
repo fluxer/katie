@@ -44,9 +44,9 @@
 
 #ifndef QT_NO_IMAGEFORMAT_XBM
 
-#include <qimage.h>
-#include <qiodevice.h>
-#include <qvariant.h>
+#include "qimage.h"
+#include "qiodevice.h"
+#include "qvariant.h"
 
 #include <stdio.h>
 #include <ctype.h>

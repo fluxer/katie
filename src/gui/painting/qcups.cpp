@@ -38,7 +38,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <qdebug.h>
+#include "qdebug.h"
 #include "qcups_p.h"
 
 #ifndef QT_NO_CUPS
@@ -46,7 +46,7 @@
 #ifndef QT_LINUXBASE // LSB merges everything into cups.h
 # include <cups/language.h>
 #endif
-#include <qtextcodec.h>
+#include "qtextcodec.h"
 
 QT_BEGIN_NAMESPACE
 

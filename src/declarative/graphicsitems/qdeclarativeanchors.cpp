@@ -43,8 +43,7 @@
 
 #include "qdeclarativeitem.h"
 #include "qdeclarativeitem_p.h"
-
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 
 #include <QDebug>
 

@@ -34,7 +34,7 @@
 #ifndef QDECLARATIVEVISUALDATAMODEL_H
 #define QDECLARATIVEVISUALDATAMODEL_H
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 #include <QtCore/qobject.h>
 #include <QtCore/qabstractitemmodel.h>

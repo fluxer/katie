@@ -50,7 +50,7 @@
 #include "qnetworkcommon_p.h"
 
 #if !defined(QT_NO_NETWORKPROXY) && !defined(QT_NO_HTTP)
-#include <qdebug.h>
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

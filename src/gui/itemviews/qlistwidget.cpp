@@ -42,7 +42,7 @@
 #include "qlistwidget.h"
 
 #ifndef QT_NO_LISTWIDGET
-#include <qitemdelegate.h>
+#include "qitemdelegate.h"
 #include <qlistview_p.h>
 #include <qwidgetitemdata_p.h>
 #include <qlistwidget_p.h>

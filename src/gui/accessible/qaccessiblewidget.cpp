@@ -51,7 +51,7 @@
 #include "qwhatsthis.h"
 #include "qwidget.h"
 #include "qdebug.h"
-#include <qmath.h>
+#include "qmath.h"
 #include <QRubberBand>
 #include <QtGui/QFocusFrame>
 #include <QtGui/QMenu>

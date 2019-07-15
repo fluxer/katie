@@ -47,7 +47,7 @@
 
 #include "qdeclarativepath_p.h"
 
-#include <qdeclarative.h>
+#include "qdeclarative.h"
 
 #include <qobject_p.h>
 

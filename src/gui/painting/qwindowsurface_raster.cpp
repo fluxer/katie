@@ -39,9 +39,9 @@
 **
 ****************************************************************************/
 
-#include <qdebug.h>
-#include <qpaintdevice.h>
-#include <qwidget.h>
+#include "qdebug.h"
+#include "qpaintdevice.h"
+#include "qwidget.h"
 
 #include "qwindowsurface_raster_p.h"
 #include "qimage.h"

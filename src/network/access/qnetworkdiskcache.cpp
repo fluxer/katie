@@ -46,13 +46,13 @@
 #include "qnetworkdiskcache_p.h"
 #include "QtCore/qscopedpointer.h"
 
-#include <qfile.h>
-#include <qdir.h>
-#include <qdatetime.h>
-#include <qdiriterator.h>
-#include <qurl.h>
-#include <qcryptographichash.h>
-#include <qdebug.h>
+#include "qfile.h"
+#include "qdir.h"
+#include "qdatetime.h"
+#include "qdiriterator.h"
+#include "qurl.h"
+#include "qcryptographichash.h"
+#include "qdebug.h"
 
 #define CACHE_POSTFIX QLatin1String(".d")
 #define PREPARED_SLASH QLatin1String("prepared/")

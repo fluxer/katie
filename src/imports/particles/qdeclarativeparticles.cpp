@@ -41,7 +41,7 @@
 
 #include "qdeclarativeparticles_p.h"
 
-#include <qdeclarativeinfo.h>
+#include "qdeclarativeinfo.h"
 #include <qdeclarativeitem_p.h>
 
 #include <qdeclarativepixmapcache_p.h>

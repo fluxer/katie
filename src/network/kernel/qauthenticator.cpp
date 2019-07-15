@@ -39,18 +39,18 @@
 **
 ****************************************************************************/
 
-#include <qauthenticator.h>
+#include "qauthenticator.h"
 #include <qauthenticator_p.h>
-#include <qdebug.h>
-#include <qhash.h>
-#include <qbytearray.h>
-#include <qcryptographichash.h>
-#include <qhttp.h>
-#include <qiodevice.h>
-#include <qdatastream.h>
-#include <qendian.h>
-#include <qstring.h>
-#include <qdatetime.h>
+#include "qdebug.h"
+#include "qhash.h"
+#include "qbytearray.h"
+#include "qcryptographichash.h"
+#include "qhttp.h"
+#include "qiodevice.h"
+#include "qdatastream.h"
+#include "qendian.h"
+#include "qstring.h"
+#include "qdatetime.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -44,7 +44,7 @@
 #include <QPainter>
 #include <QTextLayout>
 #include <QDebug>
-#include <qmath.h>
+#include "qmath.h"
 #include "qdeclarativestyledtext_p.h"
 
 /*

@@ -41,16 +41,16 @@
 
 #include <QtGui/qprintengine.h>
 
-#include <qiodevice.h>
-#include <qpainter.h>
-#include <qbitmap.h>
-#include <qpainterpath.h>
-#include <qpaintdevice.h>
-#include <qfile.h>
-#include <qdebug.h>
-#include <qimagewriter.h>
-#include <qbuffer.h>
-#include <qdatetime.h>
+#include "qiodevice.h"
+#include "qpainter.h"
+#include "qbitmap.h"
+#include "qpainterpath.h"
+#include "qpaintdevice.h"
+#include "qfile.h"
+#include "qdebug.h"
+#include "qimagewriter.h"
+#include "qbuffer.h"
+#include "qdatetime.h"
 
 #ifndef QT_NO_PRINTER
 #include <limits.h>

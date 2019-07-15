@@ -40,20 +40,19 @@
 ****************************************************************************/
 
 #include "qsql_odbc.h"
-#include <qsqlrecord.h>
-
-#include <qcoreapplication.h>
-#include <qvariant.h>
-#include <qdatetime.h>
-#include <qsqlerror.h>
-#include <qsqlfield.h>
-#include <qsqlindex.h>
-#include <qstringlist.h>
-#include <qvarlengtharray.h>
-#include <qvector.h>
-#include <qmath.h>
-#include <QDebug>
-#include <QSqlQuery>
+#include "qsqlrecord.h"
+#include "qcoreapplication.h"
+#include "qvariant.h"
+#include "qdatetime.h"
+#include "qsqlerror.h"
+#include "qsqlfield.h"
+#include "qsqlindex.h"
+#include "qstringlist.h"
+#include "qvarlengtharray.h"
+#include "qvector.h"
+#include "qmath.h"
+#include "qdebug.h"
+#include "qsqlquery.h"
 
 QT_BEGIN_NAMESPACE
 

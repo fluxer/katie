@@ -40,25 +40,25 @@
 ****************************************************************************/
 
 #include <qplatformdefs.h>
-#include <qdom.h>
+#include "qdom.h"
 #include "qxmlutils_p.h"
 
 #ifndef QT_NO_DOM
 
-#include <qatomic.h>
-#include <qbuffer.h>
-#include <qhash.h>
-#include <qiodevice.h>
-#include <qlist.h>
-#include <qregexp.h>
-#include <qtextcodec.h>
-#include <qtextstream.h>
-#include <qxml.h>
-#include <qvariant.h>
-#include <qmap.h>
-#include <qshareddata.h>
-#include <qdebug.h>
-#include <qscopedpointer.h>
+#include "qatomic.h"
+#include "qbuffer.h"
+#include "qhash.h"
+#include "qiodevice.h"
+#include "qlist.h"
+#include "qregexp.h"
+#include "qtextcodec.h"
+#include "qtextstream.h"
+#include "qxml.h"
+#include "qvariant.h"
+#include "qmap.h"
+#include "qshareddata.h"
+#include "qdebug.h"
+#include "qscopedpointer.h"
 
 #include <stdio.h>
 

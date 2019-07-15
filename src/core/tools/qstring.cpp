@@ -35,11 +35,11 @@
 #include "qregexp.h"
 #include "qunicodetables_p.h"
 #ifndef QT_NO_TEXTCODEC
-#include <qtextcodec.h>
+#include "qtextcodec.h"
 #endif
 #include <qutfcodec_p.h>
-#include <qdatastream.h>
-#include <qlist.h>
+#include "qdatastream.h"
+#include "qlist.h"
 #include "qlocale.h"
 #include "qlocale_p.h"
 #include "qlocale_tools_p.h"

@@ -41,12 +41,12 @@
 
 #include "qfilesystemmodel_p.h"
 #include "qfilesystemmodel.h"
-#include <qlocale.h>
-#include <qmimedata.h>
-#include <qurl.h>
-#include <qdebug.h>
-#include <qmessagebox.h>
-#include <qapplication.h>
+#include "qlocale.h"
+#include "qmimedata.h"
+#include "qurl.h"
+#include "qdebug.h"
+#include "qmessagebox.h"
+#include "qapplication.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -41,27 +41,27 @@
 
 #include "qdeclarativeview.h"
 
-#include <qdeclarative.h>
-#include <qdeclarativeitem.h>
-#include <qdeclarativeengine.h>
-#include <qdeclarativecontext.h>
+#include "qdeclarative.h"
+#include "qdeclarativeitem.h"
+#include "qdeclarativeengine.h"
+#include "qdeclarativecontext.h"
 #include <qdeclarativeglobal_p.h>
 #include <qdeclarativeguard_p.h>
 
-#include <qscriptvalueiterator.h>
-#include <qdebug.h>
-#include <qtimer.h>
-#include <qevent.h>
-#include <qdir.h>
-#include <qcoreapplication.h>
-#include <qfontdatabase.h>
-#include <qicon.h>
-#include <qurl.h>
-#include <qlayout.h>
-#include <qwidget.h>
-#include <qgraphicswidget.h>
-#include <qbasictimer.h>
-#include <qabstractanimation.h>
+#include "qscriptvalueiterator.h"
+#include "qdebug.h"
+#include "qtimer.h"
+#include "qevent.h"
+#include "qdir.h"
+#include "qcoreapplication.h"
+#include "qfontdatabase.h"
+#include "qicon.h"
+#include "qurl.h"
+#include "qlayout.h"
+#include "qwidget.h"
+#include "qgraphicswidget.h"
+#include "qbasictimer.h"
+#include "qabstractanimation.h"
 #include <qgraphicsview_p.h>
 #include <qdeclarativeitem_p.h>
 #include <qabstractanimation_p.h>

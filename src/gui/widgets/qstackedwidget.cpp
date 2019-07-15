@@ -43,8 +43,8 @@
 
 #ifndef QT_NO_STACKEDWIDGET
 
-#include <qstackedlayout.h>
-#include <qevent.h>
+#include "qstackedlayout.h"
+#include "qevent.h"
 #include <qframe_p.h>
 
 QT_BEGIN_NAMESPACE

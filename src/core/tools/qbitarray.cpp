@@ -32,8 +32,8 @@
 ****************************************************************************/
 
 #include "qbitarray.h"
-#include <qdatastream.h>
-#include <qdebug.h>
+#include "qdatastream.h"
+#include "qdebug.h"
 #include <string.h>
 
 QT_BEGIN_NAMESPACE

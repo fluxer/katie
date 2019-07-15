@@ -42,13 +42,13 @@
 #include "qtextlayout.h"
 #include "qtextengine_p.h"
 
-#include <qfont.h>
-#include <qapplication.h>
-#include <qmath.h>
-#include <qpainter.h>
-#include <qvarlengtharray.h>
-#include <qtextformat.h>
-#include <qabstracttextdocumentlayout.h>
+#include "qfont.h"
+#include "qapplication.h"
+#include "qmath.h"
+#include "qpainter.h"
+#include "qvarlengtharray.h"
+#include "qtextformat.h"
+#include "qabstracttextdocumentlayout.h"
 #include "qtextdocument_p.h"
 #include "qtextformat_p.h"
 #include "qstyleoption.h"

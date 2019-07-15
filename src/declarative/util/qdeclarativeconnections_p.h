@@ -34,8 +34,8 @@
 #ifndef QDECLARATIVECONNECTIONS_H
 #define QDECLARATIVECONNECTIONS_H
 
-#include <qdeclarative.h>
-#include <qdeclarativescriptstring.h>
+#include "qdeclarative.h"
+#include "qdeclarativescriptstring.h"
 #include <qdeclarativecustomparser_p.h>
 
 #include <QtCore/qobject.h>

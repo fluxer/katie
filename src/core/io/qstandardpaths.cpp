@@ -23,13 +23,13 @@
 *
 ***********************************************************************/
 
-#include <qstandardpaths.h>
+#include "qstandardpaths.h"
 
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qhash.h>
-#include <qobject.h>
-#include <qcoreapplication.h>
+#include "qdir.h"
+#include "qfileinfo.h"
+#include "qhash.h"
+#include "qobject.h"
+#include "qcoreapplication.h"
 
 #ifndef QT_NO_STANDARDPATHS
 

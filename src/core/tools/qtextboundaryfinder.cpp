@@ -30,8 +30,9 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <QtCore/qtextboundaryfinder.h>
-#include <qdebug.h>
+
+#include "qtextboundaryfinder.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

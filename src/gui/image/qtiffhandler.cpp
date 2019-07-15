@@ -40,10 +40,10 @@
 ****************************************************************************/
 
 #include "qtiffhandler_p.h"
-#include <qvariant.h>
-#include <qdebug.h>
-#include <qimage.h>
-#include <qglobal.h>
+#include "qvariant.h"
+#include "qdebug.h"
+#include "qimage.h"
+
 extern "C" {
 #include "tiffio.h"
 }

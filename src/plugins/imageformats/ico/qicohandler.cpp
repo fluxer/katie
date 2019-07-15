@@ -53,7 +53,7 @@
 #include <QtGui/QImage>
 #include <QtCore/QFile>
 #include <QtCore/QBuffer>
-#include <qvariant.h>
+#include "qvariant.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -26,8 +26,8 @@
 #ifndef QJSONPARSER_P_H
 #define QJSONPARSER_P_H
 
-#include <qjsondocument.h>
-#include <qvarlengtharray.h>
+#include "qjsondocument.h"
+#include "qvarlengtharray.h"
 
 QT_BEGIN_NAMESPACE
 

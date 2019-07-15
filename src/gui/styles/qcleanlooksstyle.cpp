@@ -45,27 +45,27 @@
 #if !defined(QT_NO_STYLE_CLEANLOOKS) || defined(QT_PLUGIN)
 
 #include "qwindowsstyle_p.h"
-#include <qcombobox.h>
-#include <qpushbutton.h>
-#include <qpainter.h>
-#include <qdir.h>
-#include <qhash.h>
-#include <qstyleoption.h>
-#include <qapplication.h>
-#include <qmainwindow.h>
-#include <qfont.h>
-#include <qgroupbox.h>
-#include <qpixmapcache.h>
-#include <qdialogbuttonbox.h>
-#include <qscrollbar.h>
-#include <qspinbox.h>
-#include <qslider.h>
-#include <qsplitter.h>
-#include <qprogressbar.h>
-#include <qtoolbar.h>
-#include <qwizard.h>
+#include "qcombobox.h"
+#include "qpushbutton.h"
+#include "qpainter.h"
+#include "qdir.h"
+#include "qhash.h"
+#include "qstyleoption.h"
+#include "qapplication.h"
+#include "qmainwindow.h"
+#include "qfont.h"
+#include "qgroupbox.h"
+#include "qpixmapcache.h"
+#include "qdialogbuttonbox.h"
+#include "qscrollbar.h"
+#include "qspinbox.h"
+#include "qslider.h"
+#include "qsplitter.h"
+#include "qprogressbar.h"
+#include "qtoolbar.h"
+#include "qwizard.h"
 #include <qstylehelper_p.h>
-#include <qpen.h>
+#include "qpen.h"
 #include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE

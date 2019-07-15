@@ -44,9 +44,9 @@
 // We mean it.
 //
 
-#include <qheaderview.h>
-#include <qtablewidget.h>
-#include <qabstractitemmodel.h>
+#include "qheaderview.h"
+#include "qtablewidget.h"
+#include "qabstractitemmodel.h"
 #include <qabstractitemmodel_p.h>
 #include <qtableview_p.h>
 #include <qwidgetitemdata_p.h>

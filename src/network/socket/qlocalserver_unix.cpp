@@ -50,9 +50,9 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
-#include <qdebug.h>
-#include <qdir.h>
-#include <qdatetime.h>
+#include "qdebug.h"
+#include "qdir.h"
+#include "qdatetime.h"
 
 QT_BEGIN_NAMESPACE
 

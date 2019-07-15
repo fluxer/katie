@@ -41,12 +41,12 @@
 
 #include "itemviews.h"
 
-#include <qheaderview.h>
-#include <qtableview.h>
-#include <qlistview.h>
-#include <qtreeview.h>
+#include "qheaderview.h"
+#include "qtableview.h"
+#include "qlistview.h"
+#include "qtreeview.h"
 #include <qtreewidget_p.h>
-#include <qaccessible2.h>
+#include "qaccessible2.h"
 #include <QDebug>
 
 #ifndef QT_NO_ACCESSIBILITY
