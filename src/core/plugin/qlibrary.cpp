@@ -600,7 +600,7 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
 
     pluginState = IsNotAPlugin; // be pessimistic
 
-    static const uint current = QByteArray(QT_VERSION_HEX_STR).toUInt();
+    const uint current = QByteArray(QT_VERSION_HEX_STR).toUInt();
     if (qt_version < current) {
         if (qt_debug_component()) {
             qWarning("Plugin uses incompatible Katie library: %s (%d, %d)\n",
