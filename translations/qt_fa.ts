@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>خطای کتابخانه ناسازگار کیوت</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1891"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1890"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>RTL</translation>
@@ -350,7 +350,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCoreApplication</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+133"/>
+        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+125"/>
         <location line="+62"/>
         <source>%1: key is empty</source>
         <comment>QSystemSemaphore</comment>
@@ -437,7 +437,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnchors</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+198"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+197"/>
         <source>Possible anchor loop detected on fill.</source>
         <translation>حلقهٔ احتمالی تکیه‌گاه در «پر» تشخیص داده شد.</translation>
     </message>
@@ -1727,7 +1727,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+612"/>
+        <location filename="../src/core/io/qfile.cpp" line="+604"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>پرونده مقصد موجود است</translation>
@@ -1771,7 +1771,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+513"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+514"/>
         <source>Find Directory</source>
         <translation>یافتن پوشه</translation>
     </message>
@@ -2571,7 +2571,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHttp</name>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+1571"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+1562"/>
         <location line="+816"/>
         <source>Unknown error</source>
         <translation>خطای ناشناخته</translation>
@@ -2730,8 +2730,8 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1428"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1413"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
         <source>Permission denied</source>
         <translation>حق دسترسی رد شد</translation>
     </message>
@@ -2754,7 +2754,7 @@ Do you want to delete it anyway?</source>
         <translation>فضایی در دستگاه باقی نمانده است</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1553"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
         <source>Unknown error</source>
         <translation>خطای ناشناخته</translation>
     </message>
@@ -2843,31 +2843,31 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+366"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+347"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>داده اعتبارسنجی افزونه در «%1» تطابق ندارد</translation>
     </message>
     <message>
-        <location line="+218"/>
-        <location line="+64"/>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
+        <location line="+202"/>
+        <location line="+43"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+280"/>
         <source>The shared library was not found.</source>
         <translation>کتابخانه اشتراکی پیدا نشد.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>The file &apos;%1&apos; is not a valid Qt plugin.</source>
-        <translation>پرونده «%1» یک افزونه معتبر Qt نیست.</translation>
+        <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
-        <translation>افزونه «%1» از کتابخانه ناسازگار Qt استفاده می‌کند. (%2.%3.%4) [%5]</translation>
+        <location line="+13"/>
+        <source>The plugin uses incompatible Katie library: %1 (%2, %3)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
-        <translation>افزونه «%1» از کتابخانه ناسازگار Qt استفاده می‌کند. (نمی‌توان کتابخانه‌های اشکال‌زدایی و انتشار را ترکیب کرد.)</translation>
+        <location line="+7"/>
+        <source>The plugin &apos;%1&apos; uses incompatible Katie library. (Cannot mix debug and release libraries.)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+332"/>
@@ -2875,7 +2875,7 @@ Do you want to delete it anyway?</source>
         <translation>خطای ناشناخته</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+207"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
         <source>Cannot load library %1: %2</source>
         <translation>نمی‌توان کتابخانه %1 را بارگذاری کرد: %2</translation>
     </message>
@@ -3022,7 +3022,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1292"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1289"/>
         <source>Unable to open database &apos;</source>
         <translation>نمی‌توان پایگاه داده را باز کرد &apos;</translation>
     </message>
@@ -3552,7 +3552,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkSession</name>
     <message>
-        <location filename="../src/network/bearer/qnetworksession.cpp" line="+453"/>
+        <location filename="../src/network/bearer/qnetworksession.cpp" line="+452"/>
         <source>Invalid configuration.</source>
         <translation>پیکر‌بندی نامعتبر.</translation>
     </message>
@@ -3588,7 +3588,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1835"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1834"/>
         <source>Unable to connect</source>
         <translation>نمی‌توان اتصال برقرار کرد</translation>
     </message>
@@ -4406,7 +4406,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+823"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+814"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>خطای خواندن از پردازش</translation>
@@ -4427,7 +4427,7 @@ Do you want to overwrite it?</source>
         <translation>هیچ برنامه‌ای تعریف نشده است</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+413"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+404"/>
         <source>Could not open input redirection for reading</source>
         <translation>نمی‌توان تغییر مسیر ورودی را برای خواندن باز کرد</translation>
     </message>
@@ -4453,7 +4453,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QProgressDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+183"/>
+        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+184"/>
         <source>Cancel</source>
         <translation>لغو</translation>
     </message>
@@ -4477,7 +4477,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QRegExp</name>
     <message>
-        <location filename="../src/core/tools/qregexp.cpp" line="+65"/>
+        <location filename="../src/core/tools/qregexp.cpp" line="+57"/>
         <source>no error occurred</source>
         <translation>خطایی رخ نداد</translation>
     </message>
@@ -4540,7 +4540,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+572"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+570"/>
         <source>Error opening database</source>
         <translation>خطا در باز کردن پایگاه داده</translation>
     </message>
@@ -5031,7 +5031,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+238"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+230"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: نمی‌توان کلید را روی قفل تنظیم کرد</translation>
     </message>
@@ -5052,7 +5052,7 @@ Do you want to overwrite it?</source>
         <translation>%1: نمی‌توان قفل را باز کرد</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+95"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+87"/>
         <source>%1: already exists</source>
         <translation>%1: هم‌اکنون موجود است</translation>
     </message>
@@ -6891,7 +6891,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7140,13 +7140,13 @@ Do you want to overwrite it?</source>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+591"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1756"/>
         <source>Extra content at end of document.</source>
         <translation>محتویات اضافه در انتهای سند.</translation>
     </message>
     <message>
-        <location line="+276"/>
+        <location line="+273"/>
         <source>Invalid entity value.</source>
         <translation>مقدار موجودیت نامعتبر.</translation>
     </message>

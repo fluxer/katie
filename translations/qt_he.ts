@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1891"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1890"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>RTL</translation>
@@ -350,7 +350,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCoreApplication</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+133"/>
+        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+125"/>
         <location line="+62"/>
         <source>%1: key is empty</source>
         <comment>QSystemSemaphore</comment>
@@ -437,7 +437,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnchors</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+198"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+197"/>
         <source>Possible anchor loop detected on fill.</source>
         <translation>אותרה לולאת עוגן אפשרית בתוך fill.</translation>
     </message>
@@ -1729,7 +1729,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+612"/>
+        <location filename="../src/core/io/qfile.cpp" line="+604"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>קובץ יעד קיים</translation>
@@ -1773,7 +1773,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+532"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+533"/>
         <location line="+512"/>
         <source>All Files (*)</source>
         <translation>כל הקבצים (*)</translation>
@@ -2579,7 +2579,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="-3"/>
-        <location filename="../src/network/access/qhttp.cpp" line="+2616"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+2607"/>
         <source>Host %1 not found</source>
         <translation>מארח %1 לא נמצא</translation>
     </message>
@@ -2732,8 +2732,8 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1428"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1413"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
         <source>Permission denied</source>
         <translation>הרשאה נדחתה</translation>
     </message>
@@ -2756,7 +2756,7 @@ Do you want to delete it anyway?</source>
         <translation>לא נשאר מקום בהתקן</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1553"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
         <source>Unknown error</source>
         <translation>שגיאה לא מוכרת</translation>
     </message>
@@ -2845,39 +2845,39 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+366"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+347"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>חוסר התאמה במידע אימות תוסף בתוך &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+299"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
-        <translation>התוסף &apos;%1&apos; משתמש בספריית Qt שאינה תואמת (%2.%3.%4) [%5]</translation>
+        <location line="+247"/>
+        <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+341"/>
+        <location line="+13"/>
+        <source>The plugin uses incompatible Katie library: %1 (%2, %3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>The plugin &apos;%1&apos; uses incompatible Katie library. (Cannot mix debug and release libraries.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+332"/>
         <source>Unknown error</source>
         <translation>שגיאה לא מוכרת</translation>
     </message>
     <message>
-        <location line="-422"/>
-        <location line="+64"/>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
+        <location line="-397"/>
+        <location line="+43"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+280"/>
         <source>The shared library was not found.</source>
         <translation>הספריה המשותפת לא נמצאה.</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>The file &apos;%1&apos; is not a valid Qt plugin.</source>
-        <translation>הקובץ &apos;%1&apos; אינו תוסף Qt תקין.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
-        <translation>התוסף &apos;%1&apos; משתמש בספריית Qt שאינה תואמת (לא ניתן לערבב ספריית debug וספריית release.)</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+207"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
         <source>Cannot load library %1: %2</source>
         <translation>אין אפשרות לטעון ספרייה %1: %2</translation>
     </message>
@@ -3025,7 +3025,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1292"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1289"/>
         <source>Unable to open database &apos;</source>
         <translation>אין אפשרות לפתוח מסד נתונים &apos;</translation>
     </message>
@@ -3555,7 +3555,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkSession</name>
     <message>
-        <location filename="../src/network/bearer/qnetworksession.cpp" line="+453"/>
+        <location filename="../src/network/bearer/qnetworksession.cpp" line="+452"/>
         <source>Invalid configuration.</source>
         <translation>תצורה לא תקינה.</translation>
     </message>
@@ -3591,7 +3591,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1835"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1834"/>
         <source>Unable to connect</source>
         <translation>אין אפשרות להתחבר</translation>
     </message>
@@ -4409,7 +4409,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+413"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+404"/>
         <source>Could not open input redirection for reading</source>
         <translation>לא ניתן לפתוח הפניית קלט לקריאה</translation>
     </message>
@@ -4432,7 +4432,7 @@ Please choose a different file name.</source>
         <translation>תם זמן פעולת תהליך</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+823"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+814"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>שגיאה בקריאה מתהליך</translation>
@@ -4456,7 +4456,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProgressDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+183"/>
+        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+184"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
@@ -4480,7 +4480,7 @@ Please choose a different file name.</source>
 <context>
     <name>QRegExp</name>
     <message>
-        <location filename="../src/core/tools/qregexp.cpp" line="+65"/>
+        <location filename="../src/core/tools/qregexp.cpp" line="+57"/>
         <source>no error occurred</source>
         <translation>לא אירעה כל שגיאה</translation>
     </message>
@@ -4543,7 +4543,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+572"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+570"/>
         <source>Error opening database</source>
         <translation>שגיאה בפתיחת מסד נתונים</translation>
     </message>
@@ -5034,7 +5034,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+238"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+230"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: לא ניתן לקבוע מפתח במנעול</translation>
     </message>
@@ -5056,7 +5056,7 @@ Please choose a different file name.</source>
         <translation>%1: אין אפשרות לבטל נעילה</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+91"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+83"/>
         <source>%1: permission denied</source>
         <translation>%1: הרשאה נדחתה</translation>
     </message>
@@ -6896,7 +6896,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7145,13 +7145,13 @@ Please choose a different file name.</source>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+591"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1756"/>
         <source>Extra content at end of document.</source>
         <translation>תוכן נוסף בסוף מסמך.</translation>
     </message>
     <message>
-        <location line="+276"/>
+        <location line="+273"/>
         <source>Invalid entity value.</source>
         <translation>ערך ישות לא תקין.</translation>
     </message>

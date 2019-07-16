@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1891"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1890"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -350,7 +350,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCoreApplication</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+133"/>
+        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+125"/>
         <location line="+62"/>
         <source>%1: key is empty</source>
         <comment>QSystemSemaphore</comment>
@@ -437,7 +437,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnchors</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+198"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+197"/>
         <source>Possible anchor loop detected on fill.</source>
         <translation>Detectouse un posíbel ciclo de enganche no recheo.</translation>
     </message>
@@ -1728,7 +1728,7 @@ superior, inferior nin vcenter.</translation>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+612"/>
+        <location filename="../src/core/io/qfile.cpp" line="+604"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>O ficheiro de destino xa existe</translation>
@@ -1777,7 +1777,7 @@ superior, inferior nin vcenter.</translation>
         <translation>O meu ordenador</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+513"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+514"/>
         <source>Find Directory</source>
         <translation>Buscar un cartafol</translation>
     </message>
@@ -2607,7 +2607,7 @@ Desexa aínda así borralo?</translation>
         <translation>Fallou a negociación de SSL</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+1571"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+1562"/>
         <location line="+816"/>
         <source>Unknown error</source>
         <translation>Erro descoñecido</translation>
@@ -2731,8 +2731,8 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1428"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1413"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
         <source>Permission denied</source>
         <translation>Permiso negado</translation>
     </message>
@@ -2755,7 +2755,7 @@ Desexa aínda así borralo?</translation>
         <translation>Non queda espazo no dispositivo</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1553"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
         <source>Unknown error</source>
         <translation>Erro descoñecido</translation>
     </message>
@@ -2844,31 +2844,31 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+366"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+347"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Erro de concordancia na verificación dos datos do complemento en «%1»</translation>
     </message>
     <message>
-        <location line="+218"/>
-        <location line="+64"/>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
+        <location line="+202"/>
+        <location line="+43"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+280"/>
         <source>The shared library was not found.</source>
         <translation>Non se atopou a biblioteca compartida.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>The file &apos;%1&apos; is not a valid Qt plugin.</source>
-        <translation>O ficheiro «%1» non é un complemento válido de Qt.</translation>
+        <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
-        <translation>O complemento «%1» utiliza unha biblioteca Qt non compatíbel. (%2.%3.%4) [%5]</translation>
+        <location line="+13"/>
+        <source>The plugin uses incompatible Katie library: %1 (%2, %3)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
-        <translation>O complemento «%1» utiliza unha biblioteca Qt non compatíbel (Non é posíbel mesturar as bibliotecas de depuración coas publicadas).</translation>
+        <location line="+7"/>
+        <source>The plugin &apos;%1&apos; uses incompatible Katie library. (Cannot mix debug and release libraries.)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+332"/>
@@ -2876,7 +2876,7 @@ Desexa aínda así borralo?</translation>
         <translation>Erro descoñecido</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+207"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
         <source>Cannot load library %1: %2</source>
         <translation>Non foi posíbel cargar a biblioteca %1: %2</translation>
     </message>
@@ -3023,7 +3023,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1292"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1289"/>
         <source>Unable to open database &apos;</source>
         <translation>Non foi posíbel abrir a base de datos «</translation>
     </message>
@@ -3553,7 +3553,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QNetworkSession</name>
     <message>
-        <location filename="../src/network/bearer/qnetworksession.cpp" line="+453"/>
+        <location filename="../src/network/bearer/qnetworksession.cpp" line="+452"/>
         <source>Invalid configuration.</source>
         <translation>A configuración non é válida.</translation>
     </message>
@@ -3589,7 +3589,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1835"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1834"/>
         <source>Unable to connect</source>
         <translation>Non foi posíbel conectar</translation>
     </message>
@@ -4408,7 +4408,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+823"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+814"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Aconteceu un erro ao ler do proceso</translation>
@@ -4429,7 +4429,7 @@ Desexa sobrescribilo?</translation>
         <translation>Non definiu programa ningún</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+413"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+404"/>
         <source>Could not open input redirection for reading</source>
         <translation>Non foi posíbel abrir a redirección da entrada para lectura</translation>
     </message>
@@ -4455,7 +4455,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QProgressDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+183"/>
+        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+184"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -4479,7 +4479,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QRegExp</name>
     <message>
-        <location filename="../src/core/tools/qregexp.cpp" line="+65"/>
+        <location filename="../src/core/tools/qregexp.cpp" line="+57"/>
         <source>no error occurred</source>
         <translation>non aconteceu ningún erro</translation>
     </message>
@@ -4542,7 +4542,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+572"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+570"/>
         <source>Error opening database</source>
         <translation>Aconteceu un erro ao abrir a base de datos</translation>
     </message>
@@ -5033,7 +5033,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+238"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+230"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: non foi posíbel modificar a tecla por bloqueo</translation>
     </message>
@@ -5054,7 +5054,7 @@ Desexa sobrescribilo?</translation>
         <translation>%1: non foi posíbel desbloquear</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+95"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+87"/>
         <source>%1: already exists</source>
         <translation>%1: xa existe</translation>
     </message>
@@ -6893,7 +6893,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7142,13 +7142,13 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1758"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+591"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1756"/>
         <source>Extra content at end of document.</source>
         <translation>Contido adicional na fin do documento.</translation>
     </message>
     <message>
-        <location line="+276"/>
+        <location line="+273"/>
         <source>Invalid entity value.</source>
         <translation>O valor da entidade non é válido.</translation>
     </message>

@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Qt není slučitelná</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1891"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1890"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -350,7 +350,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QCoreApplication</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+133"/>
+        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+125"/>
         <location line="+62"/>
         <source>%1: key is empty</source>
         <comment>QSystemSemaphore</comment>
@@ -437,7 +437,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnchors</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+198"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+197"/>
         <source>Possible anchor loop detected on fill.</source>
         <translation>Při operaci naplnění byla zjištěna případná nekonečná smyčka kotvy.</translation>
     </message>
@@ -1727,7 +1727,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+822"/>
+        <location filename="../src/core/io/qfile.cpp" line="+814"/>
         <source>Cannot create %1 for output</source>
         <translation>%1 se nepodařilo zřídit pro výstup</translation>
     </message>
@@ -1789,7 +1789,7 @@ Script: %3</source>
         <translation>Zkratka</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+515"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+516"/>
         <source>Open</source>
         <translation>Otevřít</translation>
     </message>
@@ -2571,7 +2571,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QHttp</name>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+2613"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+2604"/>
         <source>Connection refused (or timed out)</source>
         <translation>Spojení bylo odmítnuto (nebo byl překročen časový limit)</translation>
     </message>
@@ -2730,8 +2730,8 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1434"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+64"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1419"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+56"/>
         <source>No such file or directory</source>
         <translation>Nepodařilo se najít žádný takový soubor nebo adresář</translation>
     </message>
@@ -2748,7 +2748,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Na zařízení není žádný volný úložný prostor</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1553"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
@@ -2843,7 +2843,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+224"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+216"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Knihovnu %1 nelze vyjmout: %2</translation>
     </message>
@@ -2853,39 +2853,39 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Knihovnu %1 nelze nahrát: %2</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+665"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
-        <translation>Přídavný modul &apos;%1&apos; používá neslučitelnou Qt knihovnu. (%2.%3.%4) [%5]</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+44"/>
+        <location line="+44"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Symbol &quot;%1&quot; nelze v %2 vyřešit: %3</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="-299"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+347"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Ověřovací data přídavného nesouhlasí v &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+308"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
-        <translation>Přídavný modul &apos;%1&apos; používá neslučitelnou Qt knihovnu. (Knihovny vytvořené v režimu ladění a vydání nemohou být používány společně.)</translation>
-    </message>
-    <message>
-        <location line="-24"/>
-        <source>The file &apos;%1&apos; is not a valid Qt plugin.</source>
-        <translation>Soubor &apos;%1&apos; není platným přídavným modulem Qt.</translation>
-    </message>
-    <message>
-        <location line="-66"/>
-        <location line="+64"/>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
+        <location line="+202"/>
+        <location line="+43"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+280"/>
         <source>The shared library was not found.</source>
         <translation>Nepodařilo se nalézt sdílenou knihovnu.</translation>
     </message>
     <message>
-        <location line="+358"/>
+        <location line="+2"/>
+        <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>The plugin uses incompatible Katie library: %1 (%2, %3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>The plugin &apos;%1&apos; uses incompatible Katie library. (Cannot mix debug and release libraries.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+332"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
@@ -3022,7 +3022,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1474"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1471"/>
         <source>Unable to commit transaction</source>
         <translation>Transakci se nepodařilo zapsat</translation>
     </message>
@@ -3552,7 +3552,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkSession</name>
     <message>
-        <location filename="../src/network/bearer/qnetworksession.cpp" line="+453"/>
+        <location filename="../src/network/bearer/qnetworksession.cpp" line="+452"/>
         <source>Invalid configuration.</source>
         <translation>Neplatné nastavení.</translation>
     </message>
@@ -3588,7 +3588,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+2131"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+2130"/>
         <source>Unable to commit transaction</source>
         <translation>Transakci se nepodařilo zapsat</translation>
     </message>
@@ -4406,7 +4406,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+922"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+913"/>
         <source>Error writing to process</source>
         <translation>Zápis do procesu se nezdařil</translation>
     </message>
@@ -4416,7 +4416,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Nestanoven žádný program</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+643"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+634"/>
         <source>Resource error (fork failure): %1</source>
         <translation>Potíže se zdroji (selhání rozcestí - &quot;fork failure&quot;): %1</translation>
     </message>
@@ -4453,7 +4453,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QProgressDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+183"/>
+        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+184"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
@@ -4477,7 +4477,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QRegExp</name>
     <message>
-        <location filename="../src/core/tools/qregexp.cpp" line="+68"/>
+        <location filename="../src/core/tools/qregexp.cpp" line="+60"/>
         <source>bad lookahead syntax</source>
         <translation>nesprávná syntax pro dopředný výrok (lookahead)</translation>
     </message>
@@ -4540,7 +4540,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+621"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+619"/>
         <source>Unable to commit transaction</source>
         <translation>Transakci se nepodařilo zapsat</translation>
     </message>
@@ -5031,7 +5031,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+99"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+91"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: Neexistuje</translation>
     </message>
@@ -5058,7 +5058,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Neplatný údaj u klíče (prázdný)</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+322"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+314"/>
         <source>%1: create size is less then 0</source>
         <translation>%1: Údaj o velikosti vytvoření je menší než nula</translation>
     </message>
@@ -6891,7 +6891,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7140,12 +7140,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1788"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1786"/>
         <source>Reference to unparsed entity &apos;%1&apos;.</source>
         <translation>Odkaz na nevyhodnocenou entitu &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+1683"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+1681"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
         <translation>&apos;%1&apos; není platným znakem v údaji veřejného id, který je tvořen písmeny.</translation>
     </message>
@@ -7271,7 +7271,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1 není platným údajem VEŘEJNÉHO identifikátoru (id).</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="-979"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="-976"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="+129"/>
         <source>Extra content at end of document.</source>
         <translation>Přebytečný obsah za koncem dokumentu.</translation>
@@ -7282,7 +7282,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Neplatný název XML.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+1187"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+1184"/>
         <source>Premature end of document.</source>
         <translation>Předčasný konec dokumentu.</translation>
     </message>

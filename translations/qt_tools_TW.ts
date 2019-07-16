@@ -832,11 +832,6 @@ Options:
     </message>
     <message>
         <location filename="../src/tools/qtconfig/mainwindow.ui"/>
-        <source>Qt Configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location/>
         <source>Appearance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1221,14 +1216,15 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location filename="../src/tools/qtconfig/mainwindow.ui"/>
+        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+5"/>
         <location line="+1"/>
         <location line="+7"/>
         <source>Katie Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+19"/>
         <source>Save Changes</source>
         <translation type="unfinished"></translation>
     </message>
