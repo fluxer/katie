@@ -431,14 +431,12 @@ void QThread::start(Priority priority)
         }
     }
 
-    int code =
-        pthread_create(&d->thread_id, &attr, QThreadPrivate::start, this);
-    if (code == EPERM) {
+    int code = pthread_create(&d->thread_id, &attr, QThreadPrivate::start, this);
+    if (Q_UNLIKELY(code == EPERM)) {
         // caller does not have permission to set the scheduling
         // parameters/policy
         pthread_attr_setinheritsched(&attr, PTHREAD_INHERIT_SCHED);
-        code =
-            pthread_create(&d->thread_id, &attr, QThreadPrivate::start, this);
+        code = pthread_create(&d->thread_id, &attr, QThreadPrivate::start, this);
     }
 
     pthread_attr_destroy(&attr);
