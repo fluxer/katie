@@ -39,10 +39,10 @@
 **
 ****************************************************************************/
 
-#include <qdrawhelper_p.h>
-#include <qpaintengine_raster_p.h>
-#include <qpainter_p.h>
-#include <qmath_p.h>
+#include "qdrawhelper_p.h"
+#include "qpaintengine_raster_p.h"
+#include "qpainter_p.h"
+#include "qmath_p.h"
 #include "qmath.h"
 
 QT_BEGIN_NAMESPACE

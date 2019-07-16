@@ -41,8 +41,8 @@
 
 #include "qstatictext.h"
 #include "qstatictext_p.h"
-#include <qtextengine_p.h>
-#include <qfontengine_p.h>
+#include "qtextengine_p.h"
+#include "qfontengine_p.h"
 #include "qfontmetrics.h"
 #include "qabstracttextdocumentlayout.h"
 #include "qapplication.h"

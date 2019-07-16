@@ -54,12 +54,12 @@
 #include <QtDesigner/abstractpropertyeditor.h>
 
 // shared
-#include <qdesigner_utils_p.h>
+#include "qdesigner_utils_p.h"
 #include <formwindowbase_p.h>
 #include <itemviewfindwidget.h>
-#include <qdesigner_dnditem_p.h>
+#include "qdesigner_dnditem_p.h"
 #include <textpropertyeditor_p.h>
-#include <qdesigner_command_p.h>
+#include "qdesigner_command_p.h"
 #include <grid_p.h>
 
 // Qt

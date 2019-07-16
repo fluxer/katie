@@ -37,9 +37,9 @@
 #include <QtCore/QMetaObject>
 #include <QtCore/QObject>
 
-#include <qdeclarativerefcount_p.h>
-#include <qdeclarativeglobal_p.h>
-#include <qobject_p.h>
+#include "qdeclarativerefcount_p.h"
+#include "qdeclarativeglobal_p.h"
+#include "qobject_p.h"
 
 QT_BEGIN_HEADER
 

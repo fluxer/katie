@@ -34,8 +34,8 @@
 #include "qeventdispatcher_glib_p.h"
 #include "qeventdispatcher_unix_p.h"
 
-#include <qmutexpool_p.h>
-#include <qthread_p.h>
+#include "qmutexpool_p.h"
+#include "qthread_p.h"
 
 #include "qcoreapplication.h"
 #include "qsocketnotifier.h"

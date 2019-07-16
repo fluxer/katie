@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qitemselectionmodel.h"
-#include <qitemselectionmodel_p.h>
+#include "qitemselectionmodel_p.h"
 #include "qdebug.h"
 
 #ifndef QT_NO_ITEMVIEWS

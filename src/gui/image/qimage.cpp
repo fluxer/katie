@@ -54,16 +54,16 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <math.h>
-#include <qdrawhelper_p.h>
-#include <qmemrotate_p.h>
-#include <qpixmapdata_p.h>
+#include "qdrawhelper_p.h"
+#include "qmemrotate_p.h"
+#include "qpixmapdata_p.h"
 
 #include "qhash.h"
 
-#include <qpaintengine_raster_p.h>
+#include "qpaintengine_raster_p.h"
 
-#include <qimage_p.h>
-#include <qfont_p.h>
+#include "qimage_p.h"
+#include "qfont_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -37,7 +37,7 @@
 #include "qdeclarativestate_p.h"
 
 #include "qdeclarativeitem.h"
-#include <qdeclarativeanchors_p.h>
+#include "qdeclarativeanchors_p.h"
 #include "qdeclarativescriptstring.h"
 
 QT_BEGIN_HEADER

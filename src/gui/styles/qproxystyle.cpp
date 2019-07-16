@@ -40,11 +40,11 @@
 ****************************************************************************/
 
 #include "qstyle.h"
-#include <qproxystyle_p.h>
-#include <qapplication_p.h>
+#include "qproxystyle_p.h"
+#include "qapplication_p.h"
 #include "qproxystyle.h"
 #include "qstylefactory.h"
-#include <qstyle_p.h>
+#include "qstyle_p.h"
 
 #if !defined(QT_NO_STYLE_PROXY) || defined(QT_PLUGIN)
 

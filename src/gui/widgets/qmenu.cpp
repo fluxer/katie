@@ -56,15 +56,15 @@
 #include "qwidgetaction.h"
 #include "qtoolbutton.h"
 #include "qpushbutton.h"
-#include <qpushbutton_p.h>
-#include <qaction_p.h>
+#include "qpushbutton_p.h"
+#include "qaction_p.h"
 
 #ifndef QT_NO_ACCESSIBILITY
 # include "qaccessible.h"
 #endif
 
 #ifndef QT_NO_EFFECTS
-# include <qeffects_p.h>
+# include "qeffects_p.h"
 #endif
 
 #ifndef QT_NO_WHATSTHIS

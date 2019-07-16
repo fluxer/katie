@@ -39,11 +39,11 @@
 **
 ****************************************************************************/
 
-#include <qwindowsurface_p.h>
+#include "qwindowsurface_p.h"
 #include "qwidget.h"
-#include <qwidget_p.h>
-#include <qbackingstore_p.h>
-#include <qapplication_p.h>
+#include "qwidget_p.h"
+#include "qbackingstore_p.h"
+#include "qapplication_p.h"
 
 QT_BEGIN_NAMESPACE
 

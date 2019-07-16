@@ -43,9 +43,9 @@
 #include "qdeclarativepositioners_p_p.h"
 
 #include "qdeclarative.h"
-#include <qdeclarativestate_p.h>
-#include <qdeclarativestategroup_p.h>
-#include <qdeclarativestateoperations_p.h>
+#include "qdeclarativestate_p.h"
+#include "qdeclarativestategroup_p.h"
+#include "qdeclarativestateoperations_p.h"
 #include "qdeclarativeinfo.h"
 #include <QtCore/qmath.h>
 

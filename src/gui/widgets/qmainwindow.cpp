@@ -55,7 +55,7 @@
 #include "qstyle.h"
 #include "qdebug.h"
 #include "qpainter.h"
-#include <qwidget_p.h>
+#include "qwidget_p.h"
 #include "qtoolbar_p.h"
 #include "qwidgetanimator_p.h"
 

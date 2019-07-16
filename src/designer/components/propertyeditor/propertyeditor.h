@@ -35,7 +35,7 @@
 #define PROPERTYEDITOR_H
 
 #include "propertyeditor_global.h"
-#include <qdesigner_propertyeditor_p.h>
+#include "qdesigner_propertyeditor_p.h"
 
 #include <QtCore/QPointer>
 #include <QtCore/QMap>

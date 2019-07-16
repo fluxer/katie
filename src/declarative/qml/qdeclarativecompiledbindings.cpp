@@ -45,16 +45,16 @@
 #include "qdeclarativecompiledbindings_p.h"
 
 #include <QtDeclarative/qdeclarativeinfo.h>
-#include <qdeclarativecontext_p.h>
-#include <qdeclarativejsast_p.h>
-#include <qdeclarativejsengine_p.h>
-#include <qdeclarativeexpression_p.h>
+#include "qdeclarativecontext_p.h"
+#include "qdeclarativejsast_p.h"
+#include "qdeclarativejsengine_p.h"
+#include "qdeclarativeexpression_p.h"
 #include <QtCore/qcoreapplication.h>
 #include <QtCore/qdebug.h>
 #include <QtCore/qnumeric.h>
-#include <qdeclarativeanchors_p_p.h>
-#include <qdeclarativeglobal_p.h>
-#include <qdeclarativefastproperties_p.h>
+#include "qdeclarativeanchors_p_p.h"
+#include "qdeclarativeglobal_p.h"
+#include "qdeclarativefastproperties_p.h"
 #include "qdeclarativecommon_p.h"
 
 QT_BEGIN_NAMESPACE

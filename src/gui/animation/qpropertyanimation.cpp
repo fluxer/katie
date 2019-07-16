@@ -92,7 +92,7 @@
 #include "qanimationgroup.h"
 #include "qpropertyanimation_p.h"
 
-#include <qmutexpool_p.h>
+#include "qmutexpool_p.h"
 
 #ifndef QT_NO_ANIMATION
 

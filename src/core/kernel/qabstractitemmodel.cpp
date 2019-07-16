@@ -32,7 +32,7 @@
 ****************************************************************************/
 
 #include "qabstractitemmodel.h"
-#include <qabstractitemmodel_p.h>
+#include "qabstractitemmodel_p.h"
 #include "qdatastream.h"
 #include "qstringlist.h"
 #include "qsize.h"

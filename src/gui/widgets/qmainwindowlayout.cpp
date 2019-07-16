@@ -60,9 +60,9 @@
 #include "qmap.h"
 #include "qtimer.h"
 #include "qdebug.h"
-#include <qapplication_p.h>
-#include <qlayoutengine_p.h>
-#include <qguicommon_p.h>
+#include "qapplication_p.h"
+#include "qlayoutengine_p.h"
+#include "qguicommon_p.h"
 
 #ifdef QT_NO_DOCKWIDGET
 extern QMainWindowLayout *qt_mainwindow_layout(const QMainWindow *window);

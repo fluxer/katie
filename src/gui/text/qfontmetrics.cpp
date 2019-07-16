@@ -45,7 +45,7 @@
 
 #include "qfont_p.h"
 #include "qfontengine_p.h"
-#include <qunicodetables_p.h>
+#include "qunicodetables_p.h"
 
 #include <math.h>
 

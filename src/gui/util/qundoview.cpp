@@ -48,7 +48,7 @@
 #include <QtCore/qabstractitemmodel.h>
 #include <QtCore/qpointer.h>
 #include <QtGui/qicon.h>
-#include <qlistview_p.h>
+#include "qlistview_p.h"
 
 QT_BEGIN_NAMESPACE
 

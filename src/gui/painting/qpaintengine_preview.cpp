@@ -39,9 +39,9 @@
 **
 ****************************************************************************/
 
-#include <qpaintengine_preview_p.h>
-#include <qpainter_p.h>
-#include <qpaintengine_p.h>
+#include "qpaintengine_preview_p.h"
+#include "qpainter_p.h"
+#include "qpaintengine_p.h"
 
 #include <QtGui/qprintengine.h>
 #include <QtGui/qpainter.h>

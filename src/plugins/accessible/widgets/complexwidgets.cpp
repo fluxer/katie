@@ -55,7 +55,7 @@
 #include "qtooltip.h"
 #include "qwhatsthis.h"
 #include "qtreeview.h"
-#include <qtabbar_p.h>
+#include "qtabbar_p.h"
 #include <QAbstractScrollArea>
 #include <QScrollArea>
 #include <QScrollBar>

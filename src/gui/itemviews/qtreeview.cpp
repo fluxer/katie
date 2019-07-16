@@ -57,7 +57,7 @@
 #include "qaccessible2.h"
 #endif
 
-#include <qtreeview_p.h>
+#include "qtreeview_p.h"
 
 QT_BEGIN_NAMESPACE
 

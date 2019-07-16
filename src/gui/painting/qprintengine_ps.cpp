@@ -40,11 +40,11 @@
 ****************************************************************************/
 
 #include "qplatformdefs.h"
-#include <qprintengine_ps_p.h>
-#include <qpainter_p.h>
-#include <qfontengine_p.h>
-#include <qpaintengine_p.h>
-#include <qpdf_p.h>
+#include "qprintengine_ps_p.h"
+#include "qpainter_p.h"
+#include "qfontengine_p.h"
+#include "qpaintengine_p.h"
+#include "qpdf_p.h"
 
 #ifndef QT_NO_PRINTER
 
@@ -63,10 +63,10 @@
 #include "qbitmap.h"
 #include "qregion.h"
 #include "qimagewriter.h"
-#include <qpainterpath_p.h>
+#include "qpainterpath_p.h"
 #include "qdebug.h"
-#include <qdrawhelper_p.h>
-#include <qmutexpool_p.h>
+#include "qdrawhelper_p.h"
+#include "qmutexpool_p.h"
 
 #include <unistd.h>
 #include <stdlib.h>

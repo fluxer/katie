@@ -46,7 +46,7 @@
 #include "qscriptdebuggerconsole_p.h"
 #include "qscriptdebuggerconsolecommandmanager_p.h"
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 #include <QtScript/qscriptengine.h>
 

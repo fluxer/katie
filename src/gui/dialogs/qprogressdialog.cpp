@@ -53,7 +53,8 @@
 #include "qcursor.h"
 #include "qtimer.h"
 #include "qelapsedtimer.h"
-#include <qdialog_p.h>
+#include "qdialog_p.h"
+
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE

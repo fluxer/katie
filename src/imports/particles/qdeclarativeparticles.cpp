@@ -42,9 +42,9 @@
 #include "qdeclarativeparticles_p.h"
 
 #include "qdeclarativeinfo.h"
-#include <qdeclarativeitem_p.h>
+#include "qdeclarativeitem_p.h"
 
-#include <qdeclarativepixmapcache_p.h>
+#include "qdeclarativepixmapcache_p.h"
 #include <QAbstractAnimation>
 
 #include <QPainter>

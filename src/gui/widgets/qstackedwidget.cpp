@@ -45,7 +45,7 @@
 
 #include "qstackedlayout.h"
 #include "qevent.h"
-#include <qframe_p.h>
+#include "qframe_p.h"
 
 QT_BEGIN_NAMESPACE
 

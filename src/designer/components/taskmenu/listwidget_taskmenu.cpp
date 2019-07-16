@@ -42,7 +42,7 @@
 #include "listwidget_taskmenu.h"
 #include "listwidgeteditor.h"
 #include "qdesigner_utils_p.h"
-#include <qdesigner_command_p.h>
+#include "qdesigner_command_p.h"
 
 #include <QtDesigner/abstractformwindow.h>
 

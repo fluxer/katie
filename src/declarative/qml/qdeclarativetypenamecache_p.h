@@ -48,7 +48,7 @@
 #include "qdeclarativerefcount_p.h"
 #include "qdeclarativecleanup_p.h"
 
-#include <qscriptdeclarativeclass_p.h>
+#include "qscriptdeclarativeclass_p.h"
 
 QT_BEGIN_NAMESPACE
 

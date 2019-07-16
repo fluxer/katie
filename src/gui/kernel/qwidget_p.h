@@ -54,11 +54,11 @@
 #include "QtGui/qsizepolicy.h"
 #include "QtGui/qstyle.h"
 #include "QtGui/qapplication.h"
-#include <qgraphicseffect_p.h>
+#include "qgraphicseffect_p.h"
 #include "QtGui/qgraphicsproxywidget.h"
 #include "QtGui/qgraphicsscene.h"
 #include "QtGui/qgraphicsview.h"
-#include <qgesture_p.h>
+#include "qgesture_p.h"
 
 #ifdef Q_WS_X11
 #include "QtGui/qx11info_x11.h"

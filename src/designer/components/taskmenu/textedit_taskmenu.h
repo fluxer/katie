@@ -37,7 +37,7 @@
 #include <QtGui/QTextEdit>
 #include <QtGui/QPlainTextEdit>
 
-#include <qdesigner_taskmenu_p.h>
+#include "qdesigner_taskmenu_p.h"
 #include <extensionfactory_p.h>
 
 QT_BEGIN_NAMESPACE

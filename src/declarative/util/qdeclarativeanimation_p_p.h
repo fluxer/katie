@@ -60,8 +60,8 @@
 #include <QtGui/QColor>
 #include <QDebug>
 
-#include <qobject_p.h>
-#include <qvariantanimation_p.h>
+#include "qobject_p.h"
+#include "qvariantanimation_p.h"
 
 QT_BEGIN_NAMESPACE
 

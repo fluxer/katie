@@ -32,10 +32,9 @@
 ****************************************************************************/
 
 #include "qfilesystementry_p.h"
-
-#include <QtCore/qdir.h>
-#include <QtCore/qfile.h>
-#include <qfsfileengine_p.h>
+#include "qdir.h"
+#include "qfile.h"
+#include "qfsfileengine_p.h"
 
 QT_BEGIN_NAMESPACE
 

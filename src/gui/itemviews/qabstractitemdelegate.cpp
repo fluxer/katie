@@ -50,7 +50,7 @@
 #include "qevent.h"
 #include "qstring.h"
 #include "qdebug.h"
-#include <qtextengine_p.h>
+#include "qtextengine_p.h"
 
 QT_BEGIN_NAMESPACE
 

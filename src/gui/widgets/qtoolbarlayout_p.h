@@ -46,7 +46,7 @@
 //
 
 #include <QtGui/qlayout.h>
-#include <qlayoutengine_p.h>
+#include "qlayoutengine_p.h"
 #include <QVector>
 
 QT_BEGIN_NAMESPACE

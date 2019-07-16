@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>

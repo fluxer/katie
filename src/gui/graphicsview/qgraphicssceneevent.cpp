@@ -264,7 +264,7 @@
 #include "qgraphicsview.h"
 #include "qgraphicsitem.h"
 #include <QtGui/qgesture.h>
-#include <qevent_p.h>
+#include "qevent_p.h"
 
 QT_BEGIN_NAMESPACE
 

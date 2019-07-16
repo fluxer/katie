@@ -52,7 +52,7 @@
 #include <QtCore/QTextCodec>
 #include <QtCore/QTextStream>
 
-#include <qtranslator_p.h>
+#include "qtranslator_p.h"
 
 QT_BEGIN_NAMESPACE
 

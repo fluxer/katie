@@ -60,7 +60,7 @@
 #include "qdebug.h"
 #include <ctype.h>
 
-#include <qapplication_p.h>
+#include "qapplication_p.h"
 
 #ifndef QT_NO_DRAGANDDROP
 

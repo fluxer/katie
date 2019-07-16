@@ -52,7 +52,7 @@
 
 #include "qparallelanimationgroup.h"
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include <QTimer>
 
 QT_BEGIN_NAMESPACE

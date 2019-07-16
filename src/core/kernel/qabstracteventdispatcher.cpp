@@ -35,8 +35,8 @@
 #include "qabstracteventdispatcher_p.h"
 
 #include "qthread.h"
-#include <qthread_p.h>
-#include <qcoreapplication_p.h>
+#include "qthread_p.h"
+#include "qcoreapplication_p.h"
 
 QT_BEGIN_NAMESPACE
 

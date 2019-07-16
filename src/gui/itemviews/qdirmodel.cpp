@@ -54,7 +54,7 @@
 #include "qlocale.h"
 #include "qstyle.h"
 #include "qapplication.h"
-#include <qabstractitemmodel_p.h>
+#include "qabstractitemmodel_p.h"
 #include "qdebug.h"
 
 /*!

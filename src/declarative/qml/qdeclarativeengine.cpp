@@ -92,10 +92,10 @@
 #include <QVector3D>
 #include <QCryptographicHash>
 
-#include <qobject_p.h>
-#include <qscriptdeclarativeclass_p.h>
-#include <qdeclarativeitemsmodule_p.h>
-#include <qdeclarativeutilmodule_p.h>
+#include "qobject_p.h"
+#include "qscriptdeclarativeclass_p.h"
+#include "qdeclarativeitemsmodule_p.h"
+#include "qdeclarativeutilmodule_p.h"
 
 Q_DECLARE_METATYPE(QDeclarativeProperty)
 

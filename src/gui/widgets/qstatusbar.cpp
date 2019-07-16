@@ -57,8 +57,8 @@
 #include "qaccessible.h"
 #endif
 
-#include <qlayoutengine_p.h>
-#include <qwidget_p.h>
+#include "qlayoutengine_p.h"
+#include "qwidget_p.h"
 
 QT_BEGIN_NAMESPACE
 

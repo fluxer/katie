@@ -56,8 +56,8 @@
 #include "qlineedit.h"
 #include "qspinbox.h"
 #include "qstyleditemdelegate.h"
-#include <qabstractitemview_p.h>
-#include <qabstractitemmodel_p.h>
+#include "qabstractitemview_p.h"
+#include "qabstractitemmodel_p.h"
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #include "qaccessible2.h"

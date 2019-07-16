@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qvariant.h"
-#include <qwidgetitemdata_p.h>
+#include "qwidgetitemdata_p.h"
 #include "qfiledialog.h"
 
 #ifndef QT_NO_FILEDIALOG
@@ -57,7 +57,7 @@
 #include "qdebug.h"
 #include "qapplication.h"
 #include "qstylepainter.h"
-#include <qfileiconprovider_p.h>
+#include "qfileiconprovider_p.h"
 #include "ui_qfiledialog.h"
 
 #include <stdlib.h>

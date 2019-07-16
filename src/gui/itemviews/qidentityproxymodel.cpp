@@ -43,7 +43,7 @@
 #ifndef QT_NO_IDENTITYPROXYMODEL
 
 #include "qitemselectionmodel.h"
-#include <qabstractproxymodel_p.h>
+#include "qabstractproxymodel_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -50,7 +50,7 @@
 #include "qlocalserver.h"
 #include "qobject_p.h"
 #include "qqueue.h"
-#include <qabstractsocketengine_p.h>
+#include "qabstractsocketengine_p.h"
 #include "qsocketnotifier.h"
 
 QT_BEGIN_NAMESPACE

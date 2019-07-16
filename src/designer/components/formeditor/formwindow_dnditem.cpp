@@ -44,7 +44,7 @@
 
 #include <ui4_p.h>
 #include "qdesigner_resource.h"
-#include <qtresourcemodel_p.h>
+#include "qtresourcemodel_p.h"
 
 #include <QtDesigner/abstractformeditor.h>
 

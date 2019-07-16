@@ -65,8 +65,8 @@
 #include "qdataurl_p.h"
 
 #include "qtextdocument_p.h"
-#include <qprinter_p.h>
-#include <qabstracttextdocumentlayout_p.h>
+#include "qprinter_p.h"
+#include "qabstracttextdocumentlayout_p.h"
 
 #include <limits.h>
 

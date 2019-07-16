@@ -41,7 +41,7 @@
 #if !defined(QT_NO_GLIB)
 #  include "../kernel/qeventdispatcher_glib_p.h"
 #endif
-#include <qeventdispatcher_unix_p.h>
+#include "qeventdispatcher_unix_p.h"
 
 #include <sched.h>
 #include <errno.h>

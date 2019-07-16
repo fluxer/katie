@@ -40,9 +40,9 @@
 #include "qfsfileengine.h"
 #include "qdiriterator.h"
 
-#include <qfilesystementry_p.h>
-#include <qfilesystemmetadata_p.h>
-#include <qfilesystemengine_p.h>
+#include "qfilesystementry_p.h"
+#include "qfilesystemmetadata_p.h"
+#include "qfilesystemengine_p.h"
 
 QT_BEGIN_NAMESPACE
 

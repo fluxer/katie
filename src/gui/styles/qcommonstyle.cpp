@@ -63,8 +63,8 @@
 #include "qtoolbar.h"
 #include "qtoolbutton.h"
 #include "qrubberband.h"
-#include <qcommonstylepixmaps_p.h>
-#include <qmath_p.h>
+#include "qcommonstylepixmaps_p.h"
+#include "qmath_p.h"
 #include "qdebug.h"
 #include "qtextformat.h"
 #include "qwizard.h"
@@ -80,7 +80,7 @@
 #   include "qtextengine_p.h"
 #endif
 
-#include <qstylehelper_p.h>
+#include "qstylehelper_p.h"
 
 QT_BEGIN_NAMESPACE
 

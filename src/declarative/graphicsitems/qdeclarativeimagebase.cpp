@@ -44,7 +44,7 @@
 
 #include "qdeclarativeengine.h"
 #include "qdeclarativeinfo.h"
-#include <qdeclarativepixmapcache_p.h>
+#include "qdeclarativepixmapcache_p.h"
 
 QT_BEGIN_NAMESPACE
 

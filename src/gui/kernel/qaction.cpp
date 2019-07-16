@@ -48,9 +48,9 @@
 #include "qevent.h"
 #include "qlist.h"
 #include "qdebug.h"
-#include <qshortcutmap_p.h>
-#include <qapplication_p.h>
-#include <qmenu_p.h>
+#include "qshortcutmap_p.h"
+#include "qapplication_p.h"
+#include "qmenu_p.h"
 
 #define QAPP_CHECK(functionName) \
     if (!qApp) { \

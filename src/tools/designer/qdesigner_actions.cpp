@@ -52,13 +52,13 @@
 #include "appfontdialog.h"
 
 #include <pluginmanager_p.h>
-#include <qdesigner_formbuilder_p.h>
-#include <qdesigner_utils_p.h>
+#include "qdesigner_formbuilder_p.h"
+#include "qdesigner_utils_p.h"
 #include <iconloader_p.h>
-#include <qsimpleresource_p.h>
+#include "qsimpleresource_p.h"
 #include <previewmanager_p.h>
 #include <codedialog_p.h>
-#include <qdesigner_formwindowmanager_p.h>
+#include "qdesigner_formwindowmanager_p.h"
 #include "qdesigner_integration_p.h"
 
 // sdk

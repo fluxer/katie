@@ -62,8 +62,8 @@
 #include "qlistview.h"
 #include "qstringlistmodel.h"
 #include "qvalidator.h"
-#include <qdialog_p.h>
-#include <qfont_p.h>
+#include "qdialog_p.h"
+#include "qfont_p.h"
 
 
 QT_BEGIN_NAMESPACE

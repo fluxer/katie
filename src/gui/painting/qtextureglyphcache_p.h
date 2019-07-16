@@ -50,7 +50,7 @@
 #include "qobject.h"
 #include "qtransform.h"
 
-#include <qfontengineglyphcache_p.h>
+#include "qfontengineglyphcache_p.h"
 
 #ifndef QT_DEFAULT_TEXTURE_GLYPH_CACHE_WIDTH
 #define QT_DEFAULT_TEXTURE_GLYPH_CACHE_WIDTH 256

@@ -53,7 +53,7 @@
 #include <QtCore/qbitarray.h>
 #include <QtCore/qmimedata.h>
 
-#include <qstandarditemmodel_p.h>
+#include "qstandarditemmodel_p.h"
 #include "qdebug.h"
 
 QT_BEGIN_NAMESPACE

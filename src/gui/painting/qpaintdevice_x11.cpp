@@ -44,7 +44,7 @@
 #include "qwidget.h"
 #include "qbitmap.h"
 #include "qapplication.h"
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
 #include "qx11info_x11.h"
 
 QT_BEGIN_NAMESPACE

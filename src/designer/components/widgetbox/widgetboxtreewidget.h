@@ -34,7 +34,7 @@
 #ifndef WIDGETBOXTREEWIDGET_H
 #define WIDGETBOXTREEWIDGET_H
 
-#include <qdesigner_widgetbox_p.h>
+#include "qdesigner_widgetbox_p.h"
 
 #include <QtCore/QList>
 #include <QtCore/QHash>

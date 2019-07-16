@@ -34,7 +34,7 @@
 #ifndef TABLEWIDGET_TASKMENU_H
 #define TABLEWIDGET_TASKMENU_H
 
-#include <qdesigner_taskmenu_p.h>
+#include "qdesigner_taskmenu_p.h"
 #include <extensionfactory_p.h>
 
 #include <QtGui/QTableWidget>

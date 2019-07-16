@@ -48,16 +48,16 @@
 #include "qprintdialog.h"
 #include "qdialogbuttonbox.h"
 #include "qprinter.h"
-#include <qabstractpagesetupdialog_p.h>
-#include <qprinter_p.h>
+#include "qabstractpagesetupdialog_p.h"
+#include "qprinter_p.h"
 #include "qpagesetupdialog_p.h"
 
 #include <ui_qpagesetupwidget.h>
 
 #if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
-#  include <qcups_p.h>
+#  include "qcups_p.h"
 #  include <cups/cups.h>
-#  include <qpdf_p.h>
+#  include "qpdf_p.h"
 #endif
 
 QT_BEGIN_NAMESPACE

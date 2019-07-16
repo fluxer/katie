@@ -49,7 +49,7 @@
 
 #ifndef QT_NO_QCOLUMNVIEW
 
-#include <qabstractitemview_p.h>
+#include "qabstractitemview_p.h"
 
 #include <QtCore/qabstractitemmodel.h>
 #include <QtGui/qpropertyanimation.h>

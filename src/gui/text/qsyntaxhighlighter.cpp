@@ -42,9 +42,9 @@
 #include "qsyntaxhighlighter.h"
 
 #ifndef QT_NO_SYNTAXHIGHLIGHTER
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include "qtextdocument.h"
-#include <qtextdocument_p.h>
+#include "qtextdocument_p.h"
 #include "qtextlayout.h"
 #include "qpointer.h"
 #include "qtextobject.h"

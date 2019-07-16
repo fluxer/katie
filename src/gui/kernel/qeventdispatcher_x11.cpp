@@ -45,7 +45,7 @@
 #include "qx11info_x11.h"
 
 #include "qt_x11_p.h"
-#include <qeventdispatcher_unix_p.h>
+#include "qeventdispatcher_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 

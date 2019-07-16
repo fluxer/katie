@@ -41,7 +41,7 @@
 #include "qcoreapplication.h"
 #include "qsocketnotifier.h"
 #include "qtimer.h"
-#include <qcore_unix_p.h>
+#include "qcore_unix_p.h"
 
 //#define QPROCESS_DEBUG
 

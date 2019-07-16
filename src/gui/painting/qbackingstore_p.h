@@ -47,8 +47,8 @@
 
 #include <QDebug>
 #include <QtGui/qwidget.h>
-#include <qwidget_p.h>
-#include <qwindowsurface_p.h>
+#include "qwidget_p.h"
+#include "qwindowsurface_p.h"
 
 QT_BEGIN_NAMESPACE
 

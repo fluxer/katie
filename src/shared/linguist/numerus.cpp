@@ -48,7 +48,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QMap>
 
-#include <qtranslator_p.h>
+#include "qtranslator_p.h"
 
 QT_BEGIN_NAMESPACE
 

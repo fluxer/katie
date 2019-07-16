@@ -41,7 +41,7 @@
 
 #include "button_taskmenu.h"
 #include "inplace_editor.h"
-#include <qdesigner_formwindowcommand_p.h>
+#include "qdesigner_formwindowcommand_p.h"
 #include <formwindowbase_p.h>
 
 #include <QtDesigner/abstractformwindow.h>

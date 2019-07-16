@@ -49,9 +49,9 @@
 
 #include "qdeclarativeimplicitsizeitem_p_p.h"
 
-#include <qdeclarativestate_p.h>
-#include <qdeclarativetransitionmanager_p_p.h>
-#include <qdeclarativestateoperations_p.h>
+#include "qdeclarativestate_p.h"
+#include "qdeclarativetransitionmanager_p_p.h"
+#include "qdeclarativestateoperations_p.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QString>

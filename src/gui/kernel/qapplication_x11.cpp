@@ -76,10 +76,10 @@
 #include "qguiplatformplugin.h"
 #include "qthread_p.h"
 #include "qeventdispatcher_x11_p.h"
-#include <qpaintengine_x11_p.h>
-#include <qkeymapper_p.h>
-#include <qwidget_p.h>
-#include <qbackingstore_p.h>
+#include "qpaintengine_x11_p.h"
+#include "qkeymapper_p.h"
+#include "qwidget_p.h"
+#include "qbackingstore_p.h"
 
 #if !defined(QT_NO_GLIB)
 #  include "qguieventdispatcher_glib_p.h"

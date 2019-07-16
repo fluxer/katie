@@ -51,7 +51,7 @@
 #include <QtCore/qdebug.h>
 #include <QtScript/qscriptprogram.h>
 
-#include <qscriptdeclarativeclass_p.h>
+#include "qscriptdeclarativeclass_p.h"
 
 QT_BEGIN_NAMESPACE
 

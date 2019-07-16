@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qwidget_p.h>
+#include "qwidget_p.h"
 
 QT_BEGIN_NAMESPACE
 

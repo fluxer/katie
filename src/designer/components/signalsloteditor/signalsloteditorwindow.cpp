@@ -47,7 +47,7 @@
 
 #include <iconloader_p.h>
 #include <spacer_widget_p.h>
-#include <qlayout_widget_p.h>
+#include "qlayout_widget_p.h"
 
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/abstractformeditor.h>

@@ -46,7 +46,7 @@
 
 #include <abstractformeditor.h>
 #include <abstractsettings_p.h>
-#include <qdesigner_utils_p.h>
+#include "qdesigner_utils_p.h"
 #include <previewmanager_p.h>
 
 #include <QtCore/QVariant>

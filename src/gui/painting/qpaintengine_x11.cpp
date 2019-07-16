@@ -53,17 +53,15 @@
 #include "qcoreevent.h"
 #include "qiodevice.h"
 #include "qmath.h"
-
 #include "qpainter_p.h"
 #include "qtextlayout.h"
 #include "qvarlengtharray.h"
-#include <qfont_p.h>
-#include <qtextengine_p.h>
-#include <qpaintengine_x11_p.h>
-#include <qfontengine_x11_p.h>
-#include <qwidget_p.h>
-#include <qpainterpath_p.h>
-
+#include "qfont_p.h"
+#include "qtextengine_p.h"
+#include "qpaintengine_x11_p.h"
+#include "qfontengine_x11_p.h"
+#include "qwidget_p.h"
+#include "qpainterpath_p.h"
 #include "qpen.h"
 #include "qcolor.h"
 #include "qcolormap.h"

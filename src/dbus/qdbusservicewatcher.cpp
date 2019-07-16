@@ -44,7 +44,7 @@
 
 #include <QStringList>
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 #include <dbus/dbus.h>
 

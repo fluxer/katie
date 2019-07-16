@@ -53,7 +53,7 @@
 #include "qtoolbutton.h"
 #include "qdebug.h"
 
-#include <qwidgetresizehandler_p.h>
+#include "qwidgetresizehandler_p.h"
 
 #include "qdockwidget_p.h"
 #include "qmainwindowlayout_p.h"

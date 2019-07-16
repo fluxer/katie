@@ -51,12 +51,12 @@
 #include "qgraphicssceneevent.h"
 
 #ifndef QT_NO_ACTION
-#include <qaction_p.h>
+#include "qaction_p.h"
 #endif
-#include <qapplication_p.h>
-#include <qgraphicsscene_p.h>
+#include "qapplication_p.h"
+#include "qgraphicsscene_p.h"
 #ifndef QT_NO_SHORTCUT
-#include <qshortcutmap_p.h>
+#include "qshortcutmap_p.h"
 #endif
 #include <QtCore/qmutex.h>
 #include <QtGui/qapplication.h>

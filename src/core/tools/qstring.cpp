@@ -37,7 +37,7 @@
 #ifndef QT_NO_TEXTCODEC
 #include "qtextcodec.h"
 #endif
-#include <qutfcodec_p.h>
+#include "qutfcodec_p.h"
 #include "qdatastream.h"
 #include "qlist.h"
 #include "qlocale.h"

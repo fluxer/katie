@@ -51,8 +51,8 @@
 #include "qwidgetanimator_p.h"
 #include "qmainwindowlayout_p.h"
 #include "qdockwidget_p.h"
-#include <qlayoutengine_p.h>
-#include <qguicommon_p.h>
+#include "qlayoutengine_p.h"
+#include "qguicommon_p.h"
 
 #include "qpainter.h"
 #include "qstyleoption.h"

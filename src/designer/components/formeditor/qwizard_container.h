@@ -36,7 +36,7 @@
 
 #include <QtDesigner/container.h>
 
-#include <qdesigner_propertysheet_p.h>
+#include "qdesigner_propertysheet_p.h"
 #include <extensionfactory_p.h>
 
 #include <QtGui/QWizard>

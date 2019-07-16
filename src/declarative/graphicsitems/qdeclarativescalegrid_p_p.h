@@ -39,9 +39,9 @@
 #include <QtCore/QString>
 #include <QtCore/QObject>
 
-#include <qdeclarativeborderimage_p.h>
-#include <qdeclarativepixmapcache_p.h>
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativeborderimage_p.h"
+#include "qdeclarativepixmapcache_p.h"
+#include "qdeclarativeglobal_p.h"
 
 QT_BEGIN_HEADER
 

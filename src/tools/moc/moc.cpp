@@ -45,7 +45,7 @@
 #include "utils.h"
 
 // for normalizeTypeInternal
-#include <qmetaobject_p.h>
+#include "qmetaobject_p.h"
 
 QT_BEGIN_NAMESPACE
 

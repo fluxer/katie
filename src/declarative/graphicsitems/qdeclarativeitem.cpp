@@ -42,15 +42,15 @@
 #include "qdeclarativeitem.h"
 
 #include "qdeclarativeevents_p_p.h"
-#include <qdeclarativeengine_p.h>
-#include <qgraphicsitem_p.h>
-#include <qdeclarativeitem_p.h>
+#include "qdeclarativeengine_p.h"
+#include "qgraphicsitem_p.h"
+#include "qdeclarativeitem_p.h"
 
 #include "qdeclarativeengine.h"
-#include <qdeclarativeopenmetaobject_p.h>
-#include <qdeclarativestate_p.h>
+#include "qdeclarativeopenmetaobject_p.h"
+#include "qdeclarativestate_p.h"
 #include "qdeclarativeview.h"
-#include <qdeclarativestategroup_p.h>
+#include "qdeclarativestategroup_p.h"
 #include "qdeclarativecomponent.h"
 #include "qdeclarativeinfo.h"
 
@@ -61,7 +61,7 @@
 #include <QtCore/qnumeric.h>
 #include <QtScript/qscriptengine.h>
 #include <QtGui/qgraphicstransform.h>
-#include <qlistmodelinterface_p.h>
+#include "qlistmodelinterface_p.h"
 
 #include <float.h>
 

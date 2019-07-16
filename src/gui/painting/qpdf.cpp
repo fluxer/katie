@@ -43,7 +43,7 @@
 #include "qpdf_p.h"
 #include "qfile.h"
 #include "qtemporaryfile.h"
-#include <qmath_p.h>
+#include "qmath_p.h"
 #include "qcups_p.h"
 #include "qprinterinfo.h"
 #include "qnumeric.h"

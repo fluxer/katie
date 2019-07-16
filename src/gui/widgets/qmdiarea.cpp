@@ -172,8 +172,8 @@
 #include <QDesktopWidget>
 #include <QDebug>
 #include "qmath.h"
-#include <qlayoutengine_p.h>
-#include <qguicommon_p.h>
+#include "qlayoutengine_p.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -44,7 +44,7 @@
 #ifndef QT_NO_TABLEWIDGET
 #include "qitemdelegate.h"
 #include "qpainter.h"
-#include <qtablewidget_p.h>
+#include "qtablewidget_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -42,7 +42,7 @@
 #include "tablewidgeteditor.h"
 #include <abstractformbuilder.h>
 #include <iconloader_p.h>
-#include <qdesigner_command_p.h>
+#include "qdesigner_command_p.h"
 #include "formwindowbase_p.h"
 #include "qdesigner_utils_p.h"
 #include <designerpropertymanager.h>

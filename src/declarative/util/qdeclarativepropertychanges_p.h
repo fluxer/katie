@@ -35,7 +35,7 @@
 #define QDECLARATIVEPROPERTYCHANGES_H
 
 #include "qdeclarativestateoperations_p.h"
-#include <qdeclarativecustomparser_p.h>
+#include "qdeclarativecustomparser_p.h"
 
 QT_BEGIN_HEADER
 

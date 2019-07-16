@@ -47,9 +47,9 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
 #include "qx11info_x11.h"
-#include <qfontengine_x11_p.h>
+#include "qfontengine_x11_p.h"
 
 #ifndef QT_NO_FONTCONFIG
 #include <ft2build.h>

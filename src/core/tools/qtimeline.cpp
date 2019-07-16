@@ -33,7 +33,7 @@
 
 #include "qtimeline.h"
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include <QtCore/qcoreevent.h>
 #include <QtCore/qmath.h>
 #include <QtCore/qelapsedtimer.h>

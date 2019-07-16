@@ -45,10 +45,11 @@
 #include "qpainter.h"
 #include "qstylepainter.h"
 #include "qstyleoption.h"
-#include <qwidget_p.h>
+#include "qwidget_p.h"
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif
+
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE

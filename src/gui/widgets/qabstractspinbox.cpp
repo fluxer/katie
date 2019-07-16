@@ -40,8 +40,8 @@
 ****************************************************************************/
 
 #include <qplatformdefs.h>
-#include <qabstractspinbox_p.h>
-#include <qlineedit_p.h>
+#include "qabstractspinbox_p.h"
+#include "qlineedit_p.h"
 #include "qabstractspinbox.h"
 
 #ifndef QT_NO_SPINBOX

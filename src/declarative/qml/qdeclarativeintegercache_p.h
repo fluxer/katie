@@ -50,7 +50,7 @@
 
 #include <QtCore/qhash.h>
 
-#include <qscriptdeclarativeclass_p.h>
+#include "qscriptdeclarativeclass_p.h"
 
 QT_BEGIN_NAMESPACE
 

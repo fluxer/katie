@@ -69,14 +69,14 @@
 #include "qfileinfo.h"
 
 #if defined(Q_WS_X11)
-# include <qpaintengine_x11_p.h>
+# include "qpaintengine_x11_p.h"
 # include "qx11info_x11.h"
 #endif
 
-#include <qgraphicseffect_p.h>
-#include <qwindowsurface_p.h>
-#include <qbackingstore_p.h>
-#include <qpaintengine_raster_p.h>
+#include "qgraphicseffect_p.h"
+#include "qwindowsurface_p.h"
+#include "qbackingstore_p.h"
+#include "qpaintengine_raster_p.h"
 
 
 #include "qwidget_p.h"

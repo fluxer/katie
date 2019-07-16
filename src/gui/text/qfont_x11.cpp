@@ -53,13 +53,13 @@
 #include "qiodevice.h"
 #include "qhash.h"
 
-#include <qunicodetables_p.h>
+#include "qunicodetables_p.h"
 #include "qfont_p.h"
 #include "qfontengine_p.h"
 #include "qfontengine_x11_p.h"
 #include "qtextengine_p.h"
 
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
 #include "qx11info_x11.h"
 
 #include <time.h>

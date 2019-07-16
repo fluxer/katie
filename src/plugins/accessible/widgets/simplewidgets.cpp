@@ -53,7 +53,7 @@
 #include "qlcdnumber.h"
 #include "qtextdocument.h"
 #include "qlineedit.h"
-#include <qlineedit_p.h>
+#include "qlineedit_p.h"
 #include "qstyle.h"
 #include "qstyleoption.h"
 

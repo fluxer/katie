@@ -45,8 +45,8 @@
 #include "qdeclarativeitem.h"
 #include "qdeclarativeengine.h"
 #include "qdeclarativecontext.h"
-#include <qdeclarativeglobal_p.h>
-#include <qdeclarativeguard_p.h>
+#include "qdeclarativeglobal_p.h"
+#include "qdeclarativeguard_p.h"
 
 #include "qscriptvalueiterator.h"
 #include "qdebug.h"
@@ -62,10 +62,10 @@
 #include "qgraphicswidget.h"
 #include "qbasictimer.h"
 #include "qabstractanimation.h"
-#include <qgraphicsview_p.h>
-#include <qdeclarativeitem_p.h>
-#include <qabstractanimation_p.h>
-#include <qdeclarativeitemchangelistener_p.h>
+#include "qgraphicsview_p.h"
+#include "qdeclarativeitem_p.h"
+#include "qabstractanimation_p.h"
+#include "qdeclarativeitemchangelistener_p.h"
 
 QT_BEGIN_NAMESPACE
 

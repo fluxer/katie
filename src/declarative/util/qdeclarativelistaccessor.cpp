@@ -40,14 +40,10 @@
 ****************************************************************************/
 
 #include "qdeclarativelistaccessor_p.h"
-
-#include <qdeclarativemetatype_p.h>
-
-#include <QtCore/qstringlist.h>
-#include <QtCore/qdebug.h>
-
-// ### Remove me
-#include <qdeclarativeengine_p.h>
+#include "qdeclarativemetatype_p.h"
+#include "qstringlist.h"
+#include "qdebug.h"
+#include "qdeclarativeengine_p.h"
 
 QT_BEGIN_NAMESPACE
 

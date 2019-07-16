@@ -48,8 +48,8 @@
 #include <QtGui/qabstractitemview.h>
 #include <QtGui/qlistwidget.h>
 #include "qitemdelegate.h"
-#include <qlistview_p.h>
-#include <qwidgetitemdata_p.h>
+#include "qlistview_p.h"
+#include "qwidgetitemdata_p.h"
 
 #ifndef QT_NO_LISTWIDGET
 

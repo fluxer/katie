@@ -46,8 +46,8 @@
 #include <QtNetwork/qnetworkreply.h>
 #include <QtCore/qfile.h>
 
-#include <qdeclarativeengine_p.h>
-#include <qdeclarativeglobalscriptclass_p.h>
+#include "qdeclarativeengine_p.h"
+#include "qdeclarativeglobalscriptclass_p.h"
 
 QT_BEGIN_NAMESPACE
 

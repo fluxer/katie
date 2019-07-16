@@ -49,7 +49,7 @@
 
 #ifndef QT_NO_FILESYSTEMMODEL
 
-#include <qabstractitemmodel_p.h>
+#include "qabstractitemmodel_p.h"
 #include "qabstractitemmodel.h"
 #include "qfileinfogatherer_p.h"
 #include "qpair.h"

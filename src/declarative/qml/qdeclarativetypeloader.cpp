@@ -41,10 +41,10 @@
 
 #include "qdeclarativetypeloader_p.h"
 
-#include <qdeclarativeengine_p.h>
-#include <qdeclarativecompiler_p.h>
-#include <qdeclarativecomponent_p.h>
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativeengine_p.h"
+#include "qdeclarativecompiler_p.h"
+#include "qdeclarativecomponent_p.h"
+#include "qdeclarativeglobal_p.h"
 
 #include <QtDeclarative/qdeclarativecomponent.h>
 #include <QtCore/qdebug.h>

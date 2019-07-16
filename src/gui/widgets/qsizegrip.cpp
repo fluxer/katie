@@ -53,10 +53,10 @@
 #include <QDesktopWidget>
 
 #if defined(Q_WS_X11)
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
 #endif
 
-#include <qwidget_p.h>
+#include "qwidget_p.h"
 #include <QtGui/qabstractscrollarea.h>
 
 #define SZ_SIZEBOTTOMRIGHT  0xf008

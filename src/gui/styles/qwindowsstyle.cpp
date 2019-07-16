@@ -50,7 +50,7 @@
 #include "qevent.h"
 #include "qmenu.h"
 #include "qmenubar.h"
-#include <qmenubar_p.h>
+#include "qmenubar_p.h"
 #include "qpaintengine.h"
 #include "qpainter.h"
 #include "qprogressbar.h"

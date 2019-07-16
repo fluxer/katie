@@ -50,7 +50,7 @@
 
 #include <QtCore/qmetaobject.h>
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 QT_BEGIN_NAMESPACE
 

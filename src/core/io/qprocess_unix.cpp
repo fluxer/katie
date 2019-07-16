@@ -39,8 +39,8 @@
 #include "qprocess.h"
 #include "qprocess_p.h"
 #include "qcore_unix_p.h"
-#include <qcoreapplication_p.h>
-#include <qthread_p.h>
+#include "qcoreapplication_p.h"
+#include "qthread_p.h"
 #include "qfile.h"
 #include "qfileinfo.h"
 #include "qlist.h"

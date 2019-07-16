@@ -50,7 +50,7 @@
 #include "qtextdocument.h"
 #include "qtextcursor.h"
 #include <QtCore/qdebug.h>
-#include <qwidget_p.h>
+#include "qwidget_p.h"
 
 QT_BEGIN_NAMESPACE
 

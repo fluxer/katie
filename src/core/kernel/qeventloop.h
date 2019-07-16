@@ -34,7 +34,7 @@
 #ifndef QEVENTLOOP_H
 #define QEVENTLOOP_H
 
-#include <QtCore/qobject.h>
+#include "qobject.h"
 
 QT_BEGIN_HEADER
 

@@ -51,7 +51,7 @@
 #include "qevent.h"
 #include "qtextformat.h"
 #include "qheaderview.h"
-#include <qwidget_p.h>
+#include "qwidget_p.h"
 #include "qpushbutton.h"
 #include "qtoolbutton.h"
 #include "qlabel.h"
@@ -60,7 +60,7 @@
 #include "qapplication.h"
 #include "qbasictimer.h"
 #include "qstylepainter.h"
-#include <qcalendartextnavigator_p.h>
+#include "qcalendartextnavigator_p.h"
 
 QT_BEGIN_NAMESPACE
 

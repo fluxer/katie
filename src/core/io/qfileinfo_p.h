@@ -48,8 +48,8 @@
 #include "qshareddata.h"
 #include "qfilesystemengine_p.h"
 
-#include <qfilesystementry_p.h>
-#include <qfilesystemmetadata_p.h>
+#include "qfilesystementry_p.h"
+#include "qfilesystemmetadata_p.h"
 
 QT_BEGIN_NAMESPACE
 

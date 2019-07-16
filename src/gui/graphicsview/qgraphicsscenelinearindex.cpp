@@ -53,7 +53,7 @@
     \sa QGraphicsScene, QGraphicsView, QGraphicsSceneIndex, QGraphicsSceneBspTreeIndex
 */
 
-#include <qgraphicsscenelinearindex_p.h>
+#include "qgraphicsscenelinearindex_p.h"
 
 /*!
     \fn QGraphicsSceneLinearIndex::QGraphicsSceneLinearIndex(QGraphicsScene *scene = 0):

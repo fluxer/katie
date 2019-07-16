@@ -58,7 +58,7 @@
 #include <QtDesigner/abstracticoncache.h>
 #include <QtDesigner/abstractactioneditor.h>
 #include <pluginmanager_p.h>
-#include <qtresourcemodel_p.h>
+#include "qtresourcemodel_p.h"
 #include <qtgradientmanager.h>
 #include <widgetfactory_p.h>
 #include <shared_settings_p.h>

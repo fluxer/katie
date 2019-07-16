@@ -52,7 +52,7 @@
 #include "qbitarray.h"
 #include "qscrollbar.h"
 #include "qabstractbutton.h"
-#include <qtableview_p.h>
+#include "qtableview_p.h"
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif

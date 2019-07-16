@@ -41,7 +41,7 @@
 
 #include "qprintpreviewwidget.h"
 #include "qwidget_p.h"
-#include <qprinter_p.h>
+#include "qprinter_p.h"
 
 #include <QtCore/qmath.h>
 #include <QtGui/qboxlayout.h>

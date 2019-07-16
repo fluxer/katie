@@ -49,7 +49,7 @@
 
 #ifndef QT_NO_STANDARDITEMMODEL
 
-#include <qwidgetitemdata_p.h>
+#include "qwidgetitemdata_p.h"
 #include <QtCore/qlist.h>
 #include <QtCore/qpair.h>
 #include <QtCore/qstack.h>

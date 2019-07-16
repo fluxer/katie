@@ -78,7 +78,7 @@
 #include <QtGui/QAbstractItemView>
 #include <QtGui/QHeaderView>
 #ifndef QFORMINTERNAL_NAMESPACE
-#  include <qlayout_p.h> // Compiling within Designer
+#  include "qlayout_p.h" // Compiling within Designer
 #endif
 
 #include <QtXml/QXmlStreamReader>

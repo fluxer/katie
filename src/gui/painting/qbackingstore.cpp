@@ -52,11 +52,11 @@
 #include <QtGui/qpaintengine.h>
 #include <QtGui/qgraphicsproxywidget.h>
 
-#include <qwidget_p.h>
-#include <qwindowsurface_raster_p.h>
-#include <qapplication_p.h>
-#include <qpaintengine_raster_p.h>
-#include <qgraphicseffect_p.h>
+#include "qwidget_p.h"
+#include "qwindowsurface_raster_p.h"
+#include "qapplication_p.h"
+#include "qpaintengine_raster_p.h"
+#include "qgraphicseffect_p.h"
 
 #include "qgraphicssystem_p.h"
 

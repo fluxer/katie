@@ -57,7 +57,7 @@
 #include <QtCore/QSettings>
 #include <QtGui/QPainter>
 
-#include <qstylehelper_p.h>
+#include "qstylehelper_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -247,14 +247,14 @@
 # include <QtGui/qaccessible.h>
 #endif
 
-#include <qapplication_p.h>
-#include <qobject_p.h>
+#include "qapplication_p.h"
+#include "qobject_p.h"
 #ifdef Q_WS_X11
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
 #endif
-#include <qgraphicseffect_p.h>
-#include <qgesturemanager_p.h>
-#include <qpathclipper_p.h>
+#include "qgraphicseffect_p.h"
+#include "qgesturemanager_p.h"
+#include "qpathclipper_p.h"
 
 // #define GESTURE_DEBUG
 #ifndef GESTURE_DEBUG

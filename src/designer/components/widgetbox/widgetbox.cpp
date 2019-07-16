@@ -47,7 +47,7 @@
 #include <QtDesigner/abstractformwindowmanager.h>
 
 #include <iconloader_p.h>
-#include <qdesigner_utils_p.h>
+#include "qdesigner_utils_p.h"
 #include <filterwidget_p.h>
 
 #include <QtGui/qevent.h>

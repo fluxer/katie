@@ -42,7 +42,7 @@
 #include "newdynamicpropertydialog.h"
 #include "ui_newdynamicpropertydialog.h"
 #include <abstractdialoggui_p.h>
-#include <qdesigner_propertysheet_p.h>
+#include "qdesigner_propertysheet_p.h"
 
 #include <QtGui/QPushButton>
 

@@ -51,8 +51,8 @@
 #include "qdeclarativevisualitemmodel_p.h"
 
 #include "qdeclarative.h"
-#include <qdeclarativeanimation_p_p.h>
-#include <qdeclarativeguard_p.h>
+#include "qdeclarativeanimation_p_p.h"
+#include "qdeclarativeguard_p.h"
 
 #include "qdatetime.h"
 

@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qauthenticator.h"
-#include <qauthenticator_p.h>
+#include "qauthenticator_p.h"
 #include "qdebug.h"
 #include "qhash.h"
 #include "qbytearray.h"

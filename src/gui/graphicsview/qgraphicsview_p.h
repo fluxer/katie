@@ -53,8 +53,8 @@
 #include <QtCore/qcoreapplication.h>
 #include "qgraphicssceneevent.h"
 #include <QtGui/qstyleoption.h>
-#include <qabstractscrollarea_p.h>
-#include <qapplication_p.h>
+#include "qabstractscrollarea_p.h"
+#include "qapplication_p.h"
 
 QT_BEGIN_NAMESPACE
 

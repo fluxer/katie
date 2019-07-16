@@ -45,11 +45,9 @@
 // We mean it.
 //
 
-#include "QtCore/qglobal.h"
 #include "QtGui/qpainter.h"
-
-#include <qdrawhelper_p.h>
-#include <qrasterdefs_p.h>
+#include "qdrawhelper_p.h"
+#include "qrasterdefs_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -45,7 +45,7 @@
 //
 
 #include "qobject.h"
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include "qkeysequence.h"
 #include "qlist.h"
 #include "qlocale.h"

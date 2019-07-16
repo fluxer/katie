@@ -379,8 +379,8 @@
 #include "qelapsedtimer.h"
 #include "qscopedvaluerollback.h"
 #include "qsslsocket.h"
-#include <qthread_p.h>
-#include <qcore_unix_p.h>
+#include "qthread_p.h"
+#include "qcore_unix_p.h"
 #include "qnetworkcommon_p.h"
 
 #ifdef QABSTRACTSOCKET_DEBUG

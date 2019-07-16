@@ -82,7 +82,7 @@
 #include "qlabel.h"
 #include "qdrawutil.h"
 #include "qtoolbar.h"
-#include <qguicommon_p.h>
+#include "qguicommon_p.h"
 
 #include <limits.h>
 

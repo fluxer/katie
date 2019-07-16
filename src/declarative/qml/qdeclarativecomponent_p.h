@@ -56,7 +56,7 @@
 #include <QtCore/QStringList>
 #include <QtCore/QList>
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 QT_BEGIN_NAMESPACE
 

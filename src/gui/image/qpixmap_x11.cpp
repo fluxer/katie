@@ -58,12 +58,12 @@
 #include "qimage.h"
 #include "qmatrix.h"
 #include "qapplication.h"
-#include <qpaintengine_x11_p.h>
-#include <qt_x11_p.h>
+#include "qpaintengine_x11_p.h"
+#include "qt_x11_p.h"
 #include "qx11info_x11.h"
-#include <qdrawhelper_p.h>
-#include <qimage_p.h>
-#include <qguicommon_p.h>
+#include "qdrawhelper_p.h"
+#include "qimage_p.h"
+#include "qguicommon_p.h"
 
 #include <stdlib.h>
 

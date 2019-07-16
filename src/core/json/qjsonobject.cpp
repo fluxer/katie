@@ -29,8 +29,8 @@
 #include "qstringlist.h"
 #include "qdebug.h"
 #include "qvariant.h"
-#include <qjson_p.h>
-#include <qjsonwriter_p.h>
+#include "qjson_p.h"
+#include "qjsonwriter_p.h"
 
 QT_BEGIN_NAMESPACE
 

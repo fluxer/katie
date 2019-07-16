@@ -49,7 +49,7 @@
 #include "qbytearray.h"
 #include "qurl.h"
 #include "qfile.h"
-#include <qnet_unix_p.h>
+#include "qnet_unix_p.h"
 
 #include <sys/types.h>
 #include <netdb.h>

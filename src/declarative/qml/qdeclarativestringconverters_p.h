@@ -48,7 +48,7 @@
 #include <QtCore/qglobal.h>
 #include <QtCore/qvariant.h>
 
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativeglobal_p.h"
 
 QT_BEGIN_NAMESPACE
 

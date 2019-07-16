@@ -35,14 +35,14 @@
 #define QDECLARATIVELISTMODEL_H
 
 #include "qdeclarative.h"
-#include <qdeclarativecustomparser_p.h>
+#include "qdeclarativecustomparser_p.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 #include <QtCore/QHash>
 #include <QtCore/QList>
 #include <QtCore/QVariant>
-#include <qlistmodelinterface_p.h>
+#include "qlistmodelinterface_p.h"
 #include <QtScript/qscriptvalue.h>
 
 QT_BEGIN_HEADER

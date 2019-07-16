@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qdeclarativeapplication_p.h"
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include <QtGui/QApplication>
 
 QT_BEGIN_NAMESPACE

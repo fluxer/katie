@@ -73,12 +73,12 @@
 
 // shared
 #include <pluginmanager_p.h>
-#include <qdesigner_taskmenu_p.h>
-#include <qdesigner_membersheet_p.h>
-#include <qdesigner_promotion_p.h>
+#include "qdesigner_taskmenu_p.h"
+#include "qdesigner_membersheet_p.h"
+#include "qdesigner_promotion_p.h"
 #include <dialoggui_p.h>
-#include <qdesigner_introspection_p.h>
-#include <qdesigner_qsettings_p.h>
+#include "qdesigner_introspection_p.h"
+#include "qdesigner_qsettings_p.h"
 
 QT_BEGIN_NAMESPACE
 

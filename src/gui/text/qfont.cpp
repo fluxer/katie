@@ -52,18 +52,18 @@
 #include "qstringlist.h"
 
 #include "qthread.h"
-#include <qunicodetables_p.h>
+#include "qunicodetables_p.h"
 #include "qfont_p.h"
-#include <qfontengine_p.h>
-#include <qpainter_p.h>
-#include <qtextengine_p.h>
+#include "qfontengine_p.h"
+#include "qpainter_p.h"
+#include "qtextengine_p.h"
 #include "qmutex.h"
 
 #include <limits.h>
 
 #ifdef Q_WS_X11
 #include "qx11info_x11.h"
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
 #endif
 
 // #define QFONTCACHE_DEBUG

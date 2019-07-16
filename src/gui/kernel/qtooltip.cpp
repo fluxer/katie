@@ -50,10 +50,10 @@
 #include "qstylepainter.h"
 #include "qtimer.h"
 #include "qtooltip.h"
-#include <qeffects_p.h>
+#include "qeffects_p.h"
 #include "qtextdocument.h"
 #include "qdebug.h"
-#include <qstylesheetstyle_p.h>
+#include "qstylesheetstyle_p.h"
 #include "qbasictimer.h"
 #ifndef QT_NO_TOOLTIP
 

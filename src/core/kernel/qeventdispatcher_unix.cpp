@@ -38,9 +38,9 @@
 #include "qthread.h"
 #include "qelapsedtimer.h"
 #include "qeventdispatcher_unix_p.h"
-#include <qthread_p.h>
-#include <qcoreapplication_p.h>
-#include <qcore_unix_p.h>
+#include "qthread_p.h"
+#include "qcoreapplication_p.h"
+#include "qcore_unix_p.h"
 
 #include <errno.h>
 #include <stdio.h>

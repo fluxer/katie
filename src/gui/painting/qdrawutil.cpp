@@ -45,10 +45,10 @@
 #include "qapplication.h"
 #include "qpainter.h"
 #include "qpalette.h"
-#include <qpaintengineex_p.h>
+#include "qpaintengineex_p.h"
 #include "qvarlengtharray.h"
 #include "qmath.h"
-#include <qstylehelper_p.h>
+#include "qstylehelper_p.h"
 
 QT_BEGIN_NAMESPACE
 

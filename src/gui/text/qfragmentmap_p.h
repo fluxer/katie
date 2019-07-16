@@ -46,7 +46,7 @@
 //
 
 #include "qglobal.h"
-#include <qtools_p.h>
+#include "qtools_p.h"
 
 #include <stdlib.h>
 

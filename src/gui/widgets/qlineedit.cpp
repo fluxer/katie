@@ -63,7 +63,7 @@
 #include "qwhatsthis.h"
 #include "qdebug.h"
 #include "qtextedit.h"
-#include <qtextedit_p.h>
+#include "qtextedit_p.h"
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif

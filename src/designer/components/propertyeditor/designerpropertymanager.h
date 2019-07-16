@@ -38,7 +38,7 @@
 #include "brushpropertymanager.h"
 #include "fontpropertymanager.h"
 
-#include <qdesigner_utils_p.h>
+#include "qdesigner_utils_p.h"
 #include <shared_enums_p.h>
 
 #include <QtCore/QUrl>

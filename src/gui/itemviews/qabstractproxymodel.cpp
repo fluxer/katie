@@ -44,7 +44,7 @@
 #ifndef QT_NO_PROXYMODEL
 
 #include "qitemselectionmodel.h"
-#include <qabstractproxymodel_p.h>
+#include "qabstractproxymodel_p.h"
 #include <QtCore/QSize>
 #include <QtCore/QStringList>
 

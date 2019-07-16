@@ -53,8 +53,8 @@
 #define QT_FT_BEGIN_HEADER
 #define QT_FT_END_HEADER
 
-#include <qrasterdefs_p.h>
-#include <qdatabuffer_p.h>
+#include "qrasterdefs_p.h"
+#include "qdatabuffer_p.h"
 #include "qpaintengineex_p.h"
 
 QT_BEGIN_NAMESPACE

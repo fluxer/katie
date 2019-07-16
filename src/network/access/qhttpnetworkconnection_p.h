@@ -51,16 +51,16 @@
 #include <QtNetwork/qsslsocket.h>
 #include <QtNetwork/qsslerror.h>
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include "qauthenticator.h"
 #include "qnetworkproxy.h"
 #include "qbuffer.h"
 
-#include <qhttpnetworkheader_p.h>
-#include <qhttpnetworkrequest_p.h>
-#include <qhttpnetworkreply_p.h>
+#include "qhttpnetworkheader_p.h"
+#include "qhttpnetworkrequest_p.h"
+#include "qhttpnetworkreply_p.h"
 
-#include <qhttpnetworkconnectionchannel_p.h>
+#include "qhttpnetworkconnectionchannel_p.h"
 
 #ifndef QT_NO_HTTP
 

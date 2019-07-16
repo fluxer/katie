@@ -50,7 +50,7 @@
 
 #ifndef QT_NO_QFUTURE
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 QT_BEGIN_NAMESPACE
 

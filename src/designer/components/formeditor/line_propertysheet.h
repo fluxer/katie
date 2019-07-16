@@ -34,8 +34,8 @@
 #ifndef LINE_PROPERTYSHEET_H
 #define LINE_PROPERTYSHEET_H
 
-#include <qdesigner_propertysheet_p.h>
-#include <qdesigner_widget_p.h>
+#include "qdesigner_propertysheet_p.h"
+#include "qdesigner_widget_p.h"
 #include <extensionfactory_p.h>
 
 QT_BEGIN_NAMESPACE

@@ -41,7 +41,7 @@
 
 #include "qdeclarativedirparser_p.h"
 #include "qdeclarativeerror.h"
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativeglobal_p.h"
 
 #include <QtCore/QTextStream>
 #include <QtCore/QFile>

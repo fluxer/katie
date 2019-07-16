@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qdeclarativetranslate_p.h"
-#include <qgraphicstransform_p.h>
+#include "qgraphicstransform_p.h"
 #include <QDebug>
 #include <QtCore/qmath.h>
 

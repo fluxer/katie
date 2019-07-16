@@ -38,7 +38,7 @@
 #include "qdeclarativeproperty.h"
 #include <QtCore/qobject.h>
 #include <QtCore/qsharedpointer.h>
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativeglobal_p.h"
 
 QT_BEGIN_HEADER
 

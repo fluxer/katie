@@ -57,7 +57,7 @@
 
 #if defined(Q_WS_X11)
 #include <QtCore/qcoreapplication.h>
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
 #endif
 
 QT_BEGIN_NAMESPACE

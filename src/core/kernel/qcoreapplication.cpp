@@ -44,17 +44,17 @@
 #include "qfile.h"
 #include "qfileinfo.h"
 #include "qhash.h"
-#include <qprocess_p.h>
+#include "qprocess_p.h"
 #include "qtextcodec.h"
 #include "qthread.h"
 #include "qthreadpool.h"
-#include <qthread_p.h>
+#include "qthread_p.h"
 #include "qelapsedtimer.h"
 #include "qlibraryinfo.h"
 #include "qvarlengtharray.h"
-#include <qfactoryloader_p.h>
-#include <qlocale_p.h>
-#include <qmutexpool_p.h>
+#include "qfactoryloader_p.h"
+#include "qlocale_p.h"
+#include "qmutexpool_p.h"
 #include "qscopedpointer.h"
 
 #if !defined(QT_NO_GLIB)

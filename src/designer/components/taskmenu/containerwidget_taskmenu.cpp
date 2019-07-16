@@ -46,8 +46,8 @@
 #include <QtDesigner/QExtensionManager>
 #include <QtDesigner/container.h>
 
-#include <qdesigner_command_p.h>
-#include <qdesigner_dockwidget_p.h>
+#include "qdesigner_command_p.h"
+#include "qdesigner_dockwidget_p.h"
 #include <promotiontaskmenu_p.h>
 #include <widgetdatabase_p.h>
 

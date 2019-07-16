@@ -42,7 +42,7 @@
 #include "qproxymodel.h"
 
 #ifndef QT_NO_PROXYMODEL
-#include <qproxymodel_p.h>
+#include "qproxymodel_p.h"
 #include "qsize.h"
 #include "qstringlist.h"
 

@@ -55,7 +55,7 @@
 #include <QSizeGrip>
 #include <QPointer>
 #include <QDebug>
-#include <qwidget_p.h>
+#include "qwidget_p.h"
 
 QT_BEGIN_NAMESPACE
 

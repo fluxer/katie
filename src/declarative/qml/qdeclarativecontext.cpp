@@ -52,7 +52,7 @@
 #include "qscriptengine.h"
 #include "qdebug.h"
 
-#include <qscriptdeclarativeclass_p.h>
+#include "qscriptdeclarativeclass_p.h"
 
 QT_BEGIN_NAMESPACE
 

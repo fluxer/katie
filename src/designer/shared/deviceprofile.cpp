@@ -43,7 +43,7 @@
 
 #include <QtDesigner/abstractformeditor.h>
 #include <widgetfactory_p.h>
-#include <qdesigner_utils_p.h>
+#include "qdesigner_utils_p.h"
 
 #include <QtCore/QSharedData>
 #include <QtCore/QTextStream>

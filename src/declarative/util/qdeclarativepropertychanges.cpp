@@ -47,19 +47,19 @@
 #include "qdeclarativecompiler_p.h"
 
 #include "qdeclarativeinfo.h"
-#include <qdeclarativecustomparser_p.h>
-#include <qdeclarativeparser_p.h>
+#include "qdeclarativecustomparser_p.h"
+#include "qdeclarativeparser_p.h"
 #include "qdeclarativeexpression.h"
-#include <qdeclarativebinding_p.h>
+#include "qdeclarativebinding_p.h"
 #include "qdeclarativecontext.h"
-#include <qdeclarativeguard_p.h>
-#include <qdeclarativeproperty_p.h>
-#include <qdeclarativecontext_p.h>
-#include <qdeclarativestate_p_p.h>
+#include "qdeclarativeguard_p.h"
+#include "qdeclarativeproperty_p.h"
+#include "qdeclarativecontext_p.h"
+#include "qdeclarativestate_p_p.h"
 
 #include <QtCore/qdebug.h>
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 QT_BEGIN_NAMESPACE
 

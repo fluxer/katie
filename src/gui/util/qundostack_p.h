@@ -34,7 +34,7 @@
 #ifndef QUNDOSTACK_P_H
 #define QUNDOSTACK_P_H
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include <QtCore/qlist.h>
 #include <QtCore/qstring.h>
 #include <QtGui/qaction.h>

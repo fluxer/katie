@@ -2678,7 +2678,7 @@ bool QDeclarativeCompiler::checkValidId(QDeclarativeParser::Value *v, const QStr
     return true;
 }
 
-#include <qdeclarativejsparser_p.h>
+#include "qdeclarativejsparser_p.h"
 
 static QStringList astNodeToStringList(QDeclarativeJS::AST::Node *node)
 {

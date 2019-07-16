@@ -48,7 +48,7 @@
 #include "qtextcursor.h"
 #include "qtextdocument.h"
 #include "qtextdocument_p.h"
-#include <qtextformat_p.h>
+#include "qtextformat_p.h"
 #include "qtextobject.h"
 
 QT_BEGIN_NAMESPACE

@@ -44,9 +44,9 @@
 #include "qdeclarativeopenmetaobject_p.h"
 #include "qdeclarativecommon_p.h"
 
-#include <qdeclarativecustomparser_p.h>
-#include <qdeclarativeparser_p.h>
-#include <qdeclarativeengine_p.h>
+#include "qdeclarativecustomparser_p.h"
+#include "qdeclarativeparser_p.h"
+#include "qdeclarativeengine_p.h"
 #include "qdeclarativecontext.h"
 #include "qdeclarativeinfo.h"
 

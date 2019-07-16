@@ -52,7 +52,7 @@
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif
-#include <qwidget_p.h>
+#include "qwidget_p.h"
 
 #include "qdebug.h"
 

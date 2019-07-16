@@ -53,9 +53,9 @@
 #include "qmenubar.h"
 #include "qshortcut.h"
 #include "qapplication_p.h"
-#include <qaction_p.h>
-#include <qkeymapper_p.h>
-#include <qwidget_p.h>
+#include "qaction_p.h"
+#include "qkeymapper_p.h"
+#include "qwidget_p.h"
 
 #ifndef QT_NO_SHORTCUT
 

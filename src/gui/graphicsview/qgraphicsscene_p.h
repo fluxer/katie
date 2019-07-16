@@ -54,7 +54,7 @@
 #include "qgraphicsview_p.h"
 #include "qgraphicsitem_p.h"
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include <QtCore/qbitarray.h>
 #include <QtCore/qlist.h>
 #include <QtCore/qmap.h>

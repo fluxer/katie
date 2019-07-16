@@ -52,7 +52,7 @@
 #include <QDoubleSpinBox>
 #include <QDial>
 #include "qmath.h"
-#include <qmath_p.h>
+#include "qmath_p.h"
 
 QT_BEGIN_NAMESPACE
 

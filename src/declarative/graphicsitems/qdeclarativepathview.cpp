@@ -42,11 +42,11 @@
 #include "qdeclarativepathview_p.h"
 #include "qdeclarativepathview_p_p.h"
 
-#include <qdeclarativestate_p.h>
-#include <qdeclarativeopenmetaobject_p.h>
+#include "qdeclarativestate_p.h"
+#include "qdeclarativeopenmetaobject_p.h"
 #include <QDebug>
 #include <QEvent>
-#include <qlistmodelinterface_p.h>
+#include "qlistmodelinterface_p.h"
 #include <QGraphicsSceneEvent>
 
 #include "qmath.h"

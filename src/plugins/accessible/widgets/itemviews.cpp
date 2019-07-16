@@ -45,7 +45,7 @@
 #include "qtableview.h"
 #include "qlistview.h"
 #include "qtreeview.h"
-#include <qtreewidget_p.h>
+#include "qtreewidget_p.h"
 #include "qaccessible2.h"
 #include <QDebug>
 

@@ -43,7 +43,7 @@
 #include "qbitmap.h"
 #include "qdesktopwidget.h"
 #include "qdialog.h"
-#include <qdialog_p.h>
+#include "qdialog_p.h"
 #include "qevent.h"
 #include "qfontmetrics.h"
 #include "qmenu.h"

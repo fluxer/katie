@@ -101,8 +101,8 @@
 #include "qnetworkinterface.h"
 
 #include "qnativesocketengine_p.h"
-#include <qthread_p.h>
-#include <qobject_p.h>
+#include "qthread_p.h"
+#include "qobject_p.h"
 
 #if !defined(QT_NO_NETWORKPROXY)
 # include "qnetworkproxy.h"

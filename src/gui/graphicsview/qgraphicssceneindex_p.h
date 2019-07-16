@@ -47,7 +47,7 @@
 
 #include "qgraphicsscene_p.h"
 #include "qgraphicsscene.h"
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 #include <QtCore/qnamespace.h>
 #include <QtCore/qobject.h>

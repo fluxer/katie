@@ -46,7 +46,7 @@
 //
 
 #include <QGraphicsWidget>
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include "qgraphicslayout_p.h"
 #include "qgraphicsanchorlayout.h"
 #include "qgraph_p.h"

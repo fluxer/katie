@@ -39,7 +39,7 @@
 #include <QtCore/qobject.h>
 #include <QtGui/qabstractanimation.h>
 
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativeglobal_p.h"
 
 QT_BEGIN_HEADER
 

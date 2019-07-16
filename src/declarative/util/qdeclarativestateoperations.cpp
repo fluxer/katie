@@ -45,10 +45,10 @@
 #include "qdeclarativecontext.h"
 #include "qdeclarativeexpression.h"
 #include "qdeclarativeinfo.h"
-#include <qdeclarativeanchors_p_p.h>
-#include <qdeclarativeitem_p.h>
-#include <qdeclarativeguard_p.h>
-#include <qdeclarativenullablevalue_p_p.h>
+#include "qdeclarativeanchors_p_p.h"
+#include "qdeclarativeitem_p.h"
+#include "qdeclarativeguard_p.h"
+#include "qdeclarativenullablevalue_p_p.h"
 #include "qdeclarativecontext_p.h"
 #include "qdeclarativeproperty_p.h"
 #include "qdeclarativebinding_p.h"
@@ -65,7 +65,7 @@
 #endif
 #include <QtCore/qmath.h>
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 QT_BEGIN_NAMESPACE
 

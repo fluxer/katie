@@ -40,7 +40,7 @@
 
 #include <QtCore/QObject>
 
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativeglobal_p.h"
 
 QT_BEGIN_HEADER
 

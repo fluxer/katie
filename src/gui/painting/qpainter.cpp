@@ -39,12 +39,9 @@
 **
 ****************************************************************************/
 
-// QtCore
 #include "qdebug.h"
 #include "qmath.h"
 #include "qmutex.h"
-
-// QtGui
 #include "qbitmap.h"
 #include "qimage.h"
 #include "qpaintdevice.h"
@@ -61,16 +58,15 @@
 #include "qthread.h"
 #include "qvarlengtharray.h"
 #include "qstatictext.h"
-
-#include <qfontengine_p.h>
-#include <qpaintengine_p.h>
-#include <qpainterpath_p.h>
-#include <qtextengine_p.h>
-#include <qwidget_p.h>
-#include <qpaintengine_raster_p.h>
-#include <qmath_p.h>
-#include <qstatictext_p.h>
-#include <qstylehelper_p.h>
+#include "qfontengine_p.h"
+#include "qpaintengine_p.h"
+#include "qpainterpath_p.h"
+#include "qtextengine_p.h"
+#include "qwidget_p.h"
+#include "qpaintengine_raster_p.h"
+#include "qmath_p.h"
+#include "qstatictext_p.h"
+#include "qstylehelper_p.h"
 
 QT_BEGIN_NAMESPACE
 

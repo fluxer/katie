@@ -41,7 +41,7 @@
 
 #include "signalslot_utils_p.h"
 
-#include <qdesigner_membersheet_p.h>
+#include "qdesigner_membersheet_p.h"
 #include <widgetdatabase_p.h>
 #include <metadatabase_p.h>
 

@@ -29,10 +29,11 @@
 #include "qfile.h"
 #include "qhash.h"
 #include "qtextstream.h"
-#include <qfilesystemengine_p.h>
+#include "qfilesystemengine_p.h"
+#include "qcoreapplication.h"
+
 #include <errno.h>
 #include <stdlib.h>
-#include "qcoreapplication.h"
 
 #ifndef QT_NO_STANDARDPATHS
 

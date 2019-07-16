@@ -53,10 +53,10 @@
 
 #ifndef QT_NO_PRINTER
 
-#include <qprintengine_ps_p.h>
+#include "qprintengine_ps_p.h"
 
 #if defined(Q_WS_X11)
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
 #endif
 
 #ifndef QT_NO_PDF
@@ -64,7 +64,7 @@
 #endif
 
 #include "qimage.h"
-#include <qpaintengine_preview_p.h>
+#include "qpaintengine_preview_p.h"
 
 
 QT_BEGIN_NAMESPACE

@@ -45,9 +45,8 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
-#include <QtCore/qvariant.h>
-#include <qdeclarativedata_p.h>
+#include "qvariant.h"
+#include "qdeclarativedata_p.h"
 
 QT_BEGIN_NAMESPACE
 

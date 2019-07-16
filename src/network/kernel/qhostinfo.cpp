@@ -49,7 +49,7 @@
 #include "qstringlist.h"
 #include "qthread.h"
 #include "qurl.h"
-#include <qnetworksession_p.h>
+#include "qnetworksession_p.h"
 
 #ifdef Q_OS_UNIX
 #  include <unistd.h>

@@ -55,7 +55,7 @@
 #include <QtCore/qlist.h>
 #include <QtCore/qdebug.h>
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 #include "qdeclarativeguard_p.h"
 #include "qdeclarativecompiler_p.h"

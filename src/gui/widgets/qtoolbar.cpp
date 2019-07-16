@@ -56,8 +56,8 @@
 #include "qtoolbutton.h"
 #include "qwidgetaction.h"
 #include "qtimer.h"
-#include <qwidgetaction_p.h>
-#include <qmainwindowlayout_p.h>
+#include "qwidgetaction_p.h"
+#include "qmainwindowlayout_p.h"
 
 #include "qtoolbar_p.h"
 #include "qtoolbarlayout_p.h"

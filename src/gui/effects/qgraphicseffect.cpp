@@ -113,7 +113,7 @@
 #include <QtGui/qpaintengine.h>
 #include <QtCore/qrect.h>
 #include <QtCore/qdebug.h>
-#include <qdrawhelper_p.h>
+#include "qdrawhelper_p.h"
 
 #ifndef QT_NO_GRAPHICSEFFECT
 QT_BEGIN_NAMESPACE

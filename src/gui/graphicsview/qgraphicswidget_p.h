@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include "qgraphicsitem_p.h"
 #include "qgraphicswidget.h"
 #include <QtGui/qfont.h>

@@ -78,9 +78,9 @@
 
 #ifndef QT_NO_GRAPHICSVIEW
 
-#include <qgraphicsscene_p.h>
-#include <qgraphicsscenebsptreeindex_p.h>
-#include <qgraphicssceneindex_p.h>
+#include "qgraphicsscene_p.h"
+#include "qgraphicsscenebsptreeindex_p.h"
+#include "qgraphicssceneindex_p.h"
 
 #include <QtCore/qmath.h>
 #include <QtCore/qdebug.h>

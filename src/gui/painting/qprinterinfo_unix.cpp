@@ -49,16 +49,16 @@
 #include "qtextstream.h"
 
 #if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
-#  include <qcups_p.h>
+#  include "qcups_p.h"
 #  include <cups/cups.h>
-#  include <qpdf_p.h>
+#  include "qpdf_p.h"
 #endif
 
 #ifndef QT_NO_NSL
 #include <rpcsvc/ypclnt.h>
 #endif
 
-#include <qprinterinfo_unix_p.h>
+#include "qprinterinfo_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 

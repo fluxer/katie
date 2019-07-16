@@ -45,10 +45,10 @@
 // We mean it.
 //
 
-#include <QtGui/qpainterpath.h>
-#include <QtCore/qlist.h>
+#include "qpainterpath.h"
+#include "qlist.h"
+#include "qdatabuffer_p.h"
 
-#include <qdatabuffer_p.h>
 #include <stdio.h>
 
 QT_BEGIN_HEADER

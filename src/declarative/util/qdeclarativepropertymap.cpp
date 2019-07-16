@@ -41,7 +41,7 @@
 
 #include "qdeclarativepropertymap.h"
 
-#include <qmetaobjectbuilder_p.h>
+#include "qmetaobjectbuilder_p.h"
 #include "qdeclarativeopenmetaobject_p.h"
 
 #include <QDebug>

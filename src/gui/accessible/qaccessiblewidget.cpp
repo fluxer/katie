@@ -280,7 +280,7 @@ QRect QAccessibleWidget::rect(int child) const
 }
 
 QT_BEGIN_INCLUDE_NAMESPACE
-#include <qobject_p.h>
+#include "qobject_p.h"
 QT_END_INCLUDE_NAMESPACE
 
 class QACConnectionObject : public QObject

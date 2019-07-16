@@ -47,10 +47,10 @@
 
 #include "qdeclarativeproperty.h"
 
-#include <qobject_p.h>
-#include <qdeclarativeglobal_p.h>
-#include <qdeclarativepropertycache_p.h>
-#include <qdeclarativeguard_p.h>
+#include "qobject_p.h"
+#include "qdeclarativeglobal_p.h"
+#include "qdeclarativepropertycache_p.h"
+#include "qdeclarativeguard_p.h"
 
 QT_BEGIN_NAMESPACE
 

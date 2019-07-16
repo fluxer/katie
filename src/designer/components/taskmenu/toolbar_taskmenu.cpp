@@ -45,7 +45,7 @@
 #include <QtDesigner/abstractformwindow.h>
 
 #include <promotiontaskmenu_p.h>
-#include <qdesigner_command_p.h>
+#include "qdesigner_command_p.h"
 
 #include <QtGui/QAction>
 #include <QtGui/QUndoStack>

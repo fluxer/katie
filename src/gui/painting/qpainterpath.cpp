@@ -53,13 +53,13 @@
 #include "qvarlengtharray.h"
 #include "qmath.h"
 
-#include <qbezier_p.h>
-#include <qfontengine_p.h>
+#include "qbezier_p.h"
+#include "qfontengine_p.h"
 #include "qnumeric.h"
-#include <qobject_p.h>
-#include <qpathclipper_p.h>
-#include <qstroker_p.h>
-#include <qtextengine_p.h>
+#include "qobject_p.h"
+#include "qpathclipper_p.h"
+#include "qstroker_p.h"
+#include "qtextengine_p.h"
 
 #include <limits.h>
 

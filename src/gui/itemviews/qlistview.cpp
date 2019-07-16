@@ -51,7 +51,7 @@
 #include "qevent.h"
 #include "qscrollbar.h"
 #include "qrubberband.h"
-#include <qlistview_p.h>
+#include "qlistview_p.h"
 #include "qdebug.h"
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"

@@ -34,7 +34,7 @@
 #ifndef LAYOUT_PROPERTYSHEET_H
 #define LAYOUT_PROPERTYSHEET_H
 
-#include <qdesigner_propertysheet_p.h>
+#include "qdesigner_propertysheet_p.h"
 #include <extensionfactory_p.h>
 
 #include <QtGui/QLayout>

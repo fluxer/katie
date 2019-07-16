@@ -43,12 +43,12 @@
 #include "qdeclarativetextedit_p_p.h"
 
 #include "qdeclarativeevents_p_p.h"
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativeglobal_p.h"
 #include "qdeclarativeinfo.h"
 
 #include <QtCore/qmath.h>
 
-#include <qtextengine_p.h>
+#include "qtextengine_p.h"
 #include <QTextLayout>
 #include <QTextDocument>
 #include <QTextObject>
@@ -56,7 +56,7 @@
 #include <QDebug>
 #include <QPainter>
 
-#include <qtextcontrol_p.h>
+#include "qtextcontrol_p.h"
 
 QT_BEGIN_NAMESPACE
 

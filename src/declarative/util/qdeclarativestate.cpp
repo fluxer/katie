@@ -49,8 +49,8 @@
 #include "qdeclarativeanimation_p_p.h"
 #include "qdeclarativecommon_p.h"
 
-#include <qdeclarativebinding_p.h>
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativebinding_p.h"
+#include "qdeclarativeglobal_p.h"
 
 #include <QtCore/qdebug.h>
 

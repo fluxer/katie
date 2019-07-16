@@ -36,8 +36,8 @@
 
 #include <QtDesigner/taskmenu.h>
 
-#include <qdesigner_menu_p.h>
-#include <qdesigner_menubar_p.h>
+#include "qdesigner_menu_p.h"
+#include "qdesigner_menubar_p.h"
 #include <extensionfactory_p.h>
 
 QT_BEGIN_NAMESPACE

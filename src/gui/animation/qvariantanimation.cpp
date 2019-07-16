@@ -45,7 +45,7 @@
 #include <QtCore/qrect.h>
 #include <QtCore/qline.h>
 #include <QtCore/qmutex.h>
-#include <qmutexpool_p.h>
+#include "qmutexpool_p.h"
 
 #ifndef QT_NO_ANIMATION
 

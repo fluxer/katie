@@ -742,20 +742,20 @@
 # include "qaccessible.h"
 #endif
 
-#include <qgraphicsitem_p.h>
-#include <qgraphicswidget_p.h>
-#include <qtextcontrol_p.h>
-#include <qtextdocumentlayout_p.h>
-#include <qtextengine_p.h>
-#include <qwidget_p.h>
-#include <qapplication_p.h>
+#include "qgraphicsitem_p.h"
+#include "qgraphicswidget_p.h"
+#include "qtextcontrol_p.h"
+#include "qtextdocumentlayout_p.h"
+#include "qtextengine_p.h"
+#include "qwidget_p.h"
+#include "qapplication_p.h"
 
 #ifdef Q_WS_X11
-#include <qt_x11_p.h>
-#include <qpixmap_x11_p.h>
+#include "qt_x11_p.h"
+#include "qpixmap_x11_p.h"
 #endif
 
-#include <qgesturemanager_p.h>
+#include "qgesturemanager_p.h"
 
 #include <math.h>
 

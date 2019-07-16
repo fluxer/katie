@@ -46,7 +46,7 @@
 //
 
 #include <QtNetwork/qtcpsocket.h>
-#include <qabstractsocket_p.h>
+#include "qabstractsocket_p.h"
 
 QT_BEGIN_NAMESPACE
 

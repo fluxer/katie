@@ -56,9 +56,9 @@
 #include "qtoolbar.h"
 #include "qvariant.h"
 #include "qstylepainter.h"
-#include <qabstractbutton_p.h>
-#include <qaction_p.h>
-#include <qmenu_p.h>
+#include "qabstractbutton_p.h"
+#include "qaction_p.h"
+#include "qmenu_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -34,9 +34,9 @@
 #ifndef QLAYOUTWIDGET_PROPERTYSHEET_H
 #define QLAYOUTWIDGET_PROPERTYSHEET_H
 
-#include <qdesigner_propertysheet_p.h>
+#include "qdesigner_propertysheet_p.h"
 #include <extensionfactory_p.h>
-#include <qlayout_widget_p.h>
+#include "qlayout_widget_p.h"
 
 QT_BEGIN_NAMESPACE
 

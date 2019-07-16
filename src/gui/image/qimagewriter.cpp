@@ -108,24 +108,24 @@
 #include "qguicommon_p.h"
 
 // image handlers
-#include <qbmphandler_p.h>
-#include <qppmhandler_p.h>
-#include <qxbmhandler_p.h>
-#include <qxpmhandler_p.h>
+#include "qbmphandler_p.h"
+#include "qppmhandler_p.h"
+#include "qxbmhandler_p.h"
+#include "qxpmhandler_p.h"
 #ifndef QT_NO_IMAGEFORMAT_PNG
-#include <qpnghandler_p.h>
+#include "qpnghandler_p.h"
 #endif
 #ifndef QT_NO_IMAGEFORMAT_JPEG
-#include <qjpeghandler_p.h>
+#include "qjpeghandler_p.h"
 #endif
 #ifndef QT_NO_IMAGEFORMAT_MNG
-#include <qmnghandler_p.h>
+#include "qmnghandler_p.h"
 #endif
 #ifndef QT_NO_IMAGEFORMAT_TIFF
-#include <qtiffhandler_p.h>
+#include "qtiffhandler_p.h"
 #endif
 #ifdef QT_BUILTIN_GIF_READER
-#include <qgifhandler_p.h>
+#include "qgifhandler_p.h"
 #endif
 
 QT_BEGIN_NAMESPACE

@@ -41,7 +41,7 @@
 #include "qcorecommon_p.h"
 
 #ifndef QT_NO_QOBJECT
-#include <qthread_p.h>
+#include "qthread_p.h"
 #endif
 
 #include <stdio.h>

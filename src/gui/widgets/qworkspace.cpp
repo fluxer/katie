@@ -61,9 +61,9 @@
 #include "qelapsedtimer.h"
 #include "qtooltip.h"
 #include "qdebug.h"
-#include <qwidget_p.h>
-#include <qwidgetresizehandler_p.h>
-#include <qlayoutengine_p.h>
+#include "qwidget_p.h"
+#include "qwidgetresizehandler_p.h"
+#include "qlayoutengine_p.h"
 
 QT_BEGIN_NAMESPACE
 

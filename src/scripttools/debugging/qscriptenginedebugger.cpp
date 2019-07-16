@@ -43,7 +43,7 @@
 #include "qscriptdebugger_p.h"
 #include "qscriptenginedebuggerfrontend_p.h"
 #include "qscriptdebuggerstandardwidgetfactory_p.h"
-#include <qobject_p.h>
+#include "qobject_p.h"
 
 #include <QtCore/qsettings.h>
 #include <QtGui/qapplication.h>

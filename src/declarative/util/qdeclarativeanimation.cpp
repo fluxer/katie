@@ -50,12 +50,12 @@
 #include "qdeclarative.h"
 #include "qdeclarativeinfo.h"
 #include "qdeclarativeexpression.h"
-#include <qdeclarativestringconverters_p.h>
-#include <qdeclarativeglobal_p.h>
-#include <qdeclarativemetatype_p.h>
-#include <qdeclarativevaluetype_p.h>
-#include <qdeclarativeproperty_p.h>
-#include <qdeclarativeengine_p.h>
+#include "qdeclarativestringconverters_p.h"
+#include "qdeclarativeglobal_p.h"
+#include "qdeclarativemetatype_p.h"
+#include "qdeclarativevaluetype_p.h"
+#include "qdeclarativeproperty_p.h"
+#include "qdeclarativeengine_p.h"
 
 #include "qvariant.h"
 #include "qcolor.h"
@@ -68,7 +68,7 @@
 #include <QtCore/qsize.h>
 #include <QtCore/qmath.h>
 
-#include <qvariantanimation_p.h>
+#include "qvariantanimation_p.h"
 
 QT_BEGIN_NAMESPACE
 

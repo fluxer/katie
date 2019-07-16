@@ -50,7 +50,7 @@
 #include "qdeclarativeopenmetaobject_p.h"
 #include "qdeclarative.h"
 
-#include <qscriptdeclarativeclass_p.h>
+#include "qscriptdeclarativeclass_p.h"
 
 QT_BEGIN_HEADER
 

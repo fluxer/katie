@@ -50,7 +50,7 @@
 #include <QtGui/QIcon>
 #include <QtGui/QIconEngine>
 #include <QtGui/QPixmapCache>
-#include <qicon_p.h>
+#include "qicon_p.h"
 
 QT_BEGIN_NAMESPACE
 

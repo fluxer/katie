@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qdebug.h"
-#include <qfontengine_p.h>
+#include "qfontengine_p.h"
 
 #include "qbitmap.h"
 #include "qpainter.h"
@@ -48,7 +48,7 @@
 #include "qvarlengtharray.h"
 #include "qmath.h"
 #include "qendian.h"
-#include <qharfbuzz_p.h>
+#include "qharfbuzz_p.h"
 
 QT_BEGIN_NAMESPACE
 

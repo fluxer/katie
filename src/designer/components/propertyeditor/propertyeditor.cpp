@@ -61,8 +61,8 @@
 #include <QtDesigner/abstractwidgetdatabase.h>
 #include <QtDesigner/abstractsettings_p.h>
 // shared
-#include <qdesigner_utils_p.h>
-#include <qdesigner_propertycommand_p.h>
+#include "qdesigner_utils_p.h"
+#include "qdesigner_propertycommand_p.h"
 #include <metadatabase_p.h>
 #include <iconloader_p.h>
 #ifdef Q_OS_WIN

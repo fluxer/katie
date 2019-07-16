@@ -45,16 +45,15 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
+#include "qglobal.h"
 
 #ifndef QT_NO_FILESYSTEMITERATOR
 
-#include <QtCore/qdiriterator.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qscopedpointer.h>
-
-#include <qfilesystementry_p.h>
-#include <qfilesystemmetadata_p.h>
+#include "qdiriterator.h"
+#include "qstringlist.h"
+#include "qscopedpointer.h"
+#include "qfilesystementry_p.h"
+#include "qfilesystemmetadata_p.h"
 
 QT_BEGIN_NAMESPACE
 

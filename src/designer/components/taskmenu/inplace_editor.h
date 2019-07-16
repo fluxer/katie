@@ -38,7 +38,7 @@
 #include <shared_enums_p.h>
 
 #include "inplace_widget_helper.h"
-#include <qdesigner_utils_p.h>
+#include "qdesigner_utils_p.h"
 
 #include <QtCore/QPointer>
 

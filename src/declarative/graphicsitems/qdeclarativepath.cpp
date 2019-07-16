@@ -45,7 +45,7 @@
 #include <QSet>
 #include <QDateTime>
 
-#include <qbezier_p.h>
+#include "qbezier_p.h"
 #include <QtCore/qmath.h>
 #include <QtCore/qnumeric.h>
 

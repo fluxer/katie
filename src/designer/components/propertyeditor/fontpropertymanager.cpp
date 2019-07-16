@@ -44,7 +44,7 @@
 #include "qtvariantproperty.h"
 #include "qtpropertybrowserutils_p.h"
 
-#include <qdesigner_utils_p.h>
+#include "qdesigner_utils_p.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QVariant>

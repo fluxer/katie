@@ -48,7 +48,7 @@
 #include "qfile.h"
 #include "qfilesystementry_p.h"
 #include "qfilesystemmetadata_p.h"
-#include <qsystemerror_p.h>
+#include "qsystemerror_p.h"
 
 QT_BEGIN_NAMESPACE
 

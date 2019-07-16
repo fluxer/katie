@@ -48,7 +48,7 @@
 #include <QtDesigner/abstractwidgetbox.h>
 
 #include <layoutinfo_p.h>
-#include <qdesigner_dnditem_p.h>
+#include "qdesigner_dnditem_p.h"
 #include "qdesigner_resource.h"
 
 #include <QtGui/qevent.h>

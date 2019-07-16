@@ -51,7 +51,7 @@
 #include <QtCore/qstring.h>
 #include <QtNetwork/qhostaddress.h>
 #include <QtNetwork/qabstractsocket.h>
-#include <qhostaddress_p.h>
+#include "qhostaddress_p.h"
 
 #ifndef QT_NO_NETWORKINTERFACE
 

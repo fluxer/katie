@@ -39,13 +39,13 @@
 **
 ****************************************************************************/
 
-#include <qabstractsocket_p.h>
+#include "qabstractsocket_p.h"
 #include "qhttpnetworkconnection_p.h"
 #include "qhttpnetworkconnectionchannel_p.h"
 #include "qnoncontiguousbytedevice_p.h"
-#include <qnetworkrequest_p.h>
-#include <qobject_p.h>
-#include <qauthenticator_p.h>
+#include "qnetworkrequest_p.h"
+#include "qobject_p.h"
+#include "qauthenticator_p.h"
 #include "qnetworkproxy.h"
 #include "qauthenticator.h"
 #include "qcoreapplication.h"
@@ -57,7 +57,7 @@
 
 #ifndef QT_NO_HTTP
 
-#include <qsslsocket_p.h>
+#include "qsslsocket_p.h"
 #include <QtNetwork/qsslkey.h>
 #include <QtNetwork/qsslcipher.h>
 #include <QtNetwork/qsslconfiguration.h>

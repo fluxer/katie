@@ -48,7 +48,7 @@
 #include "formwindowbase_p.h"
 
 #include <abstractdialoggui_p.h>
-#include <qdesigner_integration_p.h>
+#include "qdesigner_integration_p.h"
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractresourcebrowser.h>
 #include <QtDesigner/abstractlanguage.h>

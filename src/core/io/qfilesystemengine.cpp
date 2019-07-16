@@ -32,11 +32,11 @@
 ****************************************************************************/
 
 #include "qfilesystemengine_p.h"
-#include <QtCore/qdir.h>
-#include <QtCore/qset.h>
-#include <qabstractfileengine_p.h>
+#include "qdir.h"
+#include "qset.h"
+#include "qabstractfileengine_p.h"
 #ifdef QT_BUILD_CORE_LIB
-#include <qresource_p.h>
+#include "qresource_p.h"
 #endif
 
 QT_BEGIN_NAMESPACE

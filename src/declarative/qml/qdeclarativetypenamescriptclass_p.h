@@ -46,7 +46,7 @@
 //
 #include "qdeclarativeengine_p.h"
 
-#include <qscriptdeclarativeclass_p.h>
+#include "qscriptdeclarativeclass_p.h"
 #include <QtScript/qscriptclass.h>
 
 QT_BEGIN_NAMESPACE

@@ -49,7 +49,7 @@
 #include "qpainter.h"
 #include "qevent.h"
 #include "qapplication.h"
-#include <qcombobox_p.h>
+#include "qcombobox_p.h"
 #include "qdebug.h"
 
 QT_BEGIN_NAMESPACE

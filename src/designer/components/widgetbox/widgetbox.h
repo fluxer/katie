@@ -35,7 +35,7 @@
 #define WIDGETBOX_H
 
 #include "widgetbox_global.h"
-#include <qdesigner_widgetbox_p.h>
+#include "qdesigner_widgetbox_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -59,10 +59,10 @@
 #include <abstractdialoggui_p.h>
 
 // shared
-#include <qdesigner_propertysheet_p.h>
-#include <qdesigner_utils_p.h>
+#include "qdesigner_propertysheet_p.h"
+#include "qdesigner_utils_p.h"
 #include <formwindowbase_p.h>
-#include <qtresourcemodel_p.h>
+#include "qtresourcemodel_p.h"
 #include <scripterrordialog_p.h>
 
 #include <QtGui/QWidget>

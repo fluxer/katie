@@ -46,7 +46,7 @@
 
 #include <metadatabase_p.h>
 #include <ui4_p.h>
-#include <qdesigner_formwindowcommand_p.h>
+#include "qdesigner_formwindowcommand_p.h"
 
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/abstractformeditor.h>

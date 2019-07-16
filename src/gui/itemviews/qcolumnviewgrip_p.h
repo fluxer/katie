@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <qwidget_p.h>
+#include "qwidget_p.h"
 
 #ifndef QT_NO_QCOLUMNVIEW
 

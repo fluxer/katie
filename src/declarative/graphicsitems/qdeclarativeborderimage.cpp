@@ -43,7 +43,7 @@
 #include "qdeclarativeborderimage_p_p.h"
 
 #include "qdeclarativeinfo.h"
-#include <qdeclarativeengine_p.h>
+#include "qdeclarativeengine_p.h"
 
 #include <QNetworkRequest>
 #include <QNetworkReply>

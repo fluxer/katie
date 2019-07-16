@@ -57,8 +57,8 @@
 #include "qvarlengtharray.h"
 #include "qabstractitemdelegate.h"
 #include "qvariant.h"
-#include <qheaderview_p.h>
-#include <qabstractitemmodel_p.h>
+#include "qheaderview_p.h"
+#include "qabstractitemmodel_p.h"
 
 #ifndef QT_NO_DATASTREAM
 #include "qdatastream.h"

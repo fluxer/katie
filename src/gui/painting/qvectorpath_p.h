@@ -47,8 +47,8 @@
 
 #include <QtGui/qpaintengine.h>
 
-#include <qpaintengine_p.h>
-#include <qpainter_p.h>
+#include "qpaintengine_p.h"
+#include "qpainter_p.h"
 
 
 QT_BEGIN_HEADER

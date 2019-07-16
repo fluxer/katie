@@ -60,7 +60,7 @@
 #include <formbuilderextra_p.h>
 #include <resourcebuilder_p.h>
 #include <textbuilder_p.h>
-#include <qdesigner_widgetitem_p.h>
+#include "qdesigner_widgetitem_p.h"
 
 // shared
 #include <widgetdatabase_p.h>
@@ -73,8 +73,8 @@
 #include <abstractlanguage.h>
 #include <abstractintrospection_p.h>
 
-#include <qlayout_widget_p.h>
-#include <qdesigner_utils_p.h>
+#include "qlayout_widget_p.h"
+#include "qdesigner_utils_p.h"
 #include <ui4_p.h>
 
 // sdk
@@ -107,7 +107,7 @@
 #include <QtGui/QFileDialog>
 #include <QtGui/QHeaderView>
 #include <QtGui/qwizard.h>
-#include <qlayoutengine_p.h>
+#include "qlayoutengine_p.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QDir>

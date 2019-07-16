@@ -44,8 +44,8 @@
 #include "qdeclarativeimageprovider.h"
 
 #include "qdeclarativeengine.h"
-#include <qdeclarativeglobal_p.h>
-#include <qdeclarativeengine_p.h>
+#include "qdeclarativeglobal_p.h"
+#include "qdeclarativeengine_p.h"
 
 #include <QCoreApplication>
 #include <QImageReader>
@@ -58,7 +58,7 @@
 #include <QWaitCondition>
 #include <QBuffer>
 #include <QDebug>
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include <QSslError>
 
 #define IMAGEREQUEST_MAX_REQUEST_COUNT       8

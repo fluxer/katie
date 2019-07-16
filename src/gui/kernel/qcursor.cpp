@@ -48,7 +48,7 @@
 #include "qimage.h"
 #include "qdatastream.h"
 #include "qvariant.h"
-#include <qcursor_p.h>
+#include "qcursor_p.h"
 
 QT_BEGIN_NAMESPACE
 

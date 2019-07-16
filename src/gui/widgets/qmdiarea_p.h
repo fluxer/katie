@@ -54,8 +54,8 @@
 #include <QRect>
 #include <QPoint>
 #include <QtGui/qapplication.h>
-#include <qmdisubwindow_p.h>
-#include <qabstractscrollarea_p.h>
+#include "qmdisubwindow_p.h"
+#include "qabstractscrollarea_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -43,8 +43,8 @@
 #include <QtCore/qbuffer.h>
 #include <QtGui/qbitmap.h>
 #include <QtGui/qimagereader.h>
-#include <qgraphicssystem_p.h>
-#include <qapplication_p.h>
+#include "qgraphicssystem_p.h"
+#include "qapplication_p.h"
 #include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE

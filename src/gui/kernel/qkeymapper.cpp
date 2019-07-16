@@ -42,7 +42,7 @@
 
 #include "qapplication.h"
 
-#include <qobject_p.h>
+#include "qobject_p.h"
 #include "qkeymapper_p.h"
 #include "qwidget.h"
 

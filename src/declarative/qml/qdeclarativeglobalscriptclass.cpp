@@ -47,7 +47,7 @@
 #include <QtScript/qscriptengine.h>
 #include <QtScript/qscriptvalueiterator.h>
 
-#include <qscriptdeclarativeclass_p.h>
+#include "qscriptdeclarativeclass_p.h"
 
 QT_BEGIN_NAMESPACE
 

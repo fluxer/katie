@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <qtreewidgetitemiterator_p.h>
+#include "qtreewidgetitemiterator_p.h"
 #include "qtreewidget.h"
 #include "qtreewidget_p.h"
 #include "qwidgetitemdata_p.h"

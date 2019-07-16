@@ -44,8 +44,8 @@
 #include "qdeclarativeexpression.h"
 #include "qdeclarativecontext.h"
 #include "qdeclarativeinfo.h"
-#include <qdeclarativeproperty_p.h>
-#include <qdeclarativeitem_p.h>
+#include "qdeclarativeproperty_p.h"
+#include "qdeclarativeitem_p.h"
 
 #include <QtCore/qdebug.h>
 #include <QtCore/qstringlist.h>

@@ -51,8 +51,8 @@
 #include <QNetworkReply>
 #include <QFontDatabase>
 
-#include <qobject_p.h>
-#include <qdeclarativeengine_p.h>
+#include "qobject_p.h"
+#include "qdeclarativeengine_p.h"
 #include "qdeclarativeinfo.h"
 
 QT_BEGIN_NAMESPACE

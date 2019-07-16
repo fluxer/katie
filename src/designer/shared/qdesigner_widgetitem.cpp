@@ -57,7 +57,7 @@
 
 #include <QtCore/QTextStream>
 #include <QtCore/QDebug>
-#include <qlayout_p.h>
+#include "qlayout_p.h"
 
 QT_BEGIN_NAMESPACE
 

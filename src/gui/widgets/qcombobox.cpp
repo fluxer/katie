@@ -57,14 +57,14 @@
 #include "qtreeview.h"
 #include "qheaderview.h"
 #include "qmath.h"
-#include <qapplication_p.h>
-#include <qcombobox_p.h>
-#include <qabstractitemmodel_p.h>
-#include <qabstractscrollarea_p.h>
+#include "qapplication_p.h"
+#include "qcombobox_p.h"
+#include "qabstractitemmodel_p.h"
+#include "qabstractscrollarea_p.h"
 #include "qdebug.h"
 
 #ifndef QT_NO_EFFECTS
-# include <qeffects_p.h>
+# include "qeffects_p.h"
 #endif
 
 #ifndef QT_NO_ACCESSIBILITY

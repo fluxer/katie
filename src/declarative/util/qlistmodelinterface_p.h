@@ -37,7 +37,7 @@
 #include <QtCore/QHash>
 #include <QtCore/QVariant>
 
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativeglobal_p.h"
 
 QT_BEGIN_HEADER
 

@@ -45,11 +45,11 @@
 //
 
 #include <QtCore/qabstractitemmodel.h>
-#include <qabstractitemmodel_p.h>
+#include "qabstractitemmodel_p.h"
 #include <QtCore/qpair.h>
 #include <QtCore/qbasictimer.h>
 #include <QtGui/qtreewidget.h>
-#include <qtreeview_p.h>
+#include "qtreeview_p.h"
 #include <QtGui/qheaderview.h>
 #include "qabstractitemmodel_p.h"
 

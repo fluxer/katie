@@ -46,7 +46,7 @@
 #include "qdesigner_workbench.h"
 #include "mainwindow.h"
 
-#include <qdesigner_propertysheet_p.h>
+#include "qdesigner_propertysheet_p.h"
 
 #include <QtGui/qevent.h>
 #include <QtGui/qevent.h>

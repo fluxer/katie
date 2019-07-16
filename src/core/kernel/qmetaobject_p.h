@@ -46,10 +46,10 @@
 //
 
 #include "qobjectdefs.h"
-#include <qcorecommon_p.h>
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_QOBJECT
-#  include <qobject_p.h>
+#  include "qobject_p.h"
 #endif
 
 #ifndef QT_NO_COMPRESS

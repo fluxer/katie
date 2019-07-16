@@ -49,8 +49,8 @@
 
 #include <QPixmapCache>
 
-#include <qobject_p.h>
-#include <qpixmapfilter_p.h>
+#include "qobject_p.h"
+#include "qpixmapfilter_p.h"
 
 #ifndef QT_NO_GRAPHICSEFFECT
 QT_BEGIN_NAMESPACE

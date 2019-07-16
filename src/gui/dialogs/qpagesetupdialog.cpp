@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#include <qabstractpagesetupdialog_p.h>
-#include <qpagesetupdialog_p.h>
+#include "qabstractpagesetupdialog_p.h"
+#include "qpagesetupdialog_p.h"
 
 #ifndef QT_NO_PRINTDIALOG
 

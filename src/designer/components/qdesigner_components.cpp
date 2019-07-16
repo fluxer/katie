@@ -51,7 +51,7 @@
 #include <objectinspector/objectinspector.h>
 #include <taskmenu/taskmenu_component.h>
 #include "qtresourceview_p.h"
-#include <qdesigner_integration_p.h>
+#include "qdesigner_integration_p.h"
 #include <signalsloteditor/signalsloteditorwindow.h>
 
 #include <buddyeditor/buddyeditor_plugin.h>

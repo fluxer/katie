@@ -37,7 +37,7 @@
 #include <QtGui/qtextoption.h>
 #include "qdeclarativeimplicitsizeitem_p.h"
 
-#include <qdeclarativeglobal_p.h>
+#include "qdeclarativeglobal_p.h"
 
 QT_BEGIN_HEADER
 

@@ -48,7 +48,7 @@
 #include "QtGui/qfont.h"
 #include "QtCore/qmap.h"
 #include "QtCore/qobject.h"
-#include <qunicodetables_p.h>
+#include "qunicodetables_p.h"
 #include <QtGui/qfontdatabase.h>
 #include "qfixed_p.h"
 
