@@ -31,9 +31,45 @@
 **
 ****************************************************************************/
 
-#ifndef Q_POSIX_QPLATFORMDEFS_H
-#define Q_POSIX_QPLATFORMDEFS_H
+#ifndef QPLATFORMDEFS_H
+#define QPLATFORMDEFS_H
 
+// Get Qt defines/settings
+#include "qconfig.h"
+
+#if defined(__linux__)
+#  define QT_USE_XOPEN_LFS_EXTENSIONS
+// 1) need to reset default environment if _BSD_SOURCE is defined
+// 2) need to specify POSIX thread interfaces explicitly in glibc 2.0
+// 3) it seems older glibc need this to include the X/Open stuff
+#  ifndef _GNU_SOURCE
+#    define _GNU_SOURCE
+#  endif
+
+#elif defined(__OpenBSD__)
+// 1003.1c-1995 says on page 38 (2.9.3, paragraph 3) that if _POSIX_THREADS
+// is defined, then _POSIX_THREAD_SAFE_FUNCTIONS must also be defined.
+// However this looks like a well-known typo (reversed dependency).
+//
+// On the other hand _POSIX_THREAD_SAFE_FUNCTIONS should be defined only
+// if the Thread-Safe Functions option is implemented. OpenBSD does not
+// support all of the required _r() interfaces, especially getpwuid_r(),
+// which means it should not define _POSIX_THREAD_SAFE_FUNCTIONS.
+//
+// Since OpenBSD does define _POSIX_THREAD_SAFE_FUNCTIONS, we have to
+// undefine it behind its back.
+#  ifdef _POSIX_THREAD_SAFE_FUNCTIONS
+#  undef _POSIX_THREAD_SAFE_FUNCTIONS
+#  endif
+
+// Older OpenBSD versions may still use the a.out format instead of ELF.
+#  ifndef __ELF__
+#  define QT_AOUT_UNDERSCORE
+#  endif
+
+#endif
+
+#include <unistd.h>
 #include <stdio.h>
 #include <dirent.h>
 #include <signal.h>
@@ -122,7 +158,11 @@
 #define QT_READ                 ::read
 #define QT_WRITE                ::write
 
-#define QT_OPEN_LARGEFILE       O_LARGEFILE
+#if defined(__FreeBSD__) || defined(__OpenBSD__)
+#  define QT_OPEN_LARGEFILE     0
+#else
+#  define QT_OPEN_LARGEFILE     O_LARGEFILE
+#endif
 #define QT_OPEN_RDONLY          O_RDONLY
 #define QT_OPEN_WRONLY          O_WRONLY
 #define QT_OPEN_RDWR            O_RDWR
@@ -151,7 +191,11 @@
 #define QT_READDIR_R            ::readdir_r
 #endif
 
+#if defined(__GLIBC__) && (__GLIBC__ < 2)
+#define QT_SOCKLEN_T            int
+#else
 #define QT_SOCKLEN_T            socklen_t
+#endif
 
 #define QT_SOCKET_CONNECT       ::connect
 #define QT_SOCKET_BIND          ::bind
@@ -159,5 +203,10 @@
 #define QT_SIGNAL_RETTYPE       void
 #define QT_SIGNAL_ARGS          int
 #define QT_SIGNAL_IGNORE        SIG_IGN
+
+#if defined(_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
+#define QT_SNPRINTF             ::snprintf
+#define QT_VSNPRINTF            ::vsnprintf
+#endif
 
 #endif // include guard

@@ -4,6 +4,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qendian.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qnumeric.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/global/qplatformdefs.h
 )
 
 set(CORE_SOURCES
