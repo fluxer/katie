@@ -72,7 +72,7 @@ public:
     bool notify_helper(QObject *, QEvent *);
 
     virtual QString appName() const;
-    mutable QString applicationName;
+    QString applicationName;
 
     virtual void createEventDispatcher();
     static void removePostedEvent(QEvent *);

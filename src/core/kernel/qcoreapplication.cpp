@@ -69,11 +69,9 @@ QT_BEGIN_NAMESPACE
 
 QString QCoreApplicationPrivate::appName() const
 {
-    QMutexLocker locker(QMutexPool::globalInstanceGet(&applicationName));
-
     if (applicationName.isEmpty() && argv[0]) {
-        char *p = strrchr(argv[0], '/');
-        applicationName = QString::fromLocal8Bit(p ? p + 1 : argv[0]);
+        const char *p = strrchr(argv[0], '/');
+        return QString::fromLocal8Bit(p ? p + 1 : argv[0]);
     }
     return applicationName;
 }
