@@ -34,6 +34,7 @@
 #ifndef Q_POSIX_QPLATFORMDEFS_H
 #define Q_POSIX_QPLATFORMDEFS_H
 
+#include <stdio.h>
 #include <dirent.h>
 #include <signal.h>
 #include <fcntl.h>

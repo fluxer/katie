@@ -49,9 +49,6 @@
 #include <unistd.h>
 
 // We are hot - unistd.h should have turned on the specific APIs we requested
-#include <stdio.h>
-#include <sys/socket.h>
-
 #define QT_USE_XOPEN_LFS_EXTENSIONS
 #include "common/mkspecs_posix.h"
 

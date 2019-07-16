@@ -42,9 +42,6 @@
 #include <unistd.h>
 
 // We are hot - unistd.h should have turned on the specific APIs we requested
-#include <stdio.h> // snprintf, vsnprintf
-#include <sys/socket.h> // socklen_t
-
 #include "common/mkspecs_posix.h"
 
 #undef QT_OPEN_LARGEFILE

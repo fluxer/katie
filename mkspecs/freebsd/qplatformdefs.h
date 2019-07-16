@@ -41,9 +41,6 @@
 #include <unistd.h>
 
 // We are hot - unistd.h should have turned on the specific APIs we requested
-#include <stdio.h>
-#include <sys/socket.h>
-
 #include "common/mkspecs_posix.h"
 
 #undef QT_OPEN_LARGEFILE
