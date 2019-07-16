@@ -3701,14 +3701,7 @@ QByteArray QByteArray::toBase64() const
 
 QByteArray &QByteArray::setNum(qlonglong n, int base)
 {
-#if defined(QT_CHECK_RANGE)
-    if (Q_UNLIKELY(base < 2 || base > 36)) {
-        qWarning("QByteArray::setNum: Invalid base %d", base);
-        base = 10;
-    }
-#endif
-    QLocale locale(QLocale::C);
-    *this = locale.d()->longLongToString(n, -1, base).toLatin1();
+    *this = QByteArray::number(n, base);
     return *this;
 }
 
@@ -3720,14 +3713,7 @@ QByteArray &QByteArray::setNum(qlonglong n, int base)
 
 QByteArray &QByteArray::setNum(qulonglong n, int base)
 {
-#if defined(QT_CHECK_RANGE)
-    if (Q_UNLIKELY(base < 2 || base > 36)) {
-        qWarning("QByteArray::setNum: Invalid base %d", base);
-        base = 10;
-    }
-#endif
-    QLocale locale(QLocale::C);
-    *this = locale.d()->unsLongLongToString(n, -1, base).toLatin1();
+    *this = QByteArray::number(n, base);
     return *this;
 }
 
@@ -3761,32 +3747,7 @@ QByteArray &QByteArray::setNum(qulonglong n, int base)
 
 QByteArray &QByteArray::setNum(double n, char f, int prec)
 {
-    QLocalePrivate::DoubleForm form = QLocalePrivate::DFDecimal;
-    uint flags = 0;
-
-    if (qIsUpper(f))
-        flags = QLocalePrivate::CapitalEorX;
-    f = qToLower(f);
-
-    switch (f) {
-        case 'f':
-            form = QLocalePrivate::DFDecimal;
-            break;
-        case 'e':
-            form = QLocalePrivate::DFExponent;
-            break;
-        case 'g':
-            form = QLocalePrivate::DFSignificantDigits;
-            break;
-        default:
-#if defined(QT_CHECK_RANGE)
-            qWarning("QByteArray::setNum: Invalid format char '%c'", f);
-#endif
-            break;
-    }
-
-    QLocale locale(QLocale::C);
-    *this = locale.d()->doubleToString(n, prec, form, -1, flags).toLatin1();
+    *this = QByteArray::number(n, f, prec);
     return *this;
 }
 
@@ -3843,9 +3804,14 @@ QByteArray QByteArray::number(uint n, int base)
 */
 QByteArray QByteArray::number(qlonglong n, int base)
 {
-    QByteArray s;
-    s.setNum(n, base);
-    return s;
+#if defined(QT_CHECK_RANGE)
+    if (Q_UNLIKELY(base < 2 || base > 36)) {
+        qWarning("QByteArray::number: Invalid base %d", base);
+        base = 10;
+    }
+#endif
+    QLocale locale(QLocale::C);
+    return locale.d()->longLongToString(n, -1, base).toLatin1();
 }
 
 /*!
@@ -3855,9 +3821,14 @@ QByteArray QByteArray::number(qlonglong n, int base)
 */
 QByteArray QByteArray::number(qulonglong n, int base)
 {
-    QByteArray s;
-    s.setNum(n, base);
-    return s;
+#if defined(QT_CHECK_RANGE)
+    if (Q_UNLIKELY(base < 2 || base > 36)) {
+        qWarning("QByteArray::number: Invalid base %d", base);
+        base = 10;
+    }
+#endif
+    QLocale locale(QLocale::C);
+    return locale.d()->unsLongLongToString(n, -1, base).toLatin1();
 }
 
 /*! 
@@ -3891,9 +3862,32 @@ QByteArray QByteArray::number(qulonglong n, int base)
 */
 QByteArray QByteArray::number(double n, char f, int prec)
 {
-    QByteArray s;
-    s.setNum(n, f, prec);
-    return s;
+    QLocalePrivate::DoubleForm form = QLocalePrivate::DFDecimal;
+    uint flags = 0;
+
+    if (qIsUpper(f))
+        flags = QLocalePrivate::CapitalEorX;
+    f = qToLower(f);
+
+    switch (f) {
+        case 'f':
+            form = QLocalePrivate::DFDecimal;
+            break;
+        case 'e':
+            form = QLocalePrivate::DFExponent;
+            break;
+        case 'g':
+            form = QLocalePrivate::DFSignificantDigits;
+            break;
+        default:
+#if defined(QT_CHECK_RANGE)
+            qWarning("QByteArray::number: Invalid format char '%c'", f);
+#endif
+            break;
+    }
+
+    QLocale locale(QLocale::C);
+    return locale.d()->doubleToString(n, prec, form, -1, flags).toLatin1();
 }
 
 /*!
