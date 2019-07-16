@@ -5489,14 +5489,7 @@ float QString::toFloat(bool *ok) const
 */
 QString &QString::setNum(qlonglong n, int base)
 {
-#if defined(QT_CHECK_RANGE)
-    if (Q_UNLIKELY(base < 2 || base > 36)) {
-        qWarning("QString::setNum: Invalid base (%d)", base);
-        base = 10;
-    }
-#endif
-    QLocale locale(QLocale::C);
-    *this = locale.d()->longLongToString(n, -1, base);
+    *this = QString::number(n, base);
     return *this;
 }
 
@@ -5505,14 +5498,7 @@ QString &QString::setNum(qlonglong n, int base)
 */
 QString &QString::setNum(qulonglong n, int base)
 {
-#if defined(QT_CHECK_RANGE)
-    if (Q_UNLIKELY(base < 2 || base > 36)) {
-        qWarning("QString::setNum: Invalid base (%d)", base);
-        base = 10;
-    }
-#endif
-    QLocale locale(QLocale::C);
-    *this = locale.d()->unsLongLongToString(n, -1, base);
+    *this = QString::number(n, base);
     return *this;
 }
 
@@ -5543,32 +5529,7 @@ QString &QString::setNum(qulonglong n, int base)
 
 QString &QString::setNum(double n, char f, int prec)
 {
-    QLocalePrivate::DoubleForm form = QLocalePrivate::DFDecimal;
-    uint flags = 0;
-
-    if (qIsUpper(f))
-        flags = QLocalePrivate::CapitalEorX;
-    f = qToLower(f);
-
-    switch (f) {
-        case 'f':
-            form = QLocalePrivate::DFDecimal;
-            break;
-        case 'e':
-            form = QLocalePrivate::DFExponent;
-            break;
-        case 'g':
-            form = QLocalePrivate::DFSignificantDigits;
-            break;
-        default:
-#if defined(QT_CHECK_RANGE)
-            qWarning("QString::setNum: Invalid format char '%c'", f);
-#endif
-            break;
-    }
-
-    QLocale locale(QLocale::C);
-    *this = locale.d()->doubleToString(n, prec, form, -1, flags);
+    *this = QString::number(n, f, prec);
     return *this;
 }
 
@@ -5599,9 +5560,7 @@ QString &QString::setNum(double n, char f, int prec)
 
 QString QString::number(long n, int base)
 {
-    QString s;
-    s.setNum(n, base);
-    return s;
+    return number(qlonglong(n), base);
 }
 
 /*!
@@ -5611,9 +5570,7 @@ QString QString::number(long n, int base)
 */
 QString QString::number(ulong n, int base)
 {
-    QString s;
-    s.setNum(n, base);
-    return s;
+    return number(qulonglong(n), base);
 }
 
 /*!
@@ -5621,9 +5578,7 @@ QString QString::number(ulong n, int base)
 */
 QString QString::number(int n, int base)
 {
-    QString s;
-    s.setNum(n, base);
-    return s;
+    return number(qlonglong(n), base);
 }
 
 /*!
@@ -5631,9 +5586,7 @@ QString QString::number(int n, int base)
 */
 QString QString::number(uint n, int base)
 {
-    QString s;
-    s.setNum(n, base);
-    return s;
+    return number(qulonglong(n), base);
 }
 
 /*!
@@ -5641,9 +5594,14 @@ QString QString::number(uint n, int base)
 */
 QString QString::number(qlonglong n, int base)
 {
-    QString s;
-    s.setNum(n, base);
-    return s;
+#if defined(QT_CHECK_RANGE)
+    if (Q_UNLIKELY(base < 2 || base > 36)) {
+        qWarning("QString::number: Invalid base (%d)", base);
+        base = 10;
+    }
+#endif
+    QLocale locale(QLocale::C);
+    return locale.d()->longLongToString(n, -1, base);
 }
 
 /*!
@@ -5651,9 +5609,14 @@ QString QString::number(qlonglong n, int base)
 */
 QString QString::number(qulonglong n, int base)
 {
-    QString s;
-    s.setNum(n, base);
-    return s;
+#if defined(QT_CHECK_RANGE)
+    if (Q_UNLIKELY(base < 2 || base > 36)) {
+        qWarning("QString::number: Invalid base (%d)", base);
+        base = 10;
+    }
+#endif
+    QLocale locale(QLocale::C);
+    return locale.d()->unsLongLongToString(n, -1, base);
 }
 
 
@@ -5671,9 +5634,32 @@ QString QString::number(qulonglong n, int base)
 */
 QString QString::number(double n, char f, int prec)
 {
-    QString s;
-    s.setNum(n, f, prec);
-    return s;
+    QLocalePrivate::DoubleForm form = QLocalePrivate::DFDecimal;
+    uint flags = 0;
+
+    if (qIsUpper(f))
+        flags = QLocalePrivate::CapitalEorX;
+    f = qToLower(f);
+
+    switch (f) {
+        case 'f':
+            form = QLocalePrivate::DFDecimal;
+            break;
+        case 'e':
+            form = QLocalePrivate::DFExponent;
+            break;
+        case 'g':
+            form = QLocalePrivate::DFSignificantDigits;
+            break;
+        default:
+#if defined(QT_CHECK_RANGE)
+            qWarning("QString::number: Invalid format char '%c'", f);
+#endif
+            break;
+    }
+
+    QLocale locale(QLocale::C);
+    return locale.d()->doubleToString(n, prec, form, -1, flags);
 }
 
 /*!
