@@ -58,8 +58,7 @@ public:
         ExcludeSocketNotifiers = 0x02,
         WaitForMoreEvents = 0x04,
         X11ExcludeTimers = 0x08,
-        EventLoopExec = 0x10,
-        DialogExec = 0x20
+        EventLoopExec = 0x10
     };
     Q_DECLARE_FLAGS(ProcessEventsFlags, ProcessEventsFlag)
 

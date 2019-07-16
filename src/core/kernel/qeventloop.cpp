@@ -91,7 +91,6 @@ public:
     \omitvalue ExcludeUserInput
     \omitvalue WaitForMore
     \omitvalue EventLoopExec
-    \omitvalue DialogExec
 
     \sa processEvents()
 */
