@@ -312,12 +312,11 @@ static long qt_find_pattern(const char *s, ulong s_len,
                 information could not be read.
   Returns  true if version information is present and successfully read.
 */
-static bool qt_unix_query(const QString &library, uint *version, bool *debug, QLibraryPrivate *lib = 0)
+static bool qt_unix_query(const QString &library, uint *version, bool *debug, QLibraryPrivate *lib)
 {
     QFile file(library);
     if (!file.open(QIODevice::ReadOnly)) {
-        if (lib)
-            lib->errorString = file.errorString();
+        lib->errorString = file.errorString();
         if (qt_debug_component()) {
             qWarning("%s: %s", QFile::encodeName(library).data(),
                 qPrintable(qt_error_string(errno)));
@@ -344,7 +343,7 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
     if (pos >= 0)
         ret = qt_parse_pattern(filedata + pos, version, debug);
 
-    if (!ret && lib)
+    if (!ret)
         lib->errorString = QLibrary::tr("Plugin verification data mismatch in '%1'").arg(library);
     file.close();
     return ret;
