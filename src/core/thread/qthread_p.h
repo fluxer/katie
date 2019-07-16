@@ -54,6 +54,8 @@
 #include "QtCore/qmap.h"
 #include "qobject_p.h"
 
+#include <thread>
+
 QT_BEGIN_NAMESPACE
 
 class QAbstractEventDispatcher;
@@ -144,7 +146,7 @@ public:
 
     static QThread *threadForId(int id);
 
-    pthread_t thread_id;
+    std::thread::native_handle_type thread_id;
     QWaitCondition thread_done;
 
     static void *start(void *arg);
