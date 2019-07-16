@@ -55,12 +55,9 @@
 #define QT_USE_XOPEN_LFS_EXTENSIONS
 #include "common/mkspecs_posix.h"
 
-#undef QT_SOCKLEN_T
-
 #if defined(__GLIBC__) && (__GLIBC__ < 2)
+#undef QT_SOCKLEN_T
 #define QT_SOCKLEN_T            int
-#else
-#define QT_SOCKLEN_T            socklen_t
 #endif
 
 #if defined(_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
