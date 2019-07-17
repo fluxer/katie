@@ -322,10 +322,9 @@ void Releaser::squeeze(TranslatorSaveMode mode)
         writeMessage(it.key(), ms, mode, Prefix(qMax(cpPrev, cpNext + 1)));
     }
 
-    QMap<Offset, void *>::Iterator offset;
-    offset = offsets.begin();
+    QMap<Offset, void *>::const_iterator offset = offsets.constBegin();
     QDataStream ds(&m_offsetArray, QIODevice::WriteOnly);
-    while (offset != offsets.end()) {
+    while (offset != offsets.constEnd()) {
         Offset k = offset.key();
         ++offset;
         ds << quint32(k.h) << quint32(k.o);
