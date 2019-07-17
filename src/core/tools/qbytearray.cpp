@@ -2249,12 +2249,10 @@ QList<QByteArray> QByteArray::split(char sep) const
 */
 QByteArray QByteArray::repeated(const int times) const
 {
-    if (d->size == 0)
+    if (d->size == 0 || times == 1)
         return *this;
 
-    if (times <= 1) {
-        if (times == 1)
-            return *this;
+    if (times < 1) {
         return QByteArray();
     }
 
