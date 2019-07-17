@@ -5801,12 +5801,10 @@ QString QString::normalized(QString::NormalizationForm mode) const
 */
 QString QString::repeated(int times) const
 {
-    if (d->size == 0)
+    if (d->size == 0 || times == 1)
         return *this;
 
-    if (times <= 1) {
-        if (times == 1)
-            return *this;
+    if (times < 1) {
         return QString();
     }
 
