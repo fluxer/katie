@@ -2031,11 +2031,11 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
     s << pointSize;
     s << pixelSize;
 
-    s << (quint8) font.d->request.styleHint;
-    s << (quint8) font.d->request.styleStrategy;
-    s << (quint8) font.d->request.weight
+    s << (qint8) font.d->request.styleHint;
+    s << (qint8) font.d->request.styleStrategy;
+    s << (qint8) font.d->request.weight
       << get_font_bits(s.version(), font.d.data());
-    s << (quint16)font.d->request.stretch;
+    s << (qint16)font.d->request.stretch;
     s << get_extended_font_bits(font.d.data());
     s << font.d->letterSpacing.value();
     s << font.d->wordSpacing.value();
@@ -2056,16 +2056,17 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     font.d = new QFontPrivate;
     font.resolve_mask = QFont::AllPropertiesResolved;
 
-    quint8 styleHint, styleStrategy = QFont::PreferDefault, weight, bits;
+    quint8 styleHint, styleStrategy = QFont::PreferDefault, bits;
+    qint8 weight;
 
     s >> font.d->request.family;
 
     double pointSize;
-    qint32 pixelSize;
+    double pixelSize;
     s >> pointSize;
     s >> pixelSize;
     font.d->request.pointSize = qreal(pointSize);
-    font.d->request.pixelSize = pixelSize;
+    font.d->request.pixelSize = qreal(pixelSize);
     s >> styleHint;
     s >> styleStrategy;
 
@@ -2078,7 +2079,7 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
 
     set_font_bits(s.version(), bits, font.d.data());
 
-    quint16 stretch;
+    qint16 stretch;
     s >> stretch;
     font.d->request.stretch = stretch;
 
