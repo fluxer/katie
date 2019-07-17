@@ -152,7 +152,7 @@ public:
 
     QString themeName() const { return m_userTheme.isEmpty() ? m_systemTheme : m_userTheme; }
     void setThemeName(const QString &themeName);
-    QIconTheme theme() { return themeList.value(themeName()); }
+    QIconTheme theme() const { return themeList.value(themeName()); }
     void setThemeSearchPath(const QStringList &searchPaths);
     QStringList themeSearchPaths() const;
     QIconDirInfo dirInfo(int dirindex);
