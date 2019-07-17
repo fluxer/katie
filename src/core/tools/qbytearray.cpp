@@ -2260,8 +2260,7 @@ QByteArray QByteArray::repeated(const int times) const
 
     const int resultSize = times * d->size;
 
-    QByteArray result;
-    result.reserve(resultSize);
+    QByteArray result(resultSize, Qt::Uninitialized);
     if (result.d->alloc != resultSize)
         return QByteArray(); // not enough memory
 
