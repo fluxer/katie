@@ -57,8 +57,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QTextCharFormat;
-
 class QSvgAnimation : public QSvgNode
 {
 public:
