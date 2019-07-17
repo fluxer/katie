@@ -3728,7 +3728,7 @@ bool QSvgHandler::endElement(const QStringRef &localName)
     return true;
 }
 
-void QSvgHandler::resolveGradients(QSvgNode *node)
+void QSvgHandler::resolveGradients(QSvgNode *node) const
 {
     if (!node || (node->type() != QSvgNode::DOC && node->type() != QSvgNode::G
         && node->type() != QSvgNode::DEFS && node->type() != QSvgNode::SWITCH)) {
