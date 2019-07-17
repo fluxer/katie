@@ -112,7 +112,7 @@ public:
     static inline bool testAttribute(uint flag)
         { return attribs & (1 << flag); }
 #ifndef QT_NO_SETTINGS
-    static QSettings *trolltechConf();
+    static QSettings *staticConf();
 #endif
 };
 

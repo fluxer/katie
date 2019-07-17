@@ -86,7 +86,7 @@ QDesigner::QDesigner(int &argc, char **argv)
     : QApplication(argc, argv),
       m_workbench(0), m_suppressNewFormShow(false)
 {
-    setOrganizationName(QLatin1String("Trolltech"));
+    setOrganizationName(QLatin1String("Katie"));
     setApplicationName(QLatin1String(designerApplicationName));
     QDesignerComponents::initializeResources();
 

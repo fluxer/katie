@@ -93,7 +93,7 @@ QFactoryLoader::QFactoryLoader(const char *iid,
 }
 
 
-void QFactoryLoader::updateDir(const QString &pluginDir, QSettings& settings)
+void QFactoryLoader::updateDir(const QString &pluginDir, QSettings *settings)
 {
     Q_D(QFactoryLoader);
     QString path = pluginDir + d->suffix;
@@ -109,7 +109,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir, QSettings& settings)
             qDebug() << "QFactoryLoader::QFactoryLoader() looking at" << fileName;
         }
         library = QLibraryPrivate::findOrCreate(QFileInfo(fileName).canonicalFilePath());
-        if (!library->isPlugin(&settings)) {
+        if (!library->isPlugin(settings)) {
             if (qt_debug_component()) {
                 qDebug() << library->errorString;
                 qDebug() << "         not a plugin";
@@ -123,7 +123,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir, QSettings& settings)
                          .arg(QString::fromLatin1(d->iid.constData()))
                          .arg(fileName);
         QStringList reg, keys;
-        reg = settings.value(regkey).toStringList();
+        reg = settings->value(regkey).toStringList();
         if (reg.count() && library->lastModified == reg[0]) {
             keys = reg;
             keys.removeFirst();
@@ -150,7 +150,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir, QSettings& settings)
             reg.clear();
             reg << library->lastModified;
             reg += keys;
-            settings.setValue(regkey, reg);
+            settings->setValue(regkey, reg);
         }
         if (qt_debug_component()) {
             qDebug() << "keys" << keys;
@@ -189,14 +189,13 @@ void QFactoryLoader::update()
 #ifdef QT_SHARED
     Q_D(QFactoryLoader);
     QStringList paths = QCoreApplication::libraryPaths();
-    QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
     for (int i = 0; i < paths.count(); ++i) {
         const QString &pluginDir = paths.at(i);
         // Already loaded, skip it...
         if (d->loadedPaths.contains(pluginDir))
             continue;
         d->loadedPaths << pluginDir;
-        updateDir(pluginDir, settings);
+        updateDir(pluginDir, QCoreApplicationPrivate::staticConf());
     }
 #else
     Q_D(QFactoryLoader);

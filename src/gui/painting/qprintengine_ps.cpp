@@ -178,7 +178,7 @@ QPSPrintEnginePrivate::QPSPrintEnginePrivate(QPrinter::PrinterMode m)
     firstPage = true;
 
 #ifndef QT_NO_SETTINGS
-    QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
+    QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
     settings.beginGroup(QLatin1String("Qt"));
     embedFonts = settings.value(QLatin1String("embedFonts"), true).toBool();
 #else

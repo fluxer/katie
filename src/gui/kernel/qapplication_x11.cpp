@@ -708,7 +708,7 @@ bool QApplicationPrivate::x11_apply_settings()
         return true;
     }
 
-    QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
+    QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
 
     settings.beginGroup(QLatin1String("Qt"));
 
@@ -1667,7 +1667,7 @@ void qt_init(QApplicationPrivate *priv, int,
         // read some non-GUI settings when not using the X server...
 
         if (QApplication::desktopSettingsAware()) {
-            QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
+            QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
             settings.beginGroup(QLatin1String("Qt"));
 
             // read library (ie. plugin) path list

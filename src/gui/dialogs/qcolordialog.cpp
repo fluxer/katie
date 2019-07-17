@@ -1399,7 +1399,7 @@ void QColorDialogPrivate::init(const QColor &initial)
 
 #ifndef QT_NO_SETTINGS
     if (!customSet) {
-        QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
+        QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
         for (int i = 0; i < 2*8; ++i) {
             QVariant v = settings.value(QLatin1String("Qt/customColors/") + QString::number(i));
             if (v.isValid()) {
@@ -1820,7 +1820,7 @@ QColorDialog::~QColorDialog()
 
 #ifndef QT_NO_SETTINGS
     if (!customSet) {
-        QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
+        QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
         for (int i = 0; i < 2*8; ++i)
             settings.setValue(QLatin1String("Qt/customColors/") + QString::number(i), cusrgb[i]);
     }

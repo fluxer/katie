@@ -331,7 +331,7 @@ QFileDialog::~QFileDialog()
 {
     Q_D(QFileDialog);
 #ifndef QT_NO_SETTINGS
-    QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
+    QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
     settings.beginGroup(QLatin1String("Qt"));
     settings.setValue(QLatin1String("filedialog"), saveState());
 #endif
@@ -2029,7 +2029,7 @@ void QFileDialogPrivate::init(const QString &directory, const QString &nameFilte
     q->setFileMode(fileMode);
 
 #ifndef QT_NO_SETTINGS
-    QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
+    QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
     settings.beginGroup(QLatin1String("Qt"));
     if (!directory.isEmpty())
         setLastVisitedDirectory(workingDirectory(directory));

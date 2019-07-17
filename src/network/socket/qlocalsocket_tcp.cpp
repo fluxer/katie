@@ -235,7 +235,7 @@ void QLocalSocket::connectToServer(const QString &name, OpenMode openMode)
     else
         d->fullServerName = prefix + name;
 
-    QSettings settings(QLatin1String("Trolltech"), QLatin1String("Qt"));
+    QSettings settings(QLatin1String("Katie"), QLatin1String("Qt"));
     bool ok;
     const quint16 port = settings.value(d->fullServerName).toUInt(&ok);
     if (!ok) {

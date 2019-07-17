@@ -160,15 +160,15 @@ Q_CORE_EXPORT bool qt_locale_initialized = false;
 
 
 /*
-  Create an instance of Trolltech.conf. This ensures that the settings will not
+  Create an instance of Katie.conf. This ensures that the settings will not
   be thrown out of QSetting's cache for unused settings.
   */
 #ifndef QT_NO_SETTINGS
-Q_GLOBAL_STATIC_WITH_ARGS(QSettings, staticTrolltechConf, (QSettings::UserScope, QLatin1String("Trolltech")))
+Q_GLOBAL_STATIC_WITH_ARGS(QSettings, staticKatieConf, (QSettings::UserScope, QLatin1String("Katie")))
 
-QSettings *QCoreApplicationPrivate::trolltechConf()
+QSettings *QCoreApplicationPrivate::staticConf()
 {
-    return staticTrolltechConf();
+    return staticKatieConf();
 }
 #endif
 

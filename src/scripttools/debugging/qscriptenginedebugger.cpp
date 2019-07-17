@@ -308,7 +308,7 @@ QScriptEngineDebuggerPrivate::~QScriptEngineDebuggerPrivate()
     delete frontend;
 #ifndef QT_NO_MAINWINDOW
     if (standardWindow) {
-        QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
+        QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
         QByteArray geometry = standardWindow->saveGeometry();
         settings.setValue(QLatin1String("Qt/scripttools/debugging/mainWindowGeometry"), geometry);
         QByteArray state = standardWindow->saveState();
@@ -595,7 +595,7 @@ QMainWindow *QScriptEngineDebugger::standardWindow() const
 
     win->setWindowTitle(tr("Qt Script Debugger"));
 
-    QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
+    QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
     QVariant geometry = settings.value(QLatin1String("Qt/scripttools/debugging/mainWindowGeometry"));
     if (geometry.isValid())
         win->restoreGeometry(geometry.toByteArray());
