@@ -287,7 +287,8 @@ static int apple_cmap[216] = {
 int findapple(Col c)
 {
     for (int i=0; i<216; i++)
-	if (apple_cmap[i]==(c.r<<16)|(c.g<<8)|c.b) return i;
+        if (apple_cmap[i]==((c.r<<16)|(c.g<<8)|c.b))
+            return i;
     abort();
 }
 #endif

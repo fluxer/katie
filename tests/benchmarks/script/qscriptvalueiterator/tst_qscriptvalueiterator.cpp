@@ -232,9 +232,8 @@ void tst_QScriptValueIterator::flags()
 {
     QScriptEngine engine;
     QScriptValue object = engine.newObject();
-    QScriptValue::PropertyFlags flags = flags;
-    object.setProperty(QLatin1String("foo"), 123,
-        QScriptValue::SkipInEnumeration | QScriptValue::ReadOnly | QScriptValue::Undeletable);
+    QScriptValue::PropertyFlags flags = QScriptValue::SkipInEnumeration | QScriptValue::ReadOnly | QScriptValue::Undeletable;
+    object.setProperty(QLatin1String("foo"), 123, flags);
     QScriptValueIterator it(object);
     it.next();
     QBENCHMARK {
