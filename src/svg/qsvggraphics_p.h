@@ -126,10 +126,6 @@ public:
     virtual void draw(QPainter *p, QSvgExtraStates &states);
     virtual Type type() const;
     virtual QRectF bounds(QPainter *p, QSvgExtraStates &states) const;
-
-    QPainterPath *qpath() {
-        return &m_path;
-    }
 private:
     QPainterPath m_path;
 };
