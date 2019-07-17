@@ -593,7 +593,7 @@ QMainWindow *QScriptEngineDebugger::standardWindow() const
     widget(CodeFinderWidget)->hide();
     win->setCentralWidget(central);
 
-    win->setWindowTitle(tr("Qt Script Debugger"));
+    win->setWindowTitle(tr("Katie Script Debugger"));
 
     QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
     QVariant geometry = settings.value(QLatin1String("Qt/scripttools/debugging/mainWindowGeometry"));
