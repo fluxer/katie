@@ -5812,8 +5812,7 @@ QString QString::repeated(int times) const
 
     const int resultSize = times * d->size;
 
-    QString result;
-    result.reserve(resultSize);
+    QString result(resultSize, Qt::Uninitialized);
     if (result.d->alloc != resultSize)
         return QString(); // not enough memory
 
