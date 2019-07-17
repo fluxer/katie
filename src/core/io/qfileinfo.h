@@ -122,10 +122,9 @@ public:
     bool caching() const;
     void setCaching(bool on);
 
-protected:
-    QSharedDataPointer<QFileInfoPrivate> d_ptr;
 private:
     explicit QFileInfo(QFileInfoPrivate *d);
+    QSharedDataPointer<QFileInfoPrivate> d_ptr;
 
     QFileInfoPrivate* d_func();
     const QFileInfoPrivate* d_func() const;
