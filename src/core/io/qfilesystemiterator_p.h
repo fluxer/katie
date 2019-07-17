@@ -60,9 +60,7 @@ QT_BEGIN_NAMESPACE
 class QFileSystemIterator
 {
 public:
-    QFileSystemIterator(const QFileSystemEntry &entry, QDir::Filters filters,
-            const QStringList &nameFilters, QDirIterator::IteratorFlags flags
-                = QDirIterator::FollowSymlinks | QDirIterator::Subdirectories);
+    QFileSystemIterator(const QFileSystemEntry &entry);
     ~QFileSystemIterator();
 
     bool advance(QFileSystemEntry &fileEntry, QFileSystemMetaData &metaData);

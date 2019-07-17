@@ -41,16 +41,12 @@
 
 QT_BEGIN_NAMESPACE
 
-QFileSystemIterator::QFileSystemIterator(const QFileSystemEntry &entry, QDir::Filters filters,
-                                         const QStringList &nameFilters, QDirIterator::IteratorFlags flags)
+QFileSystemIterator::QFileSystemIterator(const QFileSystemEntry &entry)
     : nativePath(entry.nativeFilePath())
     , dir(0)
     , dirEntry(0)
     , lastError(0)
 {
-    Q_UNUSED(filters)
-    Q_UNUSED(nameFilters)
-    Q_UNUSED(flags)
 
     if ((dir = QT_OPENDIR(nativePath.constData())) == 0) {
         lastError = errno;

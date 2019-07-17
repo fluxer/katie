@@ -55,8 +55,7 @@ QFSFileEngineIterator::~QFSFileEngineIterator()
 bool QFSFileEngineIterator::hasNext() const
 {
     if (!done && !nativeIterator) {
-        nativeIterator = new QFileSystemIterator(QFileSystemEntry(path()),
-                    filters(), nameFilters());
+        nativeIterator = new QFileSystemIterator(QFileSystemEntry(path()));
         advance();
     }
 
