@@ -1345,8 +1345,6 @@ bool QSocks5SocketEngine::bind(const QHostAddress &address, quint16 port)
     }
 
     int msecs = SOCKS5_BLOCKING_BIND_TIMEOUT;
-    QElapsedTimer stopWatch;
-    stopWatch.start();
     d->data->controlSocket->connectToHost(d->proxyInfo.hostName(), d->proxyInfo.port());
     if (!d->waitForConnected(msecs, 0) ||
         d->data->controlSocket->state() == QAbstractSocket::UnconnectedState) {
@@ -1371,7 +1369,7 @@ bool QSocks5SocketEngine::bind(const QHostAddress &address, quint16 port)
         dummy.setProxy(QNetworkProxy::NoProxy);
         if (!dummy.bind()
             || writeDatagram(0,0, d->data->controlSocket->localAddress(), dummy.localPort()) != 0
-            || !dummy.waitForReadyRead(qt_timeout_value(msecs, stopWatch.elapsed()))
+            || !dummy.waitForReadyRead(msecs)
             || dummy.readDatagram(0,0, &d->localAddress, &d->localPort) != 0) {
             QSOCKS5_DEBUG << "udp actual address and port lookup failed";
             setState(QAbstractSocket::UnconnectedState);
@@ -1448,10 +1446,8 @@ void QSocks5SocketEngine::close()
     if (d->data && d->data->controlSocket) {
         if (d->data->controlSocket->state() == QAbstractSocket::ConnectedState) {
             int msecs = 100;
-            QElapsedTimer stopWatch;
-            stopWatch.start();
             while (!d->data->controlSocket->bytesToWrite()) {
-               if (!d->data->controlSocket->waitForBytesWritten(qt_timeout_value(msecs, stopWatch.elapsed())))
+               if (!d->data->controlSocket->waitForBytesWritten(msecs))
                    break;
             }
         }
@@ -1703,11 +1699,8 @@ bool QSocks5SocketEnginePrivate::waitForConnected(int msecs, bool *timedOut)
         mode == BindMode ? BindSuccess :
         UdpAssociateSuccess;
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     while (socks5State != wantedState) {
-        if (!data->controlSocket->waitForReadyRead(qt_timeout_value(msecs, stopWatch.elapsed()))) {
+        if (!data->controlSocket->waitForReadyRead(msecs)) {
             if (data->controlSocket->state() == QAbstractSocket::UnconnectedState)
                 return true;
 
@@ -1728,9 +1721,6 @@ bool QSocks5SocketEngine::waitForRead(int msecs, bool *timedOut)
 
     d->readNotificationActivated = false;
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     // are we connected yet?
     if (!d->waitForConnected(msecs, timedOut))
         return false;
@@ -1741,7 +1731,7 @@ bool QSocks5SocketEngine::waitForRead(int msecs, bool *timedOut)
     if (d->mode == QSocks5SocketEnginePrivate::ConnectMode ||
         d->mode == QSocks5SocketEnginePrivate::BindMode) {
         while (!d->readNotificationActivated) {
-            if (!d->data->controlSocket->waitForReadyRead(qt_timeout_value(msecs, stopWatch.elapsed()))) {
+            if (!d->data->controlSocket->waitForReadyRead(msecs)) {
                 if (d->data->controlSocket->state() == QAbstractSocket::UnconnectedState)
                     return true;
 
@@ -1754,7 +1744,7 @@ bool QSocks5SocketEngine::waitForRead(int msecs, bool *timedOut)
 #ifndef QT_NO_UDPSOCKET
     } else {
         while (!d->readNotificationActivated) {
-            if (!d->udpData->udpSocket->waitForReadyRead(qt_timeout_value(msecs, stopWatch.elapsed()))) {
+            if (!d->udpData->udpSocket->waitForReadyRead(msecs)) {
                 setError(d->udpData->udpSocket->error(), d->udpData->udpSocket->errorString());
                 if (timedOut && d->udpData->udpSocket->error() == QAbstractSocket::SocketTimeoutError)
                     *timedOut = true;
@@ -1791,11 +1781,11 @@ bool QSocks5SocketEngine::waitForWrite(int msecs, bool *timedOut)
 
     // flush any bytes we may still have buffered in the time that we have left
     if (d->data->controlSocket->bytesToWrite())
-        d->data->controlSocket->waitForBytesWritten(qt_timeout_value(msecs, stopWatch.elapsed()));
+        d->data->controlSocket->waitForBytesWritten(msecs);
     while ((msecs == -1 || stopWatch.elapsed() < msecs)
            && d->data->controlSocket->state() == QAbstractSocket::ConnectedState
            && d->data->controlSocket->bytesToWrite() >= MaxWriteBufferSize)
-        d->data->controlSocket->waitForBytesWritten(qt_timeout_value(msecs, stopWatch.elapsed()));
+        d->data->controlSocket->waitForBytesWritten(msecs);
     return d->data->controlSocket->bytesToWrite() < MaxWriteBufferSize;
 }
 
