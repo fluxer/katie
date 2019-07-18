@@ -240,11 +240,7 @@ static bool write_xbm_image(const QImage &sourceImage, QIODevice *device, const 
             }
         }
     }
-#if defined(_MSC_VER) && _MSC_VER >= 1400
-    strcpy_s(p, sizeof(" };\n"), " };\n");
-#else
     strcpy(p, " };\n");
-#endif
     if ((int)qstrlen(buf) != device->write(buf, qstrlen(buf))) {
         delete [] buf;
         return false;
