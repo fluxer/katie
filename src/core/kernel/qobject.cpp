@@ -937,8 +937,7 @@ bool QObject::event(QEvent *e)
 
     case QEvent::ThreadChange: {
         Q_D(QObject);
-        QThreadData *threadData = d->threadData;
-        QAbstractEventDispatcher *eventDispatcher = threadData->eventDispatcher;
+        QAbstractEventDispatcher *eventDispatcher = d->threadData->eventDispatcher;
         if (eventDispatcher) {
             QList<QPair<int, int> > timers = eventDispatcher->registeredTimers(this);
             if (!timers.isEmpty()) {
