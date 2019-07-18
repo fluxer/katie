@@ -317,7 +317,7 @@ void QPlainTestLogger::startLogging()
                              ", Qt %s\n", QTestResult::currentTestObjectName(), qVersion());
         }
     }
-    QTest::outputMessage(buf);
+    QAbstractTestLogger::outputString(buf);
 }
 
 void QPlainTestLogger::stopLogging()
@@ -334,7 +334,7 @@ void QPlainTestLogger::stopLogging()
                          QTestResult::passCount(), QTestResult::failCount(),
                          QTestResult::skipCount(), QTestResult::currentTestObjectName());
     }
-    QTest::outputMessage(buf);
+    QAbstractTestLogger::outputString(buf);
 
     QAbstractTestLogger::stopLogging();
 }

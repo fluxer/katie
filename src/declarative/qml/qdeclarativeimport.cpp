@@ -872,7 +872,6 @@ QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const 
     //  libfoo.so
 
     return resolvePlugin(qmldirPath, qmldirPluginPath, baseName, validSuffixList, QLatin1String("lib"));
-#endif
 }
 
 /*!
