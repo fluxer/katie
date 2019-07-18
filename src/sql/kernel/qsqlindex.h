@@ -63,7 +63,6 @@ public:
 
 
 private:
-    QString createField(int i, const QString& prefix, bool verbose) const;
     QString cursor;
     QString nm;
     QList<bool> sorts;
