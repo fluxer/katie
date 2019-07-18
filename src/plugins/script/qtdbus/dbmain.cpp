@@ -70,6 +70,7 @@ static QScriptValue do_dbus_call(QScriptContext *context, QScriptEngine *engine)
                                                       functionName);
 
     QList<QVariant> args;
+    args.reserve(context->argumentCount() - firstArgument);
     for (int i = firstArgument; i < context->argumentCount(); ++i) {
         args.append(context->argument(i).toVariant());
     }
