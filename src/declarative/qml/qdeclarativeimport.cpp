@@ -846,12 +846,9 @@ QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const 
 
   \table
   \header \i Platform \i Valid suffixes
-  \row \i Windows     \i \c .dll
   \row \i Unix/Linux  \i \c .so
   \row \i AIX  \i \c .a
   \row \i HP-UX       \i \c .sl, \c .so (HP-UXi)
-  \row \i Mac OS X    \i \c .dylib, \c .bundle, \c .so
-  \row \i Symbian     \i \c .dll
   \endtable
 
   Version number on unix are ignored.
@@ -859,54 +856,27 @@ QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const 
 QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const QString &qmldirPluginPath, 
                                                   const QString &baseName)
 {
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE)
-    return resolvePlugin(qmldirPath, qmldirPluginPath, baseName,
-                         QStringList()
-# ifdef QT_DEBUG
-                         << QLatin1String("d.dll") // try a qmake-style debug build first
-# endif
-                         << QLatin1String(".dll"));
-#else
-
-# if defined(Q_OS_DARWIN)
-
-    return resolvePlugin(qmldirPath, qmldirPluginPath, baseName,
-                         QStringList()
-# ifdef QT_DEBUG
-                         << QLatin1String("_debug.dylib") // try a qmake-style debug build first
-                         << QLatin1String(".dylib")
-# else
-                         << QLatin1String(".dylib")
-                         << QLatin1String("_debug.dylib") // try a qmake-style debug build after
-# endif
-                         << QLatin1String(".so")
-                         << QLatin1String(".bundle"),
-                         QLatin1String("lib"));
-# else  // Generic Unix
     QStringList validSuffixList;
-
-#  if defined(Q_OS_HPUX)
+#if defined(Q_OS_HPUX)
 /*
     See "HP-UX Linker and Libraries User's Guide", section "Link-time Differences between PA-RISC and IPF":
     "In PA-RISC (PA-32 and PA-64) shared libraries are suffixed with .sl. In IPF (32-bit and 64-bit),
     the shared libraries are suffixed with .so. For compatibility, the IPF linker also supports the .sl suffix."
  */
     validSuffixList << QLatin1String(".sl");
-#   if defined __ia64
+# if defined __ia64
     validSuffixList << QLatin1String(".so");
-#   endif
-#  elif defined(Q_OS_AIX)
+# endif
+#elif defined(Q_OS_AIX)
     validSuffixList << QLatin1String(".a") << QLatin1String(".so");
-#  elif defined(Q_OS_UNIX)
+#elif defined(Q_OS_UNIX)
     validSuffixList << QLatin1String(".so");
-#  endif
+#endif
 
     // Examples of valid library names:
     //  libfoo.so
 
     return resolvePlugin(qmldirPath, qmldirPluginPath, baseName, validSuffixList, QLatin1String("lib"));
-# endif
-
 #endif
 }
 

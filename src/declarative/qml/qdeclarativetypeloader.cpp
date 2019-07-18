@@ -70,9 +70,6 @@ static QSet<QString> *qmlFilesInDirectory(const QString &path)
         if (fileName == QLatin1String("qmldir")
                 || fileName.endsWith(QLatin1String(".qml"))
                 || fileName.endsWith(QLatin1String(".js"))) {
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE) || defined(Q_OS_DARWIN)
-            fileName = fileName.toLower();
-#endif
             files->insert(fileName);
         }
     }
@@ -784,13 +781,9 @@ QString QDeclarativeTypeLoader::absoluteFilePath(const QString &path)
         QFileInfo fileInfo(path);
         return fileInfo.isFile() ? fileInfo.absoluteFilePath() : QString();
     }
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE) || defined(Q_OS_DARWIN)
-    QString lowPath(path.toLower());
-#else
-    QString lowPath(path);
-#endif
-    int lastSlash = lowPath.lastIndexOf(QLatin1Char('/'));
-    QString dirPath = lowPath.left(lastSlash);
+
+    int lastSlash = path.lastIndexOf(QLatin1Char('/'));
+    QString dirPath = path.left(lastSlash);
 
     StringSet *fileSet = 0;
     QHash<QString,StringSet*>::const_iterator it = m_importDirCache.find(dirPath);
@@ -804,7 +797,7 @@ QString QDeclarativeTypeLoader::absoluteFilePath(const QString &path)
     if (!fileSet)
         return QString();
 
-    QString absoluteFilePath = fileSet->contains(QString(lowPath.constData()+lastSlash+1, lowPath.length()-lastSlash-1)) ? path : QString();
+    QString absoluteFilePath = fileSet->contains(QString(path.constData()+lastSlash+1, path.length()-lastSlash-1)) ? path : QString();
     if (absoluteFilePath.length() > 2 && absoluteFilePath.at(0) != QLatin1Char('/') && absoluteFilePath.at(1) != QLatin1Char(':'))
         absoluteFilePath = QFileInfo(absoluteFilePath).absoluteFilePath();
 

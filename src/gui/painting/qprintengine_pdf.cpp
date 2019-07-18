@@ -51,6 +51,8 @@
 #include "qimagewriter.h"
 #include "qbuffer.h"
 #include "qdatetime.h"
+#include "qprintengine_pdf_p.h"
+#include "qdrawhelper_p.h"
 
 #ifndef QT_NO_PRINTER
 #include <limits.h>
@@ -58,13 +60,6 @@
 #ifndef QT_NO_COMPRESS
 #include <zlib.h>
 #endif
-
-#if defined(Q_OS_WINCE)
-#include "qwinfunctions_wince.h"
-#endif
-
-#include "qprintengine_pdf_p.h"
-#include "qdrawhelper_p.h"
 
 QT_BEGIN_NAMESPACE
 

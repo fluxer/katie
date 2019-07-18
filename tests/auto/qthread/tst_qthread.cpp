@@ -47,12 +47,6 @@
 #ifdef Q_OS_UNIX
 #include <pthread.h>
 #endif
-#if defined(Q_OS_WINCE)
-#include <windows.h>
-#elif defined(Q_OS_WIN)
-#include <process.h>
-#include <windows.h>
-#endif
 
 //TESTED_CLASS=
 //TESTED_FILES=
@@ -637,12 +631,7 @@ void tst_QThread::msleep()
     thread.interval = 120;
     thread.start();
     QVERIFY(thread.wait(five_minutes));
-#if defined (Q_OS_WIN)
-    // Since the resolution of QTime is so coarse...
-    QVERIFY(thread.elapsed >= 100);
-#else
     QVERIFY(thread.elapsed >= 120);
-#endif
 }
 
 void tst_QThread::usleep()
@@ -652,23 +641,14 @@ void tst_QThread::usleep()
     thread.interval = 120000;
     thread.start();
     QVERIFY(thread.wait(five_minutes));
-#if defined (Q_OS_WIN)
-    // Since the resolution of QTime is so coarse...
-    QVERIFY(thread.elapsed >= 100);
-#else
     QVERIFY(thread.elapsed >= 120);
-#endif
 }
 
 typedef void (*FunctionPointer)(void *);
 void noop(void*) { }
 
-#ifdef Q_OS_SYMBIAN
-typedef RThread ThreadHandle;
-#elif defined Q_OS_UNIX
+#if defined Q_OS_UNIX
     typedef pthread_t ThreadHandle;
-#elif defined Q_OS_WIN
-    typedef HANDLE ThreadHandle;
 #endif
 
 #ifdef Q_OS_WIN
@@ -695,8 +675,6 @@ public:
     QWaitCondition stopCondition;
 protected:
     static void *runUnix(void *data);
-    static unsigned WIN_FIX_STDCALL runWin(void *data);
-    static int runSymbian(void *data);
 
     FunctionPointer functionPointer;
     void *data;
@@ -706,17 +684,9 @@ void NativeThreadWrapper::start(FunctionPointer functionPointer, void *data)
 {
     this->functionPointer = functionPointer;
     this->data = data;
-#ifdef Q_OS_SYMBIAN
-    qt_symbian_throwIfError(nativeThreadHandle.Create(KNullDesC(), NativeThreadWrapper::runSymbian, 1024, &User::Allocator(), this));
-    nativeThreadHandle.Resume();
-#elif defined Q_OS_UNIX
+#if defined Q_OS_UNIX
     const int state = pthread_create(&nativeThreadHandle, 0, NativeThreadWrapper::runUnix, this);
     Q_UNUSED(state);
-#elif defined(Q_OS_WINCE)
-        nativeThreadHandle = CreateThread(NULL, 0 , (LPTHREAD_START_ROUTINE)NativeThreadWrapper::runWin , this, 0, NULL);
-#elif defined Q_OS_WIN
-    unsigned thrdid = 0;
-    nativeThreadHandle = (Qt::HANDLE) _beginthreadex(NULL, 0, NativeThreadWrapper::runWin, this, 0, &thrdid);
 #endif
 }
 
@@ -729,16 +699,8 @@ void NativeThreadWrapper::startAndWait(FunctionPointer functionPointer, void *da
 
 void NativeThreadWrapper::join()
 {
-#ifdef Q_OS_SYMBIAN
-    TRequestStatus stat;
-    nativeThreadHandle.Logon(stat);
-    User::WaitForRequest(stat);
-    nativeThreadHandle.Close();
-#elif defined Q_OS_UNIX
+#if defined Q_OS_UNIX
     pthread_join(nativeThreadHandle, 0);
-#elif defined Q_OS_WIN
-    WaitForSingleObject(nativeThreadHandle, INFINITE);
-    CloseHandle(nativeThreadHandle);
 #endif
 }
 
@@ -765,18 +727,6 @@ void *NativeThreadWrapper::runUnix(void *that)
             nativeThreadWrapper->stopCondition.wait(lock.mutex());
     }
 
-    return 0;
-}
-
-unsigned WIN_FIX_STDCALL NativeThreadWrapper::runWin(void *data)
-{
-    runUnix(data);
-    return 0;
-}
-
-int NativeThreadWrapper::runSymbian(void *data)
-{
-    runUnix(data);
     return 0;
 }
 
@@ -929,17 +879,7 @@ void tst_QThread::adoptedThreadExecFinished()
 
 void tst_QThread::adoptMultipleThreads()
 {
-#if defined(Q_OS_WIN)
-    // Windows CE is not capable of handling that many threads. On the emulator it is dead with 26 threads already.
-#  if defined(Q_OS_WINCE)
-    const int numThreads = 20;
-#  else
-    // need to test lots of threads, so that we exceed MAXIMUM_WAIT_OBJECTS in qt_adopted_thread_watcher()
-    const int numThreads = 200;
-#  endif
-#else
     const int numThreads = 5;
-#endif
     QVector<NativeThreadWrapper*> nativeThreads;
 
     SignalRecorder recorder;
@@ -966,20 +906,7 @@ void tst_QThread::adoptMultipleThreads()
 
 void tst_QThread::adoptMultipleThreadsOverlap()
 {
-#if defined(Q_OS_WIN)
-    // Windows CE is not capable of handling that many threads. On the emulator it is dead with 26 threads already.
-#  if defined(Q_OS_WINCE)
-    const int numThreads = 20;
-#  else
-    // need to test lots of threads, so that we exceed MAXIMUM_WAIT_OBJECTS in qt_adopted_thread_watcher()
-    const int numThreads = 200;
-#  endif
-#elif defined(Q_OS_SYMBIAN)
-    // stress the monitoring thread's add function
-    const int numThreads = 100;
-#else
     const int numThreads = 5;
-#endif
     QVector<NativeThreadWrapper*> nativeThreads;
 
     SignalRecorder recorder;
@@ -1036,9 +963,6 @@ void tst_QThread::adoptThreadExitWithActiveTimer()
 
 void tst_QThread::stressTest()
 {
-#if defined(Q_OS_WINCE)
-    QSKIP("Disconnects on WinCE, skipping...", SkipAll);
-#endif
     QTime t;
     t.start();
     while (t.elapsed() < one_minute) {

@@ -45,63 +45,19 @@
 #include "QtTest/qplaintestlogger_p.h"
 #include "QtTest/qbenchmark_p.h"
 #include "QtTest/qbenchmarkmetric_p.h"
+#include <QtCore/QByteArray>
+#include <QtCore/qmath.h>
 
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef Q_OS_WIN
-#include "windows.h"
-#endif
-
-
-#ifdef Q_OS_WINCE
-#include <QtCore/QString>
-#endif
-
-#include <QtCore/QByteArray>
-#include <QtCore/qmath.h>
-
 QT_BEGIN_NAMESPACE
 
 namespace QTest {
 
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-
-    static CRITICAL_SECTION outputCriticalSection;
-    static HANDLE hConsole = INVALID_HANDLE_VALUE;
-    static WORD consoleAttributes = 0;
-
-    static const char *qWinColoredMsg(int prefix, int color, const char *msg)
-    {
-        if (!hConsole)
-            return msg;
-
-        WORD attr = consoleAttributes & ~(FOREGROUND_GREEN | FOREGROUND_BLUE
-                  | FOREGROUND_RED | FOREGROUND_INTENSITY);
-        if (prefix)
-            attr |= FOREGROUND_INTENSITY;
-        if (color == 32)
-            attr |= FOREGROUND_GREEN;
-        if (color == 36)
-            attr |= FOREGROUND_BLUE | FOREGROUND_GREEN;
-        if (color == 31)
-            attr |= FOREGROUND_RED | FOREGROUND_INTENSITY;
-        if (color == 37)
-            attr |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
-        if (color == 33)
-            attr |= FOREGROUND_RED | FOREGROUND_GREEN;
-        SetConsoleTextAttribute(hConsole, attr);
-        printf(msg);
-        SetConsoleTextAttribute(hConsole, consoleAttributes);
-        return "";
-    }
-
-# define COLORED_MSG(prefix, color, msg) colored ? qWinColoredMsg(prefix, color, msg) : msg
-#else
 # define COLORED_MSG(prefix, color, msg) colored && QAbstractTestLogger::isTtyOutput() ? "\033["#prefix";"#color"m" msg "\033[0m" : msg
-#endif
 
     static const char *incidentType2String(QAbstractTestLogger::IncidentTypes type)
     {
@@ -127,11 +83,7 @@ namespace QTest {
 
     static const char *messageType2String(QAbstractTestLogger::MessageTypes type)
     {
-#ifdef Q_OS_WIN
-        static bool colored = (!qgetenv("QTEST_COLORED").isEmpty());
-#else
         static bool colored = ::getenv("QTEST_COLORED");
-#endif
         switch (type) {
         case QAbstractTestLogger::Skip:
             return COLORED_MSG(0, 37, "SKIP   "); //white
@@ -149,26 +101,6 @@ namespace QTest {
             return "INFO   "; // no coloring
         }
         return "??????";
-    }
-
-    static void outputMessage(const char *str)
-    {
-#if defined(Q_OS_WINCE)
-        QString strUtf16 = QString::fromLatin1(str);
-        const int maxOutputLength = 255;
-        do {
-            QString tmp = strUtf16.left(maxOutputLength);
-            OutputDebugString((wchar_t*)tmp.utf16());
-            strUtf16.remove(0, maxOutputLength);
-        } while (!strUtf16.isEmpty());
-        if (QTestLog::outputFileName())
-#elif defined(Q_OS_WIN)
-        EnterCriticalSection(&outputCriticalSection);
-        // OutputDebugString is not threadsafe
-        OutputDebugStringA(str);
-        LeaveCriticalSection(&outputCriticalSection);
-#endif
-        QAbstractTestLogger::outputString(str);
     }
 
     static void printMessage(const char *type, const char *msg, const char *file = 0, int line = 0)
@@ -202,7 +134,7 @@ namespace QTest {
         // In colored mode, printf above stripped our nonprintable control characters.
         // Put them back.
         memcpy(buf.data(), type, strlen(type));
-        outputMessage(buf.data());
+        QAbstractTestLogger::outputString(buf.data());
     }
 
     template <typename T>
@@ -355,32 +287,17 @@ namespace QTest {
         }
 
         memcpy(buf, bmtag, strlen(bmtag));
-        outputMessage(buf);
+        QAbstractTestLogger::outputString(buf);
     }
 }
 
 QPlainTestLogger::QPlainTestLogger()
 : randomSeed(9), hasRandomSeed(false)
 {
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    InitializeCriticalSection(&QTest::outputCriticalSection);
-    QTest::hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    if (QTest::hConsole != INVALID_HANDLE_VALUE) {
-        CONSOLE_SCREEN_BUFFER_INFO info;
-        if (GetConsoleScreenBufferInfo(QTest::hConsole, &info)) {
-            QTest::consoleAttributes = info.wAttributes;
-        } else {
-            QTest::hConsole = INVALID_HANDLE_VALUE;
-        }
-    }
-#endif
 }
 
 QPlainTestLogger::~QPlainTestLogger()
 {
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-	DeleteCriticalSection(&QTest::outputCriticalSection);
-#endif
 }
 
 void QPlainTestLogger::startLogging()

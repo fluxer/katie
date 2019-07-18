@@ -67,62 +67,7 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_NETWORKINTERFACE
 static QNetworkConfiguration::BearerType qGetInterfaceType(const QString &interface)
 {
-#ifdef Q_OS_WIN32
-    unsigned long oid;
-    DWORD bytesWritten;
-
-    NDIS_MEDIUM medium;
-    NDIS_PHYSICAL_MEDIUM physicalMedium;
-
-    HANDLE handle = CreateFile((TCHAR *)QString::fromLatin1("\\\\.\\%1").arg(interface).utf16(), 0,
-                               FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
-    if (handle == INVALID_HANDLE_VALUE)
-        return QNetworkConfiguration::BearerUnknown;
-
-    oid = OID_GEN_MEDIA_SUPPORTED;
-    bytesWritten = 0;
-    bool result = DeviceIoControl(handle, IOCTL_NDIS_QUERY_GLOBAL_STATS, &oid, sizeof(oid),
-                                  &medium, sizeof(medium), &bytesWritten, 0);
-    if (!result) {
-        CloseHandle(handle);
-        return QNetworkConfiguration::BearerUnknown;
-    }
-
-    oid = OID_GEN_PHYSICAL_MEDIUM;
-    bytesWritten = 0;
-    result = DeviceIoControl(handle, IOCTL_NDIS_QUERY_GLOBAL_STATS, &oid, sizeof(oid),
-                             &physicalMedium, sizeof(physicalMedium), &bytesWritten, 0);
-    if (!result) {
-        CloseHandle(handle);
-
-        if (medium == NdisMedium802_3)
-            return QNetworkConfiguration::BearerEthernet;
-        else
-            return QNetworkConfiguration::BearerUnknown;
-    }
-
-    CloseHandle(handle);
-
-    if (medium == NdisMedium802_3) {
-        switch (physicalMedium) {
-        case NdisPhysicalMediumWirelessLan:
-            return QNetworkConfiguration::BearerWLAN;
-        case NdisPhysicalMediumBluetooth:
-            return QNetworkConfiguration::BearerBluetooth;
-        case NdisPhysicalMediumWiMax:
-            return QNetworkConfiguration::BearerWiMAX;
-        default:
-#ifdef BEARER_MANAGEMENT_DEBUG
-            qDebug() << "Physical Medium" << physicalMedium;
-#endif
-            return QNetworkConfiguration::BearerEthernet;
-        }
-    }
-
-#ifdef BEARER_MANAGEMENT_DEBUG
-    qDebug() << medium << physicalMedium;
-#endif
-#elif defined(Q_OS_LINUX)
+#if defined(Q_OS_LINUX)
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
 
     ifreq request;
