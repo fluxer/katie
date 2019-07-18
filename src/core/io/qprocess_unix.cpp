@@ -888,9 +888,6 @@ bool QProcessPrivate::waitForReadyRead(int msecs)
     qDebug("QProcessPrivate::waitForReadyRead(%d)", msecs);
 #endif
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     forever {
         fd_set fdread;
         fd_set fdwrite;
@@ -912,8 +909,7 @@ bool QProcessPrivate::waitForReadyRead(int msecs)
         if (!writeBuffer.isEmpty() && stdinChannel.pipe[1] != -1)
             add_fd(nfds, stdinChannel.pipe[1], &fdwrite);
 
-        int timeout = qt_timeout_value(msecs, stopWatch.elapsed());
-        int ret = select_msecs(nfds + 1, &fdread, &fdwrite, timeout);
+        int ret = select_msecs(nfds + 1, &fdread, &fdwrite, msecs);
         if (ret < 0) {
             break;
         }
@@ -960,9 +956,6 @@ bool QProcessPrivate::waitForBytesWritten(int msecs)
     qDebug("QProcessPrivate::waitForBytesWritten(%d)", msecs);
 #endif
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     while (!writeBuffer.isEmpty()) {
         fd_set fdread;
         fd_set fdwrite;
@@ -985,8 +978,7 @@ bool QProcessPrivate::waitForBytesWritten(int msecs)
         if (!writeBuffer.isEmpty() && stdinChannel.pipe[1] != -1)
             add_fd(nfds, stdinChannel.pipe[1], &fdwrite);
 
-        int timeout = qt_timeout_value(msecs, stopWatch.elapsed());
-        int ret = select_msecs(nfds + 1, &fdread, &fdwrite, timeout);
+        int ret = select_msecs(nfds + 1, &fdread, &fdwrite, msecs);
         if (ret < 0) {
             break;
         }
@@ -1027,9 +1019,6 @@ bool QProcessPrivate::waitForFinished(int msecs)
     qDebug("QProcessPrivate::waitForFinished(%d)", msecs);
 #endif
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     forever {
         fd_set fdread;
         fd_set fdwrite;
@@ -1052,8 +1041,7 @@ bool QProcessPrivate::waitForFinished(int msecs)
         if (!writeBuffer.isEmpty() && stdinChannel.pipe[1] != -1)
             add_fd(nfds, stdinChannel.pipe[1], &fdwrite);
 
-        int timeout = qt_timeout_value(msecs, stopWatch.elapsed());
-        int ret = select_msecs(nfds + 1, &fdread, &fdwrite, timeout);
+        int ret = select_msecs(nfds + 1, &fdread, &fdwrite, msecs);
         if (ret < 0) {
             break;
         }
