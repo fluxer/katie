@@ -362,12 +362,11 @@ void QThread::start(Priority priority)
     d->terminated = false;
     d->returnCode = 0;
     d->exited = false;
+    d->priority = priority;
 
     pthread_attr_t attr;
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-
-    d->priority = priority;
 
 #if defined(QT_HAS_THREAD_PRIORITY_SCHEDULING)
     switch (priority) {
