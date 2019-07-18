@@ -51,7 +51,7 @@
 #include "qvarlengtharray.h"
 
 #include <sys/time.h>
-#if (!defined(Q_OS_HPUX) || defined(__ia64)) && !defined(Q_OS_NACL)
+#if (!defined(Q_OS_HPUX) || defined(QT_ARCH_IA64)) && !defined(Q_OS_NACL)
 #  include <sys/select.h>
 #endif
 

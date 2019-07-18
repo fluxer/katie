@@ -864,7 +864,7 @@ QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const 
     the shared libraries are suffixed with .so. For compatibility, the IPF linker also supports the .sl suffix."
  */
     validSuffixList << QLatin1String(".sl");
-# if defined __ia64
+# if defined QT_ARCH_IA64
     validSuffixList << QLatin1String(".so");
 # endif
 #elif defined(Q_OS_AIX)
