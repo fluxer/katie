@@ -57,7 +57,6 @@ public:
     QSqlRecordPrivate(const QSqlRecordPrivate &other);
 
     inline bool contains(int index) const { return index >= 0 && index < fields.count(); }
-    QString createField(int index, const QString &prefix) const;
 
     QVector<QSqlField> fields;
     QAtomicInt ref;
@@ -71,18 +70,6 @@ QSqlRecordPrivate::QSqlRecordPrivate()
 QSqlRecordPrivate::QSqlRecordPrivate(const QSqlRecordPrivate &other): fields(other.fields)
 {
     ref = 1;
-}
-
-/*! \internal
-    Just for compat
-*/
-QString QSqlRecordPrivate::createField(int index, const QString &prefix) const
-{
-    QString f;
-    if (!prefix.isEmpty())
-        f = prefix + QLatin1Char('.');
-    f += fields.at(index).name();
-    return f;
 }
 
 /*!
