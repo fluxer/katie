@@ -131,7 +131,7 @@ public:
 
     QVariant asVariant() const;
 
-protected:
+private:
     QDBusArgument(QDBusArgumentPrivate *d);
     friend class QDBusArgumentPrivate;
     mutable QDBusArgumentPrivate *d;
