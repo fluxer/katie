@@ -281,6 +281,7 @@ QT_USE_NAMESPACE
 #  define Q_ALIGNOF(type)   __alignof__(type)
 #  define Q_TYPEOF(expr)    __typeof__(expr)
 #  define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
+#  define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
 #  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
 #  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
 #  if !defined(QT_MOC_CPP)
@@ -301,6 +302,7 @@ QT_USE_NAMESPACE
 #  define Q_ALIGNOF(type)   __alignof__(type)
 #  define Q_TYPEOF(expr)    __typeof__(expr)
 #  define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
+#  define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
 #  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
 #  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
 #  if !defined(QT_MOC_CPP)
@@ -432,14 +434,6 @@ QT_USE_NAMESPACE
        inline ~ AFUNC ## __dest_class__() { AFUNC(); } \
     } AFUNC ## __dest_instance__;
 # define Q_DESTRUCTOR_FUNCTION(AFUNC) Q_DESTRUCTOR_FUNCTION0(AFUNC)
-#endif
-
-#ifndef Q_REQUIRED_RESULT
-#  if defined(Q_CC_GNU) || defined(Q_CC_CLANG)
-#    define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
-#  else
-#    define Q_REQUIRED_RESULT
-#  endif
 #endif
 
 /*
