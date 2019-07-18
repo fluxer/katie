@@ -144,8 +144,6 @@ public:
     uint stackSize;
     QThread::Priority priority;
 
-    static QThread *threadForId(int id);
-
     std::thread::native_handle_type thread_id;
     QWaitCondition thread_done;
 
@@ -168,7 +166,6 @@ public:
     QThreadData *data;
 
     static void setCurrentThread(QThread*) {}
-    static QThread *threadForId(int) { return QThread::currentThread(); }
     static void createEventDispatcher(QThreadData *data);
 
     Q_DECLARE_PUBLIC(QThread)
