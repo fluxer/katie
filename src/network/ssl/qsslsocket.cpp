@@ -1430,9 +1430,6 @@ bool QSslSocket::waitForEncrypted(int msecs)
     if (d->mode == UnencryptedMode && !d->autoStartHandshake)
         return false;
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     if (d->plainSocket->state() != QAbstractSocket::ConnectedState) {
         // Wait until we've entered connected state.
         if (!d->plainSocket->waitForConnected(msecs))
@@ -1445,7 +1442,7 @@ bool QSslSocket::waitForEncrypted(int msecs)
             startClientEncryption();
         // Loop, waiting until the connection has been encrypted or an error
         // occurs.
-        if (!d->plainSocket->waitForReadyRead(qt_timeout_value(msecs, stopWatch.elapsed())))
+        if (!d->plainSocket->waitForReadyRead(msecs))
             return false;
     }
     return d->connectionEncrypted;
@@ -1470,9 +1467,6 @@ bool QSslSocket::waitForReadyRead(int msecs)
     bool *previousReadyReadEmittedPointer = d->readyReadEmittedPointer;
     d->readyReadEmittedPointer = &readyReadEmitted;
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     if (!d->connectionEncrypted) {
         // Wait until we've entered encrypted mode, or until a failure occurs.
         if (!waitForEncrypted(msecs)) {
@@ -1489,7 +1483,7 @@ bool QSslSocket::waitForReadyRead(int msecs)
     // test readyReadEmitted first because either operation above
     // (waitForEncrypted or transmit) may have set it
     while (!readyReadEmitted &&
-           d->plainSocket->waitForReadyRead(qt_timeout_value(msecs, stopWatch.elapsed()))) {
+           d->plainSocket->waitForReadyRead(msecs)) {
     }
 
     d->readyReadEmittedPointer = previousReadyReadEmittedPointer;
@@ -1507,9 +1501,6 @@ bool QSslSocket::waitForBytesWritten(int msecs)
     if (d->mode == UnencryptedMode)
         return d->plainSocket->waitForBytesWritten(msecs);
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     if (!d->connectionEncrypted) {
         // Wait until we've entered encrypted mode, or until a failure occurs.
         if (!waitForEncrypted(msecs))
@@ -1520,7 +1511,7 @@ bool QSslSocket::waitForBytesWritten(int msecs)
         d->transmit();
     }
 
-    return d->plainSocket->waitForBytesWritten(qt_timeout_value(msecs, stopWatch.elapsed()));
+    return d->plainSocket->waitForBytesWritten(msecs);
 }
 
 /*!
@@ -1545,15 +1536,12 @@ bool QSslSocket::waitForDisconnected(int msecs)
     if (d->mode == UnencryptedMode)
         return d->plainSocket->waitForDisconnected(msecs);
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     if (!d->connectionEncrypted) {
         // Wait until we've entered encrypted mode, or until a failure occurs.
         if (!waitForEncrypted(msecs))
             return false;
     }
-    bool retVal = d->plainSocket->waitForDisconnected(qt_timeout_value(msecs, stopWatch.elapsed()));
+    bool retVal = d->plainSocket->waitForDisconnected(msecs);
     if (!retVal) {
         setSocketState(d->plainSocket->state());
         setSocketError(d->plainSocket->error());
