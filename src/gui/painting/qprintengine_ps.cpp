@@ -707,11 +707,7 @@ QPSPrintEngine::~QPSPrintEngine()
 {
     Q_D(QPSPrintEngine);
     if (d->fd >= 0)
-#if defined(Q_OS_WIN) && defined(_MSC_VER) && _MSC_VER >= 1400
-        ::_close(d->fd);
-#else
         ::close(d->fd);
-#endif
 }
 
 bool QPSPrintEngine::begin(QPaintDevice *pdev)

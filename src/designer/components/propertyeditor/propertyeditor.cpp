@@ -65,9 +65,6 @@
 #include "qdesigner_propertycommand_p.h"
 #include <metadatabase_p.h>
 #include <iconloader_p.h>
-#ifdef Q_OS_WIN
-#  include <widgetfactory_p.h>
-#endif
 #include <QtGui/QAction>
 #include <QtGui/QLineEdit>
 #include <QtGui/QMenu>

@@ -37,10 +37,6 @@
 #include <QtSql/qsqldriver.h>
 #include <QtSql/qsqlresult.h>
 
-#if defined (Q_OS_WIN32)
-#include <QtCore/qt_windows.h>
-#endif
-
 #include <mysql.h>
 
 #ifdef QT_PLUGIN

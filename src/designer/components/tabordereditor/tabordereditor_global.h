@@ -36,14 +36,6 @@
 
 #include <QtCore/qglobal.h>
 
-#ifdef Q_OS_WIN
-#ifdef QT_TABORDEREDITOR_LIBRARY
-# define QT_TABORDEREDITOR_EXPORT
-#else
-# define QT_TABORDEREDITOR_EXPORT
-#endif
-#else
 #define QT_TABORDEREDITOR_EXPORT
-#endif
 
 #endif // TABORDEREDITOR_GLOBAL_H

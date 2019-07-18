@@ -651,12 +651,6 @@ void noop(void*) { }
     typedef pthread_t ThreadHandle;
 #endif
 
-#ifdef Q_OS_WIN
-#define WIN_FIX_STDCALL __stdcall
-#else
-#define WIN_FIX_STDCALL
-#endif
-
 class NativeThreadWrapper
 {
 public:

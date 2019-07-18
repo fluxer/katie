@@ -88,11 +88,7 @@ void tst_QDBusPerformance::initTestCase()
     connect(&watcher, SIGNAL(serviceRegistered(QString)),
             &QTestEventLoop::instance(), SLOT(exitLoop()));
 
-#ifdef Q_OS_WIN
-    proc.start(QLatin1String("performance_server"));
-#else
     proc.start(QLatin1String("./performance_server"));
-#endif
     QVERIFY(proc.waitForStarted());
 
     QTestEventLoop::instance().enterLoop(5);

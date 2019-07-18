@@ -156,23 +156,6 @@ private slots:
 
     void sizeSpeedWithoutFilterLowLevel() {
         QDir testdir(QDir::tempPath() + QLatin1String("/test_speed"));
-#ifdef Q_OS_WIN
-        const wchar_t *dirpath = (wchar_t*)testdir.absolutePath().utf16();
-        wchar_t appendedPath[MAX_PATH];
-        wcscpy(appendedPath, dirpath);
-        wcscat(appendedPath, L"\\*");
-
-        WIN32_FIND_DATA fd;
-        HANDLE hSearch = FindFirstFileW(appendedPath, &fd);
-        QVERIFY(hSearch != INVALID_HANDLE_VALUE);
-
-        QBENCHMARK {
-            do {
-
-            } while (FindNextFile(hSearch, &fd));
-        }
-        FindClose(hSearch);
-#else
         DIR *dir = opendir(qPrintable(testdir.absolutePath()));
         QVERIFY(dir);
 
@@ -189,7 +172,6 @@ private slots:
             }
         }
         closedir(dir);
-#endif
     }
 };
 

@@ -59,13 +59,7 @@ QPanGestureRecognizer::QPanGestureRecognizer()
 QGesture *QPanGestureRecognizer::create(QObject *target)
 {
     if (target && target->isWidgetType()) {
-#if defined(Q_OS_WIN) && !defined(QT_NO_NATIVE_GESTURES)
-        // for scroll areas on Windows we want to use native gestures instead
-        if (!qobject_cast<QAbstractScrollArea *>(target->parent()))
-            static_cast<QWidget *>(target)->setAttribute(Qt::WA_AcceptTouchEvents);
-#else
         static_cast<QWidget *>(target)->setAttribute(Qt::WA_AcceptTouchEvents);
-#endif
     }
     return new QPanGesture;
 }

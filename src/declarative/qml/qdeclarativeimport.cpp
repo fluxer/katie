@@ -738,12 +738,7 @@ QDeclarativeImportDatabase::QDeclarativeImportDatabase(QDeclarativeEngine *e)
     // env import paths
     QByteArray envImportPath = qgetenv("QML_IMPORT_PATH");
     if (!envImportPath.isEmpty()) {
-#if defined(Q_OS_WIN)
-        QLatin1Char pathSep(';');
-#else
-        QLatin1Char pathSep(':');
-#endif
-        QStringList paths = QString::fromLatin1(envImportPath).split(pathSep, QString::SkipEmptyParts);
+        QStringList paths = QString::fromLatin1(envImportPath).split(QLatin1Char(':'), QString::SkipEmptyParts);
         for (int ii = paths.count() - 1; ii >= 0; --ii)
             addImportPath(paths.at(ii));
     }

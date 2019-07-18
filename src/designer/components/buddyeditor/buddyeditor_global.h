@@ -36,14 +36,6 @@
 
 #include <QtCore/qglobal.h>
 
-#ifdef Q_OS_WIN
-#ifdef QT_BUDDYEDITOR_LIBRARY
-# define QT_BUDDYEDITOR_EXPORT
-#else
-# define QT_BUDDYEDITOR_EXPORT
-#endif
-#else
 #define QT_BUDDYEDITOR_EXPORT
-#endif
 
 #endif // BUDDYEDITOR_GLOBAL_H

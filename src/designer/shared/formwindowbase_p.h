@@ -163,12 +163,7 @@ public:
     enum LineTerminatorMode {
         LFLineTerminator,
         CRLFLineTerminator,
-        NativeLineTerminator =
-#if defined (Q_OS_WIN)
-            CRLFLineTerminator
-#else
-            LFLineTerminator
-#endif
+        NativeLineTerminator = LFLineTerminator
     };
 
     void setLineTerminatorMode(LineTerminatorMode mode);

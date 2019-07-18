@@ -119,11 +119,7 @@ namespace QTest {
         const char *filler = (tag[0] && gtag[0]) ? ":" : "";
         if (file) {
             QTest::qt_asprintf(&buf, "%s: %s::%s(%s%s%s)%s%s\n"
-#ifdef Q_OS_WIN
-                          "%s(%d) : failure location\n"
-#else
                           "   Loc: [%s(%d)]\n"
-#endif
                           , type, QTestResult::currentTestObjectName(), fn, gtag, filler, tag,
                           msg[0] ? " " : "", msg, file, line);
         } else {
