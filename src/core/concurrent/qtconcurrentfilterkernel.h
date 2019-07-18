@@ -82,7 +82,7 @@ class FilterKernel : public IterateKernel<typename Sequence::const_iterator, voi
 
 public:
     FilterKernel(Sequence &_sequence, KeepFunctor _keep, ReduceFunctor _reduce)
-        : IterateKernelType(const_cast<const Sequence &>(_sequence).begin(), const_cast<const Sequence &>(_sequence).end()), reducedResult(),
+        : IterateKernelType(_sequence.constBegin(), _sequence.constEnd()), reducedResult(),
           sequence(_sequence),
           keep(_keep),
           reduce(_reduce),
