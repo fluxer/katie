@@ -346,12 +346,9 @@ bool QHttpSocketEngine::waitForRead(int msecs, bool *timedOut)
     if (!d->socket || d->socket->state() == QAbstractSocket::UnconnectedState)
         return false;
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     // Wait for more data if nothing is available.
     if (!d->socket->bytesAvailable()) {
-        if (!d->socket->waitForReadyRead(qt_timeout_value(msecs, stopWatch.elapsed()))) {
+        if (!d->socket->waitForReadyRead(msecs)) {
             if (d->socket->state() == QAbstractSocket::UnconnectedState)
                 return true;
             setError(d->socket->error(), d->socket->errorString());
@@ -363,7 +360,7 @@ bool QHttpSocketEngine::waitForRead(int msecs, bool *timedOut)
 
     // If we're not connected yet, wait until we are, or until an error
     // occurs.
-    while (d->state != Connected && d->socket->waitForReadyRead(qt_timeout_value(msecs, stopWatch.elapsed()))) {
+    while (d->state != Connected && d->socket->waitForReadyRead(msecs)) {
         // Loop while the protocol handshake is taking place.
     }
 
@@ -393,13 +390,10 @@ bool QHttpSocketEngine::waitForWrite(int msecs, bool *timedOut)
         return true;
     }
 
-    QElapsedTimer stopWatch;
-    stopWatch.start();
-
     // If we're not connected yet, wait until we are, and until bytes have
     // been received (i.e., the socket has connected, we have sent the
     // greeting, and then received the response).
-    while (d->state != Connected && d->socket->waitForReadyRead(qt_timeout_value(msecs, stopWatch.elapsed()))) {
+    while (d->state != Connected && d->socket->waitForReadyRead(msecs)) {
         // Loop while the protocol handshake is taking place.
     }
 
