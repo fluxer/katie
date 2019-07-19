@@ -21,7 +21,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtSql
     ${CMAKE_BINARY_DIR}/include/QtSvg
     ${CMAKE_BINARY_DIR}/privateinclude/QtSvg
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
 )
 
 if(NOT ${KATIE_TYPE} STREQUAL SHARED)
