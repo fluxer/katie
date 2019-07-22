@@ -157,7 +157,7 @@ void tst_QStringList::split_qlist_qstring() const
     const QChar splitChar = QLatin1Char(':');
 
     QBENCHMARK {
-        input.split(splitChar);
+        (void)input.split(splitChar);
     }
 }
 

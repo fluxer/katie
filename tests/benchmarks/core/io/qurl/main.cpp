@@ -224,7 +224,7 @@ void tst_qurl::equality()
         QUrl url(QLatin1String("pics/avatar.png"));
         QUrl url2(QLatin1String("pics/avatar2.png"));
         QBENCHMARK {
-            url == url2;
+            (void)(url == url2);
         }
     }
 }

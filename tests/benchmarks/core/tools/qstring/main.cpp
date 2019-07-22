@@ -100,7 +100,7 @@ void tst_QString::equals() const
     QFETCH(QString, b);
 
     QBENCHMARK {
-        a == b;
+        (void)(a == b);
     }
 }
 

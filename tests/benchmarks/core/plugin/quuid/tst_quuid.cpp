@@ -175,7 +175,7 @@ void tst_bench_QUuid::operatorLess()
     uuid1 = QUuid::createUuid();
     uuid2 = QUuid::createUuid();
     QBENCHMARK {
-        uuid1 < uuid2;
+        (void)(uuid1 < uuid2);
     }
 }
 
@@ -185,7 +185,7 @@ void tst_bench_QUuid::operatorMore()
     uuid1 = QUuid::createUuid();
     uuid2 = QUuid::createUuid();
     QBENCHMARK {
-        uuid1 > uuid2;
+        (void)(uuid1 > uuid2);
     }
 }
 

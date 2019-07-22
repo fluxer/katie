@@ -288,7 +288,7 @@ void tst_QTransform::operatorEqual()
     QFETCH(QTransform, x2);
     QTransform x = x1;
     QBENCHMARK {
-        x == x2;
+        (void)(x == x2);
     }
 }
 
@@ -300,7 +300,7 @@ void tst_QTransform::operatorNotEqual()
     QFETCH(QTransform, x2);
     QTransform x = x1;
     QBENCHMARK {
-        x != x2;
+        (void)(x != x2);
     }
 }
 
