@@ -662,12 +662,6 @@ static const int scriptForWritingSystem[] = {
     QUnicodeTables::Nko // Nko
 };
 
-int qt_script_for_writing_system(QFontDatabase::WritingSystem writingSystem)
-{
-    return scriptForWritingSystem[writingSystem];
-}
-
-
 #if defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)
 static inline bool requiresOpenType(int writingSystem)
 {
