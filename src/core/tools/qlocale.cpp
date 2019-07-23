@@ -59,8 +59,8 @@ static QLocalePrivate *system_lp = 0;
 Q_GLOBAL_STATIC(QLocalePrivate, globalLocalePrivate)
 #endif
 
-#ifdef QT_USE_ICU
-extern bool qt_initIcu(const QString &localeName);
+#ifdef QT_STD_LOCALE
+extern bool qt_initStdLocale(const QString &localeName);
 extern bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale);
 extern bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale);
 #endif
@@ -481,9 +481,9 @@ void QLocalePrivate::updateSystemPrivate()
     if (!res.isNull())
         system_lp->m_plus = res.toString().at(0).unicode();
 
-#ifdef QT_USE_ICU
+#ifdef QT_STD_LOCALE
     if (!default_lp)
-        qt_initIcu(system_lp->bcp47Name());
+        qt_initStdLocale(system_lp->bcp47Name());
 #endif
 }
 #endif
@@ -838,8 +838,8 @@ void QLocale::setDefault(const QLocale &locale)
     default_lp = locale.d();
     default_number_options = locale.numberOptions();
 
-#ifdef QT_USE_ICU
-    qt_initIcu(locale.bcp47Name());
+#ifdef QT_STD_LOCALE
+    qt_initStdLocale(locale.bcp47Name());
 #endif
 }
 
@@ -2099,7 +2099,7 @@ Qt::LayoutDirection QLocale::textDirection() const
 */
 QString QLocale::toUpper(const QString &str) const
 {
-#ifdef QT_USE_ICU
+#ifdef QT_STD_LOCALE
     QString result;
     if (qt_u_strToUpper(str, &result, *this))
         return result;
@@ -2114,7 +2114,7 @@ QString QLocale::toUpper(const QString &str) const
 */
 QString QLocale::toLower(const QString &str) const
 {
-#ifdef QT_USE_ICU
+#ifdef QT_STD_LOCALE
     QString result;
     if (qt_u_strToLower(str, &result, *this))
         return result;

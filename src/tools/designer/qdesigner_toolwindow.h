@@ -47,7 +47,6 @@ struct ToolWindowFontSettings {
     bool equals(const ToolWindowFontSettings &) const;
 
     QFont m_font;
-    QFontDatabase::WritingSystem m_writingSystem;
     bool m_useFont;
 };
 

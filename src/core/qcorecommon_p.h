@@ -44,6 +44,29 @@ static inline quint32 qCRC32(const char *data, uint len)
 }
 #endif
 
+
+static inline uint foldCase(const ushort *ch, const ushort *start)
+{
+    uint c = *ch;
+    if (QChar(c).isLowSurrogate() && ch > start && QChar(*(ch - 1)).isHighSurrogate())
+        c = QChar::surrogateToUcs4(*(ch - 1), c);
+    return QChar::toCaseFolded(*ch);
+}
+
+static inline uint foldCase(const uint ch, uint &last)
+{
+    uint c = ch;
+    if (QChar(c).isLowSurrogate() && QChar(last).isHighSurrogate())
+        c = QChar::surrogateToUcs4(last, c);
+    last = ch;
+    return QChar::toCaseFolded(ch);
+}
+
+static inline ushort foldCase(const ushort ch)
+{
+    return QChar::toCaseFolded(ch);
+}
+
 QT_END_NAMESPACE
 
 #endif // QCORECOMMON_P_H

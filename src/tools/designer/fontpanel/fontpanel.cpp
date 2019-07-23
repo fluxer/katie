@@ -54,7 +54,6 @@ QT_BEGIN_NAMESPACE
 FontPanel::FontPanel(QWidget *parentWidget) :
     QGroupBox(parentWidget),
     m_previewLineEdit(new QLineEdit),
-    m_writingSystemComboBox(new QComboBox),
     m_familyComboBox(new QFontComboBox),
     m_styleComboBox(new QComboBox),
     m_pointSizeComboBox(new QComboBox),
@@ -63,15 +62,6 @@ FontPanel::FontPanel(QWidget *parentWidget) :
     setTitle(tr("Font"));
 
     QFormLayout *formLayout = new QFormLayout(this);
-    // writing systems
-    m_writingSystemComboBox->setEditable(false);
-
-    QList<QFontDatabase::WritingSystem> writingSystems = m_fontDatabase.writingSystems();
-    writingSystems.push_front(QFontDatabase::Any);
-    foreach (QFontDatabase::WritingSystem ws, writingSystems)
-        m_writingSystemComboBox->addItem(QFontDatabase::writingSystemName(ws), QVariant(ws));
-    connect(m_writingSystemComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotWritingSystemChanged(int)));
-    formLayout->addRow(tr("&Writing system"), m_writingSystemComboBox);
 
     connect(m_familyComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(slotFamilyChanged(QFont)));
     formLayout->addRow(tr("&Family"), m_familyComboBox);
@@ -86,8 +76,6 @@ FontPanel::FontPanel(QWidget *parentWidget) :
 
     m_previewLineEdit->setReadOnly(true);
     formLayout->addRow(m_previewLineEdit);
-
-    setWritingSystem(QFontDatabase::Any);
 }
 
 QFont FontPanel::selectedFont() const
@@ -114,15 +102,6 @@ QFont FontPanel::selectedFont() const
 void FontPanel::setSelectedFont(const QFont &f)
 {
     m_familyComboBox->setCurrentFont(f);
-    if (m_familyComboBox->currentIndex() < 0) {
-        // family not in writing system - find the corresponding one?
-        QList<QFontDatabase::WritingSystem> familyWritingSystems = m_fontDatabase.writingSystems(f.family());
-        if (familyWritingSystems.empty())
-            return;
-
-        setWritingSystem(familyWritingSystems.front());
-        m_familyComboBox->setCurrentFont(f);
-    }
 
     updateFamily(family());
 
@@ -133,15 +112,6 @@ void FontPanel::setSelectedFont(const QFont &f)
     const int styleIndex = m_styleComboBox->findText(styleString);
     m_styleComboBox->setCurrentIndex(styleIndex);
     slotUpdatePreviewFont();
-}
-
-
-QFontDatabase::WritingSystem FontPanel::writingSystem() const
-{
-    const int currentIndex = m_writingSystemComboBox->currentIndex();
-    if ( currentIndex == -1)
-        return QFontDatabase::Latin;
-    return static_cast<QFontDatabase::WritingSystem>(m_writingSystemComboBox->itemData(currentIndex).toInt());
 }
 
 QString FontPanel::family() const
@@ -162,19 +132,6 @@ QString FontPanel::styleString() const
     return currentIndex != -1 ? m_styleComboBox->itemText(currentIndex) : QString();
 }
 
-void FontPanel::setWritingSystem(QFontDatabase::WritingSystem ws)
-{
-    m_writingSystemComboBox->setCurrentIndex(m_writingSystemComboBox->findData(QVariant(ws)));
-    updateWritingSystem(ws);
-}
-
-
-void FontPanel::slotWritingSystemChanged(int)
-{
-    updateWritingSystem(writingSystem());
-    delayedPreviewFontUpdate();
-}
-
 void FontPanel::slotFamilyChanged(const QFont &)
 {
     updateFamily(family());
@@ -190,18 +147,6 @@ void FontPanel::slotStyleChanged(int)
 void FontPanel::slotPointSizeChanged(int)
 {
     delayedPreviewFontUpdate();
-}
-
-void FontPanel::updateWritingSystem(QFontDatabase::WritingSystem ws)
-{
-
-    m_previewLineEdit->setText(QFontDatabase::writingSystemSample(ws));
-    m_familyComboBox->setWritingSystem (ws);
-    // Current font not in WS ... set index 0.
-    if (m_familyComboBox->currentIndex() < 0) {
-        m_familyComboBox->setCurrentIndex(0);
-        updateFamily(family());
-    }
 }
 
 void FontPanel::updateFamily(const QString &family)

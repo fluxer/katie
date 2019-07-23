@@ -108,7 +108,6 @@ AppearanceOptions QDesignerAppearanceOptionsWidget::appearanceOptions() const
     rc.uiMode = uiMode();
     rc.toolWindowFontSettings.m_font = m_ui->m_fontPanel->selectedFont();
     rc.toolWindowFontSettings.m_useFont = m_ui->m_fontPanel->isChecked();
-    rc.toolWindowFontSettings.m_writingSystem = m_ui->m_fontPanel->writingSystem();
     return rc;
 }
 
@@ -116,7 +115,6 @@ void QDesignerAppearanceOptionsWidget::setAppearanceOptions(const AppearanceOpti
 {
     m_initialUIMode = ao.uiMode;
     m_ui->m_uiModeCombo->setCurrentIndex(m_ui->m_uiModeCombo->findData(QVariant(ao.uiMode)));
-    m_ui->m_fontPanel->setWritingSystem(ao.toolWindowFontSettings.m_writingSystem);
     m_ui->m_fontPanel->setSelectedFont(ao.toolWindowFontSettings.m_font);
     m_ui->m_fontPanel->setChecked(ao.toolWindowFontSettings.m_useFont);
 }

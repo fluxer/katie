@@ -50,7 +50,6 @@ class Q_GUI_EXPORT QFontComboBox : public QComboBox
 {
     Q_OBJECT
     Q_FLAGS(FontFilters)
-    Q_PROPERTY(QFontDatabase::WritingSystem writingSystem READ writingSystem WRITE setWritingSystem)
     Q_PROPERTY(FontFilters fontFilters READ fontFilters WRITE setFontFilters)
     Q_PROPERTY(QFont currentFont READ currentFont WRITE setCurrentFont NOTIFY currentFontChanged)
     Q_ENUMS(FontSelection)
@@ -58,9 +57,6 @@ class Q_GUI_EXPORT QFontComboBox : public QComboBox
 public:
     explicit QFontComboBox(QWidget *parent = Q_NULLPTR);
     ~QFontComboBox();
-
-    void setWritingSystem(QFontDatabase::WritingSystem);
-    QFontDatabase::WritingSystem writingSystem() const;
 
     enum FontFilter {
         AllFonts = 0,

@@ -345,24 +345,16 @@ QtFontStyle *QtFontFoundry::style(const QtFontStyle::Key &key, const QString &st
 
 struct  QtFontFamily
 {
-    enum WritingSystemStatus {
-        Unknown         = 0,
-        Supported       = 1,
-        UnsupportedFT  = 2,
-        Unsupported     = UnsupportedFT
-    };
-
     QtFontFamily(const QString &n)
         :
 #ifdef Q_WS_X11
-        fixedPitch(true), ftWritingSystemCheck(false),
-        synthetic(false), symbol_checked(false),
+        fixedPitch(true), synthetic(false), symbol_checked(false),
 #else
         fixedPitch(false),
 #endif
         name(n), count(0), foundries(0)
     {
-        memset(writingSystems, 0, sizeof(writingSystems));
+
     }
     ~QtFontFamily() {
         while (count--)
@@ -372,7 +364,6 @@ struct  QtFontFamily
 
     bool fixedPitch : 1;
 #ifdef Q_WS_X11
-    bool ftWritingSystemCheck : 1;
     bool synthetic : 1;
     bool symbol_checked : 1;
 #endif
@@ -384,8 +375,6 @@ struct  QtFontFamily
 #endif
     int count;
     QtFontFoundry **foundries;
-
-    unsigned char writingSystems[QFontDatabase::WritingSystemsCount];
 
     QtFontFoundry *foundry(const QString &f, bool = false);
 };
@@ -413,132 +402,6 @@ QtFontFoundry *QtFontFamily::foundry(const QString &f, bool create)
     foundries[count] = new QtFontFoundry(f);
     return foundries[count++];
 }
-
-// see the Unicode subset bitfields in the MSDN docs
-static int requiredUnicodeBits[QFontDatabase::WritingSystemsCount][2] = {
-        // Any,
-    { 127, 127 },
-        // Latin,
-    { 0, 127 },
-        // Greek,
-    { 7, 127 },
-        // Cyrillic,
-    { 9, 127 },
-        // Armenian,
-    { 10, 127 },
-        // Hebrew,
-    { 11, 127 },
-        // Arabic,
-    { 13, 127 },
-        // Syriac,
-    { 71, 127 },
-    //Thaana,
-    { 72, 127 },
-    //Devanagari,
-    { 15, 127 },
-    //Bengali,
-    { 16, 127 },
-    //Gurmukhi,
-    { 17, 127 },
-    //Gujarati,
-    { 18, 127 },
-    //Oriya,
-    { 19, 127 },
-    //Tamil,
-    { 20, 127 },
-    //Telugu,
-    { 21, 127 },
-    //Kannada,
-    { 22, 127 },
-    //Malayalam,
-    { 23, 127 },
-    //Sinhala,
-    { 73, 127 },
-    //Thai,
-    { 24, 127 },
-    //Lao,
-    { 25, 127 },
-    //Tibetan,
-    { 70, 127 },
-    //Myanmar,
-    { 74, 127 },
-        // Georgian,
-    { 26, 127 },
-        // Khmer,
-    { 80, 127 },
-        // SimplifiedChinese,
-    { 126, 127 },
-        // TraditionalChinese,
-    { 126, 127 },
-        // Japanese,
-    { 126, 127 },
-        // Korean,
-    { 56, 127 },
-        // Vietnamese,
-    { 0, 127 }, // same as latin1
-        // Other,
-    { 126, 127 },
-        // Ogham,
-    { 78, 127 },
-        // Runic,
-    { 79, 127 },
-        // Nko,
-    { 14, 127 },
-};
-
-#define SimplifiedChineseCsbBit 18
-#define TraditionalChineseCsbBit 20
-#define JapaneseCsbBit 17
-#define KoreanCsbBit 21
-
-QList<QFontDatabase::WritingSystem> qt_determine_writing_systems_from_truetype_bits(quint32 unicodeRange[4], quint32 codePageRange[2])
-{
-    QList<QFontDatabase::WritingSystem> writingSystems;
-    bool hasScript = false;
-
-    int i;
-    for(i = 0; i < QFontDatabase::WritingSystemsCount; i++) {
-        int bit = requiredUnicodeBits[i][0];
-        int index = bit/32;
-        int flag =  1 << (bit&31);
-        if (bit != 126 && unicodeRange[index] & flag) {
-            bit = requiredUnicodeBits[i][1];
-            index = bit/32;
-
-            flag =  1 << (bit&31);
-            if (bit == 127 || unicodeRange[index] & flag) {
-                writingSystems.append(QFontDatabase::WritingSystem(i));
-                hasScript = true;
-                // qDebug("font %s: index=%d, flag=%8x supports script %d", familyName.latin1(), index, flag, i);
-            }
-        }
-    }
-    if(codePageRange[0] & (1 << SimplifiedChineseCsbBit)) {
-        writingSystems.append(QFontDatabase::SimplifiedChinese);
-        hasScript = true;
-        //qDebug("font %s supports Simplified Chinese", familyName.latin1());
-    }
-    if(codePageRange[0] & (1 << TraditionalChineseCsbBit)) {
-        writingSystems.append(QFontDatabase::TraditionalChinese);
-        hasScript = true;
-        //qDebug("font %s supports Traditional Chinese", familyName.latin1());
-    }
-    if(codePageRange[0] & (1 << JapaneseCsbBit)) {
-        writingSystems.append(QFontDatabase::Japanese);
-        hasScript = true;
-        //qDebug("font %s supports Japanese", familyName.latin1());
-    }
-    if(codePageRange[0] & (1 << KoreanCsbBit)) {
-        writingSystems.append(QFontDatabase::Korean);
-        hasScript = true;
-        //qDebug("font %s supports Korean", familyName.latin1());
-    }
-    if (!hasScript)
-        writingSystems.append(QFontDatabase::Symbol);
-
-    return writingSystems;
-}
-
 
 class QFontDatabasePrivate
 {
@@ -624,57 +487,6 @@ QtFontFamily *QFontDatabasePrivate::family(const QString &f, bool create)
     count++;
     return families[pos];
 }
-
-static const int scriptForWritingSystem[] = {
-    QUnicodeTables::Common, // Any
-    QUnicodeTables::Latin, // Latin
-    QUnicodeTables::Greek, // Greek
-    QUnicodeTables::Cyrillic, // Cyrillic
-    QUnicodeTables::Armenian, // Armenian
-    QUnicodeTables::Hebrew, // Hebrew
-    QUnicodeTables::Arabic, // Arabic
-    QUnicodeTables::Syriac, // Syriac
-    QUnicodeTables::Thaana, // Thaana
-    QUnicodeTables::Devanagari, // Devanagari
-    QUnicodeTables::Bengali, // Bengali
-    QUnicodeTables::Gurmukhi, // Gurmukhi
-    QUnicodeTables::Gujarati, // Gujarati
-    QUnicodeTables::Oriya, // Oriya
-    QUnicodeTables::Tamil, // Tamil
-    QUnicodeTables::Telugu, // Telugu
-    QUnicodeTables::Kannada, // Kannada
-    QUnicodeTables::Malayalam, // Malayalam
-    QUnicodeTables::Sinhala, // Sinhala
-    QUnicodeTables::Thai, // Thai
-    QUnicodeTables::Lao, // Lao
-    QUnicodeTables::Tibetan, // Tibetan
-    QUnicodeTables::Myanmar, // Myanmar
-    QUnicodeTables::Georgian, // Georgian
-    QUnicodeTables::Khmer, // Khmer
-    QUnicodeTables::Common, // SimplifiedChinese
-    QUnicodeTables::Common, // TraditionalChinese
-    QUnicodeTables::Common, // Japanese
-    QUnicodeTables::Hangul, // Korean
-    QUnicodeTables::Common, // Vietnamese
-    QUnicodeTables::Common, // Symbol
-    QUnicodeTables::Ogham,  // Ogham
-    QUnicodeTables::Runic, // Runic
-    QUnicodeTables::Nko // Nko
-};
-
-#if defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)
-static inline bool requiresOpenType(int writingSystem)
-{
-    return ((writingSystem >= QFontDatabase::Syriac && writingSystem <= QFontDatabase::Sinhala)
-            || writingSystem == QFontDatabase::Khmer || writingSystem == QFontDatabase::Nko);
-}
-static inline bool scriptRequiresOpenType(int script)
-{
-    return ((script >= QUnicodeTables::Syriac && script <= QUnicodeTables::Sinhala)
-            || script == QUnicodeTables::Khmer || script == QUnicodeTables::Nko);
-}
-#endif
-
 
 /*!
   \internal
@@ -1091,18 +903,6 @@ static void match(int script, const QFontDef &request,
 
         uint score_adjust = 0;
 
-        bool supported = (script == QUnicodeTables::Common);
-        for (int ws = 1; !supported && ws < QFontDatabase::WritingSystemsCount; ++ws) {
-            if (scriptForWritingSystem[ws] != script)
-                continue;
-            if (test.family->writingSystems[ws] & QtFontFamily::Supported)
-                supported = true;
-        }
-        if (!supported) {
-            // family not supported in the script we want
-            continue;
-        }
-
         // as we know the script is supported, we can be sure
         // to find a matching font here.
         unsigned int newscore =
@@ -1207,9 +1007,7 @@ QString QFontDatabase::styleString(const QFontInfo &fontInfo)
     Use the styleString() to obtain a text version of a style.
 
     The QFontDatabase class also supports some static functions, for
-    example, standardSizes(). You can retrieve the description of a
-    writing system using writingSystemName(), and a sample of
-    characters in a writing system with writingSystemSample().
+    example, standardSizes().
 
     Example:
 
@@ -1235,139 +1033,22 @@ QFontDatabase::QFontDatabase()
 }
 
 /*!
-    \enum QFontDatabase::WritingSystem
-
-    \value Any
-    \value Latin
-    \value Greek
-    \value Cyrillic
-    \value Armenian
-    \value Hebrew
-    \value Arabic
-    \value Syriac
-    \value Thaana
-    \value Devanagari
-    \value Bengali
-    \value Gurmukhi
-    \value Gujarati
-    \value Oriya
-    \value Tamil
-    \value Telugu
-    \value Kannada
-    \value Malayalam
-    \value Sinhala
-    \value Thai
-    \value Lao
-    \value Tibetan
-    \value Myanmar
-    \value Georgian
-    \value Khmer
-    \value SimplifiedChinese
-    \value TraditionalChinese
-    \value Japanese
-    \value Korean
-    \value Vietnamese
-    \value Symbol
-    \value Other (the same as Symbol)
-    \value Ogham
-    \value Runic
-    \value Nko
-
-    \omitvalue WritingSystemsCount
-*/
-
-/*!
-    Returns a sorted list of the available writing systems. This is
-    list generated from information about all installed fonts on the
-    system.
-
-    \sa families()
-*/
-QList<QFontDatabase::WritingSystem> QFontDatabase::writingSystems() const
-{
-    QMutexLocker locker(fontDatabaseMutex());
-
-    createDatabase();
-#ifdef Q_WS_X11
-    checkSymbolFonts();
-#endif
-
-    QList<WritingSystem> list;
-    for (int i = 0; i < d->count; ++i) {
-        QtFontFamily *family = d->families[i];
-        if (family->count == 0)
-            continue;
-        for (int x = Latin; x < WritingSystemsCount; ++x) {
-            const WritingSystem writingSystem = WritingSystem(x);
-            if (!(family->writingSystems[writingSystem] & QtFontFamily::Supported))
-                continue;
-            if (!list.contains(writingSystem))
-                list.append(writingSystem);
-        }
-    }
-    qSort(list);
-    return list;
-}
-
-
-/*!
-    Returns a sorted list of the writing systems supported by a given
-    font \a family.
-
-    \sa families()
-*/
-QList<QFontDatabase::WritingSystem> QFontDatabase::writingSystems(const QString &family) const
-{
-    QString familyName, foundryName;
-    parseFontName(family, foundryName, familyName);
-
-    QMutexLocker locker(fontDatabaseMutex());
-
-    createDatabase();
-#ifdef Q_WS_X11
-    checkSymbolFonts(familyName);
-#endif
-
-    QList<WritingSystem> list;
-    QtFontFamily *f = d->family(familyName);
-    if (!f || f->count == 0)
-        return list;
-
-    for (int x = Latin; x < WritingSystemsCount; ++x) {
-        const WritingSystem writingSystem = WritingSystem(x);
-        if (f->writingSystems[writingSystem] & QtFontFamily::Supported)
-            list.append(writingSystem);
-    }
-    return list;
-}
-
-
-/*!
-    Returns a sorted list of the available font families which support
-    the \a writingSystem.
+    Returns a sorted list of the available font families.
 
     If a family exists in several foundries, the returned name for
     that font is in the form "family [foundry]". Examples: "Times
     [Adobe]", "Times [Cronyx]", "Palatino".
-
-    \sa writingSystems()
 */
-QStringList QFontDatabase::families(WritingSystem writingSystem) const
+QStringList QFontDatabase::families() const
 {
     QMutexLocker locker(fontDatabaseMutex());
 
     createDatabase();
-#ifdef Q_WS_X11
-    if (writingSystem != Any)
-        checkSymbolFonts();
-#endif
 
     QStringList flist;
     for (int i = 0; i < d->count; i++) {
         QtFontFamily *f = d->families[i];
         if (f->count == 0)
-            continue;
-        if (writingSystem != Any && (f->writingSystems[writingSystem] != QtFontFamily::Supported))
             continue;
         if (f->count == 1) {
             flist.append(f->name);
@@ -1839,345 +1520,6 @@ bool QFontDatabase::hasFamily(const QString &family) const
     const QString familyAlias = resolveFontFamilyAlias(parsedFamily);
     return families().contains(familyAlias, Qt::CaseInsensitive);
 }
-
-
-/*!
-    Returns the names the \a writingSystem (e.g. for displaying to the
-    user in a dialog).
-*/
-QString QFontDatabase::writingSystemName(WritingSystem writingSystem)
-{
-    const char *name = 0;
-    switch (writingSystem) {
-    case Any:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Any");
-        break;
-    case Latin:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Latin");
-        break;
-    case Greek:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Greek");
-        break;
-    case Cyrillic:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Cyrillic");
-        break;
-    case Armenian:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Armenian");
-        break;
-    case Hebrew:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Hebrew");
-        break;
-    case Arabic:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Arabic");
-        break;
-    case Syriac:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Syriac");
-        break;
-    case Thaana:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Thaana");
-        break;
-    case Devanagari:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Devanagari");
-        break;
-    case Bengali:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Bengali");
-        break;
-    case Gurmukhi:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Gurmukhi");
-        break;
-    case Gujarati:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Gujarati");
-        break;
-    case Oriya:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Oriya");
-        break;
-    case Tamil:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Tamil");
-        break;
-    case Telugu:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Telugu");
-        break;
-    case Kannada:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Kannada");
-        break;
-    case Malayalam:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Malayalam");
-        break;
-    case Sinhala:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Sinhala");
-        break;
-    case Thai:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Thai");
-        break;
-    case Lao:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Lao");
-        break;
-    case Tibetan:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Tibetan");
-        break;
-    case Myanmar:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Myanmar");
-        break;
-    case Georgian:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Georgian");
-        break;
-    case Khmer:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Khmer");
-        break;
-    case SimplifiedChinese:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Simplified Chinese");
-        break;
-    case TraditionalChinese:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Traditional Chinese");
-        break;
-    case Japanese:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Japanese");
-        break;
-    case Korean:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Korean");
-        break;
-    case Vietnamese:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Vietnamese");
-        break;
-    case Symbol:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Symbol");
-        break;
-    case Ogham:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Ogham");
-        break;
-    case Runic:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "Runic");
-        break;
-    case Nko:
-        name = QT_TRANSLATE_NOOP("QFontDatabase", "N'Ko");
-        break;
-    default:
-        Q_ASSERT_X(false, "QFontDatabase::writingSystemName", "invalid 'writingSystem' parameter");
-        break;
-    }
-    return QApplication::translate("QFontDatabase", name);
-}
-
-
-/*!
-    Returns a string with sample characters from \a writingSystem.
-*/
-QString QFontDatabase::writingSystemSample(WritingSystem writingSystem)
-{
-    QString sample;
-    switch (writingSystem) {
-    case Any:
-    case Symbol:
-        // show only ascii characters
-        sample += QLatin1String("AaBbzZ");
-        break;
-    case Latin:
-        // This is cheating... we only show latin-1 characters so that we don't
-        // end up loading lots of fonts - at least on X11...
-        sample = QLatin1String("Aa");
-        sample += QChar(0x00C3);
-        sample += QChar(0x00E1);
-        sample += QLatin1String("Zz");
-        break;
-    case Greek:
-        sample += QChar(0x0393);
-        sample += QChar(0x03B1);
-        sample += QChar(0x03A9);
-        sample += QChar(0x03C9);
-        break;
-    case Cyrillic:
-        sample += QChar(0x0414);
-        sample += QChar(0x0434);
-        sample += QChar(0x0436);
-        sample += QChar(0x044f);
-        break;
-    case Armenian:
-        sample += QChar(0x053f);
-        sample += QChar(0x054f);
-        sample += QChar(0x056f);
-        sample += QChar(0x057f);
-        break;
-    case Hebrew:
-        sample += QChar(0x05D0);
-        sample += QChar(0x05D1);
-        sample += QChar(0x05D2);
-        sample += QChar(0x05D3);
-        break;
-    case Arabic:
-        sample += QChar(0x0628);
-        sample += QChar(0x0629);
-        sample += QChar(0x062A);
-        sample += QChar(0x063A);
-        break;
-    case Syriac:
-        sample += QChar(0x0715);
-        sample += QChar(0x0725);
-        sample += QChar(0x0716);
-        sample += QChar(0x0726);
-        break;
-    case Thaana:
-        sample += QChar(0x0784);
-        sample += QChar(0x0794);
-        sample += QChar(0x078c);
-        sample += QChar(0x078d);
-        break;
-    case Devanagari:
-        sample += QChar(0x0905);
-        sample += QChar(0x0915);
-        sample += QChar(0x0925);
-        sample += QChar(0x0935);
-        break;
-    case Bengali:
-        sample += QChar(0x0986);
-        sample += QChar(0x0996);
-        sample += QChar(0x09a6);
-        sample += QChar(0x09b6);
-        break;
-    case Gurmukhi:
-        sample += QChar(0x0a05);
-        sample += QChar(0x0a15);
-        sample += QChar(0x0a25);
-        sample += QChar(0x0a35);
-        break;
-    case Gujarati:
-        sample += QChar(0x0a85);
-        sample += QChar(0x0a95);
-        sample += QChar(0x0aa5);
-        sample += QChar(0x0ab5);
-        break;
-    case Oriya:
-        sample += QChar(0x0b06);
-        sample += QChar(0x0b16);
-        sample += QChar(0x0b2b);
-        sample += QChar(0x0b36);
-        break;
-    case Tamil:
-        sample += QChar(0x0b89);
-        sample += QChar(0x0b99);
-        sample += QChar(0x0ba9);
-        sample += QChar(0x0bb9);
-        break;
-    case Telugu:
-        sample += QChar(0x0c05);
-        sample += QChar(0x0c15);
-        sample += QChar(0x0c25);
-        sample += QChar(0x0c35);
-        break;
-    case Kannada:
-        sample += QChar(0x0c85);
-        sample += QChar(0x0c95);
-        sample += QChar(0x0ca5);
-        sample += QChar(0x0cb5);
-        break;
-    case Malayalam:
-        sample += QChar(0x0d05);
-        sample += QChar(0x0d15);
-        sample += QChar(0x0d25);
-        sample += QChar(0x0d35);
-        break;
-    case Sinhala:
-        sample += QChar(0x0d90);
-        sample += QChar(0x0da0);
-        sample += QChar(0x0db0);
-        sample += QChar(0x0dc0);
-        break;
-    case Thai:
-        sample += QChar(0x0e02);
-        sample += QChar(0x0e12);
-        sample += QChar(0x0e22);
-        sample += QChar(0x0e32);
-        break;
-    case Lao:
-        sample += QChar(0x0e8d);
-        sample += QChar(0x0e9d);
-        sample += QChar(0x0ead);
-        sample += QChar(0x0ebd);
-        break;
-    case Tibetan:
-        sample += QChar(0x0f00);
-        sample += QChar(0x0f01);
-        sample += QChar(0x0f02);
-        sample += QChar(0x0f03);
-        break;
-    case Myanmar:
-        sample += QChar(0x1000);
-        sample += QChar(0x1001);
-        sample += QChar(0x1002);
-        sample += QChar(0x1003);
-        break;
-    case Georgian:
-        sample += QChar(0x10a0);
-        sample += QChar(0x10b0);
-        sample += QChar(0x10c0);
-        sample += QChar(0x10d0);
-        break;
-    case Khmer:
-        sample += QChar(0x1780);
-        sample += QChar(0x1790);
-        sample += QChar(0x17b0);
-        sample += QChar(0x17c0);
-        break;
-    case SimplifiedChinese:
-        sample += QChar(0x4e2d);
-        sample += QChar(0x6587);
-        sample += QChar(0x8303);
-        sample += QChar(0x4f8b);
-        break;
-    case TraditionalChinese:
-        sample += QChar(0x4e2d);
-        sample += QChar(0x6587);
-        sample += QChar(0x7bc4);
-        sample += QChar(0x4f8b);
-        break;
-    case Japanese:
-        sample += QChar(0x30b5);
-        sample += QChar(0x30f3);
-        sample += QChar(0x30d7);
-        sample += QChar(0x30eb);
-        sample += QChar(0x3067);
-        sample += QChar(0x3059);
-        break;
-    case Korean:
-        sample += QChar(0xac00);
-        sample += QChar(0xac11);
-        sample += QChar(0xac1a);
-        sample += QChar(0xac2f);
-        break;
-    case Vietnamese:
-    {
-        static const char vietnameseUtf8[] = {
-            char(0xef), char(0xbb), char(0xbf), char(0xe1), char(0xbb), char(0x97),
-            char(0xe1), char(0xbb), char(0x99),
-            char(0xe1), char(0xbb), char(0x91),
-            char(0xe1), char(0xbb), char(0x93),
-        };
-        sample += QString::fromUtf8(vietnameseUtf8, sizeof(vietnameseUtf8));
-        break;
-    }
-    case Ogham:
-        sample += QChar(0x1681);
-        sample += QChar(0x1682);
-        sample += QChar(0x1683);
-        sample += QChar(0x1684);
-        break;
-    case Runic:
-        sample += QChar(0x16a0);
-        sample += QChar(0x16a1);
-        sample += QChar(0x16a2);
-        sample += QChar(0x16a3);
-        break;
-    case Nko:
-        sample += QChar(0x7ca);
-        sample += QChar(0x7cb);
-        sample += QChar(0x7cc);
-        sample += QChar(0x7cd);
-        break;
-    default:
-        break;
-    }
-    return sample;
-}
-
 
 void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString &family)
 {

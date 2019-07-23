@@ -51,39 +51,161 @@
 
 QT_BEGIN_NAMESPACE
 
-#define UNICODE_DATA_VERSION QChar::Unicode_5_0
-
-#define UNICODE_LAST_CODEPOINT 0x10ffff
-
 namespace QUnicodeTables {
 
-    struct Properties {
-        ushort category         : 8; /* 5 needed */
-        ushort line_break_class : 8; /* 6 needed */
-        ushort direction        : 8; /* 5 needed */
-        ushort combiningClass   : 8;
-        ushort joining          : 2;
-        signed short digitValue : 6; /* 5 needed */
-        ushort unicodeVersion   : 4;
-        ushort lowerCaseSpecial : 1;
-        ushort upperCaseSpecial : 1;
-        ushort titleCaseSpecial : 1;
-        ushort caseFoldSpecial  : 1; /* currently unused */
-        signed short mirrorDiff    : 16;
-        signed short lowerCaseDiff : 16;
-        signed short upperCaseDiff : 16;
-        signed short titleCaseDiff : 16;
-        signed short caseFoldDiff  : 16;
-        ushort graphemeBreak    : 8; /* 4 needed */
-        ushort wordBreak        : 8; /* 4 needed */
-        ushort sentenceBreak    : 8; /* 4 needed */
-    };
-    Q_CORE_EXPORT const Properties * QT_FASTCALL properties(uint ucs4);
-    Q_CORE_EXPORT const Properties * QT_FASTCALL properties(ushort ucs2);
+    // required by QChar
+    Q_CORE_EXPORT int QT_FASTCALL digitValue(uint ucs4);
+    Q_CORE_EXPORT int QT_FASTCALL digitValue(ushort ucs2);
+    Q_CORE_EXPORT QChar::Joining QT_FASTCALL joining(uint ucs4);
+    Q_CORE_EXPORT QChar::Joining QT_FASTCALL joining(ushort ucs2);
+    Q_CORE_EXPORT uint QT_FASTCALL mirroredChar(uint ucs4);
+    Q_CORE_EXPORT ushort QT_FASTCALL mirroredChar(ushort ucs2);
+    Q_CORE_EXPORT QChar::UnicodeVersion QT_FASTCALL unicodeVersion(uint ucs4);
+    Q_CORE_EXPORT QChar::UnicodeVersion QT_FASTCALL unicodeVersion(ushort ucs2);
 
+    // required by Harfbuzz
+    enum CombiningClass {
+        Combining_NotOrdered = 0,
+        Combining_Overlay = 1,
+        Combining_Nukta = 7,
+        Combining_Kana_Voicing = 8,
+        Combining_Virama = 9,
+        Combining_CCC10 = 10,
+        Combining_CCC11 = 11,
+        Combining_CCC12 = 12,
+        Combining_CCC13 = 13,
+        Combining_CCC14 = 14,
+        Combining_CCC15 = 15,
+        Combining_CCC16 = 16,
+        Combining_CCC17 = 17,
+        Combining_CCC18 = 18,
+        Combining_CCC19 = 19,
+        Combining_CCC20 = 20,
+        Combining_CCC21 = 21,
+        Combining_CCC22 = 22,
+        Combining_CCC23 = 23,
+        Combining_CCC24 = 24,
+        Combining_CCC25 = 25,
+        Combining_CCC26 = 26,
+        Combining_CCC27 = 27,
+        Combining_CCC28 = 28,
+        Combining_CCC29 = 29,
+        Combining_CCC30 = 30,
+        Combining_CCC31 = 31,
+        Combining_CCC32 = 32,
+        Combining_CCC33 = 33,
+        Combining_CCC34 = 34,
+        Combining_CCC35 = 35,
+        Combining_CCC36 = 36,
+        Combining_CCC84 = 84,
+        Combining_CCC91 = 91,
+        Combining_CCC103 = 103,
+        Combining_CCC107 = 107,
+        Combining_CCC118 = 118,
+        Combining_CCC122 = 122,
+        Combining_CCC129 = 129,
+        Combining_CCC130 = 130,
+        Combining_CCC132 = 132,
+        Combining_AttachedBelow = 202,
+        Combining_AttachedAbove = 214,
+        Combining_AttachedAboveRight = 216,
+        Combining_BelowLeft = 218,
+        Combining_Below = 220,
+        Combining_BelowRight = 222,
+        Combining_Left = 224,
+        Combining_Right = 226,
+        Combining_AboveLeft = 228,
+        Combining_Above = 230,
+        Combining_AboveRight = 232,
+        Combining_DoubleBelow = 233,
+        Combining_DoubleAbove = 234,
+        Combining_IotaSubscript = 240
+    };
+
+    enum GraphemeBreak {
+        GraphemeBreak_Other,
+        GraphemeBreak_CR,
+        GraphemeBreak_LF,
+        GraphemeBreak_Control,
+        GraphemeBreak_Extend,
+        GraphemeBreak_L,
+        GraphemeBreak_V,
+        GraphemeBreak_T,
+        GraphemeBreak_LV,
+        GraphemeBreak_LVT
+    };
+
+    enum WordBreak {
+        WordBreak_Other,
+        WordBreak_Format,
+        WordBreak_Katakana,
+        WordBreak_ALetter,
+        WordBreak_MidLetter,
+        WordBreak_MidNum,
+        WordBreak_Numeric,
+        WordBreak_ExtendNumLet
+    };
+
+    enum SentenceBreak {
+        SentenceBreak_Other,
+        SentenceBreak_Sep,
+        SentenceBreak_Format,
+        SentenceBreak_Sp,
+        SentenceBreak_Lower,
+        SentenceBreak_Upper,
+        SentenceBreak_OLetter,
+        SentenceBreak_Numeric,
+        SentenceBreak_ATerm,
+        SentenceBreak_STerm,
+        SentenceBreak_Close
+    };
+
+    enum LineBreak {
+        LineBreak_OP,
+        LineBreak_CL,
+        LineBreak_QU,
+        LineBreak_GL,
+        LineBreak_NS,
+        LineBreak_EX,
+        LineBreak_SY,
+        LineBreak_IS,
+        LineBreak_PR,
+        LineBreak_PO,
+        LineBreak_NU,
+        LineBreak_AL,
+        LineBreak_ID,
+        LineBreak_IN,
+        LineBreak_HY,
+        LineBreak_BA,
+        LineBreak_BB,
+        LineBreak_B2,
+        LineBreak_ZW,
+        LineBreak_CM,
+        LineBreak_WJ,
+        LineBreak_H2,
+        LineBreak_H3,
+        LineBreak_JL,
+        LineBreak_JV,
+        LineBreak_JT,
+        LineBreak_SA,
+        LineBreak_SG,
+        LineBreak_SP,
+        LineBreak_CR,
+        LineBreak_LF,
+        LineBreak_BK
+    };
+
+    Q_CORE_EXPORT CombiningClass QT_FASTCALL combiningClass(uint ucs4);
+    Q_CORE_EXPORT GraphemeBreak QT_FASTCALL graphemeBreak(uint ucs4);
+    Q_CORE_EXPORT WordBreak QT_FASTCALL wordBreak(uint ucs4);
+    Q_CORE_EXPORT SentenceBreak QT_FASTCALL sentenceBreak(uint ucs4);
+    Q_CORE_EXPORT LineBreak QT_FASTCALL lineBreakClass(uint ucs4);
+
+    // required by text engine
     // See http://www.unicode.org/reports/tr24/tr24-5.html
     enum Script {
         Common,
+        Latin,
         Greek,
         Cyrillic,
         Armenian,
@@ -107,115 +229,138 @@ namespace QUnicodeTables {
         Myanmar,
         Georgian,
         Hangul,
+        Ethiopic,
+        Cherokee,
+        CanadianAboriginal,
         Ogham,
         Runic,
         Khmer,
-        Nko,
+        Mongolian,
+        Hiragana,
+        Katakana,
+        Bopomofo,
+        Han,
+        Yi,
+        OldItalic,
+        Gothic,
+        Deseret,
         Inherited,
-        ScriptCount = Inherited,
-        Latin = Common,
-        Ethiopic = Common,
-        Cherokee = Common,
-        CanadianAboriginal = Common,
-        Mongolian = Common,
-        Hiragana = Common,
-        Katakana = Common,
-        Bopomofo = Common,
-        Han = Common,
-        Yi = Common,
-        OldItalic = Common,
-        Gothic = Common,
-        Deseret = Common,
-        Tagalog = Common,
-        Hanunoo = Common,
-        Buhid = Common,
-        Tagbanwa = Common,
-        Limbu = Common,
-        TaiLe = Common,
-        LinearB = Common,
-        Ugaritic = Common,
-        Shavian = Common,
-        Osmanya = Common,
-        Cypriot = Common,
-        Braille = Common,
-        Buginese = Common,
-        Coptic = Common,
-        NewTaiLue = Common,
-        Glagolitic = Common,
-        Tifinagh = Common,
-        SylotiNagri = Common,
-        OldPersian = Common,
-        Kharoshthi = Common,
-        Balinese = Common,
-        Cuneiform = Common,
-        Phoenician = Common,
-        PhagsPa = Common
+        Tagalog,
+        Hanunoo,
+        Buhid,
+        Tagbanwa,
+        Limbu,
+        TaiLe,
+        LinearB,
+        Ugaritic,
+        Shavian,
+        Osmanya,
+        Cypriot,
+        Braille,
+        Buginese,
+        Coptic,
+        NewTaiLue,
+        Glagolitic,
+        Tifinagh,
+        SylotiNagri,
+        OldPersian,
+        Kharoshthi,
+        Balinese,
+        Cuneiform,
+        Phoenician,
+        PhagsPa,
+        Nko,
+        Sundanese,
+        Lepcha,
+        OlChiki,
+        Vai,
+        Saurashtra,
+        KayahLi,
+        Rejang,
+        Lycian,
+        Carian,
+        Lydian,
+        Cham,
+        TaiTham,
+        TaiViet,
+        Avestan,
+        EgyptianHieroglyphs,
+        Samaritan,
+        Lisu,
+        Bamum,
+        Javanese,
+        MeeteiMayek,
+        ImperialAramaic,
+        OldSouthArabian,
+        InscriptionalParthian,
+        InscriptionalPahlavi,
+        OldTurkic,
+        Kaithi,
+        Batak,
+        Brahmi,
+        Mandaic,
+        Chakma,
+        MeroiticCursive,
+        MeroiticHieroglyphs,
+        Miao,
+        Sharada,
+        SoraSompeng,
+        Takri,
+        CaucasianAlbanian,
+        BassaVah,
+        Duployan,
+        Elbasan,
+        Grantha,
+        PahawhHmong,
+        Khojki,
+        LinearA,
+        Mahajani,
+        Manichaean,
+        MendeKikakui,
+        Modi,
+        Mro,
+        OldNorthArabian,
+        Nabataean,
+        Palmyrene,
+        PauCinHau,
+        OldPermic,
+        PsalterPahlavi,
+        Siddham,
+        Khudawadi,
+        Tirhuta,
+        WarangCiti,
+        Ahom,
+        AnatolianHieroglyphs,
+        Hatran,
+        Multani,
+        OldHungarian,
+        SignWriting,
+        Adlam,
+        Bhaiksuki,
+        Marchen,
+        Newa,
+        Osage,
+        Tangut,
+        MasaramGondi,
+        Nushu,
+        Soyombo,
+        ZanabazarSquare,
+        Dogra,
+        GunjalaGondi,
+        Makasar,
+        Medefaidrin,
+        HanifiRohingya,
+        Sogdian,
+        OldSogdian,
+        Elymaic,
+        Nandinagari,
+        NyiakengPuachueHmong,
+        Wancho,
+
+        ScriptCount
     };
-    enum { ScriptSentinel = 32 };
 
-
-    enum GraphemeBreak {
-        GraphemeBreakOther,
-        GraphemeBreakCR,
-        GraphemeBreakLF,
-        GraphemeBreakControl,
-        GraphemeBreakExtend,
-        GraphemeBreakL,
-        GraphemeBreakV,
-        GraphemeBreakT,
-        GraphemeBreakLV,
-        GraphemeBreakLVT
-    };
-
-
-    enum WordBreak {
-        WordBreakOther,
-        WordBreakFormat,
-        WordBreakKatakana,
-        WordBreakALetter,
-        WordBreakMidLetter,
-        WordBreakMidNum,
-        WordBreakNumeric,
-        WordBreakExtendNumLet
-    };
-
-
-    enum SentenceBreak {
-        SentenceBreakOther,
-        SentenceBreakSep,
-        SentenceBreakFormat,
-        SentenceBreakSp,
-        SentenceBreakLower,
-        SentenceBreakUpper,
-        SentenceBreakOLetter,
-        SentenceBreakNumeric,
-        SentenceBreakATerm,
-        SentenceBreakSTerm,
-        SentenceBreakClose
-    };
-
-
-    // see http://www.unicode.org/reports/tr14/tr14-19.html
-    // we don't use the XX, AI and CB properties and map them to AL instead.
-    // as we don't support any EBDIC based OS'es, NL is ignored and mapped to AL as well.
-    enum LineBreakClass {
-        LineBreak_OP, LineBreak_CL, LineBreak_QU, LineBreak_GL, LineBreak_NS,
-        LineBreak_EX, LineBreak_SY, LineBreak_IS, LineBreak_PR, LineBreak_PO,
-        LineBreak_NU, LineBreak_AL, LineBreak_ID, LineBreak_IN, LineBreak_HY,
-        LineBreak_BA, LineBreak_BB, LineBreak_B2, LineBreak_ZW, LineBreak_CM,
-        LineBreak_WJ, LineBreak_H2, LineBreak_H3, LineBreak_JL, LineBreak_JV,
-        LineBreak_JT, LineBreak_SA, LineBreak_SG,
-        LineBreak_SP, LineBreak_CR, LineBreak_LF, LineBreak_BK
-    };
-
-
-    Q_CORE_EXPORT QUnicodeTables::LineBreakClass QT_FASTCALL lineBreakClass(uint ucs4);
-    inline int lineBreakClass(const QChar &ch)
-    { return lineBreakClass(ch.unicode()); }
-
-    Q_CORE_EXPORT int QT_FASTCALL script(uint ucs4);
-    inline int script(const QChar &ch)
-    { return script(ch.unicode()); }
+    Q_CORE_EXPORT Script QT_FASTCALL script(uint ucs4);
 
 } // namespace QUnicodeTables
 

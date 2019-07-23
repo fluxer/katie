@@ -204,7 +204,7 @@ extern QMutex *qt_fontdatabase_mutex();
 QFontEngine *QFontPrivate::engineForScript(int script) const
 {
     QMutexLocker locker(qt_fontdatabase_mutex());
-    if (script >= QUnicodeTables::Inherited)
+    if (script > QUnicodeTables::ScriptCount)
         script = QUnicodeTables::Common;
     if (engineData && engineData->fontCache != QFontCache::instance()) {
         // throw out engineData that came from a different thread

@@ -80,6 +80,9 @@ private slots:
     void fromLatin1Alternatives() const;
     void fromUtf8Alternatives_data() const;
     void fromUtf8Alternatives() const;
+    void toLower() const;
+    void toUpper() const;
+    void toCaseFolded() const;
 
 #if !defined(QWS) && defined(Q_OS_MAC)
     void QCFString_data() const;
@@ -1065,6 +1068,57 @@ void tst_QString::fromUtf8Alternatives() const
 
     QBENCHMARK {
         fromUtf8Alternatives_internal(function, dst, false);
+    }
+}
+
+void tst_QString::toLower() const
+{
+    QFile file(QLatin1String(SRCDIR "utf-8.txt"));
+    if (!file.open(QFile::ReadOnly)) {
+        qFatal("Cannot open input file");
+        return;
+    }
+    QByteArray data = file.readAll();
+    const char *d = data.constData();
+    int size = data.size();
+    QString s = QString::fromUtf8(d, size);
+
+    QBENCHMARK {
+        (void)s.toLower();
+    }
+}
+
+void tst_QString::toUpper() const
+{
+    QFile file(QLatin1String(SRCDIR "utf-8.txt"));
+    if (!file.open(QFile::ReadOnly)) {
+        qFatal("Cannot open input file");
+        return;
+    }
+    QByteArray data = file.readAll();
+    const char *d = data.constData();
+    int size = data.size();
+    QString s = QString::fromUtf8(d, size);
+
+    QBENCHMARK {
+        (void)s.toUpper();
+    }
+}
+
+void tst_QString::toCaseFolded() const
+{
+    QFile file(QLatin1String(SRCDIR "utf-8.txt"));
+    if (!file.open(QFile::ReadOnly)) {
+        qFatal("Cannot open input file");
+        return;
+    }
+    QByteArray data = file.readAll();
+    const char *d = data.constData();
+    int size = data.size();
+    QString s = QString::fromUtf8(d, size);
+
+    QBENCHMARK {
+        (void)s.toCaseFolded();
     }
 }
 

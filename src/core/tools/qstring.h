@@ -712,8 +712,6 @@ public:
     QChar mirroredChar() const { return QChar(*this).mirroredChar(); }
     QString decomposition() const { return QChar(*this).decomposition(); }
     QChar::Decomposition decompositionTag() const { return QChar(*this).decompositionTag(); }
-    uchar combiningClass() const { return QChar(*this).combiningClass(); }
-
     QChar::UnicodeVersion unicodeVersion() const { return QChar(*this).unicodeVersion(); }
 
     inline uchar cell() const { return QChar(*this).cell(); }

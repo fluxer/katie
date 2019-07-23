@@ -256,7 +256,6 @@ set(GUI_PUBLIC_HEADERS
     QStyleOptionToolBoxV2
     QStylePainter
     QStylePlugin
-    QSupportedWritingSystems
     QSwipeGesture
     QSyntaxHighlighter
     QSystemTrayIcon

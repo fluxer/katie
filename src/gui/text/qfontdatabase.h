@@ -53,59 +53,12 @@ class QFontDatabasePrivate;
 class Q_GUI_EXPORT QFontDatabase
 {
     Q_GADGET
-    Q_ENUMS(WritingSystem)
 public:
-    enum WritingSystem {
-        Any,
-
-        Latin,
-        Greek,
-        Cyrillic,
-        Armenian,
-        Hebrew,
-        Arabic,
-        Syriac,
-        Thaana,
-        Devanagari,
-        Bengali,
-        Gurmukhi,
-        Gujarati,
-        Oriya,
-        Tamil,
-        Telugu,
-        Kannada,
-        Malayalam,
-        Sinhala,
-        Thai,
-        Lao,
-        Tibetan,
-        Myanmar,
-        Georgian,
-        Khmer,
-        SimplifiedChinese,
-        TraditionalChinese,
-        Japanese,
-        Korean,
-        Vietnamese,
-
-        Symbol,
-        Other = Symbol,
-
-        Ogham,
-        Runic,
-        Nko,
-
-        WritingSystemsCount
-    };
-
     static QList<int> standardSizes();
 
     QFontDatabase();
 
-    QList<WritingSystem> writingSystems() const;
-    QList<WritingSystem> writingSystems(const QString &family) const;
-
-    QStringList families(WritingSystem writingSystem = Any) const;
+    QStringList families() const;
     QStringList styles(const QString &family) const;
     QList<int> pointSizes(const QString &family, const QString &style = QString());
     QList<int> smoothSizes(const QString &family, const QString &style);
@@ -124,9 +77,6 @@ public:
     int weight(const QString &family, const QString &style) const;
 
     bool hasFamily(const QString &family) const;
-
-    static QString writingSystemName(WritingSystem writingSystem);
-    static QString writingSystemSample(WritingSystem writingSystem);
 
     static int addApplicationFont(const QString &fileName);
     static int addApplicationFontFromData(const QByteArray &fontData);

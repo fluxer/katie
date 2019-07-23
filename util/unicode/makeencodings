@@ -1,0 +1,42 @@
+#!/usr/bin/perl
+
+use strict;
+
+open IN, "encodings.in"
+  or die "Can't open in\n";
+open out, ">encodings.c"
+  or die "Can't open out\n";
+
+my $num = 0;
+my @xlfd = ();
+my @mib = ();
+
+my $i;
+
+while (<IN>) {
+  chomp;
+  s/#.*//;			
+  if ( index( $_, ' ' ) > -1 ) {
+    chomp;
+    my @line = split( / /, $_ );
+    $xlfd[$num] = $line[0];
+    $mib[$num] = $line[1];
+
+    $num = $num + 1;
+  }
+
+}
+
+print out "static const struct XlfdTblData {
+    const char *name;
+    const int id;
+    const int mib;
+} XlfdTbl[] = {\n";
+$i = 0;
+while( $i < $num ) {
+  print out "    { \"".$xlfd[$i]."\", ".$i.", ".$mib[$i]." },\n";
+  $i = $i + 1;
+}
+print out "};\n\n";
+
+close out;

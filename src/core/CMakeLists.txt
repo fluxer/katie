@@ -241,6 +241,17 @@ include_directories(
     ${ZLIB_INCLUDE_DIRS}
     ${OPENSSL_INCLUDE_DIR}
     ${ZSTD_INCLUDES}
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc
+)
+
+set(CORE_SOURCES
+    ${CORE_SOURCES}
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc/utf8proc.c
+)
+
+set(CORE_HEADERS
+    ${CORE_HEADERS}
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc/utf8proc.h
 )
 
 if(WITH_GLIB2 AND GLIB2_FOUND)

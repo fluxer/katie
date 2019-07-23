@@ -54,50 +54,6 @@
 
 QT_BEGIN_NAMESPACE
 
-static QFontDatabase::WritingSystem writingSystemForFont(const QFont &font, bool *hasLatin)
-{
-    *hasLatin = true;
-
-    QList<QFontDatabase::WritingSystem> writingSystems = QFontDatabase().writingSystems(font.family());
-//     qDebug() << font.family() << writingSystems;
-
-    // this just confuses the algorithm below. Vietnamese is Latin with lots of special chars
-    writingSystems.removeAll(QFontDatabase::Vietnamese);
-
-    QFontDatabase::WritingSystem system = QFontDatabase::Any;
-
-    if (!writingSystems.contains(QFontDatabase::Latin)) {
-        *hasLatin = false;
-        // we need to show something
-        if (writingSystems.count())
-            system = writingSystems.last();
-    } else {
-        writingSystems.removeAll(QFontDatabase::Latin);
-    }
-
-    if (writingSystems.isEmpty())
-        return system;
-
-    if (writingSystems.count() == 1 && writingSystems.at(0) > QFontDatabase::Cyrillic) {
-        system = writingSystems.at(0);
-        return system;
-    }
-
-    if (writingSystems.count() <= 2
-        && writingSystems.last() > QFontDatabase::Armenian
-        && writingSystems.last() < QFontDatabase::Vietnamese) {
-        system = writingSystems.last();
-        return system;
-    }
-
-    if (writingSystems.count() <= 5
-        && writingSystems.last() >= QFontDatabase::SimplifiedChinese
-        && writingSystems.last() <= QFontDatabase::Korean)
-        system = writingSystems.last();
-
-    return system;
-}
-
 class QFontFamilyDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
@@ -114,7 +70,6 @@ public:
 
     QIcon truetype;
     QIcon bitmap;
-    QFontDatabase::WritingSystem writingSystem;
 };
 
 QFontFamilyDelegate::QFontFamilyDelegate(QObject *parent)
@@ -122,7 +77,6 @@ QFontFamilyDelegate::QFontFamilyDelegate(QObject *parent)
 {
     truetype = QIcon(QLatin1String(":/trolltech/styles/commonstyle/images/fonttruetype-16.png"));
     bitmap = QIcon(QLatin1String(":/trolltech/styles/commonstyle/images/fontbitmap-16.png"));
-    writingSystem = QFontDatabase::Any;
 }
 
 void QFontFamilyDelegate::paint(QPainter *painter,
@@ -132,13 +86,7 @@ void QFontFamilyDelegate::paint(QPainter *painter,
     QString text = index.data(Qt::DisplayRole).toString();
     QFont font(option.font);
     font.setPointSize(QFontInfo(font).pointSize() * 3 / 2);
-    QFont font2 = font;
-    font2.setFamily(text);
-
-    bool hasLatin;
-    QFontDatabase::WritingSystem system = writingSystemForFont(font2, &hasLatin);
-    if (hasLatin)
-        font = font2;
+    font.setFamily(text);
 
     QRect r = option.rect;
 
@@ -177,19 +125,6 @@ void QFontFamilyDelegate::paint(QPainter *painter,
         painter->drawText(r, Qt::AlignVCenter|Qt::AlignLeading|Qt::TextSingleLine, text);
     }
 
-    if (writingSystem != QFontDatabase::Any)
-        system = writingSystem;
-
-    if (system != QFontDatabase::Any) {
-        int w = painter->fontMetrics().width(text + QLatin1String("  "));
-        painter->setFont(font2);
-        QString sample = QFontDatabase().writingSystemSample(system);
-        if (option.direction == Qt::RightToLeft)
-            r.setRight(r.right() - w);
-        else
-            r.setLeft(r.left() + w);
-        painter->drawText(r, Qt::AlignVCenter|Qt::AlignLeading|Qt::TextSingleLine, sample);
-    }
     painter->setFont(old);
 
     if (option.state & QStyle::State_Selected)
@@ -233,11 +168,9 @@ void QFontComboBoxPrivate::_q_updateModel()
     QStringListModel *m = qobject_cast<QStringListModel *>(q->model());
     if (!m)
         return;
-    QFontFamilyDelegate *delegate = qobject_cast<QFontFamilyDelegate *>(q->view()->itemDelegate());
-    QFontDatabase::WritingSystem system = delegate ? delegate->writingSystem : QFontDatabase::Any;
 
     QFontDatabase fdb;
-    QStringList list = fdb.families(system);
+    QStringList list = fdb.families();
     QStringList result;
 
     int offset = 0;
@@ -308,18 +241,12 @@ void QFontComboBoxPrivate::_q_currentChanged(const QString &text)
     When the user selects a new font, the currentFontChanged() signal
     is emitted in addition to currentIndexChanged().
 
-    Call setWritingSystem() to tell QFontComboBox to show only fonts
-    that support a given writing system, and setFontFilters() to
-    filter out certain types of fonts as e.g. non scalable fonts or
-    monospaced fonts.
+    Call setFontFilters() to filter out certain types of fonts as e.g.
+    non scalable fonts or monospaced fonts.
 
     \image windowsxp-fontcombobox.png Screenshot of QFontComboBox on Windows XP
 
     \sa QComboBox, QFont, QFontInfo, QFontMetrics, QFontDatabase, {Character Map Example}
-*/
-
-/*!
-    \fn void QFontComboBox::setWritingSystem(QFontDatabase::WritingSystem script)
 */
 
 /*!
@@ -342,7 +269,6 @@ QFontComboBox::QFontComboBox(QWidget *parent)
     QListView *lview = qobject_cast<QListView*>(view());
     if (lview)
         lview->setUniformItemSizes(true);
-    setWritingSystem(QFontDatabase::Any);
 
     connect(this, SIGNAL(currentIndexChanged(QString)),
             this, SLOT(_q_currentChanged(QString)));
@@ -358,34 +284,6 @@ QFontComboBox::QFontComboBox(QWidget *parent)
 QFontComboBox::~QFontComboBox()
 {
 }
-
-/*!
-    \property QFontComboBox::writingSystem
-    \brief the writing system that serves as a filter for the combobox
-
-    If \a script is QFontDatabase::Any (the default), all fonts are
-    listed.
-
-    \sa fontFilters
-*/
-
-void QFontComboBox::setWritingSystem(QFontDatabase::WritingSystem script)
-{
-    Q_D(QFontComboBox);
-    QFontFamilyDelegate *delegate = qobject_cast<QFontFamilyDelegate *>(view()->itemDelegate());
-    if (delegate)
-        delegate->writingSystem = script;
-    d->_q_updateModel();
-}
-
-QFontDatabase::WritingSystem QFontComboBox::writingSystem() const
-{
-    QFontFamilyDelegate *delegate = qobject_cast<QFontFamilyDelegate *>(view()->itemDelegate());
-    if (delegate)
-        return delegate->writingSystem;
-    return QFontDatabase::Any;
-}
-
 
 /*!
   \enum QFontComboBox::FontFilter
@@ -404,8 +302,6 @@ QFontDatabase::WritingSystem QFontComboBox::writingSystem() const
     \brief the filter for the combobox
 
     By default, all fonts are listed.
-
-    \sa writingSystem
 */
 void QFontComboBox::setFontFilters(FontFilters filters)
 {

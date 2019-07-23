@@ -32,6 +32,7 @@
 ****************************************************************************/
 
 #include "qstringmatcher.h"
+#include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 

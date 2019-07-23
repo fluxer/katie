@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the tools applications of the Katie Toolkit.
+** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** GNU Lesser General Public License Usage
@@ -31,64 +31,49 @@
 **
 ****************************************************************************/
 
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Katie API.  It exists for the convenience
-// of the Qt tools.  This header
-// file may change from version to version without notice, or even be removed.
-//
-// We mean it.
-//
+#include "qdebug.h"
 
-#ifndef FONTPANEL_H
-#define FONTPANEL_H
+#ifdef QT_STD_LOCALE
 
-#include <QtGui/QGroupBox>
-#include <QtGui/QFont>
-#include <QtGui/QFontDatabase>
+#include <locale>
+#include <cstring>
 
 QT_BEGIN_NAMESPACE
 
-class QComboBox;
-class QFontComboBox;
-class QTimer;
-class QLineEdit;
-
-class FontPanel: public QGroupBox
+bool qt_initStdLocale(const QString &localeString)
 {
-    Q_OBJECT
-public:
-    FontPanel(QWidget *parentWidget = 0);
+    return std::setlocale(LC_COLLATE, localeString.toLatin1().constData());
+}
 
-    QFont selectedFont() const;
-    void setSelectedFont(const QFont &);
+bool qt_ucol_strcoll(const QChar *source, int sourceLength, const QChar *target, int targetLength, int *result)
+{
+    Q_ASSERT(result);
+    Q_ASSERT(source);
+    Q_ASSERT(target);
+    Q_UNUSED(sourceLength);
+    Q_UNUSED(targetLength);
 
-private slots:
-    void slotFamilyChanged(const QFont &);
-    void slotStyleChanged(int);
-    void slotPointSizeChanged(int);
-    void slotUpdatePreviewFont();
+    *result = std::strcoll(reinterpret_cast<const char*>(source), reinterpret_cast<const char*>(target));
 
-private:
-    QString family() const;
-    QString styleString() const;
-    int pointSize() const;
-    int closestPointSizeIndex(int ps) const;
+    return true;
+}
 
-    void updateFamily(const QString &family);
-    void updatePointSizes(const QString &family, const QString &style);
-    void delayedPreviewFontUpdate();
+bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale)
+{
+    Q_ASSERT(out);
+    std::locale l = std::locale(locale.bcp47Name().toLatin1().constData());
+    *out = QString::fromUtf8(std::toupper(str.toLatin1().constData(), l));
+    return true;
+}
 
-    QFontDatabase m_fontDatabase;
-    QLineEdit *m_previewLineEdit;
-    QFontComboBox* m_familyComboBox;
-    QComboBox *m_styleComboBox;
-    QComboBox *m_pointSizeComboBox;
-    QTimer *m_previewFontUpdateTimer;
-};
+bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale)
+{
+    Q_ASSERT(out);
+    std::locale l = std::locale(locale.bcp47Name().toLatin1().constData());
+    *out = QString::fromUtf8(std::tolower(str.toLatin1().constData(), l));
+    return true;
+}
 
 QT_END_NAMESPACE
 
-#endif // FONTPANEL_H
+#endif // QT_STD_LOCALE

@@ -141,9 +141,6 @@ add_feature_info(dbus WITH_DBUS "build DBus support")
 option(WITH_FONTCONFIG "Build Fontconfig support" ON)
 add_feature_info(fontconfig WITH_FONTCONFIG "build Fontconfig support")
 
-option(WITH_ICU "Build ICU support" ON)
-add_feature_info(icu WITH_ICU "build ICU support")
-
 # TODO: enable when building against external harfbuzz works
 option(WITH_HARFBUZZ "Build Harfbuzz support" OFF)
 add_feature_info(harfbuzz WITH_HARFBUZZ "build Harfbuzz support")
@@ -183,6 +180,7 @@ include(mkspecs/mkspecs.cmake)
 
 add_definitions(
     -DQT_POSIX_IPC
+    -DQT_STD_LOCALE
     # -DQT_STRICT_ITERATORS
     # -DQT_ASCII_CAST_WARNINGS
     # maybe one day, this forces it onto other projects which (most likely)
@@ -381,14 +379,6 @@ set_package_properties(Fontconfig PROPERTIES
     PURPOSE "Required for fonts configuration support"
     DESCRIPTION "Library for configuring and customizing font access"
     URL "http://www.freedesktop.org/wiki/Software/fontconfig"
-    TYPE RECOMMENDED
-)
-
-find_package(ICU)
-set_package_properties(ICU PROPERTIES
-    PURPOSE "ICU locales support"
-    DESCRIPTION "Mature, widely used libraries providing Unicode and Globalization support"
-    URL "http://site.icu-project.org/"
     TYPE RECOMMENDED
 )
 

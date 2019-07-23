@@ -83,8 +83,6 @@ public:
     // Unicode information
 
     enum Category {
-        NoCategory,    // ### Qt 5: replace with Other_NotAssigned
-
         Mark_NonSpacing,          //   Mn
         Mark_SpacingCombining,    //   Mc
         Mark_Enclosing,           //   Me
@@ -120,7 +118,7 @@ public:
         Symbol_Math,              //   Sm
         Symbol_Currency,          //   Sc
         Symbol_Modifier,          //   Sk
-        Symbol_Other             //   So
+        Symbol_Other              //   So
     };
 
     enum Direction {
@@ -142,12 +140,15 @@ public:
         DirRLO,
         DirPDF,
         DirNSM,
-        DirBN
+        DirBN,
+        DirLRI,
+        DirRLI,
+        DirFSI,
+        DirPDI
     };
 
     enum Decomposition {
         NoDecomposition,
-        Canonical,
         Font,
         NoBreak,
         Initial,
@@ -170,44 +171,36 @@ public:
         OtherJoining,
         Dual,
         Right,
-        Center
-    };
-
-    enum CombiningClass {
-        Combining_BelowLeftAttached       = 200,
-        Combining_BelowAttached           = 202,
-        Combining_BelowRightAttached      = 204,
-        Combining_LeftAttached            = 208,
-        Combining_RightAttached           = 210,
-        Combining_AboveLeftAttached       = 212,
-        Combining_AboveAttached           = 214,
-        Combining_AboveRightAttached      = 216,
-
-        Combining_BelowLeft               = 218,
-        Combining_Below                   = 220,
-        Combining_BelowRight              = 222,
-        Combining_Left                    = 224,
-        Combining_Right                   = 226,
-        Combining_AboveLeft               = 228,
-        Combining_Above                   = 230,
-        Combining_AboveRight              = 232,
-
-        Combining_DoubleBelow             = 233,
-        Combining_DoubleAbove             = 234,
-        Combining_IotaSubscript           = 240
+        Left,
+        Causing,
+        Transparent
     };
 
     enum UnicodeVersion {
-        Unicode_Unassigned,    // ### Qt 5: assign with some constantly big value
+        Unicode_Unassigned,
         Unicode_1_1,
         Unicode_2_0,
-        Unicode_2_1_2,
+        Unicode_2_1,
         Unicode_3_0,
         Unicode_3_1,
         Unicode_3_2,
         Unicode_4_0,
         Unicode_4_1,
-        Unicode_5_0
+        Unicode_5_0,
+        Unicode_5_1,
+        Unicode_5_2,
+        Unicode_6_0,
+        Unicode_6_1,
+        Unicode_6_2,
+        Unicode_6_3,
+        Unicode_7_0,
+        Unicode_8_0,
+        Unicode_9_0,
+        Unicode_10_0,
+        Unicode_11_0,
+        Unicode_12_0,
+        Unicode_12_1,
+        Unicode_Last = Unicode_12_1
     };
     // ****** WHEN ADDING FUNCTIONS, CONSIDER ADDING TO QCharRef TOO
 
@@ -215,7 +208,6 @@ public:
     Direction direction() const;
     Joining joining() const;
     bool hasMirrored() const;
-    unsigned char combiningClass() const;
 
     QChar mirroredChar() const;
     QString decomposition() const;
@@ -247,9 +239,9 @@ public:
     bool isLetterOrNumber() const;
     bool isDigit() const;
     bool isSymbol() const;
-    inline bool isLower() const { return category() == Letter_Lowercase; }
-    inline bool isUpper() const { return category() == Letter_Uppercase; }
-    inline bool isTitleCase() const { return category() == Letter_Titlecase; }
+    bool isLower() const;
+    bool isUpper() const;
+    bool isTitleCase() const;
 
     inline bool isHighSurrogate() const {
         return ((ucs & 0xfc00) == 0xd800);
@@ -291,8 +283,6 @@ public:
     static Direction QT_FASTCALL direction(const ushort ucs2);
     static Joining QT_FASTCALL joining(const uint ucs4);
     static Joining QT_FASTCALL joining(const ushort ucs2);
-    static unsigned char QT_FASTCALL combiningClass(const uint ucs4);
-    static unsigned char QT_FASTCALL combiningClass(const ushort ucs2);
 
     static uint QT_FASTCALL mirroredChar(const uint ucs4);
     static ushort QT_FASTCALL mirroredChar(const ushort ucs2);

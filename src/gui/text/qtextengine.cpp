@@ -232,7 +232,8 @@ private:
 #if (BIDI_DEBUG >= 1)
 static const char *directions[] = {
     "DirL", "DirR", "DirEN", "DirES", "DirET", "DirAN", "DirCS", "DirB", "DirS", "DirWS", "DirON",
-    "DirLRE", "DirLRO", "DirAL", "DirRLE", "DirRLO", "DirPDF", "DirNSM", "DirBN"
+    "DirLRE", "DirLRO", "DirAL", "DirRLE", "DirRLO", "DirPDF", "DirNSM", "DirBN", "DirLRI",
+    "DirRLI", "DirFSI", "DirPDI"
 };
 
 #endif
@@ -2238,7 +2239,7 @@ static inline bool prevCharJoins(const QString &string, int pos)
     if (pos == 0)
         return false;
     QChar::Joining joining = string.at(pos - 1).joining();
-    return (joining == QChar::Dual || joining == QChar::Center);
+    return (joining == QChar::Dual);
 }
 
 QString QTextEngine::elidedText(Qt::TextElideMode mode, const QFixed &width, int flags) const

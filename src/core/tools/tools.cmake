@@ -58,6 +58,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbitarray.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbytearray.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbytearraymatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qchar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcryptographichash.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qdatetime.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qeasingcurve.cpp
@@ -79,6 +80,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsize.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstring.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstringlist.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstringmatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtextboundaryfinder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtimeline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.cpp
@@ -87,20 +89,9 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineparser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_std.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qunicodetables.cpp
 )
-
-if(WITH_ICU AND ICU_FOUND)
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_icu.cpp
-    )
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        ${ICU_LIBRARIES}
-    )
-    add_definitions(-DQT_USE_ICU)
-    include_directories(${ICU_INCLUDES})
-endif()
 
 # Note: libm should be present by default becaue this is C++
 set(EXTRA_CORE_LIBS

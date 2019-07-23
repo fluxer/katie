@@ -51,20 +51,17 @@ extern "C" {
 
 HB_GraphemeClass HB_GetGraphemeClass(HB_UChar32 ch)
 {
-    const QUnicodeTables::Properties *prop = QUnicodeTables::properties(ch);
-    return (HB_GraphemeClass) prop->graphemeBreak;
+    return (HB_GraphemeClass) QUnicodeTables::graphemeBreak(ch);
 }
 
 HB_WordClass HB_GetWordClass(HB_UChar32 ch)
 {
-    const QUnicodeTables::Properties *prop = QUnicodeTables::properties(ch);
-    return (HB_WordClass) prop->wordBreak;
+    return (HB_WordClass) QUnicodeTables::wordBreak(ch);
 }
 
 HB_SentenceClass HB_GetSentenceClass(HB_UChar32 ch)
 {
-    const QUnicodeTables::Properties *prop = QUnicodeTables::properties(ch);
-    return (HB_SentenceClass) prop->sentenceBreak;
+    return (HB_SentenceClass) QUnicodeTables::sentenceBreak(ch);
 }
 
 HB_LineBreakClass HB_GetLineBreakClass(HB_UChar32 ch)
@@ -75,16 +72,14 @@ HB_LineBreakClass HB_GetLineBreakClass(HB_UChar32 ch)
 
 void HB_GetGraphemeAndLineBreakClass(HB_UChar32 ch, HB_GraphemeClass *grapheme, HB_LineBreakClass *lineBreak)
 {
-    const QUnicodeTables::Properties *prop = QUnicodeTables::properties(ch);
-    *grapheme = (HB_GraphemeClass) prop->graphemeBreak;
-    *lineBreak = (HB_LineBreakClass) prop->line_break_class;
+    *grapheme = (HB_GraphemeClass) QUnicodeTables::graphemeBreak(ch);
+    *lineBreak = (HB_LineBreakClass) QUnicodeTables::lineBreakClass(ch);
 }
 
 void HB_GetUnicodeCharProperties(HB_UChar32 ch, HB_CharCategory *category, int *combiningClass)
 {
-    const QUnicodeTables::Properties *prop = QUnicodeTables::properties(ch);
-    *category = (HB_CharCategory)prop->category;
-    *combiningClass = prop->combiningClass;
+    *category = (HB_CharCategory)QChar::category(ch);
+    *combiningClass = QUnicodeTables::combiningClass(ch);
 }
 
 HB_CharCategory HB_GetUnicodeCharCategory(HB_UChar32 ch)
@@ -94,7 +89,7 @@ HB_CharCategory HB_GetUnicodeCharCategory(HB_UChar32 ch)
 
 int HB_GetUnicodeCharCombiningClass(HB_UChar32 ch)
 {
-    return QChar::combiningClass(ch);
+    return QUnicodeTables::combiningClass(ch);
 }
 
 HB_UChar16 HB_GetMirroredChar(HB_UChar16 ch)

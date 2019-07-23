@@ -33,7 +33,6 @@
 
 #include "qstringlist.h"
 #include "qregexp.h"
-#include "qunicodetables_p.h"
 #ifndef QT_NO_TEXTCODEC
 #include "qtextcodec.h"
 #endif
@@ -50,15 +49,14 @@
 #include "qdebug.h"
 #include "qendian.h"
 #include "qmutex.h"
+#include "qcorecommon_p.h"
+#include "utf8proc.h"
 
 #include <limits.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
-
-#include "qchar.cpp"
-#include "qstringmatcher.cpp"
 
 QT_BEGIN_NAMESPACE
 
@@ -67,8 +65,8 @@ QTextCodec *QString::codecForCStrings;
 #endif
 
 
-#ifdef QT_USE_ICU
-// qlocale_icu.cpp
+#ifdef QT_STD_LOCALE
+// qlocale_std.cpp
 extern bool qt_ucol_strcoll(const QChar *source, int sourceLength, const QChar *target, int targetLength, int *result);
 #endif
 
@@ -4440,7 +4438,7 @@ int QString::localeAwareCompare_helper(const QChar *data1, int length1,
     if (length1 == 0 || length2 == 0)
         return ucstrcmp(data1, length1, data2, length2);
 
-#if defined(QT_USE_ICU)
+#if defined(QT_STD_LOCALE)
     int res;
     if (qt_ucol_strcoll(data1, length1, data2, length2, &res)) {
         if (res == 0)
@@ -4578,50 +4576,14 @@ QString QString::rightJustified(int width, QChar fill, bool truncate) const
 
 QString QString::toLower() const
 {
-    const ushort *p = d->data;
-    if (!p)
-        return *this;
-    if (!d->size)
+    if (!d->data || !d->size)
         return *this;
 
-    const ushort *e = d->data + d->size;
-
-    // this avoids one out of bounds check in the loop
-    if (QChar(*p).isLowSurrogate())
-        ++p;
-
-    while (p != e) {
-        uint c = *p;
-        if (QChar(c).isLowSurrogate() && QChar(*(p - 1)).isHighSurrogate())
-            c = QChar::surrogateToUcs4(*(p - 1), c);
-        const QUnicodeTables::Properties *prop = qGetProp(c);
-        if (prop->lowerCaseDiff || prop->lowerCaseSpecial) {
-            QString s(d->size, Qt::Uninitialized);
-            memcpy(s.d->data, d->data, (p - d->data)*sizeof(ushort));
-            ushort *pp = s.d->data + (p - d->data);
-            while (p < e) {
-                uint c = *p;
-                if (QChar(c).isLowSurrogate() && QChar(*(p - 1)).isHighSurrogate())
-                    c = QChar::surrogateToUcs4(*(p - 1), c);
-                prop = qGetProp(c);
-                if (prop->lowerCaseSpecial) {
-                    int pos = pp - s.d->data;
-                    s.resize(s.d->size + SPECIAL_CASE_MAX_LEN);
-                    pp = s.d->data + pos;
-                    const ushort *specialCase = specialCaseMap + prop->lowerCaseDiff;
-                    while (*specialCase)
-                        *pp++ = *specialCase++;
-                } else {
-                    *pp++ = *p + prop->lowerCaseDiff;
-                }
-                ++p;
-            }
-            s.truncate(pp - s.d->data);
-            return s;
-        }
-        ++p;
+    QString result(d->size, Qt::Uninitialized);
+    for (int i = 0; i < d->size; i++) {
+        result.d->data[i] = QChar::toLower(d->data[i]);
     }
-    return *this;
+    return result;
 }
 
 /*!
@@ -4630,33 +4592,14 @@ QString QString::toLower() const
 */
 QString QString::toCaseFolded() const
 {
-    if (!d->size)
+    if (!d->data || !d->size)
         return *this;
 
-    const ushort *p = d->data;
-    if (!p)
-        return *this;
-
-    const ushort *e = d->data + d->size;
-
-    uint last = 0;
-    while (p < e) {
-        ushort folded = foldCase(*p, last);
-        if (folded != *p) {
-            QString s(*this);
-            s.detach();
-            ushort *pp = s.d->data + (p - d->data);
-            const ushort *ppe = s.d->data + s.d->size;
-            last = pp > s.d->data ? *(pp - 1) : 0;
-            while (pp < ppe) {
-                *pp = foldCase(*pp, last);
-                ++pp;
-            }
-            return s;
-        }
-        p++;
+    QString result(d->size, Qt::Uninitialized);
+    for (int i = 0; i < d->size; i++) {
+        result.d->data[i] = QChar::toCaseFolded(d->data[i]);
     }
-    return *this;
+    return result;
 }
 
 /*!
@@ -4672,50 +4615,14 @@ QString QString::toCaseFolded() const
 
 QString QString::toUpper() const
 {
-    const ushort *p = d->data;
-    if (!p)
-        return *this;
-    if (!d->size)
+    if (!d->data || !d->size)
         return *this;
 
-    const ushort *e = d->data + d->size;
-
-    // this avoids one out of bounds check in the loop
-    if (QChar(*p).isLowSurrogate())
-        ++p;
-
-    while (p != e) {
-        uint c = *p;
-        if (QChar(c).isLowSurrogate() && QChar(*(p - 1)).isHighSurrogate())
-            c = QChar::surrogateToUcs4(*(p - 1), c);
-        const QUnicodeTables::Properties *prop = qGetProp(c);
-        if (prop->upperCaseDiff || prop->upperCaseSpecial) {
-            QString s(d->size, Qt::Uninitialized);
-            memcpy(s.d->data, d->data, (p - d->data)*sizeof(ushort));
-            ushort *pp = s.d->data + (p - d->data);
-            while (p < e) {
-                uint c = *p;
-                if (QChar(c).isLowSurrogate() && QChar(*(p - 1)).isHighSurrogate())
-                    c = QChar::surrogateToUcs4(*(p - 1), c);
-                prop = qGetProp(c);
-                if (prop->upperCaseSpecial) {
-                    int pos = pp - s.d->data;
-                    s.resize(s.d->size + SPECIAL_CASE_MAX_LEN);
-                    pp = s.d->data + pos;
-                    const ushort *specialCase = specialCaseMap + prop->upperCaseDiff;
-                    while (*specialCase)
-                        *pp++ = *specialCase++;
-                } else {
-                    *pp++ = *p + prop->upperCaseDiff;
-                }
-                ++p;
-            }
-            s.truncate(pp - s.d->data);
-            return s;
-        }
-        ++p;
+    QString result(d->size, Qt::Uninitialized);
+    for (int i = 0; i < d->size; i++) {
+        result.d->data[i] = QChar::toUpper(d->data[i]);
     }
-    return *this;
+    return result;
 }
 
 // ### Qt 5: Consider whether this function shouldn't be removed See task 202871.
@@ -5782,7 +5689,7 @@ QStringList QString::split(const QRegExp &rx, SplitBehavior behavior) const
 */
 QString QString::normalized(QString::NormalizationForm mode) const
 {
-    return normalized(mode, UNICODE_DATA_VERSION);
+    return normalized(mode, QChar::Unicode_Last);
 }
 
 /*!
@@ -5831,7 +5738,36 @@ QString QString::repeated(int times) const
     return result;
 }
 
-void qt_string_normalize(QString *data, QString::NormalizationForm mode, QChar::UnicodeVersion version, int from);
+void qt_string_normalize(QString *data, QString::NormalizationForm mode, QChar::UnicodeVersion version, int from)
+{
+    Q_UNUSED(version);
+    const utf8proc_uint8_t *d = reinterpret_cast<const utf8proc_uint8_t*>(data->constData() + from);
+    utf8proc_uint8_t *p = Q_NULLPTR;
+
+    switch (mode) {
+        case QString::NormalizationForm_D: {
+            p = utf8proc_NFKD(d);
+            break;
+        }
+        case QString::NormalizationForm_C: {
+            p = utf8proc_NFC(d);
+            break;
+        }
+        case QString::NormalizationForm_KD: {
+            p = utf8proc_NFKD(d);
+            break;
+        }
+        case QString::NormalizationForm_KC: {
+            p = utf8proc_NFKC(d);
+            break;
+        }
+    }
+
+    data->setUtf16(reinterpret_cast<const ushort*>(p), qstrlen(reinterpret_cast<char*>(p)));
+    if (p)
+        ::free(p);
+}
+
 /*!
     \overload
     \fn QString QString::normalized(NormalizationForm mode, QChar::UnicodeVersion version) const
@@ -5845,67 +5781,6 @@ QString QString::normalized(QString::NormalizationForm mode, QChar::UnicodeVersi
     qt_string_normalize(&copy, mode, version, 0);
     return copy;
 }
-
-void qt_string_normalize(QString *data, QString::NormalizationForm mode, QChar::UnicodeVersion version, int from)
-{
-    bool simple = true;
-    const QChar *p = data->constData();
-    int len = data->length();
-    for (int i = from; i < len; ++i) {
-        if (p[i].unicode() >= 0x80) {
-            simple = false;
-            break;
-        }
-    }
-    if (simple)
-        return;
-
-    if (version == QChar::Unicode_Unassigned) {
-        version = UNICODE_DATA_VERSION;
-    } else if (version != UNICODE_DATA_VERSION) {
-        const QString &s = *data;
-        for (int i = 0; i < NumNormalizationCorrections; ++i) {
-            const NormalizationCorrection &n = uc_normalization_corrections[i];
-            QChar *d = Q_NULLPTR;
-            if (n.version > version) {
-                int pos = from;
-                if (QChar::requiresSurrogates(n.ucs4)) {
-                    ushort ucs4High = QChar::highSurrogate(n.ucs4);
-                    ushort ucs4Low = QChar::lowSurrogate(n.ucs4);
-                    ushort oldHigh = QChar::highSurrogate(n.old_mapping);
-                    ushort oldLow = QChar::lowSurrogate(n.old_mapping);
-                    while (pos < s.length() - 1) {
-                        if (s.at(pos).unicode() == ucs4High && s.at(pos + 1).unicode() == ucs4Low) {
-                            if (!d)
-                                d = data->data();
-                            d[pos] = QChar(oldHigh);
-                            d[++pos] = QChar(oldLow);
-                        }
-                        ++pos;
-                    }
-                } else {
-                    while (pos < s.length()) {
-                        if (s.at(pos).unicode() == n.ucs4) {
-                            if (!d)
-                                d = data->data();
-                            d[pos] = QChar(n.old_mapping);
-                        }
-                        ++pos;
-                    }
-                }
-            }
-        }
-    }
-    decomposeHelper(data, mode < QString::NormalizationForm_KD, version, from);
-
-    canonicalOrderHelper(data, version, from);
-
-    if (mode == QString::NormalizationForm_D || mode == QString::NormalizationForm_KD)
-        return;
-
-    composeHelper(data, version, from);
-}
-
 
 struct ArgEscapeData
 {

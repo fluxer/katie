@@ -668,7 +668,6 @@ classlist = [
     "QStyleOptionViewItemV4",
     "QStylePainter",
     "QStylePlugin",
-    "QSupportedWritingSystems",
     "QSvgGenerator",
     "QSvgRenderer",
     "QSvgWidget",

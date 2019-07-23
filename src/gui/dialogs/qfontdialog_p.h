@@ -68,9 +68,7 @@ class QFontDialogPrivate : public QDialogPrivate
     Q_DECLARE_PUBLIC(QFontDialog)
 
 public:
-    inline QFontDialogPrivate()
-        : writingSystem(QFontDatabase::Any)
-    { }
+    inline QFontDialogPrivate() { }
 
     void updateFamilies();
     void updateStyles();
@@ -82,7 +80,6 @@ public:
     void init();
     void _q_sizeChanged(const QString &);
     void _q_familyHighlighted(int);
-    void _q_writingSystemHighlighted(int);
     void _q_styleHighlighted(int);
     void _q_sizeHighlighted(int);
     void _q_updateSample();
@@ -109,9 +106,6 @@ public:
     QGroupBox *sample;
     QLineEdit *sampleEdit;
 
-    QLabel *writingSystemAccel;
-    QComboBox *writingSystemCombo;
-
     QBoxLayout *buttonLayout;
     QBoxLayout *effectsLayout;
     QBoxLayout *sampleLayout;
@@ -121,7 +115,6 @@ public:
 
     QFontDatabase fdb;
     QString family;
-    QFontDatabase::WritingSystem writingSystem;
     QString style;
     int size;
     bool smoothScalable;

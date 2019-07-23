@@ -1000,6 +1000,8 @@ Q_DECLARE_TYPEINFO(QRegExpAnchorAlternation, Q_PRIMITIVE_TYPE);
 #endif
 
 #ifndef QT_NO_REGEXP_CCLASS
+
+#define FLAG(x) (1 << (x))
 /*
   The class QRegExpCharClass represents a set of characters, such as can
   be found in regular expressions (e.g., [a-z] denotes the set
@@ -1016,7 +1018,7 @@ public:
     void clear();
     bool negative() const { return n; }
     void setNegative(bool negative);
-    void addCategories(int cats);
+    void addCategories(uint cats);
     void addRange(ushort from, ushort to);
     void addSingleton(ushort ch) { addRange(ch, ch); }
 
@@ -1030,7 +1032,7 @@ public:
 #endif
 
 private:
-    int c; // character classes
+    uint c; // character classes
     QVector<QRegExpCharClassRange> r; // character ranges
     bool n; // negative?
 #ifndef QT_NO_REGEXP_OPTIM
@@ -2334,9 +2336,39 @@ void QRegExpCharClass::setNegative(bool negative)
 #endif
 }
 
-void QRegExpCharClass::addCategories(int cats)
+void QRegExpCharClass::addCategories(uint cats)
 {
-    c |= cats;
+    static const int all_cats = FLAG(QChar::Mark_NonSpacing) |
+                                FLAG(QChar::Mark_SpacingCombining) |
+                                FLAG(QChar::Mark_Enclosing) |
+                                FLAG(QChar::Number_DecimalDigit) |
+                                FLAG(QChar::Number_Letter) |
+                                FLAG(QChar::Number_Other) |
+                                FLAG(QChar::Separator_Space) |
+                                FLAG(QChar::Separator_Line) |
+                                FLAG(QChar::Separator_Paragraph) |
+                                FLAG(QChar::Other_Control) |
+                                FLAG(QChar::Other_Format) |
+                                FLAG(QChar::Other_Surrogate) |
+                                FLAG(QChar::Other_PrivateUse) |
+                                FLAG(QChar::Other_NotAssigned) |
+                                FLAG(QChar::Letter_Uppercase) |
+                                FLAG(QChar::Letter_Lowercase) |
+                                FLAG(QChar::Letter_Titlecase) |
+                                FLAG(QChar::Letter_Modifier) |
+                                FLAG(QChar::Letter_Other) |
+                                FLAG(QChar::Punctuation_Connector) |
+                                FLAG(QChar::Punctuation_Dash) |
+                                FLAG(QChar::Punctuation_Open) |
+                                FLAG(QChar::Punctuation_Close) |
+                                FLAG(QChar::Punctuation_InitialQuote) |
+                                FLAG(QChar::Punctuation_FinalQuote) |
+                                FLAG(QChar::Punctuation_Other) |
+                                FLAG(QChar::Symbol_Math) |
+                                FLAG(QChar::Symbol_Currency) |
+                                FLAG(QChar::Symbol_Modifier) |
+                                FLAG(QChar::Symbol_Other);
+    c |= (all_cats & cats);
 #ifndef QT_NO_REGEXP_OPTIM
     occ1.fill(0, NumBadChars);
 #endif
@@ -2377,7 +2409,7 @@ bool QRegExpCharClass::in(QChar ch) const
         return n;
 #endif
 
-    if (c != 0 && (c & (1 << (int)ch.category())) != 0)
+    if (c != 0 && (c & FLAG(ch.category())) != 0)
         return !n;
 
     const int uc = ch.unicode();
@@ -2737,18 +2769,32 @@ int QRegExpEngine::getEscape()
 #ifndef QT_NO_REGEXP_CCLASS
     case 'D':
         // see QChar::isDigit()
-        yyCharClass->addCategories(0x7fffffef);
+        yyCharClass->addCategories(uint(-1) ^ FLAG(QChar::Number_DecimalDigit));
         return Tok_CharClass;
     case 'S':
         // see QChar::isSpace()
-        yyCharClass->addCategories(0x7ffff87f);
+        yyCharClass->addCategories(uint(-1) ^ (FLAG(QChar::Separator_Space) |
+                                               FLAG(QChar::Separator_Line) |
+                                               FLAG(QChar::Separator_Paragraph) |
+                                               FLAG(QChar::Other_Control)));
         yyCharClass->addRange(0x0000, 0x0008);
         yyCharClass->addRange(0x000e, 0x001f);
         yyCharClass->addRange(0x007f, 0x009f);
         return Tok_CharClass;
     case 'W':
         // see QChar::isLetterOrNumber() and QChar::isMark()
-        yyCharClass->addCategories(0x7fe07f81);
+        yyCharClass->addCategories(uint(-1) ^ (FLAG(QChar::Mark_NonSpacing) |
+                                               FLAG(QChar::Mark_SpacingCombining) |
+                                               FLAG(QChar::Mark_Enclosing) |
+                                               FLAG(QChar::Number_DecimalDigit) |
+                                               FLAG(QChar::Number_Letter) |
+                                               FLAG(QChar::Number_Other) |
+                                               FLAG(QChar::Letter_Uppercase) |
+                                               FLAG(QChar::Letter_Lowercase) |
+                                               FLAG(QChar::Letter_Titlecase) |
+                                               FLAG(QChar::Letter_Modifier) |
+                                               FLAG(QChar::Letter_Other) |
+                                               FLAG(QChar::Punctuation_Connector)));
         yyCharClass->addRange(0x203f, 0x2040);
         yyCharClass->addSingleton(0x2040);
         yyCharClass->addSingleton(0x2054);
@@ -2766,16 +2812,28 @@ int QRegExpEngine::getEscape()
 #ifndef QT_NO_REGEXP_CCLASS
     case 'd':
         // see QChar::isDigit()
-        yyCharClass->addCategories(0x00000010);
+        yyCharClass->addCategories(FLAG(QChar::Number_DecimalDigit));
         return Tok_CharClass;
     case 's':
         // see QChar::isSpace()
-        yyCharClass->addCategories(0x00000380);
+        yyCharClass->addCategories(FLAG(QChar::Separator_Space) |
+                                   FLAG(QChar::Separator_Line) |
+                                   FLAG(QChar::Separator_Paragraph));
         yyCharClass->addRange(0x0009, 0x000d);
         return Tok_CharClass;
     case 'w':
         // see QChar::isLetterOrNumber() and QChar::isMark()
-        yyCharClass->addCategories(0x000f807e);
+        yyCharClass->addCategories(FLAG(QChar::Mark_NonSpacing) |
+                                   FLAG(QChar::Mark_SpacingCombining) |
+                                   FLAG(QChar::Mark_Enclosing) |
+                                   FLAG(QChar::Number_DecimalDigit) |
+                                   FLAG(QChar::Number_Letter) |
+                                   FLAG(QChar::Number_Other) |
+                                   FLAG(QChar::Letter_Uppercase) |
+                                   FLAG(QChar::Letter_Lowercase) |
+                                   FLAG(QChar::Letter_Titlecase) |
+                                   FLAG(QChar::Letter_Modifier) |
+                                   FLAG(QChar::Letter_Other));
         yyCharClass->addSingleton(0x005f); // '_'
         return Tok_CharClass;
     case 'I':

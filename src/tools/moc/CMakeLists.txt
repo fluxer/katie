@@ -7,6 +7,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc
 )
 
 set(MOC_SOURCES
@@ -70,6 +71,7 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qbitarray.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qbytearray.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qbytearraymatcher.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/tools/qchar.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qdatetime.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qhash.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlist.cpp
@@ -79,9 +81,13 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qregexp.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstring.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstringlist.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/tools/qstringmatcher.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvector.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvsnprintf.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_std.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/tools/qunicodetables.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc/utf8proc.c
 )
 
 add_executable(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})

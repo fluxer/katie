@@ -225,16 +225,12 @@ void QDesignerSettings::setToolWindowFont(const ToolWindowFontSettings &fontSett
     s->beginGroup(QLatin1String("UI"));
     s->setValue(QLatin1String("font"), fontSettings.m_font);
     s->setValue(QLatin1String("useFont"), fontSettings.m_useFont);
-    s->setValue(QLatin1String("writingSystem"), fontSettings.m_writingSystem);
     s->endGroup();
 }
 
 ToolWindowFontSettings QDesignerSettings::toolWindowFont() const
 {
     ToolWindowFontSettings fontSettings;
-    fontSettings.m_writingSystem =
-            static_cast<QFontDatabase::WritingSystem>(value(QLatin1String("UI/writingSystem"),
-                                                            QFontDatabase::Any).toInt());
     fontSettings.m_font = qvariant_cast<QFont>(value(QLatin1String("UI/font")));
     fontSettings.m_useFont =
             settings()->value(QLatin1String("UI/useFont"), QVariant(false)).toBool();

@@ -227,18 +227,9 @@ void QFontDialogPrivate::init()
     sampleEdit->setText(QLatin1String("AaBbYyZz"));
     hbox->addWidget(sampleEdit);
 
-    writingSystemCombo = new QComboBox(q);
-
-    writingSystemAccel = new QLabel(q);
-#ifndef QT_NO_SHORTCUT
-    writingSystemAccel->setBuddy(writingSystemCombo);
-#endif
-    writingSystemAccel->setIndent(2);
-
     size = 0;
     smoothScalable = false;
 
-    QObject::connect(writingSystemCombo, SIGNAL(activated(int)), q, SLOT(_q_writingSystemHighlighted(int)));
     QObject::connect(familyList, SIGNAL(highlighted(int)), q, SLOT(_q_familyHighlighted(int)));
     QObject::connect(styleList, SIGNAL(highlighted(int)), q, SLOT(_q_styleHighlighted(int)));
     QObject::connect(sizeList, SIGNAL(highlighted(int)), q, SLOT(_q_sizeHighlighted(int)));
@@ -246,14 +237,6 @@ void QFontDialogPrivate::init()
 
     QObject::connect(strikeout, SIGNAL(clicked()), q, SLOT(_q_updateSample()));
     QObject::connect(underline, SIGNAL(clicked()), q, SLOT(_q_updateSample()));
-
-    for (int i = 0; i < QFontDatabase::WritingSystemsCount; ++i) {
-        QFontDatabase::WritingSystem ws = QFontDatabase::WritingSystem(i);
-        QString writingSystemName = QFontDatabase::writingSystemName(ws);
-        if (writingSystemName.isEmpty())
-            break;
-        writingSystemCombo->addItem(writingSystemName);
-    }
 
     updateFamilies();
     if (familyList->count() != 0)
@@ -296,9 +279,6 @@ void QFontDialogPrivate::init()
     mainGrid->addWidget(effects, 4, 0);
 
     mainGrid->addWidget(sample, 4, 2, 4, 3);
-
-    mainGrid->addWidget(writingSystemAccel, 5, 0);
-    mainGrid->addWidget(writingSystemCombo, 7, 0);
 
     buttonBox = new QDialogButtonBox(q);
     mainGrid->addWidget(buttonBox, 9, 0, 1, 5);
@@ -462,7 +442,7 @@ void QFontDialogPrivate::updateFamilies()
 
     enum match_t { MATCH_NONE = 0, MATCH_LAST_RESORT = 1, MATCH_APP = 2, MATCH_FAMILY = 3 };
 
-    QStringList familyNames = fdb.families(writingSystem);
+    QStringList familyNames = fdb.families();
 
     familyList->model()->setStringList(familyNames);
 
@@ -497,7 +477,6 @@ void QFontDialogPrivate::updateFamilies()
             type = MATCH_LAST_RESORT;
         if (bestFamilyType <= MATCH_LAST_RESORT && familyName2 == f.family())
             type = MATCH_APP;
-        // ### add fallback for writingSystem
         if (type != MATCH_NONE) {
             bestFamilyType = type;
             bestFamilyMatch = i;
@@ -639,16 +618,6 @@ void QFontDialogPrivate::updateSampleFont(const QFont &newFont)
 /*!
     \internal
 */
-void QFontDialogPrivate::_q_writingSystemHighlighted(int index)
-{
-    writingSystem = QFontDatabase::WritingSystem(index);
-    sampleEdit->setText(fdb.writingSystemSample(writingSystem));
-    updateFamilies();
-}
-
-/*!
-    \internal
-*/
 void QFontDialogPrivate::_q_familyHighlighted(int i)
 {
     Q_Q(QFontDialog);
@@ -736,7 +705,6 @@ void QFontDialogPrivate::retranslateStrings()
     strikeout->setText(QFontDialog::tr("Stri&keout"));
     underline->setText(QFontDialog::tr("&Underline"));
     sample->setTitle(QFontDialog::tr("Sample"));
-    writingSystemAccel->setText(QFontDialog::tr("Wr&iting System"));
 }
 
 /*!

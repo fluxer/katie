@@ -62,16 +62,13 @@ QT_BEGIN_NAMESPACE
 
 // ---------------- QDesignerToolWindowFontSettings
 ToolWindowFontSettings::ToolWindowFontSettings() :
-    m_writingSystem(QFontDatabase::Any),
     m_useFont(false)
 {
 }
 
 bool ToolWindowFontSettings::equals(const ToolWindowFontSettings &rhs) const
 {
-    return m_useFont == rhs.m_useFont &&
-           m_writingSystem == rhs.m_writingSystem &&
-           m_font == rhs.m_font;
+    return m_useFont == rhs.m_useFont && m_font == rhs.m_font;
 }
 
 // ---------------- QDesignerToolWindow
