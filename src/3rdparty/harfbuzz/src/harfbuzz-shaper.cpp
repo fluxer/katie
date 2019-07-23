@@ -708,7 +708,7 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     // Avestan
     { HB_BasicShape, 0},
     // EgyptianHieroglyphs
-    { HB_BasicShape, 0},
+    { HB_ArabicShape, 0},
     // Samaritan
     { HB_BasicShape, 0},
     // Lisu
