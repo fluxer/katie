@@ -768,7 +768,7 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     // LinearA
     { HB_BasicShape, 0},
     // Mahajani
-    { HB_BasicShape, 0},
+    { HB_IndicShape, HB_IndicAttributes },
     // Manichaean
     { HB_BasicShape, 0},
     // MendeKikakui
