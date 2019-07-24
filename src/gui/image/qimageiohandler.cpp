@@ -228,21 +228,17 @@ class QIODevice;
 
 class QImageIOHandlerPrivate
 {
-    Q_DECLARE_PUBLIC(QImageIOHandler)
 public:
-    QImageIOHandlerPrivate(QImageIOHandler *q);
+    QImageIOHandlerPrivate();
     virtual ~QImageIOHandlerPrivate();
 
     QIODevice *device;
     mutable QByteArray format;
-
-    QImageIOHandler *q_ptr;
 };
 
-QImageIOHandlerPrivate::QImageIOHandlerPrivate(QImageIOHandler *q)
+QImageIOHandlerPrivate::QImageIOHandlerPrivate()
 {
     device = 0;
-    q_ptr = q;
 }
 
 QImageIOHandlerPrivate::~QImageIOHandlerPrivate()
@@ -253,7 +249,7 @@ QImageIOHandlerPrivate::~QImageIOHandlerPrivate()
     Constructs a QImageIOHandler object.
 */
 QImageIOHandler::QImageIOHandler()
-    : d_ptr(new QImageIOHandlerPrivate(this))
+    : d_ptr(new QImageIOHandlerPrivate())
 {
 }
 
