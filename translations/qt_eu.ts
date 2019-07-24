@@ -100,7 +100,7 @@ This indicates an inconsistency in the ui-file.</source>
     </message>
     <message>
         <location line="-684"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+676"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+670"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+649"/>
         <location line="+26"/>
         <source>Host not found</source>
@@ -119,7 +119,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Elkarketa denboraz kanpo</translation>
     </message>
     <message>
-        <location line="+1125"/>
+        <location line="+1118"/>
         <source>Socket is not connected</source>
         <translation>Hartunea ez dago elkarketuta</translation>
     </message>
@@ -1081,7 +1081,7 @@ Script: %3</source>
         <translation>ez da mota bat</translation>
     </message>
     <message>
-        <location line="+301"/>
+        <location line="+265"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation>Agiri izena ez dator bat &quot;%1&quot;-rako</translation>
     </message>
@@ -1205,7 +1205,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeParentChange</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+110"/>
+        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+103"/>
         <source>Unable to preserve appearance under complex transform</source>
         <translation>Ezinezkoa itxura gordetzea eraldaketa korapilotsupean</translation>
     </message>
@@ -1437,7 +1437,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTypeLoader</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+936"/>
+        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+929"/>
         <source>Script %1 unavailable</source>
         <translation>%1 eskripta eskuraezina</translation>
     </message>
@@ -2091,222 +2091,52 @@ Horrela ere ezabatzea nahi duzu?</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1060"/>
+        <location line="+854"/>
         <source>Normal</source>
         <translation>Arrunta</translation>
     </message>
     <message>
-        <location line="-1057"/>
+        <location line="-851"/>
         <location line="+12"/>
-        <location line="+1033"/>
+        <location line="+827"/>
         <source>Bold</source>
         <translation>Lodia</translation>
     </message>
     <message>
-        <location line="-1042"/>
-        <location line="+1044"/>
+        <location line="-836"/>
+        <location line="+838"/>
         <source>Demi Bold</source>
         <translation>Erdi Lodia</translation>
     </message>
     <message>
-        <location line="-1041"/>
+        <location line="-835"/>
         <location line="+18"/>
-        <location line="+1019"/>
+        <location line="+813"/>
         <source>Black</source>
         <translation>Beltza</translation>
     </message>
     <message>
-        <location line="-1029"/>
+        <location line="-823"/>
         <source>Demi</source>
         <translation>Erdia</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1029"/>
+        <location line="+823"/>
         <source>Light</source>
         <translation>Argia</translation>
     </message>
     <message>
-        <location line="-883"/>
-        <location line="+886"/>
+        <location line="-677"/>
+        <location line="+680"/>
         <source>Italic</source>
         <translation>Etzana</translation>
     </message>
     <message>
-        <location line="-883"/>
-        <location line="+885"/>
+        <location line="-677"/>
+        <location line="+679"/>
         <source>Oblique</source>
         <translation>Okerra</translation>
-    </message>
-    <message>
-        <location line="+708"/>
-        <source>Any</source>
-        <translation>Edozein</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Latin</source>
-        <translation>Latinera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Greek</source>
-        <translation>Greziera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Cyrillic</source>
-        <translation>Ziriliarra</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Armenian</source>
-        <translation>Armeniera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Hebrew</source>
-        <translation>Hebraiera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Arabic</source>
-        <translation>Arabiera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Syriac</source>
-        <translation>Siriera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Thaana</source>
-        <translation>Thaanaera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Devanagari</source>
-        <translation>Devanagariera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Bengali</source>
-        <translation>Bengaliera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Gurmukhi</source>
-        <translation>Gurmukhiera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Gujarati</source>
-        <translation>Guxaratiera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Oriya</source>
-        <translation>Oriyaera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tamil</source>
-        <translation>Tamilera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Telugu</source>
-        <translation>Teluguera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Kannada</source>
-        <translation>Kannadaera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Malayalam</source>
-        <translation>Malayalamera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Sinhala</source>
-        <translation>Sinhalaera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Thai</source>
-        <translation>Thailandiera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Lao</source>
-        <translation>Laosera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tibetan</source>
-        <translation>Tibetera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Myanmar</source>
-        <translation>Myanmarrera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Georgian</source>
-        <translation>Georgiera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Khmer</source>
-        <translation>Khmerrera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Simplified Chinese</source>
-        <translation>Txinera Arrundua</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Traditional Chinese</source>
-        <translation>Txinera Tradizionala</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Japanese</source>
-        <translation>Japoniera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Korean</source>
-        <translation>Koreaera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Vietnamese</source>
-        <translation>Vietnamera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Symbol</source>
-        <translation>Ikurra</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Ogham</source>
-        <translation>Oghamera</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Runic</source>
-        <translation>Errunikoa</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>N&apos;Ko</source>
-        <translation>N&apos;Koera</translation>
     </message>
 </context>
 <context>
@@ -2317,7 +2147,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Hautatu Hizkia</translation>
     </message>
     <message>
-        <location line="+555"/>
+        <location line="+524"/>
         <source>&amp;Font</source>
         <translation>&amp;Hizkia</translation>
     </message>
@@ -2350,11 +2180,6 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <location line="+1"/>
         <source>Sample</source>
         <translation>Lagina</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Wr&amp;iting System</source>
-        <translation>I&amp;dazketa Sistema</translation>
     </message>
 </context>
 <context>
@@ -2541,7 +2366,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+139"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+138"/>
         <source>No host name given</source>
         <translation>Ez da hostalari izenik eman</translation>
     </message>
@@ -4422,7 +4247,7 @@ Gainidaztea nahi duzu?</translation>
         <translation>Garapena matxuratuta</translation>
     </message>
     <message>
-        <location line="+897"/>
+        <location line="+891"/>
         <source>No program defined</source>
         <translation>Ez da programarik zehaztu</translation>
     </message>
@@ -4443,9 +4268,9 @@ Gainidaztea nahi duzu?</translation>
     </message>
     <message>
         <location line="+236"/>
-        <location line="+52"/>
-        <location line="+74"/>
-        <location line="+66"/>
+        <location line="+48"/>
+        <location line="+70"/>
+        <location line="+62"/>
         <source>Process operation timed out</source>
         <translation>Prozesu eragiketa epez kanpo</translation>
     </message>
@@ -4931,8 +4756,8 @@ Gainidaztea nahi duzu?</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>Qt Script Debugger</source>
-        <translation>Qt Eskript Garbitzailea</translation>
+        <source>Katie Script Debugger</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6323,7 +6148,7 @@ Gainidaztea nahi duzu?</translation>
         <translation>SOCKSv5 proxy akats ezezaguna kodea 0x%1</translation>
     </message>
     <message>
-        <location line="+694"/>
+        <location line="+692"/>
         <source>Network operation timed out</source>
         <translation>Sare eragiketa denboraz kanpo</translation>
     </message>

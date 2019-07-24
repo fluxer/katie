@@ -87,7 +87,7 @@ This indicates an inconsistency in the ui-file.</source>
     <name>QAbstractSocket</name>
     <message>
         <location filename="../src/network/socket/qabstractsocket.cpp" line="+946"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+679"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+673"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+679"/>
         <source>Connection refused</source>
         <translation>Połączenie odrzucone</translation>
@@ -113,12 +113,12 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Operacja na gnieździe nie jest obsługiwana</translation>
     </message>
     <message>
-        <location line="+630"/>
+        <location line="+623"/>
         <source>Socket is not connected</source>
         <translation>Gniazdo nie jest podłączone</translation>
     </message>
     <message>
-        <location line="-431"/>
+        <location line="-424"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>Przekroczony czas operacji gniazda</translation>
@@ -1081,7 +1081,7 @@ Script: %3</source>
         <translation>nie jest typem</translation>
     </message>
     <message>
-        <location line="+301"/>
+        <location line="+265"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation>Niezgodność wielkości liter w &quot;%1&quot;</translation>
     </message>
@@ -1205,7 +1205,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeParentChange</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+110"/>
+        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+103"/>
         <source>Unable to preserve appearance under complex transform</source>
         <translation>Nie można utrzymać wyglądu przy złożonej transformacji</translation>
     </message>
@@ -1437,7 +1437,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTypeLoader</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+936"/>
+        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+929"/>
         <source>Script %1 unavailable</source>
         <translation>Skrypt &quot;%1&quot; nie jest dostępny</translation>
     </message>
@@ -2091,230 +2091,60 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1060"/>
+        <location line="+854"/>
         <source>Normal</source>
         <translation>Normalny</translation>
     </message>
     <message>
-        <location line="-1057"/>
+        <location line="-851"/>
         <location line="+12"/>
-        <location line="+1033"/>
+        <location line="+827"/>
         <source>Bold</source>
         <translation>Pogrubiony</translation>
     </message>
     <message>
-        <location line="-1042"/>
-        <location line="+1044"/>
+        <location line="-836"/>
+        <location line="+838"/>
         <source>Demi Bold</source>
         <translation>Na wpół pogrubiony</translation>
     </message>
     <message>
-        <location line="-1041"/>
+        <location line="-835"/>
         <location line="+18"/>
-        <location line="+1019"/>
+        <location line="+813"/>
         <source>Black</source>
         <translatorcomment>it&apos;s about font weight</translatorcomment>
         <translation>Bardzo gruby</translation>
     </message>
     <message>
-        <location line="-1029"/>
+        <location line="-823"/>
         <source>Demi</source>
         <translation>Na wpół</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1029"/>
+        <location line="+823"/>
         <source>Light</source>
         <translatorcomment>it&apos;s about font weight</translatorcomment>
         <translation>Cienki</translation>
     </message>
     <message>
-        <location line="-883"/>
-        <location line="+886"/>
+        <location line="-677"/>
+        <location line="+680"/>
         <source>Italic</source>
         <translation>Kursywa</translation>
     </message>
     <message>
-        <location line="-883"/>
-        <location line="+885"/>
+        <location line="-677"/>
+        <location line="+679"/>
         <source>Oblique</source>
         <translation>Pochyły</translation>
-    </message>
-    <message>
-        <location line="+708"/>
-        <source>Any</source>
-        <translation>Każdy</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Latin</source>
-        <translation>Łaciński</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Greek</source>
-        <translation>Grecki</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Cyrillic</source>
-        <translation>Cyrylica</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Armenian</source>
-        <translation>Ormiański</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Hebrew</source>
-        <translation>Hebrajski</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Arabic</source>
-        <translation>Arabski</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Syriac</source>
-        <translation>Syryjski</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Thaana</source>
-        <translation>Thaana</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Devanagari</source>
-        <translation>Devanagari</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Bengali</source>
-        <translation>Bengalski</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Gurmukhi</source>
-        <translation>Gurmukhi</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Gujarati</source>
-        <translation>Gudżaracki</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Oriya</source>
-        <translation>Orija</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tamil</source>
-        <translation>Tamilski</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Telugu</source>
-        <translation>Telugu</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Kannada</source>
-        <translation>Kannada</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Malayalam</source>
-        <translation>Malajalam</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Sinhala</source>
-        <translation>Syngaleski</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Thai</source>
-        <translation>Tajski</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Lao</source>
-        <translation>Laotański</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tibetan</source>
-        <translation>Tybetański</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Myanmar</source>
-        <translation>Birmański</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Georgian</source>
-        <translation>Gruziński</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Khmer</source>
-        <translation>Khmerski</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Simplified Chinese</source>
-        <translation>Uproszczony chiński</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Traditional Chinese</source>
-        <translation>Tradycyjny chiński</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Japanese</source>
-        <translation>Japoński</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Korean</source>
-        <translation>Koreański</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Vietnamese</source>
-        <translation>Wietnamski</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Symbol</source>
-        <translation>Symboliczny</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Ogham</source>
-        <translation>Ogamiczny</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Runic</source>
-        <translation>Runiczny</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>N&apos;Ko</source>
-        <translation>N&apos;Ko</translation>
     </message>
 </context>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+735"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+704"/>
         <source>Effects</source>
         <translation>Efekty</translation>
     </message>
@@ -2334,12 +2164,12 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Przykład</translation>
     </message>
     <message>
-        <location line="-563"/>
+        <location line="-532"/>
         <source>Select Font</source>
         <translation>Wybierz czcionkę</translation>
     </message>
     <message>
-        <location line="+557"/>
+        <location line="+526"/>
         <source>&amp;Size</source>
         <translation>&amp;Rozmiar</translation>
     </message>
@@ -2352,11 +2182,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <location line="+1"/>
         <source>&amp;Underline</source>
         <translation>&amp;Podkreślenie</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Wr&amp;iting System</source>
-        <translation>Sys&amp;tem pisania</translation>
     </message>
 </context>
 <context>
@@ -2543,7 +2368,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+207"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+206"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>Host nie znaleziony</translation>
@@ -4424,9 +4249,9 @@ Proszę wybrać inną nazwę pliku.</translation>
     </message>
     <message>
         <location line="+236"/>
-        <location line="+52"/>
-        <location line="+74"/>
-        <location line="+66"/>
+        <location line="+48"/>
+        <location line="+70"/>
+        <location line="+62"/>
         <source>Process operation timed out</source>
         <translation>Przekroczony czas operacji procesu</translation>
     </message>
@@ -4447,7 +4272,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Wystąpił błąd w procesie - proces zakończony</translation>
     </message>
     <message>
-        <location line="+897"/>
+        <location line="+891"/>
         <source>No program defined</source>
         <translation>Nie zdefiniowano programu</translation>
     </message>
@@ -4933,8 +4758,8 @@ Proszę wybrać inną nazwę pliku.</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>Qt Script Debugger</source>
-        <translation>Debugger Qt Script</translation>
+        <source>Katie Script Debugger</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6325,7 +6150,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Nieznany kod błędu (0x%1) pośrednika SOCKS wersji 5</translation>
     </message>
     <message>
-        <location line="+694"/>
+        <location line="+692"/>
         <source>Network operation timed out</source>
         <translation>Przekroczony czas operacji sieciowej</translation>
     </message>

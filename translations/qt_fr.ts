@@ -87,7 +87,7 @@ This indicates an inconsistency in the ui-file.</source>
     <name>QAbstractSocket</name>
     <message>
         <location filename="../src/network/socket/qabstractsocket.cpp" line="+899"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+676"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+670"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+649"/>
         <location line="+26"/>
         <source>Host not found</source>
@@ -119,7 +119,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Opération socket expirée</translation>
     </message>
     <message>
-        <location line="+431"/>
+        <location line="+424"/>
         <source>Socket is not connected</source>
         <translation>Le socket n&apos;est pas connecté</translation>
     </message>
@@ -1085,7 +1085,7 @@ Script: %3</source>
         <translation>n&apos;est pas un type</translation>
     </message>
     <message>
-        <location line="+301"/>
+        <location line="+265"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1210,7 +1210,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeParentChange</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+110"/>
+        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+103"/>
         <source>Unable to preserve appearance under complex transform</source>
         <translation>Impossible de conserver l&apos;aspect lors d&apos;une transformation complexe</translation>
     </message>
@@ -1443,7 +1443,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTypeLoader</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+936"/>
+        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+929"/>
         <source>Script %1 unavailable</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2098,230 +2098,58 @@ Voulez-vous quand même le supprimer ?</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1060"/>
+        <location line="+854"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location line="-1057"/>
+        <location line="-851"/>
         <location line="+12"/>
-        <location line="+1033"/>
+        <location line="+827"/>
         <source>Bold</source>
         <translation>Gras</translation>
     </message>
     <message>
-        <location line="-1042"/>
-        <location line="+1044"/>
+        <location line="-836"/>
+        <location line="+838"/>
         <source>Demi Bold</source>
         <translation>Demi-gras</translation>
     </message>
     <message>
-        <location line="-1041"/>
+        <location line="-835"/>
         <location line="+18"/>
-        <location line="+1019"/>
+        <location line="+813"/>
         <source>Black</source>
         <translation>Extra-gras</translation>
     </message>
     <message>
-        <location line="-1029"/>
+        <location line="-823"/>
         <source>Demi</source>
         <translation>Demi</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1029"/>
+        <location line="+823"/>
         <source>Light</source>
         <translation>Maigre</translation>
     </message>
     <message>
-        <location line="-883"/>
-        <location line="+886"/>
+        <location line="-677"/>
+        <location line="+680"/>
         <source>Italic</source>
         <translation>Italique</translation>
     </message>
     <message>
-        <location line="-883"/>
-        <location line="+885"/>
+        <location line="-677"/>
+        <location line="+679"/>
         <source>Oblique</source>
         <translation>Oblique</translation>
-    </message>
-    <message>
-        <location line="+708"/>
-        <source>Any</source>
-        <translation>Tous</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Latin</source>
-        <translation>Latin</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Greek</source>
-        <translation>Grec</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Cyrillic</source>
-        <translation>Cyrillique</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Armenian</source>
-        <translation>Arménien</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Hebrew</source>
-        <translation>Hébreu</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Arabic</source>
-        <translation>Arabe</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Syriac</source>
-        <translation>Syriaque</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Thaana</source>
-        <translation>Thâna</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Devanagari</source>
-        <translation>Dévanagari</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Bengali</source>
-        <translation>Bengali</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Gurmukhi</source>
-        <translation>Gurmukhi</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Gujarati</source>
-        <translation>Gujarati</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Oriya</source>
-        <translation>Oriya</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tamil</source>
-        <translation>Tamoul</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Telugu</source>
-        <translation>Telugu</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Kannada</source>
-        <translation>Kannada</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Malayalam</source>
-        <translation>Malayalam</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Sinhala</source>
-        <translation>Sinhala</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Thai</source>
-        <translation>Thaï</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Lao</source>
-        <translatorcomment>Lao/Laotien sont corrects</translatorcomment>
-        <translation>Lao</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tibetan</source>
-        <translation>Tibétain</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Myanmar</source>
-        <translatorcomment>Myanmar/Birman sont corrects mais Myanmar semble plus adapté pour la langue écrite</translatorcomment>
-        <translation>Myanmar</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Georgian</source>
-        <translation>Géorgien</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Khmer</source>
-        <translation>Khmer</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Simplified Chinese</source>
-        <translation>Chinois Simplifié</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Traditional Chinese</source>
-        <translation>Chinois Traditionnel</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Japanese</source>
-        <translation>Japonais</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Korean</source>
-        <translation>Coréen</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Vietnamese</source>
-        <translation>Vietnamien</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Symbol</source>
-        <translation>Symbole</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Ogham</source>
-        <translation>Ogham</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Runic</source>
-        <translation>Runique</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>N&apos;Ko</source>
-        <translation>N&apos;Ko</translation>
     </message>
 </context>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+730"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+699"/>
         <source>&amp;Font</source>
         <translation>&amp;Police</translation>
     </message>
@@ -2356,14 +2184,9 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Exemple</translation>
     </message>
     <message>
-        <location line="-563"/>
+        <location line="-532"/>
         <source>Select Font</source>
         <translation>Choisir une police</translation>
-    </message>
-    <message>
-        <location line="+564"/>
-        <source>Wr&amp;iting System</source>
-        <translation>&amp;Système d&apos;écriture</translation>
     </message>
 </context>
 <context>
@@ -2550,7 +2373,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+207"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+206"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>Hôte introuvable</translation>
@@ -4431,9 +4254,9 @@ Veuillez choisir un nom de fichier différent.</translation>
     </message>
     <message>
         <location line="+236"/>
-        <location line="+52"/>
-        <location line="+74"/>
-        <location line="+66"/>
+        <location line="+48"/>
+        <location line="+70"/>
+        <location line="+62"/>
         <source>Process operation timed out</source>
         <translation>Operation de processus a expiré</translation>
     </message>
@@ -4454,7 +4277,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Le processus à planté</translation>
     </message>
     <message>
-        <location line="+897"/>
+        <location line="+891"/>
         <source>No program defined</source>
         <translation>Aucun programme défini</translation>
     </message>
@@ -4940,8 +4763,8 @@ Veuillez choisir un nom de fichier différent.</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>Qt Script Debugger</source>
-        <translation>Débogueur de script Qt</translation>
+        <source>Katie Script Debugger</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6333,7 +6156,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Erreur proxy SOCKSv5 inconnue : 0x%1</translation>
     </message>
     <message>
-        <location line="+694"/>
+        <location line="+692"/>
         <source>Network operation timed out</source>
         <translation>L&apos;opération réseau a expiré</translation>
     </message>

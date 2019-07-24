@@ -87,7 +87,7 @@ This indicates an inconsistency in the ui-file.</source>
     <name>QAbstractSocket</name>
     <message>
         <location filename="../src/network/socket/qabstractsocket.cpp" line="+899"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+676"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+670"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+649"/>
         <location line="+26"/>
         <source>Host not found</source>
@@ -119,7 +119,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Socket-operation timed out</translation>
     </message>
     <message>
-        <location line="+431"/>
+        <location line="+424"/>
         <source>Socket is not connected</source>
         <translation>Socket ikke forbundet</translation>
     </message>
@@ -1081,7 +1081,7 @@ Script: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+301"/>
+        <location line="+265"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1205,7 +1205,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeParentChange</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+110"/>
+        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+103"/>
         <source>Unable to preserve appearance under complex transform</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1437,7 +1437,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTypeLoader</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+936"/>
+        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+929"/>
         <source>Script %1 unavailable</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2091,228 +2091,58 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1060"/>
+        <location line="+854"/>
         <source>Normal</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-1057"/>
+        <location line="-851"/>
         <location line="+12"/>
-        <location line="+1033"/>
+        <location line="+827"/>
         <source>Bold</source>
         <translation>Fed</translation>
     </message>
     <message>
-        <location line="-1042"/>
-        <location line="+1044"/>
+        <location line="-836"/>
+        <location line="+838"/>
         <source>Demi Bold</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-1041"/>
+        <location line="-835"/>
         <location line="+18"/>
-        <location line="+1019"/>
+        <location line="+813"/>
         <source>Black</source>
         <translation>Sort</translation>
     </message>
     <message>
-        <location line="-1029"/>
+        <location line="-823"/>
         <source>Demi</source>
         <translation></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1029"/>
+        <location line="+823"/>
         <source>Light</source>
         <translation>Lys</translation>
     </message>
     <message>
-        <location line="-883"/>
-        <location line="+886"/>
+        <location line="-677"/>
+        <location line="+680"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
     <message>
-        <location line="-883"/>
-        <location line="+885"/>
+        <location line="-677"/>
+        <location line="+679"/>
         <source>Oblique</source>
         <translation>Skråt</translation>
-    </message>
-    <message>
-        <location line="+708"/>
-        <source>Any</source>
-        <translation>Alle</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Latin</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Greek</source>
-        <translation>Græsk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Cyrillic</source>
-        <translation>Kyrillisk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Armenian</source>
-        <translation>Armensk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Hebrew</source>
-        <translation>Hebræisk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Arabic</source>
-        <translation>Arabisk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Syriac</source>
-        <translation>Syrisk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Thaana</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Devanagari</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Bengali</source>
-        <translation>Bengalsk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Gurmukhi</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Gujarati</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Oriya</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tamil</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Telugu</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Kannada</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Malayalam</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Sinhala</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Thai</source>
-        <translation>Thailandsk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Lao</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tibetan</source>
-        <translation>Tibetansk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Myanmar</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Georgian</source>
-        <translation>georgisk </translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Khmer</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Simplified Chinese</source>
-        <translation>Forenklet kinesisk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Traditional Chinese</source>
-        <translation>Traditionelt kinesisk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Japanese</source>
-        <translation>Japansk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Korean</source>
-        <translation>Koreansk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Vietnamese</source>
-        <translation>Vietnamesisk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Symbol</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Ogham</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Runic</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>N&apos;Ko</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+730"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+699"/>
         <source>&amp;Font</source>
         <translation>S&amp;krifttype</translation>
     </message>
@@ -2347,12 +2177,7 @@ Do you want to delete it anyway?</source>
         <translation>Eksempel</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Wr&amp;iting System</source>
-        <translation>Skr&amp;ivesystem</translation>
-    </message>
-    <message>
-        <location line="-564"/>
+        <location line="-532"/>
         <source>Select Font</source>
         <translation>Vælg skrifttype</translation>
     </message>
@@ -2541,7 +2366,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+207"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+206"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>Vært ikke fundet</translation>
@@ -4422,9 +4247,9 @@ Vælg et andet filnavn.</translation>
     </message>
     <message>
         <location line="+236"/>
-        <location line="+52"/>
-        <location line="+74"/>
-        <location line="+66"/>
+        <location line="+48"/>
+        <location line="+70"/>
+        <location line="+62"/>
         <source>Process operation timed out</source>
         <translation>Proces-operation time out</translation>
     </message>
@@ -4445,7 +4270,7 @@ Vælg et andet filnavn.</translation>
         <translation>Proces crashede</translation>
     </message>
     <message>
-        <location line="+897"/>
+        <location line="+891"/>
         <source>No program defined</source>
         <translation>Intet program defineret</translation>
     </message>
@@ -4931,7 +4756,7 @@ Vælg et andet filnavn.</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>Qt Script Debugger</source>
+        <source>Katie Script Debugger</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6323,7 +6148,7 @@ Vælg et andet filnavn.</translation>
         <translation>Ukendt SOCKSv5 proxy fejlkode 0x%1</translation>
     </message>
     <message>
-        <location line="+694"/>
+        <location line="+692"/>
         <source>Network operation timed out</source>
         <translation>Netværksoperationen timed out</translation>
     </message>

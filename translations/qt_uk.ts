@@ -100,7 +100,7 @@ This indicates an inconsistency in the ui-file.</source>
     </message>
     <message>
         <location line="-684"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+676"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+670"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+649"/>
         <location line="+26"/>
         <source>Host not found</source>
@@ -119,7 +119,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Час на з’єднання вичерпано</translation>
     </message>
     <message>
-        <location line="+1125"/>
+        <location line="+1118"/>
         <source>Socket is not connected</source>
         <translation>Сокет не під’єднано</translation>
     </message>
@@ -1081,7 +1081,7 @@ Script: %3</source>
         <translation>не є типом</translation>
     </message>
     <message>
-        <location line="+301"/>
+        <location line="+265"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation>Регістр імені файлу не збігається для &quot;%1&quot;</translation>
     </message>
@@ -1205,7 +1205,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeParentChange</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+110"/>
+        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+103"/>
         <source>Unable to preserve appearance under complex transform</source>
         <translation>Неможливо зберегти зовнішній вигляд при складному перетворенні</translation>
     </message>
@@ -1437,7 +1437,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTypeLoader</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+936"/>
+        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+929"/>
         <source>Script %1 unavailable</source>
         <translation>Скрипт %1 недоступний</translation>
     </message>
@@ -2091,222 +2091,52 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1060"/>
+        <location line="+854"/>
         <source>Normal</source>
         <translation>Звичайний</translation>
     </message>
     <message>
-        <location line="-1057"/>
+        <location line="-851"/>
         <location line="+12"/>
-        <location line="+1033"/>
+        <location line="+827"/>
         <source>Bold</source>
         <translation>Жирний</translation>
     </message>
     <message>
-        <location line="-1042"/>
-        <location line="+1044"/>
+        <location line="-836"/>
+        <location line="+838"/>
         <source>Demi Bold</source>
         <translation>Напівжирний</translation>
     </message>
     <message>
-        <location line="-1041"/>
+        <location line="-835"/>
         <location line="+18"/>
-        <location line="+1019"/>
+        <location line="+813"/>
         <source>Black</source>
         <translation>Чорний</translation>
     </message>
     <message>
-        <location line="-1029"/>
+        <location line="-823"/>
         <source>Demi</source>
         <translation>Середній</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1029"/>
+        <location line="+823"/>
         <source>Light</source>
         <translation>Світлий</translation>
     </message>
     <message>
-        <location line="-883"/>
-        <location line="+886"/>
+        <location line="-677"/>
+        <location line="+680"/>
         <source>Italic</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location line="-883"/>
-        <location line="+885"/>
+        <location line="-677"/>
+        <location line="+679"/>
         <source>Oblique</source>
         <translation>Нахилений</translation>
-    </message>
-    <message>
-        <location line="+708"/>
-        <source>Any</source>
-        <translation>Будь-яка</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Latin</source>
-        <translation>Латиниця</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Greek</source>
-        <translation>Грецька</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Cyrillic</source>
-        <translation>Кирилиця</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Armenian</source>
-        <translation>Вірменська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Hebrew</source>
-        <translation>Іврит</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Arabic</source>
-        <translation>Арабська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Syriac</source>
-        <translation>Сирійська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Thaana</source>
-        <translation>Тана</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Devanagari</source>
-        <translation>Деванагарі</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Bengali</source>
-        <translation>Бенгальська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Gurmukhi</source>
-        <translation>Гурмукхі</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Gujarati</source>
-        <translation>Гуджараті</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Oriya</source>
-        <translation>Орія</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tamil</source>
-        <translation>Тамільська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Telugu</source>
-        <translation>Телугу</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Kannada</source>
-        <translation>Каннада</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Malayalam</source>
-        <translation>Малаялам</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Sinhala</source>
-        <translation>Сингальська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Thai</source>
-        <translation>Тайська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Lao</source>
-        <translation>Лаоська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tibetan</source>
-        <translation>Тибетська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Myanmar</source>
-        <translation>М&apos;янма</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Georgian</source>
-        <translation>Грузинська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Khmer</source>
-        <translation>Кхмерська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Simplified Chinese</source>
-        <translation>Китайська спрощена</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Traditional Chinese</source>
-        <translation>Китайська традиційна</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Japanese</source>
-        <translation>Японська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Korean</source>
-        <translation>Корейська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Vietnamese</source>
-        <translation>В&apos;єтнамська</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Symbol</source>
-        <translation>Символьна</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Ogham</source>
-        <translation>Огам</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Runic</source>
-        <translation>Рунічна</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>N&apos;Ko</source>
-        <translation>Нко</translation>
     </message>
 </context>
 <context>
@@ -2317,7 +2147,7 @@ Do you want to delete it anyway?</source>
         <translation>Виберіть шрифт</translation>
     </message>
     <message>
-        <location line="+555"/>
+        <location line="+524"/>
         <source>&amp;Font</source>
         <translation>&amp;Шрифт</translation>
     </message>
@@ -2350,11 +2180,6 @@ Do you want to delete it anyway?</source>
         <location line="+1"/>
         <source>Sample</source>
         <translation>Зразок</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Wr&amp;iting System</source>
-        <translation>Система &amp;писемності</translation>
     </message>
 </context>
 <context>
@@ -2541,7 +2366,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+139"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+138"/>
         <source>No host name given</source>
         <translation>Ім&apos;я вузла не задано</translation>
     </message>
@@ -4422,7 +4247,7 @@ Do you want to overwrite it?</source>
         <translation>Процес аварійно завершився</translation>
     </message>
     <message>
-        <location line="+897"/>
+        <location line="+891"/>
         <source>No program defined</source>
         <translation>Програму не задано</translation>
     </message>
@@ -4443,9 +4268,9 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <location line="+236"/>
-        <location line="+52"/>
-        <location line="+74"/>
-        <location line="+66"/>
+        <location line="+48"/>
+        <location line="+70"/>
+        <location line="+62"/>
         <source>Process operation timed out</source>
         <translation>Час на операцію з процесом вичерпано</translation>
     </message>
@@ -4931,8 +4756,8 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <location line="+18"/>
-        <source>Qt Script Debugger</source>
-        <translation>Зневаджувач скриптів Qt</translation>
+        <source>Katie Script Debugger</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6323,7 +6148,7 @@ Do you want to overwrite it?</source>
         <translation>Невідомий код помилки проксі-серверу SOCKSv5 0x%1</translation>
     </message>
     <message>
-        <location line="+694"/>
+        <location line="+692"/>
         <source>Network operation timed out</source>
         <translation>Час на мережеву операцію вичерпано</translation>
     </message>

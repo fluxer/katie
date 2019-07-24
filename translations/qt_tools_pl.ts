@@ -124,17 +124,12 @@
 <context>
     <name>FontPanel</name>
     <message>
-        <location filename="../src/tools/designer/fontpanel/fontpanel.cpp" line="+63"/>
+        <location filename="../src/tools/designer/fontpanel/fontpanel.cpp" line="+62"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>&amp;Writing system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+5"/>
         <source>&amp;Family</source>
         <translation type="unfinished"></translation>
     </message>
@@ -726,7 +721,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+95"/>
         <source>The option -target-language requires a parameter.
 </source>
         <translation type="unfinished"></translation>
@@ -2028,7 +2023,7 @@ Would you like to retry?</source>
 <context>
     <name>QDesignerAppearanceOptionsPage</name>
     <message>
-        <location filename="../src/tools/designer/qdesigner_appearanceoptions.cpp" line="+138"/>
+        <location filename="../src/tools/designer/qdesigner_appearanceoptions.cpp" line="+136"/>
         <source>Appearance</source>
         <extracomment>Tab in preferences dialog</extracomment>
         <translation type="unfinished"></translation>
@@ -2037,7 +2032,7 @@ Would you like to retry?</source>
 <context>
     <name>QDesignerAppearanceOptionsWidget</name>
     <message>
-        <location line="-53"/>
+        <location line="-51"/>
         <source>Docked Window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2078,7 +2073,7 @@ Would you like to retry?</source>
 <context>
     <name>QDesignerToolWindow</name>
     <message>
-        <location filename="../src/tools/designer/qdesigner_toolwindow.cpp" line="+190"/>
+        <location filename="../src/tools/designer/qdesigner_toolwindow.cpp" line="+187"/>
         <source>Property Editor</source>
         <translation type="unfinished"></translation>
     </message>

@@ -87,7 +87,7 @@ This indicates an inconsistency in the ui-file.</source>
     <name>QAbstractSocket</name>
     <message>
         <location filename="../src/network/socket/qabstractsocket.cpp" line="+899"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+676"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+670"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+649"/>
         <location line="+26"/>
         <source>Host not found</source>
@@ -106,12 +106,12 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Časový limit pro spojení byl překročen</translation>
     </message>
     <message>
-        <location line="+1125"/>
+        <location line="+1118"/>
         <source>Socket is not connected</source>
         <translation>Socket není spojen</translation>
     </message>
     <message>
-        <location line="-431"/>
+        <location line="-424"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>Časový limit pro socket operaci byl překročen</translation>
@@ -1081,7 +1081,7 @@ Script: %3</source>
         <translation>není typ</translation>
     </message>
     <message>
-        <location line="+301"/>
+        <location line="+265"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation>Velikost písmen v názvu souboru neodpovídá pro &quot;%1&quot;</translation>
     </message>
@@ -1205,7 +1205,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeParentChange</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+110"/>
+        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+103"/>
         <source>Unable to preserve appearance under complex transform</source>
         <translation>Při složité proměně nelze zachovat vzhled</translation>
     </message>
@@ -1437,7 +1437,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTypeLoader</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+936"/>
+        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+929"/>
         <source>Script %1 unavailable</source>
         <translation>Skript %1 nedostupný</translation>
     </message>
@@ -2090,229 +2090,59 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+1859"/>
-        <source>Any</source>
-        <translation>Všechna</translation>
-    </message>
-    <message>
-        <location line="+60"/>
-        <source>Lao</source>
-        <translation>Laoské</translation>
-    </message>
-    <message>
-        <location line="-1822"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+97"/>
         <location line="+12"/>
-        <location line="+1033"/>
+        <location line="+827"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location line="-1031"/>
+        <location line="-825"/>
         <source>Demi</source>
         <translation>Polotučné</translation>
     </message>
     <message>
-        <location line="+1805"/>
-        <source>Thai</source>
-        <translation>Thajské</translation>
-    </message>
-    <message>
-        <location line="-1813"/>
+        <location line="-8"/>
         <location line="+18"/>
-        <location line="+1019"/>
+        <location line="+813"/>
         <source>Black</source>
         <translation>Černé</translation>
     </message>
     <message>
-        <location line="+725"/>
-        <source>Greek</source>
-        <translation>Řecké</translation>
-    </message>
-    <message>
-        <location line="+66"/>
-        <source>Khmer</source>
-        <translation>Khmerské</translation>
-    </message>
-    <message>
-        <location line="-69"/>
-        <source>Latin</source>
-        <translation>Latinské</translation>
-    </message>
-    <message>
-        <location line="-1745"/>
-        <location line="+1029"/>
+        <location line="-817"/>
+        <location line="+823"/>
         <source>Light</source>
         <translation>Jemné</translation>
     </message>
     <message>
-        <location line="+806"/>
-        <source>Ogham</source>
-        <translation>Ogamské</translation>
-    </message>
-    <message>
-        <location line="-54"/>
-        <source>Oriya</source>
-        <translation>Oriya</translation>
-    </message>
-    <message>
-        <location line="+57"/>
-        <source>Runic</source>
-        <translation>Runové</translation>
-    </message>
-    <message>
-        <location line="-54"/>
-        <source>Tamil</source>
-        <translation>Tamilské</translation>
-    </message>
-    <message>
-        <location line="-33"/>
-        <source>Cyrillic</source>
-        <translation>Cyrilské</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>Kannada</source>
-        <translation>Kannada</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Malayalam</source>
-        <translation>Malayalam</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Simplified Chinese</source>
-        <translation>Zjednodušená čínština</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>N&apos;Ko</source>
-        <translation>N&apos;Ko</translation>
-    </message>
-    <message>
-        <location line="-1858"/>
-        <location line="+1044"/>
+        <location line="-840"/>
+        <location line="+838"/>
         <source>Demi Bold</source>
         <translation>Polotučné</translation>
     </message>
     <message>
-        <location line="+733"/>
-        <source>Arabic</source>
-        <translation>Arabské</translation>
-    </message>
-    <message>
-        <location line="-3"/>
-        <source>Hebrew</source>
-        <translation>Hebrejské</translation>
-    </message>
-    <message>
-        <location line="+51"/>
-        <source>Myanmar</source>
-        <translation>Myanmar</translation>
-    </message>
-    <message>
-        <location line="-1662"/>
-        <location line="+886"/>
+        <location line="-675"/>
+        <location line="+680"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location line="+794"/>
-        <source>Korean</source>
-        <translation>Korejské</translation>
-    </message>
-    <message>
-        <location line="-1849"/>
-        <location line="+1060"/>
+        <location line="-849"/>
+        <location line="+854"/>
         <source>Normal</source>
         <translation>Normální</translation>
     </message>
     <message>
-        <location line="-888"/>
-        <location line="+885"/>
+        <location line="-682"/>
+        <location line="+679"/>
         <source>Oblique</source>
         <translation>Skloněné</translation>
-    </message>
-    <message>
-        <location line="+753"/>
-        <source>Telugu</source>
-        <translation>Telugu</translation>
-    </message>
-    <message>
-        <location line="-21"/>
-        <source>Thaana</source>
-        <translation>Thaana</translation>
-    </message>
-    <message>
-        <location line="+66"/>
-        <source>Symbol</source>
-        <translation>Symbol</translation>
-    </message>
-    <message>
-        <location line="-69"/>
-        <source>Syriac</source>
-        <translation>Syrské</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Devanagari</source>
-        <translation>Devanagari</translation>
-    </message>
-    <message>
-        <location line="+54"/>
-        <source>Japanese</source>
-        <translation>Japonské</translation>
-    </message>
-    <message>
-        <location line="-51"/>
-        <source>Bengali</source>
-        <translation>Bengálské</translation>
-    </message>
-    <message>
-        <location line="-18"/>
-        <source>Armenian</source>
-        <translation>Arménské</translation>
-    </message>
-    <message>
-        <location line="+42"/>
-        <source>Sinhala</source>
-        <translation>Sinhálské</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Tibetan</source>
-        <translation>Tibetské</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Vietnamese</source>
-        <translation>Větnamské</translation>
-    </message>
-    <message>
-        <location line="-51"/>
-        <source>Gujarati</source>
-        <translation>Gujarati</translation>
-    </message>
-    <message>
-        <location line="+42"/>
-        <source>Traditional Chinese</source>
-        <translation>Tradiční čínština</translation>
-    </message>
-    <message>
-        <location line="-9"/>
-        <source>Georgian</source>
-        <translation>Gruzínské</translation>
-    </message>
-    <message>
-        <location line="-36"/>
-        <source>Gurmukhi</source>
-        <translation>Gurmukhi</translation>
     </message>
 </context>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+730"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+699"/>
         <source>&amp;Font</source>
         <translation>&amp;Písmo</translation>
     </message>
@@ -2332,17 +2162,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Druh pís&amp;ma</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Wr&amp;iting System</source>
-        <translation>Způsob &amp;psaní</translation>
-    </message>
-    <message>
-        <location line="-564"/>
+        <location line="-525"/>
         <source>Select Font</source>
         <translation>Vybrat písmo</translation>
     </message>
     <message>
-        <location line="+562"/>
+        <location line="+531"/>
         <source>&amp;Underline</source>
         <translation>&amp;Podtrhnout</translation>
     </message>
@@ -2541,7 +2366,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+207"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+206"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>Nepodařilo se najít počítač</translation>
@@ -4411,7 +4236,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Zápis do procesu se nezdařil</translation>
     </message>
     <message>
-        <location line="+960"/>
+        <location line="+954"/>
         <source>No program defined</source>
         <translation>Nestanoven žádný program</translation>
     </message>
@@ -4421,7 +4246,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Potíže se zdroji (selhání rozcestí - &quot;fork failure&quot;): %1</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-1059"/>
+        <location filename="../src/core/io/qprocess.cpp" line="-1053"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Čtení z procesu se nezdařilo</translation>
@@ -4438,9 +4263,9 @@ Zvolte, prosím, pro soubor jiný název.</translation>
     </message>
     <message>
         <location line="+454"/>
-        <location line="+52"/>
-        <location line="+74"/>
-        <location line="+66"/>
+        <location line="+48"/>
+        <location line="+70"/>
+        <location line="+62"/>
         <source>Process operation timed out</source>
         <translation>Překročení času u procesu</translation>
     </message>
@@ -4931,8 +4756,8 @@ Zvolte, prosím, pro soubor jiný název.</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>Qt Script Debugger</source>
-        <translation>Qt ladění skriptů</translation>
+        <source>Katie Script Debugger</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6258,12 +6083,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QSocks5SocketEngine</name>
     <message>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+719"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+717"/>
         <source>Network operation timed out</source>
         <translation>Časový limit pro síťovou operaci byl překročen</translation>
     </message>
     <message>
-        <location line="-782"/>
+        <location line="-780"/>
         <source>Connection to proxy closed prematurely</source>
         <translation>Proxy server předčasně ukončil spojení</translation>
     </message>
