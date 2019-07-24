@@ -1046,9 +1046,8 @@ static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
 #endif
     FM_DEBUG("passes charset test\n");
 
-    QFontEngineX11FT *engine = 0;
     if (!match) // probably no fonts available.
-        goto done;
+        return Q_NULLPTR;
 
     if (script != QUnicodeTables::Common) {
         // skip font if it doesn't support the language we want
@@ -1064,9 +1063,9 @@ special_char:
             // need to check the charset, as the langset doesn't work for some scripts
             FcCharSet *cs;
             if (FcPatternGetCharSet(match, FC_CHARSET, 0, &cs) != FcResultMatch)
-                goto done;
+                return Q_NULLPTR;
             if (!FcCharSetHasChar(cs, specialChars[script]))
-                goto done;
+                return Q_NULLPTR;
         }
     }
 
@@ -1076,13 +1075,12 @@ special_char:
         FcPatternAddBool(match, FC_ANTIALIAS, false);
     }
 
-    engine = new QFontEngineX11FT(match, qt_FcPatternToQFontDef(match, request), screen);
+    QFontEngineX11FT *engine = new QFontEngineX11FT(match, qt_FcPatternToQFontDef(match, request), screen);
     if (engine->invalid()) {
         FM_DEBUG("   --> invalid!\n");
         delete engine;
-        engine = 0;
+        engine = Q_NULLPTR;
     }
-done:
     return engine;
 }
 
