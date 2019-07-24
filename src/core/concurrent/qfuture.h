@@ -239,7 +239,7 @@ private:
 #ifdef QFUTURE_TEST
 public:
 #endif
-    mutable QFutureInterfaceBase d;
+    QFutureInterfaceBase d;
 };
 
 inline QFuture<void> &QFuture<void>::operator=(const QFuture<void> &other)
