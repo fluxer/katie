@@ -60,7 +60,7 @@
 #include "ui_qprintsettingsoutput.h"
 #include "ui_qprintwidget.h"
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
 #  include "qcups_p.h"
 #  include <cups/cups.h>
 #  include "qpdf_p.h"
@@ -79,7 +79,7 @@ public:
     QPrintPropertiesDialog(QAbstractPrintDialog *parent = 0);
     ~QPrintPropertiesDialog();
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     void setCups(QCUPSSupport *cups) { m_cups = cups; }
     void addItemToOptions(QOptionTreeItem *parent, QList<const ppd_option_t*>& options, QList<const char*>& markedOptions) const;
 #endif
@@ -97,7 +97,7 @@ protected:
 private:
     Ui::QPrintPropertiesWidget widget;
     QDialogButtonBox *m_buttons;
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     QCUPSSupport *m_cups;
     QPPDOptionsModel *m_cupsOptionsModel;
 #endif
@@ -114,7 +114,7 @@ public:
     bool checkFields();
     void setupPrinter();
     void setOptionsPane(QPrintDialogPrivate *pane);
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     void setCupsProperties();
 #endif
 
@@ -134,7 +134,7 @@ public:
 private:
     QPrintDialogPrivate *optionsPane;
     bool filePrintersAdded;
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     QCUPSSupport* cups;
     int cupsPrinterCount;
     const cups_dest_t* cupsPrinters;
@@ -160,7 +160,7 @@ private:
     Q_PRIVATE_SLOT(d, void _q_btnPropertiesClicked())
 };
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
 class QOptionTreeItem
 {
 public:
@@ -236,7 +236,7 @@ private slots:
 
 QPrintPropertiesDialog::QPrintPropertiesDialog(QAbstractPrintDialog *parent)
     : QDialog(parent)
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     , m_cups(0), m_cupsOptionsModel(0)
 #endif
 {
@@ -254,7 +254,7 @@ QPrintPropertiesDialog::QPrintPropertiesDialog(QAbstractPrintDialog *parent)
 
 QPrintPropertiesDialog::~QPrintPropertiesDialog()
 {
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     delete m_cupsOptionsModel;
 #else
     delete widget.cupsPropertiesPage;
@@ -270,7 +270,7 @@ void QPrintPropertiesDialog::setupPrinter() const
 {
     widget.pageSetup->setupPrinter();
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     QPPDOptionsModel* model = static_cast<QPPDOptionsModel*>(widget.treeView->model());
     if (model) {
         QOptionTreeItem* rootItem = model->rootItem;
@@ -285,7 +285,7 @@ void QPrintPropertiesDialog::setupPrinter() const
 
 void QPrintPropertiesDialog::selectPrinter()
 {
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     widget.pageSetup->selectPrinter(m_cups);
     widget.treeView->setModel(0);
     if (m_cups && QCUPSSupport::isAvailable()) {
@@ -331,7 +331,7 @@ void QPrintPropertiesDialog::showEvent(QShowEvent* event)
     event->accept();
 }
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
 void QPrintPropertiesDialog::addItemToOptions(QOptionTreeItem *parent, QList<const ppd_option_t*>& options, QList<const char*>& markedOptions) const
 {
     for (int i = 0; i < parent->childItems.count(); ++i) {
@@ -554,7 +554,7 @@ void QPrintDialogPrivate::setTabs(const QList<QWidget*> &tabWidgets)
     }
 }
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
 void QPrintDialogPrivate::selectPrinter(QCUPSSupport *cups)
 {
     options.duplex->setEnabled(cups && cups->ppdOption("Duplex"));
@@ -613,7 +613,7 @@ void QPrintDialog::accept()
 */
 QUnixPrintWidgetPrivate::QUnixPrintWidgetPrivate(QUnixPrintWidget *p)
     : parent(p), propertiesDialog(0), printer(0), optionsPane(0), filePrintersAdded(false)
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     , cups(0), cupsPrinterCount(0), cupsPrinters(0), cupsPPD(0)
 #endif
 {
@@ -624,7 +624,7 @@ QUnixPrintWidgetPrivate::QUnixPrintWidgetPrivate(QUnixPrintWidget *p)
     widget.setupUi(parent);
 
     int currentPrinterIndex = 0;
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     cups = new QCUPSSupport;
     if (QCUPSSupport::isAvailable()) {
         cupsPPD = cups->currentPPD();
@@ -653,7 +653,7 @@ QUnixPrintWidgetPrivate::QUnixPrintWidgetPrivate(QUnixPrintWidget *p)
         QList<QPrinterDescription>::const_iterator i = lprPrinters.constBegin();
         for(; i != lprPrinters.constEnd(); ++i)
             widget.printers->addItem((*i).name);
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     }
 #endif
 
@@ -710,7 +710,7 @@ void QUnixPrintWidgetPrivate::updateWidget()
 
 QUnixPrintWidgetPrivate::~QUnixPrintWidgetPrivate()
 {
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     delete cups;
 #endif
 }
@@ -742,7 +742,7 @@ void QUnixPrintWidgetPrivate::_q_printerChanged(int index)
             widget.lOutput->setEnabled(true);
             if (propertiesDialog)
                 propertiesDialog->selectPdfPsPrinter(printer);
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
             if (optionsPane)
                 optionsPane->selectPrinter(0);
 #endif
@@ -751,7 +751,7 @@ void QUnixPrintWidgetPrivate::_q_printerChanged(int index)
     }
 
     widget.location->setText(QString());
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     if (QCUPSSupport::isAvailable()) {
         cups->setCurrentPrinter(index);
 
@@ -783,7 +783,7 @@ void QUnixPrintWidgetPrivate::_q_printerChanged(int index)
             if (propertiesDialog)
                 propertiesDialog->selectPrinter();
         }
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     }
 #endif
 }
@@ -910,7 +910,7 @@ void QUnixPrintWidgetPrivate::_q_btnPropertiesClicked()
     }
 
     if (propertiesDialog->result() == QDialog::Rejected) {
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
         propertiesDialog->setCups(cups);
 #endif
         propertiesDialog->applyPrinterProperties(q->printer());
@@ -924,7 +924,7 @@ void QUnixPrintWidgetPrivate::_q_btnPropertiesClicked()
     propertiesDialog->exec();
 }
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
 void QUnixPrintWidgetPrivate::setCupsProperties()
 {
     if (cups && QCUPSSupport::isAvailable() && cups->pageSizes()) {
@@ -977,7 +977,7 @@ void QUnixPrintWidgetPrivate::setupPrinter()
 
     if (propertiesDialog && propertiesDialog->result() == QDialog::Accepted)
         propertiesDialog->setupPrinter();
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     if (!propertiesDialog)
         setCupsProperties();
 #endif
@@ -1011,7 +1011,7 @@ void QUnixPrintWidget::updatePrinter()
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
 
 QPPDOptionsModel::QPPDOptionsModel(QCUPSSupport *c, QObject *parent)
     : QAbstractItemModel(parent), rootItem(0), cups(c), ppd(c->currentPPD())

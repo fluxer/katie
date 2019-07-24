@@ -278,7 +278,7 @@ public:
     bool hasCustomPageMargins;
     qreal leftMargin, topMargin, rightMargin, bottomMargin;
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     QString cupsTempFile;
 #endif
 };

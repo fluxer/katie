@@ -54,7 +54,7 @@
 
 #include <ui_qpagesetupwidget.h>
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
 #  include "qcups_p.h"
 #  include <cups/cups.h>
 #  include "qpdf_p.h"
@@ -216,7 +216,7 @@ private:
 
 QPageSetupDialogPrivate::~QPageSetupDialogPrivate()
 {
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     delete cups;
 #endif
 }
@@ -227,7 +227,7 @@ void QPageSetupDialogPrivate::init()
 
     widget = new QPageSetupWidget(q);
     widget->setPrinter(printer);
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     if (printer->outputFormat() == QPrinter::NativeFormat && QCUPSSupport::isAvailable()) {
         cups = new QCUPSSupport;
         widget->selectPrinter(cups);
@@ -339,7 +339,7 @@ void QPageSetupWidget::setupPrinter() const
     if (val.type() == QVariant::Int) {
         ps = val.toInt();
     }
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     else if (m_cups && QCUPSSupport::isAvailable() && m_cups->currentPPD()) {
         QByteArray cupsPageSize = val.toByteArray();
         QPrintEngine *engine = m_printer->printEngine();
@@ -375,7 +375,7 @@ void QPageSetupWidget::selectPrinter(QCUPSSupport *cups)
 {
     m_cups = cups;
     widget.paperSize->clear();
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     if (m_cups && QCUPSSupport::isAvailable()) {
         const ppd_option_t* pageSizes = m_cups->pageSizes();
         const int numChoices = pageSizes ? pageSizes->num_choices : 0;
@@ -456,7 +456,7 @@ void QPageSetupWidget::_q_paperSizeChanged()
 
     bool custom = size == QPrinter::Custom;
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     custom = custom ? !m_cups : custom;
 #endif
 
@@ -470,7 +470,7 @@ void QPageSetupWidget::_q_paperSizeChanged()
         m_pagePreview->setPaperSize(m_paperSize);
     } else {
         Q_ASSERT(m_printer);
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
         if (m_cups) { // combobox is filled with cups based data
             QByteArray cupsPageSize = widget.paperSize->itemData(widget.paperSize->currentIndex()).toByteArray();
             m_paperSize = m_cups->paperRect(cupsPageSize).size();

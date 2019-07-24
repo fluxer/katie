@@ -920,7 +920,7 @@ QPdfBaseEngine::QPdfBaseEngine(QPdfBaseEnginePrivate &dd, PaintEngineFeatures f)
     : QAlphaPaintEngine(dd, f)
 {
     Q_D(QPdfBaseEngine);
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     if (QCUPSSupport::isAvailable()) {
         QCUPSSupport cups;
         const cups_dest_t* printers = cups.availablePrinters();
@@ -1500,7 +1500,7 @@ QVariant QPdfBaseEngine::property(PrintEnginePropertyKey key) const
         ret = d->copies;
         break;
     case PPK_SupportsMultipleCopies:
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
         if (QCUPSSupport::isAvailable())
             ret = true;
         else
@@ -1508,7 +1508,7 @@ QVariant QPdfBaseEngine::property(PrintEnginePropertyKey key) const
             ret = false;
         break;
     case PPK_NumberOfCopies:
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
         if (QCUPSSupport::isAvailable())
             ret = 1;
         else
@@ -1675,7 +1675,7 @@ bool QPdfBaseEnginePrivate::openPrintDevice()
             return false;
         }
         outDevice = file;
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     } else if (QCUPSSupport::isAvailable()) {
         QCUPSSupport cups;
         QPair<int, QString> ret = cups.tempFd();
@@ -1816,7 +1816,7 @@ void QPdfBaseEnginePrivate::closePrintDevice()
     delete outDevice;
     outDevice = 0;
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     if (!cupsTempFile.isEmpty()) {
         QString tempFile = cupsTempFile;
         cupsTempFile.clear();
@@ -2022,7 +2022,7 @@ QRect QPdfBaseEnginePrivate::paperRect() const
         w = qRound(customPaperSize.width()*resolution/72.);
         h = qRound(customPaperSize.height()*resolution/72.);
     } else {
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
         if (QCUPSSupport::isAvailable() && !cupsPaperRect.isNull()) {
             QRect r = cupsPaperRect;
             w = r.width();
@@ -2050,7 +2050,7 @@ QRect QPdfBaseEnginePrivate::pageRect() const
 
     QRect r;
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     if (!hasCustomPageMargins && QCUPSSupport::isAvailable() && !cupsPageRect.isNull()) {
         r = cupsPageRect;
         if (r == cupsPaperRect) {

@@ -50,7 +50,7 @@ public:
     void init();
 
     QPageSetupWidget *widget;
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     QCUPSSupport *cups;
 #endif
 };

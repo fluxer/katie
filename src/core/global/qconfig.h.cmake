@@ -671,7 +671,7 @@
 #endif
 
 // Common UNIX Printing System
-#if !defined(QT_NO_CUPS) && (defined(QT_NO_PRINTER) || defined(QT_NO_LIBRARY))
+#if !defined(QT_NO_CUPS) && defined(QT_NO_PRINTER)
 #define QT_NO_CUPS
 #endif
 

@@ -55,7 +55,7 @@ public:
     /// copy printer properties to the widget
     void applyPrinterProperties(QPrinter *p);
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     void selectPrinter(QCUPSSupport *cups);
 #endif
 

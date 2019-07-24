@@ -48,7 +48,7 @@
 #include "qprintdialog.h"
 #include "qtextstream.h"
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
 #  include "qcups_p.h"
 #  include <cups/cups.h>
 #  include "qpdf_p.h"
@@ -64,7 +64,7 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_PRINTER
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
 // preserver names in ascending order for the binary search
 static const struct NamedPaperSize {
     const char *const name;
@@ -837,7 +837,7 @@ QList<QPrinterInfo> QPrinterInfo::availablePrinters()
 {
     QList<QPrinterInfo> printers;
 
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     if (QCUPSSupport::isAvailable()) {
         QCUPSSupport cups;
         int cupsPrinterCount = cups.availablePrintersCount();
@@ -881,7 +881,7 @@ QPrinterInfo QPrinterInfo::defaultPrinter()
 
 QList<QPrinter::PaperSize> QPrinterInfo::supportedPaperSizes() const
 {
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_CUPS)
     const Q_D(QPrinterInfo);
 
     if (isNull())
