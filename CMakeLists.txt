@@ -103,7 +103,6 @@ set(KATIE_MAN_FULL "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages insta
 set(KATIE_APPLICATIONS_FULL "${KATIE_DATA_FULL}/applications" CACHE PATH "Desktop applications register installation path")
 set(KATIE_PIXMAPS_FULL "${KATIE_DATA_FULL}/pixmaps" CACHE PATH "Desktop applications icon installation path")
 set(KATIE_PKGCONFIG_FULL "${KATIE_DATA_FULL}/pkgconfig" CACHE PATH "pkg-config installation path")
-set(KATIE_PYTHON_FULL "${KATIE_LIBRARIES_FULL}/python" CACHE PATH "Python packages installation path")
 set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 katie_setup_paths()
 
@@ -166,9 +165,6 @@ add_feature_info(nsl WITH_NSL "build NSL support")
 # optional features
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
-
-option(KATIE_BINDINGS "Build experimental Python bindings" OFF)
-add_feature_info(bindings KATIE_BINDINGS "build experimental Python bindings")
 
 option(KATIE_ALLINONE "Build targets from single source file" OFF)
 add_feature_info(allinone KATIE_ALLINONE "build targets from single source file")
@@ -441,24 +437,6 @@ set_package_properties(MySQL PROPERTIES
     TYPE OPTIONAL
 )
 
-if(KATIE_BINDINGS)
-    find_package(Shiboken)
-    set_package_properties(Shiboken PROPERTIES
-        PURPOSE "Python bindings"
-        DESCRIPTION "Generates bindings for C++ libraries using CPython source code"
-        URL "https://wiki.qt.io/PySide"
-        TYPE REQUIRED
-    )
-
-    find_package(PythonLibs)
-    set_package_properties(PythonLibs PROPERTIES
-        PURPOSE "Python bindings"
-        DESCRIPTION "Programming language that lets you work quickly"
-        URL "https://www.python.org/"
-        TYPE REQUIRED
-    )
-endif()
-
 if(PYTHONINTERP_FOUND)
     execute_process(
         COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/genmap.py
@@ -608,11 +586,6 @@ endif()
 # utilities for maintainance
 if(KATIE_UTILS)
     add_subdirectory(util)
-endif()
-
-# Python bindings
-if(KATIE_BINDINGS)
-    add_subdirectory(bindings)
 endif()
 
 # the macro calls bellow are generted via the incfsck script
