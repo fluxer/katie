@@ -42,7 +42,6 @@ QT_BEGIN_NAMESPACE
 class QScriptable;
 class QScriptablePrivate
 {
-    Q_DECLARE_PUBLIC(QScriptable)
 public:
     inline QScriptablePrivate()
         : engine(Q_NULLPTR)
@@ -52,8 +51,6 @@ public:
         { return q->d_func(); }
 
     QScriptEngine *engine;
-
-    QScriptable *q_ptr;
 };
 
 QT_END_NAMESPACE

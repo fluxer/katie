@@ -84,7 +84,6 @@ QT_BEGIN_NAMESPACE
 QScriptable::QScriptable()
     : d_ptr(new QScriptablePrivate())
 {
-    d_ptr->q_ptr = this;
 }
 
 /*!
