@@ -617,7 +617,7 @@ bool QChar::isPrint() const
 */
 bool QChar::isSpace() const
 {
-    if(ucs >= 9 && ucs <=13)
+    if(ucs >= 9 && ucs <= 13)
         return true;
 
     const utf8proc_category_t category = utf8proc_category(ucs);
