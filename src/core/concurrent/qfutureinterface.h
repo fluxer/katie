@@ -242,14 +242,12 @@ inline void QFutureInterface<T>::reportFinished(const T *result)
 template <typename T>
 inline const T &QFutureInterface<T>::resultReference(int index) const
 {
-    QMutexLocker lock(mutex());
     return resultStore().resultAt(index).value();
 }
 
 template <typename T>
 inline const T *QFutureInterface<T>::resultPointer(int index) const
 {
-    QMutexLocker lock(mutex());
     return resultStore().resultAt(index).pointer();
 }
 
