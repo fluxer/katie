@@ -267,8 +267,8 @@ static const char *specialLanguages[] = {
     0, // Ethiopic
     "chr-us", // Cherokee
     "en-ca", // CanadianAboriginal
-    0, // Ogham
-    0, // Runic
+    "sga-ie", // Ogham
+    "non-se", // Runic
     "km", // Khmer
     "mn", // Mongolian
     "ja-jp", // Hiragana
@@ -276,121 +276,121 @@ static const char *specialLanguages[] = {
     "zh-tw", // Bopomofo
     "zh-tw", // Han
     "yi", // Yi
-    0, // OldItalic
-    0, // Gothic
+    "ett-it", // OldItalic
+    "got-ua", // Gothic
     0, // Deseret
     0, // Inherited
     "tl-ph", // Tagalog
-    0, // Hanunoo
-    0, // Buhid
-    0, // Tagbanwa
-    0, // Limbu
-    0, // TaiLe
-    0, // LinearB
-    0, // Ugaritic
+    "hnn-ph", // Hanunoo
+    "bku-ph", // Buhid
+    "tbw-ph", // Tagbanwa
+    "lif", // Limbu
+    "tdd-cn", // TaiLe
+    "lab-gr", // LinearB
+    "uga-sy", // Ugaritic
     "en-gb", // Shavian
     "so-so", // Osmanya
-    0, // Cypriot
+    "grc-cy", // Cypriot
     "fr-fr", // Braille
-    0, // Buginese
-    0, // Coptic
-    0, // NewTaiLue
-    0, // Glagolitic
+    "bug-id", // Buginese
+    "cop-eg", // Coptic
+    "khb-cn", // NewTaiLue
+    "cu-bg", // Glagolitic
     0, // Tifinagh
-    0, // SylotiNagri
-    0, // OldPersian
-    0, // Kharoshthi
-    0, // Balinese
-    0, // Cuneiform
-    0, // Phoenician
-    0, // PhagsPa
+    "syl-bd", // SylotiNagri
+    "peo-ir", // OldPersian
+    "pra-pk", // Kharoshthi
+    "ban-id", // Balinese
+    "akk-iq", // Cuneiform
+    "phn-lb", // Phoenician
+    "lzh-cn", // PhagsPa
     0, // Nko
-    0, // Sundanese
-    0, // Lepcha
+    "su-id", // Sundanese
+    "lep-in", // Lepcha
     "sat-in", // OlChiki
-    0, // Vai
-    0, // Saurashtra
-    0, // KayahLi
-    0, // Rejang
-    0, // Lycian
-    0, // Carian
-    0, // Lydian
+    "vai-lr", // Vai
+    "saz-in", // Saurashtra
+    "eky-mm", // KayahLi
+    "rej-id", // Rejang
+    "xlc-tr", // Lycian
+    "xcr-tr", // Carian
+    "xld-tr", // Lydian
     0, // Cham
     0, // TaiTham
-    0, // TaiViet
-    0, // Avestan
+    "blt-vn", // TaiViet
+    "ae-ir", // Avestan
     "ar-eg", // EgyptianHieroglyphs
-    0, // Samaritan
-    0, // Lisu
-    0, // Bamum
+    "smp-il", // Samaritan
+    "lis-cn", // Lisu
+    "bax-cm", // Bamum
     0, // Javanese
     "mni-in", // MeeteiMayek
-    0, // ImperialAramaic
+    "arc-ir", // ImperialAramaic
     "ar", // OldSouthArabian
-    0, // InscriptionalParthian
-    0, // InscriptionalPahlavi
+    "xpr-ir", // InscriptionalParthian
+    "pal-ir", // InscriptionalPahlavi
     0, // OldTurkic
     "bho-in", // Kaithi
-    0, // Batak
-    0, // Brahmi
-    0, // Mandaic
-    0, // Chakma
-    0, // MeroiticCursive
+    "bbc-id", // Batak
+    "pka-in", // Brahmi
+    "myz-ir", // Mandaic
+    "ccp-bd", // Chakma
+    "xmr-sd", // MeroiticCursive
     0, // MeroiticHieroglyphs
     0, // Miao
     "sa-in", // Sharada
-    0, // SoraSompeng
+    "srb-in", // SoraSompeng
     "doi-in", // Takri
     "sq", // CaucasianAlbanian
-    0, // BassaVah
+    "bsq-lr", // BassaVah
     "fr-fr", // Duployan
     "sq-al", // Elbasan
     "sa-in", // Grantha
-    0, // PahawhHmong
+    "hnj-la", // PahawhHmong
     "sd-in", // Khojki
-    0, // LinearA
+    "lab-gr", // LinearA
     "hi-in", // Mahajani
-    0, // Manichaean
+    "xmn-cn", // Manichaean
     0, // MendeKikakui
     "mr-in", // Modi
-    0, // Mro
+    "mro-bd", // Mro
     "ar", // OldNorthArabian
-    0, // Nabataean
-    0, // Palmyrene
-    0, // PauCinHau
-    0, // OldPermic
-    0, // PsalterPahlavi
+    "arc-jo", // Nabataean
+    "arc-sy", // Palmyrene
+    "ctd-mm", // PauCinHau
+    "kv-ru", // OldPermic
+    "pal-cn", // PsalterPahlavi
     "sa-in", // Siddham
     "sd-in", // Khudawadi
     "mai-in", // Tirhuta
     0, // WarangCiti
-    0, // Ahom
-    0, // AnatolianHieroglyphs
-    0, // Hatran
-    0, // Multani
+    "aho-in", // Ahom
+    "hlu-tr", // AnatolianHieroglyphs
+    "mis-iq", // Hatran
+    "skr-pk", // Multani
     "hu-hu", // OldHungarian
-    0, // SignWriting
-    0, // Adlam
+    "ase-us", // SignWriting
+    "ff-gn", // Adlam
     "sa-in", // Bhaiksuki
     "bo-cn", // Marchen
-    0, // Newa
-    0, // Osage
-    0, // Tangut
-    0, // MasaramGondi
+    "new-np", // Newa
+    "osa-us", // Osage
+    "txg-cn", // Tangut
+    "esg-in", // MasaramGondi
     0, // Nushu
-    0, // Soyombo
-    0, // ZanabazarSquare
+    "cmg-mn", // Soyombo
+    "cmg-mn", // ZanabazarSquare
     "doi-in", // Dogra
-    0, // GunjalaGondi
-    0, // Makasar
-    0, // Medefaidrin
-    0, // HanifiRohingya
-    0, // Sogdian
-    0, // OldSogdian
-    0, // Elymaic
+    "wsg-in", // GunjalaGondi
+    "mak-id", // Makasar
+    "mis-ng", // Medefaidrin
+    "rhg-mm", // HanifiRohingya
+    "sog-uz", // Sogdian
+    "sog-uz", // OldSogdian
+    "arc-ir", // Elymaic
     "sa-in", // Nandinagari
-    0, // NyiakengPuachueHmong
-    0 // Wancho
+    "mww-us", // NyiakengPuachueHmong
+    "npp-in" // Wancho
 };
 enum { SpecialLanguageCount = sizeof(specialLanguages) / sizeof(const char *) };
 
