@@ -339,7 +339,7 @@ QStandardItemModelPrivate::~QStandardItemModelPrivate()
 */
 void QStandardItemModelPrivate::init()
 {
-    Q_Q(QStandardItemModel);
+    Q_Q(const QStandardItemModel);
     QObject::connect(q, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
                      q, SLOT(_q_emitItemChanged(QModelIndex,QModelIndex)));
 }
