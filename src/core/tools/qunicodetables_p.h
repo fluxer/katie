@@ -201,8 +201,8 @@ namespace QUnicodeTables {
     Q_CORE_EXPORT SentenceBreak QT_FASTCALL sentenceBreak(uint ucs4);
     Q_CORE_EXPORT LineBreak QT_FASTCALL lineBreakClass(uint ucs4);
 
-    // required by text engine
-    // See http://www.unicode.org/reports/tr24/tr24-5.html
+    // required by text engine and font database
+    // See https://www.unicode.org/reports/tr24/
     enum Script {
         Common,
         Latin,
