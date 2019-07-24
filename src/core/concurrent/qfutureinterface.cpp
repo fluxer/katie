@@ -122,7 +122,6 @@ void QFutureInterfaceBase::setThrottled(bool enable)
 
 bool QFutureInterfaceBase::isResultReadyAt(int index) const
 {
-    QMutexLocker lock(&d->m_mutex);
     return d->internal_isResultReadyAt(index);
 }
 
