@@ -4094,13 +4094,6 @@ static void sm_setProperty(const QString& name, const QStringList& value)
     delete [] prop;
 }
 
-
-// workaround for broken libsm, see below
-struct QT_smcConn {
-    unsigned int save_yourself_in_progress : 1;
-    unsigned int shutdown_in_progress : 1;
-};
-
 static void sm_saveYourselfCallback(SmcConn smcConn, SmPointer clientData,
                                   int saveType, Bool shutdown , int interactStyle, Bool /*fast*/)
 {
@@ -4112,12 +4105,6 @@ static void sm_saveYourselfCallback(SmcConn smcConn, SmPointer clientData,
     sm_saveType = saveType;
     sm_interactStyle = interactStyle;
 //    sm_shouldbefast = fast; ### never used?!?
-
-    // ugly workaround for broken libSM. libSM should do that _before_
-    // actually invoking the callback in sm_process.c
-    ((QT_smcConn*)smcConn)->save_yourself_in_progress = true;
-    if (sm_isshutdown)
-        ((QT_smcConn*)smcConn)->shutdown_in_progress = true;
 
     sm_performSaveYourself((QSessionManagerPrivate*) clientData);
     if (!sm_isshutdown) // we cannot expect a confirmation message in that case
