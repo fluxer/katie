@@ -272,15 +272,13 @@ class QGraphicsSceneEventPrivate
 {
 public:
     inline QGraphicsSceneEventPrivate()
-        : widget(0),
-          q_ptr(0)
+        : widget(0)
     { }
 
     inline virtual ~QGraphicsSceneEventPrivate()
     { }
 
     QWidget *widget;
-    QGraphicsSceneEvent *q_ptr;
 };
 
 /*!
@@ -291,7 +289,6 @@ public:
 QGraphicsSceneEvent::QGraphicsSceneEvent(Type type)
     : QEvent(type), d_ptr(new QGraphicsSceneEventPrivate)
 {
-    d_ptr->q_ptr = this;
 }
 
 /*!
@@ -302,7 +299,6 @@ QGraphicsSceneEvent::QGraphicsSceneEvent(Type type)
 QGraphicsSceneEvent::QGraphicsSceneEvent(QGraphicsSceneEventPrivate &dd, Type type)
     : QEvent(type), d_ptr(&dd)
 {
-    d_ptr->q_ptr = this;
 }
 
 /*!
@@ -335,7 +331,6 @@ void QGraphicsSceneEvent::setWidget(QWidget *widget)
 
 class QGraphicsSceneMouseEventPrivate : public QGraphicsSceneEventPrivate
 {
-    Q_DECLARE_PUBLIC(QGraphicsSceneMouseEvent)
 public:
     inline QGraphicsSceneMouseEventPrivate()
         : button(Qt::NoButton),
@@ -627,7 +622,6 @@ void QGraphicsSceneMouseEvent::setModifiers(Qt::KeyboardModifiers modifiers)
 
 class QGraphicsSceneWheelEventPrivate : public QGraphicsSceneEventPrivate
 {
-    Q_DECLARE_PUBLIC(QGraphicsSceneWheelEvent)
 public:
     inline QGraphicsSceneWheelEventPrivate()
         : buttons(0), modifiers(0), delta(0), orientation(Qt::Horizontal)
@@ -808,8 +802,7 @@ void QGraphicsSceneWheelEvent::setOrientation(Qt::Orientation orientation)
 
 class QGraphicsSceneContextMenuEventPrivate : public QGraphicsSceneEventPrivate
 {
-    Q_DECLARE_PUBLIC(QGraphicsSceneContextMenuEvent)
-        public:
+public:
     inline QGraphicsSceneContextMenuEventPrivate()
         : modifiers(0), reason(QGraphicsSceneContextMenuEvent::Other)
         { }
@@ -1230,7 +1223,6 @@ void QGraphicsSceneHelpEvent::setScreenPos(const QPoint &pos)
 
 class QGraphicsSceneDragDropEventPrivate : public QGraphicsSceneEventPrivate
 {
-    Q_DECLARE_PUBLIC(QGraphicsSceneDragDropEvent)
 public:
     inline QGraphicsSceneDragDropEventPrivate()
         : source(0), mimeData(0)
@@ -1537,7 +1529,6 @@ void QGraphicsSceneDragDropEvent::setMimeData(const QMimeData *data)
 
 class QGraphicsSceneResizeEventPrivate : public QGraphicsSceneEventPrivate
 {
-    Q_DECLARE_PUBLIC(QGraphicsSceneResizeEvent)
 public:
     inline QGraphicsSceneResizeEventPrivate()
     { }
@@ -1604,7 +1595,6 @@ void QGraphicsSceneResizeEvent::setNewSize(const QSizeF &size)
 
 class QGraphicsSceneMoveEventPrivate : public QGraphicsSceneEventPrivate
 {
-    Q_DECLARE_PUBLIC(QGraphicsSceneMoveEvent)
 public:
     inline QGraphicsSceneMoveEventPrivate()
     { }
