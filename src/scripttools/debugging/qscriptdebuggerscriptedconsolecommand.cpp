@@ -70,7 +70,6 @@ QT_BEGIN_NAMESPACE
 class QScriptDebuggerScriptedConsoleCommandPrivate
     : public QScriptDebuggerConsoleCommandPrivate
 {
-    Q_DECLARE_PUBLIC(QScriptDebuggerScriptedConsoleCommand)
 public:
     QScriptDebuggerScriptedConsoleCommandPrivate();
     ~QScriptDebuggerScriptedConsoleCommandPrivate();

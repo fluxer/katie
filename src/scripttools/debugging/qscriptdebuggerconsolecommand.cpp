@@ -67,7 +67,6 @@ QScriptDebuggerConsoleCommandPrivate::~QScriptDebuggerConsoleCommandPrivate()
 QScriptDebuggerConsoleCommand::QScriptDebuggerConsoleCommand()
     : d_ptr(new QScriptDebuggerConsoleCommandPrivate)
 {
-    d_ptr->q_ptr = this;
 }
 
 QScriptDebuggerConsoleCommand::~QScriptDebuggerConsoleCommand()
@@ -77,7 +76,6 @@ QScriptDebuggerConsoleCommand::~QScriptDebuggerConsoleCommand()
 QScriptDebuggerConsoleCommand::QScriptDebuggerConsoleCommand(QScriptDebuggerConsoleCommandPrivate &dd)
     : d_ptr(&dd)
 {
-    d_ptr->q_ptr = this;
 }
 
 /*!
