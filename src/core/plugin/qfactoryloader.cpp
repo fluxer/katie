@@ -248,14 +248,6 @@ QObject *QFactoryLoader::instance(const QString &key) const
     return 0;
 }
 
-#ifdef Q_WS_X11
-QLibraryPrivate *QFactoryLoader::library(const QString &key) const
-{
-    Q_D(const QFactoryLoader);
-    return d->keyMap.value(d->cs ? key : key.toLower());
-}
-#endif
-
 void QFactoryLoader::refreshAll()
 {
     QMutexLocker locker(qt_factoryloader_mutex());
