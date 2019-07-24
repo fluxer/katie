@@ -272,29 +272,6 @@ elif 'version' in sys.argv:
         mapdecideinsert(switchmap, rangemap, value, codepoint)
     printswitch(switchmap)
     printifrange(rangemap)
-elif 'grapheme' in sys.argv:
-    # only some are supported by harfbuzz
-    supported = [
-        'CR',
-        'LF'
-        'Control',
-        'Extend',
-        'L',
-        'V',
-        'T',
-        'LV',
-        'LVT',
-    ]
-    for line in readlines('auxiliary/GraphemeBreakProperty.txt'):
-        tablesplit = line.split(';')
-        codepoint = tablesplit[0].strip()
-        value = tablesplit[1].strip()
-        if not value in supported:
-            continue
-        value = 'QUnicodeTables::GraphemeBreak_%s' % value.replace('_', '')
-        mapdecideinsert(switchmap, rangemap, value, codepoint)
-    printswitch(switchmap)
-    printifrange(rangemap)
 elif 'word' in sys.argv:
     # only some are supported by harfbuzz
     supported = [
@@ -418,5 +395,5 @@ elif 'special' in sys.argv:
             print('    0x%s, // %s' % (codepoint, value.replace('_', '')))
         scriptslist.append(value)
 else:
-    print('usage: <digit|joining|combining|mirror|version|grapheme|word|sentence|line|script|special>')
+    print('usage: <digit|joining|combining|mirror|version|word|sentence|line|script|special>')
     sys.exit(1)
