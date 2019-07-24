@@ -134,7 +134,7 @@ class QStandardItemModelPrivate : public QAbstractItemModelPrivate
 
 public:
     QStandardItemModelPrivate();
-    virtual ~QStandardItemModelPrivate();
+    ~QStandardItemModelPrivate();
 
     void init();
 
