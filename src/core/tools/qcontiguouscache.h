@@ -35,7 +35,9 @@
 #define QCONTIGUOUSCACHE_H
 
 #include <QtCore/qatomic.h>
+
 #include <limits.h>
+#include <cstdlib>
 #include <new>
 
 QT_BEGIN_HEADER
