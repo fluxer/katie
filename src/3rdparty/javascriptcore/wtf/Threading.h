@@ -126,9 +126,6 @@ public:
 
     int refCount() const
     {
-#if !USE(LOCKFREE_THREADSAFESHARED)
-        QMutexLocker locker(m_mutex);
-#endif
         return static_cast<int const volatile &>(m_refCount);
     }
 
@@ -158,7 +155,7 @@ private:
 
     int m_refCount;
 #if !USE(LOCKFREE_THREADSAFESHARED)
-    mutable QMutex m_mutex;
+    QMutex m_mutex;
 #endif
 };
 
