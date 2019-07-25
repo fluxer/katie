@@ -36,6 +36,8 @@
 
 #include <QtCore/qglobal.h>
 
+#include <cstdlib>
+
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
