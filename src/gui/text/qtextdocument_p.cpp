@@ -1328,7 +1328,7 @@ void QTextDocumentPrivate::adjustDocumentChangesAndCursors(int from, int addedOr
 
 QString QTextDocumentPrivate::plainText() const
 {
-    QString result(length(), Qt:Uninitialized);
+    QString result(length(), Qt::Uninitialized);
     const QChar *text_unicode = text.unicode();
     QChar *data = result.data();
     for (QTextDocumentPrivate::FragmentIterator it = begin(); it != end(); ++it) {
