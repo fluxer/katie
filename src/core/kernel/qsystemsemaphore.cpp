@@ -81,12 +81,6 @@ QT_BEGIN_NAMESPACE
   When using this class, be aware of the following platform
   differences:
 
-  \bold{Windows:} QSystemSemaphore does not own its underlying system
-  semaphore. Windows owns it. This means that when all instances of
-  QSystemSemaphore for a particular key have been destroyed, either by
-  having their destructors called, or because one or more processes
-  crash, Windows removes the underlying system semaphore.
-
   \bold{Unix:}
 
   \list
@@ -161,13 +155,8 @@ QSystemSemaphore::QSystemSemaphore(const QString &key, int initialValue, AccessM
   system semaphore.
 
   Two important side effects of the destructor depend on the system.
-  In Windows, if acquire() has been called for this semaphore but not
-  release(), release() will not be called by the destructor, nor will
-  the resource be released when the process exits normally. This would
-  be a program bug which could be the cause of a deadlock in another
-  process trying to acquire the same resource. In Unix, acquired
-  resources that are not released before the destructor is called are
-  automatically released when the process exits.
+  In Unix, acquired resources that are not released before the
+  destructor is called are automatically released when the process exits.
 */
 QSystemSemaphore::~QSystemSemaphore()
 {
@@ -182,8 +171,7 @@ QSystemSemaphore::~QSystemSemaphore()
   enable handling the problem in Unix implementations of semaphores
   that survive a crash. In Unix, when a semaphore survives a crash, we
   need a way to force it to reset its resource count, when the system
-  reuses the semaphore. In Windows and in Symbian, where semaphores can't survive a
-  crash, this enum has no effect.
+  reuses the semaphore.
 
   \value Open If the semaphore already exists, its initial resource
   count is not reset. If the semaphore does not already exist, it is
@@ -194,9 +182,7 @@ QSystemSemaphore::~QSystemSemaphore()
   whether the semaphore already exists by having survived a crash.
   This value should be passed to the constructor, when the first
   semaphore for a particular key is constructed and you know that if
-  the semaphore already exists it could only be because of a crash. In
-  Windows and in Symbian, where a semaphore can't survive a crash, Create and Open
-  have the same behavior.
+  the semaphore already exists it could only be because of a crash.
 */
 
 /*!
