@@ -447,8 +447,7 @@ QString QUtf32::convertToUnicode(const char *chars, int len, QTextCodec::Convert
     if (headerdone && endian == DetectEndianness)
         endian = (QSysInfo::ByteOrder == QSysInfo::BigEndian) ? BigEndianness : LittleEndianness;
 
-    QString result;
-    result.resize((num + len) >> 2 << 1); // worst case
+    QString result((num + len) >> 2 << 1, Qt::Uninitialized); // worst case
     QChar *qch = (QChar *)result.unicode();
 
     const char *end = chars + len;
