@@ -3353,9 +3353,8 @@ bool QString::endsWith(const QChar &c, Qt::CaseSensitivity cs) const
 
 static QByteArray toLatin1_helper(const QChar *data, int length)
 {
-    QByteArray ba;
+    QByteArray ba(length, Qt::Uninitialized);
     if (length) {
-        ba.resize(length);
         const ushort *src = reinterpret_cast<const ushort *>(data);
         uchar *dst = (uchar*) ba.data();
         while (length--) {
