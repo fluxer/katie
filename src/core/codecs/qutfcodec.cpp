@@ -66,8 +66,7 @@ QByteArray QUtf8::convertFromUnicode(const QChar *uc, int len, QTextCodec::Conve
             surrogate_high = state->state_data[0];
     }
 
-    QByteArray rstr;
-    rstr.resize(rlen);
+    QByteArray rstr(rlen, Qt::Uninitialized);
     uchar* cursor = (uchar*)rstr.data();
     const QChar *ch = uc;
     int invalid = 0;
