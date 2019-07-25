@@ -140,8 +140,6 @@ void QNetworkManagerEngine::initialize()
 
 bool QNetworkManagerEngine::networkManagerAvailable() const
 {
-    QMutexLocker locker(&mutex);
-
     return interface->isValid();
 }
 

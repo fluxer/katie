@@ -71,7 +71,6 @@ QConnmanEngine::~QConnmanEngine()
 
 bool QConnmanEngine::connmanAvailable() const
 {
-    QMutexLocker locker(&mutex);
     return connmanManager->isValid();
 }
 
