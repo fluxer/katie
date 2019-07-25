@@ -3377,7 +3377,7 @@ static QString qt_ACE_do(const QString &domain, AceOperation op)
             qt_nameprep(&result, prevLen);
             labelLength = result.length() - prevLen;
             int toReserve = labelLength + 4 + 6; // "xn--" plus some extra bytes
-            aceForm.resize(0);
+            aceForm.clear();
             if (toReserve > aceForm.capacity())
                 aceForm.reserve(toReserve);
             toPunycodeHelper(result.constData() + prevLen, result.size() - prevLen, &aceForm);
