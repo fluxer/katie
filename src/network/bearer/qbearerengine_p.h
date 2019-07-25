@@ -98,7 +98,7 @@ protected:
     QHash<QString, QNetworkConfigurationPrivatePointer> snapConfigurations;
     QHash<QString, QNetworkConfigurationPrivatePointer> userChoiceConfigurations;
 
-    mutable QMutex mutex;
+    QMutex mutex;
 };
 
 QT_END_NAMESPACE

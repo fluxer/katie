@@ -52,6 +52,8 @@ QBearerEngine::QBearerEngine(QObject *parent)
 
 QBearerEngine::~QBearerEngine()
 {
+    QMutexLocker locker(&mutex);
+
     QHash<QString, QNetworkConfigurationPrivatePointer>::Iterator it;
     QHash<QString, QNetworkConfigurationPrivatePointer>::Iterator end;
 
@@ -91,8 +93,6 @@ bool QBearerEngine::configurationsInUse() const
 {
     QHash<QString, QNetworkConfigurationPrivatePointer>::ConstIterator it;
     QHash<QString, QNetworkConfigurationPrivatePointer>::ConstIterator end;
-
-    QMutexLocker locker(&mutex);
 
     for (it = accessPointConfigurations.constBegin(),
          end = accessPointConfigurations.constEnd(); it != end; ++it) {
