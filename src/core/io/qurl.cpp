@@ -3310,8 +3310,7 @@ static QString qt_ACE_do(const QString &domain, AceOperation op)
     if (domain.isEmpty())
         return domain;
 
-    QString result;
-    result.reserve(domain.length());
+    QString result(domain.length(), Qt::Uninitialized);
 
     const bool isIdnEnabled = op == NormalizeAce ? qt_is_idn_enabled(domain) : false;
     int lastIdx = 0;
