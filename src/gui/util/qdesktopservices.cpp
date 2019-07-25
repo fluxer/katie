@@ -50,11 +50,11 @@
 #include "qurl.h"
 #include "qmutex.h"
 
-#if defined(Q_WS_X11)
-#include "qdesktopservices_x11.cpp"
-#endif
-
 QT_BEGIN_NAMESPACE
+
+// in qdesktopservices_x11.cpp
+extern bool openDocument(const QUrl &url);
+extern bool launchWebBrowser(const QUrl &url);
 
 class QOpenUrlHandlerRegistry : public QObject
 {
