@@ -212,9 +212,9 @@ namespace WTF {
     public:
         // Any modifications of the m_next or m_previous of an iterator that is in a linked list of a HashTable::m_iterator,
         // should be guarded with m_table->m_mutex.
-        mutable const HashTableType* m_table;
-        mutable const_iterator* m_next;
-        mutable const_iterator* m_previous;
+        const HashTableType* m_table;
+        const_iterator* m_next;
+        const_iterator* m_previous;
 #endif
     };
 
@@ -396,8 +396,8 @@ namespace WTF {
 #if CHECK_HASHTABLE_ITERATORS
     public:
         // All access to m_iterators should be guarded with m_mutex.
-        mutable const_iterator* m_iterators;
-        mutable QMutex m_mutex;
+        const_iterator* m_iterators;
+        QMutex m_mutex;
 #endif
     };
 
