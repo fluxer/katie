@@ -48,7 +48,6 @@
 #include "qdir.h"
 #include "qfile.h"
 #include "qtextstream.h"
-#include "qt_x11_p.h"
 #include "qcoreapplication.h"
 
 #include <stdlib.h>

@@ -499,7 +499,6 @@ katie_allinone_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qsizegrip.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/qdesktopservices_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_x11.cpp
