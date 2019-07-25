@@ -716,7 +716,7 @@ QHostInfoCache::QHostInfoCache() : max_age(60), enabled(true), cache(128)
 #endif
 }
 
-bool QHostInfoCache::isEnabled()
+bool QHostInfoCache::isEnabled() const
 {
     return enabled;
 }
@@ -729,10 +729,8 @@ void QHostInfoCache::setEnabled(bool e)
 }
 
 
-QHostInfo QHostInfoCache::get(const QString &name, bool *valid)
+QHostInfo QHostInfoCache::get(const QString &name, bool *valid) const
 {
-    QMutexLocker locker(&this->mutex);
-
     *valid = false;
     if (cache.contains(name)) {
         QHostInfoCacheElement *element = cache.object(name);

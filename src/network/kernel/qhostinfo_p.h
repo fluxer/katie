@@ -126,11 +126,11 @@ public:
     QHostInfoCache();
     const int max_age; // seconds
 
-    QHostInfo get(const QString &name, bool *valid);
+    QHostInfo get(const QString &name, bool *valid) const;
     void put(const QString &name, const QHostInfo &info);
     void clear();
 
-    bool isEnabled();
+    bool isEnabled() const;
     void setEnabled(bool e);
 private:
     bool enabled;
