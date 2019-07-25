@@ -47,6 +47,8 @@
 
 #include "qglobal.h"
 
+#include <cstdlib>
+
 QT_BEGIN_NAMESPACE
 
 class QBenchmarkResult;
