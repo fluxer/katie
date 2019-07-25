@@ -142,7 +142,7 @@
 
 // needed for std::swap
 #ifdef __cplusplus
-#include <algorithm>
+#include <utility>
 #endif
 
 #if defined(__cplusplus) && !defined(QT_NO_USING_NAMESPACE)
