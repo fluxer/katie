@@ -268,9 +268,8 @@ QByteArray QUtf16::convertFromUnicode(const QChar *uc, int len, QTextCodec::Conv
         endian = (QSysInfo::ByteOrder == QSysInfo::BigEndian) ? BigEndianness : LittleEndianness;
     }
 
-    QByteArray d;
-    d.resize(length);
-    char *data = d.data();
+    QByteArray result(length, Qt::Uninitialized);
+    char *data = result.data();
     if (!state || !(state->flags & QTextCodec::IgnoreHeader)) {
         QChar bom(QChar::ByteOrderMark);
         if (endian == BigEndianness) {
@@ -298,7 +297,7 @@ QByteArray QUtf16::convertFromUnicode(const QChar *uc, int len, QTextCodec::Conv
         state->remainingChars = 0;
         state->flags |= QTextCodec::IgnoreHeader;
     }
-    return d;
+    return result;
 }
 
 QString QUtf16::convertToUnicode(const char *chars, int len, QTextCodec::ConverterState *state, DataEndianness e)
