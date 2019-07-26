@@ -732,8 +732,8 @@ void QHostInfoCache::setEnabled(bool e)
 QHostInfo QHostInfoCache::get(const QString &name, bool *valid) const
 {
     *valid = false;
-    if (cache.contains(name)) {
-        QHostInfoCacheElement *element = cache.object(name);
+    QHostInfoCacheElement *element = cache.object(name);
+    if (element) {
         if (element->age.elapsed() < max_age*1000)
             *valid = true;
         return element->info;
