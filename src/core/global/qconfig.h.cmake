@@ -350,6 +350,11 @@
 #define QT_NO_CONCURRENT
 #endif
 
+// Process
+#if !defined(QT_NO_PROCESS) && defined(QT_NO_THREAD)
+#define QT_NO_PROCESS
+#endif
+
 // Animation
 #if !defined(QT_NO_ANIMATION) && (defined(QT_NO_PROPERTIES))
 #define QT_NO_ANIMATION
