@@ -396,6 +396,7 @@ int main(int argc, char **argv)
         if (line.contains("Meta object code from reading C++ file"))
             // this is a moc-generated file
             parser.parse(argv[i], &f, 3);
+#ifndef QT_NO_PROCESS
         else {
             // run moc on this file
             QProcess proc;
@@ -420,6 +421,7 @@ int main(int argc, char **argv)
 
             parser.parse(argv[i], &proc, 1);
         }
+#endif
 
         f.close();
     }
