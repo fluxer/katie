@@ -716,6 +716,16 @@ QThread::QThread(QThreadPrivate &dd, QObject *parent)
     d->data->thread = this;
 }
 
+QThreadPrivate::QThreadPrivate(QThreadData *d)
+    : data(d ? d : new QThreadData)
+{
+}
+
+QThreadPrivate::~QThreadPrivate()
+{
+    delete data;
+}
+
 #endif // QT_NO_THREAD
 
 QT_END_NAMESPACE
