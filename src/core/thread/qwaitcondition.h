@@ -84,7 +84,7 @@ public:
         return true;
     }
 
-    bool wait(QReadWriteLock *readWriteLock, unsigned long time = ULONG_MAX);
+    bool wait(QReadWriteLock *readWriteLock, unsigned long time = ULONG_MAX)
     {
         Q_UNUSED(readWriteLock);
         Q_UNUSED(time);
