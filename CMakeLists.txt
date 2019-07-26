@@ -221,16 +221,6 @@ configure_file(
     ${CMAKE_BINARY_DIR}/include/QtCore/qglobal.h
 )
 
-# TODO: make it optional, Qt4 was prepping for it I believe (QT_NO_THREAD)
-set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-find_package(Threads)
-set_package_properties(Threads PROPERTIES
-    PURPOSE "Required for threads support"
-    DESCRIPTION "Platform dependent threads implementation"
-    URL ""
-    TYPE REQUIRED
-)
-
 find_package(ZLIB)
 set_package_properties(ZLIB PROPERTIES
     PURPOSE "Required for compression support"
@@ -279,6 +269,15 @@ set_package_properties(Freetype PROPERTIES
     DESCRIPTION "Freely available software library to render fonts"
     URL "http://www.freetype.org"
     TYPE REQUIRED
+)
+
+set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+find_package(Threads)
+set_package_properties(Threads PROPERTIES
+    PURPOSE "Required for threads support"
+    DESCRIPTION "Platform dependent threads implementation"
+    URL ""
+    TYPE RECOMMENDED
 )
 
 find_package(Git)
