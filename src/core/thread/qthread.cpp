@@ -694,16 +694,22 @@ QThread *QThread::currentThread()
     return QThreadData::current()->thread;
 }
 
+static QThreadData *currentdata = Q_NULLPTR;
+
 QThreadData* QThreadData::current()
 {
-    static QThreadData *data = 0; // reinterpret_cast<QThreadData *>(pthread_getspecific(current_thread_data_key));
-    if (!data) {
+    if (!currentdata) {
         QScopedPointer<QThreadData> newdata(new QThreadData);
         newdata->thread = new QAdoptedThread(newdata.data());
-        data = newdata.take();
-        data->deref();
+        currentdata = newdata.take();
+        currentdata->deref();
     }
-    return data;
+    return currentdata;
+}
+
+void QThreadData::clearCurrentThreadData()
+{
+    currentdata = Q_NULLPTR;
 }
 
 /*! \internal
