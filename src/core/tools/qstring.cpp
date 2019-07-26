@@ -1063,7 +1063,7 @@ void QString::resize(int size)
         d = x;
     } else {
         if (d->ref != 1 || size != d->capacity)
-            reallocData(grow(size));
+            reallocData(size);
         if (d->capacity >= size) {
             d->size = size;
             if (d->data == d->array) {
