@@ -345,6 +345,11 @@
 #cmakedefine QT_NO_XSHM
 #cmakedefine QT_NO_XSYNC
 
+// Concurrent
+#if !defined(QT_NO_CONCURRENT) && defined(QT_NO_THREAD)
+#define QT_NO_CONCURRENT
+#endif
+
 // Animation
 #if !defined(QT_NO_ANIMATION) && (defined(QT_NO_PROPERTIES))
 #define QT_NO_ANIMATION
