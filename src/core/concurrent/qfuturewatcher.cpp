@@ -34,14 +34,15 @@
 #include "qfuturewatcher.h"
 
 #ifndef QT_NO_QFUTURE
-
-#include <QtCore/qcoreevent.h>
-#include <QtCore/qcoreapplication.h>
-#include <QtCore/qthread.h>
-
-#include "qfuturewatcher_p.h"
+#  include <QtCore/qcoreevent.h>
+#  include <QtCore/qcoreapplication.h>
+#  include <QtCore/qthread.h>
+#  include "qfuturewatcher_p.h"
+#endif
 
 QT_BEGIN_NAMESPACE
+
+#ifndef QT_NO_QFUTURE
 
 /*! \class QFutureWatcher
     \reentrant
@@ -579,8 +580,6 @@ void QFutureWatcherBasePrivate::sendCallOutEvent(QFutureCallOutEvent *event)
 
 */
 
-QT_END_NAMESPACE
-
 #else
 
 // On Symbian winscw target QT_NO_QFUTURE and QT_NO_CONCURRENT are both defined.
@@ -597,5 +596,7 @@ void QFutureWatcherBase::connectNotify(const char *) { }
 void QFutureWatcherBase::disconnectNotify(const char *) { }
 
 #endif // QT_NO_QFUTURE
+
+QT_END_NAMESPACE
 
 #include "moc_qfuturewatcher.h"
