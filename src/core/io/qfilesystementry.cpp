@@ -196,7 +196,7 @@ bool QFileSystemEntry::isRelative() const
 
 bool QFileSystemEntry::isAbsolute() const
 {
-    return (!m_filePath.isEmpty() && (m_filePath[0].unicode() == '/'));
+    return (!m_filePath.isEmpty() && (m_filePath.at(0).unicode() == '/'));
 }
 
 bool QFileSystemEntry::isRoot() const
@@ -217,7 +217,7 @@ void QFileSystemEntry::findLastSeparator()
         resolveFilePath();
         m_lastSeparator = -1;
         for (int i = m_filePath.size() - 1; i >= 0; --i) {
-            if (m_filePath[i].unicode() == '/') {
+            if (m_filePath.at(i).unicode() == '/') {
                 m_lastSeparator = i;
                 break;
             }
@@ -243,10 +243,10 @@ void QFileSystemEntry::findFileNameSeparators()
 
         int i = m_filePath.size() - 1;
         for (; i >= stop; --i) {
-            if (m_filePath[i].unicode() == '.') {
+            if (m_filePath.at(i).unicode() == '.') {
                 firstDotInFileName = lastDotInFileName = i;
                 break;
-            } else if (m_filePath[i].unicode() == '/') {
+            } else if (m_filePath.at(i).unicode() == '/') {
                 lastSeparator = i;
                 break;
             }
@@ -254,9 +254,9 @@ void QFileSystemEntry::findFileNameSeparators()
 
         if (lastSeparator != i) {
             for (--i; i >= stop; --i) {
-                if (m_filePath[i].unicode() == '.')
+                if (m_filePath.at(i).unicode() == '.')
                     firstDotInFileName = i;
-                else if (m_filePath[i].unicode() == '/') {
+                else if (m_filePath.at(i).unicode() == '/') {
                     lastSeparator = i;
                     break;
                 }
