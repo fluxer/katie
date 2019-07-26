@@ -29,27 +29,20 @@
 #include "Platform.h"
 #include "Threading.h"
 
-#ifdef QT_NO_THREAD
-
 namespace WTF {
 
+#ifdef QT_NO_THREAD
+
 void initializeThreading() { }
-inline ThreadIdentifier createThreadInternal(ThreadFunction, void*, const char*) { return ThreadIdentifier(); }
+ThreadIdentifier createThreadInternal(ThreadFunction, void*, const char*) { return ThreadIdentifier(); }
 int waitForThreadCompletion(ThreadIdentifier, void**) { return 0; }
 void detachThread(ThreadIdentifier) { }
-inline ThreadIdentifier currentThread() { return ThreadIdentifier(); }
+ThreadIdentifier currentThread() { return ThreadIdentifier(); }
 
 void lockAtomicallyInitializedStaticMutex() { }
 void unlockAtomicallyInitializedStaticMutex() { }
 
-} // namespace WTF
-
 #else // QT_NO_THREAD
-
-#include "CurrentTime.h"
-#include "HashMap.h"
-
-namespace WTF {
 
 QT_USE_NAMESPACE
 
@@ -205,6 +198,6 @@ ThreadIdentifier currentThread()
     return establishIdentifierForThread(currentThread);
 }
 
-} // namespace WTF
-
 #endif
+
+} // namespace WTF
