@@ -56,6 +56,7 @@
 #include "qdatetime.h"
 #include "qdir.h"
 #include "qelapsedtimer.h"
+#include "qevent.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -137,7 +138,11 @@ private :
 
 #ifndef QT_NO_FILESYSTEMMODEL
 
+#ifndef QT_NO_THREAD
 class Q_AUTOTEST_EXPORT QFileInfoGatherer : public QThread
+#else
+class Q_AUTOTEST_EXPORT QFileInfoGatherer : public QObject
+#endif
 {
 Q_OBJECT
 
@@ -182,6 +187,11 @@ private:
     QFileIconProvider defaultProvider;
     uint userId;
     uint groupId;
+
+#ifdef QT_NO_THREAD
+    void timerEvent(QTimerEvent *event);
+    int timerid;
+#endif
 };
 #endif // QT_NO_FILESYSTEMMODEL
 

@@ -68,7 +68,12 @@ Q_AUTOTEST_EXPORT bool qt_test_isFetchedRoot()
     Creates thread
 */
 QFileInfoGatherer::QFileInfoGatherer(QObject *parent)
-    : QThread(parent), abort(false),
+#ifndef QT_NO_THREAD
+    : QThread(parent),
+#else
+    : QObject(parent),
+#endif
+    abort(false),
 #ifndef QT_NO_FILESYSTEMWATCHER
       watcher(0),
 #endif
@@ -81,7 +86,12 @@ QFileInfoGatherer::QFileInfoGatherer(QObject *parent)
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(list(QString)));
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(updateFile(QString)));
 #endif
+
+#ifndef QT_NO_THREAD
     start(LowPriority);
+#else
+    timerid = startTimer(1000);
+#endif
 }
 
 /*!
@@ -93,7 +103,11 @@ QFileInfoGatherer::~QFileInfoGatherer()
     abort = true;
     condition.wakeOne();
     locker.unlock();
+#ifndef QT_NO_THREAD
     wait();
+#else
+    killTimer(timerid);
+#endif
 }
 
 void QFileInfoGatherer::setIconProvider(QFileIconProvider *provider)
@@ -182,7 +196,10 @@ void QFileInfoGatherer::list(const QString &directoryPath)
 */
 void QFileInfoGatherer::run()
 {
-    forever {
+#ifndef QT_NO_THREAD
+    forever
+#endif
+    {
         bool updateFiles = false;
         QMutexLocker locker(&mutex);
         if (abort) {
@@ -204,6 +221,14 @@ void QFileInfoGatherer::run()
             getFileInfos(path, list);
     }
 }
+
+#ifdef QT_NO_THREAD
+void QFileInfoGatherer::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == timerid)
+        run();
+}
+#endif
 
 QExtendedInformation QFileInfoGatherer::getInfo(const QFileInfo &fileInfo) const
 {
