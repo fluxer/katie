@@ -94,14 +94,6 @@ inline bool isMainThread()
 int waitForThreadCompletion(ThreadIdentifier, void**);
 void detachThread(ThreadIdentifier);
 
-#if COMPILER(GCC) && !CPU(SPARC64) // sizeof(_Atomic_word) != sizeof(int) on sparc64 gcc
-#define WTF_USE_LOCKFREE_THREADSAFESHARED 1
-
-inline int atomicIncrement(int volatile* addend) { return __sync_add_and_fetch(addend, 1); }
-inline int atomicDecrement(int volatile* addend) { return __sync_sub_and_fetch(addend, 1); }
-
-#endif
-
 class ThreadSafeSharedBase : public Noncopyable {
 public:
     ThreadSafeSharedBase(int initialRefCount = 1)
@@ -111,52 +103,32 @@ public:
 
     void ref()
     {
-#if USE(LOCKFREE_THREADSAFESHARED)
-        atomicIncrement(&m_refCount);
-#else
-        QMutexLocker locker(m_mutex);
-        ++m_refCount;
-#endif
+        m_refCount.ref();
     }
 
     bool hasOneRef()
     {
-        return refCount() == 1;
+        return m_refCount == 1;
     }
 
     int refCount() const
     {
-        return static_cast<int const volatile &>(m_refCount);
+        return m_refCount;
     }
 
 protected:
     // Returns whether the pointer should be freed or not.
     bool derefBase()
     {
-#if USE(LOCKFREE_THREADSAFESHARED)
-        if (atomicDecrement(&m_refCount) <= 0)
-            return true;
-#else
-        int refCount;
-        {
-            QMutexLocker locker(m_mutex);
-            --m_refCount;
-            refCount = m_refCount;
-        }
-        if (refCount <= 0)
-            return true;
-#endif
-        return false;
+        m_refCount.deref();
+        return m_refCount <= 0;
     }
 
 private:
     template<class T>
     friend class CrossThreadRefCounted;
 
-    int m_refCount;
-#if !USE(LOCKFREE_THREADSAFESHARED)
-    QMutex m_mutex;
-#endif
+    QAtomicInt m_refCount;
 };
 
 template<class T> class ThreadSafeShared : public ThreadSafeSharedBase {
@@ -184,11 +156,6 @@ void unlockAtomicallyInitializedStaticMutex();
 
 using WTF::ThreadIdentifier;
 using WTF::ThreadSafeShared;
-
-#if USE(LOCKFREE_THREADSAFESHARED)
-using WTF::atomicDecrement;
-using WTF::atomicIncrement;
-#endif
 
 using WTF::createThread;
 using WTF::currentThread;
