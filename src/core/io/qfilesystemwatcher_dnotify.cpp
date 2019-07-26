@@ -158,10 +158,9 @@ void QDnotifySignalThread::startNotify()
     // loop is to avoid nasty messages at app shutdown when the
     // QDnotifySignalThread singleton is deleted
     start();
-    mutex.lock();
+    QMutexLocker locker(&mutex);
     while(!isExecing)
         wait.wait(&mutex);
-    mutex.unlock();
 }
 
 void QDnotifySignalThread::run()
