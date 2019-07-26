@@ -1517,13 +1517,11 @@ void QByteArray::resize(int size)
         (void) d->ref.deref(); // cannot be 0, x points to shared_null
         d = x;
     } else {
-        if (d->ref != 1 || size > d->alloc || (size < d->size && size < d->alloc >> 1))
-            reallocData(qAllocMore(size, sizeof(Data)));
-        if (d->alloc >= size) {
-            d->size = size;
-            if (d->data == d->array) {
-                d->array[size] = '\0';
-            }
+        if (d->ref != 1 || size != d->size)
+            reallocData(size);
+        d->size = size;
+        if (d->data == d->array) {
+            d->array[size] = '\0';
         }
     }
 }
