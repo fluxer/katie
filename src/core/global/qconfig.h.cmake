@@ -516,7 +516,7 @@
 #endif
 
 // Hyper Text Transfer Protocol
-#if !defined(QT_NO_HTTP) && defined(QT_NO_HOSTINFO)
+#if !defined(QT_NO_HTTP) && (defined(QT_NO_HOSTINFO) || defined(QT_NO_THREAD))
 #define QT_NO_HTTP
 #endif
 
