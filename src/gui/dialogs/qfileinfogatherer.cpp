@@ -90,7 +90,7 @@ QFileInfoGatherer::QFileInfoGatherer(QObject *parent)
 #ifndef QT_NO_THREAD
     start(LowPriority);
 #else
-    timerid = startTimer(1000);
+    timerid = startTimer(500);
 #endif
 }
 
