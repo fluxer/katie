@@ -45,7 +45,6 @@
 
 #if defined(Q_OS_LINUX)
 #  include "qfilesystemwatcher_inotify_p.h"
-#  include "qfilesystemwatcher_dnotify_p.h"
 #elif defined(Q_OS_FREEBSD)
 #  include "qfilesystemwatcher_kqueue_p.h"
 #endif
@@ -214,12 +213,9 @@ void QPollingFileSystemWatcherEngine::timeout()
 QFileSystemWatcherEngine *QFileSystemWatcherPrivate::createNativeEngine()
 {
 #if defined(Q_OS_LINUX)
-    QFileSystemWatcherEngine *eng = QInotifyFileSystemWatcherEngine::create();
-    if(!eng)
-        eng = QDnotifyFileSystemWatcherEngine::create();
-    return eng;
+    return QInotifyFileSystemWatcherEngine::create();
 #elif defined(Q_OS_FREEBSD)
-        return QKqueueFileSystemWatcherEngine::create();
+    return QKqueueFileSystemWatcherEngine::create();
 #else
     return 0;
 #endif
@@ -256,8 +252,6 @@ void QFileSystemWatcherPrivate::initForcedEngine(const QString &forceName)
 #if defined(Q_OS_LINUX)
     if(forceName == QLatin1String("inotify")) {
         forced = QInotifyFileSystemWatcherEngine::create();
-    } else if(forceName == QLatin1String("dnotify")) {
-        forced = QDnotifyFileSystemWatcherEngine::create();
     }
 #else
     Q_UNUSED(forceName);
