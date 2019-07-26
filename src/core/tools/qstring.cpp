@@ -633,9 +633,9 @@ static int findChar(const QChar *str, int len, QChar ch, int from,
 */
 
 QString::Data QString::shared_null = { QAtomicInt(1),
-                                       0, 0, 0, shared_null.array, {0} };
+                                       0, 0, shared_null.array, {0} };
 QString::Data QString::shared_empty = { QAtomicInt(1),
-                                        0, 0, 0, shared_empty.array, {0} };
+                                        0, 0, shared_empty.array, {0} };
 
 int QString::grow(int size)
 {
@@ -891,8 +891,7 @@ QString::QString(const QChar *unicode, int size)
         d = (Data*) malloc(sizeof(Data)+size*sizeof(QChar));
         Q_CHECK_PTR(d);
         d->ref = 1;
-        d->alloc = d->size = size;
-        d->capacity = 0;
+        d->capacity = d->size = size;
         d->data = d->array;
         memcpy(d->array, unicode, size * sizeof(QChar));
         d->array[size] = '\0';
@@ -914,8 +913,7 @@ QString::QString(const int size, const QChar ch)
         d = (Data*) malloc(sizeof(Data)+size*sizeof(QChar));
         Q_CHECK_PTR(d);
         d->ref = 1;
-        d->alloc = d->size = size;
-        d->capacity = 0;
+        d->capacity = d->size = size;
         d->data = d->array;
         d->array[size] = '\0';
         ushort *i = d->array + size;
@@ -937,8 +935,7 @@ QString::QString(int size, Qt::Initialization)
     d = (Data*) ::malloc(sizeof(Data)+size*sizeof(QChar));
     Q_CHECK_PTR(d);
     d->ref = 1;
-    d->alloc = d->size = size;
-    d->capacity = 0;
+    d->capacity = d->size = size;
     d->data = d->array;
     d->array[size] = '\0';
 }
@@ -959,8 +956,7 @@ QString::QString(const QChar ch)
     Q_CHECK_PTR(buf);
     d = reinterpret_cast<Data *>(buf);
     d->ref = 1;
-    d->alloc = d->size = 1;
-    d->capacity = 0;
+    d->capacity = d->size = 1;
     d->data = d->array;
     d->array[0] = ch.unicode();
     d->array[1] = '\0';
@@ -1059,17 +1055,16 @@ void QString::resize(int size)
     if (size < 0)
         size = 0;
 
-    if (size == 0 && !d->capacity) {
+    if (size == 0) {
         Data *x = &shared_empty;
         x->ref.ref();
         if (!d->ref.deref())
             QString::freeData(d);
         d = x;
     } else {
-        if (d->ref != 1 || size > d->alloc ||
-            (!d->capacity && size < d->size && size < d->alloc >> 1))
+        if (d->ref != 1 || size != d->capacity)
             reallocData(grow(size));
-        if (d->alloc >= size) {
+        if (d->capacity >= size) {
             d->size = size;
             if (d->data == d->array) {
                 d->array[size] = '\0';
@@ -1137,8 +1132,7 @@ void QString::reallocData(int alloc)
         ::memcpy(x->array, d->data, x->size * sizeof(QChar));
         x->array[x->size] = 0;
         x->ref = 1;
-        x->alloc = alloc;
-        x->capacity = d->capacity;
+        x->capacity = alloc;
         x->data = x->array;
         if (!d->ref.deref())
             QString::freeData(d);
@@ -1147,7 +1141,7 @@ void QString::reallocData(int alloc)
         Data *p = static_cast<Data *>(realloc(d, sizeof(Data) + alloc * sizeof(QChar)));
         Q_CHECK_PTR(p);
         d = p;
-        d->alloc = alloc;
+        d->capacity = alloc;
         d->data = d->array;
     }
 }
@@ -1295,7 +1289,7 @@ QString& QString::insert(int i, const QChar *unicode, int size)
         return *this;
 
     const ushort *s = (const ushort *)unicode;
-    if (s >= d->data && s < d->data + d->alloc) {
+    if (s >= d->data && s < d->data + d->capacity) {
         // Part of me - take a copy
         ushort *tmp = static_cast<ushort *>(malloc(size * sizeof(QChar)));
         Q_CHECK_PTR(tmp);
@@ -1355,7 +1349,7 @@ QString &QString::append(const QString &str)
         if (d == &shared_null) {
             operator=(str);
         } else {
-            if (d->ref != 1 || d->size + str.d->size > d->alloc)
+            if (d->ref != 1 || d->size + str.d->size > d->capacity)
                 reallocData(grow(d->size + str.d->size));
             memcpy(d->data + d->size, str.d->data, str.d->size * sizeof(QChar));
             d->size += str.d->size;
@@ -1375,7 +1369,7 @@ QString &QString::append(const QLatin1String &str)
     const uchar *s = (const uchar *)str.latin1();
     if (s) {
         int len = qstrlen((char *)s);
-        if (d->ref != 1 || d->size + len > d->alloc)
+        if (d->ref != 1 || d->size + len > d->capacity)
             reallocData(grow(d->size + len));
         ushort *i = d->data + d->size;
         while ((*i++ = *s++))
@@ -1418,7 +1412,7 @@ QString &QString::append(const QLatin1String &str)
 */
 QString &QString::append(QChar ch)
 {
-    if (d->ref != 1 || d->size + 1 > d->alloc)
+    if (d->ref != 1 || d->size + 1 > d->capacity)
         reallocData(grow(d->size + 1));
     d->data[d->size++] = ch.unicode();
     d->data[d->size] = '\0';
@@ -3491,8 +3485,7 @@ QString::Data *QString::fromLatin1_helper(const char *str, int size)
         d = static_cast<Data *>(malloc(sizeof(Data) + size * sizeof(QChar)));
         Q_CHECK_PTR(d);
         d->ref = 1;
-        d->alloc = d->size = size;
-        d->capacity = 0;
+        d->capacity = d->size = size;
         d->data = d->array;
         d->array[size] = '\0';
         ushort *dst = d->data;
@@ -5717,7 +5710,7 @@ QString QString::repeated(int times) const
     const int resultSize = times * d->size;
 
     QString result(resultSize, Qt::Uninitialized);
-    if (result.d->alloc != resultSize)
+    if (result.d->capacity != resultSize)
         return QString(); // not enough memory
 
     memcpy(result.d->data, d->data, d->size * sizeof(ushort));
@@ -6608,9 +6601,8 @@ QString QString::fromRawData(const QChar *unicode, int size)
         size = 0;
     }
     x->ref = 1;
-    x->alloc = x->size = size;
+    x->capacity = x->size = size;
     *x->array = '\0';
-    x->capacity = 0;
     return QString(x, 0);
 }
 
@@ -6630,7 +6622,7 @@ QString QString::fromRawData(const QChar *unicode, int size)
 */
 QString &QString::setRawData(const QChar *unicode, int size)
 {
-    if (d->ref != 1 || (d->data == d->array && d->alloc)) {
+    if (d->ref != 1 || (d->data == d->array && d->capacity)) {
         *this = fromRawData(unicode, size);
     } else {
         if (unicode) {
@@ -6639,9 +6631,8 @@ QString &QString::setRawData(const QChar *unicode, int size)
             d->data = d->array;
             size = 0;
         }
-        d->alloc = d->size = size;
+        d->capacity = d->size = size;
         *d->array = '\0';
-        d->capacity = 0;
     }
     return *this;
 }

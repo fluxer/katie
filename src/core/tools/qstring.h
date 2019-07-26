@@ -91,7 +91,7 @@ public:
 
     int capacity() const;
     inline void reserve(int size);
-    inline void squeeze() { if (d->size < d->alloc || d->ref != 1) reallocData(d->size); d->capacity = 0;}
+    inline void squeeze() { if (d->size < d->capacity || d->ref != 1) reallocData(d->size);}
 
     inline const QChar *unicode() const;
     inline QChar *data();
@@ -246,7 +246,7 @@ public:
     inline QString &prepend(const QLatin1String &s) { return insert(0, s); }
 
     inline QString &operator+=(QChar c) {
-        if (d->ref != 1 || d->size + 1 > d->alloc)
+        if (d->ref != 1 || d->size + 1 > d->capacity)
             reallocData(grow(d->size + 1));
         d->data[d->size++] = c.unicode();
         d->data[d->size] = '\0';
@@ -485,7 +485,7 @@ private:
 
     struct Data {
         QAtomicInt ref;
-        int alloc, size, capacity;
+        int size, capacity;
         ushort *data;
         ushort array[1];
     };
@@ -599,7 +599,7 @@ inline void QString::clear()
 inline QString::QString(const QString &other) : d(other.d)
 { Q_ASSERT(&other != this); d->ref.ref(); }
 inline int QString::capacity() const
-{ return d->alloc; }
+{ return d->capacity; }
 inline QString &QString::setNum(short n, int base)
 { return setNum(qlonglong(n), base); }
 inline QString &QString::setNum(ushort n, int base)
@@ -731,7 +731,7 @@ inline void QCharRef::setCell(uchar acell) { QChar(*this).setCell(acell); }
 
 inline QString::QString() : d(&shared_null) { d->ref.ref(); }
 inline QString::~QString() { if (!d->ref.deref()) freeData(d); }
-inline void QString::reserve(int asize) { if (d->ref != 1 || asize > d->alloc) reallocData(asize); d->capacity = 1;}
+inline void QString::reserve(int asize) { if (d->ref != 1 || asize > d->capacity) reallocData(asize);}
 inline QString &QString::setUtf16(const ushort *autf16, int asize)
 { return setUnicode(reinterpret_cast<const QChar *>(autf16), asize); }
 inline QCharRef QString::operator[](int i)
