@@ -4332,7 +4332,7 @@ int QString::compare_helper(const QChar *data1, int length1, QLatin1String s2,
 {
     const ushort *uc = reinterpret_cast<const ushort *>(data1);
     const ushort *e = uc + length1;
-    const uchar *c = (uchar *)s2.latin1();
+    const uchar *c = reinterpret_cast<const uchar *>(s2.latin1());
 
     if (!c)
         return length1;
