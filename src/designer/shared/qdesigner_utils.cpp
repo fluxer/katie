@@ -777,6 +777,7 @@ namespace qdesigner_internal
 
     QDESIGNER_SHARED_EXPORT bool runUIC(const QString &fileName, QByteArray& ba, QString &errorMessage)
     {
+#ifndef QT_NO_PROCESS
         QStringList argv;
         QString binary = QLibraryInfo::location(QLibraryInfo::BinariesPath) + QDir::separator() + QLatin1String("uic" KATIE_TOOLS_SUFFIX);
         argv += fileName;
@@ -796,6 +797,10 @@ namespace qdesigner_internal
         }
         ba = uic.readAllStandardOutput();
         return true;
+#else
+        errorMessage = QApplication::translate("Designer", "Katie build without process support.");
+        return false;
+#endif // QT_NO_PROCESS
     }
 
     QDESIGNER_SHARED_EXPORT QString qtify(const QString &name)
