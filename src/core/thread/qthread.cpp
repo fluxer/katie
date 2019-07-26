@@ -700,7 +700,7 @@ QThreadData* QThreadData::current()
 {
     if (!currentdata) {
         QScopedPointer<QThreadData> newdata(new QThreadData);
-        newdata->thread = new QAdoptedThread(newdata.data());
+        newdata->thread = Q_NULLPTR; // new QAdoptedThread(newdata.data());
         currentdata = newdata.take();
         currentdata->deref();
     }
