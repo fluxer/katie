@@ -53,8 +53,8 @@
 QT_BEGIN_NAMESPACE
 
 // in qdesktopservices_x11.cpp
-extern bool openDocument(const QUrl &url);
-extern bool launchWebBrowser(const QUrl &url);
+extern bool qt_openDocument(const QUrl &url);
+extern bool qt_launchWebBrowser(const QUrl &url);
 
 class QOpenUrlHandlerRegistry : public QObject
 {
@@ -187,9 +187,9 @@ bool QDesktopServices::openUrl(const QUrl &url)
     }
 
     if (url.scheme() == QLatin1String("file"))
-        return openDocument(url);
+        return qt_openDocument(url);
 
-    return launchWebBrowser(url);
+    return qt_launchWebBrowser(url);
 }
 
 /*!

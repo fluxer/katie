@@ -64,7 +64,7 @@ inline static bool launch(const QUrl &url, const QString &client)
 #endif
 }
 
-static bool openDocument(const QUrl &url)
+bool qt_openDocument(const QUrl &url)
 {
     if (!url.isValid())
         return false;
@@ -82,12 +82,12 @@ static bool openDocument(const QUrl &url)
     return false;
 }
 
-static bool launchWebBrowser(const QUrl &url)
+bool qt_launchWebBrowser(const QUrl &url)
 {
     if (!url.isValid())
         return false;
     if (url.scheme() == QLatin1String("mailto"))
-        return openDocument(url);
+        return qt_openDocument(url);
 
     if (launch(url, QLatin1String("xdg-open")))
         return true;
