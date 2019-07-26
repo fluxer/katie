@@ -1386,20 +1386,21 @@ void QByteArray::chop(int n)
     QByteArray makes a deep copy of the string data.
 */
 
-QByteArray::QByteArray(const char *str)
+QByteArray::QByteArray(const char *data)
 {
-    if (!str) {
+    int size = qstrlen(data);
+    if (!data) {
         d = &shared_null;
-    } else if (!*str) {
+    } else if (size <= 0) {
         d = &shared_empty;
     } else {
-        int len = qstrlen(str);
-        d = static_cast<Data *>(malloc(sizeof(Data)+len));
+        d = static_cast<Data *>(malloc(sizeof(Data) + size));
         Q_CHECK_PTR(d);
-        d->ref = 0;;
-        d->alloc = d->size = len;
+        d->ref = 0;
+        d->alloc = d->size = size;
         d->data = d->array;
-        memcpy(d->array, str, len+1); // include null terminator
+        memcpy(d->array, data, size);
+        d->array[size] = '\0';
     }
     d->ref.ref();
 }
