@@ -1146,22 +1146,26 @@ void QNetworkAccessManagerPrivate::clearCache(QNetworkAccessManager *manager)
     manager->d_func()->objectCache.clear();
     manager->d_func()->authenticationManager->clearCache();
 
+#ifndef QT_NO_HTTP
     if (manager->d_func()->httpThread) {
         // The thread will deleteLater() itself from its finished() signal
         manager->d_func()->httpThread->quit();
         manager->d_func()->httpThread->wait(5000);
         manager->d_func()->httpThread = 0;
     }
+#endif
 }
 
 QNetworkAccessManagerPrivate::~QNetworkAccessManagerPrivate()
 {
+#ifndef QT_NO_HTTP
     if (httpThread) {
         // The thread will deleteLater() itself from its finished() signal
         httpThread->quit();
         httpThread->wait(5000);
         httpThread = 0;
     }
+#endif
 }
 
 #ifndef QT_NO_BEARERMANAGEMENT
