@@ -143,7 +143,7 @@ private:
 };
 
 // the following classes are used for the (normal) case: We use multiple threads to lookup DNS
-
+#ifndef QT_NO_THREAD
 class QHostInfoRunnable : public QRunnable
 {
 public:
@@ -207,7 +207,7 @@ protected:
 private slots:
     void waitForThreadPoolDone() { threadPool.waitForDone(); }
 };
-
+#endif // QT_NO_THREAD
 
 
 
