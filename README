@@ -42,7 +42,6 @@ There are several things you should be aware before considering Katie:
   - command line parser
   - standard directories handler
   - building with OpenSSL v1.1+ is possible
-  - building with ICU v59+ is possible
   - building with IODBC instead of unixODBC is possible
   - building with LTO is possible and supported, if the toolchain can handle it
   - building without resolv is possible
