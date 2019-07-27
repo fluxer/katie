@@ -1619,9 +1619,6 @@ void QDeclarativeCompiledBindingsPrivate::run(int instrIndex,
     }
     QML_END_INSTR(ConvertGenericToUrl)
 
-#ifdef QML_THREADED_INTERPRETER
-    // nothing to do
-#else
     default:
         qFatal("EEK");
         break;
@@ -1629,7 +1626,6 @@ void QDeclarativeCompiledBindingsPrivate::run(int instrIndex,
 
     ++instr;
     } // while
-#endif
 }
 
 void QDeclarativeBindingCompiler::dump(const QByteArray &programData)
