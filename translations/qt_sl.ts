@@ -2358,7 +2358,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Neznana napaka</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo.cpp" line="+172"/>
+        <location filename="../src/network/kernel/qhostinfo.cpp" line="+174"/>
         <source>No host name given</source>
         <translation>Podano ni bilo nobeno ime gostitelja</translation>
     </message>

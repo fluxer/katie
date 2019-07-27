@@ -2358,7 +2358,7 @@ Do you want to delete it anyway?</source>
         <translation>未知的錯誤</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo.cpp" line="+172"/>
+        <location filename="../src/network/kernel/qhostinfo.cpp" line="+174"/>
         <source>No host name given</source>
         <translation type="unfinished">未指定主機</translation>
     </message>

@@ -2358,7 +2358,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Neznámá chyba</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo.cpp" line="+172"/>
+        <location filename="../src/network/kernel/qhostinfo.cpp" line="+174"/>
         <source>No host name given</source>
         <translation>Nebyl zadán název pro hostitelský počítač</translation>
     </message>

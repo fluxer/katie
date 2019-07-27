@@ -2349,7 +2349,7 @@ Do you want to delete it anyway?</source>
         <translation>خطأ غير معروف</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo.cpp" line="+172"/>
+        <location filename="../src/network/kernel/qhostinfo.cpp" line="+174"/>
         <source>No host name given</source>
         <translation type="unfinished"></translation>
     </message>
