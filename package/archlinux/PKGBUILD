@@ -10,7 +10,7 @@ url='https://github.com/fluxer/katie'
 license=('LGPL' 'FDL' 'custom')
 depends=('openssl' 'zlib' 'cups' 'libice' 'libsm' 'pcre' 'libxcursor'
         'libxext' 'libxfixes' 'libxi' 'libxinerama' 'libxrandr' 'libxrender'
-        'libx11' 'fontconfig' 'freetype2' 'glib2' 'libmng' 'zstd')
+        'libx11' 'fontconfig' 'freetype2' 'libmng' 'zstd')
 makedepends=('cmake' 'git' 'python' 'postgresql' 'libmariadbclient' 'unixodbc' 'unifdef')
 optdepends=('postgresql-libs: PostgreSQL driver'
         'libmariadbclient: MariaDB driver'

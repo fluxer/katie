@@ -81,10 +81,6 @@
 #include "qwidget_p.h"
 #include "qbackingstore_p.h"
 
-#if !defined(QT_NO_GLIB)
-#  include "qguieventdispatcher_glib_p.h"
-#endif
-
 #ifndef QT_GUI_DOUBLE_CLICK_RADIUS
 #define QT_GUI_DOUBLE_CLICK_RADIUS 5
 #endif
@@ -470,16 +466,9 @@ public:
 void QApplicationPrivate::createEventDispatcher()
 {
     Q_Q(QApplication);
-#if !defined(QT_NO_GLIB)
-    if (qgetenv("QT_NO_GLIB").isEmpty())
-        eventDispatcher = (q->type() != QApplication::Tty
-                           ? new QGuiEventDispatcherGlib(q)
-                           : new QEventDispatcherGlib(q));
-    else
-#endif
-        eventDispatcher = (q->type() != QApplication::Tty
-                           ? new QEventDispatcherX11(q)
-                           : new QEventDispatcherUNIX(q));
+    eventDispatcher = (q->type() != QApplication::Tty
+                       ? new QEventDispatcherX11(q)
+                       : new QEventDispatcherUNIX(q));
 }
 
 /*****************************************************************************

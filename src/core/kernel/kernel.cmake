@@ -64,19 +64,3 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix.cpp
 )
-
-if(WITH_GLIB2 AND GLIB2_FOUND)
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib.cpp
-    )
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib_p.h
-    )
-    include_directories(${GLIB2_INCLUDES})
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        ${GLIB2_LIBRARIES}
-    )
-endif()

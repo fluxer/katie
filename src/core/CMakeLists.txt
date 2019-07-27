@@ -254,18 +254,6 @@ set(CORE_HEADERS
     ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc/utf8proc.h
 )
 
-if(WITH_GLIB2 AND GLIB2_FOUND)
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib_p.h
-    )
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        ${GLIB2_LIBRARIES}
-    )
-    include_directories(${GLIB2_INCLUDES})
-endif()
-
 if(${KATIE_PLATFORM} STREQUAL "linux")
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}

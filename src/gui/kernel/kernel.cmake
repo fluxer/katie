@@ -92,19 +92,3 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
 )
-
-if(WITH_GLIB2 AND GLIB2_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguieventdispatcher_glib_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguieventdispatcher_glib.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${GLIB2_LIBRARIES}
-    )
-    include_directories(${GLIB2_INCLUDES})
-endif()

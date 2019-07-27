@@ -131,9 +131,6 @@ add_feature_info(mng WITH_MNG "build MNG support")
 option(WITH_ICONV "Build Iconv support" ON)
 add_feature_info(iconv WITH_ICONV "build Iconv support")
 
-option(WITH_GLIB2 "Build GLib2 support" OFF)
-add_feature_info(glib2 WITH_GLIB2 "build GLib2 support")
-
 option(WITH_DBUS "Build DBus support" ON)
 add_feature_info(dbus WITH_DBUS "build DBus support")
 
@@ -386,15 +383,6 @@ set_package_properties(HarfBuzz PROPERTIES
     TYPE RECOMMENDED
 )
 
-# v2.22.0+ to avoid too many conditionals in sources
-find_package(GLib2 2.22.0)
-set_package_properties(GLib2 PROPERTIES
-    PURPOSE "Required for glib mainloop support"
-    DESCRIPTION "Core application building blocks for libraries and applications written in C"
-    URL "https://developer.gnome.org/glib"
-    TYPE RECOMMENDED
-)
-
 # v1.2+ required for dbus_watch_get_unix_fd
 find_package(DBus 1.2)
 set_package_properties(DBus PROPERTIES
@@ -484,10 +472,6 @@ if(NOT WITH_DBUS OR NOT DBUS_FOUND)
 else()
     set(KATIE_COMPONENTS "${KATIE_COMPONENTS} DBus")
     set(KATIE_TOOLS "${KATIE_TOOLS} qdbusxml2cpp qdbuscpp2xml qdbusviewer")
-endif()
-
-if(NOT WITH_GLIB2 OR NOT GLIB2_FOUND)
-    katie_definition(-DQT_NO_GLIB)
 endif()
 
 if(NOT WITH_CUPS OR NOT CUPS_FOUND)

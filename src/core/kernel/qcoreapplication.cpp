@@ -56,10 +56,6 @@
 #include "qlocale_p.h"
 #include "qmutexpool_p.h"
 #include "qscopedpointer.h"
-
-#if !defined(QT_NO_GLIB)
-#  include "qeventdispatcher_glib_p.h"
-#endif
 #include "qeventdispatcher_unix_p.h"
 
 #include <stdlib.h>
@@ -262,12 +258,7 @@ QCoreApplicationPrivate::~QCoreApplicationPrivate()
 void QCoreApplicationPrivate::createEventDispatcher()
 {
     Q_Q(QCoreApplication);
-#if !defined(QT_NO_GLIB)
-    if (qgetenv("QT_NO_GLIB").isEmpty())
-        eventDispatcher = new QEventDispatcherGlib(q);
-    else
-#endif
-        eventDispatcher = new QEventDispatcherUNIX(q);
+    eventDispatcher = new QEventDispatcherUNIX(q);
 }
 
 QThread *QCoreApplicationPrivate::theMainThread = Q_NULLPTR;

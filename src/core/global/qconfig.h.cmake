@@ -88,6 +88,7 @@
 #define QT_NO_GCONF2
 #define QT_NO_RAWFONT
 #define QT_NO_IMAGE_TEXT
+#define QT_NO_GLIB
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -172,7 +173,6 @@
 #cmakedefine QT_NO_GESTURES
 #cmakedefine QT_NO_GETADDRINFO
 #cmakedefine QT_NO_GETIFADDRS
-#cmakedefine QT_NO_GLIB
 #cmakedefine QT_NO_GRAPHICSEFFECT
 #cmakedefine QT_NO_GRAPHICSSVGITEM
 #cmakedefine QT_NO_GRAPHICSVIEW

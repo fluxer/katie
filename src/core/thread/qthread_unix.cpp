@@ -37,10 +37,6 @@
 #include "qcoreapplication_p.h"
 #include "qthread_p.h"
 #include "qdebug.h"
-
-#if !defined(QT_NO_GLIB)
-#  include "../kernel/qeventdispatcher_glib_p.h"
-#endif
 #include "qeventdispatcher_unix_p.h"
 
 #include <sched.h>
@@ -173,11 +169,6 @@ void QThreadPrivate::createEventDispatcher(QThreadData *data)
 {
     QMutexLocker l(&data->postEventList.mutex);
 
-#if !defined(QT_NO_GLIB)
-    if (qgetenv("QT_NO_GLIB").isEmpty() && qgetenv("QT_NO_THREADED_GLIB").isEmpty())
-        data->eventDispatcher = new QEventDispatcherGlib;
-    else
-#endif
     data->eventDispatcher = new QEventDispatcherUNIX;
 
     l.unlock();
