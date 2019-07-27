@@ -24,8 +24,8 @@ for t in glob.glob('src/tools/*'):
 for t in glob.glob('translations/qt*.ts'):
     command = ['minsize/bin/lupdate', '-locations', 'relative', '-no-ui-lines', '-no-obsolete']
     if not 'tools' in t:
-        command.extend(tfiles)
-    else:
         command.extend(cfiles)
+    else:
+        command.extend(tfiles)
     command.extend(['-ts', t])
     subprocess.check_call(command)
