@@ -106,7 +106,6 @@ private Q_SLOTS:
 private:
     Q_INVOKABLE void startPolling();
     QTimer *pollTimer;
-    QThread *bearerThread;
 
 private:
     mutable QMutex mutex;

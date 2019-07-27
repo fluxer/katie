@@ -47,7 +47,6 @@
 #include <QtCore/qdebug.h>
 #include <QtCore/qtimer.h>
 #include <QtCore/qstringlist.h>
-#include <QtCore/qthread.h>
 #include <QtCore/qcoreapplication_p.h>
 
 #ifndef QT_NO_BEARERMANAGEMENT
@@ -60,7 +59,7 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
 #endif
 
 QNetworkConfigurationManagerPrivate::QNetworkConfigurationManagerPrivate()
-    : QObject(), pollTimer(0), bearerThread(0), mutex(QMutex::Recursive), forcedPolling(0), firstUpdate(true)
+    : QObject(), pollTimer(0), mutex(QMutex::Recursive), forcedPolling(0), firstUpdate(true)
 {
     qRegisterMetaType<QNetworkConfiguration>("QNetworkConfiguration");
     qRegisterMetaType<QNetworkConfigurationPrivatePointer>("QNetworkConfigurationPrivatePointer");
@@ -68,11 +67,7 @@ QNetworkConfigurationManagerPrivate::QNetworkConfigurationManagerPrivate()
 
 void QNetworkConfigurationManagerPrivate::initialize()
 {
-    //Two stage construction, because we only want to do this heavyweight work for the winner of the Q_GLOBAL_STATIC race.
-    bearerThread = new QThread();
-    bearerThread->moveToThread(QCoreApplicationPrivate::mainThread()); // because cleanup() is called in main thread context.
-    moveToThread(bearerThread);
-    bearerThread->start();
+    moveToThread(QCoreApplicationPrivate::mainThread()); // because cleanup() is called in main thread context.
     updateConfigurations();
 }
 
@@ -81,16 +76,11 @@ QNetworkConfigurationManagerPrivate::~QNetworkConfigurationManagerPrivate()
     QMutexLocker locker(&mutex);
 
     qDeleteAll(sessionEngines);
-    if (bearerThread)
-        bearerThread->quit();
 }
 
 void QNetworkConfigurationManagerPrivate::cleanup()
 {
-    QThread* thread = bearerThread;
     deleteLater();
-    if(thread->wait(5000))
-        delete thread;
 }
 
 QNetworkConfiguration QNetworkConfigurationManagerPrivate::defaultConfiguration() const
@@ -384,7 +374,7 @@ void QNetworkConfigurationManagerPrivate::updateConfigurations()
                 else
                     sessionEngines.append(engine);
 
-                engine->moveToThread(bearerThread);
+                engine->moveToThread(QCoreApplicationPrivate::mainThread());
 
                 connect(engine, SIGNAL(updateCompleted()),
                         this, SLOT(updateConfigurations()),
