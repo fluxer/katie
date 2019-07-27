@@ -387,7 +387,7 @@ static void *hpux_get_stack_base()
 }
 #endif
 
-#ifdef QT_NO_THREAD
+#ifndef QT_NO_THREAD
 static inline void* currentThreadStackBase()
 {
 #if OS(HPUX)
