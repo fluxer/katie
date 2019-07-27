@@ -245,7 +245,9 @@ public:
         , applicationLevelProxy(0)
         , applicationLevelProxyFactory(0)
         , socks5SocketEngineHandler(0)
+#ifndef QT_NO_HTTP
         , httpSocketEngineHandler(0)
+#endif
     {
 #ifdef QT_USE_SYSTEM_PROXIES
         setApplicationProxyFactory(new QSystemConfigurationProxyFactory);
@@ -263,7 +265,9 @@ public:
         delete applicationLevelProxy;
         delete applicationLevelProxyFactory;
         delete socks5SocketEngineHandler;
+#ifndef QT_NO_HTTP
         delete httpSocketEngineHandler;
+#endif
     }
 
     void setApplicationProxy(const QNetworkProxy &proxy)
@@ -297,7 +301,9 @@ private:
     QNetworkProxy *applicationLevelProxy;
     QNetworkProxyFactory *applicationLevelProxyFactory;
     QSocks5SocketEngineHandler *socks5SocketEngineHandler;
+#ifndef QT_NO_HTTP
     QHttpSocketEngineHandler *httpSocketEngineHandler;
+#endif
 };
 
 QList<QNetworkProxy> QGlobalNetworkProxy::proxyForQuery(const QNetworkProxyQuery &query)
