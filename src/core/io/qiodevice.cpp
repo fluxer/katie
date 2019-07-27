@@ -1542,7 +1542,7 @@ QString QIODevice::errorString() const
 #ifdef QT_NO_QOBJECT
         return QLatin1String(QT_TRANSLATE_NOOP(QIODevice, "Unknown error"));
 #else
-        return tr("Unknown error");
+        return QIODevice::tr("Unknown error");
 #endif
     }
     return d->errorString;
