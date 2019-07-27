@@ -522,8 +522,6 @@ QHostAddress::QHostAddress(SpecialAddress address)
 */
 QHostAddress::~QHostAddress()
 {
-    // ###: leaking pointer, something is accessing it?
-    // delete d;
 }
 
 /*!
