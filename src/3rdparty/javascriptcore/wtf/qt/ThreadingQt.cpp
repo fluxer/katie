@@ -28,6 +28,7 @@
  */
 #include "Platform.h"
 #include "Threading.h"
+#include "HashMap.h"
 
 namespace WTF {
 
