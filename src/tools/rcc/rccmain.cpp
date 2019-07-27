@@ -195,7 +195,7 @@ int runRcc(int argc, char *argv[])
             } else if (opt == QLatin1String("-list")) {
                 list = true;
             } else if (opt == QLatin1String("-version") || opt == QLatin1String("-v")) {
-                fprintf(stderr, "Qt Resource Compiler version %s\n", QT_VERSION_STR);
+                fprintf(stderr, "Katie Resource Compiler version %s\n", QT_VERSION_STR);
                 return 1;
             } else if (opt == QLatin1String("-help") || opt == QLatin1String("-h")) {
                 helpRequested = true;
@@ -228,7 +228,7 @@ int runRcc(int argc, char *argv[])
     errorDevice.open(stderr, QIODevice::WriteOnly|QIODevice::Text);
     
     if (library.verbose())
-        errorDevice.write("Qt resource compiler\n");
+        errorDevice.write("Katie resource compiler\n");
 
     library.setInputFiles(filenamesIn);
 
