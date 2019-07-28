@@ -48,7 +48,6 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/unicode
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/interpreter
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode
