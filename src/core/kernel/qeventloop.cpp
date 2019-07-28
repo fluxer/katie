@@ -185,14 +185,10 @@ int QEventLoop::exec(ProcessEventsFlags flags)
     if (app && app->thread() == thread())
         QCoreApplication::removePostedEvents(app, QEvent::Quit);
 
-#if defined(QT_NO_EXCEPTIONS)
-    while (!d->exit)
-        processEvents(flags | WaitForMoreEvents | EventLoopExec);
-#else
-    try {
+    QT_TRY {
         while (!d->exit)
             processEvents(flags | WaitForMoreEvents | EventLoopExec);
-    } catch (...) {
+    } QT_CATCH (...) {
         qWarning("Qt has caught an exception thrown from an event handler. Throwing\n"
                  "exceptions from an event handler is not supported in Qt. You must\n"
                  "reimplement QApplication::notify() and catch all exceptions there.\n");
@@ -207,9 +203,8 @@ int QEventLoop::exec(ProcessEventsFlags flags)
         d->inExec = false;
         --d->threadData->loopLevel;
 
-        throw;
+        QT_RETHROW;
     }
-#endif
 
 #ifndef QT_NO_THREAD
     // copied above

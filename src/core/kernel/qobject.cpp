@@ -929,16 +929,12 @@ bool QObject::event(QEvent *e)
             currentSender.ref = 1;
             QObjectPrivate::Sender * const previousSender =
                 QObjectPrivate::setCurrentSender(this, &currentSender);
-#if defined(QT_NO_EXCEPTIONS)
-            mce->placeMetaCall(this);
-#else
             QT_TRY {
                 mce->placeMetaCall(this);
             } QT_CATCH(...) {
                 QObjectPrivate::resetCurrentSender(this, &currentSender, previousSender);
                 QT_RETHROW;
             }
-#endif
             QObjectPrivate::resetCurrentSender(this, &currentSender, previousSender);
             break;
         }
@@ -3008,9 +3004,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                 if (qt_signal_spy_callback_set.slot_begin_callback != 0)
                     qt_signal_spy_callback_set.slot_begin_callback(receiver, c->method(), argv ? argv : empty_argv);
 
-#if defined(QT_NO_EXCEPTIONS)
-                callFunction(receiver, QMetaObject::InvokeMetaMethod, method_relative, argv ? argv : empty_argv);
-#else
                 QT_TRY {
                     callFunction(receiver, QMetaObject::InvokeMetaMethod, method_relative, argv ? argv : empty_argv);
                 } QT_CATCH(...) {
@@ -3024,7 +3017,7 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                         delete connectionLists;
                     QT_RETHROW;
                 }
-#endif
+
                 if (qt_signal_spy_callback_set.slot_end_callback != 0)
                     qt_signal_spy_callback_set.slot_end_callback(receiver, c->method());
                 locker.relock();
@@ -3038,9 +3031,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                                                                 argv ? argv : empty_argv);
                 }
 
-#if defined(QT_NO_EXCEPTIONS)
-                metacall(receiver, QMetaObject::InvokeMetaMethod, method, argv ? argv : empty_argv);
-#else
                 QT_TRY {
                     metacall(receiver, QMetaObject::InvokeMetaMethod, method, argv ? argv : empty_argv);
                 } QT_CATCH(...) {
@@ -3054,7 +3044,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                         delete connectionLists;
                     QT_RETHROW;
                 }
-#endif
 
                 if (qt_signal_spy_callback_set.slot_end_callback != 0)
                     qt_signal_spy_callback_set.slot_end_callback(receiver, method);

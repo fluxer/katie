@@ -95,19 +95,15 @@ void QThreadPoolThread::run()
 
                 // run the task
                 locker.unlock();
-#ifndef QT_NO_EXCEPTIONS
-                try {
-#endif
+                QT_TRY {
                     r->run();
-#ifndef QT_NO_EXCEPTIONS
-                } catch (...) {
+                } QT_CATCH (...) {
                     qWarning("Qt Concurrent has caught an exception thrown from a worker thread.\n"
                              "This is not supported, exceptions thrown in worker threads must be\n"
                              "caught before control returns to Qt Concurrent.");
                     registerThreadInactive();
-                    throw;
+                    QT_RETHROW;
                 }
-#endif
                 locker.relock();
 
                 if (autoDelete && !--r->ref)

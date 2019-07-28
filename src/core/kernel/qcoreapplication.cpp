@@ -1142,12 +1142,9 @@ void QCoreApplicationPrivate::sendPostedEvents(QObject *receiver, int event_type
 
         locker.unlock();
         // after all that work, it's time to deliver the event.
-#ifdef QT_NO_EXCEPTIONS
-        QCoreApplication::sendEvent(r, e);
-#else
-        try {
+        QT_TRY {
             QCoreApplication::sendEvent(r, e);
-        } catch (...) {
+        } QT_CATCH (...) {
             delete e;
             locker.relock();
 
@@ -1158,9 +1155,8 @@ void QCoreApplicationPrivate::sendPostedEvents(QObject *receiver, int event_type
             --data->postEventList.recursion;
             if (!data->postEventList.recursion && !data->canWait && data->eventDispatcher)
                 data->eventDispatcher->wakeUp();
-            throw;              // rethrow
+            QT_RETHROW;              // rethrow
         }
-#endif
 
         delete e;
         locker.relock();

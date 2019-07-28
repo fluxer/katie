@@ -1819,48 +1819,44 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
     int callgrindChildExitCode = 0;
 #endif
 
-#ifndef QT_NO_EXCEPTIONS
-    try {
-#endif
+    QT_TRY {
+        QTestResult::reset();
 
-    QTestResult::reset();
+        QTEST_ASSERT(testObject);
+        QTEST_ASSERT(!currentTestObject);
+        currentTestObject = testObject;
 
-    QTEST_ASSERT(testObject);
-    QTEST_ASSERT(!currentTestObject);
-    currentTestObject = testObject;
+        const QMetaObject *metaObject = testObject->metaObject();
+        QTEST_ASSERT(metaObject);
 
-    const QMetaObject *metaObject = testObject->metaObject();
-    QTEST_ASSERT(metaObject);
+        QTestResult::setCurrentTestObject(metaObject->className());
+        if (argc > 0)
+            QTestResult::setCurrentApplicationName(argv[0]);
 
-    QTestResult::setCurrentTestObject(metaObject->className());
-    if (argc > 0)
-        QTestResult::setCurrentApplicationName(argv[0]);
-
-    qtest_qParseArgs(argc, argv, false);
-    if (QTest::randomOrder) {
-        seedRandom();
-    }
+        qtest_qParseArgs(argc, argv, false);
+        if (QTest::randomOrder) {
+            seedRandom();
+        }
 #ifdef QTESTLIB_USE_VALGRIND
-    if (QBenchmarkGlobalData::current->mode() == QBenchmarkGlobalData::CallgrindParentProcess) {
-        const QStringList origAppArgs(QCoreApplication::arguments());
-        if (!QBenchmarkValgrindUtils::rerunThroughCallgrind(origAppArgs, callgrindChildExitCode))
-            return -1;
+        if (QBenchmarkGlobalData::current->mode() == QBenchmarkGlobalData::CallgrindParentProcess) {
+            const QStringList origAppArgs(QCoreApplication::arguments());
+            if (!QBenchmarkValgrindUtils::rerunThroughCallgrind(origAppArgs, callgrindChildExitCode))
+                return -1;
 
-        QBenchmarkValgrindUtils::cleanup();
+            QBenchmarkValgrindUtils::cleanup();
 
-    } else
+        } else
 #endif
-    {
+        {
 #if defined(Q_OS_UNIX)
-        QScopedPointer<FatalSignalHandler> handler;
-        if (!noCrashHandler)
-            handler.reset(new FatalSignalHandler);
+            QScopedPointer<FatalSignalHandler> handler;
+            if (!noCrashHandler)
+                handler.reset(new FatalSignalHandler);
 #endif
-        qInvokeTestMethods(testObject);
-    }
+            qInvokeTestMethods(testObject);
+        }
 
-#ifndef QT_NO_EXCEPTIONS
-    } catch (...) {
+    } QT_CATCH (...) {
         QTestResult::addFailure("Caught unhandled exception", __FILE__, __LINE__);
         if (QTestResult::currentTestFunction()) {
              QTestResult::finishedCurrentTestFunction();
@@ -1871,10 +1867,9 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
         currentTestObject = 0;
 
         // Rethrow exception to make debugging easier.
-        throw;
+        QT_RETHROW;
         return 1;
     }
-#  endif
 
     currentTestObject = 0;
 
