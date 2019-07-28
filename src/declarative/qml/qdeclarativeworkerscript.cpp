@@ -510,13 +510,23 @@ QDeclarativeError WorkerErrorEvent::error() const
 }
 
 QDeclarativeWorkerScriptEngine::QDeclarativeWorkerScriptEngine(QDeclarativeEngine *parent)
-: QThread(parent), d(new QDeclarativeWorkerScriptEnginePrivate(parent))
+#ifndef QT_NO_THREAD
+    : QThread(parent),
+#else
+    : QObject(parent),
+#endif
+    d(new QDeclarativeWorkerScriptEnginePrivate(parent))
 {
     d->m_lock.lock();
     connect(d, SIGNAL(stopThread()), this, SLOT(quit()), Qt::DirectConnection);
+#ifndef QT_NO_THREAD
     start(QThread::IdlePriority);
     d->m_wait.wait(&d->m_lock);
     d->moveToThread(this);
+#else
+    d->workerEngine = new QDeclarativeWorkerScriptEnginePrivate::ScriptEngine(d);
+    timerid = startTimer(500);
+#endif
     d->m_lock.unlock();
 }
 
@@ -528,7 +538,11 @@ QDeclarativeWorkerScriptEngine::~QDeclarativeWorkerScriptEngine()
     QCoreApplication::postEvent(d, new QEvent((QEvent::Type)QDeclarativeWorkerScriptEnginePrivate::WorkerDestroyEvent));
     d->m_lock.unlock();
 
+#ifndef QT_NO_THREAD
     wait();
+#else
+    killTimer(timerid);
+#endif
     d->deleteLater();
 }
 
@@ -565,6 +579,7 @@ void QDeclarativeWorkerScriptEngine::sendMessage(int id, const QVariant &data)
     QCoreApplication::postEvent(d, new WorkerDataEvent(id, data));
 }
 
+#ifndef QT_NO_THREAD
 void QDeclarativeWorkerScriptEngine::run()
 {
     d->m_lock.lock();
@@ -579,7 +594,21 @@ void QDeclarativeWorkerScriptEngine::run()
 
     delete d->workerEngine; d->workerEngine = 0;
 }
+#else
+void QDeclarativeWorkerScriptEngine::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == timerid) {
+        QCoreApplication::processEvents();
+    }
+}
 
+void QDeclarativeWorkerScriptEngine::quit()
+{
+    killTimer(timerid);
+    timerid = -1;
+    deleteLater();
+}
+#endif
 
 /*!
     \qmlclass WorkerScript QDeclarativeWorkerScript
