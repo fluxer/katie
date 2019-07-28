@@ -734,9 +734,7 @@ Q_CORE_EXPORT bool qSharedBuild();
 #endif
 
 class QString;
-#ifndef qPrintable
-#  define qPrintable(string) QString(string).toLocal8Bit().constData()
-#endif
+#define qPrintable(string) QString(string).toLocal8Bit().constData()
 
 Q_CORE_EXPORT void qDebug(const char *, ...) /* print debug message */
 #if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
