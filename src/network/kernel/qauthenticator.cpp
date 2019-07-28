@@ -568,14 +568,8 @@ static QByteArray digestMd5ResponseHelper(
     )
 {
     QCryptographicHash hash(QCryptographicHash::Md5);
-    hash.addData(userName);
-    hash.addData(":", 1);
-    hash.addData(realm);
-    hash.addData(":", 1);
-    hash.addData(password);
-    QByteArray ha1 = hash.result();
+    QByteArray ha1;
     if (alg.toLower() == "md5-sess") {
-        hash.reset();
         // RFC 2617 contains an error, it was:
         // hash.addData(ha1);
         // but according to the errata page at http://www.rfc-editor.org/errata_list.php, ID 1649, it
@@ -585,6 +579,13 @@ static QByteArray digestMd5ResponseHelper(
         hash.addData(nonce);
         hash.addData(":", 1);
         hash.addData(cNonce);
+        ha1 = hash.result();
+    } else {
+        hash.addData(userName);
+        hash.addData(":", 1);
+        hash.addData(realm);
+        hash.addData(":", 1);
+        hash.addData(password);
         ha1 = hash.result();
     };
     ha1 = ha1.toHex();
