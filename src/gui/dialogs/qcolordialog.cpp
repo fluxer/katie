@@ -1238,7 +1238,7 @@ void QColorShower::setRgb(QRgb rgb)
 void QColorShower::setHsv(int h, int s, int v)
 {
     if (h < -1 || (uint)s > 255 || (uint)v > 255)
-	    return;
+        return;
 
     hue = h; val = v; sat = s;
     QColor c;
