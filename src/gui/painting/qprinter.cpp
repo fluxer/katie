@@ -1730,39 +1730,6 @@ QPrintEngine *QPrinter::printEngine() const
     return d->printEngine;
 }
 
-#if defined (Q_WS_WIN)
-/*!
-    Sets the page size to be used by the printer under Windows to \a
-    pageSize.
-
-    \warning This function is not portable so you may prefer to use
-    setPaperSize() instead.
-
-    \sa winPageSize()
-*/
-void QPrinter::setWinPageSize(int pageSize)
-{
-    Q_D(QPrinter);
-    ABORT_IF_ACTIVE("QPrinter::setWinPageSize");
-    d->printEngine->setProperty(QPrintEngine::PPK_WindowsPageSize, pageSize);
-    d->addToManualSetList(QPrintEngine::PPK_WindowsPageSize);
-}
-
-/*!
-    Returns the page size used by the printer under Windows.
-
-    \warning This function is not portable so you may prefer to use
-    paperSize() instead.
-
-    \sa setWinPageSize()
-*/
-int QPrinter::winPageSize() const
-{
-    Q_D(const QPrinter);
-    return d->printEngine->property(QPrintEngine::PPK_WindowsPageSize).toInt();
-}
-#endif // Q_WS_WIN
-
 /*!
     Returns a list of the resolutions (a list of dots-per-inch
     integers) that the printer says it supports.
@@ -1872,51 +1839,6 @@ QPrinter::PrinterState QPrinter::printerState() const
     Use printerState() == QPrinter::Aborted instead.
 */
 
-#ifdef Q_WS_WIN
-/*!
-    \internal
-*/
-HDC QPrinter::getDC() const
-{
-    Q_D(const QPrinter);
-    return d->printEngine->getPrinterDC();
-}
-
-/*!
-    \internal
-*/
-void QPrinter::releaseDC(HDC hdc) const
-{
-    Q_D(const QPrinter);
-    d->printEngine->releasePrinterDC(hdc);
-}
-
-/*!
-    Returns the supported paper sizes for this printer.
-
-    The values will be either a value that matches an entry in the
-    QPrinter::PaperSource enum or a driver spesific value. The driver
-    spesific values are greater than the constant DMBIN_USER declared
-    in wingdi.h.
-
-    \warning This function is only available in windows.
-*/
-
-QList<QPrinter::PaperSource> QPrinter::supportedPaperSources() const
-{
-    Q_D(const QPrinter);
-    QVariant v = d->printEngine->property(QPrintEngine::PPK_PaperSources);
-
-    QList<QVariant> variant_list = v.toList();
-    QList<QPrinter::PaperSource> int_list;
-    for (int i=0; i<variant_list.size(); ++i)
-        int_list << (QPrinter::PaperSource) variant_list.at(i).toInt();
-
-    return int_list;
-}
-
-#endif
-
 /*!
     \fn QString QPrinter::printerSelectionOption() const
 
@@ -1949,7 +1871,6 @@ QList<QPrinter::PaperSource> QPrinter::supportedPaperSources() const
     \sa printerSelectionOption()
 */
 
-#ifndef Q_WS_WIN
 QString QPrinter::printerSelectionOption() const
 {
     Q_D(const QPrinter);
@@ -1962,7 +1883,6 @@ void QPrinter::setPrinterSelectionOption(const QString &option)
     d->printEngine->setProperty(QPrintEngine::PPK_SelectionOption, option);
     d->addToManualSetList(QPrintEngine::PPK_SelectionOption);
 }
-#endif
 
 /*!
     \since 4.1

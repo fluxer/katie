@@ -279,13 +279,6 @@ static inline bool isHoverControl(QStyle::SubControl control)
     return control != QStyle::SC_None && control != QStyle::SC_TitleBarLabel;
 }
 
-#if defined(Q_WS_WIN)
-static inline QRgb colorref2qrgb(COLORREF col)
-{
-    return qRgb(GetRValue(col),GetGValue(col),GetBValue(col));
-}
-#endif
-
 #ifndef QT_NO_TOOLTIP
 static void showToolTip(QHelpEvent *helpEvent, QWidget *widget, const QStyleOptionComplex &opt,
                         QStyle::ComplexControl complexControl, QStyle::SubControl subControl)

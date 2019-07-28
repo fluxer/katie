@@ -647,18 +647,8 @@ void QDeclarativeMouseArea::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 #ifndef QT_NO_CONTEXTMENU
 void QDeclarativeMouseArea::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
-    bool acceptsContextMenuButton;
-#if   defined(Q_WS_WINCE)
-    // ### WinCE can trigger context menu event with a gesture in the left button or a
-    // click with the right button. Since we have no way here to differentiate them when
-    // event happens, accepting either of the them will block the event.
-    acceptsContextMenuButton = acceptedButtons() & (Qt::LeftButton | Qt::RightButton);
-#else
-    acceptsContextMenuButton = acceptedButtons() & Qt::RightButton;
-#endif
-
     if (isEnabled() && event->reason() == QGraphicsSceneContextMenuEvent::Mouse
-        && acceptsContextMenuButton) {
+        && acceptedButtons() & Qt::RightButton) {
         // Do not let the context menu event propagate to items behind.
         return;
     }

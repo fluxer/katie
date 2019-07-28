@@ -1415,9 +1415,7 @@ void QColorDialogPrivate::init(const QColor &initial)
         leftLay->addWidget(lblBasicColors);
         leftLay->addWidget(standard);
 
-#if !defined(Q_WS_WINCE)
         leftLay->addStretch();
-#endif
 
         custom = new QColorWell(q, 2, 8, cusrgb);
         custom->setAcceptDrops(true);

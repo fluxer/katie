@@ -1842,7 +1842,7 @@ void QLineEdit::contextMenuEvent(QContextMenuEvent *event)
     }
 }
 
-#if defined(Q_WS_WIN) || defined(Q_WS_X11)
+#ifdef Q_WS_X11
     extern bool qt_use_rtl_extensions;
 #endif
 

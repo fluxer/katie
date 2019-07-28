@@ -298,21 +298,6 @@ PreviewManager:: ~PreviewManager()
     delete d;
 }
 
-
-Qt::WindowFlags PreviewManager::previewWindowFlags(const QWidget *widget) const
-{
-#ifdef Q_WS_WIN
-    Qt::WindowFlags windowFlags = (widget->windowType() == Qt::Window) ? Qt::Window | Qt::WindowMaximizeButtonHint : Qt::WindowFlags(Qt::Dialog);
-#else
-    Q_UNUSED(widget)
-    // Only Dialogs have close buttons on Mac.
-    // On Linux, we don't want an additional task bar item and we don't want a minimize button;
-    // we want the preview to be on top.
-    Qt::WindowFlags windowFlags = Qt::Dialog;
-#endif
-    return windowFlags;
-}
-
 // Some widgets might require fake containers
 
 static QWidget *fakeContainer(QWidget *w)
@@ -394,7 +379,7 @@ QWidget *PreviewManager::createPreview(const QDesignerFormWindowInterface *fw,
         zw->setWidget(formWidget);
         // Keep any widgets' context menus working, do not use global menu
         zw->setWidgetZoomContextMenuEnabled(true);
-        zw->setParent(fw->window(), previewWindowFlags(formWidget));
+        zw->setParent(fw->window(), Qt::Dialog);
         // Make preview close when Widget closes (Dialog/accept, etc)
         formWidget->setAttribute(Qt::WA_DeleteOnClose, true);
         connect(formWidget, SIGNAL(destroyed()), zw, SLOT(close()));
@@ -402,7 +387,7 @@ QWidget *PreviewManager::createPreview(const QDesignerFormWindowInterface *fw,
         zw->setProperty(WidgetFactory::disableStyleCustomPaintingPropertyC, QVariant(true));
         return zw;
     }
-    formWidget->setParent(fw->window(), previewWindowFlags(formWidget));
+    formWidget->setParent(fw->window(), Qt::Dialog);
     formWidget->setProperty(WidgetFactory::disableStyleCustomPaintingPropertyC, QVariant(true));
     return formWidget;
 }

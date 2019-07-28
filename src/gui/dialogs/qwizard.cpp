@@ -1913,10 +1913,6 @@ QWizard::QWizard(QWidget *parent, Qt::WindowFlags flags)
 {
     Q_D(QWizard);
     d->init();
-#ifdef Q_WS_WINCE
-    if (!qt_wince_is_mobile())
-        setWindowFlags(windowFlags() & ~Qt::WindowOkButtonHint);
-#endif
 }
 
 /*!

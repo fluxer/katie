@@ -146,9 +146,6 @@ private slots:
     void slotZoomChanged(int);
 
 private:
-
-    virtual Qt::WindowFlags previewWindowFlags(const QWidget *widget) const;
-
     QWidget *raise(const QDesignerFormWindowInterface *, const PreviewConfiguration &pc);
     QWidget *createPreview(const QDesignerFormWindowInterface *,
                            const PreviewConfiguration &pc,

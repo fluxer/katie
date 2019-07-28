@@ -126,10 +126,8 @@ void QDesignerDnDItem::setDomUi(DomUI *dom_ui)
 
 // ---------- QDesignerMimeData
 
-// Make pixmap transparent on Windows only. Mac is transparent by default, Unix usually does not work.
-#ifdef Q_WS_WIN
-#  define TRANSPARENT_DRAG_PIXMAP
-#endif
+// Make pixmap transparent, on Unix usually does not work.
+// #define TRANSPARENT_DRAG_PIXMAP
 
 QDesignerMimeData::QDesignerMimeData(const QDesignerDnDItems &items, QDrag *drag) :
     m_items(items)

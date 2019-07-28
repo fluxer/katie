@@ -1334,11 +1334,6 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
 QList<int> QFontDatabase::smoothSizes(const QString &family,
                                             const QString &styleName)
 {
-#ifdef Q_WS_WIN
-    Q_UNUSED(family);
-    Q_UNUSED(styleName);
-    return QFontDatabase::standardSizes();
-#else
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
@@ -1383,7 +1378,6 @@ QList<int> QFontDatabase::smoothSizes(const QString &family,
 
     qSort(sizes);
     return sizes;
-#endif
 }
 
 
