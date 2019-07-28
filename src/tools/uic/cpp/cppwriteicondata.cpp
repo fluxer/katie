@@ -87,8 +87,7 @@ static QByteArray unzipXPM(const QString &data, ulong& length)
     ba[2] = (length & 0x0000ff00) >> 8;
     ba[3] = (length & 0x000000ff);
     ba.append(transformImageData(data));
-    QByteArray baunzip = qUncompress(ba);
-    return baunzip;
+    return qUncompress(ba);
 #else
     Q_UNUSED(data);
     Q_UNUSED(length);
