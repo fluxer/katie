@@ -1339,7 +1339,6 @@ QList<int> QFontDatabase::smoothSizes(const QString &family,
     Q_UNUSED(styleName);
     return QFontDatabase::standardSizes();
 #else
-    bool smoothScalable = false;
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
@@ -1368,8 +1367,7 @@ QList<int> QFontDatabase::smoothSizes(const QString &family,
             if (!style) continue;
 
             if (style->smoothScalable) {
-                smoothScalable = true;
-                goto end;
+                return QFontDatabase::standardSizes();
             }
             for (int l = 0; l < style->count; l++) {
                 const QtFontSize *size = style->pixelSizes + l;
@@ -1382,9 +1380,6 @@ QList<int> QFontDatabase::smoothSizes(const QString &family,
             }
         }
     }
- end:
-    if (smoothScalable)
-        return QFontDatabase::standardSizes();
 
     qSort(sizes);
     return sizes;
