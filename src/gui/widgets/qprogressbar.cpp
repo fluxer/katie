@@ -128,13 +128,9 @@ void QProgressBar::initStyleOption(QStyleOptionProgressBar *option) const
     option->textAlignment = d->alignment;
     option->textVisible = d->textVisible;
     option->text = text();
-
-    if (QStyleOptionProgressBarV2 *optionV2
-            = qstyleoption_cast<QStyleOptionProgressBarV2 *>(option)) {
-        optionV2->orientation = d->orientation;  // ### Qt 5: use State_Horizontal instead
-        optionV2->invertedAppearance = d->invertedAppearance;
-        optionV2->bottomToTop = (d->textDirection == QProgressBar::BottomToTop);
-    }
+    option->orientation = d->orientation;  // ### Qt 5: use State_Horizontal instead
+    option->invertedAppearance = d->invertedAppearance;
+    option->bottomToTop = (d->textDirection == QProgressBar::BottomToTop);
 }
 
 bool QProgressBarPrivate::repaintRequired() const

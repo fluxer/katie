@@ -1691,15 +1691,10 @@ void QCleanlooksStyle::drawControl(ControlElement element, const QStyleOption *o
         painter->save();
         if (const QStyleOptionProgressBar *bar = qstyleoption_cast<const QStyleOptionProgressBar *>(option)) {
             QRect rect = bar->rect;
-            bool vertical = false;
-            bool inverted = false;
             bool indeterminate = (bar->minimum == 0 && bar->maximum == 0);
-
             // Get extra style options if version 2
-            if (const QStyleOptionProgressBarV2 *bar2 = qstyleoption_cast<const QStyleOptionProgressBarV2 *>(option)) {
-                vertical = (bar2->orientation == Qt::Vertical);
-                inverted = bar2->invertedAppearance;
-            }
+            bool vertical = (bar->orientation == Qt::Vertical);
+            bool inverted = bar->invertedAppearance;
 
             // If the orientation is vertical, we use a transform to rotate
             // the progress bar 90 degrees clockwise.  This way we can use the

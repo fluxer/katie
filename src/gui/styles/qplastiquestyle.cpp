@@ -2450,15 +2450,10 @@ void QPlastiqueStyle::drawControl(ControlElement element, const QStyleOption *op
             painter->setFont(font);
             painter->setPen(bar->palette.text().color());
 
-            bool vertical = false;
-            bool inverted = false;
-            bool bottomToTop = false;
             // Get extra style options if version 2
-            if (const QStyleOptionProgressBarV2 *bar2 = qstyleoption_cast<const QStyleOptionProgressBarV2 *>(option)) {
-                vertical = (bar2->orientation == Qt::Vertical);
-                inverted = bar2->invertedAppearance;
-                bottomToTop = bar2->bottomToTop;
-            }
+            bool vertical = (bar->orientation == Qt::Vertical);
+            bool inverted = bar->invertedAppearance;
+            bool bottomToTop = bar->bottomToTop;
 
             if (vertical) {
                 rect = QRect(rect.left(), rect.top(), rect.height(), rect.width()); // flip width and height
