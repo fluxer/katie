@@ -950,7 +950,6 @@ private:
     QColSpinBox *alphaEd;
     QLabel *alphaLab;
     QColorShowLabel *lab;
-    bool rgbOriginal;
     QColorDialog *colorDialog;
 
     friend class QColorDialog;
@@ -1186,7 +1185,6 @@ void QColorShower::showCurrentColor()
 
 void QColorShower::rgbEd()
 {
-    rgbOriginal = true;
     curCol = qRgba(rEd->value(), gEd->value(), bEd->value(), currentAlpha());
 
     rgb2hsv(currentColor(), hue, sat, val);
@@ -1202,7 +1200,6 @@ void QColorShower::rgbEd()
 
 void QColorShower::hsvEd()
 {
-    rgbOriginal = false;
     hue = hEd->value();
     sat = sEd->value();
     val = vEd->value();
@@ -1222,7 +1219,6 @@ void QColorShower::hsvEd()
 
 void QColorShower::setRgb(QRgb rgb)
 {
-    rgbOriginal = true;
     curCol = rgb;
 
     rgb2hsv(currentColor(), hue, sat, val);
@@ -1244,7 +1240,6 @@ void QColorShower::setHsv(int h, int s, int v)
     if (h < -1 || (uint)s > 255 || (uint)v > 255)
 	    return;
 
-    rgbOriginal = false;
     hue = h; val = v; sat = s;
     QColor c;
     c.setHsv(hue, sat, val);
