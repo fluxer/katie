@@ -285,14 +285,6 @@ set_package_properties(Git PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(PythonInterp)
-set_package_properties(PythonInterp PROPERTIES
-    PURPOSE "UI class maps generator script"
-    DESCRIPTION "Programming language that lets you work quickly"
-    URL "https://www.python.org/"
-    TYPE RECOMMENDED
-)
-
 find_package(NIS)
 set_package_properties(NIS PROPERTIES
     PURPOSE "Required for Network Information Service support"
@@ -423,20 +415,6 @@ set_package_properties(MySQL PROPERTIES
     URL "http://www.mysql.com"
     TYPE OPTIONAL
 )
-
-if(PYTHONINTERP_FOUND)
-    execute_process(
-        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/genmap.py
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        RESULT_VARIABLE genmap_result
-        ERROR_VARIABLE genmap_error
-    )
-    if(NOT genmap_result EQUAL 0)
-        message(SEND_ERROR "${genmap_error}")
-    endif()
-else()
-    message(WARNING "\nUsing pre-generated classes map")
-endif()
 
 if(ENABLE_TESTING)
     message(WARNING

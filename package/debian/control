@@ -6,13 +6,11 @@ Homepage: https://github.com/fluxer/katie
 Vcs-Git: git://github.com/fluxer/katie.git
 Vcs-browser: https://github.com/fluxer/katie
 Standards-Version: 4.9.0
-X-Python-Version: >= 2.7
-Build-Depends: debhelper (>= 9~), g++, python-dev (>= 2.7~), libssl-dev,
- zlib1g-dev, libzstd-dev, libc6-dev, libpng-dev, libjpeg-dev, libtiff5-dev,
- libmng-dev, libcups2-dev, libfreetype6-dev, libfontconfig1-dev,
- libpcre3-dev, libdbus-1-dev, unixodbc-dev, libpq-dev, libpqtypes-dev,
- libmariadbclient-dev, libmariadbd-dev, libaio-dev, libsqlite3-dev, xorg-dev,
- cmake, git
+Build-Depends: debhelper (>= 9~), g++, libssl-dev, zlib1g-dev, libzstd-dev,
+ libc6-dev, libpng-dev, libjpeg-dev, libtiff5-dev, libmng-dev, libcups2-dev,
+ libfreetype6-dev, libfontconfig1-dev, libpcre3-dev, libdbus-1-dev,
+ unixodbc-dev, libpq-dev, libpqtypes-dev, libmariadbclient-dev,
+ libmariadbd-dev, libaio-dev, libsqlite3-dev, xorg-dev, cmake, git
 
 Package: katie-git
 Architecture: i386 amd64
