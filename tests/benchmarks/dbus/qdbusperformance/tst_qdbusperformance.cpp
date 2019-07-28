@@ -50,7 +50,9 @@ static const int runTime = 500;
 class tst_QDBusPerformance: public QObject
 {
     Q_OBJECT
+#ifndef QT_NO_PROCESS
     QProcess proc;
+#endif
     QDBusInterface *target;
 
     QDBusInterface *remote;
@@ -80,6 +82,10 @@ Q_DECLARE_METATYPE(QVariant)
 
 void tst_QDBusPerformance::initTestCase()
 {
+#ifdef QT_NO_PROCESS
+    QSKIP("Katie build without process support", SkipAll);
+#endif
+
     QDBusConnection con = QDBusConnection::sessionBus();
     QVERIFY(con.isConnected());
 
@@ -88,8 +94,10 @@ void tst_QDBusPerformance::initTestCase()
     connect(&watcher, SIGNAL(serviceRegistered(QString)),
             &QTestEventLoop::instance(), SLOT(exitLoop()));
 
+#ifndef QT_NO_PROCESS
     proc.start(QLatin1String("./performance_server"));
     QVERIFY(proc.waitForStarted());
+#endif
 
     QTestEventLoop::instance().enterLoop(5);
     QVERIFY(con.interface()->isServiceRegistered(serviceName));
