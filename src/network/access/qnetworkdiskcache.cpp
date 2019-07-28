@@ -56,7 +56,7 @@
 
 #define CACHE_POSTFIX QLatin1String(".d")
 #define PREPARED_SLASH QLatin1String("prepared/")
-#define CACHE_VERSION 7
+#define CACHE_VERSION 8
 #define DATA_DIR QLatin1String("data")
 
 #define MAX_COMPRESSION_SIZE (1024 * 1024 * 3)
