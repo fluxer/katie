@@ -22,7 +22,6 @@ There are several things you should be aware before considering Katie:
   - zlib, zstd, OpenSSL, PCRE, Freetype and X11 are required for building
   - OpenSSL, D-Bus, CUPS, resolv and NSL cannot be runtime dependencies, they
     must be linked to during build
-  - building with threads support is optional
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, lrelease, lupdate, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
@@ -46,6 +45,7 @@ There are several things you should be aware before considering Katie:
   - building with IODBC instead of unixODBC is possible
   - building with LTO is possible and supported, if the toolchain can handle it
   - building without resolv is possible
+  - building without threads is possible
   - alternative libc implementations support
   - Unicode v5.0+ characters and partial scripts support
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
