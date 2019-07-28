@@ -207,8 +207,16 @@ int QHostInfo::lookupHost(const QString &name, QObject *receiver,
         manager->scheduleLookup(runnable);
     }
 #else
-    bool valid = false;
-    QHostInfo info = qt_qhostinfo_lookup(name, receiver, member, &valid, &id);
+    QHostInfo info;
+    if (!receiver)
+        return -1;
+
+    QHostInfo hostInfo(id);
+    hostInfo.fromName(name);
+    QScopedPointer<QHostInfoResult> result(new QHostInfoResult);
+    QObject::connect(result.data(), SIGNAL(resultsReady(QHostInfo)),
+                        receiver, member, Qt::QueuedConnection);
+    result.data()->emitResultsReady(hostInfo);
 #endif // QT_NO_THREAD
 
     return id;
@@ -691,10 +699,10 @@ void QHostInfoLookupManager::lookupFinished(QHostInfoRunnable *r)
 // This function returns immediately when we had a result in the cache, else it will later emit a signal
 QHostInfo qt_qhostinfo_lookup(const QString &name, QObject *receiver, const char *member, bool *valid, int *id)
 {
+#ifndef QT_NO_THREAD
     *valid = false;
     *id = -1;
 
-#ifndef QT_NO_THREAD
     // check cache
     QAbstractHostInfoLookupManager* manager = theHostInfoLookupManager();
     if (manager && manager->cache.isEnabled()) {
@@ -706,7 +714,12 @@ QHostInfo qt_qhostinfo_lookup(const QString &name, QObject *receiver, const char
 #endif
 
     // was not in cache, trigger lookup
-    *id = QHostInfo::lookupHost(name, receiver, member);
+    QHostInfo info;
+    *id = info.lookupHost(name, receiver, member);
+    *valid = (*id != -1);
+    if (*valid) {
+        return info;
+    }
 
     // return empty response, valid==false
     return QHostInfo();
