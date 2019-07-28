@@ -337,7 +337,32 @@ QT_USE_NAMESPACE
  *  http://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
  */
 
-#if defined(Q_CC_CLANG)
+
+#if defined(Q_CC_GNU)
+#  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
+     /* C++0x features supported in GCC 4.3: */
+#    define Q_COMPILER_RVALUE_REFS
+#    define Q_COMPILER_DECLTYPE
+     /* C++0x features supported in GCC 4.4: */
+#    define Q_COMPILER_VARIADIC_TEMPLATES
+#    define Q_COMPILER_AUTO_FUNCTION
+#    define Q_COMPILER_AUTO_TYPE
+#    define Q_COMPILER_EXTERN_TEMPLATES
+#    define Q_COMPILER_DEFAULT_DELETE_MEMBERS
+#    define Q_COMPILER_CLASS_ENUM
+#    define Q_COMPILER_INITIALIZER_LISTS
+#    /* C++0x features supported in GCC 4.5: */
+#    define Q_COMPILER_LAMBDA
+#    define Q_COMPILER_UNICODE_STRINGS
+#    /* C++0x features supported in GCC 4.6: */
+#    define Q_COMPILER_CONSTEXPR
+#    define Q_COMPILER_NULLPTR
+#    ifdef __EXCEPTIONS
+#      define Q_COMPILER_EXCEPTIONS
+#    endif
+#  endif
+
+#elif defined(Q_CC_CLANG)
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
     /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
 #    if __has_feature(cxx_auto_type)
@@ -374,32 +399,13 @@ QT_USE_NAMESPACE
 #    if __has_feature(cxx_nullptr)
 #      define Q_COMPILER_NULLPTR
 #    endif
+#    if __has_feature(cxx_exceptions)
+#      define Q_COMPILER_EXCEPTIONS
+#    endif
     /* Features that have no __has_feature() check */
 #    if ((__clang_major__ * 100) + __clang_minor__) >= 209 /* since clang 2.9 */
 #      define Q_COMPILER_EXTERN_TEMPLATES
 #    endif
-#  endif
-#endif
-
-#if defined(Q_CC_GNU) && !defined(Q_CC_CLANG)
-#  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
-     /* C++0x features supported in GCC 4.3: */
-#    define Q_COMPILER_RVALUE_REFS
-#    define Q_COMPILER_DECLTYPE
-     /* C++0x features supported in GCC 4.4: */
-#    define Q_COMPILER_VARIADIC_TEMPLATES
-#    define Q_COMPILER_AUTO_FUNCTION
-#    define Q_COMPILER_AUTO_TYPE
-#    define Q_COMPILER_EXTERN_TEMPLATES
-#    define Q_COMPILER_DEFAULT_DELETE_MEMBERS
-#    define Q_COMPILER_CLASS_ENUM
-#    define Q_COMPILER_INITIALIZER_LISTS
-#    /* C++0x features supported in GCC 4.5: */
-#    define Q_COMPILER_LAMBDA
-#    define Q_COMPILER_UNICODE_STRINGS
-#    /* C++0x features supported in GCC 4.6: */
-#    define Q_COMPILER_CONSTEXPR
-#    define Q_COMPILER_NULLPTR
 #  endif
 #endif
 
@@ -663,7 +669,7 @@ inline void qt_noop(void) {}
    Use the QT_NO_EXCEPTIONS macro to protect your code instead.
 */
 
-#if !defined(QT_NO_EXCEPTIONS) && defined(Q_CC_GNU) && !defined (__EXCEPTIONS) && !defined(Q_MOC_RUN)
+#if !defined(QT_NO_EXCEPTIONS) && !defined(Q_COMPILER_EXCEPTIONS) && !defined(Q_MOC_RUN)
 #  define QT_NO_EXCEPTIONS
 #endif
 
