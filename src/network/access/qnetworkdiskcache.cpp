@@ -595,10 +595,9 @@ QString QNetworkDiskCachePrivate::uniqueFileName(const QUrl &url)
     cleanUrl.setPassword(QString());
     cleanUrl.setFragment(QString());
 
-    QCryptographicHash hash(QCryptographicHash::Sha1);
-    hash.addData(cleanUrl.toEncoded());
+    QByteArray hash = QCryptographicHash::hash(cleanUrl.toEncoded(), QCryptographicHash::Sha1);
     // convert sha1 to base36 form and return first 8 bytes for use as string
-    QByteArray id =  QByteArray::number(*(qlonglong*)hash.result().data(), 36).left(8);
+    QByteArray id =  QByteArray::number(*(qlonglong*)hash.data(), 36).left(8);
     // generates <one-char subdir>/<8-char filname.d>
     uint code = (uint)id.at(id.length()-1) % 16;
     QString pathFragment = QString::number(code, 16) + QLatin1Char('/')
