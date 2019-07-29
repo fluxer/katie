@@ -66,7 +66,6 @@ if 'digit' in sys.argv:
     printswitch(switchmap)
     printifrange(rangemap)
 elif 'joining' in sys.argv:
-    joiningmap = {}
     for line in readlines('extracted/DerivedJoiningType.txt'):
         tablesplit = line.split(';')
         codepoint = tablesplit[0].strip()
@@ -222,53 +221,7 @@ elif 'version' in sys.argv:
         tablesplit = line.split(';')
         codepoint = tablesplit[0].strip()
         value = tablesplit[1].strip()
-        if value == '1.1':
-            value = 'QChar::Unicode_1_1'
-        elif value == '2.0':
-            value = 'QChar::Unicode_2_0'
-        elif value == '2.1':
-            value = 'QChar::Unicode_2_1'
-        elif value == '3.0':
-            value = 'QChar::Unicode_3_0'
-        elif value == '3.1':
-            value = 'QChar::Unicode_3_1'
-        elif value == '3.2':
-            value = 'QChar::Unicode_3_2'
-        elif value == '4.0':
-            value = 'QChar::Unicode_4_0'
-        elif value == '4.1':
-            value = 'QChar::Unicode_4_1'
-        elif value == '5.0':
-            value = 'QChar::Unicode_5_0'
-        elif value == '5.1':
-            value = 'QChar::Unicode_5_1'
-        elif value == '5.2':
-            value = 'QChar::Unicode_5_2'
-        elif value == '6.0':
-            value = 'QChar::Unicode_6_0'
-        elif value == '6.1':
-            value = 'QChar::Unicode_6_1'
-        elif value == '6.2':
-            value = 'QChar::Unicode_6_2'
-        elif value == '6.3':
-            value = 'QChar::Unicode_6_3'
-        elif value == '7.0':
-            value = 'QChar::Unicode_7_0'
-        elif value == '8.0':
-            value = 'QChar::Unicode_8_0'
-        elif value == '9.0':
-            value = 'QChar::Unicode_9_0'
-        elif value == '10.0':
-            value = 'QChar::Unicode_10_0'
-        elif value == '11.0':
-            value = 'QChar::Unicode_11_0'
-        elif value == '12.0':
-            value = 'QChar::Unicode_12_0'
-        elif value == '12.1':
-            value = 'QChar::Unicode_12_1'
-        else:
-            print('Unhandled version type: %s' % value)
-            sys.exit(2)
+        value = 'QChar::Unicode_%s' % value.replace('.', '_')
         mapdecideinsert(switchmap, rangemap, value, codepoint)
     printswitch(switchmap)
     printifrange(rangemap)
