@@ -301,11 +301,10 @@ QString QHostInfo::localDomainName()
 #else
 
     // nothing worked, try doing it by ourselves:
-    QFile resolvconf;
 #if defined(_PATH_RESCONF)
-    resolvconf.setFileName(QFile::decodeName(_PATH_RESCONF));
+    QFile resolvconf(QFile::decodeName(_PATH_RESCONF));
 #else
-    resolvconf.setFileName(QLatin1String("/etc/resolv.conf"));
+    QFile resolvconf(QLatin1String("/etc/resolv.conf"));
 #endif
     if (!resolvconf.open(QIODevice::ReadOnly))
         return QString();       // failure
