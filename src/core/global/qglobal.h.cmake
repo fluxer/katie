@@ -140,9 +140,9 @@
 #  error Unable to detect target endianness
 #endif
 
-// needed for std::swap
 #ifdef __cplusplus
-#include <utility>
+#include <utility> // std::swap
+#include <cstdint> // std::uintptr_t
 #endif
 
 #if defined(__cplusplus) && !defined(QT_NO_USING_NAMESPACE)
@@ -488,23 +488,11 @@ typedef quint64 qulonglong;
 #if defined(__cplusplus)
 
 /*
-  quintptr and qptrdiff is guaranteed to be the same size as a pointer, i.e.
-
-      sizeof(void *) == sizeof(quintptr)
-      && sizeof(void *) == sizeof(qptrdiff)
-*/
-template <int> struct QIntegerForSize;
-template <>    struct QIntegerForSize<1> { typedef quint8  Unsigned; typedef qint8  Signed; };
-template <>    struct QIntegerForSize<2> { typedef quint16 Unsigned; typedef qint16 Signed; };
-template <>    struct QIntegerForSize<4> { typedef quint32 Unsigned; typedef qint32 Signed; };
-template <>    struct QIntegerForSize<8> { typedef quint64 Unsigned; typedef qint64 Signed; };
-template <class T> struct QIntegerForSizeof: QIntegerForSize<sizeof(T)> { };
-typedef QIntegerForSizeof<void*>::Unsigned quintptr;
-typedef QIntegerForSizeof<void*>::Signed qptrdiff;
-
-/*
    Useful type definitions for Qt
 */
+
+typedef std::uintptr_t quintptr;
+typedef std::ptrdiff_t qptrdiff;
 
 QT_BEGIN_INCLUDE_NAMESPACE
 typedef unsigned char uchar;
