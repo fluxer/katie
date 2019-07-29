@@ -348,5 +348,7 @@ elif 'special' in sys.argv:
             print('    0x%s, // %s' % (codepoint, value.replace('_', '')))
         scriptslist.append(value)
 else:
-    print('usage: <digit|joining|combining|mirror|version|word|sentence|line|script|special>')
+    print('''usage: <digit|joining|combining|mirror|version|word|sentence|line|script|special>
+
+Data is from https://unicode.org/Public/12.1.0/ucd/UCD.zip''')
     sys.exit(1)
