@@ -370,6 +370,8 @@ public:
     QString &setNum(float, char f='g', int prec=6);
     QString &setNum(double, char f='g', int prec=6);
 
+    static QString number(short, int base=10);
+    static QString number(ushort, int base=10);
     static QString number(int, int base=10);
     static QString number(uint, int base=10);
     static QString number(long, int base=10);

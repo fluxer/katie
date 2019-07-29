@@ -5482,6 +5482,22 @@ QString QString::number(ulong n, int base)
 /*!
     \overload
 */
+QString QString::number(short n, int base)
+{
+    return number(qlonglong(n), base);
+}
+
+/*!
+    \overload
+*/
+QString QString::number(ushort n, int base)
+{
+    return number(qulonglong(n), base);
+}
+
+/*!
+    \overload
+*/
 QString QString::number(int n, int base)
 {
     return number(qlonglong(n), base);

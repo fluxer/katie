@@ -270,6 +270,8 @@ public:
     QByteArray &setNum(double, char f = 'g', int prec = 6);
     QByteArray &setRawData(const char *a, int n);
 
+    static QByteArray number(short, int base = 10);
+    static QByteArray number(ushort, int base = 10);
     static QByteArray number(int, int base = 10);
     static QByteArray number(uint, int base = 10);
     static QByteArray number(qlonglong, int base = 10);

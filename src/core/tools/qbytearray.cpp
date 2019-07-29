@@ -3762,6 +3762,26 @@ QByteArray &QByteArray::setNum(double n, char f, int prec)
 */
 
 /*!
+    \overload
+
+    \sa toShort()
+*/
+QByteArray QByteArray::number(short n, int base)
+{
+    return QByteArray::number(qlonglong(n), base);
+}
+
+/*!
+    \overload
+
+    \sa toUShort()
+*/
+QByteArray QByteArray::number(ushort n, int base)
+{
+    return QByteArray::number(qulonglong(n), base);
+}
+
+/*!
     Returns a byte array containing the string equivalent of the
     number \a n to base \a base (10 by default). The \a base can be
     any value between 2 and 36.
