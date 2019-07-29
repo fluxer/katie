@@ -3776,9 +3776,7 @@ QByteArray &QByteArray::setNum(double n, char f, int prec)
 */
 QByteArray QByteArray::number(int n, int base)
 {
-    QByteArray s;
-    s.setNum(n, base);
-    return s;
+    return QByteArray::number(qlonglong(n), base);
 }
 
 /*!
@@ -3788,9 +3786,7 @@ QByteArray QByteArray::number(int n, int base)
 */
 QByteArray QByteArray::number(uint n, int base)
 {
-    QByteArray s;
-    s.setNum(n, base);
-    return s;
+    return QByteArray::number(qulonglong(n), base);
 }
 
 /*!
