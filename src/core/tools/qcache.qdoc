@@ -51,10 +51,10 @@
     deletes them to make room for new objects, if necessary. When
     inserting an object into the cache, you can specify a \e{cost},
     which should bear some approximate relationship to the amount of
-    memory taken by the object. When the sum of all objects' costs
-    (totalCost()) exceeds the cache's limit (maxCost()), QCache starts
-    deleting objects in the cache to keep under the limit, starting with
-    less recently accessed objects.
+    memory taken by the object. When the number of all objects' costs
+    exceeds the cache's limit (maxCost()), QCache starts deleting
+    objects in the cache to keep under the limit, starting with the
+    first object.
 
     By default, QCache's maxCost() is 100. You can specify a
     different value in the QCache constructor:
