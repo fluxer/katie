@@ -61,7 +61,6 @@ protected:
     QSize sizeHint() const;
     int heightForWidth(int) const;
     QSize minimumSizeHint() const;
-    bool event(QEvent *e);
     void paintEvent(QPaintEvent *);
 
 private:

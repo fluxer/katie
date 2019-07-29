@@ -289,12 +289,6 @@ QCommandLinkButton::QCommandLinkButton(const QString &text, const QString &descr
 }
 
 /*! \reimp */
-bool QCommandLinkButton::event(QEvent *e)
-{
-    return QPushButton::event(e);
-}
-
-/*! \reimp */
 QSize QCommandLinkButton::sizeHint() const
 {
 //  Standard size hints from UI specs
