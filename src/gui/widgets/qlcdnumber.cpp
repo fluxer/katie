@@ -132,10 +132,6 @@ public:
     \value Dec  Decimal
     \value Oct  Octal
     \value Bin  Binary
-    \omitvalue HEX
-    \omitvalue DEC
-    \omitvalue OCT
-    \omitvalue BIN
 
     If the display is set to hexadecimal, octal or binary, the integer
     equivalent of the value is displayed.
