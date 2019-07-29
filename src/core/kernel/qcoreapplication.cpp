@@ -272,10 +272,10 @@ void QCoreApplicationPrivate::checkReceiverThread(QObject *receiver)
                "QCoreApplication::sendEvent",
                QString::fromLatin1("Cannot send events to objects owned by a different thread. "
                                    "Current thread %1. Receiver '%2' (of type '%3') was created in thread %4")
-               .arg(QString::number((quintptr) currentThread, 16))
+               .arg(QString::number(quintptr(currentThread), 16))
                .arg(receiver->objectName())
                .arg(QLatin1String(receiver->metaObject()->className()))
-               .arg(QString::number((quintptr) thr, 16))
+               .arg(QString::number(quintptr(thr), 16))
                .toLocal8Bit().data());
     Q_UNUSED(currentThread);
     Q_UNUSED(thr);
