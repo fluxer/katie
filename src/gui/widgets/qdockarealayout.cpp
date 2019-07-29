@@ -216,11 +216,11 @@ QDockAreaLayoutItem
 */
 
 #ifndef QT_NO_TABBAR
-static quintptr tabId(const QDockAreaLayoutItem &item)
+static qulonglong tabId(const QDockAreaLayoutItem &item)
 {
     if (item.widgetItem == 0)
         return 0;
-    return reinterpret_cast<quintptr>(item.widgetItem->widget());
+    return reinterpret_cast<qulonglong>(item.widgetItem->widget());
 }
 #endif
 
@@ -1101,7 +1101,7 @@ QLayoutItem *QDockAreaLayoutInfo::unplug(const QList<int> &path)
 
 #ifndef QT_NO_TABBAR
 
-quintptr QDockAreaLayoutInfo::currentTabId() const
+qulonglong QDockAreaLayoutInfo::currentTabId() const
 {
     if (!tabbed || tabBar == 0)
         return 0;
@@ -1110,21 +1110,21 @@ quintptr QDockAreaLayoutInfo::currentTabId() const
     if (index == -1)
         return 0;
 
-    return qvariant_cast<quintptr>(tabBar->tabData(index));
+    return qvariant_cast<qulonglong>(tabBar->tabData(index));
 }
 
 void QDockAreaLayoutInfo::setCurrentTab(QWidget *widget)
 {
-    setCurrentTabId(reinterpret_cast<quintptr>(widget));
+    setCurrentTabId(reinterpret_cast<qulonglong>(widget));
 }
 
-void QDockAreaLayoutInfo::setCurrentTabId(quintptr id)
+void QDockAreaLayoutInfo::setCurrentTabId(qulonglong id)
 {
     if (!tabbed || tabBar == 0)
         return;
 
     for (int i = 0; i < tabBar->count(); ++i) {
-        if (qvariant_cast<quintptr>(tabBar->tabData(i)) == id) {
+        if (qvariant_cast<qulonglong>(tabBar->tabData(i)) == id) {
             tabBar->setCurrentIndex(i);
             return;
         }
@@ -1786,7 +1786,7 @@ void QDockAreaLayoutInfo::saveState(QDataStream &stream) const
         stream << (uchar) TabMarker;
 
         // write the index in item_list of the widget that's currently on top.
-        quintptr id = currentTabId();
+        qulonglong id = currentTabId();
         int index = -1;
         for (int i = 0; i < item_list.count(); ++i) {
             if (tabId(item_list.at(i)) == id) {
@@ -2084,16 +2084,16 @@ bool QDockAreaLayoutInfo::updateTabBar() const
 
         QDockWidget *dw = qobject_cast<QDockWidget*>(item.widgetItem->widget());
         QString title = dw->d_func()->fixedWindowTitle;
-        quintptr id = tabId(item);
+        qulonglong id = tabId(item);
         if (tab_idx == tabBar->count()) {
             tabBar->insertTab(tab_idx, title);
 #ifndef QT_NO_TOOLTIP
             tabBar->setTabToolTip(tab_idx, title);
 #endif
-            tabBar->setTabData(tab_idx, id);
-        } else if (qvariant_cast<quintptr>(tabBar->tabData(tab_idx)) != id) {
+            tabBar->setTabData(tab_idx, qulonglong(id));
+        } else if (qvariant_cast<qulonglong>(tabBar->tabData(tab_idx)) != id) {
             if (tab_idx + 1 < tabBar->count()
-                    && qvariant_cast<quintptr>(tabBar->tabData(tab_idx + 1)) == id)
+                    && qvariant_cast<qulonglong>(tabBar->tabData(tab_idx + 1)) == id)
                 tabBar->removeTab(tab_idx);
             else {
                 tabBar->insertTab(tab_idx, title);

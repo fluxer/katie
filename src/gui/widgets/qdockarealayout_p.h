@@ -194,9 +194,9 @@ public:
 #endif //QT_NO_TABBAR
 
 #ifndef QT_NO_TABBAR
-    quintptr currentTabId() const;
+    qulonglong currentTabId() const;
     void setCurrentTab(QWidget *widget);
-    void setCurrentTabId(quintptr id);
+    void setCurrentTabId(qulonglong id);
     QRect tabContentRect() const;
     bool tabbed;
     QTabBar *tabBar;
