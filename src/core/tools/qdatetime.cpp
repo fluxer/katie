@@ -3046,8 +3046,8 @@ QDateTime QDateTime::fromString(const QString& s, Qt::DateFormat f)
 
         // Recognize timezone specifications
         QRegExp rx(QLatin1String("[+-]"));
-        if (tmp.contains(rx)) {
-            int idx = tmp.indexOf(rx);
+        int idx = tmp.indexOf(rx);
+        if (idx != -1) {
             QString tmp2 = tmp.mid(idx);
             tmp = tmp.left(idx);
             bool ok = true;
