@@ -38,6 +38,7 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_DEPRECATED
     -DQT_NO_COMPRESS
     -DQT_NO_EXCEPTIONS
+    -DQT_NO_REGEXP
 )
 
 set(BOOTSTRAP_SOURCES
@@ -78,7 +79,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_tools.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qmap.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/tools/qregexp.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstring.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstringlist.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstringmatcher.cpp
