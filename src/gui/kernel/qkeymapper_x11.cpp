@@ -51,18 +51,6 @@
 
 #include <ctype.h>
 
-#ifdef QT_LINUXBASE
-// LSB's IsKeypadKey define is wrong - see
-// http://bugs.linuxbase.org/show_bug.cgi?id=2521
-#undef IsKeypadKey
-#define IsKeypadKey(keysym) \
-      (((KeySym)(keysym) >= XK_KP_Space) && ((KeySym)(keysym) <= XK_KP_Equal))
-
-#undef IsPrivateKeypadKey
-#define IsPrivateKeypadKey(keysym) \
-      (((KeySym)(keysym) >= 0x11000000) && ((KeySym)(keysym) <= 0x1100FFFF))
-#endif
-
 QT_BEGIN_NAMESPACE
 
 // from qapplication_x11.cpp
