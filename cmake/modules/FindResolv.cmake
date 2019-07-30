@@ -32,6 +32,8 @@ find_library(RESOLV_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Resolv DEFAULT_MSG RESOLV_INCLUDES RESOLV_LIBRARIES)
+find_package_handle_standard_args(Resolv
+    REQUIRED_VARS RESOLV_INCLUDES RESOLV_LIBRARIES
+)
 
 mark_as_advanced(RESOLV_INCLUDES RESOLV_LIBRARIES)

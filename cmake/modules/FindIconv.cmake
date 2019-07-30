@@ -32,6 +32,8 @@ find_library(ICONV_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Iconv DEFAULT_MSG ICONV_INCLUDES ICONV_LIBRARIES)
+find_package_handle_standard_args(Iconv
+    REQUIRED_VARS ICONV_INCLUDES ICONV_LIBRARIES
+)
 
 mark_as_advanced(ICONV_INCLUDES ICONV_LIBRARIES)

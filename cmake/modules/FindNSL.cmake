@@ -32,6 +32,8 @@ find_library(NSL_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(NSL DEFAULT_MSG NSL_INCLUDES NSL_LIBRARIES)
+find_package_handle_standard_args(NSL
+    REQUIRED_VARS NSL_INCLUDES NSL_LIBRARIES
+)
 
 mark_as_advanced(NSL_INCLUDES NSL_LIBRARIES)
