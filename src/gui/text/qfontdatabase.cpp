@@ -652,8 +652,7 @@ static QtFontStyle *bestStyle(QtFontFoundry *foundry, const QtFontStyle::Key &st
 }
 
 #if defined(Q_WS_X11)
-static QtFontEncoding *findEncoding(int script, int styleStrategy,
-                                    QtFontSize *size, int force_encoding_id)
+static QtFontEncoding *findEncoding(QtFontSize *size, int force_encoding_id)
 {
     if (force_encoding_id >= 0) {
         QtFontEncoding *encoding = size->encodingID(force_encoding_id);
@@ -667,13 +666,12 @@ static QtFontEncoding *findEncoding(int script, int styleStrategy,
 #endif // Q_WS_X11
 
 static
-unsigned int bestFoundry(int script, unsigned int score, int styleStrategy,
+unsigned int bestFoundry(unsigned int score, int styleStrategy,
                          const QtFontFamily *family, const QString &foundry_name,
                          QtFontStyle::Key styleKey, int pixelSize, char pitch,
                          QtFontDesc *desc, int force_encoding_id)
 {
     Q_UNUSED(force_encoding_id);
-    Q_UNUSED(script);
     Q_UNUSED(pitch);
 
     desc->foundry = 0;
@@ -739,7 +737,7 @@ unsigned int bestFoundry(int script, unsigned int score, int styleStrategy,
             for (int x = 0; x < style->count; ++x) {
 #ifdef Q_WS_X11
                 encoding =
-                    findEncoding(script, styleStrategy, style->pixelSizes + x, force_encoding_id);
+                    findEncoding(style->pixelSizes + x, force_encoding_id);
                 if (!encoding) {
                     FM_DEBUG("          size %3d does not support the script we want",
                              style->pixelSizes[x].pixelSize);
@@ -782,7 +780,7 @@ unsigned int bestFoundry(int script, unsigned int score, int styleStrategy,
 
 #ifdef Q_WS_X11
         if (size) {
-            encoding = findEncoding(script, styleStrategy, size, force_encoding_id);
+            encoding = findEncoding(size, force_encoding_id);
             if (!encoding) size = 0;
         }
         if (! encoding) {
@@ -906,13 +904,13 @@ static void match(int script, const QFontDef &request,
         // as we know the script is supported, we can be sure
         // to find a matching font here.
         unsigned int newscore =
-            bestFoundry(script, score, request.styleStrategy,
+            bestFoundry(score, request.styleStrategy,
                         test.family, foundry_name, styleKey, request.pixelSize, pitch,
                         &test, force_encoding_id);
         if (test.foundry == 0) {
             // the specific foundry was not found, so look for
             // any foundry matching our requirements
-            newscore = bestFoundry(script, score, request.styleStrategy, test.family,
+            newscore = bestFoundry(score, request.styleStrategy, test.family,
                                    QString(), styleKey, request.pixelSize,
                                    pitch, &test, force_encoding_id);
         }

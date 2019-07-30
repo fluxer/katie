@@ -1037,7 +1037,6 @@ static void FcFontSetRemove(FcFontSet *fs, int at)
 }
 
 static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
-                                   const QFontDef &request, int script)
 {
 #ifdef FONT_MATCH_DEBUG
     FcChar8 *fam;
