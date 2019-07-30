@@ -56,7 +56,7 @@ public:
     inline void setMaxCost(int m);
 
     inline int size() const { return hash.size(); }
-    inline int count() const { return hash.size(); }
+    inline int count() const { return hash.count(); }
     inline bool isEmpty() const { return hash.isEmpty(); }
     inline QList<Key> keys() const { return hash.keys(); }
     inline void clear() { hash.clear(); }
