@@ -94,8 +94,6 @@ inline bool QCache<Key,T>::remove(const Key &key)
 template <class Key, class T>
 inline T *QCache<Key,T>::take(const Key &key)
 {
-    if (!hash.contains(key))
-        return Q_NULLPTR;
     return hash.take(key);
 }
 
