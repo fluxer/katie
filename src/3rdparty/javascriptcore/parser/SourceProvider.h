@@ -34,13 +34,10 @@
 
 namespace JSC {
 
-    enum SourceBOMPresence { SourceHasNoBOMs, SourceCouldHaveBOMs };
-
     class SourceProvider : public RefCounted<SourceProvider> {
     public:
-        SourceProvider(const UString& url, SourceBOMPresence hasBOMs = SourceCouldHaveBOMs)
+        SourceProvider(const UString& url)
             : m_url(url)
-            , m_hasBOMs(hasBOMs)
         {
         }
         virtual ~SourceProvider() { }
@@ -52,11 +49,8 @@ namespace JSC {
         const UString& url() { return m_url; }
         intptr_t asID() { return reinterpret_cast<intptr_t>(this); }
 
-        SourceBOMPresence hasBOMs() const { return m_hasBOMs; }
-
     private:
         UString m_url;
-        SourceBOMPresence m_hasBOMs;
     };
 
     class UStringSourceProvider : public SourceProvider {

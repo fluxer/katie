@@ -149,39 +149,9 @@ void Lexer::setCode(const SourceCode& source, ParserArena& arena)
     m_error = false;
     m_atLineStart = true;
 
-    // ECMA-262 calls for stripping all Cf characters, but we only strip BOM characters.
-    // See <https://bugs.webkit.org/show_bug.cgi?id=4931> for details.
-    if (source.provider()->hasBOMs()) {
-        for (const UChar* p = m_codeStart; p < m_codeEnd; ++p) {
-            if (Q_UNLIKELY(*p == byteOrderMark)) {
-                copyCodeWithoutBOMs();
-                break;
-            }
-        }
-    }
-
     // Read the first characters into the 4-character buffer.
     shift4();
     Q_ASSERT(currentOffset() == source.startOffset());
-}
-
-void Lexer::copyCodeWithoutBOMs()
-{
-    // Note: In this case, the character offset data for debugging will be incorrect.
-    // If it's important to correctly debug code with extraneous BOMs, then the caller
-    // should strip the BOMs when creating the SourceProvider object and do its own
-    // mapping of offsets within the stripped text to original text offset.
-
-    m_codeWithoutBOMs.reserveCapacity(m_codeEnd - m_code);
-    for (const UChar* p = m_code; p < m_codeEnd; ++p) {
-        UChar c = *p;
-        if (c != byteOrderMark)
-            m_codeWithoutBOMs.append(c);
-    }
-    ptrdiff_t startDelta = m_codeStart - m_code;
-    m_code = m_codeWithoutBOMs.data();
-    m_codeStart = m_code + startDelta;
-    m_codeEnd = m_codeWithoutBOMs.data() + m_codeWithoutBOMs.size();
 }
 
 void Lexer::shiftLineTerminator()
