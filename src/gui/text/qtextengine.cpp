@@ -1308,7 +1308,7 @@ void QTextEngine::itemize() const
 
     const ushort *uc = reinterpret_cast<const ushort *>(layoutData->string.unicode());
     const ushort *e = uc + length;
-    int lastScript = QUnicodeTables::Common;
+    QUnicodeTables::Script lastScript = QUnicodeTables::Common;
     while (uc < e) {
         switch (*uc) {
         case QChar::ObjectReplacementCharacter:
@@ -1338,7 +1338,7 @@ void QTextEngine::itemize() const
             }
         // fall through
         default:
-            int script = QUnicodeTables::script(*uc);
+            QUnicodeTables::Script script = QUnicodeTables::script(*uc);
             analysis->script = script == QUnicodeTables::Inherited ? lastScript : script;
             analysis->flags = QScriptAnalysis::None;
             break;
@@ -1646,7 +1646,7 @@ QFontEngine *QTextEngine::fontEngine(const QScriptItem &si, QFixed *ascent, QFix
 {
     QFontEngine *engine = 0;
     QFontEngine *scaledEngine = 0;
-    int script = si.analysis.script;
+    QUnicodeTables::Script script = si.analysis.script;
 
     QFont font = fnt;
     if (hasFormats()) {

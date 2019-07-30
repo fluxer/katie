@@ -154,7 +154,7 @@ public:
     QFontPrivate(const QFontPrivate &other);
     ~QFontPrivate();
 
-    QFontEngine *engineForScript(int script) const;
+    QFontEngine *engineForScript(QUnicodeTables::Script script) const;
     void alterCharForCapitalization(QChar &c) const;
 
     QAtomicInt ref;

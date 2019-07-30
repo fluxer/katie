@@ -1037,6 +1037,8 @@ static void FcFontSetRemove(FcFontSet *fs, int at)
 }
 
 static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
+                                   const QFontDef &request,
+                                   QUnicodeTables::Script script)
 {
 #ifdef FONT_MATCH_DEBUG
     FcChar8 *fam;
@@ -1117,7 +1119,7 @@ FcFontSet *qt_fontSetForPattern(FcPattern *pattern, const QFontDef &request)
     return fs;
 }
 
-static QFontEngine *loadFc(const QFontPrivate *fp, int script, const QFontDef &request)
+static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script, const QFontDef &request)
 {
     FM_DEBUG("===================== loadFc: script=%d family='%s'\n", script, request.family.toLatin1().constData());
     FcPattern *pattern = getFcPattern(fp, script, request);
@@ -1236,7 +1238,7 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
 #endif
 #ifndef QT_NO_FONTCONFIG
         if (qt_x11Data->has_fontconfig) {
-            fe = loadFc(d, script, req);
+            fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);
 #endif
         }
         if (!fe) {

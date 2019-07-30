@@ -201,7 +201,7 @@ QFontPrivate::~QFontPrivate()
 
 extern QMutex *qt_fontdatabase_mutex();
 
-QFontEngine *QFontPrivate::engineForScript(int script) const
+QFontEngine *QFontPrivate::engineForScript(QUnicodeTables::Script script) const
 {
     QMutexLocker locker(qt_fontdatabase_mutex());
     if (script > QUnicodeTables::ScriptCount)
