@@ -127,7 +127,7 @@
 #define QT_FTRUNCATE            ::ftruncate
 
 // Posix extensions to C89
-#if !defined(QT_USE_XOPEN_LFS_EXTENSIONS) && !defined(QT_NO_USE_FSEEKO)
+#if !defined(QT_NO_USE_FSEEKO)
 #undef QT_OFF_T
 #undef QT_FSEEK
 #undef QT_FTELL
