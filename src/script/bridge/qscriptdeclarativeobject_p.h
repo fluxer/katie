@@ -48,10 +48,9 @@ class QScriptClass;
 class QScriptDeclarativeClassPrivate
 {
 public:
-    QScriptDeclarativeClassPrivate() : engine(0), q_ptr(0), context(0), supportsCall(false) {}
+    QScriptDeclarativeClassPrivate() : engine(0), context(0), supportsCall(false) {}
 
     QScriptEngine *engine;
-    QScriptDeclarativeClass *q_ptr;
     QScriptContext *context;
     bool supportsCall;
 

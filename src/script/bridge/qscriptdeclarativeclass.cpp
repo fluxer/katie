@@ -188,7 +188,6 @@ QScriptDeclarativeClass::QScriptDeclarativeClass(QScriptEngine *engine)
 : d_ptr(new QScriptDeclarativeClassPrivate)
 {
     Q_ASSERT(sizeof(void*) == sizeof(JSC::Identifier));
-    d_ptr->q_ptr = this;
     d_ptr->engine = engine;
 }
 
