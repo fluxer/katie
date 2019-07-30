@@ -462,7 +462,7 @@ bool QThread::wait(unsigned long time)
     Q_D(QThread);
     QMutexLocker locker(&d->mutex);
 
-    if (Q_UNLIKELY(d->thread_id == pthread_self())) {
+    if (Q_UNLIKELY(pthread_equal(d->thread_id, pthread_self()))) {
         qWarning("QThread::wait: Thread tried to wait on itself");
         return false;
     }
