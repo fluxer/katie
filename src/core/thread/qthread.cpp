@@ -138,7 +138,7 @@ void QAdoptedThread::run()
 QThreadPrivate::QThreadPrivate(QThreadData *d)
     : QObjectPrivate(), running(false), finished(false), terminated(false),
       isInFinish(false), exited(false), returnCode(-1),
-      stackSize(0), priority(QThread::InheritPriority), data(d)
+      stackSize(0), priority(QThread::InheritPriority), thread_id(0), data(d)
 {
     if (!data)
         data = new QThreadData;
