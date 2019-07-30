@@ -1,11 +1,10 @@
 #!/usr/bin/make -f
 
-# a dirty way to make dh_shlibdeps find the libraries, if you have better
-# solution I'd welcome it
-export LD_LIBRARY_PATH := $(shell pwd)/obj-$(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)/lib:$(LD_LIBRARY_PATH)
-
 %:
 	dh $@ --parallel
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l$(shell pwd)/obj-$(DEB_BUILD_GNU_TYPE)/lib
 
 override_dh_auto_configure:
 	dh_auto_configure -- -Wno-dev \
