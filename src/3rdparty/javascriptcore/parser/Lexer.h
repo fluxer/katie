@@ -73,8 +73,6 @@ namespace JSC {
         void record16(int);
         void record16(UChar);
 
-        void copyCodeWithoutBOMs();
-
         int currentOffset() const;
         const UChar* currentCharacter() const;
 
