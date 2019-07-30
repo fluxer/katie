@@ -1456,6 +1456,7 @@ void QWidgetPrivate::createExtra()
         extra->nativeChildrenForced = false;
         extra->inRenderWithPainter = false;
         extra->hasMask = false;
+        extra->compress_events = true;
         createSysExtra();
 #ifdef QWIDGET_EXTRA_DEBUG
         static int count = 0;
