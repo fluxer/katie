@@ -346,19 +346,14 @@ char* UString::ascii() const
     static char* asciiBuffer = 0;
 
     int length = size();
-    int neededSize = length + 1;
     delete[] asciiBuffer;
-    asciiBuffer = new char[neededSize];
+    asciiBuffer = new char[length + 1];
 
-    const UChar* p = data();
-    char* q = asciiBuffer;
-    const UChar* limit = p + length;
-    while (p != limit) {
-        *q = static_cast<char>(p[0]);
-        ++p;
-        ++q;
+    const UChar* d = data();
+    for (int i = 0; i < length; i++) {
+        asciiBuffer[i] = static_cast<char>(d[i]);
     }
-    *q = '\0';
+    asciiBuffer[length] = '\0';
 
     return asciiBuffer;
 }
