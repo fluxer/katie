@@ -7,11 +7,11 @@ if len(sys.argv) < 3:
     print("usage: <path to Katie test> <path to Qt4 test>")
     sys.exit(1)
 
-katietest = sys.argv[1]
+katietest = os.path.realpath(sys.argv[1])
 katietestdir = os.path.dirname(katietest)
 commonargs = ['-iterations', '10', '-tickcounter', '-xml']
 katieargs = [katietest, '-o', '/tmp/katie-bench.xml']
-qt4test = sys.argv[2]
+qt4test = os.path.realpath(sys.argv[2])
 qt4testdir = os.path.dirname(qt4test)
 qt4args = [qt4test, '-o', '/tmp/qt4-bench.xml']
 katieargs.extend(commonargs)
