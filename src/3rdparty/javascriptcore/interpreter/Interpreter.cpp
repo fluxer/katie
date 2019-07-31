@@ -2059,20 +2059,6 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         uncacheGetByID(callFrame->codeBlock(), vPC);
         NEXT_INSTRUCTION();
     }
-    DEFINE_OPCODE(op_get_by_id_self_list) {
-        // Polymorphic self access caching currently only supported when JITting.
-        Q_UNREACHABLE();
-        // This case of the switch must not be empty, else (op_get_by_id_self_list == op_get_by_id_chain)!
-        vPC += OPCODE_LENGTH(op_get_by_id_self_list);
-        NEXT_INSTRUCTION();
-    }
-    DEFINE_OPCODE(op_get_by_id_proto_list) {
-        // Polymorphic prototype access caching currently only supported when JITting.
-        Q_UNREACHABLE();
-        // This case of the switch must not be empty, else (op_get_by_id_proto_list == op_get_by_id_chain)!
-        vPC += OPCODE_LENGTH(op_get_by_id_proto_list);
-        NEXT_INSTRUCTION();
-    }
     DEFINE_OPCODE(op_get_by_id_chain) {
         /* op_get_by_id_chain dst(r) base(r) property(id) structure(sID) structureChain(chain) count(n) offset(n)
 

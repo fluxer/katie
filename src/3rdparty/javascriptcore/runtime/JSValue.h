@@ -63,9 +63,6 @@ namespace JSC {
     class JSValue {
         friend class JSImmediate;
         friend struct EncodedJSValueHashTraits;
-        friend class JIT;
-        friend class JITStubs;
-        friend class JITStubCall;
 
     public:
         static EncodedJSValue encode(JSValue value);

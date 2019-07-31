@@ -42,8 +42,6 @@ namespace JSC {
     struct ExceptionInfo;
 
     class ExecutableBase : public RefCounted<ExecutableBase> {
-        friend class JIT;
-
     protected:
         static const int NUM_PARAMETERS_IS_HOST = 0;
         static const int NUM_PARAMETERS_NOT_COMPILED = -1;
@@ -196,7 +194,6 @@ namespace JSC {
     };
 
     class FunctionExecutable : public ScriptExecutable {
-        friend class JIT;
     public:
         static PassRefPtr<FunctionExecutable> create(ExecState* exec, const Identifier& name, const SourceCode& source, bool forceUsesArguments, FunctionParameters* parameters, int firstLine, int lastLine)
         {

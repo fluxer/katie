@@ -100,9 +100,7 @@ namespace JSC {
         macro(op_resolve_with_base, 4) \
         macro(op_get_by_id, 8) \
         macro(op_get_by_id_self, 8) \
-        macro(op_get_by_id_self_list, 8) \
         macro(op_get_by_id_proto, 8) \
-        macro(op_get_by_id_proto_list, 8) \
         macro(op_get_by_id_chain, 8) \
         macro(op_get_by_id_generic, 8) \
         macro(op_get_array_length, 8) \

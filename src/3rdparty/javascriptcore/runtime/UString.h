@@ -42,8 +42,6 @@ namespace JSC {
     typedef Vector<char, 32> CStringBuffer;
 
     class UString {
-        friend class JIT;
-
     public:
         operator QT_PREPEND_NAMESPACE(QString)() const
         {

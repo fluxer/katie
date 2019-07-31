@@ -41,7 +41,6 @@ namespace JSC {
     class ScriptExecutable;
 
     class SamplingFlags {
-        friend class JIT;
     public:
         static void start();
         static void stop();
@@ -284,7 +283,6 @@ namespace JSC {
     // Implements a named set of counters, printed on exit if ENABLE(SAMPLING_COUNTERS).
     // See subclasses below, SamplingCounter, GlobalSamplingCounter and DeletableSamplingCounter.
     class AbstractSamplingCounter {
-        friend class JIT;
         friend class DeletableSamplingCounter;
     public:
         void count(uint32_t count = 1)

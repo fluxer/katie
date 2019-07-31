@@ -98,7 +98,6 @@ namespace JSC {
     };
 
     class CodeBlock : public FastAllocBase {
-        friend class JIT;
     protected:
         CodeBlock(ScriptExecutable* ownerExecutable, CodeType, PassRefPtr<SourceProvider>, unsigned sourceOffset, SymbolTable* symbolTable);
     public:

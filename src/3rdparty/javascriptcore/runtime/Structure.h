@@ -58,7 +58,6 @@ namespace JSC {
 
     class Structure : public RefCounted<Structure> {
     public:
-        friend class JIT;
         friend class StructureTransitionTable;
         static PassRefPtr<Structure> create(JSValue prototype, const TypeInfo& typeInfo)
         {

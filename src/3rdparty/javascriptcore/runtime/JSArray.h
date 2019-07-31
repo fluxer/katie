@@ -37,7 +37,6 @@ namespace JSC {
     };
 
     class JSArray : public JSObject {
-        friend class JIT;
         friend class Walker;
 
     public:

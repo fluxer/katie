@@ -41,8 +41,6 @@ namespace JSC {
     class JSObject;
 
     class JSPropertyNameIterator : public JSCell {
-        friend class JIT;
-
     public:
         static JSPropertyNameIterator* create(ExecState*, JSObject*);
         

@@ -64,7 +64,6 @@ namespace JSC {
 
     class JSString : public JSCell {
     public:
-        friend class JIT;
         friend class JSGlobalData;
 
         // A Rope is a string composed of a set of substrings.

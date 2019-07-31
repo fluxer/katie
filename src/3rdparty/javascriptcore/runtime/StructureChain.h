@@ -36,8 +36,6 @@ namespace JSC {
     class Structure;
 
     class StructureChain : public RefCounted<StructureChain> {
-        friend class JIT;
-
     public:
 #if OS(HPUX)
         static PassRefPtr<StructureChain> create(Structure* head);

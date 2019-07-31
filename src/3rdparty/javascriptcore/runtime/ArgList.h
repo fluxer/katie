@@ -176,7 +176,6 @@ namespace JSC {
     };
 
     class ArgList {
-        friend class JIT;
     public:
         typedef JSValue* iterator;
         typedef const JSValue* const_iterator;

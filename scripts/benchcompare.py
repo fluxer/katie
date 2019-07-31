@@ -9,7 +9,7 @@ if len(sys.argv) < 3:
 
 katietest = sys.argv[1]
 katietestdir = os.path.dirname(katietest)
-commonargs = ['-iterations', '100', '-tickcounter', '-xml']
+commonargs = ['-iterations', '10', '-tickcounter', '-xml']
 katieargs = [katietest, '-o', '/tmp/katie-bench.xml']
 qt4test = sys.argv[2]
 qt4testdir = os.path.dirname(qt4test)

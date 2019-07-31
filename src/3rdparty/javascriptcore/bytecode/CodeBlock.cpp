@@ -629,16 +629,8 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
             printGetByIdOp(exec, location, it, "get_by_id_self");
             break;
         }
-        case op_get_by_id_self_list: {
-            printGetByIdOp(exec, location, it, "get_by_id_self_list");
-            break;
-        }
         case op_get_by_id_proto: {
             printGetByIdOp(exec, location, it, "get_by_id_proto");
-            break;
-        }
-        case op_get_by_id_proto_list: {
-            printGetByIdOp(exec, location, it, "op_get_by_id_proto_list");
             break;
         }
         case op_get_by_id_chain: {
@@ -1208,13 +1200,6 @@ void CodeBlock::derefStructures(Instruction* vPC) const
     if (vPC[0].u.opcode == op_resolve_global) {
         if(vPC[4].u.structure)
             vPC[4].u.structure->deref();
-        return;
-    }
-    if ((vPC[0].u.opcode == op_get_by_id_proto_list)
-        || (vPC[0].u.opcode == op_get_by_id_self_list)) {
-        PolymorphicAccessStructureList* polymorphicStructures = vPC[4].u.polymorphicStructures;
-        polymorphicStructures->derefStructures(vPC[5].u.operand);
-        delete polymorphicStructures;
         return;
     }
 

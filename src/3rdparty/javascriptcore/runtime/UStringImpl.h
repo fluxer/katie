@@ -265,7 +265,6 @@ private:
     static UStringImpl* s_null;
     static UStringImpl* s_empty;
 
-    friend class JIT;
     friend class SmallStringsStorage;
     friend void initializeUString();
 };

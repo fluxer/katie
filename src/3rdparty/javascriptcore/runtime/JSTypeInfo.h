@@ -45,7 +45,6 @@ namespace JSC {
     static const unsigned OverridesGetPropertyNames = 1 << 7;
 
     class TypeInfo {
-        friend class JIT;
     public:
         TypeInfo(JSType type, unsigned flags = 0)
             : m_type(type)

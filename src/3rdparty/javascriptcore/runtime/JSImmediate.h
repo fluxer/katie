@@ -135,7 +135,6 @@ namespace JSC {
 
     class JSImmediate {
     public: // QtScript needs isImmediate() and from() functions
-        friend class JIT;
         friend class JSValue;
         friend class JSFastMath;
         friend JSValue jsNumber(ExecState* exec, double d);

@@ -38,81 +38,9 @@
 
 namespace JSC {
 
-    // *Sigh*, will need to something smarter if/when we actually want mixed-mode operation.
-    typedef void* PolymorphicAccessStructureListStubRoutineType;
-
     class JSCell;
     class Structure;
     class StructureChain;
-
-    // Structure used by op_get_by_id_self_list and op_get_by_id_proto_list instruction to hold data off the main opcode stream.
-    struct PolymorphicAccessStructureList : FastAllocBase {
-        struct PolymorphicStubInfo {
-            bool isChain;
-            PolymorphicAccessStructureListStubRoutineType stubRoutine;
-            Structure* base;
-            union {
-                Structure* proto;
-                StructureChain* chain;
-            } u;
-
-            void set(PolymorphicAccessStructureListStubRoutineType _stubRoutine, Structure* _base)
-            {
-                stubRoutine = _stubRoutine;
-                base = _base;
-                u.proto = 0;
-                isChain = false;
-            }
-            
-            void set(PolymorphicAccessStructureListStubRoutineType _stubRoutine, Structure* _base, Structure* _proto)
-            {
-                stubRoutine = _stubRoutine;
-                base = _base;
-                u.proto = _proto;
-                isChain = false;
-            }
-            
-            void set(PolymorphicAccessStructureListStubRoutineType _stubRoutine, Structure* _base, StructureChain* _chain)
-            {
-                stubRoutine = _stubRoutine;
-                base = _base;
-                u.chain = _chain;
-                isChain = true;
-            }
-        } list[POLYMORPHIC_LIST_CACHE_SIZE];
-        
-        PolymorphicAccessStructureList(PolymorphicAccessStructureListStubRoutineType stubRoutine, Structure* firstBase)
-        {
-            list[0].set(stubRoutine, firstBase);
-        }
-
-        PolymorphicAccessStructureList(PolymorphicAccessStructureListStubRoutineType stubRoutine, Structure* firstBase, Structure* firstProto)
-        {
-            list[0].set(stubRoutine, firstBase, firstProto);
-        }
-
-        PolymorphicAccessStructureList(PolymorphicAccessStructureListStubRoutineType stubRoutine, Structure* firstBase, StructureChain* firstChain)
-        {
-            list[0].set(stubRoutine, firstBase, firstChain);
-        }
-
-        void derefStructures(int count)
-        {
-            for (int i = 0; i < count; ++i) {
-                PolymorphicStubInfo& info = list[i];
-
-                Q_ASSERT(info.base);
-                info.base->deref();
-
-                if (info.u.proto) {
-                    if (info.isChain)
-                        info.u.chain->deref();
-                    else
-                        info.u.proto->deref();
-                }
-            }
-        }
-    };
 
     struct Instruction {
         Instruction(OpcodeID opcode)
@@ -134,7 +62,6 @@ namespace JSC {
         Instruction(Structure* structure) { u.structure = structure; }
         Instruction(StructureChain* structureChain) { u.structureChain = structureChain; }
         Instruction(JSCell* jsCell) { u.jsCell = jsCell; }
-        Instruction(PolymorphicAccessStructureList* polymorphicStructures) { u.polymorphicStructures = polymorphicStructures; }
 
         union {
             OpcodeID opcode;
@@ -142,7 +69,6 @@ namespace JSC {
             Structure* structure;
             StructureChain* structureChain;
             JSCell* jsCell;
-            PolymorphicAccessStructureList* polymorphicStructures;
         } u;
     };
 

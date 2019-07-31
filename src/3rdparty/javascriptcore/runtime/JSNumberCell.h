@@ -48,7 +48,6 @@ namespace JSC {
     struct Instruction;
 
     class JSNumberCell : public JSCell {
-        friend class JIT;
         friend JSValue jsNumberCell(JSGlobalData*, double);
         friend JSValue jsNumberCell(ExecState*, double);
 
