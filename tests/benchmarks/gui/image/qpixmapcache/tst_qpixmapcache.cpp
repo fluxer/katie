@@ -199,7 +199,7 @@ void tst_QPixmapCache::styleUseCaseComplexKey()
                 myStruct.key = 3;
                 myStruct.palette = 358;
                 myStruct.width = 100;
-                myStruct.key = 200;
+                myStruct.key = QString::number(200);
                 QPixmapCache::Key key = QPixmapCache::insert(p);
                 hash.insert(myStruct, key);
             }
@@ -212,7 +212,7 @@ void tst_QPixmapCache::styleUseCaseComplexKey()
                 myStruct.key = 3;
                 myStruct.palette = 358;
                 myStruct.width = 100;
-                myStruct.key = 200;
+                myStruct.key = QString::number(200);
                 QPixmapCache::Key key = hash.value(myStruct);
                 QPixmapCache::find(key, &p);
             }
