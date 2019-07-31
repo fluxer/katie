@@ -194,9 +194,9 @@ void tst_QPixmapCache::styleUseCaseComplexKey()
             {
                 styleStruct myStruct;
                 myStruct.key = QString("my-progressbar-%1").arg(i);
-                myStruct.key = 5;
-                myStruct.key = 4;
-                myStruct.key = 3;
+                myStruct.state = 5;
+                myStruct.direction = 4;
+                myStruct.complex = 3;
                 myStruct.palette = 358;
                 myStruct.width = 100;
                 myStruct.key = QString::number(200);
@@ -207,9 +207,9 @@ void tst_QPixmapCache::styleUseCaseComplexKey()
             {
                 styleStruct myStruct;
                 myStruct.key = QString("my-progressbar-%1").arg(i);
-                myStruct.key = 5;
-                myStruct.key = 4;
-                myStruct.key = 3;
+                myStruct.state = 5;
+                myStruct.direction = 4;
+                myStruct.complex = 3;
                 myStruct.palette = 358;
                 myStruct.width = 100;
                 myStruct.key = QString::number(200);
