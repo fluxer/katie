@@ -68,12 +68,12 @@ static const short ImperialMeasurementSystemsCount =
 
 /*
     This part of the file was generated on 2016-07-11 from the
-    Common Locale Data Repository v2.0.1
+    Common Locale Data Repository v2.0.1 and v35
 
     http://www.unicode.org/cldr/
 
     Do not change it, instead edit CLDR data and regenerate this file using
-    cldr2qlocalexml.py and qlocalexml2cpp.py.
+    genlocale.py.
 */
 
 
@@ -5613,1507 +5613,1162 @@ static const ushort endonyms_data[] = {
 0x77, 0x69, 0x7a, 0x6e, 0x75, 0x61, 0x73, 0x75, 0x65, 0x4b, 0x65, 0x6d, 0x65, 0x6c, 0xfa, 0x6e
 };
 
-static const char language_name_list[] =
-"Default\0"
-"C\0"
-"Abkhazian\0"
-"Afan\0"
-"Afar\0"
-"Afrikaans\0"
-"Albanian\0"
-"Amharic\0"
-"Arabic\0"
-"Armenian\0"
-"Assamese\0"
-"Aymara\0"
-"Azerbaijani\0"
-"Bashkir\0"
-"Basque\0"
-"Bengali\0"
-"Bhutani\0"
-"Bihari\0"
-"Bislama\0"
-"Breton\0"
-"Bulgarian\0"
-"Burmese\0"
-"Byelorussian\0"
-"Cambodian\0"
-"Catalan\0"
-"Chinese\0"
-"Corsican\0"
-"Croatian\0"
-"Czech\0"
-"Danish\0"
-"Dutch\0"
-"English\0"
-"Esperanto\0"
-"Estonian\0"
-"Faroese\0"
-"Fiji\0"
-"Finnish\0"
-"French\0"
-"Frisian\0"
-"Gaelic\0"
-"Galician\0"
-"Georgian\0"
-"German\0"
-"Greek\0"
-"Greenlandic\0"
-"Guarani\0"
-"Gujarati\0"
-"Hausa\0"
-"Hebrew\0"
-"Hindi\0"
-"Hungarian\0"
-"Icelandic\0"
-"Indonesian\0"
-"Interlingua\0"
-"Interlingue\0"
-"Inuktitut\0"
-"Inupiak\0"
-"Irish\0"
-"Italian\0"
-"Japanese\0"
-"Javanese\0"
-"Kannada\0"
-"Kashmiri\0"
-"Kazakh\0"
-"Kinyarwanda\0"
-"Kirghiz\0"
-"Korean\0"
-"Kurdish\0"
-"Rundi\0"
-"Laothian\0"
-"Latin\0"
-"Latvian\0"
-"Lingala\0"
-"Lithuanian\0"
-"Macedonian\0"
-"Malagasy\0"
-"Malay\0"
-"Malayalam\0"
-"Maltese\0"
-"Maori\0"
-"Marathi\0"
-"Moldavian\0"
-"Mongolian\0"
-"Nauru\0"
-"Nepali\0"
-"Norwegian\0"
-"Occitan\0"
-"Oriya\0"
-"Pashto\0"
-"Persian\0"
-"Polish\0"
-"Portuguese\0"
-"Punjabi\0"
-"Quechua\0"
-"RhaetoRomance\0"
-"Romanian\0"
-"Russian\0"
-"Samoan\0"
-"Sangho\0"
-"Sanskrit\0"
-"Serbian\0"
-"SerboCroatian\0"
-"Sesotho\0"
-"Setswana\0"
-"Shona\0"
-"Sindhi\0"
-"Singhalese\0"
-"Siswati\0"
-"Slovak\0"
-"Slovenian\0"
-"Somali\0"
-"Spanish\0"
-"Sundanese\0"
-"Swahili\0"
-"Swedish\0"
-"Tagalog\0"
-"Tajik\0"
-"Tamil\0"
-"Tatar\0"
-"Telugu\0"
-"Thai\0"
-"Tibetan\0"
-"Tigrinya\0"
-"Tonga\0"
-"Tsonga\0"
-"Turkish\0"
-"Turkmen\0"
-"Twi\0"
-"Uigur\0"
-"Ukrainian\0"
-"Urdu\0"
-"Uzbek\0"
-"Vietnamese\0"
-"Volapuk\0"
-"Welsh\0"
-"Wolof\0"
-"Xhosa\0"
-"Yiddish\0"
-"Yoruba\0"
-"Zhuang\0"
-"Zulu\0"
-"Nynorsk\0"
-"Bosnian\0"
-"Divehi\0"
-"Manx\0"
-"Cornish\0"
-"Akan\0"
-"Konkani\0"
-"Ga\0"
-"Igbo\0"
-"Kamba\0"
-"Syriac\0"
-"Blin\0"
-"Geez\0"
-"Koro\0"
-"Sidamo\0"
-"Atsam\0"
-"Tigre\0"
-"Jju\0"
-"Friulian\0"
-"Venda\0"
-"Ewe\0"
-"Walamo\0"
-"Hawaiian\0"
-"Tyap\0"
-"Chewa\0"
-"Filipino\0"
-"Swiss German\0"
-"Sichuan Yi\0"
-"Kpelle\0"
-"Low German\0"
-"South Ndebele\0"
-"Northern Sotho\0"
-"Northern Sami\0"
-"Taroko\0"
-"Gusii\0"
-"Taita\0"
-"Fulah\0"
-"Kikuyu\0"
-"Samburu\0"
-"Sena\0"
-"North Ndebele\0"
-"Rombo\0"
-"Tachelhit\0"
-"Kabyle\0"
-"Nyankole\0"
-"Bena\0"
-"Vunjo\0"
-"Bambara\0"
-"Embu\0"
-"Cherokee\0"
-"Morisyen\0"
-"Makonde\0"
-"Langi\0"
-"Ganda\0"
-"Bemba\0"
-"Kabuverdianu\0"
-"Meru\0"
-"Kalenjin\0"
-"Nama\0"
-"Machame\0"
-"Colognian\0"
-"Masai\0"
-"Soga\0"
-"Luyia\0"
-"Asu\0"
-"Teso\0"
-"Saho\0"
-"Koyra Chiini\0"
-"Rwa\0"
-"Luo\0"
-"Chiga\0"
-"Central Morocco Tamazight\0"
-"Koyraboro Senni\0"
-"Shambala\0"
-"Bodo\0"
-"Aghem\0"
-"Basaa\0"
-"Zarma\0"
-"Duala\0"
-"JolaFonyi\0"
-"Ewondo\0"
-"Bafia\0"
-"LubaKatanga\0"
-"MakhuwaMeetto\0"
-"Mundang\0"
-"Kwasio\0"
-"Nuer\0"
-"Sakha\0"
-"Sangu\0"
-"Congo Swahili\0"
-"Tasawaq\0"
-"Vai\0"
-"Walser\0"
-"Yangben\0"
-;
-
-static const quint16 language_name_index[] = {
-     0, // AnyLanguage
-     8, // C
-    10, // Abkhazian
-    20, // Afan
-    25, // Afar
-    30, // Afrikaans
-    40, // Albanian
-    49, // Amharic
-    57, // Arabic
-    64, // Armenian
-    73, // Assamese
-    82, // Aymara
-    89, // Azerbaijani
-   101, // Bashkir
-   109, // Basque
-   116, // Bengali
-   124, // Bhutani
-   132, // Bihari
-   139, // Bislama
-   147, // Breton
-   154, // Bulgarian
-   164, // Burmese
-   172, // Byelorussian
-   185, // Cambodian
-   195, // Catalan
-   203, // Chinese
-   211, // Corsican
-   220, // Croatian
-   229, // Czech
-   235, // Danish
-   242, // Dutch
-   248, // English
-   256, // Esperanto
-   266, // Estonian
-   275, // Faroese
-   283, // Fiji
-   288, // Finnish
-   296, // French
-   303, // Frisian
-   311, // Gaelic
-   318, // Galician
-   327, // Georgian
-   336, // German
-   343, // Greek
-   349, // Greenlandic
-   361, // Guarani
-   369, // Gujarati
-   378, // Hausa
-   384, // Hebrew
-   391, // Hindi
-   397, // Hungarian
-   407, // Icelandic
-   417, // Indonesian
-   428, // Interlingua
-   440, // Interlingue
-   452, // Inuktitut
-   462, // Inupiak
-   470, // Irish
-   476, // Italian
-   484, // Japanese
-   493, // Javanese
-   502, // Kannada
-   510, // Kashmiri
-   519, // Kazakh
-   526, // Kinyarwanda
-   538, // Kirghiz
-   546, // Korean
-   553, // Kurdish
-   561, // Rundi
-   567, // Laothian
-   576, // Latin
-   582, // Latvian
-   590, // Lingala
-   598, // Lithuanian
-   609, // Macedonian
-   620, // Malagasy
-   629, // Malay
-   635, // Malayalam
-   645, // Maltese
-   653, // Maori
-   659, // Marathi
-   667, // Moldavian
-   677, // Mongolian
-   687, // Nauru
-   693, // Nepali
-   700, // Norwegian
-   710, // Occitan
-   718, // Oriya
-   724, // Pashto
-   731, // Persian
-   739, // Polish
-   746, // Portuguese
-   757, // Punjabi
-   765, // Quechua
-   773, // RhaetoRomance
-   787, // Romanian
-   796, // Russian
-   804, // Samoan
-   811, // Sangho
-   818, // Sanskrit
-   827, // Serbian
-   835, // SerboCroatian
-   849, // Sesotho
-   857, // Setswana
-   866, // Shona
-   872, // Sindhi
-   879, // Singhalese
-   890, // Siswati
-   898, // Slovak
-   905, // Slovenian
-   915, // Somali
-   922, // Spanish
-   930, // Sundanese
-   940, // Swahili
-   948, // Swedish
-   956, // Tagalog
-   964, // Tajik
-   970, // Tamil
-   976, // Tatar
-   982, // Telugu
-   989, // Thai
-   994, // Tibetan
-  1002, // Tigrinya
-  1011, // Tonga
-  1017, // Tsonga
-  1024, // Turkish
-  1032, // Turkmen
-  1040, // Twi
-  1044, // Uigur
-  1050, // Ukrainian
-  1060, // Urdu
-  1065, // Uzbek
-  1071, // Vietnamese
-  1082, // Volapuk
-  1090, // Welsh
-  1096, // Wolof
-  1102, // Xhosa
-  1108, // Yiddish
-  1116, // Yoruba
-  1123, // Zhuang
-  1130, // Zulu
-  1135, // Nynorsk
-  1143, // Bosnian
-  1151, // Divehi
-  1158, // Manx
-  1163, // Cornish
-  1171, // Akan
-  1176, // Konkani
-  1184, // Ga
-  1187, // Igbo
-  1192, // Kamba
-  1198, // Syriac
-  1205, // Blin
-  1210, // Geez
-  1215, // Koro
-  1220, // Sidamo
-  1227, // Atsam
-  1233, // Tigre
-  1239, // Jju
-  1243, // Friulian
-  1252, // Venda
-  1258, // Ewe
-  1262, // Walamo
-  1269, // Hawaiian
-  1278, // Tyap
-  1283, // Chewa
-  1289, // Filipino
-  1298, // Swiss German
-  1311, // Sichuan Yi
-  1322, // Kpelle
-  1329, // Low German
-  1340, // South Ndebele
-  1354, // Northern Sotho
-  1369, // Northern Sami
-  1383, // Taroko
-  1390, // Gusii
-  1396, // Taita
-  1402, // Fulah
-  1408, // Kikuyu
-  1415, // Samburu
-  1423, // Sena
-  1428, // North Ndebele
-  1442, // Rombo
-  1448, // Tachelhit
-  1458, // Kabyle
-  1465, // Nyankole
-  1474, // Bena
-  1479, // Vunjo
-  1485, // Bambara
-  1493, // Embu
-  1498, // Cherokee
-  1507, // Morisyen
-  1516, // Makonde
-  1524, // Langi
-  1530, // Ganda
-  1536, // Bemba
-  1542, // Kabuverdianu
-  1555, // Meru
-  1560, // Kalenjin
-  1569, // Nama
-  1574, // Machame
-  1582, // Colognian
-  1592, // Masai
-  1598, // Soga
-  1603, // Luyia
-  1609, // Asu
-  1613, // Teso
-  1618, // Saho
-  1623, // Koyra Chiini
-  1636, // Rwa
-  1640, // Luo
-  1644, // Chiga
-  1650, // Central Morocco Tamazight
-  1676, // Koyraboro Senni
-  1692, // Shambala
-  1701, // Bodo
-  1706, // Aghem
-  1712, // Basaa
-  1718, // Zarma
-  1724, // Duala
-  1730, // JolaFonyi
-  1740, // Ewondo
-  1747, // Bafia
-  1753, // LubaKatanga
-  1765, // MakhuwaMeetto
-  1779, // Mundang
-  1787, // Kwasio
-  1794, // Nuer
-  1799, // Sakha
-  1805, // Sangu
-  1811, // Congo Swahili
-  1825, // Tasawaq
-  1833, // Vai
-  1837, // Walser
-  1844, // Yangben
+static const struct languageTblData {
+    const char* name;
+    const char* code;
+    const QLocale::Language language;
+} languageTbl[] = {
+    { "Default\0", "  \0", QLocale::Language::AnyLanguage },
+    { "C\0", "  \0", QLocale::Language::C },
+    { "Afar\0", "aa\0", QLocale::Afar },
+    { "Abkhazian\0", "ab\0", QLocale::Abkhazian },
+    { "Achinese\0", "ace", QLocale::Achinese },
+    { "Acoli\0", "ach", QLocale::Acoli },
+    { "Adangme\0", "ada", QLocale::Adangme },
+    { "Adyghe\0", "ady", QLocale::Adyghe },
+    { "Avestan\0", "ae\0", QLocale::Avestan },
+    { "Tunisian Arabic\0", "aeb", QLocale::TunisianArabic },
+    { "Afrikaans\0", "af\0", QLocale::Afrikaans },
+    { "Afrihili\0", "afh", QLocale::Afrihili },
+    { "Aghem\0", "agq", QLocale::Aghem },
+    { "Ainu\0", "ain", QLocale::Ainu },
+    { "Akan\0", "ak\0", QLocale::Akan },
+    { "Akkadian\0", "akk", QLocale::Akkadian },
+    { "Alabama\0", "akz", QLocale::Alabama },
+    { "Aleut\0", "ale", QLocale::Aleut },
+    { "Gheg Albanian\0", "aln", QLocale::GhegAlbanian },
+    { "Southern Altai\0", "alt", QLocale::SouthernAltai },
+    { "Amharic\0", "am\0", QLocale::Amharic },
+    { "Aragonese\0", "an\0", QLocale::Aragonese },
+    { "Old English\0", "ang", QLocale::OldEnglish },
+    { "Angika\0", "anp", QLocale::Angika },
+    { "Arabic\0", "ar\0", QLocale::Arabic },
+    { "Modern Standard Arabic\0", "ar_001", QLocale::ModernStandardArabic },
+    { "Aramaic\0", "arc", QLocale::Aramaic },
+    { "Mapuche\0", "arn", QLocale::Mapuche },
+    { "Araona\0", "aro", QLocale::Araona },
+    { "Arapaho\0", "arp", QLocale::Arapaho },
+    { "Algerian Arabic\0", "arq", QLocale::AlgerianArabic },
+    { "Najdi Arabic\0", "ars", QLocale::NajdiArabic },
+    { "Arawak\0", "arw", QLocale::Arawak },
+    { "Moroccan Arabic\0", "ary", QLocale::MoroccanArabic },
+    { "Egyptian Arabic\0", "arz", QLocale::EgyptianArabic },
+    { "Assamese\0", "as\0", QLocale::Assamese },
+    { "Asu\0", "asa", QLocale::Asu },
+    { "American Sign Language\0", "ase", QLocale::AmericanSignLanguage },
+    { "Asturian\0", "ast", QLocale::Asturian },
+    { "Avaric\0", "av\0", QLocale::Avaric },
+    { "Kotava\0", "avk", QLocale::Kotava },
+    { "Awadhi\0", "awa", QLocale::Awadhi },
+    { "Aymara\0", "ay\0", QLocale::Aymara },
+    { "Azerbaijani\0", "az\0", QLocale::Azerbaijani },
+    { "Azeri\0", "az\0", QLocale::Azeri },
+    { "Bashkir\0", "ba\0", QLocale::Bashkir },
+    { "Baluchi\0", "bal", QLocale::Baluchi },
+    { "Balinese\0", "ban", QLocale::Balinese },
+    { "Bavarian\0", "bar", QLocale::Bavarian },
+    { "Basaa\0", "bas", QLocale::Basaa },
+    { "Bamun\0", "bax", QLocale::Bamun },
+    { "Batak Toba\0", "bbc", QLocale::BatakToba },
+    { "Ghomala\0", "bbj", QLocale::Ghomala },
+    { "Belarusian\0", "be\0", QLocale::Belarusian },
+    { "Beja\0", "bej", QLocale::Beja },
+    { "Bemba\0", "bem", QLocale::Bemba },
+    { "Betawi\0", "bew", QLocale::Betawi },
+    { "Bena\0", "bez", QLocale::Bena },
+    { "Bafut\0", "bfd", QLocale::Bafut },
+    { "Badaga\0", "bfq", QLocale::Badaga },
+    { "Bulgarian\0", "bg\0", QLocale::Bulgarian },
+    { "Western Balochi\0", "bgn", QLocale::WesternBalochi },
+    { "Bhojpuri\0", "bho", QLocale::Bhojpuri },
+    { "Bislama\0", "bi\0", QLocale::Bislama },
+    { "Bikol\0", "bik", QLocale::Bikol },
+    { "Bini\0", "bin", QLocale::Bini },
+    { "Banjar\0", "bjn", QLocale::Banjar },
+    { "Kom\0", "bkm", QLocale::Kom },
+    { "Siksika\0", "bla", QLocale::Siksika },
+    { "Bambara\0", "bm\0", QLocale::Bambara },
+    { "Bangla\0", "bn\0", QLocale::Bangla },
+    { "Tibetan\0", "bo\0", QLocale::Tibetan },
+    { "Bishnupriya\0", "bpy", QLocale::Bishnupriya },
+    { "Bakhtiari\0", "bqi", QLocale::Bakhtiari },
+    { "Breton\0", "br\0", QLocale::Breton },
+    { "Braj\0", "bra", QLocale::Braj },
+    { "Brahui\0", "brh", QLocale::Brahui },
+    { "Bodo\0", "brx", QLocale::Bodo },
+    { "Bosnian\0", "bs\0", QLocale::Bosnian },
+    { "Akoose\0", "bss", QLocale::Akoose },
+    { "Buriat\0", "bua", QLocale::Buriat },
+    { "Buginese\0", "bug", QLocale::Buginese },
+    { "Bulu\0", "bum", QLocale::Bulu },
+    { "Blin\0", "byn", QLocale::Blin },
+    { "Medumba\0", "byv", QLocale::Medumba },
+    { "Catalan\0", "ca\0", QLocale::Catalan },
+    { "Caddo\0", "cad", QLocale::Caddo },
+    { "Carib\0", "car", QLocale::Carib },
+    { "Cayuga\0", "cay", QLocale::Cayuga },
+    { "Atsam\0", "cch", QLocale::Atsam },
+    { "Chakma\0", "ccp", QLocale::Chakma },
+    { "Chechen\0", "ce\0", QLocale::Chechen },
+    { "Cebuano\0", "ceb", QLocale::Cebuano },
+    { "Chiga\0", "cgg", QLocale::Chiga },
+    { "Chamorro\0", "ch\0", QLocale::Chamorro },
+    { "Chibcha\0", "chb", QLocale::Chibcha },
+    { "Chagatai\0", "chg", QLocale::Chagatai },
+    { "Chuukese\0", "chk", QLocale::Chuukese },
+    { "Mari\0", "chm", QLocale::Mari },
+    { "Chinook Jargon\0", "chn", QLocale::ChinookJargon },
+    { "Choctaw\0", "cho", QLocale::Choctaw },
+    { "Chipewyan\0", "chp", QLocale::Chipewyan },
+    { "Cherokee\0", "chr", QLocale::Cherokee },
+    { "Cheyenne\0", "chy", QLocale::Cheyenne },
+    { "Central Kurdish\0", "ckb", QLocale::CentralKurdish },
+    { "Corsican\0", "co\0", QLocale::Corsican },
+    { "Coptic\0", "cop", QLocale::Coptic },
+    { "Capiznon\0", "cps", QLocale::Capiznon },
+    { "Cree\0", "cr\0", QLocale::Cree },
+    { "Crimean Turkish\0", "crh", QLocale::CrimeanTurkish },
+    { "Seselwa Creole French\0", "crs", QLocale::SeselwaCreoleFrench },
+    { "Czech\0", "cs\0", QLocale::Czech },
+    { "Kashubian\0", "csb", QLocale::Kashubian },
+    { "Church Slavic\0", "cu\0", QLocale::ChurchSlavic },
+    { "Chuvash\0", "cv\0", QLocale::Chuvash },
+    { "Welsh\0", "cy\0", QLocale::Welsh },
+    { "Danish\0", "da\0", QLocale::Danish },
+    { "Dakota\0", "dak", QLocale::Dakota },
+    { "Dargwa\0", "dar", QLocale::Dargwa },
+    { "Taita\0", "dav", QLocale::Taita },
+    { "German\0", "de\0", QLocale::German },
+    { "Austrian German\0", "de_AT", QLocale::AustrianGerman },
+    { "Swiss High German\0", "de_CH", QLocale::SwissHighGerman },
+    { "Delaware\0", "del", QLocale::Delaware },
+    { "Slave\0", "den", QLocale::Slave },
+    { "Dogrib\0", "dgr", QLocale::Dogrib },
+    { "Dinka\0", "din", QLocale::Dinka },
+    { "Zarma\0", "dje", QLocale::Zarma },
+    { "Dogri\0", "doi", QLocale::Dogri },
+    { "Lower Sorbian\0", "dsb", QLocale::LowerSorbian },
+    { "Central Dusun\0", "dtp", QLocale::CentralDusun },
+    { "Duala\0", "dua", QLocale::Duala },
+    { "Middle Dutch\0", "dum", QLocale::MiddleDutch },
+    { "Divehi\0", "dv\0", QLocale::Divehi },
+    { "Jola-Fonyi\0", "dyo", QLocale::JolaFonyi },
+    { "Dyula\0", "dyu", QLocale::Dyula },
+    { "Dzongkha\0", "dz\0", QLocale::Dzongkha },
+    { "Dazaga\0", "dzg", QLocale::Dazaga },
+    { "Embu\0", "ebu", QLocale::Embu },
+    { "Ewe\0", "ee\0", QLocale::Ewe },
+    { "Efik\0", "efi", QLocale::Efik },
+    { "Emilian\0", "egl", QLocale::Emilian },
+    { "Ancient Egyptian\0", "egy", QLocale::AncientEgyptian },
+    { "Ekajuk\0", "eka", QLocale::Ekajuk },
+    { "Greek\0", "el\0", QLocale::Greek },
+    { "Elamite\0", "elx", QLocale::Elamite },
+    { "English\0", "en\0", QLocale::English },
+    { "Australian English\0", "en_AU", QLocale::AustralianEnglish },
+    { "Canadian English\0", "en_CA", QLocale::CanadianEnglish },
+    { "British English\0", "en_GB", QLocale::BritishEnglish },
+    { "UK English\0", "en_GB", QLocale::UKEnglish },
+    { "American English\0", "en_US", QLocale::AmericanEnglish },
+    { "US English\0", "en_US", QLocale::USEnglish },
+    { "Middle English\0", "enm", QLocale::MiddleEnglish },
+    { "Esperanto\0", "eo\0", QLocale::Esperanto },
+    { "Spanish\0", "es\0", QLocale::Spanish },
+    { "Latin American Spanish\0", "es_419", QLocale::LatinAmericanSpanish },
+    { "European Spanish\0", "es_ES", QLocale::EuropeanSpanish },
+    { "Mexican Spanish\0", "es_MX", QLocale::MexicanSpanish },
+    { "Central Yupik\0", "esu", QLocale::CentralYupik },
+    { "Estonian\0", "et\0", QLocale::Estonian },
+    { "Basque\0", "eu\0", QLocale::Basque },
+    { "Ewondo\0", "ewo", QLocale::Ewondo },
+    { "Extremaduran\0", "ext", QLocale::Extremaduran },
+    { "Persian\0", "fa\0", QLocale::Persian },
+    { "Dari\0", "fa_AF", QLocale::Dari },
+    { "Fang\0", "fan", QLocale::Fang },
+    { "Fanti\0", "fat", QLocale::Fanti },
+    { "Fulah\0", "ff\0", QLocale::Fulah },
+    { "Finnish\0", "fi\0", QLocale::Finnish },
+    { "Filipino\0", "fil", QLocale::Filipino },
+    { "Tornedalen Finnish\0", "fit", QLocale::TornedalenFinnish },
+    { "Fijian\0", "fj\0", QLocale::Fijian },
+    { "Faroese\0", "fo\0", QLocale::Faroese },
+    { "Fon\0", "fon", QLocale::Fon },
+    { "French\0", "fr\0", QLocale::French },
+    { "Canadian French\0", "fr_CA", QLocale::CanadianFrench },
+    { "Swiss French\0", "fr_CH", QLocale::SwissFrench },
+    { "Cajun French\0", "frc", QLocale::CajunFrench },
+    { "Middle French\0", "frm", QLocale::MiddleFrench },
+    { "Old French\0", "fro", QLocale::OldFrench },
+    { "Arpitan\0", "frp", QLocale::Arpitan },
+    { "Northern Frisian\0", "frr", QLocale::NorthernFrisian },
+    { "Eastern Frisian\0", "frs", QLocale::EasternFrisian },
+    { "Friulian\0", "fur", QLocale::Friulian },
+    { "Western Frisian\0", "fy\0", QLocale::WesternFrisian },
+    { "Irish\0", "ga\0", QLocale::Irish },
+    { "Ga\0", "gaa", QLocale::Ga },
+    { "Gagauz\0", "gag", QLocale::Gagauz },
+    { "Gan Chinese\0", "gan", QLocale::GanChinese },
+    { "Gayo\0", "gay", QLocale::Gayo },
+    { "Gbaya\0", "gba", QLocale::Gbaya },
+    { "Zoroastrian Dari\0", "gbz", QLocale::ZoroastrianDari },
+    { "Scottish Gaelic\0", "gd\0", QLocale::ScottishGaelic },
+    { "Geez\0", "gez", QLocale::Geez },
+    { "Gilbertese\0", "gil", QLocale::Gilbertese },
+    { "Galician\0", "gl\0", QLocale::Galician },
+    { "Gilaki\0", "glk", QLocale::Gilaki },
+    { "Middle High German\0", "gmh", QLocale::MiddleHighGerman },
+    { "Guarani\0", "gn\0", QLocale::Guarani },
+    { "Old High German\0", "goh", QLocale::OldHighGerman },
+    { "Goan Konkani\0", "gom", QLocale::GoanKonkani },
+    { "Gondi\0", "gon", QLocale::Gondi },
+    { "Gorontalo\0", "gor", QLocale::Gorontalo },
+    { "Gothic\0", "got", QLocale::Gothic },
+    { "Grebo\0", "grb", QLocale::Grebo },
+    { "Ancient Greek\0", "grc", QLocale::AncientGreek },
+    { "Swiss German\0", "gsw", QLocale::SwissGerman },
+    { "Gujarati\0", "gu\0", QLocale::Gujarati },
+    { "Wayuu\0", "guc", QLocale::Wayuu },
+    { "Frafra\0", "gur", QLocale::Frafra },
+    { "Gusii\0", "guz", QLocale::Gusii },
+    { "Manx\0", "gv\0", QLocale::Manx },
+    { "Gwichʼin\0", "gwi", QLocale::Gwichin },
+    { "Hausa\0", "ha\0", QLocale::Hausa },
+    { "Haida\0", "hai", QLocale::Haida },
+    { "Hakka Chinese\0", "hak", QLocale::HakkaChinese },
+    { "Hawaiian\0", "haw", QLocale::Hawaiian },
+    { "Hebrew\0", "he\0", QLocale::Hebrew },
+    { "Hindi\0", "hi\0", QLocale::Hindi },
+    { "Fiji Hindi\0", "hif", QLocale::FijiHindi },
+    { "Hiligaynon\0", "hil", QLocale::Hiligaynon },
+    { "Hittite\0", "hit", QLocale::Hittite },
+    { "Hmong\0", "hmn", QLocale::Hmong },
+    { "Hiri Motu\0", "ho\0", QLocale::HiriMotu },
+    { "Croatian\0", "hr\0", QLocale::Croatian },
+    { "Upper Sorbian\0", "hsb", QLocale::UpperSorbian },
+    { "Xiang Chinese\0", "hsn", QLocale::XiangChinese },
+    { "Haitian Creole\0", "ht\0", QLocale::HaitianCreole },
+    { "Hungarian\0", "hu\0", QLocale::Hungarian },
+    { "Hupa\0", "hup", QLocale::Hupa },
+    { "Armenian\0", "hy\0", QLocale::Armenian },
+    { "Herero\0", "hz\0", QLocale::Herero },
+    { "Interlingua\0", "ia\0", QLocale::Interlingua },
+    { "Iban\0", "iba", QLocale::Iban },
+    { "Ibibio\0", "ibb", QLocale::Ibibio },
+    { "Indonesian\0", "id\0", QLocale::Indonesian },
+    { "Interlingue\0", "ie\0", QLocale::Interlingue },
+    { "Igbo\0", "ig\0", QLocale::Igbo },
+    { "Sichuan Yi\0", "ii\0", QLocale::SichuanYi },
+    { "Inupiaq\0", "ik\0", QLocale::Inupiaq },
+    { "Iloko\0", "ilo", QLocale::Iloko },
+    { "Ingush\0", "inh", QLocale::Ingush },
+    { "Ido\0", "io\0", QLocale::Ido },
+    { "Icelandic\0", "is\0", QLocale::Icelandic },
+    { "Italian\0", "it\0", QLocale::Italian },
+    { "Inuktitut\0", "iu\0", QLocale::Inuktitut },
+    { "Ingrian\0", "izh", QLocale::Ingrian },
+    { "Japanese\0", "ja\0", QLocale::Japanese },
+    { "Jamaican Creole English\0", "jam", QLocale::JamaicanCreoleEnglish },
+    { "Lojban\0", "jbo", QLocale::Lojban },
+    { "Ngomba\0", "jgo", QLocale::Ngomba },
+    { "Machame\0", "jmc", QLocale::Machame },
+    { "Judeo-Persian\0", "jpr", QLocale::JudeoPersian },
+    { "Judeo-Arabic\0", "jrb", QLocale::JudeoArabic },
+    { "Jutish\0", "jut", QLocale::Jutish },
+    { "Javanese\0", "jv\0", QLocale::Javanese },
+    { "Georgian\0", "ka\0", QLocale::Georgian },
+    { "Kara-Kalpak\0", "kaa", QLocale::KaraKalpak },
+    { "Kabyle\0", "kab", QLocale::Kabyle },
+    { "Kachin\0", "kac", QLocale::Kachin },
+    { "Jju\0", "kaj", QLocale::Jju },
+    { "Kamba\0", "kam", QLocale::Kamba },
+    { "Kawi\0", "kaw", QLocale::Kawi },
+    { "Kabardian\0", "kbd", QLocale::Kabardian },
+    { "Kanembu\0", "kbl", QLocale::Kanembu },
+    { "Tyap\0", "kcg", QLocale::Tyap },
+    { "Makonde\0", "kde", QLocale::Makonde },
+    { "Kabuverdianu\0", "kea", QLocale::Kabuverdianu },
+    { "Kenyang\0", "ken", QLocale::Kenyang },
+    { "Koro\0", "kfo", QLocale::Koro },
+    { "Kongo\0", "kg\0", QLocale::Kongo },
+    { "Kaingang\0", "kgp", QLocale::Kaingang },
+    { "Khasi\0", "kha", QLocale::Khasi },
+    { "Khotanese\0", "kho", QLocale::Khotanese },
+    { "Koyra Chiini\0", "khq", QLocale::KoyraChiini },
+    { "Khowar\0", "khw", QLocale::Khowar },
+    { "Kikuyu\0", "ki\0", QLocale::Kikuyu },
+    { "Kirmanjki\0", "kiu", QLocale::Kirmanjki },
+    { "Kuanyama\0", "kj\0", QLocale::Kuanyama },
+    { "Kazakh\0", "kk\0", QLocale::Kazakh },
+    { "Kako\0", "kkj", QLocale::Kako },
+    { "Kalaallisut\0", "kl\0", QLocale::Kalaallisut },
+    { "Kalenjin\0", "kln", QLocale::Kalenjin },
+    { "Khmer\0", "km\0", QLocale::Khmer },
+    { "Kimbundu\0", "kmb", QLocale::Kimbundu },
+    { "Kannada\0", "kn\0", QLocale::Kannada },
+    { "Korean\0", "ko\0", QLocale::Korean },
+    { "Komi-Permyak\0", "koi", QLocale::KomiPermyak },
+    { "Konkani\0", "kok", QLocale::Konkani },
+    { "Kosraean\0", "kos", QLocale::Kosraean },
+    { "Kpelle\0", "kpe", QLocale::Kpelle },
+    { "Kanuri\0", "kr\0", QLocale::Kanuri },
+    { "Karachay-Balkar\0", "krc", QLocale::KarachayBalkar },
+    { "Krio\0", "kri", QLocale::Krio },
+    { "Kinaray-a\0", "krj", QLocale::Kinaraya },
+    { "Karelian\0", "krl", QLocale::Karelian },
+    { "Kurukh\0", "kru", QLocale::Kurukh },
+    { "Kashmiri\0", "ks\0", QLocale::Kashmiri },
+    { "Shambala\0", "ksb", QLocale::Shambala },
+    { "Bafia\0", "ksf", QLocale::Bafia },
+    { "Colognian\0", "ksh", QLocale::Colognian },
+    { "Kurdish\0", "ku\0", QLocale::Kurdish },
+    { "Kumyk\0", "kum", QLocale::Kumyk },
+    { "Kutenai\0", "kut", QLocale::Kutenai },
+    { "Komi\0", "kv\0", QLocale::Komi },
+    { "Cornish\0", "kw\0", QLocale::Cornish },
+    { "Kyrgyz\0", "ky\0", QLocale::Kyrgyz },
+    { "Kirghiz\0", "ky\0", QLocale::Kirghiz },
+    { "Latin\0", "la\0", QLocale::Latin },
+    { "Ladino\0", "lad", QLocale::Ladino },
+    { "Langi\0", "lag", QLocale::Langi },
+    { "Lahnda\0", "lah", QLocale::Lahnda },
+    { "Lamba\0", "lam", QLocale::Lamba },
+    { "Luxembourgish\0", "lb\0", QLocale::Luxembourgish },
+    { "Lezghian\0", "lez", QLocale::Lezghian },
+    { "Lingua Franca Nova\0", "lfn", QLocale::LinguaFrancaNova },
+    { "Ganda\0", "lg\0", QLocale::Ganda },
+    { "Limburgish\0", "li\0", QLocale::Limburgish },
+    { "Ligurian\0", "lij", QLocale::Ligurian },
+    { "Livonian\0", "liv", QLocale::Livonian },
+    { "Lakota\0", "lkt", QLocale::Lakota },
+    { "Lombard\0", "lmo", QLocale::Lombard },
+    { "Lingala\0", "ln\0", QLocale::Lingala },
+    { "Lao\0", "lo\0", QLocale::Lao },
+    { "Mongo\0", "lol", QLocale::Mongo },
+    { "Louisiana Creole\0", "lou", QLocale::LouisianaCreole },
+    { "Lozi\0", "loz", QLocale::Lozi },
+    { "Northern Luri\0", "lrc", QLocale::NorthernLuri },
+    { "Lithuanian\0", "lt\0", QLocale::Lithuanian },
+    { "Latgalian\0", "ltg", QLocale::Latgalian },
+    { "Luba-Katanga\0", "lu\0", QLocale::LubaKatanga },
+    { "Luba-Lulua\0", "lua", QLocale::LubaLulua },
+    { "Luiseno\0", "lui", QLocale::Luiseno },
+    { "Lunda\0", "lun", QLocale::Lunda },
+    { "Luo\0", "luo", QLocale::Luo },
+    { "Mizo\0", "lus", QLocale::Mizo },
+    { "Luyia\0", "luy", QLocale::Luyia },
+    { "Latvian\0", "lv\0", QLocale::Latvian },
+    { "Literary Chinese\0", "lzh", QLocale::LiteraryChinese },
+    { "Laz\0", "lzz", QLocale::Laz },
+    { "Madurese\0", "mad", QLocale::Madurese },
+    { "Mafa\0", "maf", QLocale::Mafa },
+    { "Magahi\0", "mag", QLocale::Magahi },
+    { "Maithili\0", "mai", QLocale::Maithili },
+    { "Makasar\0", "mak", QLocale::Makasar },
+    { "Mandingo\0", "man", QLocale::Mandingo },
+    { "Masai\0", "mas", QLocale::Masai },
+    { "Maba\0", "mde", QLocale::Maba },
+    { "Moksha\0", "mdf", QLocale::Moksha },
+    { "Mandar\0", "mdr", QLocale::Mandar },
+    { "Mende\0", "men", QLocale::Mende },
+    { "Meru\0", "mer", QLocale::Meru },
+    { "Morisyen\0", "mfe", QLocale::Morisyen },
+    { "Malagasy\0", "mg\0", QLocale::Malagasy },
+    { "Middle Irish\0", "mga", QLocale::MiddleIrish },
+    { "Makhuwa-Meetto\0", "mgh", QLocale::MakhuwaMeetto },
+    { "Metaʼ\0", "mgo", QLocale::Meta },
+    { "Marshallese\0", "mh\0", QLocale::Marshallese },
+    { "Maori\0", "mi\0", QLocale::Maori },
+    { "Mi'kmaq\0", "mic", QLocale::Mikmaq },
+    { "Minangkabau\0", "min", QLocale::Minangkabau },
+    { "Macedonian\0", "mk\0", QLocale::Macedonian },
+    { "Malayalam\0", "ml\0", QLocale::Malayalam },
+    { "Mongolian\0", "mn\0", QLocale::Mongolian },
+    { "Manchu\0", "mnc", QLocale::Manchu },
+    { "Manipuri\0", "mni", QLocale::Manipuri },
+    { "Mohawk\0", "moh", QLocale::Mohawk },
+    { "Mossi\0", "mos", QLocale::Mossi },
+    { "Marathi\0", "mr\0", QLocale::Marathi },
+    { "Western Mari\0", "mrj", QLocale::WesternMari },
+    { "Malay\0", "ms\0", QLocale::Malay },
+    { "Maltese\0", "mt\0", QLocale::Maltese },
+    { "Mundang\0", "mua", QLocale::Mundang },
+    { "Multiple languages\0", "mul", QLocale::Multiplelanguages },
+    { "Creek\0", "mus", QLocale::Creek },
+    { "Mirandese\0", "mwl", QLocale::Mirandese },
+    { "Marwari\0", "mwr", QLocale::Marwari },
+    { "Mentawai\0", "mwv", QLocale::Mentawai },
+    { "Burmese\0", "my\0", QLocale::Burmese },
+    { "Myanmar Language\0", "my\0", QLocale::MyanmarLanguage },
+    { "Myene\0", "mye", QLocale::Myene },
+    { "Erzya\0", "myv", QLocale::Erzya },
+    { "Mazanderani\0", "mzn", QLocale::Mazanderani },
+    { "Nauru\0", "na\0", QLocale::Nauru },
+    { "Min Nan Chinese\0", "nan", QLocale::MinNanChinese },
+    { "Neapolitan\0", "nap", QLocale::Neapolitan },
+    { "Nama\0", "naq", QLocale::Nama },
+    { "Norwegian Bokmål\0", "nb\0", QLocale::NorwegianBokmal },
+    { "North Ndebele\0", "nd\0", QLocale::NorthNdebele },
+    { "Low German\0", "nds", QLocale::LowGerman },
+    { "Low Saxon\0", "nds_NL", QLocale::LowSaxon },
+    { "Nepali\0", "ne\0", QLocale::Nepali },
+    { "Newari\0", "new", QLocale::Newari },
+    { "Ndonga\0", "ng\0", QLocale::Ndonga },
+    { "Nias\0", "nia", QLocale::Nias },
+    { "Niuean\0", "niu", QLocale::Niuean },
+    { "Ao Naga\0", "njo", QLocale::AoNaga },
+    { "Dutch\0", "nl\0", QLocale::Dutch },
+    { "Flemish\0", "nl_BE", QLocale::Flemish },
+    { "Kwasio\0", "nmg", QLocale::Kwasio },
+    { "Norwegian Nynorsk\0", "nn\0", QLocale::NorwegianNynorsk },
+    { "Ngiemboon\0", "nnh", QLocale::Ngiemboon },
+    { "Norwegian\0", "no\0", QLocale::Norwegian },
+    { "Nogai\0", "nog", QLocale::Nogai },
+    { "Old Norse\0", "non", QLocale::OldNorse },
+    { "Novial\0", "nov", QLocale::Novial },
+    { "N’Ko\0", "nqo", QLocale::NKo },
+    { "South Ndebele\0", "nr\0", QLocale::SouthNdebele },
+    { "Northern Sotho\0", "nso", QLocale::NorthernSotho },
+    { "Nuer\0", "nus", QLocale::Nuer },
+    { "Navajo\0", "nv\0", QLocale::Navajo },
+    { "Classical Newari\0", "nwc", QLocale::ClassicalNewari },
+    { "Nyanja\0", "ny\0", QLocale::Nyanja },
+    { "Nyamwezi\0", "nym", QLocale::Nyamwezi },
+    { "Nyankole\0", "nyn", QLocale::Nyankole },
+    { "Nyoro\0", "nyo", QLocale::Nyoro },
+    { "Nzima\0", "nzi", QLocale::Nzima },
+    { "Occitan\0", "oc\0", QLocale::Occitan },
+    { "Ojibwa\0", "oj\0", QLocale::Ojibwa },
+    { "Oromo\0", "om\0", QLocale::Oromo },
+    { "Odia\0", "or\0", QLocale::Odia },
+    { "Ossetic\0", "os\0", QLocale::Ossetic },
+    { "Osage\0", "osa", QLocale::Osage },
+    { "Ottoman Turkish\0", "ota", QLocale::OttomanTurkish },
+    { "Punjabi\0", "pa\0", QLocale::Punjabi },
+    { "Pangasinan\0", "pag", QLocale::Pangasinan },
+    { "Pahlavi\0", "pal", QLocale::Pahlavi },
+    { "Pampanga\0", "pam", QLocale::Pampanga },
+    { "Papiamento\0", "pap", QLocale::Papiamento },
+    { "Palauan\0", "pau", QLocale::Palauan },
+    { "Picard\0", "pcd", QLocale::Picard },
+    { "Nigerian Pidgin\0", "pcm", QLocale::NigerianPidgin },
+    { "Pennsylvania German\0", "pdc", QLocale::PennsylvaniaGerman },
+    { "Plautdietsch\0", "pdt", QLocale::Plautdietsch },
+    { "Old Persian\0", "peo", QLocale::OldPersian },
+    { "Palatine German\0", "pfl", QLocale::PalatineGerman },
+    { "Phoenician\0", "phn", QLocale::Phoenician },
+    { "Pali\0", "pi\0", QLocale::Pali },
+    { "Polish\0", "pl\0", QLocale::Polish },
+    { "Piedmontese\0", "pms", QLocale::Piedmontese },
+    { "Pontic\0", "pnt", QLocale::Pontic },
+    { "Pohnpeian\0", "pon", QLocale::Pohnpeian },
+    { "Prussian\0", "prg", QLocale::Prussian },
+    { "Old Provençal\0", "pro", QLocale::OldProvencal },
+    { "Pashto\0", "ps\0", QLocale::Pashto },
+    { "Pushto\0", "ps\0", QLocale::Pushto },
+    { "Portuguese\0", "pt\0", QLocale::Portuguese },
+    { "Brazilian Portuguese\0", "pt_BR", QLocale::BrazilianPortuguese },
+    { "European Portuguese\0", "pt_PT", QLocale::EuropeanPortuguese },
+    { "Quechua\0", "qu\0", QLocale::Quechua },
+    { "Kʼicheʼ\0", "quc", QLocale::Kiche },
+    { "Chimborazo Highland Quichua\0", "qug", QLocale::ChimborazoHighlandQuichua },
+    { "Rajasthani\0", "raj", QLocale::Rajasthani },
+    { "Rapanui\0", "rap", QLocale::Rapanui },
+    { "Rarotongan\0", "rar", QLocale::Rarotongan },
+    { "Romagnol\0", "rgn", QLocale::Romagnol },
+    { "Riffian\0", "rif", QLocale::Riffian },
+    { "Romansh\0", "rm\0", QLocale::Romansh },
+    { "Rundi\0", "rn\0", QLocale::Rundi },
+    { "Romanian\0", "ro\0", QLocale::Romanian },
+    { "Moldavian\0", "ro_MD", QLocale::Moldavian },
+    { "Rombo\0", "rof", QLocale::Rombo },
+    { "Romany\0", "rom", QLocale::Romany },
+    { "Root\0", "root", QLocale::Root },
+    { "Rotuman\0", "rtm", QLocale::Rotuman },
+    { "Russian\0", "ru\0", QLocale::Russian },
+    { "Rusyn\0", "rue", QLocale::Rusyn },
+    { "Roviana\0", "rug", QLocale::Roviana },
+    { "Aromanian\0", "rup", QLocale::Aromanian },
+    { "Kinyarwanda\0", "rw\0", QLocale::Kinyarwanda },
+    { "Rwa\0", "rwk", QLocale::Rwa },
+    { "Sanskrit\0", "sa\0", QLocale::Sanskrit },
+    { "Sandawe\0", "sad", QLocale::Sandawe },
+    { "Sakha\0", "sah", QLocale::Sakha },
+    { "Samaritan Aramaic\0", "sam", QLocale::SamaritanAramaic },
+    { "Samburu\0", "saq", QLocale::Samburu },
+    { "Sasak\0", "sas", QLocale::Sasak },
+    { "Santali\0", "sat", QLocale::Santali },
+    { "Saurashtra\0", "saz", QLocale::Saurashtra },
+    { "Ngambay\0", "sba", QLocale::Ngambay },
+    { "Sangu\0", "sbp", QLocale::Sangu },
+    { "Sardinian\0", "sc\0", QLocale::Sardinian },
+    { "Sicilian\0", "scn", QLocale::Sicilian },
+    { "Scots\0", "sco", QLocale::Scots },
+    { "Sindhi\0", "sd\0", QLocale::Sindhi },
+    { "Sassarese Sardinian\0", "sdc", QLocale::SassareseSardinian },
+    { "Southern Kurdish\0", "sdh", QLocale::SouthernKurdish },
+    { "Northern Sami\0", "se\0", QLocale::NorthernSami },
+    { "Seneca\0", "see", QLocale::Seneca },
+    { "Sena\0", "seh", QLocale::Sena },
+    { "Seri\0", "sei", QLocale::Seri },
+    { "Selkup\0", "sel", QLocale::Selkup },
+    { "Koyraboro Senni\0", "ses", QLocale::KoyraboroSenni },
+    { "Sango\0", "sg\0", QLocale::Sango },
+    { "Old Irish\0", "sga", QLocale::OldIrish },
+    { "Samogitian\0", "sgs", QLocale::Samogitian },
+    { "Serbo-Croatian\0", "sh\0", QLocale::SerboCroatian },
+    { "Tachelhit\0", "shi", QLocale::Tachelhit },
+    { "Shan\0", "shn", QLocale::Shan },
+    { "Chadian Arabic\0", "shu", QLocale::ChadianArabic },
+    { "Sinhala\0", "si\0", QLocale::Sinhala },
+    { "Sidamo\0", "sid", QLocale::Sidamo },
+    { "Slovak\0", "sk\0", QLocale::Slovak },
+    { "Slovenian\0", "sl\0", QLocale::Slovenian },
+    { "Lower Silesian\0", "sli", QLocale::LowerSilesian },
+    { "Selayar\0", "sly", QLocale::Selayar },
+    { "Samoan\0", "sm\0", QLocale::Samoan },
+    { "Southern Sami\0", "sma", QLocale::SouthernSami },
+    { "Lule Sami\0", "smj", QLocale::LuleSami },
+    { "Inari Sami\0", "smn", QLocale::InariSami },
+    { "Skolt Sami\0", "sms", QLocale::SkoltSami },
+    { "Shona\0", "sn\0", QLocale::Shona },
+    { "Soninke\0", "snk", QLocale::Soninke },
+    { "Somali\0", "so\0", QLocale::Somali },
+    { "Sogdien\0", "sog", QLocale::Sogdien },
+    { "Albanian\0", "sq\0", QLocale::Albanian },
+    { "Serbian\0", "sr\0", QLocale::Serbian },
+    { "Montenegrin\0", "sr_ME", QLocale::Montenegrin },
+    { "Sranan Tongo\0", "srn", QLocale::SrananTongo },
+    { "Serer\0", "srr", QLocale::Serer },
+    { "Swati\0", "ss\0", QLocale::Swati },
+    { "Saho\0", "ssy", QLocale::Saho },
+    { "Southern Sotho\0", "st\0", QLocale::SouthernSotho },
+    { "Saterland Frisian\0", "stq", QLocale::SaterlandFrisian },
+    { "Sundanese\0", "su\0", QLocale::Sundanese },
+    { "Sukuma\0", "suk", QLocale::Sukuma },
+    { "Susu\0", "sus", QLocale::Susu },
+    { "Sumerian\0", "sux", QLocale::Sumerian },
+    { "Swedish\0", "sv\0", QLocale::Swedish },
+    { "Swahili\0", "sw\0", QLocale::Swahili },
+    { "Congo Swahili\0", "sw_CD", QLocale::CongoSwahili },
+    { "Comorian\0", "swb", QLocale::Comorian },
+    { "Classical Syriac\0", "syc", QLocale::ClassicalSyriac },
+    { "Syriac\0", "syr", QLocale::Syriac },
+    { "Silesian\0", "szl", QLocale::Silesian },
+    { "Tamil\0", "ta\0", QLocale::Tamil },
+    { "Tulu\0", "tcy", QLocale::Tulu },
+    { "Telugu\0", "te\0", QLocale::Telugu },
+    { "Timne\0", "tem", QLocale::Timne },
+    { "Teso\0", "teo", QLocale::Teso },
+    { "Tereno\0", "ter", QLocale::Tereno },
+    { "Tetum\0", "tet", QLocale::Tetum },
+    { "Tajik\0", "tg\0", QLocale::Tajik },
+    { "Thai\0", "th\0", QLocale::Thai },
+    { "Tigrinya\0", "ti\0", QLocale::Tigrinya },
+    { "Tigre\0", "tig", QLocale::Tigre },
+    { "Tiv\0", "tiv", QLocale::Tiv },
+    { "Turkmen\0", "tk\0", QLocale::Turkmen },
+    { "Tokelau\0", "tkl", QLocale::Tokelau },
+    { "Tsakhur\0", "tkr", QLocale::Tsakhur },
+    { "Tagalog\0", "tl\0", QLocale::Tagalog },
+    { "Klingon\0", "tlh", QLocale::Klingon },
+    { "Tlingit\0", "tli", QLocale::Tlingit },
+    { "Talysh\0", "tly", QLocale::Talysh },
+    { "Tamashek\0", "tmh", QLocale::Tamashek },
+    { "Tswana\0", "tn\0", QLocale::Tswana },
+    { "Tongan\0", "to\0", QLocale::Tongan },
+    { "Nyasa Tonga\0", "tog", QLocale::NyasaTonga },
+    { "Tok Pisin\0", "tpi", QLocale::TokPisin },
+    { "Turkish\0", "tr\0", QLocale::Turkish },
+    { "Turoyo\0", "tru", QLocale::Turoyo },
+    { "Taroko\0", "trv", QLocale::Taroko },
+    { "Tsonga\0", "ts\0", QLocale::Tsonga },
+    { "Tsakonian\0", "tsd", QLocale::Tsakonian },
+    { "Tsimshian\0", "tsi", QLocale::Tsimshian },
+    { "Tatar\0", "tt\0", QLocale::Tatar },
+    { "Muslim Tat\0", "ttt", QLocale::MuslimTat },
+    { "Tumbuka\0", "tum", QLocale::Tumbuka },
+    { "Tuvalu\0", "tvl", QLocale::Tuvalu },
+    { "Twi\0", "tw\0", QLocale::Twi },
+    { "Tasawaq\0", "twq", QLocale::Tasawaq },
+    { "Tahitian\0", "ty\0", QLocale::Tahitian },
+    { "Tuvinian\0", "tyv", QLocale::Tuvinian },
+    { "Central Atlas Tamazight\0", "tzm", QLocale::CentralAtlasTamazight },
+    { "Udmurt\0", "udm", QLocale::Udmurt },
+    { "Uyghur\0", "ug\0", QLocale::Uyghur },
+    { "Uighur\0", "ug\0", QLocale::Uighur },
+    { "Ugaritic\0", "uga", QLocale::Ugaritic },
+    { "Ukrainian\0", "uk\0", QLocale::Ukrainian },
+    { "Umbundu\0", "umb", QLocale::Umbundu },
+    { "Unknown language\0", "und", QLocale::Unknownlanguage },
+    { "Urdu\0", "ur\0", QLocale::Urdu },
+    { "Uzbek\0", "uz\0", QLocale::Uzbek },
+    { "Vai\0", "vai", QLocale::Vai },
+    { "Venda\0", "ve\0", QLocale::Venda },
+    { "Venetian\0", "vec", QLocale::Venetian },
+    { "Veps\0", "vep", QLocale::Veps },
+    { "Vietnamese\0", "vi\0", QLocale::Vietnamese },
+    { "West Flemish\0", "vls", QLocale::WestFlemish },
+    { "Main-Franconian\0", "vmf", QLocale::MainFranconian },
+    { "Volapük\0", "vo\0", QLocale::Volapuk },
+    { "Votic\0", "vot", QLocale::Votic },
+    { "Võro\0", "vro", QLocale::Voro },
+    { "Vunjo\0", "vun", QLocale::Vunjo },
+    { "Walloon\0", "wa\0", QLocale::Walloon },
+    { "Walser\0", "wae", QLocale::Walser },
+    { "Wolaytta\0", "wal", QLocale::Wolaytta },
+    { "Waray\0", "war", QLocale::Waray },
+    { "Washo\0", "was", QLocale::Washo },
+    { "Warlpiri\0", "wbp", QLocale::Warlpiri },
+    { "Wolof\0", "wo\0", QLocale::Wolof },
+    { "Wu Chinese\0", "wuu", QLocale::WuChinese },
+    { "Kalmyk\0", "xal", QLocale::Kalmyk },
+    { "Xhosa\0", "xh\0", QLocale::Xhosa },
+    { "Mingrelian\0", "xmf", QLocale::Mingrelian },
+    { "Soga\0", "xog", QLocale::Soga },
+    { "Yao\0", "yao", QLocale::Yao },
+    { "Yapese\0", "yap", QLocale::Yapese },
+    { "Yangben\0", "yav", QLocale::Yangben },
+    { "Yemba\0", "ybb", QLocale::Yemba },
+    { "Yiddish\0", "yi\0", QLocale::Yiddish },
+    { "Yoruba\0", "yo\0", QLocale::Yoruba },
+    { "Nheengatu\0", "yrl", QLocale::Nheengatu },
+    { "Cantonese\0", "yue", QLocale::Cantonese },
+    { "Zhuang\0", "za\0", QLocale::Zhuang },
+    { "Zapotec\0", "zap", QLocale::Zapotec },
+    { "Blissymbols\0", "zbl", QLocale::Blissymbols },
+    { "Zeelandic\0", "zea", QLocale::Zeelandic },
+    { "Zenaga\0", "zen", QLocale::Zenaga },
+    { "Standard Moroccan Tamazight\0", "zgh", QLocale::StandardMoroccanTamazight },
+    { "Chinese\0", "zh\0", QLocale::Chinese },
+    { "Mandarin Chinese\0", "zh\0", QLocale::MandarinChinese },
+    { "Simplified Chinese\0", "zh_Hans", QLocale::SimplifiedChinese },
+    { "Traditional Chinese\0", "zh_Hant", QLocale::TraditionalChinese },
+    { "Zulu\0", "zu\0", QLocale::Zulu },
+    { "Zuni\0", "zun", QLocale::Zuni },
+    { "No linguistic content\0", "zxx", QLocale::Nolinguisticcontent },
+    { "Zaza\0", "zza", QLocale::Zaza },
 };
+static const qint16 languageTblSize = sizeof(languageTbl) / sizeof(languageTblData);
 
-static const char script_name_list[] =
-"Default\0"
-"Arabic\0"
-"Cyrillic\0"
-"Deseret\0"
-"Gurmukhi\0"
-"Simplified Han\0"
-"Traditional Han\0"
-"Latin\0"
-"Mongolian\0"
-"Tifinagh\0"
-;
-
-static const quint16 script_name_index[] = {
-     0, // AnyScript
-     8, // Arabic
-    15, // Cyrillic
-    24, // Deseret
-    32, // Gurmukhi
-    41, // Simplified Han
-    56, // Traditional Han
-    72, // Latin
-    78, // Mongolian
-    88, // Tifinagh
+static const struct countryTblData {
+    const char* name;
+    const char* code;
+    const QLocale::Country country;
+} countryTbl[] = {
+    { "Default\0", "  \0", QLocale::Country::AnyCountry },
+    { "Africa\0", "002\0", QLocale::Africa },
+    { "North America\0", "003\0", QLocale::NorthAmerica },
+    { "South America\0", "005\0", QLocale::SouthAmerica },
+    { "Oceania\0", "009\0", QLocale::Oceania },
+    { "Western Africa\0", "011\0", QLocale::WesternAfrica },
+    { "Central America\0", "013\0", QLocale::CentralAmerica },
+    { "Eastern Africa\0", "014\0", QLocale::EasternAfrica },
+    { "Northern Africa\0", "015\0", QLocale::NorthernAfrica },
+    { "Middle Africa\0", "017\0", QLocale::MiddleAfrica },
+    { "Southern Africa\0", "018\0", QLocale::SouthernAfrica },
+    { "Americas\0", "019\0", QLocale::Americas },
+    { "Northern America\0", "021\0", QLocale::NorthernAmerica },
+    { "Caribbean\0", "029\0", QLocale::Caribbean },
+    { "Eastern Asia\0", "030\0", QLocale::EasternAsia },
+    { "Southern Asia\0", "034\0", QLocale::SouthernAsia },
+    { "Southeast Asia\0", "035\0", QLocale::SoutheastAsia },
+    { "Southern Europe\0", "039\0", QLocale::SouthernEurope },
+    { "Australasia\0", "053\0", QLocale::Australasia },
+    { "Melanesia\0", "054\0", QLocale::Melanesia },
+    { "Micronesian Region\0", "057\0", QLocale::MicronesianRegion },
+    { "Polynesia\0", "061\0", QLocale::Polynesia },
+    { "Asia\0", "142\0", QLocale::Asia },
+    { "Central Asia\0", "143\0", QLocale::CentralAsia },
+    { "Western Asia\0", "145\0", QLocale::WesternAsia },
+    { "Europe\0", "150\0", QLocale::Europe },
+    { "Eastern Europe\0", "151\0", QLocale::EasternEurope },
+    { "Northern Europe\0", "154\0", QLocale::NorthernEurope },
+    { "Western Europe\0", "155\0", QLocale::WesternEurope },
+    { "Sub-Saharan Africa\0", "202\0", QLocale::SubSaharanAfrica },
+    { "Latin America\0", "419\0", QLocale::LatinAmerica },
+    { "Ascension Island\0", "AC\0", QLocale::AscensionIsland },
+    { "Andorra\0", "AD\0", QLocale::Andorra },
+    { "United Arab Emirates\0", "AE\0", QLocale::UnitedArabEmirates },
+    { "Afghanistan\0", "AF\0", QLocale::Afghanistan },
+    { "Antigua & Barbuda\0", "AG\0", QLocale::AntiguaAndBarbuda },
+    { "Anguilla\0", "AI\0", QLocale::Anguilla },
+    { "Albania\0", "AL\0", QLocale::Albania },
+    { "Armenia\0", "AM\0", QLocale::Armenia },
+    { "Angola\0", "AO\0", QLocale::Angola },
+    { "Antarctica\0", "AQ\0", QLocale::Antarctica },
+    { "Argentina\0", "AR\0", QLocale::Argentina },
+    { "American Samoa\0", "AS\0", QLocale::AmericanSamoa },
+    { "Austria\0", "AT\0", QLocale::Austria },
+    { "Australia\0", "AU\0", QLocale::Australia },
+    { "Aruba\0", "AW\0", QLocale::Aruba },
+    { "Åland Islands\0", "AX\0", QLocale::AlandIslands },
+    { "Azerbaijan\0", "AZ\0", QLocale::Azerbaijan },
+    { "Bosnia & Herzegovina\0", "BA\0", QLocale::BosniaAndHerzegovina },
+    { "Bosnia\0", "BA\0", QLocale::Bosnia },
+    { "Barbados\0", "BB\0", QLocale::Barbados },
+    { "Bangladesh\0", "BD\0", QLocale::Bangladesh },
+    { "Belgium\0", "BE\0", QLocale::Belgium },
+    { "Burkina Faso\0", "BF\0", QLocale::BurkinaFaso },
+    { "Bulgaria\0", "BG\0", QLocale::Bulgaria },
+    { "Bahrain\0", "BH\0", QLocale::Bahrain },
+    { "Burundi\0", "BI\0", QLocale::Burundi },
+    { "Benin\0", "BJ\0", QLocale::Benin },
+    { "St. Barthélemy\0", "BL\0", QLocale::StBarthelemy },
+    { "Bermuda\0", "BM\0", QLocale::Bermuda },
+    { "Brunei\0", "BN\0", QLocale::Brunei },
+    { "Bolivia\0", "BO\0", QLocale::Bolivia },
+    { "Caribbean Netherlands\0", "BQ\0", QLocale::CaribbeanNetherlands },
+    { "Brazil\0", "BR\0", QLocale::Brazil },
+    { "Bahamas\0", "BS\0", QLocale::Bahamas },
+    { "Bhutan\0", "BT\0", QLocale::Bhutan },
+    { "Bouvet Island\0", "BV\0", QLocale::BouvetIsland },
+    { "Botswana\0", "BW\0", QLocale::Botswana },
+    { "Belarus\0", "BY\0", QLocale::Belarus },
+    { "Belize\0", "BZ\0", QLocale::Belize },
+    { "Canada\0", "CA\0", QLocale::Canada },
+    { "Cocos (Keeling) Islands\0", "CC\0", QLocale::CocosKeelingIslands },
+    { "Congo - Kinshasa\0", "CD\0", QLocale::CongoKinshasa },
+    { "Congo (DRC)\0", "CD\0", QLocale::CongoDRC },
+    { "Central African Republic\0", "CF\0", QLocale::CentralAfricanRepublic },
+    { "Congo - Brazzaville\0", "CG\0", QLocale::CongoBrazzaville },
+    { "Congo (Republic)\0", "CG\0", QLocale::CongoRepublic },
+    { "Switzerland\0", "CH\0", QLocale::Switzerland },
+    { "Côte d’Ivoire\0", "CI\0", QLocale::CotedIvoire },
+    { "Ivory Coast\0", "CI\0", QLocale::IvoryCoast },
+    { "Cook Islands\0", "CK\0", QLocale::CookIslands },
+    { "Chile\0", "CL\0", QLocale::Chile },
+    { "Cameroon\0", "CM\0", QLocale::Cameroon },
+    { "China\0", "CN\0", QLocale::China },
+    { "Colombia\0", "CO\0", QLocale::Colombia },
+    { "Clipperton Island\0", "CP\0", QLocale::ClippertonIsland },
+    { "Costa Rica\0", "CR\0", QLocale::CostaRica },
+    { "Cuba\0", "CU\0", QLocale::Cuba },
+    { "Cape Verde\0", "CV\0", QLocale::CapeVerde },
+    { "Curaçao\0", "CW\0", QLocale::Curacao },
+    { "Christmas Island\0", "CX\0", QLocale::ChristmasIsland },
+    { "Cyprus\0", "CY\0", QLocale::Cyprus },
+    { "Czechia\0", "CZ\0", QLocale::Czechia },
+    { "Czech Republic\0", "CZ\0", QLocale::CzechRepublic },
+    { "Germany\0", "DE\0", QLocale::Germany },
+    { "Diego Garcia\0", "DG\0", QLocale::DiegoGarcia },
+    { "Djibouti\0", "DJ\0", QLocale::Djibouti },
+    { "Denmark\0", "DK\0", QLocale::Denmark },
+    { "Dominica\0", "DM\0", QLocale::Dominica },
+    { "Dominican Republic\0", "DO\0", QLocale::DominicanRepublic },
+    { "Algeria\0", "DZ\0", QLocale::Algeria },
+    { "Ceuta & Melilla\0", "EA\0", QLocale::CeutaAndMelilla },
+    { "Ecuador\0", "EC\0", QLocale::Ecuador },
+    { "Estonia\0", "EE\0", QLocale::Estonia },
+    { "Egypt\0", "EG\0", QLocale::Egypt },
+    { "Western Sahara\0", "EH\0", QLocale::WesternSahara },
+    { "Eritrea\0", "ER\0", QLocale::Eritrea },
+    { "Spain\0", "ES\0", QLocale::Spain },
+    { "Ethiopia\0", "ET\0", QLocale::Ethiopia },
+    { "European Union\0", "EU\0", QLocale::EuropeanUnion },
+    { "Eurozone\0", "EZ\0", QLocale::Eurozone },
+    { "Finland\0", "FI\0", QLocale::Finland },
+    { "Fiji\0", "FJ\0", QLocale::Fiji },
+    { "Falkland Islands\0", "FK\0", QLocale::FalklandIslands },
+    { "Falkland Islands (Islas Malvinas)\0", "FK\0", QLocale::FalklandIslandsIslasMalvinas },
+    { "Micronesia\0", "FM\0", QLocale::Micronesia },
+    { "Faroe Islands\0", "FO\0", QLocale::FaroeIslands },
+    { "France\0", "FR\0", QLocale::France },
+    { "Gabon\0", "GA\0", QLocale::Gabon },
+    { "United Kingdom\0", "GB\0", QLocale::UnitedKingdom },
+    { "UK\0", "GB\0", QLocale::UK },
+    { "Grenada\0", "GD\0", QLocale::Grenada },
+    { "Georgia\0", "GE\0", QLocale::Georgia },
+    { "French Guiana\0", "GF\0", QLocale::FrenchGuiana },
+    { "Guernsey\0", "GG\0", QLocale::Guernsey },
+    { "Ghana\0", "GH\0", QLocale::Ghana },
+    { "Gibraltar\0", "GI\0", QLocale::Gibraltar },
+    { "Greenland\0", "GL\0", QLocale::Greenland },
+    { "Gambia\0", "GM\0", QLocale::Gambia },
+    { "Guinea\0", "GN\0", QLocale::Guinea },
+    { "Guadeloupe\0", "GP\0", QLocale::Guadeloupe },
+    { "Equatorial Guinea\0", "GQ\0", QLocale::EquatorialGuinea },
+    { "Greece\0", "GR\0", QLocale::Greece },
+    { "South Georgia & South Sandwich Islands\0", "GS\0", QLocale::SouthGeorgiaAndSouthSandwichIslands },
+    { "Guatemala\0", "GT\0", QLocale::Guatemala },
+    { "Guam\0", "GU\0", QLocale::Guam },
+    { "Guinea-Bissau\0", "GW\0", QLocale::GuineaBissau },
+    { "Guyana\0", "GY\0", QLocale::Guyana },
+    { "Hong Kong SAR China\0", "HK\0", QLocale::HongKongSARChina },
+    { "Hong Kong\0", "HK\0", QLocale::HongKong },
+    { "Heard & McDonald Islands\0", "HM\0", QLocale::HeardAndMcDonaldIslands },
+    { "Honduras\0", "HN\0", QLocale::Honduras },
+    { "Croatia\0", "HR\0", QLocale::Croatia },
+    { "Haiti\0", "HT\0", QLocale::Haiti },
+    { "Hungary\0", "HU\0", QLocale::Hungary },
+    { "Canary Islands\0", "IC\0", QLocale::CanaryIslands },
+    { "Indonesia\0", "ID\0", QLocale::Indonesia },
+    { "Ireland\0", "IE\0", QLocale::Ireland },
+    { "Israel\0", "IL\0", QLocale::Israel },
+    { "Isle of Man\0", "IM\0", QLocale::IsleofMan },
+    { "India\0", "IN\0", QLocale::India },
+    { "British Indian Ocean Territory\0", "IO\0", QLocale::BritishIndianOceanTerritory },
+    { "Iraq\0", "IQ\0", QLocale::Iraq },
+    { "Iran\0", "IR\0", QLocale::Iran },
+    { "Iceland\0", "IS\0", QLocale::Iceland },
+    { "Italy\0", "IT\0", QLocale::Italy },
+    { "Jersey\0", "JE\0", QLocale::Jersey },
+    { "Jamaica\0", "JM\0", QLocale::Jamaica },
+    { "Jordan\0", "JO\0", QLocale::Jordan },
+    { "Japan\0", "JP\0", QLocale::Japan },
+    { "Kenya\0", "KE\0", QLocale::Kenya },
+    { "Kyrgyzstan\0", "KG\0", QLocale::Kyrgyzstan },
+    { "Cambodia\0", "KH\0", QLocale::Cambodia },
+    { "Kiribati\0", "KI\0", QLocale::Kiribati },
+    { "Comoros\0", "KM\0", QLocale::Comoros },
+    { "St. Kitts & Nevis\0", "KN\0", QLocale::StKittsAndNevis },
+    { "North Korea\0", "KP\0", QLocale::NorthKorea },
+    { "South Korea\0", "KR\0", QLocale::SouthKorea },
+    { "Kuwait\0", "KW\0", QLocale::Kuwait },
+    { "Cayman Islands\0", "KY\0", QLocale::CaymanIslands },
+    { "Kazakhstan\0", "KZ\0", QLocale::Kazakhstan },
+    { "Laos\0", "LA\0", QLocale::Laos },
+    { "Lebanon\0", "LB\0", QLocale::Lebanon },
+    { "St. Lucia\0", "LC\0", QLocale::StLucia },
+    { "Liechtenstein\0", "LI\0", QLocale::Liechtenstein },
+    { "Sri Lanka\0", "LK\0", QLocale::SriLanka },
+    { "Liberia\0", "LR\0", QLocale::Liberia },
+    { "Lesotho\0", "LS\0", QLocale::Lesotho },
+    { "Lithuania\0", "LT\0", QLocale::Lithuania },
+    { "Luxembourg\0", "LU\0", QLocale::Luxembourg },
+    { "Latvia\0", "LV\0", QLocale::Latvia },
+    { "Libya\0", "LY\0", QLocale::Libya },
+    { "Morocco\0", "MA\0", QLocale::Morocco },
+    { "Monaco\0", "MC\0", QLocale::Monaco },
+    { "Moldova\0", "MD\0", QLocale::Moldova },
+    { "Montenegro\0", "ME\0", QLocale::Montenegro },
+    { "St. Martin\0", "MF\0", QLocale::StMartin },
+    { "Madagascar\0", "MG\0", QLocale::Madagascar },
+    { "Marshall Islands\0", "MH\0", QLocale::MarshallIslands },
+    { "North Macedonia\0", "MK\0", QLocale::NorthMacedonia },
+    { "Mali\0", "ML\0", QLocale::Mali },
+    { "Myanmar (Burma)\0", "MM\0", QLocale::MyanmarBurma },
+    { "Myanmar\0", "MM\0", QLocale::Myanmar },
+    { "Mongolia\0", "MN\0", QLocale::Mongolia },
+    { "Macao SAR China\0", "MO\0", QLocale::MacaoSARChina },
+    { "Macao\0", "MO\0", QLocale::Macao },
+    { "Northern Mariana Islands\0", "MP\0", QLocale::NorthernMarianaIslands },
+    { "Martinique\0", "MQ\0", QLocale::Martinique },
+    { "Mauritania\0", "MR\0", QLocale::Mauritania },
+    { "Montserrat\0", "MS\0", QLocale::Montserrat },
+    { "Malta\0", "MT\0", QLocale::Malta },
+    { "Mauritius\0", "MU\0", QLocale::Mauritius },
+    { "Maldives\0", "MV\0", QLocale::Maldives },
+    { "Malawi\0", "MW\0", QLocale::Malawi },
+    { "Mexico\0", "MX\0", QLocale::Mexico },
+    { "Malaysia\0", "MY\0", QLocale::Malaysia },
+    { "Mozambique\0", "MZ\0", QLocale::Mozambique },
+    { "Namibia\0", "NA\0", QLocale::Namibia },
+    { "New Caledonia\0", "NC\0", QLocale::NewCaledonia },
+    { "Niger\0", "NE\0", QLocale::Niger },
+    { "Norfolk Island\0", "NF\0", QLocale::NorfolkIsland },
+    { "Nigeria\0", "NG\0", QLocale::Nigeria },
+    { "Nicaragua\0", "NI\0", QLocale::Nicaragua },
+    { "Netherlands\0", "NL\0", QLocale::Netherlands },
+    { "Norway\0", "NO\0", QLocale::Norway },
+    { "Nepal\0", "NP\0", QLocale::Nepal },
+    { "Nauru\0", "NR\0", QLocale::AnyCountry}, // TODO: QLocale::Nauru },
+    { "Niue\0", "NU\0", QLocale::Niue },
+    { "New Zealand\0", "NZ\0", QLocale::NewZealand },
+    { "Oman\0", "OM\0", QLocale::Oman },
+    { "Panama\0", "PA\0", QLocale::Panama },
+    { "Peru\0", "PE\0", QLocale::Peru },
+    { "French Polynesia\0", "PF\0", QLocale::FrenchPolynesia },
+    { "Papua New Guinea\0", "PG\0", QLocale::PapuaNewGuinea },
+    { "Philippines\0", "PH\0", QLocale::Philippines },
+    { "Pakistan\0", "PK\0", QLocale::Pakistan },
+    { "Poland\0", "PL\0", QLocale::Poland },
+    { "St. Pierre & Miquelon\0", "PM\0", QLocale::StPierreAndMiquelon },
+    { "Pitcairn Islands\0", "PN\0", QLocale::PitcairnIslands },
+    { "Puerto Rico\0", "PR\0", QLocale::PuertoRico },
+    { "Palestinian Territories\0", "PS\0", QLocale::PalestinianTerritories },
+    { "Palestine\0", "PS\0", QLocale::Palestine },
+    { "Portugal\0", "PT\0", QLocale::Portugal },
+    { "Palau\0", "PW\0", QLocale::Palau },
+    { "Paraguay\0", "PY\0", QLocale::Paraguay },
+    { "Qatar\0", "QA\0", QLocale::Qatar },
+    { "Outlying Oceania\0", "QO\0", QLocale::OutlyingOceania },
+    { "Réunion\0", "RE\0", QLocale::Reunion },
+    { "Romania\0", "RO\0", QLocale::Romania },
+    { "Serbia\0", "RS\0", QLocale::Serbia },
+    { "Russia\0", "RU\0", QLocale::Russia },
+    { "Rwanda\0", "RW\0", QLocale::Rwanda },
+    { "Saudi Arabia\0", "SA\0", QLocale::SaudiArabia },
+    { "Solomon Islands\0", "SB\0", QLocale::SolomonIslands },
+    { "Seychelles\0", "SC\0", QLocale::Seychelles },
+    { "Sudan\0", "SD\0", QLocale::Sudan },
+    { "Sweden\0", "SE\0", QLocale::Sweden },
+    { "Singapore\0", "SG\0", QLocale::Singapore },
+    { "St. Helena\0", "SH\0", QLocale::StHelena },
+    { "Slovenia\0", "SI\0", QLocale::Slovenia },
+    { "Svalbard & Jan Mayen\0", "SJ\0", QLocale::SvalbardAndJanMayen },
+    { "Slovakia\0", "SK\0", QLocale::Slovakia },
+    { "Sierra Leone\0", "SL\0", QLocale::SierraLeone },
+    { "San Marino\0", "SM\0", QLocale::SanMarino },
+    { "Senegal\0", "SN\0", QLocale::Senegal },
+    { "Somalia\0", "SO\0", QLocale::Somalia },
+    { "Suriname\0", "SR\0", QLocale::Suriname },
+    { "South Sudan\0", "SS\0", QLocale::SouthSudan },
+    { "São Tomé & Príncipe\0", "ST\0", QLocale::SaoTomeAndPrincipe },
+    { "El Salvador\0", "SV\0", QLocale::ElSalvador },
+    { "Sint Maarten\0", "SX\0", QLocale::SintMaarten },
+    { "Syria\0", "SY\0", QLocale::Syria },
+    { "Eswatini\0", "SZ\0", QLocale::Eswatini },
+    { "Swaziland\0", "SZ\0", QLocale::Swaziland },
+    { "Tristan da Cunha\0", "TA\0", QLocale::TristandaCunha },
+    { "Turks & Caicos Islands\0", "TC\0", QLocale::TurksAndCaicosIslands },
+    { "Chad\0", "TD\0", QLocale::Chad },
+    { "French Southern Territories\0", "TF\0", QLocale::FrenchSouthernTerritories },
+    { "Togo\0", "TG\0", QLocale::Togo },
+    { "Thailand\0", "TH\0", QLocale::Thailand },
+    { "Tajikistan\0", "TJ\0", QLocale::Tajikistan },
+    { "Tokelau\0", "TK\0", QLocale::AnyCountry }, // TODO: QLocale::Tokelau },
+    { "Timor-Leste\0", "TL\0", QLocale::TimorLeste },
+    { "East Timor\0", "TL\0", QLocale::EastTimor },
+    { "Turkmenistan\0", "TM\0", QLocale::Turkmenistan },
+    { "Tunisia\0", "TN\0", QLocale::Tunisia },
+    { "Tonga\0", "TO\0", QLocale::Tonga },
+    { "Turkey\0", "TR\0", QLocale::Turkey },
+    { "Trinidad & Tobago\0", "TT\0", QLocale::TrinidadAndTobago },
+    { "Tuvalu\0", "TV\0", QLocale::AnyCountry }, // TODO: QLocale::Tuvalu },
+    { "Taiwan\0", "TW\0", QLocale::Taiwan },
+    { "Tanzania\0", "TZ\0", QLocale::Tanzania },
+    { "Ukraine\0", "UA\0", QLocale::Ukraine },
+    { "Uganda\0", "UG\0", QLocale::Uganda },
+    { "U.S. Outlying Islands\0", "UM\0", QLocale::UnitedStatesOutlyingIslands },
+    { "United Nations\0", "UN\0", QLocale::UnitedNations },
+    { "UN\0", "UN\0", QLocale::UN },
+    { "United States\0", "US\0", QLocale::UnitedStates },
+    { "US\0", "US\0", QLocale::US },
+    { "Uruguay\0", "UY\0", QLocale::Uruguay },
+    { "Uzbekistan\0", "UZ\0", QLocale::Uzbekistan },
+    { "Vatican City\0", "VA\0", QLocale::VaticanCity },
+    { "St. Vincent & Grenadines\0", "VC\0", QLocale::StVincentAndGrenadines },
+    { "Venezuela\0", "VE\0", QLocale::Venezuela },
+    { "British Virgin Islands\0", "VG\0", QLocale::BritishVirginIslands },
+    { "U.S. Virgin Islands\0", "VI\0", QLocale::UnitedStatesVirginIslands },
+    { "Vietnam\0", "VN\0", QLocale::Vietnam },
+    { "Vanuatu\0", "VU\0", QLocale::Vanuatu },
+    { "Wallis & Futuna\0", "WF\0", QLocale::WallisAndFutuna },
+    { "Samoa\0", "WS\0", QLocale::Samoa },
+    { "Pseudo-Accents\0", "XA\0", QLocale::PseudoAccents },
+    { "Pseudo-Bidi\0", "XB\0", QLocale::PseudoBidi },
+    { "Kosovo\0", "XK\0", QLocale::Kosovo },
+    { "Yemen\0", "YE\0", QLocale::Yemen },
+    { "Mayotte\0", "YT\0", QLocale::Mayotte },
+    { "South Africa\0", "ZA\0", QLocale::SouthAfrica },
+    { "Zambia\0", "ZM\0", QLocale::Zambia },
+    { "Zimbabwe\0", "ZW\0", QLocale::Zimbabwe },
+    { "Unknown Region\0", "ZZ\0", QLocale::UnknownRegion },
 };
+static const qint16 countryTblSize = sizeof(countryTbl) / sizeof(countryTblData);
 
-static const char country_name_list[] =
-"Default\0"
-"Afghanistan\0"
-"Albania\0"
-"Algeria\0"
-"AmericanSamoa\0"
-"Andorra\0"
-"Angola\0"
-"Anguilla\0"
-"Antarctica\0"
-"AntiguaAndBarbuda\0"
-"Argentina\0"
-"Armenia\0"
-"Aruba\0"
-"Australia\0"
-"Austria\0"
-"Azerbaijan\0"
-"Bahamas\0"
-"Bahrain\0"
-"Bangladesh\0"
-"Barbados\0"
-"Belarus\0"
-"Belgium\0"
-"Belize\0"
-"Benin\0"
-"Bermuda\0"
-"Bhutan\0"
-"Bolivia\0"
-"BosniaAndHerzegowina\0"
-"Botswana\0"
-"BouvetIsland\0"
-"Brazil\0"
-"BritishIndianOceanTerritory\0"
-"BruneiDarussalam\0"
-"Bulgaria\0"
-"BurkinaFaso\0"
-"Burundi\0"
-"Cambodia\0"
-"Cameroon\0"
-"Canada\0"
-"CapeVerde\0"
-"CaymanIslands\0"
-"CentralAfricanRepublic\0"
-"Chad\0"
-"Chile\0"
-"China\0"
-"ChristmasIsland\0"
-"CocosIslands\0"
-"Colombia\0"
-"Comoros\0"
-"DemocraticRepublicOfCongo\0"
-"PeoplesRepublicOfCongo\0"
-"CookIslands\0"
-"CostaRica\0"
-"IvoryCoast\0"
-"Croatia\0"
-"Cuba\0"
-"Cyprus\0"
-"CzechRepublic\0"
-"Denmark\0"
-"Djibouti\0"
-"Dominica\0"
-"DominicanRepublic\0"
-"EastTimor\0"
-"Ecuador\0"
-"Egypt\0"
-"ElSalvador\0"
-"EquatorialGuinea\0"
-"Eritrea\0"
-"Estonia\0"
-"Ethiopia\0"
-"FalklandIslands\0"
-"FaroeIslands\0"
-"Fiji\0"
-"Finland\0"
-"France\0"
-"MetropolitanFrance\0"
-"FrenchGuiana\0"
-"FrenchPolynesia\0"
-"FrenchSouthernTerritories\0"
-"Gabon\0"
-"Gambia\0"
-"Georgia\0"
-"Germany\0"
-"Ghana\0"
-"Gibraltar\0"
-"Greece\0"
-"Greenland\0"
-"Grenada\0"
-"Guadeloupe\0"
-"Guam\0"
-"Guatemala\0"
-"Guinea\0"
-"GuineaBissau\0"
-"Guyana\0"
-"Haiti\0"
-"HeardAndMcDonaldIslands\0"
-"Honduras\0"
-"HongKong\0"
-"Hungary\0"
-"Iceland\0"
-"India\0"
-"Indonesia\0"
-"Iran\0"
-"Iraq\0"
-"Ireland\0"
-"Israel\0"
-"Italy\0"
-"Jamaica\0"
-"Japan\0"
-"Jordan\0"
-"Kazakhstan\0"
-"Kenya\0"
-"Kiribati\0"
-"DemocraticRepublicOfKorea\0"
-"RepublicOfKorea\0"
-"Kuwait\0"
-"Kyrgyzstan\0"
-"Lao\0"
-"Latvia\0"
-"Lebanon\0"
-"Lesotho\0"
-"Liberia\0"
-"LibyanArabJamahiriya\0"
-"Liechtenstein\0"
-"Lithuania\0"
-"Luxembourg\0"
-"Macau\0"
-"Macedonia\0"
-"Madagascar\0"
-"Malawi\0"
-"Malaysia\0"
-"Maldives\0"
-"Mali\0"
-"Malta\0"
-"MarshallIslands\0"
-"Martinique\0"
-"Mauritania\0"
-"Mauritius\0"
-"Mayotte\0"
-"Mexico\0"
-"Micronesia\0"
-"Moldova\0"
-"Monaco\0"
-"Mongolia\0"
-"Montserrat\0"
-"Morocco\0"
-"Mozambique\0"
-"Myanmar\0"
-"Namibia\0"
-"Nauru\0"
-"Nepal\0"
-"Netherlands\0"
-"NetherlandsAntilles\0"
-"NewCaledonia\0"
-"NewZealand\0"
-"Nicaragua\0"
-"Niger\0"
-"Nigeria\0"
-"Niue\0"
-"NorfolkIsland\0"
-"NorthernMarianaIslands\0"
-"Norway\0"
-"Oman\0"
-"Pakistan\0"
-"Palau\0"
-"PalestinianTerritory\0"
-"Panama\0"
-"PapuaNewGuinea\0"
-"Paraguay\0"
-"Peru\0"
-"Philippines\0"
-"Pitcairn\0"
-"Poland\0"
-"Portugal\0"
-"PuertoRico\0"
-"Qatar\0"
-"Reunion\0"
-"Romania\0"
-"RussianFederation\0"
-"Rwanda\0"
-"SaintKittsAndNevis\0"
-"StLucia\0"
-"StVincentAndTheGrenadines\0"
-"Samoa\0"
-"SanMarino\0"
-"SaoTomeAndPrincipe\0"
-"SaudiArabia\0"
-"Senegal\0"
-"Seychelles\0"
-"SierraLeone\0"
-"Singapore\0"
-"Slovakia\0"
-"Slovenia\0"
-"SolomonIslands\0"
-"Somalia\0"
-"SouthAfrica\0"
-"SouthGeorgiaAndTheSouthSandwichIslands\0"
-"Spain\0"
-"SriLanka\0"
-"StHelena\0"
-"StPierreAndMiquelon\0"
-"Sudan\0"
-"Suriname\0"
-"SvalbardAndJanMayenIslands\0"
-"Swaziland\0"
-"Sweden\0"
-"Switzerland\0"
-"SyrianArabRepublic\0"
-"Taiwan\0"
-"Tajikistan\0"
-"Tanzania\0"
-"Thailand\0"
-"Togo\0"
-"Tokelau\0"
-"Tonga\0"
-"TrinidadAndTobago\0"
-"Tunisia\0"
-"Turkey\0"
-"Turkmenistan\0"
-"TurksAndCaicosIslands\0"
-"Tuvalu\0"
-"Uganda\0"
-"Ukraine\0"
-"UnitedArabEmirates\0"
-"UnitedKingdom\0"
-"UnitedStates\0"
-"UnitedStatesMinorOutlyingIslands\0"
-"Uruguay\0"
-"Uzbekistan\0"
-"Vanuatu\0"
-"VaticanCityState\0"
-"Venezuela\0"
-"VietNam\0"
-"BritishVirginIslands\0"
-"USVirginIslands\0"
-"WallisAndFutunaIslands\0"
-"WesternSahara\0"
-"Yemen\0"
-"Yugoslavia\0"
-"Zambia\0"
-"Zimbabwe\0"
-"SerbiaAndMontenegro\0"
-"Montenegro\0"
-"Serbia\0"
-"Saint Barthelemy\0"
-"Saint Martin\0"
-"LatinAmericaAndTheCaribbean\0"
-;
-
-static const quint16 country_name_index[] = {
-     0, // AnyCountry
-     8, // Afghanistan
-    20, // Albania
-    28, // Algeria
-    36, // AmericanSamoa
-    50, // Andorra
-    58, // Angola
-    65, // Anguilla
-    74, // Antarctica
-    85, // AntiguaAndBarbuda
-   103, // Argentina
-   113, // Armenia
-   121, // Aruba
-   127, // Australia
-   137, // Austria
-   145, // Azerbaijan
-   156, // Bahamas
-   164, // Bahrain
-   172, // Bangladesh
-   183, // Barbados
-   192, // Belarus
-   200, // Belgium
-   208, // Belize
-   215, // Benin
-   221, // Bermuda
-   229, // Bhutan
-   236, // Bolivia
-   244, // BosniaAndHerzegowina
-   265, // Botswana
-   274, // BouvetIsland
-   287, // Brazil
-   294, // BritishIndianOceanTerritory
-   322, // BruneiDarussalam
-   339, // Bulgaria
-   348, // BurkinaFaso
-   360, // Burundi
-   368, // Cambodia
-   377, // Cameroon
-   386, // Canada
-   393, // CapeVerde
-   403, // CaymanIslands
-   417, // CentralAfricanRepublic
-   440, // Chad
-   445, // Chile
-   451, // China
-   457, // ChristmasIsland
-   473, // CocosIslands
-   486, // Colombia
-   495, // Comoros
-   503, // DemocraticRepublicOfCongo
-   529, // PeoplesRepublicOfCongo
-   552, // CookIslands
-   564, // CostaRica
-   574, // IvoryCoast
-   585, // Croatia
-   593, // Cuba
-   598, // Cyprus
-   605, // CzechRepublic
-   619, // Denmark
-   627, // Djibouti
-   636, // Dominica
-   645, // DominicanRepublic
-   663, // EastTimor
-   673, // Ecuador
-   681, // Egypt
-   687, // ElSalvador
-   698, // EquatorialGuinea
-   715, // Eritrea
-   723, // Estonia
-   731, // Ethiopia
-   740, // FalklandIslands
-   756, // FaroeIslands
-   769, // Fiji
-   774, // Finland
-   782, // France
-   789, // MetropolitanFrance
-   808, // FrenchGuiana
-   821, // FrenchPolynesia
-   837, // FrenchSouthernTerritories
-   863, // Gabon
-   869, // Gambia
-   876, // Georgia
-   884, // Germany
-   892, // Ghana
-   898, // Gibraltar
-   908, // Greece
-   915, // Greenland
-   925, // Grenada
-   933, // Guadeloupe
-   944, // Guam
-   949, // Guatemala
-   959, // Guinea
-   966, // GuineaBissau
-   979, // Guyana
-   986, // Haiti
-   992, // HeardAndMcDonaldIslands
-  1016, // Honduras
-  1025, // HongKong
-  1034, // Hungary
-  1042, // Iceland
-  1050, // India
-  1056, // Indonesia
-  1066, // Iran
-  1071, // Iraq
-  1076, // Ireland
-  1084, // Israel
-  1091, // Italy
-  1097, // Jamaica
-  1105, // Japan
-  1111, // Jordan
-  1118, // Kazakhstan
-  1129, // Kenya
-  1135, // Kiribati
-  1144, // DemocraticRepublicOfKorea
-  1170, // RepublicOfKorea
-  1186, // Kuwait
-  1193, // Kyrgyzstan
-  1204, // Lao
-  1208, // Latvia
-  1215, // Lebanon
-  1223, // Lesotho
-  1231, // Liberia
-  1239, // LibyanArabJamahiriya
-  1260, // Liechtenstein
-  1274, // Lithuania
-  1284, // Luxembourg
-  1295, // Macau
-  1301, // Macedonia
-  1311, // Madagascar
-  1322, // Malawi
-  1329, // Malaysia
-  1338, // Maldives
-  1347, // Mali
-  1352, // Malta
-  1358, // MarshallIslands
-  1374, // Martinique
-  1385, // Mauritania
-  1396, // Mauritius
-  1406, // Mayotte
-  1414, // Mexico
-  1421, // Micronesia
-  1432, // Moldova
-  1440, // Monaco
-  1447, // Mongolia
-  1456, // Montserrat
-  1467, // Morocco
-  1475, // Mozambique
-  1486, // Myanmar
-  1494, // Namibia
-  1502, // Nauru
-  1508, // Nepal
-  1514, // Netherlands
-  1526, // NetherlandsAntilles
-  1546, // NewCaledonia
-  1559, // NewZealand
-  1570, // Nicaragua
-  1580, // Niger
-  1586, // Nigeria
-  1594, // Niue
-  1599, // NorfolkIsland
-  1613, // NorthernMarianaIslands
-  1636, // Norway
-  1643, // Oman
-  1648, // Pakistan
-  1657, // Palau
-  1663, // PalestinianTerritory
-  1684, // Panama
-  1691, // PapuaNewGuinea
-  1706, // Paraguay
-  1715, // Peru
-  1720, // Philippines
-  1732, // Pitcairn
-  1741, // Poland
-  1748, // Portugal
-  1757, // PuertoRico
-  1768, // Qatar
-  1774, // Reunion
-  1782, // Romania
-  1790, // RussianFederation
-  1808, // Rwanda
-  1815, // SaintKittsAndNevis
-  1834, // StLucia
-  1842, // StVincentAndTheGrenadines
-  1868, // Samoa
-  1874, // SanMarino
-  1884, // SaoTomeAndPrincipe
-  1903, // SaudiArabia
-  1915, // Senegal
-  1923, // Seychelles
-  1934, // SierraLeone
-  1946, // Singapore
-  1956, // Slovakia
-  1965, // Slovenia
-  1974, // SolomonIslands
-  1989, // Somalia
-  1997, // SouthAfrica
-  2009, // SouthGeorgiaAndTheSouthSandwichIslands
-  2048, // Spain
-  2054, // SriLanka
-  2063, // StHelena
-  2072, // StPierreAndMiquelon
-  2092, // Sudan
-  2098, // Suriname
-  2107, // SvalbardAndJanMayenIslands
-  2134, // Swaziland
-  2144, // Sweden
-  2151, // Switzerland
-  2163, // SyrianArabRepublic
-  2182, // Taiwan
-  2189, // Tajikistan
-  2200, // Tanzania
-  2209, // Thailand
-  2218, // Togo
-  2223, // Tokelau
-  2231, // Tonga
-  2237, // TrinidadAndTobago
-  2255, // Tunisia
-  2263, // Turkey
-  2270, // Turkmenistan
-  2283, // TurksAndCaicosIslands
-  2305, // Tuvalu
-  2312, // Uganda
-  2319, // Ukraine
-  2327, // UnitedArabEmirates
-  2346, // UnitedKingdom
-  2360, // UnitedStates
-  2373, // UnitedStatesMinorOutlyingIslands
-  2406, // Uruguay
-  2414, // Uzbekistan
-  2425, // Vanuatu
-  2433, // VaticanCityState
-  2450, // Venezuela
-  2460, // VietNam
-  2468, // BritishVirginIslands
-  2489, // USVirginIslands
-  2505, // WallisAndFutunaIslands
-  2528, // WesternSahara
-  2542, // Yemen
-  2548, // Yugoslavia
-  2559, // Zambia
-  2566, // Zimbabwe
-  2575, // SerbiaAndMontenegro
-  2595, // Montenegro
-  2606, // Serbia
-  2613, // Saint Barthelemy
-  2630, // Saint Martin
-  2643, // LatinAmericaAndTheCaribbean
+static const struct scriptsTblData {
+    const char* name;
+    const char* code;
+    const QLocale::Script script;
+} scriptsTbl[] = {
+    { "Default\0", "\0\0\0\0", QLocale::Script::AnyScript },
+    { "Adlam\0", "Adlm", QLocale::AdlamScript },
+    { "Afaka\0", "Afak", QLocale::AfakaScript },
+    { "Caucasian Albanian\0", "Aghb", QLocale::CaucasianAlbanianScript },
+    { "Ahom\0", "Ahom", QLocale::AhomScript },
+    { "Arabic\0", "Arab", QLocale::ArabicScript },
+    { "Perso-Arabic\0", "Arab", QLocale::PersoArabicScript },
+    { "Imperial Aramaic\0", "Armi", QLocale::ImperialAramaicScript },
+    { "Armenian\0", "Armn", QLocale::ArmenianScript },
+    { "Avestan\0", "Avst", QLocale::AvestanScript },
+    { "Balinese\0", "Bali", QLocale::BalineseScript },
+    { "Bamum\0", "Bamu", QLocale::BamumScript },
+    { "Bassa Vah\0", "Bass", QLocale::BassaVahScript },
+    { "Batak\0", "Batk", QLocale::BatakScript },
+    { "Bangla\0", "Beng", QLocale::BanglaScript },
+    { "Bhaiksuki\0", "Bhks", QLocale::BhaiksukiScript },
+    { "Blissymbols\0", "Blis", QLocale::BlissymbolsScript },
+    { "Bopomofo\0", "Bopo", QLocale::BopomofoScript },
+    { "Brahmi\0", "Brah", QLocale::BrahmiScript },
+    { "Braille\0", "Brai", QLocale::BrailleScript },
+    { "Buginese\0", "Bugi", QLocale::BugineseScript },
+    { "Buhid\0", "Buhd", QLocale::BuhidScript },
+    { "Chakma\0", "Cakm", QLocale::ChakmaScript },
+    { "Unified Canadian Aboriginal Syllabics\0", "Cans", QLocale::UnifiedCanadianAboriginalSyllabicsScript },
+    { "UCAS\0", "Cans", QLocale::UCASScript },
+    { "Carian\0", "Cari", QLocale::CarianScript },
+    { "Cham\0", "Cham", QLocale::ChamScript },
+    { "Cherokee\0", "Cher", QLocale::CherokeeScript },
+    { "Cirth\0", "Cirt", QLocale::CirthScript },
+    { "Coptic\0", "Copt", QLocale::CopticScript },
+    { "Cypriot\0", "Cprt", QLocale::CypriotScript },
+    { "Cyrillic\0", "Cyrl", QLocale::CyrillicScript },
+    { "Old Church Slavonic Cyrillic\0", "Cyrs", QLocale::OldChurchSlavonicCyrillicScript },
+    { "Devanagari\0", "Deva", QLocale::DevanagariScript },
+    { "Dogra\0", "Dogr", QLocale::DograScript },
+    { "Deseret\0", "Dsrt", QLocale::DeseretScript },
+    { "Duployan shorthand\0", "Dupl", QLocale::DuployanshorthandScript },
+    { "Egyptian demotic\0", "Egyd", QLocale::EgyptiandemoticScript },
+    { "Egyptian hieratic\0", "Egyh", QLocale::EgyptianhieraticScript },
+    { "Egyptian hieroglyphs\0", "Egyp", QLocale::EgyptianhieroglyphsScript },
+    { "Elbasan\0", "Elba", QLocale::ElbasanScript },
+    { "Elymaic\0", "Elym", QLocale::ElymaicScript },
+    { "Ethiopic\0", "Ethi", QLocale::EthiopicScript },
+    { "Georgian Khutsuri\0", "Geok", QLocale::GeorgianKhutsuriScript },
+    { "Georgian\0", "Geor", QLocale::GeorgianScript },
+    { "Glagolitic\0", "Glag", QLocale::GlagoliticScript },
+    { "Gunjala Gondi\0", "Gong", QLocale::GunjalaGondiScript },
+    { "Masaram Gondi\0", "Gonm", QLocale::MasaramGondiScript },
+    { "Gothic\0", "Goth", QLocale::GothicScript },
+    { "Grantha\0", "Gran", QLocale::GranthaScript },
+    { "Greek\0", "Grek", QLocale::GreekScript },
+    { "Gujarati\0", "Gujr", QLocale::GujaratiScript },
+    { "Gurmukhi\0", "Guru", QLocale::GurmukhiScript },
+    { "Han with Bopomofo\0", "Hanb", QLocale::HanwithBopomofoScript },
+    { "Hangul\0", "Hang", QLocale::HangulScript },
+    { "Han\0", "Hani", QLocale::HanScript },
+    { "Hanunoo\0", "Hano", QLocale::HanunooScript },
+    { "Simplified\0", "Hans", QLocale::SimplifiedScript },
+    { "Simplified Han\0", "Hans", QLocale::SimplifiedHanScript },
+    { "Traditional\0", "Hant", QLocale::TraditionalScript },
+    { "Traditional Han\0", "Hant", QLocale::TraditionalHanScript },
+    { "Hatran\0", "Hatr", QLocale::HatranScript },
+    { "Hebrew\0", "Hebr", QLocale::HebrewScript },
+    { "Hiragana\0", "Hira", QLocale::HiraganaScript },
+    { "Anatolian Hieroglyphs\0", "Hluw", QLocale::AnatolianHieroglyphsScript },
+    { "Pahawh Hmong\0", "Hmng", QLocale::PahawhHmongScript },
+    { "Nyiakeng Puachue Hmong\0", "Hmnp", QLocale::NyiakengPuachueHmongScript },
+    { "Japanese syllabaries\0", "Hrkt", QLocale::JapanesesyllabariesScript },
+    { "Old Hungarian\0", "Hung", QLocale::OldHungarianScript },
+    { "Indus\0", "Inds", QLocale::IndusScript },
+    { "Old Italic\0", "Ital", QLocale::OldItalicScript },
+    { "Jamo\0", "Jamo", QLocale::JamoScript },
+    { "Javanese\0", "Java", QLocale::JavaneseScript },
+    { "Japanese\0", "Jpan", QLocale::JapaneseScript },
+    { "Jurchen\0", "Jurc", QLocale::JurchenScript },
+    { "Kayah Li\0", "Kali", QLocale::KayahLiScript },
+    { "Katakana\0", "Kana", QLocale::KatakanaScript },
+    { "Kharoshthi\0", "Khar", QLocale::KharoshthiScript },
+    { "Khmer\0", "Khmr", QLocale::KhmerScript },
+    { "Khojki\0", "Khoj", QLocale::KhojkiScript },
+    { "Kannada\0", "Knda", QLocale::KannadaScript },
+    { "Korean\0", "Kore", QLocale::KoreanScript },
+    { "Kpelle\0", "Kpel", QLocale::KpelleScript },
+    { "Kaithi\0", "Kthi", QLocale::KaithiScript },
+    { "Lanna\0", "Lana", QLocale::LannaScript },
+    { "Lao\0", "Laoo", QLocale::LaoScript },
+    { "Fraktur Latin\0", "Latf", QLocale::FrakturLatinScript },
+    { "Gaelic Latin\0", "Latg", QLocale::GaelicLatinScript },
+    { "Latin\0", "Latn", QLocale::LatinScript },
+    { "Lepcha\0", "Lepc", QLocale::LepchaScript },
+    { "Limbu\0", "Limb", QLocale::LimbuScript },
+    { "Linear A\0", "Lina", QLocale::LinearAScript },
+    { "Linear B\0", "Linb", QLocale::LinearBScript },
+    { "Fraser\0", "Lisu", QLocale::FraserScript },
+    { "Loma\0", "Loma", QLocale::LomaScript },
+    { "Lycian\0", "Lyci", QLocale::LycianScript },
+    { "Lydian\0", "Lydi", QLocale::LydianScript },
+    { "Mahajani\0", "Mahj", QLocale::MahajaniScript },
+    { "Makasar\0", "Maka", QLocale::MakasarScript },
+    { "Mandaean\0", "Mand", QLocale::MandaeanScript },
+    { "Manichaean\0", "Mani", QLocale::ManichaeanScript },
+    { "Marchen\0", "Marc", QLocale::MarchenScript },
+    { "Mayan hieroglyphs\0", "Maya", QLocale::MayanhieroglyphsScript },
+    { "Medefaidrin\0", "Medf", QLocale::MedefaidrinScript },
+    { "Mende\0", "Mend", QLocale::MendeScript },
+    { "Meroitic Cursive\0", "Merc", QLocale::MeroiticCursiveScript },
+    { "Meroitic\0", "Mero", QLocale::MeroiticScript },
+    { "Malayalam\0", "Mlym", QLocale::MalayalamScript },
+    { "Modi\0", "Modi", QLocale::ModiScript },
+    { "Mongolian\0", "Mong", QLocale::MongolianScript },
+    { "Moon\0", "Moon", QLocale::MoonScript },
+    { "Mro\0", "Mroo", QLocale::MroScript },
+    { "Meitei Mayek\0", "Mtei", QLocale::MeiteiMayekScript },
+    { "Multani\0", "Mult", QLocale::MultaniScript },
+    { "Myanmar\0", "Mymr", QLocale::MyanmarScript },
+    { "Nandinagari\0", "Nand", QLocale::NandinagariScript },
+    { "Old North Arabian\0", "Narb", QLocale::OldNorthArabianScript },
+    { "Nabataean\0", "Nbat", QLocale::NabataeanScript },
+    { "Newa\0", "Newa", QLocale::NewaScript },
+    { "Naxi Geba\0", "Nkgb", QLocale::NaxiGebaScript },
+    { "N’Ko\0", "Nkoo", QLocale::NKoScript },
+    { "Nüshu\0", "Nshu", QLocale::NushuScript },
+    { "Ogham\0", "Ogam", QLocale::OghamScript },
+    { "Ol Chiki\0", "Olck", QLocale::OlChikiScript },
+    { "Orkhon\0", "Orkh", QLocale::OrkhonScript },
+    { "Odia\0", "Orya", QLocale::OdiaScript },
+    { "Osage\0", "Osge", QLocale::OsageScript },
+    { "Osmanya\0", "Osma", QLocale::OsmanyaScript },
+    { "Palmyrene\0", "Palm", QLocale::PalmyreneScript },
+    { "Pau Cin Hau\0", "Pauc", QLocale::PauCinHauScript },
+    { "Old Permic\0", "Perm", QLocale::OldPermicScript },
+    { "Phags-pa\0", "Phag", QLocale::PhagspaScript },
+    { "Inscriptional Pahlavi\0", "Phli", QLocale::InscriptionalPahlaviScript },
+    { "Psalter Pahlavi\0", "Phlp", QLocale::PsalterPahlaviScript },
+    { "Book Pahlavi\0", "Phlv", QLocale::BookPahlaviScript },
+    { "Phoenician\0", "Phnx", QLocale::PhoenicianScript },
+    { "Pollard Phonetic\0", "Plrd", QLocale::PollardPhoneticScript },
+    { "Inscriptional Parthian\0", "Prti", QLocale::InscriptionalParthianScript },
+    { "Rejang\0", "Rjng", QLocale::RejangScript },
+    { "Hanifi Rohingya\0", "Rohg", QLocale::HanifiRohingyaScript },
+    { "Rongorongo\0", "Roro", QLocale::RongorongoScript },
+    { "Runic\0", "Runr", QLocale::RunicScript },
+    { "Samaritan\0", "Samr", QLocale::SamaritanScript },
+    { "Sarati\0", "Sara", QLocale::SaratiScript },
+    { "Old South Arabian\0", "Sarb", QLocale::OldSouthArabianScript },
+    { "Saurashtra\0", "Saur", QLocale::SaurashtraScript },
+    { "SignWriting\0", "Sgnw", QLocale::SignWritingScript },
+    { "Shavian\0", "Shaw", QLocale::ShavianScript },
+    { "Sharada\0", "Shrd", QLocale::SharadaScript },
+    { "Siddham\0", "Sidd", QLocale::SiddhamScript },
+    { "Khudawadi\0", "Sind", QLocale::KhudawadiScript },
+    { "Sinhala\0", "Sinh", QLocale::SinhalaScript },
+    { "Sogdian\0", "Sogd", QLocale::SogdianScript },
+    { "Old Sogdian\0", "Sogo", QLocale::OldSogdianScript },
+    { "Sora Sompeng\0", "Sora", QLocale::SoraSompengScript },
+    { "Soyombo\0", "Soyo", QLocale::SoyomboScript },
+    { "Sundanese\0", "Sund", QLocale::SundaneseScript },
+    { "Syloti Nagri\0", "Sylo", QLocale::SylotiNagriScript },
+    { "Syriac\0", "Syrc", QLocale::SyriacScript },
+    { "Estrangelo Syriac\0", "Syre", QLocale::EstrangeloSyriacScript },
+    { "Western Syriac\0", "Syrj", QLocale::WesternSyriacScript },
+    { "Eastern Syriac\0", "Syrn", QLocale::EasternSyriacScript },
+    { "Tagbanwa\0", "Tagb", QLocale::TagbanwaScript },
+    { "Takri\0", "Takr", QLocale::TakriScript },
+    { "Tai Le\0", "Tale", QLocale::TaiLeScript },
+    { "New Tai Lue\0", "Talu", QLocale::NewTaiLueScript },
+    { "Tamil\0", "Taml", QLocale::TamilScript },
+    { "Tangut\0", "Tang", QLocale::TangutScript },
+    { "Tai Viet\0", "Tavt", QLocale::TaiVietScript },
+    { "Telugu\0", "Telu", QLocale::TeluguScript },
+    { "Tengwar\0", "Teng", QLocale::TengwarScript },
+    { "Tifinagh\0", "Tfng", QLocale::TifinaghScript },
+    { "Tagalog\0", "Tglg", QLocale::TagalogScript },
+    { "Thaana\0", "Thaa", QLocale::ThaanaScript },
+    { "Thai\0", "Thai", QLocale::ThaiScript },
+    { "Tibetan\0", "Tibt", QLocale::TibetanScript },
+    { "Tirhuta\0", "Tirh", QLocale::TirhutaScript },
+    { "Ugaritic\0", "Ugar", QLocale::UgariticScript },
+    { "Vai\0", "Vaii", QLocale::VaiScript },
+    { "Visible Speech\0", "Visp", QLocale::VisibleSpeechScript },
+    { "Varang Kshiti\0", "Wara", QLocale::VarangKshitiScript },
+    { "Wancho\0", "Wcho", QLocale::WanchoScript },
+    { "Woleai\0", "Wole", QLocale::WoleaiScript },
+    { "Old Persian\0", "Xpeo", QLocale::OldPersianScript },
+    { "Sumero-Akkadian Cuneiform\0", "Xsux", QLocale::SumeroAkkadianCuneiformScript },
+    { "S-A Cuneiform\0", "Xsux", QLocale::SACuneiformScript },
+    { "Yi\0", "Yiii", QLocale::YiScript },
+    { "Zanabazar Square\0", "Zanb", QLocale::ZanabazarSquareScript },
+    { "Inherited\0", "Zinh", QLocale::InheritedScript },
+    { "Mathematical Notation\0", "Zmth", QLocale::MathematicalNotationScript },
+    { "Emoji\0", "Zsye", QLocale::EmojiScript },
+    { "Symbols\0", "Zsym", QLocale::SymbolsScript },
+    { "Unwritten\0", "Zxxx", QLocale::UnwrittenScript },
+    { "Common\0", "Zyyy", QLocale::CommonScript },
+    { "Unknown Script\0", "Zzzz", QLocale::UnknownScript },
 };
-
-static const unsigned char language_code_list[] =
-"  \0" // AnyLanguage
-"  \0" // C
-"ab\0" // Abkhazian
-"om\0" // Afan
-"aa\0" // Afar
-"af\0" // Afrikaans
-"sq\0" // Albanian
-"am\0" // Amharic
-"ar\0" // Arabic
-"hy\0" // Armenian
-"as\0" // Assamese
-"ay\0" // Aymara
-"az\0" // Azerbaijani
-"ba\0" // Bashkir
-"eu\0" // Basque
-"bn\0" // Bengali
-"dz\0" // Bhutani
-"bh\0" // Bihari
-"bi\0" // Bislama
-"br\0" // Breton
-"bg\0" // Bulgarian
-"my\0" // Burmese
-"be\0" // Byelorussian
-"km\0" // Cambodian
-"ca\0" // Catalan
-"zh\0" // Chinese
-"co\0" // Corsican
-"hr\0" // Croatian
-"cs\0" // Czech
-"da\0" // Danish
-"nl\0" // Dutch
-"en\0" // English
-"eo\0" // Esperanto
-"et\0" // Estonian
-"fo\0" // Faroese
-"fj\0" // Fiji
-"fi\0" // Finnish
-"fr\0" // French
-"fy\0" // Frisian
-"gd\0" // Gaelic
-"gl\0" // Galician
-"ka\0" // Georgian
-"de\0" // German
-"el\0" // Greek
-"kl\0" // Greenlandic
-"gn\0" // Guarani
-"gu\0" // Gujarati
-"ha\0" // Hausa
-"he\0" // Hebrew
-"hi\0" // Hindi
-"hu\0" // Hungarian
-"is\0" // Icelandic
-"id\0" // Indonesian
-"ia\0" // Interlingua
-"ie\0" // Interlingue
-"iu\0" // Inuktitut
-"ik\0" // Inupiak
-"ga\0" // Irish
-"it\0" // Italian
-"ja\0" // Japanese
-"jv\0" // Javanese
-"kn\0" // Kannada
-"ks\0" // Kashmiri
-"kk\0" // Kazakh
-"rw\0" // Kinyarwanda
-"ky\0" // Kirghiz
-"ko\0" // Korean
-"ku\0" // Kurdish
-"rn\0" // Rundi
-"lo\0" // Laothian
-"la\0" // Latin
-"lv\0" // Latvian
-"ln\0" // Lingala
-"lt\0" // Lithuanian
-"mk\0" // Macedonian
-"mg\0" // Malagasy
-"ms\0" // Malay
-"ml\0" // Malayalam
-"mt\0" // Maltese
-"mi\0" // Maori
-"mr\0" // Marathi
-"mo\0" // Moldavian
-"mn\0" // Mongolian
-"na\0" // Nauru
-"ne\0" // Nepali
-"nb\0" // Norwegian
-"oc\0" // Occitan
-"or\0" // Oriya
-"ps\0" // Pashto
-"fa\0" // Persian
-"pl\0" // Polish
-"pt\0" // Portuguese
-"pa\0" // Punjabi
-"qu\0" // Quechua
-"rm\0" // RhaetoRomance
-"ro\0" // Romanian
-"ru\0" // Russian
-"sm\0" // Samoan
-"sg\0" // Sangho
-"sa\0" // Sanskrit
-"sr\0" // Serbian
-"sh\0" // SerboCroatian
-"st\0" // Sesotho
-"tn\0" // Setswana
-"sn\0" // Shona
-"sd\0" // Sindhi
-"si\0" // Singhalese
-"ss\0" // Siswati
-"sk\0" // Slovak
-"sl\0" // Slovenian
-"so\0" // Somali
-"es\0" // Spanish
-"su\0" // Sundanese
-"sw\0" // Swahili
-"sv\0" // Swedish
-"tl\0" // Tagalog
-"tg\0" // Tajik
-"ta\0" // Tamil
-"tt\0" // Tatar
-"te\0" // Telugu
-"th\0" // Thai
-"bo\0" // Tibetan
-"ti\0" // Tigrinya
-"to\0" // Tonga
-"ts\0" // Tsonga
-"tr\0" // Turkish
-"tk\0" // Turkmen
-"tw\0" // Twi
-"ug\0" // Uigur
-"uk\0" // Ukrainian
-"ur\0" // Urdu
-"uz\0" // Uzbek
-"vi\0" // Vietnamese
-"vo\0" // Volapuk
-"cy\0" // Welsh
-"wo\0" // Wolof
-"xh\0" // Xhosa
-"yi\0" // Yiddish
-"yo\0" // Yoruba
-"za\0" // Zhuang
-"zu\0" // Zulu
-"nn\0" // Nynorsk
-"bs\0" // Bosnian
-"dv\0" // Divehi
-"gv\0" // Manx
-"kw\0" // Cornish
-"ak\0" // Akan
-"kok" // Konkani
-"gaa" // Ga
-"ig\0" // Igbo
-"kam" // Kamba
-"syr" // Syriac
-"byn" // Blin
-"gez" // Geez
-"kfo" // Koro
-"sid" // Sidamo
-"cch" // Atsam
-"tig" // Tigre
-"kaj" // Jju
-"fur" // Friulian
-"ve\0" // Venda
-"ee\0" // Ewe
-"wal" // Walamo
-"haw" // Hawaiian
-"kcg" // Tyap
-"ny\0" // Chewa
-"fil" // Filipino
-"gsw" // Swiss German
-"ii\0" // Sichuan Yi
-"kpe" // Kpelle
-"nds" // Low German
-"nr\0" // South Ndebele
-"nso" // Northern Sotho
-"se\0" // Northern Sami
-"trv" // Taroko
-"guz" // Gusii
-"dav" // Taita
-"ff\0" // Fulah
-"ki\0" // Kikuyu
-"saq" // Samburu
-"seh" // Sena
-"nd\0" // North Ndebele
-"rof" // Rombo
-"shi" // Tachelhit
-"kab" // Kabyle
-"nyn" // Nyankole
-"bez" // Bena
-"vun" // Vunjo
-"bm\0" // Bambara
-"ebu" // Embu
-"chr" // Cherokee
-"mfe" // Morisyen
-"kde" // Makonde
-"lag" // Langi
-"lg\0" // Ganda
-"bem" // Bemba
-"kea" // Kabuverdianu
-"mer" // Meru
-"kln" // Kalenjin
-"naq" // Nama
-"jmc" // Machame
-"ksh" // Colognian
-"mas" // Masai
-"xog" // Soga
-"luy" // Luyia
-"asa" // Asu
-"teo" // Teso
-"ssy" // Saho
-"khq" // Koyra Chiini
-"rwk" // Rwa
-"luo" // Luo
-"cgg" // Chiga
-"tzm" // Central Morocco Tamazight
-"ses" // Koyraboro Senni
-"ksb" // Shambala
-"brx" // Bodo
-"agq" // Aghem
-"bas" // Basaa
-"dje" // Zarma
-"dua" // Duala
-"dyo" // JolaFonyi
-"ewo" // Ewondo
-"ksf" // Bafia
-"lu\0" // LubaKatanga
-"mgh" // MakhuwaMeetto
-"mua" // Mundang
-"nmg" // Kwasio
-"nus" // Nuer
-"sah" // Sakha
-"sbp" // Sangu
-"swc" // Congo Swahili
-"twq" // Tasawaq
-"vai" // Vai
-"wae" // Walser
-"yav" // Yangben
-;
-
-static const unsigned char script_code_list[] =
-"\0\0\0\0" // AnyScript
-"Arab" // Arabic
-"Cyrl" // Cyrillic
-"Dsrt" // Deseret
-"Guru" // Gurmukhi
-"Hans" // Simplified Han
-"Hant" // Traditional Han
-"Latn" // Latin
-"Mong" // Mongolian
-"Tfng" // Tifinagh
-;
-static const unsigned char country_code_list[] =
-"  \0" // AnyCountry
-"AF\0" // Afghanistan
-"AL\0" // Albania
-"DZ\0" // Algeria
-"AS\0" // AmericanSamoa
-"AD\0" // Andorra
-"AO\0" // Angola
-"AI\0" // Anguilla
-"AQ\0" // Antarctica
-"AG\0" // AntiguaAndBarbuda
-"AR\0" // Argentina
-"AM\0" // Armenia
-"AW\0" // Aruba
-"AU\0" // Australia
-"AT\0" // Austria
-"AZ\0" // Azerbaijan
-"BS\0" // Bahamas
-"BH\0" // Bahrain
-"BD\0" // Bangladesh
-"BB\0" // Barbados
-"BY\0" // Belarus
-"BE\0" // Belgium
-"BZ\0" // Belize
-"BJ\0" // Benin
-"BM\0" // Bermuda
-"BT\0" // Bhutan
-"BO\0" // Bolivia
-"BA\0" // BosniaAndHerzegowina
-"BW\0" // Botswana
-"BV\0" // BouvetIsland
-"BR\0" // Brazil
-"IO\0" // BritishIndianOceanTerritory
-"BN\0" // BruneiDarussalam
-"BG\0" // Bulgaria
-"BF\0" // BurkinaFaso
-"BI\0" // Burundi
-"KH\0" // Cambodia
-"CM\0" // Cameroon
-"CA\0" // Canada
-"CV\0" // CapeVerde
-"KY\0" // CaymanIslands
-"CF\0" // CentralAfricanRepublic
-"TD\0" // Chad
-"CL\0" // Chile
-"CN\0" // China
-"CX\0" // ChristmasIsland
-"CC\0" // CocosIslands
-"CO\0" // Colombia
-"KM\0" // Comoros
-"CD\0" // DemocraticRepublicOfCongo
-"CG\0" // PeoplesRepublicOfCongo
-"CK\0" // CookIslands
-"CR\0" // CostaRica
-"CI\0" // IvoryCoast
-"HR\0" // Croatia
-"CU\0" // Cuba
-"CY\0" // Cyprus
-"CZ\0" // CzechRepublic
-"DK\0" // Denmark
-"DJ\0" // Djibouti
-"DM\0" // Dominica
-"DO\0" // DominicanRepublic
-"TL\0" // EastTimor
-"EC\0" // Ecuador
-"EG\0" // Egypt
-"SV\0" // ElSalvador
-"GQ\0" // EquatorialGuinea
-"ER\0" // Eritrea
-"EE\0" // Estonia
-"ET\0" // Ethiopia
-"FK\0" // FalklandIslands
-"FO\0" // FaroeIslands
-"FJ\0" // Fiji
-"FI\0" // Finland
-"FR\0" // France
-"FX\0" // MetropolitanFrance
-"GF\0" // FrenchGuiana
-"PF\0" // FrenchPolynesia
-"TF\0" // FrenchSouthernTerritories
-"GA\0" // Gabon
-"GM\0" // Gambia
-"GE\0" // Georgia
-"DE\0" // Germany
-"GH\0" // Ghana
-"GI\0" // Gibraltar
-"GR\0" // Greece
-"GL\0" // Greenland
-"GD\0" // Grenada
-"GP\0" // Guadeloupe
-"GU\0" // Guam
-"GT\0" // Guatemala
-"GN\0" // Guinea
-"GW\0" // GuineaBissau
-"GY\0" // Guyana
-"HT\0" // Haiti
-"HM\0" // HeardAndMcDonaldIslands
-"HN\0" // Honduras
-"HK\0" // HongKong
-"HU\0" // Hungary
-"IS\0" // Iceland
-"IN\0" // India
-"ID\0" // Indonesia
-"IR\0" // Iran
-"IQ\0" // Iraq
-"IE\0" // Ireland
-"IL\0" // Israel
-"IT\0" // Italy
-"JM\0" // Jamaica
-"JP\0" // Japan
-"JO\0" // Jordan
-"KZ\0" // Kazakhstan
-"KE\0" // Kenya
-"KI\0" // Kiribati
-"KP\0" // DemocraticRepublicOfKorea
-"KR\0" // RepublicOfKorea
-"KW\0" // Kuwait
-"KG\0" // Kyrgyzstan
-"LA\0" // Lao
-"LV\0" // Latvia
-"LB\0" // Lebanon
-"LS\0" // Lesotho
-"LR\0" // Liberia
-"LY\0" // LibyanArabJamahiriya
-"LI\0" // Liechtenstein
-"LT\0" // Lithuania
-"LU\0" // Luxembourg
-"MO\0" // Macau
-"MK\0" // Macedonia
-"MG\0" // Madagascar
-"MW\0" // Malawi
-"MY\0" // Malaysia
-"MV\0" // Maldives
-"ML\0" // Mali
-"MT\0" // Malta
-"MH\0" // MarshallIslands
-"MQ\0" // Martinique
-"MR\0" // Mauritania
-"MU\0" // Mauritius
-"YT\0" // Mayotte
-"MX\0" // Mexico
-"FM\0" // Micronesia
-"MD\0" // Moldova
-"MC\0" // Monaco
-"MN\0" // Mongolia
-"MS\0" // Montserrat
-"MA\0" // Morocco
-"MZ\0" // Mozambique
-"MM\0" // Myanmar
-"NA\0" // Namibia
-"NR\0" // Nauru
-"NP\0" // Nepal
-"NL\0" // Netherlands
-"AN\0" // NetherlandsAntilles
-"NC\0" // NewCaledonia
-"NZ\0" // NewZealand
-"NI\0" // Nicaragua
-"NE\0" // Niger
-"NG\0" // Nigeria
-"NU\0" // Niue
-"NF\0" // NorfolkIsland
-"MP\0" // NorthernMarianaIslands
-"NO\0" // Norway
-"OM\0" // Oman
-"PK\0" // Pakistan
-"PW\0" // Palau
-"PS\0" // PalestinianTerritory
-"PA\0" // Panama
-"PG\0" // PapuaNewGuinea
-"PY\0" // Paraguay
-"PE\0" // Peru
-"PH\0" // Philippines
-"PN\0" // Pitcairn
-"PL\0" // Poland
-"PT\0" // Portugal
-"PR\0" // PuertoRico
-"QA\0" // Qatar
-"RE\0" // Reunion
-"RO\0" // Romania
-"RU\0" // RussianFederation
-"RW\0" // Rwanda
-"KN\0" // SaintKittsAndNevis
-"LC\0" // StLucia
-"VC\0" // StVincentAndTheGrenadines
-"WS\0" // Samoa
-"SM\0" // SanMarino
-"ST\0" // SaoTomeAndPrincipe
-"SA\0" // SaudiArabia
-"SN\0" // Senegal
-"SC\0" // Seychelles
-"SL\0" // SierraLeone
-"SG\0" // Singapore
-"SK\0" // Slovakia
-"SI\0" // Slovenia
-"SB\0" // SolomonIslands
-"SO\0" // Somalia
-"ZA\0" // SouthAfrica
-"GS\0" // SouthGeorgiaAndTheSouthSandwichIslands
-"ES\0" // Spain
-"LK\0" // SriLanka
-"SH\0" // StHelena
-"PM\0" // StPierreAndMiquelon
-"SD\0" // Sudan
-"SR\0" // Suriname
-"SJ\0" // SvalbardAndJanMayenIslands
-"SZ\0" // Swaziland
-"SE\0" // Sweden
-"CH\0" // Switzerland
-"SY\0" // SyrianArabRepublic
-"TW\0" // Taiwan
-"TJ\0" // Tajikistan
-"TZ\0" // Tanzania
-"TH\0" // Thailand
-"TG\0" // Togo
-"TK\0" // Tokelau
-"TO\0" // Tonga
-"TT\0" // TrinidadAndTobago
-"TN\0" // Tunisia
-"TR\0" // Turkey
-"TM\0" // Turkmenistan
-"TC\0" // TurksAndCaicosIslands
-"TV\0" // Tuvalu
-"UG\0" // Uganda
-"UA\0" // Ukraine
-"AE\0" // UnitedArabEmirates
-"GB\0" // UnitedKingdom
-"US\0" // UnitedStates
-"UM\0" // UnitedStatesMinorOutlyingIslands
-"UY\0" // Uruguay
-"UZ\0" // Uzbekistan
-"VU\0" // Vanuatu
-"VA\0" // VaticanCityState
-"VE\0" // Venezuela
-"VN\0" // VietNam
-"VG\0" // BritishVirginIslands
-"VI\0" // USVirginIslands
-"WF\0" // WallisAndFutunaIslands
-"EH\0" // WesternSahara
-"YE\0" // Yemen
-"YU\0" // Yugoslavia
-"ZM\0" // Zambia
-"ZW\0" // Zimbabwe
-"CS\0" // SerbiaAndMontenegro
-"ME\0" // Montenegro
-"RS\0" // Serbia
-"BL\0" // Saint Barthelemy
-"MF\0" // Saint Martin
-"419" // LatinAmericaAndTheCaribbean
-;
+static const qint16 scriptsTblSize = sizeof(scriptsTbl) / sizeof(scriptsTblData);
 
 // GENERATED PART ENDS HERE
 

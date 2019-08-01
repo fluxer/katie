@@ -85,10 +85,10 @@ QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
     if (uc1 == 'n' && uc2 == 'o' && uc3 == 0)
         uc2 = 'b';
 
-    const unsigned char *c = language_code_list;
-    for (; *c != 0; c += 3) {
-        if (uc1 == c[0] && uc2 == c[1] && uc3 == c[2])
-            return QLocale::Language((c - language_code_list)/3);
+    for (int i = 0; i < languageTblSize; i++) {
+        const char* c = languageTbl[i].code;
+        if (uc1 == ushort(c[0]) && uc2 == ushort(c[1]) && uc3 == ushort(c[2]))
+            return languageTbl[i].language;
     }
 
     return QLocale::C;
@@ -101,15 +101,15 @@ QLocale::Script QLocalePrivate::codeToScript(const QString &code)
         return QLocale::AnyScript;
 
     // script is titlecased in our data
-    unsigned char c0 = code.at(0).toUpper().toLatin1();
-    unsigned char c1 = code.at(1).toLower().toLatin1();
-    unsigned char c2 = code.at(2).toLower().toLatin1();
-    unsigned char c3 = code.at(3).toLower().toLatin1();
+    char c0 = code.at(0).toUpper().toLatin1();
+    char c1 = code.at(1).toLower().toLatin1();
+    char c2 = code.at(2).toLower().toLatin1();
+    char c3 = code.at(3).toLower().toLatin1();
 
-    const unsigned char *c = script_code_list;
-    for (int i = 0; i < QLocale::LastScript; ++i, c += 4) {
+    for (int i = 0; i < QLocale::LastScript; i++) {
+        const char* c = scriptsTbl[i].code;
         if (c0 == c[0] && c1 == c[1] && c2 == c[2] && c3 == c[3])
-            return QLocale::Script(i);
+            return scriptsTbl[i].script;
     }
     return QLocale::AnyScript;
 }
@@ -123,10 +123,10 @@ QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
     ushort uc2 = len-- > 0 ? code[1].toUpper().unicode() : 0;
     ushort uc3 = len-- > 0 ? code[2].toUpper().unicode() : 0;
 
-    const unsigned char *c = country_code_list;
-    for (; *c != 0; c += 3) {
-        if (uc1 == c[0] && uc2 == c[1] && uc3 == c[2])
-            return QLocale::Country((c - country_code_list)/3);
+    for (int i = 0; i < countryTblSize; i++) {
+        const char *c = countryTbl[i].code;
+        if (uc1 == ushort(c[0]) && uc2 == ushort(c[1]) && uc3 == ushort(c[2]))
+            return countryTbl[i].country;
     }
 
     return QLocale::AnyCountry;
@@ -139,7 +139,7 @@ QString QLocalePrivate::languageCode() const
     if (m_language_id == QLocale::C)
         return QLatin1String("C");
 
-    const unsigned char *c = language_code_list + 3*(uint(m_language_id));
+    const char *c = languageTbl[m_language_id].code;
 
     QString code(c[2] == 0 ? 2 : 3, Qt::Uninitialized);
 
@@ -155,8 +155,7 @@ QString QLocalePrivate::scriptCode() const
 {
     if (m_script_id == QLocale::AnyScript || m_script_id > QLocale::LastScript)
         return QString();
-    const unsigned char *c = script_code_list + 4*(uint(m_script_id));
-    return QString::fromLatin1((const char *)c, 4);
+    return QString::fromLatin1(scriptsTbl[m_script_id].code, 4);
 }
 
 QString QLocalePrivate::countryCode() const
@@ -164,7 +163,7 @@ QString QLocalePrivate::countryCode() const
     if (m_country_id == QLocale::AnyCountry)
         return QString();
 
-    const unsigned char *c = country_code_list + 3*(uint(m_country_id));
+    const char *c = countryTbl[m_country_id].code;
 
     QString code(c[2] == 0 ? 2 : 3, Qt::Uninitialized);
 
@@ -182,11 +181,9 @@ QString QLocalePrivate::bcp47Name() const
         return QString();
     if (m_language_id == QLocale::C)
         return QLatin1String("C");
-    const unsigned char *lang = language_code_list + 3*(uint(m_language_id));
-    const unsigned char *script =
-            (m_script_id != QLocale::AnyScript ? script_code_list + 4*(uint(m_script_id)) : 0);
-    const unsigned char *country =
-            (m_country_id != QLocale::AnyCountry  ? country_code_list + 3*(uint(m_country_id)) : 0);
+    const char *lang = languageTbl[m_language_id].code;
+    const char *script = (m_script_id != QLocale::AnyScript ? scriptsTbl[m_script_id].code : 0);
+    const char *country = (m_country_id != QLocale::AnyCountry  ? countryTbl[m_country_id].code : 0);
     char len = (lang[2] != 0 ? 3 : 2) + (script ? 4+1 : 0) + (country ? (country[2] != 0 ? 3 : 2)+1 : 0);
     QString name(len, Qt::Uninitialized);
     QChar *uc = name.data();
@@ -288,15 +285,15 @@ bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QSt
             state = ScriptState;
             break;
         case ScriptState: {
-            QString scripts = QString::fromLatin1((const char *)script_code_list, sizeof(script_code_list));
-            if (value.length() == 4 && scripts.indexOf(value) % 4 == 0) {
-                // script name is always 4 characters
-                script = value;
-                state = CountryState;
-            } else {
-                // it wasn't a script, maybe it is a country then?
-                cntry = value;
-                state = NoState;
+            // if it wasn't a script, maybe it is a country then?
+            cntry = value;
+            state = NoState;
+            for (int i = 0; i < QLocale::LastScript; i++) {
+                if (QString::fromLatin1(scriptsTbl[i].code) == value) {
+                    script = value;
+                    state = CountryState;
+                    break;
+                }
             }
             break;
         }
@@ -897,7 +894,7 @@ QString QLocale::name() const
     if (dd->m_language_id == QLocale::C)
         return QLatin1String("C");
 
-    const unsigned char *c = language_code_list + 3*(uint(dd->m_language_id));
+    const char *c = languageTbl[dd->m_language_id].code;
 
     QString result(7, Qt::Uninitialized);
     ushort *data = (ushort *)result.unicode();
@@ -909,7 +906,7 @@ QString QLocale::name() const
         *data++ = ushort(c[2]);
     if (dd->m_country_id != AnyCountry) {
         *data++ = '_';
-        const unsigned char *c = country_code_list + 3*(uint(dd->m_country_id));
+        const char *c = countryTbl[dd->m_country_id].code;
         *data++ = ushort(c[0]);
         *data++ = ushort(c[1]);
         if (c[2] != 0)
@@ -949,7 +946,7 @@ QString QLocale::languageToString(Language language)
 {
     if (language > QLocale::LastLanguage)
         return QLatin1String("Unknown");
-    return QLatin1String(language_name_list + language_name_index[language]);
+    return QString::fromUtf8(languageTbl[language].name);
 }
 
 /*!
@@ -962,7 +959,7 @@ QString QLocale::countryToString(Country country)
 {
     if (country > QLocale::LastCountry)
         return QLatin1String("Unknown");
-    return QLatin1String(country_name_list + country_name_index[country]);
+    return QString::fromUtf8(countryTbl[country].name);
 }
 
 /*!
@@ -976,7 +973,7 @@ QString QLocale::scriptToString(QLocale::Script script)
 {
     if (script > QLocale::LastScript)
         return QLatin1String("Unknown");
-    return QLatin1String(script_name_list + script_name_index[script]);
+    return QString::fromUtf8(scriptsTbl[script].name);
 }
 
 /*!
