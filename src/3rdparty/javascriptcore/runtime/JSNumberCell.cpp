@@ -100,9 +100,13 @@ JSValue jsNumberCell(JSGlobalData* globalData, double d)
 // Keep our exported symbols lists happy.
 namespace JSC {
 
-JSValue jsNumberCell(ExecState*, double);
-
 JSValue jsNumberCell(ExecState*, double)
+{
+    Q_UNREACHABLE();
+    return JSValue();
+}
+
+JSValue jsNumberCell(JSGlobalData*, double)
 {
     Q_UNREACHABLE();
     return JSValue();
