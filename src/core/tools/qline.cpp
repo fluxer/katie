@@ -774,16 +774,13 @@ qreal QLineF::angleTo(const QLineF &l) const
     if (isNull() || l.isNull())
         return 0;
 
-    const qreal a1 = angle();
-    const qreal a2 = l.angle();
-
-    const qreal delta = a2 - a1;
-    const qreal delta_normalized = delta < 0 ? delta + 360 : delta;
+    const qreal delta = l.angle() - angle();
 
     if (qFuzzyCompare(delta, qreal(360)))
         return 0;
-    else
-        return delta_normalized;
+    else if (delta < 0)
+        return delta + 360;
+    return delta;
 }
 
 /*!
