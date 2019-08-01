@@ -168,8 +168,6 @@ QLibraryInfo::location(LibraryLocation loc)
         case SettingsPath:
             ret = QString::fromLocal8Bit(qt_configure_settings_path_str);
             break;
-        default:
-            break;
     }
 
     if (QDir::isRelativePath(ret)) {
