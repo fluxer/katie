@@ -653,9 +653,8 @@ inline void qt_noop(void) {}
 
 /* These wrap try/catch so we can switch off exceptions later.
 
-   Beware - do not use more than one QT_CATCH per QT_TRY, and do not use
-   the exception instance in the catch block.
-   If you can't live with those constraints, don't use these macros.
+   Beware - do not use the exception instance in the catch block.
+   If you can't live with that constraint, don't use these macros.
    Use the QT_NO_EXCEPTIONS macro to protect your code instead.
 */
 
@@ -665,7 +664,7 @@ inline void qt_noop(void) {}
 
 #ifdef QT_NO_EXCEPTIONS
 #  define QT_TRY if (true)
-#  define QT_CATCH(A) else
+#  define QT_CATCH(A) else if (false)
 #  define QT_THROW(A) qt_noop()
 #  define QT_RETHROW qt_noop()
 #else
