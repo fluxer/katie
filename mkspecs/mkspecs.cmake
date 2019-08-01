@@ -44,7 +44,6 @@ if(NOT KATIE_ARCHITECTURE)
     endif()
 
     # https://en.wikipedia.org/wiki/Uname
-    # TODO: NACL?
     if(LOWERCASE_CMAKE_SYSTEM_PROCESSOR MATCHES "^alpha")
         set(KATIE_ARCHITECTURE "alpha")
     elseif(LOWERCASE_CMAKE_SYSTEM_PROCESSOR MATCHES "^arm")
@@ -61,6 +60,8 @@ if(NOT KATIE_ARCHITECTURE)
         set(KATIE_ARCHITECTURE "m68k")
     elseif(LOWERCASE_CMAKE_SYSTEM_PROCESSOR MATCHES "^mips")
         set(KATIE_ARCHITECTURE "mips")
+    elseif(LOWERCASE_CMAKE_SYSTEM_PROCESSOR MATCHES "^nacl")
+        set(KATIE_ARCHITECTURE "nacl")
     elseif(LOWERCASE_CMAKE_SYSTEM_PROCESSOR MATCHES "^hppa")
         set(KATIE_ARCHITECTURE "parisc")
     elseif(LOWERCASE_CMAKE_SYSTEM_PROCESSOR MATCHES "^ppc")
