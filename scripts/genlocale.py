@@ -1,99 +1,143 @@
 #!/usr/bin/python
+#-*- coding: UTF-8 -*-
 
 import os, sys
 import xml.etree.ElementTree as ET
 
-# TODO: conflicting languages: Nauru, Tokelau and Tuvalu
+def stripstring(fromxmlstring):
+    result = fromxmlstring.replace('\n', '')
+    result = result.replace('\t', '')
+    return result.strip()
 
-def stripstring(xmlstring):
-    xmlstring = xmlstring.replace('\n', '')
-    xmlstring = xmlstring.replace('\t', '')
-    return xmlstring.strip()
+def normalizestring(fromstring):
+    result = fromstring.replace(' ', '')
+    result = result.replace('-', '')
+    result = result.replace("'", '')
+    result = result.replace('&', 'And')
+    result = result.replace('(', '')
+    result = result.replace(')', '')
+    result = result.replace('St.', 'St')
+    result = result.replace('U.S.', 'UnitedStates')
+    # UTF-8 chars
+    result = result.replace(u'ʼ', '')
+    result = result.replace(u'’', '')
+    result = result.replace(u'ü', 'u')
+    result = result.replace(u'å', 'a')
+    result = result.replace(u'ç', 'c')
+    result = result.replace(u'õ', 'o')
+    result = result.replace(u'Å', 'A')
+    result = result.replace(u'ô', 'o')
+    result = result.replace(u'ã', 'a')
+    result = result.replace(u'é', 'e')
+    result = result.replace(u'í', 'i')
+    return result
 
-def compactstring(xmlstring):
-    # TODO: xmlstring = xmlstring.replace("\xe2", '')
-    xmlstring = xmlstring.replace(' ', '')
-    xmlstring = xmlstring.replace('-', '')
-    xmlstring = xmlstring.replace('&', 'And')
-    xmlstring = xmlstring.replace('(', '')
-    xmlstring = xmlstring.replace(')', '')
-    xmlstring = xmlstring.replace('St.', 'St')
-    xmlstring = xmlstring.replace('U.S.', 'UnitedStates')
-    return xmlstring
+def printenum(frommap, prefix):
+    keyscount = 0
+
+    # print Default and C first
+    for key in sorted(frommap.keys()):
+        if not key in ('Any%s' % prefix, 'C'):
+            continue
+        print('        %s = %d,' % (key, keyscount))
+        keyscount += 1
+
+    # now everything except those
+    lastkey = ''
+    for key in sorted(frommap.keys()):
+        if key in ('Any%s' % prefix, 'C'):
+            continue
+        print('        %s = %d,' % (key, keyscount))
+        lastkey = key
+        keyscount += 1
+
+    # print last key
+    print('\n        Last%s = %s' % (prefix, lastkey))
+
+def printtable(frommap, prefix):
+    lowerprefix = prefix.lower()
+    print('''static const struct %sTblData {
+    const char* name;
+    const char* code;
+    const QLocale::%s %s;
+} %sTbl[] = {''' % (lowerprefix, prefix, lowerprefix, lowerprefix))
+
+    # print Default and C first
+    for key in frommap.keys():
+        if not key in ('Any%s' % prefix, 'C'):
+            continue
+        firstvalue = frommap[key][0]
+        secondvalue = frommap[key][1]
+        print('    { "%s\\0", "%s\\0", QLocale::%s::%s },' % (secondvalue, firstvalue, prefix, key))
+
+    # now everything except those
+    for key in sorted(frommap.keys()):
+        if key in ('Any%s' % prefix, 'C'):
+            continue
+        firstvalue = frommap[key][0]
+        secondvalue = frommap[key][1]
+        print('    { "%s\\0", "%s\\0", QLocale::%s::%s },' % (secondvalue, firstvalue, prefix, key))
+
+    print('};')
+    print('static const qint16 %sTblSize = sizeof(%sTbl) / sizeof(%sTblData);' % (lowerprefix, lowerprefix, lowerprefix))
+
+printmap = {}
 
 if 'language' in sys.argv:
-    print('''static const struct languageTblData {
-    const char* name;
-    const char* code;
-    const QLocale::Language language;
-} languageTbl[] = {''')
-
-    print('    { "Default\\0", "  \\0", QLocale::Language::AnyLanguage },')
-    print('    { "C\\0", "  \\0", QLocale::Language::C },')
+    # artificial values
+    printmap['AnyLanguage'] = ['', 'Default']
+    printmap['C'] = ['', 'C']
 
     tree = ET.parse('common/main/en.xml')
     root = tree.getroot()
-    languagecount = 2
     for language in root.findall('./localeDisplayNames/languages/language'):
         languagetype = language.get('type')
-        compactlanguage = compactstring(language.text)
-        # print('        %s = %d,' % (compactlanguage, languagecount))
-        if len(languagetype) == 2:
-            print('    { "%s\\0", "%s\\0", QLocale::%s },' % (language.text, languagetype, compactlanguage))
-        else:
-            print('    { "%s\\0", "%s", QLocale::%s },' % (language.text, languagetype, compactlanguage))
-        languagecount += 1
+        normallanguage = normalizestring(language.text)
+        if normallanguage in ('Nauru', 'Tokelau', 'Tuvalu'):
+            # countries and language are the same, suffix to solve enum clashes
+            normallanguage = '%sLanguage' % normallanguage
+        printmap[normallanguage] = [languagetype, language.text]
 
-    print('};')
-    print('static const qint16 languageTblSize = sizeof(languageTbl) / sizeof(languageTblData);')
+    # printenum(printmap, 'Language')
+    printtable(printmap, 'Language')
 
 elif 'country' in sys.argv:
-    print('''static const struct countryTblData {
-    const char* name;
-    const char* code;
-    const QLocale::Country country;
-} countryTbl[] = {''')
-
-    print('    { "Default\\0", "  \\0", QLocale::Country::AnyCountry },')
+    # artificial values
+    printmap['AnyCountry'] = ['', 'Default']
 
     tree = ET.parse('common/main/en.xml')
     root = tree.getroot()
-    countrycount = 1
     for country in root.findall('./localeDisplayNames/territories/territory'):
         countrytype = country.get('type')
-        compactcountry = compactstring(country.text)
-        if compactcountry == 'World':
+        normalcountry = normalizestring(country.text)
+        if normalcountry == 'World':
+            # only interested in specific countries
             continue
-        # print('        %s = %d,' % (compactcountry, countrycount))
-        print('    { "%s\\0", "%s\\0", QLocale::%s },' % (country.text, countrytype, compactcountry))
-        countrycount += 1
+        printmap[normalcountry] = [countrytype, country.text]
 
-    print('};')
-    print('static const qint16 countryTblSize = sizeof(countryTbl) / sizeof(countryTblData);')
+    # printenum(printmap, 'Country')
+    printtable(printmap, 'Country')
 
 elif 'script' in sys.argv:
-    print('''static const struct scriptsTblData {
-    const char* name;
-    const char* code;
-    const QLocale::Script script;
-} scriptsTbl[] = {''')
-
-    print('    { "Default\\0", "\\0\\0\\0\\0", QLocale::Script::AnyScript },')
+    # artificial values
+    printmap['AnyScript'] = ['', 'Default']
 
     tree = ET.parse('common/main/en.xml')
     root = tree.getroot()
     scriptcount = 1
     for script in root.findall('./localeDisplayNames/scripts/script'):
         scripttype = script.get('type')
-        compactscript = compactstring(script.text)
-        if not compactscript.endswith('Script'):
-            compactscript = '%sScript' % compactscript
-        # print('        %s = %d,' % (compactscript, scriptcount))
-        print('    { "%s\\0", "%s", QLocale::%s },' % (script.text, scripttype, compactscript))
-        scriptcount += 1
+        normalscript = normalizestring(script.text)
+        if not normalscript.endswith('Script'):
+            # suffix script if needed
+            normalscript = '%sScript' % normalscript
+        if normalscript in ('UnknownScript', 'CommonScript'):
+            # only interested in specific scripts
+            continue
+        printmap[normalscript] = [scripttype, script.text]
 
-    print('};')
-    print('static const qint16 scriptsTblSize = sizeof(scriptsTbl) / sizeof(scriptsTblData);')
+    # printenum(printmap, 'Script')
+    printtable(printmap, 'Script')
 
 else:
     print('''usage: <language|country|script>

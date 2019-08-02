@@ -75,19 +75,11 @@ QT_END_INCLUDE_NAMESPACE
 
 QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
 {
-    int len = code.length();
-    if (len != 2 && len != 3)
-        return QLocale::C;
-    ushort uc1 = len-- > 0 ? code[0].toLower().unicode() : 0;
-    ushort uc2 = len-- > 0 ? code[1].toLower().unicode() : 0;
-    ushort uc3 = len-- > 0 ? code[2].toLower().unicode() : 0;
-
-    if (uc1 == 'n' && uc2 == 'o' && uc3 == 0)
-        uc2 = 'b';
+    const QByteArray lower = code.toLower().toLatin1();
 
     for (int i = 0; i < languageTblSize; i++) {
         const char* c = languageTbl[i].code;
-        if (uc1 == ushort(c[0]) && uc2 == ushort(c[1]) && uc3 == ushort(c[2]))
+        if (qstrcmp(c, lower.constData()) == 0)
             return languageTbl[i].language;
     }
 
@@ -96,36 +88,27 @@ QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
 
 QLocale::Script QLocalePrivate::codeToScript(const QString &code)
 {
-    int len = code.length();
-    if (len != 4)
-        return QLocale::AnyScript;
-
     // script is titlecased in our data
-    char c0 = code.at(0).toUpper().toLatin1();
-    char c1 = code.at(1).toLower().toLatin1();
-    char c2 = code.at(2).toLower().toLatin1();
-    char c3 = code.at(3).toLower().toLatin1();
+    QByteArray title = code.toLower().toLatin1();
+    if (title.size() > 0) {
+        title[0] = static_cast<char>(code.at(0).toUpper().unicode());
+    }
 
     for (int i = 0; i < QLocale::LastScript; i++) {
-        const char* c = scriptsTbl[i].code;
-        if (c0 == c[0] && c1 == c[1] && c2 == c[2] && c3 == c[3])
-            return scriptsTbl[i].script;
+        const char* c = scriptTbl[i].code;
+        if (qstrcmp(c, title.constData()) == 0)
+            return scriptTbl[i].script;
     }
     return QLocale::AnyScript;
 }
 
 QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
 {
-    int len = code.length();
-    if (len != 2 && len != 3)
-        return QLocale::AnyCountry;
-    ushort uc1 = len-- > 0 ? code[0].toUpper().unicode() : 0;
-    ushort uc2 = len-- > 0 ? code[1].toUpper().unicode() : 0;
-    ushort uc3 = len-- > 0 ? code[2].toUpper().unicode() : 0;
+    const QByteArray upper = code.toUpper().toLatin1();
 
     for (int i = 0; i < countryTblSize; i++) {
         const char *c = countryTbl[i].code;
-        if (uc1 == ushort(c[0]) && uc2 == ushort(c[1]) && uc3 == ushort(c[2]))
+        if (qstrcmp(c, upper.constData()) == 0)
             return countryTbl[i].country;
     }
 
@@ -138,41 +121,21 @@ QString QLocalePrivate::languageCode() const
         return QString();
     if (m_language_id == QLocale::C)
         return QLatin1String("C");
-
-    const char *c = languageTbl[m_language_id].code;
-
-    QString code(c[2] == 0 ? 2 : 3, Qt::Uninitialized);
-
-    code[0] = ushort(c[0]);
-    code[1] = ushort(c[1]);
-    if (c[2] != 0)
-        code[2] = ushort(c[2]);
-
-    return code;
+    return QString::fromLatin1(languageTbl[m_language_id].code);
 }
 
 QString QLocalePrivate::scriptCode() const
 {
     if (m_script_id == QLocale::AnyScript || m_script_id > QLocale::LastScript)
         return QString();
-    return QString::fromLatin1(scriptsTbl[m_script_id].code, 4);
+    return QString::fromLatin1(scriptTbl[m_script_id].code);
 }
 
 QString QLocalePrivate::countryCode() const
 {
     if (m_country_id == QLocale::AnyCountry)
         return QString();
-
-    const char *c = countryTbl[m_country_id].code;
-
-    QString code(c[2] == 0 ? 2 : 3, Qt::Uninitialized);
-
-    code[0] = ushort(c[0]);
-    code[1] = ushort(c[1]);
-    if (c[2] != 0)
-        code[2] = ushort(c[2]);
-
-    return code;
+    return QString::fromLatin1(countryTbl[m_country_id].code);
 }
 
 QString QLocalePrivate::bcp47Name() const
@@ -181,30 +144,37 @@ QString QLocalePrivate::bcp47Name() const
         return QString();
     if (m_language_id == QLocale::C)
         return QLatin1String("C");
+
     const char *lang = languageTbl[m_language_id].code;
-    const char *script = (m_script_id != QLocale::AnyScript ? scriptsTbl[m_script_id].code : 0);
-    const char *country = (m_country_id != QLocale::AnyCountry  ? countryTbl[m_country_id].code : 0);
-    char len = (lang[2] != 0 ? 3 : 2) + (script ? 4+1 : 0) + (country ? (country[2] != 0 ? 3 : 2)+1 : 0);
-    QString name(len, Qt::Uninitialized);
+    const char *script = (m_script_id != QLocale::AnyScript ? scriptTbl[m_script_id].code : Q_NULLPTR);
+    const char *country = (m_country_id != QLocale::AnyCountry  ? countryTbl[m_country_id].code : Q_NULLPTR);
+    const int langlen = qstrlen(lang);
+    const int scriptlen = qstrlen(script);
+    const int countrylen = qstrlen(country);
+    const int totallen = langlen + scriptlen + countrylen + (script ? 1 : 0) + (country ? 1 : 0);
+
+    QString name(totallen, Qt::Uninitialized);
     QChar *uc = name.data();
-    *uc++ = ushort(lang[0]);
-    *uc++ = ushort(lang[1]);
-    if (lang[2] != 0)
-        *uc++ = ushort(lang[2]);
+    int datapos = 0;
+    for (int i = 0; i < langlen; i++) {
+        uc[datapos] = ushort(lang[i]);
+        datapos++;
+    }
     if (script) {
-        *uc++ = QLatin1Char('-');
-        *uc++ = ushort(script[0]);
-        *uc++ = ushort(script[1]);
-        *uc++ = ushort(script[2]);
-        *uc++ = ushort(script[3]);
+        uc[datapos++] = QLatin1Char('-');
+        for (int i = 0; i < scriptlen; i++) {
+            uc[datapos] = ushort(script[i]);
+        }
+        datapos++;
     }
     if (country) {
-        *uc++ = QLatin1Char('-');
-        *uc++ = ushort(country[0]);
-        *uc++ = ushort(country[1]);
-        if (country[2] != 0)
-            *uc++ = ushort(country[2]);
+        uc[datapos++] = QLatin1Char('-');
+        for (int i = 0; i < countrylen; i++) {
+            uc[datapos] = ushort(country[i]);
+        }
+        datapos++;
     }
+
     return name;
 }
 
@@ -289,7 +259,7 @@ bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QSt
             cntry = value;
             state = NoState;
             for (int i = 0; i < QLocale::LastScript; i++) {
-                if (QString::fromLatin1(scriptsTbl[i].code) == value) {
+                if (QString::fromLatin1(scriptTbl[i].code) == value) {
                     script = value;
                     state = CountryState;
                     break;
@@ -973,7 +943,7 @@ QString QLocale::scriptToString(QLocale::Script script)
 {
     if (script > QLocale::LastScript)
         return QLatin1String("Unknown");
-    return QString::fromUtf8(scriptsTbl[script].name);
+    return QString::fromUtf8(scriptTbl[script].name);
 }
 
 /*!
