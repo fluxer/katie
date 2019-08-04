@@ -3,9 +3,8 @@
 
 # Data is from https://unicode.org/Public/cldr/35/core.zip
 
-import os, sys
+import os, sys, glob, re
 import xml.etree.ElementTree as ET
-import glob
 
 def mapcopy(frommap, tomap):
     for key in frommap.keys():
@@ -23,7 +22,7 @@ def stripxmltext(fromxmltext):
         result = result.replace('  ', ' ')
     return result.strip()
 
-def toushort(fromstring):
+def touint(fromstring):
     # NOTE: symbols (plus, minus, etc.) are assumed to be single character which is not true for
     # many of the locales, however the API for those does not handle them as strings thus the first
     # character only is used
@@ -87,7 +86,7 @@ def tocurrencyformat(fromformat, frommap):
         result.append(fmt)
     return result
 
-def tomothslist(fromxmlelements, initialvalues):
+def tomonthslist(fromxmlelements, initialvalues):
     result = []
     listcopy(initialvalues, result)
     for month in fromxmlelements:
@@ -253,16 +252,16 @@ def printlocaledata(frommap, key):
             value['first_day_of_week'],
             value['weekend_start'],
             value['weekend_end'],
-            toushort(value['decimal']),
-            toushort(value['group']),
-            toushort(value['list']),
-            toushort(value['percent']),
-            toushort(value['zero']),
-            toushort(value['minus']),
-            toushort(value['plus']),
-            toushort(value['exponential']),
+            touint(value['decimal']),
+            touint(value['group']),
+            touint(value['list']),
+            touint(value['percent']),
+            touint(value['minus']),
+            touint(value['plus']),
+            touint(value['exponential']),
             value['currency_digits'],
             value['currency_rounding'],
+            touint(value['zero']),
             toescapedchar(value['quotation_start']),
             toescapedchar(value['quotation_end']),
             toescapedchar(value['alternate_quotation_start']),
@@ -482,7 +481,7 @@ localemap['C']['language'] = 'QLocale::Language::C'
 # TODO: accept only "contributed" or "approved" values
 for xml in glob.glob('common/main/*.xml'):
     if xml.endswith('/root.xml'):
-        # only interested in specific languages
+        # only interested in specific locales
         continue
 
     locale = os.path.basename(xml)
@@ -494,14 +493,13 @@ for xml in glob.glob('common/main/*.xml'):
     tree = ET.parse(xml)
     root = tree.getroot()
 
-    # find the enums from mapped values
     language = root.find('./identity/language')
     langtype = None
     countrytype = None
     currencytype = None
     numbertype = 'latn' # CLDR default
 
-    # atleast language is required
+    # find the enums from mapped values
     langtype = language.get('type')
     for key in languagemap.keys():
         if langtype == languagemap[key][0]:
@@ -519,7 +517,7 @@ for xml in glob.glob('common/main/*.xml'):
         # territory often is not specified, use language code as fallback
         countrytype = langtype.upper()
 
-    # store for later reuse, data is partial so pick from what is mapped
+    # store for later, data is partial so pick from what is mapped
     if countrytype in localeiso4217map.keys():
         currencytype = localeiso4217map[countrytype]
 
@@ -575,10 +573,6 @@ for xml in glob.glob('common/main/*.xml'):
         if percent is not None and len(percent.text) == 1:
             localemap[locale]['percent'] = percent.text
 
-        # zero is from cross-reference numeric system map,
-        # taking the first character works even for UTF-8 chars
-        localemap[locale]['zero'] = localenumericmap[numbertype][0]
-
         minus = symbol.find('./minusSign')
         if minus is not None and len(minus.text) == 1:
             localemap[locale]['minus'] = minus.text
@@ -590,6 +584,10 @@ for xml in glob.glob('common/main/*.xml'):
         exponential = symbol.find('./exponential')
         if exponential is not None and len(exponential.text) == 1:
             localemap[locale]['exponential'] = exponential.text
+
+        # zero is from cross-reference numeric system map,
+        # taking the first character works even for UTF-8 chars
+        localemap[locale]['zero'] = localenumericmap[numbertype][0]
 
     # digits/rounding data is specific so check if it is mapped
     if currencytype and currencytype in localecurrencymap.keys():
@@ -685,25 +683,25 @@ for xml in glob.glob('common/main/*.xml'):
                     monthwidthtype = monthwidth.get('type')
                     if monthwidthtype == 'wide':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['standalone_long_month_names'] = tomothslist(months, localemap[locale]['standalone_long_month_names'])
+                        localemap[locale]['standalone_long_month_names'] = tomonthslist(months, localemap[locale]['standalone_long_month_names'])
                     elif monthwidthtype == 'abbreviated':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['standalone_short_month_names'] = tomothslist(months, localemap[locale]['standalone_short_month_names'])
+                        localemap[locale]['standalone_short_month_names'] = tomonthslist(months, localemap[locale]['standalone_short_month_names'])
                     elif monthwidthtype == 'narrow':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['standalone_narrow_month_names'] = tomothslist(months, localemap[locale]['standalone_narrow_month_names'])
+                        localemap[locale]['standalone_narrow_month_names'] = tomonthslist(months, localemap[locale]['standalone_narrow_month_names'])
             elif monthcontexttype == 'format':
                 for monthwidth in monthcontext.findall('./monthWidth'):
                     monthwidthtype = monthwidth.get('type')
                     if monthwidthtype == 'wide':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['long_month_names'] = tomothslist(months, localemap[locale]['long_month_names'])
+                        localemap[locale]['long_month_names'] = tomonthslist(months, localemap[locale]['long_month_names'])
                     elif monthwidthtype == 'abbreviated':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['short_month_names'] = tomothslist(months, localemap[locale]['short_month_names'])
+                        localemap[locale]['short_month_names'] = tomonthslist(months, localemap[locale]['short_month_names'])
                     elif monthwidthtype == 'narrow':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['narrow_month_names'] = tomothslist(months, localemap[locale]['narrow_month_names'])
+                        localemap[locale]['narrow_month_names'] = tomonthslist(months, localemap[locale]['narrow_month_names'])
 
         for daycontext in calendar.findall('./days/dayContext'):
             daycontexttype = daycontext.get('type')
@@ -744,7 +742,8 @@ for xml in glob.glob('common/main/*.xml'):
                 if symbol is not None:
                     localemap[locale]['currency_symbol'] = symbol.text
 
-                displaynamelist = ['', '', '', '', '', '', '']
+                displaynamelist = []
+                listcopy(localemap[locale]['currency_display_name'], displaynamelist)
                 for displayname in elemcurrency.findall('./displayName'):
                     displaynamecount = displayname.get('count')
                     # TODO: 0 and 1 are aliases?
@@ -809,7 +808,6 @@ for measurementsystem in root.findall('./measurementData/measurementSystem'):
         territories = measurementsystem.get('territories')
         for territory in territories.split(' '):
             countryenum = None
-            languageenum = None
             for key in countrymap.keys():
                 countrycode = countrymap[key][0]
                 if countrycode == territory:

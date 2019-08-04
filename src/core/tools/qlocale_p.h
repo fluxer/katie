@@ -176,12 +176,12 @@ public:
     ushort m_group;
     ushort m_list;
     ushort m_percent;
-    ushort m_zero;
     ushort m_minus;
     ushort m_plus;
     ushort m_exponential;
     ushort m_currency_digits;
     ushort m_currency_rounding;
+    uint m_zero;
     const char* m_quotation_start;
     const char* m_quotation_end;
     const char* m_alternate_quotation_start;
