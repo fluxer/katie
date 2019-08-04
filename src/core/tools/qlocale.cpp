@@ -117,37 +117,37 @@ QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
 
 QString QLocalePrivate::languageCode() const
 {
-    if (m_language_id == QLocale::AnyLanguage)
+    if (m_language == QLocale::AnyLanguage)
         return QString();
-    if (m_language_id == QLocale::C)
+    if (m_language == QLocale::C)
         return QLatin1String("C");
-    return QString::fromLatin1(languageTbl[m_language_id].code);
+    return QString::fromLatin1(languageTbl[m_language].code);
 }
 
 QString QLocalePrivate::scriptCode() const
 {
-    if (m_script_id == QLocale::AnyScript || m_script_id > QLocale::LastScript)
+    if (m_script == QLocale::AnyScript || m_script > QLocale::LastScript)
         return QString();
-    return QString::fromLatin1(scriptTbl[m_script_id].code);
+    return QString::fromLatin1(scriptTbl[m_script].code);
 }
 
 QString QLocalePrivate::countryCode() const
 {
-    if (m_country_id == QLocale::AnyCountry)
+    if (m_country == QLocale::AnyCountry)
         return QString();
-    return QString::fromLatin1(countryTbl[m_country_id].code);
+    return QString::fromLatin1(countryTbl[m_country].code);
 }
 
 QString QLocalePrivate::bcp47Name() const
 {
-    if (m_language_id == QLocale::AnyLanguage)
+    if (m_language == QLocale::AnyLanguage)
         return QString();
-    if (m_language_id == QLocale::C)
+    if (m_language == QLocale::C)
         return QLatin1String("C");
 
-    const char *lang = languageTbl[m_language_id].code;
-    const char *script = (m_script_id != QLocale::AnyScript ? scriptTbl[m_script_id].code : Q_NULLPTR);
-    const char *country = (m_country_id != QLocale::AnyCountry  ? countryTbl[m_country_id].code : Q_NULLPTR);
+    const char *lang = languageTbl[m_language].code;
+    const char *script = (m_script != QLocale::AnyScript ? scriptTbl[m_script].code : Q_NULLPTR);
+    const char *country = (m_country != QLocale::AnyCountry ? countryTbl[m_country].code : Q_NULLPTR);
     const int langlen = qstrlen(lang);
     const int scriptlen = qstrlen(script);
     const int countrylen = qstrlen(country);
@@ -178,32 +178,33 @@ QString QLocalePrivate::bcp47Name() const
     return name;
 }
 
-static const int locale_data_size = sizeof(locale_data)/sizeof(QLocalePrivate) - 1;
-
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
 {
     if (country == QLocale::AnyCountry) {
-        for (int i = 0; i < locale_data_size; i++) {
-            const QLocalePrivate *d = locale_data + i;
-            if (d->m_language_id == language && d->m_script_id == script)
-                return d;
+        for (int i = 0; i < localeTblSize; i++) {
+            if (localeTbl[i].m_language == language && localeTbl[i].m_script == script)
+                return &localeTbl[i];
         }
     } else if (script == QLocale::AnyScript) {
-        for (int i = 0; i < locale_data_size; i++) {
-            const QLocalePrivate *d = locale_data + i;
-            if (d->m_language_id == language && d->m_country_id == country)
-                return d;
+        for (int i = 0; i < localeTblSize; i++) {
+            if (localeTbl[i].m_language == language && localeTbl[i].m_country == country)
+                return &localeTbl[i];
         }
     } else {
         // both script and country are explicitly specified
-        for (int i = 0; i < locale_data_size; i++) {
-            const QLocalePrivate *d = locale_data + i;
-            if (d->m_script_id == script && d->m_country_id == country)
-                return d;
+        for (int i = 0; i < localeTblSize; i++) {
+            if (localeTbl[i].m_script == script && localeTbl[i].m_country == country) {
+                return &localeTbl[i];
+            }
         }
     }
 
-    return locale_data + locale_index[language];;
+    for (int i = 0; i < localeTblSize; i++) {
+        if (localeTbl[i].m_language == language)
+            return &localeTbl[i];
+    }
+
+    return &localeTbl[0];
 }
 
 static bool parse_locale_tag(const QString &input, int &i, QString *result, const QString &separators)
@@ -375,7 +376,7 @@ QSystemLocale::QSystemLocale()
     _systemLocale = this;
 
     if (system_lp)
-        system_lp->m_language_id = 0;
+        system_lp->m_language = QLocale::AnyLanguage;
 }
 
 /*! \internal */
@@ -391,7 +392,7 @@ QSystemLocale::~QSystemLocale()
         _systemLocale = 0;
 
         if (system_lp)
-            system_lp->m_language_id = 0;
+            system_lp->m_language = QLocale::AnyLanguage;
     }
 }
 
@@ -416,17 +417,17 @@ void QLocalePrivate::updateSystemPrivate()
 
     QVariant res = sys_locale->query(QSystemLocale::LanguageId, QVariant());
     if (!res.isNull()) {
-        system_lp->m_language_id = res.toInt();
-        system_lp->m_script_id = QLocale::AnyScript; // default for compatibility
+        system_lp->m_language = QLocale::Language(res.toInt());
+        system_lp->m_script = QLocale::AnyScript; // default for compatibility
     }
     res = sys_locale->query(QSystemLocale::CountryId, QVariant());
     if (!res.isNull()) {
-        system_lp->m_country_id = res.toInt();
-        system_lp->m_script_id = QLocale::AnyScript; // default for compatibility
+        system_lp->m_country = QLocale::Country(res.toInt());
+        system_lp->m_script = QLocale::AnyScript; // default for compatibility
     }
     res = sys_locale->query(QSystemLocale::ScriptId, QVariant());
     if (!res.isNull())
-        system_lp->m_script_id = res.toInt();
+        system_lp->m_script = QLocale::Script(res.toInt());
 
     res = sys_locale->query(QSystemLocale::DecimalPoint, QVariant());
     if (!res.isNull())
@@ -459,12 +460,12 @@ static const QLocalePrivate *systemPrivate()
 {
 #ifndef QT_NO_SYSTEMLOCALE
     // copy over the information from the fallback locale and modify
-    if (!system_lp || system_lp->m_language_id == 0)
+    if (!system_lp || system_lp->m_language == 0)
         QLocalePrivate::updateSystemPrivate();
 
     return system_lp;
 #else
-    return locale_data;
+    return &localeTbl[0];
 #endif
 }
 
@@ -475,27 +476,14 @@ static const QLocalePrivate *defaultPrivate()
     return default_lp;
 }
 
-static QString getLocaleListData(const ushort *data, int size, int index)
+static inline QString getLocaleListData(const char * const* data, int index)
 {
-    static const ushort separator = ';';
-    while (index && size > 0) {
-        while (*data != separator)
-            ++data, --size;
-        --index;
-        ++data;
-        --size;
-    }
-    const ushort *end = data;
-    while (size > 0 && *end != separator)
-        ++end, --size;
-    if (end-data == 0)
-        return QString();
-    return QString::fromRawData(reinterpret_cast<const QChar*>(data), end-data);
+    return QString::fromUtf8(data[index]);
 }
 
-static inline QString getLocaleData(const ushort *data, int size)
+static inline QString getLocaleData(const char *data)
 {
-    return size ? QString::fromRawData(reinterpret_cast<const QChar*>(data), size) : QString();
+    return QString::fromUtf8(data);
 }
 
 
@@ -515,31 +503,13 @@ QDataStream &operator>>(QDataStream &ds, QLocale &l)
 }
 #endif // QT_NO_DATASTREAM
 
-static const QLocalePrivate *dataPointerHelper(quint16 index)
-{
-#ifndef QT_NO_SYSTEMLOCALE
-    Q_ASSERT(index <= locale_data_size);
-    if (index == locale_data_size)
-        return system_lp;
-#else
-    Q_ASSERT(index < locale_data_size);
-#endif
-
-    return &locale_data[index];
-}
-
 static quint16 localePrivateIndex(const QLocalePrivate *p)
 {
-#ifndef QT_NO_SYSTEMLOCALE
-    Q_ASSERT((p >= locale_data && p - locale_data < locale_data_size)
-             || (p != 0 && p == system_lp));
-    quint16 index = p == system_lp ? locale_data_size : p - locale_data;
-#else
-    Q_ASSERT(p >= locale_data && p - locale_data < locale_data_size);
-    quint16 index = p - locale_data;
-#endif
-
-    return index;
+    for (int i = 0; i < localeTblSize; i++) {
+        if (&localeTbl[i] == p)
+            return i;
+    }
+    return 0;
 }
 
 /*!
@@ -673,7 +643,15 @@ QLocale::QLocale(const QLocale &other)
 
 const QLocalePrivate *QLocale::d() const
 {
-    return dataPointerHelper(p.index);
+#ifndef QT_NO_SYSTEMLOCALE
+    Q_ASSERT(p.index <= localeTblSize);
+    if (p.index == localeTblSize)
+        return system_lp;
+#else
+    Q_ASSERT(p.index < localeTblSize);
+#endif
+
+    return &localeTbl[p.index];
 }
 
 /*!
@@ -742,9 +720,9 @@ QString QLocale::quoteString(const QStringRef &str, QuotationStyle style) const
 #endif
 
     if (style == QLocale::StandardQuotation)
-        return QChar(d()->m_quotation_start) + str.toString() + QChar(d()->m_quotation_end);
+        return getLocaleData(d()->m_quotation_start) + str.toString() + getLocaleData(d()->m_quotation_end);
     else
-        return QChar(d()->m_alternate_quotation_start) + str.toString() + QChar(d()->m_alternate_quotation_end);
+        return getLocaleData(d()->m_alternate_quotation_start) + str.toString() + getLocaleData(d()->m_alternate_quotation_end);
 }
 
 /*!
@@ -769,12 +747,12 @@ QString QLocale::createSeparatedList(const QStringList &list) const
     if (size == 1) {
         return list.at(0);
     } else if (size == 2) {
-        QString format = getLocaleData(list_pattern_part_data + d()->m_list_pattern_part_two_idx, d()->m_list_pattern_part_two_size);
+        QString format = getLocaleData(d()->m_list_pattern_part_two);
         return format.arg(list.at(0), list.at(1));
     } else if (size > 2) {
-        QString formatStart = getLocaleData(list_pattern_part_data + d()->m_list_pattern_part_start_idx, d()->m_list_pattern_part_start_size);
-        QString formatMid = getLocaleData(list_pattern_part_data + d()->m_list_pattern_part_mid_idx, d()->m_list_pattern_part_mid_size);
-        QString formatEnd = getLocaleData(list_pattern_part_data + d()->m_list_pattern_part_end_idx, d()->m_list_pattern_part_end_size);
+        QString formatStart = getLocaleData(d()->m_list_pattern_part_start);
+        QString formatMid = getLocaleData(d()->m_list_pattern_part_mid);
+        QString formatEnd = getLocaleData(d()->m_list_pattern_part_end);
         QString result = formatStart.arg(list.at(0), list.at(1));
         for (int i = 2; i < size - 1; ++i)
             result = formatMid.arg(result, list.at(i));
@@ -817,7 +795,7 @@ void QLocale::setDefault(const QLocale &locale)
 */
 QLocale::Language QLocale::language() const
 {
-    return Language(d()->languageId());
+    return d()->m_language;
 }
 
 /*!
@@ -829,7 +807,7 @@ QLocale::Language QLocale::language() const
 */
 QLocale::Script QLocale::script() const
 {
-    return Script(d()->m_script_id);
+    return d()->m_script;
 }
 
 /*!
@@ -839,7 +817,7 @@ QLocale::Script QLocale::script() const
 */
 QLocale::Country QLocale::country() const
 {
-    return Country(d()->countryId());
+    return d()->m_country;
 }
 
 /*!
@@ -859,12 +837,12 @@ QString QLocale::name() const
 {
     const QLocalePrivate *dd = d();
 
-    if (dd->m_language_id == QLocale::AnyLanguage)
+    if (dd->m_language == QLocale::AnyLanguage)
         return QString();
-    if (dd->m_language_id == QLocale::C)
+    if (dd->m_language == QLocale::C)
         return QLatin1String("C");
 
-    const char *c = languageTbl[dd->m_language_id].code;
+    const char *c = languageTbl[dd->m_language].code;
 
     QString result(7, Qt::Uninitialized);
     ushort *data = (ushort *)result.unicode();
@@ -874,9 +852,9 @@ QString QLocale::name() const
     *data++ = ushort(c[1]);
     if (c[2] != 0)
         *data++ = ushort(c[2]);
-    if (dd->m_country_id != AnyCountry) {
+    if (dd->m_country != AnyCountry) {
         *data++ = '_';
-        const char *c = countryTbl[dd->m_country_id].code;
+        const char *c = countryTbl[dd->m_country].code;
         *data++ = ushort(c[0]);
         *data++ = ushort(c[1]);
         if (c[2] != 0)
@@ -1361,18 +1339,13 @@ QString QLocale::dateFormat(FormatType format) const
     }
 #endif
 
-    quint16 idx, size;
     switch (format) {
-    case LongFormat:
-        idx = d()->m_long_date_format_idx;
-        size = d()->m_long_date_format_size;
-        break;
-    default:
-        idx = d()->m_short_date_format_idx;
-        size = d()->m_short_date_format_size;
-        break;
+        case LongFormat:
+            return getLocaleData(d()->m_long_date_format);
+        default:
+            return getLocaleData(d()->m_short_date_format);
     }
-    return getLocaleData(date_format_data + idx, size);
+    return QString();
 }
 
 /*!
@@ -1398,18 +1371,13 @@ QString QLocale::timeFormat(FormatType format) const
     }
 #endif
 
-    quint16 idx, size;
     switch (format) {
-    case LongFormat:
-        idx = d()->m_long_time_format_idx;
-        size = d()->m_long_time_format_size;
-        break;
-    default:
-        idx = d()->m_short_time_format_idx;
-        size = d()->m_short_time_format_size;
-        break;
+        case LongFormat:
+            return getLocaleData(d()->m_long_time_format);
+        default:
+            return getLocaleData(d()->m_short_time_format);
     }
-    return getLocaleData(time_format_data + idx, size);
+    return QString();
 }
 
 /*!
@@ -1736,17 +1704,15 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
         return QList<QLocale>();
 
     QList<QLocale> result;
-    const QLocalePrivate *d = locale_data;
     if (language == QLocale::AnyLanguage && script == QLocale::AnyScript && country == QLocale::AnyCountry)
-        result.reserve(locale_data_size);
-    if (language != QLocale::C)
-        d += locale_index[language];
-    while ( (d != locale_data + locale_data_size)
-            && (language == QLocale::AnyLanguage || d->m_language_id == language)) {
-        QLocale locale(QLocale::C);
-        locale.p.index = localePrivateIndex(d);
-        result.append(locale);
-        ++d;
+        result.reserve(localeTblSize);
+    for (int i = 0; i < localeTblSize; i++) {
+        if (localeTbl[i].m_language == language
+            && localeTbl[i].m_script == script
+            && localeTbl[i].m_country == country) {
+            QLocale locale(language, script, country);
+            result.append(locale);
+        }
     }
     return result;
 }
@@ -1766,14 +1732,13 @@ QList<QLocale::Country> QLocale::countriesForLanguage(Language language)
     QList<Country> result;
 
     if (language == C) {
-        result << AnyCountry;
+        result.append(QLocale::AnyCountry);
         return result;
     }
 
-    for (int i = 0; i < locale_data_size; i++) {
-        const QLocalePrivate *d = locale_data + i;
-        if (d->m_language_id == language) {
-            result << static_cast<Country>(d->m_language_id);
+    for (int i = 0; i < localeTblSize; i++) {
+        if (localeTbl[i].m_language == language) {
+            result.append(localeTbl[i].m_country);
         }
     }
 
@@ -1803,24 +1768,18 @@ QString QLocale::monthName(int month, FormatType type) const
     }
 #endif
 
-    quint16 idx, size;
+    quint16 idx = month - 1;
     switch (type) {
-    case QLocale::LongFormat:
-        idx = d()->m_long_month_names_idx;
-        size = d()->m_long_month_names_size;
-        break;
-    case QLocale::ShortFormat:
-        idx = d()->m_short_month_names_idx;
-        size = d()->m_short_month_names_size;
-        break;
-    case QLocale::NarrowFormat:
-        idx = d()->m_narrow_month_names_idx;
-        size = d()->m_narrow_month_names_size;
-        break;
-    default:
-        return QString();
+        case QLocale::LongFormat:
+            return getLocaleListData(d()->m_long_month_names, idx);
+        case QLocale::ShortFormat:
+            return getLocaleListData(d()->m_short_month_names, idx);
+        case QLocale::NarrowFormat:
+            return getLocaleListData(d()->m_narrow_month_names, idx);
+        default:
+            return QString();
     }
-    return getLocaleListData(months_data + idx, size, month - 1);
+    return QString();
 }
 
 /*!
@@ -1849,27 +1808,18 @@ QString QLocale::standaloneMonthName(int month, FormatType type) const
     }
 #endif
 
-    quint16 idx, size;
+    quint16 idx = month - 1;
     switch (type) {
-    case QLocale::LongFormat:
-        idx = d()->m_standalone_long_month_names_idx;
-        size = d()->m_standalone_long_month_names_size;
-        break;
-    case QLocale::ShortFormat:
-        idx = d()->m_standalone_short_month_names_idx;
-        size = d()->m_standalone_short_month_names_size;
-        break;
-    case QLocale::NarrowFormat:
-        idx = d()->m_standalone_narrow_month_names_idx;
-        size = d()->m_standalone_narrow_month_names_size;
-        break;
-    default:
-        return QString();
+        case QLocale::LongFormat:
+            return getLocaleListData(d()->m_standalone_long_month_names, idx);
+        case QLocale::ShortFormat:
+            return getLocaleListData(d()->m_standalone_short_month_names, idx);
+        case QLocale::NarrowFormat:
+            return getLocaleListData(d()->m_standalone_narrow_month_names, idx);
+        default:
+            return QString();
     }
-    QString name = getLocaleListData(standalone_months_data + idx, size, month - 1);
-    if (name.isEmpty())
-        return monthName(month, type);
-    return name;
+    return monthName(month, type);
 }
 
 /*!
@@ -1898,24 +1848,18 @@ QString QLocale::dayName(int day, FormatType type) const
     if (day == 7)
         day = 0;
 
-    quint16 idx, size;
+    quint16 idx = day;
     switch (type) {
-    case QLocale::LongFormat:
-        idx = d()->m_long_day_names_idx;
-        size = d()->m_long_day_names_size;
-        break;
-    case QLocale::ShortFormat:
-        idx = d()->m_short_day_names_idx;
-        size = d()->m_short_day_names_size;
-        break;
-    case QLocale::NarrowFormat:
-        idx = d()->m_narrow_day_names_idx;
-        size = d()->m_narrow_day_names_size;
-        break;
-    default:
-        return QString();
+        case QLocale::LongFormat:
+            return getLocaleListData(d()->m_long_day_names, idx);
+        case QLocale::ShortFormat:
+            return getLocaleListData(d()->m_short_day_names, idx);
+        case QLocale::NarrowFormat:
+            return getLocaleListData(d()->m_narrow_day_names, idx);
+        default:
+            return QString();
     }
-    return getLocaleListData(days_data + idx, size, day);
+    return QString();
 }
 
 /*!
@@ -1944,30 +1888,20 @@ QString QLocale::standaloneDayName(int day, FormatType type) const
             return res.toString();
     }
 #endif
-    if (day == 7)
-        day = 0;
 
-    quint16 idx, size;
+    quint16 idx = day - 1;
     switch (type) {
-    case QLocale::LongFormat:
-        idx = d()->m_standalone_long_day_names_idx;
-        size = d()->m_standalone_long_day_names_size;
-        break;
-    case QLocale::ShortFormat:
-        idx = d()->m_standalone_short_day_names_idx;
-        size = d()->m_standalone_short_day_names_size;
-        break;
-    case QLocale::NarrowFormat:
-        idx = d()->m_standalone_narrow_day_names_idx;
-        size = d()->m_standalone_narrow_day_names_size;
-        break;
-    default:
-        return QString();
+        case QLocale::LongFormat:
+            return getLocaleListData(d()->m_standalone_long_day_names, idx);
+        case QLocale::ShortFormat:
+            return getLocaleListData(d()->m_standalone_short_day_names, idx);
+        case QLocale::NarrowFormat:
+            return getLocaleListData(d()->m_standalone_narrow_day_names, idx);
+        default:
+            return QString();
     }
-    QString name = getLocaleListData(days_data + idx, size, day);
-    if (name.isEmpty())
-        return dayName(day == 0 ? 7 : day, type);
-    return name;
+    // ### unreachable?
+    return dayName(day, type);
 }
 
 /*!
@@ -1984,14 +1918,14 @@ Qt::DayOfWeek QLocale::firstDayOfWeek() const
             return static_cast<Qt::DayOfWeek>(res.toUInt());
     }
 #endif
-    return static_cast<Qt::DayOfWeek>(d()->m_first_day_of_week);
+    return d()->m_first_day_of_week;
 }
 
 QLocale::MeasurementSystem QLocalePrivate::measurementSystem() const
 {
     for (int i = 0; i < ImperialMeasurementSystemsCount; ++i) {
-        if (ImperialMeasurementSystems[i].languageId == m_language_id
-            && ImperialMeasurementSystems[i].countryId == m_country_id) {
+        if (ImperialMeasurementSystems[i].languageId == m_language
+            && ImperialMeasurementSystems[i].countryId == m_country) {
             return QLocale::ImperialSystem;
         }
     }
@@ -2013,8 +1947,8 @@ QList<Qt::DayOfWeek> QLocale::weekdays() const
     }
 #endif
     QList<Qt::DayOfWeek> weekdays;
-    quint16 weekendStart = d()->m_weekend_start;
-    quint16 weekendEnd = d()->m_weekend_end;
+    Qt::DayOfWeek weekendStart = d()->m_weekend_start;
+    Qt::DayOfWeek weekendEnd = d()->m_weekend_end;
     for (int day = Qt::Monday; day <= Qt::Sunday; day++) {
         if ((weekendEnd >= weekendStart && (day < weekendStart || day > weekendEnd)) ||
             (weekendEnd < weekendStart && (day > weekendEnd && day < weekendStart)))
@@ -2107,7 +2041,7 @@ QString QLocale::amText() const
             return res.toString();
     }
 #endif
-    return getLocaleData(am_data + d()->m_am_idx, d()->m_am_size);
+    return getLocaleData(d()->m_am);
 }
 
 /*!
@@ -2127,7 +2061,7 @@ QString QLocale::pmText() const
             return res.toString();
     }
 #endif
-    return getLocaleData(pm_data + d()->m_pm_idx, d()->m_pm_size);
+    return getLocaleData(d()->m_pm);
 }
 
 
@@ -2981,24 +2915,15 @@ QString QLocale::currencySymbol(QLocale::CurrencySymbolFormat format) const
             return res.toString();
     }
 #endif
-    quint16 idx, size;
+    quint16 idx = 0;
     switch (format) {
-    case CurrencySymbol:
-        idx = d()->m_currency_symbol_idx;
-        size = d()->m_currency_symbol_size;
-        return getLocaleData(currency_symbol_data + idx, size);
-    case CurrencyDisplayName:
-        idx = d()->m_currency_display_name_idx;
-        size = d()->m_currency_display_name_size;
-        return getLocaleListData(currency_display_name_data + idx, size, 0);
-    case CurrencyIsoCode: {
-        int len = 0;
-        const QLocalePrivate *d = this->d();
-        for (; len < 3; ++len)
-            if (!d->m_currency_iso_code[len])
-                break;
-        return len ? QString::fromLatin1(d->m_currency_iso_code, len) : QString();
-    }
+        case CurrencySymbol:
+            return getLocaleData(d()->m_currency_symbol);
+        case CurrencyDisplayName:
+            return getLocaleListData(d()->m_currency_display_name, idx);
+        case CurrencyIsoCode: {
+            return QString::fromLatin1(d()->m_currency_iso_code);
+        }
     }
     return QString();
 }
@@ -3022,18 +2947,17 @@ QString QLocale::toCurrencyString(qlonglong value, const QString &symbol) const
     }
 #endif
     const QLocalePrivate *d = this->d();
-    quint8 idx = d->m_currency_format_idx;
-    quint8 size = d->m_currency_format_size;
-    if (d->m_currency_negative_format_size && value < 0) {
-        idx = d->m_currency_negative_format_idx;
-        size = d->m_currency_negative_format_size;
+    const char* currency_negative_format = d->m_currency_negative_format;
+    bool tonegative = false;
+    if (currency_negative_format && value < 0) {
+        tonegative = true;
         value = -value;
     }
     QString str = d->longLongToString(value);
     QString sym = symbol.isNull() ? currencySymbol() : symbol;
     if (sym.isEmpty())
         sym = currencySymbol(QLocale::CurrencyIsoCode);
-    QString format = getLocaleData(currency_format_data + idx, size);
+    QString format = (tonegative ? getLocaleData(currency_negative_format) : getLocaleData(d->m_currency_format));
     return format.arg(str, sym);
 }
 
@@ -3052,13 +2976,11 @@ QString QLocale::toCurrencyString(qulonglong value, const QString &symbol) const
     }
 #endif
     const QLocalePrivate *d = this->d();
-    quint8 idx = d->m_currency_format_idx;
-    quint8 size = d->m_currency_format_size;
     QString str = d->unsLongLongToString(value);
     QString sym = symbol.isNull() ? currencySymbol() : symbol;
     if (sym.isEmpty())
         sym = currencySymbol(QLocale::CurrencyIsoCode);
-    QString format = getLocaleData(currency_format_data + idx, size);
+    QString format = getLocaleData(d->m_currency_format);
     return format.arg(str, sym);
 }
 
@@ -3077,11 +2999,10 @@ QString QLocale::toCurrencyString(double value, const QString &symbol) const
     }
 #endif
     const QLocalePrivate *d = this->d();
-    quint8 idx = d->m_currency_format_idx;
-    quint8 size = d->m_currency_format_size;
-    if (d->m_currency_negative_format_size && value < 0) {
-        idx = d->m_currency_negative_format_idx;
-        size = d->m_currency_negative_format_size;
+    const char* currency_negative_format = d->m_currency_negative_format;
+    bool tonegative = false;
+    if (currency_negative_format && value < 0) {
+        tonegative = true;
         value = -value;
     }
     QString str = d->doubleToString(value, d->m_currency_digits,
@@ -3089,7 +3010,7 @@ QString QLocale::toCurrencyString(double value, const QString &symbol) const
     QString sym = symbol.isNull() ? currencySymbol() : symbol;
     if (sym.isEmpty())
         sym = currencySymbol(QLocale::CurrencyIsoCode);
-    QString format = getLocaleData(currency_format_data + idx, size);
+    QString format = (tonegative ? getLocaleData(currency_negative_format) : getLocaleData(d->m_currency_format));
     return format.arg(str, sym);
 }
 
@@ -3141,7 +3062,7 @@ QString QLocale::nativeLanguageName() const
             return res.toString();
     }
 #endif
-    return getLocaleData(endonyms_data + d()->m_language_endonym_idx, d()->m_language_endonym_size);
+    return getLocaleData(d()->m_language_endonym);
 }
 
 /*!
@@ -3161,7 +3082,7 @@ QString QLocale::nativeCountryName() const
             return res.toString();
     }
 #endif
-    return getLocaleData(endonyms_data + d()->m_country_endonym_idx, d()->m_country_endonym_size);
+    return getLocaleData(d()->m_country_endonym);
 }
 
 QT_END_NAMESPACE
