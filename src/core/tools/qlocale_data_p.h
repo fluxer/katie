@@ -47,23 +47,6 @@
 
 QT_BEGIN_NAMESPACE
 
-/* This part of the file isn't generated, but written by hand since
- * Unicode CLDR doesn't contain measurement system information.
- */
-struct CountryLanguage
-{
-    const quint16 languageId;
-    const quint16 countryId;
-};
-static const CountryLanguage ImperialMeasurementSystems[] = {
-    { 31, 225 },
-    { 31, 226 },
-    { 111, 225 },
-    { 163, 225 }
-};
-static const short ImperialMeasurementSystemsCount =
-    sizeof(ImperialMeasurementSystems)/sizeof(ImperialMeasurementSystems[0]);
-
 /*
     This part of the file was generated from Common Locale Data Repository v35
 
@@ -27038,6 +27021,19 @@ static const QLocalePrivate localeTbl[] = {
     }, // zu_ZA
 };
 static const qint16 localeTblSize = sizeof(localeTbl) / sizeof(QLocalePrivate);
+
+static const QLocale::Country imperialTbl[] = {
+    QLocale::Country::Bahamas,
+    QLocale::Country::Belize,
+    QLocale::Country::CaymanIslands,
+    QLocale::Country::Liberia,
+    QLocale::Country::MyanmarBurma,
+    QLocale::Country::Palau,
+    QLocale::Country::PuertoRico,
+    QLocale::Country::UnitedKingdom,
+    QLocale::Country::UnitedStates,
+};
+static const qint16 imperialTblSize = sizeof(imperialTbl);
 
 // GENERATED PART ENDS HERE
 

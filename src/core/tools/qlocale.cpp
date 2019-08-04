@@ -1923,9 +1923,8 @@ Qt::DayOfWeek QLocale::firstDayOfWeek() const
 
 QLocale::MeasurementSystem QLocalePrivate::measurementSystem() const
 {
-    for (int i = 0; i < ImperialMeasurementSystemsCount; ++i) {
-        if (ImperialMeasurementSystems[i].languageId == m_language
-            && ImperialMeasurementSystems[i].countryId == m_country) {
+    for (int i = 0; i < imperialTblSize; ++i) {
+        if (imperialTbl[i] == m_country) {
             return QLocale::ImperialSystem;
         }
     }

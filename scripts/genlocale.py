@@ -305,6 +305,8 @@ languagemap = {}
 countrymap = {}
 scriptmap = {}
 localemap = {}
+# main lists
+imperiallist = []
 # cross-reference maps
 localescriptmap = {}
 localefirstdaymap = {}
@@ -323,10 +325,10 @@ scriptmap['AnyScript'] = ['', 'Default']
 # locale to script parsing
 tree = ET.parse('common/supplemental/supplementalData.xml')
 root = tree.getroot()
-for supllanguage in root.findall('./languageData/language'):
-    supllanguagetype = supllanguage.get('type')
-    supllanguagescripts = supllanguage.get('scripts')
-    localescriptmap[supllanguagetype] = supllanguagescripts
+for suppllanguage in root.findall('./languageData/language'):
+    suppllanguagetype = suppllanguage.get('type')
+    suppllanguagescripts = suppllanguage.get('scripts')
+    localescriptmap[suppllanguagetype] = suppllanguagescripts
 
 # locale to first day parsing
 for firstday in root.findall('./weekData/firstDay'):
@@ -525,7 +527,7 @@ for xml in glob.glob('common/main/*.xml'):
     if defaultnumbersystem is not None:
         numbertype = defaultnumbersystem.text
 
-    # find values from suplemental maps
+    # find values from supplemental maps
     if langtype:
         for key in scriptmap.keys():
             if localescriptmap[langtype] == scriptmap[key][0]:
@@ -796,4 +798,29 @@ for key in sorted(localemap.keys()):
     printlocaledata(localemap, key)
 
 print('};')
-print('static const qint16 localeTblSize = sizeof(localeTbl) / sizeof(QLocalePrivate);')
+print('static const qint16 localeTblSize = sizeof(localeTbl) / sizeof(QLocalePrivate);\n')
+
+# imperial parsing
+tree = ET.parse('common/supplemental/supplementalData.xml')
+root = tree.getroot()
+for measurementsystem in root.findall('./measurementData/measurementSystem'):
+    measurementsystemtype = measurementsystem.get('type')
+    if measurementsystemtype in ('UK', 'US'):
+        territories = measurementsystem.get('territories')
+        for territory in territories.split(' '):
+            countryenum = None
+            languageenum = None
+            for key in countrymap.keys():
+                countrycode = countrymap[key][0]
+                if countrycode == territory:
+                    countryenum = key
+                    break
+            imperiallist.append(countryenum)
+
+print('''static const QLocale::Country imperialTbl[] = {''')
+
+for string in sorted(imperiallist):
+    print('    QLocale::Country::%s,' % string)
+
+print('};')
+print('static const qint16 imperialTblSize = sizeof(imperialTbl);')
