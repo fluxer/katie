@@ -102,7 +102,7 @@ def todatetimeformat(fromformat):
         'j',
         'v',
     ]
-    possibleoccurances = [
+    possibleoccurences = [
         '%s, ',
         '%s.',
         '%s-',
@@ -111,15 +111,15 @@ def todatetimeformat(fromformat):
     result = fromformat
     for tag in unsupportedtags:
         uppertag = tag.upper()
-        for occurance in possibleoccurances:
-            result = result.replace(occurance % tag, '')
-            result = result.replace(occurance % (tag * 2), '')
-            result = result.replace(occurance % (tag * 3), '')
-            result = result.replace(occurance % (tag * 4), '')
-            result = result.replace(occurance % uppertag, '')
-            result = result.replace(occurance % (uppertag * 2), '')
-            result = result.replace(occurance % (uppertag * 3), '')
-            result = result.replace(occurance % (uppertag * 4), '')
+        for occurence in possibleoccurences:
+            result = result.replace(occurence % (tag * 4), '')
+            result = result.replace(occurence % (tag * 3), '')
+            result = result.replace(occurence % (tag * 2), '')
+            result = result.replace(occurence % tag, '')
+            result = result.replace(occurence % (uppertag * 4), '')
+            result = result.replace(occurence % (uppertag * 3), '')
+            result = result.replace(occurence % (uppertag * 2), '')
+            result = result.replace(occurence % uppertag, '')
     return result
 
 def tomonthslist(fromxmlelements, initialvalues):
