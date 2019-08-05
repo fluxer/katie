@@ -10,6 +10,12 @@ def mapcopy(frommap, tomap):
     for key in frommap.keys():
         tomap[key] = frommap[key]
 
+def mapmerge(frommap, tomap, defaultmap):
+    for key in frommap.keys():
+        if frommap[key] == defaultmap[key]:
+            continue
+        tomap[key] = frommap[key]
+
 def listcopy(fromlist, tolist):
     for entry in fromlist:
         tolist.append(entry)
@@ -538,6 +544,7 @@ def readlocale(fromxml, tomap, isparent):
 
     language = root.find('./identity/language')
     langtype = language.get('type')
+    country = root.find('./identity/territory')
     countrytype = None
     currencytype = None
     numbertype = 'latn' # CLDR default
@@ -548,14 +555,14 @@ def readlocale(fromxml, tomap, isparent):
     tomap[locale] = {}
     mapcopy(localedefaults, tomap[locale])
 
-    # set defaults from parent locale, then from territory if specified
-    country = root.find('./identity/territory')
+    # set defaults from parent locale if territory is specified
     if country is not None:
         for parent in localeparentmap.keys():
-            if country in localeparentmap[parent]:
+            if locale in localeparentmap[parent]:
                 mapcopy(localeparentvaluesmap[parent], tomap[locale])
+    # then from main locale (non-territory) filling the blanks that even parent locales do not fill
     if not isparent:
-        mapcopy(localemap[langtype], tomap[locale])
+        mapmerge(localemap[langtype], tomap[locale], localedefaults)
 
     # find the enums from mapped values
     for key in languagemap.keys():

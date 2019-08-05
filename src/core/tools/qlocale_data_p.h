@@ -5852,7 +5852,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -5920,7 +5920,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -5954,7 +5954,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6022,7 +6022,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6056,7 +6056,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d/M/yy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6090,7 +6090,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6124,7 +6124,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6192,7 +6192,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6226,7 +6226,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6260,7 +6260,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "P\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6294,7 +6294,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6362,7 +6362,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6396,7 +6396,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%2 %1\0", "%2-%1\0", "CHF\0",
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6430,7 +6430,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6464,7 +6464,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6498,7 +6498,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6532,7 +6532,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6566,7 +6566,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6600,7 +6600,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6634,7 +6634,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "kr.\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6668,7 +6668,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6702,7 +6702,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "Nfk\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6736,7 +6736,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6770,7 +6770,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6804,7 +6804,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "£\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6838,7 +6838,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6872,7 +6872,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6906,7 +6906,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -6940,7 +6940,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "UK Pound\0", "\0", "UK pound\0", "\0", "\0", "\0", "UK pounds\0" },
@@ -6974,7 +6974,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "GH₵\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7008,7 +7008,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "£\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7042,7 +7042,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "D\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7110,7 +7110,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7144,7 +7144,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d/M/y\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7212,7 +7212,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7246,7 +7246,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "UK Pound\0", "\0", "UK pound\0", "\0", "\0", "\0", "UK pounds\0" },
@@ -7280,7 +7280,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0",
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7314,7 +7314,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7348,7 +7348,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "UK Pound\0", "\0", "UK pound\0", "\0", "\0", "\0", "UK pounds\0" },
@@ -7382,7 +7382,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d/M/yy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7416,7 +7416,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "Ksh\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7450,7 +7450,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7484,7 +7484,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7518,7 +7518,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7552,7 +7552,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7586,7 +7586,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7620,7 +7620,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "R\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7654,7 +7654,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "Ar\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7722,7 +7722,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "MOP$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7790,7 +7790,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7824,7 +7824,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "dd MMMM y\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7858,7 +7858,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "Rs\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7892,7 +7892,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "MK\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7926,7 +7926,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "RM\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7960,7 +7960,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -7994,7 +7994,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8028,7 +8028,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "₦\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8062,7 +8062,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%2 %1\0", "%2 -%1\0", "EUR\0",
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8096,7 +8096,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8130,7 +8130,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8164,7 +8164,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8198,7 +8198,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "K\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8232,7 +8232,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "₱\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8266,7 +8266,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "Rs\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8300,7 +8300,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8368,7 +8368,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8402,7 +8402,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "RF\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8436,7 +8436,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8470,7 +8470,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "SR\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8504,7 +8504,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8538,7 +8538,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "y-MM-dd\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "kr\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8572,7 +8572,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d/M/yy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8606,7 +8606,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "£\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8640,7 +8640,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1 %2\0", "(%1 %2)\0", "EUR\0",
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8674,7 +8674,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "Le\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8708,7 +8708,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "£\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8742,7 +8742,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "NAf.\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8776,7 +8776,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "E\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8810,7 +8810,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8844,7 +8844,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8878,7 +8878,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "T$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8912,7 +8912,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8946,7 +8946,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -8980,7 +8980,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "TSh\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -9014,7 +9014,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "USh\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -9116,7 +9116,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -9150,7 +9150,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -9218,7 +9218,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "VT\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -9252,7 +9252,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "WS$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -9286,7 +9286,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "R\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -9320,7 +9320,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         "K\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -9354,7 +9354,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
         { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
@@ -20600,7 +20600,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "«\0", "»\0", "“\0", "”\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -20608,7 +20608,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "manhã\0", "tarde\0",
         // currency
         "Kz\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
@@ -20668,7 +20668,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "«\0", "»\0", "“\0", "”\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -20676,7 +20676,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "manhã\0", "tarde\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
@@ -20702,7 +20702,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "«\0", "»\0", "“\0", "”\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -20710,7 +20710,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "manhã\0", "tarde\0",
         // currency
         "​\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
@@ -20736,7 +20736,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "«\0", "»\0", "“\0", "”\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -20744,7 +20744,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "manhã\0", "tarde\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
@@ -20770,7 +20770,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "«\0", "»\0", "“\0", "”\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -20778,7 +20778,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "manhã\0", "tarde\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
@@ -20804,7 +20804,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "«\0", "»\0", "“\0", "”\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -20812,7 +20812,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "manhã\0", "tarde\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
@@ -20838,7 +20838,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "«\0", "»\0", "“\0", "”\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -20846,7 +20846,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "manhã\0", "tarde\0",
         // currency
         "MOP$\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
@@ -20872,7 +20872,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "«\0", "»\0", "“\0", "”\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -20880,7 +20880,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "manhã\0", "tarde\0",
         // currency
         "MTn\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
@@ -20940,7 +20940,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "«\0", "»\0", "“\0", "”\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -20948,7 +20948,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "manhã\0", "tarde\0",
         // currency
         "Db\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
@@ -20974,7 +20974,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "«\0", "»\0", "“\0", "”\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -20982,7 +20982,7 @@ static const QLocalePrivate localeTbl[] = {
         // date/time format
         "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
         // am/pm
-        "AM\0", "PM\0",
+        "manhã\0", "tarde\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
         { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
@@ -26832,8 +26832,8 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "上午\0", "下午\0",
         // currency
-        "MOP$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        "MOP$\0", "%2%1K\0", Q_NULLPTR, "HKD\0",
+        { "港元\0", "\0", "\0", "\0", "\0", "\0", "港元\0" },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
