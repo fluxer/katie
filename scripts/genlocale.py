@@ -201,7 +201,7 @@ def printenum(frommap, prefix):
     keyscount = 0
 
     # print Default and C first
-    for key in sorted(frommap.keys()):
+    for key in frommap.keys():
         if not key in ('Any%s' % prefix, 'C'):
             continue
         print('        %s = %d,' % (key, keyscount))
@@ -758,7 +758,7 @@ for xml in glob.glob('common/main/*.xml'):
                     daywidthtype = daywidth.get('type')
                     if daywidthtype == 'wide':
                         days = daywidth.findall('./day')
-                        localemap[locale]['long_month_names'] = todayslist(days, localemap[locale]['long_month_names'])
+                        localemap[locale]['long_day_names'] = todayslist(days, localemap[locale]['long_day_names'])
                     elif daywidthtype == 'abbreviated':
                         days = daywidth.findall('./day')
                         localemap[locale]['short_day_names'] = todayslist(days, localemap[locale]['short_day_names'])
