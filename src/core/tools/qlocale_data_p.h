@@ -3968,40 +3968,6 @@ static const QLocalePrivate localeTbl[] = {
         { "dg\0", "dl\0", "dt\0", "dc\0", "dj\0", "dv\0", "ds\0" }
     }, // ca_ES
     {
-        QLocale::Language::Catalan, QLocale::Script::AnyScript, QLocale::Country::Spain,
-        // week
-        Qt::Monday, Qt::Saturday, Qt::Sunday,
-        // symbols
-        44, 46, 59, 37, 45, 43, 69, 2, 0, 48,
-        // quotation
-        "«\0", "»\0", "“\0", "”\0",
-        // endonym
-        "català\0", "Canadà\0",
-        // list pattern
-        "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
-        // date/time format
-        "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
-        // am/pm
-        "a. m.\0", "p. m.\0",
-        // currency
-        "CAD\0", "%1 %2\0", Q_NULLPTR, "CAD\0",
-        { "dòlar canadenc\0", "\0", "dòlar canadenc\0", "\0", "\0", "\0", "dòlars canadencs\0" },
-        // month names
-        { "gen.\0", "febr.\0", "març\0", "abr.\0", "maig\0", "juny\0", "jul.\0", "ag.\0", "set.\0", "oct.\0", "nov.\0", "des.\0" },
-        { "gener\0", "febrer\0", "març\0", "abril\0", "maig\0", "juny\0", "juliol\0", "agost\0", "setembre\0", "octubre\0", "novembre\0", "desembre\0" },
-        { "GN\0", "FB\0", "MÇ\0", "AB\0", "MG\0", "JN\0", "JL\0", "AG\0", "ST\0", "OC\0", "NV\0", "DS\0" },
-        { "de gen.\0", "de febr.\0", "de març\0", "d’abr.\0", "de maig\0", "de juny\0", "de jul.\0", "d’ag.\0", "de set.\0", "d’oct.\0", "de nov.\0", "de des.\0" },
-        { "de gener\0", "de febrer\0", "de març\0", "d’abril\0", "de maig\0", "de juny\0", "de juliol\0", "d’agost\0", "de setembre\0", "d’octubre\0", "de novembre\0", "de desembre\0" },
-        { "GN\0", "FB\0", "MÇ\0", "AB\0", "MG\0", "JN\0", "JL\0", "AG\0", "ST\0", "OC\0", "NV\0", "DS\0" },
-        // day names
-        { "dg.\0", "dl.\0", "dt.\0", "dc.\0", "dj.\0", "dv.\0", "ds.\0" },
-        { "diumenge\0", "dilluns\0", "dimarts\0", "dimecres\0", "dijous\0", "divendres\0", "dissabte\0" },
-        { "dg\0", "dl\0", "dt\0", "dc\0", "dj\0", "dv\0", "ds\0" },
-        { "dg.\0", "dl.\0", "dt.\0", "dc.\0", "dj.\0", "dv.\0", "ds.\0" },
-        { "diumenge\0", "dilluns\0", "dimarts\0", "dimecres\0", "dijous\0", "divendres\0", "dissabte\0" },
-        { "dg\0", "dl\0", "dt\0", "dc\0", "dj\0", "dv\0", "ds\0" }
-    }, // ca_ES_VALENCIA
-    {
         QLocale::Language::Catalan, QLocale::Script::AnyScript, QLocale::Country::France,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
@@ -9135,40 +9101,6 @@ static const QLocalePrivate localeTbl[] = {
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_US
-    {
-        QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::UnitedStates,
-        // week
-        Qt::Monday, Qt::Saturday, Qt::Sunday,
-        // symbols
-        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
-        // quotation
-        "“\0", "”\0", "‘\0", "’\0",
-        // endonym
-        "English\0", Q_NULLPTR,
-        // list pattern
-        "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
-        // date/time format
-        "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
-        // am/pm
-        "AM\0", "PM\0",
-        // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "USD\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
-        // month names
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
-        // day names
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
-    }, // en_US_POSIX
     {
         QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::StVincentAndGrenadines,
         // week

@@ -521,14 +521,19 @@ for xml in sorted(glob.glob('common/main/*.xml')):
         # only interested in specific locales
         continue
 
+    tree = ET.parse(xml)
+    root = tree.getroot()
+
+    variant = root.find('./identity/variant')
+    if variant is not None:
+        # TODO: variants are not supported by QLocale, e.g
+        continue
+
     locale = os.path.basename(xml)
     locale = locale.replace('.xml', '')
 
     localemap[locale] = {}
     mapcopy(localemap['Default'], localemap[locale])
-
-    tree = ET.parse(xml)
-    root = tree.getroot()
 
     language = root.find('./identity/language')
     langtype = language.get('type')
