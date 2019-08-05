@@ -506,7 +506,9 @@ QDataStream &operator>>(QDataStream &ds, QLocale &l)
 static quint16 localePrivateIndex(const QLocalePrivate *p)
 {
     for (int i = 0; i < localeTblSize; i++) {
-        if (&localeTbl[i] == p)
+        if (p->m_language == localeTbl[i].m_language
+            && p->m_country == localeTbl[i].m_country
+            && p->m_script == localeTbl[i].m_script)
             return i;
     }
     return 0;
