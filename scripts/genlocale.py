@@ -248,17 +248,6 @@ def printtable(frommap, prefix):
 
 def printlocaledata(frommap, key):
     value = frommap[key]
-    # check if anything but language, script and country data is different than the defaults and
-    # skip the table entry since default entry already covers it, unless it is the default
-    shouldprint = (key in ('Default', 'C'))
-    for defaultkey in localedefaults.keys():
-        if defaultkey in ('language', 'script', 'country'):
-            continue
-        if not localedefaults[defaultkey] == value[defaultkey]:
-            shouldprint = True
-            break
-    if not shouldprint:
-        return
     print('''    {
         %s, %s, %s,
         // week
@@ -362,7 +351,7 @@ localeiso4217map = {}
 localecurrencymap = {}
 localenumericmap = {}
 
-# artificial values
+# artificial entries
 languagemap['AnyLanguage'] = ['', 'Default']
 languagemap['C'] = ['', 'C']
 countrymap['AnyCountry'] = ['', 'Default']
@@ -519,6 +508,7 @@ localedefaults = {
     'long_day_names': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     'narrow_day_names': ['7', '1', '2', '3', '4', '5', '6'],
 }
+# artificial entries
 localemap['Default'] = {}
 mapcopy(localedefaults, localemap['Default'])
 localemap['C'] = {}
