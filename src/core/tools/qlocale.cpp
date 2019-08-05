@@ -164,15 +164,15 @@ QString QLocalePrivate::bcp47Name() const
         uc[datapos++] = QLatin1Char('-');
         for (int i = 0; i < scriptlen; i++) {
             uc[datapos] = ushort(script[i]);
+            datapos++;
         }
-        datapos++;
     }
     if (country) {
         uc[datapos++] = QLatin1Char('-');
         for (int i = 0; i < countrylen; i++) {
             uc[datapos] = ushort(country[i]);
+            datapos++;
         }
-        datapos++;
     }
 
     return name;
