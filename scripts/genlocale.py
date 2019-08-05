@@ -86,6 +86,42 @@ def tocurrencyformat(fromformat, frommap):
         result.append(fmt)
     return result
 
+def todatetimeformat(fromformat):
+    unsupportedtags = [
+        'g',
+        'u',
+        'q',
+        'l',
+        'w',
+        'f',
+        'g',
+        'e',
+        'c',
+        'a',
+        'k',
+        'j',
+        'v',
+    ]
+    possibleoccurances = [
+        '%s, ',
+        '%s.',
+        '%s-',
+        '%s',
+    ]
+    result = fromformat
+    for tag in unsupportedtags:
+        uppertag = tag.upper()
+        for occurance in possibleoccurances:
+            result = result.replace(occurance % tag, '')
+            result = result.replace(occurance % (tag * 2), '')
+            result = result.replace(occurance % (tag * 3), '')
+            result = result.replace(occurance % (tag * 4), '')
+            result = result.replace(occurance % uppertag, '')
+            result = result.replace(occurance % (uppertag * 2), '')
+            result = result.replace(occurance % (uppertag * 3), '')
+            result = result.replace(occurance % (uppertag * 4), '')
+    return result
+
 def tomonthslist(fromxmlelements, initialvalues):
     result = []
     listcopy(initialvalues, result)
@@ -272,8 +308,8 @@ def printlocaledata(frommap, key):
             tochar(value['list_pattern_part_mid']),
             tochar(value['list_pattern_part_end']),
             tochar(value['list_pattern_part_two']),
-            tochar(value['short_date_format']),
-            tochar(value['long_date_format']),
+            tochar(todatetimeformat(value['short_date_format'])),
+            tochar(todatetimeformat(value['long_date_format'])),
             tochar(value['short_time_format']),
             tochar(value['long_time_format']),
             tochar(value['am']),
@@ -448,7 +484,7 @@ localedefaults = {
     'list_pattern_part_end': "%1, %2",
     'list_pattern_part_two': "%1, %2",
     'short_date_format': 'd MMM yyyy',
-    'long_date_format': 'EEEE, d MMMM yyyy',
+    'long_date_format': 'd MMMM yyyy',
     'short_time_format': 'HH:mm:ss',
     'long_time_format': 'HH:mm:ss z',
     'am': 'AM',
@@ -648,20 +684,20 @@ for xml in glob.glob('common/main/*.xml'):
             dateformattype = dateformat.get('type')
             if dateformattype == 'short':
                 pattern = dateformat.find('./dateFormat/pattern')
-                localemap[locale]['short_date_format'] = pattern.text
+                localemap[locale]['short_date_format'] = todatetimeformat(pattern.text)
             elif dateformattype == 'long':
                 pattern = dateformat.find('./dateFormat/pattern')
-                localemap[locale]['long_date_format'] = pattern.text
+                localemap[locale]['long_date_format'] = todatetimeformat(pattern.text)
 
         timeformat = calendar.find('./timeFormats/timeFormatLength')
         if timeformat is not None:
             timeformattype = timeformat.get('type')
             if timeformattype == 'short':
                 pattern = timeformat.find('./timeFormat/pattern')
-                localemap[locale]['short_time_format'] = pattern.text
+                localemap[locale]['short_time_format'] = todatetimeformat(pattern.text)
             elif timeformattype == 'long':
                 pattern = timeformat.find('./timeFormat/pattern')
-                localemap[locale]['long_time_format'] = pattern.text
+                localemap[locale]['long_time_format'] = todatetimeformat(pattern.text)
 
         for dayperiodwidth in calendar.findall('./dayPeriods/dayPeriodContext/dayPeriodWidth'):
             dayperiodwidthtype = dayperiodwidth.get('type')
