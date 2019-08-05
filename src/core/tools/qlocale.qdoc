@@ -125,224 +125,632 @@
     \value AnyLanguage
     \value C The "C" locale is identical in behavior to English/UnitedStates.
     \value Abkhazian
-    \value Afan
+    \value Achinese
+    \value Acoli
+    \value Adangme
+    \value Adyghe
     \value Afar
+    \value Afrihili
     \value Afrikaans
+    \value Aghem
+    \value Ainu
+    \value Akan
+    \value Akkadian
+    \value Akoose
+    \value Alabama
     \value Albanian
+    \value Aleut
+    \value AlgerianArabic
+    \value AmericanEnglish
+    \value AmericanSignLanguage
     \value Amharic
+    \value AncientEgyptian
+    \value AncientGreek
+    \value Angika
+    \value AoNaga
     \value Arabic
+    \value Aragonese
+    \value Aramaic
+    \value Araona
+    \value Arapaho
+    \value Arawak
     \value Armenian
+    \value Aromanian
+    \value Arpitan
     \value Assamese
+    \value Asturian
+    \value Asu
+    \value Atsam
+    \value AustralianEnglish
+    \value AustrianGerman
+    \value Avaric
+    \value Avestan
+    \value Awadhi
     \value Aymara
     \value Azerbaijani
+    \value Azeri
+    \value Badaga
+    \value Bafia
+    \value Bafut
+    \value Bakhtiari
+    \value Balinese
+    \value Baluchi
+    \value Bambara
+    \value Bamun
+    \value Bangla
+    \value Banjar
+    \value Basaa
     \value Bashkir
     \value Basque
-    \value Bengali
-    \value Bhutani
-    \value Bihari
+    \value BatakToba
+    \value Bavarian
+    \value Beja
+    \value Belarusian
+    \value Bemba
+    \value Bena
+    \value Betawi
+    \value Bhojpuri
+    \value Bikol
+    \value Bini
+    \value Bishnupriya
     \value Bislama
+    \value Blin
+    \value Blissymbols
+    \value Bodo
     \value Bosnian
+    \value Brahui
+    \value Braj
+    \value BrazilianPortuguese
     \value Breton
+    \value BritishEnglish
+    \value Buginese
     \value Bulgarian
+    \value Bulu
+    \value Buriat
     \value Burmese
-    \value Byelorussian
-    \value Cambodian
+    \value Caddo
+    \value CajunFrench
+    \value CanadianEnglish
+    \value CanadianFrench
+    \value Cantonese
+    \value Capiznon
+    \value Carib
     \value Catalan
+    \value Cayuga
+    \value Cebuano
+    \value CentralAtlasTamazight
+    \value CentralDusun
+    \value CentralKurdish
+    \value CentralYupik
+    \value ChadianArabic
+    \value Chagatai
+    \value Chakma
+    \value Chamorro
+    \value Chechen
+    \value Cherokee
+    \value Cheyenne
+    \value Chibcha
+    \value Chiga
+    \value ChimborazoHighlandQuichua
     \value Chinese
+    \value ChinookJargon
+    \value Chipewyan
+    \value Choctaw
+    \value ChurchSlavic
+    \value Chuukese
+    \value Chuvash
+    \value ClassicalNewari
+    \value ClassicalSyriac
+    \value Colognian
+    \value Comorian
+    \value CongoSwahili
+    \value Coptic
     \value Cornish
     \value Corsican
+    \value Cree
+    \value Creek
+    \value CrimeanTurkish
     \value Croatian
     \value Czech
+    \value Dakota
     \value Danish
+    \value Dargwa
+    \value Dari
+    \value Dazaga
+    \value Delaware
+    \value Dinka
     \value Divehi
+    \value Dogri
+    \value Dogrib
+    \value Duala
     \value Dutch
+    \value Dyula
+    \value Dzongkha
+    \value EasternFrisian
+    \value Efik
+    \value EgyptianArabic
+    \value Ekajuk
+    \value Elamite
+    \value Embu
+    \value Emilian
     \value English
+    \value Erzya
     \value Esperanto
     \value Estonian
+    \value EuropeanPortuguese
+    \value EuropeanSpanish
+    \value Ewe
+    \value Ewondo
+    \value Extremaduran
+    \value Fang
+    \value Fanti
     \value Faroese
-    \value FijiLanguage
+    \value FijiHindi
+    \value Fijian
+    \value Filipino
     \value Finnish
+    \value Flemish
+    \value Fon
+    \value Frafra
     \value French
-    \value Frisian
-    \value Gaelic
+    \value Friulian
+    \value Fulah
+    \value Ga
+    \value Gagauz
     \value Galician
+    \value GanChinese
+    \value Ganda
+    \value Gayo
+    \value Gbaya
+    \value Geez
     \value Georgian
     \value German
+    \value GhegAlbanian
+    \value Ghomala
+    \value Gilaki
+    \value Gilbertese
+    \value GoanKonkani
+    \value Gondi
+    \value Gorontalo
+    \value Gothic
+    \value Grebo
     \value Greek
-    \value Greenlandic
     \value Guarani
     \value Gujarati
+    \value Gusii
+    \value Gwichin
+    \value Haida
+    \value HaitianCreole
+    \value HakkaChinese
     \value Hausa
+    \value Hawaiian
     \value Hebrew
+    \value Herero
+    \value Hiligaynon
     \value Hindi
+    \value HiriMotu
+    \value Hittite
+    \value Hmong
     \value Hungarian
+    \value Hupa
+    \value Iban
+    \value Ibibio
     \value Icelandic
+    \value Ido
+    \value Igbo
+    \value Iloko
+    \value InariSami
     \value Indonesian
+    \value Ingrian
+    \value Ingush
     \value Interlingua
     \value Interlingue
     \value Inuktitut
-    \value Inupiak
+    \value Inupiaq
     \value Irish
     \value Italian
+    \value JamaicanCreoleEnglish
     \value Japanese
     \value Javanese
+    \value Jju
+    \value JolaFonyi
+    \value JudeoArabic
+    \value JudeoPersian
+    \value Jutish
+    \value Kabardian
+    \value Kabuverdianu
+    \value Kabyle
+    \value Kachin
+    \value Kaingang
+    \value Kako
+    \value Kalaallisut
+    \value Kalenjin
+    \value Kalmyk
+    \value Kamba
+    \value Kanembu
     \value Kannada
+    \value Kanuri
+    \value KaraKalpak
+    \value KarachayBalkar
+    \value Karelian
     \value Kashmiri
+    \value Kashubian
+    \value Kawi
     \value Kazakh
+    \value Kenyang
+    \value Khasi
+    \value Khmer
+    \value Khotanese
+    \value Khowar
+    \value Kiche
+    \value Kikuyu
+    \value Kimbundu
+    \value Kinaraya
     \value Kinyarwanda
     \value Kirghiz
+    \value Kirmanjki
+    \value Klingon
+    \value Kom
+    \value Komi
+    \value KomiPermyak
+    \value Kongo
+    \value Konkani
     \value Korean
+    \value Koro
+    \value Kosraean
+    \value Kotava
+    \value KoyraChiini
+    \value KoyraboroSenni
+    \value Kpelle
+    \value Krio
+    \value Kuanyama
+    \value Kumyk
     \value Kurdish
-    \value Kurundi
-    \value Laothian
+    \value Kurukh
+    \value Kutenai
+    \value Kwasio
+    \value Kyrgyz
+    \value Ladino
+    \value Lahnda
+    \value Lakota
+    \value Lamba
+    \value Langi
+    \value Lao
+    \value Latgalian
     \value Latin
+    \value LatinAmericanSpanish
     \value Latvian
+    \value Laz
+    \value Lezghian
+    \value Ligurian
+    \value Limburgish
     \value Lingala
+    \value LinguaFrancaNova
+    \value LiteraryChinese
     \value Lithuanian
+    \value Livonian
+    \value Lojban
+    \value Lombard
+    \value LouisianaCreole
+    \value LowGerman
+    \value LowSaxon
+    \value LowerSilesian
+    \value LowerSorbian
+    \value Lozi
+    \value LubaKatanga
+    \value LubaLulua
+    \value Luiseno
+    \value LuleSami
+    \value Lunda
+    \value Luo
+    \value Luxembourgish
+    \value Luyia
+    \value Maba
     \value Macedonian
+    \value Machame
+    \value Madurese
+    \value Mafa
+    \value Magahi
+    \value MainFranconian
+    \value Maithili
+    \value Makasar
+    \value MakhuwaMeetto
+    \value Makonde
     \value Malagasy
     \value Malay
     \value Malayalam
     \value Maltese
+    \value Manchu
+    \value Mandar
+    \value MandarinChinese
+    \value Mandingo
+    \value Manipuri
     \value Manx
     \value Maori
+    \value Mapuche
     \value Marathi
+    \value Mari
+    \value Marshallese
+    \value Marwari
+    \value Masai
+    \value Mazanderani
+    \value Medumba
+    \value Mende
+    \value Mentawai
+    \value Meru
+    \value Meta
+    \value MexicanSpanish
+    \value MiddleDutch
+    \value MiddleEnglish
+    \value MiddleFrench
+    \value MiddleHighGerman
+    \value MiddleIrish
+    \value Mikmaq
+    \value MinNanChinese
+    \value Minangkabau
+    \value Mingrelian
+    \value Mirandese
+    \value Mizo
+    \value ModernStandardArabic
+    \value Mohawk
+    \value Moksha
     \value Moldavian
+    \value Mongo
     \value Mongolian
+    \value Montenegrin
+    \value Morisyen
+    \value MoroccanArabic
+    \value Mossi
+    \value Multiplelanguages
+    \value Mundang
+    \value MuslimTat
+    \value MyanmarLanguage
+    \value Myene
+    \value NKo
+    \value NajdiArabic
+    \value Nama
     \value NauruLanguage
+    \value Navajo
+    \value Ndonga
+    \value Neapolitan
     \value Nepali
+    \value Newari
+    \value Ngambay
+    \value Ngiemboon
+    \value Ngomba
+    \value Nheengatu
+    \value Nias
+    \value NigerianPidgin
+    \value Niuean
+    \value Nogai
+    \value Nolinguisticcontent
+    \value NorthNdebele
+    \value NorthernFrisian
+    \value NorthernLuri
+    \value NorthernSami
+    \value NorthernSotho
     \value Norwegian
     \value NorwegianBokmal
-    \value Nynorsk Obsolete, please use NorwegianNynorsk
     \value NorwegianNynorsk
+    \value Novial
+    \value Nuer
+    \value Nyamwezi
+    \value Nyanja
+    \value Nyankole
+    \value NyasaTonga
+    \value Nyoro
+    \value Nzima
     \value Occitan
-    \value Oriya
+    \value Odia
+    \value Ojibwa
+    \value OldEnglish
+    \value OldFrench
+    \value OldHighGerman
+    \value OldIrish
+    \value OldNorse
+    \value OldPersian
+    \value OldProvencal
+    \value Oromo
+    \value Osage
+    \value Ossetic
+    \value OttomanTurkish
+    \value Pahlavi
+    \value PalatineGerman
+    \value Palauan
+    \value Pali
+    \value Pampanga
+    \value Pangasinan
+    \value Papiamento
     \value Pashto
+    \value PennsylvaniaGerman
     \value Persian
+    \value Phoenician
+    \value Picard
+    \value Piedmontese
+    \value Plautdietsch
+    \value Pohnpeian
     \value Polish
+    \value Pontic
     \value Portuguese
+    \value Prussian
     \value Punjabi
+    \value Pushto
     \value Quechua
-    \value RhaetoRomance
+    \value Rajasthani
+    \value Rapanui
+    \value Rarotongan
+    \value Riffian
+    \value Romagnol
     \value Romanian
+    \value Romansh
+    \value Romany
+    \value Rombo
+    \value Root
+    \value Rotuman
+    \value Roviana
+    \value Rundi
     \value Russian
+    \value Rusyn
+    \value Rwa
+    \value Saho
+    \value Sakha
+    \value SamaritanAramaic
+    \value Samburu
     \value Samoan
-    \value Sangho
+    \value Samogitian
+    \value Sandawe
+    \value Sango
+    \value Sangu
     \value Sanskrit
+    \value Santali
+    \value Sardinian
+    \value Sasak
+    \value SassareseSardinian
+    \value SaterlandFrisian
+    \value Saurashtra
+    \value Scots
+    \value ScottishGaelic
+    \value Selayar
+    \value Selkup
+    \value Sena
+    \value Seneca
     \value Serbian
     \value SerboCroatian
-    \value Sesotho
-    \value Setswana
+    \value Serer
+    \value Seri
+    \value SeselwaCreoleFrench
+    \value Shambala
+    \value Shan
     \value Shona
+    \value SichuanYi
+    \value Sicilian
+    \value Sidamo
+    \value Siksika
+    \value Silesian
+    \value SimplifiedChinese
     \value Sindhi
-    \value Singhalese
-    \value Siswati
+    \value Sinhala
+    \value SkoltSami
+    \value Slave
     \value Slovak
     \value Slovenian
+    \value Soga
+    \value Sogdien
     \value Somali
+    \value Soninke
+    \value SouthNdebele
+    \value SouthernAltai
+    \value SouthernKurdish
+    \value SouthernSami
+    \value SouthernSotho
     \value Spanish
+    \value SrananTongo
+    \value StandardMoroccanTamazight
+    \value Sukuma
+    \value Sumerian
     \value Sundanese
+    \value Susu
     \value Swahili
+    \value Swati
     \value Swedish
+    \value SwissFrench
+    \value SwissGerman
+    \value SwissHighGerman
+    \value Syriac
+    \value Tachelhit
     \value Tagalog
+    \value Tahitian
+    \value Taita
     \value Tajik
+    \value Talysh
+    \value Tamashek
     \value Tamil
+    \value Taroko
+    \value Tasawaq
     \value Tatar
     \value Telugu
+    \value Tereno
+    \value Teso
+    \value Tetum
     \value Thai
     \value Tibetan
+    \value Tigre
     \value Tigrinya
-    \value TongaLanguage
+    \value Timne
+    \value Tiv
+    \value Tlingit
+    \value TokPisin
+    \value TokelauLanguage
+    \value Tongan
+    \value TornedalenFinnish
+    \value TraditionalChinese
+    \value Tsakhur
+    \value Tsakonian
+    \value Tsimshian
     \value Tsonga
+    \value Tswana
+    \value Tulu
+    \value Tumbuka
+    \value TunisianArabic
     \value Turkish
     \value Turkmen
+    \value Turoyo
+    \value TuvaluLanguage
+    \value Tuvinian
     \value Twi
-    \value Uigur
+    \value Tyap
+    \value UKEnglish
+    \value USEnglish
+    \value Udmurt
+    \value Ugaritic
+    \value Uighur
     \value Ukrainian
+    \value Umbundu
+    \value Unknownlanguage
+    \value UpperSorbian
     \value Urdu
+    \value Uyghur
     \value Uzbek
+    \value Vai
+    \value Venda
+    \value Venetian
+    \value Veps
     \value Vietnamese
     \value Volapuk
+    \value Voro
+    \value Votic
+    \value Vunjo
+    \value Walloon
+    \value Walser
+    \value Waray
+    \value Warlpiri
+    \value Washo
+    \value Wayuu
     \value Welsh
+    \value WestFlemish
+    \value WesternBalochi
+    \value WesternFrisian
+    \value WesternMari
+    \value Wolaytta
     \value Wolof
+    \value WuChinese
     \value Xhosa
+    \value XiangChinese
+    \value Yangben
+    \value Yao
+    \value Yapese
+    \value Yemba
     \value Yiddish
     \value Yoruba
+    \value Zapotec
+    \value Zarma
+    \value Zaza
+    \value Zeelandic
+    \value Zenaga
     \value Zhuang
+    \value ZoroastrianDari
     \value Zulu
-    \value Bosnian
-    \value Divehi
-    \value Manx
-    \value Cornish
-    \value Akan
-    \value Konkani
-    \value Ga
-    \value Igbo
-    \value Kamba
-    \value Syriac
-    \value Blin
-    \value Geez
-    \value Koro
-    \value Sidamo
-    \value Atsam
-    \value Tigre
-    \value Jju
-    \value Friulian
-    \value Venda
-    \value Ewe
-    \value Walamo
-    \value Hawaiian
-    \value Tyap
-    \value Chewa
-    \value Filipino
-    \value SwissGerman
-    \value SichuanYi
-    \value Kpelle
-    \value LowGerman
-    \value SouthNdebele
-    \value NorthernSotho
-    \value NorthernSami
-    \value Taroko
-    \value Gusii
-    \value Taita
-    \value Fulah
-    \value Kikuyu
-    \value Samburu
-    \value Sena
-    \value NorthNdebele
-    \value Rombo
-    \value Tachelhit
-    \value Kabyle
-    \value Nyankole
-    \value Bena
-    \value Vunjo
-    \value Bambara
-    \value Embu
-    \value Cherokee
-    \value Morisyen
-    \value Makonde
-    \value Langi
-    \value Ganda
-    \value Bemba
-    \value Kabuverdianu
-    \value Meru
-    \value Kalenjin
-    \value Nama
-    \value Machame
-    \value Colognian
-    \value Masai
-    \value Soga
-    \value Luyia
-    \value Asu
-    \value Teso
-    \value Saho
-    \value KoyraChiini
-    \value Rwa
-    \value Luo
-    \value Chiga
-    \value CentralMoroccoTamazight
-    \value KoyraboroSenni
-    \value Shambala
+    \value Zuni
     \omitvalue LastLanguage
 
     \sa language(), languageToString()
@@ -355,9 +763,12 @@
 
     \value AnyCountry
     \value Afghanistan
+    \value Africa
+    \value AlandIslands
     \value Albania
     \value Algeria
     \value AmericanSamoa
+    \value Americas
     \value Andorra
     \value Angola
     \value Anguilla
@@ -366,6 +777,9 @@
     \value Argentina
     \value Armenia
     \value Aruba
+    \value AscensionIsland
+    \value Asia
+    \value Australasia
     \value Australia
     \value Austria
     \value Azerbaijan
@@ -380,55 +794,76 @@
     \value Bermuda
     \value Bhutan
     \value Bolivia
-    \value BosniaAndHerzegowina
+    \value Bosnia
+    \value BosniaAndHerzegovina
     \value Botswana
     \value BouvetIsland
     \value Brazil
     \value BritishIndianOceanTerritory
-    \value BruneiDarussalam
+    \value BritishVirginIslands
+    \value Brunei
     \value Bulgaria
     \value BurkinaFaso
     \value Burundi
     \value Cambodia
     \value Cameroon
     \value Canada
+    \value CanaryIslands
     \value CapeVerde
+    \value Caribbean
+    \value CaribbeanNetherlands
     \value CaymanIslands
     \value CentralAfricanRepublic
+    \value CentralAmerica
+    \value CentralAsia
+    \value CeutaAndMelilla
     \value Chad
     \value Chile
     \value China
     \value ChristmasIsland
-    \value CocosIslands
+    \value ClippertonIsland
+    \value CocosKeelingIslands
     \value Colombia
     \value Comoros
-    \value DemocraticRepublicOfCongo
-    \value PeoplesRepublicOfCongo
+    \value CongoBrazzaville
+    \value CongoDRC
+    \value CongoKinshasa
+    \value CongoRepublic
     \value CookIslands
     \value CostaRica
-    \value IvoryCoast
+    \value CotedIvoire
     \value Croatia
     \value Cuba
+    \value Curacao
     \value Cyprus
     \value CzechRepublic
+    \value Czechia
     \value Denmark
+    \value DiegoGarcia
     \value Djibouti
     \value Dominica
     \value DominicanRepublic
     \value EastTimor
+    \value EasternAfrica
+    \value EasternAsia
+    \value EasternEurope
     \value Ecuador
     \value Egypt
     \value ElSalvador
     \value EquatorialGuinea
     \value Eritrea
     \value Estonia
+    \value Eswatini
     \value Ethiopia
+    \value Europe
+    \value EuropeanUnion
+    \value Eurozone
     \value FalklandIslands
+    \value FalklandIslandsIslasMalvinas
     \value FaroeIslands
-    \value FijiCountry
+    \value Fiji
     \value Finland
     \value France
-    \value MetropolitanFrance
     \value FrenchGuiana
     \value FrenchPolynesia
     \value FrenchSouthernTerritories
@@ -444,6 +879,7 @@
     \value Guadeloupe
     \value Guam
     \value Guatemala
+    \value Guernsey
     \value Guinea
     \value GuineaBissau
     \value Guyana
@@ -451,6 +887,7 @@
     \value HeardAndMcDonaldIslands
     \value Honduras
     \value HongKong
+    \value HongKongSARChina
     \value Hungary
     \value Iceland
     \value India
@@ -458,29 +895,32 @@
     \value Iran
     \value Iraq
     \value Ireland
+    \value IsleofMan
     \value Israel
     \value Italy
+    \value IvoryCoast
     \value Jamaica
     \value Japan
+    \value Jersey
     \value Jordan
     \value Kazakhstan
     \value Kenya
     \value Kiribati
-    \value DemocraticRepublicOfKorea
-    \value RepublicOfKorea
+    \value Kosovo
     \value Kuwait
     \value Kyrgyzstan
-    \value Lao
+    \value Laos
+    \value LatinAmerica
     \value Latvia
     \value Lebanon
     \value Lesotho
     \value Liberia
-    \value LibyanArabJamahiriya
+    \value Libya
     \value Liechtenstein
     \value Lithuania
     \value Luxembourg
-    \value Macau
-    \value Macedonia
+    \value Macao
+    \value MacaoSARChina
     \value Madagascar
     \value Malawi
     \value Malaysia
@@ -492,20 +932,24 @@
     \value Mauritania
     \value Mauritius
     \value Mayotte
+    \value Melanesia
     \value Mexico
     \value Micronesia
+    \value MicronesianRegion
+    \value MiddleAfrica
     \value Moldova
     \value Monaco
     \value Mongolia
+    \value Montenegro
     \value Montserrat
     \value Morocco
     \value Mozambique
     \value Myanmar
+    \value MyanmarBurma
     \value Namibia
-    \value NauruCountry
+    \value Nauru
     \value Nepal
     \value Netherlands
-    \value NetherlandsAntilles
     \value NewCaledonia
     \value NewZealand
     \value Nicaragua
@@ -513,93 +957,119 @@
     \value Nigeria
     \value Niue
     \value NorfolkIsland
+    \value NorthAmerica
+    \value NorthKorea
+    \value NorthMacedonia
+    \value NorthernAfrica
+    \value NorthernAmerica
+    \value NorthernEurope
     \value NorthernMarianaIslands
     \value Norway
+    \value Oceania
     \value Oman
+    \value OutlyingOceania
     \value Pakistan
     \value Palau
-    \value PalestinianTerritory
+    \value Palestine
+    \value PalestinianTerritories
     \value Panama
     \value PapuaNewGuinea
     \value Paraguay
     \value Peru
     \value Philippines
-    \value Pitcairn
+    \value PitcairnIslands
     \value Poland
+    \value Polynesia
     \value Portugal
+    \value PseudoAccents
+    \value PseudoBidi
     \value PuertoRico
     \value Qatar
     \value Reunion
     \value Romania
-    \value RussianFederation
+    \value Russia
     \value Rwanda
-    \value SaintKittsAndNevis
-    \value StLucia
-    \value StVincentAndTheGrenadines
     \value Samoa
     \value SanMarino
     \value SaoTomeAndPrincipe
     \value SaudiArabia
     \value Senegal
-    \value SerbiaAndMontenegro
+    \value Serbia
     \value Seychelles
     \value SierraLeone
     \value Singapore
+    \value SintMaarten
     \value Slovakia
     \value Slovenia
     \value SolomonIslands
     \value Somalia
     \value SouthAfrica
-    \value SouthGeorgiaAndTheSouthSandwichIslands
+    \value SouthAmerica
+    \value SouthGeorgiaAndSouthSandwichIslands
+    \value SouthKorea
+    \value SouthSudan
+    \value SoutheastAsia
+    \value SouthernAfrica
+    \value SouthernAsia
+    \value SouthernEurope
     \value Spain
     \value SriLanka
+    \value StBarthelemy
     \value StHelena
+    \value StKittsAndNevis
+    \value StLucia
+    \value StMartin
     \value StPierreAndMiquelon
+    \value StVincentAndGrenadines
+    \value SubSaharanAfrica
     \value Sudan
     \value Suriname
-    \value SvalbardAndJanMayenIslands
+    \value SvalbardAndJanMayen
     \value Swaziland
     \value Sweden
     \value Switzerland
-    \value SyrianArabRepublic
+    \value Syria
     \value Taiwan
     \value Tajikistan
     \value Tanzania
     \value Thailand
+    \value TimorLeste
     \value Togo
     \value Tokelau
-    \value TongaCountry
+    \value Tonga
     \value TrinidadAndTobago
+    \value TristandaCunha
     \value Tunisia
     \value Turkey
     \value Turkmenistan
     \value TurksAndCaicosIslands
     \value Tuvalu
+    \value UK
+    \value UN
+    \value US
     \value Uganda
     \value Ukraine
     \value UnitedArabEmirates
     \value UnitedKingdom
+    \value UnitedNations
     \value UnitedStates
-    \value UnitedStatesMinorOutlyingIslands
+    \value UnitedStatesOutlyingIslands
+    \value UnitedStatesVirginIslands
+    \value UnknownRegion
     \value Uruguay
     \value Uzbekistan
     \value Vanuatu
-    \value VaticanCityState
+    \value VaticanCity
     \value Venezuela
-    \value VietNam
-    \value BritishVirginIslands
-    \value USVirginIslands
-    \value WallisAndFutunaIslands
+    \value Vietnam
+    \value WallisAndFutuna
+    \value WesternAfrica
+    \value WesternAsia
+    \value WesternEurope
     \value WesternSahara
     \value Yemen
-    \value Yugoslavia
     \value Zambia
     \value Zimbabwe
-    \value Montenegro
-    \value Serbia
-    \value SaintBarthelemy
-    \value SaintMartin
-    \value LatinAmericaAndTheCaribbean
     \omitvalue LastCountry
 
     \sa country(), countryToString()
@@ -612,17 +1082,198 @@
     This enumerated type is used to specify a script.
 
     \value AnyScript
+    \value AdlamScript
+    \value AfakaScript
+    \value AhomScript
+    \value AnatolianHieroglyphsScript
     \value ArabicScript
+    \value ArmenianScript
+    \value AvestanScript
+    \value BalineseScript
+    \value BamumScript
+    \value BanglaScript
+    \value BassaVahScript
+    \value BatakScript
+    \value BhaiksukiScript
+    \value BlissymbolsScript
+    \value BookPahlaviScript
+    \value BopomofoScript
+    \value BrahmiScript
+    \value BrailleScript
+    \value BugineseScript
+    \value BuhidScript
+    \value CarianScript
+    \value CaucasianAlbanianScript
+    \value ChakmaScript
+    \value ChamScript
+    \value CherokeeScript
+    \value CirthScript
+    \value CopticScript
+    \value CypriotScript
     \value CyrillicScript
     \value DeseretScript
+    \value DevanagariScript
+    \value DograScript
+    \value DuployanshorthandScript
+    \value EasternSyriacScript
+    \value EgyptiandemoticScript
+    \value EgyptianhieraticScript
+    \value EgyptianhieroglyphsScript
+    \value ElbasanScript
+    \value ElymaicScript
+    \value EmojiScript
+    \value EstrangeloSyriacScript
+    \value EthiopicScript
+    \value FrakturLatinScript
+    \value FraserScript
+    \value GaelicLatinScript
+    \value GeorgianKhutsuriScript
+    \value GeorgianScript
+    \value GlagoliticScript
+    \value GothicScript
+    \value GranthaScript
+    \value GreekScript
+    \value GujaratiScript
+    \value GunjalaGondiScript
     \value GurmukhiScript
-    \value SimplifiedHanScript same as SimplifiedChineseScript
-    \value SimplifiedChineseScript same as SimplifiedHanScript
-    \value TraditionalHanScript same as TraditionalChineseScript
-    \value TraditionalChineseScript same as TraditionalHanScript
+    \value HanScript
+    \value HangulScript
+    \value HanifiRohingyaScript
+    \value HanunooScript
+    \value HanwithBopomofoScript
+    \value HatranScript
+    \value HebrewScript
+    \value HiraganaScript
+    \value ImperialAramaicScript
+    \value IndusScript
+    \value InheritedScript
+    \value InscriptionalPahlaviScript
+    \value InscriptionalParthianScript
+    \value JamoScript
+    \value JapaneseScript
+    \value JapanesesyllabariesScript
+    \value JavaneseScript
+    \value JurchenScript
+    \value KaithiScript
+    \value KannadaScript
+    \value KatakanaScript
+    \value KayahLiScript
+    \value KharoshthiScript
+    \value KhmerScript
+    \value KhojkiScript
+    \value KhudawadiScript
+    \value KoreanScript
+    \value KpelleScript
+    \value LannaScript
+    \value LaoScript
     \value LatinScript
+    \value LepchaScript
+    \value LimbuScript
+    \value LinearAScript
+    \value LinearBScript
+    \value LomaScript
+    \value LycianScript
+    \value LydianScript
+    \value MahajaniScript
+    \value MakasarScript
+    \value MalayalamScript
+    \value MandaeanScript
+    \value ManichaeanScript
+    \value MarchenScript
+    \value MasaramGondiScript
+    \value MathematicalNotationScript
+    \value MayanhieroglyphsScript
+    \value MedefaidrinScript
+    \value MeiteiMayekScript
+    \value MendeScript
+    \value MeroiticCursiveScript
+    \value MeroiticScript
+    \value ModiScript
     \value MongolianScript
+    \value MoonScript
+    \value MroScript
+    \value MultaniScript
+    \value MyanmarScript
+    \value NKoScript
+    \value NabataeanScript
+    \value NandinagariScript
+    \value NaxiGebaScript
+    \value NewTaiLueScript
+    \value NewaScript
+    \value NushuScript
+    \value NyiakengPuachueHmongScript
+    \value OdiaScript
+    \value OghamScript
+    \value OlChikiScript
+    \value OldChurchSlavonicCyrillicScript
+    \value OldHungarianScript
+    \value OldItalicScript
+    \value OldNorthArabianScript
+    \value OldPermicScript
+    \value OldPersianScript
+    \value OldSogdianScript
+    \value OldSouthArabianScript
+    \value OrkhonScript
+    \value OsageScript
+    \value OsmanyaScript
+    \value PahawhHmongScript
+    \value PalmyreneScript
+    \value PauCinHauScript
+    \value PersoArabicScript
+    \value PhagspaScript
+    \value PhoenicianScript
+    \value PollardPhoneticScript
+    \value PsalterPahlaviScript
+    \value RejangScript
+    \value RongorongoScript
+    \value RunicScript
+    \value SACuneiformScript
+    \value SamaritanScript
+    \value SaratiScript
+    \value SaurashtraScript
+    \value SharadaScript
+    \value ShavianScript
+    \value SiddhamScript
+    \value SignWritingScript
+    \value SimplifiedHanScript
+    \value SimplifiedScript
+    \value SinhalaScript
+    \value SogdianScript
+    \value SoraSompengScript
+    \value SoyomboScript
+    \value SumeroAkkadianCuneiformScript
+    \value SundaneseScript
+    \value SylotiNagriScript
+    \value SymbolsScript
+    \value SyriacScript
+    \value TagalogScript
+    \value TagbanwaScript
+    \value TaiLeScript
+    \value TaiVietScript
+    \value TakriScript
+    \value TamilScript
+    \value TangutScript
+    \value TeluguScript
+    \value TengwarScript
+    \value ThaanaScript
+    \value ThaiScript
+    \value TibetanScript
     \value TifinaghScript
+    \value TirhutaScript
+    \value TraditionalHanScript
+    \value TraditionalScript
+    \value UCASScript
+    \value UgariticScript
+    \value UnifiedCanadianAboriginalSyllabicsScript
+    \value UnwrittenScript
+    \value VaiScript
+    \value VarangKshitiScript
+    \value VisibleSpeechScript
+    \value WanchoScript
+    \value WesternSyriacScript
+    \value WoleaiScript
+    \value YiScript
+    \value ZanabazarSquareScript
     \omitvalue LastScript
 
     \sa script(), scriptToString(), languageToString()
