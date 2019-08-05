@@ -349,6 +349,8 @@ localemap = {}
 # main lists
 imperiallist = []
 # cross-reference maps
+localeparentmap = {}
+localeparentvaluesmap = {}
 localescriptmap = {}
 localefirstdaymap = {}
 localeweekendstartmap = {}
@@ -363,9 +365,16 @@ languagemap['C'] = ['', 'C']
 countrymap['AnyCountry'] = ['', 'Default']
 scriptmap['AnyScript'] = ['', 'Default']
 
-# locale to script parsing
+
+# locale to parent parsing
 tree = ET.parse('common/supplemental/supplementalData.xml')
 root = tree.getroot()
+for parentlocale in root.findall('./parentLocales/parentLocale'):
+    parentlocaleparent = parentlocale.get('parent')
+    parentlocalelocales = parentlocale.get('locales')
+    localeparentmap[parentlocaleparent] = parentlocalelocales.split(' ')
+
+# locale to script parsing
 for suppllanguage in root.findall('./languageData/language'):
     suppllanguagetype = suppllanguage.get('type')
     suppllanguagescripts = suppllanguage.get('scripts')
@@ -428,8 +437,6 @@ for language in root.findall('./localeDisplayNames/languages/language'):
 printtable(languagemap, 'Language')
 
 # country parsing
-tree = ET.parse('common/main/en.xml')
-root = tree.getroot()
 for country in root.findall('./localeDisplayNames/territories/territory'):
     countrytype = country.get('type')
     normalcountry = normalizestring(country.text)
@@ -442,8 +449,6 @@ for country in root.findall('./localeDisplayNames/territories/territory'):
 printtable(countrymap, 'Country')
 
 # scripts parsing
-tree = ET.parse('common/main/en.xml')
-root = tree.getroot()
 for script in root.findall('./localeDisplayNames/scripts/script'):
     scripttype = script.get('type')
     normalscript = normalizestring(script.text)
@@ -522,24 +527,14 @@ mapcopy(localedefaults, localemap['C'])
 localemap['C']['language'] = 'QLocale::Language::C'
 
 # TODO: accept only "contributed" or "approved" values
-for xml in sorted(glob.glob('common/main/*.xml')):
-    if xml.endswith('/root.xml'):
-        # only interested in specific locales
-        continue
-
-    tree = ET.parse(xml)
+def readlocale(fromxml, tomap, isparent):
+    tree = ET.parse(fromxml)
     root = tree.getroot()
 
     variant = root.find('./identity/variant')
     if variant is not None:
         # TODO: variants are not supported by QLocale
-        continue
-
-    locale = os.path.basename(xml)
-    locale = locale.replace('.xml', '')
-
-    localemap[locale] = {}
-    mapcopy(localemap['Default'], localemap[locale])
+        return
 
     language = root.find('./identity/language')
     langtype = language.get('type')
@@ -547,22 +542,32 @@ for xml in sorted(glob.glob('common/main/*.xml')):
     currencytype = None
     numbertype = 'latn' # CLDR default
 
-    # set defaults from main locale if territory is specified
+    locale = os.path.basename(xml)
+    locale = locale.replace('.xml', '')
+
+    tomap[locale] = {}
+    mapcopy(localedefaults, tomap[locale])
+
+    # set defaults from parent locale, then from territory if specified
     country = root.find('./identity/territory')
     if country is not None:
-        mapcopy(localemap[langtype], localemap[locale])
+        for parent in localeparentmap.keys():
+            if country in localeparentmap[parent]:
+                mapcopy(localeparentvaluesmap[parent], tomap[locale])
+    if not isparent:
+        mapcopy(localemap[langtype], tomap[locale])
 
     # find the enums from mapped values
     for key in languagemap.keys():
         if langtype == languagemap[key][0]:
-            localemap[locale]['language'] = 'QLocale::Language::%s' % key
+            tomap[locale]['language'] = 'QLocale::Language::%s' % key
             break
 
     if country is not None:
         countrytype = country.get('type')
         for key in countrymap.keys():
             if countrytype == countrymap[key][0]:
-                localemap[locale]['country'] = 'QLocale::Country::%s' % key
+                tomap[locale]['country'] = 'QLocale::Country::%s' % key
                 break
     else:
         # territory often is not specified, use language code as fallback
@@ -577,29 +582,29 @@ for xml in sorted(glob.glob('common/main/*.xml')):
         numbertype = defaultnumbersystem.text
 
     # find values from supplemental maps
-    if langtype:
+    if not isparent:
         for key in scriptmap.keys():
             if localescriptmap[langtype] == scriptmap[key][0]:
-                localemap[locale]['script'] = 'QLocale::Script::%s' % key
+                tomap[locale]['script'] = 'QLocale::Script::%s' % key
                 break
 
-        for key in localefirstdaymap.keys():
-            for countryvalue in localefirstdaymap[key]:
-                if countryvalue == countrytype:
-                    localemap[locale]['first_day_of_week'] = key
-                    break
+    for key in localefirstdaymap.keys():
+        for countryvalue in localefirstdaymap[key]:
+            if countryvalue == countrytype:
+                tomap[locale]['first_day_of_week'] = key
+                break
 
-        for key in localeweekendstartmap.keys():
-            for countryvalue in localeweekendstartmap[key]:
-                if countryvalue == countrytype:
-                    localemap[locale]['weekend_start'] = key
-                    break
+    for key in localeweekendstartmap.keys():
+        for countryvalue in localeweekendstartmap[key]:
+            if countryvalue == countrytype:
+                tomap[locale]['weekend_start'] = key
+                break
 
-        for key in localeweekendendmap.keys():
-            for countryvalue in localeweekendendmap[key]:
-                if countryvalue == countrytype:
-                    localemap[locale]['weekend_end'] = key
-                    break
+    for key in localeweekendendmap.keys():
+        for countryvalue in localeweekendendmap[key]:
+            if countryvalue == countrytype:
+                tomap[locale]['weekend_end'] = key
+                break
 
     # find from locale data
     for symbol in root.findall('./numbers/symbols'):
@@ -610,70 +615,70 @@ for xml in sorted(glob.glob('common/main/*.xml')):
 
         decimal = symbol.find('./decimal')
         if decimal is not None and len(decimal.text) == 1:
-            localemap[locale]['decimal'] = decimal.text
+            tomap[locale]['decimal'] = decimal.text
 
         group = symbol.find('./group')
         if group is not None and len(group.text) == 1:
-            localemap[locale]['group'] = group.text
+            tomap[locale]['group'] = group.text
 
         listdelimiter = symbol.find('./list')
         if listdelimiter is not None and len(listdelimiter.text) == 1:
-            localemap[locale]['list'] = listdelimiter.text
+            tomap[locale]['list'] = listdelimiter.text
 
         percent = symbol.find('./percentSign')
         if percent is not None and len(percent.text) == 1:
-            localemap[locale]['percent'] = percent.text
+            tomap[locale]['percent'] = percent.text
 
         minus = symbol.find('./minusSign')
         if minus is not None and len(minus.text) == 1:
-            localemap[locale]['minus'] = minus.text
+            tomap[locale]['minus'] = minus.text
 
         plus = symbol.find('./plusSign')
         if plus is not None and len(plus.text) == 1:
-            localemap[locale]['plus'] = plus.text
+            tomap[locale]['plus'] = plus.text
 
         exponential = symbol.find('./exponential')
         if exponential is not None and len(exponential.text) == 1:
-            localemap[locale]['exponential'] = exponential.text
+            tomap[locale]['exponential'] = exponential.text
 
         # zero is from cross-reference numeric system map,
         # taking the first character works even for UTF-8 chars
-        localemap[locale]['zero'] = localenumericmap[numbertype][0]
+        tomap[locale]['zero'] = localenumericmap[numbertype][0]
 
     # digits/rounding data is specific so check if it is mapped
     if currencytype and currencytype in localecurrencymap.keys():
-        localemap[locale]['currency_digits'] = localecurrencymap[currencytype][0]
+        tomap[locale]['currency_digits'] = localecurrencymap[currencytype][0]
 
-        localemap[locale]['currency_rounding'] = localecurrencymap[currencytype][1]
+        tomap[locale]['currency_rounding'] = localecurrencymap[currencytype][1]
 
     quotationstart = root.find('./delimiters/quotationStart')
     if quotationstart is not None:
-        localemap[locale]['quotation_start'] = quotationstart.text
+        tomap[locale]['quotation_start'] = quotationstart.text
 
     quotationend = root.find('./delimiters/quotationEnd')
     if quotationend is not None:
-        localemap[locale]['quotation_end'] = quotationend.text
+        tomap[locale]['quotation_end'] = quotationend.text
 
     altquotationstart = root.find('./delimiters/alternateQuotationStart')
     if altquotationstart is not None:
-        localemap[locale]['alternate_quotation_start'] = altquotationstart.text
+        tomap[locale]['alternate_quotation_start'] = altquotationstart.text
 
     altquotationend = root.find('./delimiters/alternateQuotationEnd')
     if altquotationend is not None:
-        localemap[locale]['alternate_quotation_end'] = altquotationend.text
+        tomap[locale]['alternate_quotation_end'] = altquotationend.text
 
     if langtype:
         for nativelang in root.findall('./localeDisplayNames/languages/language'):
             nativelangtype = nativelang.get('type')
             if nativelangtype == langtype:
-                localemap[locale]['language_endonym'] = nativelang.text
+                tomap[locale]['language_endonym'] = nativelang.text
                 break
 
     if countrytype:
         for nativecountry in root.findall('./localeDisplayNames/territories/territory'):
             nativecountrytype = nativecountry.get('type')
             if nativecountrytype == countrytype:
-                localemap[locale]['country_endonym'] = nativecountry.text
+                tomap[locale]['country_endonym'] = nativecountry.text
                 break
 
     listpattern = root.find('./listPatterns/listPattern')
@@ -681,13 +686,13 @@ for xml in sorted(glob.glob('common/main/*.xml')):
         for listpatternpart in listpattern.findall('./listPatternPart'):
             listpatternparttype = listpatternpart.get('type')
             if listpatternparttype == 'start':
-                localemap[locale]['list_pattern_part_start'] = tolistformat(listpatternpart.text)
+                tomap[locale]['list_pattern_part_start'] = tolistformat(listpatternpart.text)
             elif listpatternparttype == 'middle':
-                localemap[locale]['list_pattern_part_mid'] = tolistformat(listpatternpart.text)
+                tomap[locale]['list_pattern_part_mid'] = tolistformat(listpatternpart.text)
             elif listpatternparttype == 'end':
-                localemap[locale]['list_pattern_part_end'] = tolistformat(listpatternpart.text)
+                tomap[locale]['list_pattern_part_end'] = tolistformat(listpatternpart.text)
             elif listpatternparttype == '2':
-                localemap[locale]['list_pattern_part_two'] = tolistformat(listpatternpart.text)
+                tomap[locale]['list_pattern_part_two'] = tolistformat(listpatternpart.text)
 
     for calendar in root.findall('./dates/calendars/calendar'):
         calendartype = calendar.get('type')
@@ -699,20 +704,20 @@ for xml in sorted(glob.glob('common/main/*.xml')):
             dateformattype = dateformat.get('type')
             if dateformattype == 'short':
                 pattern = dateformat.find('./dateFormat/pattern')
-                localemap[locale]['short_date_format'] = todatetimeformat(pattern.text)
+                tomap[locale]['short_date_format'] = todatetimeformat(pattern.text)
             elif dateformattype == 'long':
                 pattern = dateformat.find('./dateFormat/pattern')
-                localemap[locale]['long_date_format'] = todatetimeformat(pattern.text)
+                tomap[locale]['long_date_format'] = todatetimeformat(pattern.text)
 
         timeformat = calendar.find('./timeFormats/timeFormatLength')
         if timeformat is not None:
             timeformattype = timeformat.get('type')
             if timeformattype == 'short':
                 pattern = timeformat.find('./timeFormat/pattern')
-                localemap[locale]['short_time_format'] = todatetimeformat(pattern.text)
+                tomap[locale]['short_time_format'] = todatetimeformat(pattern.text)
             elif timeformattype == 'long':
                 pattern = timeformat.find('./timeFormat/pattern')
-                localemap[locale]['long_time_format'] = todatetimeformat(pattern.text)
+                tomap[locale]['long_time_format'] = todatetimeformat(pattern.text)
 
         for dayperiodwidth in calendar.findall('./dayPeriods/dayPeriodContext/dayPeriodWidth'):
             dayperiodwidthtype = dayperiodwidth.get('type')
@@ -722,9 +727,9 @@ for xml in sorted(glob.glob('common/main/*.xml')):
             for dayperiod in dayperiodwidth.findall('dayPeriod'):
                 dayperiodtype = dayperiod.get('type')
                 if dayperiodtype == 'am':
-                    localemap[locale]['am'] = dayperiod.text
+                    tomap[locale]['am'] = dayperiod.text
                 elif dayperiodtype == 'pm':
-                    localemap[locale]['pm'] = dayperiod.text
+                    tomap[locale]['pm'] = dayperiod.text
 
         # month/day names
         for monthcontext in calendar.findall('./months/monthContext'):
@@ -734,25 +739,25 @@ for xml in sorted(glob.glob('common/main/*.xml')):
                     monthwidthtype = monthwidth.get('type')
                     if monthwidthtype == 'wide':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['standalone_long_month_names'] = tomonthslist(months, localemap[locale]['standalone_long_month_names'])
+                        tomap[locale]['standalone_long_month_names'] = tomonthslist(months, tomap[locale]['standalone_long_month_names'])
                     elif monthwidthtype == 'abbreviated':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['standalone_short_month_names'] = tomonthslist(months, localemap[locale]['standalone_short_month_names'])
+                        tomap[locale]['standalone_short_month_names'] = tomonthslist(months, tomap[locale]['standalone_short_month_names'])
                     elif monthwidthtype == 'narrow':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['standalone_narrow_month_names'] = tomonthslist(months, localemap[locale]['standalone_narrow_month_names'])
+                        tomap[locale]['standalone_narrow_month_names'] = tomonthslist(months, tomap[locale]['standalone_narrow_month_names'])
             elif monthcontexttype == 'format':
                 for monthwidth in monthcontext.findall('./monthWidth'):
                     monthwidthtype = monthwidth.get('type')
                     if monthwidthtype == 'wide':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['long_month_names'] = tomonthslist(months, localemap[locale]['long_month_names'])
+                        tomap[locale]['long_month_names'] = tomonthslist(months, tomap[locale]['long_month_names'])
                     elif monthwidthtype == 'abbreviated':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['short_month_names'] = tomonthslist(months, localemap[locale]['short_month_names'])
+                        tomap[locale]['short_month_names'] = tomonthslist(months, tomap[locale]['short_month_names'])
                     elif monthwidthtype == 'narrow':
                         months = monthwidth.findall('./month')
-                        localemap[locale]['narrow_month_names'] = tomonthslist(months, localemap[locale]['narrow_month_names'])
+                        tomap[locale]['narrow_month_names'] = tomonthslist(months, tomap[locale]['narrow_month_names'])
 
         for daycontext in calendar.findall('./days/dayContext'):
             daycontexttype = daycontext.get('type')
@@ -761,25 +766,25 @@ for xml in sorted(glob.glob('common/main/*.xml')):
                     daywidthtype = daywidth.get('type')
                     if daywidthtype == 'wide':
                         days = daywidth.findall('./day')
-                        localemap[locale]['standalone_long_day_names'] = todayslist(days, localemap[locale]['standalone_long_day_names'])
+                        tomap[locale]['standalone_long_day_names'] = todayslist(days, tomap[locale]['standalone_long_day_names'])
                     elif daywidthtype == 'abbreviated':
                         days = daywidth.findall('./day')
-                        localemap[locale]['standalone_short_day_names'] = todayslist(days, localemap[locale]['standalone_short_day_names'])
+                        tomap[locale]['standalone_short_day_names'] = todayslist(days, tomap[locale]['standalone_short_day_names'])
                     elif daywidthtype == 'narrow':
                         days = daywidth.findall('./day')
-                        localemap[locale]['standalone_narrow_day_names'] = todayslist(days, localemap[locale]['standalone_narrow_day_names'])
+                        tomap[locale]['standalone_narrow_day_names'] = todayslist(days, tomap[locale]['standalone_narrow_day_names'])
             elif daycontexttype == 'format':
                 for daywidth in daycontext.findall('./dayWidth'):
                     daywidthtype = daywidth.get('type')
                     if daywidthtype == 'wide':
                         days = daywidth.findall('./day')
-                        localemap[locale]['long_day_names'] = todayslist(days, localemap[locale]['long_day_names'])
+                        tomap[locale]['long_day_names'] = todayslist(days, tomap[locale]['long_day_names'])
                     elif daywidthtype == 'abbreviated':
                         days = daywidth.findall('./day')
-                        localemap[locale]['short_day_names'] = todayslist(days, localemap[locale]['short_day_names'])
+                        tomap[locale]['short_day_names'] = todayslist(days, tomap[locale]['short_day_names'])
                     elif daywidthtype == 'narrow':
                         days = daywidth.findall('./day')
-                        localemap[locale]['narrow_day_names'] = todayslist(days, localemap[locale]['narrow_day_names'])
+                        tomap[locale]['narrow_day_names'] = todayslist(days, tomap[locale]['narrow_day_names'])
 
         # gregorian calendar was found, break
         break
@@ -791,10 +796,10 @@ for xml in sorted(glob.glob('common/main/*.xml')):
             if elemcurrencytype == currencytype:
                 symbol = elemcurrency.find('./symbol')
                 if symbol is not None:
-                    localemap[locale]['currency_symbol'] = symbol.text
+                    tomap[locale]['currency_symbol'] = symbol.text
 
                 displaynamelist = []
-                listcopy(localemap[locale]['currency_display_name'], displaynamelist)
+                listcopy(tomap[locale]['currency_display_name'], displaynamelist)
                 for displayname in elemcurrency.findall('./displayName'):
                     displaynamecount = displayname.get('count')
                     # TODO: 0 and 1 are aliases?
@@ -813,7 +818,7 @@ for xml in sorted(glob.glob('common/main/*.xml')):
                     elif displaynamecount == 'other':
                         displaynamelist[6] = displayname.text
 
-                localemap[locale]['currency_display_name'] = displaynamelist
+                tomap[locale]['currency_display_name'] = displaynamelist
                 # currency type was found, break
                 break
 
@@ -824,16 +829,31 @@ for xml in sorted(glob.glob('common/main/*.xml')):
                 continue
             nativecurrencyformat = currencyformat.find('currencyFormatLength/currencyFormat/pattern')
             if nativecurrencyformat is not None:
-                formats = tocurrencyformat(nativecurrencyformat.text, localemap[locale])
-                localemap[locale]['currency_format'] = formats[0]
+                formats = tocurrencyformat(nativecurrencyformat.text, tomap[locale])
+                tomap[locale]['currency_format'] = formats[0]
 
                 # negative format is optional
                 if len(formats) > 1:
-                    localemap[locale]['currency_negative_format'] = formats[1]
+                    tomap[locale]['currency_negative_format'] = formats[1]
 
-            localemap[locale]['currency_iso_code'] = currencytype
+            tomap[locale]['currency_iso_code'] = currencytype
 
     # month/day names are set during calendar parsing
+
+# read parent locales first
+for xml in glob.glob('common/main/*.xml'):
+    xmlbase = os.path.basename(xml)
+    xmlbase = xmlbase.replace('.xml', '')
+    if not xmlbase in localeparentmap.keys():
+        continue
+    readlocale(xml, localeparentvaluesmap, True)
+
+# now everything including those
+for xml in sorted(glob.glob('common/main/*.xml')):
+    if xml.endswith('/root.xml'):
+        # root is not actual locale
+        continue
+    readlocale(xml, localemap, False)
 
 print('''static const QLocalePrivate localeTbl[] = {''')
 
