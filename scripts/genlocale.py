@@ -151,6 +151,9 @@ def tomonthslist(fromxmlelements, initialvalues):
             result[10] = month.text
         elif monthtype == '12':
             result[11] = month.text
+        else:
+            print('Unknown month: %s' % monthtype)
+            sys.exit(1)
     return result
 
 def todayslist(fromxmlelements, initialvalues):
@@ -172,6 +175,9 @@ def todayslist(fromxmlelements, initialvalues):
             result[5] = day.text
         elif daytype == 'sat':
             result[6] = day.text
+        else:
+            print('Unknown day: %s' % daytype)
+            sys.exit(1)
     return result
 
 def normalizestring(fromstring):
@@ -526,7 +532,7 @@ for xml in sorted(glob.glob('common/main/*.xml')):
 
     variant = root.find('./identity/variant')
     if variant is not None:
-        # TODO: variants are not supported by QLocale, e.g
+        # TODO: variants are not supported by QLocale
         continue
 
     locale = os.path.basename(xml)
