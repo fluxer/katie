@@ -356,8 +356,8 @@ imperiallist = []
 # cross-reference maps
 localescriptmap = {}
 localefirstdaymap = {}
-localeweekstartmap = {}
-localeweekendmap = {}
+localeweekendstartmap = {}
+localeweekendendmap = {}
 localeiso4217map = {}
 localecurrencymap = {}
 localenumericmap = {}
@@ -382,17 +382,17 @@ for firstday in root.findall('./weekData/firstDay'):
     firstdayterritories = firstday.get('territories')
     localefirstdaymap[todayenum(firstdayday)] = stripxmltext(firstdayterritories).split(' ')
 
-# locale to week start parsing
+# locale to weekend start parsing
 for weekstart in root.findall('./weekData/weekendStart'):
     weekstartday = weekstart.get('day')
     weekstartterritories = weekstart.get('territories')
-    localeweekstartmap[todayenum(weekstartday)] = stripxmltext(weekstartterritories).split(' ')
+    localeweekendstartmap[todayenum(weekstartday)] = stripxmltext(weekstartterritories).split(' ')
 
-# locale to week end parsing
-for weekend in root.findall('./weekData/weekendStart'):
+# locale to weekend end parsing
+for weekend in root.findall('./weekData/weekendEnd'):
     weekendday = weekend.get('day')
     weekendterritories = weekend.get('territories')
-    localeweekendmap[todayenum(weekendday)] = stripxmltext(weekendterritories).split(' ')
+    localeweekendendmap[todayenum(weekendday)] = stripxmltext(weekendterritories).split(' ')
 
 # locale to iso4217 parsing
 for region in root.findall('./currencyData/region'):
@@ -585,14 +585,14 @@ for xml in glob.glob('common/main/*.xml'):
                     localemap[locale]['first_day_of_week'] = key
                     break
 
-        for key in localeweekstartmap.keys():
-            for countryvalue in localeweekstartmap[key]:
+        for key in localeweekendstartmap.keys():
+            for countryvalue in localeweekendstartmap[key]:
                 if countryvalue == countrytype:
                     localemap[locale]['weekend_start'] = key
                     break
 
-        for key in localeweekendmap.keys():
-            for countryvalue in localeweekendmap[key]:
+        for key in localeweekendendmap.keys():
+            for countryvalue in localeweekendendmap[key]:
                 if countryvalue == countrytype:
                     localemap[locale]['weekend_end'] = key
                     break

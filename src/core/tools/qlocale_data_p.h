@@ -1284,7 +1284,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Afrikaans, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         // week
-        Qt::Saturday, Qt::Thursday, Qt::Thursday,
+        Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
         44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
@@ -1520,43 +1520,9 @@ static const QLocalePrivate localeTbl[] = {
         { "ح\0", "ن\0", "ث\0", "ر\0", "خ\0", "ج\0", "س\0" }
     }, // ar
     {
-        QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::AnyCountry,
-        // week
-        Qt::Monday, Qt::Saturday, Qt::Saturday,
-        // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
-        // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
-        // endonym
-        Q_NULLPTR, Q_NULLPTR,
-        // list pattern
-        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
-        // date/time format
-        "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
-        // am/pm
-        "AM\0", "PM\0",
-        // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
-        // month names
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
-        // day names
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
-    }, // ar_001
-    {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::UnitedArabEmirates,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 2, 1, 1632,
         // quotation
@@ -1590,7 +1556,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Bahrain,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 3, 0, 1632,
         // quotation
@@ -1658,7 +1624,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Algeria,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         44, 46, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -1692,7 +1658,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Egypt,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 2, 1, 1632,
         // quotation
@@ -1760,7 +1726,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Israel,
         // week
-        Qt::Monday, Qt::Friday, Qt::Friday,
+        Qt::Monday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -1794,7 +1760,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Iraq,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 0, 0, 1632,
         // quotation
@@ -1828,7 +1794,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Jordan,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 3, 0, 1632,
         // quotation
@@ -1896,7 +1862,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Kuwait,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 3, 0, 1632,
         // quotation
@@ -1964,7 +1930,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Libya,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         44, 46, 59, 37, 45, 43, 101, 3, 0, 48,
         // quotation
@@ -2066,7 +2032,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Oman,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 3, 0, 1632,
         // quotation
@@ -2134,7 +2100,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Qatar,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 2, 1, 1632,
         // quotation
@@ -2168,7 +2134,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::SaudiArabia,
         // week
-        Qt::Monday, Qt::Friday, Qt::Friday,
+        Qt::Monday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -2202,7 +2168,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Sudan,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 2, 1, 1632,
         // quotation
@@ -2304,7 +2270,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Syria,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 0, 0, 1632,
         // quotation
@@ -2406,7 +2372,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Arabic, QLocale::Script::SyriacScript, QLocale::Country::Yemen,
         // week
-        Qt::Monday, Qt::Friday, Qt::Friday,
+        Qt::Monday, Qt::Friday, Qt::Saturday,
         // symbols
         1643, 1644, 59, 37, 45, 43, 101, 0, 0, 1632,
         // quotation
@@ -3630,7 +3596,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::CentralKurdish, QLocale::Script::AnyScript, QLocale::Country::Iraq,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
         // quotation
@@ -4412,7 +4378,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Dzongkha, QLocale::Script::TibetanScript, QLocale::Country::AnyCountry,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 3872,
         // quotation
@@ -4616,7 +4582,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         // week
-        Qt::Monday, Qt::Saturday, Qt::Saturday,
+        Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -4650,7 +4616,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::UnitedArabEmirates,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -5806,7 +5772,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::Israel,
         // week
-        Qt::Monday, Qt::Friday, Qt::Friday,
+        Qt::Monday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -6928,7 +6894,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::Sudan,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -7673,40 +7639,6 @@ static const QLocalePrivate localeTbl[] = {
         { "dimanĉo\0", "lundo\0", "mardo\0", "merkredo\0", "ĵaŭdo\0", "vendredo\0", "sabato\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // eo
-    {
-        QLocale::Language::Esperanto, QLocale::Script::LatinScript, QLocale::Country::AnyCountry,
-        // week
-        Qt::Monday, Qt::Saturday, Qt::Saturday,
-        // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
-        // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
-        // endonym
-        Q_NULLPTR, Q_NULLPTR,
-        // list pattern
-        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
-        // date/time format
-        "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
-        // am/pm
-        "AM\0", "PM\0",
-        // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
-        // month names
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
-        // day names
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
-    }, // eo_001
     {
         QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         // week
@@ -8764,7 +8696,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Persian, QLocale::Script::AnyScript, QLocale::Country::Afghanistan,
         // week
-        Qt::Saturday, Qt::Thursday, Qt::Thursday,
+        Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
         // quotation
@@ -9886,7 +9818,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::French, QLocale::Script::DuployanshorthandScript, QLocale::Country::Algeria,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -10498,7 +10430,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::French, QLocale::Script::DuployanshorthandScript, QLocale::Country::Syria,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
         // quotation
@@ -11314,7 +11246,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Hebrew, QLocale::Script::HebrewScript, QLocale::Country::Israel,
         // week
-        Qt::Monday, Qt::Friday, Qt::Friday,
+        Qt::Monday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -11685,40 +11617,6 @@ static const QLocalePrivate localeTbl[] = {
         { "dominica\0", "lunedi\0", "martedi\0", "mercuridi\0", "jovedi\0", "venerdi\0", "sabbato\0" },
         { "d\0", "l\0", "m\0", "m\0", "j\0", "v\0", "s\0" }
     }, // ia
-    {
-        QLocale::Language::Interlingua, QLocale::Script::LatinScript, QLocale::Country::AnyCountry,
-        // week
-        Qt::Monday, Qt::Saturday, Qt::Saturday,
-        // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
-        // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
-        // endonym
-        Q_NULLPTR, Q_NULLPTR,
-        // list pattern
-        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
-        // date/time format
-        "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
-        // am/pm
-        "AM\0", "PM\0",
-        // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
-        // month names
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
-        // day names
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
-    }, // ia_001
     {
         QLocale::Language::Indonesian, QLocale::Script::ArabicScript, QLocale::Country::AnyCountry,
         // week
@@ -12334,7 +12232,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Kabyle, QLocale::Script::AnyScript, QLocale::Country::Algeria,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -13354,7 +13252,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Cornish, QLocale::Script::LatinScript, QLocale::Country::AnyCountry,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 3, 0, 48,
         // quotation
@@ -13898,7 +13796,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::NorthernLuri, QLocale::Script::AnyScript, QLocale::Country::Iraq,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
         // quotation
@@ -15904,7 +15802,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Oromo, QLocale::Script::EthiopicScript, QLocale::Country::AnyCountry,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 69, 3, 0, 48,
         // quotation
@@ -16310,40 +16208,6 @@ static const QLocalePrivate localeTbl[] = {
         { "N\0", "P\0", "W\0", "P\0", "K\0", "P\0", "S\0" }
     }, // prg
     {
-        QLocale::Language::Prussian, QLocale::Script::LatinScript, QLocale::Country::AnyCountry,
-        // week
-        Qt::Monday, Qt::Saturday, Qt::Saturday,
-        // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
-        // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
-        // endonym
-        Q_NULLPTR, Q_NULLPTR,
-        // list pattern
-        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
-        // date/time format
-        "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
-        // am/pm
-        "AM\0", "PM\0",
-        // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
-        // month names
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
-        // day names
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
-    }, // prg_001
-    {
         QLocale::Language::Pashto, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
@@ -16380,7 +16244,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Pashto, QLocale::Script::AnyScript, QLocale::Country::Afghanistan,
         // week
-        Qt::Saturday, Qt::Thursday, Qt::Thursday,
+        Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
         // quotation
@@ -17604,7 +17468,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Sindhi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         // week
-        Qt::Saturday, Qt::Friday, Qt::Friday,
+        Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
@@ -20018,7 +19882,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::Uzbek, QLocale::Script::AnyScript, QLocale::Country::Afghanistan,
         // week
-        Qt::Saturday, Qt::Thursday, Qt::Thursday,
+        Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
         46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
         // quotation
@@ -20355,40 +20219,6 @@ static const QLocalePrivate localeTbl[] = {
         { "sudel\0", "mudel\0", "tudel\0", "vedel\0", "dödel\0", "fridel\0", "zädel\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // vo
-    {
-        QLocale::Language::Volapuk, QLocale::Script::LatinScript, QLocale::Country::AnyCountry,
-        // week
-        Qt::Monday, Qt::Saturday, Qt::Saturday,
-        // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
-        // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
-        // endonym
-        Q_NULLPTR, Q_NULLPTR,
-        // list pattern
-        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
-        // date/time format
-        "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
-        // am/pm
-        "AM\0", "PM\0",
-        // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
-        // month names
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
-        // day names
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
-    }, // vo_001
     {
         QLocale::Language::Vunjo, QLocale::Script::LatinScript, QLocale::Country::AnyCountry,
         // week
@@ -20797,40 +20627,6 @@ static const QLocalePrivate localeTbl[] = {
         { "זונטיק\0", "מאָנטיק\0", "דינסטיק\0", "מיטוואך\0", "דאנערשטיק\0", "פֿרײַטיק\0", "שבת\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // yi
-    {
-        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::AnyCountry,
-        // week
-        Qt::Monday, Qt::Saturday, Qt::Saturday,
-        // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
-        // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
-        // endonym
-        Q_NULLPTR, Q_NULLPTR,
-        // list pattern
-        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
-        // date/time format
-        "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
-        // am/pm
-        "AM\0", "PM\0",
-        // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
-        // month names
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
-        // day names
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
-    }, // yi_001
     {
         QLocale::Language::Yoruba, QLocale::Script::LatinScript, QLocale::Country::AnyCountry,
         // week
