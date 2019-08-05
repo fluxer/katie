@@ -516,7 +516,7 @@ mapcopy(localedefaults, localemap['C'])
 localemap['C']['language'] = 'QLocale::Language::C'
 
 # TODO: accept only "contributed" or "approved" values
-for xml in glob.glob('common/main/*.xml'):
+for xml in sorted(glob.glob('common/main/*.xml')):
     if xml.endswith('/root.xml'):
         # only interested in specific locales
         continue
@@ -531,19 +531,22 @@ for xml in glob.glob('common/main/*.xml'):
     root = tree.getroot()
 
     language = root.find('./identity/language')
-    langtype = None
+    langtype = language.get('type')
     countrytype = None
     currencytype = None
     numbertype = 'latn' # CLDR default
 
+    # set defaults from main locale if territory is specified
+    country = root.find('./identity/territory')
+    if country is not None:
+        mapcopy(localemap[langtype], localemap[locale])
+
     # find the enums from mapped values
-    langtype = language.get('type')
     for key in languagemap.keys():
         if langtype == languagemap[key][0]:
             localemap[locale]['language'] = 'QLocale::Language::%s' % key
             break
 
-    country = root.find('./identity/territory')
     if country is not None:
         countrytype = country.get('type')
         for key in countrymap.keys():
