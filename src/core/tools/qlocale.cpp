@@ -842,27 +842,12 @@ QString QLocale::name() const
     if (dd->m_language == QLocale::C)
         return QLatin1String("C");
 
-    const char *c = languageTbl[dd->m_language].code;
-
-    QString result(7, Qt::Uninitialized);
-    ushort *data = (ushort *)result.unicode();
-    const ushort *begin = data;
-
-    *data++ = ushort(c[0]);
-    *data++ = ushort(c[1]);
-    if (c[2] != 0)
-        *data++ = ushort(c[2]);
+    const char *lang = languageTbl[dd->m_language].code;
     if (dd->m_country != AnyCountry) {
-        *data++ = '_';
-        const char *c = countryTbl[dd->m_country].code;
-        *data++ = ushort(c[0]);
-        *data++ = ushort(c[1]);
-        if (c[2] != 0)
-            *data++ = ushort(c[2]);
+        const char *country = countryTbl[dd->m_country].code;
+        return QString::fromLatin1(lang) + QLatin1Char('-') + QString::fromLatin1(country);
     }
-    result.resize(data - begin);
-
-    return result;
+    return QString::fromLatin1(lang);
 }
 
 /*!
