@@ -77,7 +77,7 @@ QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
 {
     const QByteArray lower = code.toLower().toLatin1();
 
-    for (int i = 0; i < languageTblSize; i++) {
+    for (qint16 i = 0; i < languageTblSize; i++) {
         if (qstrcmp(languageTbl[i].code, lower.constData()) == 0)
             return languageTbl[i].language;
     }
@@ -93,7 +93,7 @@ QLocale::Script QLocalePrivate::codeToScript(const QString &code)
         title[0] = static_cast<char>(code.at(0).toUpper().unicode());
     }
 
-    for (int i = 0; i < QLocale::LastScript; i++) {
+    for (qint16 i = 0; i < QLocale::LastScript; i++) {
         if (qstrcmp(scriptTbl[i].code, title.constData()) == 0)
             return scriptTbl[i].script;
     }
@@ -104,7 +104,7 @@ QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
 {
     const QByteArray upper = code.toUpper().toLatin1();
 
-    for (int i = 0; i < countryTblSize; i++) {
+    for (qint16 i = 0; i < countryTblSize; i++) {
         if (qstrcmp(countryTbl[i].code, upper.constData()) == 0)
             return countryTbl[i].country;
     }
@@ -178,25 +178,25 @@ QString QLocalePrivate::bcp47Name() const
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
 {
     if (country == QLocale::AnyCountry) {
-        for (int i = 0; i < localeTblSize; i++) {
+        for (qint16 i = 0; i < localeTblSize; i++) {
             if (localeTbl[i].m_language == language && localeTbl[i].m_script == script)
                 return &localeTbl[i];
         }
     } else if (script == QLocale::AnyScript) {
-        for (int i = 0; i < localeTblSize; i++) {
+        for (qint16 i = 0; i < localeTblSize; i++) {
             if (localeTbl[i].m_language == language && localeTbl[i].m_country == country)
                 return &localeTbl[i];
         }
     } else {
         // both script and country are explicitly specified
-        for (int i = 0; i < localeTblSize; i++) {
+        for (qint16 i = 0; i < localeTblSize; i++) {
             if (localeTbl[i].m_script == script && localeTbl[i].m_country == country) {
                 return &localeTbl[i];
             }
         }
     }
 
-    for (int i = 0; i < localeTblSize; i++) {
+    for (qint16 i = 0; i < localeTblSize; i++) {
         if (localeTbl[i].m_language == language)
             return &localeTbl[i];
     }
@@ -256,7 +256,7 @@ bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QSt
             // if it wasn't a script, maybe it is a country then?
             cntry = value;
             state = NoState;
-            for (int i = 0; i < QLocale::LastScript; i++) {
+            for (qint16 i = 0; i < QLocale::LastScript; i++) {
                 if (QString::fromLatin1(scriptTbl[i].code) == value) {
                     script = value;
                     state = CountryState;
@@ -502,7 +502,7 @@ QDataStream &operator>>(QDataStream &ds, QLocale &l)
 
 static quint16 localePrivateIndex(const QLocalePrivate *p)
 {
-    for (int i = 0; i < localeTblSize; i++) {
+    for (qint16 i = 0; i < localeTblSize; i++) {
         if (p->m_language == localeTbl[i].m_language
             && p->m_country == localeTbl[i].m_country
             && p->m_script == localeTbl[i].m_script)
@@ -1690,7 +1690,7 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
     QList<QLocale> result;
     if (language == QLocale::AnyLanguage && script == QLocale::AnyScript && country == QLocale::AnyCountry)
         result.reserve(localeTblSize);
-    for (int i = 0; i < localeTblSize; i++) {
+    for (qint16 i = 0; i < localeTblSize; i++) {
         if (localeTbl[i].m_language == language
             && localeTbl[i].m_script == script
             && localeTbl[i].m_country == country) {
@@ -1720,7 +1720,7 @@ QList<QLocale::Country> QLocale::countriesForLanguage(Language language)
         return result;
     }
 
-    for (int i = 0; i < localeTblSize; i++) {
+    for (qint16 i = 0; i < localeTblSize; i++) {
         if (localeTbl[i].m_language == language) {
             result.append(localeTbl[i].m_country);
         }
@@ -1907,7 +1907,7 @@ Qt::DayOfWeek QLocale::firstDayOfWeek() const
 
 QLocale::MeasurementSystem QLocalePrivate::measurementSystem() const
 {
-    for (int i = 0; i < imperialTblSize; ++i) {
+    for (qint16 i = 0; i < imperialTblSize; ++i) {
         if (imperialTbl[i] == m_country) {
             return QLocale::ImperialSystem;
         }
