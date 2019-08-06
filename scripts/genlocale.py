@@ -260,6 +260,12 @@ def printtable(frommap, prefix):
 
 def printlocaledata(frommap, key):
     value = frommap[key]
+    # skip table entries without country (non-territory), unless it is artificial, this is done to
+    # preserve the assumption in QLocalePrivate::findLocale that "AnyCountry" means "find me a
+    # language, no matter what country it is spoken in" if "AnyCountry" is passed to it as argument
+    # and also shrinks the table
+    if value['country'] == 'QLocale::Country::AnyCountry' and not key in ('Default', 'C'):
+        return
     print('''    {
         %s, %s, %s,
         // week
