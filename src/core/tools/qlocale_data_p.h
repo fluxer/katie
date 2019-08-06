@@ -1219,9 +1219,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
-        "“\0", "”\0", "‘\0", "’\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         Q_NULLPTR, Q_NULLPTR,
         // list pattern
@@ -1236,16 +1236,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
+        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // Default
     {
@@ -1253,9 +1253,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
-        "“\0", "”\0", "‘\0", "’\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         Q_NULLPTR, Q_NULLPTR,
         // list pattern
@@ -1270,16 +1270,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
+        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // C
     {

@@ -532,9 +532,12 @@ localedefaults = {
     'long_day_names': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     'narrow_day_names': ['7', '1', '2', '3', '4', '5', '6'],
 }
-# artificial entries, values are set after parent locales have been parsed
+# artificial entries
 localemap['Default'] = {}
+mapcopy(localedefaults, localemap['Default'])
 localemap['C'] = {}
+mapcopy(localedefaults, localemap['C'])
+localemap['C']['language'] = 'QLocale::Language::C'
 
 # locales parsing
 # TODO: accept only "contributed" or "approved" values
@@ -861,12 +864,6 @@ for xml in glob.glob('common/main/*.xml'):
     if not xmlbase in localeparentmap.keys():
         continue
     readlocale(xml, localeparentvaluesmap, True)
-
-# set artificial values from root
-mapcopy(localeparentvaluesmap['root'], localemap['Default'])
-localemap['Default']['language'] = 'QLocale::Language::AnyLanguage'
-mapcopy(localeparentvaluesmap['root'], localemap['C'])
-localemap['C']['language'] = 'QLocale::Language::C'
 
 # now everything including those
 for xml in sorted(glob.glob('common/main/*.xml')):
