@@ -381,7 +381,7 @@ void tst_QLocale::emptyCtor()
     process.waitForReadyRead(); \
     QString ret = QString(process.readAll()); \
     process.waitForFinished(); \
-    QVERIFY2(!ret.isEmpty(), "Cannot launch external process"); \
+    QVERIFY2(process.exitStatus() == QProcess::NormalExit, "Cannot launch external process"); \
     QVERIFY2(QString(exp_str) == ret, QString("Expected: " + QString(exp_str) + ", got: " \
             + ret + ". Requested: " + QString(req_lc)).toLatin1().constData()); \
     }
