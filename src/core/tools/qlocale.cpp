@@ -78,8 +78,7 @@ QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
     const QByteArray lower = code.toLower().toLatin1();
 
     for (int i = 0; i < languageTblSize; i++) {
-        const char* c = languageTbl[i].code;
-        if (qstrcmp(c, lower.constData()) == 0)
+        if (qstrcmp(languageTbl[i].code, lower.constData()) == 0)
             return languageTbl[i].language;
     }
 
@@ -95,8 +94,7 @@ QLocale::Script QLocalePrivate::codeToScript(const QString &code)
     }
 
     for (int i = 0; i < QLocale::LastScript; i++) {
-        const char* c = scriptTbl[i].code;
-        if (qstrcmp(c, title.constData()) == 0)
+        if (qstrcmp(scriptTbl[i].code, title.constData()) == 0)
             return scriptTbl[i].script;
     }
     return QLocale::AnyScript;
@@ -107,8 +105,7 @@ QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
     const QByteArray upper = code.toUpper().toLatin1();
 
     for (int i = 0; i < countryTblSize; i++) {
-        const char *c = countryTbl[i].code;
-        if (qstrcmp(c, upper.constData()) == 0)
+        if (qstrcmp(countryTbl[i].code, upper.constData()) == 0)
             return countryTbl[i].country;
     }
 
