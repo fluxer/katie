@@ -1832,14 +1832,13 @@ QString QLocale::dayName(int day, FormatType type) const
     if (day == 7)
         day = 0;
 
-    quint16 idx = day;
     switch (type) {
         case QLocale::LongFormat:
-            return getLocaleListData(d()->m_long_day_names, idx);
+            return getLocaleListData(d()->m_long_day_names, day);
         case QLocale::ShortFormat:
-            return getLocaleListData(d()->m_short_day_names, idx);
+            return getLocaleListData(d()->m_short_day_names, day);
         case QLocale::NarrowFormat:
-            return getLocaleListData(d()->m_narrow_day_names, idx);
+            return getLocaleListData(d()->m_narrow_day_names, day);
         default:
             return QString();
     }
@@ -1873,14 +1872,16 @@ QString QLocale::standaloneDayName(int day, FormatType type) const
     }
 #endif
 
-    quint16 idx = day - 1;
+    if (day == 7)
+        day = 0;
+
     switch (type) {
         case QLocale::LongFormat:
-            return getLocaleListData(d()->m_standalone_long_day_names, idx);
+            return getLocaleListData(d()->m_standalone_long_day_names, day);
         case QLocale::ShortFormat:
-            return getLocaleListData(d()->m_standalone_short_day_names, idx);
+            return getLocaleListData(d()->m_standalone_short_day_names, day);
         case QLocale::NarrowFormat:
-            return getLocaleListData(d()->m_standalone_narrow_day_names, idx);
+            return getLocaleListData(d()->m_standalone_narrow_day_names, day);
         default:
             return QString();
     }
