@@ -34,14 +34,6 @@ def touint(fromstring):
     # character only is used
     return ord(fromstring)
 
-def tochararray(fromstringlist):
-    result = '{ '
-    for string in fromstringlist:
-        result = '%s"%s\\0", ' % (result, string)
-    result = '%s }' % result
-    result = result.replace(',  }', ' }')
-    return result
-
 def tochar(fromstring):
     if fromstring:
         return '"%s\\0"' % fromstring
@@ -51,6 +43,14 @@ def toescapedchar(fromstring):
     if fromstring:
         return '"%s\\0"' % fromstring.replace('"', '\\"')
     return 'Q_NULLPTR'
+
+def tochararray(fromstringlist):
+    result = '{ '
+    for string in fromstringlist:
+        result = '%s%s, ' % (result, tochar(string))
+    result = '%s }' % result
+    result = result.replace(',  }', ' }')
+    return result
 
 def todayenum(day):
     if day == 'mon':

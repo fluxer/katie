@@ -1232,7 +1232,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -1266,7 +1266,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -1300,7 +1300,7 @@ static const QLocalePrivate localeTbl[] = {
         "vm.\0", "nm.\0",
         // currency
         "$\0", "%2%1\0", Q_NULLPTR, "AFN\0",
-        { "Afgaanse afgani\0", "\0", "Afgaanse afgani\0", "\0", "\0", "\0", "Afgaanse afgani\0" },
+        { "Afgaanse afgani\0", Q_NULLPTR, "Afgaanse afgani\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Afgaanse afgani\0" },
         // month names
         { "Jan.\0", "Feb.\0", "Mrt.\0", "Apr.\0", "Mei\0", "Jun.\0", "Jul.\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Des.\0" },
         { "Januarie\0", "Februarie\0", "Maart\0", "April\0", "Mei\0", "Junie\0", "Julie\0", "Augustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
@@ -1334,7 +1334,7 @@ static const QLocalePrivate localeTbl[] = {
         "vm.\0", "nm.\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "AFN\0",
-        { "Afgaanse afgani\0", "\0", "Afgaanse afgani\0", "\0", "\0", "\0", "Afgaanse afgani\0" },
+        { "Afgaanse afgani\0", Q_NULLPTR, "Afgaanse afgani\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Afgaanse afgani\0" },
         // month names
         { "Jan.\0", "Feb.\0", "Mrt.\0", "Apr.\0", "Mei\0", "Jun.\0", "Jul.\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Des.\0" },
         { "Januarie\0", "Februarie\0", "Maart\0", "April\0", "Mei\0", "Junie\0", "Julie\0", "Augustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
@@ -1368,7 +1368,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.g\0", "a.k\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -1402,7 +1402,7 @@ static const QLocalePrivate localeTbl[] = {
         "AN\0", "EW\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -1436,7 +1436,7 @@ static const QLocalePrivate localeTbl[] = {
         "ጥዋት\0", "ከሰዓት\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "AMD\0",
-        { "የአርመን ድራም\0", "\0", "የአርመን ድራም\0", "\0", "\0", "\0", "የአርመን ድራም\0" },
+        { "የአርመን ድራም\0", Q_NULLPTR, "የአርመን ድራም\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "የአርመን ድራም\0" },
         // month names
         { "ጃንዩ\0", "ፌብሩ\0", "ማርች\0", "ኤፕሪ\0", "ሜይ\0", "ጁን\0", "ጁላይ\0", "ኦገስ\0", "ሴፕቴ\0", "ኦክቶ\0", "ኖቬም\0", "ዲሴም\0" },
         { "ጃንዩወሪ\0", "ፌብሩወሪ\0", "ማርች\0", "ኤፕሪል\0", "ሜይ\0", "ጁን\0", "ጁላይ\0", "ኦገስት\0", "ሴፕቴምበር\0", "ኦክቶበር\0", "ኖቬምበር\0", "ዲሴምበር\0" },
@@ -2422,7 +2422,7 @@ static const QLocalePrivate localeTbl[] = {
         "পূৰ্বাহ্ন\0", "অপৰাহ্ন\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "USD\0",
-        { "ইউ. এছ. ডলাৰ\0", "\0", "ইউ. এছ. ডলাৰ\0", "\0", "\0", "\0", "ইউ. এছ. ডলাৰ\0" },
+        { "ইউ. এছ. ডলাৰ\0", Q_NULLPTR, "ইউ. এছ. ডলাৰ\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "ইউ. এছ. ডলাৰ\0" },
         // month names
         { "জানু\0", "ফেব্ৰু\0", "মাৰ্চ\0", "এপ্ৰিল\0", "মে’\0", "জুন\0", "জুলাই\0", "আগ\0", "ছেপ্তে\0", "অক্টো\0", "নৱে\0", "ডিচে\0" },
         { "জানুৱাৰী\0", "ফেব্ৰুৱাৰী\0", "মাৰ্চ\0", "এপ্ৰিল\0", "মে’\0", "জুন\0", "জুলাই\0", "আগষ্ট\0", "ছেপ্তেম্বৰ\0", "অক্টোবৰ\0", "নৱেম্বৰ\0", "ডিচেম্বৰ\0" },
@@ -2456,7 +2456,7 @@ static const QLocalePrivate localeTbl[] = {
         "icheheavo\0", "ichamthi\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -2490,7 +2490,7 @@ static const QLocalePrivate localeTbl[] = {
         "mañana\0", "tarde\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Xin\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Xun\0", "Xnt\0", "Ago\0", "Set\0", "Och\0", "Pay\0", "Avi\0" },
         { "xineru\0", "febreru\0", "marzu\0", "abril\0", "mayu\0", "xunu\0", "xunetu\0", "agostu\0", "setiembre\0", "ochobre\0", "payares\0", "avientu\0" },
@@ -2524,7 +2524,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "₼\0", "%1 %2\0", Q_NULLPTR, "AZN\0",
-        { "Azərbaycan Manatı\0", "\0", "Azərbaycan manatı\0", "\0", "\0", "\0", "Azərbaycan manatı\0" },
+        { "Azərbaycan Manatı\0", Q_NULLPTR, "Azərbaycan manatı\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Azərbaycan manatı\0" },
         // month names
         { "yan\0", "fev\0", "mar\0", "apr\0", "may\0", "iyn\0", "iyl\0", "avq\0", "sen\0", "okt\0", "noy\0", "dek\0" },
         { "Yanvar\0", "Fevral\0", "Mart\0", "Aprel\0", "May\0", "İyun\0", "İyul\0", "Avqust\0", "Sentyabr\0", "Oktyabr\0", "Noyabr\0", "Dekabr\0" },
@@ -2558,7 +2558,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "₼\0", "%1 %2\0", Q_NULLPTR, "AZN\0",
-        { "Azərbaycan Manatı\0", "\0", "Azərbaycan manatı\0", "\0", "\0", "\0", "Azərbaycan manatı\0" },
+        { "Azərbaycan Manatı\0", Q_NULLPTR, "Azərbaycan manatı\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Azərbaycan manatı\0" },
         // month names
         { "yan\0", "fev\0", "mar\0", "apr\0", "may\0", "iyn\0", "iyl\0", "avq\0", "sen\0", "okt\0", "noy\0", "dek\0" },
         { "Yanvar\0", "Fevral\0", "Mart\0", "Aprel\0", "May\0", "İyun\0", "İyul\0", "Avqust\0", "Sentyabr\0", "Oktyabr\0", "Noyabr\0", "Dekabr\0" },
@@ -2592,7 +2592,7 @@ static const QLocalePrivate localeTbl[] = {
         "I bikɛ̂glà\0", "I ɓugajɔp\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -2626,7 +2626,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "еўра\0", "\0", "еўра\0", "\0", "еўра\0", "еўра\0", "еўра\0" },
+        { "еўра\0", Q_NULLPTR, "еўра\0", Q_NULLPTR, "еўра\0", "еўра\0", "еўра\0" },
         // month names
         { "сту\0", "лют\0", "сак\0", "кра\0", "май\0", "чэр\0", "ліп\0", "жні\0", "вер\0", "кас\0", "ліс\0", "сне\0" },
         { "студзень\0", "люты\0", "сакавік\0", "красавік\0", "май\0", "чэрвень\0", "ліпень\0", "жнівень\0", "верасень\0", "кастрычнік\0", "лістапад\0", "снежань\0" },
@@ -2660,7 +2660,7 @@ static const QLocalePrivate localeTbl[] = {
         "uluchelo\0", "akasuba\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -2694,7 +2694,7 @@ static const QLocalePrivate localeTbl[] = {
         "pamilau\0", "pamunyi\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -2728,7 +2728,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "лв.\0", "%1 %2\0", Q_NULLPTR, "BGN\0",
-        { "Български лев\0", "\0", "български лев\0", "\0", "\0", "\0", "български лева\0" },
+        { "Български лев\0", Q_NULLPTR, "български лев\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "български лева\0" },
         // month names
         { "яну\0", "фев\0", "март\0", "апр\0", "май\0", "юни\0", "юли\0", "авг\0", "сеп\0", "окт\0", "ное\0", "дек\0" },
         { "януари\0", "февруари\0", "март\0", "април\0", "май\0", "юни\0", "юли\0", "август\0", "септември\0", "октомври\0", "ноември\0", "декември\0" },
@@ -2762,7 +2762,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "BMD\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -2796,7 +2796,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, "BND\0",
-        { "ব্রুনেই ডলার\0", "\0", "ব্রুনেই ডলার\0", "\0", "\0", "\0", "ব্রুনেই ডলার\0" },
+        { "ব্রুনেই ডলার\0", Q_NULLPTR, "ব্রুনেই ডলার\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "ব্রুনেই ডলার\0" },
         // month names
         { "জানুয়ারী\0", "ফেব্রুয়ারী\0", "মার্চ\0", "এপ্রিল\0", "মে\0", "জুন\0", "জুলাই\0", "আগস্ট\0", "সেপ্টেম্বর\0", "অক্টোবর\0", "নভেম্বর\0", "ডিসেম্বর\0" },
         { "জানুয়ারী\0", "ফেব্রুয়ারী\0", "মার্চ\0", "এপ্রিল\0", "মে\0", "জুন\0", "জুলাই\0", "আগস্ট\0", "সেপ্টেম্বর\0", "অক্টোবর\0", "নভেম্বর\0", "ডিসেম্বর\0" },
@@ -2830,7 +2830,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, "BND\0",
-        { "ব্রুনেই ডলার\0", "\0", "ব্রুনেই ডলার\0", "\0", "\0", "\0", "ব্রুনেই ডলার\0" },
+        { "ব্রুনেই ডলার\0", Q_NULLPTR, "ব্রুনেই ডলার\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "ব্রুনেই ডলার\0" },
         // month names
         { "জানুয়ারী\0", "ফেব্রুয়ারী\0", "মার্চ\0", "এপ্রিল\0", "মে\0", "জুন\0", "জুলাই\0", "আগস্ট\0", "সেপ্টেম্বর\0", "অক্টোবর\0", "নভেম্বর\0", "ডিসেম্বর\0" },
         { "জানুয়ারী\0", "ফেব্রুয়ারী\0", "মার্চ\0", "এপ্রিল\0", "মে\0", "জুন\0", "জুলাই\0", "আগস্ট\0", "সেপ্টেম্বর\0", "অক্টোবর\0", "নভেম্বর\0", "ডিসেম্বর\0" },
@@ -2864,7 +2864,7 @@ static const QLocalePrivate localeTbl[] = {
         "སྔ་དྲོ་\0", "ཕྱི་དྲོ་\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "BOB\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "ཟླ་བ་དང་པོ་\0", "ཟླ་བ་གཉིས་པ་\0", "ཟླ་བ་གསུམ་པ་\0", "ཟླ་བ་བཞི་པ་\0", "ཟླ་བ་ལྔ་པ་\0", "ཟླ་བ་དྲུག་པ་\0", "ཟླ་བ་བདུན་པ་\0", "ཟླ་བ་བརྒྱད་པ་\0", "ཟླ་བ་དགུ་པ་\0", "ཟླ་བ་བཅུ་པ་\0", "ཟླ་བ་བཅུ་གཅིག་པ་\0", "ཟླ་བ་བཅུ་གཉིས་པ་\0" },
@@ -2898,7 +2898,7 @@ static const QLocalePrivate localeTbl[] = {
         "སྔ་དྲོ་\0", "ཕྱི་དྲོ་\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "BOB\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "ཟླ་བ་དང་པོ་\0", "ཟླ་བ་གཉིས་པ་\0", "ཟླ་བ་གསུམ་པ་\0", "ཟླ་བ་བཞི་པ་\0", "ཟླ་བ་ལྔ་པ་\0", "ཟླ་བ་དྲུག་པ་\0", "ཟླ་བ་བདུན་པ་\0", "ཟླ་བ་བརྒྱད་པ་\0", "ཟླ་བ་དགུ་པ་\0", "ཟླ་བ་བཅུ་པ་\0", "ཟླ་བ་བཅུ་གཅིག་པ་\0", "ཟླ་བ་བཅུ་གཉིས་པ་\0" },
@@ -2932,7 +2932,7 @@ static const QLocalePrivate localeTbl[] = {
         "A.M.\0", "G.M.\0",
         // currency
         "BRL\0", "%1 %2\0", Q_NULLPTR, "BRL\0",
-        { "real Brazil\0", "\0", "real Brazil\0", "real Brazil\0", "real Brazil\0", "a realioù Brazil\0", "real Brazil\0" },
+        { "real Brazil\0", Q_NULLPTR, "real Brazil\0", "real Brazil\0", "real Brazil\0", "a realioù Brazil\0", "real Brazil\0" },
         // month names
         { "Gen.\0", "Cʼhwe.\0", "Meur.\0", "Ebr.\0", "Mae\0", "Mezh.\0", "Goue.\0", "Eost\0", "Gwen.\0", "Here\0", "Du\0", "Kzu.\0" },
         { "Genver\0", "Cʼhwevrer\0", "Meurzh\0", "Ebrel\0", "Mae\0", "Mezheven\0", "Gouere\0", "Eost\0", "Gwengolo\0", "Here\0", "Du\0", "Kerzu\0" },
@@ -2966,7 +2966,7 @@ static const QLocalePrivate localeTbl[] = {
         "फुं\0", "बेलासे\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -3000,7 +3000,7 @@ static const QLocalePrivate localeTbl[] = {
         "prijepodne\0", "popodne\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "BSD\0",
-        { "Bahamski dolar\0", "\0", "bahamski dolar\0", "\0", "bahamska dolara\0", "\0", "bahamskih dolara\0" },
+        { "Bahamski dolar\0", Q_NULLPTR, "bahamski dolar\0", Q_NULLPTR, "bahamska dolara\0", Q_NULLPTR, "bahamskih dolara\0" },
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januar\0", "februar\0", "mart\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "septembar\0", "oktobar\0", "novembar\0", "decembar\0" },
@@ -3034,7 +3034,7 @@ static const QLocalePrivate localeTbl[] = {
         "prijepodne\0", "popodne\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "BSD\0",
-        { "Bahamski dolar\0", "\0", "bahamski dolar\0", "\0", "bahamska dolara\0", "\0", "bahamskih dolara\0" },
+        { "Bahamski dolar\0", Q_NULLPTR, "bahamski dolar\0", Q_NULLPTR, "bahamska dolara\0", Q_NULLPTR, "bahamskih dolara\0" },
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januar\0", "februar\0", "mart\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "septembar\0", "oktobar\0", "novembar\0", "decembar\0" },
@@ -3068,7 +3068,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "CAD\0", "%1 %2\0", Q_NULLPTR, "CAD\0",
-        { "dòlar canadenc\0", "\0", "dòlar canadenc\0", "\0", "\0", "\0", "dòlars canadencs\0" },
+        { "dòlar canadenc\0", Q_NULLPTR, "dòlar canadenc\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "dòlars canadencs\0" },
         // month names
         { "gen.\0", "febr.\0", "març\0", "abr.\0", "maig\0", "juny\0", "jul.\0", "ag.\0", "set.\0", "oct.\0", "nov.\0", "des.\0" },
         { "gener\0", "febrer\0", "març\0", "abril\0", "maig\0", "juny\0", "juliol\0", "agost\0", "setembre\0", "octubre\0", "novembre\0", "desembre\0" },
@@ -3102,7 +3102,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "CAD\0", "%1 %2\0", Q_NULLPTR, "CAD\0",
-        { "dòlar canadenc\0", "\0", "dòlar canadenc\0", "\0", "\0", "\0", "dòlars canadencs\0" },
+        { "dòlar canadenc\0", Q_NULLPTR, "dòlar canadenc\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "dòlars canadencs\0" },
         // month names
         { "gen.\0", "febr.\0", "març\0", "abr.\0", "maig\0", "juny\0", "jul.\0", "ag.\0", "set.\0", "oct.\0", "nov.\0", "des.\0" },
         { "gener\0", "febrer\0", "març\0", "abril\0", "maig\0", "juny\0", "juliol\0", "agost\0", "setembre\0", "octubre\0", "novembre\0", "desembre\0" },
@@ -3136,7 +3136,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "CAD\0", "%1 %2\0", Q_NULLPTR, "CAD\0",
-        { "dòlar canadenc\0", "\0", "dòlar canadenc\0", "\0", "\0", "\0", "dòlars canadencs\0" },
+        { "dòlar canadenc\0", Q_NULLPTR, "dòlar canadenc\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "dòlars canadencs\0" },
         // month names
         { "gen.\0", "febr.\0", "març\0", "abr.\0", "maig\0", "juny\0", "jul.\0", "ag.\0", "set.\0", "oct.\0", "nov.\0", "des.\0" },
         { "gener\0", "febrer\0", "març\0", "abril\0", "maig\0", "juny\0", "juliol\0", "agost\0", "setembre\0", "octubre\0", "novembre\0", "desembre\0" },
@@ -3170,7 +3170,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "CAD\0", "%1 %2\0", Q_NULLPTR, "CAD\0",
-        { "dòlar canadenc\0", "\0", "dòlar canadenc\0", "\0", "\0", "\0", "dòlars canadencs\0" },
+        { "dòlar canadenc\0", Q_NULLPTR, "dòlar canadenc\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "dòlars canadencs\0" },
         // month names
         { "gen.\0", "febr.\0", "març\0", "abr.\0", "maig\0", "juny\0", "jul.\0", "ag.\0", "set.\0", "oct.\0", "nov.\0", "des.\0" },
         { "gener\0", "febrer\0", "març\0", "abril\0", "maig\0", "juny\0", "juliol\0", "agost\0", "setembre\0", "octubre\0", "novembre\0", "desembre\0" },
@@ -3204,7 +3204,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "𑄎𑄚𑄪𑄠𑄢𑄨\0", "𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\0", "𑄟𑄢𑄴𑄌𑄧\0", "𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\0", "𑄟𑄬\0", "𑄎𑄪𑄚𑄴\0", "𑄎𑄪𑄣𑄭\0", "𑄃𑄉𑄧𑄌𑄴𑄑𑄴\0", "𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\0", "𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0" },
         { "𑄎𑄚𑄪𑄠𑄢𑄨\0", "𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\0", "𑄟𑄢𑄴𑄌𑄧\0", "𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\0", "𑄟𑄬\0", "𑄎𑄪𑄚𑄴\0", "𑄎𑄪𑄣𑄭\0", "𑄃𑄉𑄧𑄌𑄴𑄑𑄴\0", "𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\0", "𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0" },
@@ -3238,7 +3238,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "𑄎𑄚𑄪𑄠𑄢𑄨\0", "𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\0", "𑄟𑄢𑄴𑄌𑄧\0", "𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\0", "𑄟𑄬\0", "𑄎𑄪𑄚𑄴\0", "𑄎𑄪𑄣𑄭\0", "𑄃𑄉𑄧𑄌𑄴𑄑𑄴\0", "𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\0", "𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0" },
         { "𑄎𑄚𑄪𑄠𑄢𑄨\0", "𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\0", "𑄟𑄢𑄴𑄌𑄧\0", "𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\0", "𑄟𑄬\0", "𑄎𑄪𑄚𑄴\0", "𑄎𑄪𑄣𑄭\0", "𑄃𑄉𑄧𑄌𑄴𑄑𑄴\0", "𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\0", "𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0" },
@@ -3272,7 +3272,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "январь\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -3306,7 +3306,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "En\0", "Peb\0", "Mar\0", "Apr\0", "May\0", "Hun\0", "Hul\0", "Ag\0", "Set\0", "Okt\0", "Nob\0", "Dis\0" },
         { "Enero\0", "Pebrero\0", "Marso\0", "April\0", "Mayo\0", "Hunyo\0", "Hulyo\0", "Agosto\0", "Setyembre\0", "Oktubre\0", "Nobyembre\0", "Disyembre\0" },
@@ -3340,7 +3340,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -3374,7 +3374,7 @@ static const QLocalePrivate localeTbl[] = {
         "ᏌᎾᎴ\0", "ᏒᎯᏱᎢᏗᏢ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ᎤᏃ\0", "ᎧᎦ\0", "ᎠᏅ\0", "ᎧᏬ\0", "ᎠᏂ\0", "ᏕᎭ\0", "ᎫᏰ\0", "ᎦᎶ\0", "ᏚᎵ\0", "ᏚᏂ\0", "ᏅᏓ\0", "ᎥᏍ\0" },
         { "ᎤᏃᎸᏔᏅ\0", "ᎧᎦᎵ\0", "ᎠᏅᏱ\0", "ᎧᏬᏂ\0", "ᎠᏂᏍᎬᏘ\0", "ᏕᎭᎷᏱ\0", "ᎫᏰᏉᏂ\0", "ᎦᎶᏂ\0", "ᏚᎵᏍᏗ\0", "ᏚᏂᏅᏗ\0", "ᏅᏓᏕᏆ\0", "ᎥᏍᎩᏱ\0" },
@@ -3408,7 +3408,7 @@ static const QLocalePrivate localeTbl[] = {
         "ب.ن\0", "د.ن\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "کانوونی دووەم\0", "شوبات\0", "ئازار\0", "نیسان\0", "ئایار\0", "حوزەیران\0", "تەمووز\0", "ئاب\0", "ئەیلوول\0", "تشرینی یەکەم\0", "تشرینی دووەم\0", "کانونی یەکەم\0" },
         { "کانوونی دووەم\0", "شوبات\0", "ئازار\0", "نیسان\0", "ئایار\0", "حوزەیران\0", "تەمووز\0", "ئاب\0", "ئەیلوول\0", "تشرینی یەکەم\0", "تشرینی دووەم\0", "کانونی یەکەم\0" },
@@ -3442,7 +3442,7 @@ static const QLocalePrivate localeTbl[] = {
         "ب.ن\0", "د.ن\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "کانوونی دووەم\0", "شوبات\0", "ئازار\0", "نیسان\0", "ئایار\0", "حوزەیران\0", "تەمووز\0", "ئاب\0", "ئەیلوول\0", "تشرینی یەکەم\0", "تشرینی دووەم\0", "کانونی یەکەم\0" },
         { "کانوونی دووەم\0", "شوبات\0", "ئازار\0", "نیسان\0", "ئایار\0", "حوزەیران\0", "تەمووز\0", "ئاب\0", "ئەیلوول\0", "تشرینی یەکەم\0", "تشرینی دووەم\0", "کانونی یەکەم\0" },
@@ -3476,7 +3476,7 @@ static const QLocalePrivate localeTbl[] = {
         "dop.\0", "odp.\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "CSD\0",
-        { "srbský dinár (2002–2006)\0", "\0", "srbský dinár (2002–2006)\0", "\0", "srbské dináry (2002–2006)\0", "srbského dináru (2002–2006)\0", "srbských dinárů (2002–2006)\0" },
+        { "srbský dinár (2002–2006)\0", Q_NULLPTR, "srbský dinár (2002–2006)\0", Q_NULLPTR, "srbské dináry (2002–2006)\0", "srbského dináru (2002–2006)\0", "srbských dinárů (2002–2006)\0" },
         // month names
         { "led\0", "úno\0", "bře\0", "dub\0", "kvě\0", "čvn\0", "čvc\0", "srp\0", "zář\0", "říj\0", "lis\0", "pro\0" },
         { "leden\0", "únor\0", "březen\0", "duben\0", "květen\0", "červen\0", "červenec\0", "srpen\0", "září\0", "říjen\0", "listopad\0", "prosinec\0" },
@@ -3510,7 +3510,7 @@ static const QLocalePrivate localeTbl[] = {
         "ДП\0", "ПП\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "CUP\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "і҆аⷩ҇\0", "феⷡ҇\0", "маⷬ҇\0", "а҆пⷬ҇\0", "маꙵ\0", "і҆ꙋⷩ҇\0", "і҆ꙋⷧ҇\0", "а҆́ѵⷢ҇\0", "сеⷫ҇\0", "ѻ҆кⷮ\0", "ноеⷨ\0", "деⷦ҇\0" },
         { "і҆аннꙋа́рїй\0", "феврꙋа́рїй\0", "ма́ртъ\0", "а҆прі́ллїй\0", "ма́їй\0", "і҆ꙋ́нїй\0", "і҆ꙋ́лїй\0", "а҆́ѵгꙋстъ\0", "септе́мврїй\0", "ѻ҆ктѡ́врїй\0", "ное́мврїй\0", "деке́мврїй\0" },
@@ -3578,7 +3578,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marts\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -3612,7 +3612,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marts\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -3646,7 +3646,7 @@ static const QLocalePrivate localeTbl[] = {
         "Luma lwa K\0", "luma lwa p\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -3680,7 +3680,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euro\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euro\0" },
         // month names
         { "Jän\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Jänner\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
@@ -3714,7 +3714,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euro\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euro\0" },
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
@@ -3748,7 +3748,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "CHF\0", "%2 %1\0", "%2-%1\0", "CHF\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euro\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euro\0" },
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
@@ -3782,7 +3782,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euro\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euro\0" },
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
@@ -3816,7 +3816,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euro\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euro\0" },
         // month names
         { "Jän\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Jänner\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
@@ -3850,7 +3850,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "CHF\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euro\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euro\0" },
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
@@ -3884,7 +3884,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euro\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euro\0" },
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
@@ -3918,7 +3918,7 @@ static const QLocalePrivate localeTbl[] = {
         "Subbaahi\0", "Zaarikay b\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -3952,7 +3952,7 @@ static const QLocalePrivate localeTbl[] = {
         "dopołdnja\0", "wótpołdnja\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan\0", "feb\0", "měr\0", "apr\0", "maj\0", "jun\0", "jul\0", "awg\0", "sep\0", "okt\0", "now\0", "dec\0" },
         { "januar\0", "februar\0", "měrc\0", "apryl\0", "maj\0", "junij\0", "julij\0", "awgust\0", "september\0", "oktober\0", "nowember\0", "december\0" },
@@ -3986,7 +3986,7 @@ static const QLocalePrivate localeTbl[] = {
         "idiɓa\0", "ebyámu\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4020,7 +4020,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4054,7 +4054,7 @@ static const QLocalePrivate localeTbl[] = {
         "སྔ་ཆ་\0", "ཕྱི་ཆ་\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "ཨཱལ་ཇི་རི་ཡ་གི་དངུལ་ ཌའི་ནར\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "ཨཱལ་ཇི་རི་ཡ་གི་དངུལ་ ཌའི་ནར\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ཟླ་༡\0", "ཟླ་༢\0", "ཟླ་༣\0", "ཟླ་༤\0", "ཟླ་༥\0", "ཟླ་༦\0", "ཟླ་༧\0", "ཟླ་༨\0", "ཟླ་༩\0", "ཟླ་༡༠\0", "ཟླ་༡༡\0", "ཟླ་༡༢\0" },
         { "སྤྱི་ཟླ་དངཔ་\0", "སྤྱི་ཟླ་གཉིས་པ་\0", "སྤྱི་ཟླ་གསུམ་པ་\0", "སྤྱི་ཟླ་བཞི་པ\0", "སྤྱི་ཟླ་ལྔ་པ་\0", "སྤྱི་ཟླ་དྲུག་པ\0", "སྤྱི་ཟླ་བདུན་པ་\0", "སྤྱི་ཟླ་བརྒྱད་པ་\0", "སྤྱི་ཟླ་དགུ་པ་\0", "སྤྱི་ཟླ་བཅུ་པ་\0", "སྤྱི་ཟླ་བཅུ་གཅིག་པ་\0", "སྤྱི་ཟླ་བཅུ་གཉིས་པ་\0" },
@@ -4088,7 +4088,7 @@ static const QLocalePrivate localeTbl[] = {
         "KI\0", "UT\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4122,7 +4122,7 @@ static const QLocalePrivate localeTbl[] = {
         "ŋdi\0", "ɣetrɔ\0",
         // currency
         "€\0", "%2%1\0", Q_NULLPTR, "EUR\0",
-        { "EUR\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "EUR\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "dzv\0", "dzd\0", "ted\0", "afɔ\0", "dam\0", "mas\0", "sia\0", "dea\0", "any\0", "kel\0", "ade\0", "dzm\0" },
         { "dzove\0", "dzodze\0", "tedoxe\0", "afɔfĩe\0", "dama\0", "masa\0", "siamlɔm\0", "deasiamime\0", "anyɔnyɔ\0", "kele\0", "adeɛmekpɔxe\0", "dzome\0" },
@@ -4156,7 +4156,7 @@ static const QLocalePrivate localeTbl[] = {
         "ŋdi\0", "ɣetrɔ\0",
         // currency
         "€\0", "%2%1\0", Q_NULLPTR, "EUR\0",
-        { "EUR\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "EUR\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "dzv\0", "dzd\0", "ted\0", "afɔ\0", "dam\0", "mas\0", "sia\0", "dea\0", "any\0", "kel\0", "ade\0", "dzm\0" },
         { "dzove\0", "dzodze\0", "tedoxe\0", "afɔfĩe\0", "dama\0", "masa\0", "siamlɔm\0", "deasiamime\0", "anyɔnyɔ\0", "kele\0", "adeɛmekpɔxe\0", "dzome\0" },
@@ -4190,7 +4190,7 @@ static const QLocalePrivate localeTbl[] = {
         "π.μ.\0", "μ.μ.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ιαν\0", "Φεβ\0", "Μάρ\0", "Απρ\0", "Μάι\0", "Ιούν\0", "Ιούλ\0", "Αύγ\0", "Σεπ\0", "Οκτ\0", "Νοέ\0", "Δεκ\0" },
         { "Ιανουάριος\0", "Φεβρουάριος\0", "Μάρτιος\0", "Απρίλιος\0", "Μάιος\0", "Ιούνιος\0", "Ιούλιος\0", "Αύγουστος\0", "Σεπτέμβριος\0", "Οκτώβριος\0", "Νοέμβριος\0", "Δεκέμβριος\0" },
@@ -4224,7 +4224,7 @@ static const QLocalePrivate localeTbl[] = {
         "π.μ.\0", "μ.μ.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ιαν\0", "Φεβ\0", "Μάρ\0", "Απρ\0", "Μάι\0", "Ιούν\0", "Ιούλ\0", "Αύγ\0", "Σεπ\0", "Οκτ\0", "Νοέ\0", "Δεκ\0" },
         { "Ιανουάριος\0", "Φεβρουάριος\0", "Μάρτιος\0", "Απρίλιος\0", "Μάιος\0", "Ιούνιος\0", "Ιούλιος\0", "Αύγουστος\0", "Σεπτέμβριος\0", "Οκτώβριος\0", "Νοέμβριος\0", "Δεκέμβριος\0" },
@@ -4258,7 +4258,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4292,7 +4292,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4326,7 +4326,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "AED\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4360,7 +4360,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4394,7 +4394,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4428,7 +4428,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4462,7 +4462,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4496,7 +4496,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4530,7 +4530,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4564,7 +4564,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4598,7 +4598,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "FBu\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4632,7 +4632,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4666,7 +4666,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4700,7 +4700,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "P\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4734,7 +4734,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4768,7 +4768,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4802,7 +4802,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4836,7 +4836,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%2 %1\0", "%2-%1\0", "CHF\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4870,7 +4870,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4904,7 +4904,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4938,7 +4938,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4972,7 +4972,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5006,7 +5006,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5040,7 +5040,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5074,7 +5074,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "kr.\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5108,7 +5108,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5142,7 +5142,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "Nfk\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5176,7 +5176,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5210,7 +5210,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5244,7 +5244,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "£\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5278,7 +5278,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5312,7 +5312,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5346,7 +5346,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5380,7 +5380,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "UK Pound\0", "\0", "UK pound\0", "\0", "\0", "\0", "UK pounds\0" },
+        { "UK Pound\0", Q_NULLPTR, "UK pound\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "UK pounds\0" },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5414,7 +5414,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "GH₵\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5448,7 +5448,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "£\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5482,7 +5482,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "D\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5516,7 +5516,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5550,7 +5550,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5584,7 +5584,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5618,7 +5618,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5652,7 +5652,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5686,7 +5686,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "UK Pound\0", "\0", "UK pound\0", "\0", "\0", "\0", "UK pounds\0" },
+        { "UK Pound\0", Q_NULLPTR, "UK pound\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "UK pounds\0" },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5720,7 +5720,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5754,7 +5754,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5788,7 +5788,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "UK Pound\0", "\0", "UK pound\0", "\0", "\0", "\0", "UK pounds\0" },
+        { "UK Pound\0", Q_NULLPTR, "UK pound\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "UK pounds\0" },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5822,7 +5822,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5856,7 +5856,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "Ksh\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5890,7 +5890,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5924,7 +5924,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5958,7 +5958,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5992,7 +5992,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6026,7 +6026,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6060,7 +6060,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "R\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6094,7 +6094,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "Ar\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6128,7 +6128,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6162,7 +6162,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "MOP$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6196,7 +6196,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6230,7 +6230,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6264,7 +6264,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6298,7 +6298,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "Rs\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6332,7 +6332,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "MK\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6366,7 +6366,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "RM\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6400,7 +6400,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6434,7 +6434,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6468,7 +6468,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "₦\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6502,7 +6502,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%2 %1\0", "%2 -%1\0", "EUR\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6536,7 +6536,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6570,7 +6570,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6604,7 +6604,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6638,7 +6638,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "K\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6672,7 +6672,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "₱\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6706,7 +6706,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "Rs\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6740,7 +6740,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6774,7 +6774,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6808,7 +6808,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6842,7 +6842,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "RF\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6876,7 +6876,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6910,7 +6910,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "SR\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6944,7 +6944,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6978,7 +6978,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "kr\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7012,7 +7012,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7046,7 +7046,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "£\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7080,7 +7080,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1 %2\0", "(%1 %2)\0", "EUR\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7114,7 +7114,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "Le\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7148,7 +7148,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "£\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7182,7 +7182,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "NAf.\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7216,7 +7216,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "E\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7250,7 +7250,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7284,7 +7284,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7318,7 +7318,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "T$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7352,7 +7352,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7386,7 +7386,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7420,7 +7420,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "TSh\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7454,7 +7454,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "USh\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7488,7 +7488,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7522,7 +7522,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7556,7 +7556,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7590,7 +7590,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7624,7 +7624,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7658,7 +7658,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "VT\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7692,7 +7692,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "WS$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7726,7 +7726,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "R\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7760,7 +7760,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         "K\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7794,7 +7794,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7828,7 +7828,7 @@ static const QLocalePrivate localeTbl[] = {
         "atm\0", "ptm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "januaro\0", "februaro\0", "marto\0", "aprilo\0", "majo\0", "junio\0", "julio\0", "aŭgusto\0", "septembro\0", "oktobro\0", "novembro\0", "decembro\0" },
@@ -7862,7 +7862,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sep.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -7896,7 +7896,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%2 %1\0", Q_NULLPTR, "ARS\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -7930,7 +7930,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "Bs\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -7964,7 +7964,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "R$\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -7998,7 +7998,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8032,7 +8032,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%2%1\0", "%2-%1\0", "CLP\0",
-        { "Peso chileno\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "Peso chileno\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8066,7 +8066,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%2 %1\0", Q_NULLPTR, "COP\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8100,7 +8100,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "₡\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8134,7 +8134,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8168,7 +8168,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "RD$\0", "%2%1\0", "(%2%1)\0", "DOP\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8202,7 +8202,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8236,7 +8236,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%2%1\0", "%2-%1\0", "USD\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8270,7 +8270,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8304,7 +8304,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "FCFA\0", "%2%1\0", Q_NULLPTR, "XAF\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8338,7 +8338,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "Q\0", "%2%1K\0", Q_NULLPTR, "GTQ\0",
-        { "quetzal\0", "\0", "quetzal\0", "\0", "\0", "\0", "quetzales\0" },
+        { "quetzal\0", Q_NULLPTR, "quetzal\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "quetzales\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8372,7 +8372,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "L\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8406,7 +8406,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8440,7 +8440,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%1 k%2\0", Q_NULLPTR, "MXN\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8474,7 +8474,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "C$\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8508,7 +8508,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "B/.\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8542,7 +8542,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "S/\0", "%2 %1\0", Q_NULLPTR, "PEN\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "Ene.\0", "Feb.\0", "Mar.\0", "Abr.\0", "May.\0", "Jun.\0", "Jul.\0", "Ago.\0", "Set.\0", "Oct.\0", "Nov.\0", "Dic.\0" },
         { "Enero\0", "Febrero\0", "Marzo\0", "Abril\0", "Mayo\0", "Junio\0", "Julio\0", "Agosto\0", "Setiembre\0", "Octubre\0", "Noviembre\0", "Diciembre\0" },
@@ -8576,7 +8576,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "₱\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8610,7 +8610,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8644,7 +8644,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "Gs.\0", "%2 %1\0", "%2 -%1\0", "PYG\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8678,7 +8678,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8712,7 +8712,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%1 K %2\0", Q_NULLPTR, "USD\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8746,7 +8746,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "$\0", "%2 %1\0", Q_NULLPTR, "UYU\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "Ene.\0", "Feb.\0", "Mar.\0", "Abr.\0", "May.\0", "Jun.\0", "Jul.\0", "Ago.\0", "Set.\0", "Oct.\0", "Nov.\0", "Dic.\0" },
         { "Enero\0", "Febrero\0", "Marzo\0", "Abril\0", "Mayo\0", "Junio\0", "Julio\0", "Agosto\0", "Setiembre\0", "Octubre\0", "Noviembre\0", "Diciembre\0" },
@@ -8780,7 +8780,7 @@ static const QLocalePrivate localeTbl[] = {
         "a. m.\0", "p. m.\0",
         // currency
         "Bs.S\0", "%2%1\0", "%2-%1\0", "VES\0",
-        { "bolívar soberano\0", "\0", "bolívar soberano\0", "\0", "\0", "\0", "bolívares soberanos\0" },
+        { "bolívar soberano\0", Q_NULLPTR, "bolívar soberano\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "bolívares soberanos\0" },
         // month names
         { "ene.\0", "feb.\0", "mar.\0", "abr.\0", "may.\0", "jun.\0", "jul.\0", "ago.\0", "sept.\0", "oct.\0", "nov.\0", "dic.\0" },
         { "enero\0", "febrero\0", "marzo\0", "abril\0", "mayo\0", "junio\0", "julio\0", "agosto\0", "septiembre\0", "octubre\0", "noviembre\0", "diciembre\0" },
@@ -8814,7 +8814,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "ETB\0",
-        { "Etioopia birr\0", "\0", "Etioopia birr\0", "\0", "\0", "\0", "Etioopia birri\0" },
+        { "Etioopia birr\0", Q_NULLPTR, "Etioopia birr\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Etioopia birri\0" },
         // month names
         { "jaan\0", "veebr\0", "märts\0", "apr\0", "mai\0", "juuni\0", "juuli\0", "aug\0", "sept\0", "okt\0", "nov\0", "dets\0" },
         { "jaanuar\0", "veebruar\0", "märts\0", "aprill\0", "mai\0", "juuni\0", "juuli\0", "august\0", "september\0", "oktoober\0", "november\0", "detsember\0" },
@@ -8848,7 +8848,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euroa\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "euroa\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "urt.\0", "ots.\0", "mar.\0", "api.\0", "mai.\0", "eka.\0", "uzt.\0", "abu.\0", "ira.\0", "urr.\0", "aza.\0", "abe.\0" },
         { "urtarrila\0", "otsaila\0", "martxoa\0", "apirila\0", "maiatza\0", "ekaina\0", "uztaila\0", "abuztua\0", "iraila\0", "urria\0", "azaroa\0", "abendua\0" },
@@ -8882,7 +8882,7 @@ static const QLocalePrivate localeTbl[] = {
         "kíkíríg\0", "ngəgógəle\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8916,7 +8916,7 @@ static const QLocalePrivate localeTbl[] = {
         "قبل‌ازظهر\0", "بعدازظهر\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "AFN\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "جنوری\0", "فبروری\0", "مارچ\0", "اپریل\0", "می\0", "جون\0", "جولای\0", "اگست\0", "سپتمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فبروری\0", "مارچ\0", "اپریل\0", "می\0", "جون\0", "جولای\0", "اگست\0", "سپتمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
@@ -8950,7 +8950,7 @@ static const QLocalePrivate localeTbl[] = {
         "قبل‌ازظهر\0", "بعدازظهر\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
@@ -8984,7 +8984,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9018,7 +9018,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9052,7 +9052,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         "GH₵\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9086,7 +9086,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         "D\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9120,7 +9120,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         "FG\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9154,7 +9154,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9188,7 +9188,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9222,7 +9222,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         "UM\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9256,7 +9256,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9290,7 +9290,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         "₦\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9324,7 +9324,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         "Le\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9358,7 +9358,7 @@ static const QLocalePrivate localeTbl[] = {
         "subaka\0", "kikiiɗe\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9392,7 +9392,7 @@ static const QLocalePrivate localeTbl[] = {
         "ap.\0", "ip.\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euroa\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euroa\0" },
         // month names
         { "tammi\0", "helmi\0", "maalis\0", "huhti\0", "touko\0", "kesä\0", "heinä\0", "elo\0", "syys\0", "loka\0", "marras\0", "joulu\0" },
         { "tammikuu\0", "helmikuu\0", "maaliskuu\0", "huhtikuu\0", "toukokuu\0", "kesäkuu\0", "heinäkuu\0", "elokuu\0", "syyskuu\0", "lokakuu\0", "marraskuu\0", "joulukuu\0" },
@@ -9426,7 +9426,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ene\0", "Peb\0", "Mar\0", "Abr\0", "May\0", "Hun\0", "Hul\0", "Ago\0", "Set\0", "Okt\0", "Nob\0", "Dis\0" },
         { "Enero\0", "Pebrero\0", "Marso\0", "Abril\0", "Mayo\0", "Hunyo\0", "Hulyo\0", "Agosto\0", "Setyembre\0", "Oktubre\0", "Nobyembre\0", "Disyembre\0" },
@@ -9460,7 +9460,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "kr.\0", "%1 %2\0", Q_NULLPTR, "DKK\0",
-        { "donsk króna\0", "\0", "donsk króna\0", "\0", "\0", "\0", "danskar krónur\0" },
+        { "donsk króna\0", Q_NULLPTR, "donsk króna\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "danskar krónur\0" },
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "apríl\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
@@ -9494,7 +9494,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "kr\0", "%1 %2\0", Q_NULLPTR, "DKK\0",
-        { "donsk króna\0", "\0", "donsk króna\0", "\0", "\0", "\0", "danskar krónur\0" },
+        { "donsk króna\0", Q_NULLPTR, "donsk króna\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "danskar krónur\0" },
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "apríl\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
@@ -9528,7 +9528,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9562,7 +9562,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9596,7 +9596,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "FBu\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9630,7 +9630,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9664,7 +9664,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9698,7 +9698,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "$\0", "%1 k%2\0", Q_NULLPTR, "CAD\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juill.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9732,7 +9732,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "FC\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9766,7 +9766,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9800,7 +9800,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9834,7 +9834,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "CHF\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9868,7 +9868,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9902,7 +9902,7 @@ static const QLocalePrivate localeTbl[] = {
         "matin\0", "soir\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9936,7 +9936,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "Fdj\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9970,7 +9970,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "DA\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10004,7 +10004,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10038,7 +10038,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10072,7 +10072,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10106,7 +10106,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "FG\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10140,7 +10140,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10174,7 +10174,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10208,7 +10208,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "G\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10242,7 +10242,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "CF\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10276,7 +10276,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10310,7 +10310,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "jan.\0", "fév.\0", "mar.\0", "avr.\0", "mai\0", "jui.\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10344,7 +10344,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10378,7 +10378,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10412,7 +10412,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "Ar\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10446,7 +10446,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10480,7 +10480,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10514,7 +10514,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "UM\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10548,7 +10548,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "Rs\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10582,7 +10582,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10616,7 +10616,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10650,7 +10650,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10684,7 +10684,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10718,7 +10718,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10752,7 +10752,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "RF\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10786,7 +10786,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "SR\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10820,7 +10820,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10854,7 +10854,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "LS\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10888,7 +10888,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10922,7 +10922,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10956,7 +10956,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "DT\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10990,7 +10990,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "VT\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -11024,7 +11024,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -11058,7 +11058,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -11092,7 +11092,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.\0", "p.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Zen\0", "Fev\0", "Mar\0", "Avr\0", "Mai\0", "Jug\0", "Lui\0", "Avo\0", "Set\0", "Otu\0", "Nov\0", "Dic\0" },
         { "Zenâr\0", "Fevrâr\0", "Març\0", "Avrîl\0", "Mai\0", "Jugn\0", "Lui\0", "Avost\0", "Setembar\0", "Otubar\0", "Novembar\0", "Dicembar\0" },
@@ -11126,7 +11126,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mrt\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Jannewaris\0", "Febrewaris\0", "Maart\0", "April\0", "Maaie\0", "Juny\0", "July\0", "Augustus\0", "Septimber\0", "Oktober\0", "Novimber\0", "Desimber\0" },
@@ -11160,7 +11160,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "XAF\0",
-        { "Franc CFA na hAfraice Láir\0", "\0", "fhranc CFA na hAfraice Láir\0", "fhranc CFA na hAfraice Láir\0", "fhranc CFA na hAfraice Láir\0", "bhfranc CFA na hAfraice Láir\0", "franc CFA na hAfraice Láir\0" },
+        { "Franc CFA na hAfraice Láir\0", Q_NULLPTR, "fhranc CFA na hAfraice Láir\0", "fhranc CFA na hAfraice Láir\0", "fhranc CFA na hAfraice Láir\0", "bhfranc CFA na hAfraice Láir\0", "franc CFA na hAfraice Láir\0" },
         // month names
         { "Ean\0", "Feabh\0", "Márta\0", "Aib\0", "Beal\0", "Meith\0", "Iúil\0", "Lún\0", "MFómh\0", "DFómh\0", "Samh\0", "Noll\0" },
         { "Eanáir\0", "Feabhra\0", "Márta\0", "Aibreán\0", "Bealtaine\0", "Meitheamh\0", "Iúil\0", "Lúnasa\0", "Meán Fómhair\0", "Deireadh Fómhair\0", "Samhain\0", "Nollaig\0" },
@@ -11194,7 +11194,7 @@ static const QLocalePrivate localeTbl[] = {
         "m\0", "f\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "XCD\0",
-        { "Dolar Caraibeach earach\0", "\0", "dolar Caraibeach earach\0", "dholar Caraibeach earach\0", "dolaran Caraibeach earach\0", "\0", "dolar Caraibeach earach\0" },
+        { "Dolar Caraibeach earach\0", Q_NULLPTR, "dolar Caraibeach earach\0", "dholar Caraibeach earach\0", "dolaran Caraibeach earach\0", Q_NULLPTR, "dolar Caraibeach earach\0" },
         // month names
         { "Faoi\0", "Gearr\0", "Màrt\0", "Gibl\0", "Cèit\0", "Ògmh\0", "Iuch\0", "Lùna\0", "Sult\0", "Dàmh\0", "Samh\0", "Dùbh\0" },
         { "Am Faoilleach\0", "An Gearran\0", "Am Màrt\0", "An Giblean\0", "An Cèitean\0", "An t-Ògmhios\0", "An t-Iuchar\0", "An Lùnastal\0", "An t-Sultain\0", "An Dàmhair\0", "An t-Samhain\0", "An Dùbhlachd\0" },
@@ -11228,7 +11228,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "DKK\0",
-        { "Coroa dinamarquesa\0", "\0", "coroa dinamarquesa\0", "\0", "\0", "\0", "coroas dinamarquesas\0" },
+        { "Coroa dinamarquesa\0", Q_NULLPTR, "coroa dinamarquesa\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "coroas dinamarquesas\0" },
         // month names
         { "Xan.\0", "Feb.\0", "Mar.\0", "Abr.\0", "Maio\0", "Xuño\0", "Xul.\0", "Ago.\0", "Set.\0", "Out.\0", "Nov.\0", "Dec.\0" },
         { "Xaneiro\0", "Febreiro\0", "Marzo\0", "Abril\0", "Maio\0", "Xuño\0", "Xullo\0", "Agosto\0", "Setembro\0", "Outubro\0", "Novembro\0", "Decembro\0" },
@@ -11262,7 +11262,7 @@ static const QLocalePrivate localeTbl[] = {
         "Vormittag\0", "Namittag\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -11296,7 +11296,7 @@ static const QLocalePrivate localeTbl[] = {
         "Vormittag\0", "Namittag\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -11330,7 +11330,7 @@ static const QLocalePrivate localeTbl[] = {
         "Vormittag\0", "Namittag\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -11364,7 +11364,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "$\0", "%2%1\0", Q_NULLPTR, "USD\0",
-        { "યુઍસ ડોલર\0", "\0", "યુઍસ ડોલર\0", "\0", "\0", "\0", "યુઍસ ડોલર\0" },
+        { "યુઍસ ડોલર\0", Q_NULLPTR, "યુઍસ ડોલર\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "યુઍસ ડોલર\0" },
         // month names
         { "જાન્યુ\0", "ફેબ્રુ\0", "માર્ચ\0", "એપ્રિલ\0", "મે\0", "જૂન\0", "જુલાઈ\0", "ઑગસ્ટ\0", "સપ્ટે\0", "ઑક્ટો\0", "નવે\0", "ડિસે\0" },
         { "જાન્યુઆરી\0", "ફેબ્રુઆરી\0", "માર્ચ\0", "એપ્રિલ\0", "મે\0", "જૂન\0", "જુલાઈ\0", "ઑગસ્ટ\0", "સપ્ટેમ્બર\0", "ઑક્ટોબર\0", "નવેમ્બર\0", "ડિસેમ્બર\0" },
@@ -11398,7 +11398,7 @@ static const QLocalePrivate localeTbl[] = {
         "Mambia\0", "Mog\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -11432,7 +11432,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -11466,7 +11466,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "GH₵\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Fab\0", "Mar\0", "Afi\0", "May\0", "Yun\0", "Yul\0", "Agu\0", "Sat\0", "Okt\0", "Nuw\0", "Dis\0" },
         { "Janairu\0", "Faburairu\0", "Maris\0", "Afirilu\0", "Mayu\0", "Yuni\0", "Yuli\0", "Agusta\0", "Satumba\0", "Oktoba\0", "Nuwamba\0", "Disamba\0" },
@@ -11500,7 +11500,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "XOF\0",
-        { "Kuɗin Sefa na Afirka Ta Yamma\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "Kuɗin Sefa na Afirka Ta Yamma\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Fab\0", "Mar\0", "Afi\0", "May\0", "Yun\0", "Yul\0", "Agu\0", "Sat\0", "Okt\0", "Nuw\0", "Dis\0" },
         { "Janairu\0", "Faburairu\0", "Maris\0", "Afirilu\0", "Mayu\0", "Yuni\0", "Yuli\0", "Agusta\0", "Satumba\0", "Oktoba\0", "Nuwamba\0", "Disamba\0" },
@@ -11534,7 +11534,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Fab\0", "Mar\0", "Afi\0", "May\0", "Yun\0", "Yul\0", "Agu\0", "Sat\0", "Okt\0", "Nuw\0", "Dis\0" },
         { "Janairu\0", "Faburairu\0", "Maris\0", "Afirilu\0", "Mayu\0", "Yuni\0", "Yuli\0", "Agusta\0", "Satumba\0", "Oktoba\0", "Nuwamba\0", "Disamba\0" },
@@ -11568,7 +11568,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ian.\0", "Pep.\0", "Mal.\0", "ʻAp.\0", "Mei\0", "Iun.\0", "Iul.\0", "ʻAu.\0", "Kep.\0", "ʻOk.\0", "Now.\0", "Kek.\0" },
         { "Ianuali\0", "Pepeluali\0", "Malaki\0", "ʻApelila\0", "Mei\0", "Iune\0", "Iulai\0", "ʻAukake\0", "Kepakemapa\0", "ʻOkakopa\0", "Nowemapa\0", "Kekemapa\0" },
@@ -11602,7 +11602,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ינו׳\0", "פבר׳\0", "מרץ\0", "אפר׳\0", "מאי\0", "יוני\0", "יולי\0", "אוג׳\0", "ספט׳\0", "אוק׳\0", "נוב׳\0", "דצמ׳\0" },
         { "ינואר\0", "פברואר\0", "מרץ\0", "אפריל\0", "מאי\0", "יוני\0", "יולי\0", "אוגוסט\0", "ספטמבר\0", "אוקטובר\0", "נובמבר\0", "דצמבר\0" },
@@ -11636,7 +11636,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "जन॰\0", "फ़र॰\0", "मार्च\0", "अप्रैल\0", "मई\0", "जून\0", "जुल॰\0", "अग॰\0", "सित॰\0", "अक्तू॰\0", "नव॰\0", "दिस॰\0" },
         { "जनवरी\0", "फ़रवरी\0", "मार्च\0", "अप्रैल\0", "मई\0", "जून\0", "जुलाई\0", "अगस्त\0", "सितंबर\0", "अक्तूबर\0", "नवंबर\0", "दिसंबर\0" },
@@ -11670,7 +11670,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "KM\0", "%1 %2\0", Q_NULLPTR, "HRK\0",
-        { "hrvatska kuna\0", "\0", "hrvatska kuna\0", "\0", "hrvatske kune\0", "\0", "hrvatskih kuna\0" },
+        { "hrvatska kuna\0", Q_NULLPTR, "hrvatska kuna\0", Q_NULLPTR, "hrvatske kune\0", Q_NULLPTR, "hrvatskih kuna\0" },
         // month names
         { "sij\0", "velj\0", "ožu\0", "tra\0", "svi\0", "lip\0", "srp\0", "kol\0", "ruj\0", "lis\0", "stu\0", "pro\0" },
         { "siječanj\0", "veljača\0", "ožujak\0", "travanj\0", "svibanj\0", "lipanj\0", "srpanj\0", "kolovoz\0", "rujan\0", "listopad\0", "studeni\0", "prosinac\0" },
@@ -11704,7 +11704,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "HRK\0",
-        { "hrvatska kuna\0", "\0", "hrvatska kuna\0", "\0", "hrvatske kune\0", "\0", "hrvatskih kuna\0" },
+        { "hrvatska kuna\0", Q_NULLPTR, "hrvatska kuna\0", Q_NULLPTR, "hrvatske kune\0", Q_NULLPTR, "hrvatskih kuna\0" },
         // month names
         { "sij\0", "velj\0", "ožu\0", "tra\0", "svi\0", "lip\0", "srp\0", "kol\0", "ruj\0", "lis\0", "stu\0", "pro\0" },
         { "siječanj\0", "veljača\0", "ožujak\0", "travanj\0", "svibanj\0", "lipanj\0", "srpanj\0", "kolovoz\0", "rujan\0", "listopad\0", "studeni\0", "prosinac\0" },
@@ -11738,7 +11738,7 @@ static const QLocalePrivate localeTbl[] = {
         "dopołdnja\0", "popołdnju\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan\0", "feb\0", "měr\0", "apr\0", "mej\0", "jun\0", "jul\0", "awg\0", "sep\0", "okt\0", "now\0", "dec\0" },
         { "januar\0", "februar\0", "měrc\0", "apryl\0", "meja\0", "junij\0", "julij\0", "awgust\0", "september\0", "oktober\0", "nowember\0", "december\0" },
@@ -11772,7 +11772,7 @@ static const QLocalePrivate localeTbl[] = {
         "de.\0", "du.\0",
         // currency
         "Ft\0", "%1 %2\0", Q_NULLPTR, "HUF\0",
-        { "magyar forint\0", "\0", "magyar forint\0", "\0", "\0", "\0", "magyar forint\0" },
+        { "magyar forint\0", Q_NULLPTR, "magyar forint\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "magyar forint\0" },
         // month names
         { "jan.\0", "febr.\0", "márc.\0", "ápr.\0", "máj.\0", "jún.\0", "júl.\0", "aug.\0", "szept.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "január\0", "február\0", "március\0", "április\0", "május\0", "június\0", "július\0", "augusztus\0", "szeptember\0", "október\0", "november\0", "december\0" },
@@ -11806,7 +11806,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "հնվ\0", "փտվ\0", "մրտ\0", "ապր\0", "մյս\0", "հնս\0", "հլս\0", "օգս\0", "սեպ\0", "հոկ\0", "նոյ\0", "դեկ\0" },
         { "հունվար\0", "փետրվար\0", "մարտ\0", "ապրիլ\0", "մայիս\0", "հունիս\0", "հուլիս\0", "օգոստոս\0", "սեպտեմբեր\0", "հոկտեմբեր\0", "նոյեմբեր\0", "դեկտեմբեր\0" },
@@ -11840,7 +11840,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "oct\0", "nov\0", "dec\0" },
         { "januario\0", "februario\0", "martio\0", "april\0", "maio\0", "junio\0", "julio\0", "augusto\0", "septembre\0", "octobre\0", "novembre\0", "decembre\0" },
@@ -11874,7 +11874,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "Rp\0", "%2%1\0", Q_NULLPTR, "IDR\0",
-        { "Rupiah Indonesia\0", "\0", "\0", "\0", "\0", "\0", "Rupiah Indonesia\0" },
+        { "Rupiah Indonesia\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Rupiah Indonesia\0" },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Agu\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Maret\0", "April\0", "Mei\0", "Juni\0", "Juli\0", "Agustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
@@ -11908,7 +11908,7 @@ static const QLocalePrivate localeTbl[] = {
         "A.M.\0", "P.M.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jen\0", "Feb\0", "Maa\0", "Epr\0", "Mee\0", "Juu\0", "Jul\0", "Ọgọ\0", "Sep\0", "Ọkt\0", "Nov\0", "Dis\0" },
         { "Jenụwarị\0", "Febrụwarị\0", "Maachị\0", "Epreel\0", "Mee\0", "Juun\0", "Julaị\0", "Ọgọọst\0", "Septemba\0", "Ọktoba\0", "Novemba\0", "Disemba\0" },
@@ -11942,7 +11942,7 @@ static const QLocalePrivate localeTbl[] = {
         "ꎸꄑ\0", "ꁯꋒ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ꋍꆪ\0", "ꑍꆪ\0", "ꌕꆪ\0", "ꇖꆪ\0", "ꉬꆪ\0", "ꃘꆪ\0", "ꏃꆪ\0", "ꉆꆪ\0", "ꈬꆪ\0", "ꊰꆪ\0", "ꊰꊪꆪ\0", "ꊰꑋꆪ\0" },
         { "ꋍꆪ\0", "ꑍꆪ\0", "ꌕꆪ\0", "ꇖꆪ\0", "ꉬꆪ\0", "ꃘꆪ\0", "ꏃꆪ\0", "ꉆꆪ\0", "ꈬꆪ\0", "ꊰꆪ\0", "ꊰꊪꆪ\0", "ꊰꑋꆪ\0" },
@@ -11976,7 +11976,7 @@ static const QLocalePrivate localeTbl[] = {
         "f.h.\0", "e.h.\0",
         // currency
         "kr\0", "%1 %2\0", Q_NULLPTR, "ISK\0",
-        { "íslensk króna\0", "\0", "íslensk króna\0", "\0", "\0", "\0", "íslenskar krónur\0" },
+        { "íslensk króna\0", Q_NULLPTR, "íslensk króna\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "íslenskar krónur\0" },
         // month names
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maí\0", "jún.\0", "júl.\0", "ágú.\0", "sep.\0", "okt.\0", "nóv.\0", "des.\0" },
         { "janúar\0", "febrúar\0", "mars\0", "apríl\0", "maí\0", "júní\0", "júlí\0", "ágúst\0", "september\0", "október\0", "nóvember\0", "desember\0" },
@@ -12010,7 +12010,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%2 %1\0", "%2-%1\0", "CHF\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "gen\0", "feb\0", "mar\0", "apr\0", "mag\0", "giu\0", "lug\0", "ago\0", "set\0", "ott\0", "nov\0", "dic\0" },
         { "gennaio\0", "febbraio\0", "marzo\0", "aprile\0", "maggio\0", "giugno\0", "luglio\0", "agosto\0", "settembre\0", "ottobre\0", "novembre\0", "dicembre\0" },
@@ -12044,7 +12044,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "gen\0", "feb\0", "mar\0", "apr\0", "mag\0", "giu\0", "lug\0", "ago\0", "set\0", "ott\0", "nov\0", "dic\0" },
         { "gennaio\0", "febbraio\0", "marzo\0", "aprile\0", "maggio\0", "giugno\0", "luglio\0", "agosto\0", "settembre\0", "ottobre\0", "novembre\0", "dicembre\0" },
@@ -12078,7 +12078,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "gen\0", "feb\0", "mar\0", "apr\0", "mag\0", "giu\0", "lug\0", "ago\0", "set\0", "ott\0", "nov\0", "dic\0" },
         { "gennaio\0", "febbraio\0", "marzo\0", "aprile\0", "maggio\0", "giugno\0", "luglio\0", "agosto\0", "settembre\0", "ottobre\0", "novembre\0", "dicembre\0" },
@@ -12112,7 +12112,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "gen\0", "feb\0", "mar\0", "apr\0", "mag\0", "giu\0", "lug\0", "ago\0", "set\0", "ott\0", "nov\0", "dic\0" },
         { "gennaio\0", "febbraio\0", "marzo\0", "aprile\0", "maggio\0", "giugno\0", "luglio\0", "agosto\0", "settembre\0", "ottobre\0", "novembre\0", "dicembre\0" },
@@ -12146,7 +12146,7 @@ static const QLocalePrivate localeTbl[] = {
         "午前\0", "午後\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
@@ -12180,7 +12180,7 @@ static const QLocalePrivate localeTbl[] = {
         "mbaꞌmbaꞌ\0", "ŋka mbɔ́t nji\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Nduŋmbi Saŋ\0", "Pɛsaŋ Pɛ́pá\0", "Pɛsaŋ Pɛ́tát\0", "Pɛsaŋ Pɛ́nɛ́kwa\0", "Pɛsaŋ Pataa\0", "Pɛsaŋ Pɛ́nɛ́ntúkú\0", "Pɛsaŋ Saambá\0", "Pɛsaŋ Pɛ́nɛ́fɔm\0", "Pɛsaŋ Pɛ́nɛ́pfúꞋú\0", "Pɛsaŋ Nɛgɛ́m\0", "Pɛsaŋ Ntsɔ̌pmɔ́\0", "Pɛsaŋ Ntsɔ̌ppá\0" },
         { "Nduŋmbi Saŋ\0", "Pɛsaŋ Pɛ́pá\0", "Pɛsaŋ Pɛ́tát\0", "Pɛsaŋ Pɛ́nɛ́kwa\0", "Pɛsaŋ Pataa\0", "Pɛsaŋ Pɛ́nɛ́ntúkú\0", "Pɛsaŋ Saambá\0", "Pɛsaŋ Pɛ́nɛ́fɔm\0", "Pɛsaŋ Pɛ́nɛ́pfúꞋú\0", "Pɛsaŋ Nɛgɛ́m\0", "Pɛsaŋ Ntsɔ̌pmɔ́\0", "Pɛsaŋ Ntsɔ̌ppá\0" },
@@ -12214,7 +12214,7 @@ static const QLocalePrivate localeTbl[] = {
         "utuko\0", "kyiukonyi\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12248,7 +12248,7 @@ static const QLocalePrivate localeTbl[] = {
         "Isuk\0", "Wengi\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Agt\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Maret\0", "April\0", "Mei\0", "Juni\0", "Juli\0", "Agustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
@@ -12282,7 +12282,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "შუადღ. შემდეგ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "იან\0", "თებ\0", "მარ\0", "აპრ\0", "მაი\0", "ივნ\0", "ივლ\0", "აგვ\0", "სექ\0", "ოქტ\0", "ნოე\0", "დეკ\0" },
         { "იანვარი\0", "თებერვალი\0", "მარტი\0", "აპრილი\0", "მაისი\0", "ივნისი\0", "ივლისი\0", "აგვისტო\0", "სექტემბერი\0", "ოქტომბერი\0", "ნოემბერი\0", "დეკემბერი\0" },
@@ -12316,7 +12316,7 @@ static const QLocalePrivate localeTbl[] = {
         "FT\0", "MD\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Yen\0", "Fur\0", "Meɣ\0", "Yeb\0", "May\0", "Yun\0", "Yul\0", "Ɣuc\0", "Cte\0", "Tub\0", "Wam\0", "Duj\0" },
         { "Yennayer\0", "Fuṛar\0", "Meɣres\0", "Yebrir\0", "Mayyu\0", "Yunyu\0", "Yulyu\0", "Ɣuct\0", "Ctembeṛ\0", "Tubeṛ\0", "Wambeṛ\0", "Duǧembeṛ\0" },
@@ -12350,7 +12350,7 @@ static const QLocalePrivate localeTbl[] = {
         "Ĩyakwakya\0", "Ĩyawĩoo\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12384,7 +12384,7 @@ static const QLocalePrivate localeTbl[] = {
         "Muhi\0", "Chilo\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12418,7 +12418,7 @@ static const QLocalePrivate localeTbl[] = {
         "am\0", "pm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Abr\0", "Mai\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Otu\0", "Nuv\0", "Diz\0" },
         { "Janeru\0", "Febreru\0", "Marsu\0", "Abril\0", "Maiu\0", "Junhu\0", "Julhu\0", "Agostu\0", "Setenbru\0", "Otubru\0", "Nuvenbru\0", "Dizenbru\0" },
@@ -12452,7 +12452,7 @@ static const QLocalePrivate localeTbl[] = {
         "Adduha\0", "Aluula\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12486,7 +12486,7 @@ static const QLocalePrivate localeTbl[] = {
         "Kiroko\0", "Hwaĩ-inĩ\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "AUD\0",
-        { "Dola ya Australia\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "Dola ya Australia\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12520,7 +12520,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "қаң.\0", "ақп.\0", "нау.\0", "сәу.\0", "мам.\0", "мау.\0", "шіл.\0", "там.\0", "қыр.\0", "қаз.\0", "қар.\0", "жел.\0" },
         { "Қаңтар\0", "Ақпан\0", "Наурыз\0", "Сәуір\0", "Мамыр\0", "Маусым\0", "Шілде\0", "Тамыз\0", "Қыркүйек\0", "Қазан\0", "Қараша\0", "Желтоқсан\0" },
@@ -12554,7 +12554,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "pamba\0", "wanja\0", "mbiyɔ mɛndoŋgɔ\0", "Nyɔlɔmbɔŋgɔ\0", "Mɔnɔ ŋgbanja\0", "Nyaŋgwɛ ŋgbanja\0", "kuŋgwɛ\0", "fɛ\0", "njapi\0", "nyukul\0", "11\0", "ɓulɓusɛ\0" },
@@ -12588,7 +12588,7 @@ static const QLocalePrivate localeTbl[] = {
         "ulloqeqqata-tungaa\0", "ulloqeqqata-kingorna\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januari\0", "februari\0", "martsi\0", "aprili\0", "maji\0", "juni\0", "juli\0", "augustusi\0", "septemberi\0", "oktoberi\0", "novemberi\0", "decemberi\0" },
@@ -12622,7 +12622,7 @@ static const QLocalePrivate localeTbl[] = {
         "karoon\0", "kooskoliny\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12656,7 +12656,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "KMF\0", "%1%2\0", Q_NULLPTR, "KMF\0",
-        { "ហ្វ្រង់​កូម័រ\0", "\0", "\0", "\0", "\0", "\0", "ហ្វ្រង់​កូម័រ\0" },
+        { "ហ្វ្រង់​កូម័រ\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "ហ្វ្រង់​កូម័រ\0" },
         // month names
         { "មករា\0", "កុម្ភៈ\0", "មីនា\0", "មេសា\0", "ឧសភា\0", "មិថុនា\0", "កក្កដា\0", "សីហា\0", "កញ្ញា\0", "តុលា\0", "វិច្ឆិកា\0", "ធ្នូ\0" },
         { "មករា\0", "កុម្ភៈ\0", "មីនា\0", "មេសា\0", "ឧសភា\0", "មិថុនា\0", "កក្កដា\0", "សីហា\0", "កញ្ញា\0", "តុលា\0", "វិច្ឆិកា\0", "ធ្នូ\0" },
@@ -12690,7 +12690,7 @@ static const QLocalePrivate localeTbl[] = {
         "ಪೂರ್ವಾಹ್ನ\0", "ಅಪರಾಹ್ನ\0",
         // currency
         "$\0", "%2%1\0", Q_NULLPTR, "XCD\0",
-        { "ಪೂರ್ವ ಕೆರೀಬಿಯನ್ ಡಾಲರ್\0", "\0", "ಪೂರ್ವ ಕೆರೀಬಿಯನ್ ಡಾಲರ್\0", "\0", "\0", "\0", "ಪೂರ್ವ ಕೆರೀಬಿಯನ್ ಡಾಲರ್‌ಗಳು\0" },
+        { "ಪೂರ್ವ ಕೆರೀಬಿಯನ್ ಡಾಲರ್\0", Q_NULLPTR, "ಪೂರ್ವ ಕೆರೀಬಿಯನ್ ಡಾಲರ್\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "ಪೂರ್ವ ಕೆರೀಬಿಯನ್ ಡಾಲರ್‌ಗಳು\0" },
         // month names
         { "ಜನ\0", "ಫೆಬ್ರ\0", "ಮಾರ್ಚ್\0", "ಏಪ್ರಿ\0", "ಮೇ\0", "ಜೂನ್\0", "ಜುಲೈ\0", "ಆಗ\0", "ಸೆಪ್ಟೆಂ\0", "ಅಕ್ಟೋ\0", "ನವೆಂ\0", "ಡಿಸೆಂ\0" },
         { "ಜನವರಿ\0", "ಫೆಬ್ರವರಿ\0", "ಮಾರ್ಚ್\0", "ಏಪ್ರಿಲ್\0", "ಮೇ\0", "ಜೂನ್\0", "ಜುಲೈ\0", "ಆಗಸ್ಟ್\0", "ಸೆಪ್ಟೆಂಬರ್\0", "ಅಕ್ಟೋಬರ್\0", "ನವೆಂಬರ್\0", "ಡಿಸೆಂಬರ್\0" },
@@ -12724,7 +12724,7 @@ static const QLocalePrivate localeTbl[] = {
         "오전\0", "오후\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "1월\0", "2월\0", "3월\0", "4월\0", "5월\0", "6월\0", "7월\0", "8월\0", "9월\0", "10월\0", "11월\0", "12월\0" },
         { "1월\0", "2월\0", "3월\0", "4월\0", "5월\0", "6월\0", "7월\0", "8월\0", "9월\0", "10월\0", "11월\0", "12월\0" },
@@ -12758,7 +12758,7 @@ static const QLocalePrivate localeTbl[] = {
         "오전\0", "오후\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "1월\0", "2월\0", "3월\0", "4월\0", "5월\0", "6월\0", "7월\0", "8월\0", "9월\0", "10월\0", "11월\0", "12월\0" },
         { "1월\0", "2월\0", "3월\0", "4월\0", "5월\0", "6월\0", "7월\0", "8월\0", "9월\0", "10월\0", "11월\0", "12월\0" },
@@ -12792,7 +12792,7 @@ static const QLocalePrivate localeTbl[] = {
         "म.पू.\0", "म.नं.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "जानेवारी\0", "फेब्रुवारी\0", "मार्च\0", "एप्रिल\0", "मे\0", "जून\0", "जुलाय\0", "आगोस्त\0", "सप्टेंबर\0", "ऑक्टोबर\0", "नोव्हेंबर\0", "डिसेंबर\0" },
         { "जानेवारी\0", "फेब्रुवारी\0", "मार्च\0", "एप्रिल\0", "मे\0", "जून\0", "जुलाय\0", "आगोस्त\0", "सप्टेंबर\0", "ऑक्टोबर\0", "नोव्हेंबर\0", "डिसेंबर\0" },
@@ -12826,7 +12826,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12860,7 +12860,7 @@ static const QLocalePrivate localeTbl[] = {
         "makeo\0", "nyiaghuo\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12894,7 +12894,7 @@ static const QLocalePrivate localeTbl[] = {
         "sárúwá\0", "cɛɛ́nko\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12928,7 +12928,7 @@ static const QLocalePrivate localeTbl[] = {
         "Vörmeddaach\0", "Nommendaach\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan.\0", "Fäb.\0", "Mäz.\0", "Apr.\0", "Mai\0", "Jun.\0", "Jul.\0", "Ouj.\0", "Säp.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12962,7 +12962,7 @@ static const QLocalePrivate localeTbl[] = {
         "BN\0", "PN\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "rêb\0", "reş\0", "ada\0", "avr\0", "gul\0", "pûş\0", "tîr\0", "gel\0", "rez\0", "kew\0", "ser\0", "ber\0" },
         { "rêbendan\0", "reşemî\0", "adar\0", "avrêl\0", "gulan\0", "pûşper\0", "tîrmeh\0", "gelawêj\0", "rezber\0", "kewçêr\0", "sermawez\0", "berfanbar\0" },
@@ -12996,7 +12996,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "KWD\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13030,7 +13030,7 @@ static const QLocalePrivate localeTbl[] = {
         "таңкы\0", "түштөн кийинки\0",
         // currency
         "KYD\0", "%1 %2\0", Q_NULLPTR, "KYD\0",
-        { "кайман доллары\0", "\0", "кайман доллары\0", "\0", "\0", "\0", "кайман доллары\0" },
+        { "кайман доллары\0", Q_NULLPTR, "кайман доллары\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "кайман доллары\0" },
         // month names
         { "Янв\0", "Фев\0", "Мар\0", "Апр\0", "Май\0", "Июн\0", "Июл\0", "Авг\0", "Сен\0", "Окт\0", "Ноя\0", "Дек\0" },
         { "Январь\0", "Февраль\0", "Март\0", "Апрель\0", "Май\0", "Июнь\0", "Июль\0", "Август\0", "Сентябрь\0", "Октябрь\0", "Ноябрь\0", "Декабрь\0" },
@@ -13064,7 +13064,7 @@ static const QLocalePrivate localeTbl[] = {
         "TOO\0", "MUU\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13098,7 +13098,7 @@ static const QLocalePrivate localeTbl[] = {
         "moies\0", "nomëttes\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "LBP\0",
-        { "Libanesescht Pond\0", "\0", "Libanesescht Pond\0", "\0", "\0", "\0", "Libanesesch Pond\0" },
+        { "Libanesescht Pond\0", Q_NULLPTR, "Libanesescht Pond\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Libanesesch Pond\0" },
         // month names
         { "Jan\0", "Feb\0", "Mäe\0", "Abr\0", "Mee\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "Mäerz\0", "Abrëll\0", "Mee\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
@@ -13132,7 +13132,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13166,7 +13166,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13200,7 +13200,7 @@ static const QLocalePrivate localeTbl[] = {
         "ntɔ́ngɔ́\0", "mpókwa\0",
         // currency
         "Kz\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13234,7 +13234,7 @@ static const QLocalePrivate localeTbl[] = {
         "ntɔ́ngɔ́\0", "mpókwa\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13268,7 +13268,7 @@ static const QLocalePrivate localeTbl[] = {
         "ntɔ́ngɔ́\0", "mpókwa\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13302,7 +13302,7 @@ static const QLocalePrivate localeTbl[] = {
         "ntɔ́ngɔ́\0", "mpókwa\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13336,7 +13336,7 @@ static const QLocalePrivate localeTbl[] = {
         "ກ່ອນທ່ຽງ\0", "ຫຼັງທ່ຽງ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ມ.ກ.\0", "ກ.ພ.\0", "ມ.ນ.\0", "ມ.ສ.\0", "ພ.ພ.\0", "ມິ.ຖ.\0", "ກ.ລ.\0", "ສ.ຫ.\0", "ກ.ຍ.\0", "ຕ.ລ.\0", "ພ.ຈ.\0", "ທ.ວ.\0" },
         { "ມັງກອນ\0", "ກຸມພາ\0", "ມີນາ\0", "ເມສາ\0", "ພຶດສະພາ\0", "ມິຖຸນາ\0", "ກໍລະກົດ\0", "ສິງຫາ\0", "ກັນຍາ\0", "ຕຸລາ\0", "ພະຈິກ\0", "ທັນວາ\0" },
@@ -13370,7 +13370,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "جانڤیە\0", "فئڤریە\0", "مارس\0", "آڤریل\0", "مئی\0", "جوٙأن\0", "جوٙلا\0", "آگوست\0", "سئپتامر\0", "ئوکتوڤر\0", "نوڤامر\0", "دئسامر\0" },
         { "جانڤیە\0", "فئڤریە\0", "مارس\0", "آڤریل\0", "مئی\0", "جوٙأن\0", "جوٙلا\0", "آگوست\0", "سئپتامر\0", "ئوکتوڤر\0", "نوڤامر\0", "دئسامر\0" },
@@ -13404,7 +13404,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "جانڤیە\0", "فئڤریە\0", "مارس\0", "آڤریل\0", "مئی\0", "جوٙأن\0", "جوٙلا\0", "آگوست\0", "سئپتامر\0", "ئوکتوڤر\0", "نوڤامر\0", "دئسامر\0" },
         { "جانڤیە\0", "فئڤریە\0", "مارس\0", "آڤریل\0", "مئی\0", "جوٙأن\0", "جوٙلا\0", "آگوست\0", "سئپتامر\0", "ئوکتوڤر\0", "نوڤامر\0", "دئسامر\0" },
@@ -13438,7 +13438,7 @@ static const QLocalePrivate localeTbl[] = {
         "priešpiet\0", "popiet\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "Euras\0", "\0", "euras\0", "\0", "eurai\0", "euro\0", "eurų\0" },
+        { "Euras\0", Q_NULLPTR, "euras\0", Q_NULLPTR, "eurai\0", "euro\0", "eurų\0" },
         // month names
         { "saus.\0", "vas.\0", "kov.\0", "bal.\0", "geg.\0", "birž.\0", "liep.\0", "rugp.\0", "rugs.\0", "spal.\0", "lapkr.\0", "gruod.\0" },
         { "sausis\0", "vasaris\0", "kovas\0", "balandis\0", "gegužė\0", "birželis\0", "liepa\0", "rugpjūtis\0", "rugsėjis\0", "spalis\0", "lapkritis\0", "gruodis\0" },
@@ -13472,7 +13472,7 @@ static const QLocalePrivate localeTbl[] = {
         "Dinda\0", "Dilolo\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0",
-        { "Iro\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "Iro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13506,7 +13506,7 @@ static const QLocalePrivate localeTbl[] = {
         "OD\0", "OT\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13540,7 +13540,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13574,7 +13574,7 @@ static const QLocalePrivate localeTbl[] = {
         "priekšpusdiena\0", "pēcpusdiena\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "eiro\0", "eiro\0", "eiro\0", "\0", "\0", "\0", "eiro\0" },
+        { "eiro\0", "eiro\0", "eiro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "eiro\0" },
         // month names
         { "janv.\0", "febr.\0", "marts\0", "apr.\0", "maijs\0", "jūn.\0", "jūl.\0", "aug.\0", "sept.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "janvāris\0", "februāris\0", "marts\0", "aprīlis\0", "maijs\0", "jūnijs\0", "jūlijs\0", "augusts\0", "septembris\0", "oktobris\0", "novembris\0", "decembris\0" },
@@ -13608,7 +13608,7 @@ static const QLocalePrivate localeTbl[] = {
         "Ɛnkakɛnyá\0", "Ɛndámâ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13642,7 +13642,7 @@ static const QLocalePrivate localeTbl[] = {
         "Ɛnkakɛnyá\0", "Ɛndámâ\0",
         // currency
         "TSh\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13676,7 +13676,7 @@ static const QLocalePrivate localeTbl[] = {
         "RŨ\0", "ŨG\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13710,7 +13710,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13744,7 +13744,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "Ar\0", "%2 %1\0", Q_NULLPTR, "MGA\0",
-        { "Ariary\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "Ariary\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mey\0", "Jon\0", "Jol\0", "Aog\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Janoary\0", "Febroary\0", "Martsa\0", "Aprily\0", "Mey\0", "Jona\0", "Jolay\0", "Aogositra\0", "Septambra\0", "Oktobra\0", "Novambra\0", "Desambra\0" },
@@ -13778,7 +13778,7 @@ static const QLocalePrivate localeTbl[] = {
         "wichishu\0", "mchochil’l\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13812,7 +13812,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "mbegtug\0", "imeg àbùbì\0", "imeg mbəŋchubi\0", "iməg ngwə̀t\0", "iməg fog\0", "iməg ichiibɔd\0", "iməg àdùmbə̀ŋ\0", "iməg ichika\0", "iməg kud\0", "iməg tèsiʼe\0", "iməg zò\0", "iməg krizmed\0" },
         { "iməg mbegtug\0", "imeg àbùbì\0", "imeg mbəŋchubi\0", "iməg ngwə̀t\0", "iməg fog\0", "iməg ichiibɔd\0", "iməg àdùmbə̀ŋ\0", "iməg ichika\0", "iməg kud\0", "iməg tèsiʼe\0", "iməg zò\0", "iməg krizmed\0" },
@@ -13846,7 +13846,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Kohi\0", "Hui\0", "Pou\0", "Pae\0", "Hara\0", "Pipi\0", "Hōngo\0", "Here\0", "Mahu\0", "Nuku\0", "Rangi\0", "Haki\0" },
         { "Kohitātea\0", "Huitanguru\0", "Poutūterangi\0", "Paengawhāwhā\0", "Haratua\0", "Pipiri\0", "Hōngongoi\0", "Hereturikōkā\0", "Mahuru\0", "Whiringa-ā-nuku\0", "Whiringa-ā-rangi\0", "Hakihea\0" },
@@ -13880,7 +13880,7 @@ static const QLocalePrivate localeTbl[] = {
         "претпладне\0", "попладне\0",
         // currency
         "ден\0", "%1 %2\0", Q_NULLPTR, "MKD\0",
-        { "Македонски денар\0", "\0", "Македонски денар\0", "\0", "\0", "\0", "Македонски денари\0" },
+        { "Македонски денар\0", Q_NULLPTR, "Македонски денар\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Македонски денари\0" },
         // month names
         { "јан.\0", "фев.\0", "мар.\0", "апр.\0", "мај\0", "јун.\0", "јул.\0", "авг.\0", "септ.\0", "окт.\0", "ноем.\0", "дек.\0" },
         { "јануари\0", "февруари\0", "март\0", "април\0", "мај\0", "јуни\0", "јули\0", "август\0", "септември\0", "октомври\0", "ноември\0", "декември\0" },
@@ -13914,7 +13914,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "XOF\0",
-        { "പശ്ചിമ ആഫ്രിക്കൻ [CFA] ഫ്രാങ്ക്\0", "\0", "പശ്ചിമ ആഫ്രിക്കൻ [CFA] ഫ്രാങ്ക്\0", "\0", "\0", "\0", "പശ്ചിമ ആഫ്രിക്കൻ [CFA] ഫ്രാങ്ക്\0" },
+        { "പശ്ചിമ ആഫ്രിക്കൻ [CFA] ഫ്രാങ്ക്\0", Q_NULLPTR, "പശ്ചിമ ആഫ്രിക്കൻ [CFA] ഫ്രാങ്ക്\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "പശ്ചിമ ആഫ്രിക്കൻ [CFA] ഫ്രാങ്ക്\0" },
         // month names
         { "ജനു\0", "ഫെബ്രു\0", "മാർ\0", "ഏപ്രി\0", "മേയ്\0", "ജൂൺ\0", "ജൂലൈ\0", "ഓഗ\0", "സെപ്റ്റം\0", "ഒക്ടോ\0", "നവം\0", "ഡിസം\0" },
         { "ജനുവരി\0", "ഫെബ്രുവരി\0", "മാർച്ച്\0", "ഏപ്രിൽ\0", "മേയ്\0", "ജൂൺ\0", "ജൂലൈ\0", "ഓഗസ്റ്റ്\0", "സെപ്റ്റംബർ\0", "ഒക്‌ടോബർ\0", "നവംബർ\0", "ഡിസംബർ\0" },
@@ -13948,7 +13948,7 @@ static const QLocalePrivate localeTbl[] = {
         "ү.ө.\0", "ү.х.\0",
         // currency
         "₮\0", "%2 %1\0", Q_NULLPTR, "MNT\0",
-        { "төгрөг\0", "\0", "төгрөг\0", "\0", "\0", "\0", "төгрөг\0" },
+        { "төгрөг\0", Q_NULLPTR, "төгрөг\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "төгрөг\0" },
         // month names
         { "1-р сар\0", "2-р сар\0", "3-р сар\0", "4-р сар\0", "5-р сар\0", "6-р сар\0", "7-р сар\0", "8-р сар\0", "9-р сар\0", "10-р сар\0", "11-р сар\0", "12-р сар\0" },
         { "Нэгдүгээр сар\0", "Хоёрдугаар сар\0", "Гуравдугаар сар\0", "Дөрөвдүгээр сар\0", "Тавдугаар сар\0", "Зургаадугаар сар\0", "Долоодугаар сар\0", "Наймдугаар сар\0", "Есдүгээр сар\0", "Аравдугаар сар\0", "Арван нэгдүгээр сар\0", "Арван хоёрдугаар сар\0" },
@@ -13982,7 +13982,7 @@ static const QLocalePrivate localeTbl[] = {
         "म.पू.\0", "म.उ.\0",
         // currency
         "MRU\0", "%2%1\0", Q_NULLPTR, "MRU\0",
-        { "मॉरिटानियन ओगिया\0", "\0", "मॉरिटानियन ओगिया\0", "\0", "\0", "\0", "मॉरिटानियन ओगियाज\0" },
+        { "मॉरिटानियन ओगिया\0", Q_NULLPTR, "मॉरिटानियन ओगिया\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "मॉरिटानियन ओगियाज\0" },
         // month names
         { "जाने\0", "फेब्रु\0", "मार्च\0", "एप्रि\0", "मे\0", "जून\0", "जुलै\0", "ऑग\0", "सप्टें\0", "ऑक्टो\0", "नोव्हें\0", "डिसें\0" },
         { "जानेवारी\0", "फेब्रुवारी\0", "मार्च\0", "एप्रिल\0", "मे\0", "जून\0", "जुलै\0", "ऑगस्ट\0", "सप्टेंबर\0", "ऑक्टोबर\0", "नोव्हेंबर\0", "डिसेंबर\0" },
@@ -14016,7 +14016,7 @@ static const QLocalePrivate localeTbl[] = {
         "PG\0", "PTG\0",
         // currency
         "$\0", "%2 %1\0", Q_NULLPTR, "BND\0",
-        { "Dolar Caribbean Timur\0", "\0", "\0", "\0", "\0", "\0", "Dolar Caribbean Timur\0" },
+        { "Dolar Caribbean Timur\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Dolar Caribbean Timur\0" },
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ogo\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Januari\0", "Februari\0", "Mac\0", "April\0", "Mei\0", "Jun\0", "Julai\0", "Ogos\0", "September\0", "Oktober\0", "November\0", "Disember\0" },
@@ -14050,7 +14050,7 @@ static const QLocalePrivate localeTbl[] = {
         "PG\0", "PTG\0",
         // currency
         "$\0", "%2%1\0", Q_NULLPTR, "XCD\0",
-        { "Dolar Caribbean Timur\0", "\0", "\0", "\0", "\0", "\0", "Dolar Caribbean Timur\0" },
+        { "Dolar Caribbean Timur\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Dolar Caribbean Timur\0" },
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ogo\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Januari\0", "Februari\0", "Mac\0", "April\0", "Mei\0", "Jun\0", "Julai\0", "Ogos\0", "September\0", "Oktober\0", "November\0", "Disember\0" },
@@ -14084,7 +14084,7 @@ static const QLocalePrivate localeTbl[] = {
         "PG\0", "PTG\0",
         // currency
         "$\0", "%2%1\0", Q_NULLPTR, "XCD\0",
-        { "Dolar Caribbean Timur\0", "\0", "\0", "\0", "\0", "\0", "Dolar Caribbean Timur\0" },
+        { "Dolar Caribbean Timur\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Dolar Caribbean Timur\0" },
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ogo\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Januari\0", "Februari\0", "Mac\0", "April\0", "Mei\0", "Jun\0", "Julai\0", "Ogos\0", "September\0", "Oktober\0", "November\0", "Disember\0" },
@@ -14118,7 +14118,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%2%1\0", Q_NULLPTR, "EUR\0",
-        { "ewro\0", "\0", "ewro\0", "\0", "ewro\0", "ewro\0", "ewro\0" },
+        { "ewro\0", Q_NULLPTR, "ewro\0", Q_NULLPTR, "ewro\0", "ewro\0", "ewro\0" },
         // month names
         { "Jan\0", "Fra\0", "Mar\0", "Apr\0", "Mej\0", "Ġun\0", "Lul\0", "Aww\0", "Set\0", "Ott\0", "Nov\0", "Diċ\0" },
         { "Jannar\0", "Frar\0", "Marzu\0", "April\0", "Mejju\0", "Ġunju\0", "Lulju\0", "Awwissu\0", "Settembru\0", "Ottubru\0", "Novembru\0", "Diċembru\0" },
@@ -14152,7 +14152,7 @@ static const QLocalePrivate localeTbl[] = {
         "comme\0", "lilli\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -14186,7 +14186,7 @@ static const QLocalePrivate localeTbl[] = {
         "နံနက်\0", "ညနေ\0",
         // currency
         "MYR\0", "%1 %2\0", Q_NULLPTR, "MYR\0",
-        { "မလေးရှား ရင်းဂစ်\0", "\0", "\0", "\0", "\0", "\0", "မလေးရှား ရင်းဂစ်\0" },
+        { "မလေးရှား ရင်းဂစ်\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "မလေးရှား ရင်းဂစ်\0" },
         // month names
         { "ဇန်\0", "ဖေ\0", "မတ်\0", "ဧ\0", "မေ\0", "ဇွန်\0", "ဇူ\0", "ဩ\0", "စက်\0", "အောက်\0", "နို\0", "ဒီ\0" },
         { "ဇန်နဝါရီ\0", "ဖေဖော်ဝါရီ\0", "မတ်\0", "ဧပြီ\0", "မေ\0", "ဇွန်\0", "ဇူလိုင်\0", "ဩဂုတ်\0", "စက်တင်ဘာ\0", "အောက်တိုဘာ\0", "နိုဝင်ဘာ\0", "ဒီဇင်ဘာ\0" },
@@ -14220,7 +14220,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
@@ -14254,7 +14254,7 @@ static const QLocalePrivate localeTbl[] = {
         "ǁgoagas\0", "ǃuias\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -14288,7 +14288,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
@@ -14322,7 +14322,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
@@ -14356,7 +14356,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -14390,7 +14390,7 @@ static const QLocalePrivate localeTbl[] = {
         "vm\0", "nm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januaar\0", "Februaar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktover\0", "November\0", "Dezember\0" },
@@ -14424,7 +14424,7 @@ static const QLocalePrivate localeTbl[] = {
         "vm\0", "nm\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januaar\0", "Februaar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktover\0", "November\0", "Dezember\0" },
@@ -14458,7 +14458,7 @@ static const QLocalePrivate localeTbl[] = {
         "पूर्वाह्न\0", "अपराह्न\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "XOF\0",
-        { "सीएफ्‌ए फ्रान्क बीसीइएओ\0", "\0", "सीएफ्‌ए फ्रान्क बीसीइएओ\0", "\0", "\0", "\0", "सीऐफ्‌ए फ्रान्क्स बीसीइएओ\0" },
+        { "सीएफ्‌ए फ्रान्क बीसीइएओ\0", Q_NULLPTR, "सीएफ्‌ए फ्रान्क बीसीइएओ\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "सीऐफ्‌ए फ्रान्क्स बीसीइएओ\0" },
         // month names
         { "जनवरी\0", "फेब्रुअरी\0", "मार्च\0", "अप्रिल\0", "मे\0", "जुन\0", "जुलाई\0", "अगस्ट\0", "सेप्टेम्बर\0", "अक्टोबर\0", "नोभेम्बर\0", "डिसेम्बर\0" },
         { "जनवरी\0", "फेब्रुअरी\0", "मार्च\0", "अप्रिल\0", "मे\0", "जुन\0", "जुलाई\0", "अगस्ट\0", "सेप्टेम्बर\0", "अक्टोबर\0", "नोभेम्बर\0", "डिसेम्बर\0" },
@@ -14492,7 +14492,7 @@ static const QLocalePrivate localeTbl[] = {
         "पूर्वाह्न\0", "अपराह्न\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "XOF\0",
-        { "सीएफ्‌ए फ्रान्क बीसीइएओ\0", "\0", "सीएफ्‌ए फ्रान्क बीसीइएओ\0", "\0", "\0", "\0", "सीऐफ्‌ए फ्रान्क्स बीसीइएओ\0" },
+        { "सीएफ्‌ए फ्रान्क बीसीइएओ\0", Q_NULLPTR, "सीएफ्‌ए फ्रान्क बीसीइएओ\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "सीऐफ्‌ए फ्रान्क्स बीसीइएओ\0" },
         // month names
         { "जनवरी\0", "फेब्रुअरी\0", "मार्च\0", "अप्रिल\0", "मे\0", "जुन\0", "जुलाई\0", "अगस्ट\0", "सेप्टेम्बर\0", "अक्टोबर\0", "नोभेम्बर\0", "डिसेम्बर\0" },
         { "जनवरी\0", "फेब्रुअरी\0", "मार्च\0", "अप्रिल\0", "मे\0", "जुन\0", "जुलाई\0", "अगस्ट\0", "सेप्टेम्बर\0", "अक्टोबर\0", "नोभेम्बर\0", "डिसेम्बर\0" },
@@ -14526,7 +14526,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "Afl.\0", "%2 %1\0", "%2 -%1\0", "EUR\0",
-        { "Euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "Euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -14560,7 +14560,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "€\0", "%2 %1\0", "%2 -%1\0", "EUR\0",
-        { "Euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "Euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -14594,7 +14594,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "$\0", "%2 %1\0", "%2 -%1\0", "EUR\0",
-        { "Euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "Euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -14628,7 +14628,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "NAf.\0", "%2 %1\0", "%2 -%1\0", "EUR\0",
-        { "Euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "Euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -14662,7 +14662,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "€\0", "%2 %1\0", "%2 -%1\0", "EUR\0",
-        { "Euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "Euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -14696,7 +14696,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "$\0", "%2 %1\0", "%2 -%1\0", "EUR\0",
-        { "Euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "Euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -14730,7 +14730,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "NAf.\0", "%2 %1\0", "%2 -%1\0", "EUR\0",
-        { "Euro\0", "\0", "euro\0", "\0", "\0", "\0", "euro\0" },
+        { "Euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euro\0" },
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -14764,7 +14764,7 @@ static const QLocalePrivate localeTbl[] = {
         "maná\0", "kugú\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -14798,7 +14798,7 @@ static const QLocalePrivate localeTbl[] = {
         "f.m.\0", "e.m.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
@@ -14832,7 +14832,7 @@ static const QLocalePrivate localeTbl[] = {
         "mbaʼámbaʼ\0", "ncwònzém\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "saŋ tsetsɛ̀ɛ lùm\0", "saŋ kàg ngwóŋ\0", "saŋ lepyè shúm\0", "saŋ cÿó\0", "saŋ tsɛ̀ɛ cÿó\0", "saŋ njÿoláʼ\0", "saŋ tyɛ̀b tyɛ̀b mbʉ̀ŋ\0", "saŋ mbʉ̀ŋ\0", "saŋ ngwɔ̀ʼ mbÿɛ\0", "saŋ tàŋa tsetsáʼ\0", "saŋ mejwoŋó\0", "saŋ lùm\0" },
         { "saŋ tsetsɛ̀ɛ lùm\0", "saŋ kàg ngwóŋ\0", "saŋ lepyè shúm\0", "saŋ cÿó\0", "saŋ tsɛ̀ɛ cÿó\0", "saŋ njÿoláʼ\0", "saŋ tyɛ̀b tyɛ̀b mbʉ̀ŋ\0", "saŋ mbʉ̀ŋ\0", "saŋ ngwɔ̀ʼ mbÿɛ\0", "saŋ tàŋa tsetsáʼ\0", "saŋ mejwoŋó\0", "saŋ lùm\0" },
@@ -14866,7 +14866,7 @@ static const QLocalePrivate localeTbl[] = {
         "RW\0", "TŊ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -14900,7 +14900,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -14934,7 +14934,7 @@ static const QLocalePrivate localeTbl[] = {
         "WD\0", "WB\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "OMR\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ama\0", "Gur\0", "Bit\0", "Elb\0", "Cam\0", "Wax\0", "Ado\0", "Hag\0", "Ful\0", "Onk\0", "Sad\0", "Mud\0" },
         { "Amajjii\0", "Guraandhala\0", "Bitooteessa\0", "Elba\0", "Caamsa\0", "Waxabajjii\0", "Adooleessa\0", "Hagayya\0", "Fuulbana\0", "Onkololeessa\0", "Sadaasa\0", "Muddee\0" },
@@ -14968,7 +14968,7 @@ static const QLocalePrivate localeTbl[] = {
         "WD\0", "WB\0",
         // currency
         "Ksh\0", "%2%1\0", Q_NULLPTR, "OMR\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ama\0", "Gur\0", "Bit\0", "Elb\0", "Cam\0", "Wax\0", "Ado\0", "Hag\0", "Ful\0", "Onk\0", "Sad\0", "Mud\0" },
         { "Amajjii\0", "Guraandhala\0", "Bitooteessa\0", "Elba\0", "Caamsa\0", "Waxabajjii\0", "Adooleessa\0", "Hagayya\0", "Fuulbana\0", "Onkololeessa\0", "Sadaasa\0", "Muddee\0" },
@@ -15002,7 +15002,7 @@ static const QLocalePrivate localeTbl[] = {
         "ପୂର୍ବାହ୍ନ\0", "ଅପରାହ୍ନ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ଜାନୁଆରୀ\0", "ଫେବୃଆରୀ\0", "ମାର୍ଚ୍ଚ\0", "ଅପ୍ରେଲ\0", "ମଇ\0", "ଜୁନ\0", "ଜୁଲାଇ\0", "ଅଗଷ୍ଟ\0", "ସେପ୍ଟେମ୍ବର\0", "ଅକ୍ଟୋବର\0", "ନଭେମ୍ବର\0", "ଡିସେମ୍ବର\0" },
         { "ଜାନୁଆରୀ\0", "ଫେବୃଆରୀ\0", "ମାର୍ଚ୍ଚ\0", "ଅପ୍ରେଲ\0", "ମଇ\0", "ଜୁନ\0", "ଜୁଲାଇ\0", "ଅଗଷ୍ଟ\0", "ସେପ୍ଟେମ୍ବର\0", "ଅକ୍ଟୋବର\0", "ନଭେମ୍ବର\0", "ଡିସେମ୍ବର\0" },
@@ -15036,7 +15036,7 @@ static const QLocalePrivate localeTbl[] = {
         "ӕмбисбоны размӕ\0", "ӕмбисбоны фӕстӕ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Янв.\0", "Февр.\0", "Март.\0", "Апр.\0", "Май\0", "Июнь\0", "Июль\0", "Авг.\0", "Сент.\0", "Окт.\0", "Нояб.\0", "Дек.\0" },
         { "Январь\0", "Февраль\0", "Мартъи\0", "Апрель\0", "Май\0", "Июнь\0", "Июль\0", "Август\0", "Сентябрь\0", "Октябрь\0", "Ноябрь\0", "Декабрь\0" },
@@ -15070,7 +15070,7 @@ static const QLocalePrivate localeTbl[] = {
         "ӕмбисбоны размӕ\0", "ӕмбисбоны фӕстӕ\0",
         // currency
         "₽\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Янв.\0", "Февр.\0", "Март.\0", "Апр.\0", "Май\0", "Июнь\0", "Июль\0", "Авг.\0", "Сент.\0", "Окт.\0", "Нояб.\0", "Дек.\0" },
         { "Январь\0", "Февраль\0", "Мартъи\0", "Апрель\0", "Май\0", "Июнь\0", "Июль\0", "Август\0", "Сентябрь\0", "Октябрь\0", "Ноябрь\0", "Декабрь\0" },
@@ -15104,7 +15104,7 @@ static const QLocalePrivate localeTbl[] = {
         "ਪੂ.ਦੁ.\0", "ਬਾ.ਦੁ.\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "PAB\0",
-        { "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0", "\0", "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0", "\0", "\0", "\0", "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0" },
+        { "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0", Q_NULLPTR, "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0" },
         // month names
         { "ਜਨ\0", "ਫ਼ਰ\0", "ਮਾਰਚ\0", "ਅਪ੍ਰੈ\0", "ਮਈ\0", "ਜੂਨ\0", "ਜੁਲਾ\0", "ਅਗ\0", "ਸਤੰ\0", "ਅਕਤੂ\0", "ਨਵੰ\0", "ਦਸੰ\0" },
         { "ਜਨਵਰੀ\0", "ਫ਼ਰਵਰੀ\0", "ਮਾਰਚ\0", "ਅਪ੍ਰੈਲ\0", "ਮਈ\0", "ਜੂਨ\0", "ਜੁਲਾਈ\0", "ਅਗਸਤ\0", "ਸਤੰਬਰ\0", "ਅਕਤੂਬਰ\0", "ਨਵੰਬਰ\0", "ਦਸੰਬਰ\0" },
@@ -15138,7 +15138,7 @@ static const QLocalePrivate localeTbl[] = {
         "ਪੂ.ਦੁ.\0", "ਬਾ.ਦੁ.\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "PAB\0",
-        { "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0", "\0", "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0", "\0", "\0", "\0", "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0" },
+        { "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0", Q_NULLPTR, "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0" },
         // month names
         { "ਜਨ\0", "ਫ਼ਰ\0", "ਮਾਰਚ\0", "ਅਪ੍ਰੈ\0", "ਮਈ\0", "ਜੂਨ\0", "ਜੁਲਾ\0", "ਅਗ\0", "ਸਤੰ\0", "ਅਕਤੂ\0", "ਨਵੰ\0", "ਦਸੰ\0" },
         { "ਜਨਵਰੀ\0", "ਫ਼ਰਵਰੀ\0", "ਮਾਰਚ\0", "ਅਪ੍ਰੈਲ\0", "ਮਈ\0", "ਜੂਨ\0", "ਜੁਲਾਈ\0", "ਅਗਸਤ\0", "ਸਤੰਬਰ\0", "ਅਕਤੂਬਰ\0", "ਨਵੰਬਰ\0", "ਦਸੰਬਰ\0" },
@@ -15172,7 +15172,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "zł\0", "%1 %2\0", Q_NULLPTR, "PLN\0",
-        { "złoty polski\0", "\0", "złoty polski\0", "\0", "złote polskie\0", "złotych polskich\0", "złotego polskiego\0" },
+        { "złoty polski\0", Q_NULLPTR, "złoty polski\0", Q_NULLPTR, "złote polskie\0", "złotych polskich\0", "złotego polskiego\0" },
         // month names
         { "sty\0", "lut\0", "mar\0", "kwi\0", "maj\0", "cze\0", "lip\0", "sie\0", "wrz\0", "paź\0", "lis\0", "gru\0" },
         { "styczeń\0", "luty\0", "marzec\0", "kwiecień\0", "maj\0", "czerwiec\0", "lipiec\0", "sierpień\0", "wrzesień\0", "październik\0", "listopad\0", "grudzień\0" },
@@ -15206,7 +15206,7 @@ static const QLocalePrivate localeTbl[] = {
         "ankstāinan\0", "pa pussideinan\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "rag\0", "was\0", "pūl\0", "sak\0", "zal\0", "sīm\0", "līp\0", "dag\0", "sil\0", "spa\0", "lap\0", "sal\0" },
         { "rags\0", "wassarins\0", "pūlis\0", "sakkis\0", "zallaws\0", "sīmenis\0", "līpa\0", "daggis\0", "sillins\0", "spallins\0", "lapkrūtis\0", "sallaws\0" },
@@ -15240,7 +15240,7 @@ static const QLocalePrivate localeTbl[] = {
         "غ.م.\0", "غ.و.\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "ILS\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "جنوري\0", "فبروري\0", "مارچ\0", "اپریل\0", "مۍ\0", "جون\0", "جولای\0", "اگست\0", "سپتمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوري\0", "فېبروري\0", "مارچ\0", "اپریل\0", "مۍ\0", "جون\0", "جولای\0", "اگست\0", "سپتمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
@@ -15274,7 +15274,7 @@ static const QLocalePrivate localeTbl[] = {
         "غ.م.\0", "غ.و.\0",
         // currency
         "Rs\0", "%1 %2\0", Q_NULLPTR, "ILS\0",
-        { "\0", "\0", "پاکستانۍ کلداره\0", "\0", "\0", "\0", "پاکستانۍ کلدارے\0" },
+        { Q_NULLPTR, Q_NULLPTR, "پاکستانۍ کلداره\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "پاکستانۍ کلدارے\0" },
         // month names
         { "جنوري\0", "فبروري\0", "مارچ\0", "اپریل\0", "مۍ\0", "جون\0", "جولای\0", "اگست\0", "سپتمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوري\0", "فېبروري\0", "مارچ\0", "اپریل\0", "مۍ\0", "جون\0", "جولای\0", "اگست\0", "سپتمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
@@ -15308,7 +15308,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "Kz\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15342,7 +15342,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15376,7 +15376,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15410,7 +15410,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "​\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15444,7 +15444,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15478,7 +15478,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15512,7 +15512,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15546,7 +15546,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "MOP$\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15580,7 +15580,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "MTn\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15614,7 +15614,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "\0", "\0", "euros\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15648,7 +15648,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "Db\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15682,7 +15682,7 @@ static const QLocalePrivate localeTbl[] = {
         "manhã\0", "tarde\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0",
-        { "Euro\0", "\0", "Euro\0", "\0", "\0", "\0", "Euros\0" },
+        { "Euro\0", Q_NULLPTR, "Euro\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Euros\0" },
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15716,7 +15716,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "Bs\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ene\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Oct\0", "Nov\0", "Dic\0" },
         { "Enero\0", "Febrero\0", "Marzo\0", "Abril\0", "Mayo\0", "Junio\0", "Julio\0", "Agosto\0", "Setiembre\0", "Octubre\0", "Noviembre\0", "Diciembre\0" },
@@ -15750,7 +15750,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ene\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Oct\0", "Nov\0", "Dic\0" },
         { "Enero\0", "Febrero\0", "Marzo\0", "Abril\0", "Mayo\0", "Junio\0", "Julio\0", "Agosto\0", "Setiembre\0", "Octubre\0", "Noviembre\0", "Diciembre\0" },
@@ -15784,7 +15784,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ene\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Oct\0", "Nov\0", "Dic\0" },
         { "Enero\0", "Febrero\0", "Marzo\0", "Abril\0", "Mayo\0", "Junio\0", "Julio\0", "Agosto\0", "Setiembre\0", "Octubre\0", "Noviembre\0", "Diciembre\0" },
@@ -15818,7 +15818,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "schan.\0", "favr.\0", "mars\0", "avr.\0", "matg\0", "zercl.\0", "fan.\0", "avust\0", "sett.\0", "oct.\0", "nov.\0", "dec.\0" },
         { "schaner\0", "favrer\0", "mars\0", "avrigl\0", "matg\0", "zercladur\0", "fanadur\0", "avust\0", "settember\0", "october\0", "november\0", "december\0" },
@@ -15852,7 +15852,7 @@ static const QLocalePrivate localeTbl[] = {
         "Z.MU.\0", "Z.MW.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -15886,7 +15886,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         "L\0", "%1 %2\0", Q_NULLPTR, "RON\0",
-        { "leu românesc\0", "\0", "leu românesc\0", "\0", "lei românești\0", "\0", "lei românești\0" },
+        { "leu românesc\0", Q_NULLPTR, "leu românesc\0", Q_NULLPTR, "lei românești\0", Q_NULLPTR, "lei românești\0" },
         // month names
         { "ian.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "iun.\0", "iul.\0", "aug.\0", "sept.\0", "oct.\0", "nov.\0", "dec.\0" },
         { "ianuarie\0", "februarie\0", "martie\0", "aprilie\0", "mai\0", "iunie\0", "iulie\0", "august\0", "septembrie\0", "octombrie\0", "noiembrie\0", "decembrie\0" },
@@ -15920,7 +15920,7 @@ static const QLocalePrivate localeTbl[] = {
         "a.m.\0", "p.m.\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "RON\0",
-        { "leu românesc\0", "\0", "leu românesc\0", "\0", "lei românești\0", "\0", "lei românești\0" },
+        { "leu românesc\0", Q_NULLPTR, "leu românesc\0", Q_NULLPTR, "lei românești\0", Q_NULLPTR, "lei românești\0" },
         // month names
         { "ian.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "iun.\0", "iul.\0", "aug.\0", "sept.\0", "oct.\0", "nov.\0", "dec.\0" },
         { "ianuarie\0", "februarie\0", "martie\0", "aprilie\0", "mai\0", "iunie\0", "iulie\0", "august\0", "septembrie\0", "octombrie\0", "noiembrie\0", "decembrie\0" },
@@ -15954,7 +15954,7 @@ static const QLocalePrivate localeTbl[] = {
         "kang’ama\0", "kingoto\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -15988,7 +15988,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "Br\0", "%1 %2\0", Q_NULLPTR, "RUB\0",
-        { "российский рубль\0", "\0", "российский рубль\0", "\0", "российских рубля\0", "российских рублей\0", "российского рубля\0" },
+        { "российский рубль\0", Q_NULLPTR, "российский рубль\0", Q_NULLPTR, "российских рубля\0", "российских рублей\0", "российского рубля\0" },
         // month names
         { "янв.\0", "февр.\0", "март\0", "апр.\0", "май\0", "июнь\0", "июль\0", "авг.\0", "сент.\0", "окт.\0", "нояб.\0", "дек.\0" },
         { "январь\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -16022,7 +16022,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "сом\0", "%1 %2\0", Q_NULLPTR, "RUB\0",
-        { "российский рубль\0", "\0", "российский рубль\0", "\0", "российских рубля\0", "российских рублей\0", "российского рубля\0" },
+        { "российский рубль\0", Q_NULLPTR, "российский рубль\0", Q_NULLPTR, "российских рубля\0", "российских рублей\0", "российского рубля\0" },
         // month names
         { "янв.\0", "февр.\0", "март\0", "апр.\0", "май\0", "июнь\0", "июль\0", "авг.\0", "сент.\0", "окт.\0", "нояб.\0", "дек.\0" },
         { "январь\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -16056,7 +16056,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "₸\0", "%1 %2\0", Q_NULLPTR, "RUB\0",
-        { "российский рубль\0", "\0", "российский рубль\0", "\0", "российских рубля\0", "российских рублей\0", "российского рубля\0" },
+        { "российский рубль\0", Q_NULLPTR, "российский рубль\0", Q_NULLPTR, "российских рубля\0", "российских рублей\0", "российского рубля\0" },
         // month names
         { "янв.\0", "февр.\0", "март\0", "апр.\0", "май\0", "июнь\0", "июль\0", "авг.\0", "сент.\0", "окт.\0", "нояб.\0", "дек.\0" },
         { "январь\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -16090,7 +16090,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "L\0", "%1 %2\0", Q_NULLPTR, "RUB\0",
-        { "российский рубль\0", "\0", "российский рубль\0", "\0", "российских рубля\0", "российских рублей\0", "российского рубля\0" },
+        { "российский рубль\0", Q_NULLPTR, "российский рубль\0", Q_NULLPTR, "российских рубля\0", "российских рублей\0", "российского рубля\0" },
         // month names
         { "янв.\0", "февр.\0", "март\0", "апр.\0", "май\0", "июнь\0", "июль\0", "авг.\0", "сент.\0", "окт.\0", "нояб.\0", "дек.\0" },
         { "январь\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -16124,7 +16124,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "₽\0", "%1 %2\0", Q_NULLPTR, "RUB\0",
-        { "российский рубль\0", "\0", "российский рубль\0", "\0", "российских рубля\0", "российских рублей\0", "российского рубля\0" },
+        { "российский рубль\0", Q_NULLPTR, "российский рубль\0", Q_NULLPTR, "российских рубля\0", "российских рублей\0", "российского рубля\0" },
         // month names
         { "янв.\0", "февр.\0", "март\0", "апр.\0", "май\0", "июнь\0", "июль\0", "авг.\0", "сент.\0", "окт.\0", "нояб.\0", "дек.\0" },
         { "январь\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -16158,7 +16158,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "₽\0", "%1 %2\0", Q_NULLPTR, "RUB\0",
-        { "российский рубль\0", "\0", "российский рубль\0", "\0", "российских рубля\0", "российских рублей\0", "российского рубля\0" },
+        { "российский рубль\0", Q_NULLPTR, "российский рубль\0", Q_NULLPTR, "российских рубля\0", "российских рублей\0", "российского рубля\0" },
         // month names
         { "янв.\0", "февр.\0", "март\0", "апр.\0", "май\0", "июнь\0", "июль\0", "авг.\0", "сент.\0", "окт.\0", "нояб.\0", "дек.\0" },
         { "январь\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -16192,7 +16192,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "RF\0", "%2 %1\0", Q_NULLPTR, "RWF\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "mut.\0", "gas.\0", "wer.\0", "mat.\0", "gic.\0", "kam.\0", "nya.\0", "kan.\0", "nze.\0", "ukw.\0", "ugu.\0", "uku.\0" },
         { "Mutarama\0", "Gashyantare\0", "Werurwe\0", "Mata\0", "Gicuransi\0", "Kamena\0", "Nyakanga\0", "Kanama\0", "Nzeli\0", "Ukwakira\0", "Ugushyingo\0", "Ukuboza\0" },
@@ -16226,7 +16226,7 @@ static const QLocalePrivate localeTbl[] = {
         "utuko\0", "kyiukonyi\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16260,7 +16260,7 @@ static const QLocalePrivate localeTbl[] = {
         "ЭИ\0", "ЭК\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Тохс\0", "Олун\0", "Клн\0", "Мсу\0", "Ыам\0", "Бэс\0", "Отй\0", "Атр\0", "Блҕ\0", "Алт\0", "Сэт\0", "Ахс\0" },
         { "тохсунньу\0", "олунньу\0", "кулун тутар\0", "муус устар\0", "ыам ыйа\0", "бэс ыйа\0", "от ыйа\0", "атырдьых ыйа\0", "балаҕан ыйа\0", "алтынньы\0", "сэтинньи\0", "ахсынньы\0" },
@@ -16294,7 +16294,7 @@ static const QLocalePrivate localeTbl[] = {
         "Tesiran\0", "Teipa\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16328,7 +16328,7 @@ static const QLocalePrivate localeTbl[] = {
         "Lwamilawu\0", "Pashamihe\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16362,7 +16362,7 @@ static const QLocalePrivate localeTbl[] = {
         "صبح، منجهند\0", "منجهند، شام\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "سوڊاني پائونڊ\0", "\0", "سوڊاني پائونڊ\0", "\0", "\0", "\0", "سوڊاني پائونڊ\0" },
+        { "سوڊاني پائونڊ\0", Q_NULLPTR, "سوڊاني پائونڊ\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "سوڊاني پائونڊ\0" },
         // month names
         { "جنوري\0", "فيبروري\0", "مارچ\0", "اپريل\0", "مئي\0", "جون\0", "جولاءِ\0", "آگسٽ\0", "سيپٽمبر\0", "آڪٽوبر\0", "نومبر\0", "ڊسمبر\0" },
         { "جنوري\0", "فيبروري\0", "مارچ\0", "اپريل\0", "مئي\0", "جون\0", "جولاءِ\0", "آگسٽ\0", "سيپٽمبر\0", "آڪٽوبر\0", "نومبر\0", "ڊسمبر\0" },
@@ -16396,7 +16396,7 @@ static const QLocalePrivate localeTbl[] = {
         "ib\0", "eb\0",
         // currency
         "Skr\0", "%1 %2\0", Q_NULLPTR, "SEK\0",
-        { "ruoŧŧa kruvdno\0", "\0", "ruoŧŧa kruvdno\0", "ruoŧŧa kruvdno\0", "\0", "\0", "ruoŧŧa kruvdno\0" },
+        { "ruoŧŧa kruvdno\0", Q_NULLPTR, "ruoŧŧa kruvdno\0", "ruoŧŧa kruvdno\0", Q_NULLPTR, Q_NULLPTR, "ruoŧŧa kruvdno\0" },
         // month names
         { "ođđj\0", "guov\0", "njuk\0", "cuoŋ\0", "mies\0", "geas\0", "suoi\0", "borg\0", "čakč\0", "golg\0", "skáb\0", "juov\0" },
         { "ođđajagemánnu\0", "guovvamánnu\0", "njukčamánnu\0", "cuoŋománnu\0", "miessemánnu\0", "geassemánnu\0", "suoidnemánnu\0", "borgemánnu\0", "čakčamánnu\0", "golggotmánnu\0", "skábmamánnu\0", "juovlamánnu\0" },
@@ -16430,7 +16430,7 @@ static const QLocalePrivate localeTbl[] = {
         "iđitbeaivi\0", "eahketbeaivi\0",
         // currency
         "Skr\0", "%1 %2\0", Q_NULLPTR, "SEK\0",
-        { "ruoŧŧa kruvdno\0", "\0", "ruoŧŧa kruvdno\0", "ruoŧŧa kruvdno\0", "\0", "\0", "ruoŧŧa kruvdno\0" },
+        { "ruoŧŧa kruvdno\0", Q_NULLPTR, "ruoŧŧa kruvdno\0", "ruoŧŧa kruvdno\0", Q_NULLPTR, Q_NULLPTR, "ruoŧŧa kruvdno\0" },
         // month names
         { "ođđj\0", "guov\0", "njuk\0", "cuo\0", "mies\0", "geas\0", "suoi\0", "borg\0", "čakč\0", "golg\0", "skáb\0", "juov\0" },
         { "ođđajagemánnu\0", "guovvamánnu\0", "njukčamánnu\0", "cuoŋománnu\0", "miessemánnu\0", "geassemánnu\0", "suoidnemánnu\0", "borgemánnu\0", "čakčamánnu\0", "golggotmánnu\0", "skábmamánnu\0", "juovlamánnu\0" },
@@ -16464,7 +16464,7 @@ static const QLocalePrivate localeTbl[] = {
         "iđitbeaivi\0", "eahketbeaivi\0",
         // currency
         "kr\0", "%1 %2\0", Q_NULLPTR, "SEK\0",
-        { "ruoŧŧa kruvdno\0", "\0", "ruoŧŧa kruvdno\0", "ruoŧŧa kruvdno\0", "\0", "\0", "ruoŧŧa kruvdno\0" },
+        { "ruoŧŧa kruvdno\0", Q_NULLPTR, "ruoŧŧa kruvdno\0", "ruoŧŧa kruvdno\0", Q_NULLPTR, Q_NULLPTR, "ruoŧŧa kruvdno\0" },
         // month names
         { "ođđj\0", "guov\0", "njuk\0", "cuo\0", "mies\0", "geas\0", "suoi\0", "borg\0", "čakč\0", "golg\0", "skáb\0", "juov\0" },
         { "ođđajagemánnu\0", "guovvamánnu\0", "njukčamánnu\0", "cuoŋománnu\0", "miessemánnu\0", "geassemánnu\0", "suoidnemánnu\0", "borgemánnu\0", "čakčamánnu\0", "golggotmánnu\0", "skábmamánnu\0", "juovlamánnu\0" },
@@ -16498,7 +16498,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16532,7 +16532,7 @@ static const QLocalePrivate localeTbl[] = {
         "Adduha\0", "Aluula\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16566,7 +16566,7 @@ static const QLocalePrivate localeTbl[] = {
         "ND\0", "LK\0",
         // currency
         Q_NULLPTR, "%2%1\0", "%2-%1\0", "SGD\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16600,7 +16600,7 @@ static const QLocalePrivate localeTbl[] = {
         "ⵜⵉⴼⴰⵡⵜ\0", "ⵜⴰⴷⴳⴳⵯⴰⵜ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16634,7 +16634,7 @@ static const QLocalePrivate localeTbl[] = {
         "ⵜⵉⴼⴰⵡⵜ\0", "ⵜⴰⴷⴳⴳⵯⴰⵜ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16668,7 +16668,7 @@ static const QLocalePrivate localeTbl[] = {
         "පෙ.ව.\0", "ප.ව.\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "EUR\0",
-        { "යුරෝ\0", "\0", "යුරෝ\0", "\0", "\0", "\0", "යුරෝ\0" },
+        { "යුරෝ\0", Q_NULLPTR, "යුරෝ\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "යුරෝ\0" },
         // month names
         { "ජන\0", "පෙබ\0", "මාර්\0", "අප්‍රේල්\0", "මැයි\0", "ජූනි\0", "ජූලි\0", "අගෝ\0", "සැප්\0", "ඔක්\0", "නොවැ\0", "දෙසැ\0" },
         { "ජනවාරි\0", "පෙබරවාරි\0", "මාර්තු\0", "අප්‍රේල්\0", "මැයි\0", "ජූනි\0", "ජූලි\0", "අගෝස්තු\0", "සැප්තැම්බර්\0", "ඔක්තෝබර්\0", "නොවැම්බර්\0", "දෙසැම්බර්\0" },
@@ -16702,7 +16702,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0",
-        { "euro\0", "\0", "euro\0", "\0", "eurá\0", "eura\0", "eur\0" },
+        { "euro\0", Q_NULLPTR, "euro\0", Q_NULLPTR, "eurá\0", "eura\0", "eur\0" },
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "máj\0", "jún\0", "júl\0", "aug\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "január\0", "február\0", "marec\0", "apríl\0", "máj\0", "jún\0", "júl\0", "august\0", "september\0", "október\0", "november\0", "december\0" },
@@ -16736,7 +16736,7 @@ static const QLocalePrivate localeTbl[] = {
         "dopoldne\0", "popoldne\0",
         // currency
         "SLL\0", "%1 %2\0", Q_NULLPTR, "SLL\0",
-        { "sieraleonski leone\0", "\0", "sieraleonski leone\0", "sieraleonska leona\0", "sieraleonski leoni\0", "\0", "sieraleonskih leonov\0" },
+        { "sieraleonski leone\0", Q_NULLPTR, "sieraleonski leone\0", "sieraleonska leona\0", "sieraleonski leoni\0", Q_NULLPTR, "sieraleonskih leonov\0" },
         // month names
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "avg.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marec\0", "april\0", "maj\0", "junij\0", "julij\0", "avgust\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -16770,7 +16770,7 @@ static const QLocalePrivate localeTbl[] = {
         "ip.\0", "ep.\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "uđiv\0", "kuovâ\0", "njuhčâ\0", "cuáŋui\0", "vyesi\0", "kesi\0", "syeini\0", "porge\0", "čohčâ\0", "roovvâd\0", "skammâ\0", "juovlâ\0" },
         { "uđđâivemáánu\0", "kuovâmáánu\0", "njuhčâmáánu\0", "cuáŋuimáánu\0", "vyesimáánu\0", "kesimáánu\0", "syeinimáánu\0", "porgemáánu\0", "čohčâmáánu\0", "roovvâdmáánu\0", "skammâmáánu\0", "juovlâmáánu\0" },
@@ -16804,7 +16804,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "XOF\0",
-        { "Furenki CFA BCEAO\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "Furenki CFA BCEAO\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ndi\0", "Kuk\0", "Kur\0", "Kub\0", "Chv\0", "Chk\0", "Chg\0", "Nya\0", "Gun\0", "Gum\0", "Mbu\0", "Zvi\0" },
         { "Ndira\0", "Kukadzi\0", "Kurume\0", "Kubvumbi\0", "Chivabvu\0", "Chikumi\0", "Chikunguru\0", "Nyamavhuvhu\0", "Gunyana\0", "Gumiguru\0", "Mbudzi\0", "Zvita\0" },
@@ -16838,7 +16838,7 @@ static const QLocalePrivate localeTbl[] = {
         "GH\0", "GD\0",
         // currency
         "Fdj\0", "%2%1\0", Q_NULLPTR, "SOS\0",
-        { "Shilingka Soomaaliya\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "Shilingka Soomaaliya\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Jun\0", "Lul\0", "Ogs\0", "Seb\0", "Okt\0", "Nof\0", "Dis\0" },
         { "Jannaayo\0", "Febraayo\0", "Maarso\0", "Abriil\0", "May\0", "Juun\0", "Luuliyo\0", "Ogost\0", "Sebtembar\0", "Oktoobar\0", "Nofembar\0", "Desembar\0" },
@@ -16872,7 +16872,7 @@ static const QLocalePrivate localeTbl[] = {
         "GH\0", "GD\0",
         // currency
         "Br\0", "%2%1\0", Q_NULLPTR, "SOS\0",
-        { "Shilingka Soomaaliya\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "Shilingka Soomaaliya\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Jun\0", "Lul\0", "Ogs\0", "Seb\0", "Okt\0", "Nof\0", "Dis\0" },
         { "Jannaayo\0", "Febraayo\0", "Maarso\0", "Abriil\0", "May\0", "Juun\0", "Luuliyo\0", "Ogost\0", "Sebtembar\0", "Oktoobar\0", "Nofembar\0", "Desembar\0" },
@@ -16906,7 +16906,7 @@ static const QLocalePrivate localeTbl[] = {
         "GH\0", "GD\0",
         // currency
         "Ksh\0", "%2%1\0", Q_NULLPTR, "SOS\0",
-        { "Shilingka Soomaaliya\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "Shilingka Soomaaliya\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Jun\0", "Lul\0", "Ogs\0", "Seb\0", "Okt\0", "Nof\0", "Dis\0" },
         { "Jannaayo\0", "Febraayo\0", "Maarso\0", "Abriil\0", "May\0", "Juun\0", "Luuliyo\0", "Ogost\0", "Sebtembar\0", "Oktoobar\0", "Nofembar\0", "Desembar\0" },
@@ -16940,7 +16940,7 @@ static const QLocalePrivate localeTbl[] = {
         "GH\0", "GD\0",
         // currency
         "S\0", "%2%1\0", Q_NULLPTR, "SOS\0",
-        { "Shilingka Soomaaliya\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "Shilingka Soomaaliya\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Jun\0", "Lul\0", "Ogs\0", "Seb\0", "Okt\0", "Nof\0", "Dis\0" },
         { "Jannaayo\0", "Febraayo\0", "Maarso\0", "Abriil\0", "May\0", "Juun\0", "Luuliyo\0", "Ogost\0", "Sebtembar\0", "Oktoobar\0", "Nofembar\0", "Desembar\0" },
@@ -16974,7 +16974,7 @@ static const QLocalePrivate localeTbl[] = {
         "paradite\0", "pasdite\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan\0", "shk\0", "mar\0", "pri\0", "maj\0", "qer\0", "korr\0", "gush\0", "sht\0", "tet\0", "nën\0", "dhj\0" },
         { "janar\0", "shkurt\0", "mars\0", "prill\0", "maj\0", "qershor\0", "korrik\0", "gusht\0", "shtator\0", "tetor\0", "nëntor\0", "dhjetor\0" },
@@ -17008,7 +17008,7 @@ static const QLocalePrivate localeTbl[] = {
         "paradite\0", "pasdite\0",
         // currency
         "den\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan\0", "shk\0", "mar\0", "pri\0", "maj\0", "qer\0", "korr\0", "gush\0", "sht\0", "tet\0", "nën\0", "dhj\0" },
         { "janar\0", "shkurt\0", "mars\0", "prill\0", "maj\0", "qershor\0", "korrik\0", "gusht\0", "shtator\0", "tetor\0", "nëntor\0", "dhjetor\0" },
@@ -17042,7 +17042,7 @@ static const QLocalePrivate localeTbl[] = {
         "paradite\0", "pasdite\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "jan\0", "shk\0", "mar\0", "pri\0", "maj\0", "qer\0", "korr\0", "gush\0", "sht\0", "tet\0", "nën\0", "dhj\0" },
         { "janar\0", "shkurt\0", "mars\0", "prill\0", "maj\0", "qershor\0", "korrik\0", "gusht\0", "shtator\0", "tetor\0", "nëntor\0", "dhjetor\0" },
@@ -17076,7 +17076,7 @@ static const QLocalePrivate localeTbl[] = {
         "прије подне\0", "по подне\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "SRD\0",
-        { "Суринамски долар\0", "\0", "суринамски долар\0", "\0", "суринамска долара\0", "\0", "суринамских долара\0" },
+        { "Суринамски долар\0", Q_NULLPTR, "суринамски долар\0", Q_NULLPTR, "суринамска долара\0", Q_NULLPTR, "суринамских долара\0" },
         // month names
         { "јан\0", "феб\0", "март\0", "апр\0", "мај\0", "јун\0", "јул\0", "авг\0", "септ\0", "окт\0", "нов\0", "дец\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -17110,7 +17110,7 @@ static const QLocalePrivate localeTbl[] = {
         "прије подне\0", "по подне\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "SRD\0",
-        { "Суринамски долар\0", "\0", "суринамски долар\0", "\0", "суринамска долара\0", "\0", "суринамских долара\0" },
+        { "Суринамски долар\0", Q_NULLPTR, "суринамски долар\0", Q_NULLPTR, "суринамска долара\0", Q_NULLPTR, "суринамских долара\0" },
         // month names
         { "јан\0", "феб\0", "март\0", "апр\0", "мај\0", "јун\0", "јул\0", "авг\0", "септ\0", "окт\0", "нов\0", "дец\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -17144,7 +17144,7 @@ static const QLocalePrivate localeTbl[] = {
         "пре подне\0", "по подне\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "SRD\0",
-        { "Суринамски долар\0", "\0", "суринамски долар\0", "\0", "суринамска долара\0", "\0", "суринамских долара\0" },
+        { "Суринамски долар\0", Q_NULLPTR, "суринамски долар\0", Q_NULLPTR, "суринамска долара\0", Q_NULLPTR, "суринамских долара\0" },
         // month names
         { "јан\0", "феб\0", "мар\0", "апр\0", "мај\0", "јун\0", "јул\0", "авг\0", "сеп\0", "окт\0", "нов\0", "дец\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -17178,7 +17178,7 @@ static const QLocalePrivate localeTbl[] = {
         "пре подне\0", "по подне\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "SRD\0",
-        { "Суринамски долар\0", "\0", "суринамски долар\0", "\0", "суринамска долара\0", "\0", "суринамских долара\0" },
+        { "Суринамски долар\0", Q_NULLPTR, "суринамски долар\0", Q_NULLPTR, "суринамска долара\0", Q_NULLPTR, "суринамских долара\0" },
         // month names
         { "јан\0", "феб\0", "март\0", "апр\0", "мај\0", "јун\0", "јул\0", "авг\0", "септ\0", "окт\0", "нов\0", "дец\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -17212,7 +17212,7 @@ static const QLocalePrivate localeTbl[] = {
         "prije podne\0", "po podne\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "SRD\0",
-        { "Суринамски долар\0", "\0", "суринамски долар\0", "\0", "суринамска долара\0", "\0", "суринамских долара\0" },
+        { "Суринамски долар\0", Q_NULLPTR, "суринамски долар\0", Q_NULLPTR, "суринамска долара\0", Q_NULLPTR, "суринамских долара\0" },
         // month names
         { "jan\0", "feb\0", "mart\0", "apr\0", "maj\0", "jun\0", "jul\0", "avg\0", "sept\0", "okt\0", "nov\0", "dec\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -17246,7 +17246,7 @@ static const QLocalePrivate localeTbl[] = {
         "prije podne\0", "po podne\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "SRD\0",
-        { "Суринамски долар\0", "\0", "суринамски долар\0", "\0", "суринамска долара\0", "\0", "суринамских долара\0" },
+        { "Суринамски долар\0", Q_NULLPTR, "суринамски долар\0", Q_NULLPTR, "суринамска долара\0", Q_NULLPTR, "суринамских долара\0" },
         // month names
         { "jan.\0", "feb.\0", "mart\0", "apr.\0", "maj\0", "jun\0", "jul\0", "avg.\0", "sept.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -17280,7 +17280,7 @@ static const QLocalePrivate localeTbl[] = {
         "пре подне\0", "по подне\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "SRD\0",
-        { "Суринамски долар\0", "\0", "суринамски долар\0", "\0", "суринамска долара\0", "\0", "суринамских долара\0" },
+        { "Суринамски долар\0", Q_NULLPTR, "суринамски долар\0", Q_NULLPTR, "суринамска долара\0", Q_NULLPTR, "суринамских долара\0" },
         // month names
         { "јан\0", "феб\0", "мар\0", "апр\0", "мај\0", "јун\0", "јул\0", "авг\0", "сеп\0", "окт\0", "нов\0", "дец\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -17314,7 +17314,7 @@ static const QLocalePrivate localeTbl[] = {
         "пре подне\0", "по подне\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "SRD\0",
-        { "Суринамски долар\0", "\0", "суринамски долар\0", "\0", "суринамска долара\0", "\0", "суринамских долара\0" },
+        { "Суринамски долар\0", Q_NULLPTR, "суринамски долар\0", Q_NULLPTR, "суринамска долара\0", Q_NULLPTR, "суринамских долара\0" },
         // month names
         { "jan.\0", "feb.\0", "mart\0", "apr.\0", "maj\0", "jun\0", "jul\0", "avg.\0", "sept.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -17348,7 +17348,7 @@ static const QLocalePrivate localeTbl[] = {
         "förmiddag\0", "eftermiddag\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "USD\0",
-        { "US-dollar\0", "\0", "US-dollar\0", "\0", "\0", "\0", "US-dollar\0" },
+        { "US-dollar\0", Q_NULLPTR, "US-dollar\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "US-dollar\0" },
         // month names
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -17382,7 +17382,7 @@ static const QLocalePrivate localeTbl[] = {
         "förmiddag\0", "eftermiddag\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "USD\0",
-        { "US-dollar\0", "\0", "US-dollar\0", "\0", "\0", "\0", "US-dollar\0" },
+        { "US-dollar\0", Q_NULLPTR, "US-dollar\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "US-dollar\0" },
         // month names
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -17416,7 +17416,7 @@ static const QLocalePrivate localeTbl[] = {
         "förmiddag\0", "eftermiddag\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "USD\0",
-        { "US-dollar\0", "\0", "US-dollar\0", "\0", "\0", "\0", "US-dollar\0" },
+        { "US-dollar\0", Q_NULLPTR, "US-dollar\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "US-dollar\0" },
         // month names
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -17450,7 +17450,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "FC\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
@@ -17484,7 +17484,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
@@ -17518,7 +17518,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
@@ -17552,7 +17552,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         "USh\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
@@ -17586,7 +17586,7 @@ static const QLocalePrivate localeTbl[] = {
         "முற்பகல்\0", "பிற்பகல்\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "GBP\0",
-        { "பிரிட்டிஷ் பவுண்டு\0", "\0", "பிரிட்டிஷ் பவுண்டு\0", "\0", "\0", "\0", "பிரிட்டிஷ் பவுண்டுகள்\0" },
+        { "பிரிட்டிஷ் பவுண்டு\0", Q_NULLPTR, "பிரிட்டிஷ் பவுண்டு\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "பிரிட்டிஷ் பவுண்டுகள்\0" },
         // month names
         { "ஜன.\0", "பிப்.\0", "மார்.\0", "ஏப்.\0", "மே\0", "ஜூன்\0", "ஜூலை\0", "ஆக.\0", "செப்.\0", "அக்.\0", "நவ.\0", "டிச.\0" },
         { "ஜனவரி\0", "பிப்ரவரி\0", "மார்ச்\0", "ஏப்ரல்\0", "மே\0", "ஜூன்\0", "ஜூலை\0", "ஆகஸ்ட்\0", "செப்டம்பர்\0", "அக்டோபர்\0", "நவம்பர்\0", "டிசம்பர்\0" },
@@ -17620,7 +17620,7 @@ static const QLocalePrivate localeTbl[] = {
         "முற்பகல்\0", "பிற்பகல்\0",
         // currency
         "Rs.\0", "%2 %1\0", Q_NULLPTR, "GBP\0",
-        { "பிரிட்டிஷ் பவுண்டு\0", "\0", "பிரிட்டிஷ் பவுண்டு\0", "\0", "\0", "\0", "பிரிட்டிஷ் பவுண்டுகள்\0" },
+        { "பிரிட்டிஷ் பவுண்டு\0", Q_NULLPTR, "பிரிட்டிஷ் பவுண்டு\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "பிரிட்டிஷ் பவுண்டுகள்\0" },
         // month names
         { "ஜன.\0", "பிப்.\0", "மார்.\0", "ஏப்.\0", "மே\0", "ஜூன்\0", "ஜூலை\0", "ஆக.\0", "செப்.\0", "அக்.\0", "நவ.\0", "டிச.\0" },
         { "ஜனவரி\0", "பிப்ரவரி\0", "மார்ச்\0", "ஏப்ரல்\0", "மே\0", "ஜூன்\0", "ஜூலை\0", "ஆகஸ்ட்\0", "செப்டம்பர்\0", "அக்டோபர்\0", "நவம்பர்\0", "டிசம்பர்\0" },
@@ -17654,7 +17654,7 @@ static const QLocalePrivate localeTbl[] = {
         "முற்பகல்\0", "பிற்பகல்\0",
         // currency
         "RM\0", "%2 %1\0", Q_NULLPTR, "MYR\0",
-        { "பிரிட்டிஷ் பவுண்டு\0", "\0", "பிரிட்டிஷ் பவுண்டு\0", "\0", "\0", "\0", "பிரிட்டிஷ் பவுண்டுகள்\0" },
+        { "பிரிட்டிஷ் பவுண்டு\0", Q_NULLPTR, "பிரிட்டிஷ் பவுண்டு\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "பிரிட்டிஷ் பவுண்டுகள்\0" },
         // month names
         { "ஜன.\0", "பிப்.\0", "மார்.\0", "ஏப்.\0", "மே\0", "ஜூன்\0", "ஜூலை\0", "ஆக.\0", "செப்.\0", "அக்.\0", "நவ.\0", "டிச.\0" },
         { "ஜனவரி\0", "பிப்ரவரி\0", "மார்ச்\0", "ஏப்ரல்\0", "மே\0", "ஜூன்\0", "ஜூலை\0", "ஆகஸ்ட்\0", "செப்டம்பர்\0", "அக்டோபர்\0", "நவம்பர்\0", "டிசம்பர்\0" },
@@ -17688,7 +17688,7 @@ static const QLocalePrivate localeTbl[] = {
         "முற்பகல்\0", "பிற்பகல்\0",
         // currency
         "$\0", "%2 %1\0", Q_NULLPTR, "SGD\0",
-        { "பிரிட்டிஷ் பவுண்டு\0", "\0", "பிரிட்டிஷ் பவுண்டு\0", "\0", "\0", "\0", "பிரிட்டிஷ் பவுண்டுகள்\0" },
+        { "பிரிட்டிஷ் பவுண்டு\0", Q_NULLPTR, "பிரிட்டிஷ் பவுண்டு\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "பிரிட்டிஷ் பவுண்டுகள்\0" },
         // month names
         { "ஜன.\0", "பிப்.\0", "மார்.\0", "ஏப்.\0", "மே\0", "ஜூன்\0", "ஜூலை\0", "ஆக.\0", "செப்.\0", "அக்.\0", "நவ.\0", "டிச.\0" },
         { "ஜனவரி\0", "பிப்ரவரி\0", "மார்ச்\0", "ஏப்ரல்\0", "மே\0", "ஜூன்\0", "ஜூலை\0", "ஆகஸ்ட்\0", "செப்டம்பர்\0", "அக்டோபர்\0", "நவம்பர்\0", "டிசம்பர்\0" },
@@ -17722,7 +17722,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "జన\0", "ఫిబ్ర\0", "మార్చి\0", "ఏప్రి\0", "మే\0", "జూన్\0", "జులై\0", "ఆగ\0", "సెప్టెం\0", "అక్టో\0", "నవం\0", "డిసెం\0" },
         { "జనవరి\0", "ఫిబ్రవరి\0", "మార్చి\0", "ఏప్రిల్\0", "మే\0", "జూన్\0", "జులై\0", "ఆగస్టు\0", "సెప్టెంబర్\0", "అక్టోబర్\0", "నవంబర్\0", "డిసెంబర్\0" },
@@ -17756,7 +17756,7 @@ static const QLocalePrivate localeTbl[] = {
         "Taparachu\0", "Ebongi\0",
         // currency
         "Ksh\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -17790,7 +17790,7 @@ static const QLocalePrivate localeTbl[] = {
         "Taparachu\0", "Ebongi\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -17824,7 +17824,7 @@ static const QLocalePrivate localeTbl[] = {
         "пе. чо.\0", "па. чо.\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XOF\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Янв\0", "Фев\0", "Мар\0", "Апр\0", "Май\0", "Июн\0", "Июл\0", "Авг\0", "Сен\0", "Окт\0", "Ноя\0", "Дек\0" },
         { "Январ\0", "Феврал\0", "Март\0", "Апрел\0", "Май\0", "Июн\0", "Июл\0", "Август\0", "Сентябр\0", "Октябр\0", "Ноябр\0", "Декабр\0" },
@@ -17858,7 +17858,7 @@ static const QLocalePrivate localeTbl[] = {
         "ก่อนเที่ยง\0", "หลังเที่ยง\0",
         // currency
         "฿\0", "%2%1\0", Q_NULLPTR, "THB\0",
-        { "บาท\0", "\0", "\0", "\0", "\0", "\0", "บาทไทย\0" },
+        { "บาท\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "บาทไทย\0" },
         // month names
         { "ม.ค.\0", "ก.พ.\0", "มี.ค.\0", "เม.ย.\0", "พ.ค.\0", "มิ.ย.\0", "ก.ค.\0", "ส.ค.\0", "ก.ย.\0", "ต.ค.\0", "พ.ย.\0", "ธ.ค.\0" },
         { "มกราคม\0", "กุมภาพันธ์\0", "มีนาคม\0", "เมษายน\0", "พฤษภาคม\0", "มิถุนายน\0", "กรกฎาคม\0", "สิงหาคม\0", "กันยายน\0", "ตุลาคม\0", "พฤศจิกายน\0", "ธันวาคม\0" },
@@ -17892,7 +17892,7 @@ static const QLocalePrivate localeTbl[] = {
         "ንጉሆ ሰዓተ\0", "ድሕር ሰዓት\0",
         // currency
         "Nfk\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ጥሪ\0", "ለካ\0", "መጋ\0", "ሚያ\0", "ግን\0", "ሰነ\0", "ሓም\0", "ነሓ\0", "መስ\0", "ጥቅ\0", "ሕዳ\0", "ታሕ\0" },
         { "ጥሪ\0", "ለካቲት\0", "መጋቢት\0", "ሚያዝያ\0", "ግንቦት\0", "ሰነ\0", "ሓምለ\0", "ነሓሰ\0", "መስከረም\0", "ጥቅምቲ\0", "ሕዳር\0", "ታሕሳስ\0" },
@@ -17926,7 +17926,7 @@ static const QLocalePrivate localeTbl[] = {
         "ንጉሆ ሰዓተ\0", "ድሕር ሰዓት\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ጥሪ\0", "ለካ\0", "መጋ\0", "ሚያ\0", "ግን\0", "ሰነ\0", "ሓም\0", "ነሓ\0", "መስ\0", "ጥቅ\0", "ሕዳ\0", "ታሕ\0" },
         { "ጥሪ\0", "ለካቲት\0", "መጋቢት\0", "ሚያዝያ\0", "ግንቦት\0", "ሰነ\0", "ሓምለ\0", "ነሓሰ\0", "መስከረም\0", "ጥቅምቲ\0", "ሕዳር\0", "ታሕሳስ\0" },
@@ -17960,7 +17960,7 @@ static const QLocalePrivate localeTbl[] = {
         "günortadan öň\0", "günortadan soň\0",
         // currency
         "NZ$\0", "%1 %2\0", Q_NULLPTR, "NZD\0",
-        { "Täze Zelandiýa dollary\0", "\0", "täze zelandiýa dollary\0", "\0", "\0", "\0", "täze zelandiýa dollary\0" },
+        { "Täze Zelandiýa dollary\0", Q_NULLPTR, "täze zelandiýa dollary\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "täze zelandiýa dollary\0" },
         // month names
         { "Ýan\0", "Few\0", "Mar\0", "Apr\0", "Maý\0", "Iýun\0", "Iýul\0", "Awg\0", "Sen\0", "Okt\0", "Noý\0", "Dek\0" },
         { "Ýanwar\0", "Fewral\0", "Mart\0", "Aprel\0", "Maý\0", "Iýun\0", "Iýul\0", "Awgust\0", "Sentýabr\0", "Oktýabr\0", "Noýabr\0", "Dekabr\0" },
@@ -17994,7 +17994,7 @@ static const QLocalePrivate localeTbl[] = {
         "HH\0", "EA\0",
         // currency
         "T$\0", "%2 %1\0", Q_NULLPTR, "TOP\0",
-        { "Paʻanga fakatonga\0", "\0", "\0", "\0", "\0", "\0", "Paʻanga fakatonga\0" },
+        { "Paʻanga fakatonga\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Paʻanga fakatonga\0" },
         // month names
         { "Sān\0", "Fēp\0", "Maʻa\0", "ʻEpe\0", "Mē\0", "Sun\0", "Siu\0", "ʻAok\0", "Sep\0", "ʻOka\0", "Nōv\0", "Tīs\0" },
         { "Sānuali\0", "Fēpueli\0", "Maʻasi\0", "ʻEpeleli\0", "Mē\0", "Sune\0", "Siulai\0", "ʻAokosi\0", "Sepitema\0", "ʻOkatopa\0", "Nōvema\0", "Tīsema\0" },
@@ -18028,7 +18028,7 @@ static const QLocalePrivate localeTbl[] = {
         "ÖÖ\0", "ÖS\0",
         // currency
         "₺\0", "%2%1\0", Q_NULLPTR, "TRY\0",
-        { "Türk Lirası\0", "\0", "Türk lirası\0", "\0", "\0", "\0", "Türk lirası\0" },
+        { "Türk Lirası\0", Q_NULLPTR, "Türk lirası\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Türk lirası\0" },
         // month names
         { "Oca\0", "Şub\0", "Mar\0", "Nis\0", "May\0", "Haz\0", "Tem\0", "Ağu\0", "Eyl\0", "Eki\0", "Kas\0", "Ara\0" },
         { "Ocak\0", "Şubat\0", "Mart\0", "Nisan\0", "Mayıs\0", "Haziran\0", "Temmuz\0", "Ağustos\0", "Eylül\0", "Ekim\0", "Kasım\0", "Aralık\0" },
@@ -18062,7 +18062,7 @@ static const QLocalePrivate localeTbl[] = {
         "ÖÖ\0", "ÖS\0",
         // currency
         "₺\0", "%2%1\0", Q_NULLPTR, "TRY\0",
-        { "Türk Lirası\0", "\0", "Türk lirası\0", "\0", "\0", "\0", "Türk lirası\0" },
+        { "Türk Lirası\0", Q_NULLPTR, "Türk lirası\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Türk lirası\0" },
         // month names
         { "Oca\0", "Şub\0", "Mar\0", "Nis\0", "May\0", "Haz\0", "Tem\0", "Ağu\0", "Eyl\0", "Eki\0", "Kas\0", "Ara\0" },
         { "Ocak\0", "Şubat\0", "Mart\0", "Nisan\0", "Mayıs\0", "Haziran\0", "Temmuz\0", "Ağustos\0", "Eylül\0", "Ekim\0", "Kasım\0", "Aralık\0" },
@@ -18096,7 +18096,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "TTD\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "гыйн.\0", "фев.\0", "мар.\0", "апр.\0", "май\0", "июнь\0", "июль\0", "авг.\0", "сент.\0", "окт.\0", "нояб.\0", "дек.\0" },
         { "гыйнвар\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -18130,7 +18130,7 @@ static const QLocalePrivate localeTbl[] = {
         "Subbaahi\0", "Zaarikay b\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -18164,7 +18164,7 @@ static const QLocalePrivate localeTbl[] = {
         "Zdat azal\0", "Ḍeffir aza\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -18198,7 +18198,7 @@ static const QLocalePrivate localeTbl[] = {
         "چ.ب\0", "چ.ك\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "UGX\0",
-        { "ئۇگاندا شىللىڭى\0", "\0", "ئۇگاندا شىللىڭى\0", "\0", "\0", "\0", "ئۇگاندا شىللىڭى\0" },
+        { "ئۇگاندا شىللىڭى\0", Q_NULLPTR, "ئۇگاندا شىللىڭى\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "ئۇگاندا شىللىڭى\0" },
         // month names
         { "يانۋار\0", "فېۋرال\0", "مارت\0", "ئاپرېل\0", "ماي\0", "ئىيۇن\0", "ئىيۇل\0", "ئاۋغۇست\0", "سېنتەبىر\0", "ئۆكتەبىر\0", "نويابىر\0", "دېكابىر\0" },
         { "يانۋار\0", "فېۋرال\0", "مارت\0", "ئاپرېل\0", "ماي\0", "ئىيۇن\0", "ئىيۇل\0", "ئاۋغۇست\0", "سېنتەبىر\0", "ئۆكتەبىر\0", "نويابىر\0", "دېكابىر\0" },
@@ -18232,7 +18232,7 @@ static const QLocalePrivate localeTbl[] = {
         "дп\0", "пп\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "січ\0", "лют\0", "бер\0", "кві\0", "тра\0", "чер\0", "лип\0", "сер\0", "вер\0", "жов\0", "лис\0", "гру\0" },
         { "січень\0", "лютий\0", "березень\0", "квітень\0", "травень\0", "червень\0", "липень\0", "серпень\0", "вересень\0", "жовтень\0", "листопад\0", "грудень\0" },
@@ -18266,7 +18266,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
@@ -18300,7 +18300,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
@@ -18334,7 +18334,7 @@ static const QLocalePrivate localeTbl[] = {
         "TO\0", "TK\0",
         // currency
         "soʻm\0", "%1 %2\0", Q_NULLPTR, "UZS\0",
-        { "O‘zbekiston so‘mi\0", "\0", "O‘zbekiston so‘mi\0", "\0", "\0", "\0", "O‘zbekiston so‘mi\0" },
+        { "O‘zbekiston so‘mi\0", Q_NULLPTR, "O‘zbekiston so‘mi\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "O‘zbekiston so‘mi\0" },
         // month names
         { "Yan\0", "Fev\0", "Mar\0", "Apr\0", "May\0", "Iyn\0", "Iyl\0", "Avg\0", "Sen\0", "Okt\0", "Noy\0", "Dek\0" },
         { "Yanvar\0", "Fevral\0", "Mart\0", "Aprel\0", "May\0", "Iyun\0", "Iyul\0", "Avgust\0", "Sentabr\0", "Oktabr\0", "Noyabr\0", "Dekabr\0" },
@@ -18368,7 +18368,7 @@ static const QLocalePrivate localeTbl[] = {
         "TO\0", "TK\0",
         // currency
         "soʻm\0", "%1 %2\0", Q_NULLPTR, "UZS\0",
-        { "O‘zbekiston so‘mi\0", "\0", "O‘zbekiston so‘mi\0", "\0", "\0", "\0", "O‘zbekiston so‘mi\0" },
+        { "O‘zbekiston so‘mi\0", Q_NULLPTR, "O‘zbekiston so‘mi\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "O‘zbekiston so‘mi\0" },
         // month names
         { "Yan\0", "Fev\0", "Mar\0", "Apr\0", "May\0", "Iyn\0", "Iyl\0", "Avg\0", "Sen\0", "Okt\0", "Noy\0", "Dek\0" },
         { "Yanvar\0", "Fevral\0", "Mart\0", "Aprel\0", "May\0", "Iyun\0", "Iyul\0", "Avgust\0", "Sentabr\0", "Oktabr\0", "Noyabr\0", "Dekabr\0" },
@@ -18402,7 +18402,7 @@ static const QLocalePrivate localeTbl[] = {
         "TO\0", "TK\0",
         // currency
         "soʻm\0", "%1 %2\0", Q_NULLPTR, "UZS\0",
-        { "O‘zbekiston so‘mi\0", "\0", "O‘zbekiston so‘mi\0", "\0", "\0", "\0", "O‘zbekiston so‘mi\0" },
+        { "O‘zbekiston so‘mi\0", Q_NULLPTR, "O‘zbekiston so‘mi\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "O‘zbekiston so‘mi\0" },
         // month names
         { "Yan\0", "Fev\0", "Mar\0", "Apr\0", "May\0", "Iyn\0", "Iyl\0", "Avg\0", "Sen\0", "Okt\0", "Noy\0", "Dek\0" },
         { "Yanvar\0", "Fevral\0", "Mart\0", "Aprel\0", "May\0", "Iyun\0", "Iyul\0", "Avgust\0", "Sentabr\0", "Oktabr\0", "Noyabr\0", "Dekabr\0" },
@@ -18436,7 +18436,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
         { "ꖨꖕ ꕪꕴ ꔞꔀꕮꕊ\0", "ꕒꕡꖝꖕ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞꔤ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋꕔꕿ ꕸꖃꗏ\0", "ꖨꖕ ꕪꕴ ꗏꖺꕮꕊ\0" },
@@ -18470,7 +18470,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
         { "ꖨꖕ ꕪꕴ ꔞꔀꕮꕊ\0", "ꕒꕡꖝꖕ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞꔤ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋꕔꕿ ꕸꖃꗏ\0", "ꖨꖕ ꕪꕴ ꗏꖺꕮꕊ\0" },
@@ -18504,7 +18504,7 @@ static const QLocalePrivate localeTbl[] = {
         "SA\0", "CH\0",
         // currency
         "$\0", "%1 %2\0", Q_NULLPTR, "USD\0",
-        { "Đô la Mỹ\0", "\0", "\0", "\0", "\0", "\0", "Đô la Mỹ\0" },
+        { "Đô la Mỹ\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "Đô la Mỹ\0" },
         // month names
         { "Thg 1\0", "Thg 2\0", "Thg 3\0", "Thg 4\0", "Thg 5\0", "Thg 6\0", "Thg 7\0", "Thg 8\0", "Thg 9\0", "Thg 10\0", "Thg 11\0", "Thg 12\0" },
         { "Tháng 1\0", "Tháng 2\0", "Tháng 3\0", "Tháng 4\0", "Tháng 5\0", "Tháng 6\0", "Tháng 7\0", "Tháng 8\0", "Tháng 9\0", "Tháng 10\0", "Tháng 11\0", "Tháng 12\0" },
@@ -18538,7 +18538,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "yan\0", "feb\0", "mäz\0", "prl\0", "may\0", "yun\0", "yul\0", "gst\0", "set\0", "tob\0", "nov\0", "dek\0" },
         { "yanul\0", "febul\0", "mäzul\0", "prilul\0", "mayul\0", "yunul\0", "yulul\0", "gustul\0", "setul\0", "tobul\0", "novul\0", "dekul\0" },
@@ -18572,7 +18572,7 @@ static const QLocalePrivate localeTbl[] = {
         "utuko\0", "kyiukonyi\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -18606,7 +18606,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jen\0", "Hor\0", "Mär\0", "Abr\0", "Mei\0", "Brá\0", "Hei\0", "Öig\0", "Her\0", "Wím\0", "Win\0", "Chr\0" },
         { "Jenner\0", "Hornig\0", "Märze\0", "Abrille\0", "Meije\0", "Bráčet\0", "Heiwet\0", "Öigšte\0", "Herbštmánet\0", "Wímánet\0", "Wintermánet\0", "Chrištmánet\0" },
@@ -18640,7 +18640,7 @@ static const QLocalePrivate localeTbl[] = {
         "Sub\0", "Ngo\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Sam\0", "Few\0", "Mar\0", "Awr\0", "Mee\0", "Suw\0", "Sul\0", "Ut\0", "Sàt\0", "Okt\0", "Now\0", "Des\0" },
         { "Samwiyee\0", "Fewriyee\0", "Mars\0", "Awril\0", "Mee\0", "Suwe\0", "Sulet\0", "Ut\0", "Sàttumbar\0", "Oktoobar\0", "Nowàmbar\0", "Desàmbar\0" },
@@ -18674,7 +18674,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mat\0", "Epr\0", "Mey\0", "Jun\0", "Jul\0", "Aga\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Janyuwari\0", "Februwari\0", "Matshi\0", "Epreli\0", "Meyi\0", "Juni\0", "Julayi\0", "Agasti\0", "Septemba\0", "Okthoba\0", "Novemba\0", "Disemba\0" },
@@ -18708,7 +18708,7 @@ static const QLocalePrivate localeTbl[] = {
         "Munkyo\0", "Eigulo\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -18742,7 +18742,7 @@ static const QLocalePrivate localeTbl[] = {
         "kiɛmɛ́ɛm\0", "kisɛ́ndɛ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -18776,7 +18776,7 @@ static const QLocalePrivate localeTbl[] = {
         "פֿאַרמיטאָג\0", "נאָכמיטאָג\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "יאַנ\0", "פֿעב\0", "מערץ\0", "אַפּר\0", "מיי\0", "יוני\0", "יולי\0", "אויג\0", "סעפּ\0", "אקט\0", "נאוו\0", "דעצ\0" },
         { "יאַנואַר\0", "פֿעברואַר\0", "מערץ\0", "אַפּריל\0", "מיי\0", "יוני\0", "יולי\0", "אויגוסט\0", "סעפּטעמבער\0", "אקטאבער\0", "נאוועמבער\0", "דעצעמבער\0" },
@@ -18810,7 +18810,7 @@ static const QLocalePrivate localeTbl[] = {
         "Àárɔ̀\0", "Ɔ̀sán\0",
         // currency
         Q_NULLPTR, "%2%1\0", Q_NULLPTR, "XOF\0",
-        { "Faransi ti Orílɛ́ède BIKEAO\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { "Faransi ti Orílɛ́ède BIKEAO\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Shɛ́\0", "Èr\0", "Ɛr\0", "Ìg\0", "Ɛ̀b\0", "Òk\0", "Ag\0", "Òg\0", "Ow\0", "Ɔ̀w\0", "Bé\0", "Ɔ̀p\0" },
         { "Shɛ́rɛ́\0", "Èrèlè\0", "Ɛrɛ̀nà\0", "Ìgbé\0", "Ɛ̀bibi\0", "Òkúdu\0", "Agɛmɔ\0", "Ògún\0", "Owewe\0", "Ɔ̀wàrà\0", "Bélú\0", "Ɔ̀pɛ̀\0" },
@@ -18844,7 +18844,7 @@ static const QLocalePrivate localeTbl[] = {
         "Àárọ̀\0", "Ọ̀sán\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Ṣẹ́\0", "Èr\0", "Ẹr\0", "Ìg\0", "Ẹ̀b\0", "Òk\0", "Ag\0", "Òg\0", "Ow\0", "Ọ̀w\0", "Bé\0", "Ọ̀p\0" },
         { "Ṣẹ́rẹ́\0", "Èrèlè\0", "Ẹrẹ̀nà\0", "Ìgbé\0", "Ẹ̀bibi\0", "Òkúdu\0", "Agẹmọ\0", "Ògún\0", "Owewe\0", "Ọ̀wàrà\0", "Bélú\0", "Ọ̀pẹ̀\0" },
@@ -18878,7 +18878,7 @@ static const QLocalePrivate localeTbl[] = {
         "上午\0", "下午\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
@@ -18912,7 +18912,7 @@ static const QLocalePrivate localeTbl[] = {
         "上午\0", "下午\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
@@ -18946,7 +18946,7 @@ static const QLocalePrivate localeTbl[] = {
         "ⵜⵉⴼⴰⵡⵜ\0", "ⵜⴰⴷⴳⴳⵯⴰⵜ\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "ⵉⵏⵏ\0", "ⴱⵕⴰ\0", "ⵎⴰⵕ\0", "ⵉⴱⵔ\0", "ⵎⴰⵢ\0", "ⵢⵓⵏ\0", "ⵢⵓⵍ\0", "ⵖⵓⵛ\0", "ⵛⵓⵜ\0", "ⴽⵜⵓ\0", "ⵏⵓⵡ\0", "ⴷⵓⵊ\0" },
         { "ⵉⵏⵏⴰⵢⵔ\0", "ⴱⵕⴰⵢⵕ\0", "ⵎⴰⵕⵚ\0", "ⵉⴱⵔⵉⵔ\0", "ⵎⴰⵢⵢⵓ\0", "ⵢⵓⵏⵢⵓ\0", "ⵢⵓⵍⵢⵓⵣ\0", "ⵖⵓⵛⵜ\0", "ⵛⵓⵜⴰⵏⴱⵉⵔ\0", "ⴽⵜⵓⴱⵔ\0", "ⵏⵓⵡⴰⵏⴱⵉⵔ\0", "ⴷⵓⵊⴰⵏⴱⵉⵔ\0" },
@@ -18980,7 +18980,7 @@ static const QLocalePrivate localeTbl[] = {
         "上午\0", "下午\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -19014,7 +19014,7 @@ static const QLocalePrivate localeTbl[] = {
         "上午\0", "下午\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, "HKD\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -19048,7 +19048,7 @@ static const QLocalePrivate localeTbl[] = {
         "上午\0", "下午\0",
         // currency
         "MOP$\0", "%1%2\0", Q_NULLPTR, "MOP\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -19082,7 +19082,7 @@ static const QLocalePrivate localeTbl[] = {
         "上午\0", "下午\0",
         // currency
         "$\0", "%1%2\0", Q_NULLPTR, "SGD\0",
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -19116,7 +19116,7 @@ static const QLocalePrivate localeTbl[] = {
         "上午\0", "下午\0",
         // currency
         Q_NULLPTR, "%2%1K\0", Q_NULLPTR, "HKD\0",
-        { "港元\0", "\0", "\0", "\0", "\0", "\0", "港元\0" },
+        { "港元\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "港元\0" },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -19150,7 +19150,7 @@ static const QLocalePrivate localeTbl[] = {
         "上午\0", "下午\0",
         // currency
         "MOP$\0", "%2%1K\0", Q_NULLPTR, "HKD\0",
-        { "港元\0", "\0", "\0", "\0", "\0", "\0", "港元\0" },
+        { "港元\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, "港元\0" },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -19184,7 +19184,7 @@ static const QLocalePrivate localeTbl[] = {
         "上午\0", "下午\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -19218,7 +19218,7 @@ static const QLocalePrivate localeTbl[] = {
         "AM\0", "PM\0",
         // currency
         Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { "\0", "\0", "\0", "\0", "\0", "\0", "\0" },
+        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
         // month names
         { "Jan\0", "Feb\0", "Mas\0", "Eph\0", "Mey\0", "Jun\0", "Jul\0", "Aga\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Januwari\0", "Februwari\0", "Mashi\0", "Ephreli\0", "Meyi\0", "Juni\0", "Julayi\0", "Agasti\0", "Septhemba\0", "Okthoba\0", "Novemba\0", "Disemba\0" },
