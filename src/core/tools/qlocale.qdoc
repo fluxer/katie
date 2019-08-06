@@ -1067,6 +1067,7 @@
     \value WesternAsia
     \value WesternEurope
     \value WesternSahara
+    \value World
     \value Yemen
     \value Zambia
     \value Zimbabwe

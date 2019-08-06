@@ -1272,9 +1272,10 @@ public:
         WesternAsia = 303,
         WesternEurope = 304,
         WesternSahara = 305,
-        Yemen = 306,
-        Zambia = 307,
-        Zimbabwe = 308,
+        World = 306,
+        Yemen = 307,
+        Zambia = 308,
+        Zimbabwe = 309,
 
         LastCountry = Zimbabwe
     };

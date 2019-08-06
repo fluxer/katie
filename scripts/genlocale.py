@@ -446,9 +446,6 @@ printtable(languagemap, 'Language')
 for country in root.findall('./localeDisplayNames/territories/territory'):
     countrytype = country.get('type')
     normalcountry = normalizestring(country.text)
-    if normalcountry == 'World':
-        # only interested in specific countries
-        continue
     countrymap[normalcountry] = [countrytype, country.text]
 
 # printenum(countrymap, 'Country')
