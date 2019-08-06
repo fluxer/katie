@@ -75,10 +75,10 @@ QT_END_INCLUDE_NAMESPACE
 
 QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
 {
-    const QByteArray lower = code.toLower().toLatin1();
+    const QString lower = code.toLower();
 
     for (qint16 i = 0; i < languageTblSize; i++) {
-        if (qstrcmp(languageTbl[i].code, lower.constData()) == 0)
+        if (QString::fromLatin1(languageTbl[i].code) ==  lower)
             return languageTbl[i].language;
     }
 
@@ -88,13 +88,13 @@ QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
 QLocale::Script QLocalePrivate::codeToScript(const QString &code)
 {
     // script is titlecased in our data
-    QByteArray title = code.toLower().toLatin1();
+    QString title = code.toLower();
     if (title.size() > 0) {
-        title[0] = static_cast<char>(code.at(0).toUpper().unicode());
+        title[0] = code.at(0).toUpper();
     }
 
     for (qint16 i = 0; i < QLocale::LastScript; i++) {
-        if (qstrcmp(scriptTbl[i].code, title.constData()) == 0)
+        if (QString::fromLatin1(scriptTbl[i].code) == title)
             return scriptTbl[i].script;
     }
     return QLocale::AnyScript;
@@ -102,10 +102,10 @@ QLocale::Script QLocalePrivate::codeToScript(const QString &code)
 
 QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
 {
-    const QByteArray upper = code.toUpper().toLatin1();
+    const QString upper = code.toUpper();
 
     for (qint16 i = 0; i < countryTblSize; i++) {
-        if (qstrcmp(countryTbl[i].code, upper.constData()) == 0)
+        if (QString::fromLatin1(countryTbl[i].code) == upper)
             return countryTbl[i].country;
     }
 
