@@ -3,7 +3,7 @@
 
 # Data is from https://unicode.org/Public/cldr/35/core.zip
 
-import os, sys, glob, re
+import os, sys, glob
 import xml.etree.ElementTree as ET
 
 def mapcopy(frommap, tomap):
@@ -363,7 +363,7 @@ localeweekendstartmap = {}
 localeweekendendmap = {}
 localeiso4217map = {}
 localecurrencymap = {}
-localenumericmap = {}
+localenumberingmap = {}
 
 # artificial entries
 languagemap['AnyLanguage'] = ['', 'Default']
@@ -418,15 +418,15 @@ for info in root.findall('./currencyData/fractions/info'):
     inforounding = info.get('rounding')
     localecurrencymap[infoiso4217] = [infodigits, inforounding]
 
-# locale to numeric system parsing
+# locale to numbering system parsing
 tree = ET.parse('common/supplemental/numberingSystems.xml')
 root = tree.getroot()
-for numeric in root.findall('./numberingSystems/numberingSystem'):
-    numericid = numeric.get('id')
-    numericdigits = numeric.get('digits')
-    if numericdigits:
+for numberingsystem  in root.findall('./numberingSystems/numberingSystem'):
+    numberingsystemid = numberingsystem.get('id')
+    numberingsystemdigits = numberingsystem.get('digits')
+    if numberingsystemdigits:
         # either digits or rules is set
-        localenumericmap[numericid] = stripxmltext(numericdigits)
+        localenumberingmap[numberingsystemid] = stripxmltext(numberingsystemdigits)
 
 # language parsing
 tree = ET.parse('common/main/en.xml')
@@ -647,7 +647,7 @@ def readlocale(fromxml, tomap, isparent):
 
         # zero is from cross-reference numeric system map,
         # taking the first character works even for UTF-8 chars
-        tomap[locale]['zero'] = localenumericmap[numbertype][0]
+        tomap[locale]['zero'] = localenumberingmap[numbertype][0]
 
     # digits/rounding data is specific so check if it is mapped
     if currencytype and currencytype in localecurrencymap.keys():
@@ -671,12 +671,11 @@ def readlocale(fromxml, tomap, isparent):
     if altquotationend is not None:
         tomap[locale]['alternate_quotation_end'] = altquotationend.text
 
-    if langtype:
-        for nativelang in root.findall('./localeDisplayNames/languages/language'):
-            nativelangtype = nativelang.get('type')
-            if nativelangtype == langtype:
-                tomap[locale]['language_endonym'] = nativelang.text
-                break
+    for nativelang in root.findall('./localeDisplayNames/languages/language'):
+        nativelangtype = nativelang.get('type')
+        if nativelangtype == langtype:
+            tomap[locale]['language_endonym'] = nativelang.text
+            break
 
     if countrytype:
         for nativecountry in root.findall('./localeDisplayNames/territories/territory'):
@@ -701,7 +700,7 @@ def readlocale(fromxml, tomap, isparent):
     for calendar in root.findall('./dates/calendars/calendar'):
         calendartype = calendar.get('type')
         if not calendartype == 'gregorian':
-            # all values should be from be from gregorian calendar
+            # all values should be from gregorian calendar
             continue
         dateformat = calendar.find('./dateFormats/dateFormatLength')
         if dateformat is not None:
@@ -726,7 +725,7 @@ def readlocale(fromxml, tomap, isparent):
         for dayperiodwidth in calendar.findall('./dayPeriods/dayPeriodContext/dayPeriodWidth'):
             dayperiodwidthtype = dayperiodwidth.get('type')
             if not dayperiodwidthtype == 'wide':
-                # only wide format is accepted
+                # all values should be in wide format
                 continue
             for dayperiod in dayperiodwidth.findall('dayPeriod'):
                 dayperiodtype = dayperiod.get('type')
