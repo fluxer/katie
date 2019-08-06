@@ -324,10 +324,8 @@ void tst_QLocale::ctor()
     TEST_CTOR("en-GB@bla", English, UnitedKingdom)
 
     QVERIFY(QLocale::Norwegian == QLocale::NorwegianBokmal);
-    TEST_CTOR("no", Norwegian, Norway)
     TEST_CTOR("nb", Norwegian, Norway)
     TEST_CTOR("nn", NorwegianNynorsk, Norway)
-    TEST_CTOR("no_NO", Norwegian, Norway)
     TEST_CTOR("nb_NO", Norwegian, Norway)
     TEST_CTOR("nn_NO", NorwegianNynorsk, Norway)
     TEST_CTOR("es_ES", Spanish, Spain)
@@ -428,10 +426,8 @@ void tst_QLocale::emptyCtor()
     TEST_CTOR("de", "de_DE")
 
     QVERIFY(QLocale::Norwegian == QLocale::NorwegianBokmal);
-    TEST_CTOR("no", "nb_NO")
     TEST_CTOR("nb", "nb_NO")
     TEST_CTOR("nn", "nn_NO")
-    TEST_CTOR("no_NO", "nb_NO")
     TEST_CTOR("nb_NO", "nb_NO")
     TEST_CTOR("nn_NO", "nn_NO")
 
@@ -935,46 +931,46 @@ void tst_QLocale::formatDateTime_data()
     QTest::newRow("27C") << "C" << QDateTime()
                          << "'\"yymm\"'" << "";
 
-    QTest::newRow("1no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(5, 14, 13))
+    QTest::newRow("1nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(5, 14, 13))
                             << "d/M/yyyy hh:h:mm" << "1/12/1974 05:5:14";
-    QTest::newRow("2no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("2nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                             << "d/M/yyyyy h" << "1/12/1974y 15";
-    QTest::newRow("4no_NO") << "no_NO" << QDateTime(QDate(1974, 1, 1), QTime(15, 14, 13))
+    QTest::newRow("4nn_NO") << "nn_NO" << QDateTime(QDate(1974, 1, 1), QTime(15, 14, 13))
                             << "d/M/yyyy zzz" << "1/1/1974 000";
-    QTest::newRow("5no_NO") << "no_NO" << QDateTime(QDate(1974, 1, 1), QTime(15, 14, 13))
+    QTest::newRow("5nn_NO") << "nn_NO" << QDateTime(QDate(1974, 1, 1), QTime(15, 14, 13))
                             << "dd/MM/yyy z" << "01/01/74y 0";
-    QTest::newRow("6no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
+    QTest::newRow("6nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
                             << "ddd/MMM/yy AP" << "man./des./74 PM";
-    QTest::newRow("7no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
+    QTest::newRow("7nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
                             << "dddd/MMMM/y apa" << "mandag/desember/y pmpm";
-    QTest::newRow("8no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
+    QTest::newRow("8nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
                             << "ddddd/MMMMM/yy ss" << "mandag2/desember12/74 13";
-    QTest::newRow("9no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("9nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                             << "'dddd'/MMMM/yy s" << "dddd/desember/74 13";
-    QTest::newRow("10no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 4, 13))
+    QTest::newRow("10nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 4, 13))
                              << "d'dd'd/MMMM/yyy m'm'mm" << "1dd1/desember/74y 4m04";
-    QTest::newRow("11no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 3))
+    QTest::newRow("11nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 3))
                              << "d'dd'd/MMM'M'/yysss" << "1dd1/des.M/74033";
-    QTest::newRow("12no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("12nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                              << "d'd'dd/M/yyh" << "1d01/12/7415";
 
-    QTest::newRow("20no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("20nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                              << "foo" << "foo";
-    QTest::newRow("21no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("21nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                              << "'" << "";
-    QTest::newRow("22no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("22nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                              << "''" << "'";
-    QTest::newRow("23no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("23nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                              << "'''" << "'";
-    QTest::newRow("24no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("24nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                              << "\"" << "\"";
-    QTest::newRow("25no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("25nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                              << "\"\"" << "\"\"";
-    QTest::newRow("26no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("26nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                              << "\"yymm\"" << "\"7414\"";
-    QTest::newRow("27no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
+    QTest::newRow("27nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                              << "'\"yymm\"'" << "\"yymm\"";
-    QTest::newRow("27no_NO") << "no_NO" << QDateTime()
+    QTest::newRow("27nn_NO") << "nn_NO" << QDateTime()
                              << "'\"yymm\"'" << "";
 
 }
@@ -1016,23 +1012,23 @@ void tst_QLocale::toDateTime_data()
     QTest::newRow("12C") << "C" << QDateTime(QDate(1974, 12, 1), QTime(15, 0, 0))
                          << "d'd'dd/M/yyh" << "1d01/12/7415";
 
-    QTest::newRow("1no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(5, 14, 0))
+    QTest::newRow("1nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(5, 14, 0))
                             << "d/M/yyyy hh:h:mm" << "1/12/1974 05:5:14";
-    QTest::newRow("2no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 0, 0))
+    QTest::newRow("2nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 0, 0))
                             << "d/M/yyyyy h" << "1/12/1974y 15";
-    QTest::newRow("4no_NO") << "no_NO" << QDateTime(QDate(1974, 1, 1), QTime(0, 0, 0))
+    QTest::newRow("4nn_NO") << "nn_NO" << QDateTime(QDate(1974, 1, 1), QTime(0, 0, 0))
                             << "d/M/yyyy zzz" << "1/1/1974 000";
-    QTest::newRow("5no_NO") << "no_NO" << QDateTime(QDate(1974, 1, 1), QTime(0, 0, 0))
+    QTest::newRow("5nn_NO") << "nn_NO" << QDateTime(QDate(1974, 1, 1), QTime(0, 0, 0))
                             << "dd/MM/yyy z" << "01/01/74y 0";
-    QTest::newRow("8no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 2), QTime(0, 0, 13))
+    QTest::newRow("8nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(0, 0, 13))
                             << "ddddd/MMMMM/yy ss" << "mandag2/desember12/74 13";
-    QTest::newRow("9no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(0, 0, 13))
+    QTest::newRow("9nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(0, 0, 13))
                             << "'dddd'/MMMM/yy s" << "dddd/desember/74 13";
-    QTest::newRow("10no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(0, 4, 0))
+    QTest::newRow("10nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(0, 4, 0))
                              << "d'dd'd/MMMM/yyy m'm'mm" << "1dd1/desember/74y 4m04";
-    QTest::newRow("11no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(0, 0, 3))
+    QTest::newRow("11nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(0, 0, 3))
                              << "d'dd'd/MMM'M'/yysss" << "1dd1/des.M/74033";
-    QTest::newRow("12no_NO") << "no_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 0, 0))
+    QTest::newRow("12nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 0, 0))
                              << "d'd'dd/M/yyh" << "1d01/12/7415";
 
     QTest::newRow("RFC-1123") << "C" << QDateTime(QDate(2007, 11, 1), QTime(18, 8, 30))
@@ -1195,7 +1191,6 @@ void tst_QLocale::dayName_data()
     QTest::addColumn<int>("day");
     QTest::addColumn<QLocale::FormatType>("format");
 
-    QTest::newRow("no_NO")  << QString("no_NO") << QString("tirsdag") << 2 << QLocale::LongFormat;
     QTest::newRow("nb_NO")  << QString("nb_NO") << QString("tirsdag") << 2 << QLocale::LongFormat;
     QTest::newRow("nn_NO")  << QString("nn_NO") << QString("tysdag") << 2 << QLocale::LongFormat;
 
@@ -1235,7 +1230,6 @@ void tst_QLocale::standaloneDayName_data()
     QTest::addColumn<int>("day");
     QTest::addColumn<QLocale::FormatType>("format");
 
-    QTest::newRow("no_NO")  << QString("no_NO") << QString("tirsdag") << 2 << QLocale::LongFormat;
     QTest::newRow("nb_NO")  << QString("nb_NO") << QString("tirsdag") << 2 << QLocale::LongFormat;
     QTest::newRow("nn_NO")  << QString("nn_NO") << QString("tysdag") << 2 << QLocale::LongFormat;
 
@@ -1289,11 +1283,10 @@ void tst_QLocale::measurementSystems_data()
     QTest::addColumn<QString>("localeName");
     QTest::addColumn<int>("mSystem");
 
-    QTest::newRow("no_NO") << QString("no_NO") << (int)QLocale::MetricSystem; // Norwegian/Norway
+    QTest::newRow("nn_NO") << QString("nn_NO") << (int)QLocale::MetricSystem; // Norwegian/Norway
     QTest::newRow("sv_SE") << QString("sv_SE") << (int)QLocale::MetricSystem; // Swedish/Sweden
     QTest::newRow("en_US") << QString("en_US") << (int)QLocale::ImperialSystem; // English/United States
     QTest::newRow("en_GB") << QString("en_GB") << (int)QLocale::MetricSystem; // English/Great Britain
-    QTest::newRow("no")    << QString("no")    << (int)QLocale::MetricSystem; // Norwegian
     QTest::newRow("en")    << QString("en")    << (int)QLocale::ImperialSystem; // English
     QTest::newRow("es_US") << QString("es_US") << (int)QLocale::ImperialSystem; // Spanish/United States
     QTest::newRow("es_ES") << QString("es_ES") << (int)QLocale::MetricSystem; // Spanish/Spain
@@ -1318,47 +1311,47 @@ void tst_QLocale::systemMeasurementSystems_data()
     QTest::addColumn<QString>("langLocale");
     QTest::addColumn<int>("mSystem");
 
-    QTest::newRow("row0") << QString("no_NO") << QString("no_NO") << QString("no_NO")
+    QTest::newRow("row0") << QString("nn_NO") << QString("nn_NO") << QString("nn_NO")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row1") << QString("no_NO") << QString("no_NO") << QString("en_US")
+    QTest::newRow("row1") << QString("nn_NO") << QString("nn_NO") << QString("en_US")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row2") << QString("no_NO") << QString("en_US") << QString("no_NO")
+    QTest::newRow("row2") << QString("nn_NO") << QString("en_US") << QString("nn_NO")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row3") << QString("no_NO") << QString("en_US") << QString("en_US")
+    QTest::newRow("row3") << QString("nn_NO") << QString("en_US") << QString("en_US")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row4") << QString("en_US") << QString("no_NO") << QString("no_NO")
+    QTest::newRow("row4") << QString("en_US") << QString("nn_NO") << QString("nn_NO")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row5") << QString("en_US") << QString("no_NO") << QString("en_US")
+    QTest::newRow("row5") << QString("en_US") << QString("nn_NO") << QString("en_US")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row6") << QString("en_US") << QString("en_US") << QString("no_NO")
+    QTest::newRow("row6") << QString("en_US") << QString("en_US") << QString("nn_NO")
             << (int)QLocale::ImperialSystem;
     QTest::newRow("row7") << QString("en_US") << QString("en_US") << QString("en_US")
             << (int)QLocale::ImperialSystem;
     QTest::newRow("row8") << QString("") << QString("") << QString("")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row9") << QString("") << QString("") << QString("no_NO")
+    QTest::newRow("row9") << QString("") << QString("") << QString("nn_NO")
             << (int)QLocale::MetricSystem;
     QTest::newRow("row10") << QString("") << QString("") << QString("en_US")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row11") << QString("") << QString("no_NO") << QString("")
+    QTest::newRow("row11") << QString("") << QString("nn_NO") << QString("")
             << (int)QLocale::MetricSystem;
     QTest::newRow("row12") << QString("") << QString("en_US") << QString("")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row13") << QString("") << QString("no_NO") << QString("en_US")
+    QTest::newRow("row13") << QString("") << QString("nn_NO") << QString("en_US")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row14") << QString("") << QString("en_US") << QString("no_NO")
+    QTest::newRow("row14") << QString("") << QString("en_US") << QString("nn_NO")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row15") << QString("no_NO") << QString("") << QString("")
+    QTest::newRow("row15") << QString("nn_NO") << QString("") << QString("")
             << (int)QLocale::MetricSystem;
     QTest::newRow("row16") << QString("en_US") << QString("") << QString("")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row17") << QString("no_NO") << QString("en_US") << QString("")
+    QTest::newRow("row17") << QString("nn_NO") << QString("en_US") << QString("")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row18") << QString("en_US") << QString("no_NO") << QString("")
+    QTest::newRow("row18") << QString("en_US") << QString("nn_NO") << QString("")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row19") << QString("no_NO") << QString("") << QString("en_US")
+    QTest::newRow("row19") << QString("nn_NO") << QString("") << QString("en_US")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row20") << QString("en_US") << QString("") << QString("no_NO")
+    QTest::newRow("row20") << QString("en_US") << QString("") << QString("nn_NO")
             << (int)QLocale::ImperialSystem;
 }
 
@@ -1437,47 +1430,47 @@ void tst_QLocale::queryMeasureSystem_data()
     QTest::addColumn<QString>("langLocale");
     QTest::addColumn<int>("mSystem");
 
-    QTest::newRow("row0") << QString("no_NO") << QString("no_NO") << QString("no_NO")
+    QTest::newRow("row0") << QString("nn_NO") << QString("nn_NO") << QString("nn_NO")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row1") << QString("no_NO") << QString("no_NO") << QString("en_US")
+    QTest::newRow("row1") << QString("nn_NO") << QString("nn_NO") << QString("en_US")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row2") << QString("no_NO") << QString("en_US") << QString("no_NO")
+    QTest::newRow("row2") << QString("nn_NO") << QString("en_US") << QString("nn_NO")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row3") << QString("no_NO") << QString("en_US") << QString("en_US")
+    QTest::newRow("row3") << QString("nn_NO") << QString("en_US") << QString("en_US")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row4") << QString("en_US") << QString("no_NO") << QString("no_NO")
+    QTest::newRow("row4") << QString("en_US") << QString("nn_NO") << QString("nn_NO")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row5") << QString("en_US") << QString("no_NO") << QString("en_US")
+    QTest::newRow("row5") << QString("en_US") << QString("nn_NO") << QString("en_US")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row6") << QString("en_US") << QString("en_US") << QString("no_NO")
+    QTest::newRow("row6") << QString("en_US") << QString("en_US") << QString("nn_NO")
             << (int)QLocale::ImperialSystem;
     QTest::newRow("row7") << QString("en_US") << QString("en_US") << QString("en_US")
             << (int)QLocale::ImperialSystem;
     QTest::newRow("row8") << QString("") << QString("") << QString("")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row9") << QString("") << QString("") << QString("no_NO")
+    QTest::newRow("row9") << QString("") << QString("") << QString("nn_NO")
             << (int)QLocale::MetricSystem;
     QTest::newRow("row10") << QString("") << QString("") << QString("en_US")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row11") << QString("") << QString("no_NO") << QString("")
+    QTest::newRow("row11") << QString("") << QString("nn_NO") << QString("")
             << (int)QLocale::MetricSystem;
     QTest::newRow("row12") << QString("") << QString("en_US") << QString("")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row13") << QString("") << QString("no_NO") << QString("en_US")
+    QTest::newRow("row13") << QString("") << QString("nn_NO") << QString("en_US")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row14") << QString("") << QString("en_US") << QString("no_NO")
+    QTest::newRow("row14") << QString("") << QString("en_US") << QString("nn_NO")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row15") << QString("no_NO") << QString("") << QString("")
+    QTest::newRow("row15") << QString("nn_NO") << QString("") << QString("")
             << (int)QLocale::MetricSystem;
     QTest::newRow("row16") << QString("en_US") << QString("") << QString("")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row17") << QString("no_NO") << QString("en_US") << QString("")
+    QTest::newRow("row17") << QString("nn_NO") << QString("en_US") << QString("")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row18") << QString("en_US") << QString("no_NO") << QString("")
+    QTest::newRow("row18") << QString("en_US") << QString("nn_NO") << QString("")
             << (int)QLocale::ImperialSystem;
-    QTest::newRow("row19") << QString("no_NO") << QString("") << QString("en_US")
+    QTest::newRow("row19") << QString("nn_NO") << QString("") << QString("en_US")
             << (int)QLocale::MetricSystem;
-    QTest::newRow("row20") << QString("en_US") << QString("") << QString("no_NO")
+    QTest::newRow("row20") << QString("en_US") << QString("") << QString("nn_NO")
             << (int)QLocale::ImperialSystem;
 }
 
@@ -1589,10 +1582,10 @@ void tst_QLocale::dateFormat()
     // check that the NarrowFormat is the same as ShortFormat.
     QCOMPARE(c.dateFormat(QLocale::NarrowFormat), c.dateFormat(QLocale::ShortFormat));
 
-    const QLocale no("no_NO");
-    QCOMPARE(no.dateFormat(QLocale::NarrowFormat), QLatin1String("dd.MM.yy"));
-    QCOMPARE(no.dateFormat(QLocale::ShortFormat), QLatin1String("dd.MM.yy"));
-    QCOMPARE(no.dateFormat(QLocale::LongFormat), QLatin1String("dddd d. MMMM yyyy"));
+    const QLocale nn("nn_NO");
+    QCOMPARE(nn.dateFormat(QLocale::NarrowFormat), QLatin1String("dd.MM.yy"));
+    QCOMPARE(nn.dateFormat(QLocale::ShortFormat), QLatin1String("dd.MM.yy"));
+    QCOMPARE(nn.dateFormat(QLocale::LongFormat), QLatin1String("dddd d. MMMM yyyy"));
 
     const QLocale ca("en_CA");
     QCOMPARE(ca.dateFormat(QLocale::ShortFormat), QLatin1String("M/d/yy"));
@@ -1611,10 +1604,10 @@ void tst_QLocale::timeFormat()
     // check that the NarrowFormat is the same as ShortFormat.
     QCOMPARE(c.timeFormat(QLocale::NarrowFormat), c.timeFormat(QLocale::ShortFormat));
 
-    const QLocale no("no_NO");
-    QCOMPARE(no.timeFormat(QLocale::NarrowFormat), QLatin1String("HH:mm"));
-    QCOMPARE(no.timeFormat(QLocale::ShortFormat), QLatin1String("HH:mm"));
-    QCOMPARE(no.timeFormat(QLocale::LongFormat), QLatin1String("'kl'. HH:mm:ss t"));
+    const QLocale nn("nn_NO");
+    QCOMPARE(nn.timeFormat(QLocale::NarrowFormat), QLatin1String("HH:mm:ss"));
+    QCOMPARE(nn.timeFormat(QLocale::ShortFormat), QLatin1String("HH:mm"));
+    QCOMPARE(nn.timeFormat(QLocale::LongFormat), QLatin1String("'kl'. HH:mm:ss t"));
 
     const QLocale id("id_ID");
     QCOMPARE(id.timeFormat(QLocale::ShortFormat), QLatin1String("HH.mm"));
@@ -1635,10 +1628,10 @@ void tst_QLocale::dateTimeFormat()
     // check that the NarrowFormat is the same as ShortFormat.
     QCOMPARE(c.dateTimeFormat(QLocale::NarrowFormat), c.dateTimeFormat(QLocale::ShortFormat));
 
-    const QLocale no("no_NO");
-    QCOMPARE(no.dateTimeFormat(QLocale::NarrowFormat), QLatin1String("dd.MM.yy HH:mm"));
-    QCOMPARE(no.dateTimeFormat(QLocale::ShortFormat), QLatin1String("dd.MM.yy HH:mm"));
-    QCOMPARE(no.dateTimeFormat(QLocale::LongFormat), QLatin1String("dddd d. MMMM yyyy 'kl'. HH:mm:ss t"));
+    const QLocale nn("nn_NO");
+    QCOMPARE(nn.dateTimeFormat(QLocale::NarrowFormat), QLatin1String("d MMM yyyy HH:mm:ss"));
+    QCOMPARE(nn.dateTimeFormat(QLocale::ShortFormat), QLatin1String("dd.MM.yy HH:mm"));
+    QCOMPARE(nn.dateTimeFormat(QLocale::LongFormat), QLatin1String("dddd d. MMMM yyyy 'kl'. HH:mm:ss t"));
 }
 
 void tst_QLocale::monthName()
