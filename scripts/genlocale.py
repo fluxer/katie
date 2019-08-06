@@ -110,8 +110,12 @@ def todatetimeformat(fromformat):
     ]
     possibleoccurences = [
         '%s, ',
+        ', %s',
         '%s.',
+        '.%s',
         '%s-',
+        '-%s',
+        '(%s)',
         '%s',
     ]
     result = fromformat
