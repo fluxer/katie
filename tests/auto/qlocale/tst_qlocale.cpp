@@ -453,7 +453,8 @@ void tst_QLocale::unixLocaleName()
     QLocale::setDefault(QLocale(QLocale::C));
 
     TEST_NAME(C, AnyCountry, "C")
-    TEST_NAME(English, AnyCountry, "en_US")
+    TEST_NAME(English, AnyCountry, "en_001")
+    TEST_NAME(English, UnitedStates, "en_US")
     TEST_NAME(English, UnitedKingdom, "en_GB")
     TEST_NAME(Aymara, UnitedKingdom, "C")
 

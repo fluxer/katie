@@ -175,6 +175,29 @@ QString QLocalePrivate::bcp47Name() const
     return name;
 }
 
+static const QLocalePrivate *systemPrivate()
+{
+#ifndef QT_NO_SYSTEMLOCALE
+    // copy over the information from the fallback locale and modify
+    if (!system_lp || system_lp->m_language == 0)
+        QLocalePrivate::updateSystemPrivate();
+
+    return system_lp;
+#else
+    return &localeTbl[0];
+#endif
+}
+
+static const QLocalePrivate *default_lp = 0;
+static quint16 default_number_options = 0;
+
+static const QLocalePrivate *defaultPrivate()
+{
+    if (!default_lp)
+        default_lp = systemPrivate();
+    return default_lp;
+}
+
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
 {
     if (country == QLocale::AnyCountry) {
@@ -201,7 +224,7 @@ const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLo
             return &localeTbl[i];
     }
 
-    return &localeTbl[0];
+    return defaultPrivate();
 }
 
 static bool parse_locale_tag(const QString &input, int &i, QString *result, const QString &separators)
@@ -352,9 +375,6 @@ int qt_repeatCount(const QString &s, int i)
     return j - i;
 }
 
-static const QLocalePrivate *default_lp = 0;
-static quint16 default_number_options = 0;
-
 #ifndef QT_NO_SYSTEMLOCALE
 
 
@@ -452,26 +472,6 @@ void QLocalePrivate::updateSystemPrivate()
 #endif
 }
 #endif
-
-static const QLocalePrivate *systemPrivate()
-{
-#ifndef QT_NO_SYSTEMLOCALE
-    // copy over the information from the fallback locale and modify
-    if (!system_lp || system_lp->m_language == 0)
-        QLocalePrivate::updateSystemPrivate();
-
-    return system_lp;
-#else
-    return &localeTbl[0];
-#endif
-}
-
-static const QLocalePrivate *defaultPrivate()
-{
-    if (!default_lp)
-        default_lp = systemPrivate();
-    return default_lp;
-}
 
 static inline QString getLocaleListData(const char * const* data, int index)
 {
