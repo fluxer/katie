@@ -493,10 +493,10 @@ localedefaults = {
     'currency_digits': '2',
     'currency_rounding': '1', # not used, default in CLDR is 0
     # strings
-    'quotation_start': '"',
-    'quotation_end': '"',
-    'alternate_quotation_start': '"',
-    'alternate_quotation_end': '"',
+    'quotation_start': '"', # default in CLDR is “
+    'quotation_end': '"', # default in CLDR is ”
+    'alternate_quotation_start': "'", # default in CLDR is ‘
+    'alternate_quotation_end': "'", # default in CLDR is ’
     'language_endonym': '',
     'country_endonym': '',
     'list_pattern_part_start': "%1, %2",

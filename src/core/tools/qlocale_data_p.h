@@ -1221,7 +1221,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         Q_NULLPTR, Q_NULLPTR,
         // list pattern
@@ -1255,7 +1255,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         Q_NULLPTR, Q_NULLPTR,
         // list pattern
@@ -2853,7 +2853,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "བོད་སྐད་\0", "བོ་ལི་ཝིཡ།\0",
         // list pattern
@@ -2887,7 +2887,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "བོད་སྐད་\0", "བོ་ལི་ཝིཡ།\0",
         // list pattern
@@ -3261,7 +3261,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "нохчийн\0", Q_NULLPTR,
         // list pattern
@@ -3397,7 +3397,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         1643, 1644, 59, 1642, 45, 43, 101, 0, 0, 1632,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "کوردیی ناوەندی\0", Q_NULLPTR,
         // list pattern
@@ -3431,7 +3431,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         1643, 1644, 59, 1642, 45, 43, 101, 0, 0, 1632,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "کوردیی ناوەندی\0", Q_NULLPTR,
         // list pattern
@@ -11421,7 +11421,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "Gaelg\0", Q_NULLPTR,
         // list pattern
@@ -11557,7 +11557,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "ʻŌlelo Hawaiʻi\0", Q_NULLPTR,
         // list pattern
@@ -11625,7 +11625,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "हिन्दी\0", Q_NULLPTR,
         // list pattern
@@ -11931,7 +11931,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "ꆈꌠꉙ\0", Q_NULLPTR,
         // list pattern
@@ -12713,7 +12713,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "한국어\0", "조선민주주의인민공화국\0",
         // list pattern
@@ -12747,7 +12747,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "한국어\0", Q_NULLPTR,
         // list pattern
@@ -12815,7 +12815,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 101, 2, 1, 1776,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "کٲشُر\0", Q_NULLPTR,
         // list pattern
@@ -12985,7 +12985,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 101, 3, 0, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "kernewek\0", Q_NULLPTR,
         // list pattern
@@ -13155,7 +13155,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "Lakȟólʼiyapi\0", Q_NULLPTR,
         // list pattern
@@ -13767,7 +13767,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 101, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "Makua\0", Q_NULLPTR,
         // list pattern
@@ -14923,7 +14923,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 3, 0, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "Oromoo\0", Q_NULLPTR,
         // list pattern
@@ -14957,7 +14957,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 3, 0, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "Oromoo\0", Q_NULLPTR,
         // list pattern
@@ -15093,7 +15093,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "ਪੰਜਾਬੀ\0", "ਪਨਾਮਾ\0",
         // list pattern
@@ -15127,7 +15127,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "ਪੰਜਾਬੀ\0", "ਪਨਾਮਾ\0",
         // list pattern
@@ -15331,7 +15331,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15705,7 +15705,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "Runasimi\0", Q_NULLPTR,
         // list pattern
@@ -15739,7 +15739,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "Runasimi\0", Q_NULLPTR,
         // list pattern
@@ -15773,7 +15773,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "Runasimi\0", Q_NULLPTR,
         // list pattern
@@ -16759,7 +16759,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "anarâškielâ\0", Q_NULLPTR,
         // list pattern
@@ -17575,7 +17575,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
         // list pattern
@@ -17609,7 +17609,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
         // list pattern
@@ -17643,7 +17643,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
         // list pattern
@@ -17677,7 +17677,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
         // list pattern
@@ -17915,7 +17915,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "ትግርኛ\0", Q_NULLPTR,
         // list pattern
@@ -18493,7 +18493,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
-        "\"\0", "\"\0", "\"\0", "\"\0",
+        "\"\0", "\"\0", "'\0", "'\0",
         // endonym
         "Tiếng Việt\0", "Quần đảo Virgin thuộc Mỹ\0",
         // list pattern
