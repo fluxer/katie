@@ -472,7 +472,7 @@ for script in root.findall('./localeDisplayNames/scripts/script'):
 # printenum(scriptmap, 'Script')
 printtable(scriptmap, 'Script')
 
-# locales parsing
+# these defaults are used only as parent locales fallback, actual defaults are set from root
 localedefaults = {
     # enums
     'language': 'QLocale::Language::AnyLanguage',
@@ -528,13 +528,11 @@ localedefaults = {
     'long_day_names': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     'narrow_day_names': ['7', '1', '2', '3', '4', '5', '6'],
 }
-# artificial entries
+# artificial entries, values are set after parent locales have been parsed
 localemap['Default'] = {}
-mapcopy(localedefaults, localemap['Default'])
 localemap['C'] = {}
-mapcopy(localedefaults, localemap['C'])
-localemap['C']['language'] = 'QLocale::Language::C'
 
+# locales parsing
 # TODO: accept only "contributed" or "approved" values
 def readlocale(fromxml, tomap, isparent):
     tree = ET.parse(fromxml)
@@ -556,7 +554,10 @@ def readlocale(fromxml, tomap, isparent):
     locale = locale.replace('.xml', '')
 
     tomap[locale] = {}
-    mapcopy(localedefaults, tomap[locale])
+    if isparent:
+        mapcopy(localedefaults, tomap[locale])
+    else:
+        mapcopy(localeparentvaluesmap['root'], tomap[locale])
 
     # set defaults from parent locale if territory is specified
     if country is not None:
@@ -856,6 +857,12 @@ for xml in glob.glob('common/main/*.xml'):
     if not xmlbase in localeparentmap.keys():
         continue
     readlocale(xml, localeparentvaluesmap, True)
+
+# set artificial values from root
+mapcopy(localeparentvaluesmap['root'], localemap['Default'])
+localemap['Default']['language'] = 'QLocale::Language::AnyLanguage'
+mapcopy(localeparentvaluesmap['root'], localemap['C'])
+localemap['C']['language'] = 'QLocale::Language::C'
 
 # now everything including those
 for xml in sorted(glob.glob('common/main/*.xml')):

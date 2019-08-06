@@ -1219,9 +1219,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         Q_NULLPTR, Q_NULLPTR,
         // list pattern
@@ -1236,16 +1236,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // Default
     {
@@ -1253,9 +1253,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         Q_NULLPTR, Q_NULLPTR,
         // list pattern
@@ -1270,16 +1270,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // C
     {
@@ -1304,7 +1304,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan.\0", "Feb.\0", "Mrt.\0", "Apr.\0", "Mei\0", "Jun.\0", "Jul.\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Des.\0" },
         { "Januarie\0", "Februarie\0", "Maart\0", "April\0", "Mei\0", "Junie\0", "Julie\0", "Augustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan.\0", "Feb.\0", "Mrt.\0", "Apr.\0", "Mei\0", "Jun.\0", "Jul.\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Des.\0" },
         { "Januarie\0", "Februarie\0", "Maart\0", "April\0", "Mei\0", "Junie\0", "Julie\0", "Augustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -1338,7 +1338,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan.\0", "Feb.\0", "Mrt.\0", "Apr.\0", "Mei\0", "Jun.\0", "Jul.\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Des.\0" },
         { "Januarie\0", "Februarie\0", "Maart\0", "April\0", "Mei\0", "Junie\0", "Julie\0", "Augustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan.\0", "Feb.\0", "Mrt.\0", "Apr.\0", "Mei\0", "Jun.\0", "Jul.\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Des.\0" },
         { "Januarie\0", "Februarie\0", "Maart\0", "April\0", "Mei\0", "Junie\0", "Julie\0", "Augustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -1355,7 +1355,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -1389,7 +1389,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -1406,7 +1406,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "S-Ɔ\0", "K-Ɔ\0", "E-Ɔ\0", "E-O\0", "E-K\0", "O-A\0", "A-K\0", "D-Ɔ\0", "F-Ɛ\0", "Ɔ-A\0", "Ɔ-O\0", "M-Ɔ\0" },
         { "Sanda-Ɔpɛpɔn\0", "Kwakwar-Ɔgyefuo\0", "Ebɔw-Ɔbenem\0", "Ebɔbira-Oforisuo\0", "Esusow Aketseaba-Kɔtɔnimba\0", "Obirade-Ayɛwohomumu\0", "Ayɛwoho-Kitawonsa\0", "Difuu-Ɔsandaa\0", "Fankwa-Ɛbɔ\0", "Ɔbɛsɛ-Ahinime\0", "Ɔberɛfɛw-Obubuo\0", "Mumu-Ɔpɛnimba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -1457,7 +1457,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1491,7 +1491,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1525,7 +1525,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 3, 0, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 3, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1559,7 +1559,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 0, 0, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 0, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1593,7 +1593,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        44, 46, 1563, 37, 45, 43, 101, 2, 1, 48,
+        44, 46, 1563, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1627,7 +1627,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1661,7 +1661,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1695,7 +1695,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1729,7 +1729,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Friday, Qt::Saturday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1763,7 +1763,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 0, 0, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 0, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1797,7 +1797,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 3, 0, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 3, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1831,7 +1831,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 0, 0, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 0, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1865,7 +1865,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 3, 0, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 3, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1899,7 +1899,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 0, 0, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 0, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1933,7 +1933,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        44, 46, 1563, 37, 45, 43, 101, 3, 0, 48,
+        44, 46, 1563, 37, 45, 43, 69, 3, 0, 48,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -1967,7 +1967,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 1563, 37, 45, 43, 101, 2, 1, 48,
+        44, 46, 1563, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2001,7 +2001,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2035,7 +2035,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 3, 0, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 3, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2069,7 +2069,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2103,7 +2103,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2137,7 +2137,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Friday, Qt::Saturday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2171,7 +2171,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2205,7 +2205,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 0, 0, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 0, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2239,7 +2239,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 2, 1, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 2, 1, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2273,7 +2273,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 0, 0, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 0, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2307,7 +2307,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 101, 0, 0, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 0, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2341,7 +2341,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 1563, 37, 45, 43, 101, 3, 0, 48,
+        44, 46, 1563, 37, 45, 43, 69, 3, 0, 48,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2375,7 +2375,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 1563, 37, 45, 43, 101, 0, 0, 1632,
+        1643, 1644, 1563, 37, 45, 43, 69, 0, 0, 1632,
         // quotation
         "”\0", "“\0", "’\0", "‘\0",
         // endonym
@@ -2443,7 +2443,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -2460,7 +2460,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Dec\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -2579,7 +2579,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "„\0", "“\0",
         // endonym
@@ -2647,7 +2647,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -2681,7 +2681,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -2749,7 +2749,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "“\0", "”\0",
         // endonym
@@ -2851,9 +2851,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "བོད་སྐད་\0", "བོ་ལི་ཝིཡ།\0",
         // list pattern
@@ -2868,7 +2868,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "ཟླ་བ་དང་པོ་\0", "ཟླ་བ་གཉིས་པ་\0", "ཟླ་བ་གསུམ་པ་\0", "ཟླ་བ་བཞི་པ་\0", "ཟླ་བ་ལྔ་པ་\0", "ཟླ་བ་དྲུག་པ་\0", "ཟླ་བ་བདུན་པ་\0", "ཟླ་བ་བརྒྱད་པ་\0", "ཟླ་བ་དགུ་པ་\0", "ཟླ་བ་བཅུ་པ་\0", "ཟླ་བ་བཅུ་གཅིག་པ་\0", "ཟླ་བ་བཅུ་གཉིས་པ་\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "ཟླ་༡\0", "ཟླ་༢\0", "ཟླ་༣\0", "ཟླ་༤\0", "ཟླ་༥\0", "ཟླ་༦\0", "ཟླ་༧\0", "ཟླ་༨\0", "ཟླ་༩\0", "ཟླ་༡༠\0", "ཟླ་༡༡\0", "ཟླ་༡༢\0" },
         { "ཟླ་བ་དང་པོ\0", "ཟླ་བ་གཉིས་པ\0", "ཟླ་བ་གསུམ་པ\0", "ཟླ་བ་བཞི་པ\0", "ཟླ་བ་ལྔ་པ\0", "ཟླ་བ་དྲུག་པ\0", "ཟླ་བ་བདུན་པ\0", "ཟླ་བ་བརྒྱད་པ\0", "ཟླ་བ་དགུ་པ\0", "ཟླ་བ་བཅུ་པ\0", "ཟླ་བ་བཅུ་གཅིག་པ\0", "ཟླ་བ་བཅུ་གཉིས་པ\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -2885,9 +2885,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "བོད་སྐད་\0", "བོ་ལི་ཝིཡ།\0",
         // list pattern
@@ -2902,7 +2902,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "ཟླ་བ་དང་པོ་\0", "ཟླ་བ་གཉིས་པ་\0", "ཟླ་བ་གསུམ་པ་\0", "ཟླ་བ་བཞི་པ་\0", "ཟླ་བ་ལྔ་པ་\0", "ཟླ་བ་དྲུག་པ་\0", "ཟླ་བ་བདུན་པ་\0", "ཟླ་བ་བརྒྱད་པ་\0", "ཟླ་བ་དགུ་པ་\0", "ཟླ་བ་བཅུ་པ་\0", "ཟླ་བ་བཅུ་གཅིག་པ་\0", "ཟླ་བ་བཅུ་གཉིས་པ་\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "ཟླ་༡\0", "ཟླ་༢\0", "ཟླ་༣\0", "ཟླ་༤\0", "ཟླ་༥\0", "ཟླ་༦\0", "ཟླ་༧\0", "ཟླ་༨\0", "ཟླ་༩\0", "ཟླ་༡༠\0", "ཟླ་༡༡\0", "ཟླ་༡༢\0" },
         { "ཟླ་བ་དང་པོ\0", "ཟླ་བ་གཉིས་པ\0", "ཟླ་བ་གསུམ་པ\0", "ཟླ་བ་བཞི་པ\0", "ཟླ་བ་ལྔ་པ\0", "ཟླ་བ་དྲུག་པ\0", "ཟླ་བ་བདུན་པ\0", "ཟླ་བ་བརྒྱད་པ\0", "ཟླ་བ་དགུ་པ\0", "ཟླ་བ་བཅུ་པ\0", "ཟླ་བ་བཅུ་གཅིག་པ\0", "ཟླ་བ་བཅུ་གཉིས་པ\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -3261,7 +3261,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "нохчийн\0", Q_NULLPTR,
         // list pattern
@@ -3293,7 +3293,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -3327,7 +3327,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -3344,7 +3344,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "KBZ\0", "KBR\0", "KST\0", "KKN\0", "KTN\0", "KMK\0", "KMS\0", "KMN\0", "KMW\0", "KKM\0", "KNK\0", "KNB\0" },
         { "Okwokubanza\0", "Okwakabiri\0", "Okwakashatu\0", "Okwakana\0", "Okwakataana\0", "Okwamukaaga\0", "Okwamushanju\0", "Okwamunaana\0", "Okwamwenda\0", "Okwaikumi\0", "Okwaikumi na kumwe\0", "Okwaikumi na ibiri\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -3395,9 +3395,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        1643, 1644, 59, 1642, 45, 43, 101, 0, 0, 1632,
+        1643, 1644, 59, 1642, 45, 43, 69, 0, 0, 1632,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "کوردیی ناوەندی\0", Q_NULLPTR,
         // list pattern
@@ -3429,9 +3429,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Friday,
         // symbols
-        1643, 1644, 59, 1642, 45, 43, 101, 0, 0, 1632,
+        1643, 1644, 59, 1642, 45, 43, 69, 0, 0, 1632,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "کوردیی ناوەندی\0", Q_NULLPTR,
         // list pattern
@@ -3480,7 +3480,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "led\0", "úno\0", "bře\0", "dub\0", "kvě\0", "čvn\0", "čvc\0", "srp\0", "zář\0", "říj\0", "lis\0", "pro\0" },
         { "leden\0", "únor\0", "březen\0", "duben\0", "květen\0", "červen\0", "červenec\0", "srpen\0", "září\0", "říjen\0", "listopad\0", "prosinec\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "led\0", "úno\0", "bře\0", "dub\0", "kvě\0", "čvn\0", "čvc\0", "srp\0", "zář\0", "říj\0", "lis\0", "pro\0" },
         { "ledna\0", "února\0", "března\0", "dubna\0", "května\0", "června\0", "července\0", "srpna\0", "září\0", "října\0", "listopadu\0", "prosince\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -3497,7 +3497,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "«\0", "»\0", "„\0", "“\0",
         // endonym
@@ -3582,7 +3582,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marts\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marts\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3616,7 +3616,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marts\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marts\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3633,7 +3633,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -3684,7 +3684,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jän\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Jänner\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jän.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Jänner\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3718,7 +3718,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sept.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3752,7 +3752,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sept.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3786,7 +3786,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sept.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3820,7 +3820,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jän\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Jänner\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jän.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Jänner\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3854,7 +3854,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sept.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3888,7 +3888,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sept.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3905,7 +3905,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -3973,7 +3973,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "‘\0", "’\0",
         // endonym
@@ -4007,7 +4007,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "“\0", "”\0",
         // endonym
@@ -4075,7 +4075,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -4177,7 +4177,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "«\0", "»\0", "“\0", "”\0",
         // endonym
@@ -4211,7 +4211,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "«\0", "»\0", "“\0", "”\0",
         // endonym
@@ -4262,16 +4262,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_001
     {
@@ -4330,16 +4330,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_AE
     {
@@ -4432,16 +4432,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_AS
     {
@@ -4602,16 +4602,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_BI
     {
@@ -5520,16 +5520,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_GU
     {
@@ -6132,16 +6132,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_MH
     {
@@ -6200,16 +6200,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_MP
     {
@@ -6778,16 +6778,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_PR
     {
@@ -7492,16 +7492,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_UM
     {
@@ -7526,16 +7526,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_US
     {
@@ -7628,16 +7628,16 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
+        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_VI
     {
@@ -7815,7 +7815,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 8722, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 8722, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -7832,7 +7832,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "januaro\0", "februaro\0", "marto\0", "aprilo\0", "majo\0", "junio\0", "julio\0", "aŭgusto\0", "septembro\0", "oktobro\0", "novembro\0", "decembro\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aŭg\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januaro\0", "februaro\0", "marto\0", "aprilo\0", "majo\0", "junio\0", "julio\0", "aŭgusto\0", "septembro\0", "oktobro\0", "novembro\0", "decembro\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -8801,7 +8801,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 8722, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 8722, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "“\0", "‚\0", "‘\0",
         // endonym
@@ -8869,7 +8869,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "“\0", "”\0",
         // endonym
@@ -8903,7 +8903,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
-        46, 44, 59, 1642, 45, 43, 101, 0, 0, 1776,
+        46, 44, 59, 1642, 45, 43, 69, 0, 0, 1776,
         // quotation
         "«\0", "»\0", "‹\0", "›\0",
         // endonym
@@ -8937,7 +8937,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Friday,
         // symbols
-        46, 44, 59, 1642, 45, 43, 101, 0, 0, 1776,
+        46, 44, 59, 1642, 45, 43, 69, 0, 0, 1776,
         // quotation
         "«\0", "»\0", "‹\0", "›\0",
         // endonym
@@ -8971,7 +8971,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9005,7 +9005,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9039,7 +9039,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9073,7 +9073,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9107,7 +9107,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9141,7 +9141,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9175,7 +9175,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9209,7 +9209,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9243,7 +9243,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9277,7 +9277,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9311,7 +9311,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9345,7 +9345,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "„\0", "”\0", "‚\0", "’\0",
         // endonym
@@ -9464,7 +9464,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "apríl\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
         { "januar\0", "februar\0", "mars\0", "apríl\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9498,7 +9498,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "apríl\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
         { "januar\0", "februar\0", "mars\0", "apríl\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9532,7 +9532,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9566,7 +9566,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9600,7 +9600,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9634,7 +9634,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9668,7 +9668,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9702,7 +9702,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juill.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juill.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9736,7 +9736,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9770,7 +9770,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9804,7 +9804,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9838,7 +9838,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9872,7 +9872,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9906,7 +9906,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9940,7 +9940,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9974,7 +9974,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10008,7 +10008,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10042,7 +10042,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10076,7 +10076,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10110,7 +10110,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10144,7 +10144,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10178,7 +10178,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10212,7 +10212,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10246,7 +10246,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10280,7 +10280,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10314,7 +10314,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "fév.\0", "mar.\0", "avr.\0", "mai\0", "jui.\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "fév.\0", "mar.\0", "avr.\0", "mai\0", "jui.\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10348,7 +10348,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10382,7 +10382,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10416,7 +10416,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10450,7 +10450,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10484,7 +10484,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10518,7 +10518,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10552,7 +10552,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10586,7 +10586,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10620,7 +10620,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10654,7 +10654,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10688,7 +10688,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10722,7 +10722,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10756,7 +10756,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10790,7 +10790,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10824,7 +10824,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10858,7 +10858,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10892,7 +10892,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10926,7 +10926,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10960,7 +10960,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10994,7 +10994,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -11028,7 +11028,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -11062,7 +11062,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -11130,7 +11130,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mrt\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Jannewaris\0", "Febrewaris\0", "Maart\0", "April\0", "Maaie\0", "Juny\0", "July\0", "Augustus\0", "Septimber\0", "Oktober\0", "Novimber\0", "Desimber\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mrt\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Jannewaris\0", "Febrewaris\0", "Maart\0", "April\0", "Maaie\0", "Juny\0", "July\0", "Augustus\0", "Septimber\0", "Oktober\0", "Novimber\0", "Desimber\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -11266,7 +11266,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "Auguscht\0", "Septämber\0", "Oktoober\0", "Novämber\0", "Dezämber\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -11300,7 +11300,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "Auguscht\0", "Septämber\0", "Oktoober\0", "Novämber\0", "Dezämber\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -11334,7 +11334,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "Auguscht\0", "Septämber\0", "Oktoober\0", "Novämber\0", "Dezämber\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -11385,7 +11385,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -11419,9 +11419,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "Gaelg\0", Q_NULLPTR,
         // list pattern
@@ -11436,7 +11436,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "J-guer\0", "T-arree\0", "Mayrnt\0", "Avrril\0", "Boaldyn\0", "M-souree\0", "J-souree\0", "Luanistyn\0", "M-fouyir\0", "J-fouyir\0", "M-Houney\0", "M-Nollick\0" },
         { "Jerrey-geuree\0", "Toshiaght-arree\0", "Mayrnt\0", "Averil\0", "Boaldyn\0", "Mean-souree\0", "Jerrey-souree\0", "Luanistyn\0", "Mean-fouyir\0", "Jerrey-fouyir\0", "Mee Houney\0", "Mee ny Nollick\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -11453,7 +11453,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -11487,7 +11487,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -11521,7 +11521,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -11557,7 +11557,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "ʻŌlelo Hawaiʻi\0", Q_NULLPTR,
         // list pattern
@@ -11625,7 +11625,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "हिन्दी\0", Q_NULLPTR,
         // list pattern
@@ -11878,7 +11878,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Agu\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Maret\0", "April\0", "Mei\0", "Juni\0", "Juli\0", "Agustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Agu\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Maret\0", "April\0", "Mei\0", "Juni\0", "Juli\0", "Agustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -11929,9 +11929,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "ꆈꌠꉙ\0", Q_NULLPTR,
         // list pattern
@@ -12150,7 +12150,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -12201,7 +12201,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -12218,7 +12218,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprilyi\0", "Mei\0", "Junyi\0", "Julyai\0", "Agusti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -12252,7 +12252,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Agt\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Maret\0", "April\0", "Mei\0", "Juni\0", "Juli\0", "Agustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Agt\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Maret\0", "April\0", "Mei\0", "Juni\0", "Juli\0", "Agustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -12337,7 +12337,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -12371,7 +12371,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -12388,7 +12388,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Mwedi Ntandi\0", "Mwedi wa Pili\0", "Mwedi wa Tatu\0", "Mwedi wa Nchechi\0", "Mwedi wa Nnyano\0", "Mwedi wa Nnyano na Umo\0", "Mwedi wa Nnyano na Mivili\0", "Mwedi wa Nnyano na Mitatu\0", "Mwedi wa Nnyano na Nchechi\0", "Mwedi wa Nnyano na Nnyano\0", "Mwedi wa Nnyano na Nnyano na U\0", "Mwedi wa Nnyano na Nnyano na M\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -12422,7 +12422,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Abr\0", "Mai\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Otu\0", "Nuv\0", "Diz\0" },
         { "Janeru\0", "Febreru\0", "Marsu\0", "Abril\0", "Maiu\0", "Junhu\0", "Julhu\0", "Agostu\0", "Setenbru\0", "Otubru\0", "Nuvenbru\0", "Dizenbru\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Abr\0", "Mai\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Otu\0", "Nuv\0", "Diz\0" },
         { "Janeru\0", "Febreru\0", "Marsu\0", "Abril\0", "Maiu\0", "Junhu\0", "Julhu\0", "Agostu\0", "Setenbru\0", "Otubru\0", "Nuvenbru\0", "Dizenbru\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -12439,7 +12439,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -12473,7 +12473,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -12541,7 +12541,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "‹\0", "›\0",
         // endonym
@@ -12558,7 +12558,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "pamba\0", "wanja\0", "mbiyɔ mɛndoŋgɔ\0", "Nyɔlɔmbɔŋgɔ\0", "Mɔnɔ ŋgbanja\0", "Nyaŋgwɛ ŋgbanja\0", "kuŋgwɛ\0", "fɛ\0", "njapi\0", "nyukul\0", "11\0", "ɓulɓusɛ\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "pamba\0", "wanja\0", "mbiyɔ mɛndoŋgɔ\0", "Nyɔlɔmbɔŋgɔ\0", "Mɔnɔ ŋgbanja\0", "Nyaŋgwɛ ŋgbanja\0", "kuŋgwɛ\0", "fɛ\0", "njapi\0", "nyukul\0", "11\0", "ɓulɓusɛ\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -12575,7 +12575,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 8722, 43, 101, 2, 0, 48,
+        44, 46, 59, 37, 8722, 43, 69, 2, 0, 48,
         // quotation
         "»\0", "«\0", "›\0", "‹\0",
         // endonym
@@ -12592,7 +12592,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januari\0", "februari\0", "martsi\0", "aprili\0", "maji\0", "juni\0", "juli\0", "augustusi\0", "septemberi\0", "oktoberi\0", "novemberi\0", "decemberi\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januari\0", "februari\0", "martsi\0", "aprili\0", "maji\0", "juni\0", "juli\0", "augustusi\0", "septemberi\0", "oktoberi\0", "novemberi\0", "decemberi\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -12609,7 +12609,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -12713,7 +12713,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "한국어\0", "조선민주주의인민공화국\0",
         // list pattern
@@ -12747,7 +12747,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "한국어\0", Q_NULLPTR,
         // list pattern
@@ -12813,9 +12813,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 1776,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 1776,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "کٲشُر\0", Q_NULLPTR,
         // list pattern
@@ -12847,7 +12847,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -12864,7 +12864,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januali\0", "Febluali\0", "Machi\0", "Aplili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -12881,7 +12881,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "‘\0", "’\0",
         // endonym
@@ -12898,7 +12898,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "ŋ1\0", "ŋ2\0", "ŋ3\0", "ŋ4\0", "ŋ5\0", "ŋ6\0", "ŋ7\0", "ŋ8\0", "ŋ9\0", "ŋ10\0", "ŋ11\0", "ŋ12\0" },
         { "ŋwíí a ntɔ́ntɔ\0", "ŋwíí akǝ bɛ́ɛ\0", "ŋwíí akǝ ráá\0", "ŋwíí akǝ nin\0", "ŋwíí akǝ táan\0", "ŋwíí akǝ táafɔk\0", "ŋwíí akǝ táabɛɛ\0", "ŋwíí akǝ táaraa\0", "ŋwíí akǝ táanin\0", "ŋwíí akǝ ntɛk\0", "ŋwíí akǝ ntɛk di bɔ́k\0", "ŋwíí akǝ ntɛk di bɛ́ɛ\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -12915,7 +12915,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 8722, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 8722, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "“\0", "‚\0", "‘\0",
         // endonym
@@ -12983,9 +12983,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Sunday, Qt::Friday, Qt::Saturday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 3, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 3, 0, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "kernewek\0", Q_NULLPTR,
         // list pattern
@@ -13000,7 +13000,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Gen\0", "Hwe\0", "Meu\0", "Ebr\0", "Me\0", "Met\0", "Gor\0", "Est\0", "Gwn\0", "Hed\0", "Du\0", "Kev\0" },
         { "mis Genver\0", "mis Hwevrer\0", "mis Meurth\0", "mis Ebrel\0", "mis Me\0", "mis Metheven\0", "mis Gortheren\0", "mis Est\0", "mis Gwynngala\0", "mis Hedra\0", "mis Du\0", "mis Kevardhu\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -13051,7 +13051,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "”\0", "”\0", "’\0", "’\0",
         // endonym
@@ -13102,7 +13102,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mäe\0", "Abr\0", "Mee\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "Mäerz\0", "Abrëll\0", "Mee\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan.\0", "Feb.\0", "Mäe.\0", "Abr.\0", "Mee\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januar\0", "Februar\0", "Mäerz\0", "Abrëll\0", "Mee\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -13119,7 +13119,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13136,7 +13136,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apu\0", "Maa\0", "Juu\0", "Jul\0", "Agu\0", "Seb\0", "Oki\0", "Nov\0", "Des\0" },
         { "Janwaliyo\0", "Febwaliyo\0", "Marisi\0", "Apuli\0", "Maayi\0", "Juuni\0", "Julaayi\0", "Agusito\0", "Sebuttemba\0", "Okitobba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -13155,7 +13155,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "Lakȟólʼiyapi\0", Q_NULLPTR,
         // list pattern
@@ -13170,7 +13170,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "Wiótheȟika Wí\0", "Thiyóȟeyuŋka Wí\0", "Ištáwičhayazaŋ Wí\0", "Pȟežítȟo Wí\0", "Čhaŋwápetȟo Wí\0", "Wípazukȟa-wašté Wí\0", "Čhaŋpȟásapa Wí\0", "Wasútȟuŋ Wí\0", "Čhaŋwápeǧi Wí\0", "Čhaŋwápe-kasná Wí\0", "Waníyetu Wí\0", "Tȟahékapšuŋ Wí\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -13187,7 +13187,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13221,7 +13221,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13255,7 +13255,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13289,7 +13289,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13357,7 +13357,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 0, 0, 1776,
+        46, 44, 59, 37, 45, 43, 69, 0, 0, 1776,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13391,7 +13391,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Friday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 0, 0, 1776,
+        46, 44, 59, 37, 45, 43, 69, 0, 0, 1776,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13425,7 +13425,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 8722, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 8722, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "“\0", "„\0", "“\0",
         // endonym
@@ -13459,7 +13459,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13493,7 +13493,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13527,7 +13527,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "“\0", "‚\0", "‘\0",
         // endonym
@@ -13544,7 +13544,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -13578,7 +13578,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "febr.\0", "marts\0", "apr.\0", "maijs\0", "jūn.\0", "jūl.\0", "aug.\0", "sept.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "janvāris\0", "februāris\0", "marts\0", "aprīlis\0", "maijs\0", "jūnijs\0", "jūlijs\0", "augusts\0", "septembris\0", "oktobris\0", "novembris\0", "decembris\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "janv.\0", "febr.\0", "marts\0", "apr.\0", "maijs\0", "jūn.\0", "jūl.\0", "aug.\0", "sept.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "janvāris\0", "februāris\0", "marts\0", "aprīlis\0", "maijs\0", "jūnijs\0", "jūlijs\0", "augusts\0", "septembris\0", "oktobris\0", "novembris\0", "decembris\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -13595,7 +13595,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13612,7 +13612,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Dal\0", "Ará\0", "Ɔɛn\0", "Doy\0", "Lép\0", "Rok\0", "Sás\0", "Bɔ́r\0", "Kús\0", "Gís\0", "Shʉ́\0", "Ntʉ́\0" },
         { "Oladalʉ́\0", "Arát\0", "Ɔɛnɨ́ɔɨŋɔk\0", "Olodoyíóríê inkókúâ\0", "Oloilépūnyīē inkókúâ\0", "Kújúɔrɔk\0", "Mórusásin\0", "Ɔlɔ́ɨ́bɔ́rárɛ\0", "Kúshîn\0", "Olgísan\0", "Pʉshʉ́ka\0", "Ntʉ́ŋʉ́s\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -13629,7 +13629,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13646,7 +13646,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Dal\0", "Ará\0", "Ɔɛn\0", "Doy\0", "Lép\0", "Rok\0", "Sás\0", "Bɔ́r\0", "Kús\0", "Gís\0", "Shʉ́\0", "Ntʉ́\0" },
         { "Oladalʉ́\0", "Arát\0", "Ɔɛnɨ́ɔɨŋɔk\0", "Olodoyíóríê inkókúâ\0", "Oloilépūnyīē inkókúâ\0", "Kújúɔrɔk\0", "Mórusásin\0", "Ɔlɔ́ɨ́bɔ́rárɛ\0", "Kúshîn\0", "Olgísan\0", "Pʉshʉ́ka\0", "Ntʉ́ŋʉ́s\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -13663,7 +13663,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13697,7 +13697,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 160, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 160, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -13748,7 +13748,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mey\0", "Jon\0", "Jol\0", "Aog\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Janoary\0", "Febroary\0", "Martsa\0", "Aprily\0", "Mey\0", "Jona\0", "Jolay\0", "Aogositra\0", "Septambra\0", "Oktobra\0", "Novambra\0", "Desambra\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mey\0", "Jon\0", "Jol\0", "Aog\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Janoary\0", "Febroary\0", "Martsa\0", "Aprily\0", "Mey\0", "Jona\0", "Jolay\0", "Aogositra\0", "Septambra\0", "Oktobra\0", "Novambra\0", "Desambra\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -13765,9 +13765,9 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "Makua\0", Q_NULLPTR,
         // list pattern
@@ -14139,7 +14139,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "“\0", "”\0",
         // endonym
@@ -14207,7 +14207,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Friday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 0, 0, 1776,
+        46, 44, 59, 37, 45, 43, 69, 0, 0, 1776,
         // quotation
         "«\0", "»\0", "‹\0", "›\0",
         // endonym
@@ -14224,7 +14224,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -14233,7 +14233,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
+        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // mzn_IR
     {
@@ -14241,7 +14241,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -14258,7 +14258,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "ǃKhanni\0", "ǃKhanǀgôab\0", "ǀKhuuǁkhâb\0", "ǃHôaǂkhaib\0", "ǃKhaitsâb\0", "Gamaǀaeb\0", "ǂKhoesaob\0", "Aoǁkhuumûǁkhâb\0", "Taraǀkhuumûǁkhâb\0", "ǂNûǁnâiseb\0", "ǀHooǂgaeb\0", "Hôasoreǁkhâb\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -14292,7 +14292,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14326,7 +14326,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14343,7 +14343,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -14394,7 +14394,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januaar\0", "Februaar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktover\0", "November\0", "Dezember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januaar\0", "Februaar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktover\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14428,7 +14428,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januaar\0", "Februaar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktover\0", "November\0", "Dezember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januaar\0", "Februaar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktover\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14530,7 +14530,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14564,7 +14564,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14598,7 +14598,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14632,7 +14632,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14666,7 +14666,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14700,7 +14700,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14734,7 +14734,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14751,7 +14751,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "„\0", "”\0", "«\0", "»\0",
         // endonym
@@ -14768,7 +14768,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "ng1\0", "ng2\0", "ng3\0", "ng4\0", "ng5\0", "ng6\0", "ng7\0", "ng8\0", "ng9\0", "ng10\0", "ng11\0", "kris\0" },
         { "ngwɛn matáhra\0", "ngwɛn ńmba\0", "ngwɛn ńlal\0", "ngwɛn ńna\0", "ngwɛn ńtan\0", "ngwɛn ńtuó\0", "ngwɛn hɛmbuɛrí\0", "ngwɛn lɔmbi\0", "ngwɛn rɛbvuâ\0", "ngwɛn wum\0", "ngwɛn wum navǔr\0", "krísimin\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -14802,7 +14802,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "mai\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14819,7 +14819,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "“\0", "”\0",
         // endonym
@@ -14836,7 +14836,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "saŋ tsetsɛ̀ɛ lùm\0", "saŋ kàg ngwóŋ\0", "saŋ lepyè shúm\0", "saŋ cÿó\0", "saŋ tsɛ̀ɛ cÿó\0", "saŋ njÿoláʼ\0", "saŋ tyɛ̀b tyɛ̀b mbʉ̀ŋ\0", "saŋ mbʉ̀ŋ\0", "saŋ ngwɔ̀ʼ mbÿɛ\0", "saŋ tàŋa tsetsáʼ\0", "saŋ mejwoŋó\0", "saŋ lùm\0" },
         { "saŋ tsetsɛ̀ɛ lùm\0", "saŋ kàg ngwóŋ\0", "saŋ lepyè shúm\0", "saŋ cÿó\0", "saŋ tsɛ̀ɛ cÿó\0", "saŋ njÿoláʼ\0", "saŋ tyɛ̀b tyɛ̀b mbʉ̀ŋ\0", "saŋ mbʉ̀ŋ\0", "saŋ ngwɔ̀ʼ mbÿɛ\0", "saŋ tàŋa tsetsáʼ\0", "saŋ mejwoŋó\0", "saŋ lùm\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "saŋ tsetsɛ̀ɛ lùm\0", "saŋ kàg ngwóŋ\0", "saŋ lepyè shúm\0", "saŋ cÿó\0", "saŋ tsɛ̀ɛ cÿó\0", "saŋ njÿoláʼ\0", "saŋ tyɛ̀b tyɛ̀b mbʉ̀ŋ\0", "saŋ mbʉ̀ŋ\0", "saŋ ngwɔ̀ʼ mbÿɛ\0", "saŋ tàŋa tsetsáʼ\0", "saŋ mejwoŋó\0", "saŋ lùm\0" },
         { "saŋ tsetsɛ̀ɛ lùm\0", "saŋ kàg ngwóŋ\0", "saŋ lepyè shúm\0", "saŋ cÿó\0", "saŋ tsɛ̀ɛ cÿó\0", "saŋ njÿoláʼ\0", "saŋ tyɛ̀b tyɛ̀b mbʉ̀ŋ\0", "saŋ mbʉ̀ŋ\0", "saŋ ngwɔ̀ʼ mbÿɛ\0", "saŋ tàŋa tsetsáʼ\0", "saŋ mejwoŋó\0", "saŋ lùm\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -14853,7 +14853,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -14887,7 +14887,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -14904,7 +14904,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "KBZ\0", "KBR\0", "KST\0", "KKN\0", "KTN\0", "KMK\0", "KMS\0", "KMN\0", "KMW\0", "KKM\0", "KNK\0", "KNB\0" },
         { "Okwokubanza\0", "Okwakabiri\0", "Okwakashatu\0", "Okwakana\0", "Okwakataana\0", "Okwamukaaga\0", "Okwamushanju\0", "Okwamunaana\0", "Okwamwenda\0", "Okwaikumi\0", "Okwaikumi na kumwe\0", "Okwaikumi na ibiri\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -14923,7 +14923,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 3, 0, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "Oromoo\0", Q_NULLPTR,
         // list pattern
@@ -14938,7 +14938,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Ama\0", "Gur\0", "Bit\0", "Elb\0", "Cam\0", "Wax\0", "Ado\0", "Hag\0", "Ful\0", "Onk\0", "Sad\0", "Mud\0" },
         { "Amajjii\0", "Guraandhala\0", "Bitooteessa\0", "Elba\0", "Caamsa\0", "Waxabajjii\0", "Adooleessa\0", "Hagayya\0", "Fuulbana\0", "Onkololeessa\0", "Sadaasa\0", "Muddee\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Ama\0", "Gur\0", "Bit\0", "Elb\0", "Cam\0", "Wax\0", "Ado\0", "Hag\0", "Ful\0", "Onk\0", "Sad\0", "Mud\0" },
         { "Amajjii\0", "Guraandhala\0", "Bitooteessa\0", "Elba\0", "Caamsa\0", "Waxabajjii\0", "Adooleessa\0", "Hagayya\0", "Fuulbana\0", "Onkololeessa\0", "Sadaasa\0", "Muddee\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14957,7 +14957,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 3, 0, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "Oromoo\0", Q_NULLPTR,
         // list pattern
@@ -15093,7 +15093,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "ਪੰਜਾਬੀ\0", "ਪਨਾਮਾ\0",
         // list pattern
@@ -15127,7 +15127,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "ਪੰਜਾਬੀ\0", "ਪਨਾਮਾ\0",
         // list pattern
@@ -15161,7 +15161,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "„\0", "\"\0", "«\0", "»\0",
+        "„\0", "”\0", "«\0", "»\0",
         // endonym
         "polski\0", "Polska\0",
         // list pattern
@@ -15193,7 +15193,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "“\0", "„\0", "“\0",
         // endonym
@@ -15227,7 +15227,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
-        46, 44, 59, 1642, 45, 43, 101, 0, 0, 1776,
+        46, 44, 59, 1642, 45, 43, 69, 0, 0, 1776,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -15261,7 +15261,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 1642, 45, 43, 101, 2, 0, 1776,
+        46, 44, 59, 1642, 45, 43, 69, 2, 0, 1776,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -15297,7 +15297,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "«\0", "»\0", "“\0", "”\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15331,7 +15331,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15346,7 +15346,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -15365,7 +15365,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
-        "«\0", "»\0", "“\0", "”\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15399,7 +15399,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "«\0", "»\0", "“\0", "”\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15433,7 +15433,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
-        "«\0", "»\0", "“\0", "”\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15467,7 +15467,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
-        "«\0", "»\0", "“\0", "”\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15501,7 +15501,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "«\0", "»\0", "“\0", "”\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15535,7 +15535,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "«\0", "»\0", "“\0", "”\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15569,7 +15569,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "«\0", "»\0", "“\0", "”\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15618,7 +15618,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -15637,7 +15637,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "«\0", "»\0", "“\0", "”\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15671,7 +15671,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "«\0", "»\0", "“\0", "”\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "português\0", "Portugal\0",
         // list pattern
@@ -15705,7 +15705,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "Runasimi\0", Q_NULLPTR,
         // list pattern
@@ -15739,7 +15739,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "Runasimi\0", Q_NULLPTR,
         // list pattern
@@ -15773,7 +15773,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "Runasimi\0", Q_NULLPTR,
         // list pattern
@@ -15839,7 +15839,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "”\0", "”\0", "’\0", "’\0",
         // endonym
@@ -15856,7 +15856,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Mut.\0", "Gas.\0", "Wer.\0", "Mat.\0", "Gic.\0", "Kam.\0", "Nya.\0", "Kan.\0", "Nze.\0", "Ukw.\0", "Ugu.\0", "Uku.\0" },
         { "Nzero\0", "Ruhuhuma\0", "Ntwarante\0", "Ndamukiza\0", "Rusama\0", "Ruheshi\0", "Mukakaro\0", "Nyandagaro\0", "Nyakanga\0", "Gitugutu\0", "Munyonyo\0", "Kigarama\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -15941,7 +15941,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -16213,7 +16213,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -16230,7 +16230,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprilyi\0", "Mei\0", "Junyi\0", "Julyai\0", "Agusti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -16281,7 +16281,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -16315,7 +16315,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -16332,7 +16332,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Mup\0", "Mwi\0", "Msh\0", "Mun\0", "Mag\0", "Muj\0", "Msp\0", "Mpg\0", "Mye\0", "Mok\0", "Mus\0", "Muh\0" },
         { "Mupalangulwa\0", "Mwitope\0", "Mushende\0", "Munyi\0", "Mushende Magali\0", "Mujimbi\0", "Mushipepo\0", "Mupuguto\0", "Munyense\0", "Mokhu\0", "Musongandembwe\0", "Muhaano\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -16349,7 +16349,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -16366,7 +16366,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "جنوري\0", "فيبروري\0", "مارچ\0", "اپريل\0", "مئي\0", "جون\0", "جولاءِ\0", "آگسٽ\0", "سيپٽمبر\0", "آڪٽوبر\0", "نومبر\0", "ڊسمبر\0" },
         { "جنوري\0", "فيبروري\0", "مارچ\0", "اپريل\0", "مئي\0", "جون\0", "جولاءِ\0", "آگسٽ\0", "سيپٽمبر\0", "آڪٽوبر\0", "نومبر\0", "ڊسمبر\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "جنوري\0", "فيبروري\0", "مارچ\0", "اپريل\0", "مئي\0", "جون\0", "جولاءِ\0", "آگسٽ\0", "سيپٽمبر\0", "آڪٽوبر\0", "نومبر\0", "ڊسمبر\0" },
         { "جنوري\0", "فيبروري\0", "مارچ\0", "اپريل\0", "مئي\0", "جون\0", "جولاءِ\0", "آگسٽ\0", "سيپٽمبر\0", "آڪٽوبر\0", "نومبر\0", "ڊسمبر\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -16383,7 +16383,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 8722, 43, 101, 2, 0, 48,
+        44, 160, 59, 37, 8722, 43, 69, 2, 0, 48,
         // quotation
         "”\0", "”\0", "’\0", "’\0",
         // endonym
@@ -16417,7 +16417,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 8722, 43, 101, 2, 0, 48,
+        44, 160, 59, 37, 8722, 43, 69, 2, 0, 48,
         // quotation
         "”\0", "”\0", "’\0", "’\0",
         // endonym
@@ -16451,7 +16451,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 8722, 43, 101, 2, 0, 48,
+        44, 160, 59, 37, 8722, 43, 69, 2, 0, 48,
         // quotation
         "”\0", "”\0", "’\0", "’\0",
         // endonym
@@ -16485,7 +16485,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 46, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -16502,7 +16502,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Fev\0", "Mar\0", "Abr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Set\0", "Otu\0", "Nov\0", "Dec\0" },
         { "Janeiro\0", "Fevreiro\0", "Marco\0", "Abril\0", "Maio\0", "Junho\0", "Julho\0", "Augusto\0", "Setembro\0", "Otubro\0", "Novembro\0", "Decembro\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -16519,7 +16519,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -16553,7 +16553,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "“\0", "”\0",
         // endonym
@@ -16587,7 +16587,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "«\0", "»\0", "„\0", "”\0",
         // endonym
@@ -16621,7 +16621,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "«\0", "»\0", "„\0", "”\0",
         // endonym
@@ -16689,7 +16689,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "„\0", "“\0", "‚\0", "‘\0",
         // endonym
@@ -16723,7 +16723,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 8722, 43, 101, 0, 0, 48,
+        44, 46, 59, 37, 8722, 43, 69, 0, 0, 48,
         // quotation
         "„\0", "“\0", "‚\0", "‘\0",
         // endonym
@@ -16759,7 +16759,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "anarâškielâ\0", Q_NULLPTR,
         // list pattern
@@ -17335,7 +17335,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 8722, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 8722, 43, 69, 2, 1, 48,
         // quotation
         "”\0", "”\0", "’\0", "’\0",
         // endonym
@@ -17352,7 +17352,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17369,7 +17369,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 8722, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 8722, 43, 69, 2, 1, 48,
         // quotation
         "”\0", "”\0", "’\0", "’\0",
         // endonym
@@ -17386,7 +17386,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17403,7 +17403,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 8722, 43, 101, 2, 0, 48,
+        44, 160, 59, 37, 8722, 43, 69, 2, 0, 48,
         // quotation
         "”\0", "”\0", "’\0", "’\0",
         // endonym
@@ -17420,7 +17420,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17454,7 +17454,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17488,7 +17488,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17522,7 +17522,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17556,7 +17556,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17575,7 +17575,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
         // list pattern
@@ -17609,7 +17609,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
         // list pattern
@@ -17643,7 +17643,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
         // list pattern
@@ -17677,7 +17677,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
         // list pattern
@@ -17743,7 +17743,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -17777,7 +17777,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -17915,7 +17915,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "ትግርኛ\0", Q_NULLPTR,
         // list pattern
@@ -18117,7 +18117,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -18151,7 +18151,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        44, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -18270,7 +18270,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -18304,7 +18304,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -18423,7 +18423,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -18440,7 +18440,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
         { "ꖨꖕ ꕪꕴ ꔞꔀꕮꕊ\0", "ꕒꕡꖝꖕ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞꔤ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋꕔꕿ ꕸꖃꗏ\0", "ꖨꖕ ꕪꕴ ꗏꖺꕮꕊ\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
         { "ꖨꖕ ꕪꕴ ꔞꔀꕮꕊ\0", "ꕒꕡꖝꖕ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞꔤ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋꕔꕿ ꕸꖃꗏ\0", "ꖨꖕ ꕪꕴ ꗏꖺꕮꕊ\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -18457,7 +18457,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -18474,7 +18474,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
         { "ꖨꖕ ꕪꕴ ꔞꔀꕮꕊ\0", "ꕒꕡꖝꖕ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞꔤ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋꕔꕿ ꕸꖃꗏ\0", "ꖨꖕ ꕪꕴ ꗏꖺꕮꕊ\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
         { "ꖨꖕ ꕪꕴ ꔞꔀꕮꕊ\0", "ꕒꕡꖝꖕ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞꔤ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋꕔꕿ ꕸꖃꗏ\0", "ꖨꖕ ꕪꕴ ꗏꖺꕮꕊ\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -18493,7 +18493,7 @@ static const QLocalePrivate localeTbl[] = {
         // symbols
         44, 46, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
+        "“\0", "”\0", "‘\0", "’\0",
         // endonym
         "Tiếng Việt\0", "Quần đảo Virgin thuộc Mỹ\0",
         // list pattern
@@ -18508,7 +18508,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Thg 1\0", "Thg 2\0", "Thg 3\0", "Thg 4\0", "Thg 5\0", "Thg 6\0", "Thg 7\0", "Thg 8\0", "Thg 9\0", "Thg 10\0", "Thg 11\0", "Thg 12\0" },
         { "Tháng 1\0", "Tháng 2\0", "Tháng 3\0", "Tháng 4\0", "Tháng 5\0", "Tháng 6\0", "Tháng 7\0", "Tháng 8\0", "Tháng 9\0", "Tháng 10\0", "Tháng 11\0", "Tháng 12\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "thg 1\0", "thg 2\0", "thg 3\0", "thg 4\0", "thg 5\0", "thg 6\0", "thg 7\0", "thg 8\0", "thg 9\0", "thg 10\0", "thg 11\0", "thg 12\0" },
         { "tháng 1\0", "tháng 2\0", "tháng 3\0", "tháng 4\0", "tháng 5\0", "tháng 6\0", "tháng 7\0", "tháng 8\0", "tháng 9\0", "tháng 10\0", "tháng 11\0", "tháng 12\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -18525,7 +18525,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -18559,7 +18559,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -18576,7 +18576,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprilyi\0", "Mei\0", "Junyi\0", "Julyai\0", "Agusti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -18593,7 +18593,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 8217, 59, 37, 45, 43, 101, 2, 0, 48,
+        44, 8217, 59, 37, 45, 43, 69, 2, 0, 48,
         // quotation
         "«\0", "»\0", "‹\0", "›\0",
         // endonym
@@ -18661,7 +18661,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 160, 59, 37, 45, 43, 101, 2, 1, 48,
+        46, 160, 59, 37, 45, 43, 69, 2, 1, 48,
         // quotation
         "‘\0", "’\0", "“\0", "”\0",
         // endonym
@@ -18695,7 +18695,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 101, 0, 0, 48,
+        46, 44, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "“\0", "”\0", "‘\0", "’\0",
         // endonym
@@ -18712,7 +18712,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apu\0", "Maa\0", "Juu\0", "Jul\0", "Agu\0", "Seb\0", "Oki\0", "Nov\0", "Des\0" },
         { "Janwaliyo\0", "Febwaliyo\0", "Marisi\0", "Apuli\0", "Maayi\0", "Juuni\0", "Julaayi\0", "Agusito\0", "Sebuttemba\0", "Okitobba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -18729,7 +18729,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 101, 0, 0, 48,
+        44, 160, 59, 37, 45, 43, 69, 0, 0, 48,
         // quotation
         "«\0", "»\0", "«\0", "»\0",
         // endonym
@@ -18746,7 +18746,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "o.1\0", "o.2\0", "o.3\0", "o.4\0", "o.5\0", "o.6\0", "o.7\0", "o.8\0", "o.9\0", "o.10\0", "o.11\0", "o.12\0" },
         { "pikítíkítie, oólí ú kutúan\0", "siɛyɛ́, oóli ú kándíɛ\0", "ɔnsúmbɔl, oóli ú kátátúɛ\0", "mesiŋ, oóli ú kénie\0", "ensil, oóli ú kátánuɛ\0", "ɔsɔn\0", "efute\0", "pisuyú\0", "imɛŋ i puɔs\0", "imɛŋ i putúk,oóli ú kátíɛ\0", "makandikɛ\0", "pilɔndɔ́\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -18780,7 +18780,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "יאַנ\0", "פֿעב\0", "מערץ\0", "אַפּר\0", "מיי\0", "יוני\0", "יולי\0", "אויג\0", "סעפּ\0", "אקט\0", "נאוו\0", "דעצ\0" },
         { "יאַנואַר\0", "פֿעברואַר\0", "מערץ\0", "אַפּריל\0", "מיי\0", "יוני\0", "יולי\0", "אויגוסט\0", "סעפּטעמבער\0", "אקטאבער\0", "נאוועמבער\0", "דעצעמבער\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "יאַנואַר\0", "פֿעברואַר\0", "מערץ\0", "אַפּריל\0", "מיי\0", "יוני\0", "יולי\0", "אויגוסט\0", "סעפּטעמבער\0", "אקטאבער\0", "נאוועמבער\0", "דעצעמבער\0" },
         { "יאַנואַר\0", "פֿעברואַר\0", "מערץ\0", "אַפּריל\0", "מיי\0", "יוני\0", "יולי\0", "אויגוסט\0", "סעפּטעמבער\0", "אקטאבער\0", "נאוועמבער\0", "דעצעמבער\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -18984,7 +18984,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -19018,7 +19018,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -19052,7 +19052,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -19086,7 +19086,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -19120,7 +19120,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -19154,7 +19154,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -19188,7 +19188,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -19222,7 +19222,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mas\0", "Eph\0", "Mey\0", "Jun\0", "Jul\0", "Aga\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Januwari\0", "Februwari\0", "Mashi\0", "Ephreli\0", "Meyi\0", "Juni\0", "Julayi\0", "Agasti\0", "Septhemba\0", "Okthoba\0", "Novemba\0", "Disemba\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
+        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         { "Jan\0", "Feb\0", "Mas\0", "Eph\0", "Mey\0", "Jun\0", "Jul\0", "Aga\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Januwari\0", "Februwari\0", "Mashi\0", "Ephreli\0", "Meyi\0", "Juni\0", "Julayi\0", "Agasti\0", "Septhemba\0", "Okthoba\0", "Novemba\0", "Disemba\0" },
         { "J\0", "F\0", "M\0", "E\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
