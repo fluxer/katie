@@ -844,7 +844,7 @@ QString QLocale::name() const
     const char *lang = languageTbl[dd->m_language].code;
     if (dd->m_country != AnyCountry) {
         const char *country = countryTbl[dd->m_country].code;
-        return QString::fromLatin1(lang) + QLatin1Char('-') + QString::fromLatin1(country);
+        return QString::fromLatin1(lang) + QLatin1Char('_') + QString::fromLatin1(country);
     }
     return QString::fromLatin1(lang);
 }
