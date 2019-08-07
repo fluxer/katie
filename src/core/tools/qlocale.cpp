@@ -93,7 +93,7 @@ QLocale::Script QLocalePrivate::codeToScript(const QString &code)
         title[0] = code.at(0).toUpper();
     }
 
-    for (qint16 i = 0; i < QLocale::LastScript; i++) {
+    for (qint16 i = 0; i < scriptTblSize; i++) {
         if (QString::fromLatin1(scriptTbl[i].code) == title)
             return scriptTbl[i].script;
     }
@@ -279,7 +279,7 @@ bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QSt
             // if it wasn't a script, maybe it is a country then?
             cntry = value;
             state = NoState;
-            for (qint16 i = 0; i < QLocale::LastScript; i++) {
+            for (qint16 i = 0; i < scriptTblSize; i++) {
                 if (QString::fromLatin1(scriptTbl[i].code) == value) {
                     script = value;
                     state = CountryState;
