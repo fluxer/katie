@@ -95,6 +95,7 @@ def tocurrencyformat(fromformat, frommap):
     return result
 
 def todatetimeformat(fromformat):
+    # valid are y, m, M, d, h, H, s, a, A, z and t
     unsupportedtags = [
         'g',
         'u',
@@ -105,7 +106,6 @@ def todatetimeformat(fromformat):
         'g',
         'e',
         'c',
-        'a',
         'k',
         'j',
         'v',
