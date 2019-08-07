@@ -215,13 +215,22 @@ def normalizestring(fromstring):
     result = result.replace(u'í', 'i')
     return result
 
+# printenum prints mapped values that have unique code only, the rest are set to the enum of the
+# first occurence. the reason for doing so is because table lookups for figuring out language,
+# script and country that is required for constructing QLocale from string (named locales) relies
+# on the fact that there is only one code for each, if that is not the case constructing copy of
+# locale from its name will not copy it correctly. printtable skips duplicate code entries entirely
 def printenum(frommap, prefix):
     keyscount = 0
+    aliaseslist = []
+    seenfirstvalues = []
 
+    print('    enum %s {' % prefix)
     # print Default and C first
     for key in frommap.keys():
         if not key in ('Any%s' % prefix, 'C'):
             continue
+        firstvalue = frommap[key][0]
         print('        %s = %d,' % (key, keyscount))
         keyscount += 1
 
@@ -230,15 +239,36 @@ def printenum(frommap, prefix):
     for key in sorted(frommap.keys()):
         if key in ('Any%s' % prefix, 'C'):
             continue
+        firstvalue = frommap[key][0]
+        if firstvalue in seenfirstvalues:
+            aliaseslist.append(key)
+            continue
+        seenfirstvalues.append(firstvalue)
         print('        %s = %d,' % (key, keyscount))
         lastkey = key
         keyscount += 1
 
+    # now aliases
+    print('')
+    for alias in sorted(aliaseslist):
+        firstvalue = frommap[alias][0]
+        aliasenum = None
+        for key in sorted(frommap.keys()):
+            keyfirstvalue = frommap[key][0]
+            if firstvalue == keyfirstvalue:
+                aliasenum == key
+                break
+        print('        %s = %s,' % (alias, key))
+
     # print last key
     print('\n        Last%s = %s' % (prefix, lastkey))
 
+    print('    };\n')
+
 def printtable(frommap, prefix):
     lowerprefix = prefix.lower()
+    seenfirstvalues = []
+
     print('''static const struct %sTblData {
     const char* name;
     const char* code;
@@ -253,11 +283,14 @@ def printtable(frommap, prefix):
         secondvalue = frommap[key][1]
         print('    { "%s\\0", "%s\\0", QLocale::%s::%s },' % (secondvalue, firstvalue, prefix, key))
 
-    # now everything except those
+    # now everything except those but only unique code values
     for key in sorted(frommap.keys()):
         if key in ('Any%s' % prefix, 'C'):
             continue
         firstvalue = frommap[key][0]
+        if firstvalue in seenfirstvalues:
+            continue
+        seenfirstvalues.append(firstvalue)
         secondvalue = frommap[key][1]
         print('    { "%s\\0", "%s\\0", QLocale::%s::%s },' % (secondvalue, firstvalue, prefix, key))
 
