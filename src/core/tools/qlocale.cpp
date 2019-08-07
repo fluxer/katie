@@ -1688,14 +1688,20 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
         return QList<QLocale>();
 
     QList<QLocale> result;
-    if (language == QLocale::AnyLanguage && script == QLocale::AnyScript && country == QLocale::AnyCountry)
+    if (language == QLocale::AnyLanguage && script == QLocale::AnyScript && country == QLocale::AnyCountry) {
         result.reserve(localeTblSize);
-    for (qint16 i = 0; i < localeTblSize; i++) {
-        if (localeTbl[i].m_language == language
-            && localeTbl[i].m_script == script
-            && localeTbl[i].m_country == country) {
-            QLocale locale(language, script, country);
+        for (qint16 i = 0; i < localeTblSize; i++) {
+            QLocale locale(localeTbl[i].m_language, localeTbl[i].m_script, localeTbl[i].m_country);
             result.append(locale);
+        }
+    } else {
+        for (qint16 i = 0; i < localeTblSize; i++) {
+            if (localeTbl[i].m_language == language
+                && localeTbl[i].m_script == script
+                && localeTbl[i].m_country == country) {
+                QLocale locale(language, script, country);
+                result.append(locale);
+            }
         }
     }
     return result;
