@@ -46,6 +46,8 @@
 #include <qlocale.h>
 #include <qnumeric.h>
 #include <qprocess.h>
+#include <qlocale_p.h>
+#include <qlocale_data_p.h>
 
 #include <math.h>
 #include <float.h>
@@ -1133,9 +1135,6 @@ void tst_QLocale::negativeNumbers()
     QVERIFY(ok);
     QCOMPARE(i, -1000000);
 }
-
-#include <qlocale_p.h>
-#include <qlocale_data_p.h>
 
 void tst_QLocale::testNames_data()
 {
