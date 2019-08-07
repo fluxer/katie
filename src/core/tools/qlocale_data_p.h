@@ -62,8 +62,8 @@ static const struct languageTblData {
     const char* code;
     const QLocale::Language language;
 } languageTbl[] = {
-    { "Default\0", "\0", QLocale::Language::AnyLanguage },
-    { "C\0", "\0", QLocale::Language::C },
+    { "Default\0", Q_NULLPTR, QLocale::Language::AnyLanguage },
+    { "C\0", "C\0", QLocale::Language::C },
     { "Abkhazian\0", "ab\0", QLocale::Language::Abkhazian },
     { "Achinese\0", "ace\0", QLocale::Language::Achinese },
     { "Acoli\0", "ach\0", QLocale::Language::Acoli },
@@ -691,7 +691,7 @@ static const struct countryTblData {
     const char* code;
     const QLocale::Country country;
 } countryTbl[] = {
-    { "Default\0", "\0", QLocale::Country::AnyCountry },
+    { "Default\0", Q_NULLPTR, QLocale::Country::AnyCountry },
     { "Afghanistan\0", "AF\0", QLocale::Country::Afghanistan },
     { "Africa\0", "002\0", QLocale::Country::Africa },
     { "Åland Islands\0", "AX\0", QLocale::Country::AlandIslands },
@@ -994,7 +994,7 @@ static const struct scriptTblData {
     const char* code;
     const QLocale::Script script;
 } scriptTbl[] = {
-    { "Default\0", "\0", QLocale::Script::AnyScript },
+    { "Default\0", Q_NULLPTR, QLocale::Script::AnyScript },
     { "Adlam\0", "Adlm\0", QLocale::Script::AdlamScript },
     { "Afaka\0", "Afak\0", QLocale::Script::AfakaScript },
     { "Ahom\0", "Ahom\0", QLocale::Script::AhomScript },
@@ -1186,40 +1186,6 @@ static const struct scriptTblData {
 static const qint16 scriptTblSize = sizeof(scriptTbl) / sizeof(scriptTblData);
 
 static const QLocalePrivate localeTbl[] = {
-    {
-        QLocale::Language::AnyLanguage, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
-        // week
-        Qt::Monday, Qt::Saturday, Qt::Sunday,
-        // symbols
-        46, 44, 59, 37, 45, 43, 101, 2, 1, 48,
-        // quotation
-        "\"\0", "\"\0", "'\0", "'\0",
-        // endonym
-        Q_NULLPTR, Q_NULLPTR,
-        // list pattern
-        "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
-        // date/time format
-        "d MMM yyyy\0", "d MMMM yyyy\0", "HH:mm:ss\0", "HH:mm:ss z\0",
-        // am/pm
-        "AM\0", "PM\0",
-        // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, Q_NULLPTR,
-        { Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR },
-        // month names
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
-        { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
-        // day names
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
-        { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
-    }, // Default
     {
         QLocale::Language::C, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
         // week

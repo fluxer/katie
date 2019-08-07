@@ -281,7 +281,7 @@ def printtable(frommap, prefix):
             continue
         firstvalue = frommap[key][0]
         secondvalue = frommap[key][1]
-        print('    { "%s\\0", "%s\\0", QLocale::%s::%s },' % (secondvalue, firstvalue, prefix, key))
+        print('    { %s, %s, QLocale::%s::%s },' % (tochar(secondvalue), tochar(firstvalue), prefix, key))
 
     # now everything except those but only unique code values
     for key in sorted(frommap.keys()):
@@ -292,7 +292,7 @@ def printtable(frommap, prefix):
             continue
         seenfirstvalues.append(firstvalue)
         secondvalue = frommap[key][1]
-        print('    { "%s\\0", "%s\\0", QLocale::%s::%s },' % (secondvalue, firstvalue, prefix, key))
+        print('    { %s, %s, QLocale::%s::%s },' % (tochar(secondvalue), tochar(firstvalue), prefix, key))
 
     print('};')
     print('static const qint16 %sTblSize = sizeof(%sTbl) / sizeof(%sTblData);\n' % (lowerprefix, lowerprefix, lowerprefix))
@@ -303,7 +303,7 @@ def printlocaledata(frommap, key):
     # preserve the assumption in QLocalePrivate::findLocale that "AnyCountry" means "find me a
     # language, no matter what country it is spoken in" if "AnyCountry" is passed to it as argument
     # and also shrinks the table
-    if value['country'] == 'QLocale::Country::AnyCountry' and not key in ('Default', 'C'):
+    if value['country'] == 'QLocale::Country::AnyCountry' and not key == 'C':
         return
     print('''    {
         %s, %s, %s,
@@ -412,10 +412,9 @@ localenumberingmap = {}
 
 # artificial entries
 languagemap['AnyLanguage'] = ['', 'Default']
-languagemap['C'] = ['', 'C']
+languagemap['C'] = ['C', 'C']
 countrymap['AnyCountry'] = ['', 'Default']
 scriptmap['AnyScript'] = ['', 'Default']
-
 
 # locale to parent parsing
 tree = ET.parse('common/supplemental/supplementalData.xml')
@@ -452,9 +451,10 @@ for weekend in root.findall('./weekData/weekendEnd'):
 # locale to iso4217 parsing
 for region in root.findall('./currencyData/region'):
     regioniso3166 = region.get('iso3166')
-    latestcurrency = region.find('currency')
-    lastestcurrencyiso4217 = latestcurrency.get('iso4217')
-    localeiso4217map[regioniso3166] = lastestcurrencyiso4217
+    # data includes past currencies too, pick the current currency which is first
+    currency = region.find('currency')
+    currencyiso4217 = currency.get('iso4217')
+    localeiso4217map[regioniso3166] = currencyiso4217
 
 # locale to currency parsing
 for info in root.findall('./currencyData/fractions/info'):
@@ -518,7 +518,8 @@ if printenumsandexit:
 else:
     printtable(scriptmap, 'Script')
 
-# these defaults are used only as parent locales fallback, actual defaults are set from root
+# these defaults are used as parent locales fallback, C uses them as actual values because root
+# contains UTF-8 characters and for compatibility. for the rest defaults are set from root
 localedefaults = {
     # enums
     'language': 'QLocale::Language::AnyLanguage',
@@ -575,8 +576,6 @@ localedefaults = {
     'narrow_day_names': ['7', '1', '2', '3', '4', '5', '6'],
 }
 # artificial entries
-localemap['Default'] = {}
-mapcopy(localedefaults, localemap['Default'])
 localemap['C'] = {}
 mapcopy(localedefaults, localemap['C'])
 localemap['C']['language'] = 'QLocale::Language::C'
@@ -704,6 +703,9 @@ def readlocale(fromxml, tomap, isparent):
         # zero is from cross-reference numeric system map,
         # taking the first character works even for UTF-8 chars
         tomap[locale]['zero'] = localenumberingmap[numbertype][0]
+
+        # locale numeric system was found, break
+        break
 
     # digits/rounding data is specific so check if it is mapped
     if currencytype and currencytype in localecurrencymap.keys():
@@ -916,13 +918,12 @@ for xml in sorted(glob.glob('common/main/*.xml')):
 
 print('''static const QLocalePrivate localeTbl[] = {''')
 
-# print Default first, C second
-printlocaledata(localemap, 'Default')
+# print C first
 printlocaledata(localemap, 'C')
 
-# now everything except those
+# now everything except that
 for key in sorted(localemap.keys()):
-    if key in ('Default', 'C'):
+    if key == 'C':
         continue
     printlocaledata(localemap, key)
 
