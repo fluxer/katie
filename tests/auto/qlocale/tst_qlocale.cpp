@@ -187,7 +187,7 @@ void tst_QLocale::ctor()
     TEST_CTOR(Aymara, AnyCountry, default_lang, default_country)
     TEST_CTOR(Aymara, France, default_lang, default_country)
 
-    TEST_CTOR(English, AnyCountry, QLocale::English, QLocale::UnitedStates)
+    TEST_CTOR(English, AnyCountry, QLocale::English, QLocale::World)
     TEST_CTOR(English, UnitedStates, QLocale::English, QLocale::UnitedStates)
     TEST_CTOR(English, France, QLocale::English, QLocale::UnitedStates)
     TEST_CTOR(English, UnitedKingdom, QLocale::English, QLocale::UnitedKingdom)
@@ -407,32 +407,38 @@ void tst_QLocale::emptyCtor()
     TEST_CTOR("zz", "C")
     TEST_CTOR("zz_zz", "C")
     TEST_CTOR("zz...", "C")
-    TEST_CTOR("en", "en_US")
-    TEST_CTOR("en", "en_US")
-    TEST_CTOR("en.", "en_US")
-    TEST_CTOR("en@", "en_US")
-    TEST_CTOR("en.@", "en_US")
-    TEST_CTOR("en_", "en_US")
-    TEST_CTOR("en_.", "en_US")
-    TEST_CTOR("en_.@", "en_US")
-    TEST_CTOR("en.bla", "en_US")
-    TEST_CTOR("en@bla", "en_US")
-    TEST_CTOR("en_blaaa", "en_US")
-    TEST_CTOR("en_zz", "en_US")
+    TEST_CTOR("en", "en_001")
+    TEST_CTOR("en", "en_001")
+    TEST_CTOR("en.", "en_001")
+    TEST_CTOR("en@", "en_001")
+    TEST_CTOR("en.@", "en_001")
+    TEST_CTOR("en_", "en_001")
+    TEST_CTOR("en_.", "en_001")
+    TEST_CTOR("en_.@", "en_001")
+    TEST_CTOR("en.bla", "en_001")
+    TEST_CTOR("en@bla", "en_001")
+    TEST_CTOR("en_blaaa", "en_001")
+    TEST_CTOR("en_zz", "en_001")
     TEST_CTOR("en_GB", "en_GB")
     TEST_CTOR("en_GB.bla", "en_GB")
     TEST_CTOR("en_GB@.bla", "en_GB")
     TEST_CTOR("en_GB@bla", "en_GB")
-    TEST_CTOR("de", "de_DE")
+    TEST_CTOR("en_US", "en_US")
+    TEST_CTOR("en_US.bla", "en_US")
+    TEST_CTOR("en_US@.bla", "en_US")
+    TEST_CTOR("en_US@bla", "en_US")
+    TEST_CTOR("de", "de_AT")
+    TEST_CTOR("de_DE", "de_DE")
 
-    QVERIFY(QLocale::Norwegian == QLocale::NorwegianBokmal);
     TEST_CTOR("nb", "nb_NO")
     TEST_CTOR("nn", "nn_NO")
     TEST_CTOR("nb_NO", "nb_NO")
     TEST_CTOR("nn_NO", "nn_NO")
 
-    TEST_CTOR("DE", "de_DE");
-    TEST_CTOR("EN", "en_US");
+    TEST_CTOR("DE", "de_AT");
+    TEST_CTOR("DE_DE", "de_DE");
+    TEST_CTOR("EN", "en_001");
+    TEST_CTOR("EN_US", "en_US");
 
     TEST_CTOR("en/", defaultLoc)
     TEST_CTOR("asdfghj", defaultLoc);
@@ -1245,9 +1251,9 @@ void tst_QLocale::standaloneDayName_data()
     QTest::newRow("C short")  << QString("C") << QString("Sun") << 7 << QLocale::ShortFormat;
     QTest::newRow("C narrow")  << QString("C") << QString("S") << 7 << QLocale::NarrowFormat;
 
-    QTest::newRow("ru_RU long")  << QString("ru_RU") << QString::fromUtf8("\320\222\320\276\321\201\320\272\321\200\320\265\321\201\320\265\320\275\321\214\320\265") << 7 << QLocale::LongFormat;
-    QTest::newRow("ru_RU short")  << QString("ru_RU") << QString::fromUtf8("\320\222\321\201") << 7 << QLocale::ShortFormat;
-    QTest::newRow("ru_RU narrow")  << QString("ru_RU") << QString::fromUtf8("\320\222") << 7 << QLocale::NarrowFormat;
+    QTest::newRow("ru_RU long")  << QString("ru_RU") << QString::fromUtf8("воскресенье") << 7 << QLocale::LongFormat;
+    QTest::newRow("ru_RU short")  << QString("ru_RU") << QString::fromUtf8("вс") << 7 << QLocale::ShortFormat;
+    QTest::newRow("ru_RU narrow")  << QString("ru_RU") << QString::fromUtf8("вс") << 7 << QLocale::NarrowFormat;
 }
 
 void tst_QLocale::standaloneDayName()
@@ -1549,16 +1555,16 @@ void tst_QLocale::ampm()
     QCOMPARE(c.pmText(), QLatin1String("PM"));
 
     QLocale de("de_DE");
-    QCOMPARE(de.amText(), QLatin1String("vorm."));
-    QCOMPARE(de.pmText(), QLatin1String("nachm."));
+    QCOMPARE(de.amText(), QLatin1String("AM"));
+    QCOMPARE(de.pmText(), QLatin1String("PM"));
 
     QLocale sv("sv_SE");
-    QCOMPARE(sv.amText(), QLatin1String("fm"));
-    QCOMPARE(sv.pmText(), QLatin1String("em"));
+    QCOMPARE(sv.amText(), QString::fromUtf8("förmiddag"));
+    QCOMPARE(sv.pmText(), QString::fromUtf8("eftermiddag"));
 
     QLocale nn("nl_NL");
-    QCOMPARE(nn.amText(), QLatin1String("AM"));
-    QCOMPARE(nn.pmText(), QLatin1String("PM"));
+    QCOMPARE(nn.amText(), QLatin1String("a.m."));
+    QCOMPARE(nn.pmText(), QLatin1String("p.m."));
 
     QLocale ua("uk_UA");
     QCOMPARE(ua.amText(), QString::fromUtf8("\320\264\320\277"));
@@ -1573,8 +1579,8 @@ void tst_QLocale::ampm()
     QCOMPARE(id.pmText(), QLatin1String("PM"));
 
     QLocale ta("ta_LK");
-    QCOMPARE(ta.amText(), QLatin1String("AM"));
-    QCOMPARE(ta.pmText(), QLatin1String("PM"));
+    QCOMPARE(ta.amText(), QString::fromUtf8("முற்பகல்"));
+    QCOMPARE(ta.pmText(), QString::fromUtf8("பிற்பகல்"));
 }
 
 void tst_QLocale::dateFormat()
@@ -1651,18 +1657,18 @@ void tst_QLocale::monthName()
 
     const QLocale de("de_DE");
     QCOMPARE(de.monthName(12, QLocale::LongFormat), QLatin1String("Dezember"));
-    QCOMPARE(de.monthName(12, QLocale::ShortFormat), QLatin1String("Dez"));
+    QCOMPARE(de.monthName(12, QLocale::ShortFormat), QLatin1String("Dez."));
     // 'de' locale doesn't have narrow month name
     QCOMPARE(de.monthName(12, QLocale::NarrowFormat), QLatin1String("D"));
 
     QLocale ru("ru_RU");
-    QCOMPARE(ru.monthName(1, QLocale::LongFormat), QString::fromUtf8("\321\217\320\275\320\262\320\260\321\200\321\217"));
-    QCOMPARE(ru.monthName(1, QLocale::ShortFormat), QString::fromUtf8("\321\217\320\275\320\262"));
-    QCOMPARE(ru.monthName(1, QLocale::NarrowFormat), QString::fromUtf8("\320\257"));
+    QCOMPARE(ru.monthName(1, QLocale::LongFormat), QString::fromUtf8("января"));
+    QCOMPARE(ru.monthName(1, QLocale::ShortFormat), QString::fromUtf8("янв."));
+    QCOMPARE(ru.monthName(1, QLocale::NarrowFormat), QString::fromUtf8("Я"));
 
     // check that our CLDR scripts handle surrogate pairs correctly
     QLocale dsrt("en-Dsrt-US");
-    QCOMPARE(dsrt.monthName(1, QLocale::LongFormat), QString::fromUtf8("\xf0\x90\x90\x96\xf0\x90\x90\xb0\xf0\x90\x91\x8c\xf0\x90\x90\xb7\xf0\x90\x90\xad\xf0\x90\x90\xaf\xf0\x90\x91\x89\xf0\x90\x90\xa8"));
+    QCOMPARE(dsrt.monthName(1, QLocale::LongFormat), QString::fromUtf8("M01"));
 
     QLocale ir("ga_IE");
     QCOMPARE(ir.monthName(1, QLocale::ShortFormat), QLatin1String("Ean"));
@@ -1692,12 +1698,12 @@ void tst_QLocale::standaloneMonthName()
     QCOMPARE(de.standaloneMonthName(12, QLocale::LongFormat), QLatin1String("Dezember"));
     QCOMPARE(de.standaloneMonthName(12, QLocale::LongFormat), de.monthName(12, QLocale::LongFormat));
     QCOMPARE(de.standaloneMonthName(12, QLocale::ShortFormat), QLatin1String("Dez"));
-    QCOMPARE(de.standaloneMonthName(12, QLocale::NarrowFormat), QLatin1String("D"));
+    QCOMPARE(de.standaloneMonthName(12, QLocale::NarrowFormat), QLatin1String("12"));
 
     QLocale ru("ru_RU");
-    QCOMPARE(ru.standaloneMonthName(1, QLocale::LongFormat), QString::fromUtf8("\320\257\320\275\320\262\320\260\321\200\321\214"));
-    QCOMPARE(ru.standaloneMonthName(1, QLocale::ShortFormat), QString::fromUtf8("\320\257\320\275\320\262\56"));
-    QCOMPARE(ru.standaloneMonthName(1, QLocale::NarrowFormat), QString::fromUtf8("\320\257"));
+    QCOMPARE(ru.standaloneMonthName(1, QLocale::LongFormat), QString::fromUtf8("январь"));
+    QCOMPARE(ru.standaloneMonthName(1, QLocale::ShortFormat), QString::fromUtf8("янв."));
+    QCOMPARE(ru.standaloneMonthName(1, QLocale::NarrowFormat), QString::fromUtf8("Я"));
 }
 
 void tst_QLocale::currency()
@@ -1735,8 +1741,8 @@ void tst_QLocale::quoteString()
     QCOMPARE(c.quoteString(someText, QLocale::AlternateQuotation), QString::fromUtf8("\x27" "text" "\x27"));
 
     const QLocale de_CH("de_CH");
-    QCOMPARE(de_CH.quoteString(someText), QString::fromUtf8("\xc2\xab" "text" "\xc2\xbb"));
-    QCOMPARE(de_CH.quoteString(someText, QLocale::AlternateQuotation), QString::fromUtf8("\xe2\x80\xb9" "text" "\xe2\x80\xba"));
+    QCOMPARE(de_CH.quoteString(someText), QString::fromUtf8("„text“"));
+    QCOMPARE(de_CH.quoteString(someText, QLocale::AlternateQuotation), QString::fromUtf8("‚text‘"));
 
 }
 
