@@ -6,6 +6,8 @@
 import os, sys, glob
 import xml.etree.ElementTree as ET
 
+printenumsandexit = ('--printenums' in sys.argv)
+
 def mapcopy(frommap, tomap):
     for key in frommap.keys():
         tomap[key] = frommap[key]
@@ -449,8 +451,10 @@ for language in root.findall('./localeDisplayNames/languages/language'):
         normallanguage = '%sLanguage' % normallanguage
     languagemap[normallanguage] = [languagetype, language.text]
 
-# printenum(languagemap, 'Language')
-printtable(languagemap, 'Language')
+if printenumsandexit:
+    printenum(languagemap, 'Language')
+else:
+    printtable(languagemap, 'Language')
 
 # country parsing
 for country in root.findall('./localeDisplayNames/territories/territory'):
@@ -458,8 +462,10 @@ for country in root.findall('./localeDisplayNames/territories/territory'):
     normalcountry = normalizestring(country.text)
     countrymap[normalcountry] = [countrytype, country.text]
 
-# printenum(countrymap, 'Country')
-printtable(countrymap, 'Country')
+if printenumsandexit:
+    printenum(countrymap, 'Country')
+else:
+    printtable(countrymap, 'Country')
 
 # scripts parsing
 for script in root.findall('./localeDisplayNames/scripts/script'):
@@ -473,8 +479,11 @@ for script in root.findall('./localeDisplayNames/scripts/script'):
         continue
     scriptmap[normalscript] = [scripttype, script.text]
 
-# printenum(scriptmap, 'Script')
-printtable(scriptmap, 'Script')
+if printenumsandexit:
+    printenum(scriptmap, 'Script')
+    sys.exit(0)
+else:
+    printtable(scriptmap, 'Script')
 
 # these defaults are used only as parent locales fallback, actual defaults are set from root
 localedefaults = {
