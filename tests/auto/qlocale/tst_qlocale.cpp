@@ -1750,7 +1750,7 @@ void tst_QLocale::uiLanguages()
 
     const QLocale ru_RU("ru_RU");
     QCOMPARE(ru_RU.uiLanguages().size(), 1);
-    QCOMPARE(ru_RU.uiLanguages().at(0), QLatin1String("ru-RU"));
+    QCOMPARE(ru_RU.uiLanguages().at(0), QLatin1String("ru-Cyrl-RU"));
 }
 
 void tst_QLocale::weekendDays()

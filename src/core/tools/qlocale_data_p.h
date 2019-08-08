@@ -1221,7 +1221,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // C
     {
-        QLocale::Language::Afrikaans, QLocale::Script::AnyScript, QLocale::Country::Namibia,
+        QLocale::Language::Afrikaans, QLocale::Script::LatinScript, QLocale::Country::Namibia,
         // week
         Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
@@ -1255,7 +1255,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "D\0", "W\0", "D\0", "V\0", "S\0" }
     }, // af_NA
     {
-        QLocale::Language::Afrikaans, QLocale::Script::AnyScript, QLocale::Country::SouthAfrica,
+        QLocale::Language::Afrikaans, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica,
         // week
         Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
@@ -1323,7 +1323,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // agq_CM
     {
-        QLocale::Language::Akan, QLocale::Script::AnyScript, QLocale::Country::Ghana,
+        QLocale::Language::Akan, QLocale::Script::LatinScript, QLocale::Country::Ghana,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -2343,7 +2343,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ح\0", "ن\0", "ث\0", "ر\0", "خ\0", "ج\0", "س\0" }
     }, // ar_YE
     {
-        QLocale::Language::Assamese, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Assamese, QLocale::Script::BanglaScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -2411,7 +2411,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // asa_TZ
     {
-        QLocale::Language::Asturian, QLocale::Script::AnyScript, QLocale::Country::Spain,
+        QLocale::Language::Asturian, QLocale::Script::LatinScript, QLocale::Country::Spain,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -2445,7 +2445,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "X\0", "V\0", "S\0" }
     }, // ast_ES
     {
-        QLocale::Language::Azerbaijani, QLocale::Script::AnyScript, QLocale::Country::Azerbaijan,
+        QLocale::Language::Azerbaijani, QLocale::Script::CyrillicScript, QLocale::Country::Azerbaijan,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -2479,7 +2479,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // az_Cyrl_AZ
     {
-        QLocale::Language::Azerbaijani, QLocale::Script::AnyScript, QLocale::Country::Azerbaijan,
+        QLocale::Language::Azerbaijani, QLocale::Script::LatinScript, QLocale::Country::Azerbaijan,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -2581,7 +2581,7 @@ static const QLocalePrivate localeTbl[] = {
         { "н\0", "п\0", "а\0", "с\0", "ч\0", "п\0", "с\0" }
     }, // be_BY
     {
-        QLocale::Language::Bemba, QLocale::Script::AnyScript, QLocale::Country::Zambia,
+        QLocale::Language::Bemba, QLocale::Script::LatinScript, QLocale::Country::Zambia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -2717,7 +2717,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // bm_ML
     {
-        QLocale::Language::Bangla, QLocale::Script::AnyScript, QLocale::Country::Bangladesh,
+        QLocale::Language::Bangla, QLocale::Script::BanglaScript, QLocale::Country::Bangladesh,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -2751,7 +2751,7 @@ static const QLocalePrivate localeTbl[] = {
         { "র\0", "সো\0", "ম\0", "বু\0", "বৃ\0", "শু\0", "শ\0" }
     }, // bn_BD
     {
-        QLocale::Language::Bangla, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Bangla, QLocale::Script::BanglaScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -2785,7 +2785,7 @@ static const QLocalePrivate localeTbl[] = {
         { "র\0", "সো\0", "ম\0", "বু\0", "বৃ\0", "শু\0", "শ\0" }
     }, // bn_IN
     {
-        QLocale::Language::Tibetan, QLocale::Script::AnyScript, QLocale::Country::China,
+        QLocale::Language::Tibetan, QLocale::Script::TibetanScript, QLocale::Country::China,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -2819,7 +2819,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ཉི\0", "ཟླ\0", "མིག\0", "ལྷག\0", "ཕུར\0", "སངས\0", "སྤེན\0" }
     }, // bo_CN
     {
-        QLocale::Language::Tibetan, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Tibetan, QLocale::Script::TibetanScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -2887,7 +2887,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Su\0", "L\0", "Mz\0", "Mc\0", "Y\0", "G\0", "Sa\0" }
     }, // br_FR
     {
-        QLocale::Language::Bodo, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Bodo, QLocale::Script::DevanagariScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -2921,7 +2921,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // brx_IN
     {
-        QLocale::Language::Bosnian, QLocale::Script::AnyScript, QLocale::Country::BosniaAndHerzegovina,
+        QLocale::Language::Bosnian, QLocale::Script::CyrillicScript, QLocale::Country::BosniaAndHerzegovina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -2955,7 +2955,7 @@ static const QLocalePrivate localeTbl[] = {
         { "N\0", "P\0", "U\0", "S\0", "Č\0", "P\0", "S\0" }
     }, // bs_Cyrl_BA
     {
-        QLocale::Language::Bosnian, QLocale::Script::AnyScript, QLocale::Country::BosniaAndHerzegovina,
+        QLocale::Language::Bosnian, QLocale::Script::LatinScript, QLocale::Country::BosniaAndHerzegovina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -2989,7 +2989,7 @@ static const QLocalePrivate localeTbl[] = {
         { "N\0", "P\0", "U\0", "S\0", "Č\0", "P\0", "S\0" }
     }, // bs_Latn_BA
     {
-        QLocale::Language::Catalan, QLocale::Script::AnyScript, QLocale::Country::Andorra,
+        QLocale::Language::Catalan, QLocale::Script::LatinScript, QLocale::Country::Andorra,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3023,7 +3023,7 @@ static const QLocalePrivate localeTbl[] = {
         { "dg\0", "dl\0", "dt\0", "dc\0", "dj\0", "dv\0", "ds\0" }
     }, // ca_AD
     {
-        QLocale::Language::Catalan, QLocale::Script::AnyScript, QLocale::Country::Spain,
+        QLocale::Language::Catalan, QLocale::Script::LatinScript, QLocale::Country::Spain,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3057,7 +3057,7 @@ static const QLocalePrivate localeTbl[] = {
         { "dg\0", "dl\0", "dt\0", "dc\0", "dj\0", "dv\0", "ds\0" }
     }, // ca_ES
     {
-        QLocale::Language::Catalan, QLocale::Script::AnyScript, QLocale::Country::France,
+        QLocale::Language::Catalan, QLocale::Script::LatinScript, QLocale::Country::France,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3091,7 +3091,7 @@ static const QLocalePrivate localeTbl[] = {
         { "dg\0", "dl\0", "dt\0", "dc\0", "dj\0", "dv\0", "ds\0" }
     }, // ca_FR
     {
-        QLocale::Language::Catalan, QLocale::Script::AnyScript, QLocale::Country::Italy,
+        QLocale::Language::Catalan, QLocale::Script::LatinScript, QLocale::Country::Italy,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3193,7 +3193,7 @@ static const QLocalePrivate localeTbl[] = {
         { "𑄢𑄧\0", "𑄥𑄧\0", "𑄟𑄧\0", "𑄝𑄪\0", "𑄝𑄳𑄢𑄨\0", "𑄥𑄪\0", "𑄥𑄧\0" }
     }, // ccp_IN
     {
-        QLocale::Language::Chechen, QLocale::Script::AnyScript, QLocale::Country::Russia,
+        QLocale::Language::Chechen, QLocale::Script::CyrillicScript, QLocale::Country::Russia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3227,7 +3227,7 @@ static const QLocalePrivate localeTbl[] = {
         { "кӀи\0", "ор\0", "ши\0", "кха\0", "еа\0", "пӀе\0", "шуо\0" }
     }, // ce_RU
     {
-        QLocale::Language::Cebuano, QLocale::Script::AnyScript, QLocale::Country::Philippines,
+        QLocale::Language::Cebuano, QLocale::Script::LatinScript, QLocale::Country::Philippines,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3261,7 +3261,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "H\0", "B\0", "S\0" }
     }, // ceb_PH
     {
-        QLocale::Language::Chiga, QLocale::Script::AnyScript, QLocale::Country::Uganda,
+        QLocale::Language::Chiga, QLocale::Script::LatinScript, QLocale::Country::Uganda,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3329,7 +3329,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Ꮖ\0", "Ꮙ\0", "Ꮤ\0", "Ꮶ\0", "Ꮕ\0", "Ꮷ\0", "Ꭴ\0" }
     }, // chr_US
     {
-        QLocale::Language::CentralKurdish, QLocale::Script::AnyScript, QLocale::Country::Iraq,
+        QLocale::Language::CentralKurdish, QLocale::Script::ArabicScript, QLocale::Country::Iraq,
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
@@ -3363,7 +3363,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ی\0", "د\0", "س\0", "چ\0", "پ\0", "ھ\0", "ش\0" }
     }, // ckb_IQ
     {
-        QLocale::Language::CentralKurdish, QLocale::Script::AnyScript, QLocale::Country::Iran,
+        QLocale::Language::CentralKurdish, QLocale::Script::ArabicScript, QLocale::Country::Iran,
         // week
         Qt::Saturday, Qt::Friday, Qt::Friday,
         // symbols
@@ -3397,7 +3397,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ی\0", "د\0", "س\0", "چ\0", "پ\0", "ھ\0", "ش\0" }
     }, // ckb_IR
     {
-        QLocale::Language::Czech, QLocale::Script::AnyScript, QLocale::Country::Czechia,
+        QLocale::Language::Czech, QLocale::Script::LatinScript, QLocale::Country::Czechia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3465,7 +3465,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Н\0", "П\0", "В\0", "С\0", "Ч\0", "П\0", "С\0" }
     }, // cu_RU
     {
-        QLocale::Language::Welsh, QLocale::Script::AnyScript, QLocale::Country::UnitedKingdom,
+        QLocale::Language::Welsh, QLocale::Script::LatinScript, QLocale::Country::UnitedKingdom,
         // week
         Qt::Sunday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3499,7 +3499,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "Ll\0", "M\0", "M\0", "I\0", "G\0", "S\0" }
     }, // cy_GB
     {
-        QLocale::Language::Danish, QLocale::Script::AnyScript, QLocale::Country::Denmark,
+        QLocale::Language::Danish, QLocale::Script::LatinScript, QLocale::Country::Denmark,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3533,7 +3533,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "O\0", "T\0", "F\0", "L\0" }
     }, // da_DK
     {
-        QLocale::Language::Danish, QLocale::Script::AnyScript, QLocale::Country::Greenland,
+        QLocale::Language::Danish, QLocale::Script::LatinScript, QLocale::Country::Greenland,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -3839,7 +3839,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "D\0", "M\0", "D\0", "F\0", "S\0" }
     }, // de_LU
     {
-        QLocale::Language::Zarma, QLocale::Script::AnyScript, QLocale::Country::Niger,
+        QLocale::Language::Zarma, QLocale::Script::LatinScript, QLocale::Country::Niger,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -4043,7 +4043,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ebu_KE
     {
-        QLocale::Language::Ewe, QLocale::Script::AnyScript, QLocale::Country::Ghana,
+        QLocale::Language::Ewe, QLocale::Script::LatinScript, QLocale::Country::Ghana,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -4077,7 +4077,7 @@ static const QLocalePrivate localeTbl[] = {
         { "k\0", "d\0", "b\0", "k\0", "y\0", "f\0", "m\0" }
     }, // ee_GH
     {
-        QLocale::Language::Ewe, QLocale::Script::AnyScript, QLocale::Country::Togo,
+        QLocale::Language::Ewe, QLocale::Script::LatinScript, QLocale::Country::Togo,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -7783,7 +7783,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // eo_001
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::LatinAmerica,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::LatinAmerica,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -7817,7 +7817,7 @@ static const QLocalePrivate localeTbl[] = {
         { "d\0", "l\0", "m\0", "m\0", "j\0", "v\0", "s\0" }
     }, // es_419
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Argentina,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Argentina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -7851,7 +7851,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "J\0", "V\0", "S\0" }
     }, // es_AR
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Bolivia,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Bolivia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -7885,7 +7885,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_BO
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Brazil,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Brazil,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -7919,7 +7919,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_BR
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Belize,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Belize,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -7953,7 +7953,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_BZ
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Chile,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Chile,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -7987,7 +7987,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_CL
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Colombia,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Colombia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8021,7 +8021,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "J\0", "V\0", "S\0" }
     }, // es_CO
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::CostaRica,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::CostaRica,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8055,7 +8055,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_CR
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Cuba,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Cuba,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8089,7 +8089,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_CU
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::DominicanRepublic,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::DominicanRepublic,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8123,7 +8123,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "J\0", "V\0", "S\0" }
     }, // es_DO
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::CeutaAndMelilla,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::CeutaAndMelilla,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8157,7 +8157,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_EA
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Ecuador,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Ecuador,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8191,7 +8191,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_EC
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Spain,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Spain,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8225,7 +8225,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_ES
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::EquatorialGuinea,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::EquatorialGuinea,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8259,7 +8259,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_GQ
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Guatemala,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Guatemala,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8293,7 +8293,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_GT
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Honduras,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Honduras,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8327,7 +8327,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_HN
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::CanaryIslands,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::CanaryIslands,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8361,7 +8361,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_IC
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Mexico,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Mexico,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8395,7 +8395,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "J\0", "V\0", "S\0" }
     }, // es_MX
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Nicaragua,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Nicaragua,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8429,7 +8429,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_NI
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Panama,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Panama,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8463,7 +8463,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_PA
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Peru,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Peru,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8497,7 +8497,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_PE
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Philippines,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Philippines,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8531,7 +8531,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_PH
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::PuertoRico,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::PuertoRico,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8565,7 +8565,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_PR
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Paraguay,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Paraguay,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8599,7 +8599,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_PY
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::ElSalvador,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::ElSalvador,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8633,7 +8633,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_SV
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::UnitedStates,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::UnitedStates,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8667,7 +8667,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "J\0", "V\0", "S\0" }
     }, // es_US
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Uruguay,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Uruguay,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8701,7 +8701,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // es_UY
     {
-        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::Venezuela,
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Venezuela,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8769,7 +8769,7 @@ static const QLocalePrivate localeTbl[] = {
         { "P\0", "E\0", "T\0", "K\0", "N\0", "R\0", "L\0" }
     }, // et_EE
     {
-        QLocale::Language::Basque, QLocale::Script::AnyScript, QLocale::Country::Spain,
+        QLocale::Language::Basque, QLocale::Script::LatinScript, QLocale::Country::Spain,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8837,7 +8837,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ewo_CM
     {
-        QLocale::Language::Persian, QLocale::Script::AnyScript, QLocale::Country::Afghanistan,
+        QLocale::Language::Persian, QLocale::Script::ArabicScript, QLocale::Country::Afghanistan,
         // week
         Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
@@ -8871,7 +8871,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ی\0", "د\0", "س\0", "چ\0", "پ\0", "ج\0", "ش\0" }
     }, // fa_AF
     {
-        QLocale::Language::Persian, QLocale::Script::AnyScript, QLocale::Country::Iran,
+        QLocale::Language::Persian, QLocale::Script::ArabicScript, QLocale::Country::Iran,
         // week
         Qt::Saturday, Qt::Friday, Qt::Friday,
         // symbols
@@ -8905,7 +8905,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ی\0", "د\0", "س\0", "چ\0", "پ\0", "ج\0", "ش\0" }
     }, // fa_IR
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::BurkinaFaso,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::BurkinaFaso,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8939,7 +8939,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_BF
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::Cameroon,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::Cameroon,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -8973,7 +8973,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_CM
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::Ghana,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::Ghana,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -9007,7 +9007,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_GH
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::Gambia,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::Gambia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -9041,7 +9041,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_GM
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::Guinea,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::Guinea,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -9075,7 +9075,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_GN
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::GuineaBissau,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::GuineaBissau,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -9109,7 +9109,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_GW
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::Liberia,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::Liberia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -9143,7 +9143,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_LR
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::Mauritania,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::Mauritania,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -9177,7 +9177,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_MR
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::Niger,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::Niger,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -9211,7 +9211,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_NE
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::Nigeria,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::Nigeria,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -9245,7 +9245,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_NG
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::SierraLeone,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::SierraLeone,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -9279,7 +9279,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_SL
     {
-        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::Senegal,
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::Senegal,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -9313,7 +9313,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ff_Latn_SN
     {
-        QLocale::Language::Finnish, QLocale::Script::AnyScript, QLocale::Country::Finland,
+        QLocale::Language::Finnish, QLocale::Script::LatinScript, QLocale::Country::Finland,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11047,7 +11047,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "J\0", "V\0", "S\0" }
     }, // fur_IT
     {
-        QLocale::Language::WesternFrisian, QLocale::Script::AnyScript, QLocale::Country::Netherlands,
+        QLocale::Language::WesternFrisian, QLocale::Script::LatinScript, QLocale::Country::Netherlands,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11081,7 +11081,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // fy_NL
     {
-        QLocale::Language::Irish, QLocale::Script::AnyScript, QLocale::Country::Ireland,
+        QLocale::Language::Irish, QLocale::Script::LatinScript, QLocale::Country::Ireland,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11115,7 +11115,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "C\0", "D\0", "A\0", "S\0" }
     }, // ga_IE
     {
-        QLocale::Language::ScottishGaelic, QLocale::Script::AnyScript, QLocale::Country::UnitedKingdom,
+        QLocale::Language::ScottishGaelic, QLocale::Script::LatinScript, QLocale::Country::UnitedKingdom,
         // week
         Qt::Sunday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11149,7 +11149,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "C\0", "A\0", "H\0", "S\0" }
     }, // gd_GB
     {
-        QLocale::Language::Galician, QLocale::Script::AnyScript, QLocale::Country::Spain,
+        QLocale::Language::Galician, QLocale::Script::LatinScript, QLocale::Country::Spain,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11183,7 +11183,7 @@ static const QLocalePrivate localeTbl[] = {
         { "d.\0", "l.\0", "m.\0", "m.\0", "x.\0", "v.\0", "s.\0" }
     }, // gl_ES
     {
-        QLocale::Language::SwissGerman, QLocale::Script::AnyScript, QLocale::Country::Switzerland,
+        QLocale::Language::SwissGerman, QLocale::Script::LatinScript, QLocale::Country::Switzerland,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11217,7 +11217,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // gsw_CH
     {
-        QLocale::Language::SwissGerman, QLocale::Script::AnyScript, QLocale::Country::France,
+        QLocale::Language::SwissGerman, QLocale::Script::LatinScript, QLocale::Country::France,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11251,7 +11251,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // gsw_FR
     {
-        QLocale::Language::SwissGerman, QLocale::Script::AnyScript, QLocale::Country::Liechtenstein,
+        QLocale::Language::SwissGerman, QLocale::Script::LatinScript, QLocale::Country::Liechtenstein,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11285,7 +11285,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // gsw_LI
     {
-        QLocale::Language::Gujarati, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Gujarati, QLocale::Script::GujaratiScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -11319,7 +11319,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ર\0", "સો\0", "મં\0", "બુ\0", "ગુ\0", "શુ\0", "શ\0" }
     }, // gu_IN
     {
-        QLocale::Language::Gusii, QLocale::Script::AnyScript, QLocale::Country::Kenya,
+        QLocale::Language::Gusii, QLocale::Script::LatinScript, QLocale::Country::Kenya,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11489,7 +11489,7 @@ static const QLocalePrivate localeTbl[] = {
         { "L\0", "L\0", "T\0", "L\0", "A\0", "J\0", "A\0" }
     }, // ha_NG
     {
-        QLocale::Language::Hawaiian, QLocale::Script::AnyScript, QLocale::Country::UnitedStates,
+        QLocale::Language::Hawaiian, QLocale::Script::LatinScript, QLocale::Country::UnitedStates,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11591,7 +11591,7 @@ static const QLocalePrivate localeTbl[] = {
         { "र\0", "सो\0", "मं\0", "बु\0", "गु\0", "शु\0", "श\0" }
     }, // hi_IN
     {
-        QLocale::Language::Croatian, QLocale::Script::AnyScript, QLocale::Country::BosniaAndHerzegovina,
+        QLocale::Language::Croatian, QLocale::Script::LatinScript, QLocale::Country::BosniaAndHerzegovina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11625,7 +11625,7 @@ static const QLocalePrivate localeTbl[] = {
         { "N\0", "P\0", "U\0", "S\0", "Č\0", "P\0", "S\0" }
     }, // hr_BA
     {
-        QLocale::Language::Croatian, QLocale::Script::AnyScript, QLocale::Country::Croatia,
+        QLocale::Language::Croatian, QLocale::Script::LatinScript, QLocale::Country::Croatia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11693,7 +11693,7 @@ static const QLocalePrivate localeTbl[] = {
         { "n\0", "p\0", "w\0", "s\0", "š\0", "p\0", "s\0" }
     }, // hsb_DE
     {
-        QLocale::Language::Hungarian, QLocale::Script::AnyScript, QLocale::Country::Hungary,
+        QLocale::Language::Hungarian, QLocale::Script::LatinScript, QLocale::Country::Hungary,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11727,7 +11727,7 @@ static const QLocalePrivate localeTbl[] = {
         { "V\0", "H\0", "K\0", "Sz\0", "Cs\0", "P\0", "Sz\0" }
     }, // hu_HU
     {
-        QLocale::Language::Armenian, QLocale::Script::AnyScript, QLocale::Country::Armenia,
+        QLocale::Language::Armenian, QLocale::Script::ArmenianScript, QLocale::Country::Armenia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11829,7 +11829,7 @@ static const QLocalePrivate localeTbl[] = {
         { "M\0", "S\0", "S\0", "R\0", "K\0", "J\0", "S\0" }
     }, // id_ID
     {
-        QLocale::Language::Igbo, QLocale::Script::AnyScript, QLocale::Country::Nigeria,
+        QLocale::Language::Igbo, QLocale::Script::LatinScript, QLocale::Country::Nigeria,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11931,7 +11931,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "Þ\0", "M\0", "F\0", "F\0", "L\0" }
     }, // is_IS
     {
-        QLocale::Language::Italian, QLocale::Script::AnyScript, QLocale::Country::Switzerland,
+        QLocale::Language::Italian, QLocale::Script::LatinScript, QLocale::Country::Switzerland,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11965,7 +11965,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "G\0", "V\0", "S\0" }
     }, // it_CH
     {
-        QLocale::Language::Italian, QLocale::Script::AnyScript, QLocale::Country::Italy,
+        QLocale::Language::Italian, QLocale::Script::LatinScript, QLocale::Country::Italy,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -11999,7 +11999,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "G\0", "V\0", "S\0" }
     }, // it_IT
     {
-        QLocale::Language::Italian, QLocale::Script::AnyScript, QLocale::Country::SanMarino,
+        QLocale::Language::Italian, QLocale::Script::LatinScript, QLocale::Country::SanMarino,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -12033,7 +12033,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "M\0", "G\0", "V\0", "S\0" }
     }, // it_SM
     {
-        QLocale::Language::Italian, QLocale::Script::AnyScript, QLocale::Country::VaticanCity,
+        QLocale::Language::Italian, QLocale::Script::LatinScript, QLocale::Country::VaticanCity,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -12237,7 +12237,7 @@ static const QLocalePrivate localeTbl[] = {
         { "კ\0", "ო\0", "ს\0", "ო\0", "ხ\0", "პ\0", "შ\0" }
     }, // ka_GE
     {
-        QLocale::Language::Kabyle, QLocale::Script::AnyScript, QLocale::Country::Algeria,
+        QLocale::Language::Kabyle, QLocale::Script::LatinScript, QLocale::Country::Algeria,
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
@@ -12271,7 +12271,7 @@ static const QLocalePrivate localeTbl[] = {
         { "C\0", "R\0", "A\0", "H\0", "M\0", "S\0", "D\0" }
     }, // kab_DZ
     {
-        QLocale::Language::Kamba, QLocale::Script::AnyScript, QLocale::Country::Kenya,
+        QLocale::Language::Kamba, QLocale::Script::LatinScript, QLocale::Country::Kenya,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -12305,7 +12305,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // kam_KE
     {
-        QLocale::Language::Makonde, QLocale::Script::AnyScript, QLocale::Country::Tanzania,
+        QLocale::Language::Makonde, QLocale::Script::LatinScript, QLocale::Country::Tanzania,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -12339,7 +12339,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // kde_TZ
     {
-        QLocale::Language::Kabuverdianu, QLocale::Script::AnyScript, QLocale::Country::CapeVerde,
+        QLocale::Language::Kabuverdianu, QLocale::Script::LatinScript, QLocale::Country::CapeVerde,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -12407,7 +12407,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // khq_ML
     {
-        QLocale::Language::Kikuyu, QLocale::Script::AnyScript, QLocale::Country::Kenya,
+        QLocale::Language::Kikuyu, QLocale::Script::LatinScript, QLocale::Country::Kenya,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -12509,7 +12509,7 @@ static const QLocalePrivate localeTbl[] = {
         { "so\0", "lu\0", "ma\0", "mɛ\0", "ye\0", "va\0", "ms\0" }
     }, // kkj_CM
     {
-        QLocale::Language::Kalaallisut, QLocale::Script::AnyScript, QLocale::Country::Greenland,
+        QLocale::Language::Kalaallisut, QLocale::Script::LatinScript, QLocale::Country::Greenland,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -12543,7 +12543,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // kl_GL
     {
-        QLocale::Language::Kalenjin, QLocale::Script::AnyScript, QLocale::Country::Kenya,
+        QLocale::Language::Kalenjin, QLocale::Script::LatinScript, QLocale::Country::Kenya,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -12611,7 +12611,7 @@ static const QLocalePrivate localeTbl[] = {
         { "អ\0", "ច\0", "អ\0", "ព\0", "ព\0", "ស\0", "ស\0" }
     }, // km_KH
     {
-        QLocale::Language::Kannada, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Kannada, QLocale::Script::KannadaScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -12645,7 +12645,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ಭಾ\0", "ಸೋ\0", "ಮಂ\0", "ಬು\0", "ಗು\0", "ಶು\0", "ಶ\0" }
     }, // kn_IN
     {
-        QLocale::Language::Korean, QLocale::Script::AnyScript, QLocale::Country::NorthKorea,
+        QLocale::Language::Korean, QLocale::Script::KoreanScript, QLocale::Country::NorthKorea,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -12679,7 +12679,7 @@ static const QLocalePrivate localeTbl[] = {
         { "일\0", "월\0", "화\0", "수\0", "목\0", "금\0", "토\0" }
     }, // ko_KP
     {
-        QLocale::Language::Korean, QLocale::Script::AnyScript, QLocale::Country::SouthKorea,
+        QLocale::Language::Korean, QLocale::Script::KoreanScript, QLocale::Country::SouthKorea,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -12713,7 +12713,7 @@ static const QLocalePrivate localeTbl[] = {
         { "일\0", "월\0", "화\0", "수\0", "목\0", "금\0", "토\0" }
     }, // ko_KR
     {
-        QLocale::Language::Konkani, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Konkani, QLocale::Script::DevanagariScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -13053,7 +13053,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "D\0", "M\0", "D\0", "F\0", "S\0" }
     }, // lb_LU
     {
-        QLocale::Language::Ganda, QLocale::Script::AnyScript, QLocale::Country::Uganda,
+        QLocale::Language::Ganda, QLocale::Script::LatinScript, QLocale::Country::Uganda,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13121,7 +13121,7 @@ static const QLocalePrivate localeTbl[] = {
         { "A\0", "W\0", "N\0", "Y\0", "T\0", "Z\0", "O\0" }
     }, // lkt_US
     {
-        QLocale::Language::Lingala, QLocale::Script::AnyScript, QLocale::Country::Angola,
+        QLocale::Language::Lingala, QLocale::Script::LatinScript, QLocale::Country::Angola,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13155,7 +13155,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ln_AO
     {
-        QLocale::Language::Lingala, QLocale::Script::AnyScript, QLocale::Country::CongoKinshasa,
+        QLocale::Language::Lingala, QLocale::Script::LatinScript, QLocale::Country::CongoKinshasa,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13189,7 +13189,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ln_CD
     {
-        QLocale::Language::Lingala, QLocale::Script::AnyScript, QLocale::Country::CentralAfricanRepublic,
+        QLocale::Language::Lingala, QLocale::Script::LatinScript, QLocale::Country::CentralAfricanRepublic,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13223,7 +13223,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // ln_CF
     {
-        QLocale::Language::Lingala, QLocale::Script::AnyScript, QLocale::Country::CongoBrazzaville,
+        QLocale::Language::Lingala, QLocale::Script::LatinScript, QLocale::Country::CongoBrazzaville,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13291,7 +13291,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ອາ\0", "ຈ\0", "ອ\0", "ພ\0", "ພຫ\0", "ສຸ\0", "ສ\0" }
     }, // lo_LA
     {
-        QLocale::Language::NorthernLuri, QLocale::Script::AnyScript, QLocale::Country::Iraq,
+        QLocale::Language::NorthernLuri, QLocale::Script::ArabicScript, QLocale::Country::Iraq,
         // week
         Qt::Saturday, Qt::Friday, Qt::Saturday,
         // symbols
@@ -13325,7 +13325,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // lrc_IQ
     {
-        QLocale::Language::NorthernLuri, QLocale::Script::AnyScript, QLocale::Country::Iran,
+        QLocale::Language::NorthernLuri, QLocale::Script::ArabicScript, QLocale::Country::Iran,
         // week
         Qt::Saturday, Qt::Friday, Qt::Friday,
         // symbols
@@ -13359,7 +13359,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // lrc_IR
     {
-        QLocale::Language::Lithuanian, QLocale::Script::AnyScript, QLocale::Country::Lithuania,
+        QLocale::Language::Lithuanian, QLocale::Script::LatinScript, QLocale::Country::Lithuania,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13393,7 +13393,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "P\0", "A\0", "T\0", "K\0", "P\0", "Š\0" }
     }, // lt_LT
     {
-        QLocale::Language::LubaKatanga, QLocale::Script::AnyScript, QLocale::Country::CongoKinshasa,
+        QLocale::Language::LubaKatanga, QLocale::Script::LatinScript, QLocale::Country::CongoKinshasa,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13427,7 +13427,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // lu_CD
     {
-        QLocale::Language::Luo, QLocale::Script::AnyScript, QLocale::Country::Kenya,
+        QLocale::Language::Luo, QLocale::Script::LatinScript, QLocale::Country::Kenya,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13461,7 +13461,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // luo_KE
     {
-        QLocale::Language::Luyia, QLocale::Script::AnyScript, QLocale::Country::Kenya,
+        QLocale::Language::Luyia, QLocale::Script::LatinScript, QLocale::Country::Kenya,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13597,7 +13597,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // mas_TZ
     {
-        QLocale::Language::Meru, QLocale::Script::AnyScript, QLocale::Country::Kenya,
+        QLocale::Language::Meru, QLocale::Script::LatinScript, QLocale::Country::Kenya,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13631,7 +13631,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // mer_KE
     {
-        QLocale::Language::Morisyen, QLocale::Script::AnyScript, QLocale::Country::Mauritius,
+        QLocale::Language::Morisyen, QLocale::Script::LatinScript, QLocale::Country::Mauritius,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13699,7 +13699,7 @@ static const QLocalePrivate localeTbl[] = {
         { "A\0", "A\0", "T\0", "A\0", "A\0", "Z\0", "A\0" }
     }, // mg_MG
     {
-        QLocale::Language::MakhuwaMeetto, QLocale::Script::AnyScript, QLocale::Country::Mozambique,
+        QLocale::Language::MakhuwaMeetto, QLocale::Script::LatinScript, QLocale::Country::Mozambique,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -13835,7 +13835,7 @@ static const QLocalePrivate localeTbl[] = {
         { "н\0", "п\0", "в\0", "с\0", "ч\0", "п\0", "с\0" }
     }, // mk_MK
     {
-        QLocale::Language::Malayalam, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Malayalam, QLocale::Script::MalayalamScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -14141,7 +14141,7 @@ static const QLocalePrivate localeTbl[] = {
         { "တ\0", "တ\0", "အ\0", "ဗ\0", "က\0", "သ\0", "စ\0" }
     }, // my_MM
     {
-        QLocale::Language::Mazanderani, QLocale::Script::AnyScript, QLocale::Country::Iran,
+        QLocale::Language::Mazanderani, QLocale::Script::ArabicScript, QLocale::Country::Iran,
         // week
         Qt::Saturday, Qt::Friday, Qt::Friday,
         // symbols
@@ -14311,7 +14311,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // nd_ZW
     {
-        QLocale::Language::LowGerman, QLocale::Script::AnyScript, QLocale::Country::Germany,
+        QLocale::Language::LowGerman, QLocale::Script::LatinScript, QLocale::Country::Germany,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14345,7 +14345,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "D\0", "M\0", "D\0", "F\0", "S\0" }
     }, // nds_DE
     {
-        QLocale::Language::LowGerman, QLocale::Script::AnyScript, QLocale::Country::Netherlands,
+        QLocale::Language::LowGerman, QLocale::Script::LatinScript, QLocale::Country::Netherlands,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14379,7 +14379,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "D\0", "M\0", "D\0", "F\0", "S\0" }
     }, // nds_NL
     {
-        QLocale::Language::Nepali, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Nepali, QLocale::Script::DevanagariScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -14413,7 +14413,7 @@ static const QLocalePrivate localeTbl[] = {
         { "आ\0", "सो\0", "म\0", "बु\0", "बि\0", "शु\0", "श\0" }
     }, // ne_IN
     {
-        QLocale::Language::Nepali, QLocale::Script::AnyScript, QLocale::Country::Nepal,
+        QLocale::Language::Nepali, QLocale::Script::DevanagariScript, QLocale::Country::Nepal,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14447,7 +14447,7 @@ static const QLocalePrivate localeTbl[] = {
         { "आ\0", "सो\0", "म\0", "बु\0", "बि\0", "शु\0", "श\0" }
     }, // ne_NP
     {
-        QLocale::Language::Dutch, QLocale::Script::AnyScript, QLocale::Country::Aruba,
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::Aruba,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14481,7 +14481,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Z\0", "M\0", "D\0", "W\0", "D\0", "V\0", "Z\0" }
     }, // nl_AW
     {
-        QLocale::Language::Dutch, QLocale::Script::AnyScript, QLocale::Country::Belgium,
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::Belgium,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14515,7 +14515,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Z\0", "M\0", "D\0", "W\0", "D\0", "V\0", "Z\0" }
     }, // nl_BE
     {
-        QLocale::Language::Dutch, QLocale::Script::AnyScript, QLocale::Country::CaribbeanNetherlands,
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::CaribbeanNetherlands,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14549,7 +14549,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Z\0", "M\0", "D\0", "W\0", "D\0", "V\0", "Z\0" }
     }, // nl_BQ
     {
-        QLocale::Language::Dutch, QLocale::Script::AnyScript, QLocale::Country::Curacao,
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::Curacao,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14583,7 +14583,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Z\0", "M\0", "D\0", "W\0", "D\0", "V\0", "Z\0" }
     }, // nl_CW
     {
-        QLocale::Language::Dutch, QLocale::Script::AnyScript, QLocale::Country::Netherlands,
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::Netherlands,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14617,7 +14617,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Z\0", "M\0", "D\0", "W\0", "D\0", "V\0", "Z\0" }
     }, // nl_NL
     {
-        QLocale::Language::Dutch, QLocale::Script::AnyScript, QLocale::Country::Suriname,
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::Suriname,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14651,7 +14651,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Z\0", "M\0", "D\0", "W\0", "D\0", "V\0", "Z\0" }
     }, // nl_SR
     {
-        QLocale::Language::Dutch, QLocale::Script::AnyScript, QLocale::Country::SintMaarten,
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::SintMaarten,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14821,7 +14821,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // nus_SS
     {
-        QLocale::Language::Nyankole, QLocale::Script::AnyScript, QLocale::Country::Uganda,
+        QLocale::Language::Nyankole, QLocale::Script::LatinScript, QLocale::Country::Uganda,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14923,7 +14923,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // om_KE
     {
-        QLocale::Language::Odia, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Odia, QLocale::Script::OdiaScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -14957,7 +14957,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ର\0", "ସୋ\0", "ମ\0", "ବୁ\0", "ଗୁ\0", "ଶୁ\0", "ଶ\0" }
     }, // or_IN
     {
-        QLocale::Language::Ossetic, QLocale::Script::AnyScript, QLocale::Country::Georgia,
+        QLocale::Language::Ossetic, QLocale::Script::CyrillicScript, QLocale::Country::Georgia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -14991,7 +14991,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Х\0", "К\0", "Д\0", "Ӕ\0", "Ц\0", "М\0", "С\0" }
     }, // os_GE
     {
-        QLocale::Language::Ossetic, QLocale::Script::AnyScript, QLocale::Country::Russia,
+        QLocale::Language::Ossetic, QLocale::Script::CyrillicScript, QLocale::Country::Russia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -15025,7 +15025,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Х\0", "К\0", "Д\0", "Ӕ\0", "Ц\0", "М\0", "С\0" }
     }, // os_RU
     {
-        QLocale::Language::Punjabi, QLocale::Script::AnyScript, QLocale::Country::Pakistan,
+        QLocale::Language::Punjabi, QLocale::Script::ArabicScript, QLocale::Country::Pakistan,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -15059,7 +15059,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ਐ\0", "ਸੋ\0", "ਮੰ\0", "ਬੁੱ\0", "ਵੀ\0", "ਸ਼ੁੱ\0", "ਸ਼\0" }
     }, // pa_Arab_PK
     {
-        QLocale::Language::Punjabi, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Punjabi, QLocale::Script::GurmukhiScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -15093,7 +15093,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ਐ\0", "ਸੋ\0", "ਮੰ\0", "ਬੁੱ\0", "ਵੀ\0", "ਸ਼ੁੱ\0", "ਸ਼\0" }
     }, // pa_Guru_IN
     {
-        QLocale::Language::Polish, QLocale::Script::AnyScript, QLocale::Country::Poland,
+        QLocale::Language::Polish, QLocale::Script::LatinScript, QLocale::Country::Poland,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -15161,7 +15161,7 @@ static const QLocalePrivate localeTbl[] = {
         { "N\0", "P\0", "W\0", "P\0", "K\0", "P\0", "S\0" }
     }, // prg_001
     {
-        QLocale::Language::Pashto, QLocale::Script::AnyScript, QLocale::Country::Afghanistan,
+        QLocale::Language::Pashto, QLocale::Script::ArabicScript, QLocale::Country::Afghanistan,
         // week
         Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
@@ -15195,7 +15195,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // ps_AF
     {
-        QLocale::Language::Pashto, QLocale::Script::AnyScript, QLocale::Country::Pakistan,
+        QLocale::Language::Pashto, QLocale::Script::ArabicScript, QLocale::Country::Pakistan,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -15739,7 +15739,7 @@ static const QLocalePrivate localeTbl[] = {
         { "D\0", "L\0", "M\0", "X\0", "J\0", "V\0", "S\0" }
     }, // qu_PE
     {
-        QLocale::Language::Romansh, QLocale::Script::AnyScript, QLocale::Country::Switzerland,
+        QLocale::Language::Romansh, QLocale::Script::LatinScript, QLocale::Country::Switzerland,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -15909,7 +15909,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // rof_TZ
     {
-        QLocale::Language::Russian, QLocale::Script::AnyScript, QLocale::Country::Belarus,
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Belarus,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -15943,7 +15943,7 @@ static const QLocalePrivate localeTbl[] = {
         { "вс\0", "пн\0", "вт\0", "ср\0", "чт\0", "пт\0", "сб\0" }
     }, // ru_BY
     {
-        QLocale::Language::Russian, QLocale::Script::AnyScript, QLocale::Country::Kyrgyzstan,
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Kyrgyzstan,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -15977,7 +15977,7 @@ static const QLocalePrivate localeTbl[] = {
         { "вс\0", "пн\0", "вт\0", "ср\0", "чт\0", "пт\0", "сб\0" }
     }, // ru_KG
     {
-        QLocale::Language::Russian, QLocale::Script::AnyScript, QLocale::Country::Kazakhstan,
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Kazakhstan,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -16011,7 +16011,7 @@ static const QLocalePrivate localeTbl[] = {
         { "вс\0", "пн\0", "вт\0", "ср\0", "чт\0", "пт\0", "сб\0" }
     }, // ru_KZ
     {
-        QLocale::Language::Russian, QLocale::Script::AnyScript, QLocale::Country::Moldova,
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Moldova,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -16045,7 +16045,7 @@ static const QLocalePrivate localeTbl[] = {
         { "вс\0", "пн\0", "вт\0", "ср\0", "чт\0", "пт\0", "сб\0" }
     }, // ru_MD
     {
-        QLocale::Language::Russian, QLocale::Script::AnyScript, QLocale::Country::Russia,
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Russia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -16079,7 +16079,7 @@ static const QLocalePrivate localeTbl[] = {
         { "вс\0", "пн\0", "вт\0", "ср\0", "чт\0", "пт\0", "сб\0" }
     }, // ru_RU
     {
-        QLocale::Language::Russian, QLocale::Script::AnyScript, QLocale::Country::Ukraine,
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Ukraine,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -16181,7 +16181,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // rwk_TZ
     {
-        QLocale::Language::Sakha, QLocale::Script::AnyScript, QLocale::Country::Russia,
+        QLocale::Language::Sakha, QLocale::Script::CyrillicScript, QLocale::Country::Russia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -16419,7 +16419,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "V\0", "M\0", "G\0", "D\0", "B\0", "L\0" }
     }, // se_SE
     {
-        QLocale::Language::Sena, QLocale::Script::AnyScript, QLocale::Country::Mozambique,
+        QLocale::Language::Sena, QLocale::Script::LatinScript, QLocale::Country::Mozambique,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -16521,7 +16521,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // sg_CF
     {
-        QLocale::Language::Tachelhit, QLocale::Script::AnyScript, QLocale::Country::Morocco,
+        QLocale::Language::Tachelhit, QLocale::Script::LatinScript, QLocale::Country::Morocco,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -16555,7 +16555,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // shi_Latn_MA
     {
-        QLocale::Language::Tachelhit, QLocale::Script::AnyScript, QLocale::Country::Morocco,
+        QLocale::Language::Tachelhit, QLocale::Script::TifinaghScript, QLocale::Country::Morocco,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -16623,7 +16623,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ඉ\0", "ස\0", "අ\0", "බ\0", "බ්‍ර\0", "සි\0", "සෙ\0" }
     }, // si_LK
     {
-        QLocale::Language::Slovak, QLocale::Script::AnyScript, QLocale::Country::Slovakia,
+        QLocale::Language::Slovak, QLocale::Script::LatinScript, QLocale::Country::Slovakia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -16657,7 +16657,7 @@ static const QLocalePrivate localeTbl[] = {
         { "n\0", "p\0", "u\0", "s\0", "š\0", "p\0", "s\0" }
     }, // sk_SK
     {
-        QLocale::Language::Slovenian, QLocale::Script::AnyScript, QLocale::Country::Slovenia,
+        QLocale::Language::Slovenian, QLocale::Script::LatinScript, QLocale::Country::Slovenia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -16997,7 +16997,7 @@ static const QLocalePrivate localeTbl[] = {
         { "d\0", "h\0", "m\0", "m\0", "e\0", "p\0", "sh\0" }
     }, // sq_XK
     {
-        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::BosniaAndHerzegovina,
+        QLocale::Language::Serbian, QLocale::Script::CyrillicScript, QLocale::Country::BosniaAndHerzegovina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17031,7 +17031,7 @@ static const QLocalePrivate localeTbl[] = {
         { "н\0", "п\0", "у\0", "с\0", "ч\0", "п\0", "с\0" }
     }, // sr_Cyrl_BA
     {
-        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::Montenegro,
+        QLocale::Language::Serbian, QLocale::Script::CyrillicScript, QLocale::Country::Montenegro,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17065,7 +17065,7 @@ static const QLocalePrivate localeTbl[] = {
         { "н\0", "п\0", "у\0", "с\0", "ч\0", "п\0", "с\0" }
     }, // sr_Cyrl_ME
     {
-        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::Serbia,
+        QLocale::Language::Serbian, QLocale::Script::CyrillicScript, QLocale::Country::Serbia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17099,7 +17099,7 @@ static const QLocalePrivate localeTbl[] = {
         { "н\0", "п\0", "у\0", "с\0", "ч\0", "п\0", "с\0" }
     }, // sr_Cyrl_RS
     {
-        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::Kosovo,
+        QLocale::Language::Serbian, QLocale::Script::CyrillicScript, QLocale::Country::Kosovo,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17133,7 +17133,7 @@ static const QLocalePrivate localeTbl[] = {
         { "н\0", "п\0", "у\0", "с\0", "ч\0", "п\0", "с\0" }
     }, // sr_Cyrl_XK
     {
-        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::BosniaAndHerzegovina,
+        QLocale::Language::Serbian, QLocale::Script::LatinScript, QLocale::Country::BosniaAndHerzegovina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17167,7 +17167,7 @@ static const QLocalePrivate localeTbl[] = {
         { "н\0", "п\0", "у\0", "с\0", "ч\0", "п\0", "с\0" }
     }, // sr_Latn_BA
     {
-        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::Montenegro,
+        QLocale::Language::Serbian, QLocale::Script::LatinScript, QLocale::Country::Montenegro,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17201,7 +17201,7 @@ static const QLocalePrivate localeTbl[] = {
         { "н\0", "п\0", "у\0", "с\0", "ч\0", "п\0", "с\0" }
     }, // sr_Latn_ME
     {
-        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::Serbia,
+        QLocale::Language::Serbian, QLocale::Script::LatinScript, QLocale::Country::Serbia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17235,7 +17235,7 @@ static const QLocalePrivate localeTbl[] = {
         { "н\0", "п\0", "у\0", "с\0", "ч\0", "п\0", "с\0" }
     }, // sr_Latn_RS
     {
-        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::Kosovo,
+        QLocale::Language::Serbian, QLocale::Script::LatinScript, QLocale::Country::Kosovo,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17371,7 +17371,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "O\0", "T\0", "F\0", "L\0" }
     }, // sv_SE
     {
-        QLocale::Language::Swahili, QLocale::Script::AnyScript, QLocale::Country::CongoKinshasa,
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::CongoKinshasa,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17405,7 +17405,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // sw_CD
     {
-        QLocale::Language::Swahili, QLocale::Script::AnyScript, QLocale::Country::Kenya,
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::Kenya,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17439,7 +17439,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // sw_KE
     {
-        QLocale::Language::Swahili, QLocale::Script::AnyScript, QLocale::Country::Tanzania,
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::Tanzania,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17473,7 +17473,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // sw_TZ
     {
-        QLocale::Language::Swahili, QLocale::Script::AnyScript, QLocale::Country::Uganda,
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::Uganda,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17507,7 +17507,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // sw_UG
     {
-        QLocale::Language::Tamil, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Tamil, QLocale::Script::TamilScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -17541,7 +17541,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ஞா\0", "தி\0", "செ\0", "பு\0", "வி\0", "வெ\0", "ச\0" }
     }, // ta_IN
     {
-        QLocale::Language::Tamil, QLocale::Script::AnyScript, QLocale::Country::SriLanka,
+        QLocale::Language::Tamil, QLocale::Script::TamilScript, QLocale::Country::SriLanka,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17575,7 +17575,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ஞா\0", "தி\0", "செ\0", "பு\0", "வி\0", "வெ\0", "ச\0" }
     }, // ta_LK
     {
-        QLocale::Language::Tamil, QLocale::Script::AnyScript, QLocale::Country::Malaysia,
+        QLocale::Language::Tamil, QLocale::Script::TamilScript, QLocale::Country::Malaysia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17609,7 +17609,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ஞா\0", "தி\0", "செ\0", "பு\0", "வி\0", "வெ\0", "ச\0" }
     }, // ta_MY
     {
-        QLocale::Language::Tamil, QLocale::Script::AnyScript, QLocale::Country::Singapore,
+        QLocale::Language::Tamil, QLocale::Script::TamilScript, QLocale::Country::Singapore,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17643,7 +17643,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ஞா\0", "தி\0", "செ\0", "பு\0", "வி\0", "வெ\0", "ச\0" }
     }, // ta_SG
     {
-        QLocale::Language::Telugu, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Telugu, QLocale::Script::TeluguScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -17677,7 +17677,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ఆ\0", "సో\0", "మ\0", "బు\0", "గు\0", "శు\0", "శ\0" }
     }, // te_IN
     {
-        QLocale::Language::Teso, QLocale::Script::AnyScript, QLocale::Country::Kenya,
+        QLocale::Language::Teso, QLocale::Script::LatinScript, QLocale::Country::Kenya,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17711,7 +17711,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // teo_KE
     {
-        QLocale::Language::Teso, QLocale::Script::AnyScript, QLocale::Country::Uganda,
+        QLocale::Language::Teso, QLocale::Script::LatinScript, QLocale::Country::Uganda,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17813,7 +17813,7 @@ static const QLocalePrivate localeTbl[] = {
         { "อา\0", "จ\0", "อ\0", "พ\0", "พฤ\0", "ศ\0", "ส\0" }
     }, // th_TH
     {
-        QLocale::Language::Tigrinya, QLocale::Script::AnyScript, QLocale::Country::Eritrea,
+        QLocale::Language::Tigrinya, QLocale::Script::EthiopicScript, QLocale::Country::Eritrea,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -17847,7 +17847,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ሰ\0", "ሰ\0", "ሰ\0", "ረ\0", "ሓ\0", "ዓ\0", "ቀ\0" }
     }, // ti_ER
     {
-        QLocale::Language::Tigrinya, QLocale::Script::AnyScript, QLocale::Country::Ethiopia,
+        QLocale::Language::Tigrinya, QLocale::Script::EthiopicScript, QLocale::Country::Ethiopia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18017,7 +18017,7 @@ static const QLocalePrivate localeTbl[] = {
         { "P\0", "P\0", "S\0", "Ç\0", "P\0", "C\0", "C\0" }
     }, // tr_TR
     {
-        QLocale::Language::Tatar, QLocale::Script::AnyScript, QLocale::Country::Russia,
+        QLocale::Language::Tatar, QLocale::Script::CyrillicScript, QLocale::Country::Russia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18153,7 +18153,7 @@ static const QLocalePrivate localeTbl[] = {
         { "ي\0", "د\0", "س\0", "چ\0", "پ\0", "ج\0", "ش\0" }
     }, // ug_CN
     {
-        QLocale::Language::Ukrainian, QLocale::Script::AnyScript, QLocale::Country::Ukraine,
+        QLocale::Language::Ukrainian, QLocale::Script::CyrillicScript, QLocale::Country::Ukraine,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18187,7 +18187,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Н\0", "П\0", "В\0", "С\0", "Ч\0", "П\0", "С\0" }
     }, // uk_UA
     {
-        QLocale::Language::Urdu, QLocale::Script::AnyScript, QLocale::Country::India,
+        QLocale::Language::Urdu, QLocale::Script::ArabicScript, QLocale::Country::India,
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
@@ -18221,7 +18221,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // ur_IN
     {
-        QLocale::Language::Urdu, QLocale::Script::AnyScript, QLocale::Country::Pakistan,
+        QLocale::Language::Urdu, QLocale::Script::ArabicScript, QLocale::Country::Pakistan,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18255,7 +18255,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // ur_PK
     {
-        QLocale::Language::Uzbek, QLocale::Script::AnyScript, QLocale::Country::Afghanistan,
+        QLocale::Language::Uzbek, QLocale::Script::ArabicScript, QLocale::Country::Afghanistan,
         // week
         Qt::Saturday, Qt::Thursday, Qt::Friday,
         // symbols
@@ -18289,7 +18289,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Y\0", "D\0", "S\0", "C\0", "P\0", "J\0", "S\0" }
     }, // uz_Arab_AF
     {
-        QLocale::Language::Uzbek, QLocale::Script::AnyScript, QLocale::Country::Uzbekistan,
+        QLocale::Language::Uzbek, QLocale::Script::CyrillicScript, QLocale::Country::Uzbekistan,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18323,7 +18323,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Y\0", "D\0", "S\0", "C\0", "P\0", "J\0", "S\0" }
     }, // uz_Cyrl_UZ
     {
-        QLocale::Language::Uzbek, QLocale::Script::AnyScript, QLocale::Country::Uzbekistan,
+        QLocale::Language::Uzbek, QLocale::Script::LatinScript, QLocale::Country::Uzbekistan,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18357,7 +18357,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Y\0", "D\0", "S\0", "C\0", "P\0", "J\0", "S\0" }
     }, // uz_Latn_UZ
     {
-        QLocale::Language::Vai, QLocale::Script::AnyScript, QLocale::Country::Liberia,
+        QLocale::Language::Vai, QLocale::Script::LatinScript, QLocale::Country::Liberia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18391,7 +18391,7 @@ static const QLocalePrivate localeTbl[] = {
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // vai_Latn_LR
     {
-        QLocale::Language::Vai, QLocale::Script::AnyScript, QLocale::Country::Liberia,
+        QLocale::Language::Vai, QLocale::Script::VaiScript, QLocale::Country::Liberia,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18595,7 +18595,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Dib\0", "Alt\0", "Tal\0", "Àla\0", "Alx\0", "Àjj\0", "Ase\0" }
     }, // wo_SN
     {
-        QLocale::Language::Xhosa, QLocale::Script::AnyScript, QLocale::Country::SouthAfrica,
+        QLocale::Language::Xhosa, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18629,7 +18629,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // xh_ZA
     {
-        QLocale::Language::Soga, QLocale::Script::AnyScript, QLocale::Country::Uganda,
+        QLocale::Language::Soga, QLocale::Script::LatinScript, QLocale::Country::Uganda,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18799,7 +18799,7 @@ static const QLocalePrivate localeTbl[] = {
         { "À\0", "A\0", "Ì\0", "Ọ\0", "Ọ\0", "Ẹ\0", "À\0" }
     }, // yo_NG
     {
-        QLocale::Language::Cantonese, QLocale::Script::AnyScript, QLocale::Country::China,
+        QLocale::Language::Cantonese, QLocale::Script::SimplifiedScript, QLocale::Country::China,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18833,7 +18833,7 @@ static const QLocalePrivate localeTbl[] = {
         { "日\0", "一\0", "二\0", "三\0", "四\0", "五\0", "六\0" }
     }, // yue_Hans_CN
     {
-        QLocale::Language::Cantonese, QLocale::Script::AnyScript, QLocale::Country::HongKongSARChina,
+        QLocale::Language::Cantonese, QLocale::Script::TraditionalScript, QLocale::Country::HongKongSARChina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18867,7 +18867,7 @@ static const QLocalePrivate localeTbl[] = {
         { "日\0", "一\0", "二\0", "三\0", "四\0", "五\0", "六\0" }
     }, // yue_Hant_HK
     {
-        QLocale::Language::StandardMoroccanTamazight, QLocale::Script::AnyScript, QLocale::Country::Morocco,
+        QLocale::Language::StandardMoroccanTamazight, QLocale::Script::TifinaghScript, QLocale::Country::Morocco,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18901,7 +18901,7 @@ static const QLocalePrivate localeTbl[] = {
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" }
     }, // zgh_MA
     {
-        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::China,
+        QLocale::Language::Chinese, QLocale::Script::SimplifiedScript, QLocale::Country::China,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18935,7 +18935,7 @@ static const QLocalePrivate localeTbl[] = {
         { "日\0", "一\0", "二\0", "三\0", "四\0", "五\0", "六\0" }
     }, // zh_Hans_CN
     {
-        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::HongKongSARChina,
+        QLocale::Language::Chinese, QLocale::Script::SimplifiedScript, QLocale::Country::HongKongSARChina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -18969,7 +18969,7 @@ static const QLocalePrivate localeTbl[] = {
         { "日\0", "一\0", "二\0", "三\0", "四\0", "五\0", "六\0" }
     }, // zh_Hans_HK
     {
-        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::MacaoSARChina,
+        QLocale::Language::Chinese, QLocale::Script::SimplifiedScript, QLocale::Country::MacaoSARChina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -19003,7 +19003,7 @@ static const QLocalePrivate localeTbl[] = {
         { "日\0", "一\0", "二\0", "三\0", "四\0", "五\0", "六\0" }
     }, // zh_Hans_MO
     {
-        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Singapore,
+        QLocale::Language::Chinese, QLocale::Script::SimplifiedScript, QLocale::Country::Singapore,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -19037,7 +19037,7 @@ static const QLocalePrivate localeTbl[] = {
         { "日\0", "一\0", "二\0", "三\0", "四\0", "五\0", "六\0" }
     }, // zh_Hans_SG
     {
-        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::HongKongSARChina,
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::HongKongSARChina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -19071,7 +19071,7 @@ static const QLocalePrivate localeTbl[] = {
         { "日\0", "一\0", "二\0", "三\0", "四\0", "五\0", "六\0" }
     }, // zh_Hant_HK
     {
-        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::MacaoSARChina,
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::MacaoSARChina,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -19105,7 +19105,7 @@ static const QLocalePrivate localeTbl[] = {
         { "日\0", "一\0", "二\0", "三\0", "四\0", "五\0", "六\0" }
     }, // zh_Hant_MO
     {
-        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Taiwan,
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Taiwan,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
@@ -19139,7 +19139,7 @@ static const QLocalePrivate localeTbl[] = {
         { "日\0", "一\0", "二\0", "三\0", "四\0", "五\0", "六\0" }
     }, // zh_Hant_TW
     {
-        QLocale::Language::Zulu, QLocale::Script::AnyScript, QLocale::Country::SouthAfrica,
+        QLocale::Language::Zulu, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica,
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols

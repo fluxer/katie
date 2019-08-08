@@ -424,9 +424,13 @@ for parentlocale in root.findall('./parentLocales/parentLocale'):
     localeparentmap[parentlocaleparent] = parentlocalelocales.split(' ')
 
 # locale to script parsing
+# TODO: multiple, alternative scripts and territories handling
 for suppllanguage in root.findall('./languageData/language'):
     suppllanguagetype = suppllanguage.get('type')
     suppllanguagescripts = suppllanguage.get('scripts')
+    if not suppllanguagescripts:
+        # alternative entry, skip it
+        continue
     localescriptmap[suppllanguagetype] = suppllanguagescripts
 
 # locale to first day parsing
@@ -595,6 +599,10 @@ def readlocale(fromxml, tomap, isparent):
     country = root.find('./identity/territory')
     countrytype = None
     currencytype = None
+    script = root.find('./identity/script')
+    scripttype = None
+    if script is not None:
+        scripttype = script.get('type')
     numbertype = 'latn' # CLDR default
 
     locale = os.path.basename(xml)
@@ -641,10 +649,16 @@ def readlocale(fromxml, tomap, isparent):
 
     # find values from supplemental maps
     if not isparent:
-        for key in scriptmap.keys():
-            if localescriptmap[langtype] == scriptmap[key][0]:
-                tomap[locale]['script'] = 'QLocale::Script::%s' % key
-                break
+        if scripttype:
+            for key in scriptmap.keys():
+                if scriptmap[key][0] == scripttype:
+                    tomap[locale]['script'] = 'QLocale::Script::%s' % key
+                    break
+        else:
+            for key in scriptmap.keys():
+                if scriptmap[key][0] == localescriptmap[langtype]:
+                    tomap[locale]['script'] = 'QLocale::Script::%s' % key
+                    break
 
     for key in localefirstdaymap.keys():
         for countryvalue in localefirstdaymap[key]:
