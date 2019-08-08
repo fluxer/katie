@@ -581,15 +581,15 @@ QLocale::QLocale()
 
 QLocale::QLocale(Language language, Country country)
 {
-    const QLocalePrivate *d = QLocalePrivate::findLocale(language, QLocale::AnyScript, country);
+    const QLocalePrivate *dd = QLocalePrivate::findLocale(language, QLocale::AnyScript, country);
 
     // If not found, should default to system
-    if (d->languageId() == QLocale::C && language != QLocale::C) {
+    if (dd->languageId() == QLocale::C && language != QLocale::C) {
         p.numberOptions = default_number_options;
         p.index = localePrivateIndex(defaultPrivate());
     } else {
         p.numberOptions = 0;
-        p.index = localePrivateIndex(d);
+        p.index = localePrivateIndex(dd);
     }
 }
 \
@@ -619,15 +619,15 @@ QLocale::QLocale(Language language, Country country)
 
 QLocale::QLocale(Language language, Script script, Country country)
 {
-    const QLocalePrivate *d = QLocalePrivate::findLocale(language, script, country);
+    const QLocalePrivate *dd = QLocalePrivate::findLocale(language, script, country);
 
     // If not found, should default to system
-    if (d->languageId() == QLocale::C && language != QLocale::C) {
+    if (dd->languageId() == QLocale::C && language != QLocale::C) {
         p.numberOptions = default_number_options;
         p.index = localePrivateIndex(defaultPrivate());
     } else {
         p.numberOptions = 0;
-        p.index = localePrivateIndex(d);
+        p.index = localePrivateIndex(dd);
     }
 }
 
@@ -2936,18 +2936,18 @@ QString QLocale::toCurrencyString(qlonglong value, const QString &symbol) const
             return res.toString();
     }
 #endif
-    const QLocalePrivate *d = this->d();
-    const char* currency_negative_format = d->m_currency_negative_format;
+    const QLocalePrivate *dd = this->d();
+    const char* currency_negative_format = dd->m_currency_negative_format;
     bool tonegative = false;
     if (currency_negative_format && value < 0) {
         tonegative = true;
         value = -value;
     }
-    QString str = d->longLongToString(value);
+    QString str = dd->longLongToString(value);
     QString sym = symbol.isNull() ? currencySymbol() : symbol;
     if (sym.isEmpty())
         sym = currencySymbol(QLocale::CurrencyIsoCode);
-    QString format = (tonegative ? getLocaleData(currency_negative_format) : getLocaleData(d->m_currency_format));
+    QString format = (tonegative ? getLocaleData(currency_negative_format) : getLocaleData(dd->m_currency_format));
     return format.arg(str, sym);
 }
 
@@ -2965,12 +2965,12 @@ QString QLocale::toCurrencyString(qulonglong value, const QString &symbol) const
             return res.toString();
     }
 #endif
-    const QLocalePrivate *d = this->d();
-    QString str = d->unsLongLongToString(value);
+    const QLocalePrivate *dd = this->d();
+    QString str = dd->unsLongLongToString(value);
     QString sym = symbol.isNull() ? currencySymbol() : symbol;
     if (sym.isEmpty())
         sym = currencySymbol(QLocale::CurrencyIsoCode);
-    QString format = getLocaleData(d->m_currency_format);
+    QString format = getLocaleData(dd->m_currency_format);
     return format.arg(str, sym);
 }
 
@@ -2988,19 +2988,19 @@ QString QLocale::toCurrencyString(double value, const QString &symbol) const
             return res.toString();
     }
 #endif
-    const QLocalePrivate *d = this->d();
-    const char* currency_negative_format = d->m_currency_negative_format;
+    const QLocalePrivate *dd = this->d();
+    const char* currency_negative_format = dd->m_currency_negative_format;
     bool tonegative = false;
     if (currency_negative_format && value < 0) {
         tonegative = true;
         value = -value;
     }
-    QString str = d->doubleToString(value, d->m_currency_digits,
-                                    QLocalePrivate::DFDecimal);
+    QString str = dd->doubleToString(value, dd->m_currency_digits,
+                                     QLocalePrivate::DFDecimal);
     QString sym = symbol.isNull() ? currencySymbol() : symbol;
     if (sym.isEmpty())
         sym = currencySymbol(QLocale::CurrencyIsoCode);
-    QString format = (tonegative ? getLocaleData(currency_negative_format) : getLocaleData(d->m_currency_format));
+    QString format = (tonegative ? getLocaleData(currency_negative_format) : getLocaleData(dd->m_currency_format));
     return format.arg(str, sym);
 }
 
