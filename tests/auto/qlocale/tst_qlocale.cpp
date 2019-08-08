@@ -1535,10 +1535,10 @@ void tst_QLocale::defaultNumeringSystem()
     QCOMPARE(pa.toString(123), QLatin1String("123"));
 
     QLocale ne("ne_IN");
-    QCOMPARE(ne.toString(123), QLatin1String("123"));
+    QCOMPARE(ne.toString(123), QString::fromUtf8("१२३"));
 
     QLocale mr("mr_IN");
-    QCOMPARE(mr.toString(123), QLatin1String("123"));
+    QCOMPARE(mr.toString(123), QString::fromUtf8("१२३"));
 
     QLocale ml("ml_IN");
     QCOMPARE(ml.toString(123), QLatin1String("123"));
