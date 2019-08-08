@@ -494,9 +494,6 @@ int QDate::weekNumber(int *yearNumber) const
 
 QString QDate::shortMonthName(int month, QDate::MonthNameType type)
 {
-    if (month < 1 || month > 12) {
-        month = 1;
-    }
     switch (type) {
     case QDate::DateFormat:
         return QLocale::system().monthName(month, QLocale::ShortFormat);
@@ -539,9 +536,6 @@ QString QDate::shortMonthName(int month, QDate::MonthNameType type)
 
 QString QDate::longMonthName(int month, MonthNameType type)
 {
-    if (month < 1 || month > 12) {
-        month = 1;
-    }
     switch (type) {
     case QDate::DateFormat:
         return QLocale::system().monthName(month, QLocale::LongFormat);
@@ -579,9 +573,6 @@ QString QDate::longMonthName(int month, MonthNameType type)
 
 QString QDate::shortDayName(int weekday, MonthNameType type)
 {
-    if (weekday < 1 || weekday > 7) {
-        weekday = 1;
-    }
     switch (type) {
     case QDate::DateFormat:
         return QLocale::system().dayName(weekday, QLocale::ShortFormat);
@@ -619,9 +610,6 @@ QString QDate::shortDayName(int weekday, MonthNameType type)
 
 QString QDate::longDayName(int weekday, MonthNameType type)
 {
-    if (weekday < 1 || weekday > 7) {
-        weekday = 1;
-    }
     switch (type) {
     case QDate::DateFormat:
         return QLocale::system().dayName(weekday, QLocale::LongFormat);
