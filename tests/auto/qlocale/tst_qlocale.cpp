@@ -949,11 +949,11 @@ void tst_QLocale::formatDateTime_data()
     QTest::newRow("5nn_NO") << "nn_NO" << QDateTime(QDate(1974, 1, 1), QTime(15, 14, 13))
                             << "dd/MM/yyy z" << "01/01/74y 0";
     QTest::newRow("6nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
-                            << "ddd/MMM/yy AP" << "man./des./74 PM";
+                            << "ddd/MMM/yy AP" << "mån./des./74 E.M.";
     QTest::newRow("7nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
-                            << "dddd/MMMM/y apa" << "mandag/desember/y pmpm";
+                            << "dddd/MMMM/y apa" << "måndag/desember/y e.m.em";
     QTest::newRow("8nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
-                            << "ddddd/MMMMM/yy ss" << "mandag2/desember12/74 13";
+                            << "ddddd/MMMMM/yy ss" << "måndag2/desember12/74 13";
     QTest::newRow("9nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                             << "'dddd'/MMMM/yy s" << "dddd/desember/74 13";
     QTest::newRow("10nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 4, 13))
@@ -1204,9 +1204,9 @@ void tst_QLocale::dayName_data()
     QTest::newRow("C short")  << QString("C") << QString("Sun") << 7 << QLocale::ShortFormat;
     QTest::newRow("C narrow")  << QString("C") << QString("7") << 7 << QLocale::NarrowFormat;
 
-    QTest::newRow("ru_RU long")  << QString("ru_RU") << QString::fromUtf8("\320\262\320\276\321\201\320\272\321\200\320\265\321\201\320\265\320\275\321\214\320\265") << 7 << QLocale::LongFormat;
-    QTest::newRow("ru_RU short")  << QString("ru_RU") << QString::fromUtf8("\320\262\321\201") << 7 << QLocale::ShortFormat;
-    QTest::newRow("ru_RU narrow")  << QString("ru_RU") << QString::fromUtf8("\320\222") << 7 << QLocale::NarrowFormat;
+    QTest::newRow("ru_RU long")  << QString("ru_RU") << QString::fromUtf8("воскресенье") << 7 << QLocale::LongFormat;
+    QTest::newRow("ru_RU short")  << QString("ru_RU") << QString::fromUtf8("вс") << 7 << QLocale::ShortFormat;
+    QTest::newRow("ru_RU narrow")  << QString("ru_RU") << QString::fromUtf8("вс") << 7 << QLocale::NarrowFormat;
 }
 
 void tst_QLocale::dayName()
@@ -1252,7 +1252,7 @@ void tst_QLocale::standaloneDayName_data()
 
     QTest::newRow("ru_RU long")  << QString("ru_RU") << QString::fromUtf8("воскресенье") << 7 << QLocale::LongFormat;
     QTest::newRow("ru_RU short")  << QString("ru_RU") << QString::fromUtf8("вс") << 7 << QLocale::ShortFormat;
-    QTest::newRow("ru_RU narrow")  << QString("ru_RU") << QString::fromUtf8("вс") << 7 << QLocale::NarrowFormat;
+    QTest::newRow("ru_RU narrow")  << QString("ru_RU") << QString::fromUtf8("В") << 7 << QLocale::NarrowFormat;
 }
 
 void tst_QLocale::standaloneDayName()
@@ -1707,10 +1707,10 @@ void tst_QLocale::currency()
     QCOMPARE(c.toCurrencyString(double(-1234.56)), QString("-1234.56"));
 
     const QLocale ru_RU("ru_RU");
-    QCOMPARE(ru_RU.toCurrencyString(qulonglong(1234)), QString::fromUtf8("1234\xc2\xa0\xd1\x80\xd1\x83\xd0\xb1."));
-    QCOMPARE(ru_RU.toCurrencyString(qlonglong(-1234)), QString::fromUtf8("-1234\xc2\xa0\xd1\x80\xd1\x83\xd0\xb1."));
-    QCOMPARE(ru_RU.toCurrencyString(double(1234.56)), QString::fromUtf8("1234,56\xc2\xa0\xd1\x80\xd1\x83\xd0\xb1."));
-    QCOMPARE(ru_RU.toCurrencyString(double(-1234.56)), QString::fromUtf8("-1234,56\xc2\xa0\xd1\x80\xd1\x83\xd0\xb1."));
+    QCOMPARE(ru_RU.toCurrencyString(qulonglong(1234)), QString::fromUtf8("1234 ₽"));
+    QCOMPARE(ru_RU.toCurrencyString(qlonglong(-1234)), QString::fromUtf8("-1234 ₽"));
+    QCOMPARE(ru_RU.toCurrencyString(double(1234.56)), QString::fromUtf8("1234,56 ₽"));
+    QCOMPARE(ru_RU.toCurrencyString(double(-1234.56)), QString::fromUtf8("-1234,56 ₽"));
 
     const QLocale de_DE("de_DE");
     QCOMPARE(de_DE.toCurrencyString(qulonglong(1234)), QString::fromUtf8("1234\xc2\xa0\xe2\x82\xac"));
