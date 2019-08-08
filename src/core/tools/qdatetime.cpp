@@ -4564,7 +4564,7 @@ int QDateTimeParser::parseSection(const QDateTime &currentValue, int sectionInde
                     if (skipToNextSection(sectionIndex, currentValue, digitsStr)) {
                         state = Acceptable;
                         const int missingZeroes = sectionmaxsize - digitsStr.size();
-                        text.insert(index, QString().fill(QLatin1Char('0'), missingZeroes));
+                        text.insert(index, QString(missingZeroes, QLatin1Char('0')));
                         used = sectionmaxsize;
                         cursorPosition += missingZeroes;
                     } else {
