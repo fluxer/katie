@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #-*- coding: UTF-8 -*-
 
-# Data is from https://unicode.org/Public/cldr/35/core.zip
+# Data is from https://unicode.org/Public/cldr/35.1/core.zip
 
 import os, sys, glob
 import xml.etree.ElementTree as ET
@@ -216,9 +216,9 @@ def normalizestring(fromstring):
 
 # printenum prints mapped values that have unique code only, the rest are set to the enum of the
 # first occurence. the reason for doing so is because table lookups for figuring out language,
-# script and country that is required for constructing QLocale from string (named locales) relies
-# on the fact that there is only one code for each, if that is not the case constructing copy of
-# locale from its name will not copy it correctly. printtable skips duplicate code entries entirely
+# script and country required for constructing QLocale from string (named locales) relies on the
+# fact that there is only one code for each, if that is not the case constructing copy of locale
+# from its name will not copy it correctly. printtable skips duplicate code entries entirely
 def printenum(frommap, prefix):
     keyscount = 0
     aliaseslist = []
