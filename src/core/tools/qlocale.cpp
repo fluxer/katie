@@ -43,9 +43,9 @@
 #include "qstringlist.h"
 #include "qvariant.h"
 #include "qnumeric.h"
+#include "qlocale_data_p.h"
 
 QT_BEGIN_NAMESPACE
-
 
 #ifndef QT_NO_SYSTEMLOCALE
 static QSystemLocale *_systemLocale = 0;
@@ -68,11 +68,6 @@ extern bool qt_u_strToLower(const QString &str, QString *out, const QLocale &loc
 /******************************************************************************
 ** Helpers for accessing Qt locale database
 */
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "qlocale_data_p.h"
-QT_END_INCLUDE_NAMESPACE
-
 QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
 {
     const QString lower = code.toLower();
