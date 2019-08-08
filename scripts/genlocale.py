@@ -103,7 +103,6 @@ def todatetimeformat(fromformat):
         'l',
         'w',
         'f',
-        'g',
         'e',
         'c',
         'k',
