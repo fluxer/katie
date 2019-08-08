@@ -174,7 +174,7 @@ static const QLocalePrivate *systemPrivate()
 {
 #ifndef QT_NO_SYSTEMLOCALE
     // copy over the information from the fallback locale and modify
-    if (!system_lp || system_lp->m_language == 0)
+    if (!system_lp || system_lp->m_language == QLocale::AnyLanguage)
         QLocalePrivate::updateSystemPrivate();
 
     return system_lp;
