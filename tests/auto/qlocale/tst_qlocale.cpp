@@ -399,7 +399,7 @@ void tst_QLocale::emptyCtor()
     // Get default locale.
     QProcess p;
     p.setEnvironment(env);
-    p.start("syslocaleapp/syslocaleapp");
+    p.start(m_sysLocaleApp);
     p.waitForReadyRead();
     QString defaultLoc = QString(p.readAll());
     p.waitForFinished();
