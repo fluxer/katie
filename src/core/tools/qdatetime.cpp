@@ -826,7 +826,7 @@ bool QDate::setDate(int year, int month, int day)
 
     \sa year(), month(), day(), isValid()
 */
-void QDate::getDate(int *year, int *month, int *day)
+void QDate::getDate(int *year, int *month, int *day) const
 {
     getDateFromJulianDay(jd, year, month, day);
 }

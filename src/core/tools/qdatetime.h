@@ -79,7 +79,7 @@ public:
     bool setYMD(int y, int m, int d);
     bool setDate(int year, int month, int day);
 
-    void getDate(int *year, int *month, int *day);
+    void getDate(int *year, int *month, int *day) const;
 
     QDate addDays(int days) const;
     QDate addMonths(int months) const;
