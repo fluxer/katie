@@ -550,7 +550,7 @@ localedefaults = {
     'list_pattern_part_mid': "%1, %2",
     'list_pattern_part_end': "%1, %2",
     'list_pattern_part_two': "%1, %2",
-    'short_date_format': 'd MMM yyyy',
+    'short_date_format': 'd MMM yyyy', # default in CLDR is y-MM-dd
     'long_date_format': 'd MMMM yyyy',
     'short_time_format': 'HH:mm:ss',
     'long_time_format': 'HH:mm:ss z',
@@ -760,8 +760,7 @@ def readlocale(fromxml, tomap, isparent):
         if not calendartype == 'gregorian':
             # all values should be from gregorian calendar
             continue
-        dateformat = calendar.find('./dateFormats/dateFormatLength')
-        if dateformat is not None:
+        for dateformat in calendar.findall('./dateFormats/dateFormatLength'):
             dateformattype = dateformat.get('type')
             if dateformattype == 'short':
                 pattern = dateformat.find('./dateFormat/pattern')
@@ -770,8 +769,7 @@ def readlocale(fromxml, tomap, isparent):
                 pattern = dateformat.find('./dateFormat/pattern')
                 tomap[locale]['long_date_format'] = todatetimeformat(pattern.text)
 
-        timeformat = calendar.find('./timeFormats/timeFormatLength')
-        if timeformat is not None:
+        for timeformat in calendar.findall('./timeFormats/timeFormatLength'):
             timeformattype = timeformat.get('type')
             if timeformattype == 'short':
                 pattern = timeformat.find('./timeFormat/pattern')

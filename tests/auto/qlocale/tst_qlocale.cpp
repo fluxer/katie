@@ -1589,19 +1589,16 @@ void tst_QLocale::dateFormat()
     QCOMPARE(c.dateFormat(QLocale::NarrowFormat), c.dateFormat(QLocale::ShortFormat));
 
     const QLocale nn("nn_NO");
-    QCOMPARE(nn.dateFormat(QLocale::NarrowFormat), QLatin1String("dd.MM.yy"));
-    QCOMPARE(nn.dateFormat(QLocale::ShortFormat), QLatin1String("dd.MM.yy"));
-    QCOMPARE(nn.dateFormat(QLocale::LongFormat), QLatin1String("dddd d. MMMM yyyy"));
+    QCOMPARE(nn.dateFormat(QLocale::NarrowFormat), QLatin1String("dd.MM.y"));
+    QCOMPARE(nn.dateFormat(QLocale::ShortFormat), QLatin1String("dd.MM.y"));
+    QCOMPARE(nn.dateFormat(QLocale::LongFormat), QLatin1String("d. MMMM y"));
 
     const QLocale ca("en_CA");
-    QCOMPARE(ca.dateFormat(QLocale::ShortFormat), QLatin1String("M/d/yy"));
-    QCOMPARE(ca.dateFormat(QLocale::LongFormat), QLatin1String("dddd, MMMM d, yyyy"));
+    QCOMPARE(ca.dateFormat(QLocale::ShortFormat), QLatin1String("y-MM-dd"));
+    QCOMPARE(ca.dateFormat(QLocale::LongFormat), QLatin1String("MMMM d, y"));
 
     const QLocale ja("ja_JP");
-    QCOMPARE(ja.dateFormat(QLocale::ShortFormat), QLatin1String("yyyy/MM/dd"));
-
-    const QLocale ir("ga_IE");
-    QCOMPARE(ir.dateFormat(QLocale::ShortFormat), QLatin1String("dd/MM/yyyy"));
+    QCOMPARE(ja.dateFormat(QLocale::ShortFormat), QLatin1String("y/MM/dd"));
 }
 
 void tst_QLocale::timeFormat()
@@ -1611,21 +1608,17 @@ void tst_QLocale::timeFormat()
     QCOMPARE(c.timeFormat(QLocale::NarrowFormat), c.timeFormat(QLocale::ShortFormat));
 
     const QLocale nn("nn_NO");
-    QCOMPARE(nn.timeFormat(QLocale::NarrowFormat), QLatin1String("HH:mm:ss"));
+    QCOMPARE(nn.timeFormat(QLocale::NarrowFormat), QLatin1String("HH:mm"));
     QCOMPARE(nn.timeFormat(QLocale::ShortFormat), QLatin1String("HH:mm"));
-    QCOMPARE(nn.timeFormat(QLocale::LongFormat), QLatin1String("'kl'. HH:mm:ss t"));
+    QCOMPARE(nn.timeFormat(QLocale::LongFormat), QLatin1String("HH:mm:ss z"));
 
-    const QLocale id("id_ID");
-    QCOMPARE(id.timeFormat(QLocale::ShortFormat), QLatin1String("HH.mm"));
-    QCOMPARE(id.timeFormat(QLocale::LongFormat), QLatin1String("HH.mm.ss t"));
+    const QLocale en("en_FJ");
+    QCOMPARE(en.timeFormat(QLocale::ShortFormat), QLatin1String("h:mm a"));
+    QCOMPARE(en.timeFormat(QLocale::LongFormat), QLatin1String("h:mm:ss a z"));
 
     const QLocale cat("ca_ES");
-    QCOMPARE(cat.timeFormat(QLocale::ShortFormat), QLatin1String("H.mm"));
-    QCOMPARE(cat.timeFormat(QLocale::LongFormat), QLatin1String("H.mm.ss t"));
-
-    const QLocale bra("pt_BR");
-    QCOMPARE(bra.timeFormat(QLocale::ShortFormat), QLatin1String("HH:mm"));
-    QCOMPARE(bra.timeFormat(QLocale::LongFormat), QLatin1String("HH:mm:ss t"));
+    QCOMPARE(cat.timeFormat(QLocale::ShortFormat), QLatin1String("H:mm"));
+    QCOMPARE(cat.timeFormat(QLocale::LongFormat), QLatin1String("H:mm:ss z"));
 }
 
 void tst_QLocale::dateTimeFormat()
@@ -1635,9 +1628,9 @@ void tst_QLocale::dateTimeFormat()
     QCOMPARE(c.dateTimeFormat(QLocale::NarrowFormat), c.dateTimeFormat(QLocale::ShortFormat));
 
     const QLocale nn("nn_NO");
-    QCOMPARE(nn.dateTimeFormat(QLocale::NarrowFormat), QLatin1String("d MMM yyyy HH:mm:ss"));
-    QCOMPARE(nn.dateTimeFormat(QLocale::ShortFormat), QLatin1String("dd.MM.yy HH:mm"));
-    QCOMPARE(nn.dateTimeFormat(QLocale::LongFormat), QLatin1String("dddd d. MMMM yyyy 'kl'. HH:mm:ss t"));
+    QCOMPARE(nn.dateTimeFormat(QLocale::NarrowFormat), QLatin1String("dd.MM.y HH:mm"));
+    QCOMPARE(nn.dateTimeFormat(QLocale::ShortFormat), QLatin1String("dd.MM.y HH:mm"));
+    QCOMPARE(nn.dateTimeFormat(QLocale::LongFormat), QLatin1String("d. MMMM y HH:mm:ss z"));
 }
 
 void tst_QLocale::monthName()
