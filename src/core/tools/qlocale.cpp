@@ -48,14 +48,15 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_SYSTEMLOCALE
-static QSystemLocale *_systemLocale = 0;
+static const qint16 systemLocaleIndex = localeTblSize + 1;
+static QSystemLocale *_systemLocale = Q_NULLPTR;
 class QSystemLocaleSingleton: public QSystemLocale
 {
 public:
     QSystemLocaleSingleton() : QSystemLocale(true) {}
 };
 Q_GLOBAL_STATIC(QSystemLocaleSingleton, QSystemLocale_globalSystemLocale)
-static QLocalePrivate *system_lp = 0;
+static QLocalePrivate *system_lp = Q_NULLPTR;
 Q_GLOBAL_STATIC(QLocalePrivate, globalLocalePrivate)
 #endif
 
@@ -219,7 +220,7 @@ const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLo
             return &localeTbl[i];
     }
 
-    return defaultPrivate();
+    return &localeTbl[0];
 }
 
 static bool parse_locale_tag(const QString &input, int &i, QString *result, const QString &separators)
@@ -401,7 +402,7 @@ QSystemLocale::QSystemLocale(bool)
 QSystemLocale::~QSystemLocale()
 {
     if (_systemLocale == this) {
-        _systemLocale = 0;
+        _systemLocale = Q_NULLPTR;
 
         if (system_lp)
             system_lp->m_language = QLocale::AnyLanguage;
@@ -497,6 +498,10 @@ QDataStream &operator>>(QDataStream &ds, QLocale &l)
 
 static quint16 localePrivateIndex(const QLocalePrivate *p)
 {
+#ifndef QT_NO_SYSTEMLOCALE
+    if (p && p == system_lp)
+        return systemLocaleIndex;
+#endif
     for (qint16 i = 0; i < localeTblSize; i++) {
         if (p->m_language == localeTbl[i].m_language
             && p->m_country == localeTbl[i].m_country
@@ -638,11 +643,11 @@ QLocale::QLocale(const QLocale &other)
 const QLocalePrivate *QLocale::d() const
 {
 #ifndef QT_NO_SYSTEMLOCALE
-    Q_ASSERT(p.index <= localeTblSize);
-    if (p.index == localeTblSize)
+    Q_ASSERT(p.index <= systemLocaleIndex);
+    if (p.index == systemLocaleIndex)
         return system_lp;
 #else
-    Q_ASSERT(p.index < localeTblSize);
+    Q_ASSERT(p.index < systemLocaleIndex);
 #endif
 
     return &localeTbl[p.index];
