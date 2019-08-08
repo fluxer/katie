@@ -3987,7 +3987,7 @@ bool QDateTimeParser::parseFormat(const QString &newFormat)
                     newSectionNodes.append(sn);
                     appendSeparator(&newSeparators, newFormat, index, i - index, lastQuote);
                     newDisplay |= AmPmSection;
-                    if (i + 1 < newFormat.size()
+                    if (i + 1 < max
                         && newFormat.at(i+1) == (cap ? QLatin1Char('P') : QLatin1Char('p'))) {
                         ++i;
                     }
@@ -4040,15 +4040,15 @@ bool QDateTimeParser::parseFormat(const QString &newFormat)
     }
 
     if ((newDisplay & (AmPmSection|Hour12Section)) == Hour12Section) {
-        const int max = newSectionNodes.size();
-        for (int i=0; i<max; ++i) {
+        const int count = newSectionNodes.size();
+        for (int i = 0; i < count; ++i) {
             SectionNode &node = newSectionNodes[i];
             if (node.type == Hour12Section)
                 node.type = Hour24Section;
         }
     }
 
-    if (index < newFormat.size()) {
+    if (index < max) {
         appendSeparator(&newSeparators, newFormat, index, index - max, lastQuote);
     } else {
         newSeparators.append(QString());
@@ -4268,7 +4268,6 @@ int QDateTimeParser::parseSection(const QDateTime &currentValue, int sectionInde
             break;
         }
         if (state != Invalid) {
-            QString str = text;
             text.replace(index, used, sectiontext.left(used));
         }
         break; }
@@ -4288,7 +4287,6 @@ int QDateTimeParser::parseSection(const QDateTime &currentValue, int sectionInde
 
             if (num != -1) {
                 state = (used == sectiontext.size() ? Acceptable : Intermediate);
-                QString str = text;
                 text.replace(index, used, sectiontext.left(used));
             } else {
                 state = Intermediate;
@@ -4371,7 +4369,7 @@ int QDateTimeParser::parseSection(const QDateTime &currentValue, int sectionInde
                     if (skipToNextSection(sectionIndex, currentValue, digitsStr)) {
                         state = Acceptable;
                         const int missingZeroes = sectionmaxsize - digitsStr.size();
-                        text.insert(index, QString().fill(QLatin1Char('0'), missingZeroes));
+                        text.insert(index, QString(missingZeroes, QLatin1Char('0')));
                         used = sectionmaxsize;
                         cursorPosition += missingZeroes;
                     } else {
@@ -4889,9 +4887,9 @@ int QDateTimeParser::findDay(const QString &str1, int startDay, int sectionIndex
 
 */
 
-int QDateTimeParser::findAmPm(QString &str, int index, int *used) const
+int QDateTimeParser::findAmPm(QString &str, int sectionIndex, int *used) const
 {
-    const SectionNode &s = sectionNode(index);
+    const SectionNode &s = sectionNode(sectionIndex);
     if (Q_UNLIKELY(s.type != AmPmSection)) {
         qWarning("QDateTimeParser::findAmPm Internal error");
         return -1;
@@ -4902,7 +4900,7 @@ int QDateTimeParser::findAmPm(QString &str, int index, int *used) const
         return PossibleBoth;
     }
     const QLatin1Char space(' ');
-    int size = sectionMaxSize(index);
+    int size = sectionMaxSize(sectionIndex);
 
     enum {
         amindex = 0,
