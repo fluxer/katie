@@ -959,7 +959,7 @@ void tst_QLocale::formatDateTime_data()
     QTest::newRow("6nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
                             << "ddd/MMM/yy AP" << "mån./des./74 E.M.";
     QTest::newRow("7nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
-                            << "dddd/MMMM/y apa" << "måndag/desember/y e.m.em";
+                            << "dddd/MMMM/y apa" << "måndag/desember/y e.m.e.m";
     QTest::newRow("8nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
                             << "ddddd/MMMMM/yy ss" << "måndag2/desember12/74 13";
     QTest::newRow("9nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
