@@ -186,9 +186,8 @@ const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLo
     } else {
         // both script and country are explicitly specified
         for (qint16 i = 0; i < localeTblSize; i++) {
-            if (localeTbl[i].m_script == script && localeTbl[i].m_country == country) {
+            if (localeTbl[i].m_language == language && localeTbl[i].m_script == script && localeTbl[i].m_country == country)
                 return &localeTbl[i];
-            }
         }
     }
 
