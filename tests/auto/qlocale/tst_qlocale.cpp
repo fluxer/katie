@@ -368,8 +368,9 @@ void tst_QLocale::ctor()
     TEST_CTOR("zh_Hant_MO", Chinese, TraditionalHanScript, Macao)
     TEST_CTOR("az_Latn_AZ", Azerbaijani, LatinScript, Azerbaijan)
     TEST_CTOR("ha_NG", Hausa, AnyScript, Nigeria)
-    // TODO: enable once locale names substitution is implemented
-    // TEST_CTOR("ha_Latn_NG", Hausa, AnyScript, Nigeria)
+    // substitutions
+    TEST_CTOR("ha_Latn_GH", Hausa, AnyScript, Ghana)
+    TEST_CTOR("ha_Latn_NG", Hausa, AnyScript, Nigeria)
 
 #undef TEST_CTOR
 }

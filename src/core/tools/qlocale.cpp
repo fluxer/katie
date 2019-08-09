@@ -519,6 +519,12 @@ static quint16 localePrivateIndex(const QLocalePrivate *p)
 QLocale::QLocale(const QString &name)
 {
     p.numberOptions = 0;
+    for (qint16 i = 0; i < languageAliasTblSize; i++) {
+        if (languageAliasTbl[i].original == name) {
+            p.index = localePrivateIndex(findLocale(languageAliasTbl[i].substitute));
+            return;
+        }
+    }
     p.index = localePrivateIndex(findLocale(name));
 }
 

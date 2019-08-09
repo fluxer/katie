@@ -388,6 +388,7 @@ languagemap = {}
 countrymap = {}
 scriptmap = {}
 localemap = {}
+languagealiasmap = {}
 # main lists
 imperiallist = []
 # cross-reference maps
@@ -431,7 +432,7 @@ for parentlocale in root.findall('./parentLocales/parentLocale'):
 # only languages with one primary script are mapped because if there are multiple it should be
 # specified in the locale data, see:
 # https://sites.google.com/site/cldr/development/updating-codes/update-language-script-info/language-script-description
-# secondary scripts are not taken into account at all.
+# secondary scripts are not taken into account at all
 for suppllanguage in root.findall('./languageData/language'):
     suppllanguagetype = suppllanguage.get('type')
     suppllanguagescripts = suppllanguage.get('scripts')
@@ -502,7 +503,7 @@ for language in root.findall('./localeDisplayNames/languages/language'):
     languagetype = language.get('type')
     normallanguage = normalizestring(language.text)
     if normallanguage in ('Nauru', 'Tokelau', 'Tuvalu'):
-        # countries and language are the same, suffix to solve enum clashes
+        # country and language are the same, suffix to solve enum clashes
         normallanguage = '%sLanguage' % normallanguage
     languagemap[normallanguage] = {
         'code': languagetype,
@@ -569,11 +570,11 @@ localedefaults = {
     'plus': '+',
     'exponential': 'e', # default in CLDR is E
     'currency_digits': '2',
-    # strings
     'quotation_start': '"', # default in CLDR is “
     'quotation_end': '"', # default in CLDR is ”
     'alternate_quotation_start': "'", # default in CLDR is ‘
     'alternate_quotation_end': "'", # default in CLDR is ’
+    # strings
     'language_endonym': '',
     'country_endonym': '',
     'list_pattern_part_start': "%1, %2",
@@ -629,7 +630,7 @@ def readlocale(fromxml, tomap, isparent):
     scripttype = None
     numbertype = 'latn' # CLDR default
 
-    locale = os.path.basename(xml)
+    locale = os.path.basename(fromxml)
     locale = locale.replace('.xml', '')
 
     tomap[locale] = {}
@@ -977,4 +978,23 @@ for string in sorted(imperiallist):
     print('    QLocale::Country::%s,' % string)
 
 print('};')
-print('static const qint16 imperialTblSize = sizeof(imperialTbl);')
+print('static const qint16 imperialTblSize = sizeof(imperialTbl);\n')
+
+# language alias parsing
+tree = ET.parse('common/supplemental/supplementalMetadata.xml')
+root = tree.getroot()
+for languagealias in root.findall('./metadata/alias/languageAlias'):
+    languagealiastype = languagealias.get('type')
+    languagealiasreplacement = languagealias.get('replacement')
+    languagealiasmap[languagealiastype] = languagealiasreplacement
+
+print('''static const struct languageAliasTblData {
+    const QLatin1String original;
+    const QLatin1String substitute;
+} languageAliasTbl[] = {''')
+
+for key in sorted(languagealiasmap):
+    print('    { QLatin1String("%s"), QLatin1String("%s") },' % (key, languagealiasmap[key]))
+
+print('};')
+print('static const qint16 languageAliasTblSize = sizeof(languageAliasTbl) / sizeof(languageAliasTblData);')
