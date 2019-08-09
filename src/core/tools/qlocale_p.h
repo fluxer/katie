@@ -175,10 +175,10 @@ public:
     ushort m_currency_digits;
     ushort m_currency_rounding;
     uint m_zero;
-    const char* m_quotation_start;
-    const char* m_quotation_end;
-    const char* m_alternate_quotation_start;
-    const char* m_alternate_quotation_end;
+    uint m_quotation_start;
+    uint m_quotation_end;
+    uint m_alternate_quotation_start;
+    uint m_alternate_quotation_end;
     const char* m_language_endonym;
     const char* m_country_endonym;
     const char* m_list_pattern_part_start;
