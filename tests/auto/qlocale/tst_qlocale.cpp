@@ -360,15 +360,16 @@ void tst_QLocale::ctor()
         + "/" + QLocale::countryToString(l.country())).toLatin1().constData()); \
     }
 
-    TEST_CTOR("zh_CN", Chinese, AnyScript, China)
+    TEST_CTOR("zh_CN", Chinese, SimplifiedScript, China)
     TEST_CTOR("zh_Hans_CN", Chinese, SimplifiedHanScript, China)
     TEST_CTOR("zh_Hans", Chinese, SimplifiedHanScript, China)
     TEST_CTOR("zh_Hant", Chinese, TraditionalHanScript, HongKong)
-    TEST_CTOR("zh_Hans", Chinese, SimplifiedHanScript, Macao)
-    TEST_CTOR("zh_Hant", Chinese, TraditionalHanScript, Macao)
+    TEST_CTOR("zh_Hans_MO", Chinese, SimplifiedHanScript, Macao)
+    TEST_CTOR("zh_Hant_MO", Chinese, TraditionalHanScript, Macao)
     TEST_CTOR("az_Latn_AZ", Azerbaijani, LatinScript, Azerbaijan)
     TEST_CTOR("ha_NG", Hausa, AnyScript, Nigeria)
-    TEST_CTOR("ha_Latn_NG", Hausa, LatinScript, Nigeria)
+    // TODO: enable once locale names substitution is implemented
+    // TEST_CTOR("ha_Latn_NG", Hausa, AnyScript, Nigeria)
 
 #undef TEST_CTOR
 }
@@ -1752,7 +1753,7 @@ void tst_QLocale::uiLanguages()
 
     const QLocale en_US("en_US");
     QCOMPARE(en_US.uiLanguages().size(), 1);
-    QCOMPARE(en_US.uiLanguages().at(0), QLatin1String("en-US"));
+    QCOMPARE(en_US.uiLanguages().at(0), QLatin1String("en-Latn-US"));
 
     const QLocale ru_RU("ru_RU");
     QCOMPARE(ru_RU.uiLanguages().size(), 1);
