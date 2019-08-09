@@ -66,14 +66,7 @@ public:
     QChar minus() const { return QChar(m_minus); }
     QChar exponential() const { return QChar(m_exponential); }
 
-    QLocale::Language languageId() const { return m_language; }
-    QLocale::Country countryId() const { return m_country; }
-
     QString bcp47Name() const;
-
-    QString languageCode() const; // ### QByteArray::fromRawData would be more optimal
-    QString scriptCode() const;
-    QString countryCode() const;
 
     static QLocale::Language codeToLanguage(const QString &code);
     static QLocale::Script codeToScript(const QString &code);

@@ -108,29 +108,6 @@ QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
     return QLocale::AnyCountry;
 }
 
-QString QLocalePrivate::languageCode() const
-{
-    if (m_language == QLocale::AnyLanguage)
-        return QString();
-    if (m_language == QLocale::C)
-        return QLatin1String("C");
-    return QString::fromLatin1(languageTbl[m_language].code);
-}
-
-QString QLocalePrivate::scriptCode() const
-{
-    if (m_script == QLocale::AnyScript || m_script > QLocale::LastScript)
-        return QString();
-    return QString::fromLatin1(scriptTbl[m_script].code);
-}
-
-QString QLocalePrivate::countryCode() const
-{
-    if (m_country == QLocale::AnyCountry)
-        return QString();
-    return QString::fromLatin1(countryTbl[m_country].code);
-}
-
 QString QLocalePrivate::bcp47Name() const
 {
     if (m_language == QLocale::AnyLanguage)
@@ -584,7 +561,7 @@ QLocale::QLocale(Language language, Country country)
     const QLocalePrivate *dd = QLocalePrivate::findLocale(language, QLocale::AnyScript, country);
 
     // If not found, should default to system
-    if (dd->languageId() == QLocale::C && language != QLocale::C) {
+    if (dd->m_language == QLocale::C && language != QLocale::C) {
         p.numberOptions = default_number_options;
         p.index = localePrivateIndex(defaultPrivate());
     } else {
@@ -622,7 +599,7 @@ QLocale::QLocale(Language language, Script script, Country country)
     const QLocalePrivate *dd = QLocalePrivate::findLocale(language, script, country);
 
     // If not found, should default to system
-    if (dd->languageId() == QLocale::C && language != QLocale::C) {
+    if (dd->m_language == QLocale::C && language != QLocale::C) {
         p.numberOptions = default_number_options;
         p.index = localePrivateIndex(defaultPrivate());
     } else {
