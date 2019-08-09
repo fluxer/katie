@@ -275,8 +275,8 @@ bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QSt
             // if it wasn't a script, maybe it is a country then?
             cntry = value;
             state = NoState;
-            for (qint16 i = 0; i < scriptTblSize; i++) {
-                if (QString::fromLatin1(scriptTbl[i].code) == value) {
+            for (qint16 ii = 0; ii < scriptTblSize; ii++) {
+                if (QString::fromLatin1(scriptTbl[ii].code) == value) {
                     script = value;
                     state = CountryState;
                     break;
