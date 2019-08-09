@@ -221,15 +221,14 @@ def normalizestring(fromstring):
 # from its name will not copy it correctly. printtable skips duplicate code entries entirely
 def printenum(frommap, prefix):
     keyscount = 0
-    aliaseslist = []
-    seenfirstvalues = []
+    aliascodes = []
+    seencodes = []
 
     print('    enum %s {' % prefix)
     # print Default and C first
     for key in frommap.keys():
         if not key in ('Any%s' % prefix, 'C'):
             continue
-        firstvalue = frommap[key][0]
         print('        %s = %d,' % (key, keyscount))
         keyscount += 1
 
@@ -238,23 +237,23 @@ def printenum(frommap, prefix):
     for key in sorted(frommap.keys()):
         if key in ('Any%s' % prefix, 'C'):
             continue
-        firstvalue = frommap[key][0]
-        if firstvalue in seenfirstvalues:
-            aliaseslist.append(key)
+        code = frommap[key]['code']
+        if code in seencodes:
+            aliascodes.append(key)
             continue
-        seenfirstvalues.append(firstvalue)
+        seencodes.append(code)
         print('        %s = %d,' % (key, keyscount))
         lastkey = key
         keyscount += 1
 
     # now aliases
     print('')
-    for alias in sorted(aliaseslist):
-        firstvalue = frommap[alias][0]
+    for alias in sorted(aliascodes):
+        aliascode = frommap[alias]['code']
         aliasenum = None
         for key in sorted(frommap.keys()):
-            keyfirstvalue = frommap[key][0]
-            if firstvalue == keyfirstvalue:
+            code = frommap[key]['code']
+            if aliascode == code:
                 aliasenum == key
                 break
         print('        %s = %s,' % (alias, key))
@@ -266,7 +265,7 @@ def printenum(frommap, prefix):
 
 def printtable(frommap, prefix):
     lowerprefix = prefix.lower()
-    seenfirstvalues = []
+    seencodes = []
 
     print('''static const struct %sTblData {
     const char* name;
@@ -278,20 +277,20 @@ def printtable(frommap, prefix):
     for key in frommap.keys():
         if not key in ('Any%s' % prefix, 'C'):
             continue
-        firstvalue = frommap[key][0]
-        secondvalue = frommap[key][1]
-        print('    { %s, %s, QLocale::%s::%s },' % (tochar(secondvalue), tochar(firstvalue), prefix, key))
+        code = frommap[key]['code']
+        name = frommap[key]['name']
+        print('    { %s, %s, QLocale::%s::%s },' % (tochar(name), tochar(code), prefix, key))
 
     # now everything except those but only unique code values
     for key in sorted(frommap.keys()):
         if key in ('Any%s' % prefix, 'C'):
             continue
-        firstvalue = frommap[key][0]
-        if firstvalue in seenfirstvalues:
+        code = frommap[key]['code']
+        if code in seencodes:
             continue
-        seenfirstvalues.append(firstvalue)
-        secondvalue = frommap[key][1]
-        print('    { %s, %s, QLocale::%s::%s },' % (tochar(secondvalue), tochar(firstvalue), prefix, key))
+        seencodes.append(code)
+        name = frommap[key]['name']
+        print('    { %s, %s, QLocale::%s::%s },' % (tochar(name), tochar(code), prefix, key))
 
     print('};')
     print('static const qint16 %sTblSize = sizeof(%sTbl) / sizeof(%sTblData);\n' % (lowerprefix, lowerprefix, lowerprefix))
@@ -410,10 +409,22 @@ localecurrencymap = {}
 localenumberingmap = {}
 
 # artificial entries
-languagemap['AnyLanguage'] = ['', 'Default']
-languagemap['C'] = ['C', 'C']
-countrymap['AnyCountry'] = ['', 'Default']
-scriptmap['AnyScript'] = ['', 'Default']
+languagemap['AnyLanguage'] = {
+    'code': '',
+    'name': 'Default',
+}
+languagemap['C'] = {
+    'code': 'C',
+    'name': 'C',
+}
+countrymap['AnyCountry'] = {
+    'code': '',
+    'name': 'Default',
+}
+scriptmap['AnyScript'] = {
+    'code': '',
+    'name': 'Default',
+}
 
 # locale to parent parsing
 tree = ET.parse('common/supplemental/supplementalData.xml')
@@ -424,14 +435,30 @@ for parentlocale in root.findall('./parentLocales/parentLocale'):
     localeparentmap[parentlocaleparent] = parentlocalelocales.split(' ')
 
 # locale to script parsing
-# TODO: multiple, alternative scripts and territories handling
+# only languages with one primary script are mapped because if there are multiple it should be
+# specified in the locale data, see:
+# https://sites.google.com/site/cldr/development/updating-codes/update-language-script-info/language-script-description
+# secondary scripts are not taken into account at all.
 for suppllanguage in root.findall('./languageData/language'):
     suppllanguagetype = suppllanguage.get('type')
     suppllanguagescripts = suppllanguage.get('scripts')
-    if not suppllanguagescripts:
+    suppllanguagealt = suppllanguage.get('alt')
+    if not suppllanguagescripts or suppllanguagealt == 'secondary':
         # alternative entry, skip it
         continue
-    localescriptmap[suppllanguagetype] = suppllanguagescripts
+    suppllanguagescriptslist = suppllanguagescripts.split(' ')
+    if not len(suppllanguagescriptslist) == 1:
+        # skip entries without definitive primary script
+        continue
+    suppllanguageterritories = suppllanguage.get('territories')
+    if not suppllanguageterritories:
+        # territories is optional, if not specified use artifical value to map all languages of
+        # that type to the script
+        suppllanguageterritories = 'AnyTerritory'
+    localescriptmap[suppllanguagetype] = {
+        'script': suppllanguagescripts,
+        'territories': suppllanguageterritories.split(' '),
+    }
 
 # locale to first day parsing
 for firstday in root.findall('./weekData/firstDay'):
@@ -464,7 +491,10 @@ for info in root.findall('./currencyData/fractions/info'):
     infoiso4217 = info.get('iso4217')
     infodigits = info.get('digits')
     inforounding = info.get('rounding')
-    localecurrencymap[infoiso4217] = [infodigits, inforounding]
+    localecurrencymap[infoiso4217] = {
+        'digits': infodigits,
+        'rounding': inforounding,
+    }
 
 # locale to numbering system parsing
 tree = ET.parse('common/supplemental/numberingSystems.xml')
@@ -485,7 +515,10 @@ for language in root.findall('./localeDisplayNames/languages/language'):
     if normallanguage in ('Nauru', 'Tokelau', 'Tuvalu'):
         # countries and language are the same, suffix to solve enum clashes
         normallanguage = '%sLanguage' % normallanguage
-    languagemap[normallanguage] = [languagetype, language.text]
+    languagemap[normallanguage] = {
+        'code': languagetype,
+        'name': language.text,
+    }
 
 if printenumsandexit:
     printenum(languagemap, 'Language')
@@ -496,7 +529,10 @@ else:
 for country in root.findall('./localeDisplayNames/territories/territory'):
     countrytype = country.get('type')
     normalcountry = normalizestring(country.text)
-    countrymap[normalcountry] = [countrytype, country.text]
+    countrymap[normalcountry] = {
+        'code': countrytype,
+        'name': country.text,
+    }
 
 if printenumsandexit:
     printenum(countrymap, 'Country')
@@ -513,7 +549,10 @@ for script in root.findall('./localeDisplayNames/scripts/script'):
     if normalscript in ('UnknownScript', 'CommonScript'):
         # only interested in specific scripts
         continue
-    scriptmap[normalscript] = [scripttype, script.text]
+    scriptmap[normalscript] = {
+        'code': scripttype,
+        'name': script.text,
+    }
 
 if printenumsandexit:
     printenum(scriptmap, 'Script')
@@ -555,7 +594,7 @@ localedefaults = {
     'list_pattern_part_two': "%1, %2",
     'short_date_format': 'd MMM yyyy', # default in CLDR is y-MM-dd
     'long_date_format': 'd MMMM yyyy',
-    'short_time_format': 'HH:mm:ss',
+    'short_time_format': 'HH:mm:ss', # default in CLDR is HH:mm
     'long_time_format': 'HH:mm:ss z',
     'am': 'AM',
     'pm': 'PM',
@@ -599,10 +638,7 @@ def readlocale(fromxml, tomap, isparent):
     country = root.find('./identity/territory')
     countrytype = None
     currencytype = None
-    script = root.find('./identity/script')
     scripttype = None
-    if script is not None:
-        scripttype = script.get('type')
     numbertype = 'latn' # CLDR default
 
     locale = os.path.basename(xml)
@@ -625,19 +661,31 @@ def readlocale(fromxml, tomap, isparent):
 
     # find the enums from mapped values
     for key in languagemap.keys():
-        if langtype == languagemap[key][0]:
+        if langtype == languagemap[key]['code']:
             tomap[locale]['language'] = 'QLocale::Language::%s' % key
             break
 
     if country is not None:
         countrytype = country.get('type')
         for key in countrymap.keys():
-            if countrytype == countrymap[key][0]:
+            if countrytype == countrymap[key]['code']:
                 tomap[locale]['country'] = 'QLocale::Country::%s' % key
                 break
     else:
         # territory often is not specified, use language code as fallback
         countrytype = langtype.upper()
+
+    # script is specified either in the locale or supplemental data
+    script = root.find('./identity/script')
+    if script is not None:
+        scripttype = script.get('type')
+    elif not isparent:
+        # scripts map is partial, pick from what is mapped
+        if langtype in localescriptmap.keys():
+            scriptterritories = localescriptmap[langtype]['territories']
+            if 'AnyTerritory' in scriptterritories \
+                or countrytype in scriptterritories:
+                scripttype = localescriptmap[langtype]['script']
 
     # store for later, data is partial so pick from what is mapped
     if countrytype in localeiso4217map.keys():
@@ -648,17 +696,11 @@ def readlocale(fromxml, tomap, isparent):
         numbertype = defaultnumbersystem.text
 
     # find values from supplemental maps
-    if not isparent:
-        if scripttype:
-            for key in scriptmap.keys():
-                if scriptmap[key][0] == scripttype:
-                    tomap[locale]['script'] = 'QLocale::Script::%s' % key
-                    break
-        else:
-            for key in scriptmap.keys():
-                if scriptmap[key][0] == localescriptmap[langtype]:
-                    tomap[locale]['script'] = 'QLocale::Script::%s' % key
-                    break
+    if not isparent and scripttype:
+        for key in scriptmap.keys():
+            if scriptmap[key]['code'] == scripttype:
+                tomap[locale]['script'] = 'QLocale::Script::%s' % key
+                break
 
     for key in localefirstdaymap.keys():
         for countryvalue in localefirstdaymap[key]:
@@ -722,9 +764,9 @@ def readlocale(fromxml, tomap, isparent):
 
     # digits/rounding data is specific so check if it is mapped
     if currencytype and currencytype in localecurrencymap.keys():
-        tomap[locale]['currency_digits'] = localecurrencymap[currencytype][0]
+        tomap[locale]['currency_digits'] = localecurrencymap[currencytype]['digits']
 
-        tomap[locale]['currency_rounding'] = localecurrencymap[currencytype][1]
+        tomap[locale]['currency_rounding'] = localecurrencymap[currencytype]['rounding']
 
     quotationstart = root.find('./delimiters/quotationStart')
     if quotationstart is not None:
@@ -951,7 +993,7 @@ for measurementsystem in root.findall('./measurementData/measurementSystem'):
         for territory in territories.split(' '):
             countryenum = None
             for key in countrymap.keys():
-                countrycode = countrymap[key][0]
+                countrycode = countrymap[key]['code']
                 if countrycode == territory:
                     countryenum = key
                     break
