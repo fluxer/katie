@@ -2881,12 +2881,11 @@ QString QLocale::currencySymbol(QLocale::CurrencySymbolFormat format) const
             return res.toString();
     }
 #endif
-    quint16 idx = 0;
     switch (format) {
         case CurrencySymbol:
             return getLocaleData(d()->m_currency_symbol);
         case CurrencyDisplayName:
-            return getLocaleListData(d()->m_currency_display_name, idx);
+            return getLocaleData(d()->m_currency_display_name);
         case CurrencyIsoCode: {
             return QString::fromLatin1(d()->m_currency_iso_code);
         }

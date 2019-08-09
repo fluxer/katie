@@ -41,11 +41,6 @@ def tochar(fromstring):
         return '"%s\\0"' % fromstring
     return 'Q_NULLPTR'
 
-def toescapedchar(fromstring):
-    if fromstring:
-        return '"%s\\0"' % fromstring.replace('"', '\\"')
-    return 'Q_NULLPTR'
-
 def tochararray(fromstringlist):
     result = '{ '
     for string in fromstringlist:
@@ -308,7 +303,7 @@ def printlocaledata(frommap, key):
         // week
         %s, %s, %s,
         // symbols
-        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+        %s, %s, %s, %s, %s, %s, %s, %s, %s,
         // quotation
         %s, %s, %s, %s,
         // endonym
@@ -320,8 +315,7 @@ def printlocaledata(frommap, key):
         // am/pm
         %s, %s,
         // currency
-        %s, %s, %s, %s,
-        %s,
+        %s, %s, %s, %s, %s,
         // month names
         %s,
         %s,
@@ -351,7 +345,6 @@ def printlocaledata(frommap, key):
             touint(value['plus']),
             touint(value['exponential']),
             value['currency_digits'],
-            value['currency_rounding'],
             touint(value['zero']),
             touint(value['quotation_start']),
             touint(value['quotation_end']),
@@ -373,7 +366,7 @@ def printlocaledata(frommap, key):
             tochar(value['currency_format']),
             tochar(value['currency_negative_format']),
             tochar(value['currency_iso_code']),
-            tochararray(value['currency_display_name']),
+            tochar(value['currency_display_name']),
             tochararray(value['standalone_short_month_names']),
             tochararray(value['standalone_long_month_names']),
             tochararray(value['standalone_narrow_month_names']),
@@ -490,11 +483,7 @@ for region in root.findall('./currencyData/region'):
 for info in root.findall('./currencyData/fractions/info'):
     infoiso4217 = info.get('iso4217')
     infodigits = info.get('digits')
-    inforounding = info.get('rounding')
-    localecurrencymap[infoiso4217] = {
-        'digits': infodigits,
-        'rounding': inforounding,
-    }
+    localecurrencymap[infoiso4217] = infodigits
 
 # locale to numbering system parsing
 tree = ET.parse('common/supplemental/numberingSystems.xml')
@@ -580,7 +569,6 @@ localedefaults = {
     'plus': '+',
     'exponential': 'e', # default in CLDR is E
     'currency_digits': '2',
-    'currency_rounding': '1', # not used, default in CLDR is 0
     # strings
     'quotation_start': '"', # default in CLDR is “
     'quotation_end': '"', # default in CLDR is ”
@@ -602,8 +590,8 @@ localedefaults = {
     'currency_format': '%1%2',
     'currency_negative_format': '',
     'currency_iso_code': '',
+    'currency_display_name': '',
     # arrays
-    'currency_display_name': ['', '', '', '', '', '', ''], # only the first entry is used
     'standalone_short_month_names': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     'standalone_long_month_names': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     'standalone_narrow_month_names': ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
@@ -764,9 +752,7 @@ def readlocale(fromxml, tomap, isparent):
 
     # digits/rounding data is specific so check if it is mapped
     if currencytype and currencytype in localecurrencymap.keys():
-        tomap[locale]['currency_digits'] = localecurrencymap[currencytype]['digits']
-
-        tomap[locale]['currency_rounding'] = localecurrencymap[currencytype]['rounding']
+        tomap[locale]['currency_digits'] = localecurrencymap[currencytype]
 
     quotationstart = root.find('./delimiters/quotationStart')
     if quotationstart is not None:
@@ -912,27 +898,13 @@ def readlocale(fromxml, tomap, isparent):
                 if symbol is not None:
                     tomap[locale]['currency_symbol'] = symbol.text
 
-                displaynamelist = []
-                listcopy(tomap[locale]['currency_display_name'], displaynamelist)
                 for displayname in elemcurrency.findall('./displayName'):
                     displaynamecount = displayname.get('count')
-                    # TODO: 0 and 1 are aliases?
                     if not displaynamecount:
-                        displaynamelist[0] = displayname.text
-                    elif displaynamecount == 'zero':
-                        displaynamelist[1] = displayname.text
-                    elif displaynamecount == 'one':
-                        displaynamelist[2] = displayname.text
-                    elif displaynamecount == 'two':
-                        displaynamelist[3] = displayname.text
-                    elif displaynamecount == 'few':
-                        displaynamelist[4] = displayname.text
-                    elif displaynamecount == 'many':
-                        displaynamelist[5] = displayname.text
-                    elif displaynamecount == 'other':
-                        displaynamelist[6] = displayname.text
+                        # only interested in default display name
+                        tomap[locale]['currency_display_name'] = displayname.text
+                        break
 
-                tomap[locale]['currency_display_name'] = displaynamelist
                 # currency type was found, break
                 break
 

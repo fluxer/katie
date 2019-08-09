@@ -173,7 +173,6 @@ public:
     ushort m_plus;
     ushort m_exponential;
     ushort m_currency_digits;
-    ushort m_currency_rounding;
     uint m_zero;
     uint m_quotation_start;
     uint m_quotation_end;
@@ -195,7 +194,7 @@ public:
     const char* m_currency_format;
     const char* m_currency_negative_format;
     const char* m_currency_iso_code;
-    const char* m_currency_display_name[7];
+    const char* m_currency_display_name;
     const char* m_standalone_short_month_names[12];
     const char* m_standalone_long_month_names[12];
     const char* m_standalone_narrow_month_names[12];
