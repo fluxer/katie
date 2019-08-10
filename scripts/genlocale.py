@@ -996,18 +996,12 @@ for measurementsystem in root.findall('./measurementData/measurementSystem'):
     if measurementsystemtype in ('UK', 'US'):
         territories = measurementsystem.get('territories')
         for territory in territories.split(' '):
-            countryenum = None
-            for key in countrymap.keys():
-                countrycode = countrymap[key]['code']
-                if countrycode == territory:
-                    countryenum = key
-                    break
-            imperiallist.append(countryenum)
+            imperiallist.append(tocountryenum(territory))
 
 print('''static const QLocale::Country imperialTbl[] = {''')
 
 for string in sorted(imperiallist):
-    print('    QLocale::Country::%s,' % string)
+    print('    %s,' % string)
 
 print('};')
 print('static const qint16 imperialTblSize = sizeof(imperialTbl);\n')
