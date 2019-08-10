@@ -263,9 +263,9 @@ def printtable(frommap, prefix):
     seencodes = []
 
     print('''static const struct %sTblData {
+    const QLocale::%s %s;
     const char* name;
     const char* code;
-    const QLocale::%s %s;
 } %sTbl[] = {''' % (lowerprefix, prefix, lowerprefix, lowerprefix))
 
     # print Default and C first
@@ -274,7 +274,7 @@ def printtable(frommap, prefix):
             continue
         code = frommap[key]['code']
         name = frommap[key]['name']
-        print('    { %s, %s, QLocale::%s::%s },' % (tochar(name), tochar(code), prefix, key))
+        print('    { QLocale::%s::%s, %s, %s },' % (prefix, key, tochar(name), tochar(code)))
 
     # now everything except those but only unique code values
     for key in sorted(frommap.keys()):
@@ -285,7 +285,7 @@ def printtable(frommap, prefix):
             continue
         seencodes.append(code)
         name = frommap[key]['name']
-        print('    { %s, %s, QLocale::%s::%s },' % (tochar(name), tochar(code), prefix, key))
+        print('    { QLocale::%s::%s, %s, %s },' % (prefix, key, tochar(name), tochar(code)))
 
     print('};')
     print('static const qint16 %sTblSize = sizeof(%sTbl) / sizeof(%sTblData);\n' % (lowerprefix, lowerprefix, lowerprefix))
