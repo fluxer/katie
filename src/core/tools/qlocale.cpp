@@ -2083,13 +2083,17 @@ QString QLocalePrivate::dateTimeToString(const QString &format, const QDate *dat
                     repeat = 2;
 
                 switch (repeat) {
-                case 4:
-                    result.append(longLongToString(date->year()));
+                case 4: {
+                    const int yr = date->year();
+                    const int len = (yr < 0) ? 5 : 4;
+                    result.append(longLongToString(yr, -1, 10, len, QLocalePrivate::ZeroPadded));
                     break;
-                case 2:
+                }
+                case 2: {
                     result.append(longLongToString(date->year() % 100, -1, 10, 2,
                                                    QLocalePrivate::ZeroPadded));
                     break;
+                }
                 default:
                     repeat = 1;
                     result.append(c);
