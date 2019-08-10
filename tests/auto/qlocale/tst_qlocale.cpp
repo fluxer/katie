@@ -151,7 +151,7 @@ tst_QLocale::tst_QLocale()
 
 void tst_QLocale::initTestCase()
 {
-    QDir workingDirectory = QDir::current();
+    QDir workingDirectory = QCoreApplication::applicationDirPath();
     m_sysLocaleApp = workingDirectory.absoluteFilePath(QLatin1String("syslocaleapp"));
     QVERIFY2(QFileInfo(m_sysLocaleApp).exists(),
              qPrintable(QString::fromLatin1("SysLocalApp executable '%1' does not exist!")
@@ -1817,5 +1817,6 @@ void tst_QLocale::listPatterns()
     QCOMPARE(zh_CN.createSeparatedList(sl5), QString::fromUtf8("aaa" "\xe3\x80\x81" "bbb" "\xe3\x80\x81" "ccc" "\xe5\x92\x8c" "ddd"));
 }
 
-QTEST_APPLESS_MAIN(tst_QLocale)
+QTEST_MAIN(tst_QLocale)
+
 #include "moc_tst_qlocale.cpp"
