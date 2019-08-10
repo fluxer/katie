@@ -18561,7 +18561,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "上午\0", "下午\0",
         // currency
-        "MOP$\0", "%2%1K\0", Q_NULLPTR, "HKD\0", "港元\0",
+        "MOP$\0", "%1%2\0", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR,
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -18659,11 +18659,5007 @@ static const QLocale::Country imperialTbl[] = {
 };
 static const qint16 imperialTblSize = sizeof(imperialTbl);
 
+static const struct subtagAliasTblData {
+    const QLocale::Language fromlanguage;
+    const QLocale::Script fromscript;
+    const QLocale::Country fromcountry;
+    const QLocale::Language tolanguage;
+    const QLocale::Script toscript;
+    const QLocale::Country tocountry;
+} subtagAliasTbl[] = {
+    {
+        // from aa
+        QLocale::Language::Afar, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to aa_Latn_ET
+        QLocale::Language::Afar, QLocale::Script::LatinScript, QLocale::Country::Ethiopia
+    },
+    {
+        // from ab
+        QLocale::Language::Abkhazian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ab_Cyrl_GE
+        QLocale::Language::Abkhazian, QLocale::Script::CyrillicScript, QLocale::Country::Georgia
+    },
+    {
+        // from ace
+        QLocale::Language::Achinese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ace_Latn_ID
+        QLocale::Language::Achinese, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from ach
+        QLocale::Language::Acoli, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ach_Latn_UG
+        QLocale::Language::Acoli, QLocale::Script::LatinScript, QLocale::Country::Uganda
+    },
+    {
+        // from ada
+        QLocale::Language::Adangme, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ada_Latn_GH
+        QLocale::Language::Adangme, QLocale::Script::LatinScript, QLocale::Country::Ghana
+    },
+    {
+        // from ady
+        QLocale::Language::Adyghe, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ady_Cyrl_RU
+        QLocale::Language::Adyghe, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from ae
+        QLocale::Language::Avestan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ae_Avst_IR
+        QLocale::Language::Avestan, QLocale::Script::AvestanScript, QLocale::Country::Iran
+    },
+    {
+        // from aeb
+        QLocale::Language::TunisianArabic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to aeb_Arab_TN
+        QLocale::Language::TunisianArabic, QLocale::Script::ArabicScript, QLocale::Country::Tunisia
+    },
+    {
+        // from af
+        QLocale::Language::Afrikaans, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to af_Latn_ZA
+        QLocale::Language::Afrikaans, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from agq
+        QLocale::Language::Aghem, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to agq_Latn_CM
+        QLocale::Language::Aghem, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from ak
+        QLocale::Language::Akan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ak_Latn_GH
+        QLocale::Language::Akan, QLocale::Script::LatinScript, QLocale::Country::Ghana
+    },
+    {
+        // from akk
+        QLocale::Language::Akkadian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to akk_Xsux_IQ
+        QLocale::Language::Akkadian, QLocale::Script::SumeroAkkadianCuneiformScript, QLocale::Country::Iraq
+    },
+    {
+        // from aln
+        QLocale::Language::GhegAlbanian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to aln_Latn_XK
+        QLocale::Language::GhegAlbanian, QLocale::Script::LatinScript, QLocale::Country::Kosovo
+    },
+    {
+        // from alt
+        QLocale::Language::SouthernAltai, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to alt_Cyrl_RU
+        QLocale::Language::SouthernAltai, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from am
+        QLocale::Language::Amharic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to am_Ethi_ET
+        QLocale::Language::Amharic, QLocale::Script::EthiopicScript, QLocale::Country::Ethiopia
+    },
+    {
+        // from ar
+        QLocale::Language::Arabic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ar_Arab_EG
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Egypt
+    },
+    {
+        // from arc
+        QLocale::Language::Aramaic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to arc_Armi_IR
+        QLocale::Language::Aramaic, QLocale::Script::ImperialAramaicScript, QLocale::Country::Iran
+    },
+    {
+        // from arn
+        QLocale::Language::Mapuche, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to arn_Latn_CL
+        QLocale::Language::Mapuche, QLocale::Script::LatinScript, QLocale::Country::Chile
+    },
+    {
+        // from aro
+        QLocale::Language::Araona, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to aro_Latn_BO
+        QLocale::Language::Araona, QLocale::Script::LatinScript, QLocale::Country::Bolivia
+    },
+    {
+        // from arq
+        QLocale::Language::AlgerianArabic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to arq_Arab_DZ
+        QLocale::Language::AlgerianArabic, QLocale::Script::ArabicScript, QLocale::Country::Algeria
+    },
+    {
+        // from ary
+        QLocale::Language::MoroccanArabic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ary_Arab_MA
+        QLocale::Language::MoroccanArabic, QLocale::Script::ArabicScript, QLocale::Country::Morocco
+    },
+    {
+        // from arz
+        QLocale::Language::EgyptianArabic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to arz_Arab_EG
+        QLocale::Language::EgyptianArabic, QLocale::Script::ArabicScript, QLocale::Country::Egypt
+    },
+    {
+        // from as
+        QLocale::Language::Assamese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to as_Beng_IN
+        QLocale::Language::Assamese, QLocale::Script::BanglaScript, QLocale::Country::India
+    },
+    {
+        // from asa
+        QLocale::Language::Asu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to asa_Latn_TZ
+        QLocale::Language::Asu, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from ase
+        QLocale::Language::AmericanSignLanguage, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ase_Sgnw_US
+        QLocale::Language::AmericanSignLanguage, QLocale::Script::SignWritingScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from ast
+        QLocale::Language::Asturian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ast_Latn_ES
+        QLocale::Language::Asturian, QLocale::Script::LatinScript, QLocale::Country::Spain
+    },
+    {
+        // from av
+        QLocale::Language::Avaric, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to av_Cyrl_RU
+        QLocale::Language::Avaric, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from awa
+        QLocale::Language::Awadhi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to awa_Deva_IN
+        QLocale::Language::Awadhi, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from ay
+        QLocale::Language::Aymara, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ay_Latn_BO
+        QLocale::Language::Aymara, QLocale::Script::LatinScript, QLocale::Country::Bolivia
+    },
+    {
+        // from az
+        QLocale::Language::Azerbaijani, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to az_Latn_AZ
+        QLocale::Language::Azerbaijani, QLocale::Script::LatinScript, QLocale::Country::Azerbaijan
+    },
+    {
+        // from az_IQ
+        QLocale::Language::Azerbaijani, QLocale::Script::AnyScript, QLocale::Country::Iraq,
+        // to az_Arab_IQ
+        QLocale::Language::Azerbaijani, QLocale::Script::ArabicScript, QLocale::Country::Iraq
+    },
+    {
+        // from az_IR
+        QLocale::Language::Azerbaijani, QLocale::Script::AnyScript, QLocale::Country::Iran,
+        // to az_Arab_IR
+        QLocale::Language::Azerbaijani, QLocale::Script::ArabicScript, QLocale::Country::Iran
+    },
+    {
+        // from az_RU
+        QLocale::Language::Azerbaijani, QLocale::Script::AnyScript, QLocale::Country::Russia,
+        // to az_Cyrl_RU
+        QLocale::Language::Azerbaijani, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from ba
+        QLocale::Language::Bashkir, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ba_Cyrl_RU
+        QLocale::Language::Bashkir, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from bal
+        QLocale::Language::Baluchi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bal_Arab_PK
+        QLocale::Language::Baluchi, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from ban
+        QLocale::Language::Balinese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ban_Latn_ID
+        QLocale::Language::Balinese, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from bar
+        QLocale::Language::Bavarian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bar_Latn_AT
+        QLocale::Language::Bavarian, QLocale::Script::LatinScript, QLocale::Country::Austria
+    },
+    {
+        // from bas
+        QLocale::Language::Basaa, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bas_Latn_CM
+        QLocale::Language::Basaa, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from bax
+        QLocale::Language::Bamun, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bax_Bamu_CM
+        QLocale::Language::Bamun, QLocale::Script::BamumScript, QLocale::Country::Cameroon
+    },
+    {
+        // from bbc
+        QLocale::Language::BatakToba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bbc_Latn_ID
+        QLocale::Language::BatakToba, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from bbj
+        QLocale::Language::Ghomala, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bbj_Latn_CM
+        QLocale::Language::Ghomala, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from be
+        QLocale::Language::Belarusian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to be_Cyrl_BY
+        QLocale::Language::Belarusian, QLocale::Script::CyrillicScript, QLocale::Country::Belarus
+    },
+    {
+        // from bej
+        QLocale::Language::Beja, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bej_Arab_SD
+        QLocale::Language::Beja, QLocale::Script::ArabicScript, QLocale::Country::Sudan
+    },
+    {
+        // from bem
+        QLocale::Language::Bemba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bem_Latn_ZM
+        QLocale::Language::Bemba, QLocale::Script::LatinScript, QLocale::Country::Zambia
+    },
+    {
+        // from bew
+        QLocale::Language::Betawi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bew_Latn_ID
+        QLocale::Language::Betawi, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from bez
+        QLocale::Language::Bena, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bez_Latn_TZ
+        QLocale::Language::Bena, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from bfd
+        QLocale::Language::Bafut, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bfd_Latn_CM
+        QLocale::Language::Bafut, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from bfq
+        QLocale::Language::Badaga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bfq_Taml_IN
+        QLocale::Language::Badaga, QLocale::Script::TamilScript, QLocale::Country::India
+    },
+    {
+        // from bg
+        QLocale::Language::Bulgarian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bg_Cyrl_BG
+        QLocale::Language::Bulgarian, QLocale::Script::CyrillicScript, QLocale::Country::Bulgaria
+    },
+    {
+        // from bgn
+        QLocale::Language::WesternBalochi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bgn_Arab_PK
+        QLocale::Language::WesternBalochi, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from bho
+        QLocale::Language::Bhojpuri, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bho_Deva_IN
+        QLocale::Language::Bhojpuri, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from bi
+        QLocale::Language::Bislama, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bi_Latn_VU
+        QLocale::Language::Bislama, QLocale::Script::LatinScript, QLocale::Country::Vanuatu
+    },
+    {
+        // from bik
+        QLocale::Language::Bikol, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bik_Latn_PH
+        QLocale::Language::Bikol, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from bin
+        QLocale::Language::Bini, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bin_Latn_NG
+        QLocale::Language::Bini, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from bjn
+        QLocale::Language::Banjar, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bjn_Latn_ID
+        QLocale::Language::Banjar, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from bkm
+        QLocale::Language::Kom, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bkm_Latn_CM
+        QLocale::Language::Kom, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from bm
+        QLocale::Language::Bambara, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bm_Latn_ML
+        QLocale::Language::Bambara, QLocale::Script::LatinScript, QLocale::Country::Mali
+    },
+    {
+        // from bn
+        QLocale::Language::Bangla, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bn_Beng_BD
+        QLocale::Language::Bangla, QLocale::Script::BanglaScript, QLocale::Country::Bangladesh
+    },
+    {
+        // from bo
+        QLocale::Language::Tibetan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bo_Tibt_CN
+        QLocale::Language::Tibetan, QLocale::Script::TibetanScript, QLocale::Country::China
+    },
+    {
+        // from bpy
+        QLocale::Language::Bishnupriya, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bpy_Beng_IN
+        QLocale::Language::Bishnupriya, QLocale::Script::BanglaScript, QLocale::Country::India
+    },
+    {
+        // from bqi
+        QLocale::Language::Bakhtiari, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bqi_Arab_IR
+        QLocale::Language::Bakhtiari, QLocale::Script::ArabicScript, QLocale::Country::Iran
+    },
+    {
+        // from br
+        QLocale::Language::Breton, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to br_Latn_FR
+        QLocale::Language::Breton, QLocale::Script::LatinScript, QLocale::Country::France
+    },
+    {
+        // from bra
+        QLocale::Language::Braj, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bra_Deva_IN
+        QLocale::Language::Braj, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from brh
+        QLocale::Language::Brahui, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to brh_Arab_PK
+        QLocale::Language::Brahui, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from brx
+        QLocale::Language::Bodo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to brx_Deva_IN
+        QLocale::Language::Bodo, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from bs
+        QLocale::Language::Bosnian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bs_Latn_BA
+        QLocale::Language::Bosnian, QLocale::Script::LatinScript, QLocale::Country::BosniaAndHerzegovina
+    },
+    {
+        // from bss
+        QLocale::Language::Akoose, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bss_Latn_CM
+        QLocale::Language::Akoose, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from bua
+        QLocale::Language::Buriat, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bua_Cyrl_RU
+        QLocale::Language::Buriat, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from bug
+        QLocale::Language::Buginese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bug_Latn_ID
+        QLocale::Language::Buginese, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from bum
+        QLocale::Language::Bulu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to bum_Latn_CM
+        QLocale::Language::Bulu, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from byn
+        QLocale::Language::Blin, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to byn_Ethi_ER
+        QLocale::Language::Blin, QLocale::Script::EthiopicScript, QLocale::Country::Eritrea
+    },
+    {
+        // from byv
+        QLocale::Language::Medumba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to byv_Latn_CM
+        QLocale::Language::Medumba, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from ca
+        QLocale::Language::Catalan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ca_Latn_ES
+        QLocale::Language::Catalan, QLocale::Script::LatinScript, QLocale::Country::Spain
+    },
+    {
+        // from cch
+        QLocale::Language::Atsam, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to cch_Latn_NG
+        QLocale::Language::Atsam, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from ccp
+        QLocale::Language::Chakma, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ccp_Cakm_BD
+        QLocale::Language::Chakma, QLocale::Script::ChakmaScript, QLocale::Country::Bangladesh
+    },
+    {
+        // from ce
+        QLocale::Language::Chechen, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ce_Cyrl_RU
+        QLocale::Language::Chechen, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from ceb
+        QLocale::Language::Cebuano, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ceb_Latn_PH
+        QLocale::Language::Cebuano, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from cgg
+        QLocale::Language::Chiga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to cgg_Latn_UG
+        QLocale::Language::Chiga, QLocale::Script::LatinScript, QLocale::Country::Uganda
+    },
+    {
+        // from ch
+        QLocale::Language::Chamorro, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ch_Latn_GU
+        QLocale::Language::Chamorro, QLocale::Script::LatinScript, QLocale::Country::Guam
+    },
+    {
+        // from chk
+        QLocale::Language::Chuukese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to chk_Latn_FM
+        QLocale::Language::Chuukese, QLocale::Script::LatinScript, QLocale::Country::Micronesia
+    },
+    {
+        // from chm
+        QLocale::Language::Mari, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to chm_Cyrl_RU
+        QLocale::Language::Mari, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from cho
+        QLocale::Language::Choctaw, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to cho_Latn_US
+        QLocale::Language::Choctaw, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from chp
+        QLocale::Language::Chipewyan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to chp_Latn_CA
+        QLocale::Language::Chipewyan, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
+        // from chr
+        QLocale::Language::Cherokee, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to chr_Cher_US
+        QLocale::Language::Cherokee, QLocale::Script::CherokeeScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from ckb
+        QLocale::Language::CentralKurdish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ckb_Arab_IQ
+        QLocale::Language::CentralKurdish, QLocale::Script::ArabicScript, QLocale::Country::Iraq
+    },
+    {
+        // from co
+        QLocale::Language::Corsican, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to co_Latn_FR
+        QLocale::Language::Corsican, QLocale::Script::LatinScript, QLocale::Country::France
+    },
+    {
+        // from cop
+        QLocale::Language::Coptic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to cop_Copt_EG
+        QLocale::Language::Coptic, QLocale::Script::CopticScript, QLocale::Country::Egypt
+    },
+    {
+        // from cps
+        QLocale::Language::Capiznon, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to cps_Latn_PH
+        QLocale::Language::Capiznon, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from cr
+        QLocale::Language::Cree, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to cr_Cans_CA
+        QLocale::Language::Cree, QLocale::Script::UnifiedCanadianAboriginalSyllabicsScript, QLocale::Country::Canada
+    },
+    {
+        // from crh
+        QLocale::Language::CrimeanTurkish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to crh_Cyrl_UA
+        QLocale::Language::CrimeanTurkish, QLocale::Script::CyrillicScript, QLocale::Country::Ukraine
+    },
+    {
+        // from crs
+        QLocale::Language::SeselwaCreoleFrench, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to crs_Latn_SC
+        QLocale::Language::SeselwaCreoleFrench, QLocale::Script::LatinScript, QLocale::Country::Seychelles
+    },
+    {
+        // from cs
+        QLocale::Language::Czech, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to cs_Latn_CZ
+        QLocale::Language::Czech, QLocale::Script::LatinScript, QLocale::Country::Czechia
+    },
+    {
+        // from csb
+        QLocale::Language::Kashubian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to csb_Latn_PL
+        QLocale::Language::Kashubian, QLocale::Script::LatinScript, QLocale::Country::Poland
+    },
+    {
+        // from cu
+        QLocale::Language::ChurchSlavic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to cu_Cyrl_RU
+        QLocale::Language::ChurchSlavic, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from cv
+        QLocale::Language::Chuvash, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to cv_Cyrl_RU
+        QLocale::Language::Chuvash, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from cy
+        QLocale::Language::Welsh, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to cy_Latn_GB
+        QLocale::Language::Welsh, QLocale::Script::LatinScript, QLocale::Country::UnitedKingdom
+    },
+    {
+        // from da
+        QLocale::Language::Danish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to da_Latn_DK
+        QLocale::Language::Danish, QLocale::Script::LatinScript, QLocale::Country::Denmark
+    },
+    {
+        // from dak
+        QLocale::Language::Dakota, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dak_Latn_US
+        QLocale::Language::Dakota, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from dar
+        QLocale::Language::Dargwa, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dar_Cyrl_RU
+        QLocale::Language::Dargwa, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from dav
+        QLocale::Language::Taita, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dav_Latn_KE
+        QLocale::Language::Taita, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from de
+        QLocale::Language::German, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to de_Latn_DE
+        QLocale::Language::German, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from den
+        QLocale::Language::Slave, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to den_Latn_CA
+        QLocale::Language::Slave, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
+        // from dgr
+        QLocale::Language::Dogrib, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dgr_Latn_CA
+        QLocale::Language::Dogrib, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
+        // from dje
+        QLocale::Language::Zarma, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dje_Latn_NE
+        QLocale::Language::Zarma, QLocale::Script::LatinScript, QLocale::Country::Niger
+    },
+    {
+        // from doi
+        QLocale::Language::Dogri, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to doi_Arab_IN
+        QLocale::Language::Dogri, QLocale::Script::ArabicScript, QLocale::Country::India
+    },
+    {
+        // from dsb
+        QLocale::Language::LowerSorbian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dsb_Latn_DE
+        QLocale::Language::LowerSorbian, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from dtp
+        QLocale::Language::CentralDusun, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dtp_Latn_MY
+        QLocale::Language::CentralDusun, QLocale::Script::LatinScript, QLocale::Country::Malaysia
+    },
+    {
+        // from dua
+        QLocale::Language::Duala, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dua_Latn_CM
+        QLocale::Language::Duala, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from dv
+        QLocale::Language::Divehi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dv_Thaa_MV
+        QLocale::Language::Divehi, QLocale::Script::ThaanaScript, QLocale::Country::Maldives
+    },
+    {
+        // from dyo
+        QLocale::Language::JolaFonyi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dyo_Latn_SN
+        QLocale::Language::JolaFonyi, QLocale::Script::LatinScript, QLocale::Country::Senegal
+    },
+    {
+        // from dyu
+        QLocale::Language::Dyula, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dyu_Latn_BF
+        QLocale::Language::Dyula, QLocale::Script::LatinScript, QLocale::Country::BurkinaFaso
+    },
+    {
+        // from dz
+        QLocale::Language::Dzongkha, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dz_Tibt_BT
+        QLocale::Language::Dzongkha, QLocale::Script::TibetanScript, QLocale::Country::Bhutan
+    },
+    {
+        // from dzg
+        QLocale::Language::Dazaga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to dzg_Latn_ZZ
+        QLocale::Language::Dazaga, QLocale::Script::LatinScript, QLocale::Country::UnknownRegion
+    },
+    {
+        // from ebu
+        QLocale::Language::Embu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ebu_Latn_KE
+        QLocale::Language::Embu, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from ee
+        QLocale::Language::Ewe, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ee_Latn_GH
+        QLocale::Language::Ewe, QLocale::Script::LatinScript, QLocale::Country::Ghana
+    },
+    {
+        // from efi
+        QLocale::Language::Efik, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to efi_Latn_NG
+        QLocale::Language::Efik, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from egl
+        QLocale::Language::Emilian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to egl_Latn_IT
+        QLocale::Language::Emilian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from egy
+        QLocale::Language::AncientEgyptian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to egy_Egyp_EG
+        QLocale::Language::AncientEgyptian, QLocale::Script::EgyptianhieroglyphsScript, QLocale::Country::Egypt
+    },
+    {
+        // from eka
+        QLocale::Language::Ekajuk, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to eka_Latn_ZZ
+        QLocale::Language::Ekajuk, QLocale::Script::LatinScript, QLocale::Country::UnknownRegion
+    },
+    {
+        // from el
+        QLocale::Language::Greek, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to el_Grek_GR
+        QLocale::Language::Greek, QLocale::Script::GreekScript, QLocale::Country::Greece
+    },
+    {
+        // from en
+        QLocale::Language::English, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to en_Latn_US
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from eo
+        QLocale::Language::Esperanto, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to eo_Latn_001
+        QLocale::Language::Esperanto, QLocale::Script::LatinScript, QLocale::Country::World
+    },
+    {
+        // from es
+        QLocale::Language::Spanish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to es_Latn_ES
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Spain
+    },
+    {
+        // from esu
+        QLocale::Language::CentralYupik, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to esu_Latn_US
+        QLocale::Language::CentralYupik, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from et
+        QLocale::Language::Estonian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to et_Latn_EE
+        QLocale::Language::Estonian, QLocale::Script::LatinScript, QLocale::Country::Estonia
+    },
+    {
+        // from eu
+        QLocale::Language::Basque, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to eu_Latn_ES
+        QLocale::Language::Basque, QLocale::Script::LatinScript, QLocale::Country::Spain
+    },
+    {
+        // from ewo
+        QLocale::Language::Ewondo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ewo_Latn_CM
+        QLocale::Language::Ewondo, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from ext
+        QLocale::Language::Extremaduran, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ext_Latn_ES
+        QLocale::Language::Extremaduran, QLocale::Script::LatinScript, QLocale::Country::Spain
+    },
+    {
+        // from fa
+        QLocale::Language::Persian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fa_Arab_IR
+        QLocale::Language::Persian, QLocale::Script::ArabicScript, QLocale::Country::Iran
+    },
+    {
+        // from fan
+        QLocale::Language::Fang, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fan_Latn_GQ
+        QLocale::Language::Fang, QLocale::Script::LatinScript, QLocale::Country::EquatorialGuinea
+    },
+    {
+        // from ff
+        QLocale::Language::Fulah, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ff_Latn_SN
+        QLocale::Language::Fulah, QLocale::Script::LatinScript, QLocale::Country::Senegal
+    },
+    {
+        // from fi
+        QLocale::Language::Finnish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fi_Latn_FI
+        QLocale::Language::Finnish, QLocale::Script::LatinScript, QLocale::Country::Finland
+    },
+    {
+        // from fil
+        QLocale::Language::Filipino, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fil_Latn_PH
+        QLocale::Language::Filipino, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from fit
+        QLocale::Language::TornedalenFinnish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fit_Latn_SE
+        QLocale::Language::TornedalenFinnish, QLocale::Script::LatinScript, QLocale::Country::Sweden
+    },
+    {
+        // from fj
+        QLocale::Language::Fijian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fj_Latn_FJ
+        QLocale::Language::Fijian, QLocale::Script::LatinScript, QLocale::Country::Fiji
+    },
+    {
+        // from fo
+        QLocale::Language::Faroese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fo_Latn_FO
+        QLocale::Language::Faroese, QLocale::Script::LatinScript, QLocale::Country::FaroeIslands
+    },
+    {
+        // from fon
+        QLocale::Language::Fon, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fon_Latn_BJ
+        QLocale::Language::Fon, QLocale::Script::LatinScript, QLocale::Country::Benin
+    },
+    {
+        // from fr
+        QLocale::Language::French, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fr_Latn_FR
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::France
+    },
+    {
+        // from frc
+        QLocale::Language::CajunFrench, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to frc_Latn_US
+        QLocale::Language::CajunFrench, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from frp
+        QLocale::Language::Arpitan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to frp_Latn_FR
+        QLocale::Language::Arpitan, QLocale::Script::LatinScript, QLocale::Country::France
+    },
+    {
+        // from frr
+        QLocale::Language::NorthernFrisian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to frr_Latn_DE
+        QLocale::Language::NorthernFrisian, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from frs
+        QLocale::Language::EasternFrisian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to frs_Latn_DE
+        QLocale::Language::EasternFrisian, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from fur
+        QLocale::Language::Friulian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fur_Latn_IT
+        QLocale::Language::Friulian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from fy
+        QLocale::Language::WesternFrisian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to fy_Latn_NL
+        QLocale::Language::WesternFrisian, QLocale::Script::LatinScript, QLocale::Country::Netherlands
+    },
+    {
+        // from ga
+        QLocale::Language::Irish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ga_Latn_IE
+        QLocale::Language::Irish, QLocale::Script::LatinScript, QLocale::Country::Ireland
+    },
+    {
+        // from gaa
+        QLocale::Language::Ga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gaa_Latn_GH
+        QLocale::Language::Ga, QLocale::Script::LatinScript, QLocale::Country::Ghana
+    },
+    {
+        // from gag
+        QLocale::Language::Gagauz, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gag_Latn_MD
+        QLocale::Language::Gagauz, QLocale::Script::LatinScript, QLocale::Country::Moldova
+    },
+    {
+        // from gan
+        QLocale::Language::GanChinese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gan_Hans_CN
+        QLocale::Language::GanChinese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from gay
+        QLocale::Language::Gayo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gay_Latn_ID
+        QLocale::Language::Gayo, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from gba
+        QLocale::Language::Gbaya, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gba_Latn_ZZ
+        QLocale::Language::Gbaya, QLocale::Script::LatinScript, QLocale::Country::UnknownRegion
+    },
+    {
+        // from gbz
+        QLocale::Language::ZoroastrianDari, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gbz_Arab_IR
+        QLocale::Language::ZoroastrianDari, QLocale::Script::ArabicScript, QLocale::Country::Iran
+    },
+    {
+        // from gd
+        QLocale::Language::ScottishGaelic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gd_Latn_GB
+        QLocale::Language::ScottishGaelic, QLocale::Script::LatinScript, QLocale::Country::UnitedKingdom
+    },
+    {
+        // from gez
+        QLocale::Language::Geez, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gez_Ethi_ET
+        QLocale::Language::Geez, QLocale::Script::EthiopicScript, QLocale::Country::Ethiopia
+    },
+    {
+        // from gil
+        QLocale::Language::Gilbertese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gil_Latn_KI
+        QLocale::Language::Gilbertese, QLocale::Script::LatinScript, QLocale::Country::Kiribati
+    },
+    {
+        // from gl
+        QLocale::Language::Galician, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gl_Latn_ES
+        QLocale::Language::Galician, QLocale::Script::LatinScript, QLocale::Country::Spain
+    },
+    {
+        // from glk
+        QLocale::Language::Gilaki, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to glk_Arab_IR
+        QLocale::Language::Gilaki, QLocale::Script::ArabicScript, QLocale::Country::Iran
+    },
+    {
+        // from gn
+        QLocale::Language::Guarani, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gn_Latn_PY
+        QLocale::Language::Guarani, QLocale::Script::LatinScript, QLocale::Country::Paraguay
+    },
+    {
+        // from gom
+        QLocale::Language::GoanKonkani, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gom_Deva_IN
+        QLocale::Language::GoanKonkani, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from gon
+        QLocale::Language::Gondi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gon_Telu_IN
+        QLocale::Language::Gondi, QLocale::Script::TeluguScript, QLocale::Country::India
+    },
+    {
+        // from gor
+        QLocale::Language::Gorontalo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gor_Latn_ID
+        QLocale::Language::Gorontalo, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from got
+        QLocale::Language::Gothic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to got_Goth_UA
+        QLocale::Language::Gothic, QLocale::Script::GothicScript, QLocale::Country::Ukraine
+    },
+    {
+        // from grb
+        QLocale::Language::Grebo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to grb_Latn_ZZ
+        QLocale::Language::Grebo, QLocale::Script::LatinScript, QLocale::Country::UnknownRegion
+    },
+    {
+        // from grc
+        QLocale::Language::AncientGreek, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to grc_Cprt_CY
+        QLocale::Language::AncientGreek, QLocale::Script::CypriotScript, QLocale::Country::Cyprus
+    },
+    {
+        // from gsw
+        QLocale::Language::SwissGerman, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gsw_Latn_CH
+        QLocale::Language::SwissGerman, QLocale::Script::LatinScript, QLocale::Country::Switzerland
+    },
+    {
+        // from gu
+        QLocale::Language::Gujarati, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gu_Gujr_IN
+        QLocale::Language::Gujarati, QLocale::Script::GujaratiScript, QLocale::Country::India
+    },
+    {
+        // from guc
+        QLocale::Language::Wayuu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to guc_Latn_CO
+        QLocale::Language::Wayuu, QLocale::Script::LatinScript, QLocale::Country::Colombia
+    },
+    {
+        // from gur
+        QLocale::Language::Frafra, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gur_Latn_GH
+        QLocale::Language::Frafra, QLocale::Script::LatinScript, QLocale::Country::Ghana
+    },
+    {
+        // from guz
+        QLocale::Language::Gusii, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to guz_Latn_KE
+        QLocale::Language::Gusii, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from gv
+        QLocale::Language::Manx, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gv_Latn_IM
+        QLocale::Language::Manx, QLocale::Script::LatinScript, QLocale::Country::IsleofMan
+    },
+    {
+        // from gwi
+        QLocale::Language::Gwichin, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to gwi_Latn_CA
+        QLocale::Language::Gwichin, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
+        // from ha
+        QLocale::Language::Hausa, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ha_Latn_NG
+        QLocale::Language::Hausa, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from ha_CM
+        QLocale::Language::Hausa, QLocale::Script::AnyScript, QLocale::Country::Cameroon,
+        // to ha_Arab_CM
+        QLocale::Language::Hausa, QLocale::Script::ArabicScript, QLocale::Country::Cameroon
+    },
+    {
+        // from ha_SD
+        QLocale::Language::Hausa, QLocale::Script::AnyScript, QLocale::Country::Sudan,
+        // to ha_Arab_SD
+        QLocale::Language::Hausa, QLocale::Script::ArabicScript, QLocale::Country::Sudan
+    },
+    {
+        // from hak
+        QLocale::Language::HakkaChinese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to hak_Hans_CN
+        QLocale::Language::HakkaChinese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from haw
+        QLocale::Language::Hawaiian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to haw_Latn_US
+        QLocale::Language::Hawaiian, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from he
+        QLocale::Language::Hebrew, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to he_Hebr_IL
+        QLocale::Language::Hebrew, QLocale::Script::HebrewScript, QLocale::Country::Israel
+    },
+    {
+        // from hi
+        QLocale::Language::Hindi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to hi_Deva_IN
+        QLocale::Language::Hindi, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from hif
+        QLocale::Language::FijiHindi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to hif_Latn_FJ
+        QLocale::Language::FijiHindi, QLocale::Script::LatinScript, QLocale::Country::Fiji
+    },
+    {
+        // from hil
+        QLocale::Language::Hiligaynon, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to hil_Latn_PH
+        QLocale::Language::Hiligaynon, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from ho
+        QLocale::Language::HiriMotu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ho_Latn_PG
+        QLocale::Language::HiriMotu, QLocale::Script::LatinScript, QLocale::Country::PapuaNewGuinea
+    },
+    {
+        // from hr
+        QLocale::Language::Croatian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to hr_Latn_HR
+        QLocale::Language::Croatian, QLocale::Script::LatinScript, QLocale::Country::Croatia
+    },
+    {
+        // from hsb
+        QLocale::Language::UpperSorbian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to hsb_Latn_DE
+        QLocale::Language::UpperSorbian, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from hsn
+        QLocale::Language::XiangChinese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to hsn_Hans_CN
+        QLocale::Language::XiangChinese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from ht
+        QLocale::Language::HaitianCreole, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ht_Latn_HT
+        QLocale::Language::HaitianCreole, QLocale::Script::LatinScript, QLocale::Country::Haiti
+    },
+    {
+        // from hu
+        QLocale::Language::Hungarian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to hu_Latn_HU
+        QLocale::Language::Hungarian, QLocale::Script::LatinScript, QLocale::Country::Hungary
+    },
+    {
+        // from hy
+        QLocale::Language::Armenian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to hy_Armn_AM
+        QLocale::Language::Armenian, QLocale::Script::ArmenianScript, QLocale::Country::Armenia
+    },
+    {
+        // from hz
+        QLocale::Language::Herero, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to hz_Latn_NA
+        QLocale::Language::Herero, QLocale::Script::LatinScript, QLocale::Country::Namibia
+    },
+    {
+        // from ia
+        QLocale::Language::Interlingua, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ia_Latn_001
+        QLocale::Language::Interlingua, QLocale::Script::LatinScript, QLocale::Country::World
+    },
+    {
+        // from iba
+        QLocale::Language::Iban, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to iba_Latn_MY
+        QLocale::Language::Iban, QLocale::Script::LatinScript, QLocale::Country::Malaysia
+    },
+    {
+        // from ibb
+        QLocale::Language::Ibibio, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ibb_Latn_NG
+        QLocale::Language::Ibibio, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from id
+        QLocale::Language::Indonesian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to id_Latn_ID
+        QLocale::Language::Indonesian, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from ig
+        QLocale::Language::Igbo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ig_Latn_NG
+        QLocale::Language::Igbo, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from ii
+        QLocale::Language::SichuanYi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ii_Yiii_CN
+        QLocale::Language::SichuanYi, QLocale::Script::YiScript, QLocale::Country::China
+    },
+    {
+        // from ik
+        QLocale::Language::Inupiaq, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ik_Latn_US
+        QLocale::Language::Inupiaq, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from ilo
+        QLocale::Language::Iloko, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ilo_Latn_PH
+        QLocale::Language::Iloko, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from inh
+        QLocale::Language::Ingush, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to inh_Cyrl_RU
+        QLocale::Language::Ingush, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from io
+        QLocale::Language::Ido, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to io_Latn_001
+        QLocale::Language::Ido, QLocale::Script::LatinScript, QLocale::Country::World
+    },
+    {
+        // from is
+        QLocale::Language::Icelandic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to is_Latn_IS
+        QLocale::Language::Icelandic, QLocale::Script::LatinScript, QLocale::Country::Iceland
+    },
+    {
+        // from it
+        QLocale::Language::Italian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to it_Latn_IT
+        QLocale::Language::Italian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from iu
+        QLocale::Language::Inuktitut, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to iu_Cans_CA
+        QLocale::Language::Inuktitut, QLocale::Script::UnifiedCanadianAboriginalSyllabicsScript, QLocale::Country::Canada
+    },
+    {
+        // from izh
+        QLocale::Language::Ingrian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to izh_Latn_RU
+        QLocale::Language::Ingrian, QLocale::Script::LatinScript, QLocale::Country::Russia
+    },
+    {
+        // from ja
+        QLocale::Language::Japanese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ja_Jpan_JP
+        QLocale::Language::Japanese, QLocale::Script::JapaneseScript, QLocale::Country::Japan
+    },
+    {
+        // from jam
+        QLocale::Language::JamaicanCreoleEnglish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to jam_Latn_JM
+        QLocale::Language::JamaicanCreoleEnglish, QLocale::Script::LatinScript, QLocale::Country::Jamaica
+    },
+    {
+        // from jbo
+        QLocale::Language::Lojban, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to jbo_Latn_001
+        QLocale::Language::Lojban, QLocale::Script::LatinScript, QLocale::Country::World
+    },
+    {
+        // from jgo
+        QLocale::Language::Ngomba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to jgo_Latn_CM
+        QLocale::Language::Ngomba, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from jmc
+        QLocale::Language::Machame, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to jmc_Latn_TZ
+        QLocale::Language::Machame, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from jut
+        QLocale::Language::Jutish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to jut_Latn_DK
+        QLocale::Language::Jutish, QLocale::Script::LatinScript, QLocale::Country::Denmark
+    },
+    {
+        // from jv
+        QLocale::Language::Javanese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to jv_Latn_ID
+        QLocale::Language::Javanese, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from ka
+        QLocale::Language::Georgian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ka_Geor_GE
+        QLocale::Language::Georgian, QLocale::Script::GeorgianScript, QLocale::Country::Georgia
+    },
+    {
+        // from kaa
+        QLocale::Language::KaraKalpak, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kaa_Cyrl_UZ
+        QLocale::Language::KaraKalpak, QLocale::Script::CyrillicScript, QLocale::Country::Uzbekistan
+    },
+    {
+        // from kab
+        QLocale::Language::Kabyle, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kab_Latn_DZ
+        QLocale::Language::Kabyle, QLocale::Script::LatinScript, QLocale::Country::Algeria
+    },
+    {
+        // from kac
+        QLocale::Language::Kachin, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kac_Latn_MM
+        QLocale::Language::Kachin, QLocale::Script::LatinScript, QLocale::Country::MyanmarBurma
+    },
+    {
+        // from kaj
+        QLocale::Language::Jju, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kaj_Latn_NG
+        QLocale::Language::Jju, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from kam
+        QLocale::Language::Kamba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kam_Latn_KE
+        QLocale::Language::Kamba, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from kbd
+        QLocale::Language::Kabardian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kbd_Cyrl_RU
+        QLocale::Language::Kabardian, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from kcg
+        QLocale::Language::Tyap, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kcg_Latn_NG
+        QLocale::Language::Tyap, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from kde
+        QLocale::Language::Makonde, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kde_Latn_TZ
+        QLocale::Language::Makonde, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from kea
+        QLocale::Language::Kabuverdianu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kea_Latn_CV
+        QLocale::Language::Kabuverdianu, QLocale::Script::LatinScript, QLocale::Country::CapeVerde
+    },
+    {
+        // from ken
+        QLocale::Language::Kenyang, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ken_Latn_CM
+        QLocale::Language::Kenyang, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from kfo
+        QLocale::Language::Koro, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kfo_Latn_CI
+        QLocale::Language::Koro, QLocale::Script::LatinScript, QLocale::Country::CotedIvoire
+    },
+    {
+        // from kg
+        QLocale::Language::Kongo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kg_Latn_CD
+        QLocale::Language::Kongo, QLocale::Script::LatinScript, QLocale::Country::CongoKinshasa
+    },
+    {
+        // from kgp
+        QLocale::Language::Kaingang, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kgp_Latn_BR
+        QLocale::Language::Kaingang, QLocale::Script::LatinScript, QLocale::Country::Brazil
+    },
+    {
+        // from kha
+        QLocale::Language::Khasi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kha_Latn_IN
+        QLocale::Language::Khasi, QLocale::Script::LatinScript, QLocale::Country::India
+    },
+    {
+        // from khq
+        QLocale::Language::KoyraChiini, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to khq_Latn_ML
+        QLocale::Language::KoyraChiini, QLocale::Script::LatinScript, QLocale::Country::Mali
+    },
+    {
+        // from khw
+        QLocale::Language::Khowar, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to khw_Arab_PK
+        QLocale::Language::Khowar, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from ki
+        QLocale::Language::Kikuyu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ki_Latn_KE
+        QLocale::Language::Kikuyu, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from kiu
+        QLocale::Language::Kirmanjki, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kiu_Latn_TR
+        QLocale::Language::Kirmanjki, QLocale::Script::LatinScript, QLocale::Country::Turkey
+    },
+    {
+        // from kj
+        QLocale::Language::Kuanyama, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kj_Latn_NA
+        QLocale::Language::Kuanyama, QLocale::Script::LatinScript, QLocale::Country::Namibia
+    },
+    {
+        // from kk
+        QLocale::Language::Kazakh, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kk_Cyrl_KZ
+        QLocale::Language::Kazakh, QLocale::Script::CyrillicScript, QLocale::Country::Kazakhstan
+    },
+    {
+        // from kk_AF
+        QLocale::Language::Kazakh, QLocale::Script::AnyScript, QLocale::Country::Afghanistan,
+        // to kk_Arab_AF
+        QLocale::Language::Kazakh, QLocale::Script::ArabicScript, QLocale::Country::Afghanistan
+    },
+    {
+        // from kk_CN
+        QLocale::Language::Kazakh, QLocale::Script::AnyScript, QLocale::Country::China,
+        // to kk_Arab_CN
+        QLocale::Language::Kazakh, QLocale::Script::ArabicScript, QLocale::Country::China
+    },
+    {
+        // from kk_IR
+        QLocale::Language::Kazakh, QLocale::Script::AnyScript, QLocale::Country::Iran,
+        // to kk_Arab_IR
+        QLocale::Language::Kazakh, QLocale::Script::ArabicScript, QLocale::Country::Iran
+    },
+    {
+        // from kk_MN
+        QLocale::Language::Kazakh, QLocale::Script::AnyScript, QLocale::Country::Mongolia,
+        // to kk_Arab_MN
+        QLocale::Language::Kazakh, QLocale::Script::ArabicScript, QLocale::Country::Mongolia
+    },
+    {
+        // from kkj
+        QLocale::Language::Kako, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kkj_Latn_CM
+        QLocale::Language::Kako, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from kl
+        QLocale::Language::Kalaallisut, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kl_Latn_GL
+        QLocale::Language::Kalaallisut, QLocale::Script::LatinScript, QLocale::Country::Greenland
+    },
+    {
+        // from kln
+        QLocale::Language::Kalenjin, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kln_Latn_KE
+        QLocale::Language::Kalenjin, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from km
+        QLocale::Language::Khmer, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to km_Khmr_KH
+        QLocale::Language::Khmer, QLocale::Script::KhmerScript, QLocale::Country::Cambodia
+    },
+    {
+        // from kmb
+        QLocale::Language::Kimbundu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kmb_Latn_AO
+        QLocale::Language::Kimbundu, QLocale::Script::LatinScript, QLocale::Country::Angola
+    },
+    {
+        // from kn
+        QLocale::Language::Kannada, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kn_Knda_IN
+        QLocale::Language::Kannada, QLocale::Script::KannadaScript, QLocale::Country::India
+    },
+    {
+        // from ko
+        QLocale::Language::Korean, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ko_Kore_KR
+        QLocale::Language::Korean, QLocale::Script::KoreanScript, QLocale::Country::SouthKorea
+    },
+    {
+        // from koi
+        QLocale::Language::KomiPermyak, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to koi_Cyrl_RU
+        QLocale::Language::KomiPermyak, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from kok
+        QLocale::Language::Konkani, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kok_Deva_IN
+        QLocale::Language::Konkani, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from kos
+        QLocale::Language::Kosraean, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kos_Latn_FM
+        QLocale::Language::Kosraean, QLocale::Script::LatinScript, QLocale::Country::Micronesia
+    },
+    {
+        // from kpe
+        QLocale::Language::Kpelle, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kpe_Latn_LR
+        QLocale::Language::Kpelle, QLocale::Script::LatinScript, QLocale::Country::Liberia
+    },
+    {
+        // from kr
+        QLocale::Language::Kanuri, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kr_Latn_ZZ
+        QLocale::Language::Kanuri, QLocale::Script::LatinScript, QLocale::Country::UnknownRegion
+    },
+    {
+        // from krc
+        QLocale::Language::KarachayBalkar, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to krc_Cyrl_RU
+        QLocale::Language::KarachayBalkar, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from kri
+        QLocale::Language::Krio, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kri_Latn_SL
+        QLocale::Language::Krio, QLocale::Script::LatinScript, QLocale::Country::SierraLeone
+    },
+    {
+        // from krj
+        QLocale::Language::Kinaraya, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to krj_Latn_PH
+        QLocale::Language::Kinaraya, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from krl
+        QLocale::Language::Karelian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to krl_Latn_RU
+        QLocale::Language::Karelian, QLocale::Script::LatinScript, QLocale::Country::Russia
+    },
+    {
+        // from kru
+        QLocale::Language::Kurukh, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kru_Deva_IN
+        QLocale::Language::Kurukh, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from ks
+        QLocale::Language::Kashmiri, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ks_Arab_IN
+        QLocale::Language::Kashmiri, QLocale::Script::ArabicScript, QLocale::Country::India
+    },
+    {
+        // from ksb
+        QLocale::Language::Shambala, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ksb_Latn_TZ
+        QLocale::Language::Shambala, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from ksf
+        QLocale::Language::Bafia, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ksf_Latn_CM
+        QLocale::Language::Bafia, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from ksh
+        QLocale::Language::Colognian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ksh_Latn_DE
+        QLocale::Language::Colognian, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from ku
+        QLocale::Language::Kurdish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ku_Latn_TR
+        QLocale::Language::Kurdish, QLocale::Script::LatinScript, QLocale::Country::Turkey
+    },
+    {
+        // from ku_LB
+        QLocale::Language::Kurdish, QLocale::Script::AnyScript, QLocale::Country::Lebanon,
+        // to ku_Arab_LB
+        QLocale::Language::Kurdish, QLocale::Script::ArabicScript, QLocale::Country::Lebanon
+    },
+    {
+        // from kum
+        QLocale::Language::Kumyk, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kum_Cyrl_RU
+        QLocale::Language::Kumyk, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from kv
+        QLocale::Language::Komi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kv_Cyrl_RU
+        QLocale::Language::Komi, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from kw
+        QLocale::Language::Cornish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to kw_Latn_GB
+        QLocale::Language::Cornish, QLocale::Script::LatinScript, QLocale::Country::UnitedKingdom
+    },
+    {
+        // from ky
+        QLocale::Language::Kyrgyz, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ky_Cyrl_KG
+        QLocale::Language::Kyrgyz, QLocale::Script::CyrillicScript, QLocale::Country::Kyrgyzstan
+    },
+    {
+        // from ky_CN
+        QLocale::Language::Kyrgyz, QLocale::Script::AnyScript, QLocale::Country::China,
+        // to ky_Arab_CN
+        QLocale::Language::Kyrgyz, QLocale::Script::ArabicScript, QLocale::Country::China
+    },
+    {
+        // from ky_TR
+        QLocale::Language::Kyrgyz, QLocale::Script::AnyScript, QLocale::Country::Turkey,
+        // to ky_Latn_TR
+        QLocale::Language::Kyrgyz, QLocale::Script::LatinScript, QLocale::Country::Turkey
+    },
+    {
+        // from la
+        QLocale::Language::Latin, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to la_Latn_VA
+        QLocale::Language::Latin, QLocale::Script::LatinScript, QLocale::Country::VaticanCity
+    },
+    {
+        // from lad
+        QLocale::Language::Ladino, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lad_Hebr_IL
+        QLocale::Language::Ladino, QLocale::Script::HebrewScript, QLocale::Country::Israel
+    },
+    {
+        // from lag
+        QLocale::Language::Langi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lag_Latn_TZ
+        QLocale::Language::Langi, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from lah
+        QLocale::Language::Lahnda, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lah_Arab_PK
+        QLocale::Language::Lahnda, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from lb
+        QLocale::Language::Luxembourgish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lb_Latn_LU
+        QLocale::Language::Luxembourgish, QLocale::Script::LatinScript, QLocale::Country::Luxembourg
+    },
+    {
+        // from lez
+        QLocale::Language::Lezghian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lez_Cyrl_RU
+        QLocale::Language::Lezghian, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from lg
+        QLocale::Language::Ganda, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lg_Latn_UG
+        QLocale::Language::Ganda, QLocale::Script::LatinScript, QLocale::Country::Uganda
+    },
+    {
+        // from li
+        QLocale::Language::Limburgish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to li_Latn_NL
+        QLocale::Language::Limburgish, QLocale::Script::LatinScript, QLocale::Country::Netherlands
+    },
+    {
+        // from lij
+        QLocale::Language::Ligurian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lij_Latn_IT
+        QLocale::Language::Ligurian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from lkt
+        QLocale::Language::Lakota, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lkt_Latn_US
+        QLocale::Language::Lakota, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from lmo
+        QLocale::Language::Lombard, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lmo_Latn_IT
+        QLocale::Language::Lombard, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from ln
+        QLocale::Language::Lingala, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ln_Latn_CD
+        QLocale::Language::Lingala, QLocale::Script::LatinScript, QLocale::Country::CongoKinshasa
+    },
+    {
+        // from lo
+        QLocale::Language::Lao, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lo_Laoo_LA
+        QLocale::Language::Lao, QLocale::Script::LaoScript, QLocale::Country::Laos
+    },
+    {
+        // from lol
+        QLocale::Language::Mongo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lol_Latn_CD
+        QLocale::Language::Mongo, QLocale::Script::LatinScript, QLocale::Country::CongoKinshasa
+    },
+    {
+        // from loz
+        QLocale::Language::Lozi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to loz_Latn_ZM
+        QLocale::Language::Lozi, QLocale::Script::LatinScript, QLocale::Country::Zambia
+    },
+    {
+        // from lrc
+        QLocale::Language::NorthernLuri, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lrc_Arab_IR
+        QLocale::Language::NorthernLuri, QLocale::Script::ArabicScript, QLocale::Country::Iran
+    },
+    {
+        // from lt
+        QLocale::Language::Lithuanian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lt_Latn_LT
+        QLocale::Language::Lithuanian, QLocale::Script::LatinScript, QLocale::Country::Lithuania
+    },
+    {
+        // from ltg
+        QLocale::Language::Latgalian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ltg_Latn_LV
+        QLocale::Language::Latgalian, QLocale::Script::LatinScript, QLocale::Country::Latvia
+    },
+    {
+        // from lu
+        QLocale::Language::LubaKatanga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lu_Latn_CD
+        QLocale::Language::LubaKatanga, QLocale::Script::LatinScript, QLocale::Country::CongoKinshasa
+    },
+    {
+        // from lua
+        QLocale::Language::LubaLulua, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lua_Latn_CD
+        QLocale::Language::LubaLulua, QLocale::Script::LatinScript, QLocale::Country::CongoKinshasa
+    },
+    {
+        // from luo
+        QLocale::Language::Luo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to luo_Latn_KE
+        QLocale::Language::Luo, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from luy
+        QLocale::Language::Luyia, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to luy_Latn_KE
+        QLocale::Language::Luyia, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from lv
+        QLocale::Language::Latvian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lv_Latn_LV
+        QLocale::Language::Latvian, QLocale::Script::LatinScript, QLocale::Country::Latvia
+    },
+    {
+        // from lzh
+        QLocale::Language::LiteraryChinese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lzh_Hans_CN
+        QLocale::Language::LiteraryChinese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from lzz
+        QLocale::Language::Laz, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to lzz_Latn_TR
+        QLocale::Language::Laz, QLocale::Script::LatinScript, QLocale::Country::Turkey
+    },
+    {
+        // from mad
+        QLocale::Language::Madurese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mad_Latn_ID
+        QLocale::Language::Madurese, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from maf
+        QLocale::Language::Mafa, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to maf_Latn_CM
+        QLocale::Language::Mafa, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from mag
+        QLocale::Language::Magahi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mag_Deva_IN
+        QLocale::Language::Magahi, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from mai
+        QLocale::Language::Maithili, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mai_Deva_IN
+        QLocale::Language::Maithili, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from mak
+        QLocale::Language::Makasar, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mak_Latn_ID
+        QLocale::Language::Makasar, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from man
+        QLocale::Language::Mandingo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to man_Latn_GM
+        QLocale::Language::Mandingo, QLocale::Script::LatinScript, QLocale::Country::Gambia
+    },
+    {
+        // from man_GN
+        QLocale::Language::Mandingo, QLocale::Script::AnyScript, QLocale::Country::Guinea,
+        // to man_Nkoo_GN
+        QLocale::Language::Mandingo, QLocale::Script::NKoScript, QLocale::Country::Guinea
+    },
+    {
+        // from mas
+        QLocale::Language::Masai, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mas_Latn_KE
+        QLocale::Language::Masai, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from mde
+        QLocale::Language::Maba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mde_Arab_ZZ
+        QLocale::Language::Maba, QLocale::Script::ArabicScript, QLocale::Country::UnknownRegion
+    },
+    {
+        // from mdf
+        QLocale::Language::Moksha, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mdf_Cyrl_RU
+        QLocale::Language::Moksha, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from mdr
+        QLocale::Language::Mandar, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mdr_Latn_ID
+        QLocale::Language::Mandar, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from men
+        QLocale::Language::Mende, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to men_Latn_SL
+        QLocale::Language::Mende, QLocale::Script::LatinScript, QLocale::Country::SierraLeone
+    },
+    {
+        // from mer
+        QLocale::Language::Meru, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mer_Latn_KE
+        QLocale::Language::Meru, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from mfe
+        QLocale::Language::Morisyen, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mfe_Latn_MU
+        QLocale::Language::Morisyen, QLocale::Script::LatinScript, QLocale::Country::Mauritius
+    },
+    {
+        // from mg
+        QLocale::Language::Malagasy, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mg_Latn_MG
+        QLocale::Language::Malagasy, QLocale::Script::LatinScript, QLocale::Country::Madagascar
+    },
+    {
+        // from mgh
+        QLocale::Language::MakhuwaMeetto, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mgh_Latn_MZ
+        QLocale::Language::MakhuwaMeetto, QLocale::Script::LatinScript, QLocale::Country::Mozambique
+    },
+    {
+        // from mgo
+        QLocale::Language::Meta, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mgo_Latn_CM
+        QLocale::Language::Meta, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from mh
+        QLocale::Language::Marshallese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mh_Latn_MH
+        QLocale::Language::Marshallese, QLocale::Script::LatinScript, QLocale::Country::MarshallIslands
+    },
+    {
+        // from mi
+        QLocale::Language::Maori, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mi_Latn_NZ
+        QLocale::Language::Maori, QLocale::Script::LatinScript, QLocale::Country::NewZealand
+    },
+    {
+        // from min
+        QLocale::Language::Minangkabau, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to min_Latn_ID
+        QLocale::Language::Minangkabau, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from mk
+        QLocale::Language::Macedonian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mk_Cyrl_MK
+        QLocale::Language::Macedonian, QLocale::Script::CyrillicScript, QLocale::Country::NorthMacedonia
+    },
+    {
+        // from ml
+        QLocale::Language::Malayalam, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ml_Mlym_IN
+        QLocale::Language::Malayalam, QLocale::Script::MalayalamScript, QLocale::Country::India
+    },
+    {
+        // from mn
+        QLocale::Language::Mongolian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mn_Cyrl_MN
+        QLocale::Language::Mongolian, QLocale::Script::CyrillicScript, QLocale::Country::Mongolia
+    },
+    {
+        // from mn_CN
+        QLocale::Language::Mongolian, QLocale::Script::AnyScript, QLocale::Country::China,
+        // to mn_Mong_CN
+        QLocale::Language::Mongolian, QLocale::Script::MongolianScript, QLocale::Country::China
+    },
+    {
+        // from mni
+        QLocale::Language::Manipuri, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mni_Beng_IN
+        QLocale::Language::Manipuri, QLocale::Script::BanglaScript, QLocale::Country::India
+    },
+    {
+        // from moh
+        QLocale::Language::Mohawk, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to moh_Latn_CA
+        QLocale::Language::Mohawk, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
+        // from mos
+        QLocale::Language::Mossi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mos_Latn_BF
+        QLocale::Language::Mossi, QLocale::Script::LatinScript, QLocale::Country::BurkinaFaso
+    },
+    {
+        // from mr
+        QLocale::Language::Marathi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mr_Deva_IN
+        QLocale::Language::Marathi, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from mrj
+        QLocale::Language::WesternMari, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mrj_Cyrl_RU
+        QLocale::Language::WesternMari, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from ms
+        QLocale::Language::Malay, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ms_Latn_MY
+        QLocale::Language::Malay, QLocale::Script::LatinScript, QLocale::Country::Malaysia
+    },
+    {
+        // from ms_CC
+        QLocale::Language::Malay, QLocale::Script::AnyScript, QLocale::Country::CocosKeelingIslands,
+        // to ms_Arab_CC
+        QLocale::Language::Malay, QLocale::Script::ArabicScript, QLocale::Country::CocosKeelingIslands
+    },
+    {
+        // from ms_ID
+        QLocale::Language::Malay, QLocale::Script::AnyScript, QLocale::Country::Indonesia,
+        // to ms_Arab_ID
+        QLocale::Language::Malay, QLocale::Script::ArabicScript, QLocale::Country::Indonesia
+    },
+    {
+        // from mt
+        QLocale::Language::Maltese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mt_Latn_MT
+        QLocale::Language::Maltese, QLocale::Script::LatinScript, QLocale::Country::Malta
+    },
+    {
+        // from mua
+        QLocale::Language::Mundang, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mua_Latn_CM
+        QLocale::Language::Mundang, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from mus
+        QLocale::Language::Creek, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mus_Latn_US
+        QLocale::Language::Creek, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from mwr
+        QLocale::Language::Marwari, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mwr_Deva_IN
+        QLocale::Language::Marwari, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from mwv
+        QLocale::Language::Mentawai, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mwv_Latn_ID
+        QLocale::Language::Mentawai, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from my
+        QLocale::Language::Burmese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to my_Mymr_MM
+        QLocale::Language::Burmese, QLocale::Script::MyanmarScript, QLocale::Country::MyanmarBurma
+    },
+    {
+        // from myv
+        QLocale::Language::Erzya, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to myv_Cyrl_RU
+        QLocale::Language::Erzya, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from mzn
+        QLocale::Language::Mazanderani, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to mzn_Arab_IR
+        QLocale::Language::Mazanderani, QLocale::Script::ArabicScript, QLocale::Country::Iran
+    },
+    {
+        // from na
+        QLocale::Language::NauruLanguage, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to na_Latn_NR
+        QLocale::Language::NauruLanguage, QLocale::Script::LatinScript, QLocale::Country::Nauru
+    },
+    {
+        // from nan
+        QLocale::Language::MinNanChinese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nan_Hans_CN
+        QLocale::Language::MinNanChinese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from nap
+        QLocale::Language::Neapolitan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nap_Latn_IT
+        QLocale::Language::Neapolitan, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from naq
+        QLocale::Language::Nama, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to naq_Latn_NA
+        QLocale::Language::Nama, QLocale::Script::LatinScript, QLocale::Country::Namibia
+    },
+    {
+        // from nb
+        QLocale::Language::NorwegianBokmal, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nb_Latn_NO
+        QLocale::Language::NorwegianBokmal, QLocale::Script::LatinScript, QLocale::Country::Norway
+    },
+    {
+        // from nd
+        QLocale::Language::NorthNdebele, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nd_Latn_ZW
+        QLocale::Language::NorthNdebele, QLocale::Script::LatinScript, QLocale::Country::Zimbabwe
+    },
+    {
+        // from nds
+        QLocale::Language::LowGerman, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nds_Latn_DE
+        QLocale::Language::LowGerman, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from ne
+        QLocale::Language::Nepali, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ne_Deva_NP
+        QLocale::Language::Nepali, QLocale::Script::DevanagariScript, QLocale::Country::Nepal
+    },
+    {
+        // from new
+        QLocale::Language::Newari, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to new_Deva_NP
+        QLocale::Language::Newari, QLocale::Script::DevanagariScript, QLocale::Country::Nepal
+    },
+    {
+        // from ng
+        QLocale::Language::Ndonga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ng_Latn_NA
+        QLocale::Language::Ndonga, QLocale::Script::LatinScript, QLocale::Country::Namibia
+    },
+    {
+        // from niu
+        QLocale::Language::Niuean, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to niu_Latn_NU
+        QLocale::Language::Niuean, QLocale::Script::LatinScript, QLocale::Country::Niue
+    },
+    {
+        // from njo
+        QLocale::Language::AoNaga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to njo_Latn_IN
+        QLocale::Language::AoNaga, QLocale::Script::LatinScript, QLocale::Country::India
+    },
+    {
+        // from nl
+        QLocale::Language::Dutch, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nl_Latn_NL
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::Netherlands
+    },
+    {
+        // from nmg
+        QLocale::Language::Kwasio, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nmg_Latn_CM
+        QLocale::Language::Kwasio, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from nn
+        QLocale::Language::NorwegianNynorsk, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nn_Latn_NO
+        QLocale::Language::NorwegianNynorsk, QLocale::Script::LatinScript, QLocale::Country::Norway
+    },
+    {
+        // from nnh
+        QLocale::Language::Ngiemboon, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nnh_Latn_CM
+        QLocale::Language::Ngiemboon, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from no
+        QLocale::Language::Norwegian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to no_Latn_NO
+        QLocale::Language::Norwegian, QLocale::Script::LatinScript, QLocale::Country::Norway
+    },
+    {
+        // from non
+        QLocale::Language::OldNorse, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to non_Runr_SE
+        QLocale::Language::OldNorse, QLocale::Script::RunicScript, QLocale::Country::Sweden
+    },
+    {
+        // from nqo
+        QLocale::Language::NKo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nqo_Nkoo_GN
+        QLocale::Language::NKo, QLocale::Script::NKoScript, QLocale::Country::Guinea
+    },
+    {
+        // from nr
+        QLocale::Language::SouthNdebele, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nr_Latn_ZA
+        QLocale::Language::SouthNdebele, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from nso
+        QLocale::Language::NorthernSotho, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nso_Latn_ZA
+        QLocale::Language::NorthernSotho, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from nus
+        QLocale::Language::Nuer, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nus_Latn_SS
+        QLocale::Language::Nuer, QLocale::Script::LatinScript, QLocale::Country::SouthSudan
+    },
+    {
+        // from nv
+        QLocale::Language::Navajo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nv_Latn_US
+        QLocale::Language::Navajo, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from ny
+        QLocale::Language::Nyanja, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ny_Latn_MW
+        QLocale::Language::Nyanja, QLocale::Script::LatinScript, QLocale::Country::Malawi
+    },
+    {
+        // from nym
+        QLocale::Language::Nyamwezi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nym_Latn_TZ
+        QLocale::Language::Nyamwezi, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from nyn
+        QLocale::Language::Nyankole, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nyn_Latn_UG
+        QLocale::Language::Nyankole, QLocale::Script::LatinScript, QLocale::Country::Uganda
+    },
+    {
+        // from nzi
+        QLocale::Language::Nzima, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to nzi_Latn_GH
+        QLocale::Language::Nzima, QLocale::Script::LatinScript, QLocale::Country::Ghana
+    },
+    {
+        // from oc
+        QLocale::Language::Occitan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to oc_Latn_FR
+        QLocale::Language::Occitan, QLocale::Script::LatinScript, QLocale::Country::France
+    },
+    {
+        // from om
+        QLocale::Language::Oromo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to om_Latn_ET
+        QLocale::Language::Oromo, QLocale::Script::LatinScript, QLocale::Country::Ethiopia
+    },
+    {
+        // from or
+        QLocale::Language::Odia, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to or_Orya_IN
+        QLocale::Language::Odia, QLocale::Script::OdiaScript, QLocale::Country::India
+    },
+    {
+        // from os
+        QLocale::Language::Ossetic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to os_Cyrl_GE
+        QLocale::Language::Ossetic, QLocale::Script::CyrillicScript, QLocale::Country::Georgia
+    },
+    {
+        // from osa
+        QLocale::Language::Osage, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to osa_Osge_US
+        QLocale::Language::Osage, QLocale::Script::OsageScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from ota
+        QLocale::Language::OttomanTurkish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ota_Arab_ZZ
+        QLocale::Language::OttomanTurkish, QLocale::Script::ArabicScript, QLocale::Country::UnknownRegion
+    },
+    {
+        // from pa
+        QLocale::Language::Punjabi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pa_Guru_IN
+        QLocale::Language::Punjabi, QLocale::Script::GurmukhiScript, QLocale::Country::India
+    },
+    {
+        // from pa_PK
+        QLocale::Language::Punjabi, QLocale::Script::AnyScript, QLocale::Country::Pakistan,
+        // to pa_Arab_PK
+        QLocale::Language::Punjabi, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from pag
+        QLocale::Language::Pangasinan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pag_Latn_PH
+        QLocale::Language::Pangasinan, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from pal
+        QLocale::Language::Pahlavi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pal_Phli_IR
+        QLocale::Language::Pahlavi, QLocale::Script::InscriptionalPahlaviScript, QLocale::Country::Iran
+    },
+    {
+        // from pam
+        QLocale::Language::Pampanga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pam_Latn_PH
+        QLocale::Language::Pampanga, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from pap
+        QLocale::Language::Papiamento, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pap_Latn_AW
+        QLocale::Language::Papiamento, QLocale::Script::LatinScript, QLocale::Country::Aruba
+    },
+    {
+        // from pau
+        QLocale::Language::Palauan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pau_Latn_PW
+        QLocale::Language::Palauan, QLocale::Script::LatinScript, QLocale::Country::Palau
+    },
+    {
+        // from pcd
+        QLocale::Language::Picard, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pcd_Latn_FR
+        QLocale::Language::Picard, QLocale::Script::LatinScript, QLocale::Country::France
+    },
+    {
+        // from pcm
+        QLocale::Language::NigerianPidgin, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pcm_Latn_NG
+        QLocale::Language::NigerianPidgin, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from pdc
+        QLocale::Language::PennsylvaniaGerman, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pdc_Latn_US
+        QLocale::Language::PennsylvaniaGerman, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from pdt
+        QLocale::Language::Plautdietsch, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pdt_Latn_CA
+        QLocale::Language::Plautdietsch, QLocale::Script::LatinScript, QLocale::Country::Canada
+    },
+    {
+        // from peo
+        QLocale::Language::OldPersian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to peo_Xpeo_IR
+        QLocale::Language::OldPersian, QLocale::Script::OldPersianScript, QLocale::Country::Iran
+    },
+    {
+        // from pfl
+        QLocale::Language::PalatineGerman, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pfl_Latn_DE
+        QLocale::Language::PalatineGerman, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from phn
+        QLocale::Language::Phoenician, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to phn_Phnx_LB
+        QLocale::Language::Phoenician, QLocale::Script::PhoenicianScript, QLocale::Country::Lebanon
+    },
+    {
+        // from pl
+        QLocale::Language::Polish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pl_Latn_PL
+        QLocale::Language::Polish, QLocale::Script::LatinScript, QLocale::Country::Poland
+    },
+    {
+        // from pms
+        QLocale::Language::Piedmontese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pms_Latn_IT
+        QLocale::Language::Piedmontese, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from pnt
+        QLocale::Language::Pontic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pnt_Grek_GR
+        QLocale::Language::Pontic, QLocale::Script::GreekScript, QLocale::Country::Greece
+    },
+    {
+        // from pon
+        QLocale::Language::Pohnpeian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pon_Latn_FM
+        QLocale::Language::Pohnpeian, QLocale::Script::LatinScript, QLocale::Country::Micronesia
+    },
+    {
+        // from prg
+        QLocale::Language::Prussian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to prg_Latn_001
+        QLocale::Language::Prussian, QLocale::Script::LatinScript, QLocale::Country::World
+    },
+    {
+        // from ps
+        QLocale::Language::Pashto, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ps_Arab_AF
+        QLocale::Language::Pashto, QLocale::Script::ArabicScript, QLocale::Country::Afghanistan
+    },
+    {
+        // from pt
+        QLocale::Language::Portuguese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to pt_Latn_BR
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::Brazil
+    },
+    {
+        // from qu
+        QLocale::Language::Quechua, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to qu_Latn_PE
+        QLocale::Language::Quechua, QLocale::Script::LatinScript, QLocale::Country::Peru
+    },
+    {
+        // from quc
+        QLocale::Language::Kiche, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to quc_Latn_GT
+        QLocale::Language::Kiche, QLocale::Script::LatinScript, QLocale::Country::Guatemala
+    },
+    {
+        // from qug
+        QLocale::Language::ChimborazoHighlandQuichua, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to qug_Latn_EC
+        QLocale::Language::ChimborazoHighlandQuichua, QLocale::Script::LatinScript, QLocale::Country::Ecuador
+    },
+    {
+        // from raj
+        QLocale::Language::Rajasthani, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to raj_Deva_IN
+        QLocale::Language::Rajasthani, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from rgn
+        QLocale::Language::Romagnol, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to rgn_Latn_IT
+        QLocale::Language::Romagnol, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from rif
+        QLocale::Language::Riffian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to rif_Tfng_MA
+        QLocale::Language::Riffian, QLocale::Script::TifinaghScript, QLocale::Country::Morocco
+    },
+    {
+        // from rif_NL
+        QLocale::Language::Riffian, QLocale::Script::AnyScript, QLocale::Country::Netherlands,
+        // to rif_Latn_NL
+        QLocale::Language::Riffian, QLocale::Script::LatinScript, QLocale::Country::Netherlands
+    },
+    {
+        // from rm
+        QLocale::Language::Romansh, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to rm_Latn_CH
+        QLocale::Language::Romansh, QLocale::Script::LatinScript, QLocale::Country::Switzerland
+    },
+    {
+        // from rn
+        QLocale::Language::Rundi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to rn_Latn_BI
+        QLocale::Language::Rundi, QLocale::Script::LatinScript, QLocale::Country::Burundi
+    },
+    {
+        // from ro
+        QLocale::Language::Romanian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ro_Latn_RO
+        QLocale::Language::Romanian, QLocale::Script::LatinScript, QLocale::Country::Romania
+    },
+    {
+        // from rof
+        QLocale::Language::Rombo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to rof_Latn_TZ
+        QLocale::Language::Rombo, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from rtm
+        QLocale::Language::Rotuman, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to rtm_Latn_FJ
+        QLocale::Language::Rotuman, QLocale::Script::LatinScript, QLocale::Country::Fiji
+    },
+    {
+        // from ru
+        QLocale::Language::Russian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ru_Cyrl_RU
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from rue
+        QLocale::Language::Rusyn, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to rue_Cyrl_UA
+        QLocale::Language::Rusyn, QLocale::Script::CyrillicScript, QLocale::Country::Ukraine
+    },
+    {
+        // from rug
+        QLocale::Language::Roviana, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to rug_Latn_SB
+        QLocale::Language::Roviana, QLocale::Script::LatinScript, QLocale::Country::SolomonIslands
+    },
+    {
+        // from rw
+        QLocale::Language::Kinyarwanda, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to rw_Latn_RW
+        QLocale::Language::Kinyarwanda, QLocale::Script::LatinScript, QLocale::Country::Rwanda
+    },
+    {
+        // from rwk
+        QLocale::Language::Rwa, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to rwk_Latn_TZ
+        QLocale::Language::Rwa, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from sa
+        QLocale::Language::Sanskrit, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sa_Deva_IN
+        QLocale::Language::Sanskrit, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from sah
+        QLocale::Language::Sakha, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sah_Cyrl_RU
+        QLocale::Language::Sakha, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from saq
+        QLocale::Language::Samburu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to saq_Latn_KE
+        QLocale::Language::Samburu, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from sas
+        QLocale::Language::Sasak, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sas_Latn_ID
+        QLocale::Language::Sasak, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from sat
+        QLocale::Language::Santali, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sat_Latn_IN
+        QLocale::Language::Santali, QLocale::Script::LatinScript, QLocale::Country::India
+    },
+    {
+        // from saz
+        QLocale::Language::Saurashtra, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to saz_Saur_IN
+        QLocale::Language::Saurashtra, QLocale::Script::SaurashtraScript, QLocale::Country::India
+    },
+    {
+        // from sba
+        QLocale::Language::Ngambay, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sba_Latn_ZZ
+        QLocale::Language::Ngambay, QLocale::Script::LatinScript, QLocale::Country::UnknownRegion
+    },
+    {
+        // from sbp
+        QLocale::Language::Sangu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sbp_Latn_TZ
+        QLocale::Language::Sangu, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from sc
+        QLocale::Language::Sardinian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sc_Latn_IT
+        QLocale::Language::Sardinian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from scn
+        QLocale::Language::Sicilian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to scn_Latn_IT
+        QLocale::Language::Sicilian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from sco
+        QLocale::Language::Scots, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sco_Latn_GB
+        QLocale::Language::Scots, QLocale::Script::LatinScript, QLocale::Country::UnitedKingdom
+    },
+    {
+        // from sd
+        QLocale::Language::Sindhi, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sd_Arab_PK
+        QLocale::Language::Sindhi, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from sdc
+        QLocale::Language::SassareseSardinian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sdc_Latn_IT
+        QLocale::Language::SassareseSardinian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from sdh
+        QLocale::Language::SouthernKurdish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sdh_Arab_IR
+        QLocale::Language::SouthernKurdish, QLocale::Script::ArabicScript, QLocale::Country::Iran
+    },
+    {
+        // from se
+        QLocale::Language::NorthernSami, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to se_Latn_NO
+        QLocale::Language::NorthernSami, QLocale::Script::LatinScript, QLocale::Country::Norway
+    },
+    {
+        // from seh
+        QLocale::Language::Sena, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to seh_Latn_MZ
+        QLocale::Language::Sena, QLocale::Script::LatinScript, QLocale::Country::Mozambique
+    },
+    {
+        // from sei
+        QLocale::Language::Seri, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sei_Latn_MX
+        QLocale::Language::Seri, QLocale::Script::LatinScript, QLocale::Country::Mexico
+    },
+    {
+        // from ses
+        QLocale::Language::KoyraboroSenni, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ses_Latn_ML
+        QLocale::Language::KoyraboroSenni, QLocale::Script::LatinScript, QLocale::Country::Mali
+    },
+    {
+        // from sg
+        QLocale::Language::Sango, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sg_Latn_CF
+        QLocale::Language::Sango, QLocale::Script::LatinScript, QLocale::Country::CentralAfricanRepublic
+    },
+    {
+        // from sga
+        QLocale::Language::OldIrish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sga_Ogam_IE
+        QLocale::Language::OldIrish, QLocale::Script::OghamScript, QLocale::Country::Ireland
+    },
+    {
+        // from sgs
+        QLocale::Language::Samogitian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sgs_Latn_LT
+        QLocale::Language::Samogitian, QLocale::Script::LatinScript, QLocale::Country::Lithuania
+    },
+    {
+        // from shi
+        QLocale::Language::Tachelhit, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to shi_Tfng_MA
+        QLocale::Language::Tachelhit, QLocale::Script::TifinaghScript, QLocale::Country::Morocco
+    },
+    {
+        // from shn
+        QLocale::Language::Shan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to shn_Mymr_MM
+        QLocale::Language::Shan, QLocale::Script::MyanmarScript, QLocale::Country::MyanmarBurma
+    },
+    {
+        // from shu
+        QLocale::Language::ChadianArabic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to shu_Arab_ZZ
+        QLocale::Language::ChadianArabic, QLocale::Script::ArabicScript, QLocale::Country::UnknownRegion
+    },
+    {
+        // from si
+        QLocale::Language::Sinhala, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to si_Sinh_LK
+        QLocale::Language::Sinhala, QLocale::Script::SinhalaScript, QLocale::Country::SriLanka
+    },
+    {
+        // from sid
+        QLocale::Language::Sidamo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sid_Latn_ET
+        QLocale::Language::Sidamo, QLocale::Script::LatinScript, QLocale::Country::Ethiopia
+    },
+    {
+        // from sk
+        QLocale::Language::Slovak, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sk_Latn_SK
+        QLocale::Language::Slovak, QLocale::Script::LatinScript, QLocale::Country::Slovakia
+    },
+    {
+        // from sl
+        QLocale::Language::Slovenian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sl_Latn_SI
+        QLocale::Language::Slovenian, QLocale::Script::LatinScript, QLocale::Country::Slovenia
+    },
+    {
+        // from sli
+        QLocale::Language::LowerSilesian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sli_Latn_PL
+        QLocale::Language::LowerSilesian, QLocale::Script::LatinScript, QLocale::Country::Poland
+    },
+    {
+        // from sly
+        QLocale::Language::Selayar, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sly_Latn_ID
+        QLocale::Language::Selayar, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from sm
+        QLocale::Language::Samoan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sm_Latn_WS
+        QLocale::Language::Samoan, QLocale::Script::LatinScript, QLocale::Country::Samoa
+    },
+    {
+        // from sma
+        QLocale::Language::SouthernSami, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sma_Latn_SE
+        QLocale::Language::SouthernSami, QLocale::Script::LatinScript, QLocale::Country::Sweden
+    },
+    {
+        // from smj
+        QLocale::Language::LuleSami, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to smj_Latn_SE
+        QLocale::Language::LuleSami, QLocale::Script::LatinScript, QLocale::Country::Sweden
+    },
+    {
+        // from smn
+        QLocale::Language::InariSami, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to smn_Latn_FI
+        QLocale::Language::InariSami, QLocale::Script::LatinScript, QLocale::Country::Finland
+    },
+    {
+        // from sms
+        QLocale::Language::SkoltSami, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sms_Latn_FI
+        QLocale::Language::SkoltSami, QLocale::Script::LatinScript, QLocale::Country::Finland
+    },
+    {
+        // from sn
+        QLocale::Language::Shona, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sn_Latn_ZW
+        QLocale::Language::Shona, QLocale::Script::LatinScript, QLocale::Country::Zimbabwe
+    },
+    {
+        // from snk
+        QLocale::Language::Soninke, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to snk_Latn_ML
+        QLocale::Language::Soninke, QLocale::Script::LatinScript, QLocale::Country::Mali
+    },
+    {
+        // from so
+        QLocale::Language::Somali, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to so_Latn_SO
+        QLocale::Language::Somali, QLocale::Script::LatinScript, QLocale::Country::Somalia
+    },
+    {
+        // from sog
+        QLocale::Language::Sogdien, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sog_Sogd_UZ
+        QLocale::Language::Sogdien, QLocale::Script::SogdianScript, QLocale::Country::Uzbekistan
+    },
+    {
+        // from sq
+        QLocale::Language::Albanian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sq_Latn_AL
+        QLocale::Language::Albanian, QLocale::Script::LatinScript, QLocale::Country::Albania
+    },
+    {
+        // from sr
+        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sr_Cyrl_RS
+        QLocale::Language::Serbian, QLocale::Script::CyrillicScript, QLocale::Country::Serbia
+    },
+    {
+        // from sr_ME
+        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::Montenegro,
+        // to sr_Latn_ME
+        QLocale::Language::Serbian, QLocale::Script::LatinScript, QLocale::Country::Montenegro
+    },
+    {
+        // from sr_RO
+        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::Romania,
+        // to sr_Latn_RO
+        QLocale::Language::Serbian, QLocale::Script::LatinScript, QLocale::Country::Romania
+    },
+    {
+        // from sr_RU
+        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::Russia,
+        // to sr_Latn_RU
+        QLocale::Language::Serbian, QLocale::Script::LatinScript, QLocale::Country::Russia
+    },
+    {
+        // from sr_TR
+        QLocale::Language::Serbian, QLocale::Script::AnyScript, QLocale::Country::Turkey,
+        // to sr_Latn_TR
+        QLocale::Language::Serbian, QLocale::Script::LatinScript, QLocale::Country::Turkey
+    },
+    {
+        // from srn
+        QLocale::Language::SrananTongo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to srn_Latn_SR
+        QLocale::Language::SrananTongo, QLocale::Script::LatinScript, QLocale::Country::Suriname
+    },
+    {
+        // from srr
+        QLocale::Language::Serer, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to srr_Latn_SN
+        QLocale::Language::Serer, QLocale::Script::LatinScript, QLocale::Country::Senegal
+    },
+    {
+        // from ss
+        QLocale::Language::Swati, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ss_Latn_ZA
+        QLocale::Language::Swati, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from ssy
+        QLocale::Language::Saho, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ssy_Latn_ER
+        QLocale::Language::Saho, QLocale::Script::LatinScript, QLocale::Country::Eritrea
+    },
+    {
+        // from st
+        QLocale::Language::SouthernSotho, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to st_Latn_ZA
+        QLocale::Language::SouthernSotho, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from stq
+        QLocale::Language::SaterlandFrisian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to stq_Latn_DE
+        QLocale::Language::SaterlandFrisian, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from su
+        QLocale::Language::Sundanese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to su_Latn_ID
+        QLocale::Language::Sundanese, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from suk
+        QLocale::Language::Sukuma, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to suk_Latn_TZ
+        QLocale::Language::Sukuma, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from sus
+        QLocale::Language::Susu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sus_Latn_GN
+        QLocale::Language::Susu, QLocale::Script::LatinScript, QLocale::Country::Guinea
+    },
+    {
+        // from sv
+        QLocale::Language::Swedish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sv_Latn_SE
+        QLocale::Language::Swedish, QLocale::Script::LatinScript, QLocale::Country::Sweden
+    },
+    {
+        // from sw
+        QLocale::Language::Swahili, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to sw_Latn_TZ
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from swb
+        QLocale::Language::Comorian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to swb_Arab_YT
+        QLocale::Language::Comorian, QLocale::Script::ArabicScript, QLocale::Country::Mayotte
+    },
+    {
+        // from syr
+        QLocale::Language::Syriac, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to syr_Syrc_IQ
+        QLocale::Language::Syriac, QLocale::Script::SyriacScript, QLocale::Country::Iraq
+    },
+    {
+        // from szl
+        QLocale::Language::Silesian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to szl_Latn_PL
+        QLocale::Language::Silesian, QLocale::Script::LatinScript, QLocale::Country::Poland
+    },
+    {
+        // from ta
+        QLocale::Language::Tamil, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ta_Taml_IN
+        QLocale::Language::Tamil, QLocale::Script::TamilScript, QLocale::Country::India
+    },
+    {
+        // from tcy
+        QLocale::Language::Tulu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tcy_Knda_IN
+        QLocale::Language::Tulu, QLocale::Script::KannadaScript, QLocale::Country::India
+    },
+    {
+        // from te
+        QLocale::Language::Telugu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to te_Telu_IN
+        QLocale::Language::Telugu, QLocale::Script::TeluguScript, QLocale::Country::India
+    },
+    {
+        // from tem
+        QLocale::Language::Timne, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tem_Latn_SL
+        QLocale::Language::Timne, QLocale::Script::LatinScript, QLocale::Country::SierraLeone
+    },
+    {
+        // from teo
+        QLocale::Language::Teso, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to teo_Latn_UG
+        QLocale::Language::Teso, QLocale::Script::LatinScript, QLocale::Country::Uganda
+    },
+    {
+        // from tet
+        QLocale::Language::Tetum, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tet_Latn_TL
+        QLocale::Language::Tetum, QLocale::Script::LatinScript, QLocale::Country::TimorLeste
+    },
+    {
+        // from tg
+        QLocale::Language::Tajik, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tg_Cyrl_TJ
+        QLocale::Language::Tajik, QLocale::Script::CyrillicScript, QLocale::Country::Tajikistan
+    },
+    {
+        // from tg_PK
+        QLocale::Language::Tajik, QLocale::Script::AnyScript, QLocale::Country::Pakistan,
+        // to tg_Arab_PK
+        QLocale::Language::Tajik, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from th
+        QLocale::Language::Thai, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to th_Thai_TH
+        QLocale::Language::Thai, QLocale::Script::ThaiScript, QLocale::Country::Thailand
+    },
+    {
+        // from ti
+        QLocale::Language::Tigrinya, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ti_Ethi_ET
+        QLocale::Language::Tigrinya, QLocale::Script::EthiopicScript, QLocale::Country::Ethiopia
+    },
+    {
+        // from tig
+        QLocale::Language::Tigre, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tig_Ethi_ER
+        QLocale::Language::Tigre, QLocale::Script::EthiopicScript, QLocale::Country::Eritrea
+    },
+    {
+        // from tiv
+        QLocale::Language::Tiv, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tiv_Latn_NG
+        QLocale::Language::Tiv, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from tk
+        QLocale::Language::Turkmen, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tk_Latn_TM
+        QLocale::Language::Turkmen, QLocale::Script::LatinScript, QLocale::Country::Turkmenistan
+    },
+    {
+        // from tkl
+        QLocale::Language::TokelauLanguage, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tkl_Latn_TK
+        QLocale::Language::TokelauLanguage, QLocale::Script::LatinScript, QLocale::Country::Tokelau
+    },
+    {
+        // from tkr
+        QLocale::Language::Tsakhur, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tkr_Latn_AZ
+        QLocale::Language::Tsakhur, QLocale::Script::LatinScript, QLocale::Country::Azerbaijan
+    },
+    {
+        // from tl
+        QLocale::Language::Tagalog, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tl_Latn_PH
+        QLocale::Language::Tagalog, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from tly
+        QLocale::Language::Talysh, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tly_Latn_AZ
+        QLocale::Language::Talysh, QLocale::Script::LatinScript, QLocale::Country::Azerbaijan
+    },
+    {
+        // from tmh
+        QLocale::Language::Tamashek, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tmh_Latn_NE
+        QLocale::Language::Tamashek, QLocale::Script::LatinScript, QLocale::Country::Niger
+    },
+    {
+        // from tn
+        QLocale::Language::Tswana, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tn_Latn_ZA
+        QLocale::Language::Tswana, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from to
+        QLocale::Language::Tongan, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to to_Latn_TO
+        QLocale::Language::Tongan, QLocale::Script::LatinScript, QLocale::Country::Tonga
+    },
+    {
+        // from tog
+        QLocale::Language::NyasaTonga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tog_Latn_MW
+        QLocale::Language::NyasaTonga, QLocale::Script::LatinScript, QLocale::Country::Malawi
+    },
+    {
+        // from tpi
+        QLocale::Language::TokPisin, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tpi_Latn_PG
+        QLocale::Language::TokPisin, QLocale::Script::LatinScript, QLocale::Country::PapuaNewGuinea
+    },
+    {
+        // from tr
+        QLocale::Language::Turkish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tr_Latn_TR
+        QLocale::Language::Turkish, QLocale::Script::LatinScript, QLocale::Country::Turkey
+    },
+    {
+        // from tru
+        QLocale::Language::Turoyo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tru_Latn_TR
+        QLocale::Language::Turoyo, QLocale::Script::LatinScript, QLocale::Country::Turkey
+    },
+    {
+        // from trv
+        QLocale::Language::Taroko, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to trv_Latn_TW
+        QLocale::Language::Taroko, QLocale::Script::LatinScript, QLocale::Country::Taiwan
+    },
+    {
+        // from ts
+        QLocale::Language::Tsonga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ts_Latn_ZA
+        QLocale::Language::Tsonga, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from tsd
+        QLocale::Language::Tsakonian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tsd_Grek_GR
+        QLocale::Language::Tsakonian, QLocale::Script::GreekScript, QLocale::Country::Greece
+    },
+    {
+        // from tt
+        QLocale::Language::Tatar, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tt_Cyrl_RU
+        QLocale::Language::Tatar, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from ttt
+        QLocale::Language::MuslimTat, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ttt_Latn_AZ
+        QLocale::Language::MuslimTat, QLocale::Script::LatinScript, QLocale::Country::Azerbaijan
+    },
+    {
+        // from tum
+        QLocale::Language::Tumbuka, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tum_Latn_MW
+        QLocale::Language::Tumbuka, QLocale::Script::LatinScript, QLocale::Country::Malawi
+    },
+    {
+        // from tvl
+        QLocale::Language::TuvaluLanguage, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tvl_Latn_TV
+        QLocale::Language::TuvaluLanguage, QLocale::Script::LatinScript, QLocale::Country::Tuvalu
+    },
+    {
+        // from twq
+        QLocale::Language::Tasawaq, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to twq_Latn_NE
+        QLocale::Language::Tasawaq, QLocale::Script::LatinScript, QLocale::Country::Niger
+    },
+    {
+        // from ty
+        QLocale::Language::Tahitian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ty_Latn_PF
+        QLocale::Language::Tahitian, QLocale::Script::LatinScript, QLocale::Country::FrenchPolynesia
+    },
+    {
+        // from tyv
+        QLocale::Language::Tuvinian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tyv_Cyrl_RU
+        QLocale::Language::Tuvinian, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from tzm
+        QLocale::Language::CentralAtlasTamazight, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to tzm_Latn_MA
+        QLocale::Language::CentralAtlasTamazight, QLocale::Script::LatinScript, QLocale::Country::Morocco
+    },
+    {
+        // from udm
+        QLocale::Language::Udmurt, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to udm_Cyrl_RU
+        QLocale::Language::Udmurt, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from ug
+        QLocale::Language::Uyghur, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ug_Arab_CN
+        QLocale::Language::Uyghur, QLocale::Script::ArabicScript, QLocale::Country::China
+    },
+    {
+        // from ug_KZ
+        QLocale::Language::Uyghur, QLocale::Script::AnyScript, QLocale::Country::Kazakhstan,
+        // to ug_Cyrl_KZ
+        QLocale::Language::Uyghur, QLocale::Script::CyrillicScript, QLocale::Country::Kazakhstan
+    },
+    {
+        // from ug_MN
+        QLocale::Language::Uyghur, QLocale::Script::AnyScript, QLocale::Country::Mongolia,
+        // to ug_Cyrl_MN
+        QLocale::Language::Uyghur, QLocale::Script::CyrillicScript, QLocale::Country::Mongolia
+    },
+    {
+        // from uga
+        QLocale::Language::Ugaritic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to uga_Ugar_SY
+        QLocale::Language::Ugaritic, QLocale::Script::UgariticScript, QLocale::Country::Syria
+    },
+    {
+        // from uk
+        QLocale::Language::Ukrainian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to uk_Cyrl_UA
+        QLocale::Language::Ukrainian, QLocale::Script::CyrillicScript, QLocale::Country::Ukraine
+    },
+    {
+        // from umb
+        QLocale::Language::Umbundu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to umb_Latn_AO
+        QLocale::Language::Umbundu, QLocale::Script::LatinScript, QLocale::Country::Angola
+    },
+    {
+        // from und
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to en_Latn_US
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from und_002
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Africa,
+        // to en_Latn_NG
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from und_003
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::NorthAmerica,
+        // to en_Latn_US
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from und_005
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SouthAmerica,
+        // to pt_Latn_BR
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::Brazil
+    },
+    {
+        // from und_009
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Oceania,
+        // to en_Latn_AU
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::Australia
+    },
+    {
+        // from und_011
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::WesternAfrica,
+        // to en_Latn_NG
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from und_013
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CentralAmerica,
+        // to es_Latn_MX
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Mexico
+    },
+    {
+        // from und_014
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::EasternAfrica,
+        // to sw_Latn_TZ
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from und_015
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::NorthernAfrica,
+        // to ar_Arab_EG
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Egypt
+    },
+    {
+        // from und_017
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::MiddleAfrica,
+        // to sw_Latn_CD
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::CongoKinshasa
+    },
+    {
+        // from und_018
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SouthernAfrica,
+        // to en_Latn_ZA
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from und_019
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Americas,
+        // to en_Latn_US
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from und_021
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::NorthernAmerica,
+        // to en_Latn_US
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from und_029
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Caribbean,
+        // to es_Latn_CU
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Cuba
+    },
+    {
+        // from und_030
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::EasternAsia,
+        // to zh_Hans_CN
+        QLocale::Language::Chinese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from und_034
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SouthernAsia,
+        // to hi_Deva_IN
+        QLocale::Language::Hindi, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from und_035
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SoutheastAsia,
+        // to id_Latn_ID
+        QLocale::Language::Indonesian, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from und_039
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SouthernEurope,
+        // to it_Latn_IT
+        QLocale::Language::Italian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from und_053
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Australasia,
+        // to en_Latn_AU
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::Australia
+    },
+    {
+        // from und_054
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Melanesia,
+        // to en_Latn_PG
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::PapuaNewGuinea
+    },
+    {
+        // from und_057
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::MicronesianRegion,
+        // to en_Latn_GU
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::Guam
+    },
+    {
+        // from und_061
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Polynesia,
+        // to sm_Latn_WS
+        QLocale::Language::Samoan, QLocale::Script::LatinScript, QLocale::Country::Samoa
+    },
+    {
+        // from und_142
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Asia,
+        // to zh_Hans_CN
+        QLocale::Language::Chinese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from und_143
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CentralAsia,
+        // to uz_Latn_UZ
+        QLocale::Language::Uzbek, QLocale::Script::LatinScript, QLocale::Country::Uzbekistan
+    },
+    {
+        // from und_145
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::WesternAsia,
+        // to ar_Arab_SA
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::SaudiArabia
+    },
+    {
+        // from und_150
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Europe,
+        // to ru_Cyrl_RU
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from und_151
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::EasternEurope,
+        // to ru_Cyrl_RU
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from und_154
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::NorthernEurope,
+        // to en_Latn_GB
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::UnitedKingdom
+    },
+    {
+        // from und_155
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::WesternEurope,
+        // to de_Latn_DE
+        QLocale::Language::German, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from und_202
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SubSaharanAfrica,
+        // to en_Latn_NG
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from und_419
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::LatinAmerica,
+        // to es_Latn_419
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::LatinAmerica
+    },
+    {
+        // from und_AD
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Andorra,
+        // to ca_Latn_AD
+        QLocale::Language::Catalan, QLocale::Script::LatinScript, QLocale::Country::Andorra
+    },
+    {
+        // from und_AE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::UnitedArabEmirates,
+        // to ar_Arab_AE
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::UnitedArabEmirates
+    },
+    {
+        // from und_AF
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Afghanistan,
+        // to fa_Arab_AF
+        QLocale::Language::Persian, QLocale::Script::ArabicScript, QLocale::Country::Afghanistan
+    },
+    {
+        // from und_AL
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Albania,
+        // to sq_Latn_AL
+        QLocale::Language::Albanian, QLocale::Script::LatinScript, QLocale::Country::Albania
+    },
+    {
+        // from und_AM
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Armenia,
+        // to hy_Armn_AM
+        QLocale::Language::Armenian, QLocale::Script::ArmenianScript, QLocale::Country::Armenia
+    },
+    {
+        // from und_AO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Angola,
+        // to pt_Latn_AO
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::Angola
+    },
+    {
+        // from und_AQ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Antarctica,
+        // to und_Latn_AQ
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Antarctica
+    },
+    {
+        // from und_AR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Argentina,
+        // to es_Latn_AR
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Argentina
+    },
+    {
+        // from und_AS
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::AmericanSamoa,
+        // to sm_Latn_AS
+        QLocale::Language::Samoan, QLocale::Script::LatinScript, QLocale::Country::AmericanSamoa
+    },
+    {
+        // from und_AT
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Austria,
+        // to de_Latn_AT
+        QLocale::Language::German, QLocale::Script::LatinScript, QLocale::Country::Austria
+    },
+    {
+        // from und_AW
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Aruba,
+        // to nl_Latn_AW
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::Aruba
+    },
+    {
+        // from und_AX
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::AlandIslands,
+        // to sv_Latn_AX
+        QLocale::Language::Swedish, QLocale::Script::LatinScript, QLocale::Country::AlandIslands
+    },
+    {
+        // from und_AZ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Azerbaijan,
+        // to az_Latn_AZ
+        QLocale::Language::Azerbaijani, QLocale::Script::LatinScript, QLocale::Country::Azerbaijan
+    },
+    {
+        // from und_Arab_CC
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::CocosKeelingIslands,
+        // to ms_Arab_CC
+        QLocale::Language::Malay, QLocale::Script::ArabicScript, QLocale::Country::CocosKeelingIslands
+    },
+    {
+        // from und_Arab_CN
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::China,
+        // to ug_Arab_CN
+        QLocale::Language::Uyghur, QLocale::Script::ArabicScript, QLocale::Country::China
+    },
+    {
+        // from und_Arab_GB
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::UnitedKingdom,
+        // to ks_Arab_GB
+        QLocale::Language::Kashmiri, QLocale::Script::ArabicScript, QLocale::Country::UnitedKingdom
+    },
+    {
+        // from und_Arab_ID
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::Indonesia,
+        // to ms_Arab_ID
+        QLocale::Language::Malay, QLocale::Script::ArabicScript, QLocale::Country::Indonesia
+    },
+    {
+        // from und_Arab_IN
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::India,
+        // to ur_Arab_IN
+        QLocale::Language::Urdu, QLocale::Script::ArabicScript, QLocale::Country::India
+    },
+    {
+        // from und_Arab_MN
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::Mongolia,
+        // to kk_Arab_MN
+        QLocale::Language::Kazakh, QLocale::Script::ArabicScript, QLocale::Country::Mongolia
+    },
+    {
+        // from und_Arab_MU
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::Mauritius,
+        // to ur_Arab_MU
+        QLocale::Language::Urdu, QLocale::Script::ArabicScript, QLocale::Country::Mauritius
+    },
+    {
+        // from und_Arab_NG
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::Nigeria,
+        // to ha_Arab_NG
+        QLocale::Language::Hausa, QLocale::Script::ArabicScript, QLocale::Country::Nigeria
+    },
+    {
+        // from und_Arab_PK
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::Pakistan,
+        // to ur_Arab_PK
+        QLocale::Language::Urdu, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from und_Arab_TJ
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::Tajikistan,
+        // to fa_Arab_TJ
+        QLocale::Language::Persian, QLocale::Script::ArabicScript, QLocale::Country::Tajikistan
+    },
+    {
+        // from und_Arab_TR
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::Turkey,
+        // to az_Arab_TR
+        QLocale::Language::Azerbaijani, QLocale::Script::ArabicScript, QLocale::Country::Turkey
+    },
+    {
+        // from und_Arab_YT
+        QLocale::Language::Unknownlanguage, QLocale::Script::ArabicScript, QLocale::Country::Mayotte,
+        // to swb_Arab_YT
+        QLocale::Language::Comorian, QLocale::Script::ArabicScript, QLocale::Country::Mayotte
+    },
+    {
+        // from und_BA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::BosniaAndHerzegovina,
+        // to bs_Latn_BA
+        QLocale::Language::Bosnian, QLocale::Script::LatinScript, QLocale::Country::BosniaAndHerzegovina
+    },
+    {
+        // from und_BD
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Bangladesh,
+        // to bn_Beng_BD
+        QLocale::Language::Bangla, QLocale::Script::BanglaScript, QLocale::Country::Bangladesh
+    },
+    {
+        // from und_BE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Belgium,
+        // to nl_Latn_BE
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::Belgium
+    },
+    {
+        // from und_BF
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::BurkinaFaso,
+        // to fr_Latn_BF
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::BurkinaFaso
+    },
+    {
+        // from und_BG
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Bulgaria,
+        // to bg_Cyrl_BG
+        QLocale::Language::Bulgarian, QLocale::Script::CyrillicScript, QLocale::Country::Bulgaria
+    },
+    {
+        // from und_BH
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Bahrain,
+        // to ar_Arab_BH
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Bahrain
+    },
+    {
+        // from und_BI
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Burundi,
+        // to rn_Latn_BI
+        QLocale::Language::Rundi, QLocale::Script::LatinScript, QLocale::Country::Burundi
+    },
+    {
+        // from und_BJ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Benin,
+        // to fr_Latn_BJ
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Benin
+    },
+    {
+        // from und_BL
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::StBarthelemy,
+        // to fr_Latn_BL
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::StBarthelemy
+    },
+    {
+        // from und_BN
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Brunei,
+        // to ms_Latn_BN
+        QLocale::Language::Malay, QLocale::Script::LatinScript, QLocale::Country::Brunei
+    },
+    {
+        // from und_BO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Bolivia,
+        // to es_Latn_BO
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Bolivia
+    },
+    {
+        // from und_BQ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CaribbeanNetherlands,
+        // to pap_Latn_BQ
+        QLocale::Language::Papiamento, QLocale::Script::LatinScript, QLocale::Country::CaribbeanNetherlands
+    },
+    {
+        // from und_BR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Brazil,
+        // to pt_Latn_BR
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::Brazil
+    },
+    {
+        // from und_BT
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Bhutan,
+        // to dz_Tibt_BT
+        QLocale::Language::Dzongkha, QLocale::Script::TibetanScript, QLocale::Country::Bhutan
+    },
+    {
+        // from und_BV
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::BouvetIsland,
+        // to und_Latn_BV
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::BouvetIsland
+    },
+    {
+        // from und_BY
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Belarus,
+        // to be_Cyrl_BY
+        QLocale::Language::Belarusian, QLocale::Script::CyrillicScript, QLocale::Country::Belarus
+    },
+    {
+        // from und_CD
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CongoKinshasa,
+        // to sw_Latn_CD
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::CongoKinshasa
+    },
+    {
+        // from und_CF
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CentralAfricanRepublic,
+        // to fr_Latn_CF
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::CentralAfricanRepublic
+    },
+    {
+        // from und_CG
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CongoBrazzaville,
+        // to fr_Latn_CG
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::CongoBrazzaville
+    },
+    {
+        // from und_CH
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Switzerland,
+        // to de_Latn_CH
+        QLocale::Language::German, QLocale::Script::LatinScript, QLocale::Country::Switzerland
+    },
+    {
+        // from und_CI
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CotedIvoire,
+        // to fr_Latn_CI
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::CotedIvoire
+    },
+    {
+        // from und_CL
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Chile,
+        // to es_Latn_CL
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Chile
+    },
+    {
+        // from und_CM
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Cameroon,
+        // to fr_Latn_CM
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from und_CN
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::China,
+        // to zh_Hans_CN
+        QLocale::Language::Chinese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from und_CO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Colombia,
+        // to es_Latn_CO
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Colombia
+    },
+    {
+        // from und_CP
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::ClippertonIsland,
+        // to und_Latn_CP
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::ClippertonIsland
+    },
+    {
+        // from und_CR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CostaRica,
+        // to es_Latn_CR
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::CostaRica
+    },
+    {
+        // from und_CU
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Cuba,
+        // to es_Latn_CU
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Cuba
+    },
+    {
+        // from und_CV
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CapeVerde,
+        // to pt_Latn_CV
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::CapeVerde
+    },
+    {
+        // from und_CW
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Curacao,
+        // to pap_Latn_CW
+        QLocale::Language::Papiamento, QLocale::Script::LatinScript, QLocale::Country::Curacao
+    },
+    {
+        // from und_CY
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Cyprus,
+        // to el_Grek_CY
+        QLocale::Language::Greek, QLocale::Script::GreekScript, QLocale::Country::Cyprus
+    },
+    {
+        // from und_CZ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Czechia,
+        // to cs_Latn_CZ
+        QLocale::Language::Czech, QLocale::Script::LatinScript, QLocale::Country::Czechia
+    },
+    {
+        // from und_Cyrl_AL
+        QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::Albania,
+        // to mk_Cyrl_AL
+        QLocale::Language::Macedonian, QLocale::Script::CyrillicScript, QLocale::Country::Albania
+    },
+    {
+        // from und_Cyrl_BA
+        QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::BosniaAndHerzegovina,
+        // to sr_Cyrl_BA
+        QLocale::Language::Serbian, QLocale::Script::CyrillicScript, QLocale::Country::BosniaAndHerzegovina
+    },
+    {
+        // from und_Cyrl_GE
+        QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::Georgia,
+        // to ab_Cyrl_GE
+        QLocale::Language::Abkhazian, QLocale::Script::CyrillicScript, QLocale::Country::Georgia
+    },
+    {
+        // from und_Cyrl_GR
+        QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::Greece,
+        // to mk_Cyrl_GR
+        QLocale::Language::Macedonian, QLocale::Script::CyrillicScript, QLocale::Country::Greece
+    },
+    {
+        // from und_Cyrl_MD
+        QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::Moldova,
+        // to uk_Cyrl_MD
+        QLocale::Language::Ukrainian, QLocale::Script::CyrillicScript, QLocale::Country::Moldova
+    },
+    {
+        // from und_Cyrl_RO
+        QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::Romania,
+        // to bg_Cyrl_RO
+        QLocale::Language::Bulgarian, QLocale::Script::CyrillicScript, QLocale::Country::Romania
+    },
+    {
+        // from und_Cyrl_SK
+        QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::Slovakia,
+        // to uk_Cyrl_SK
+        QLocale::Language::Ukrainian, QLocale::Script::CyrillicScript, QLocale::Country::Slovakia
+    },
+    {
+        // from und_Cyrl_TR
+        QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::Turkey,
+        // to kbd_Cyrl_TR
+        QLocale::Language::Kabardian, QLocale::Script::CyrillicScript, QLocale::Country::Turkey
+    },
+    {
+        // from und_Cyrl_XK
+        QLocale::Language::Unknownlanguage, QLocale::Script::CyrillicScript, QLocale::Country::Kosovo,
+        // to sr_Cyrl_XK
+        QLocale::Language::Serbian, QLocale::Script::CyrillicScript, QLocale::Country::Kosovo
+    },
+    {
+        // from und_DE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Germany,
+        // to de_Latn_DE
+        QLocale::Language::German, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from und_DJ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Djibouti,
+        // to aa_Latn_DJ
+        QLocale::Language::Afar, QLocale::Script::LatinScript, QLocale::Country::Djibouti
+    },
+    {
+        // from und_DK
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Denmark,
+        // to da_Latn_DK
+        QLocale::Language::Danish, QLocale::Script::LatinScript, QLocale::Country::Denmark
+    },
+    {
+        // from und_DO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::DominicanRepublic,
+        // to es_Latn_DO
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::DominicanRepublic
+    },
+    {
+        // from und_DZ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Algeria,
+        // to ar_Arab_DZ
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Algeria
+    },
+    {
+        // from und_Deva_BT
+        QLocale::Language::Unknownlanguage, QLocale::Script::DevanagariScript, QLocale::Country::Bhutan,
+        // to ne_Deva_BT
+        QLocale::Language::Nepali, QLocale::Script::DevanagariScript, QLocale::Country::Bhutan
+    },
+    {
+        // from und_Deva_FJ
+        QLocale::Language::Unknownlanguage, QLocale::Script::DevanagariScript, QLocale::Country::Fiji,
+        // to hif_Deva_FJ
+        QLocale::Language::FijiHindi, QLocale::Script::DevanagariScript, QLocale::Country::Fiji
+    },
+    {
+        // from und_Deva_MU
+        QLocale::Language::Unknownlanguage, QLocale::Script::DevanagariScript, QLocale::Country::Mauritius,
+        // to bho_Deva_MU
+        QLocale::Language::Bhojpuri, QLocale::Script::DevanagariScript, QLocale::Country::Mauritius
+    },
+    {
+        // from und_EA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CeutaAndMelilla,
+        // to es_Latn_EA
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::CeutaAndMelilla
+    },
+    {
+        // from und_EC
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Ecuador,
+        // to es_Latn_EC
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Ecuador
+    },
+    {
+        // from und_EE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Estonia,
+        // to et_Latn_EE
+        QLocale::Language::Estonian, QLocale::Script::LatinScript, QLocale::Country::Estonia
+    },
+    {
+        // from und_EG
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Egypt,
+        // to ar_Arab_EG
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Egypt
+    },
+    {
+        // from und_EH
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::WesternSahara,
+        // to ar_Arab_EH
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::WesternSahara
+    },
+    {
+        // from und_ER
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Eritrea,
+        // to ti_Ethi_ER
+        QLocale::Language::Tigrinya, QLocale::Script::EthiopicScript, QLocale::Country::Eritrea
+    },
+    {
+        // from und_ES
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Spain,
+        // to es_Latn_ES
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Spain
+    },
+    {
+        // from und_ET
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Ethiopia,
+        // to am_Ethi_ET
+        QLocale::Language::Amharic, QLocale::Script::EthiopicScript, QLocale::Country::Ethiopia
+    },
+    {
+        // from und_EU
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::EuropeanUnion,
+        // to en_Latn_GB
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::UnitedKingdom
+    },
+    {
+        // from und_EZ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Eurozone,
+        // to de_Latn_EZ
+        QLocale::Language::German, QLocale::Script::LatinScript, QLocale::Country::Eurozone
+    },
+    {
+        // from und_FI
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Finland,
+        // to fi_Latn_FI
+        QLocale::Language::Finnish, QLocale::Script::LatinScript, QLocale::Country::Finland
+    },
+    {
+        // from und_FO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::FaroeIslands,
+        // to fo_Latn_FO
+        QLocale::Language::Faroese, QLocale::Script::LatinScript, QLocale::Country::FaroeIslands
+    },
+    {
+        // from und_FR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::France,
+        // to fr_Latn_FR
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::France
+    },
+    {
+        // from und_GA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Gabon,
+        // to fr_Latn_GA
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Gabon
+    },
+    {
+        // from und_GE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Georgia,
+        // to ka_Geor_GE
+        QLocale::Language::Georgian, QLocale::Script::GeorgianScript, QLocale::Country::Georgia
+    },
+    {
+        // from und_GF
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::FrenchGuiana,
+        // to fr_Latn_GF
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::FrenchGuiana
+    },
+    {
+        // from und_GH
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Ghana,
+        // to ak_Latn_GH
+        QLocale::Language::Akan, QLocale::Script::LatinScript, QLocale::Country::Ghana
+    },
+    {
+        // from und_GL
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Greenland,
+        // to kl_Latn_GL
+        QLocale::Language::Kalaallisut, QLocale::Script::LatinScript, QLocale::Country::Greenland
+    },
+    {
+        // from und_GN
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Guinea,
+        // to fr_Latn_GN
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Guinea
+    },
+    {
+        // from und_GP
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Guadeloupe,
+        // to fr_Latn_GP
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Guadeloupe
+    },
+    {
+        // from und_GQ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::EquatorialGuinea,
+        // to es_Latn_GQ
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::EquatorialGuinea
+    },
+    {
+        // from und_GR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Greece,
+        // to el_Grek_GR
+        QLocale::Language::Greek, QLocale::Script::GreekScript, QLocale::Country::Greece
+    },
+    {
+        // from und_GS
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SouthGeorgiaAndSouthSandwichIslands,
+        // to und_Latn_GS
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::SouthGeorgiaAndSouthSandwichIslands
+    },
+    {
+        // from und_GT
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Guatemala,
+        // to es_Latn_GT
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Guatemala
+    },
+    {
+        // from und_GW
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::GuineaBissau,
+        // to pt_Latn_GW
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::GuineaBissau
+    },
+    {
+        // from und_HK
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::HongKongSARChina,
+        // to zh_Hant_HK
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::HongKongSARChina
+    },
+    {
+        // from und_HM
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::HeardAndMcDonaldIslands,
+        // to und_Latn_HM
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::HeardAndMcDonaldIslands
+    },
+    {
+        // from und_HN
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Honduras,
+        // to es_Latn_HN
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Honduras
+    },
+    {
+        // from und_HR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Croatia,
+        // to hr_Latn_HR
+        QLocale::Language::Croatian, QLocale::Script::LatinScript, QLocale::Country::Croatia
+    },
+    {
+        // from und_HT
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Haiti,
+        // to ht_Latn_HT
+        QLocale::Language::HaitianCreole, QLocale::Script::LatinScript, QLocale::Country::Haiti
+    },
+    {
+        // from und_HU
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Hungary,
+        // to hu_Latn_HU
+        QLocale::Language::Hungarian, QLocale::Script::LatinScript, QLocale::Country::Hungary
+    },
+    {
+        // from und_Hebr_CA
+        QLocale::Language::Unknownlanguage, QLocale::Script::HebrewScript, QLocale::Country::Canada,
+        // to yi_Hebr_CA
+        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::Canada
+    },
+    {
+        // from und_Hebr_GB
+        QLocale::Language::Unknownlanguage, QLocale::Script::HebrewScript, QLocale::Country::UnitedKingdom,
+        // to yi_Hebr_GB
+        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::UnitedKingdom
+    },
+    {
+        // from und_Hebr_SE
+        QLocale::Language::Unknownlanguage, QLocale::Script::HebrewScript, QLocale::Country::Sweden,
+        // to yi_Hebr_SE
+        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::Sweden
+    },
+    {
+        // from und_Hebr_UA
+        QLocale::Language::Unknownlanguage, QLocale::Script::HebrewScript, QLocale::Country::Ukraine,
+        // to yi_Hebr_UA
+        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::Ukraine
+    },
+    {
+        // from und_Hebr_US
+        QLocale::Language::Unknownlanguage, QLocale::Script::HebrewScript, QLocale::Country::UnitedStates,
+        // to yi_Hebr_US
+        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from und_IC
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::CanaryIslands,
+        // to es_Latn_IC
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::CanaryIslands
+    },
+    {
+        // from und_ID
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Indonesia,
+        // to id_Latn_ID
+        QLocale::Language::Indonesian, QLocale::Script::LatinScript, QLocale::Country::Indonesia
+    },
+    {
+        // from und_IL
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Israel,
+        // to he_Hebr_IL
+        QLocale::Language::Hebrew, QLocale::Script::HebrewScript, QLocale::Country::Israel
+    },
+    {
+        // from und_IN
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::India,
+        // to hi_Deva_IN
+        QLocale::Language::Hindi, QLocale::Script::DevanagariScript, QLocale::Country::India
+    },
+    {
+        // from und_IQ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Iraq,
+        // to ar_Arab_IQ
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Iraq
+    },
+    {
+        // from und_IR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Iran,
+        // to fa_Arab_IR
+        QLocale::Language::Persian, QLocale::Script::ArabicScript, QLocale::Country::Iran
+    },
+    {
+        // from und_IS
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Iceland,
+        // to is_Latn_IS
+        QLocale::Language::Icelandic, QLocale::Script::LatinScript, QLocale::Country::Iceland
+    },
+    {
+        // from und_IT
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Italy,
+        // to it_Latn_IT
+        QLocale::Language::Italian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from und_JO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Jordan,
+        // to ar_Arab_JO
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Jordan
+    },
+    {
+        // from und_JP
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Japan,
+        // to ja_Jpan_JP
+        QLocale::Language::Japanese, QLocale::Script::JapaneseScript, QLocale::Country::Japan
+    },
+    {
+        // from und_KE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Kenya,
+        // to sw_Latn_KE
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::Kenya
+    },
+    {
+        // from und_KG
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Kyrgyzstan,
+        // to ky_Cyrl_KG
+        QLocale::Language::Kyrgyz, QLocale::Script::CyrillicScript, QLocale::Country::Kyrgyzstan
+    },
+    {
+        // from und_KH
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Cambodia,
+        // to km_Khmr_KH
+        QLocale::Language::Khmer, QLocale::Script::KhmerScript, QLocale::Country::Cambodia
+    },
+    {
+        // from und_KM
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Comoros,
+        // to ar_Arab_KM
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Comoros
+    },
+    {
+        // from und_KP
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::NorthKorea,
+        // to ko_Kore_KP
+        QLocale::Language::Korean, QLocale::Script::KoreanScript, QLocale::Country::NorthKorea
+    },
+    {
+        // from und_KR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SouthKorea,
+        // to ko_Kore_KR
+        QLocale::Language::Korean, QLocale::Script::KoreanScript, QLocale::Country::SouthKorea
+    },
+    {
+        // from und_KW
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Kuwait,
+        // to ar_Arab_KW
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Kuwait
+    },
+    {
+        // from und_KZ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Kazakhstan,
+        // to ru_Cyrl_KZ
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Kazakhstan
+    },
+    {
+        // from und_LA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Laos,
+        // to lo_Laoo_LA
+        QLocale::Language::Lao, QLocale::Script::LaoScript, QLocale::Country::Laos
+    },
+    {
+        // from und_LB
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Lebanon,
+        // to ar_Arab_LB
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Lebanon
+    },
+    {
+        // from und_LI
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Liechtenstein,
+        // to de_Latn_LI
+        QLocale::Language::German, QLocale::Script::LatinScript, QLocale::Country::Liechtenstein
+    },
+    {
+        // from und_LK
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SriLanka,
+        // to si_Sinh_LK
+        QLocale::Language::Sinhala, QLocale::Script::SinhalaScript, QLocale::Country::SriLanka
+    },
+    {
+        // from und_LS
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Lesotho,
+        // to st_Latn_LS
+        QLocale::Language::SouthernSotho, QLocale::Script::LatinScript, QLocale::Country::Lesotho
+    },
+    {
+        // from und_LT
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Lithuania,
+        // to lt_Latn_LT
+        QLocale::Language::Lithuanian, QLocale::Script::LatinScript, QLocale::Country::Lithuania
+    },
+    {
+        // from und_LU
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Luxembourg,
+        // to fr_Latn_LU
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Luxembourg
+    },
+    {
+        // from und_LV
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Latvia,
+        // to lv_Latn_LV
+        QLocale::Language::Latvian, QLocale::Script::LatinScript, QLocale::Country::Latvia
+    },
+    {
+        // from und_LY
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Libya,
+        // to ar_Arab_LY
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Libya
+    },
+    {
+        // from und_Latn_AF
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Afghanistan,
+        // to tk_Latn_AF
+        QLocale::Language::Turkmen, QLocale::Script::LatinScript, QLocale::Country::Afghanistan
+    },
+    {
+        // from und_Latn_AM
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Armenia,
+        // to ku_Latn_AM
+        QLocale::Language::Kurdish, QLocale::Script::LatinScript, QLocale::Country::Armenia
+    },
+    {
+        // from und_Latn_CN
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::China,
+        // to za_Latn_CN
+        QLocale::Language::Zhuang, QLocale::Script::LatinScript, QLocale::Country::China
+    },
+    {
+        // from und_Latn_CY
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Cyprus,
+        // to tr_Latn_CY
+        QLocale::Language::Turkish, QLocale::Script::LatinScript, QLocale::Country::Cyprus
+    },
+    {
+        // from und_Latn_DZ
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Algeria,
+        // to fr_Latn_DZ
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Algeria
+    },
+    {
+        // from und_Latn_ET
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Ethiopia,
+        // to en_Latn_ET
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::Ethiopia
+    },
+    {
+        // from und_Latn_GE
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Georgia,
+        // to ku_Latn_GE
+        QLocale::Language::Kurdish, QLocale::Script::LatinScript, QLocale::Country::Georgia
+    },
+    {
+        // from und_Latn_IR
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Iran,
+        // to tk_Latn_IR
+        QLocale::Language::Turkmen, QLocale::Script::LatinScript, QLocale::Country::Iran
+    },
+    {
+        // from und_Latn_KM
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Comoros,
+        // to fr_Latn_KM
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Comoros
+    },
+    {
+        // from und_Latn_MA
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Morocco,
+        // to fr_Latn_MA
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Morocco
+    },
+    {
+        // from und_Latn_MK
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::NorthMacedonia,
+        // to sq_Latn_MK
+        QLocale::Language::Albanian, QLocale::Script::LatinScript, QLocale::Country::NorthMacedonia
+    },
+    {
+        // from und_Latn_MM
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::MyanmarBurma,
+        // to kac_Latn_MM
+        QLocale::Language::Kachin, QLocale::Script::LatinScript, QLocale::Country::MyanmarBurma
+    },
+    {
+        // from und_Latn_MO
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::MacaoSARChina,
+        // to pt_Latn_MO
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::MacaoSARChina
+    },
+    {
+        // from und_Latn_MR
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Mauritania,
+        // to fr_Latn_MR
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Mauritania
+    },
+    {
+        // from und_Latn_RU
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Russia,
+        // to krl_Latn_RU
+        QLocale::Language::Karelian, QLocale::Script::LatinScript, QLocale::Country::Russia
+    },
+    {
+        // from und_Latn_SY
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Syria,
+        // to fr_Latn_SY
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Syria
+    },
+    {
+        // from und_Latn_TN
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Tunisia,
+        // to fr_Latn_TN
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Tunisia
+    },
+    {
+        // from und_Latn_TW
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Taiwan,
+        // to trv_Latn_TW
+        QLocale::Language::Taroko, QLocale::Script::LatinScript, QLocale::Country::Taiwan
+    },
+    {
+        // from und_Latn_UA
+        QLocale::Language::Unknownlanguage, QLocale::Script::LatinScript, QLocale::Country::Ukraine,
+        // to pl_Latn_UA
+        QLocale::Language::Polish, QLocale::Script::LatinScript, QLocale::Country::Ukraine
+    },
+    {
+        // from und_MA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Morocco,
+        // to ar_Arab_MA
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Morocco
+    },
+    {
+        // from und_MC
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Monaco,
+        // to fr_Latn_MC
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Monaco
+    },
+    {
+        // from und_MD
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Moldova,
+        // to ro_Latn_MD
+        QLocale::Language::Romanian, QLocale::Script::LatinScript, QLocale::Country::Moldova
+    },
+    {
+        // from und_ME
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Montenegro,
+        // to sr_Latn_ME
+        QLocale::Language::Serbian, QLocale::Script::LatinScript, QLocale::Country::Montenegro
+    },
+    {
+        // from und_MF
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::StMartin,
+        // to fr_Latn_MF
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::StMartin
+    },
+    {
+        // from und_MG
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Madagascar,
+        // to mg_Latn_MG
+        QLocale::Language::Malagasy, QLocale::Script::LatinScript, QLocale::Country::Madagascar
+    },
+    {
+        // from und_MK
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::NorthMacedonia,
+        // to mk_Cyrl_MK
+        QLocale::Language::Macedonian, QLocale::Script::CyrillicScript, QLocale::Country::NorthMacedonia
+    },
+    {
+        // from und_ML
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Mali,
+        // to bm_Latn_ML
+        QLocale::Language::Bambara, QLocale::Script::LatinScript, QLocale::Country::Mali
+    },
+    {
+        // from und_MM
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::MyanmarBurma,
+        // to my_Mymr_MM
+        QLocale::Language::Burmese, QLocale::Script::MyanmarScript, QLocale::Country::MyanmarBurma
+    },
+    {
+        // from und_MN
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Mongolia,
+        // to mn_Cyrl_MN
+        QLocale::Language::Mongolian, QLocale::Script::CyrillicScript, QLocale::Country::Mongolia
+    },
+    {
+        // from und_MO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::MacaoSARChina,
+        // to zh_Hant_MO
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::MacaoSARChina
+    },
+    {
+        // from und_MQ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Martinique,
+        // to fr_Latn_MQ
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Martinique
+    },
+    {
+        // from und_MR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Mauritania,
+        // to ar_Arab_MR
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Mauritania
+    },
+    {
+        // from und_MT
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Malta,
+        // to mt_Latn_MT
+        QLocale::Language::Maltese, QLocale::Script::LatinScript, QLocale::Country::Malta
+    },
+    {
+        // from und_MU
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Mauritius,
+        // to mfe_Latn_MU
+        QLocale::Language::Morisyen, QLocale::Script::LatinScript, QLocale::Country::Mauritius
+    },
+    {
+        // from und_MV
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Maldives,
+        // to dv_Thaa_MV
+        QLocale::Language::Divehi, QLocale::Script::ThaanaScript, QLocale::Country::Maldives
+    },
+    {
+        // from und_MX
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Mexico,
+        // to es_Latn_MX
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Mexico
+    },
+    {
+        // from und_MY
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Malaysia,
+        // to ms_Latn_MY
+        QLocale::Language::Malay, QLocale::Script::LatinScript, QLocale::Country::Malaysia
+    },
+    {
+        // from und_MZ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Mozambique,
+        // to pt_Latn_MZ
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::Mozambique
+    },
+    {
+        // from und_NA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Namibia,
+        // to af_Latn_NA
+        QLocale::Language::Afrikaans, QLocale::Script::LatinScript, QLocale::Country::Namibia
+    },
+    {
+        // from und_NC
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::NewCaledonia,
+        // to fr_Latn_NC
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::NewCaledonia
+    },
+    {
+        // from und_NE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Niger,
+        // to ha_Latn_NE
+        QLocale::Language::Hausa, QLocale::Script::LatinScript, QLocale::Country::Niger
+    },
+    {
+        // from und_NI
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Nicaragua,
+        // to es_Latn_NI
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Nicaragua
+    },
+    {
+        // from und_NL
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Netherlands,
+        // to nl_Latn_NL
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::Netherlands
+    },
+    {
+        // from und_NO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Norway,
+        // to nb_Latn_NO
+        QLocale::Language::NorwegianBokmal, QLocale::Script::LatinScript, QLocale::Country::Norway
+    },
+    {
+        // from und_NP
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Nepal,
+        // to ne_Deva_NP
+        QLocale::Language::Nepali, QLocale::Script::DevanagariScript, QLocale::Country::Nepal
+    },
+    {
+        // from und_OM
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Oman,
+        // to ar_Arab_OM
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Oman
+    },
+    {
+        // from und_PA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Panama,
+        // to es_Latn_PA
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Panama
+    },
+    {
+        // from und_PE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Peru,
+        // to es_Latn_PE
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Peru
+    },
+    {
+        // from und_PF
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::FrenchPolynesia,
+        // to fr_Latn_PF
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::FrenchPolynesia
+    },
+    {
+        // from und_PG
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::PapuaNewGuinea,
+        // to tpi_Latn_PG
+        QLocale::Language::TokPisin, QLocale::Script::LatinScript, QLocale::Country::PapuaNewGuinea
+    },
+    {
+        // from und_PH
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Philippines,
+        // to fil_Latn_PH
+        QLocale::Language::Filipino, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from und_PK
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Pakistan,
+        // to ur_Arab_PK
+        QLocale::Language::Urdu, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from und_PL
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Poland,
+        // to pl_Latn_PL
+        QLocale::Language::Polish, QLocale::Script::LatinScript, QLocale::Country::Poland
+    },
+    {
+        // from und_PM
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::StPierreAndMiquelon,
+        // to fr_Latn_PM
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::StPierreAndMiquelon
+    },
+    {
+        // from und_PR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::PuertoRico,
+        // to es_Latn_PR
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::PuertoRico
+    },
+    {
+        // from und_PS
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::PalestinianTerritories,
+        // to ar_Arab_PS
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::PalestinianTerritories
+    },
+    {
+        // from und_PT
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Portugal,
+        // to pt_Latn_PT
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::Portugal
+    },
+    {
+        // from und_PW
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Palau,
+        // to pau_Latn_PW
+        QLocale::Language::Palauan, QLocale::Script::LatinScript, QLocale::Country::Palau
+    },
+    {
+        // from und_PY
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Paraguay,
+        // to gn_Latn_PY
+        QLocale::Language::Guarani, QLocale::Script::LatinScript, QLocale::Country::Paraguay
+    },
+    {
+        // from und_QA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Qatar,
+        // to ar_Arab_QA
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Qatar
+    },
+    {
+        // from und_QO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::OutlyingOceania,
+        // to en_Latn_DG
+        QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::DiegoGarcia
+    },
+    {
+        // from und_RE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Reunion,
+        // to fr_Latn_RE
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Reunion
+    },
+    {
+        // from und_RO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Romania,
+        // to ro_Latn_RO
+        QLocale::Language::Romanian, QLocale::Script::LatinScript, QLocale::Country::Romania
+    },
+    {
+        // from und_RS
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Serbia,
+        // to sr_Cyrl_RS
+        QLocale::Language::Serbian, QLocale::Script::CyrillicScript, QLocale::Country::Serbia
+    },
+    {
+        // from und_RU
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Russia,
+        // to ru_Cyrl_RU
+        QLocale::Language::Russian, QLocale::Script::CyrillicScript, QLocale::Country::Russia
+    },
+    {
+        // from und_RW
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Rwanda,
+        // to rw_Latn_RW
+        QLocale::Language::Kinyarwanda, QLocale::Script::LatinScript, QLocale::Country::Rwanda
+    },
+    {
+        // from und_SA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SaudiArabia,
+        // to ar_Arab_SA
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::SaudiArabia
+    },
+    {
+        // from und_SC
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Seychelles,
+        // to fr_Latn_SC
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Seychelles
+    },
+    {
+        // from und_SD
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Sudan,
+        // to ar_Arab_SD
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Sudan
+    },
+    {
+        // from und_SE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Sweden,
+        // to sv_Latn_SE
+        QLocale::Language::Swedish, QLocale::Script::LatinScript, QLocale::Country::Sweden
+    },
+    {
+        // from und_SI
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Slovenia,
+        // to sl_Latn_SI
+        QLocale::Language::Slovenian, QLocale::Script::LatinScript, QLocale::Country::Slovenia
+    },
+    {
+        // from und_SJ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SvalbardAndJanMayen,
+        // to nb_Latn_SJ
+        QLocale::Language::NorwegianBokmal, QLocale::Script::LatinScript, QLocale::Country::SvalbardAndJanMayen
+    },
+    {
+        // from und_SK
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Slovakia,
+        // to sk_Latn_SK
+        QLocale::Language::Slovak, QLocale::Script::LatinScript, QLocale::Country::Slovakia
+    },
+    {
+        // from und_SM
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SanMarino,
+        // to it_Latn_SM
+        QLocale::Language::Italian, QLocale::Script::LatinScript, QLocale::Country::SanMarino
+    },
+    {
+        // from und_SN
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Senegal,
+        // to fr_Latn_SN
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Senegal
+    },
+    {
+        // from und_SO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Somalia,
+        // to so_Latn_SO
+        QLocale::Language::Somali, QLocale::Script::LatinScript, QLocale::Country::Somalia
+    },
+    {
+        // from und_SR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Suriname,
+        // to nl_Latn_SR
+        QLocale::Language::Dutch, QLocale::Script::LatinScript, QLocale::Country::Suriname
+    },
+    {
+        // from und_ST
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::SaoTomeAndPrincipe,
+        // to pt_Latn_ST
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::SaoTomeAndPrincipe
+    },
+    {
+        // from und_SV
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::ElSalvador,
+        // to es_Latn_SV
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::ElSalvador
+    },
+    {
+        // from und_SY
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Syria,
+        // to ar_Arab_SY
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Syria
+    },
+    {
+        // from und_TD
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Chad,
+        // to fr_Latn_TD
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Chad
+    },
+    {
+        // from und_TF
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::FrenchSouthernTerritories,
+        // to fr_Latn_TF
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::FrenchSouthernTerritories
+    },
+    {
+        // from und_TG
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Togo,
+        // to fr_Latn_TG
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Togo
+    },
+    {
+        // from und_TH
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Thailand,
+        // to th_Thai_TH
+        QLocale::Language::Thai, QLocale::Script::ThaiScript, QLocale::Country::Thailand
+    },
+    {
+        // from und_TJ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Tajikistan,
+        // to tg_Cyrl_TJ
+        QLocale::Language::Tajik, QLocale::Script::CyrillicScript, QLocale::Country::Tajikistan
+    },
+    {
+        // from und_TK
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Tokelau,
+        // to tkl_Latn_TK
+        QLocale::Language::TokelauLanguage, QLocale::Script::LatinScript, QLocale::Country::Tokelau
+    },
+    {
+        // from und_TL
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::TimorLeste,
+        // to pt_Latn_TL
+        QLocale::Language::Portuguese, QLocale::Script::LatinScript, QLocale::Country::TimorLeste
+    },
+    {
+        // from und_TM
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Turkmenistan,
+        // to tk_Latn_TM
+        QLocale::Language::Turkmen, QLocale::Script::LatinScript, QLocale::Country::Turkmenistan
+    },
+    {
+        // from und_TN
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Tunisia,
+        // to ar_Arab_TN
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Tunisia
+    },
+    {
+        // from und_TO
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Tonga,
+        // to to_Latn_TO
+        QLocale::Language::Tongan, QLocale::Script::LatinScript, QLocale::Country::Tonga
+    },
+    {
+        // from und_TR
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Turkey,
+        // to tr_Latn_TR
+        QLocale::Language::Turkish, QLocale::Script::LatinScript, QLocale::Country::Turkey
+    },
+    {
+        // from und_TV
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Tuvalu,
+        // to tvl_Latn_TV
+        QLocale::Language::TuvaluLanguage, QLocale::Script::LatinScript, QLocale::Country::Tuvalu
+    },
+    {
+        // from und_TW
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Taiwan,
+        // to zh_Hant_TW
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Taiwan
+    },
+    {
+        // from und_TZ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Tanzania,
+        // to sw_Latn_TZ
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from und_UA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Ukraine,
+        // to uk_Cyrl_UA
+        QLocale::Language::Ukrainian, QLocale::Script::CyrillicScript, QLocale::Country::Ukraine
+    },
+    {
+        // from und_UG
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Uganda,
+        // to sw_Latn_UG
+        QLocale::Language::Swahili, QLocale::Script::LatinScript, QLocale::Country::Uganda
+    },
+    {
+        // from und_UY
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Uruguay,
+        // to es_Latn_UY
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Uruguay
+    },
+    {
+        // from und_UZ
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Uzbekistan,
+        // to uz_Latn_UZ
+        QLocale::Language::Uzbek, QLocale::Script::LatinScript, QLocale::Country::Uzbekistan
+    },
+    {
+        // from und_VA
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::VaticanCity,
+        // to it_Latn_VA
+        QLocale::Language::Italian, QLocale::Script::LatinScript, QLocale::Country::VaticanCity
+    },
+    {
+        // from und_VE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Venezuela,
+        // to es_Latn_VE
+        QLocale::Language::Spanish, QLocale::Script::LatinScript, QLocale::Country::Venezuela
+    },
+    {
+        // from und_VN
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Vietnam,
+        // to vi_Latn_VN
+        QLocale::Language::Vietnamese, QLocale::Script::LatinScript, QLocale::Country::Vietnam
+    },
+    {
+        // from und_VU
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Vanuatu,
+        // to bi_Latn_VU
+        QLocale::Language::Bislama, QLocale::Script::LatinScript, QLocale::Country::Vanuatu
+    },
+    {
+        // from und_WF
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::WallisAndFutuna,
+        // to fr_Latn_WF
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::WallisAndFutuna
+    },
+    {
+        // from und_WS
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Samoa,
+        // to sm_Latn_WS
+        QLocale::Language::Samoan, QLocale::Script::LatinScript, QLocale::Country::Samoa
+    },
+    {
+        // from und_XK
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Kosovo,
+        // to sq_Latn_XK
+        QLocale::Language::Albanian, QLocale::Script::LatinScript, QLocale::Country::Kosovo
+    },
+    {
+        // from und_YE
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Yemen,
+        // to ar_Arab_YE
+        QLocale::Language::Arabic, QLocale::Script::ArabicScript, QLocale::Country::Yemen
+    },
+    {
+        // from und_YT
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Mayotte,
+        // to fr_Latn_YT
+        QLocale::Language::French, QLocale::Script::LatinScript, QLocale::Country::Mayotte
+    },
+    {
+        // from und_ZW
+        QLocale::Language::Unknownlanguage, QLocale::Script::AnyScript, QLocale::Country::Zimbabwe,
+        // to sn_Latn_ZW
+        QLocale::Language::Shona, QLocale::Script::LatinScript, QLocale::Country::Zimbabwe
+    },
+    {
+        // from ur
+        QLocale::Language::Urdu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ur_Arab_PK
+        QLocale::Language::Urdu, QLocale::Script::ArabicScript, QLocale::Country::Pakistan
+    },
+    {
+        // from uz
+        QLocale::Language::Uzbek, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to uz_Latn_UZ
+        QLocale::Language::Uzbek, QLocale::Script::LatinScript, QLocale::Country::Uzbekistan
+    },
+    {
+        // from uz_AF
+        QLocale::Language::Uzbek, QLocale::Script::AnyScript, QLocale::Country::Afghanistan,
+        // to uz_Arab_AF
+        QLocale::Language::Uzbek, QLocale::Script::ArabicScript, QLocale::Country::Afghanistan
+    },
+    {
+        // from uz_CN
+        QLocale::Language::Uzbek, QLocale::Script::AnyScript, QLocale::Country::China,
+        // to uz_Cyrl_CN
+        QLocale::Language::Uzbek, QLocale::Script::CyrillicScript, QLocale::Country::China
+    },
+    {
+        // from vai
+        QLocale::Language::Vai, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to vai_Vaii_LR
+        QLocale::Language::Vai, QLocale::Script::VaiScript, QLocale::Country::Liberia
+    },
+    {
+        // from ve
+        QLocale::Language::Venda, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ve_Latn_ZA
+        QLocale::Language::Venda, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from vec
+        QLocale::Language::Venetian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to vec_Latn_IT
+        QLocale::Language::Venetian, QLocale::Script::LatinScript, QLocale::Country::Italy
+    },
+    {
+        // from vep
+        QLocale::Language::Veps, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to vep_Latn_RU
+        QLocale::Language::Veps, QLocale::Script::LatinScript, QLocale::Country::Russia
+    },
+    {
+        // from vi
+        QLocale::Language::Vietnamese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to vi_Latn_VN
+        QLocale::Language::Vietnamese, QLocale::Script::LatinScript, QLocale::Country::Vietnam
+    },
+    {
+        // from vls
+        QLocale::Language::WestFlemish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to vls_Latn_BE
+        QLocale::Language::WestFlemish, QLocale::Script::LatinScript, QLocale::Country::Belgium
+    },
+    {
+        // from vmf
+        QLocale::Language::MainFranconian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to vmf_Latn_DE
+        QLocale::Language::MainFranconian, QLocale::Script::LatinScript, QLocale::Country::Germany
+    },
+    {
+        // from vo
+        QLocale::Language::Volapuk, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to vo_Latn_001
+        QLocale::Language::Volapuk, QLocale::Script::LatinScript, QLocale::Country::World
+    },
+    {
+        // from vot
+        QLocale::Language::Votic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to vot_Latn_RU
+        QLocale::Language::Votic, QLocale::Script::LatinScript, QLocale::Country::Russia
+    },
+    {
+        // from vro
+        QLocale::Language::Voro, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to vro_Latn_EE
+        QLocale::Language::Voro, QLocale::Script::LatinScript, QLocale::Country::Estonia
+    },
+    {
+        // from vun
+        QLocale::Language::Vunjo, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to vun_Latn_TZ
+        QLocale::Language::Vunjo, QLocale::Script::LatinScript, QLocale::Country::Tanzania
+    },
+    {
+        // from wa
+        QLocale::Language::Walloon, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to wa_Latn_BE
+        QLocale::Language::Walloon, QLocale::Script::LatinScript, QLocale::Country::Belgium
+    },
+    {
+        // from wae
+        QLocale::Language::Walser, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to wae_Latn_CH
+        QLocale::Language::Walser, QLocale::Script::LatinScript, QLocale::Country::Switzerland
+    },
+    {
+        // from wal
+        QLocale::Language::Wolaytta, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to wal_Ethi_ET
+        QLocale::Language::Wolaytta, QLocale::Script::EthiopicScript, QLocale::Country::Ethiopia
+    },
+    {
+        // from war
+        QLocale::Language::Waray, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to war_Latn_PH
+        QLocale::Language::Waray, QLocale::Script::LatinScript, QLocale::Country::Philippines
+    },
+    {
+        // from wbp
+        QLocale::Language::Warlpiri, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to wbp_Latn_AU
+        QLocale::Language::Warlpiri, QLocale::Script::LatinScript, QLocale::Country::Australia
+    },
+    {
+        // from wo
+        QLocale::Language::Wolof, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to wo_Latn_SN
+        QLocale::Language::Wolof, QLocale::Script::LatinScript, QLocale::Country::Senegal
+    },
+    {
+        // from wuu
+        QLocale::Language::WuChinese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to wuu_Hans_CN
+        QLocale::Language::WuChinese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from xh
+        QLocale::Language::Xhosa, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to xh_Latn_ZA
+        QLocale::Language::Xhosa, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from xmf
+        QLocale::Language::Mingrelian, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to xmf_Geor_GE
+        QLocale::Language::Mingrelian, QLocale::Script::GeorgianScript, QLocale::Country::Georgia
+    },
+    {
+        // from xog
+        QLocale::Language::Soga, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to xog_Latn_UG
+        QLocale::Language::Soga, QLocale::Script::LatinScript, QLocale::Country::Uganda
+    },
+    {
+        // from yao
+        QLocale::Language::Yao, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to yao_Latn_MZ
+        QLocale::Language::Yao, QLocale::Script::LatinScript, QLocale::Country::Mozambique
+    },
+    {
+        // from yap
+        QLocale::Language::Yapese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to yap_Latn_FM
+        QLocale::Language::Yapese, QLocale::Script::LatinScript, QLocale::Country::Micronesia
+    },
+    {
+        // from yav
+        QLocale::Language::Yangben, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to yav_Latn_CM
+        QLocale::Language::Yangben, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from ybb
+        QLocale::Language::Yemba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to ybb_Latn_CM
+        QLocale::Language::Yemba, QLocale::Script::LatinScript, QLocale::Country::Cameroon
+    },
+    {
+        // from yi
+        QLocale::Language::Yiddish, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to yi_Hebr_001
+        QLocale::Language::Yiddish, QLocale::Script::HebrewScript, QLocale::Country::World
+    },
+    {
+        // from yo
+        QLocale::Language::Yoruba, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to yo_Latn_NG
+        QLocale::Language::Yoruba, QLocale::Script::LatinScript, QLocale::Country::Nigeria
+    },
+    {
+        // from yrl
+        QLocale::Language::Nheengatu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to yrl_Latn_BR
+        QLocale::Language::Nheengatu, QLocale::Script::LatinScript, QLocale::Country::Brazil
+    },
+    {
+        // from yue
+        QLocale::Language::Cantonese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to yue_Hant_HK
+        QLocale::Language::Cantonese, QLocale::Script::TraditionalScript, QLocale::Country::HongKongSARChina
+    },
+    {
+        // from yue_CN
+        QLocale::Language::Cantonese, QLocale::Script::AnyScript, QLocale::Country::China,
+        // to yue_Hans_CN
+        QLocale::Language::Cantonese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from za
+        QLocale::Language::Zhuang, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to za_Latn_CN
+        QLocale::Language::Zhuang, QLocale::Script::LatinScript, QLocale::Country::China
+    },
+    {
+        // from zea
+        QLocale::Language::Zeelandic, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to zea_Latn_NL
+        QLocale::Language::Zeelandic, QLocale::Script::LatinScript, QLocale::Country::Netherlands
+    },
+    {
+        // from zgh
+        QLocale::Language::StandardMoroccanTamazight, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to zgh_Tfng_MA
+        QLocale::Language::StandardMoroccanTamazight, QLocale::Script::TifinaghScript, QLocale::Country::Morocco
+    },
+    {
+        // from zh
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to zh_Hans_CN
+        QLocale::Language::Chinese, QLocale::Script::SimplifiedScript, QLocale::Country::China
+    },
+    {
+        // from zh_AU
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Australia,
+        // to zh_Hant_AU
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Australia
+    },
+    {
+        // from zh_BN
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Brunei,
+        // to zh_Hant_BN
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Brunei
+    },
+    {
+        // from zh_GB
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::UnitedKingdom,
+        // to zh_Hant_GB
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::UnitedKingdom
+    },
+    {
+        // from zh_GF
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::FrenchGuiana,
+        // to zh_Hant_GF
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::FrenchGuiana
+    },
+    {
+        // from zh_HK
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::HongKongSARChina,
+        // to zh_Hant_HK
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::HongKongSARChina
+    },
+    {
+        // from zh_ID
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Indonesia,
+        // to zh_Hant_ID
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Indonesia
+    },
+    {
+        // from zh_MO
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::MacaoSARChina,
+        // to zh_Hant_MO
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::MacaoSARChina
+    },
+    {
+        // from zh_MY
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Malaysia,
+        // to zh_Hant_MY
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Malaysia
+    },
+    {
+        // from zh_PA
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Panama,
+        // to zh_Hant_PA
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Panama
+    },
+    {
+        // from zh_PF
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::FrenchPolynesia,
+        // to zh_Hant_PF
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::FrenchPolynesia
+    },
+    {
+        // from zh_PH
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Philippines,
+        // to zh_Hant_PH
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Philippines
+    },
+    {
+        // from zh_SR
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Suriname,
+        // to zh_Hant_SR
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Suriname
+    },
+    {
+        // from zh_TH
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Thailand,
+        // to zh_Hant_TH
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Thailand
+    },
+    {
+        // from zh_TW
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Taiwan,
+        // to zh_Hant_TW
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Taiwan
+    },
+    {
+        // from zh_US
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::UnitedStates,
+        // to zh_Hant_US
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::UnitedStates
+    },
+    {
+        // from zh_VN
+        QLocale::Language::Chinese, QLocale::Script::AnyScript, QLocale::Country::Vietnam,
+        // to zh_Hant_VN
+        QLocale::Language::Chinese, QLocale::Script::TraditionalScript, QLocale::Country::Vietnam
+    },
+    {
+        // from zu
+        QLocale::Language::Zulu, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to zu_Latn_ZA
+        QLocale::Language::Zulu, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica
+    },
+    {
+        // from zza
+        QLocale::Language::Zaza, QLocale::Script::AnyScript, QLocale::Country::AnyCountry,
+        // to zza_Latn_TR
+        QLocale::Language::Zaza, QLocale::Script::LatinScript, QLocale::Country::Turkey
+    },
+};
+static const qint16 subtagAliasTblSize = sizeof(subtagAliasTbl) / sizeof(subtagAliasTblData);
+
 static const struct languageAliasTblData {
     const QLatin1String original;
     const QLatin1String substitute;
 } languageAliasTbl[] = {
-    { QLatin1String("aa_SAAHO"), QLatin1String("ssy") },
     { QLatin1String("aam"), QLatin1String("aas") },
     { QLatin1String("aar"), QLatin1String("aa") },
     { QLatin1String("abk"), QLatin1String("ab") },
@@ -18678,7 +23674,6 @@ static const struct languageAliasTblData {
     { QLatin1String("arb"), QLatin1String("ar") },
     { QLatin1String("arg"), QLatin1String("an") },
     { QLatin1String("arm"), QLatin1String("hy") },
-    { QLatin1String("art_lojban"), QLatin1String("jbo") },
     { QLatin1String("asm"), QLatin1String("as") },
     { QLatin1String("aue"), QLatin1String("ktz") },
     { QLatin1String("ava"), QLatin1String("av") },
@@ -18686,7 +23681,6 @@ static const struct languageAliasTblData {
     { QLatin1String("aym"), QLatin1String("ay") },
     { QLatin1String("ayr"), QLatin1String("ay") },
     { QLatin1String("ayx"), QLatin1String("nun") },
-    { QLatin1String("az_AZ"), QLatin1String("az_Latn_AZ") },
     { QLatin1String("aze"), QLatin1String("az") },
     { QLatin1String("azj"), QLatin1String("az") },
     { QLatin1String("bak"), QLatin1String("ba") },
@@ -18704,14 +23698,12 @@ static const struct languageAliasTblData {
     { QLatin1String("bod"), QLatin1String("bo") },
     { QLatin1String("bos"), QLatin1String("bs") },
     { QLatin1String("bre"), QLatin1String("br") },
-    { QLatin1String("bs_BA"), QLatin1String("bs_Latn_BA") },
     { QLatin1String("bul"), QLatin1String("bg") },
     { QLatin1String("bur"), QLatin1String("my") },
     { QLatin1String("bxk"), QLatin1String("luy") },
     { QLatin1String("bxr"), QLatin1String("bua") },
     { QLatin1String("cat"), QLatin1String("ca") },
     { QLatin1String("ccq"), QLatin1String("rki") },
-    { QLatin1String("cel-gaulish"), QLatin1String("xtg-x-cel-gaulish") },
     { QLatin1String("ces"), QLatin1String("cs") },
     { QLatin1String("cha"), QLatin1String("ch") },
     { QLatin1String("che"), QLatin1String("ce") },
@@ -18723,7 +23715,6 @@ static const struct languageAliasTblData {
     { QLatin1String("cld"), QLatin1String("syr") },
     { QLatin1String("cmk"), QLatin1String("xch") },
     { QLatin1String("cmn"), QLatin1String("zh") },
-    { QLatin1String("cnr"), QLatin1String("sr_ME") },
     { QLatin1String("cor"), QLatin1String("kw") },
     { QLatin1String("cos"), QLatin1String("co") },
     { QLatin1String("coy"), QLatin1String("pij") },
@@ -18740,7 +23731,6 @@ static const struct languageAliasTblData {
     { QLatin1String("diq"), QLatin1String("zza") },
     { QLatin1String("div"), QLatin1String("dv") },
     { QLatin1String("drh"), QLatin1String("mn") },
-    { QLatin1String("drw"), QLatin1String("fa_af") },
     { QLatin1String("dut"), QLatin1String("nl") },
     { QLatin1String("dzo"), QLatin1String("dz") },
     { QLatin1String("ekk"), QLatin1String("et") },
@@ -18781,12 +23771,8 @@ static const struct languageAliasTblData {
     { QLatin1String("guj"), QLatin1String("gu") },
     { QLatin1String("guv"), QLatin1String("duz") },
     { QLatin1String("gya"), QLatin1String("gba") },
-    { QLatin1String("ha_Latn_GH"), QLatin1String("ha_GH") },
-    { QLatin1String("ha_Latn_NE"), QLatin1String("ha_NE") },
-    { QLatin1String("ha_Latn_NG"), QLatin1String("ha_NG") },
     { QLatin1String("hat"), QLatin1String("ht") },
     { QLatin1String("hau"), QLatin1String("ha") },
-    { QLatin1String("hbs"), QLatin1String("sr_Latn") },
     { QLatin1String("hdn"), QLatin1String("hai") },
     { QLatin1String("hea"), QLatin1String("hmn") },
     { QLatin1String("heb"), QLatin1String("he") },
@@ -18798,19 +23784,6 @@ static const struct languageAliasTblData {
     { QLatin1String("hrv"), QLatin1String("hr") },
     { QLatin1String("hun"), QLatin1String("hu") },
     { QLatin1String("hye"), QLatin1String("hy") },
-    { QLatin1String("i-default"), QLatin1String("en-x-i-default") },
-    { QLatin1String("i-enochian"), QLatin1String("und-x-i-enochian") },
-    { QLatin1String("i-mingo"), QLatin1String("see-x-i-mingo") },
-    { QLatin1String("i_ami"), QLatin1String("ami") },
-    { QLatin1String("i_bnn"), QLatin1String("bnn") },
-    { QLatin1String("i_hak"), QLatin1String("hak") },
-    { QLatin1String("i_klingon"), QLatin1String("tlh") },
-    { QLatin1String("i_lux"), QLatin1String("lb") },
-    { QLatin1String("i_navajo"), QLatin1String("nv") },
-    { QLatin1String("i_pwn"), QLatin1String("pwn") },
-    { QLatin1String("i_tao"), QLatin1String("tao") },
-    { QLatin1String("i_tay"), QLatin1String("tay") },
-    { QLatin1String("i_tsu"), QLatin1String("tsu") },
     { QLatin1String("ibi"), QLatin1String("opa") },
     { QLatin1String("ibo"), QLatin1String("ig") },
     { QLatin1String("ice"), QLatin1String("is") },
@@ -18845,7 +23818,6 @@ static const struct languageAliasTblData {
     { QLatin1String("kik"), QLatin1String("ki") },
     { QLatin1String("kin"), QLatin1String("rw") },
     { QLatin1String("kir"), QLatin1String("ky") },
-    { QLatin1String("kk_Cyrl_KZ"), QLatin1String("kk_KZ") },
     { QLatin1String("kmr"), QLatin1String("ku") },
     { QLatin1String("knc"), QLatin1String("kr") },
     { QLatin1String("kng"), QLatin1String("kg") },
@@ -18856,14 +23828,12 @@ static const struct languageAliasTblData {
     { QLatin1String("kor"), QLatin1String("ko") },
     { QLatin1String("kpv"), QLatin1String("kv") },
     { QLatin1String("krm"), QLatin1String("bmf") },
-    { QLatin1String("ks_Arab_IN"), QLatin1String("ks_IN") },
     { QLatin1String("ktr"), QLatin1String("dtp") },
     { QLatin1String("kua"), QLatin1String("kj") },
     { QLatin1String("kur"), QLatin1String("ku") },
     { QLatin1String("kvs"), QLatin1String("gdj") },
     { QLatin1String("kwq"), QLatin1String("yam") },
     { QLatin1String("kxe"), QLatin1String("tvd") },
-    { QLatin1String("ky_Cyrl_KG"), QLatin1String("ky_KG") },
     { QLatin1String("kzj"), QLatin1String("dtp") },
     { QLatin1String("kzt"), QLatin1String("dtp") },
     { QLatin1String("lao"), QLatin1String("lo") },
@@ -18890,15 +23860,11 @@ static const struct languageAliasTblData {
     { QLatin1String("mkd"), QLatin1String("mk") },
     { QLatin1String("mlg"), QLatin1String("mg") },
     { QLatin1String("mlt"), QLatin1String("mt") },
-    { QLatin1String("mn_Cyrl_MN"), QLatin1String("mn_MN") },
     { QLatin1String("mnk"), QLatin1String("man") },
     { QLatin1String("mo"), QLatin1String("ro") },
     { QLatin1String("mol"), QLatin1String("ro") },
     { QLatin1String("mon"), QLatin1String("mn") },
     { QLatin1String("mri"), QLatin1String("mi") },
-    { QLatin1String("ms_Latn_BN"), QLatin1String("ms_BN") },
-    { QLatin1String("ms_Latn_MY"), QLatin1String("ms_MY") },
-    { QLatin1String("ms_Latn_SG"), QLatin1String("ms_SG") },
     { QLatin1String("msa"), QLatin1String("ms") },
     { QLatin1String("mst"), QLatin1String("mry") },
     { QLatin1String("mup"), QLatin1String("raj") },
@@ -18917,10 +23883,6 @@ static const struct languageAliasTblData {
     { QLatin1String("nno"), QLatin1String("nn") },
     { QLatin1String("nnx"), QLatin1String("ngv") },
     { QLatin1String("no"), QLatin1String("nb") },
-    { QLatin1String("no_BOKMAL"), QLatin1String("nb") },
-    { QLatin1String("no_NYNORSK"), QLatin1String("nn") },
-    { QLatin1String("no_bok"), QLatin1String("nb") },
-    { QLatin1String("no_nyn"), QLatin1String("nn") },
     { QLatin1String("nob"), QLatin1String("nb") },
     { QLatin1String("nor"), QLatin1String("nb") },
     { QLatin1String("npi"), QLatin1String("ne") },
@@ -18934,8 +23896,6 @@ static const struct languageAliasTblData {
     { QLatin1String("ory"), QLatin1String("or") },
     { QLatin1String("oss"), QLatin1String("os") },
     { QLatin1String("oun"), QLatin1String("vaj") },
-    { QLatin1String("pa_IN"), QLatin1String("pa_Guru_IN") },
-    { QLatin1String("pa_PK"), QLatin1String("pa_Arab_PK") },
     { QLatin1String("pan"), QLatin1String("pa") },
     { QLatin1String("pbu"), QLatin1String("ps") },
     { QLatin1String("pcr"), QLatin1String("adx") },
@@ -18950,7 +23910,6 @@ static const struct languageAliasTblData {
     { QLatin1String("por"), QLatin1String("pt") },
     { QLatin1String("ppa"), QLatin1String("bfy") },
     { QLatin1String("ppr"), QLatin1String("lcq") },
-    { QLatin1String("prs"), QLatin1String("fa_AF") },
     { QLatin1String("pry"), QLatin1String("prt") },
     { QLatin1String("pus"), QLatin1String("ps") },
     { QLatin1String("puz"), QLatin1String("pub") },
@@ -18967,11 +23926,6 @@ static const struct languageAliasTblData {
     { QLatin1String("sca"), QLatin1String("hle") },
     { QLatin1String("scc"), QLatin1String("sr") },
     { QLatin1String("scr"), QLatin1String("hr") },
-    { QLatin1String("sgn_BE_FR"), QLatin1String("sfb") },
-    { QLatin1String("sgn_BE_NL"), QLatin1String("vgt") },
-    { QLatin1String("sgn_CH_DE"), QLatin1String("sgg") },
-    { QLatin1String("sh"), QLatin1String("sr_Latn") },
-    { QLatin1String("shi_MA"), QLatin1String("shi_Tfng_MA") },
     { QLatin1String("sin"), QLatin1String("si") },
     { QLatin1String("skk"), QLatin1String("oyb") },
     { QLatin1String("slk"), QLatin1String("sk") },
@@ -18986,17 +23940,12 @@ static const struct languageAliasTblData {
     { QLatin1String("spa"), QLatin1String("es") },
     { QLatin1String("spy"), QLatin1String("kln") },
     { QLatin1String("sqi"), QLatin1String("sq") },
-    { QLatin1String("sr_BA"), QLatin1String("sr_Cyrl_BA") },
-    { QLatin1String("sr_ME"), QLatin1String("sr_Latn_ME") },
-    { QLatin1String("sr_RS"), QLatin1String("sr_Cyrl_RS") },
-    { QLatin1String("sr_XK"), QLatin1String("sr_Cyrl_XK") },
     { QLatin1String("src"), QLatin1String("sc") },
     { QLatin1String("srd"), QLatin1String("sc") },
     { QLatin1String("srp"), QLatin1String("sr") },
     { QLatin1String("ssw"), QLatin1String("ss") },
     { QLatin1String("sun"), QLatin1String("su") },
     { QLatin1String("swa"), QLatin1String("sw") },
-    { QLatin1String("swc"), QLatin1String("sw_CD") },
     { QLatin1String("swe"), QLatin1String("sv") },
     { QLatin1String("swh"), QLatin1String("sw") },
     { QLatin1String("tah"), QLatin1String("ty") },
@@ -19017,7 +23966,6 @@ static const struct languageAliasTblData {
     { QLatin1String("tlw"), QLatin1String("weo") },
     { QLatin1String("tmp"), QLatin1String("tyj") },
     { QLatin1String("tne"), QLatin1String("kak") },
-    { QLatin1String("tnf"), QLatin1String("fa_af") },
     { QLatin1String("ton"), QLatin1String("to") },
     { QLatin1String("tsf"), QLatin1String("taj") },
     { QLatin1String("tsn"), QLatin1String("tn") },
@@ -19027,18 +23975,13 @@ static const struct languageAliasTblData {
     { QLatin1String("tur"), QLatin1String("tr") },
     { QLatin1String("tw"), QLatin1String("ak") },
     { QLatin1String("twi"), QLatin1String("ak") },
-    { QLatin1String("tzm_Latn_MA"), QLatin1String("tzm_MA") },
-    { QLatin1String("ug_Arab_CN"), QLatin1String("ug_CN") },
     { QLatin1String("uig"), QLatin1String("ug") },
     { QLatin1String("ukr"), QLatin1String("uk") },
     { QLatin1String("umu"), QLatin1String("del") },
     { QLatin1String("uok"), QLatin1String("ema") },
     { QLatin1String("urd"), QLatin1String("ur") },
-    { QLatin1String("uz_AF"), QLatin1String("uz_Arab_AF") },
-    { QLatin1String("uz_UZ"), QLatin1String("uz_Latn_UZ") },
     { QLatin1String("uzb"), QLatin1String("uz") },
     { QLatin1String("uzn"), QLatin1String("uz") },
-    { QLatin1String("vai_LR"), QLatin1String("vai_Vaii_LR") },
     { QLatin1String("ven"), QLatin1String("ve") },
     { QLatin1String("vie"), QLatin1String("vi") },
     { QLatin1String("vol"), QLatin1String("vo") },
@@ -19059,20 +24002,8 @@ static const struct languageAliasTblData {
     { QLatin1String("ymt"), QLatin1String("mtm") },
     { QLatin1String("yor"), QLatin1String("yo") },
     { QLatin1String("yos"), QLatin1String("zom") },
-    { QLatin1String("yue_CN"), QLatin1String("yue_Hans_CN") },
-    { QLatin1String("yue_HK"), QLatin1String("yue_Hant_HK") },
     { QLatin1String("yuu"), QLatin1String("yug") },
     { QLatin1String("zai"), QLatin1String("zap") },
-    { QLatin1String("zh-min"), QLatin1String("nan-x-zh-min") },
-    { QLatin1String("zh_CN"), QLatin1String("zh_Hans_CN") },
-    { QLatin1String("zh_HK"), QLatin1String("zh_Hant_HK") },
-    { QLatin1String("zh_MO"), QLatin1String("zh_Hant_MO") },
-    { QLatin1String("zh_SG"), QLatin1String("zh_Hans_SG") },
-    { QLatin1String("zh_TW"), QLatin1String("zh_Hant_TW") },
-    { QLatin1String("zh_guoyu"), QLatin1String("zh") },
-    { QLatin1String("zh_hakka"), QLatin1String("hak") },
-    { QLatin1String("zh_min_nan"), QLatin1String("nan") },
-    { QLatin1String("zh_xiang"), QLatin1String("hsn") },
     { QLatin1String("zha"), QLatin1String("za") },
     { QLatin1String("zho"), QLatin1String("zh") },
     { QLatin1String("zsm"), QLatin1String("ms") },
@@ -19080,6 +24011,745 @@ static const struct languageAliasTblData {
     { QLatin1String("zyb"), QLatin1String("za") },
 };
 static const qint16 languageAliasTblSize = sizeof(languageAliasTbl) / sizeof(languageAliasTblData);
+
+static const struct countryAliasTblData {
+    const QLatin1String original;
+    const QLatin1String substitute;
+} countryAliasTbl[] = {
+    { QLatin1String("004"), QLatin1String("AF") },
+    { QLatin1String("008"), QLatin1String("AL") },
+    { QLatin1String("010"), QLatin1String("AQ") },
+    { QLatin1String("012"), QLatin1String("DZ") },
+    { QLatin1String("016"), QLatin1String("AS") },
+    { QLatin1String("020"), QLatin1String("AD") },
+    { QLatin1String("024"), QLatin1String("AO") },
+    { QLatin1String("028"), QLatin1String("AG") },
+    { QLatin1String("031"), QLatin1String("AZ") },
+    { QLatin1String("032"), QLatin1String("AR") },
+    { QLatin1String("036"), QLatin1String("AU") },
+    { QLatin1String("040"), QLatin1String("AT") },
+    { QLatin1String("044"), QLatin1String("BS") },
+    { QLatin1String("048"), QLatin1String("BH") },
+    { QLatin1String("050"), QLatin1String("BD") },
+    { QLatin1String("051"), QLatin1String("AM") },
+    { QLatin1String("052"), QLatin1String("BB") },
+    { QLatin1String("056"), QLatin1String("BE") },
+    { QLatin1String("060"), QLatin1String("BM") },
+    { QLatin1String("062"), QLatin1String("034") },
+    { QLatin1String("062"), QLatin1String("143") },
+    { QLatin1String("064"), QLatin1String("BT") },
+    { QLatin1String("068"), QLatin1String("BO") },
+    { QLatin1String("070"), QLatin1String("BA") },
+    { QLatin1String("072"), QLatin1String("BW") },
+    { QLatin1String("074"), QLatin1String("BV") },
+    { QLatin1String("076"), QLatin1String("BR") },
+    { QLatin1String("084"), QLatin1String("BZ") },
+    { QLatin1String("086"), QLatin1String("IO") },
+    { QLatin1String("090"), QLatin1String("SB") },
+    { QLatin1String("092"), QLatin1String("VG") },
+    { QLatin1String("096"), QLatin1String("BN") },
+    { QLatin1String("100"), QLatin1String("BG") },
+    { QLatin1String("104"), QLatin1String("MM") },
+    { QLatin1String("108"), QLatin1String("BI") },
+    { QLatin1String("112"), QLatin1String("BY") },
+    { QLatin1String("116"), QLatin1String("KH") },
+    { QLatin1String("120"), QLatin1String("CM") },
+    { QLatin1String("124"), QLatin1String("CA") },
+    { QLatin1String("132"), QLatin1String("CV") },
+    { QLatin1String("136"), QLatin1String("KY") },
+    { QLatin1String("140"), QLatin1String("CF") },
+    { QLatin1String("144"), QLatin1String("LK") },
+    { QLatin1String("148"), QLatin1String("TD") },
+    { QLatin1String("152"), QLatin1String("CL") },
+    { QLatin1String("156"), QLatin1String("CN") },
+    { QLatin1String("158"), QLatin1String("TW") },
+    { QLatin1String("162"), QLatin1String("CX") },
+    { QLatin1String("166"), QLatin1String("CC") },
+    { QLatin1String("170"), QLatin1String("CO") },
+    { QLatin1String("172"), QLatin1String("RU") },
+    { QLatin1String("172"), QLatin1String("AM") },
+    { QLatin1String("172"), QLatin1String("AZ") },
+    { QLatin1String("172"), QLatin1String("BY") },
+    { QLatin1String("172"), QLatin1String("GE") },
+    { QLatin1String("172"), QLatin1String("KG") },
+    { QLatin1String("172"), QLatin1String("KZ") },
+    { QLatin1String("172"), QLatin1String("MD") },
+    { QLatin1String("172"), QLatin1String("TJ") },
+    { QLatin1String("172"), QLatin1String("TM") },
+    { QLatin1String("172"), QLatin1String("UA") },
+    { QLatin1String("172"), QLatin1String("UZ") },
+    { QLatin1String("174"), QLatin1String("KM") },
+    { QLatin1String("175"), QLatin1String("YT") },
+    { QLatin1String("178"), QLatin1String("CG") },
+    { QLatin1String("180"), QLatin1String("CD") },
+    { QLatin1String("184"), QLatin1String("CK") },
+    { QLatin1String("188"), QLatin1String("CR") },
+    { QLatin1String("191"), QLatin1String("HR") },
+    { QLatin1String("192"), QLatin1String("CU") },
+    { QLatin1String("196"), QLatin1String("CY") },
+    { QLatin1String("200"), QLatin1String("CZ") },
+    { QLatin1String("200"), QLatin1String("SK") },
+    { QLatin1String("203"), QLatin1String("CZ") },
+    { QLatin1String("204"), QLatin1String("BJ") },
+    { QLatin1String("208"), QLatin1String("DK") },
+    { QLatin1String("212"), QLatin1String("DM") },
+    { QLatin1String("214"), QLatin1String("DO") },
+    { QLatin1String("218"), QLatin1String("EC") },
+    { QLatin1String("222"), QLatin1String("SV") },
+    { QLatin1String("226"), QLatin1String("GQ") },
+    { QLatin1String("230"), QLatin1String("ET") },
+    { QLatin1String("231"), QLatin1String("ET") },
+    { QLatin1String("232"), QLatin1String("ER") },
+    { QLatin1String("233"), QLatin1String("EE") },
+    { QLatin1String("234"), QLatin1String("FO") },
+    { QLatin1String("238"), QLatin1String("FK") },
+    { QLatin1String("239"), QLatin1String("GS") },
+    { QLatin1String("242"), QLatin1String("FJ") },
+    { QLatin1String("246"), QLatin1String("FI") },
+    { QLatin1String("248"), QLatin1String("AX") },
+    { QLatin1String("249"), QLatin1String("FR") },
+    { QLatin1String("250"), QLatin1String("FR") },
+    { QLatin1String("254"), QLatin1String("GF") },
+    { QLatin1String("258"), QLatin1String("PF") },
+    { QLatin1String("260"), QLatin1String("TF") },
+    { QLatin1String("262"), QLatin1String("DJ") },
+    { QLatin1String("266"), QLatin1String("GA") },
+    { QLatin1String("268"), QLatin1String("GE") },
+    { QLatin1String("270"), QLatin1String("GM") },
+    { QLatin1String("275"), QLatin1String("PS") },
+    { QLatin1String("276"), QLatin1String("DE") },
+    { QLatin1String("278"), QLatin1String("DE") },
+    { QLatin1String("280"), QLatin1String("DE") },
+    { QLatin1String("288"), QLatin1String("GH") },
+    { QLatin1String("292"), QLatin1String("GI") },
+    { QLatin1String("296"), QLatin1String("KI") },
+    { QLatin1String("300"), QLatin1String("GR") },
+    { QLatin1String("304"), QLatin1String("GL") },
+    { QLatin1String("308"), QLatin1String("GD") },
+    { QLatin1String("312"), QLatin1String("GP") },
+    { QLatin1String("316"), QLatin1String("GU") },
+    { QLatin1String("320"), QLatin1String("GT") },
+    { QLatin1String("324"), QLatin1String("GN") },
+    { QLatin1String("328"), QLatin1String("GY") },
+    { QLatin1String("332"), QLatin1String("HT") },
+    { QLatin1String("334"), QLatin1String("HM") },
+    { QLatin1String("336"), QLatin1String("VA") },
+    { QLatin1String("340"), QLatin1String("HN") },
+    { QLatin1String("344"), QLatin1String("HK") },
+    { QLatin1String("348"), QLatin1String("HU") },
+    { QLatin1String("352"), QLatin1String("IS") },
+    { QLatin1String("356"), QLatin1String("IN") },
+    { QLatin1String("360"), QLatin1String("ID") },
+    { QLatin1String("364"), QLatin1String("IR") },
+    { QLatin1String("368"), QLatin1String("IQ") },
+    { QLatin1String("372"), QLatin1String("IE") },
+    { QLatin1String("376"), QLatin1String("IL") },
+    { QLatin1String("380"), QLatin1String("IT") },
+    { QLatin1String("384"), QLatin1String("CI") },
+    { QLatin1String("388"), QLatin1String("JM") },
+    { QLatin1String("392"), QLatin1String("JP") },
+    { QLatin1String("398"), QLatin1String("KZ") },
+    { QLatin1String("400"), QLatin1String("JO") },
+    { QLatin1String("404"), QLatin1String("KE") },
+    { QLatin1String("408"), QLatin1String("KP") },
+    { QLatin1String("410"), QLatin1String("KR") },
+    { QLatin1String("414"), QLatin1String("KW") },
+    { QLatin1String("417"), QLatin1String("KG") },
+    { QLatin1String("418"), QLatin1String("LA") },
+    { QLatin1String("422"), QLatin1String("LB") },
+    { QLatin1String("426"), QLatin1String("LS") },
+    { QLatin1String("428"), QLatin1String("LV") },
+    { QLatin1String("430"), QLatin1String("LR") },
+    { QLatin1String("434"), QLatin1String("LY") },
+    { QLatin1String("438"), QLatin1String("LI") },
+    { QLatin1String("440"), QLatin1String("LT") },
+    { QLatin1String("442"), QLatin1String("LU") },
+    { QLatin1String("446"), QLatin1String("MO") },
+    { QLatin1String("450"), QLatin1String("MG") },
+    { QLatin1String("454"), QLatin1String("MW") },
+    { QLatin1String("458"), QLatin1String("MY") },
+    { QLatin1String("462"), QLatin1String("MV") },
+    { QLatin1String("466"), QLatin1String("ML") },
+    { QLatin1String("470"), QLatin1String("MT") },
+    { QLatin1String("474"), QLatin1String("MQ") },
+    { QLatin1String("478"), QLatin1String("MR") },
+    { QLatin1String("480"), QLatin1String("MU") },
+    { QLatin1String("484"), QLatin1String("MX") },
+    { QLatin1String("492"), QLatin1String("MC") },
+    { QLatin1String("496"), QLatin1String("MN") },
+    { QLatin1String("498"), QLatin1String("MD") },
+    { QLatin1String("499"), QLatin1String("ME") },
+    { QLatin1String("500"), QLatin1String("MS") },
+    { QLatin1String("504"), QLatin1String("MA") },
+    { QLatin1String("508"), QLatin1String("MZ") },
+    { QLatin1String("512"), QLatin1String("OM") },
+    { QLatin1String("516"), QLatin1String("NA") },
+    { QLatin1String("520"), QLatin1String("NR") },
+    { QLatin1String("524"), QLatin1String("NP") },
+    { QLatin1String("528"), QLatin1String("NL") },
+    { QLatin1String("530"), QLatin1String("CW") },
+    { QLatin1String("530"), QLatin1String("SX") },
+    { QLatin1String("530"), QLatin1String("BQ") },
+    { QLatin1String("531"), QLatin1String("CW") },
+    { QLatin1String("532"), QLatin1String("CW") },
+    { QLatin1String("532"), QLatin1String("SX") },
+    { QLatin1String("532"), QLatin1String("BQ") },
+    { QLatin1String("533"), QLatin1String("AW") },
+    { QLatin1String("534"), QLatin1String("SX") },
+    { QLatin1String("535"), QLatin1String("BQ") },
+    { QLatin1String("536"), QLatin1String("SA") },
+    { QLatin1String("536"), QLatin1String("IQ") },
+    { QLatin1String("540"), QLatin1String("NC") },
+    { QLatin1String("548"), QLatin1String("VU") },
+    { QLatin1String("554"), QLatin1String("NZ") },
+    { QLatin1String("558"), QLatin1String("NI") },
+    { QLatin1String("562"), QLatin1String("NE") },
+    { QLatin1String("566"), QLatin1String("NG") },
+    { QLatin1String("570"), QLatin1String("NU") },
+    { QLatin1String("574"), QLatin1String("NF") },
+    { QLatin1String("578"), QLatin1String("NO") },
+    { QLatin1String("580"), QLatin1String("MP") },
+    { QLatin1String("581"), QLatin1String("UM") },
+    { QLatin1String("582"), QLatin1String("FM") },
+    { QLatin1String("582"), QLatin1String("MH") },
+    { QLatin1String("582"), QLatin1String("MP") },
+    { QLatin1String("582"), QLatin1String("PW") },
+    { QLatin1String("583"), QLatin1String("FM") },
+    { QLatin1String("584"), QLatin1String("MH") },
+    { QLatin1String("585"), QLatin1String("PW") },
+    { QLatin1String("586"), QLatin1String("PK") },
+    { QLatin1String("591"), QLatin1String("PA") },
+    { QLatin1String("598"), QLatin1String("PG") },
+    { QLatin1String("600"), QLatin1String("PY") },
+    { QLatin1String("604"), QLatin1String("PE") },
+    { QLatin1String("608"), QLatin1String("PH") },
+    { QLatin1String("612"), QLatin1String("PN") },
+    { QLatin1String("616"), QLatin1String("PL") },
+    { QLatin1String("620"), QLatin1String("PT") },
+    { QLatin1String("624"), QLatin1String("GW") },
+    { QLatin1String("626"), QLatin1String("TL") },
+    { QLatin1String("630"), QLatin1String("PR") },
+    { QLatin1String("634"), QLatin1String("QA") },
+    { QLatin1String("638"), QLatin1String("RE") },
+    { QLatin1String("642"), QLatin1String("RO") },
+    { QLatin1String("643"), QLatin1String("RU") },
+    { QLatin1String("646"), QLatin1String("RW") },
+    { QLatin1String("652"), QLatin1String("BL") },
+    { QLatin1String("654"), QLatin1String("SH") },
+    { QLatin1String("659"), QLatin1String("KN") },
+    { QLatin1String("660"), QLatin1String("AI") },
+    { QLatin1String("662"), QLatin1String("LC") },
+    { QLatin1String("663"), QLatin1String("MF") },
+    { QLatin1String("666"), QLatin1String("PM") },
+    { QLatin1String("670"), QLatin1String("VC") },
+    { QLatin1String("674"), QLatin1String("SM") },
+    { QLatin1String("678"), QLatin1String("ST") },
+    { QLatin1String("682"), QLatin1String("SA") },
+    { QLatin1String("686"), QLatin1String("SN") },
+    { QLatin1String("688"), QLatin1String("RS") },
+    { QLatin1String("690"), QLatin1String("SC") },
+    { QLatin1String("694"), QLatin1String("SL") },
+    { QLatin1String("702"), QLatin1String("SG") },
+    { QLatin1String("703"), QLatin1String("SK") },
+    { QLatin1String("704"), QLatin1String("VN") },
+    { QLatin1String("705"), QLatin1String("SI") },
+    { QLatin1String("706"), QLatin1String("SO") },
+    { QLatin1String("710"), QLatin1String("ZA") },
+    { QLatin1String("716"), QLatin1String("ZW") },
+    { QLatin1String("720"), QLatin1String("YE") },
+    { QLatin1String("724"), QLatin1String("ES") },
+    { QLatin1String("728"), QLatin1String("SS") },
+    { QLatin1String("729"), QLatin1String("SD") },
+    { QLatin1String("732"), QLatin1String("EH") },
+    { QLatin1String("736"), QLatin1String("SD") },
+    { QLatin1String("740"), QLatin1String("SR") },
+    { QLatin1String("744"), QLatin1String("SJ") },
+    { QLatin1String("748"), QLatin1String("SZ") },
+    { QLatin1String("752"), QLatin1String("SE") },
+    { QLatin1String("756"), QLatin1String("CH") },
+    { QLatin1String("760"), QLatin1String("SY") },
+    { QLatin1String("762"), QLatin1String("TJ") },
+    { QLatin1String("764"), QLatin1String("TH") },
+    { QLatin1String("768"), QLatin1String("TG") },
+    { QLatin1String("772"), QLatin1String("TK") },
+    { QLatin1String("776"), QLatin1String("TO") },
+    { QLatin1String("780"), QLatin1String("TT") },
+    { QLatin1String("784"), QLatin1String("AE") },
+    { QLatin1String("788"), QLatin1String("TN") },
+    { QLatin1String("792"), QLatin1String("TR") },
+    { QLatin1String("795"), QLatin1String("TM") },
+    { QLatin1String("796"), QLatin1String("TC") },
+    { QLatin1String("798"), QLatin1String("TV") },
+    { QLatin1String("800"), QLatin1String("UG") },
+    { QLatin1String("804"), QLatin1String("UA") },
+    { QLatin1String("807"), QLatin1String("MK") },
+    { QLatin1String("810"), QLatin1String("RU") },
+    { QLatin1String("810"), QLatin1String("AM") },
+    { QLatin1String("810"), QLatin1String("AZ") },
+    { QLatin1String("810"), QLatin1String("BY") },
+    { QLatin1String("810"), QLatin1String("EE") },
+    { QLatin1String("810"), QLatin1String("GE") },
+    { QLatin1String("810"), QLatin1String("KZ") },
+    { QLatin1String("810"), QLatin1String("KG") },
+    { QLatin1String("810"), QLatin1String("LV") },
+    { QLatin1String("810"), QLatin1String("LT") },
+    { QLatin1String("810"), QLatin1String("MD") },
+    { QLatin1String("810"), QLatin1String("TJ") },
+    { QLatin1String("810"), QLatin1String("TM") },
+    { QLatin1String("810"), QLatin1String("UA") },
+    { QLatin1String("810"), QLatin1String("UZ") },
+    { QLatin1String("818"), QLatin1String("EG") },
+    { QLatin1String("826"), QLatin1String("GB") },
+    { QLatin1String("830"), QLatin1String("JE") },
+    { QLatin1String("830"), QLatin1String("GG") },
+    { QLatin1String("831"), QLatin1String("GG") },
+    { QLatin1String("832"), QLatin1String("JE") },
+    { QLatin1String("833"), QLatin1String("IM") },
+    { QLatin1String("834"), QLatin1String("TZ") },
+    { QLatin1String("840"), QLatin1String("US") },
+    { QLatin1String("850"), QLatin1String("VI") },
+    { QLatin1String("854"), QLatin1String("BF") },
+    { QLatin1String("858"), QLatin1String("UY") },
+    { QLatin1String("860"), QLatin1String("UZ") },
+    { QLatin1String("862"), QLatin1String("VE") },
+    { QLatin1String("876"), QLatin1String("WF") },
+    { QLatin1String("882"), QLatin1String("WS") },
+    { QLatin1String("886"), QLatin1String("YE") },
+    { QLatin1String("887"), QLatin1String("YE") },
+    { QLatin1String("890"), QLatin1String("RS") },
+    { QLatin1String("890"), QLatin1String("ME") },
+    { QLatin1String("890"), QLatin1String("SI") },
+    { QLatin1String("890"), QLatin1String("HR") },
+    { QLatin1String("890"), QLatin1String("MK") },
+    { QLatin1String("890"), QLatin1String("BA") },
+    { QLatin1String("891"), QLatin1String("RS") },
+    { QLatin1String("891"), QLatin1String("ME") },
+    { QLatin1String("894"), QLatin1String("ZM") },
+    { QLatin1String("958"), QLatin1String("AA") },
+    { QLatin1String("959"), QLatin1String("QM") },
+    { QLatin1String("960"), QLatin1String("QN") },
+    { QLatin1String("962"), QLatin1String("QP") },
+    { QLatin1String("963"), QLatin1String("QQ") },
+    { QLatin1String("964"), QLatin1String("QR") },
+    { QLatin1String("965"), QLatin1String("QS") },
+    { QLatin1String("966"), QLatin1String("QT") },
+    { QLatin1String("967"), QLatin1String("EU") },
+    { QLatin1String("968"), QLatin1String("QV") },
+    { QLatin1String("969"), QLatin1String("QW") },
+    { QLatin1String("970"), QLatin1String("QX") },
+    { QLatin1String("971"), QLatin1String("QY") },
+    { QLatin1String("972"), QLatin1String("QZ") },
+    { QLatin1String("973"), QLatin1String("XA") },
+    { QLatin1String("974"), QLatin1String("XB") },
+    { QLatin1String("975"), QLatin1String("XC") },
+    { QLatin1String("976"), QLatin1String("XD") },
+    { QLatin1String("977"), QLatin1String("XE") },
+    { QLatin1String("978"), QLatin1String("XF") },
+    { QLatin1String("979"), QLatin1String("XG") },
+    { QLatin1String("980"), QLatin1String("XH") },
+    { QLatin1String("981"), QLatin1String("XI") },
+    { QLatin1String("982"), QLatin1String("XJ") },
+    { QLatin1String("983"), QLatin1String("XK") },
+    { QLatin1String("984"), QLatin1String("XL") },
+    { QLatin1String("985"), QLatin1String("XM") },
+    { QLatin1String("986"), QLatin1String("XN") },
+    { QLatin1String("987"), QLatin1String("XO") },
+    { QLatin1String("988"), QLatin1String("XP") },
+    { QLatin1String("989"), QLatin1String("XQ") },
+    { QLatin1String("990"), QLatin1String("XR") },
+    { QLatin1String("991"), QLatin1String("XS") },
+    { QLatin1String("992"), QLatin1String("XT") },
+    { QLatin1String("993"), QLatin1String("XU") },
+    { QLatin1String("994"), QLatin1String("XV") },
+    { QLatin1String("995"), QLatin1String("XW") },
+    { QLatin1String("996"), QLatin1String("XX") },
+    { QLatin1String("997"), QLatin1String("XY") },
+    { QLatin1String("998"), QLatin1String("XZ") },
+    { QLatin1String("999"), QLatin1String("ZZ") },
+    { QLatin1String("AAA"), QLatin1String("AA") },
+    { QLatin1String("ABW"), QLatin1String("AW") },
+    { QLatin1String("AFG"), QLatin1String("AF") },
+    { QLatin1String("AGO"), QLatin1String("AO") },
+    { QLatin1String("AIA"), QLatin1String("AI") },
+    { QLatin1String("ALA"), QLatin1String("AX") },
+    { QLatin1String("ALB"), QLatin1String("AL") },
+    { QLatin1String("AN"), QLatin1String("CW") },
+    { QLatin1String("AN"), QLatin1String("SX") },
+    { QLatin1String("AN"), QLatin1String("BQ") },
+    { QLatin1String("AND"), QLatin1String("AD") },
+    { QLatin1String("ANT"), QLatin1String("CW") },
+    { QLatin1String("ANT"), QLatin1String("SX") },
+    { QLatin1String("ANT"), QLatin1String("BQ") },
+    { QLatin1String("ARE"), QLatin1String("AE") },
+    { QLatin1String("ARG"), QLatin1String("AR") },
+    { QLatin1String("ARM"), QLatin1String("AM") },
+    { QLatin1String("ASC"), QLatin1String("AC") },
+    { QLatin1String("ASM"), QLatin1String("AS") },
+    { QLatin1String("ATA"), QLatin1String("AQ") },
+    { QLatin1String("ATF"), QLatin1String("TF") },
+    { QLatin1String("ATG"), QLatin1String("AG") },
+    { QLatin1String("AUS"), QLatin1String("AU") },
+    { QLatin1String("AUT"), QLatin1String("AT") },
+    { QLatin1String("AZE"), QLatin1String("AZ") },
+    { QLatin1String("BDI"), QLatin1String("BI") },
+    { QLatin1String("BEL"), QLatin1String("BE") },
+    { QLatin1String("BEN"), QLatin1String("BJ") },
+    { QLatin1String("BES"), QLatin1String("BQ") },
+    { QLatin1String("BFA"), QLatin1String("BF") },
+    { QLatin1String("BGD"), QLatin1String("BD") },
+    { QLatin1String("BGR"), QLatin1String("BG") },
+    { QLatin1String("BHR"), QLatin1String("BH") },
+    { QLatin1String("BHS"), QLatin1String("BS") },
+    { QLatin1String("BIH"), QLatin1String("BA") },
+    { QLatin1String("BLM"), QLatin1String("BL") },
+    { QLatin1String("BLR"), QLatin1String("BY") },
+    { QLatin1String("BLZ"), QLatin1String("BZ") },
+    { QLatin1String("BMU"), QLatin1String("BM") },
+    { QLatin1String("BOL"), QLatin1String("BO") },
+    { QLatin1String("BRA"), QLatin1String("BR") },
+    { QLatin1String("BRB"), QLatin1String("BB") },
+    { QLatin1String("BRN"), QLatin1String("BN") },
+    { QLatin1String("BTN"), QLatin1String("BT") },
+    { QLatin1String("BU"), QLatin1String("MM") },
+    { QLatin1String("BUR"), QLatin1String("MM") },
+    { QLatin1String("BVT"), QLatin1String("BV") },
+    { QLatin1String("BWA"), QLatin1String("BW") },
+    { QLatin1String("CAF"), QLatin1String("CF") },
+    { QLatin1String("CAN"), QLatin1String("CA") },
+    { QLatin1String("CCK"), QLatin1String("CC") },
+    { QLatin1String("CHE"), QLatin1String("CH") },
+    { QLatin1String("CHL"), QLatin1String("CL") },
+    { QLatin1String("CHN"), QLatin1String("CN") },
+    { QLatin1String("CIV"), QLatin1String("CI") },
+    { QLatin1String("CMR"), QLatin1String("CM") },
+    { QLatin1String("COD"), QLatin1String("CD") },
+    { QLatin1String("COG"), QLatin1String("CG") },
+    { QLatin1String("COK"), QLatin1String("CK") },
+    { QLatin1String("COL"), QLatin1String("CO") },
+    { QLatin1String("COM"), QLatin1String("KM") },
+    { QLatin1String("CPT"), QLatin1String("CP") },
+    { QLatin1String("CPV"), QLatin1String("CV") },
+    { QLatin1String("CRI"), QLatin1String("CR") },
+    { QLatin1String("CS"), QLatin1String("RS") },
+    { QLatin1String("CS"), QLatin1String("ME") },
+    { QLatin1String("CT"), QLatin1String("KI") },
+    { QLatin1String("CUB"), QLatin1String("CU") },
+    { QLatin1String("CUW"), QLatin1String("CW") },
+    { QLatin1String("CXR"), QLatin1String("CX") },
+    { QLatin1String("CYM"), QLatin1String("KY") },
+    { QLatin1String("CYP"), QLatin1String("CY") },
+    { QLatin1String("CZE"), QLatin1String("CZ") },
+    { QLatin1String("DD"), QLatin1String("DE") },
+    { QLatin1String("DDR"), QLatin1String("DE") },
+    { QLatin1String("DEU"), QLatin1String("DE") },
+    { QLatin1String("DGA"), QLatin1String("DG") },
+    { QLatin1String("DJI"), QLatin1String("DJ") },
+    { QLatin1String("DMA"), QLatin1String("DM") },
+    { QLatin1String("DNK"), QLatin1String("DK") },
+    { QLatin1String("DOM"), QLatin1String("DO") },
+    { QLatin1String("DY"), QLatin1String("BJ") },
+    { QLatin1String("DZA"), QLatin1String("DZ") },
+    { QLatin1String("ECU"), QLatin1String("EC") },
+    { QLatin1String("EGY"), QLatin1String("EG") },
+    { QLatin1String("ERI"), QLatin1String("ER") },
+    { QLatin1String("ESH"), QLatin1String("EH") },
+    { QLatin1String("ESP"), QLatin1String("ES") },
+    { QLatin1String("EST"), QLatin1String("EE") },
+    { QLatin1String("ETH"), QLatin1String("ET") },
+    { QLatin1String("FIN"), QLatin1String("FI") },
+    { QLatin1String("FJI"), QLatin1String("FJ") },
+    { QLatin1String("FLK"), QLatin1String("FK") },
+    { QLatin1String("FQ"), QLatin1String("AQ") },
+    { QLatin1String("FQ"), QLatin1String("TF") },
+    { QLatin1String("FRA"), QLatin1String("FR") },
+    { QLatin1String("FRO"), QLatin1String("FO") },
+    { QLatin1String("FSM"), QLatin1String("FM") },
+    { QLatin1String("FX"), QLatin1String("FR") },
+    { QLatin1String("FXX"), QLatin1String("FR") },
+    { QLatin1String("GAB"), QLatin1String("GA") },
+    { QLatin1String("GBR"), QLatin1String("GB") },
+    { QLatin1String("GEO"), QLatin1String("GE") },
+    { QLatin1String("GGY"), QLatin1String("GG") },
+    { QLatin1String("GHA"), QLatin1String("GH") },
+    { QLatin1String("GIB"), QLatin1String("GI") },
+    { QLatin1String("GIN"), QLatin1String("GN") },
+    { QLatin1String("GLP"), QLatin1String("GP") },
+    { QLatin1String("GMB"), QLatin1String("GM") },
+    { QLatin1String("GNB"), QLatin1String("GW") },
+    { QLatin1String("GNQ"), QLatin1String("GQ") },
+    { QLatin1String("GRC"), QLatin1String("GR") },
+    { QLatin1String("GRD"), QLatin1String("GD") },
+    { QLatin1String("GRL"), QLatin1String("GL") },
+    { QLatin1String("GTM"), QLatin1String("GT") },
+    { QLatin1String("GUF"), QLatin1String("GF") },
+    { QLatin1String("GUM"), QLatin1String("GU") },
+    { QLatin1String("GUY"), QLatin1String("GY") },
+    { QLatin1String("HKG"), QLatin1String("HK") },
+    { QLatin1String("HMD"), QLatin1String("HM") },
+    { QLatin1String("HND"), QLatin1String("HN") },
+    { QLatin1String("HRV"), QLatin1String("HR") },
+    { QLatin1String("HTI"), QLatin1String("HT") },
+    { QLatin1String("HUN"), QLatin1String("HU") },
+    { QLatin1String("HV"), QLatin1String("BF") },
+    { QLatin1String("IDN"), QLatin1String("ID") },
+    { QLatin1String("IMN"), QLatin1String("IM") },
+    { QLatin1String("IND"), QLatin1String("IN") },
+    { QLatin1String("IOT"), QLatin1String("IO") },
+    { QLatin1String("IRL"), QLatin1String("IE") },
+    { QLatin1String("IRN"), QLatin1String("IR") },
+    { QLatin1String("IRQ"), QLatin1String("IQ") },
+    { QLatin1String("ISL"), QLatin1String("IS") },
+    { QLatin1String("ISR"), QLatin1String("IL") },
+    { QLatin1String("ITA"), QLatin1String("IT") },
+    { QLatin1String("JAM"), QLatin1String("JM") },
+    { QLatin1String("JEY"), QLatin1String("JE") },
+    { QLatin1String("JOR"), QLatin1String("JO") },
+    { QLatin1String("JPN"), QLatin1String("JP") },
+    { QLatin1String("JT"), QLatin1String("UM") },
+    { QLatin1String("KAZ"), QLatin1String("KZ") },
+    { QLatin1String("KEN"), QLatin1String("KE") },
+    { QLatin1String("KGZ"), QLatin1String("KG") },
+    { QLatin1String("KHM"), QLatin1String("KH") },
+    { QLatin1String("KIR"), QLatin1String("KI") },
+    { QLatin1String("KNA"), QLatin1String("KN") },
+    { QLatin1String("KOR"), QLatin1String("KR") },
+    { QLatin1String("KWT"), QLatin1String("KW") },
+    { QLatin1String("LAO"), QLatin1String("LA") },
+    { QLatin1String("LBN"), QLatin1String("LB") },
+    { QLatin1String("LBR"), QLatin1String("LR") },
+    { QLatin1String("LBY"), QLatin1String("LY") },
+    { QLatin1String("LCA"), QLatin1String("LC") },
+    { QLatin1String("LIE"), QLatin1String("LI") },
+    { QLatin1String("LKA"), QLatin1String("LK") },
+    { QLatin1String("LSO"), QLatin1String("LS") },
+    { QLatin1String("LTU"), QLatin1String("LT") },
+    { QLatin1String("LUX"), QLatin1String("LU") },
+    { QLatin1String("LVA"), QLatin1String("LV") },
+    { QLatin1String("MAC"), QLatin1String("MO") },
+    { QLatin1String("MAF"), QLatin1String("MF") },
+    { QLatin1String("MAR"), QLatin1String("MA") },
+    { QLatin1String("MCO"), QLatin1String("MC") },
+    { QLatin1String("MDA"), QLatin1String("MD") },
+    { QLatin1String("MDG"), QLatin1String("MG") },
+    { QLatin1String("MDV"), QLatin1String("MV") },
+    { QLatin1String("MEX"), QLatin1String("MX") },
+    { QLatin1String("MHL"), QLatin1String("MH") },
+    { QLatin1String("MI"), QLatin1String("UM") },
+    { QLatin1String("MKD"), QLatin1String("MK") },
+    { QLatin1String("MLI"), QLatin1String("ML") },
+    { QLatin1String("MLT"), QLatin1String("MT") },
+    { QLatin1String("MMR"), QLatin1String("MM") },
+    { QLatin1String("MNE"), QLatin1String("ME") },
+    { QLatin1String("MNG"), QLatin1String("MN") },
+    { QLatin1String("MNP"), QLatin1String("MP") },
+    { QLatin1String("MOZ"), QLatin1String("MZ") },
+    { QLatin1String("MRT"), QLatin1String("MR") },
+    { QLatin1String("MSR"), QLatin1String("MS") },
+    { QLatin1String("MTQ"), QLatin1String("MQ") },
+    { QLatin1String("MUS"), QLatin1String("MU") },
+    { QLatin1String("MWI"), QLatin1String("MW") },
+    { QLatin1String("MYS"), QLatin1String("MY") },
+    { QLatin1String("MYT"), QLatin1String("YT") },
+    { QLatin1String("NAM"), QLatin1String("NA") },
+    { QLatin1String("NCL"), QLatin1String("NC") },
+    { QLatin1String("NER"), QLatin1String("NE") },
+    { QLatin1String("NFK"), QLatin1String("NF") },
+    { QLatin1String("NGA"), QLatin1String("NG") },
+    { QLatin1String("NH"), QLatin1String("VU") },
+    { QLatin1String("NIC"), QLatin1String("NI") },
+    { QLatin1String("NIU"), QLatin1String("NU") },
+    { QLatin1String("NLD"), QLatin1String("NL") },
+    { QLatin1String("NOR"), QLatin1String("NO") },
+    { QLatin1String("NPL"), QLatin1String("NP") },
+    { QLatin1String("NQ"), QLatin1String("AQ") },
+    { QLatin1String("NRU"), QLatin1String("NR") },
+    { QLatin1String("NT"), QLatin1String("SA") },
+    { QLatin1String("NT"), QLatin1String("IQ") },
+    { QLatin1String("NTZ"), QLatin1String("SA") },
+    { QLatin1String("NTZ"), QLatin1String("IQ") },
+    { QLatin1String("NZL"), QLatin1String("NZ") },
+    { QLatin1String("OMN"), QLatin1String("OM") },
+    { QLatin1String("PAK"), QLatin1String("PK") },
+    { QLatin1String("PAN"), QLatin1String("PA") },
+    { QLatin1String("PC"), QLatin1String("FM") },
+    { QLatin1String("PC"), QLatin1String("MH") },
+    { QLatin1String("PC"), QLatin1String("MP") },
+    { QLatin1String("PC"), QLatin1String("PW") },
+    { QLatin1String("PCN"), QLatin1String("PN") },
+    { QLatin1String("PER"), QLatin1String("PE") },
+    { QLatin1String("PHL"), QLatin1String("PH") },
+    { QLatin1String("PLW"), QLatin1String("PW") },
+    { QLatin1String("PNG"), QLatin1String("PG") },
+    { QLatin1String("POL"), QLatin1String("PL") },
+    { QLatin1String("PRI"), QLatin1String("PR") },
+    { QLatin1String("PRK"), QLatin1String("KP") },
+    { QLatin1String("PRT"), QLatin1String("PT") },
+    { QLatin1String("PRY"), QLatin1String("PY") },
+    { QLatin1String("PSE"), QLatin1String("PS") },
+    { QLatin1String("PU"), QLatin1String("UM") },
+    { QLatin1String("PYF"), QLatin1String("PF") },
+    { QLatin1String("PZ"), QLatin1String("PA") },
+    { QLatin1String("QAT"), QLatin1String("QA") },
+    { QLatin1String("QMM"), QLatin1String("QM") },
+    { QLatin1String("QNN"), QLatin1String("QN") },
+    { QLatin1String("QPP"), QLatin1String("QP") },
+    { QLatin1String("QQQ"), QLatin1String("QQ") },
+    { QLatin1String("QRR"), QLatin1String("QR") },
+    { QLatin1String("QSS"), QLatin1String("QS") },
+    { QLatin1String("QTT"), QLatin1String("QT") },
+    { QLatin1String("QU"), QLatin1String("EU") },
+    { QLatin1String("QUU"), QLatin1String("EU") },
+    { QLatin1String("QVV"), QLatin1String("QV") },
+    { QLatin1String("QWW"), QLatin1String("QW") },
+    { QLatin1String("QXX"), QLatin1String("QX") },
+    { QLatin1String("QYY"), QLatin1String("QY") },
+    { QLatin1String("QZZ"), QLatin1String("QZ") },
+    { QLatin1String("REU"), QLatin1String("RE") },
+    { QLatin1String("RH"), QLatin1String("ZW") },
+    { QLatin1String("ROU"), QLatin1String("RO") },
+    { QLatin1String("RUS"), QLatin1String("RU") },
+    { QLatin1String("RWA"), QLatin1String("RW") },
+    { QLatin1String("SAU"), QLatin1String("SA") },
+    { QLatin1String("SCG"), QLatin1String("RS") },
+    { QLatin1String("SCG"), QLatin1String("ME") },
+    { QLatin1String("SDN"), QLatin1String("SD") },
+    { QLatin1String("SEN"), QLatin1String("SN") },
+    { QLatin1String("SGP"), QLatin1String("SG") },
+    { QLatin1String("SGS"), QLatin1String("GS") },
+    { QLatin1String("SHN"), QLatin1String("SH") },
+    { QLatin1String("SJM"), QLatin1String("SJ") },
+    { QLatin1String("SLB"), QLatin1String("SB") },
+    { QLatin1String("SLE"), QLatin1String("SL") },
+    { QLatin1String("SLV"), QLatin1String("SV") },
+    { QLatin1String("SMR"), QLatin1String("SM") },
+    { QLatin1String("SOM"), QLatin1String("SO") },
+    { QLatin1String("SPM"), QLatin1String("PM") },
+    { QLatin1String("SRB"), QLatin1String("RS") },
+    { QLatin1String("SSD"), QLatin1String("SS") },
+    { QLatin1String("STP"), QLatin1String("ST") },
+    { QLatin1String("SU"), QLatin1String("RU") },
+    { QLatin1String("SU"), QLatin1String("AM") },
+    { QLatin1String("SU"), QLatin1String("AZ") },
+    { QLatin1String("SU"), QLatin1String("BY") },
+    { QLatin1String("SU"), QLatin1String("EE") },
+    { QLatin1String("SU"), QLatin1String("GE") },
+    { QLatin1String("SU"), QLatin1String("KZ") },
+    { QLatin1String("SU"), QLatin1String("KG") },
+    { QLatin1String("SU"), QLatin1String("LV") },
+    { QLatin1String("SU"), QLatin1String("LT") },
+    { QLatin1String("SU"), QLatin1String("MD") },
+    { QLatin1String("SU"), QLatin1String("TJ") },
+    { QLatin1String("SU"), QLatin1String("TM") },
+    { QLatin1String("SU"), QLatin1String("UA") },
+    { QLatin1String("SU"), QLatin1String("UZ") },
+    { QLatin1String("SUN"), QLatin1String("RU") },
+    { QLatin1String("SUN"), QLatin1String("AM") },
+    { QLatin1String("SUN"), QLatin1String("AZ") },
+    { QLatin1String("SUN"), QLatin1String("BY") },
+    { QLatin1String("SUN"), QLatin1String("EE") },
+    { QLatin1String("SUN"), QLatin1String("GE") },
+    { QLatin1String("SUN"), QLatin1String("KZ") },
+    { QLatin1String("SUN"), QLatin1String("KG") },
+    { QLatin1String("SUN"), QLatin1String("LV") },
+    { QLatin1String("SUN"), QLatin1String("LT") },
+    { QLatin1String("SUN"), QLatin1String("MD") },
+    { QLatin1String("SUN"), QLatin1String("TJ") },
+    { QLatin1String("SUN"), QLatin1String("TM") },
+    { QLatin1String("SUN"), QLatin1String("UA") },
+    { QLatin1String("SUN"), QLatin1String("UZ") },
+    { QLatin1String("SUR"), QLatin1String("SR") },
+    { QLatin1String("SVK"), QLatin1String("SK") },
+    { QLatin1String("SVN"), QLatin1String("SI") },
+    { QLatin1String("SWE"), QLatin1String("SE") },
+    { QLatin1String("SWZ"), QLatin1String("SZ") },
+    { QLatin1String("SXM"), QLatin1String("SX") },
+    { QLatin1String("SYC"), QLatin1String("SC") },
+    { QLatin1String("SYR"), QLatin1String("SY") },
+    { QLatin1String("TAA"), QLatin1String("TA") },
+    { QLatin1String("TCA"), QLatin1String("TC") },
+    { QLatin1String("TCD"), QLatin1String("TD") },
+    { QLatin1String("TGO"), QLatin1String("TG") },
+    { QLatin1String("THA"), QLatin1String("TH") },
+    { QLatin1String("TJK"), QLatin1String("TJ") },
+    { QLatin1String("TKL"), QLatin1String("TK") },
+    { QLatin1String("TKM"), QLatin1String("TM") },
+    { QLatin1String("TLS"), QLatin1String("TL") },
+    { QLatin1String("TMP"), QLatin1String("TL") },
+    { QLatin1String("TON"), QLatin1String("TO") },
+    { QLatin1String("TP"), QLatin1String("TL") },
+    { QLatin1String("TTO"), QLatin1String("TT") },
+    { QLatin1String("TUN"), QLatin1String("TN") },
+    { QLatin1String("TUR"), QLatin1String("TR") },
+    { QLatin1String("TUV"), QLatin1String("TV") },
+    { QLatin1String("TWN"), QLatin1String("TW") },
+    { QLatin1String("TZA"), QLatin1String("TZ") },
+    { QLatin1String("UGA"), QLatin1String("UG") },
+    { QLatin1String("UK"), QLatin1String("GB") },
+    { QLatin1String("UKR"), QLatin1String("UA") },
+    { QLatin1String("UMI"), QLatin1String("UM") },
+    { QLatin1String("URY"), QLatin1String("UY") },
+    { QLatin1String("USA"), QLatin1String("US") },
+    { QLatin1String("UZB"), QLatin1String("UZ") },
+    { QLatin1String("VAT"), QLatin1String("VA") },
+    { QLatin1String("VCT"), QLatin1String("VC") },
+    { QLatin1String("VD"), QLatin1String("VN") },
+    { QLatin1String("VEN"), QLatin1String("VE") },
+    { QLatin1String("VGB"), QLatin1String("VG") },
+    { QLatin1String("VIR"), QLatin1String("VI") },
+    { QLatin1String("VNM"), QLatin1String("VN") },
+    { QLatin1String("VUT"), QLatin1String("VU") },
+    { QLatin1String("WK"), QLatin1String("UM") },
+    { QLatin1String("WLF"), QLatin1String("WF") },
+    { QLatin1String("WSM"), QLatin1String("WS") },
+    { QLatin1String("XAA"), QLatin1String("XA") },
+    { QLatin1String("XBB"), QLatin1String("XB") },
+    { QLatin1String("XCC"), QLatin1String("XC") },
+    { QLatin1String("XDD"), QLatin1String("XD") },
+    { QLatin1String("XEE"), QLatin1String("XE") },
+    { QLatin1String("XFF"), QLatin1String("XF") },
+    { QLatin1String("XGG"), QLatin1String("XG") },
+    { QLatin1String("XHH"), QLatin1String("XH") },
+    { QLatin1String("XII"), QLatin1String("XI") },
+    { QLatin1String("XJJ"), QLatin1String("XJ") },
+    { QLatin1String("XKK"), QLatin1String("XK") },
+    { QLatin1String("XLL"), QLatin1String("XL") },
+    { QLatin1String("XMM"), QLatin1String("XM") },
+    { QLatin1String("XNN"), QLatin1String("XN") },
+    { QLatin1String("XOO"), QLatin1String("XO") },
+    { QLatin1String("XPP"), QLatin1String("XP") },
+    { QLatin1String("XQQ"), QLatin1String("XQ") },
+    { QLatin1String("XRR"), QLatin1String("XR") },
+    { QLatin1String("XSS"), QLatin1String("XS") },
+    { QLatin1String("XTT"), QLatin1String("XT") },
+    { QLatin1String("XUU"), QLatin1String("XU") },
+    { QLatin1String("XVV"), QLatin1String("XV") },
+    { QLatin1String("XWW"), QLatin1String("XW") },
+    { QLatin1String("XXX"), QLatin1String("XX") },
+    { QLatin1String("XYY"), QLatin1String("XY") },
+    { QLatin1String("XZZ"), QLatin1String("XZ") },
+    { QLatin1String("YD"), QLatin1String("YE") },
+    { QLatin1String("YEM"), QLatin1String("YE") },
+    { QLatin1String("YMD"), QLatin1String("YE") },
+    { QLatin1String("YU"), QLatin1String("RS") },
+    { QLatin1String("YU"), QLatin1String("ME") },
+    { QLatin1String("YUG"), QLatin1String("RS") },
+    { QLatin1String("YUG"), QLatin1String("ME") },
+    { QLatin1String("ZAF"), QLatin1String("ZA") },
+    { QLatin1String("ZAR"), QLatin1String("CD") },
+    { QLatin1String("ZMB"), QLatin1String("ZM") },
+    { QLatin1String("ZR"), QLatin1String("CD") },
+    { QLatin1String("ZWE"), QLatin1String("ZW") },
+    { QLatin1String("ZZZ"), QLatin1String("ZZ") },
+};
+static const qint16 countryAliasTblSize = sizeof(countryAliasTbl) / sizeof(countryAliasTblData);
+
+static const struct scriptAliasTblData {
+    const QLatin1String original;
+    const QLatin1String substitute;
+} scriptAliasTbl[] = {
+    { QLatin1String("Qaai"), QLatin1String("Zinh") },
+};
+static const qint16 scriptAliasTblSize = sizeof(scriptAliasTbl) / sizeof(scriptAliasTblData);
 // GENERATED PART ENDS HERE
 
 QT_END_NAMESPACE

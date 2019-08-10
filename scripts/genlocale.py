@@ -3,7 +3,7 @@
 
 # Data is from https://unicode.org/Public/cldr/35.1/core.zip
 
-import os, sys, glob
+import os, sys, glob, re
 import xml.etree.ElementTree as ET
 
 printenumsandexit = ('--printenums' in sys.argv)
@@ -185,6 +185,27 @@ def todayslist(fromxmlelements, initialvalues):
             print('Unknown day: %s' % daytype)
             sys.exit(1)
     return result
+
+def tolanguageenum(fromstring):
+    for key in languagemap.keys():
+        if fromstring == languagemap[key]['code']:
+            return 'QLocale::Language::%s' % key
+    # print('Unknown language: %s' % fromstring)
+    # sys.exit(1)
+
+def toscriptenum(fromstring):
+    for key in scriptmap.keys():
+        if fromstring == scriptmap[key]['code']:
+            return 'QLocale::Script::%s' % key
+    # print('Unknown script: %s' % fromstring)
+    # sys.exit(1)
+
+def tocountryenum(fromstring):
+    for key in countrymap.keys():
+        if fromstring == countrymap[key]['code']:
+            return 'QLocale::Country::%s' % key
+    # print('Unknown country: %s' % fromstring)
+    # sys.exit(1)
 
 def normalizestring(fromstring):
     result = fromstring.replace(' ', '')
@@ -383,12 +404,30 @@ def printlocaledata(frommap, key):
         )
     )
 
+def printaliastable(frommap, prefix):
+    print('''static const struct %sAliasTblData {
+    const QLatin1String original;
+    const QLatin1String substitute;
+} %sAliasTbl[] = {''' % (prefix, prefix))
+
+    for key in sorted(frommap):
+        # territories and scripts entries can contain multiple replacements, add one for each
+        splitvalue = frommap[key].split(' ')
+        for value in splitvalue:
+            print('    { QLatin1String("%s"), QLatin1String("%s") },' % (key, value))
+
+    print('};')
+    print('static const qint16 %sAliasTblSize = sizeof(%sAliasTbl) / sizeof(%sAliasTblData);\n' % (prefix, prefix, prefix))
+
 # main maps
 languagemap = {}
 countrymap = {}
 scriptmap = {}
 localemap = {}
+likelysubtagsmap = {}
 languagealiasmap = {}
+countryaliasmap = {}
+scriptaliasmap = {}
 # main lists
 imperiallist = []
 # cross-reference maps
@@ -401,6 +440,8 @@ localeweekendendmap = {}
 localeiso4217map = {}
 localecurrencymap = {}
 localenumberingmap = {}
+# regular expressions
+localeregex = re.compile('([^_|-|\.|@]+)+')
 
 # artificial entries
 languagemap['AnyLanguage'] = {
@@ -649,17 +690,11 @@ def readlocale(fromxml, tomap, isparent):
         mapmerge(localemap[langtype], tomap[locale], localedefaults)
 
     # find the enums from mapped values
-    for key in languagemap.keys():
-        if langtype == languagemap[key]['code']:
-            tomap[locale]['language'] = 'QLocale::Language::%s' % key
-            break
+    tomap[locale]['language'] = tolanguageenum(langtype)
 
-    if country is not None:
+    if not isparent and country is not None:
         countrytype = country.get('type')
-        for key in countrymap.keys():
-            if countrytype == countrymap[key]['code']:
-                tomap[locale]['country'] = 'QLocale::Country::%s' % key
-                break
+        tomap[locale]['country'] = tocountryenum(countrytype)
     else:
         # territory often is not specified, use language code as fallback
         countrytype = langtype.upper()
@@ -686,10 +721,7 @@ def readlocale(fromxml, tomap, isparent):
 
     # find values from supplemental maps
     if not isparent and scripttype:
-        for key in scriptmap.keys():
-            if scriptmap[key]['code'] == scripttype:
-                tomap[locale]['script'] = 'QLocale::Script::%s' % key
-                break
+        tomap[locale]['script'] = toscriptenum(scripttype)
 
     for key in localefirstdaymap.keys():
         for countryvalue in localefirstdaymap[key]:
@@ -980,21 +1012,117 @@ for string in sorted(imperiallist):
 print('};')
 print('static const qint16 imperialTblSize = sizeof(imperialTbl);\n')
 
+# likely subtags parsing
+tree = ET.parse('common/supplemental/likelySubtags.xml')
+root = tree.getroot()
+for likelysubtag in root.findall('./likelySubtags/likelySubtag'):
+    likelysubtagfrom = likelysubtag.get('from')
+    likelysubtagto = likelysubtag.get('to')
+    # split code into language, script and country to make it possible to match against regardless
+    # of separators and remap to enums so that it is possible to substitute both named and enumed
+    # locale searches at the cost of not covering all named cases
+    likelysubtagfromsplit = localeregex.findall(likelysubtagfrom)
+    likelysubtagfromsplitlen = len(likelysubtagfromsplit)
+    likelysubtagtosplit = localeregex.findall(likelysubtagto)
+    likelyfromlanguage = None
+    likelyfromscript = None
+    likelyfromcountry = None
+    likelytolanguage = None
+    likelytoscript = None
+    likelytocountry = None
+    if likelysubtagfromsplitlen == 1:
+        likelyfromlanguage = tolanguageenum(likelysubtagfromsplit[0])
+        likelyfromscript = 'QLocale::Script::AnyScript'
+        likelyfromcountry = 'QLocale::Country::AnyCountry'
+    elif likelysubtagfromsplitlen == 2:
+        likelyfromlanguage = tolanguageenum(likelysubtagfromsplit[0])
+        likelyfromscript = 'QLocale::Script::AnyScript'
+        likelyfromcountry = tocountryenum(likelysubtagfromsplit[1])
+    elif likelysubtagfromsplitlen == 3:
+        likelyfromlanguage = tolanguageenum(likelysubtagfromsplit[0])
+        likelyfromscript = toscriptenum(likelysubtagfromsplit[1])
+        likelyfromcountry = tocountryenum(likelysubtagfromsplit[2])
+    elif likelysubtagfromsplitlen > 3:
+        # the regular expression is intentionally greedy, if there are more than 3 group matches
+        # then it is likely a variant and that is not supported case yet
+        print(likelysubtagfrom, likelysubtagfromsplit)
+        sys.exit(1)
+    likelytolanguage = tolanguageenum(likelysubtagtosplit[0])
+    likelytoscript = toscriptenum(likelysubtagtosplit[1])
+    likelytocountry = tocountryenum(likelysubtagtosplit[2])
+
+    if not likelyfromlanguage or not likelyfromscript or not likelyfromcountry \
+        or not likelytolanguage or not likelytoscript or not likelytocountry:
+        # if there are no enums for the codes skip the entry
+        continue
+
+    likelysubtagsmap[likelysubtagfrom] = {
+        'fromlanguage' : likelyfromlanguage,
+        'fromscript' : likelyfromscript,
+        'fromcountry' : likelyfromcountry,
+        'tolanguage' : likelytolanguage,
+        'toscript' : likelytoscript,
+        'tocountry' : likelytocountry,
+        'to': likelysubtagto,
+    }
+print('''static const struct subtagAliasTblData {
+    const QLocale::Language fromlanguage;
+    const QLocale::Script fromscript;
+    const QLocale::Country fromcountry;
+    const QLocale::Language tolanguage;
+    const QLocale::Script toscript;
+    const QLocale::Country tocountry;
+} subtagAliasTbl[] = {''')
+
+for key in sorted(likelysubtagsmap):
+    value = likelysubtagsmap[key]
+    print('''    {
+        // from %s
+        %s, %s, %s,
+        // to %s
+        %s, %s, %s
+    },''' % (
+            key,
+            value['fromlanguage'],
+            value['fromscript'],
+            value['fromcountry'],
+            value['to'],
+            value['tolanguage'],
+            value['toscript'],
+            value['tocountry'],
+        )
+    )
+
+print('};')
+print('static const qint16 subtagAliasTblSize = sizeof(subtagAliasTbl) / sizeof(subtagAliasTblData);\n')
+
 # language alias parsing
 tree = ET.parse('common/supplemental/supplementalMetadata.xml')
 root = tree.getroot()
 for languagealias in root.findall('./metadata/alias/languageAlias'):
     languagealiastype = languagealias.get('type')
     languagealiasreplacement = languagealias.get('replacement')
+    # if either the original or the substitute is BCP47 code (language and script/country included)
+    # skip it because QLocalePrivate::codeToLanguage() should be dealing with language codes only
+    if '_' in languagealiastype or '-' in languagealiastype \
+        or '_' in languagealiasreplacement or '-' in languagealiasreplacement:
+        continue
     languagealiasmap[languagealiastype] = languagealiasreplacement
 
-print('''static const struct languageAliasTblData {
-    const QLatin1String original;
-    const QLatin1String substitute;
-} languageAliasTbl[] = {''')
+printaliastable(languagealiasmap, 'language')
 
-for key in sorted(languagealiasmap):
-    print('    { QLatin1String("%s"), QLatin1String("%s") },' % (key, languagealiasmap[key]))
+# country alias parsing
+for territoryalias in root.findall('./metadata/alias/territoryAlias'):
+    territoryaliastype = territoryalias.get('type')
+    territoryaliasreplacement = territoryalias.get('replacement')
+    countryaliasmap[territoryaliastype] = territoryaliasreplacement
 
-print('};')
-print('static const qint16 languageAliasTblSize = sizeof(languageAliasTbl) / sizeof(languageAliasTblData);')
+printaliastable(countryaliasmap, 'country')
+
+# script alias parsing
+for scriptalias in root.findall('./metadata/alias/scriptAlias'):
+    scriptaliastype = scriptalias.get('type')
+    scriptaliasreplacement = scriptalias.get('replacement')
+    scriptaliasmap[scriptaliastype] = scriptaliasreplacement
+
+printaliastable(scriptaliasmap, 'script')

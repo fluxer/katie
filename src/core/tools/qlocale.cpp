@@ -44,6 +44,14 @@
 #include "qvariant.h"
 #include "qnumeric.h"
 #include "qlocale_data_p.h"
+#include "qdebug.h"
+
+// #define QLOCALE_DEBUG
+#if defined (QLOCALE_DEBUG) && !defined(QT_NO_DEBUG_STREAM)
+#  define QLOCALEDEBUG qDebug()
+#else
+#  define QLOCALEDEBUG if (false) qDebug()
+#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -71,7 +79,14 @@ extern bool qt_u_strToLower(const QString &str, QString *out, const QLocale &loc
 */
 QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
 {
-    const QString lower = code.toLower();
+    QString lower = code.toLower();
+
+    for (qint16 i = 0; i < languageAliasTblSize; i++) {
+        if (languageAliasTbl[i].original == lower) {
+            lower = languageAliasTbl[i].substitute;
+            break;
+        }
+    }
 
     for (qint16 i = 0; i < languageTblSize; i++) {
         if (QString::fromLatin1(languageTbl[i].code) ==  lower)
@@ -89,6 +104,13 @@ QLocale::Script QLocalePrivate::codeToScript(const QString &code)
         title[0] = code.at(0).toUpper();
     }
 
+    for (qint16 i = 0; i < scriptAliasTblSize; i++) {
+        if (scriptAliasTbl[i].original == title) {
+            title = scriptAliasTbl[i].substitute;
+            break;
+        }
+    }
+
     for (qint16 i = 0; i < scriptTblSize; i++) {
         if (QString::fromLatin1(scriptTbl[i].code) == title)
             return scriptTbl[i].script;
@@ -98,7 +120,14 @@ QLocale::Script QLocalePrivate::codeToScript(const QString &code)
 
 QLocale::Country QLocalePrivate::codeToCountry(const QString &code)
 {
-    const QString upper = code.toUpper();
+    QString upper = code.toUpper();
+
+    for (qint16 i = 0; i < countryAliasTblSize; i++) {
+        if (countryAliasTbl[i].original == upper) {
+            upper = countryAliasTbl[i].substitute;
+            break;
+        }
+    }
 
     for (qint16 i = 0; i < countryTblSize; i++) {
         if (QString::fromLatin1(countryTbl[i].code) == upper)
@@ -173,7 +202,26 @@ static const QLocalePrivate *defaultPrivate()
 
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
 {
-    if (country == QLocale::AnyCountry) {
+    // check likely substitutes first
+    for (qint16 i = 0; i < subtagAliasTblSize; i++) {
+        if (subtagAliasTbl[i].fromlanguage == language
+            && subtagAliasTbl[i].fromscript == script
+            && subtagAliasTbl[i].fromcountry == country) {
+            QLOCALEDEBUG << "from" << language << script << country;
+            language = subtagAliasTbl[i].tolanguage;
+            script = subtagAliasTbl[i].toscript;
+            country = subtagAliasTbl[i].tocountry;
+            QLOCALEDEBUG << "to" << language << script << country;
+            break;
+        }
+    }
+
+    if (language == QLocale::AnyLanguage) {
+        for (qint16 i = 0; i < localeTblSize; i++) {
+            if (localeTbl[i].m_script == script && localeTbl[i].m_country == country)
+                return &localeTbl[i];
+        }
+    } else if (country == QLocale::AnyCountry) {
         for (qint16 i = 0; i < localeTblSize; i++) {
             if (localeTbl[i].m_language == language && localeTbl[i].m_script == script)
                 return &localeTbl[i];
@@ -184,16 +232,22 @@ const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLo
                 return &localeTbl[i];
         }
     } else {
-        // both script and country are explicitly specified
+        // both script and country are explicitly specified, language is checked to ensure
+        // different languages with identical script and country are not matched
         for (qint16 i = 0; i < localeTblSize; i++) {
             if (localeTbl[i].m_language == language && localeTbl[i].m_script == script && localeTbl[i].m_country == country)
                 return &localeTbl[i];
         }
     }
 
+    // greedy matching, e.g. language is C with specific country and script in which case they can
+    // safely be ignored or scripts/country does not have table entry but it has likely subtag
+    // (e.g. ha_Latn_NG), the first match is returned
     for (qint16 i = 0; i < localeTblSize; i++) {
-        if (localeTbl[i].m_language == language)
+        if (localeTbl[i].m_language == language) {
+            QLOCALEDEBUG << "greedy match for" << language << script << country;
             return &localeTbl[i];
+        }
     }
 
     return &localeTbl[0];
@@ -519,12 +573,6 @@ static quint16 localePrivateIndex(const QLocalePrivate *p)
 QLocale::QLocale(const QString &name)
 {
     p.numberOptions = 0;
-    for (qint16 i = 0; i < languageAliasTblSize; i++) {
-        if (languageAliasTbl[i].original == name) {
-            p.index = localePrivateIndex(findLocale(languageAliasTbl[i].substitute));
-            return;
-        }
-    }
     p.index = localePrivateIndex(findLocale(name));
 }
 
