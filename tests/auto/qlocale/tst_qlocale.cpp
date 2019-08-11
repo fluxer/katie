@@ -283,7 +283,7 @@ void tst_QLocale::ctor()
     TEST_CTOR(Dutch, AnyCountry, QLocale::Dutch, QLocale::Netherlands)
     TEST_CTOR(German, AnyCountry, QLocale::German, QLocale::Germany)
     TEST_CTOR(Greek, AnyCountry, QLocale::Greek, QLocale::Greece)
-    TEST_CTOR(Malay, AnyCountry, QLocale::Malay, QLocale::Brunei)
+    TEST_CTOR(Malay, AnyCountry, QLocale::Malay, QLocale::Malaysia)
     TEST_CTOR(Persian, AnyCountry, QLocale::Persian, QLocale::Iran)
     TEST_CTOR(Portuguese, AnyCountry, QLocale::Portuguese, QLocale::Brazil)
     TEST_CTOR(Serbian, AnyCountry, QLocale::Serbian, QLocale::Serbia)
@@ -381,7 +381,7 @@ void tst_QLocale::ctor()
     TEST_CTOR("ha_NG", Hausa, AnyScript, Nigeria)
     // substitutions
     TEST_CTOR("ha_Latn_GH", Hausa, AnyScript, Ghana)
-    // TEST_CTOR("ha_Latn_NG", Hausa, AnyScript, Nigeria)
+    TEST_CTOR("ha_Latn_NG", Hausa, AnyScript, Nigeria)
 
 #undef TEST_CTOR
 }

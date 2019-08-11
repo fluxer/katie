@@ -212,37 +212,20 @@ const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLo
             script = subtagAliasTbl[i].toscript;
             country = subtagAliasTbl[i].tocountry;
             QLOCALEDEBUG << "to" << language << script << country;
-            break;
+            return QLocalePrivate::findLocale(language, script, country);
         }
     }
 
-    if (language == QLocale::AnyLanguage) {
-        for (qint16 i = 0; i < localeTblSize; i++) {
-            if (localeTbl[i].m_script == script && localeTbl[i].m_country == country)
-                return &localeTbl[i];
-        }
-    } else if (country == QLocale::AnyCountry) {
-        for (qint16 i = 0; i < localeTblSize; i++) {
-            if (localeTbl[i].m_language == language && localeTbl[i].m_script == script)
-                return &localeTbl[i];
-        }
-    } else if (script == QLocale::AnyScript) {
-        for (qint16 i = 0; i < localeTblSize; i++) {
-            if (localeTbl[i].m_language == language && localeTbl[i].m_country == country)
-                return &localeTbl[i];
-        }
-    } else {
-        // both script and country are explicitly specified, language is checked to ensure
-        // different languages with identical script and country are not matched
-        for (qint16 i = 0; i < localeTblSize; i++) {
-            if (localeTbl[i].m_language == language && localeTbl[i].m_script == script && localeTbl[i].m_country == country)
-                return &localeTbl[i];
+    for (qint16 i = 0; i < localeTblSize; i++) {
+        if ((language == QLocale::AnyLanguage || localeTbl[i].m_language == language)
+            && (script == QLocale::AnyScript || localeTbl[i].m_script == QLocale::AnyScript || localeTbl[i].m_script == script)
+            && (country == QLocale::AnyCountry || localeTbl[i].m_country == QLocale::AnyCountry || localeTbl[i].m_country == country)) {
+            QLOCALEDEBUG << "exact match for" << language << script << country;
+            return &localeTbl[i];
         }
     }
 
-    // greedy matching, e.g. language is C with specific country and script in which case they can
-    // safely be ignored or scripts/country does not have table entry but it has likely subtag
-    // (e.g. ha_Latn_NG), the first match is returned
+    // for compatibility match invalid cases, e.g. en_zz, to the first match for that language
     for (qint16 i = 0; i < localeTblSize; i++) {
         if (localeTbl[i].m_language == language) {
             QLOCALEDEBUG << "greedy match for" << language << script << country;
