@@ -1717,21 +1717,16 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
             country > QLocale::LastCountry)
         return QList<QLocale>();
 
+    if (language == QLocale::C)
+        return QList<QLocale>() << QLocale(QLocale::C);
+
     QList<QLocale> result;
-    if (language == QLocale::AnyLanguage && script == QLocale::AnyScript && country == QLocale::AnyCountry) {
-        result.reserve(localeTblSize);
-        for (qint16 i = 0; i < localeTblSize; i++) {
+    for (qint16 i = 0; i < localeTblSize; i++) {
+        if ((language == QLocale::AnyLanguage || localeTbl[i].m_language == language)
+            && (script == QLocale::AnyScript || localeTbl[i].m_script == script)
+            && (country == QLocale::AnyCountry || localeTbl[i].m_country == country)) {
             QLocale locale(localeTbl[i].m_language, localeTbl[i].m_script, localeTbl[i].m_country);
             result.append(locale);
-        }
-    } else {
-        for (qint16 i = 0; i < localeTblSize; i++) {
-            if (localeTbl[i].m_language == language
-                && localeTbl[i].m_script == script
-                && localeTbl[i].m_country == country) {
-                QLocale locale(language, script, country);
-                result.append(locale);
-            }
         }
     }
     return result;
@@ -1741,7 +1736,7 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
     \obsolete
     \since 4.3
 
-    Returns the list of countries that have entires for \a language in Qt's locale
+    Returns the list of countries that have entries for \a language in Qt's locale
     database. If the result is an empty list, then \a language is not represented in
     Qt's locale database.
 
