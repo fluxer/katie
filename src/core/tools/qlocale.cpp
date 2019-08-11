@@ -191,7 +191,7 @@ static const QLocalePrivate *systemPrivate()
 }
 
 static const QLocalePrivate *default_lp = 0;
-static quint16 default_number_options = 0;
+static QLocale::NumberOptions default_number_options = 0;
 
 static const QLocalePrivate *defaultPrivate()
 {
@@ -698,7 +698,7 @@ void QLocale::setNumberOptions(NumberOptions options)
 */
 QLocale::NumberOptions QLocale::numberOptions() const
 {
-    return static_cast<NumberOption>(p.numberOptions);
+    return p.numberOptions;
 }
 
 /*!

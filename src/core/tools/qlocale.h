@@ -1421,7 +1421,7 @@ private:
     // ### Qt 5: change to a QLocaleData *d; uint numberOptions.
     struct Data {
         quint16 index;
-        quint16 numberOptions;
+        QLocale::NumberOptions numberOptions;
     };
 
     Data p;
