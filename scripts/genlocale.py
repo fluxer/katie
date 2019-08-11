@@ -80,7 +80,7 @@ def tocurrencyformat(fromformat, frommap):
         fmt = fmt.replace('0', '#')
         fmt = fmt.replace(',', '#')
         fmt = fmt.replace('.', '#')
-        for r in range(20):
+        for r in range(10):
             fmt = fmt.replace('##', "#")
         fmt = fmt.replace('#', "%1")
         fmt = fmt.replace(u'\xa4', "%2")
@@ -955,7 +955,7 @@ def readlocale(fromxml, tomap, isparent):
                 if len(formats) > 1:
                     tomap[locale]['currency_negative_format'] = formats[1]
 
-            tomap[locale]['currency_iso_code'] = currencytype
+        tomap[locale]['currency_iso_code'] = currencytype
 
     # month/day names are set during calendar parsing
 
