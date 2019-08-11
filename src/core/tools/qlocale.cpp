@@ -1744,9 +1744,9 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
 */
 QList<QLocale::Country> QLocale::countriesForLanguage(Language language)
 {
-    QList<Country> result;
+    QList<QLocale::Country> result;
 
-    if (language == C) {
+    if (language == QLocale::C) {
         result.append(QLocale::AnyCountry);
         return result;
     }
