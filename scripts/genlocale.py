@@ -30,6 +30,38 @@ def stripxmltext(fromxmltext):
         result = result.replace('  ', ' ')
     return result.strip()
 
+def normalizestring(fromstring):
+    result = fromstring.replace(' ', '')
+    result = result.replace('-', '')
+    result = result.replace("'", '')
+    result = result.replace('&', 'And')
+    result = result.replace('(', '')
+    result = result.replace(')', '')
+    result = result.replace('St.', 'St')
+    result = result.replace('U.S.', 'UnitedStates')
+    # UTF-8 chars
+    result = result.replace(u'ʼ', '')
+    result = result.replace(u'’', '')
+    result = result.replace(u'ü', 'u')
+    result = result.replace(u'å', 'a')
+    result = result.replace(u'ç', 'c')
+    result = result.replace(u'õ', 'o')
+    result = result.replace(u'Å', 'A')
+    result = result.replace(u'ô', 'o')
+    result = result.replace(u'ã', 'a')
+    result = result.replace(u'é', 'e')
+    result = result.replace(u'í', 'i')
+    return result
+
+def xmlmerge(fromxml, fromxml2):
+    tree = ET.parse(fromxml)
+    root = tree.getroot()
+    tree2 = ET.parse(fromxml2)
+    root2 = tree2.getroot()
+    for element in root:
+        root2.insert(0, element)
+    return root2
+
 def touint(fromstring):
     # NOTE: symbols (plus, minus, etc.) are assumed to be single character which is not true for
     # many of the locales, however the API for those does not handle them as strings thus the first
@@ -206,29 +238,6 @@ def tocountryenum(fromstring):
             return 'QLocale::Country::%s' % key
     # print('Unknown country: %s' % fromstring)
     # sys.exit(1)
-
-def normalizestring(fromstring):
-    result = fromstring.replace(' ', '')
-    result = result.replace('-', '')
-    result = result.replace("'", '')
-    result = result.replace('&', 'And')
-    result = result.replace('(', '')
-    result = result.replace(')', '')
-    result = result.replace('St.', 'St')
-    result = result.replace('U.S.', 'UnitedStates')
-    # UTF-8 chars
-    result = result.replace(u'ʼ', '')
-    result = result.replace(u'’', '')
-    result = result.replace(u'ü', 'u')
-    result = result.replace(u'å', 'a')
-    result = result.replace(u'ç', 'c')
-    result = result.replace(u'õ', 'o')
-    result = result.replace(u'Å', 'A')
-    result = result.replace(u'ô', 'o')
-    result = result.replace(u'ã', 'a')
-    result = result.replace(u'é', 'e')
-    result = result.replace(u'í', 'i')
-    return result
 
 # printenum prints mapped values that have unique code only, the rest are set to the enum of the
 # first occurence. the reason for doing so is because table lookups for figuring out language,
@@ -655,8 +664,19 @@ localemap['C']['language'] = 'QLocale::Language::C'
 # locales parsing
 # TODO: accept only "contributed" or "approved" values
 def readlocale(fromxml, tomap, isparent):
-    tree = ET.parse(fromxml)
-    root = tree.getroot()
+    locale = os.path.basename(fromxml)
+    locale = locale.replace('.xml', '')
+
+    if '_' in fromxml:
+        # merge parent locales (non-territory) into the current one so that defaults can be read
+        # from them. they do not have territory and currency data is based on territory so
+        # cross-reference is not possible without doing so
+        localeparent = locale.split('_')[0]
+        xmlparent = fromxml.replace(locale, localeparent)
+        root = xmlmerge(fromxml, xmlparent)
+    else:
+        tree = ET.parse(fromxml)
+        root = tree.getroot()
 
     variant = root.find('./identity/variant')
     if variant is not None:
@@ -670,9 +690,6 @@ def readlocale(fromxml, tomap, isparent):
     currencytype = None
     scripttype = None
     numbertype = 'latn' # CLDR default
-
-    locale = os.path.basename(fromxml)
-    locale = locale.replace('.xml', '')
 
     tomap[locale] = {}
     if isparent:
@@ -711,7 +728,7 @@ def readlocale(fromxml, tomap, isparent):
                 or countrytype in scriptterritories:
                 scripttype = localescriptmap[langtype]['script']
 
-    # store for later, data is partial so pick from what is mapped
+    # store for later
     if countrytype in localeiso4217map.keys():
         currencytype = localeiso4217map[countrytype]
 
@@ -954,6 +971,9 @@ def readlocale(fromxml, tomap, isparent):
                 # negative format is optional
                 if len(formats) > 1:
                     tomap[locale]['currency_negative_format'] = formats[1]
+
+            # currency format was found, break
+            break
 
         tomap[locale]['currency_iso_code'] = currencytype
 

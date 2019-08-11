@@ -1228,7 +1228,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Afrikaans\0", "Afganistan\0",
+        "Afrikaans\0", "Namibië\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 en %2\0", "%1 en %2\0",
         // date/time format
@@ -1261,7 +1261,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Afrikaans\0", "Afganistan\0",
+        "Afrikaans\0", "Suid-Afrika\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 en %2\0", "%1 en %2\0",
         // date/time format
@@ -1269,11 +1269,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "vm.\0", "nm.\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "ZAR\0", "Afgaanse afgani\0",
+        "R\0", "%2%1\0", Q_NULLPTR, "ZAR\0", "Suid-Afrikaanse rand\0",
         // month names
         { "Jan.\0", "Feb.\0", "Mrt.\0", "Apr.\0", "Mei\0", "Jun.\0", "Jul.\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Des.\0" },
         { "Januarie\0", "Februarie\0", "Maart\0", "April\0", "Mei\0", "Junie\0", "Julie\0", "Augustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan.\0", "Feb.\0", "Mrt.\0", "Apr.\0", "Mei\0", "Jun.\0", "Jul.\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Des.\0" },
         { "Januarie\0", "Februarie\0", "Maart\0", "April\0", "Mei\0", "Junie\0", "Julie\0", "Augustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -1294,7 +1294,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Aghem\0", Q_NULLPTR,
+        "Aghem\0", "Kàmàlûŋ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -1302,7 +1302,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.g\0", "a.k\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", "CFA Fàlâŋ BEAC\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -1327,7 +1327,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Akan\0", Q_NULLPTR,
+        "Akan\0", "Gaana\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -1335,7 +1335,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AN\0", "EW\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "GHS\0", Q_NULLPTR,
+        "GH₵\0", "%2%1\0", Q_NULLPTR, "GHS\0", "Ghana Sidi\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -1360,7 +1360,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "አማርኛ\0", "አርሜኒያ\0",
+        "አማርኛ\0", "ኢትዮጵያ\0",
         // list pattern
         "%1፣ %2\0", "%1፣ %2\0", "%1, እና %2\0", "%1 እና %2\0",
         // date/time format
@@ -1368,7 +1368,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ጥዋት\0", "ከሰዓት\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "ETB\0", "የአርመን ድራም\0",
+        "ብር\0", "%2%1\0", Q_NULLPTR, "ETB\0", "የኢትዮጵያ ብር\0",
         // month names
         { "ጃንዩ\0", "ፌብሩ\0", "ማርች\0", "ኤፕሪ\0", "ሜይ\0", "ጁን\0", "ጁላይ\0", "ኦገስ\0", "ሴፕቴ\0", "ኦክቶ\0", "ኖቬም\0", "ዲሴም\0" },
         { "ጃንዩወሪ\0", "ፌብሩወሪ\0", "ማርች\0", "ኤፕሪል\0", "ሜይ\0", "ጁን\0", "ጁላይ\0", "ኦገስት\0", "ሴፕቴምበር\0", "ኦክቶበር\0", "ኖቬምበር\0", "ዲሴምበር\0" },
@@ -1393,7 +1393,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "العالم\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1426,7 +1426,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "الإمارات العربية المتحدة\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1434,7 +1434,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "AED\0", "بيزو أرجنتيني\0",
+        "د.إ.‏\0", "%1 %2\0", Q_NULLPTR, "AED\0", "درهم إماراتي\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -1459,7 +1459,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "البحرين\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1467,7 +1467,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "BHD\0", "بيزو أرجنتيني\0",
+        "د.ب.‏\0", "%1 %2\0", Q_NULLPTR, "BHD\0", "دينار بحريني\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -1492,7 +1492,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "جيبوتي\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1525,7 +1525,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "الجزائر\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1533,7 +1533,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "DZD\0", "بيزو أرجنتيني\0",
+        "د.ج.‏\0", "%2 %1\0", Q_NULLPTR, "DZD\0", "دينار جزائري\0",
         // month names
         { "جانفي\0", "فيفري\0", "مارس\0", "أفريل\0", "ماي\0", "جوان\0", "جويلية\0", "أوت\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "جانفي\0", "فيفري\0", "مارس\0", "أفريل\0", "ماي\0", "جوان\0", "جويلية\0", "أوت\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -1558,7 +1558,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "مصر\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1566,7 +1566,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "EGP\0", "بيزو أرجنتيني\0",
+        "ج.م.‏\0", "%1 %2\0", Q_NULLPTR, "EGP\0", "جنيه مصري\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -1587,11 +1587,11 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        46, 44, 1563, 37, 45, 43, 69, 2, 1632,
+        46, 44, 1563, 37, 45, 43, 69, 2, 48,
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "الصحراء الغربية\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1599,7 +1599,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "MAD\0", "بيزو أرجنتيني\0",
+        "د.م.‏\0", "%2 %1\0", Q_NULLPTR, "MAD\0", "درهم مغربي\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -1624,7 +1624,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "إريتريا\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1657,7 +1657,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "إسرائيل\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1665,7 +1665,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "ILS\0", "بيزو أرجنتيني\0",
+        "₪\0", "%1 %2\0", Q_NULLPTR, "ILS\0", "شيكل إسرائيلي جديد\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -1690,7 +1690,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "العراق\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1698,7 +1698,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "IQD\0", "بيزو أرجنتيني\0",
+        "د.ع.‏\0", "%1 %2\0", Q_NULLPTR, "IQD\0", "دينار عراقي\0",
         // month names
         { "كانون الثاني\0", "شباط\0", "آذار\0", "نيسان\0", "أيار\0", "حزيران\0", "تموز\0", "آب\0", "أيلول\0", "تشرين الأول\0", "تشرين الثاني\0", "كانون الأول\0" },
         { "كانون الثاني\0", "شباط\0", "آذار\0", "نيسان\0", "أيار\0", "حزيران\0", "تموز\0", "آب\0", "أيلول\0", "تشرين الأول\0", "تشرين الثاني\0", "كانون الأول\0" },
@@ -1723,7 +1723,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "الأردن\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1731,7 +1731,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "JOD\0", "بيزو أرجنتيني\0",
+        "د.أ.‏\0", "%1 %2\0", Q_NULLPTR, "JOD\0", "دينار أردني\0",
         // month names
         { "كانون الثاني\0", "شباط\0", "آذار\0", "نيسان\0", "أيار\0", "حزيران\0", "تموز\0", "آب\0", "أيلول\0", "تشرين الأول\0", "تشرين الثاني\0", "كانون الأول\0" },
         { "كانون الثاني\0", "شباط\0", "آذار\0", "نيسان\0", "أيار\0", "حزيران\0", "تموز\0", "آب\0", "أيلول\0", "تشرين الأول\0", "تشرين الثاني\0", "كانون الأول\0" },
@@ -1756,7 +1756,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "جزر القمر\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1789,7 +1789,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "الكويت\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1797,7 +1797,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "KWD\0", "بيزو أرجنتيني\0",
+        "د.ك.‏\0", "%1 %2\0", Q_NULLPTR, "KWD\0", "دينار كويتي\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -1822,7 +1822,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "لبنان\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1830,7 +1830,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "LBP\0", "بيزو أرجنتيني\0",
+        "ل.ل.‏\0", "%1 %2\0", Q_NULLPTR, "LBP\0", "جنيه لبناني\0",
         // month names
         { "كانون الثاني\0", "شباط\0", "آذار\0", "نيسان\0", "أيار\0", "حزيران\0", "تموز\0", "آب\0", "أيلول\0", "تشرين الأول\0", "تشرين الثاني\0", "كانون الأول\0" },
         { "كانون الثاني\0", "شباط\0", "آذار\0", "نيسان\0", "أيار\0", "حزيران\0", "تموز\0", "آب\0", "أيلول\0", "تشرين الأول\0", "تشرين الثاني\0", "كانون الأول\0" },
@@ -1855,7 +1855,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "ليبيا\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1863,7 +1863,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "LYD\0", "بيزو أرجنتيني\0",
+        "د.ل.‏\0", "%2 %1\0", Q_NULLPTR, "LYD\0", "دينار ليبي\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -1888,7 +1888,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "المغرب\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1896,7 +1896,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "MAD\0", "بيزو أرجنتيني\0",
+        "د.م.‏\0", "%2 %1\0", Q_NULLPTR, "MAD\0", "درهم مغربي\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "ماي\0", "يونيو\0", "يوليوز\0", "غشت\0", "شتنبر\0", "أكتوبر\0", "نونبر\0", "دجنبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "ماي\0", "يونيو\0", "يوليوز\0", "غشت\0", "شتنبر\0", "أكتوبر\0", "نونبر\0", "دجنبر\0" },
@@ -1921,7 +1921,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "موريتانيا\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1929,7 +1929,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "MRU\0", "بيزو أرجنتيني\0",
+        "أ.م.\0", "%1 %2\0", Q_NULLPTR, "MRU\0", "أوقية موريتانية\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "إبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغشت\0", "شتمبر\0", "أكتوبر\0", "نوفمبر\0", "دجمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "إبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغشت\0", "شتمبر\0", "أكتوبر\0", "نوفمبر\0", "دجمبر\0" },
@@ -1954,7 +1954,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "عُمان\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1962,7 +1962,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "OMR\0", "بيزو أرجنتيني\0",
+        "ر.ع.‏\0", "%1 %2\0", Q_NULLPTR, "OMR\0", "ريال عماني\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -1987,7 +1987,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "الأراضي الفلسطينية\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -1995,7 +1995,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "ILS\0", "بيزو أرجنتيني\0",
+        "₪\0", "%1 %2\0", Q_NULLPTR, "ILS\0", "شيكل إسرائيلي جديد\0",
         // month names
         { "كانون الثاني\0", "شباط\0", "آذار\0", "نيسان\0", "أيار\0", "حزيران\0", "تموز\0", "آب\0", "أيلول\0", "تشرين الأول\0", "تشرين الثاني\0", "كانون الأول\0" },
         { "كانون الثاني\0", "شباط\0", "آذار\0", "نيسان\0", "أيار\0", "حزيران\0", "تموز\0", "آب\0", "أيلول\0", "تشرين الأول\0", "تشرين الثاني\0", "كانون الأول\0" },
@@ -2020,7 +2020,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "قطر\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -2028,7 +2028,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "QAR\0", "بيزو أرجنتيني\0",
+        "ر.ق.‏\0", "%1 %2\0", Q_NULLPTR, "QAR\0", "ريال قطري\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -2053,7 +2053,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "المملكة العربية السعودية\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -2061,7 +2061,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "SAR\0", "بيزو أرجنتيني\0",
+        "ر.س.‏\0", "%1 %2\0", Q_NULLPTR, "SAR\0", "ريال سعودي\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -2086,7 +2086,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "السودان\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -2094,7 +2094,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "SDG\0", "بيزو أرجنتيني\0",
+        "ج.س.\0", "%1 %2\0", Q_NULLPTR, "SDG\0", "جنيه سوداني\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -2119,7 +2119,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "الصومال\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -2152,7 +2152,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "جنوب السودان\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -2185,7 +2185,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "سوريا\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -2193,7 +2193,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "SYP\0", "بيزو أرجنتيني\0",
+        "ل.س.‏\0", "%1 %2\0", Q_NULLPTR, "SYP\0", "ليرة سورية\0",
         // month names
         { "كانون الثاني\0", "شباط\0", "آذار\0", "نيسان\0", "أيار\0", "حزيران\0", "تموز\0", "آب\0", "أيلول\0", "تشرين الأول\0", "تشرين الثاني\0", "كانون الأول\0" },
         { "كانون الثاني\0", "شباط\0", "آذار\0", "نيسان\0", "أيار\0", "حزيران\0", "تموز\0", "آب\0", "أيلول\0", "تشرين الأول\0", "تشرين الثاني\0", "كانون الأول\0" },
@@ -2218,7 +2218,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "تشاد\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -2226,7 +2226,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "بيزو أرجنتيني\0",
+        "ARS\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "فرنك وسط أفريقي\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -2251,7 +2251,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "تونس\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -2259,7 +2259,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "TND\0", "بيزو أرجنتيني\0",
+        "د.ت.‏\0", "%2 %1\0", Q_NULLPTR, "TND\0", "دينار تونسي\0",
         // month names
         { "جانفي\0", "فيفري\0", "مارس\0", "أفريل\0", "ماي\0", "جوان\0", "جويلية\0", "أوت\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "جانفي\0", "فيفري\0", "مارس\0", "أفريل\0", "ماي\0", "جوان\0", "جويلية\0", "أوت\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -2284,7 +2284,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "العربية\0", "الأرجنتين\0",
+        "العربية\0", "اليمن\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، و%2\0", "%1 و%2\0",
         // date/time format
@@ -2292,7 +2292,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صباحًا\0", "مساءً\0",
         // currency
-        "ARS\0", "%1 %2\0", Q_NULLPTR, "YER\0", "بيزو أرجنتيني\0",
+        "ر.ي.‏\0", "%1 %2\0", Q_NULLPTR, "YER\0", "ريال يمني\0",
         // month names
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
         { "يناير\0", "فبراير\0", "مارس\0", "أبريل\0", "مايو\0", "يونيو\0", "يوليو\0", "أغسطس\0", "سبتمبر\0", "أكتوبر\0", "نوفمبر\0", "ديسمبر\0" },
@@ -2317,7 +2317,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "অসমীয়া\0", "আমেৰিকান চামোৱা\0",
+        "অসমীয়া\0", "ভাৰত\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 আৰু %2\0", "%1 আৰু %2\0",
         // date/time format
@@ -2325,7 +2325,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "পূৰ্বাহ্ন\0", "অপৰাহ্ন\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "ইউ. এছ. ডলাৰ\0",
+        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "ভাৰতীয় ৰুপী\0",
         // month names
         { "জানু\0", "ফেব্ৰু\0", "মাৰ্চ\0", "এপ্ৰিল\0", "মে’\0", "জুন\0", "জুলাই\0", "আগ\0", "ছেপ্তে\0", "অক্টো\0", "নৱে\0", "ডিচে\0" },
         { "জানুৱাৰী\0", "ফেব্ৰুৱাৰী\0", "মাৰ্চ\0", "এপ্ৰিল\0", "মে’\0", "জুন\0", "জুলাই\0", "আগষ্ট\0", "ছেপ্তেম্বৰ\0", "অক্টোবৰ\0", "নৱেম্বৰ\0", "ডিচেম্বৰ\0" },
@@ -2350,7 +2350,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kipare\0", Q_NULLPTR,
+        "Kipare\0", "Tadhania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -2358,11 +2358,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "icheheavo\0", "ichamthi\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%1 %2\0", Q_NULLPTR, "TZS\0", "shilingi ya Tandhania\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Dec\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -2383,7 +2383,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "asturianu\0", Q_NULLPTR,
+        "asturianu\0", "España\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -2391,7 +2391,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "mañana\0", "tarde\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "Xin\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Xun\0", "Xnt\0", "Ago\0", "Set\0", "Och\0", "Pay\0", "Avi\0" },
         { "xineru\0", "febreru\0", "marzu\0", "abril\0", "mayu\0", "xunu\0", "xunetu\0", "agostu\0", "setiembre\0", "ochobre\0", "payares\0", "avientu\0" },
@@ -2482,7 +2482,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "Ɓàsàa\0", Q_NULLPTR,
+        "Ɓàsàa\0", "Kàmɛ̀rûn\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -2490,7 +2490,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "I bikɛ̂glà\0", "I ɓugajɔp\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XAF\0", "Frǎŋ CFA (BEAC)\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -2515,7 +2515,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "беларуская\0", "Бельгія\0",
+        "беларуская\0", "Беларусь\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 і %2\0", "%1 і %2\0",
         // date/time format
@@ -2523,7 +2523,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "BYN\0", "еўра\0",
+        "Br\0", "%1 %2\0", Q_NULLPTR, "BYN\0", "беларускі рубель\0",
         // month names
         { "сту\0", "лют\0", "сак\0", "кра\0", "май\0", "чэр\0", "ліп\0", "жні\0", "вер\0", "кас\0", "ліс\0", "сне\0" },
         { "студзень\0", "люты\0", "сакавік\0", "красавік\0", "май\0", "чэрвень\0", "ліпень\0", "жнівень\0", "верасень\0", "кастрычнік\0", "лістапад\0", "снежань\0" },
@@ -2548,7 +2548,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Ichibemba\0", Q_NULLPTR,
+        "Ichibemba\0", "Zambia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -2556,7 +2556,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "uluchelo\0", "akasuba\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "ZMW\0", Q_NULLPTR,
+        "K\0", "%2%1\0", Q_NULLPTR, "ZMW\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -2581,7 +2581,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Hibena\0", Q_NULLPTR,
+        "Hibena\0", "Hutanzania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -2589,7 +2589,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "pamilau\0", "pamunyi\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%1%2\0", Q_NULLPTR, "TZS\0", "Shilingi ya Hutanzania\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -2647,7 +2647,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "bamanakan\0", "Bermudi\0",
+        "bamanakan\0", "Mali\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -2655,7 +2655,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "XOF\0", "sefa Fraŋ (BCEAO)\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -2680,7 +2680,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "বাংলা\0", "ব্রুনেই\0",
+        "বাংলা\0", "বাংলাদেশ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 এবং %2\0", "%1 এবং %2\0",
         // date/time format
@@ -2688,7 +2688,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "BDT\0", "ব্রুনেই ডলার\0",
+        "৳\0", "%1%2\0", Q_NULLPTR, "BDT\0", "বাংলাদেশী টাকা\0",
         // month names
         { "জানুয়ারী\0", "ফেব্রুয়ারী\0", "মার্চ\0", "এপ্রিল\0", "মে\0", "জুন\0", "জুলাই\0", "আগস্ট\0", "সেপ্টেম্বর\0", "অক্টোবর\0", "নভেম্বর\0", "ডিসেম্বর\0" },
         { "জানুয়ারী\0", "ফেব্রুয়ারী\0", "মার্চ\0", "এপ্রিল\0", "মে\0", "জুন\0", "জুলাই\0", "আগস্ট\0", "সেপ্টেম্বর\0", "অক্টোবর\0", "নভেম্বর\0", "ডিসেম্বর\0" },
@@ -2713,7 +2713,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "বাংলা\0", "ব্রুনেই\0",
+        "বাংলা\0", "ভারত\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 এবং %2\0", "%1 এবং %2\0",
         // date/time format
@@ -2721,7 +2721,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "INR\0", "ব্রুনেই ডলার\0",
+        "₹\0", "%1%2\0", Q_NULLPTR, "INR\0", "ভারতীয় রুপি\0",
         // month names
         { "জানুয়ারী\0", "ফেব্রুয়ারী\0", "মার্চ\0", "এপ্রিল\0", "মে\0", "জুন\0", "জুলাই\0", "আগস্ট\0", "সেপ্টেম্বর\0", "অক্টোবর\0", "নভেম্বর\0", "ডিসেম্বর\0" },
         { "জানুয়ারী\0", "ফেব্রুয়ারী\0", "মার্চ\0", "এপ্রিল\0", "মে\0", "জুন\0", "জুলাই\0", "আগস্ট\0", "সেপ্টেম্বর\0", "অক্টোবর\0", "নভেম্বর\0", "ডিসেম্বর\0" },
@@ -2746,7 +2746,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "བོད་སྐད་\0", "བོ་ལི་ཝིཡ།\0",
+        "བོད་སྐད་\0", "རྒྱ་ནག\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -2754,7 +2754,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "སྔ་དྲོ་\0", "ཕྱི་དྲོ་\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "CNY\0", Q_NULLPTR,
+        "¥\0", "%2 %1\0", Q_NULLPTR, "CNY\0", "ཡུ་ཨན་\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "ཟླ་བ་དང་པོ་\0", "ཟླ་བ་གཉིས་པ་\0", "ཟླ་བ་གསུམ་པ་\0", "ཟླ་བ་བཞི་པ་\0", "ཟླ་བ་ལྔ་པ་\0", "ཟླ་བ་དྲུག་པ་\0", "ཟླ་བ་བདུན་པ་\0", "ཟླ་བ་བརྒྱད་པ་\0", "ཟླ་བ་དགུ་པ་\0", "ཟླ་བ་བཅུ་པ་\0", "ཟླ་བ་བཅུ་གཅིག་པ་\0", "ཟླ་བ་བཅུ་གཉིས་པ་\0" },
@@ -2779,7 +2779,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "བོད་སྐད་\0", "བོ་ལི་ཝིཡ།\0",
+        "བོད་སྐད་\0", "རྒྱ་གར་\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -2787,7 +2787,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "སྔ་དྲོ་\0", "ཕྱི་དྲོ་\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "རྒྱ་གར་སྒོར་\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "ཟླ་བ་དང་པོ་\0", "ཟླ་བ་གཉིས་པ་\0", "ཟླ་བ་གསུམ་པ་\0", "ཟླ་བ་བཞི་པ་\0", "ཟླ་བ་ལྔ་པ་\0", "ཟླ་བ་དྲུག་པ་\0", "ཟླ་བ་བདུན་པ་\0", "ཟླ་བ་བརྒྱད་པ་\0", "ཟླ་བ་དགུ་པ་\0", "ཟླ་བ་བཅུ་པ་\0", "ཟླ་བ་བཅུ་གཅིག་པ་\0", "ཟླ་བ་བཅུ་གཉིས་པ་\0" },
@@ -2812,7 +2812,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 171, 187,
         // endonym
-        "brezhoneg\0", "Brazil\0",
+        "brezhoneg\0", "Frañs\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -2820,7 +2820,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "A.M.\0", "G.M.\0",
         // currency
-        "BRL\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "real Brazil\0",
+        "BRL\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "Gen.\0", "Cʼhwe.\0", "Meur.\0", "Ebr.\0", "Mae\0", "Mezh.\0", "Goue.\0", "Eost\0", "Gwen.\0", "Here\0", "Du\0", "Kzu.\0" },
         { "Genver\0", "Cʼhwevrer\0", "Meurzh\0", "Ebrel\0", "Mae\0", "Mezheven\0", "Gouere\0", "Eost\0", "Gwengolo\0", "Here\0", "Du\0", "Kerzu\0" },
@@ -2845,7 +2845,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "बड़ो\0", Q_NULLPTR,
+        "बड़ो\0", "भारत\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -2853,7 +2853,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "फुं\0", "बेलासे\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "INR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "रां\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -2878,7 +2878,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8216, 8217,
         // endonym
-        "bosanski\0", "Bahami\0",
+        "bosanski\0", "Bosna i Hercegovina\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
@@ -2886,7 +2886,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "prijepodne\0", "popodne\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "BAM\0", "Bahamski dolar\0",
+        "KM\0", "%1 %2\0", Q_NULLPTR, "BAM\0", "Bosanskohercegovačka konvertibilna marka\0",
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januar\0", "februar\0", "mart\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "septembar\0", "oktobar\0", "novembar\0", "decembar\0" },
@@ -2911,7 +2911,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8216, 8217,
         // endonym
-        "bosanski\0", "Bahami\0",
+        "bosanski\0", "Bosna i Hercegovina\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
@@ -2919,7 +2919,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "prijepodne\0", "popodne\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "BAM\0", "Bahamski dolar\0",
+        "KM\0", "%1 %2\0", Q_NULLPTR, "BAM\0", "Bosanskohercegovačka konvertibilna marka\0",
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januar\0", "februar\0", "mart\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "septembar\0", "oktobar\0", "novembar\0", "decembar\0" },
@@ -2944,7 +2944,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "català\0", "Canadà\0",
+        "català\0", "Andorra\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
@@ -2952,7 +2952,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
-        "CAD\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "dòlar canadenc\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "gen.\0", "febr.\0", "març\0", "abr.\0", "maig\0", "juny\0", "jul.\0", "ag.\0", "set.\0", "oct.\0", "nov.\0", "des.\0" },
         { "gener\0", "febrer\0", "març\0", "abril\0", "maig\0", "juny\0", "juliol\0", "agost\0", "setembre\0", "octubre\0", "novembre\0", "desembre\0" },
@@ -2977,7 +2977,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "català\0", "Canadà\0",
+        "català\0", "Espanya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
@@ -2985,7 +2985,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
-        "CAD\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "dòlar canadenc\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "gen.\0", "febr.\0", "març\0", "abr.\0", "maig\0", "juny\0", "jul.\0", "ag.\0", "set.\0", "oct.\0", "nov.\0", "des.\0" },
         { "gener\0", "febrer\0", "març\0", "abril\0", "maig\0", "juny\0", "juliol\0", "agost\0", "setembre\0", "octubre\0", "novembre\0", "desembre\0" },
@@ -3010,7 +3010,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "català\0", "Canadà\0",
+        "català\0", "França\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
@@ -3018,7 +3018,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
-        "CAD\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "dòlar canadenc\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "gen.\0", "febr.\0", "març\0", "abr.\0", "maig\0", "juny\0", "jul.\0", "ag.\0", "set.\0", "oct.\0", "nov.\0", "des.\0" },
         { "gener\0", "febrer\0", "març\0", "abril\0", "maig\0", "juny\0", "juliol\0", "agost\0", "setembre\0", "octubre\0", "novembre\0", "desembre\0" },
@@ -3043,7 +3043,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "català\0", "Canadà\0",
+        "català\0", "Itàlia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
@@ -3051,7 +3051,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
-        "CAD\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "dòlar canadenc\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "gen.\0", "febr.\0", "març\0", "abr.\0", "maig\0", "juny\0", "jul.\0", "ag.\0", "set.\0", "oct.\0", "nov.\0", "des.\0" },
         { "gener\0", "febrer\0", "març\0", "abril\0", "maig\0", "juny\0", "juliol\0", "agost\0", "setembre\0", "octubre\0", "novembre\0", "desembre\0" },
@@ -3076,7 +3076,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "𑄌𑄋𑄴𑄟𑄳𑄦\0", Q_NULLPTR,
+        "𑄌𑄋𑄴𑄟𑄳𑄦\0", "𑄝𑄁𑄣𑄘𑄬𑄌𑄴\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 𑄃𑄳𑄃 %2\0", "%1 𑄃𑄳𑄃 %2\0",
         // date/time format
@@ -3084,7 +3084,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "BDT\0", Q_NULLPTR,
+        "৳\0", "%1%2\0", Q_NULLPTR, "BDT\0", "𑄝𑄁𑄣𑄘𑄬𑄥𑄨 𑄑𑄬𑄋\0",
         // month names
         { "𑄎𑄚𑄪𑄠𑄢𑄨\0", "𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\0", "𑄟𑄢𑄴𑄌𑄧\0", "𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\0", "𑄟𑄬\0", "𑄎𑄪𑄚𑄴\0", "𑄎𑄪𑄣𑄭\0", "𑄃𑄉𑄧𑄌𑄴𑄑𑄴\0", "𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\0", "𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0" },
         { "𑄎𑄚𑄪𑄠𑄢𑄨\0", "𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\0", "𑄟𑄢𑄴𑄌𑄧\0", "𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\0", "𑄟𑄬\0", "𑄎𑄪𑄚𑄴\0", "𑄎𑄪𑄣𑄭\0", "𑄃𑄉𑄧𑄌𑄴𑄑𑄴\0", "𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\0", "𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0" },
@@ -3109,7 +3109,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "𑄌𑄋𑄴𑄟𑄳𑄦\0", Q_NULLPTR,
+        "𑄌𑄋𑄴𑄟𑄳𑄦\0", "𑄞𑄢𑄧𑄖𑄴\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 𑄃𑄳𑄃 %2\0", "%1 𑄃𑄳𑄃 %2\0",
         // date/time format
@@ -3117,7 +3117,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "INR\0", Q_NULLPTR,
+        "₹\0", "%1%2\0", Q_NULLPTR, "INR\0", "𑄃𑄨𑄚𑄴𑄘𑄨𑄠𑄚𑄴 𑄢𑄪𑄛𑄨\0",
         // month names
         { "𑄎𑄚𑄪𑄠𑄢𑄨\0", "𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\0", "𑄟𑄢𑄴𑄌𑄧\0", "𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\0", "𑄟𑄬\0", "𑄎𑄪𑄚𑄴\0", "𑄎𑄪𑄣𑄭\0", "𑄃𑄉𑄧𑄌𑄴𑄑𑄴\0", "𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\0", "𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0" },
         { "𑄎𑄚𑄪𑄠𑄢𑄨\0", "𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\0", "𑄟𑄢𑄴𑄌𑄧\0", "𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\0", "𑄟𑄬\0", "𑄎𑄪𑄚𑄴\0", "𑄎𑄪𑄣𑄭\0", "𑄃𑄉𑄧𑄌𑄴𑄑𑄴\0", "𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\0", "𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0", "𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\0" },
@@ -3142,7 +3142,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "нохчийн\0", Q_NULLPTR,
+        "нохчийн\0", "Росси\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -3150,7 +3150,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "RUB\0", Q_NULLPTR,
+        "₽\0", "%1 %2\0", Q_NULLPTR, "RUB\0", "Российн сом\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "январь\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -3175,7 +3175,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Cebuano\0", Q_NULLPTR,
+        "Cebuano\0", "Pilipinas\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, at %2\0", "%1 at %2\0",
         // date/time format
@@ -3183,7 +3183,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "PHP\0", Q_NULLPTR,
+        "₱\0", "%2%1\0", Q_NULLPTR, "PHP\0", Q_NULLPTR,
         // month names
         { "En\0", "Peb\0", "Mar\0", "Apr\0", "May\0", "Hun\0", "Hul\0", "Ag\0", "Set\0", "Okt\0", "Nob\0", "Dis\0" },
         { "Enero\0", "Pebrero\0", "Marso\0", "April\0", "Mayo\0", "Hunyo\0", "Hulyo\0", "Agosto\0", "Setyembre\0", "Oktubre\0", "Nobyembre\0", "Disyembre\0" },
@@ -3208,7 +3208,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Rukiga\0", Q_NULLPTR,
+        "Rukiga\0", "Uganda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -3216,11 +3216,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "UGX\0", Q_NULLPTR,
+        "USh\0", "%2%1\0", Q_NULLPTR, "UGX\0", "Eshiringi ya Uganda\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "KBZ\0", "KBR\0", "KST\0", "KKN\0", "KTN\0", "KMK\0", "KMS\0", "KMN\0", "KMW\0", "KKM\0", "KNK\0", "KNB\0" },
         { "Okwokubanza\0", "Okwakabiri\0", "Okwakashatu\0", "Okwakana\0", "Okwakataana\0", "Okwamukaaga\0", "Okwamushanju\0", "Okwamunaana\0", "Okwamwenda\0", "Okwaikumi\0", "Okwaikumi na kumwe\0", "Okwaikumi na ibiri\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -3241,7 +3241,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ᏣᎳᎩ\0", Q_NULLPTR,
+        "ᏣᎳᎩ\0", "ᏌᏊ ᎢᏳᎾᎵᏍᏔᏅ ᏍᎦᏚᎩ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, ᎠᎴ %2\0", "%1 ᎠᎴ %2\0",
         // date/time format
@@ -3249,7 +3249,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ᏌᎾᎴ\0", "ᏒᎯᏱᎢᏗᏢ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US ᎠᏕᎳ\0",
         // month names
         { "ᎤᏃ\0", "ᎧᎦ\0", "ᎠᏅ\0", "ᎧᏬ\0", "ᎠᏂ\0", "ᏕᎭ\0", "ᎫᏰ\0", "ᎦᎶ\0", "ᏚᎵ\0", "ᏚᏂ\0", "ᏅᏓ\0", "ᎥᏍ\0" },
         { "ᎤᏃᎸᏔᏅ\0", "ᎧᎦᎵ\0", "ᎠᏅᏱ\0", "ᎧᏬᏂ\0", "ᎠᏂᏍᎬᏘ\0", "ᏕᎭᎷᏱ\0", "ᎫᏰᏉᏂ\0", "ᎦᎶᏂ\0", "ᏚᎵᏍᏗ\0", "ᏚᏂᏅᏗ\0", "ᏅᏓᏕᏆ\0", "ᎥᏍᎩᏱ\0" },
@@ -3274,7 +3274,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "کوردیی ناوەندی\0", Q_NULLPTR,
+        "کوردیی ناوەندی\0", "عێراق\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -3282,7 +3282,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ب.ن\0", "د.ن\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "IQD\0", Q_NULLPTR,
+        "د.ع.‏\0", "%1 %2\0", Q_NULLPTR, "IQD\0", "دیناری عێراقی\0",
         // month names
         { "کانوونی دووەم\0", "شوبات\0", "ئازار\0", "نیسان\0", "ئایار\0", "حوزەیران\0", "تەمووز\0", "ئاب\0", "ئەیلوول\0", "تشرینی یەکەم\0", "تشرینی دووەم\0", "کانونی یەکەم\0" },
         { "کانوونی دووەم\0", "شوبات\0", "ئازار\0", "نیسان\0", "ئایار\0", "حوزەیران\0", "تەمووز\0", "ئاب\0", "ئەیلوول\0", "تشرینی یەکەم\0", "تشرینی دووەم\0", "کانونی یەکەم\0" },
@@ -3307,7 +3307,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "کوردیی ناوەندی\0", Q_NULLPTR,
+        "کوردیی ناوەندی\0", "ئێران\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -3315,7 +3315,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ب.ن\0", "د.ن\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "IRR\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "IRR\0", "ڕیاڵی ئێرانی\0",
         // month names
         { "کانوونی دووەم\0", "شوبات\0", "ئازار\0", "نیسان\0", "ئایار\0", "حوزەیران\0", "تەمووز\0", "ئاب\0", "ئەیلوول\0", "تشرینی یەکەم\0", "تشرینی دووەم\0", "کانونی یەکەم\0" },
         { "کانوونی دووەم\0", "شوبات\0", "ئازار\0", "نیسان\0", "ئایار\0", "حوزەیران\0", "تەمووز\0", "ئاب\0", "ئەیلوول\0", "تشرینی یەکەم\0", "تشرینی دووەم\0", "کانونی یەکەم\0" },
@@ -3340,7 +3340,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "čeština\0", Q_NULLPTR,
+        "čeština\0", "Česko\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 a %2\0", "%1 a %2\0",
         // date/time format
@@ -3348,7 +3348,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "dop.\0", "odp.\0",
         // currency
-        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "CZK\0", "srbský dinár (2002–2006)\0",
+        "Kč\0", "%1 %2\0", Q_NULLPTR, "CZK\0", "česká koruna\0",
         // month names
         { "led\0", "úno\0", "bře\0", "dub\0", "kvě\0", "čvn\0", "čvc\0", "srp\0", "zář\0", "říj\0", "lis\0", "pro\0" },
         { "leden\0", "únor\0", "březen\0", "duben\0", "květen\0", "červen\0", "červenec\0", "srpen\0", "září\0", "říjen\0", "listopad\0", "prosinec\0" },
@@ -3373,7 +3373,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "церковнослове́нскїй\0", Q_NULLPTR,
+        "церковнослове́нскїй\0", "рѡссі́а\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и҆ %2\0", "%1 и҆ %2\0",
         // date/time format
@@ -3381,7 +3381,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ДП\0", "ПП\0",
         // currency
-        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "RUB\0", Q_NULLPTR,
+        "₽\0", "%1 %2\0", Q_NULLPTR, "RUB\0", "рѡссі́йскїй рꙋ́бль\0",
         // month names
         { "і҆аⷩ҇\0", "феⷡ҇\0", "маⷬ҇\0", "а҆пⷬ҇\0", "маꙵ\0", "і҆ꙋⷩ҇\0", "і҆ꙋⷧ҇\0", "а҆́ѵⷢ҇\0", "сеⷫ҇\0", "ѻ҆кⷮ\0", "ноеⷨ\0", "деⷦ҇\0" },
         { "і҆аннꙋа́рїй\0", "феврꙋа́рїй\0", "ма́ртъ\0", "а҆прі́ллїй\0", "ма́їй\0", "і҆ꙋ́нїй\0", "і҆ꙋ́лїй\0", "а҆́ѵгꙋстъ\0", "септе́мврїй\0", "ѻ҆ктѡ́врїй\0", "ное́мврїй\0", "деке́мврїй\0" },
@@ -3406,7 +3406,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Cymraeg\0", "Cyprus\0",
+        "Cymraeg\0", "Y Deyrnas Unedig\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, a(c) %2\0", "%1 a(c) %2\0",
         // date/time format
@@ -3414,7 +3414,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "yb\0", "yh\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "GBP\0", "Ewro\0",
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "GBP\0", "Punt Prydain\0",
         // month names
         { "Ion\0", "Chw\0", "Maw\0", "Ebr\0", "Mai\0", "Meh\0", "Gor\0", "Awst\0", "Medi\0", "Hyd\0", "Tach\0", "Rhag\0" },
         { "Ionawr\0", "Chwefror\0", "Mawrth\0", "Ebrill\0", "Mai\0", "Mehefin\0", "Gorffennaf\0", "Awst\0", "Medi\0", "Hydref\0", "Tachwedd\0", "Rhagfyr\0" },
@@ -3439,7 +3439,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "dansk\0", Q_NULLPTR,
+        "dansk\0", "Danmark\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
         // date/time format
@@ -3447,11 +3447,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "DKK\0", Q_NULLPTR,
+        "kr.\0", "%1 %2\0", Q_NULLPTR, "DKK\0", "dansk krone\0",
         // month names
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marts\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marts\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3472,7 +3472,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "dansk\0", Q_NULLPTR,
+        "dansk\0", "Grønland\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
         // date/time format
@@ -3480,11 +3480,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "DKK\0", Q_NULLPTR,
+        "kr.\0", "%1 %2\0", Q_NULLPTR, "DKK\0", "dansk krone\0",
         // month names
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marts\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marts\0", "april\0", "maj\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3505,7 +3505,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kitaita\0", Q_NULLPTR,
+        "Kitaita\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -3513,7 +3513,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Luma lwa K\0", "luma lwa p\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", "Shilingi ya Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -3538,7 +3538,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Deutsch\0", "Deutschland\0",
+        "Deutsch\0", "Österreich\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
@@ -3571,7 +3571,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Deutsch\0", "Deutschland\0",
+        "Deutsch\0", "Belgien\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
@@ -3583,7 +3583,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sept.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3604,7 +3604,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Deutsch\0", "Deutschland\0",
+        "Deutsch\0", "Schweiz\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
@@ -3649,7 +3649,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sept.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -3670,7 +3670,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Deutsch\0", "Deutschland\0",
+        "Deutsch\0", "Italien\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
@@ -3703,7 +3703,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Deutsch\0", "Deutschland\0",
+        "Deutsch\0", "Liechtenstein\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
@@ -3711,7 +3711,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%2 %1\0", Q_NULLPTR, "CHF\0", "Euro\0",
+        "€\0", "%2 %1\0", Q_NULLPTR, "CHF\0", "Schweizer Franken\0",
         // month names
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
@@ -3736,7 +3736,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Deutsch\0", "Deutschland\0",
+        "Deutsch\0", "Luxemburg\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
@@ -3769,7 +3769,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Zarmaciine\0", Q_NULLPTR,
+        "Zarmaciine\0", "Nižer\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -3777,7 +3777,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Subbaahi\0", "Zaarikay b\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", "CFA Fraŋ (BCEAO)\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -3802,7 +3802,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "dolnoserbšćina\0", Q_NULLPTR,
+        "dolnoserbšćina\0", "Nimska\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 a %2\0", "%1 a %2\0",
         // date/time format
@@ -3810,7 +3810,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "dopołdnja\0", "wótpołdnja\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "jan\0", "feb\0", "měr\0", "apr\0", "maj\0", "jun\0", "jul\0", "awg\0", "sep\0", "okt\0", "now\0", "dec\0" },
         { "januar\0", "februar\0", "měrc\0", "apryl\0", "maj\0", "junij\0", "julij\0", "awgust\0", "september\0", "oktober\0", "nowember\0", "december\0" },
@@ -3835,7 +3835,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8216, 8217,
         // endonym
-        "duálá\0", Q_NULLPTR,
+        "duálá\0", "Cameroun\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -3843,7 +3843,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "idiɓa\0", "ebyámu\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -3868,7 +3868,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "joola\0", Q_NULLPTR,
+        "joola\0", "Senegal\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -3876,7 +3876,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XOF\0", "seefa yati BCEAO\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -3901,7 +3901,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "རྫོང་ཁ\0", "ཨཱལ་ཇི་རི་ཡ\0",
+        "རྫོང་ཁ\0", "འབྲུག\0",
         // list pattern
         "%1 དང་ %2\0", "%1 དང་ %2\0", "%1 དང་ %2\0", "%1 དང་ %2\0",
         // date/time format
@@ -3909,7 +3909,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "སྔ་ཆ་\0", "ཕྱི་ཆ་\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "BTN\0", "ཨཱལ་ཇི་རི་ཡ་གི་དངུལ་ ཌའི་ནར\0",
+        "Nu.\0", "%1%2\0", Q_NULLPTR, "BTN\0", "དངུལ་ཀྲམ\0",
         // month names
         { "ཟླ་༡\0", "ཟླ་༢\0", "ཟླ་༣\0", "ཟླ་༤\0", "ཟླ་༥\0", "ཟླ་༦\0", "ཟླ་༧\0", "ཟླ་༨\0", "ཟླ་༩\0", "ཟླ་༡༠\0", "ཟླ་༡༡\0", "ཟླ་༡༢\0" },
         { "སྤྱི་ཟླ་དངཔ་\0", "སྤྱི་ཟླ་གཉིས་པ་\0", "སྤྱི་ཟླ་གསུམ་པ་\0", "སྤྱི་ཟླ་བཞི་པ\0", "སྤྱི་ཟླ་ལྔ་པ་\0", "སྤྱི་ཟླ་དྲུག་པ\0", "སྤྱི་ཟླ་བདུན་པ་\0", "སྤྱི་ཟླ་བརྒྱད་པ་\0", "སྤྱི་ཟླ་དགུ་པ་\0", "སྤྱི་ཟླ་བཅུ་པ་\0", "སྤྱི་ཟླ་བཅུ་གཅིག་པ་\0", "སྤྱི་ཟླ་བཅུ་གཉིས་པ་\0" },
@@ -3934,7 +3934,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kĩembu\0", Q_NULLPTR,
+        "Kĩembu\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -3942,7 +3942,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "KI\0", "UT\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", "Shilingi ya Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -3967,7 +3967,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Eʋegbe\0", "Estonia nutome\0",
+        "Eʋegbe\0", "Ghana nutome\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, kple %2\0", "%1 kple %2\0",
         // date/time format
@@ -3975,7 +3975,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ŋdi\0", "ɣetrɔ\0",
         // currency
-        "€\0", "%2%1\0", Q_NULLPTR, "GHS\0", "EUR\0",
+        "GH₵\0", "%2%1\0", Q_NULLPTR, "GHS\0", "ghana siɖi\0",
         // month names
         { "dzv\0", "dzd\0", "ted\0", "afɔ\0", "dam\0", "mas\0", "sia\0", "dea\0", "any\0", "kel\0", "ade\0", "dzm\0" },
         { "dzove\0", "dzodze\0", "tedoxe\0", "afɔfĩe\0", "dama\0", "masa\0", "siamlɔm\0", "deasiamime\0", "anyɔnyɔ\0", "kele\0", "adeɛmekpɔxe\0", "dzome\0" },
@@ -4000,7 +4000,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Eʋegbe\0", "Estonia nutome\0",
+        "Eʋegbe\0", "Togo nutome\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, kple %2\0", "%1 kple %2\0",
         // date/time format
@@ -4008,7 +4008,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ŋdi\0", "ɣetrɔ\0",
         // currency
-        "€\0", "%2%1\0", Q_NULLPTR, "XOF\0", "EUR\0",
+        "€\0", "%2%1\0", Q_NULLPTR, "XOF\0", "ɣetoɖofe afrikaga CFA franc BCEAO\0",
         // month names
         { "dzv\0", "dzd\0", "ted\0", "afɔ\0", "dam\0", "mas\0", "sia\0", "dea\0", "any\0", "kel\0", "ade\0", "dzm\0" },
         { "dzove\0", "dzodze\0", "tedoxe\0", "afɔfĩe\0", "dama\0", "masa\0", "siamlɔm\0", "deasiamime\0", "anyɔnyɔ\0", "kele\0", "adeɛmekpɔxe\0", "dzome\0" },
@@ -4029,11 +4029,11 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 69, 2, 48,
+        44, 46, 59, 37, 45, 43, 101, 2, 48,
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "Ελληνικά\0", Q_NULLPTR,
+        "Ελληνικά\0", "Κύπρος\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 και %2\0", "%1 και %2\0",
         // date/time format
@@ -4041,7 +4041,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "π.μ.\0", "μ.μ.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Ευρώ\0",
         // month names
         { "Ιαν\0", "Φεβ\0", "Μάρ\0", "Απρ\0", "Μάι\0", "Ιούν\0", "Ιούλ\0", "Αύγ\0", "Σεπ\0", "Οκτ\0", "Νοέ\0", "Δεκ\0" },
         { "Ιανουάριος\0", "Φεβρουάριος\0", "Μάρτιος\0", "Απρίλιος\0", "Μάιος\0", "Ιούνιος\0", "Ιούλιος\0", "Αύγουστος\0", "Σεπτέμβριος\0", "Οκτώβριος\0", "Νοέμβριος\0", "Δεκέμβριος\0" },
@@ -4062,11 +4062,11 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 45, 43, 69, 2, 48,
+        44, 46, 59, 37, 45, 43, 101, 2, 48,
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "Ελληνικά\0", Q_NULLPTR,
+        "Ελληνικά\0", "Ελλάδα\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 και %2\0", "%1 και %2\0",
         // date/time format
@@ -4074,7 +4074,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "π.μ.\0", "μ.μ.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Ευρώ\0",
         // month names
         { "Ιαν\0", "Φεβ\0", "Μάρ\0", "Απρ\0", "Μάι\0", "Ιούν\0", "Ιούλ\0", "Αύγ\0", "Σεπ\0", "Οκτ\0", "Νοέ\0", "Δεκ\0" },
         { "Ιανουάριος\0", "Φεβρουάριος\0", "Μάρτιος\0", "Απρίλιος\0", "Μάιος\0", "Ιούνιος\0", "Ιούλιος\0", "Αύγουστος\0", "Σεπτέμβριος\0", "Οκτώβριος\0", "Νοέμβριος\0", "Δεκέμβριος\0" },
@@ -4099,7 +4099,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "World\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4132,7 +4132,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Europe\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4165,7 +4165,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "United Arab Emirates\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4173,7 +4173,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "AED\0", "%1%2\0", Q_NULLPTR, "AED\0", Q_NULLPTR,
+        "AED\0", "%2%1\0", Q_NULLPTR, "AED\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4198,15 +4198,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Antigua & Barbuda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4231,7 +4231,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Anguilla\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4239,7 +4239,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4264,7 +4264,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "American Samoa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4272,20 +4272,20 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
+        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_AS
     {
@@ -4297,15 +4297,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Austria\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4330,7 +4330,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Australia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 and %2\0", "%1 and %2\0",
         // date/time format
@@ -4338,7 +4338,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4363,15 +4363,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Barbados\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "BBD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "BBD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4396,7 +4396,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Belgium\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4404,7 +4404,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4429,7 +4429,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Burundi\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4437,7 +4437,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "FBu\0", "%1%2\0", Q_NULLPTR, "BIF\0", Q_NULLPTR,
+        "FBu\0", "%2%1\0", Q_NULLPTR, "BIF\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4462,15 +4462,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Bermuda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "BMD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "BMD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4495,15 +4495,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Bahamas\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "BSD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "BSD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4528,7 +4528,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Botswana\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4536,7 +4536,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "P\0", "%1%2\0", Q_NULLPTR, "BWP\0", Q_NULLPTR,
+        "P\0", "%2%1\0", Q_NULLPTR, "BWP\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4561,7 +4561,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Belize\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4569,7 +4569,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "BZD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "BZD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4594,7 +4594,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Canada\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4602,7 +4602,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "CAD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "CAD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4627,7 +4627,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Cocos (Keeling) Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4635,7 +4635,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4660,15 +4660,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Switzerland\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", "%2-%1\0", "CHF\0", Q_NULLPTR,
+        Q_NULLPTR, "%2 %1\0", "%2-%1\0", "CHF\0", "Swiss Franc\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4693,7 +4693,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Cook Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4701,7 +4701,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4726,7 +4726,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Cameroon\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4734,7 +4734,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "XAF\0", "Central African CFA Franc\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4759,7 +4759,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Christmas Island\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4767,7 +4767,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4792,15 +4792,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Cyprus\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4825,15 +4825,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Germany\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4858,7 +4858,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Diego Garcia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4866,7 +4866,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4891,7 +4891,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Denmark\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4899,7 +4899,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "kr.\0", "%1%2\0", Q_NULLPTR, "DKK\0", Q_NULLPTR,
+        "kr.\0", "%2%1\0", Q_NULLPTR, "DKK\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4924,15 +4924,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Dominica\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4957,15 +4957,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Eritrea\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "Nfk\0", "%1%2\0", Q_NULLPTR, "ERN\0", Q_NULLPTR,
+        "Nfk\0", "%2%1\0", Q_NULLPTR, "ERN\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -4990,7 +4990,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Finland\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -4998,7 +4998,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5023,15 +5023,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Fiji\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "FJD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "FJD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5056,7 +5056,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Falkland Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5064,7 +5064,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "£\0", "%1%2\0", Q_NULLPTR, "FKP\0", Q_NULLPTR,
+        "£\0", "%2%1\0", Q_NULLPTR, "FKP\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5089,15 +5089,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Micronesia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5122,7 +5122,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "United Kingdom\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 and %2\0", "%1 and %2\0",
         // date/time format
@@ -5130,7 +5130,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "GBP\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "GBP\0", "British Pound\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5155,15 +5155,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Grenada\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5188,7 +5188,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Guernsey\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5196,7 +5196,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "GBP\0", "UK Pound\0",
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "GBP\0", "UK Pound\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5221,15 +5221,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Ghana\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "GH₵\0", "%1%2\0", Q_NULLPTR, "GHS\0", Q_NULLPTR,
+        "GH₵\0", "%2%1\0", Q_NULLPTR, "GHS\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5254,7 +5254,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Gibraltar\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5262,7 +5262,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "£\0", "%1%2\0", Q_NULLPTR, "GIP\0", Q_NULLPTR,
+        "£\0", "%2%1\0", Q_NULLPTR, "GIP\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5287,15 +5287,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Gambia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "D\0", "%1%2\0", Q_NULLPTR, "GMD\0", Q_NULLPTR,
+        "D\0", "%2%1\0", Q_NULLPTR, "GMD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5320,7 +5320,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Guam\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5328,20 +5328,20 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
+        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_GU
     {
@@ -5353,15 +5353,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Guyana\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "GYD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "GYD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5386,7 +5386,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Hong Kong SAR China\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5394,7 +5394,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "HKD\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "HKD\0", "Hong Kong Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5419,7 +5419,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Ireland\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5427,7 +5427,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5452,7 +5452,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Israel\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5460,7 +5460,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "ILS\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "ILS\0", "Israeli New Shekel\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5485,7 +5485,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Isle of Man\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5493,7 +5493,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "GBP\0", "UK Pound\0",
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "GBP\0", "UK Pound\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5518,7 +5518,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "India\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5526,7 +5526,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "Indian Rupee\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5551,7 +5551,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "British Indian Ocean Territory\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5559,7 +5559,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5584,7 +5584,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Jersey\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5592,7 +5592,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "GBP\0", "UK Pound\0",
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "GBP\0", "UK Pound\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5617,7 +5617,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Jamaica\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5625,7 +5625,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "JMD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "JMD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5650,7 +5650,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5658,7 +5658,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "Ksh\0", "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5683,15 +5683,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Kiribati\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5716,15 +5716,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "St. Kitts & Nevis\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5749,15 +5749,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Cayman Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "KYD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "KYD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5782,15 +5782,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "St. Lucia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5815,15 +5815,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Liberia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "LRD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "LRD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5848,15 +5848,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Lesotho\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "R\0", "%1%2\0", Q_NULLPTR, "ZAR\0", Q_NULLPTR,
+        "R\0", "%2%1\0", Q_NULLPTR, "ZAR\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5881,7 +5881,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Madagascar\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5889,7 +5889,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "Ar\0", "%1%2\0", Q_NULLPTR, "MGA\0", Q_NULLPTR,
+        "Ar\0", "%2%1\0", Q_NULLPTR, "MGA\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5914,7 +5914,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Marshall Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5922,20 +5922,20 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
+        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_MH
     {
@@ -5947,15 +5947,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Macao SAR China\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "MOP$\0", "%1%2\0", Q_NULLPTR, "MOP\0", Q_NULLPTR,
+        "MOP$\0", "%2%1\0", Q_NULLPTR, "MOP\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -5980,7 +5980,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Northern Mariana Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -5988,20 +5988,20 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
+        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_MP
     {
@@ -6013,7 +6013,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Montserrat\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6021,7 +6021,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6046,7 +6046,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Malta\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6054,7 +6054,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6079,7 +6079,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Mauritius\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6087,7 +6087,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "Rs\0", "%1%2\0", Q_NULLPTR, "MUR\0", Q_NULLPTR,
+        "Rs\0", "%2%1\0", Q_NULLPTR, "MUR\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6112,15 +6112,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Malawi\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "MK\0", "%1%2\0", Q_NULLPTR, "MWK\0", Q_NULLPTR,
+        "MK\0", "%2%1\0", Q_NULLPTR, "MWK\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6145,15 +6145,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Malaysia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "RM\0", "%1%2\0", Q_NULLPTR, "MYR\0", Q_NULLPTR,
+        "RM\0", "%2%1\0", Q_NULLPTR, "MYR\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6178,15 +6178,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Namibia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "NAD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "NAD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6211,7 +6211,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Norfolk Island\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6219,7 +6219,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6244,7 +6244,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Nigeria\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6252,7 +6252,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "₦\0", "%1%2\0", Q_NULLPTR, "NGN\0", Q_NULLPTR,
+        "₦\0", "%2%1\0", Q_NULLPTR, "NGN\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6277,15 +6277,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Netherlands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", "%2 -%1\0", "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2 %1\0", "%2 -%1\0", "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6310,7 +6310,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Nauru\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6318,7 +6318,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6343,7 +6343,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Niue\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6351,7 +6351,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6376,7 +6376,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "New Zealand\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6384,7 +6384,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6409,15 +6409,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Papua New Guinea\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "K\0", "%1%2\0", Q_NULLPTR, "PGK\0", Q_NULLPTR,
+        "K\0", "%2%1\0", Q_NULLPTR, "PGK\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6442,15 +6442,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Philippines\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "₱\0", "%1%2\0", Q_NULLPTR, "PHP\0", Q_NULLPTR,
+        "₱\0", "%2%1\0", Q_NULLPTR, "PHP\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6475,7 +6475,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Pakistan\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6483,7 +6483,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "Rs\0", "%1%2\0", Q_NULLPTR, "PKR\0", Q_NULLPTR,
+        "Rs\0", "%2%1\0", Q_NULLPTR, "PKR\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6508,7 +6508,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Pitcairn Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6516,7 +6516,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6541,7 +6541,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Puerto Rico\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6549,20 +6549,20 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
+        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_PR
     {
@@ -6574,15 +6574,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Palau\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6607,7 +6607,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Rwanda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6615,7 +6615,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "RF\0", "%1%2\0", Q_NULLPTR, "RWF\0", Q_NULLPTR,
+        "RF\0", "%2%1\0", Q_NULLPTR, "RWF\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6640,15 +6640,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Solomon Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "SBD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "SBD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6673,7 +6673,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Seychelles\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6681,7 +6681,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "SR\0", "%1%2\0", Q_NULLPTR, "SCR\0", Q_NULLPTR,
+        "SR\0", "%2%1\0", Q_NULLPTR, "SCR\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6706,15 +6706,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Sudan\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "SDG\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "SDG\0", "Sudanese Pound\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6739,7 +6739,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Sweden\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6747,7 +6747,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "kr\0", "%1%2\0", Q_NULLPTR, "SEK\0", Q_NULLPTR,
+        "kr\0", "%2%1\0", Q_NULLPTR, "SEK\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6772,7 +6772,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Singapore\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6780,7 +6780,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "SGD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "SGD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6805,7 +6805,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "St. Helena\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6813,7 +6813,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "£\0", "%1%2\0", Q_NULLPTR, "SHP\0", Q_NULLPTR,
+        "£\0", "%2%1\0", Q_NULLPTR, "SHP\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6838,15 +6838,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Slovenia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1 %2\0", "(%1 %2)\0", "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", "(%1 %2)\0", "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6871,15 +6871,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Sierra Leone\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "Le\0", "%1%2\0", Q_NULLPTR, "SLL\0", Q_NULLPTR,
+        "Le\0", "%2%1\0", Q_NULLPTR, "SLL\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6904,15 +6904,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "South Sudan\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "£\0", "%1%2\0", Q_NULLPTR, "SSP\0", Q_NULLPTR,
+        "£\0", "%2%1\0", Q_NULLPTR, "SSP\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6937,7 +6937,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Sint Maarten\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -6945,7 +6945,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "NAf.\0", "%1%2\0", Q_NULLPTR, "ANG\0", Q_NULLPTR,
+        "NAf.\0", "%2%1\0", Q_NULLPTR, "ANG\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -6970,15 +6970,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Eswatini\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "E\0", "%1%2\0", Q_NULLPTR, "SZL\0", Q_NULLPTR,
+        "E\0", "%2%1\0", Q_NULLPTR, "SZL\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7003,15 +7003,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Turks & Caicos Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7036,7 +7036,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Tokelau\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -7044,7 +7044,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7069,15 +7069,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Tonga\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "T$\0", "%1%2\0", Q_NULLPTR, "TOP\0", Q_NULLPTR,
+        "T$\0", "%2%1\0", Q_NULLPTR, "TOP\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7102,15 +7102,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Trinidad & Tobago\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "TTD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "TTD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7135,7 +7135,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Tuvalu\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -7143,7 +7143,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "AUD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7168,7 +7168,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Tanzania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -7176,7 +7176,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "TSh\0", "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%2%1\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7201,7 +7201,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Uganda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -7209,7 +7209,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "USh\0", "%1%2\0", Q_NULLPTR, "UGX\0", Q_NULLPTR,
+        "USh\0", "%2%1\0", Q_NULLPTR, "UGX\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7234,7 +7234,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "U.S. Outlying Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -7242,20 +7242,20 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
+        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_UM
     {
@@ -7267,7 +7267,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "United States\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -7275,20 +7275,20 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
+        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_US
     {
@@ -7300,15 +7300,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "St. Vincent & Grenadines\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "XCD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7333,15 +7333,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "British Virgin Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7366,7 +7366,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "U.S. Virgin Islands\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -7374,20 +7374,20 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
-        { "M01\0", "M02\0", "M03\0", "M04\0", "M05\0", "M06\0", "M07\0", "M08\0", "M09\0", "M10\0", "M11\0", "M12\0" },
+        { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
         // day names
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
         { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "S\0", "M\0", "T\0", "W\0", "T\0", "F\0", "S\0" },
         { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
-        { "Sun\0", "Mon\0", "Tue\0", "Wed\0", "Thu\0", "Fri\0", "Sat\0" },
+        { "Sunday\0", "Monday\0", "Tuesday\0", "Wednesday\0", "Thursday\0", "Friday\0", "Saturday\0" },
         { "7\0", "1\0", "2\0", "3\0", "4\0", "5\0", "6\0" }
     }, // en_VI
     {
@@ -7399,15 +7399,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Vanuatu\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "VT\0", "%1%2\0", Q_NULLPTR, "VUV\0", Q_NULLPTR,
+        "VT\0", "%2%1\0", Q_NULLPTR, "VUV\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7432,15 +7432,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Samoa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "WS$\0", "%1%2\0", Q_NULLPTR, "WST\0", Q_NULLPTR,
+        "WS$\0", "%2%1\0", Q_NULLPTR, "WST\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7465,7 +7465,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "South Africa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -7473,7 +7473,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        "R\0", "%1%2\0", Q_NULLPTR, "ZAR\0", Q_NULLPTR,
+        "R\0", "%2%1\0", Q_NULLPTR, "ZAR\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7498,15 +7498,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Zambia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
         "M/d/yy\0", "MMMM d, y\0", "h:mm a\0", "h:mm:ss a z\0",
         // am/pm
-        "am\0", "pm\0",
+        "AM\0", "PM\0",
         // currency
-        "K\0", "%1%2\0", Q_NULLPTR, "ZMW\0", Q_NULLPTR,
+        "K\0", "%2%1\0", Q_NULLPTR, "ZMW\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7531,7 +7531,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "English\0", Q_NULLPTR,
+        "English\0", "Zimbabwe\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -7539,7 +7539,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", "US Dollar\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -7564,7 +7564,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "esperanto\0", Q_NULLPTR,
+        "esperanto\0", "Mondo\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 kaj %2\0", "%1 kaj %2\0",
         // date/time format
@@ -7576,7 +7576,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "januaro\0", "februaro\0", "marto\0", "aprilo\0", "majo\0", "junio\0", "julio\0", "aŭgusto\0", "septembro\0", "oktobro\0", "novembro\0", "decembro\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aŭg\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januaro\0", "februaro\0", "marto\0", "aprilo\0", "majo\0", "junio\0", "julio\0", "aŭgusto\0", "septembro\0", "oktobro\0", "novembro\0", "decembro\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -7597,7 +7597,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Latinoamérica\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7630,7 +7630,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Argentina\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7663,7 +7663,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Bolivia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7696,7 +7696,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Brasil\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7729,7 +7729,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Belice\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7762,7 +7762,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Chile\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7795,7 +7795,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Colombia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7828,7 +7828,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Costa Rica\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7861,7 +7861,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Cuba\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7894,7 +7894,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "República Dominicana\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7927,7 +7927,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Ceuta y Melilla\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -7960,7 +7960,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Ecuador\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8026,7 +8026,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Guinea Ecuatorial\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8059,7 +8059,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Guatemala\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8092,7 +8092,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Honduras\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8125,7 +8125,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Canarias\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8158,7 +8158,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "México\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8191,7 +8191,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Nicaragua\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8224,7 +8224,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Panamá\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8257,7 +8257,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Perú\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8290,7 +8290,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Filipinas\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8323,7 +8323,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Puerto Rico\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8356,7 +8356,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Paraguay\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8389,7 +8389,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "El Salvador\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8422,7 +8422,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Estados Unidos\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8455,7 +8455,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Uruguay\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8488,7 +8488,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "español\0", "España\0",
+        "español\0", "Venezuela\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
@@ -8521,7 +8521,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "eesti\0", "Etioopia\0",
+        "eesti\0", "Eesti\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ja %2\0", "%1 ja %2\0",
         // date/time format
@@ -8529,7 +8529,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0", "Etioopia birr\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "jaan\0", "veebr\0", "märts\0", "apr\0", "mai\0", "juuni\0", "juuli\0", "aug\0", "sept\0", "okt\0", "nov\0", "dets\0" },
         { "jaanuar\0", "veebruar\0", "märts\0", "aprill\0", "mai\0", "juuni\0", "juuli\0", "august\0", "september\0", "oktoober\0", "november\0", "detsember\0" },
@@ -8554,7 +8554,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8220, 8221,
         // endonym
-        "euskara\0", "Europar Batasuna\0",
+        "euskara\0", "Espainia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 eta %2\0", "%1 eta %2\0",
         // date/time format
@@ -8587,7 +8587,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "ewondo\0", Q_NULLPTR,
+        "ewondo\0", "Kamərún\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8595,7 +8595,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "kíkíríg\0", "ngəgógəle\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XAF\0", "Fəláŋ CFA (BEAC)\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8620,7 +8620,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "فارسی\0", Q_NULLPTR,
+        "فارسی\0", "افغانستان\0",
         // list pattern
         "%1،‏ %2\0", "%1،‏ %2\0", "%1، و %2\0", "%1 و %2\0",
         // date/time format
@@ -8628,7 +8628,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "قبل‌ازظهر\0", "بعدازظهر\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "AFN\0", Q_NULLPTR,
+        "؋\0", "%2 %1\0", Q_NULLPTR, "AFN\0", "افغانی افغانستان\0",
         // month names
         { "جنوری\0", "فبروری\0", "مارچ\0", "اپریل\0", "می\0", "جون\0", "جولای\0", "اگست\0", "سپتمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فبروری\0", "مارچ\0", "اپریل\0", "می\0", "جون\0", "جولای\0", "اگست\0", "سپتمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
@@ -8653,7 +8653,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "فارسی\0", Q_NULLPTR,
+        "فارسی\0", "ایران\0",
         // list pattern
         "%1،‏ %2\0", "%1،‏ %2\0", "%1، و %2\0", "%1 و %2\0",
         // date/time format
@@ -8661,7 +8661,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "قبل‌ازظهر\0", "بعدازظهر\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "IRR\0", Q_NULLPTR,
+        "ریال\0", "‎%2%1\0", Q_NULLPTR, "IRR\0", "ریال ایران\0",
         // month names
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
@@ -8686,7 +8686,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Burkibaa Faaso\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8694,7 +8694,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XOF\0", "Mbuuɗu Seefaa BCEAO\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8719,7 +8719,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Kameruun\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8727,7 +8727,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XAF\0", "Mbuuɗi Seefaa BEAC\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8752,7 +8752,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Ganaa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8760,7 +8760,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        "GH₵\0", "%1%2\0", Q_NULLPTR, "GHS\0", Q_NULLPTR,
+        "GH₵\0", "%1 %2\0", Q_NULLPTR, "GHS\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8785,7 +8785,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Gammbi\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8793,7 +8793,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        "D\0", "%1%2\0", Q_NULLPTR, "GMD\0", Q_NULLPTR,
+        "D\0", "%1 %2\0", Q_NULLPTR, "GMD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8818,7 +8818,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Gine\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8826,7 +8826,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        "FG\0", "%1%2\0", Q_NULLPTR, "GNF\0", Q_NULLPTR,
+        "FG\0", "%1 %2\0", Q_NULLPTR, "GNF\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8851,7 +8851,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Gine-Bisaawo\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8859,7 +8859,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XOF\0", "Mbuuɗu Seefaa BCEAO\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8884,7 +8884,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Liberiyaa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8892,7 +8892,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "LRD\0", Q_NULLPTR,
+        "$\0", "%1 %2\0", Q_NULLPTR, "LRD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8917,7 +8917,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Muritani\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8925,7 +8925,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        "UM\0", "%1%2\0", Q_NULLPTR, "MRU\0", Q_NULLPTR,
+        "UM\0", "%1 %2\0", Q_NULLPTR, "MRU\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8950,7 +8950,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Nijeer\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8958,7 +8958,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XOF\0", "Mbuuɗu Seefaa BCEAO\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -8983,7 +8983,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Nijeriyaa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -8991,7 +8991,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        "₦\0", "%1%2\0", Q_NULLPTR, "NGN\0", Q_NULLPTR,
+        "₦\0", "%1 %2\0", Q_NULLPTR, "NGN\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9016,7 +9016,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Seraa liyon\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -9024,7 +9024,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        "Le\0", "%1%2\0", Q_NULLPTR, "SLL\0", Q_NULLPTR,
+        "Le\0", "%1 %2\0", Q_NULLPTR, "SLL\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9049,7 +9049,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 8218, 8217,
         // endonym
-        "Pulaar\0", Q_NULLPTR,
+        "Pulaar\0", "Senegaal\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -9057,7 +9057,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "subaka\0", "kikiiɗe\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XOF\0", "Mbuuɗu Seefaa BCEAO\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -9115,7 +9115,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Filipino\0", Q_NULLPTR,
+        "Filipino\0", "Pilipinas\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, at %2\0", "%1 at %2\0",
         // date/time format
@@ -9123,7 +9123,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "PHP\0", Q_NULLPTR,
+        "₱\0", "%2%1\0", Q_NULLPTR, "PHP\0", "Piso ng Pilipinas\0",
         // month names
         { "Ene\0", "Peb\0", "Mar\0", "Abr\0", "May\0", "Hun\0", "Hul\0", "Ago\0", "Set\0", "Okt\0", "Nob\0", "Dis\0" },
         { "Enero\0", "Pebrero\0", "Marso\0", "Abril\0", "Mayo\0", "Hunyo\0", "Hulyo\0", "Agosto\0", "Setyembre\0", "Oktubre\0", "Nobyembre\0", "Disyembre\0" },
@@ -9148,7 +9148,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "føroyskt\0", "Føroyar\0",
+        "føroyskt\0", "Danmark\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
         // date/time format
@@ -9160,7 +9160,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "apríl\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
         { "januar\0", "februar\0", "mars\0", "apríl\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9193,7 +9193,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "apríl\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
         { "januar\0", "februar\0", "mars\0", "apríl\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9214,7 +9214,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Belgique\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9247,7 +9247,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Burkina Faso\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9255,11 +9255,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9280,7 +9280,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Burundi\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9292,7 +9292,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9313,7 +9313,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Bénin\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9321,11 +9321,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9346,7 +9346,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Saint-Barthélemy\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9358,7 +9358,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9379,7 +9379,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8221, 8220,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Canada\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9412,7 +9412,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Congo-Kinshasa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9445,7 +9445,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "République centrafricaine\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9453,11 +9453,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "franc CFA (BEAC)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9478,7 +9478,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Congo-Brazzaville\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9486,11 +9486,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "franc CFA (BEAC)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9511,7 +9511,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Suisse\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9519,7 +9519,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "CHF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "CHF\0", "franc suisse\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9544,7 +9544,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Côte d’Ivoire\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9552,11 +9552,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9577,7 +9577,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Cameroun\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9585,7 +9585,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "matin\0", "soir\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "franc CFA (BEAC)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -9610,7 +9610,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Djibouti\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9643,7 +9643,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Algérie\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9688,7 +9688,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9709,7 +9709,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Gabon\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9717,11 +9717,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "franc CFA (BEAC)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9742,7 +9742,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Guyane française\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9754,7 +9754,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9775,7 +9775,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Guinée\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9787,7 +9787,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9808,7 +9808,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Guadeloupe\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9820,7 +9820,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9841,7 +9841,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Guinée équatoriale\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9849,11 +9849,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "franc CFA (BEAC)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9874,7 +9874,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Haïti\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9907,7 +9907,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Comores\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9919,7 +9919,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9940,7 +9940,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Luxembourg\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9952,7 +9952,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -9973,7 +9973,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Maroc\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -9981,7 +9981,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "MAD\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "MAD\0", "dirham marocain\0",
         // month names
         { "jan.\0", "fév.\0", "mar.\0", "avr.\0", "mai\0", "jui.\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10006,7 +10006,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Monaco\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10018,7 +10018,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10039,7 +10039,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Saint-Martin\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10051,7 +10051,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10072,7 +10072,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Madagascar\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10084,7 +10084,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10105,7 +10105,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Mali\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10113,7 +10113,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10138,7 +10138,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Martinique\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10150,7 +10150,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10171,7 +10171,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Mauritanie\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10204,7 +10204,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Maurice\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10216,7 +10216,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10237,7 +10237,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Nouvelle-Calédonie\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10245,11 +10245,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XPF\0", "euro\0",
+        "FCFP\0", "%1 %2\0", Q_NULLPTR, "XPF\0", "franc CFP\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10270,7 +10270,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Niger\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10278,11 +10278,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10303,7 +10303,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Polynésie française\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10311,11 +10311,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XPF\0", "euro\0",
+        "FCFP\0", "%1 %2\0", Q_NULLPTR, "XPF\0", "franc CFP\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10336,7 +10336,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Saint-Pierre-et-Miquelon\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10348,7 +10348,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10369,7 +10369,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "La Réunion\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10402,7 +10402,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Rwanda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10414,7 +10414,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10435,7 +10435,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Seychelles\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10447,7 +10447,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10468,7 +10468,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Sénégal\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10476,7 +10476,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10501,7 +10501,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Syrie\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10534,7 +10534,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Tchad\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10542,7 +10542,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "franc CFA (BEAC)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
@@ -10567,7 +10567,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Togo\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10575,11 +10575,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "euro\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "XOF\0", "franc CFA (BCEAO)\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10600,7 +10600,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Tunisie\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10633,7 +10633,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Vanuatu\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10666,7 +10666,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Wallis-et-Futuna\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10674,11 +10674,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%1 %2\0", Q_NULLPTR, "XPF\0", "euro\0",
+        "FCFP\0", "%1 %2\0", Q_NULLPTR, "XPF\0", "franc CFP\0",
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10699,7 +10699,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "français\0", "France\0",
+        "français\0", "Mayotte\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
@@ -10711,7 +10711,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "févr.\0", "mars\0", "avr.\0", "mai\0", "juin\0", "juil.\0", "août\0", "sept.\0", "oct.\0", "nov.\0", "déc.\0" },
         { "janvier\0", "février\0", "mars\0", "avril\0", "mai\0", "juin\0", "juillet\0", "août\0", "septembre\0", "octobre\0", "novembre\0", "décembre\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10732,7 +10732,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8216, 8217, 8220, 8221,
         // endonym
-        "furlan\0", Q_NULLPTR,
+        "furlan\0", "Italie\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
@@ -10740,7 +10740,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.\0", "p.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "Zen\0", "Fev\0", "Mar\0", "Avr\0", "Mai\0", "Jug\0", "Lui\0", "Avo\0", "Set\0", "Otu\0", "Nov\0", "Dic\0" },
         { "Zenâr\0", "Fevrâr\0", "Març\0", "Avrîl\0", "Mai\0", "Jugn\0", "Lui\0", "Avost\0", "Setembar\0", "Otubar\0", "Novembar\0", "Dicembar\0" },
@@ -10765,7 +10765,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Frysk\0", Q_NULLPTR,
+        "Frysk\0", "Nederlân\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 en %2\0", "%1 en %2\0",
         // date/time format
@@ -10773,11 +10773,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        "€\0", "%2 %1\0", "%2 %1-\0", "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mrt\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Jannewaris\0", "Febrewaris\0", "Maart\0", "April\0", "Maaie\0", "Juny\0", "July\0", "Augustus\0", "Septimber\0", "Oktober\0", "Novimber\0", "Desimber\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mrt\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Jannewaris\0", "Febrewaris\0", "Maart\0", "April\0", "Maaie\0", "Juny\0", "July\0", "Augustus\0", "Septimber\0", "Oktober\0", "Novimber\0", "Desimber\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -10798,7 +10798,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Gaeilge\0", "an Ghabúin\0",
+        "Gaeilge\0", "Éire\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, agus %2\0", "%1 agus %2\0",
         // date/time format
@@ -10806,7 +10806,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "EUR\0", "Franc CFA na hAfraice Láir\0",
+        "€\0", "%2%1\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Ean\0", "Feabh\0", "Márta\0", "Aib\0", "Beal\0", "Meith\0", "Iúil\0", "Lún\0", "MFómh\0", "DFómh\0", "Samh\0", "Noll\0" },
         { "Eanáir\0", "Feabhra\0", "Márta\0", "Aibreán\0", "Bealtaine\0", "Meitheamh\0", "Iúil\0", "Lúnasa\0", "Meán Fómhair\0", "Deireadh Fómhair\0", "Samhain\0", "Nollaig\0" },
@@ -10831,7 +10831,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Gàidhlig\0", "Greanàda\0",
+        "Gàidhlig\0", "An Rìoghachd Aonaichte\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 agus %2\0", "%1 agus %2\0",
         // date/time format
@@ -10839,7 +10839,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "m\0", "f\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "GBP\0", "Dolar Caraibeach earach\0",
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "GBP\0", "Punnd Sasannach\0",
         // month names
         { "Faoi\0", "Gearr\0", "Màrt\0", "Gibl\0", "Cèit\0", "Ògmh\0", "Iuch\0", "Lùna\0", "Sult\0", "Dàmh\0", "Samh\0", "Dùbh\0" },
         { "Am Faoilleach\0", "An Gearran\0", "Am Màrt\0", "An Giblean\0", "An Cèitean\0", "An t-Ògmhios\0", "An t-Iuchar\0", "An Lùnastal\0", "An t-Sultain\0", "An Dàmhair\0", "An t-Samhain\0", "An Dùbhlachd\0" },
@@ -10864,7 +10864,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "galego\0", "Groenlandia\0",
+        "galego\0", "España\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
@@ -10872,7 +10872,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0", "Coroa dinamarquesa\0",
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Xan.\0", "Feb.\0", "Mar.\0", "Abr.\0", "Maio\0", "Xuño\0", "Xul.\0", "Ago.\0", "Set.\0", "Out.\0", "Nov.\0", "Dec.\0" },
         { "Xaneiro\0", "Febreiro\0", "Marzo\0", "Abril\0", "Maio\0", "Xuño\0", "Xullo\0", "Agosto\0", "Setembro\0", "Outubro\0", "Novembro\0", "Decembro\0" },
@@ -10897,7 +10897,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "Schwiizertüütsch\0", Q_NULLPTR,
+        "Schwiizertüütsch\0", "Schwiiz\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
@@ -10905,11 +10905,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Vormittag\0", "Namittag\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "CHF\0", Q_NULLPTR,
+        "CHF\0", "%1 %2\0", Q_NULLPTR, "CHF\0", "Schwiizer Franke\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "Auguscht\0", "Septämber\0", "Oktoober\0", "Novämber\0", "Dezämber\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -10930,7 +10930,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "Schwiizertüütsch\0", Q_NULLPTR,
+        "Schwiizertüütsch\0", "Frankriich\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
@@ -10938,11 +10938,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Vormittag\0", "Namittag\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "Auguscht\0", "Septämber\0", "Oktoober\0", "Novämber\0", "Dezämber\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -10963,7 +10963,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "Schwiizertüütsch\0", Q_NULLPTR,
+        "Schwiizertüütsch\0", "Liächteschtäi\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
@@ -10971,11 +10971,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Vormittag\0", "Namittag\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "CHF\0", Q_NULLPTR,
+        "CHF\0", "%1 %2\0", Q_NULLPTR, "CHF\0", "Schwiizer Franke\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mär\0", "Apr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "Auguscht\0", "Septämber\0", "Oktoober\0", "Novämber\0", "Dezämber\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -10996,7 +10996,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ગુજરાતી\0", "ગ્વામ\0",
+        "ગુજરાતી\0", "ભારત\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 અને %2\0", "%1 અને %2\0",
         // date/time format
@@ -11004,7 +11004,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "$\0", "%2%1\0", Q_NULLPTR, "INR\0", "યુઍસ ડોલર\0",
+        "₹\0", "%2%1\0", Q_NULLPTR, "INR\0", "ભારતીય રૂપિયા\0",
         // month names
         { "જાન્યુ\0", "ફેબ્રુ\0", "માર્ચ\0", "એપ્રિલ\0", "મે\0", "જૂન\0", "જુલાઈ\0", "ઑગસ્ટ\0", "સપ્ટે\0", "ઑક્ટો\0", "નવે\0", "ડિસે\0" },
         { "જાન્યુઆરી\0", "ફેબ્રુઆરી\0", "માર્ચ\0", "એપ્રિલ\0", "મે\0", "જૂન\0", "જુલાઈ\0", "ઑગસ્ટ\0", "સપ્ટેમ્બર\0", "ઑક્ટોબર\0", "નવેમ્બર\0", "ડિસેમ્બર\0" },
@@ -11029,7 +11029,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Ekegusii\0", Q_NULLPTR,
+        "Ekegusii\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -11037,7 +11037,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Mambia\0", "Mog\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", "Shilingi ya Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -11062,7 +11062,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Gaelg\0", Q_NULLPTR,
+        "Gaelg\0", "Ellan Vannin\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -11070,7 +11070,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "GBP\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "GBP\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -11095,7 +11095,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Hausa\0", Q_NULLPTR,
+        "Hausa\0", "Gana\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 da %2\0", "%1 da %2\0",
         // date/time format
@@ -11103,7 +11103,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "GH₵\0", "%1%2\0", Q_NULLPTR, "GHS\0", Q_NULLPTR,
+        "GH₵\0", "%2 %1\0", Q_NULLPTR, "GHS\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Fab\0", "Mar\0", "Afi\0", "May\0", "Yun\0", "Yul\0", "Agu\0", "Sat\0", "Okt\0", "Nuw\0", "Dis\0" },
         { "Janairu\0", "Faburairu\0", "Maris\0", "Afirilu\0", "Mayu\0", "Yuni\0", "Yuli\0", "Agusta\0", "Satumba\0", "Oktoba\0", "Nuwamba\0", "Disamba\0" },
@@ -11161,7 +11161,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Hausa\0", Q_NULLPTR,
+        "Hausa\0", "Najeriya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 da %2\0", "%1 da %2\0",
         // date/time format
@@ -11169,7 +11169,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "NGN\0", Q_NULLPTR,
+        "₦\0", "%2 %1\0", Q_NULLPTR, "NGN\0", "Naira\0",
         // month names
         { "Jan\0", "Fab\0", "Mar\0", "Afi\0", "May\0", "Yun\0", "Yul\0", "Agu\0", "Sat\0", "Okt\0", "Nuw\0", "Dis\0" },
         { "Janairu\0", "Faburairu\0", "Maris\0", "Afirilu\0", "Mayu\0", "Yuni\0", "Yuli\0", "Agusta\0", "Satumba\0", "Oktoba\0", "Nuwamba\0", "Disamba\0" },
@@ -11194,7 +11194,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ʻŌlelo Hawaiʻi\0", Q_NULLPTR,
+        "ʻŌlelo Hawaiʻi\0", "ʻAmelika Hui Pū ʻIa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -11202,7 +11202,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
         // month names
         { "Ian.\0", "Pep.\0", "Mal.\0", "ʻAp.\0", "Mei\0", "Iun.\0", "Iul.\0", "ʻAu.\0", "Kep.\0", "ʻOk.\0", "Now.\0", "Kek.\0" },
         { "Ianuali\0", "Pepeluali\0", "Malaki\0", "ʻApelila\0", "Mei\0", "Iune\0", "Iulai\0", "ʻAukake\0", "Kepakemapa\0", "ʻOkakopa\0", "Nowemapa\0", "Kekemapa\0" },
@@ -11227,7 +11227,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8221, 8217, 8217,
         // endonym
-        "עברית\0", Q_NULLPTR,
+        "עברית\0", "ישראל\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ו%2\0", "%1 ו%2\0",
         // date/time format
@@ -11235,7 +11235,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "ILS\0", Q_NULLPTR,
+        "₪\0", "‏%1 %2\0", "‏-%1 %2\0", "ILS\0", "שקל חדש\0",
         // month names
         { "ינו׳\0", "פבר׳\0", "מרץ\0", "אפר׳\0", "מאי\0", "יוני\0", "יולי\0", "אוג׳\0", "ספט׳\0", "אוק׳\0", "נוב׳\0", "דצמ׳\0" },
         { "ינואר\0", "פברואר\0", "מרץ\0", "אפריל\0", "מאי\0", "יוני\0", "יולי\0", "אוגוסט\0", "ספטמבר\0", "אוקטובר\0", "נובמבר\0", "דצמבר\0" },
@@ -11260,7 +11260,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "हिन्दी\0", Q_NULLPTR,
+        "हिन्दी\0", "भारत\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, और %2\0", "%1 और %2\0",
         // date/time format
@@ -11268,7 +11268,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "INR\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "INR\0", "भारतीय रुपया\0",
         // month names
         { "जन॰\0", "फ़र॰\0", "मार्च\0", "अप्रैल\0", "मई\0", "जून\0", "जुल॰\0", "अग॰\0", "सित॰\0", "अक्तू॰\0", "नव॰\0", "दिस॰\0" },
         { "जनवरी\0", "फ़रवरी\0", "मार्च\0", "अप्रैल\0", "मई\0", "जून\0", "जुलाई\0", "अगस्त\0", "सितंबर\0", "अक्तूबर\0", "नवंबर\0", "दिसंबर\0" },
@@ -11293,7 +11293,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "hrvatski\0", "Hrvatska\0",
+        "hrvatski\0", "Bosna i Hercegovina\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
@@ -11359,7 +11359,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "hornjoserbšćina\0", Q_NULLPTR,
+        "hornjoserbšćina\0", "Němska\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 a %2\0", "%1 a %2\0",
         // date/time format
@@ -11367,7 +11367,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "dopołdnja\0", "popołdnju\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "jan\0", "feb\0", "měr\0", "apr\0", "mej\0", "jun\0", "jul\0", "awg\0", "sep\0", "okt\0", "now\0", "dec\0" },
         { "januar\0", "februar\0", "měrc\0", "apryl\0", "meja\0", "junij\0", "julij\0", "awgust\0", "september\0", "oktober\0", "nowember\0", "december\0" },
@@ -11425,7 +11425,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "հայերեն\0", Q_NULLPTR,
+        "հայերեն\0", "Հայաստան\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 և %2\0", "%1 և %2\0",
         // date/time format
@@ -11433,7 +11433,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "AMD\0", Q_NULLPTR,
+        "֏\0", "%1 %2\0", Q_NULLPTR, "AMD\0", "հայկական դրամ\0",
         // month names
         { "հնվ\0", "փտվ\0", "մրտ\0", "ապր\0", "մյս\0", "հնս\0", "հլս\0", "օգս\0", "սեպ\0", "հոկ\0", "նոյ\0", "դեկ\0" },
         { "հունվար\0", "փետրվար\0", "մարտ\0", "ապրիլ\0", "մայիս\0", "հունիս\0", "հուլիս\0", "օգոստոս\0", "սեպտեմբեր\0", "հոկտեմբեր\0", "նոյեմբեր\0", "դեկտեմբեր\0" },
@@ -11458,7 +11458,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8216, 8217, 8220, 8221,
         // endonym
-        "interlingua\0", Q_NULLPTR,
+        "interlingua\0", "Mundo\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
@@ -11503,7 +11503,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Agu\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Maret\0", "April\0", "Mei\0", "Juni\0", "Juli\0", "Agustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Agu\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Maret\0", "April\0", "Mei\0", "Juni\0", "Juli\0", "Agustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -11524,7 +11524,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Asụsụ Igbo\0", Q_NULLPTR,
+        "Asụsụ Igbo\0", "Naịjịrịa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, na %2\0", "%1 na %2\0",
         // date/time format
@@ -11532,7 +11532,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "A.M.\0", "P.M.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "NGN\0", Q_NULLPTR,
+        "₦\0", "%2%1\0", Q_NULLPTR, "NGN\0", "Naịra\0",
         // month names
         { "Jen\0", "Feb\0", "Maa\0", "Epr\0", "Mee\0", "Juu\0", "Jul\0", "Ọgọ\0", "Sep\0", "Ọkt\0", "Nov\0", "Dis\0" },
         { "Jenụwarị\0", "Febrụwarị\0", "Maachị\0", "Epreel\0", "Mee\0", "Juun\0", "Julaị\0", "Ọgọọst\0", "Septemba\0", "Ọktoba\0", "Novemba\0", "Disemba\0" },
@@ -11557,7 +11557,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ꆈꌠꉙ\0", Q_NULLPTR,
+        "ꆈꌠꉙ\0", "ꍏꇩ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -11565,7 +11565,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ꎸꄑ\0", "ꁯꋒ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "CNY\0", Q_NULLPTR,
+        "¥\0", "%2 %1\0", Q_NULLPTR, "CNY\0", Q_NULLPTR,
         // month names
         { "ꋍꆪ\0", "ꑍꆪ\0", "ꌕꆪ\0", "ꇖꆪ\0", "ꉬꆪ\0", "ꃘꆪ\0", "ꏃꆪ\0", "ꉆꆪ\0", "ꈬꆪ\0", "ꊰꆪ\0", "ꊰꊪꆪ\0", "ꊰꑋꆪ\0" },
         { "ꋍꆪ\0", "ꑍꆪ\0", "ꌕꆪ\0", "ꇖꆪ\0", "ꉬꆪ\0", "ꃘꆪ\0", "ꏃꆪ\0", "ꉆꆪ\0", "ꈬꆪ\0", "ꊰꆪ\0", "ꊰꊪꆪ\0", "ꊰꑋꆪ\0" },
@@ -11623,7 +11623,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "italiano\0", "Italia\0",
+        "italiano\0", "Svizzera\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
@@ -11631,7 +11631,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%2 %1\0", "%2-%1\0", "CHF\0", "euro\0",
+        "€\0", "%2 %1\0", "%2-%1\0", "CHF\0", "franco svizzero\0",
         // month names
         { "gen\0", "feb\0", "mar\0", "apr\0", "mag\0", "giu\0", "lug\0", "ago\0", "set\0", "ott\0", "nov\0", "dic\0" },
         { "gennaio\0", "febbraio\0", "marzo\0", "aprile\0", "maggio\0", "giugno\0", "luglio\0", "agosto\0", "settembre\0", "ottobre\0", "novembre\0", "dicembre\0" },
@@ -11689,7 +11689,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "italiano\0", "Italia\0",
+        "italiano\0", "San Marino\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
@@ -11722,7 +11722,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "italiano\0", "Italia\0",
+        "italiano\0", "Città del Vaticano\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
@@ -11755,7 +11755,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         12300, 12301, 12302, 12303,
         // endonym
-        "日本語\0", Q_NULLPTR,
+        "日本語\0", "日本\0",
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1、%2\0", "%1、%2\0",
         // date/time format
@@ -11763,7 +11763,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "午前\0", "午後\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "JPY\0", Q_NULLPTR,
+        "￥\0", "%2%1\0", Q_NULLPTR, "JPY\0", "日本円\0",
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
@@ -11788,7 +11788,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "Ndaꞌa\0", Q_NULLPTR,
+        "Ndaꞌa\0", "Kamɛlûn\0",
         // list pattern
         "%1, ŋ́gɛ %2\0", "%1, ŋ́gɛ %2\0", "%1, ḿbɛn ŋ́gɛ %2\0", "%1 pɔp %2\0",
         // date/time format
@@ -11796,7 +11796,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "mbaꞌmbaꞌ\0", "ŋka mbɔ́t nji\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        "FCFA\0", "%2 %1\0", Q_NULLPTR, "XAF\0", "Fɛlâŋ\0",
         // month names
         { "Nduŋmbi Saŋ\0", "Pɛsaŋ Pɛ́pá\0", "Pɛsaŋ Pɛ́tát\0", "Pɛsaŋ Pɛ́nɛ́kwa\0", "Pɛsaŋ Pataa\0", "Pɛsaŋ Pɛ́nɛ́ntúkú\0", "Pɛsaŋ Saambá\0", "Pɛsaŋ Pɛ́nɛ́fɔm\0", "Pɛsaŋ Pɛ́nɛ́pfúꞋú\0", "Pɛsaŋ Nɛgɛ́m\0", "Pɛsaŋ Ntsɔ̌pmɔ́\0", "Pɛsaŋ Ntsɔ̌ppá\0" },
         { "Nduŋmbi Saŋ\0", "Pɛsaŋ Pɛ́pá\0", "Pɛsaŋ Pɛ́tát\0", "Pɛsaŋ Pɛ́nɛ́kwa\0", "Pɛsaŋ Pataa\0", "Pɛsaŋ Pɛ́nɛ́ntúkú\0", "Pɛsaŋ Saambá\0", "Pɛsaŋ Pɛ́nɛ́fɔm\0", "Pɛsaŋ Pɛ́nɛ́pfúꞋú\0", "Pɛsaŋ Nɛgɛ́m\0", "Pɛsaŋ Ntsɔ̌pmɔ́\0", "Pɛsaŋ Ntsɔ̌ppá\0" },
@@ -11821,7 +11821,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kimachame\0", Q_NULLPTR,
+        "Kimachame\0", "Tanzania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -11829,11 +11829,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "utuko\0", "kyiukonyi\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%2%1\0", Q_NULLPTR, "TZS\0", "Shilingi ya Tanzania\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprilyi\0", "Mei\0", "Junyi\0", "Julyai\0", "Agusti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -11854,7 +11854,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Jawa\0", Q_NULLPTR,
+        "Jawa\0", "Indonésia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, lan %2\0", "%1 lan %2\0",
         // date/time format
@@ -11862,11 +11862,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Isuk\0", "Wengi\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "IDR\0", Q_NULLPTR,
+        "Rp\0", "%2 %1\0", Q_NULLPTR, "IDR\0", "Rupiah Indonesia\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Agt\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Maret\0", "April\0", "Mei\0", "Juni\0", "Juli\0", "Agustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Agt\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Maret\0", "April\0", "Mei\0", "Juni\0", "Juli\0", "Agustus\0", "September\0", "Oktober\0", "November\0", "Desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -11887,7 +11887,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 171, 187,
         // endonym
-        "ქართული\0", Q_NULLPTR,
+        "ქართული\0", "საქართველო\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 და %2\0", "%1 და %2\0",
         // date/time format
@@ -11895,7 +11895,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "შუადღ. შემდეგ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "GEL\0", Q_NULLPTR,
+        "₾\0", "%1 %2\0", Q_NULLPTR, "GEL\0", "ქართული ლარი\0",
         // month names
         { "იან\0", "თებ\0", "მარ\0", "აპრ\0", "მაი\0", "ივნ\0", "ივლ\0", "აგვ\0", "სექ\0", "ოქტ\0", "ნოე\0", "დეკ\0" },
         { "იანვარი\0", "თებერვალი\0", "მარტი\0", "აპრილი\0", "მაისი\0", "ივნისი\0", "ივლისი\0", "აგვისტო\0", "სექტემბერი\0", "ოქტომბერი\0", "ნოემბერი\0", "დეკემბერი\0" },
@@ -11920,7 +11920,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "Taqbaylit\0", Q_NULLPTR,
+        "Taqbaylit\0", "Lezzayer\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, akked %2\0", "%1 akked %2\0",
         // date/time format
@@ -11928,7 +11928,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "FT\0", "MD\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "DZD\0", Q_NULLPTR,
+        "DA\0", "%1%2\0", Q_NULLPTR, "DZD\0", "Adinar Azzayri\0",
         // month names
         { "Yen\0", "Fur\0", "Meɣ\0", "Yeb\0", "May\0", "Yun\0", "Yul\0", "Ɣuc\0", "Cte\0", "Tub\0", "Wam\0", "Duj\0" },
         { "Yennayer\0", "Fuṛar\0", "Meɣres\0", "Yebrir\0", "Mayyu\0", "Yunyu\0", "Yulyu\0", "Ɣuct\0", "Ctembeṛ\0", "Tubeṛ\0", "Wambeṛ\0", "Duǧembeṛ\0" },
@@ -11953,7 +11953,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kikamba\0", Q_NULLPTR,
+        "Kikamba\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -11961,7 +11961,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Ĩyakwakya\0", "Ĩyawĩoo\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", "Silingi ya Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -11986,7 +11986,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Chimakonde\0", Q_NULLPTR,
+        "Chimakonde\0", "Tanzania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -11994,11 +11994,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Muhi\0", "Chilo\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%2%1\0", Q_NULLPTR, "TZS\0", "Shilingi ya Tanzania\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Mwedi Ntandi\0", "Mwedi wa Pili\0", "Mwedi wa Tatu\0", "Mwedi wa Nchechi\0", "Mwedi wa Nnyano\0", "Mwedi wa Nnyano na Umo\0", "Mwedi wa Nnyano na Mivili\0", "Mwedi wa Nnyano na Mitatu\0", "Mwedi wa Nnyano na Nchechi\0", "Mwedi wa Nnyano na Nnyano\0", "Mwedi wa Nnyano na Nnyano na U\0", "Mwedi wa Nnyano na Nnyano na M\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -12019,7 +12019,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "kabuverdianu\0", Q_NULLPTR,
+        "kabuverdianu\0", "Kabu Verdi\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
@@ -12027,11 +12027,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "am\0", "pm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "CVE\0", Q_NULLPTR,
+        "​\0", "%1 %2\0", Q_NULLPTR, "CVE\0", "Skudu Kabuverdianu\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Abr\0", "Mai\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Otu\0", "Nuv\0", "Diz\0" },
         { "Janeru\0", "Febreru\0", "Marsu\0", "Abril\0", "Maiu\0", "Junhu\0", "Julhu\0", "Agostu\0", "Setenbru\0", "Otubru\0", "Nuvenbru\0", "Dizenbru\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Abr\0", "Mai\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Otu\0", "Nuv\0", "Diz\0" },
         { "Janeru\0", "Febreru\0", "Marsu\0", "Abril\0", "Maiu\0", "Junhu\0", "Julhu\0", "Agostu\0", "Setenbru\0", "Otubru\0", "Nuvenbru\0", "Dizenbru\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -12052,7 +12052,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Koyra ciini\0", Q_NULLPTR,
+        "Koyra ciini\0", "Maali\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12060,7 +12060,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Adduha\0", "Aluula\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", "CFA Fraŋ (BCEAO)\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12085,7 +12085,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Gikuyu\0", "Kiribati\0",
+        "Gikuyu\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12093,7 +12093,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Kiroko\0", "Hwaĩ-inĩ\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "KES\0", "Dola ya Australia\0",
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", "Ciringi ya Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12118,7 +12118,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "қазақ тілі\0", Q_NULLPTR,
+        "қазақ тілі\0", "Қазақстан\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1 және %2\0",
         // date/time format
@@ -12126,7 +12126,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KZT\0", Q_NULLPTR,
+        "₸\0", "%1 %2\0", Q_NULLPTR, "KZT\0", "Қазақстан теңгесі\0",
         // month names
         { "қаң.\0", "ақп.\0", "нау.\0", "сәу.\0", "мам.\0", "мау.\0", "шіл.\0", "там.\0", "қыр.\0", "қаз.\0", "қар.\0", "жел.\0" },
         { "Қаңтар\0", "Ақпан\0", "Наурыз\0", "Сәуір\0", "Мамыр\0", "Маусым\0", "Шілде\0", "Тамыз\0", "Қыркүйек\0", "Қазан\0", "Қараша\0", "Желтоқсан\0" },
@@ -12151,7 +12151,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "kakɔ\0", Q_NULLPTR,
+        "kakɔ\0", "Kamɛrun\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12159,7 +12159,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        "FCFA\0", "%2 %1K\0", Q_NULLPTR, "XAF\0", "Franc CFA\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "pamba\0", "wanja\0", "mbiyɔ mɛndoŋgɔ\0", "Nyɔlɔmbɔŋgɔ\0", "Mɔnɔ ŋgbanja\0", "Nyaŋgwɛ ŋgbanja\0", "kuŋgwɛ\0", "fɛ\0", "njapi\0", "nyukul\0", "11\0", "ɓulɓusɛ\0" },
@@ -12184,7 +12184,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         187, 171, 8250, 8249,
         // endonym
-        "kalaallisut\0", Q_NULLPTR,
+        "kalaallisut\0", "Kalaallit Nunaat\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 aamma %2\0", "%1 aamma %2\0",
         // date/time format
@@ -12192,11 +12192,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ulloqeqqata-tungaa\0", "ulloqeqqata-kingorna\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "DKK\0", Q_NULLPTR,
+        "kr.\0", "%2%1\0", "%2−%1\0", "DKK\0", "danmarkimut koruuni\0",
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januari\0", "februari\0", "martsi\0", "aprili\0", "maji\0", "juni\0", "juli\0", "augustusi\0", "septemberi\0", "oktoberi\0", "novemberi\0", "decemberi\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan\0", "feb\0", "mar\0", "apr\0", "maj\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "dec\0" },
         { "januari\0", "februari\0", "martsi\0", "aprili\0", "maji\0", "juni\0", "juli\0", "augustusi\0", "septemberi\0", "oktoberi\0", "novemberi\0", "decemberi\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -12217,7 +12217,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kalenjin\0", Q_NULLPTR,
+        "Kalenjin\0", "Emetab Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12225,7 +12225,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "karoon\0", "kooskoliny\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", "Silingitab ya Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12250,7 +12250,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ខ្មែរ\0", "កូម័រ\0",
+        "ខ្មែរ\0", "កម្ពុជា\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 និង %2\0", "%1 និង​%2\0",
         // date/time format
@@ -12258,7 +12258,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "KMF\0", "%1%2\0", Q_NULLPTR, "KHR\0", "ហ្វ្រង់​កូម័រ\0",
+        "៛\0", "%1%2\0", Q_NULLPTR, "KHR\0", "រៀល​កម្ពុជា\0",
         // month names
         { "មករា\0", "កុម្ភៈ\0", "មីនា\0", "មេសា\0", "ឧសភា\0", "មិថុនា\0", "កក្កដា\0", "សីហា\0", "កញ្ញា\0", "តុលា\0", "វិច្ឆិកា\0", "ធ្នូ\0" },
         { "មករា\0", "កុម្ភៈ\0", "មីនា\0", "មេសា\0", "ឧសភា\0", "មិថុនា\0", "កក្កដា\0", "សីហា\0", "កញ្ញា\0", "តុលា\0", "វិច្ឆិកា\0", "ធ្នូ\0" },
@@ -12283,7 +12283,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ಕನ್ನಡ\0", "ಸೇಂಟ್ ಕಿಟ್ಸ್ ಮತ್ತು ನೆವಿಸ್\0",
+        "ಕನ್ನಡ\0", "ಭಾರತ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, ಮತ್ತು %2\0", "%1 ಮತ್ತು %2\0",
         // date/time format
@@ -12291,7 +12291,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ಪೂರ್ವಾಹ್ನ\0", "ಅಪರಾಹ್ನ\0",
         // currency
-        "$\0", "%2%1\0", Q_NULLPTR, "INR\0", "ಪೂರ್ವ ಕೆರೀಬಿಯನ್ ಡಾಲರ್\0",
+        "₹\0", "%2%1\0", Q_NULLPTR, "INR\0", "ಭಾರತೀಯ ರೂಪಾಯಿ\0",
         // month names
         { "ಜನ\0", "ಫೆಬ್ರ\0", "ಮಾರ್ಚ್\0", "ಏಪ್ರಿ\0", "ಮೇ\0", "ಜೂನ್\0", "ಜುಲೈ\0", "ಆಗ\0", "ಸೆಪ್ಟೆಂ\0", "ಅಕ್ಟೋ\0", "ನವೆಂ\0", "ಡಿಸೆಂ\0" },
         { "ಜನವರಿ\0", "ಫೆಬ್ರವರಿ\0", "ಮಾರ್ಚ್\0", "ಏಪ್ರಿಲ್\0", "ಮೇ\0", "ಜೂನ್\0", "ಜುಲೈ\0", "ಆಗಸ್ಟ್\0", "ಸೆಪ್ಟೆಂಬರ್\0", "ಅಕ್ಟೋಬರ್\0", "ನವೆಂಬರ್\0", "ಡಿಸೆಂಬರ್\0" },
@@ -12324,7 +12324,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "오전\0", "오후\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KPW\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "KPW\0", "조선 민주주의 인민 공화국 원\0",
         // month names
         { "1월\0", "2월\0", "3월\0", "4월\0", "5월\0", "6월\0", "7월\0", "8월\0", "9월\0", "10월\0", "11월\0", "12월\0" },
         { "1월\0", "2월\0", "3월\0", "4월\0", "5월\0", "6월\0", "7월\0", "8월\0", "9월\0", "10월\0", "11월\0", "12월\0" },
@@ -12349,7 +12349,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "한국어\0", Q_NULLPTR,
+        "한국어\0", "대한민국\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 및 %2\0", "%1 및 %2\0",
         // date/time format
@@ -12357,7 +12357,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "오전\0", "오후\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KRW\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "KRW\0", "대한민국 원\0",
         // month names
         { "1월\0", "2월\0", "3월\0", "4월\0", "5월\0", "6월\0", "7월\0", "8월\0", "9월\0", "10월\0", "11월\0", "12월\0" },
         { "1월\0", "2월\0", "3월\0", "4월\0", "5월\0", "6월\0", "7월\0", "8월\0", "9월\0", "10월\0", "11월\0", "12월\0" },
@@ -12382,7 +12382,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "कोंकणी\0", Q_NULLPTR,
+        "कोंकणी\0", "भारत\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12390,7 +12390,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "म.पू.\0", "म.नं.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "INR\0", Q_NULLPTR,
+        "₹\0", "%2 %1\0", Q_NULLPTR, "INR\0", "INR\0",
         // month names
         { "जानेवारी\0", "फेब्रुवारी\0", "मार्च\0", "एप्रिल\0", "मे\0", "जून\0", "जुलाय\0", "आगोस्त\0", "सप्टेंबर\0", "ऑक्टोबर\0", "नोव्हेंबर\0", "डिसेंबर\0" },
         { "जानेवारी\0", "फेब्रुवारी\0", "मार्च\0", "एप्रिल\0", "मे\0", "जून\0", "जुलाय\0", "आगोस्त\0", "सप्टेंबर\0", "ऑक्टोबर\0", "नोव्हेंबर\0", "डिसेंबर\0" },
@@ -12415,7 +12415,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "کٲشُر\0", Q_NULLPTR,
+        "کٲشُر\0", "ہِندوستان\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12423,7 +12423,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "INR\0", Q_NULLPTR,
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "INR\0", "ہِندُستٲنۍ رۄپَے\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12448,7 +12448,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kishambaa\0", Q_NULLPTR,
+        "Kishambaa\0", "Tanzania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12456,11 +12456,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "makeo\0", "nyiaghuo\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%1%2\0", Q_NULLPTR, "TZS\0", "shilingi ya Tanzania\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januali\0", "Febluali\0", "Machi\0", "Aplili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -12481,7 +12481,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8216, 8217,
         // endonym
-        "rikpa\0", Q_NULLPTR,
+        "rikpa\0", "kamɛrún\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12489,7 +12489,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "sárúwá\0", "cɛɛ́nko\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XAF\0", "fráŋ\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12514,7 +12514,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Kölsch\0", Q_NULLPTR,
+        "Kölsch\0", "Doütschland\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 un %2\0", "%1 un %2\0",
         // date/time format
@@ -12522,7 +12522,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Vörmeddaach\0", "Nommendaach\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan.\0", "Fäb.\0", "Mäz.\0", "Apr.\0", "Mai\0", "Jun.\0", "Jul.\0", "Ouj.\0", "Säp.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12547,7 +12547,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "kurdî\0", Q_NULLPTR,
+        "kurdî\0", "Tirkiye\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 û %2\0", "%1 û %2\0",
         // date/time format
@@ -12555,7 +12555,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "BN\0", "PN\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TRY\0", Q_NULLPTR,
+        "₺\0", "%1 %2\0", Q_NULLPTR, "TRY\0", Q_NULLPTR,
         // month names
         { "rêb\0", "reş\0", "ada\0", "avr\0", "gul\0", "pûş\0", "tîr\0", "gel\0", "rez\0", "kew\0", "ser\0", "ber\0" },
         { "rêbendan\0", "reşemî\0", "adar\0", "avrêl\0", "gulan\0", "pûşper\0", "tîrmeh\0", "gelawêj\0", "rezber\0", "kewçêr\0", "sermawez\0", "berfanbar\0" },
@@ -12580,7 +12580,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "kernewek\0", Q_NULLPTR,
+        "kernewek\0", "Rywvaneth Unys\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12613,7 +12613,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "кыргызча\0", "Кайман аралдары\0",
+        "кыргызча\0", "Кыргызстан\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 жана %2\0", "%1 жана %2\0",
         // date/time format
@@ -12621,7 +12621,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "таңкы\0", "түштөн кийинки\0",
         // currency
-        "KYD\0", "%1 %2\0", Q_NULLPTR, "KGS\0", "кайман доллары\0",
+        "сом\0", "%1 %2\0", Q_NULLPTR, "KGS\0", "Кыргызстан сому\0",
         // month names
         { "Янв\0", "Фев\0", "Мар\0", "Апр\0", "Май\0", "Июн\0", "Июл\0", "Авг\0", "Сен\0", "Окт\0", "Ноя\0", "Дек\0" },
         { "Январь\0", "Февраль\0", "Март\0", "Апрель\0", "Май\0", "Июнь\0", "Июль\0", "Август\0", "Сентябрь\0", "Октябрь\0", "Ноябрь\0", "Декабрь\0" },
@@ -12646,7 +12646,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8221, 8217, 8217,
         // endonym
-        "Kɨlaangi\0", Q_NULLPTR,
+        "Kɨlaangi\0", "Taansanía\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12654,7 +12654,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "TOO\0", "MUU\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%2 %1K\0", Q_NULLPTR, "TZS\0", "Shilíingi ya Taansanía\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12679,7 +12679,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Lëtzebuergesch\0", "Libanon\0",
+        "Lëtzebuergesch\0", "Lëtzebuerg\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 a(n) %2\0", "%1 a(n) %2\0",
         // date/time format
@@ -12687,11 +12687,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "moies\0", "nomëttes\0",
         // currency
-        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0", "Libanesescht Pond\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan\0", "Feb\0", "Mäe\0", "Abr\0", "Mee\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Okt\0", "Nov\0", "Dez\0" },
         { "Januar\0", "Februar\0", "Mäerz\0", "Abrëll\0", "Mee\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan.\0", "Feb.\0", "Mäe.\0", "Abr.\0", "Mee\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januar\0", "Februar\0", "Mäerz\0", "Abrëll\0", "Mee\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktober\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -12712,7 +12712,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Luganda\0", Q_NULLPTR,
+        "Luganda\0", "Yuganda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12720,11 +12720,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "UGX\0", Q_NULLPTR,
+        "USh\0", "%1%2\0", Q_NULLPTR, "UGX\0", "Silingi eya Yuganda\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apu\0", "Maa\0", "Juu\0", "Jul\0", "Agu\0", "Seb\0", "Oki\0", "Nov\0", "Des\0" },
         { "Janwaliyo\0", "Febwaliyo\0", "Marisi\0", "Apuli\0", "Maayi\0", "Juuni\0", "Julaayi\0", "Agusito\0", "Sebuttemba\0", "Okitobba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -12745,7 +12745,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Lakȟólʼiyapi\0", Q_NULLPTR,
+        "Lakȟólʼiyapi\0", "Mílahaŋska Tȟamákȟočhe\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -12753,7 +12753,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2 %1K\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12778,7 +12778,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "lingála\0", Q_NULLPTR,
+        "lingála\0", "Angóla\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 mpé %2\0", "%1 mpé %2\0",
         // date/time format
@@ -12786,7 +12786,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ntɔ́ngɔ́\0", "mpókwa\0",
         // currency
-        "Kz\0", "%1%2\0", Q_NULLPTR, "AOA\0", Q_NULLPTR,
+        "Kz\0", "%1 %2\0", Q_NULLPTR, "AOA\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12811,7 +12811,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "lingála\0", Q_NULLPTR,
+        "lingála\0", "Republíki ya Kongó Demokratíki\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 mpé %2\0", "%1 mpé %2\0",
         // date/time format
@@ -12819,7 +12819,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ntɔ́ngɔ́\0", "mpókwa\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "CDF\0", Q_NULLPTR,
+        "FC\0", "%1 %2\0", Q_NULLPTR, "CDF\0", "Falánga ya Kongó\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12844,7 +12844,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "lingála\0", Q_NULLPTR,
+        "lingála\0", "Repibiki ya Afríka ya Káti\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 mpé %2\0", "%1 mpé %2\0",
         // date/time format
@@ -12852,7 +12852,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ntɔ́ngɔ́\0", "mpókwa\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        "FCFA\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "Falánga CFA BEAC\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12877,7 +12877,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "lingála\0", Q_NULLPTR,
+        "lingála\0", "Kongo\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 mpé %2\0", "%1 mpé %2\0",
         // date/time format
@@ -12885,7 +12885,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ntɔ́ngɔ́\0", "mpókwa\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        "FCFA\0", "%1 %2\0", Q_NULLPTR, "XAF\0", "Falánga CFA BEAC\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -12910,7 +12910,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ລາວ\0", Q_NULLPTR,
+        "ລາວ\0", "ລາວ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1 ແລະ %2\0",
         // date/time format
@@ -12918,7 +12918,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ກ່ອນທ່ຽງ\0", "ຫຼັງທ່ຽງ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "LAK\0", Q_NULLPTR,
+        "₭\0", "%2%1\0", "%2-%1\0", "LAK\0", "ລາວ ກີບ\0",
         // month names
         { "ມ.ກ.\0", "ກ.ພ.\0", "ມ.ນ.\0", "ມ.ສ.\0", "ພ.ພ.\0", "ມິ.ຖ.\0", "ກ.ລ.\0", "ສ.ຫ.\0", "ກ.ຍ.\0", "ຕ.ລ.\0", "ພ.ຈ.\0", "ທ.ວ.\0" },
         { "ມັງກອນ\0", "ກຸມພາ\0", "ມີນາ\0", "ເມສາ\0", "ພຶດສະພາ\0", "ມິຖຸນາ\0", "ກໍລະກົດ\0", "ສິງຫາ\0", "ກັນຍາ\0", "ຕຸລາ\0", "ພະຈິກ\0", "ທັນວາ\0" },
@@ -12951,7 +12951,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "IQD\0", Q_NULLPTR,
+        "د.ع.‏\0", "%1%2\0", Q_NULLPTR, "IQD\0", Q_NULLPTR,
         // month names
         { "جانڤیە\0", "فئڤریە\0", "مارس\0", "آڤریل\0", "مئی\0", "جوٙأن\0", "جوٙلا\0", "آگوست\0", "سئپتامر\0", "ئوکتوڤر\0", "نوڤامر\0", "دئسامر\0" },
         { "جانڤیە\0", "فئڤریە\0", "مارس\0", "آڤریل\0", "مئی\0", "جوٙأن\0", "جوٙلا\0", "آگوست\0", "سئپتامر\0", "ئوکتوڤر\0", "نوڤامر\0", "دئسامر\0" },
@@ -13042,7 +13042,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Tshiluba\0", "Likisambulu\0",
+        "Tshiluba\0", "Ditunga wa Kongu\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13050,7 +13050,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Dinda\0", "Dilolo\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "CDF\0", "Iro\0",
+        "FC\0", "%1%2\0", Q_NULLPTR, "CDF\0", "Nfalanga wa Kongu\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13075,7 +13075,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Dholuo\0", Q_NULLPTR,
+        "Dholuo\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13083,7 +13083,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "OD\0", "OT\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%1%2\0", Q_NULLPTR, "KES\0", "Siling mar Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13108,7 +13108,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Luluhia\0", Q_NULLPTR,
+        "Luluhia\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13116,11 +13116,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", "%2- %1\0", "KES\0", "Sirinji ya Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -13153,7 +13153,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "janv.\0", "febr.\0", "marts\0", "apr.\0", "maijs\0", "jūn.\0", "jūl.\0", "aug.\0", "sept.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "janvāris\0", "februāris\0", "marts\0", "aprīlis\0", "maijs\0", "jūnijs\0", "jūlijs\0", "augusts\0", "septembris\0", "oktobris\0", "novembris\0", "decembris\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "janv.\0", "febr.\0", "marts\0", "apr.\0", "maijs\0", "jūn.\0", "jūl.\0", "aug.\0", "sept.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "janvāris\0", "februāris\0", "marts\0", "aprīlis\0", "maijs\0", "jūnijs\0", "jūlijs\0", "augusts\0", "septembris\0", "oktobris\0", "novembris\0", "decembris\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -13174,7 +13174,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Maa\0", Q_NULLPTR,
+        "Maa\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13182,7 +13182,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Ɛnkakɛnyá\0", "Ɛndámâ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", "Iropiyianí e Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13207,7 +13207,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Maa\0", Q_NULLPTR,
+        "Maa\0", "Tansania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13215,7 +13215,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Ɛnkakɛnyá\0", "Ɛndámâ\0",
         // currency
-        "TSh\0", "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%2%1\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13240,7 +13240,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kĩmĩrũ\0", Q_NULLPTR,
+        "Kĩmĩrũ\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13248,7 +13248,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "RŨ\0", "ŨG\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", "Shilingi ya Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13273,7 +13273,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "kreol morisien\0", Q_NULLPTR,
+        "kreol morisien\0", "Moris\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13281,7 +13281,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "MUR\0", Q_NULLPTR,
+        "Rs\0", "%2 %1K\0", Q_NULLPTR, "MUR\0", "roupi morisien\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13318,7 +13318,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mey\0", "Jon\0", "Jol\0", "Aog\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Janoary\0", "Febroary\0", "Martsa\0", "Aprily\0", "Mey\0", "Jona\0", "Jolay\0", "Aogositra\0", "Septambra\0", "Oktobra\0", "Novambra\0", "Desambra\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "Mey\0", "Jon\0", "Jol\0", "Aog\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Janoary\0", "Febroary\0", "Martsa\0", "Aprily\0", "Mey\0", "Jona\0", "Jolay\0", "Aogositra\0", "Septambra\0", "Oktobra\0", "Novambra\0", "Desambra\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -13339,7 +13339,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Makua\0", Q_NULLPTR,
+        "Makua\0", "Umozambiki\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13347,7 +13347,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "wichishu\0", "mchochil’l\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "MZN\0", Q_NULLPTR,
+        "MTn\0", "%2 %1K\0", Q_NULLPTR, "MZN\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13372,7 +13372,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "metaʼ\0", Q_NULLPTR,
+        "metaʼ\0", "Kamalun\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13380,7 +13380,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        "FCFA\0", "%2 %1\0", Q_NULLPTR, "XAF\0", "shirè\0",
         // month names
         { "mbegtug\0", "imeg àbùbì\0", "imeg mbəŋchubi\0", "iməg ngwə̀t\0", "iməg fog\0", "iməg ichiibɔd\0", "iməg àdùmbə̀ŋ\0", "iməg ichika\0", "iməg kud\0", "iməg tèsiʼe\0", "iməg zò\0", "iməg krizmed\0" },
         { "iməg mbegtug\0", "imeg àbùbì\0", "imeg mbəŋchubi\0", "iməg ngwə̀t\0", "iməg fog\0", "iməg ichiibɔd\0", "iməg àdùmbə̀ŋ\0", "iməg ichika\0", "iməg kud\0", "iməg tèsiʼe\0", "iməg zò\0", "iməg krizmed\0" },
@@ -13405,7 +13405,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Māori\0", Q_NULLPTR,
+        "Māori\0", "Aotearoa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13413,7 +13413,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "NZD\0", Q_NULLPTR,
+        "$\0", "%2 %1\0", Q_NULLPTR, "NZD\0", "Tāra o Aotearoa\0",
         // month names
         { "Kohi\0", "Hui\0", "Pou\0", "Pae\0", "Hara\0", "Pipi\0", "Hōngo\0", "Here\0", "Mahu\0", "Nuku\0", "Rangi\0", "Haki\0" },
         { "Kohitātea\0", "Huitanguru\0", "Poutūterangi\0", "Paengawhāwhā\0", "Haratua\0", "Pipiri\0", "Hōngongoi\0", "Hereturikōkā\0", "Mahuru\0", "Whiringa-ā-nuku\0", "Whiringa-ā-rangi\0", "Hakihea\0" },
@@ -13471,7 +13471,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "മലയാളം\0", "മാലി\0",
+        "മലയാളം\0", "ഇന്ത്യ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2 എന്നിവ\0", "%1 കൂടാതെ %2\0",
         // date/time format
@@ -13479,7 +13479,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "INR\0", "പശ്ചിമ ആഫ്രിക്കൻ [CFA] ഫ്രാങ്ക്\0",
+        "₹\0", "%2%1\0", Q_NULLPTR, "INR\0", "ഇന്ത്യൻ രൂപ\0",
         // month names
         { "ജനു\0", "ഫെബ്രു\0", "മാർ\0", "ഏപ്രി\0", "മേയ്\0", "ജൂൺ\0", "ജൂലൈ\0", "ഓഗ\0", "സെപ്റ്റം\0", "ഒക്ടോ\0", "നവം\0", "ഡിസം\0" },
         { "ജനുവരി\0", "ഫെബ്രുവരി\0", "മാർച്ച്\0", "ഏപ്രിൽ\0", "മേയ്\0", "ജൂൺ\0", "ജൂലൈ\0", "ഓഗസ്റ്റ്\0", "സെപ്റ്റംബർ\0", "ഒക്‌ടോബർ\0", "നവംബർ\0", "ഡിസംബർ\0" },
@@ -13537,7 +13537,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "मराठी\0", "मॉरिटानिया\0",
+        "मराठी\0", "भारत\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 आणि %2\0", "%1 आणि %2\0",
         // date/time format
@@ -13545,7 +13545,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "म.पू.\0", "म.उ.\0",
         // currency
-        "MRU\0", "%2%1\0", Q_NULLPTR, "INR\0", "मॉरिटानियन ओगिया\0",
+        "₹\0", "%2%1\0", Q_NULLPTR, "INR\0", "भारतीय रुपया\0",
         // month names
         { "जाने\0", "फेब्रु\0", "मार्च\0", "एप्रि\0", "मे\0", "जून\0", "जुलै\0", "ऑग\0", "सप्टें\0", "ऑक्टो\0", "नोव्हें\0", "डिसें\0" },
         { "जानेवारी\0", "फेब्रुवारी\0", "मार्च\0", "एप्रिल\0", "मे\0", "जून\0", "जुलै\0", "ऑगस्ट\0", "सप्टेंबर\0", "ऑक्टोबर\0", "नोव्हेंबर\0", "डिसेंबर\0" },
@@ -13570,7 +13570,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Melayu\0", "Montserrat\0",
+        "Melayu\0", "Brunei\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dan %2\0", "%1 dan %2\0",
         // date/time format
@@ -13603,7 +13603,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Melayu\0", "Montserrat\0",
+        "Melayu\0", "Malaysia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dan %2\0", "%1 dan %2\0",
         // date/time format
@@ -13611,7 +13611,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "PG\0", "PTG\0",
         // currency
-        "$\0", "%2%1\0", Q_NULLPTR, "MYR\0", "Dolar Caribbean Timur\0",
+        "RM\0", "%2%1\0", Q_NULLPTR, "MYR\0", "Ringgit Malaysia\0",
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ogo\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Januari\0", "Februari\0", "Mac\0", "April\0", "Mei\0", "Jun\0", "Julai\0", "Ogos\0", "September\0", "Oktober\0", "November\0", "Disember\0" },
@@ -13636,7 +13636,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Melayu\0", "Montserrat\0",
+        "Melayu\0", "Singapura\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dan %2\0", "%1 dan %2\0",
         // date/time format
@@ -13702,7 +13702,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "MUNDAŊ\0", Q_NULLPTR,
+        "MUNDAŊ\0", "kameruŋ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13710,7 +13710,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "comme\0", "lilli\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "XAF\0", "solai BEAC\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13735,7 +13735,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "မြန်မာ\0", "မလေးရှား\0",
+        "မြန်မာ\0", "မြန်မာ\0",
         // list pattern
         "%1 %2\0", "%1 %2\0", "%1နှင့် %2\0", "%1နှင့် %2\0",
         // date/time format
@@ -13743,7 +13743,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "နံနက်\0", "ညနေ\0",
         // currency
-        "MYR\0", "%1 %2\0", Q_NULLPTR, "MMK\0", "မလေးရှား ရင်းဂစ်\0",
+        "K\0", "%1 %2\0", Q_NULLPTR, "MMK\0", "မြန်မာ ကျပ်\0",
         // month names
         { "ဇန်\0", "ဖေ\0", "မတ်\0", "ဧ\0", "မေ\0", "ဇွန်\0", "ဇူ\0", "ဩ\0", "စက်\0", "အောက်\0", "နို\0", "ဒီ\0" },
         { "ဇန်နဝါရီ\0", "ဖေဖော်ဝါရီ\0", "မတ်\0", "ဧပြီ\0", "မေ\0", "ဇွန်\0", "ဇူလိုင်\0", "ဩဂုတ်\0", "စက်တင်ဘာ\0", "အောက်တိုဘာ\0", "နိုဝင်ဘာ\0", "ဒီဇင်ဘာ\0" },
@@ -13768,7 +13768,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "مازرونی\0", Q_NULLPTR,
+        "مازرونی\0", "ایران\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13776,7 +13776,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "IRR\0", Q_NULLPTR,
+        "IRR\0", "%1%2\0", Q_NULLPTR, "IRR\0", "ایران ریال\0",
         // month names
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
         { "ژانویه\0", "فوریه\0", "مارس\0", "آوریل\0", "مه\0", "ژوئن\0", "ژوئیه\0", "اوت\0", "سپتامبر\0", "اکتبر\0", "نوامبر\0", "دسامبر\0" },
@@ -13801,7 +13801,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Khoekhoegowab\0", Q_NULLPTR,
+        "Khoekhoegowab\0", "Namibiab\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13809,11 +13809,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ǁgoagas\0", "ǃuias\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "NAD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "NAD\0", "Namibia Dollari\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "ǃKhanni\0", "ǃKhanǀgôab\0", "ǀKhuuǁkhâb\0", "ǃHôaǂkhaib\0", "ǃKhaitsâb\0", "Gamaǀaeb\0", "ǂKhoesaob\0", "Aoǁkhuumûǁkhâb\0", "Taraǀkhuumûǁkhâb\0", "ǂNûǁnâiseb\0", "ǀHooǂgaeb\0", "Hôasoreǁkhâb\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -13834,7 +13834,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8216, 8217,
         // endonym
-        "norsk bokmål\0", Q_NULLPTR,
+        "norsk bokmål\0", "Norge\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
         // date/time format
@@ -13842,11 +13842,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "NOK\0", Q_NULLPTR,
+        "kr\0", "%2 %1\0", Q_NULLPTR, "NOK\0", "norske kroner\0",
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -13867,7 +13867,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8216, 8217,
         // endonym
-        "norsk bokmål\0", Q_NULLPTR,
+        "norsk bokmål\0", "Svalbard og Jan Mayen\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
         // date/time format
@@ -13875,11 +13875,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "NOK\0", Q_NULLPTR,
+        "kr\0", "%2 %1\0", Q_NULLPTR, "NOK\0", "norske kroner\0",
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "mai\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -13900,7 +13900,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "isiNdebele\0", Q_NULLPTR,
+        "isiNdebele\0", "Zimbabwe\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -13908,7 +13908,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "USD\0", "Dola yase Amelika\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -13933,7 +13933,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Neddersass’sch\0", Q_NULLPTR,
+        "Neddersass’sch\0", "Düütschland\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 un %2\0", "%1 un %2\0",
         // date/time format
@@ -13941,11 +13941,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "vm\0", "nm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januaar\0", "Februaar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktover\0", "November\0", "Dezember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januaar\0", "Februaar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktover\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -13966,7 +13966,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "Neddersass’sch\0", Q_NULLPTR,
+        "Neddersass’sch\0", "Nedderlannen\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 un %2\0", "%1 un %2\0",
         // date/time format
@@ -13974,11 +13974,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "vm\0", "nm\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januaar\0", "Februaar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktover\0", "November\0", "Dezember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan.\0", "Feb.\0", "März\0", "Apr.\0", "Mai\0", "Juni\0", "Juli\0", "Aug.\0", "Sep.\0", "Okt.\0", "Nov.\0", "Dez.\0" },
         { "Januaar\0", "Februaar\0", "März\0", "April\0", "Mai\0", "Juni\0", "Juli\0", "August\0", "September\0", "Oktover\0", "November\0", "Dezember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -13999,7 +13999,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "नेपाली\0", "नाइजर\0",
+        "नेपाली\0", "भारत\0",
         // list pattern
         "%1,%2\0", "%1, %2\0", "%1 र %2\0", "%1 र %2\0",
         // date/time format
@@ -14007,7 +14007,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "पूर्वाह्न\0", "अपराह्न\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "सीएफ्‌ए फ्रान्क बीसीइएओ\0",
+        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "भारतीय रूपिँया\0",
         // month names
         { "जनवरी\0", "फेब्रुअरी\0", "मार्च\0", "अप्रिल\0", "मे\0", "जुन\0", "जुलाई\0", "अगस्ट\0", "सेप्टेम्बर\0", "अक्टोबर\0", "नोभेम्बर\0", "डिसेम्बर\0" },
         { "जनवरी\0", "फेब्रुअरी\0", "मार्च\0", "अप्रिल\0", "मे\0", "जुन\0", "जुलाई\0", "अगस्ट\0", "सेप्टेम्बर\0", "अक्टोबर\0", "नोभेम्बर\0", "डिसेम्बर\0" },
@@ -14032,7 +14032,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "नेपाली\0", "नाइजर\0",
+        "नेपाली\0", "नेपाल\0",
         // list pattern
         "%1,%2\0", "%1, %2\0", "%1 र %2\0", "%1 र %2\0",
         // date/time format
@@ -14040,7 +14040,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "पूर्वाह्न\0", "अपराह्न\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "NPR\0", "सीएफ्‌ए फ्रान्क बीसीइएओ\0",
+        "नेरू\0", "%2 %1\0", Q_NULLPTR, "NPR\0", "नेपाली रूपैयाँ\0",
         // month names
         { "जनवरी\0", "फेब्रुअरी\0", "मार्च\0", "अप्रिल\0", "मे\0", "जुन\0", "जुलाई\0", "अगस्ट\0", "सेप्टेम्बर\0", "अक्टोबर\0", "नोभेम्बर\0", "डिसेम्बर\0" },
         { "जनवरी\0", "फेब्रुअरी\0", "मार्च\0", "अप्रिल\0", "मे\0", "जुन\0", "जुलाई\0", "अगस्ट\0", "सेप्टेम्बर\0", "अक्टोबर\0", "नोभेम्बर\0", "डिसेम्बर\0" },
@@ -14065,7 +14065,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8216, 8217, 8220, 8221,
         // endonym
-        "Nederlands\0", "Nederland\0",
+        "Nederlands\0", "Aruba\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 en %2\0", "%1 en %2\0",
         // date/time format
@@ -14077,7 +14077,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14098,7 +14098,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8216, 8217, 8220, 8221,
         // endonym
-        "Nederlands\0", "Nederland\0",
+        "Nederlands\0", "België\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 en %2\0", "%1 en %2\0",
         // date/time format
@@ -14131,7 +14131,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8216, 8217, 8220, 8221,
         // endonym
-        "Nederlands\0", "Nederland\0",
+        "Nederlands\0", "Caribisch Nederland\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 en %2\0", "%1 en %2\0",
         // date/time format
@@ -14143,7 +14143,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14164,7 +14164,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8216, 8217, 8220, 8221,
         // endonym
-        "Nederlands\0", "Nederland\0",
+        "Nederlands\0", "Curaçao\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 en %2\0", "%1 en %2\0",
         // date/time format
@@ -14176,7 +14176,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14209,7 +14209,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14230,7 +14230,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8216, 8217, 8220, 8221,
         // endonym
-        "Nederlands\0", "Nederland\0",
+        "Nederlands\0", "Suriname\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 en %2\0", "%1 en %2\0",
         // date/time format
@@ -14242,7 +14242,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14263,7 +14263,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8216, 8217, 8220, 8221,
         // endonym
-        "Nederlands\0", "Nederland\0",
+        "Nederlands\0", "Sint-Maarten\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 en %2\0", "%1 en %2\0",
         // date/time format
@@ -14275,7 +14275,7 @@ static const QLocalePrivate localeTbl[] = {
         // month names
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mrt.\0", "apr.\0", "mei\0", "jun.\0", "jul.\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "maart\0", "april\0", "mei\0", "juni\0", "juli\0", "augustus\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14296,7 +14296,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 171, 187,
         // endonym
-        "Kwasio\0", Q_NULLPTR,
+        "Kwasio\0", "Kamerun\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -14304,7 +14304,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "maná\0", "kugú\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XAF\0", "Fraŋ CFA BEAC\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -14329,7 +14329,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8216, 8217,
         // endonym
-        "nynorsk\0", Q_NULLPTR,
+        "nynorsk\0", "Noreg\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
         // date/time format
@@ -14337,11 +14337,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "f.m.\0", "e.m.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "NOK\0", Q_NULLPTR,
+        "kr\0", "%1 %2\0", Q_NULLPTR, "NOK\0", "norske kroner\0",
         // month names
         { "jan\0", "feb\0", "mar\0", "apr\0", "mai\0", "jun\0", "jul\0", "aug\0", "sep\0", "okt\0", "nov\0", "des\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "mai\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "des.\0" },
         { "januar\0", "februar\0", "mars\0", "april\0", "mai\0", "juni\0", "juli\0", "august\0", "september\0", "oktober\0", "november\0", "desember\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14362,7 +14362,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "Shwóŋò ngiembɔɔn\0", Q_NULLPTR,
+        "Shwóŋò ngiembɔɔn\0", "Kàmalûm\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -14370,7 +14370,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "mbaʼámbaʼ\0", "ncwònzém\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        "FCFA\0", "%2 %1\0", Q_NULLPTR, "XAF\0", "feláŋ CFA\0",
         // month names
         { "saŋ tsetsɛ̀ɛ lùm\0", "saŋ kàg ngwóŋ\0", "saŋ lepyè shúm\0", "saŋ cÿó\0", "saŋ tsɛ̀ɛ cÿó\0", "saŋ njÿoláʼ\0", "saŋ tyɛ̀b tyɛ̀b mbʉ̀ŋ\0", "saŋ mbʉ̀ŋ\0", "saŋ ngwɔ̀ʼ mbÿɛ\0", "saŋ tàŋa tsetsáʼ\0", "saŋ mejwoŋó\0", "saŋ lùm\0" },
         { "saŋ tsetsɛ̀ɛ lùm\0", "saŋ kàg ngwóŋ\0", "saŋ lepyè shúm\0", "saŋ cÿó\0", "saŋ tsɛ̀ɛ cÿó\0", "saŋ njÿoláʼ\0", "saŋ tyɛ̀b tyɛ̀b mbʉ̀ŋ\0", "saŋ mbʉ̀ŋ\0", "saŋ ngwɔ̀ʼ mbÿɛ\0", "saŋ tàŋa tsetsáʼ\0", "saŋ mejwoŋó\0", "saŋ lùm\0" },
@@ -14403,7 +14403,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "RW\0", "TŊ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "SSP\0", Q_NULLPTR,
+        "£\0", "%2%1\0", Q_NULLPTR, "SSP\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -14428,7 +14428,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Runyankore\0", Q_NULLPTR,
+        "Runyankore\0", "Uganda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -14436,11 +14436,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "UGX\0", Q_NULLPTR,
+        "USh\0", "%2%1\0", Q_NULLPTR, "UGX\0", "Eshiringi ya Uganda\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "KBZ\0", "KBR\0", "KST\0", "KKN\0", "KTN\0", "KMK\0", "KMS\0", "KMN\0", "KMW\0", "KKM\0", "KNK\0", "KNB\0" },
         { "Okwokubanza\0", "Okwakabiri\0", "Okwakashatu\0", "Okwakana\0", "Okwakataana\0", "Okwamukaaga\0", "Okwamushanju\0", "Okwamunaana\0", "Okwamwenda\0", "Okwaikumi\0", "Okwaikumi na kumwe\0", "Okwaikumi na ibiri\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -14461,7 +14461,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Oromoo\0", Q_NULLPTR,
+        "Oromoo\0", "Itoophiyaa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -14469,11 +14469,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "WD\0", "WB\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "ETB\0", Q_NULLPTR,
+        "Br\0", "%2%1\0", Q_NULLPTR, "ETB\0", "Itoophiyaa Birrii\0",
         // month names
         { "Ama\0", "Gur\0", "Bit\0", "Elb\0", "Cam\0", "Wax\0", "Ado\0", "Hag\0", "Ful\0", "Onk\0", "Sad\0", "Mud\0" },
         { "Amajjii\0", "Guraandhala\0", "Bitooteessa\0", "Elba\0", "Caamsa\0", "Waxabajjii\0", "Adooleessa\0", "Hagayya\0", "Fuulbana\0", "Onkololeessa\0", "Sadaasa\0", "Muddee\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Ama\0", "Gur\0", "Bit\0", "Elb\0", "Cam\0", "Wax\0", "Ado\0", "Hag\0", "Ful\0", "Onk\0", "Sad\0", "Mud\0" },
         { "Amajjii\0", "Guraandhala\0", "Bitooteessa\0", "Elba\0", "Caamsa\0", "Waxabajjii\0", "Adooleessa\0", "Hagayya\0", "Fuulbana\0", "Onkololeessa\0", "Sadaasa\0", "Muddee\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14494,7 +14494,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Oromoo\0", Q_NULLPTR,
+        "Oromoo\0", "Keeniyaa\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -14527,7 +14527,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ଓଡ଼ିଆ\0", Q_NULLPTR,
+        "ଓଡ଼ିଆ\0", "ଭାରତ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, ଓ %2\0", "%1 ଓ %2\0",
         // date/time format
@@ -14535,7 +14535,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ପୂର୍ବାହ୍ନ\0", "ଅପରାହ୍ନ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "INR\0", Q_NULLPTR,
+        "₹\0", "%2%1\0", Q_NULLPTR, "INR\0", "ଭାରତୀୟ ଟଙ୍କା\0",
         // month names
         { "ଜାନୁଆରୀ\0", "ଫେବୃଆରୀ\0", "ମାର୍ଚ୍ଚ\0", "ଅପ୍ରେଲ\0", "ମଇ\0", "ଜୁନ\0", "ଜୁଲାଇ\0", "ଅଗଷ୍ଟ\0", "ସେପ୍ଟେମ୍ବର\0", "ଅକ୍ଟୋବର\0", "ନଭେମ୍ବର\0", "ଡିସେମ୍ବର\0" },
         { "ଜାନୁଆରୀ\0", "ଫେବୃଆରୀ\0", "ମାର୍ଚ୍ଚ\0", "ଅପ୍ରେଲ\0", "ମଇ\0", "ଜୁନ\0", "ଜୁଲାଇ\0", "ଅଗଷ୍ଟ\0", "ସେପ୍ଟେମ୍ବର\0", "ଅକ୍ଟୋବର\0", "ନଭେମ୍ବର\0", "ଡିସେମ୍ବର\0" },
@@ -14560,7 +14560,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "ирон\0", Q_NULLPTR,
+        "ирон\0", "Гуырдзыстон\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ӕмӕ %2\0", "%1 ӕмӕ %2\0",
         // date/time format
@@ -14568,7 +14568,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ӕмбисбоны размӕ\0", "ӕмбисбоны фӕстӕ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "GEL\0", Q_NULLPTR,
+        "₾\0", "%2 %1\0", Q_NULLPTR, "GEL\0", "Лар\0",
         // month names
         { "Янв.\0", "Февр.\0", "Март.\0", "Апр.\0", "Май\0", "Июнь\0", "Июль\0", "Авг.\0", "Сент.\0", "Окт.\0", "Нояб.\0", "Дек.\0" },
         { "Январь\0", "Февраль\0", "Мартъи\0", "Апрель\0", "Май\0", "Июнь\0", "Июль\0", "Август\0", "Сентябрь\0", "Октябрь\0", "Ноябрь\0", "Декабрь\0" },
@@ -14593,7 +14593,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "ирон\0", Q_NULLPTR,
+        "ирон\0", "Уӕрӕсе\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ӕмӕ %2\0", "%1 ӕмӕ %2\0",
         // date/time format
@@ -14601,7 +14601,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ӕмбисбоны размӕ\0", "ӕмбисбоны фӕстӕ\0",
         // currency
-        "₽\0", "%1%2\0", Q_NULLPTR, "RUB\0", Q_NULLPTR,
+        "₽\0", "%2 %1\0", Q_NULLPTR, "RUB\0", Q_NULLPTR,
         // month names
         { "Янв.\0", "Февр.\0", "Март.\0", "Апр.\0", "Май\0", "Июнь\0", "Июль\0", "Авг.\0", "Сент.\0", "Окт.\0", "Нояб.\0", "Дек.\0" },
         { "Январь\0", "Февраль\0", "Мартъи\0", "Апрель\0", "Май\0", "Июнь\0", "Июль\0", "Август\0", "Сентябрь\0", "Октябрь\0", "Ноябрь\0", "Декабрь\0" },
@@ -14626,7 +14626,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ਪੰਜਾਬੀ\0", "ਪਨਾਮਾ\0",
+        "ਪੰਜਾਬੀ\0", "ਪਾਕਿਸਤਾਨ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ਅਤੇ %2\0", "%1 ਅਤੇ %2\0",
         // date/time format
@@ -14634,7 +14634,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ਪੂ.ਦੁ.\0", "ਬਾ.ਦੁ.\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "PKR\0", "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0",
+        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "PKR\0", "ਪਾਕਿਸਤਾਨੀ ਰੁਪਇਆ\0",
         // month names
         { "ਜਨ\0", "ਫ਼ਰ\0", "ਮਾਰਚ\0", "ਅਪ੍ਰੈ\0", "ਮਈ\0", "ਜੂਨ\0", "ਜੁਲਾ\0", "ਅਗ\0", "ਸਤੰ\0", "ਅਕਤੂ\0", "ਨਵੰ\0", "ਦਸੰ\0" },
         { "ਜਨਵਰੀ\0", "ਫ਼ਰਵਰੀ\0", "ਮਾਰਚ\0", "ਅਪ੍ਰੈਲ\0", "ਮਈ\0", "ਜੂਨ\0", "ਜੁਲਾਈ\0", "ਅਗਸਤ\0", "ਸਤੰਬਰ\0", "ਅਕਤੂਬਰ\0", "ਨਵੰਬਰ\0", "ਦਸੰਬਰ\0" },
@@ -14659,7 +14659,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ਪੰਜਾਬੀ\0", "ਪਨਾਮਾ\0",
+        "ਪੰਜਾਬੀ\0", "ਭਾਰਤ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ਅਤੇ %2\0", "%1 ਅਤੇ %2\0",
         // date/time format
@@ -14667,7 +14667,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ਪੂ.ਦੁ.\0", "ਬਾ.ਦੁ.\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "ਪਨਾਮੇਨੀਅਨ ਬਾਲਬੋਆ\0",
+        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "ਭਾਰਤੀ ਰੁਪਇਆ\0",
         // month names
         { "ਜਨ\0", "ਫ਼ਰ\0", "ਮਾਰਚ\0", "ਅਪ੍ਰੈ\0", "ਮਈ\0", "ਜੂਨ\0", "ਜੁਲਾ\0", "ਅਗ\0", "ਸਤੰ\0", "ਅਕਤੂ\0", "ਨਵੰ\0", "ਦਸੰ\0" },
         { "ਜਨਵਰੀ\0", "ਫ਼ਰਵਰੀ\0", "ਮਾਰਚ\0", "ਅਪ੍ਰੈਲ\0", "ਮਈ\0", "ਜੂਨ\0", "ਜੁਲਾਈ\0", "ਅਗਸਤ\0", "ਸਤੰਬਰ\0", "ਅਕਤੂਬਰ\0", "ਨਵੰਬਰ\0", "ਦਸੰਬਰ\0" },
@@ -14725,7 +14725,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8222, 8220,
         // endonym
-        "prūsiskan\0", Q_NULLPTR,
+        "prūsiskan\0", "swītai\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 be %2\0", "%1 be %2\0",
         // date/time format
@@ -14758,7 +14758,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "پښتو\0", "فلسطين سيمې\0",
+        "پښتو\0", "افغانستان\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، او %2\0", "%1 او %2\0",
         // date/time format
@@ -14766,7 +14766,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "غ.م.\0", "غ.و.\0",
         // currency
-        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "AFN\0", Q_NULLPTR,
+        "؋\0", "%1 %2\0", Q_NULLPTR, "AFN\0", "افغانۍ\0",
         // month names
         { "جنوري\0", "فبروري\0", "مارچ\0", "اپریل\0", "مۍ\0", "جون\0", "جولای\0", "اگست\0", "سپتمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوري\0", "فېبروري\0", "مارچ\0", "اپریل\0", "مۍ\0", "جون\0", "جولای\0", "اگست\0", "سپتمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
@@ -14791,7 +14791,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "پښتو\0", "فلسطين سيمې\0",
+        "پښتو\0", "پاکستان\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، او %2\0", "%1 او %2\0",
         // date/time format
@@ -14824,13 +14824,13 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "Angola\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
         "dd/MM/y\0", "d 'd' MMMM 'd' y\0", "HH:mm\0", "HH:mm:ss z\0",
         // am/pm
-        "manhã\0", "tarde\0",
+        "AM\0", "PM\0",
         // currency
         "Kz\0", "%2 %1\0", Q_NULLPTR, "AOA\0", "Euro\0",
         // month names
@@ -14857,7 +14857,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "Brasil\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
@@ -14865,11 +14865,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "€\0", "%2 %1\0", Q_NULLPTR, "BRL\0", "Euro\0",
+        "R$\0", "%2 %1\0", Q_NULLPTR, "BRL\0", "Real brasileiro\0",
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -14890,15 +14890,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "Suíça\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
         "dd/MM/y\0", "d 'd' MMMM 'd' y\0", "HH:mm\0", "HH:mm:ss z\0",
         // am/pm
-        "manhã\0", "tarde\0",
+        "AM\0", "PM\0",
         // currency
-        "€\0", "%2 %1\0", Q_NULLPTR, "CHF\0", "Euro\0",
+        "€\0", "%2 %1\0", Q_NULLPTR, "CHF\0", "Franco suíço\0",
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -14923,13 +14923,13 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "Cabo Verde\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
         "dd/MM/y\0", "d 'd' MMMM 'd' y\0", "HH:mm\0", "HH:mm:ss z\0",
         // am/pm
-        "manhã\0", "tarde\0",
+        "AM\0", "PM\0",
         // currency
         "​\0", "%2 %1\0", Q_NULLPTR, "CVE\0", "Euro\0",
         // month names
@@ -14956,15 +14956,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "Guiné Equatorial\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
         "dd/MM/y\0", "d 'd' MMMM 'd' y\0", "HH:mm\0", "HH:mm:ss z\0",
         // am/pm
-        "manhã\0", "tarde\0",
+        "AM\0", "PM\0",
         // currency
-        "€\0", "%2 %1\0", Q_NULLPTR, "XAF\0", "Euro\0",
+        "€\0", "%2 %1\0", Q_NULLPTR, "XAF\0", "Franco CFA de BEAC\0",
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -14989,15 +14989,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "Guiné-Bissau\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
         "dd/MM/y\0", "d 'd' MMMM 'd' y\0", "HH:mm\0", "HH:mm:ss z\0",
         // am/pm
-        "manhã\0", "tarde\0",
+        "AM\0", "PM\0",
         // currency
-        "€\0", "%2 %1\0", Q_NULLPTR, "XOF\0", "Euro\0",
+        "€\0", "%2 %1\0", Q_NULLPTR, "XOF\0", "Franco CFA de BCEAO\0",
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15022,13 +15022,13 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "Luxemburgo\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
         "dd/MM/y\0", "d 'd' MMMM 'd' y\0", "HH:mm\0", "HH:mm:ss z\0",
         // am/pm
-        "manhã\0", "tarde\0",
+        "AM\0", "PM\0",
         // currency
         "€\0", "%2 %1\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
@@ -15055,7 +15055,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "Macau, RAE da China\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
@@ -15088,13 +15088,13 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "Moçambique\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
         "dd/MM/y\0", "d 'd' MMMM 'd' y\0", "HH:mm\0", "HH:mm:ss z\0",
         // am/pm
-        "manhã\0", "tarde\0",
+        "AM\0", "PM\0",
         // currency
         "MTn\0", "%2 %1\0", Q_NULLPTR, "MZN\0", "Euro\0",
         // month names
@@ -15154,13 +15154,13 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "São Tomé e Príncipe\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
         "dd/MM/y\0", "d 'd' MMMM 'd' y\0", "HH:mm\0", "HH:mm:ss z\0",
         // am/pm
-        "manhã\0", "tarde\0",
+        "AM\0", "PM\0",
         // currency
         "Db\0", "%2 %1\0", Q_NULLPTR, "STN\0", "Euro\0",
         // month names
@@ -15187,15 +15187,15 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "português\0", "Portugal\0",
+        "português\0", "Timor-Leste\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
         "dd/MM/y\0", "d 'd' MMMM 'd' y\0", "HH:mm\0", "HH:mm:ss z\0",
         // am/pm
-        "manhã\0", "tarde\0",
+        "AM\0", "PM\0",
         // currency
-        "€\0", "%2 %1\0", Q_NULLPTR, "USD\0", "Euro\0",
+        "$\0", "%2 %1\0", Q_NULLPTR, "USD\0", "Dólar americano\0",
         // month names
         { "jan\0", "fev\0", "mar\0", "abr\0", "mai\0", "jun\0", "jul\0", "ago\0", "set\0", "out\0", "nov\0", "dez\0" },
         { "janeiro\0", "fevereiro\0", "março\0", "abril\0", "maio\0", "junho\0", "julho\0", "agosto\0", "setembro\0", "outubro\0", "novembro\0", "dezembro\0" },
@@ -15220,7 +15220,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Runasimi\0", Q_NULLPTR,
+        "Runasimi\0", "Bolivia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -15228,7 +15228,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        "Bs\0", "%1%2\0", Q_NULLPTR, "BOB\0", Q_NULLPTR,
+        "Bs\0", "%2 %1\0", Q_NULLPTR, "BOB\0", Q_NULLPTR,
         // month names
         { "Ene\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Oct\0", "Nov\0", "Dic\0" },
         { "Enero\0", "Febrero\0", "Marzo\0", "Abril\0", "Mayo\0", "Junio\0", "Julio\0", "Agosto\0", "Setiembre\0", "Octubre\0", "Noviembre\0", "Diciembre\0" },
@@ -15253,7 +15253,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Runasimi\0", Q_NULLPTR,
+        "Runasimi\0", "Ecuador\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -15261,7 +15261,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        "$\0", "%1%2\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
+        "$\0", "%2 %1\0", Q_NULLPTR, "USD\0", Q_NULLPTR,
         // month names
         { "Ene\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Oct\0", "Nov\0", "Dic\0" },
         { "Enero\0", "Febrero\0", "Marzo\0", "Abril\0", "Mayo\0", "Junio\0", "Julio\0", "Agosto\0", "Setiembre\0", "Octubre\0", "Noviembre\0", "Diciembre\0" },
@@ -15286,7 +15286,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Runasimi\0", Q_NULLPTR,
+        "Runasimi\0", "Perú\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -15294,7 +15294,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "PEN\0", Q_NULLPTR,
+        "S/\0", "%2 %1\0", Q_NULLPTR, "PEN\0", Q_NULLPTR,
         // month names
         { "Ene\0", "Feb\0", "Mar\0", "Abr\0", "May\0", "Jun\0", "Jul\0", "Ago\0", "Set\0", "Oct\0", "Nov\0", "Dic\0" },
         { "Enero\0", "Febrero\0", "Marzo\0", "Abril\0", "Mayo\0", "Junio\0", "Julio\0", "Agosto\0", "Setiembre\0", "Octubre\0", "Noviembre\0", "Diciembre\0" },
@@ -15319,7 +15319,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "rumantsch\0", Q_NULLPTR,
+        "rumantsch\0", "Svizra\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -15327,7 +15327,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "CHF\0", Q_NULLPTR,
+        "CHF\0", "%1 %2\0", Q_NULLPTR, "CHF\0", "franc svizzer\0",
         // month names
         { "schan.\0", "favr.\0", "mars\0", "avr.\0", "matg\0", "zercl.\0", "fan.\0", "avust\0", "sett.\0", "oct.\0", "nov.\0", "dec.\0" },
         { "schaner\0", "favrer\0", "mars\0", "avrigl\0", "matg\0", "zercladur\0", "fanadur\0", "avust\0", "settember\0", "october\0", "november\0", "december\0" },
@@ -15352,7 +15352,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8221, 8217, 8217,
         // endonym
-        "Ikirundi\0", Q_NULLPTR,
+        "Ikirundi\0", "Uburundi\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -15360,7 +15360,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Z.MU.\0", "Z.MW.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "BIF\0", Q_NULLPTR,
+        "FBu\0", "%1%2\0", Q_NULLPTR, "BIF\0", "Ifaranga ry’Uburundi\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -15385,7 +15385,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8221, 171, 187,
         // endonym
-        "română\0", "România\0",
+        "română\0", "Republica Moldova\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 și %2\0", "%1 și %2\0",
         // date/time format
@@ -15451,7 +15451,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kihorombo\0", Q_NULLPTR,
+        "Kihorombo\0", "Tanzania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -15459,7 +15459,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "kang’ama\0", "kingoto\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%2%1\0", Q_NULLPTR, "TZS\0", "heleri sa Tanzania\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -15484,7 +15484,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "русский\0", "Россия\0",
+        "русский\0", "Беларусь\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -15517,7 +15517,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "русский\0", "Россия\0",
+        "русский\0", "Киргизия\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -15550,7 +15550,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "русский\0", "Россия\0",
+        "русский\0", "Казахстан\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -15583,7 +15583,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "русский\0", "Россия\0",
+        "русский\0", "Молдова\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -15649,7 +15649,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "русский\0", "Россия\0",
+        "русский\0", "Украина\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -15657,7 +15657,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "₽\0", "%1 %2\0", Q_NULLPTR, "UAH\0", "российский рубль\0",
+        "₴\0", "%1 %2\0", Q_NULLPTR, "UAH\0", "украинская гривна\0",
         // month names
         { "янв.\0", "февр.\0", "март\0", "апр.\0", "май\0", "июнь\0", "июль\0", "авг.\0", "сент.\0", "окт.\0", "нояб.\0", "дек.\0" },
         { "январь\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -15715,7 +15715,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kiruwa\0", Q_NULLPTR,
+        "Kiruwa\0", "Tanzania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -15723,11 +15723,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "utuko\0", "kyiukonyi\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%1%2\0", Q_NULLPTR, "TZS\0", "Shilingi ya Tanzania\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprilyi\0", "Mei\0", "Junyi\0", "Julyai\0", "Agusti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -15748,7 +15748,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "саха тыла\0", Q_NULLPTR,
+        "саха тыла\0", "Арассыыйа\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 уонна %2\0", "%1 уонна %2\0",
         // date/time format
@@ -15756,7 +15756,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ЭИ\0", "ЭК\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "RUB\0", Q_NULLPTR,
+        "₽\0", "%1 %2\0", Q_NULLPTR, "RUB\0", "Арассыыйа солкуобайа\0",
         // month names
         { "Тохс\0", "Олун\0", "Клн\0", "Мсу\0", "Ыам\0", "Бэс\0", "Отй\0", "Атр\0", "Блҕ\0", "Алт\0", "Сэт\0", "Ахс\0" },
         { "тохсунньу\0", "олунньу\0", "кулун тутар\0", "муус устар\0", "ыам ыйа\0", "бэс ыйа\0", "от ыйа\0", "атырдьых ыйа\0", "балаҕан ыйа\0", "алтынньы\0", "сэтинньи\0", "ахсынньы\0" },
@@ -15781,7 +15781,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kisampur\0", Q_NULLPTR,
+        "Kisampur\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -15789,7 +15789,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Tesiran\0", "Teipa\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", "Njilingi eel Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -15814,7 +15814,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Ishisangu\0", Q_NULLPTR,
+        "Ishisangu\0", "Tansaniya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -15822,7 +15822,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Lwamilawu\0", "Pashamihe\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%1%2\0", Q_NULLPTR, "TZS\0", "Ihela ya Tansaniya\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -15847,7 +15847,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "سنڌي\0", "سوڊان\0",
+        "سنڌي\0", "پاڪستان\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1، ۽ %2\0", "%1 ۽ %2\0",
         // date/time format
@@ -15855,11 +15855,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "صبح، منجهند\0", "منجهند، شام\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "PKR\0", "سوڊاني پائونڊ\0",
+        "Rs\0", "%1%2\0", Q_NULLPTR, "PKR\0", "پاڪستاني رپي\0",
         // month names
         { "جنوري\0", "فيبروري\0", "مارچ\0", "اپريل\0", "مئي\0", "جون\0", "جولاءِ\0", "آگسٽ\0", "سيپٽمبر\0", "آڪٽوبر\0", "نومبر\0", "ڊسمبر\0" },
         { "جنوري\0", "فيبروري\0", "مارچ\0", "اپريل\0", "مئي\0", "جون\0", "جولاءِ\0", "آگسٽ\0", "سيپٽمبر\0", "آڪٽوبر\0", "نومبر\0", "ڊسمبر\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "جنوري\0", "فيبروري\0", "مارچ\0", "اپريل\0", "مئي\0", "جون\0", "جولاءِ\0", "آگسٽ\0", "سيپٽمبر\0", "آڪٽوبر\0", "نومبر\0", "ڊسمبر\0" },
         { "جنوري\0", "فيبروري\0", "مارچ\0", "اپريل\0", "مئي\0", "جون\0", "جولاءِ\0", "آگسٽ\0", "سيپٽمبر\0", "آڪٽوبر\0", "نومبر\0", "ڊسمبر\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -15880,7 +15880,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8221, 8217, 8217,
         // endonym
-        "davvisámegiella\0", "Ruoŧŧa\0",
+        "davvisámegiella\0", "Suopma\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ja %2\0", "%1 ja %2\0",
         // date/time format
@@ -15888,7 +15888,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ib\0", "eb\0",
         // currency
-        "Skr\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "ruoŧŧa kruvdno\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "ođđj\0", "guov\0", "njuk\0", "cuoŋ\0", "mies\0", "geas\0", "suoi\0", "borg\0", "čakč\0", "golg\0", "skáb\0", "juov\0" },
         { "ođđajagemánnu\0", "guovvamánnu\0", "njukčamánnu\0", "cuoŋománnu\0", "miessemánnu\0", "geassemánnu\0", "suoidnemánnu\0", "borgemánnu\0", "čakčamánnu\0", "golggotmánnu\0", "skábmamánnu\0", "juovlamánnu\0" },
@@ -15913,7 +15913,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8221, 8217, 8217,
         // endonym
-        "davvisámegiella\0", "Ruoŧŧa\0",
+        "davvisámegiella\0", "Norga\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ja %2\0", "%1 ja %2\0",
         // date/time format
@@ -15921,7 +15921,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "iđitbeaivi\0", "eahketbeaivi\0",
         // currency
-        "Skr\0", "%1 %2\0", Q_NULLPTR, "NOK\0", "ruoŧŧa kruvdno\0",
+        "kr\0", "%1 %2\0", Q_NULLPTR, "NOK\0", "norgga kruvdno\0",
         // month names
         { "ođđj\0", "guov\0", "njuk\0", "cuo\0", "mies\0", "geas\0", "suoi\0", "borg\0", "čakč\0", "golg\0", "skáb\0", "juov\0" },
         { "ođđajagemánnu\0", "guovvamánnu\0", "njukčamánnu\0", "cuoŋománnu\0", "miessemánnu\0", "geassemánnu\0", "suoidnemánnu\0", "borgemánnu\0", "čakčamánnu\0", "golggotmánnu\0", "skábmamánnu\0", "juovlamánnu\0" },
@@ -15979,7 +15979,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "sena\0", Q_NULLPTR,
+        "sena\0", "Moçambique\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -15987,11 +15987,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "MZN\0", Q_NULLPTR,
+        "MTn\0", "%1%2\0", Q_NULLPTR, "MZN\0", "Metical de Moçambique\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Fev\0", "Mar\0", "Abr\0", "Mai\0", "Jun\0", "Jul\0", "Aug\0", "Set\0", "Otu\0", "Nov\0", "Dec\0" },
         { "Janeiro\0", "Fevreiro\0", "Marco\0", "Abril\0", "Maio\0", "Junho\0", "Julho\0", "Augusto\0", "Setembro\0", "Otubro\0", "Novembro\0", "Decembro\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -16012,7 +16012,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Koyraboro senni\0", Q_NULLPTR,
+        "Koyraboro senni\0", "Maali\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -16020,7 +16020,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Adduha\0", "Aluula\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", "CFA Fraŋ (BCEAO)\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16045,7 +16045,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "Sängö\0", "Sïngäpûru\0",
+        "Sängö\0", "Ködörösêse tî Bêafrîka\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -16053,7 +16053,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ND\0", "LK\0",
         // currency
-        Q_NULLPTR, "%2%1\0", "%2-%1\0", "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", "%2-%1\0", "XAF\0", "farânga CFA (BEAC)\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16078,7 +16078,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8221,
         // endonym
-        "ⵜⴰⵛⵍⵃⵉⵜ\0", Q_NULLPTR,
+        "ⵜⴰⵛⵍⵃⵉⵜ\0", "ⵍⵎⵖⵔⵉⴱ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -16086,7 +16086,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ⵜⵉⴼⴰⵡⵜ\0", "ⵜⴰⴷⴳⴳⵯⴰⵜ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "MAD\0", Q_NULLPTR,
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "MAD\0", "ⴰⴷⵔⵉⵎ ⵏ ⵍⵎⵖⵔⵉⴱ\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16111,7 +16111,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8221,
         // endonym
-        "ⵜⴰⵛⵍⵃⵉⵜ\0", Q_NULLPTR,
+        "ⵜⴰⵛⵍⵃⵉⵜ\0", "ⵍⵎⵖⵔⵉⴱ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -16119,7 +16119,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ⵜⵉⴼⴰⵡⵜ\0", "ⵜⴰⴷⴳⴳⵯⴰⵜ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "MAD\0", Q_NULLPTR,
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "MAD\0", "ⴰⴷⵔⵉⵎ ⵏ ⵍⵎⵖⵔⵉⴱ\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -16144,7 +16144,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "සිංහල\0", "ස්ලෝවේනියාව\0",
+        "සිංහල\0", "ශ්‍රී ලංකාව\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, සහ %2\0", "%1 සහ %2\0",
         // date/time format
@@ -16152,7 +16152,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "පෙ.ව.\0", "ප.ව.\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "LKR\0", "යුරෝ\0",
+        "රු.\0", "%2%1\0", Q_NULLPTR, "LKR\0", "ශ්‍රී ලංකා රුපියල\0",
         // month names
         { "ජන\0", "පෙබ\0", "මාර්\0", "අප්‍රේල්\0", "මැයි\0", "ජූනි\0", "ජූලි\0", "අගෝ\0", "සැප්\0", "ඔක්\0", "නොවැ\0", "දෙසැ\0" },
         { "ජනවාරි\0", "පෙබරවාරි\0", "මාර්තු\0", "අප්‍රේල්\0", "මැයි\0", "ජූනි\0", "ජූලි\0", "අගෝස්තු\0", "සැප්තැම්බර්\0", "ඔක්තෝබර්\0", "නොවැම්බර්\0", "දෙසැම්බර්\0" },
@@ -16173,7 +16173,7 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 160, 59, 37, 45, 43, 69, 2, 48,
+        44, 160, 59, 37, 45, 43, 101, 2, 48,
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
@@ -16206,11 +16206,11 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Saturday, Qt::Sunday,
         // symbols
-        44, 46, 59, 37, 8722, 43, 69, 0, 48,
+        44, 46, 59, 37, 8722, 43, 101, 0, 48,
         // quotation
         8222, 8220, 8218, 8216,
         // endonym
-        "slovenščina\0", "Sierra Leone\0",
+        "slovenščina\0", "Slovenija\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 in %2\0", "%1 in %2\0",
         // date/time format
@@ -16218,7 +16218,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "dopoldne\0", "popoldne\0",
         // currency
-        "SLL\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "sieraleonski leone\0",
+        "SLL\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "evro\0",
         // month names
         { "jan.\0", "feb.\0", "mar.\0", "apr.\0", "maj\0", "jun.\0", "jul.\0", "avg.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januar\0", "februar\0", "marec\0", "april\0", "maj\0", "junij\0", "julij\0", "avgust\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -16243,7 +16243,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "anarâškielâ\0", Q_NULLPTR,
+        "anarâškielâ\0", "Suomâ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -16251,7 +16251,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ip.\0", "ep.\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "uđiv\0", "kuovâ\0", "njuhčâ\0", "cuáŋui\0", "vyesi\0", "kesi\0", "syeini\0", "porge\0", "čohčâ\0", "roovvâd\0", "skammâ\0", "juovlâ\0" },
         { "uđđâivemáánu\0", "kuovâmáánu\0", "njuhčâmáánu\0", "cuáŋuimáánu\0", "vyesimáánu\0", "kesimáánu\0", "syeinimáánu\0", "porgemáánu\0", "čohčâmáánu\0", "roovvâdmáánu\0", "skammâmáánu\0", "juovlâmáánu\0" },
@@ -16276,7 +16276,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8221, 8217, 8217,
         // endonym
-        "chiShona\0", "Senegal\0",
+        "chiShona\0", "Zimbabwe\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -16284,7 +16284,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "USD\0", "Furenki CFA BCEAO\0",
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "USD\0", "Dora re Amerika\0",
         // month names
         { "Ndi\0", "Kuk\0", "Kur\0", "Kub\0", "Chv\0", "Chk\0", "Chg\0", "Nya\0", "Gun\0", "Gum\0", "Mbu\0", "Zvi\0" },
         { "Ndira\0", "Kukadzi\0", "Kurume\0", "Kubvumbi\0", "Chivabvu\0", "Chikumi\0", "Chikunguru\0", "Nyamavhuvhu\0", "Gunyana\0", "Gumiguru\0", "Mbudzi\0", "Zvita\0" },
@@ -16309,7 +16309,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Soomaali\0", "Soomaaliya\0",
+        "Soomaali\0", "Jabuuti\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 iyo %2\0", "%1 iyo %2\0",
         // date/time format
@@ -16342,7 +16342,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Soomaali\0", "Soomaaliya\0",
+        "Soomaali\0", "Itoobiya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 iyo %2\0", "%1 iyo %2\0",
         // date/time format
@@ -16375,7 +16375,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Soomaali\0", "Soomaaliya\0",
+        "Soomaali\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 iyo %2\0", "%1 iyo %2\0",
         // date/time format
@@ -16441,7 +16441,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "shqip\0", Q_NULLPTR,
+        "shqip\0", "Shqipëri\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dhe %2\0", "%1 dhe %2\0",
         // date/time format
@@ -16449,7 +16449,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "paradite\0", "pasdite\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "ALL\0", Q_NULLPTR,
+        "Lekë\0", "%1 %2\0", Q_NULLPTR, "ALL\0", "Leku shqiptar\0",
         // month names
         { "jan\0", "shk\0", "mar\0", "pri\0", "maj\0", "qer\0", "korr\0", "gush\0", "sht\0", "tet\0", "nën\0", "dhj\0" },
         { "janar\0", "shkurt\0", "mars\0", "prill\0", "maj\0", "qershor\0", "korrik\0", "gusht\0", "shtator\0", "tetor\0", "nëntor\0", "dhjetor\0" },
@@ -16474,7 +16474,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "shqip\0", Q_NULLPTR,
+        "shqip\0", "Maqedonia e Veriut\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dhe %2\0", "%1 dhe %2\0",
         // date/time format
@@ -16482,7 +16482,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "paradite\0", "pasdite\0",
         // currency
-        "den\0", "%1%2\0", Q_NULLPTR, "MKD\0", Q_NULLPTR,
+        "den\0", "%1 %2\0", Q_NULLPTR, "MKD\0", Q_NULLPTR,
         // month names
         { "jan\0", "shk\0", "mar\0", "pri\0", "maj\0", "qer\0", "korr\0", "gush\0", "sht\0", "tet\0", "nën\0", "dhj\0" },
         { "janar\0", "shkurt\0", "mars\0", "prill\0", "maj\0", "qershor\0", "korrik\0", "gusht\0", "shtator\0", "tetor\0", "nëntor\0", "dhjetor\0" },
@@ -16507,7 +16507,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8220, 8221,
         // endonym
-        "shqip\0", Q_NULLPTR,
+        "shqip\0", "Kosovë\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dhe %2\0", "%1 dhe %2\0",
         // date/time format
@@ -16515,7 +16515,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "paradite\0", "pasdite\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "EUR\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "EUR\0", "Euroja\0",
         // month names
         { "jan\0", "shk\0", "mar\0", "pri\0", "maj\0", "qer\0", "korr\0", "gush\0", "sht\0", "tet\0", "nën\0", "dhj\0" },
         { "janar\0", "shkurt\0", "mars\0", "prill\0", "maj\0", "qershor\0", "korrik\0", "gusht\0", "shtator\0", "tetor\0", "nëntor\0", "dhjetor\0" },
@@ -16540,7 +16540,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8216, 8216,
         // endonym
-        "српски\0", "Суринам\0",
+        "српски\0", "Босна и Херцеговина\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -16548,7 +16548,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "прије подне\0", "по подне\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "BAM\0", "Суринамски долар\0",
+        "КМ\0", "%1 %2\0", Q_NULLPTR, "BAM\0", "Босанско-херцеговачка конвертибилна марка\0",
         // month names
         { "јан\0", "феб\0", "март\0", "апр\0", "мај\0", "јун\0", "јул\0", "авг\0", "септ\0", "окт\0", "нов\0", "дец\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -16573,7 +16573,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8216, 8216,
         // endonym
-        "српски\0", "Суринам\0",
+        "српски\0", "Црна Гора\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -16581,7 +16581,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "прије подне\0", "по подне\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Суринамски долар\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Евро\0",
         // month names
         { "јан\0", "феб\0", "март\0", "апр\0", "мај\0", "јун\0", "јул\0", "авг\0", "септ\0", "окт\0", "нов\0", "дец\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -16606,7 +16606,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8216, 8216,
         // endonym
-        "српски\0", "Суринам\0",
+        "српски\0", "Србија\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -16614,7 +16614,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "пре подне\0", "по подне\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "RSD\0", "Суринамски долар\0",
+        "$\0", "%1 %2\0", Q_NULLPTR, "RSD\0", "Српски динар\0",
         // month names
         { "јан\0", "феб\0", "мар\0", "апр\0", "мај\0", "јун\0", "јул\0", "авг\0", "сеп\0", "окт\0", "нов\0", "дец\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -16639,7 +16639,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8216, 8216,
         // endonym
-        "српски\0", "Суринам\0",
+        "српски\0", "Косово\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -16647,7 +16647,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "пре подне\0", "по подне\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Суринамски долар\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Евро\0",
         // month names
         { "јан\0", "феб\0", "март\0", "апр\0", "мај\0", "јун\0", "јул\0", "авг\0", "септ\0", "окт\0", "нов\0", "дец\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -16672,7 +16672,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8216, 8216,
         // endonym
-        "српски\0", "Суринам\0",
+        "српски\0", "Босна и Херцеговина\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -16680,7 +16680,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "prije podne\0", "po podne\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "BAM\0", "Суринамски долар\0",
+        "КМ\0", "%1 %2\0", Q_NULLPTR, "BAM\0", "Босанско-херцеговачка конвертибилна марка\0",
         // month names
         { "jan\0", "feb\0", "mart\0", "apr\0", "maj\0", "jun\0", "jul\0", "avg\0", "sept\0", "okt\0", "nov\0", "dec\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -16705,7 +16705,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8216, 8216,
         // endonym
-        "српски\0", "Суринам\0",
+        "српски\0", "Црна Гора\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -16713,7 +16713,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "prije podne\0", "po podne\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Суринамски долар\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Евро\0",
         // month names
         { "jan.\0", "feb.\0", "mart\0", "apr.\0", "maj\0", "jun\0", "jul\0", "avg.\0", "sept.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -16738,7 +16738,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8216, 8216,
         // endonym
-        "српски\0", "Суринам\0",
+        "српски\0", "Србија\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -16746,7 +16746,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "пре подне\0", "по подне\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "RSD\0", "Суринамски долар\0",
+        "$\0", "%1 %2\0", Q_NULLPTR, "RSD\0", "Српски динар\0",
         // month names
         { "јан\0", "феб\0", "мар\0", "апр\0", "мај\0", "јун\0", "јул\0", "авг\0", "сеп\0", "окт\0", "нов\0", "дец\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -16771,7 +16771,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8222, 8220, 8216, 8216,
         // endonym
-        "српски\0", "Суринам\0",
+        "српски\0", "Косово\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
@@ -16779,7 +16779,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "пре подне\0", "по подне\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Суринамски долар\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "Евро\0",
         // month names
         { "jan.\0", "feb.\0", "mart\0", "apr.\0", "maj\0", "jun\0", "jul\0", "avg.\0", "sept.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "јануар\0", "фебруар\0", "март\0", "април\0", "мај\0", "јун\0", "јул\0", "август\0", "септембар\0", "октобар\0", "новембар\0", "децембар\0" },
@@ -16804,7 +16804,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8221, 8217, 8217,
         // endonym
-        "svenska\0", "El Salvador\0",
+        "svenska\0", "Åland\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 och %2\0", "%1 och %2\0",
         // date/time format
@@ -16812,11 +16812,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "förmiddag\0", "eftermiddag\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "US-dollar\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -16837,7 +16837,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8221, 8217, 8217,
         // endonym
-        "svenska\0", "El Salvador\0",
+        "svenska\0", "Finland\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 och %2\0", "%1 och %2\0",
         // date/time format
@@ -16845,7 +16845,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "förmiddag\0", "eftermiddag\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "US-dollar\0",
+        "€\0", "%1 %2\0", Q_NULLPTR, "EUR\0", "euro\0",
         // month names
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
@@ -16870,7 +16870,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8221, 8217, 8217,
         // endonym
-        "svenska\0", "El Salvador\0",
+        "svenska\0", "Sverige\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 och %2\0", "%1 och %2\0",
         // date/time format
@@ -16878,11 +16878,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "förmiddag\0", "eftermiddag\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "SEK\0", "US-dollar\0",
+        "kr\0", "%1 %2\0", Q_NULLPTR, "SEK\0", "svensk krona\0",
         // month names
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "jan.\0", "feb.\0", "mars\0", "apr.\0", "maj\0", "juni\0", "juli\0", "aug.\0", "sep.\0", "okt.\0", "nov.\0", "dec.\0" },
         { "januari\0", "februari\0", "mars\0", "april\0", "maj\0", "juni\0", "juli\0", "augusti\0", "september\0", "oktober\0", "november\0", "december\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -16903,7 +16903,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kiswahili\0", Q_NULLPTR,
+        "Kiswahili\0", "Jamhuri ya Kidemokrasia ya Kongo\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 na %2\0", "%1 na %2\0",
         // date/time format
@@ -16911,11 +16911,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "FC\0", "%1%2\0", Q_NULLPTR, "CDF\0", Q_NULLPTR,
+        "FC\0", "%2 %1\0", Q_NULLPTR, "CDF\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -16936,7 +16936,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kiswahili\0", Q_NULLPTR,
+        "Kiswahili\0", "Kenya\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 na %2\0", "%1 na %2\0",
         // date/time format
@@ -16944,7 +16944,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2 %1\0", Q_NULLPTR, "KES\0", "Shilingi ya Kenya\0",
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
@@ -16969,7 +16969,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kiswahili\0", Q_NULLPTR,
+        "Kiswahili\0", "Tanzania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 na %2\0", "%1 na %2\0",
         // date/time format
@@ -16977,11 +16977,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%2 %1\0", Q_NULLPTR, "TZS\0", "Shilingi ya Tanzania\0",
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17002,7 +17002,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kiswahili\0", Q_NULLPTR,
+        "Kiswahili\0", "Uganda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 na %2\0", "%1 na %2\0",
         // date/time format
@@ -17010,11 +17010,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        "USh\0", "%1%2\0", Q_NULLPTR, "UGX\0", Q_NULLPTR,
+        "USh\0", "%2 %1\0", Q_NULLPTR, "UGX\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprili\0", "Mei\0", "Juni\0", "Julai\0", "Agosti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17035,7 +17035,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
+        "தமிழ்\0", "இந்தியா\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 மற்றும் %2\0", "%1 மற்றும் %2\0",
         // date/time format
@@ -17043,7 +17043,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "முற்பகல்\0", "பிற்பகல்\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "பிரிட்டிஷ் பவுண்டு\0",
+        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", "இந்திய ரூபாய்\0",
         // month names
         { "ஜன.\0", "பிப்.\0", "மார்.\0", "ஏப்.\0", "மே\0", "ஜூன்\0", "ஜூலை\0", "ஆக.\0", "செப்.\0", "அக்.\0", "நவ.\0", "டிச.\0" },
         { "ஜனவரி\0", "பிப்ரவரி\0", "மார்ச்\0", "ஏப்ரல்\0", "மே\0", "ஜூன்\0", "ஜூலை\0", "ஆகஸ்ட்\0", "செப்டம்பர்\0", "அக்டோபர்\0", "நவம்பர்\0", "டிசம்பர்\0" },
@@ -17068,7 +17068,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
+        "தமிழ்\0", "இலங்கை\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 மற்றும் %2\0", "%1 மற்றும் %2\0",
         // date/time format
@@ -17101,7 +17101,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
+        "தமிழ்\0", "மலேசியா\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 மற்றும் %2\0", "%1 மற்றும் %2\0",
         // date/time format
@@ -17134,7 +17134,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "தமிழ்\0", "டிரிஸ்டன் டா குன்ஹா\0",
+        "தமிழ்\0", "சிங்கப்பூர்\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 மற்றும் %2\0", "%1 மற்றும் %2\0",
         // date/time format
@@ -17167,7 +17167,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "తెలుగు\0", Q_NULLPTR,
+        "తెలుగు\0", "భారతదేశం\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 మరియు %2\0", "%1 మరియు %2\0",
         // date/time format
@@ -17175,7 +17175,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "INR\0", Q_NULLPTR,
+        "₹\0", "%2%1\0", Q_NULLPTR, "INR\0", "రూపాయి\0",
         // month names
         { "జన\0", "ఫిబ్ర\0", "మార్చి\0", "ఏప్రి\0", "మే\0", "జూన్\0", "జులై\0", "ఆగ\0", "సెప్టెం\0", "అక్టో\0", "నవం\0", "డిసెం\0" },
         { "జనవరి\0", "ఫిబ్రవరి\0", "మార్చి\0", "ఏప్రిల్\0", "మే\0", "జూన్\0", "జులై\0", "ఆగస్టు\0", "సెప్టెంబర్\0", "అక్టోబర్\0", "నవంబర్\0", "డిసెంబర్\0" },
@@ -17200,7 +17200,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kiteso\0", Q_NULLPTR,
+        "Kiteso\0", "Kenia\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -17208,7 +17208,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Taparachu\0", "Ebongi\0",
         // currency
-        "Ksh\0", "%1%2\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
+        "Ksh\0", "%2%1\0", Q_NULLPTR, "KES\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -17233,7 +17233,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kiteso\0", Q_NULLPTR,
+        "Kiteso\0", "Uganda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -17241,7 +17241,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Taparachu\0", "Ebongi\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "UGX\0", Q_NULLPTR,
+        "USh\0", "%2%1\0", Q_NULLPTR, "UGX\0", "Ango’otol lok’ Uganda\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -17266,7 +17266,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "тоҷикӣ\0", "Того\0",
+        "тоҷикӣ\0", "Тоҷикистон\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -17274,7 +17274,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "пе. чо.\0", "па. чо.\0",
         // currency
-        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "TJS\0", Q_NULLPTR,
+        "сом.\0", "%1 %2\0", Q_NULLPTR, "TJS\0", "Сомонӣ\0",
         // month names
         { "Янв\0", "Фев\0", "Мар\0", "Апр\0", "Май\0", "Июн\0", "Июл\0", "Авг\0", "Сен\0", "Окт\0", "Ноя\0", "Дек\0" },
         { "Январ\0", "Феврал\0", "Март\0", "Апрел\0", "Май\0", "Июн\0", "Июл\0", "Август\0", "Сентябр\0", "Октябр\0", "Ноябр\0", "Декабр\0" },
@@ -17332,7 +17332,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8216, 8217, 8220, 8221,
         // endonym
-        "ትግርኛ\0", Q_NULLPTR,
+        "ትግርኛ\0", "ኤርትራ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -17340,7 +17340,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ንጉሆ ሰዓተ\0", "ድሕር ሰዓት\0",
         // currency
-        "Nfk\0", "%1%2\0", Q_NULLPTR, "ERN\0", Q_NULLPTR,
+        "Nfk\0", "%2%1\0", Q_NULLPTR, "ERN\0", Q_NULLPTR,
         // month names
         { "ጥሪ\0", "ለካ\0", "መጋ\0", "ሚያ\0", "ግን\0", "ሰነ\0", "ሓም\0", "ነሓ\0", "መስ\0", "ጥቅ\0", "ሕዳ\0", "ታሕ\0" },
         { "ጥሪ\0", "ለካቲት\0", "መጋቢት\0", "ሚያዝያ\0", "ግንቦት\0", "ሰነ\0", "ሓምለ\0", "ነሓሰ\0", "መስከረም\0", "ጥቅምቲ\0", "ሕዳር\0", "ታሕሳስ\0" },
@@ -17365,7 +17365,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ትግርኛ\0", Q_NULLPTR,
+        "ትግርኛ\0", "ኢትዮጵያ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -17373,7 +17373,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ንጉሆ ሰዓተ\0", "ድሕር ሰዓት\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "ETB\0", Q_NULLPTR,
+        "Br\0", "%2%1\0", Q_NULLPTR, "ETB\0", "የኢትዮጵያ ብር\0",
         // month names
         { "ጥሪ\0", "ለካ\0", "መጋ\0", "ሚያ\0", "ግን\0", "ሰነ\0", "ሓም\0", "ነሓ\0", "መስ\0", "ጥቅ\0", "ሕዳ\0", "ታሕ\0" },
         { "ጥሪ\0", "ለካቲት\0", "መጋቢት\0", "ሚያዝያ\0", "ግንቦት\0", "ሰነ\0", "ሓምለ\0", "ነሓሰ\0", "መስከረም\0", "ጥቅምቲ\0", "ሕዳር\0", "ታሕሳስ\0" },
@@ -17398,7 +17398,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8220, 8221,
         // endonym
-        "türkmen dili\0", "Tokelau\0",
+        "türkmen dili\0", "Türkmenistan\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 we %2\0", "%1 we %2\0",
         // date/time format
@@ -17406,7 +17406,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "günortadan öň\0", "günortadan soň\0",
         // currency
-        "NZ$\0", "%1 %2\0", Q_NULLPTR, "TMT\0", "Täze Zelandiýa dollary\0",
+        "TMT\0", "%1 %2\0", Q_NULLPTR, "TMT\0", "Türkmen manady\0",
         // month names
         { "Ýan\0", "Few\0", "Mar\0", "Apr\0", "Maý\0", "Iýun\0", "Iýul\0", "Awg\0", "Sen\0", "Okt\0", "Noý\0", "Dek\0" },
         { "Ýanwar\0", "Fewral\0", "Mart\0", "Aprel\0", "Maý\0", "Iýun\0", "Iýul\0", "Awgust\0", "Sentýabr\0", "Oktýabr\0", "Noýabr\0", "Dekabr\0" },
@@ -17464,7 +17464,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Türkçe\0", "Türkiye\0",
+        "Türkçe\0", "Kıbrıs\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ve %2\0", "%1 ve %2\0",
         // date/time format
@@ -17472,7 +17472,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ÖÖ\0", "ÖS\0",
         // currency
-        "₺\0", "%2%1\0", Q_NULLPTR, "EUR\0", "Türk Lirası\0",
+        "€\0", "%2%1\0", Q_NULLPTR, "EUR\0", "Euro\0",
         // month names
         { "Oca\0", "Şub\0", "Mar\0", "Nis\0", "May\0", "Haz\0", "Tem\0", "Ağu\0", "Eyl\0", "Eki\0", "Kas\0", "Ara\0" },
         { "Ocak\0", "Şubat\0", "Mart\0", "Nisan\0", "Mayıs\0", "Haziran\0", "Temmuz\0", "Ağustos\0", "Eylül\0", "Ekim\0", "Kasım\0", "Aralık\0" },
@@ -17530,7 +17530,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "татар\0", "Тринидад һәм Тобаго\0",
+        "татар\0", "Россия\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 һәм %2\0", "%1 һәм %2\0",
         // date/time format
@@ -17538,7 +17538,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "RUB\0", Q_NULLPTR,
+        "₽\0", "%1 %2\0", Q_NULLPTR, "RUB\0", "Россия сумы\0",
         // month names
         { "гыйн.\0", "фев.\0", "мар.\0", "апр.\0", "май\0", "июнь\0", "июль\0", "авг.\0", "сент.\0", "окт.\0", "нояб.\0", "дек.\0" },
         { "гыйнвар\0", "февраль\0", "март\0", "апрель\0", "май\0", "июнь\0", "июль\0", "август\0", "сентябрь\0", "октябрь\0", "ноябрь\0", "декабрь\0" },
@@ -17563,7 +17563,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Tasawaq senni\0", Q_NULLPTR,
+        "Tasawaq senni\0", "Nižer\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -17571,7 +17571,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Subbaahi\0", "Zaarikay b\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", "CFA Fraŋ (BCEAO)\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -17596,7 +17596,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Tamaziɣt n laṭlaṣ\0", Q_NULLPTR,
+        "Tamaziɣt n laṭlaṣ\0", "Meṛṛuk\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -17604,7 +17604,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Zdat azal\0", "Ḍeffir aza\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "MAD\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "MAD\0", "Derhem Umeṛṛuki\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -17629,7 +17629,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         187, 171, 8250, 8249,
         // endonym
-        "ئۇيغۇرچە\0", "ئۇگاندا\0",
+        "ئۇيغۇرچە\0", "جۇڭگو\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
@@ -17637,7 +17637,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "چ.ب\0", "چ.ك\0",
         // currency
-        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "CNY\0", "ئۇگاندا شىللىڭى\0",
+        "￥\0", "%2%1\0", Q_NULLPTR, "CNY\0", "جۇڭگو يۈەنى\0",
         // month names
         { "يانۋار\0", "فېۋرال\0", "مارت\0", "ئاپرېل\0", "ماي\0", "ئىيۇن\0", "ئىيۇل\0", "ئاۋغۇست\0", "سېنتەبىر\0", "ئۆكتەبىر\0", "نويابىر\0", "دېكابىر\0" },
         { "يانۋار\0", "فېۋرال\0", "مارت\0", "ئاپرېل\0", "ماي\0", "ئىيۇن\0", "ئىيۇل\0", "ئاۋغۇست\0", "سېنتەبىر\0", "ئۆكتەبىر\0", "نويابىر\0", "دېكابىر\0" },
@@ -17662,7 +17662,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8220,
         // endonym
-        "українська\0", Q_NULLPTR,
+        "українська\0", "Україна\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 і %2\0", "%1 і %2\0",
         // date/time format
@@ -17670,7 +17670,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "дп\0", "пп\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "UAH\0", Q_NULLPTR,
+        "₴\0", "%1 %2\0", Q_NULLPTR, "UAH\0", "українська гривня\0",
         // month names
         { "січ\0", "лют\0", "бер\0", "кві\0", "тра\0", "чер\0", "лип\0", "сер\0", "вер\0", "жов\0", "лис\0", "гру\0" },
         { "січень\0", "лютий\0", "березень\0", "квітень\0", "травень\0", "червень\0", "липень\0", "серпень\0", "вересень\0", "жовтень\0", "листопад\0", "грудень\0" },
@@ -17691,11 +17691,11 @@ static const QLocalePrivate localeTbl[] = {
         // week
         Qt::Monday, Qt::Sunday, Qt::Sunday,
         // symbols
-        46, 44, 59, 37, 45, 43, 69, 2, 48,
+        46, 44, 59, 37, 45, 43, 69, 2, 1776,
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "اردو\0", Q_NULLPTR,
+        "اردو\0", "بھارت\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%2، %1\0", "%2، %1\0",
         // date/time format
@@ -17703,11 +17703,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%2 %1\0", Q_NULLPTR, "INR\0", Q_NULLPTR,
+        "₹\0", "%2 %1\0", Q_NULLPTR, "INR\0", "بھارتی روپیہ\0",
         // month names
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17728,7 +17728,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8220, 8217, 8216,
         // endonym
-        "اردو\0", Q_NULLPTR,
+        "اردو\0", "پاکستان\0",
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، اور %2\0", "%1 اور %2\0",
         // date/time format
@@ -17736,11 +17736,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "PKR\0", Q_NULLPTR,
+        "Rs\0", "%2 %1\0", Q_NULLPTR, "PKR\0", "پاکستانی روپیہ\0",
         // month names
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "جنوری\0", "فروری\0", "مارچ\0", "اپریل\0", "مئی\0", "جون\0", "جولائی\0", "اگست\0", "ستمبر\0", "اکتوبر\0", "نومبر\0", "دسمبر\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
@@ -17761,7 +17761,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8217, 8216,
         // endonym
-        "o‘zbek\0", "Oʻzbekiston\0",
+        "o‘zbek\0", "Afgʻoniston\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 va %2\0", "%1 va %2\0",
         // date/time format
@@ -17769,7 +17769,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "TO\0", "TK\0",
         // currency
-        "soʻm\0", "%1 %2\0", Q_NULLPTR, "AFN\0", "O‘zbekiston so‘mi\0",
+        "soʻm\0", "%1 %2\0", Q_NULLPTR, "AFN\0", "Afg‘oniston afg‘oniysi\0",
         // month names
         { "Yan\0", "Fev\0", "Mar\0", "Apr\0", "May\0", "Iyn\0", "Iyl\0", "Avg\0", "Sen\0", "Okt\0", "Noy\0", "Dek\0" },
         { "Yanvar\0", "Fevral\0", "Mart\0", "Aprel\0", "May\0", "Iyun\0", "Iyul\0", "Avgust\0", "Sentabr\0", "Oktabr\0", "Noyabr\0", "Dekabr\0" },
@@ -17860,7 +17860,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ꕙꔤ\0", Q_NULLPTR,
+        "ꕙꔤ\0", "ꕞꔤꔫꕩ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -17868,7 +17868,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "LRD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "LRD\0", "ꕞꔤꔫꕩ ꕜꕞꕌ\0",
         // month names
         { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
         { "ꖨꖕ ꕪꕴ ꔞꔀꕮꕊ\0", "ꕒꕡꖝꖕ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞꔤ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋꕔꕿ ꕸꖃꗏ\0", "ꖨꖕ ꕪꕴ ꗏꖺꕮꕊ\0" },
@@ -17893,7 +17893,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "ꕙꔤ\0", Q_NULLPTR,
+        "ꕙꔤ\0", "ꕞꔤꔫꕩ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -17901,7 +17901,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "LRD\0", Q_NULLPTR,
+        "$\0", "%2%1\0", Q_NULLPTR, "LRD\0", "ꕞꔤꔫꕩ ꕜꕞꕌ\0",
         // month names
         { "ꖨꖕꔞ\0", "ꕒꕡ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋ\0", "ꖨꖕꗏ\0" },
         { "ꖨꖕ ꕪꕴ ꔞꔀꕮꕊ\0", "ꕒꕡꖝꖕ\0", "ꕾꖺ\0", "ꖢꖕ\0", "ꖑꕱ\0", "ꖱꘋ\0", "ꖱꕞꔤ\0", "ꗛꔕ\0", "ꕢꕌ\0", "ꕭꖃ\0", "ꔞꘋꕔꕿ ꕸꖃꗏ\0", "ꖨꖕ ꕪꕴ ꗏꖺꕮꕊ\0" },
@@ -17926,7 +17926,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Tiếng Việt\0", "Quần đảo Virgin thuộc Mỹ\0",
+        "Tiếng Việt\0", "Việt Nam\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 và %2\0", "%1 và %2\0",
         // date/time format
@@ -17934,7 +17934,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "SA\0", "CH\0",
         // currency
-        "$\0", "%1 %2\0", Q_NULLPTR, "VND\0", "Đô la Mỹ\0",
+        "$\0", "%1 %2\0", Q_NULLPTR, "VND\0", "Đồng Việt Nam\0",
         // month names
         { "Thg 1\0", "Thg 2\0", "Thg 3\0", "Thg 4\0", "Thg 5\0", "Thg 6\0", "Thg 7\0", "Thg 8\0", "Thg 9\0", "Thg 10\0", "Thg 11\0", "Thg 12\0" },
         { "Tháng 1\0", "Tháng 2\0", "Tháng 3\0", "Tháng 4\0", "Tháng 5\0", "Tháng 6\0", "Tháng 7\0", "Tháng 8\0", "Tháng 9\0", "Tháng 10\0", "Tháng 11\0", "Tháng 12\0" },
@@ -17992,7 +17992,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Kyivunjo\0", Q_NULLPTR,
+        "Kyivunjo\0", "Tanzania\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -18000,11 +18000,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "utuko\0", "kyiukonyi\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TZS\0", Q_NULLPTR,
+        "TSh\0", "%2%1\0", Q_NULLPTR, "TZS\0", "Shilingi ya Tanzania\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mac\0", "Apr\0", "Mei\0", "Jun\0", "Jul\0", "Ago\0", "Sep\0", "Okt\0", "Nov\0", "Des\0" },
         { "Januari\0", "Februari\0", "Machi\0", "Aprilyi\0", "Mei\0", "Junyi\0", "Julyai\0", "Agusti\0", "Septemba\0", "Oktoba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -18025,7 +18025,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8249, 8250,
         // endonym
-        "Walser\0", Q_NULLPTR,
+        "Walser\0", "Schwiz\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
@@ -18033,7 +18033,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "CHF\0", Q_NULLPTR,
+        Q_NULLPTR, "%2 %1K\0", Q_NULLPTR, "CHF\0", Q_NULLPTR,
         // month names
         { "Jen\0", "Hor\0", "Mär\0", "Abr\0", "Mei\0", "Brá\0", "Hei\0", "Öig\0", "Her\0", "Wím\0", "Win\0", "Chr\0" },
         { "Jenner\0", "Hornig\0", "Märze\0", "Abrille\0", "Meije\0", "Bráčet\0", "Heiwet\0", "Öigšte\0", "Herbštmánet\0", "Wímánet\0", "Wintermánet\0", "Chrištmánet\0" },
@@ -18058,7 +18058,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Wolof\0", Q_NULLPTR,
+        "Wolof\0", "Senegaal\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -18066,7 +18066,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Sub\0", "Ngo\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XOF\0", Q_NULLPTR,
+        "CFA\0", "%2 %1\0", Q_NULLPTR, "XOF\0", "Franc CFA bu Afrik Sowwu-jant\0",
         // month names
         { "Sam\0", "Few\0", "Mar\0", "Awr\0", "Mee\0", "Suw\0", "Sul\0", "Ut\0", "Sàt\0", "Okt\0", "Now\0", "Des\0" },
         { "Samwiyee\0", "Fewriyee\0", "Mars\0", "Awril\0", "Mee\0", "Suwe\0", "Sulet\0", "Ut\0", "Sàttumbar\0", "Oktoobar\0", "Nowàmbar\0", "Desàmbar\0" },
@@ -18091,7 +18091,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8216, 8217, 8220, 8221,
         // endonym
-        "isiXhosa\0", Q_NULLPTR,
+        "isiXhosa\0", "eMzantsi Afrika\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -18099,7 +18099,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "ZAR\0", Q_NULLPTR,
+        "R\0", "%2%1\0", Q_NULLPTR, "ZAR\0", "iRandi yaseMzanzi Afrika\0",
         // month names
         { "Jan\0", "Feb\0", "Mat\0", "Epr\0", "Mey\0", "Jun\0", "Jul\0", "Aga\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Janyuwari\0", "Februwari\0", "Matshi\0", "Epreli\0", "Meyi\0", "Juni\0", "Julayi\0", "Agasti\0", "Septemba\0", "Okthoba\0", "Novemba\0", "Disemba\0" },
@@ -18124,7 +18124,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Olusoga\0", Q_NULLPTR,
+        "Olusoga\0", "Yuganda\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -18132,11 +18132,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Munkyo\0", "Eigulo\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "UGX\0", Q_NULLPTR,
+        "USh\0", "%1 %2\0", Q_NULLPTR, "UGX\0", "Silingi eya Yuganda\0",
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mar\0", "Apu\0", "Maa\0", "Juu\0", "Jul\0", "Agu\0", "Seb\0", "Oki\0", "Nov\0", "Des\0" },
         { "Janwaliyo\0", "Febwaliyo\0", "Marisi\0", "Apuli\0", "Maayi\0", "Juuni\0", "Julaayi\0", "Agusito\0", "Sebuttemba\0", "Okitobba\0", "Novemba\0", "Desemba\0" },
         { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
@@ -18157,7 +18157,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 171, 187,
         // endonym
-        "nuasue\0", Q_NULLPTR,
+        "nuasue\0", "Kemelún\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -18165,7 +18165,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "kiɛmɛ́ɛm\0", "kisɛ́ndɛ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
+        Q_NULLPTR, "%1 %2\0", Q_NULLPTR, "XAF\0", Q_NULLPTR,
         // month names
         { "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0", "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0" },
         { "January\0", "February\0", "March\0", "April\0", "May\0", "June\0", "July\0", "August\0", "September\0", "October\0", "November\0", "December\0" },
@@ -18190,7 +18190,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8221, 8221, 8217, 8217,
         // endonym
-        "ייִדיש\0", Q_NULLPTR,
+        "ייִדיש\0", "וועלט\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 און %2\0", "%1 און %2\0",
         // date/time format
@@ -18256,7 +18256,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "Èdè Yorùbá\0", Q_NULLPTR,
+        "Èdè Yorùbá\0", "Orilẹ̀-èdè Nàìjíríà\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -18264,7 +18264,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "Àárọ̀\0", "Ọ̀sán\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "NGN\0", Q_NULLPTR,
+        "₦\0", "%2%1\0", Q_NULLPTR, "NGN\0", "Náìrà ti Orílẹ̀-èdè Nàìjíríà\0",
         // month names
         { "Ṣẹ́\0", "Èr\0", "Ẹr\0", "Ìg\0", "Ẹ̀b\0", "Òk\0", "Ag\0", "Òg\0", "Ow\0", "Ọ̀w\0", "Bé\0", "Ọ̀p\0" },
         { "Ṣẹ́rẹ́\0", "Èrèlè\0", "Ẹrẹ̀nà\0", "Ìgbé\0", "Ẹ̀bibi\0", "Òkúdu\0", "Agẹmọ\0", "Ògún\0", "Owewe\0", "Ọ̀wàrà\0", "Bélú\0", "Ọ̀pẹ̀\0" },
@@ -18289,7 +18289,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         12300, 12301, 12302, 12303,
         // endonym
-        "粵語\0", Q_NULLPTR,
+        "粵語\0", "中華人民共和國\0",
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1同%2\0", "%1同%2\0",
         // date/time format
@@ -18297,7 +18297,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "上午\0", "下午\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "CNY\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "CNY\0", "人民幣\0",
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
@@ -18322,7 +18322,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         12300, 12301, 12302, 12303,
         // endonym
-        "粵語\0", Q_NULLPTR,
+        "粵語\0", "中華人民共和國香港特別行政區\0",
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1同%2\0", "%1同%2\0",
         // date/time format
@@ -18330,7 +18330,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "上午\0", "下午\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "HKD\0", Q_NULLPTR,
+        Q_NULLPTR, "%2%1\0", Q_NULLPTR, "HKD\0", "港幣\0",
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
@@ -18355,7 +18355,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         171, 187, 8222, 8221,
         // endonym
-        "ⵜⴰⵎⴰⵣⵉⵖⵜ\0", Q_NULLPTR,
+        "ⵜⴰⵎⴰⵣⵉⵖⵜ\0", "ⵍⵎⵖⵔⵉⴱ\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
@@ -18363,7 +18363,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "ⵜⵉⴼⴰⵡⵜ\0", "ⵜⴰⴷⴳⴳⵯⴰⵜ\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "MAD\0", Q_NULLPTR,
+        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "MAD\0", "ⴰⴷⵔⵉⵎ ⵏ ⵍⵎⵖⵔⵉⴱ\0",
         // month names
         { "ⵉⵏⵏ\0", "ⴱⵕⴰ\0", "ⵎⴰⵕ\0", "ⵉⴱⵔ\0", "ⵎⴰⵢ\0", "ⵢⵓⵏ\0", "ⵢⵓⵍ\0", "ⵖⵓⵛ\0", "ⵛⵓⵜ\0", "ⴽⵜⵓ\0", "ⵏⵓⵡ\0", "ⴷⵓⵊ\0" },
         { "ⵉⵏⵏⴰⵢⵔ\0", "ⴱⵕⴰⵢⵕ\0", "ⵎⴰⵕⵚ\0", "ⵉⴱⵔⵉⵔ\0", "ⵎⴰⵢⵢⵓ\0", "ⵢⵓⵏⵢⵓ\0", "ⵢⵓⵍⵢⵓⵣ\0", "ⵖⵓⵛⵜ\0", "ⵛⵓⵜⴰⵏⴱⵉⵔ\0", "ⴽⵜⵓⴱⵔ\0", "ⵏⵓⵡⴰⵏⴱⵉⵔ\0", "ⴷⵓⵊⴰⵏⴱⵉⵔ\0" },
@@ -18388,7 +18388,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "中文\0", Q_NULLPTR,
+        "中文\0", "中国\0",
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1和%2\0", "%1和%2\0",
         // date/time format
@@ -18396,7 +18396,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "上午\0", "下午\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "CNY\0", Q_NULLPTR,
+        "￥\0", "%2%1\0", Q_NULLPTR, "CNY\0", "人民币\0",
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -18421,7 +18421,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "中文\0", Q_NULLPTR,
+        "中文\0", "中国香港特别行政区\0",
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1和%2\0", "%1和%2\0",
         // date/time format
@@ -18429,7 +18429,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "上午\0", "下午\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "HKD\0", Q_NULLPTR,
+        "$\0", "%1%2\0", Q_NULLPTR, "HKD\0", "港元\0",
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -18454,7 +18454,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "中文\0", Q_NULLPTR,
+        "中文\0", "中国澳门特别行政区\0",
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1和%2\0", "%1和%2\0",
         // date/time format
@@ -18487,7 +18487,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "中文\0", Q_NULLPTR,
+        "中文\0", "新加坡\0",
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1和%2\0", "%1和%2\0",
         // date/time format
@@ -18520,7 +18520,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "中文\0", Q_NULLPTR,
+        "中文\0", "中国香港特别行政区\0",
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1及%2\0", "%1及%2\0",
         // date/time format
@@ -18553,7 +18553,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "中文\0", Q_NULLPTR,
+        "中文\0", "中国澳门特别行政区\0",
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1和%2\0", "%1和%2\0",
         // date/time format
@@ -18561,7 +18561,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "上午\0", "下午\0",
         // currency
-        "MOP$\0", "%1%2\0", Q_NULLPTR, "MOP\0", Q_NULLPTR,
+        "MOP$\0", "%2%1\0", Q_NULLPTR, "MOP\0", Q_NULLPTR,
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -18586,7 +18586,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "中文\0", Q_NULLPTR,
+        "中文\0", "台湾\0",
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1和%2\0", "%1和%2\0",
         // date/time format
@@ -18594,7 +18594,7 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "上午\0", "下午\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "TWD\0", Q_NULLPTR,
+        "NT$\0", "%2%1\0", Q_NULLPTR, "TWD\0", "新台币\0",
         // month names
         { "1月\0", "2月\0", "3月\0", "4月\0", "5月\0", "6月\0", "7月\0", "8月\0", "9月\0", "10月\0", "11月\0", "12月\0" },
         { "一月\0", "二月\0", "三月\0", "四月\0", "五月\0", "六月\0", "七月\0", "八月\0", "九月\0", "十月\0", "十一月\0", "十二月\0" },
@@ -18619,7 +18619,7 @@ static const QLocalePrivate localeTbl[] = {
         // quotation
         8220, 8221, 8216, 8217,
         // endonym
-        "isiZulu\0", Q_NULLPTR,
+        "isiZulu\0", "iNingizimu Afrika\0",
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, ne-%2\0", "%1 ne-%2\0",
         // date/time format
@@ -18627,11 +18627,11 @@ static const QLocalePrivate localeTbl[] = {
         // am/pm
         "AM\0", "PM\0",
         // currency
-        Q_NULLPTR, "%1%2\0", Q_NULLPTR, "ZAR\0", Q_NULLPTR,
+        "R\0", "%2%1\0", Q_NULLPTR, "ZAR\0", "i-South African Rand\0",
         // month names
         { "Jan\0", "Feb\0", "Mas\0", "Eph\0", "Mey\0", "Jun\0", "Jul\0", "Aga\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Januwari\0", "Februwari\0", "Mashi\0", "Ephreli\0", "Meyi\0", "Juni\0", "Julayi\0", "Agasti\0", "Septhemba\0", "Okthoba\0", "Novemba\0", "Disemba\0" },
-        { "1\0", "2\0", "3\0", "4\0", "5\0", "6\0", "7\0", "8\0", "9\0", "10\0", "11\0", "12\0" },
+        { "J\0", "F\0", "M\0", "A\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Jan\0", "Feb\0", "Mas\0", "Eph\0", "Mey\0", "Jun\0", "Jul\0", "Aga\0", "Sep\0", "Okt\0", "Nov\0", "Dis\0" },
         { "Januwari\0", "Februwari\0", "Mashi\0", "Ephreli\0", "Meyi\0", "Juni\0", "Julayi\0", "Agasti\0", "Septhemba\0", "Okthoba\0", "Novemba\0", "Disemba\0" },
         { "J\0", "F\0", "M\0", "E\0", "M\0", "J\0", "J\0", "A\0", "S\0", "O\0", "N\0", "D\0" },

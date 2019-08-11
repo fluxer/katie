@@ -1742,7 +1742,7 @@ void tst_QLocale::standaloneMonthName()
     QCOMPARE(de.standaloneMonthName(12, QLocale::LongFormat), QLatin1String("Dezember"));
     QCOMPARE(de.standaloneMonthName(12, QLocale::LongFormat), de.monthName(12, QLocale::LongFormat));
     QCOMPARE(de.standaloneMonthName(12, QLocale::ShortFormat), QLatin1String("Dez"));
-    QCOMPARE(de.standaloneMonthName(12, QLocale::NarrowFormat), QLatin1String("12"));
+    QCOMPARE(de.standaloneMonthName(12, QLocale::NarrowFormat), QLatin1String("D"));
 
     QLocale ru("ru_RU");
     QCOMPARE(ru.standaloneMonthName(1, QLocale::LongFormat), QString::fromUtf8("январь"));
@@ -1758,13 +1758,11 @@ void tst_QLocale::currency()
     QCOMPARE(c.toCurrencyString(double(1234.56)), QString("1,234.56"));
     QCOMPARE(c.toCurrencyString(double(-1234.56)), QString("-1,234.56"));
 
-#if 0
     const QLocale en_US("en_US");
     QCOMPARE(en_US.toCurrencyString(qulonglong(1234)), QString("$1,234"));
-    QCOMPARE(en_US.toCurrencyString(qlonglong(-1234)), QString("($1,234)"));
+    QCOMPARE(en_US.toCurrencyString(qlonglong(-1234)), QString("$-1,234"));
     QCOMPARE(en_US.toCurrencyString(double(1234.56)), QString("$1,234.56"));
-    QCOMPARE(en_US.toCurrencyString(double(-1234.56)), QString("($1,234.56)"));
-#endif
+    QCOMPARE(en_US.toCurrencyString(double(-1234.56)), QString("$-1,234.56"));
 
     const QLocale ru_RU("ru_RU");
     QCOMPARE(ru_RU.toCurrencyString(qulonglong(1234)), QString::fromUtf8("1 234 ₽"));
