@@ -2971,7 +2971,7 @@ QString QLocale::toCurrencyString(qlonglong value, const QString &symbol) const
         tonegative = true;
         value = -value;
     }
-    QString str = dd->longLongToString(value);
+    QString str = toString(value);
     QString sym = symbol.isNull() ? currencySymbol() : symbol;
     if (sym.isEmpty())
         sym = currencySymbol(QLocale::CurrencyIsoCode);
@@ -2994,7 +2994,7 @@ QString QLocale::toCurrencyString(qulonglong value, const QString &symbol) const
     }
 #endif
     const QLocalePrivate *dd = this->d();
-    QString str = dd->unsLongLongToString(value);
+    QString str = toString(value);
     QString sym = symbol.isNull() ? currencySymbol() : symbol;
     if (sym.isEmpty())
         sym = currencySymbol(QLocale::CurrencyIsoCode);
@@ -3023,8 +3023,7 @@ QString QLocale::toCurrencyString(double value, const QString &symbol) const
         tonegative = true;
         value = -value;
     }
-    QString str = dd->doubleToString(value, dd->m_currency_digits,
-                                     QLocalePrivate::DFDecimal);
+    QString str = toString(value, 'f', dd->m_currency_digits);
     QString sym = symbol.isNull() ? currencySymbol() : symbol;
     if (sym.isEmpty())
         sym = currencySymbol(QLocale::CurrencyIsoCode);
