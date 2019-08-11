@@ -1788,8 +1788,6 @@ QString QLocale::monthName(int month, FormatType type) const
             return getLocaleListData(d()->m_short_month_names, idx);
         case QLocale::NarrowFormat:
             return getLocaleListData(d()->m_narrow_month_names, idx);
-        default:
-            return QString();
     }
     return QString();
 }
@@ -1828,8 +1826,6 @@ QString QLocale::standaloneMonthName(int month, FormatType type) const
             return getLocaleListData(d()->m_standalone_short_month_names, idx);
         case QLocale::NarrowFormat:
             return getLocaleListData(d()->m_standalone_narrow_month_names, idx);
-        default:
-            return QString();
     }
     return monthName(month, type);
 }
@@ -1867,8 +1863,6 @@ QString QLocale::dayName(int day, FormatType type) const
             return getLocaleListData(d()->m_short_day_names, day);
         case QLocale::NarrowFormat:
             return getLocaleListData(d()->m_narrow_day_names, day);
-        default:
-            return QString();
     }
     return QString();
 }
@@ -1910,10 +1904,7 @@ QString QLocale::standaloneDayName(int day, FormatType type) const
             return getLocaleListData(d()->m_standalone_short_day_names, day);
         case QLocale::NarrowFormat:
             return getLocaleListData(d()->m_standalone_narrow_day_names, day);
-        default:
-            return QString();
     }
-    // ### unreachable?
     return dayName(day, type);
 }
 
