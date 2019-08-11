@@ -1038,6 +1038,7 @@ for likelysubtag in root.findall('./likelySubtags/likelySubtag'):
     likelysubtagfromsplit = localeregex.findall(likelysubtagfrom)
     likelysubtagfromsplitlen = len(likelysubtagfromsplit)
     likelysubtagtosplit = localeregex.findall(likelysubtagto)
+    likelysubtagtosplitlen = len(likelysubtagtosplit)
     likelyfromlanguage = None
     likelyfromscript = None
     likelyfromcountry = None
@@ -1056,10 +1057,11 @@ for likelysubtag in root.findall('./likelySubtags/likelySubtag'):
         likelyfromlanguage = tolanguageenum(likelysubtagfromsplit[0])
         likelyfromscript = toscriptenum(likelysubtagfromsplit[1])
         likelyfromcountry = tocountryenum(likelysubtagfromsplit[2])
-    elif likelysubtagfromsplitlen > 3:
+    elif likelysubtagfromsplitlen > 3 or likelysubtagtosplitlen > 3:
         # the regular expression is intentionally greedy, if there are more than 3 group matches
         # then it is likely a variant and that is not supported case yet
         print(likelysubtagfrom, likelysubtagfromsplit)
+        print(likelysubtagto, likelysubtagtosplit)
         sys.exit(1)
     likelytolanguage = tolanguageenum(likelysubtagtosplit[0])
     likelytoscript = toscriptenum(likelysubtagtosplit[1])
@@ -1116,10 +1118,11 @@ root = tree.getroot()
 for languagealias in root.findall('./metadata/alias/languageAlias'):
     languagealiastype = languagealias.get('type')
     languagealiasreplacement = languagealias.get('replacement')
-    # if either the original or the substitute is BCP47 code (language and script/country included)
-    # skip it because QLocalePrivate::codeToLanguage() should be dealing with language codes only
     if '_' in languagealiastype or '-' in languagealiastype \
         or '_' in languagealiasreplacement or '-' in languagealiasreplacement:
+        # if either the original or the substitute is BCP47 code (language and script/country
+        # included) skip it because QLocalePrivate::codeToLanguage() should be dealing with
+        # language codes only
         continue
     languagealiasmap[languagealiastype] = languagealiasreplacement
 
