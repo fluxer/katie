@@ -2339,7 +2339,7 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
                 reinterpret_cast<ushort *>(digits.data())[i] += z;
         }
 
-        bool always_show_decpt = (flags & Alternate || flags & ForcePoint);
+        bool always_show_decpt = (flags & ForcePoint);
         switch (form) {
             case DFExponent: {
                 num_str = exponentForm(_zero, decimal, exponential, group, plus, minus,
@@ -2354,7 +2354,7 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
                 break;
             }
             case DFSignificantDigits: {
-                PrecisionMode mode = (flags & Alternate) ?
+                PrecisionMode mode = (flags & ForcePoint) ?
                             PMSignificantDigits : PMChopTrailingZeros;
 
                 if (decpt != digits.length() && (decpt <= -4 || decpt > precision))
@@ -2447,7 +2447,7 @@ QString QLocalePrivate::longLongToString(const QChar zero, const QChar group,
     for (int i = num_str.length()/* - cnt_thousand_sep*/; i < precision; ++i)
         num_str.prepend(base == 10 ? zero : QChar::fromLatin1('0'));
 
-    if ((flags & Alternate || flags & ShowBase)
+    if ((flags & ForcePoint || flags & ShowBase)
             && base == 8
             && (num_str.isEmpty() || num_str[0].unicode() != QLatin1Char('0')))
         num_str.prepend(QLatin1Char('0'));
@@ -2468,10 +2468,10 @@ QString QLocalePrivate::longLongToString(const QChar zero, const QChar group,
             --num_pad_chars;
 
         // leave space for optional '0x' in hex form
-        if (base == 16 && (flags & Alternate || flags & ShowBase))
+        if (base == 16 && (flags & ForcePoint || flags & ShowBase))
             num_pad_chars -= 2;
         // leave space for optional '0b' in binary form
-        else if (base == 2 && (flags & Alternate || flags & ShowBase))
+        else if (base == 2 && (flags & ForcePoint || flags & ShowBase))
             num_pad_chars -= 2;
 
         for (int i = 0; i < num_pad_chars; ++i)
@@ -2481,9 +2481,9 @@ QString QLocalePrivate::longLongToString(const QChar zero, const QChar group,
     if (flags & CapitalEorX)
         num_str = num_str.toUpper();
 
-    if (base == 16 && (flags & Alternate || flags & ShowBase))
+    if (base == 16 && (flags & ForcePoint || flags & ShowBase))
         num_str.prepend(QLatin1String(flags & UppercaseBase ? "0X" : "0x"));
-    if (base == 2 && (flags & Alternate || flags & ShowBase))
+    if (base == 2 && (flags & ForcePoint || flags & ShowBase))
         num_str.prepend(QLatin1String(flags & UppercaseBase ? "0B" : "0b"));
 
     // add sign
@@ -2530,7 +2530,7 @@ QString QLocalePrivate::unsLongLongToString(const QChar zero, const QChar group,
     for (int i = num_str.length()/* - cnt_thousand_sep*/; i < precision; ++i)
         num_str.prepend(base == 10 ? zero : QChar::fromLatin1('0'));
 
-    if ((flags & Alternate || flags & ShowBase)
+    if ((flags & ForcePoint || flags & ShowBase)
             && base == 8
             && (num_str.isEmpty() || num_str[0].unicode() != QLatin1Char('0')))
         num_str.prepend(QLatin1Char('0'));
@@ -2545,10 +2545,10 @@ QString QLocalePrivate::unsLongLongToString(const QChar zero, const QChar group,
         int num_pad_chars = width - num_str.length();
 
         // leave space for optional '0x' in hex form
-        if (base == 16 && flags & Alternate)
+        if (base == 16 && flags & ForcePoint)
             num_pad_chars -= 2;
         // leave space for optional '0b' in binary form
-        else if (base == 2 && flags & Alternate)
+        else if (base == 2 && flags & ForcePoint)
             num_pad_chars -= 2;
 
         for (int i = 0; i < num_pad_chars; ++i)
@@ -2558,9 +2558,9 @@ QString QLocalePrivate::unsLongLongToString(const QChar zero, const QChar group,
     if (flags & CapitalEorX)
         num_str = num_str.toUpper();
 
-    if (base == 16 && (flags & Alternate || flags & ShowBase))
+    if (base == 16 && (flags & ForcePoint || flags & ShowBase))
         num_str.prepend(QLatin1String(flags & UppercaseBase ? "0X" : "0x"));
-    else if (base == 2 && (flags & Alternate || flags & ShowBase))
+    else if (base == 2 && (flags & ForcePoint || flags & ShowBase))
         num_str.prepend(QLatin1String(flags & UppercaseBase ? "0B" : "0b"));
 
     // add sign

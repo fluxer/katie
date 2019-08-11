@@ -4732,7 +4732,7 @@ QString &QString::vsprintf(const char* cformat, va_list ap)
         bool no_more_flags = false;
         do {
             switch (*c) {
-                case '#': flags |= QLocalePrivate::Alternate; break;
+                case '#': flags |= QLocalePrivate::ForcePoint; break;
                 case '0': flags |= QLocalePrivate::ZeroPadded; break;
                 case '-': flags |= QLocalePrivate::LeftAdjusted; break;
                 case ' ': flags |= QLocalePrivate::BlankBeforePositive; break;
@@ -4959,7 +4959,7 @@ QString &QString::vsprintf(const char* cformat, va_list ap)
             case 'p': {
                 void *arg = va_arg(ap, void*);
                 quint64 i = reinterpret_cast<unsigned long>(arg);
-                flags |= QLocalePrivate::Alternate;
+                flags |= QLocalePrivate::ForcePoint;
                 subst = locale.d()->unsLongLongToString(i, precision, 16, width, flags);
                 ++c;
                 break;

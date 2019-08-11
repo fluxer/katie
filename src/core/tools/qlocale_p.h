@@ -89,7 +89,7 @@ public:
 
     enum Flags {
         NoFlags             = 0,
-        Alternate           = 0x01,
+        ForcePoint          = 0x01,
         ZeroPadded          = 0x02,
         LeftAdjusted        = 0x04,
         BlankBeforePositive = 0x08,
@@ -99,7 +99,6 @@ public:
 
         ShowBase            = 0x80,
         UppercaseBase       = 0x100,
-        ForcePoint          = Alternate
     };
 
     enum GroupSeparatorMode {

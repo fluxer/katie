@@ -2445,7 +2445,7 @@ QTextStream &QTextStream::operator<<(double f)
     if (numberFlags() & UppercaseDigits)
         flags |= QLocalePrivate::CapitalEorX;
     if (numberFlags() & ForcePoint)
-        flags |= QLocalePrivate::Alternate;
+        flags |= QLocalePrivate::ForcePoint;
 
     const QLocalePrivate *dd = d->locale.d();
     QString num = dd->doubleToString(f, d->realNumberPrecision, form, -1, flags);
