@@ -26,7 +26,7 @@ def stripxmltext(fromxmltext):
     result = fromxmltext.replace('\n', '')
     result = result.replace('\t', '')
     # 3-passes of double-space removal seems to be enough for all cases
-    for p in range(3):
+    for r in range(3):
         result = result.replace('  ', ' ')
     return result.strip()
 
@@ -668,7 +668,7 @@ def readlocale(fromxml, tomap, isparent):
     locale = locale.replace('.xml', '')
 
     if '_' in fromxml:
-        # merge parent locales (non-territory) into the current one so that defaults can be read
+        # merge parent locales (non-territory) into the current one so that data can be read
         # from them. they do not have territory and currency data is based on territory so
         # cross-reference is not possible without doing so
         localeparent = locale.split('_')[0]
@@ -1042,9 +1042,6 @@ for likelysubtag in root.findall('./likelySubtags/likelySubtag'):
     likelyfromlanguage = None
     likelyfromscript = None
     likelyfromcountry = None
-    likelytolanguage = None
-    likelytoscript = None
-    likelytocountry = None
     if likelysubtagfromsplitlen == 1:
         likelyfromlanguage = tolanguageenum(likelysubtagfromsplit[0])
         likelyfromscript = 'QLocale::Script::AnyScript'
