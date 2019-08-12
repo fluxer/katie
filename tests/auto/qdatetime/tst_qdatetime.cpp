@@ -1514,9 +1514,8 @@ void tst_QDateTime::fromString()
     QCOMPARE(QDateTime::fromString(dt2.toString(Qt::SystemLocaleDate), Qt::SystemLocaleDate), dt2);
     QCOMPARE(QDateTime::fromString(dt2.toString(Qt::LocaleDate), Qt::LocaleDate), dt2);
 
-// cannot have these because of bug in datetime parser
-//    QCOMPARE(QDateTime::fromString(dt2.toString(Qt::DefaultLocaleLongDate), Qt::DefaultLocaleLongDate), dt2);
-//    QCOMPARE(QDateTime::fromString(dt2.toString(Qt::SystemLocaleLongDate), Qt::SystemLocaleLongDate), dt2);
+    QCOMPARE(QDateTime::fromString(dt2.toString(Qt::DefaultLocaleLongDate), Qt::DefaultLocaleLongDate), dt2);
+    QCOMPARE(QDateTime::fromString(dt2.toString(Qt::SystemLocaleLongDate), Qt::SystemLocaleLongDate), dt2);
 
 
     // same thing for QDate and QTime

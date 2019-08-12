@@ -134,7 +134,8 @@ public:
         MinuteSection = 0x00008,
         Hour12Section   = 0x00010,
         Hour24Section   = 0x00020,
-        TimeSectionMask = (AmPmSection|MSecSection|SecondSection|MinuteSection|Hour12Section|Hour24Section),
+        TimeZoneSection = 0x00040,
+        TimeSectionMask = (AmPmSection|MSecSection|SecondSection|MinuteSection|Hour12Section|Hour24Section|TimeZoneSection),
         Internal = 0x10000,
         DaySection = 0x00100,
         MonthSection = 0x00200,
@@ -212,6 +213,7 @@ public:
                   QString *monthName = 0, int *used = Q_NULLPTR) const;
     int findDay(const QString &str1, int intDaystart, int sectionIndex,
                 QString *dayName = 0, int *used = 0) const;
+    int findTimeZone(QString str1, const QDateTime &when, int *used = 0) const;
 #endif
     int findAmPm(QString &str1, int index, int *used = Q_NULLPTR) const;
     int maxChange(int s) const;
