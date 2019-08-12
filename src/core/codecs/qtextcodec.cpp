@@ -311,6 +311,11 @@ static QTextCodec *checkForCodec(const QByteArray &name) {
 */
 static void setupLocaleMapper()
 {
+
+#ifndef QT_NO_ICONV
+    localeMapper = QTextCodec::codecForName("System");
+#endif
+
 #if defined (_XOPEN_UNIX) && !defined(Q_OS_OSF)
     if (!localeMapper) {
         char *charset = nl_langinfo (CODESET);
@@ -416,10 +421,6 @@ static void setupLocaleMapper()
 
     }
 
-#ifndef QT_NO_ICONV
-    if (!localeMapper)
-        localeMapper = QTextCodec::codecForName("System");
-#endif
     // If everything failed, we default to 8859-1
     // We could perhaps default to 8859-15.
     if (!localeMapper)
