@@ -1151,7 +1151,7 @@ QDate QDate::fromString(const QString &string, const QString &format)
     QDate date;
 #ifndef QT_BOOTSTRAPPED
     QDateTimeParser dt(QVariant::Date, QDateTimeParser::FromString);
-    if (dt.parseFormat(format))
+    if (Q_LIKELY(dt.parseFormat(format)))
         dt.fromString(string, &date, 0);
 #else
     Q_UNUSED(string);
@@ -1756,7 +1756,7 @@ QTime QTime::fromString(const QString &string, const QString &format)
     QTime time;
 #ifndef QT_BOOTSTRAPPED
     QDateTimeParser dt(QVariant::Time, QDateTimeParser::FromString);
-    if (dt.parseFormat(format))
+    if (Q_LIKELY(dt.parseFormat(format)))
         dt.fromString(string, 0, &time);
 #else
     Q_UNUSED(string);
@@ -3260,18 +3260,17 @@ QDateTime QDateTime::fromString(const QString& s, Qt::DateFormat f)
 
 QDateTime QDateTime::fromString(const QString &string, const QString &format)
 {
-#ifndef QT_BOOTSTRAPPED
     QTime time;
     QDate date;
-
+#ifndef QT_BOOTSTRAPPED
     QDateTimeParser dt(QVariant::DateTime, QDateTimeParser::FromString);
-    if (dt.parseFormat(format) && dt.fromString(string, &date, &time))
-        return QDateTime(date, time);
+    if (Q_LIKELY(dt.parseFormat(format)))
+        dt.fromString(string, &date, &time);
 #else
     Q_UNUSED(string);
     Q_UNUSED(format);
 #endif
-    return QDateTime(QDate(), QTime(-1, -1, -1));
+    return QDateTime(date, time);
 }
 
 #endif // QT_NO_DATESTRING
