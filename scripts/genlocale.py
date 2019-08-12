@@ -130,12 +130,30 @@ def todatetimeformat(fromformat):
         'l',
         'w',
         'f',
-        'e',
-        'c',
-        'k',
         'j',
-        'v',
     ]
+    replacementtags = {
+        "y" : "yyyy", # four-digit year without leading zeroes
+        "MMMMM" : "MMM", # narrow month name
+        "LLLLL" : "MMM", # stand-alone narrow month name
+        "E" : "ddd", "EE" : "ddd", "EEE" : "ddd", "EEEEE" : "ddd", "EEEE" : "dddd", # day of week
+        "e" : "ddd", "ee" : "ddd", "eee" : "ddd", "eeeee" : "ddd", "eeee" : "dddd", # local day of week
+        "c" : "ddd", "cc" : "ddd", "ccc" : "ddd", "ccccc" : "ddd", "cccc" : "dddd", # stand-alone local day of week
+        "a" : "AP", # AM/PM
+        "K" : "h", # Hour 0-11
+        "k" : "H", # Hour 1-24
+        "z" : "t", "zz" : "t", "zzz" : "t", "zzzz" : "t", # timezone
+        "Z" : "t", "ZZ" : "t", "ZZZ" : "t", "ZZZZ" : "t", # timezone
+        "v" : "t", "vv" : "t", "vvv" : "t", "vvvv" : "t", # timezone
+        "V" : "t", "VV" : "t", "VVV" : "t", "VVVV" : "t",  # timezone
+        "L" : "M", # stand-alone month names. not supported
+    }
+    replacementregex = {
+        r"yyy{3,}" : "yyyy", # more that three digits hence convert to four-digit year
+        r"g{1,}": "",        # modified julian day. not supported.
+        r"S{1,}" : "",       # fractional seconds. not supported.
+        r"A{1,}" : ""        # milliseconds in day. not supported.
+    }
     possibleoccurences = [
         '%s, ',
         ', %s',
@@ -144,9 +162,14 @@ def todatetimeformat(fromformat):
         '%s-',
         '-%s',
         '(%s)',
+        "('%s')",
+        '%s ',
+        ' %s',
         '%s',
     ]
     result = fromformat
+    for key in replacementregex.keys():
+        result = re.sub(key, replacementregex[key], result)
     for tag in unsupportedtags:
         uppertag = tag.upper()
         for occurence in possibleoccurences:
@@ -158,6 +181,8 @@ def todatetimeformat(fromformat):
             result = result.replace(occurence % (uppertag * 3), '')
             result = result.replace(occurence % (uppertag * 2), '')
             result = result.replace(occurence % uppertag, '')
+    for key in replacementtags.keys():
+        result = result.replace(key, replacementtags[key])
     return result
 
 def tomonthslist(fromxmlelements, initialvalues):
@@ -386,8 +411,8 @@ def printlocaledata(frommap, key):
             tochar(value['list_pattern_part_mid']),
             tochar(value['list_pattern_part_end']),
             tochar(value['list_pattern_part_two']),
-            tochar(todatetimeformat(value['short_date_format'])),
-            tochar(todatetimeformat(value['long_date_format'])),
+            tochar(value['short_date_format']),
+            tochar(value['long_date_format']),
             tochar(value['short_time_format']),
             tochar(value['long_time_format']),
             tochar(value['am']),
