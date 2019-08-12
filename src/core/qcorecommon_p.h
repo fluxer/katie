@@ -67,6 +67,12 @@ static inline ushort foldCase(const ushort ch)
     return QChar::toCaseFolded(ch);
 }
 
+static inline QString timeZone()
+{
+    tzset();
+    return QString::fromLocal8Bit(tzname[1]);
+}
+
 QT_END_NAMESPACE
 
 #endif // QCORECOMMON_P_H

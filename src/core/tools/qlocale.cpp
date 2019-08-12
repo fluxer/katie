@@ -45,6 +45,7 @@
 #include "qnumeric.h"
 #include "qlocale_data_p.h"
 #include "qdebug.h"
+#include "qcorecommon_p.h"
 
 // #define QLOCALE_DEBUG
 #if defined (QLOCALE_DEBUG) && !defined(QT_NO_DEBUG_STREAM)
@@ -1228,12 +1229,6 @@ static bool timeFormatContainsAP(const QString &format)
         ++i;
     }
     return false;
-}
-
-static inline QString timeZone()
-{
-    tzset();
-    return QString::fromLocal8Bit(tzname[1]);
 }
 
 /*!

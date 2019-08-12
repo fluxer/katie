@@ -40,6 +40,7 @@
 #include "qregexp.h"
 #include "qdebug.h"
 #include "qmath.h"
+#include "qcorecommon_p.h"
 
 #include <time.h>
 #include <sys/time.h>
@@ -4903,13 +4904,6 @@ int QDateTimeParser::findDay(const QString &str1, int startDay, int sectionIndex
         *used = bestCount;
 
     return bestMatch;
-}
-
-// copy from qlocale.cpp
-static inline QString timeZone()
-{
-    tzset();
-    return QString::fromLocal8Bit(tzname[1]);
 }
 
 int QDateTimeParser::findTimeZone(QString str, const QDateTime &when, int *used) const
