@@ -1763,7 +1763,7 @@ QString QLocale::monthName(int month, FormatType type) const
     }
 #endif
 
-    quint16 idx = month - 1;
+    const quint16 idx = month - 1;
     switch (type) {
         case QLocale::LongFormat:
             return getLocaleListData(d()->m_long_month_names, idx);
@@ -1801,7 +1801,7 @@ QString QLocale::standaloneMonthName(int month, FormatType type) const
     }
 #endif
 
-    quint16 idx = month - 1;
+    const quint16 idx = month - 1;
     switch (type) {
         case QLocale::LongFormat:
             return getLocaleListData(d()->m_standalone_long_month_names, idx);
@@ -1836,16 +1836,15 @@ QString QLocale::dayName(int day, FormatType type) const
             return res.toString();
     }
 #endif
-    if (day == 7)
-        day = 0;
 
+    const quint16 idx = day - 1;
     switch (type) {
         case QLocale::LongFormat:
-            return getLocaleListData(d()->m_long_day_names, day);
+            return getLocaleListData(d()->m_long_day_names, idx);
         case QLocale::ShortFormat:
-            return getLocaleListData(d()->m_short_day_names, day);
+            return getLocaleListData(d()->m_short_day_names, idx);
         case QLocale::NarrowFormat:
-            return getLocaleListData(d()->m_narrow_day_names, day);
+            return getLocaleListData(d()->m_narrow_day_names, idx);
     }
     return QString();
 }
@@ -1877,16 +1876,14 @@ QString QLocale::standaloneDayName(int day, FormatType type) const
     }
 #endif
 
-    if (day == 7)
-        day = 0;
-
+    quint16 idx = day - 1;
     switch (type) {
         case QLocale::LongFormat:
-            return getLocaleListData(d()->m_standalone_long_day_names, day);
+            return getLocaleListData(d()->m_standalone_long_day_names, idx);
         case QLocale::ShortFormat:
-            return getLocaleListData(d()->m_standalone_short_day_names, day);
+            return getLocaleListData(d()->m_standalone_short_day_names, idx);
         case QLocale::NarrowFormat:
-            return getLocaleListData(d()->m_standalone_narrow_day_names, day);
+            return getLocaleListData(d()->m_standalone_narrow_day_names, idx);
     }
     return dayName(day, type);
 }

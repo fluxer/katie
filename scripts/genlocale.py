@@ -224,19 +224,19 @@ def todayslist(fromxmlelements, initialvalues):
     listcopy(initialvalues, result)
     for day in fromxmlelements:
         daytype = day.get('type')
-        if daytype == 'sun':
+        if daytype == 'mon':
             result[0] = day.text
-        elif daytype == 'mon':
-            result[1] = day.text
         elif daytype == 'tue':
-            result[2] = day.text
+            result[1] = day.text
         elif daytype == 'wed':
-            result[3] = day.text
+            result[2] = day.text
         elif daytype == 'thu':
-            result[4] = day.text
+            result[3] = day.text
         elif daytype == 'fri':
-            result[5] = day.text
+            result[4] = day.text
         elif daytype == 'sat':
+            result[5] = day.text
+        elif daytype == 'sun':
             result[6] = day.text
         else:
             print('Unknown day: %s' % daytype)
@@ -674,12 +674,12 @@ localedefaults = {
     'short_month_names': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     'long_month_names':  ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     'narrow_month_names': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-    'standalone_short_day_names': ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    'standalone_long_day_names': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    'standalone_narrow_day_names': ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-    'short_day_names': ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    'long_day_names': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    'narrow_day_names': ['7', '1', '2', '3', '4', '5', '6'],
+    'standalone_short_day_names': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    'standalone_long_day_names': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    'standalone_narrow_day_names': ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+    'short_day_names': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    'long_day_names': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    'narrow_day_names': ['1', '2', '3', '4', '5', '6', '7'],
 }
 # artificial entries
 localemap['C'] = {}
