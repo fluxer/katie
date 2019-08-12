@@ -1284,8 +1284,7 @@ QString QLocale::toString(const QDateTime &dateTime, FormatType format) const
     }
 #endif
 
-    const QString format_str = dateTimeFormat(format);
-    return toString(dateTime, format_str);
+    return toString(dateTime, dateTimeFormat(format));
 }
 
 
@@ -1309,8 +1308,7 @@ QString QLocale::toString(const QTime &time, FormatType format) const
     }
 #endif
 
-    QString format_str = timeFormat(format);
-    return toString(time, format_str);
+    return toString(time, timeFormat(format));
 }
 
 /*!
