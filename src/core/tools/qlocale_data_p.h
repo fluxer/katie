@@ -1331,7 +1331,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "yyyyyyyy/MM/dd\0", "yyyy MMMM d\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "yyyy/MM/dd\0", "yyyy MMMM d\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AN\0", "EW\0",
         // currency
@@ -2387,7 +2387,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM 'dddd' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM 'dddd' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "mañana\0", "tarde\0",
         // currency
@@ -2420,7 +2420,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 və %2\0", "%1 və %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -2453,7 +2453,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 və %2\0", "%1 və %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -2519,7 +2519,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 і %2\0", "%1 і %2\0",
         // date/time format
-        "d.MM.yyyyyyyy\0", "d MMMM yyyy 'г'.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.MM.yyyy\0", "d MMMM yyyy 'г'.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -2618,7 +2618,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
-        "d.MM.yyyyyyyy 'г'.\0", "d MMMM yyyy 'г'.\0", "H:mm 'ч'.\0", "H:mm:ss 'ч'. t\0",
+        "d.MM.yyyy 'г'.\0", "d MMMM yyyy 'г'.\0", "H:mm 'ч'.\0", "H:mm:ss 'ч'. t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -2684,7 +2684,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 এবং %2\0", "%1 এবং %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -2717,7 +2717,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 এবং %2\0", "%1 এবং %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -2849,7 +2849,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "फुं\0", "बेलासे\0",
         // currency
@@ -2948,7 +2948,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -2981,7 +2981,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -3014,7 +3014,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -3047,7 +3047,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -3080,7 +3080,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 𑄃𑄳𑄃 %2\0", "%1 𑄃𑄳𑄃 %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -3113,7 +3113,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 𑄃𑄳𑄃 %2\0", "%1 𑄃𑄳𑄃 %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -3179,7 +3179,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, at %2\0", "%1 at %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -3245,7 +3245,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, ᎠᎴ %2\0", "%1 ᎠᎴ %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "ᏌᎾᎴ\0", "ᏒᎯᏱᎢᏗᏢ\0",
         // currency
@@ -3344,7 +3344,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 a %2\0", "%1 a %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "dop.\0", "odp.\0",
         // currency
@@ -3410,7 +3410,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, a(c) %2\0", "%1 a(c) %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "yb\0", "yh\0",
         // currency
@@ -3542,7 +3542,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -3575,7 +3575,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -3608,7 +3608,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -3641,7 +3641,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -3674,7 +3674,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -3707,7 +3707,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -3740,7 +3740,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -3806,7 +3806,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 a %2\0", "%1 a %2\0",
         // date/time format
-        "d.M.yyyyyyyy\0", "d. MMMM yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d.M.yyyy\0", "d. MMMM yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "dopołdnja\0", "wótpołdnja\0",
         // currency
@@ -3971,7 +3971,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, kple %2\0", "%1 kple %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d 'iAP' yyyy\0", "AP 'AP' h:mm\0", "AP 'AP' h:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d 'iAP' yyyy\0", "AP 'AP' h:mm\0", "AP 'AP' h:mm:ss t\0",
         // am/pm
         "ŋdi\0", "ɣetrɔ\0",
         // currency
@@ -4004,7 +4004,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, kple %2\0", "%1 kple %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d 'iAP' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d 'iAP' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "ŋdi\0", "ɣetrɔ\0",
         // currency
@@ -4037,7 +4037,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 και %2\0", "%1 και %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "π.μ.\0", "μ.μ.\0",
         // currency
@@ -4070,7 +4070,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 και %2\0", "%1 και %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "π.μ.\0", "μ.μ.\0",
         // currency
@@ -4136,7 +4136,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4202,7 +4202,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4235,7 +4235,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4268,7 +4268,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4301,7 +4301,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4334,7 +4334,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 and %2\0", "%1 and %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4367,7 +4367,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4400,7 +4400,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "dd/MM/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4433,7 +4433,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4466,7 +4466,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4499,7 +4499,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4532,7 +4532,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4565,7 +4565,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4631,7 +4631,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4664,7 +4664,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4697,7 +4697,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4730,7 +4730,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4763,7 +4763,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4796,7 +4796,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4829,7 +4829,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4862,7 +4862,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4895,7 +4895,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH.mm\0", "HH.mm.ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH.mm\0", "HH.mm.ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -4928,7 +4928,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4961,7 +4961,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -4994,7 +4994,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "H.mm\0", "H.mm.ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "H.mm\0", "H.mm.ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5027,7 +5027,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5060,7 +5060,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5093,7 +5093,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5126,7 +5126,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5159,7 +5159,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5192,7 +5192,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5225,7 +5225,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5258,7 +5258,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5291,7 +5291,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5324,7 +5324,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5357,7 +5357,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5423,7 +5423,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
@@ -5456,7 +5456,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5489,7 +5489,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5522,7 +5522,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "dd/MM/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5555,7 +5555,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5588,7 +5588,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5621,7 +5621,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5654,7 +5654,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5687,7 +5687,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5720,7 +5720,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5753,7 +5753,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5786,7 +5786,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5819,7 +5819,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5852,7 +5852,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5885,7 +5885,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -5918,7 +5918,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5951,7 +5951,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -5984,7 +5984,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6017,7 +6017,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6050,7 +6050,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6083,7 +6083,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6116,7 +6116,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6149,7 +6149,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6182,7 +6182,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6215,7 +6215,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6248,7 +6248,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6281,7 +6281,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6314,7 +6314,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6347,7 +6347,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6380,7 +6380,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "d/MM/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/MM/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6413,7 +6413,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6446,7 +6446,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6479,7 +6479,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6512,7 +6512,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6545,7 +6545,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6578,7 +6578,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6611,7 +6611,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6644,7 +6644,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6677,7 +6677,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6710,7 +6710,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6776,7 +6776,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6809,7 +6809,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6842,7 +6842,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6875,7 +6875,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6908,7 +6908,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -6941,7 +6941,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -6974,7 +6974,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7007,7 +7007,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7040,7 +7040,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -7073,7 +7073,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7106,7 +7106,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7139,7 +7139,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -7172,7 +7172,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -7205,7 +7205,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -7238,7 +7238,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7271,7 +7271,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7304,7 +7304,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7337,7 +7337,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7370,7 +7370,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7403,7 +7403,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7436,7 +7436,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7502,7 +7502,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, and %2\0", "%1 and %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -7568,7 +7568,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 kaj %2\0", "%1 kaj %2\0",
         // date/time format
-        "yyyyyyyy-MM-dd\0", "yyyy-MMMM-dd\0", "HH:mm\0", "HH:mm:ss t\0",
+        "yyyy-MM-dd\0", "yyyy-MMMM-dd\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "atm\0", "ptm\0",
         // currency
@@ -7601,7 +7601,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
@@ -7634,7 +7634,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7667,7 +7667,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7700,7 +7700,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7733,7 +7733,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7766,7 +7766,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "dd-MM-yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "dd-MM-yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7799,7 +7799,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/MM/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/MM/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7832,7 +7832,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7865,7 +7865,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7898,7 +7898,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7931,7 +7931,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7964,7 +7964,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -7997,7 +7997,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8030,7 +8030,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8063,7 +8063,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/MM/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/MM/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8096,7 +8096,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "dd 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "dd 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8129,7 +8129,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8162,7 +8162,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "dd/MM/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8195,7 +8195,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8228,7 +8228,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "MM/dd/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "MM/dd/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8261,7 +8261,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/MM/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/MM/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8294,7 +8294,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8327,7 +8327,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "MM/dd/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "MM/dd/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8360,7 +8360,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8393,7 +8393,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8459,7 +8459,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "H:mm\0", "H:mm:ss t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8492,7 +8492,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 y %2\0", "%1 y %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "a. m.\0", "p. m.\0",
         // currency
@@ -8525,7 +8525,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ja %2\0", "%1 ja %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -8558,7 +8558,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 eta %2\0", "%1 eta %2\0",
         // date/time format
-        "yyyyyyyy/M/d\0", "yyyy('ddd')'Ho' MMMM'rdddn' d('AP')\0", "HH:mm\0", "HH:mm:ss (t)\0",
+        "yyyy/M/d\0", "yyyy('ddd')'Ho' MMMM'rdddn' d('AP')\0", "HH:mm\0", "HH:mm:ss (t)\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -9119,7 +9119,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, at %2\0", "%1 at %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -9152,7 +9152,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -9185,7 +9185,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 og %2\0", "%1 og %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -9218,7 +9218,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
-        "d/MM/yyyyyyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d/MM/yyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -9383,7 +9383,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
-        "yyyyyyyy-MM-dd\0", "yyyy MMMM d\0", "HH 'h' mm\0", "HH 'h' mm 'min' ss 's' t\0",
+        "yyyy-MM-dd\0", "yyyy MMMM d\0", "HH 'h' mm\0", "HH 'h' mm 'min' ss 's' t\0",
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
@@ -9515,7 +9515,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 et %2\0", "%1 et %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -10736,7 +10736,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d 'di' MMMM 'dAP' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "d 'di' MMMM 'dAP' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "a.\0", "p.\0",
         // currency
@@ -10769,7 +10769,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 en %2\0", "%1 en %2\0",
         // date/time format
-        "dd-MM-yyyyyyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd-MM-yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -10868,7 +10868,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
@@ -10901,7 +10901,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "Vormittag\0", "Namittag\0",
         // currency
@@ -10934,7 +10934,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "Vormittag\0", "Namittag\0",
         // currency
@@ -10967,7 +10967,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 und %2\0", "%1 und %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "Vormittag\0", "Namittag\0",
         // currency
@@ -11000,7 +11000,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 અને %2\0", "%1 અને %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "hh:mm AP\0", "hh:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "hh:mm AP\0", "hh:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11066,7 +11066,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "a.m.\0", "p.m.\0",
         // currency
@@ -11099,7 +11099,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 da %2\0", "%1 da %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11132,7 +11132,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 da %2\0", "%1 da %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11165,7 +11165,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 da %2\0", "%1 da %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11198,7 +11198,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11264,7 +11264,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, और %2\0", "%1 और %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "am\0", "pm\0",
         // currency
@@ -11297,7 +11297,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 i %2\0", "%1 i %2\0",
         // date/time format
-        "d. M. yyyyyyyy.\0", "d. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d. M. yyyy.\0", "d. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11363,7 +11363,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 a %2\0", "%1 a %2\0",
         // date/time format
-        "d.M.yyyyyyyy\0", "d. MMMM yyyy\0", "H:mm 'hodź'.\0", "H:mm:ss t\0",
+        "d.M.yyyy\0", "d. MMMM yyyy\0", "H:mm 'hodź'.\0", "H:mm:ss t\0",
         // am/pm
         "dopołdnja\0", "popołdnju\0",
         // currency
@@ -11429,7 +11429,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 և %2\0", "%1 և %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "dd MMMM, yyyy թ.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "dd MMMM, yyyy թ.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11495,7 +11495,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, dan %2\0", "%1 dan %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d MMMM yyyy\0", "HH.mm\0", "HH.mm.ss t\0",
+        "dd/MM/yyyy\0", "d MMMM yyyy\0", "HH.mm\0", "HH.mm.ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11528,7 +11528,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, na %2\0", "%1 na %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "A.M.\0", "P.M.\0",
         // currency
@@ -11627,7 +11627,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11660,7 +11660,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11693,7 +11693,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11726,7 +11726,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -11891,7 +11891,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 და %2\0", "%1 და %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "შუადღ. შემდეგ\0",
         // currency
@@ -12122,7 +12122,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1 және %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "yyyy 'ж'. d MMMM\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "yyyy 'ж'. d MMMM\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -12254,7 +12254,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 និង %2\0", "%1 និង​%2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -12287,7 +12287,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, ಮತ್ತು %2\0", "%1 ಮತ್ತು %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "MMMM d, yyyy\0", "hh:mm AP\0", "hh:mm:ss AP t\0",
+        "d/M/yyyy\0", "MMMM d, yyyy\0", "hh:mm AP\0", "hh:mm:ss AP t\0",
         // am/pm
         "ಪೂರ್ವಾಹ್ನ\0", "ಅಪರಾಹ್ನ\0",
         // currency
@@ -12320,7 +12320,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 및 %2\0", "%1 및 %2\0",
         // date/time format
-        "yyyyyyyy. M. d.\0", "yyyy년 M월 d일\0", "AP h:mm\0", "AP h시 m분 s초 t\0",
+        "yyyy. M. d.\0", "yyyy년 M월 d일\0", "AP h:mm\0", "AP h시 m분 s초 t\0",
         // am/pm
         "오전\0", "오후\0",
         // currency
@@ -12353,7 +12353,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 및 %2\0", "%1 및 %2\0",
         // date/time format
-        "yyyyyyyy. M. d.\0", "yyyy년 M월 d일\0", "AP h:mm\0", "AP h시 m분 s초 t\0",
+        "yyyy. M. d.\0", "yyyy년 M월 d일\0", "AP h:mm\0", "AP h시 m분 s초 t\0",
         // am/pm
         "오전\0", "오후\0",
         // currency
@@ -12386,7 +12386,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "d-M-yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d-M-yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "म.पू.\0", "म.नं.\0",
         // currency
@@ -12419,7 +12419,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -12617,7 +12617,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 жана %2\0", "%1 жана %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "yyyy-'ж'., d-MMMM\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d/M/yyyy\0", "yyyy-'ж'., d-MMMM\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "таңкы\0", "түштөн кийинки\0",
         // currency
@@ -12683,7 +12683,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 a(n) %2\0", "%1 a(n) %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "moies\0", "nomëttes\0",
         // currency
@@ -12749,7 +12749,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -13145,7 +13145,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 un %2\0", "%1 un %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "yyyy. 'APdAP' d. MMMM\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "yyyy. 'APdAP' d. MMMM\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "priekšpusdiena\0", "pēcpusdiena\0",
         // currency
@@ -13442,7 +13442,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
-        "dd.M.yyyyyyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.M.yyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "претпладне\0", "попладне\0",
         // currency
@@ -13475,7 +13475,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2 എന്നിവ\0", "%1 കൂടാതെ %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "yyyy, MMMM d\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "yyyy, MMMM d\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -13541,7 +13541,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 आणि %2\0", "%1 आणि %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "म.पू.\0", "म.उ.\0",
         // currency
@@ -13574,7 +13574,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dan %2\0", "%1 dan %2\0",
         // date/time format
-        "d/MM/yyyyyyyy\0", "yyyy MMMM d\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/MM/yyyy\0", "yyyy MMMM d\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "PG\0", "PTG\0",
         // currency
@@ -13607,7 +13607,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dan %2\0", "%1 dan %2\0",
         // date/time format
-        "d/MM/yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/MM/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "PG\0", "PTG\0",
         // currency
@@ -13640,7 +13640,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dan %2\0", "%1 dan %2\0",
         // date/time format
-        "d/MM/yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/MM/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "PG\0", "PTG\0",
         // currency
@@ -13739,7 +13739,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1 %2\0", "%1 %2\0", "%1နှင့် %2\0", "%1နှင့် %2\0",
         // date/time format
-        "dd-MM-yyyyyyyy\0", "yyyy၊ d MMMM\0", "B H:mm\0", "t HH:mm:ss\0",
+        "dd-MM-yyyy\0", "yyyy၊ d MMMM\0", "B H:mm\0", "t HH:mm:ss\0",
         // am/pm
         "နံနက်\0", "ညနေ\0",
         // currency
@@ -13937,7 +13937,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 un %2\0", "%1 un %2\0",
         // date/time format
-        "d.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "'h'. H.mm\0", "'hodddH' H.mm:ss (t)\0",
+        "d.MM.yyyy\0", "d. MMMM yyyy\0", "'h'. H.mm\0", "'hodddH' H.mm:ss (t)\0",
         // am/pm
         "vm\0", "nm\0",
         // currency
@@ -13970,7 +13970,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 un %2\0", "%1 un %2\0",
         // date/time format
-        "d.MM.yyyyyyyy\0", "d. MMMM yyyy\0", "'h'. H.mm\0", "'hodddH' H.mm:ss (t)\0",
+        "d.MM.yyyy\0", "d. MMMM yyyy\0", "'h'. H.mm\0", "'hodddH' H.mm:ss (t)\0",
         // am/pm
         "vm\0", "nm\0",
         // currency
@@ -14003,7 +14003,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1,%2\0", "%1, %2\0", "%1 र %2\0", "%1 र %2\0",
         // date/time format
-        "yyyyyyyy/M/d\0", "yyyy MMMM d\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "yyyy/M/d\0", "yyyy MMMM d\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "पूर्वाह्न\0", "अपराह्न\0",
         // currency
@@ -14036,7 +14036,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1,%2\0", "%1, %2\0", "%1 र %2\0", "%1 र %2\0",
         // date/time format
-        "yyyyyyyy/M/d\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
+        "yyyy/M/d\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "पूर्वाह्न\0", "अपराह्न\0",
         // currency
@@ -14366,7 +14366,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "'yyyyɛ'̌ʼ d 'nAP' MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "'yyyyɛ'̌ʼ d 'nAP' MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "mbaʼámbaʼ\0", "ncwònzém\0",
         // currency
@@ -14465,7 +14465,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "WD\0", "WB\0",
         // currency
@@ -14498,7 +14498,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "WD\0", "WB\0",
         // currency
@@ -14531,7 +14531,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, ଓ %2\0", "%1 ଓ %2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "ପୂର୍ବାହ୍ନ\0", "ଅପରାହ୍ନ\0",
         // currency
@@ -14564,7 +14564,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ӕмӕ %2\0", "%1 ӕмӕ %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d MMMM, yyyy 'аз'\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d MMMM, yyyy 'аз'\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "ӕмбисбоны размӕ\0", "ӕмбисбоны фӕстӕ\0",
         // currency
@@ -14597,7 +14597,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ӕмӕ %2\0", "%1 ӕмӕ %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d MMMM, yyyy 'аз'\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d MMMM, yyyy 'аз'\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "ӕмбисбоны размӕ\0", "ӕмбисбоны фӕстӕ\0",
         // currency
@@ -14630,7 +14630,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ਅਤੇ %2\0", "%1 ਅਤੇ %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "ਪੂ.ਦੁ.\0", "ਬਾ.ਦੁ.\0",
         // currency
@@ -14663,7 +14663,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 ਅਤੇ %2\0", "%1 ਅਤੇ %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "ਪੂ.ਦੁ.\0", "ਬਾ.ਦੁ.\0",
         // currency
@@ -14729,7 +14729,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 be %2\0", "%1 be %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "yyyy 'mdddttAPs' d. MMMM\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "yyyy 'mdddttAPs' d. MMMM\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "ankstāinan\0", "pa pussideinan\0",
         // currency
@@ -15125,7 +15125,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 e %2\0", "%1 e %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "d 'dddd' MMMM 'dddd' yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "manhã\0", "tarde\0",
         // currency
@@ -15323,7 +15323,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "dd-MM-yyyyyyyy\0", "d 'dAP' MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd-MM-yyyy\0", "d 'dAP' MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -15752,7 +15752,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 уонна %2\0", "%1 уонна %2\0",
         // date/time format
-        "yyyyyyyy/M/d\0", "yyyy, MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
+        "yyyy/M/d\0", "yyyy, MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "ЭИ\0", "ЭК\0",
         // currency
@@ -16214,7 +16214,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 in %2\0", "%1 in %2\0",
         // date/time format
-        "d. MM. yyyyyyyy\0", "dd. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d. MM. yyyy\0", "dd. MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "dopoldne\0", "popoldne\0",
         // currency
@@ -16313,7 +16313,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 iyo %2\0", "%1 iyo %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "GH\0", "GD\0",
         // currency
@@ -16346,7 +16346,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 iyo %2\0", "%1 iyo %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "GH\0", "GD\0",
         // currency
@@ -16379,7 +16379,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 iyo %2\0", "%1 iyo %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "GH\0", "GD\0",
         // currency
@@ -16412,7 +16412,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 iyo %2\0", "%1 iyo %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "GH\0", "GD\0",
         // currency
@@ -16445,7 +16445,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dhe %2\0", "%1 dhe %2\0",
         // date/time format
-        "d.M.yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP, t\0",
+        "d.M.yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP, t\0",
         // am/pm
         "paradite\0", "pasdite\0",
         // currency
@@ -16478,7 +16478,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dhe %2\0", "%1 dhe %2\0",
         // date/time format
-        "d.M.yyyyyyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.M.yyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "paradite\0", "pasdite\0",
         // currency
@@ -16511,7 +16511,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 dhe %2\0", "%1 dhe %2\0",
         // date/time format
-        "d.M.yyyyyyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.M.yyyy\0", "yyyy MMMM d\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "paradite\0", "pasdite\0",
         // currency
@@ -16544,7 +16544,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
-        "d.M.yyyyyyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.M.yyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "прије подне\0", "по подне\0",
         // currency
@@ -16577,7 +16577,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
-        "d.M.yyyyyyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.M.yyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "прије подне\0", "по подне\0",
         // currency
@@ -16610,7 +16610,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
-        "d.M.yyyyyyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.M.yyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "пре подне\0", "по подне\0",
         // currency
@@ -16643,7 +16643,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
-        "d.M.yyyyyyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.M.yyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "пре подне\0", "по подне\0",
         // currency
@@ -16676,7 +16676,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
-        "d.M.yyyyyyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.M.yyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "prije podne\0", "po podne\0",
         // currency
@@ -16709,7 +16709,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
-        "d.M.yyyyyyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.M.yyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "prije podne\0", "po podne\0",
         // currency
@@ -16742,7 +16742,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
-        "d.M.yyyyyyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.M.yyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "пре подне\0", "по подне\0",
         // currency
@@ -16775,7 +16775,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 и %2\0", "%1 и %2\0",
         // date/time format
-        "d.M.yyyyyyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d.M.yyyy.\0", "dd. MMMM yyyy.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "пре подне\0", "по подне\0",
         // currency
@@ -17039,7 +17039,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 மற்றும் %2\0", "%1 மற்றும் %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "AP h:mm\0", "AP h:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "AP h:mm\0", "AP h:mm:ss t\0",
         // am/pm
         "முற்பகல்\0", "பிற்பகல்\0",
         // currency
@@ -17072,7 +17072,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 மற்றும் %2\0", "%1 மற்றும் %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "முற்பகல்\0", "பிற்பகல்\0",
         // currency
@@ -17105,7 +17105,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 மற்றும் %2\0", "%1 மற்றும் %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "AP h:mm\0", "AP h:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "AP h:mm\0", "AP h:mm:ss t\0",
         // am/pm
         "முற்பகல்\0", "பிற்பகல்\0",
         // currency
@@ -17138,7 +17138,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 மற்றும் %2\0", "%1 மற்றும் %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM, yyyy\0", "AP h:mm\0", "AP h:mm:ss t\0",
+        "d/M/yyyy\0", "d MMMM, yyyy\0", "AP h:mm\0", "AP h:mm:ss t\0",
         // am/pm
         "முற்பகல்\0", "பிற்பகல்\0",
         // currency
@@ -17171,7 +17171,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 మరియు %2\0", "%1 మరియు %2\0",
         // date/time format
-        "dd-MM-yyyyyyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "dd-MM-yyyy\0", "d MMMM, yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -17270,7 +17270,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "пе. чо.\0", "па. чо.\0",
         // currency
@@ -17303,7 +17303,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1 %2\0", "%1 %2\0", "%1 และ%2\0", "%1และ%2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM yyyy\0", "HH:mm\0", "H นาฬิกา mm นาที ss วินาที t\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "HH:mm\0", "H นาฬิกา mm นาที ss วินาที t\0",
         // am/pm
         "ก่อนเที่ยง\0", "หลังเที่ยง\0",
         // currency
@@ -17336,7 +17336,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "ንጉሆ ሰዓተ\0", "ድሕር ሰዓት\0",
         // currency
@@ -17369,7 +17369,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, %2\0", "%1, %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "dd/MM/yyyy\0", "dd MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "ንጉሆ ሰዓተ\0", "ድሕር ሰዓት\0",
         // currency
@@ -17435,7 +17435,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1 mo %2\0", "%1 mo %2\0", "%1 mo %2\0", "%1 mo %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "HH\0", "EA\0",
         // currency
@@ -17666,7 +17666,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 і %2\0", "%1 і %2\0",
         // date/time format
-        "dd.MM.yyyyyyyy\0", "d MMMM yyyy 'р'.\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd.MM.yyyy\0", "d MMMM yyyy 'р'.\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "дп\0", "пп\0",
         // currency
@@ -17699,7 +17699,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1، %2\0", "%1، %2\0", "%2، %1\0", "%2، %1\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM، yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM، yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -17732,7 +17732,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1، %2\0", "%1، %2\0", "%1، اور %2\0", "%1 اور %2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "d MMMM، yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
+        "d/M/yyyy\0", "d MMMM، yyyy\0", "h:mm AP\0", "h:mm:ss AP t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
@@ -17765,7 +17765,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 va %2\0", "%1 va %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d-MMMM, yyyy\0", "HH:mm\0", "H:mm:ss (t)\0",
+        "dd/MM/yyyy\0", "d-MMMM, yyyy\0", "HH:mm\0", "H:mm:ss (t)\0",
         // am/pm
         "TO\0", "TK\0",
         // currency
@@ -17798,7 +17798,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 va %2\0", "%1 va %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d-MMMM, yyyy\0", "HH:mm\0", "H:mm:ss (t)\0",
+        "dd/MM/yyyy\0", "d-MMMM, yyyy\0", "HH:mm\0", "H:mm:ss (t)\0",
         // am/pm
         "TO\0", "TK\0",
         // currency
@@ -17831,7 +17831,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 va %2\0", "%1 va %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "d-MMMM, yyyy\0", "HH:mm\0", "H:mm:ss (t)\0",
+        "dd/MM/yyyy\0", "d-MMMM, yyyy\0", "HH:mm\0", "H:mm:ss (t)\0",
         // am/pm
         "TO\0", "TK\0",
         // currency
@@ -18194,7 +18194,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1 און %2\0", "%1 און %2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "dטן MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "dd/MM/yyyy\0", "dטן MMMM yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "פֿאַרמיטאָג\0", "נאָכמיטאָג\0",
         // currency
@@ -18425,7 +18425,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1和%2\0", "%1和%2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "yyyy年M月d日\0", "APh:mm\0", "t APh:mm:ss\0",
+        "d/M/yyyy\0", "yyyy年M月d日\0", "APh:mm\0", "t APh:mm:ss\0",
         // am/pm
         "上午\0", "下午\0",
         // currency
@@ -18458,7 +18458,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1和%2\0", "%1和%2\0",
         // date/time format
-        "d/M/yyyyyyyy\0", "yyyy年M月d日\0", "APh:mm\0", "t APh:mm:ss\0",
+        "d/M/yyyy\0", "yyyy年M月d日\0", "APh:mm\0", "t APh:mm:ss\0",
         // am/pm
         "上午\0", "下午\0",
         // currency
@@ -18491,7 +18491,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1、%2\0", "%1、%2\0", "%1和%2\0", "%1和%2\0",
         // date/time format
-        "dd/MM/yyyyyyyy\0", "yyyy年M月d日\0", "APh:mm\0", "t APh:mm:ss\0",
+        "dd/MM/yyyy\0", "yyyy年M月d日\0", "APh:mm\0", "t APh:mm:ss\0",
         // am/pm
         "上午\0", "下午\0",
         // currency
@@ -18623,7 +18623,7 @@ static const QLocalePrivate localeTbl[] = {
         // list pattern
         "%1, %2\0", "%1, %2\0", "%1, ne-%2\0", "%1 ne-%2\0",
         // date/time format
-        "M/d/yyyyyyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
+        "M/d/yyyy\0", "MMMM d, yyyy\0", "HH:mm\0", "HH:mm:ss t\0",
         // am/pm
         "AM\0", "PM\0",
         // currency
