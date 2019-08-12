@@ -5079,9 +5079,7 @@ QString QDateTimeParser::sectionFormat(Section s, int count) const
         return QString();
     }
 
-    QString str;
-    str.fill(fillChar, count);
-    return str;
+    return QString(count, fillChar);
 }
 
 
