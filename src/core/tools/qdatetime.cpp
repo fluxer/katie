@@ -995,6 +995,21 @@ int QDate::daysTo(const QDate &d) const
 */
 
 #ifndef QT_NO_DATESTRING
+static int fromShortMonthName(const QString &monthName)
+{
+    // Assume that English monthnames are the default
+    for (int i = 0; i < 12; ++i) {
+        if (monthName == QLatin1String(qt_shortMonthNames[i]))
+            return i + 1;
+    }
+    // If English names can't be found, search the localized ones
+    for (int i = 1; i <= 12; ++i) {
+        if (monthName == QDate::shortMonthName(i))
+            return i;
+    }
+    return -1;
+}
+
 /*!
     \fn QDate QDate::fromString(const QString &string, Qt::DateFormat format)
 
@@ -1040,24 +1055,7 @@ QDate QDate::fromString(const QString& s, Qt::DateFormat f)
             return QDate();
         }
 
-        QString monthName = parts.at(1);
-        int month = -1;
-        // Assume that English monthnames are the default
-        for (int i = 0; i < 12; ++i) {
-            if (monthName == QLatin1String(qt_shortMonthNames[i])) {
-                month = i + 1;
-                break;
-            }
-        }
-        // If English names can't be found, search the localized ones
-        if (month == -1) {
-            for (int i = 1; i <= 12; ++i) {
-                if (monthName == QDate::shortMonthName(i)) {
-                    month = i;
-                    break;
-                }
-            }
-        }
+        int month = fromShortMonthName(parts.at(1));
         if (month < 1 || month > 12) {
             return QDate();
         }
@@ -2975,22 +2973,6 @@ int QDateTime::utcOffset() const
 }
 
 #ifndef QT_NO_DATESTRING
-
-static int fromShortMonthName(const QString &monthName)
-{
-    // Assume that English monthnames are the default
-    for (int i = 0; i < 12; ++i) {
-        if (monthName == QLatin1String(qt_shortMonthNames[i]))
-            return i + 1;
-    }
-    // If English names can't be found, search the localized ones
-    for (int i = 1; i <= 12; ++i) {
-        if (monthName == QDate::shortMonthName(i))
-            return i;
-    }
-    return -1;
-}
-
 /*!
     \fn QDateTime QDateTime::fromString(const QString &string, Qt::DateFormat format)
 
