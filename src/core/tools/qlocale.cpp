@@ -1210,8 +1210,7 @@ QString QLocale::toString(const QDate &date, FormatType format) const
     }
 #endif
 
-    QString format_str = dateFormat(format);
-    return toString(date, format_str);
+    return toString(date, dateFormat(format));
 }
 
 static bool timeFormatContainsAP(const QString &format)
