@@ -32,9 +32,7 @@
 ****************************************************************************/
 
 #include <QString>
-#ifdef QT_NETWORK_LIB
 #include <QtNetwork/QHostInfo>
-#endif
 
 class QtNetworkSettings
 {
@@ -105,7 +103,6 @@ public:
 // ### remove, only Symbian needed that
 #define Q_SET_DEFAULT_IAP
 
-#ifdef QT_NETWORK_LIB
 class QtNetworkSettingsInitializerCode {
 public:
     QtNetworkSettingsInitializerCode() {
@@ -119,4 +116,3 @@ public:
     }
 };
 QtNetworkSettingsInitializerCode qtNetworkSettingsInitializer;
-#endif
