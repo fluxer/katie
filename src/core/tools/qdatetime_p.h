@@ -142,6 +142,7 @@ public:
         YearSection = 0x00400,
         YearSection2Digits = 0x00800,
         DayOfWeekSection = 0x01000,
+        DaySectionMask = DaySection|DayOfWeekSection,
         DateSectionMask = (DaySection|MonthSection|YearSection|YearSection2Digits|DayOfWeekSection),
         FirstSection = 0x02000|Internal,
         LastSection = 0x04000|Internal,

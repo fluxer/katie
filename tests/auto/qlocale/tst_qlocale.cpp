@@ -1082,7 +1082,7 @@ void tst_QLocale::toDateTime_data()
     QTest::newRow("5nn_NO") << "nn_NO" << QDateTime(QDate(1974, 1, 1), QTime(0, 0, 0))
                             << "dd/MM/yyy z" << "01/01/74y 0";
     QTest::newRow("8nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(0, 0, 13))
-                            << "ddddd/MMMMM/yy ss" << "mandag2/desember12/74 13";
+                            << "ddddd/MMMMM/yy ss" << "måndag2/desember12/74 13";
     QTest::newRow("9nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(0, 0, 13))
                             << "'dddd'/MMMM/yy s" << "dddd/desember/74 13";
     QTest::newRow("10nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(0, 4, 0))
