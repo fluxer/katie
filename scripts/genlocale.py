@@ -354,30 +354,20 @@ def printlocaledata(frommap, key):
         return
     print('''    {
         %s, %s, %s,
-        // week
         %s, %s, %s,
-        // symbols
         %s, %s, %s, %s, %s, %s, %s, %s, %s,
-        // quotation
         %s, %s, %s, %s,
-        // endonym
         %s, %s,
-        // list pattern
         %s, %s, %s, %s,
-        // date/time format
         %s, %s, %s, %s,
-        // am/pm
         %s, %s,
-        // currency
         %s, %s, %s, %s, %s,
-        // month names
         %s,
         %s,
         %s,
         %s,
         %s,
         %s,
-        // day names
         %s,
         %s,
         %s,
@@ -1100,7 +1090,6 @@ for likelysubtag in root.findall('./likelySubtags/likelySubtag'):
         'tolanguage' : likelytolanguage,
         'toscript' : likelytoscript,
         'tocountry' : likelytocountry,
-        'to': likelysubtagto,
     }
 print('''static const struct subtagAliasTblData {
     const QLocale::Language fromlanguage;
@@ -1114,16 +1103,12 @@ print('''static const struct subtagAliasTblData {
 for key in sorted(likelysubtagsmap):
     value = likelysubtagsmap[key]
     print('''    {
-        // from %s
         %s, %s, %s,
-        // to %s
         %s, %s, %s
     },''' % (
-            key,
             value['fromlanguage'],
             value['fromscript'],
             value['fromcountry'],
-            value['to'],
             value['tolanguage'],
             value['toscript'],
             value['tocountry'],
