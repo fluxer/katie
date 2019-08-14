@@ -237,14 +237,16 @@ const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLo
     return &localeTbl[0];
 }
 
+static const int bcp47max = 11;  // worst case according to BCP47
+
 static bool parse_locale_tag(const QString &input, int &i, QString *result, const QString &separators)
 {
-    *result = QString(8, Qt::Uninitialized); // worst case according to BCP47
+    *result = QString(bcp47max, Qt::Uninitialized);
     QChar *pch = result->data();
     const QChar *uc = input.data() + i;
     const int l = input.length();
     int size = 0;
-    for (; i < l && size < 8; ++i, ++size) {
+    for (; i < l && size < bcp47max; ++i, ++size) {
         if (separators.contains(*uc))
             break;
         if (! ((uc->unicode() >= 'a' && uc->unicode() <= 'z') ||
