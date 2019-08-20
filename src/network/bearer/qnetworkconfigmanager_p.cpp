@@ -413,10 +413,8 @@ void QNetworkConfigurationManagerPrivate::updateConfigurations()
 
     if (firstUpdate) {
         firstUpdate = false;
-        QList<QBearerEngine*> enginesToInitialize = sessionEngines; //shallow copy the list in case it is modified when we unlock mutex
-        locker.unlock();
-        foreach (QBearerEngine* engine, enginesToInitialize) {
-            QMetaObject::invokeMethod(engine, "initialize", Qt::BlockingQueuedConnection);
+        foreach (QBearerEngine* engine, sessionEngines) {
+            QMetaObject::invokeMethod(engine, "initialize");
         }
     }
 }
