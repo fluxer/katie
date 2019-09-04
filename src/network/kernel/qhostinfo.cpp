@@ -207,7 +207,6 @@ int QHostInfo::lookupHost(const QString &name, QObject *receiver,
         manager->scheduleLookup(runnable);
     }
 #else
-    QHostInfo info;
     if (!receiver)
         return -1;
 
