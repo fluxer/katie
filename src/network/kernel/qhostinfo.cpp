@@ -707,12 +707,7 @@ QHostInfo qt_qhostinfo_lookup(const QString &name, QObject *receiver, const char
 #endif
 
     // was not in cache, trigger lookup
-    QHostInfo info;
-    *id = info.lookupHost(name, receiver, member);
-    *valid = (*id != -1);
-    if (*valid) {
-        return info;
-    }
+    *id = QHostInfo::lookupHost(name, receiver, member);
 
     // return empty response, valid==false
     return QHostInfo();
