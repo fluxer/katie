@@ -163,12 +163,12 @@ int QHostInfo::lookupHost(const QString &name, QObject *receiver,
 
     qRegisterMetaType<QHostInfo>("QHostInfo");
 
+    if (!receiver)
+        return -1;
+
     int id = theIdCounter.fetchAndAddRelaxed(1); // generate unique ID
 
     if (name.isEmpty()) {
-        if (!receiver)
-            return -1;
-
         QHostInfo hostInfo(id);
         hostInfo.setError(QHostInfo::HostNotFound);
         hostInfo.setErrorString(QCoreApplication::translate("QHostInfo", "No host name given"));
@@ -189,9 +189,6 @@ int QHostInfo::lookupHost(const QString &name, QObject *receiver,
             bool valid = false;
             QHostInfo info = manager->cache.get(name, &valid);
             if (valid) {
-                if (!receiver)
-                    return -1;
-
                 info.setLookupId(id);
                 QHostInfoResult result;
                 QObject::connect(&result, SIGNAL(resultsReady(QHostInfo)), receiver, member, Qt::QueuedConnection);
@@ -207,9 +204,6 @@ int QHostInfo::lookupHost(const QString &name, QObject *receiver,
         manager->scheduleLookup(runnable);
     }
 #else
-    if (!receiver)
-        return -1;
-
     QHostInfo hostInfo(id);
     hostInfo.fromName(name);
     QScopedPointer<QHostInfoResult> result(new QHostInfoResult);
