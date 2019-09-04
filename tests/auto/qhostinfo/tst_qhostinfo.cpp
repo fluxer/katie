@@ -35,7 +35,7 @@
 #include <qcoreapplication.h>
 #include <QDebug>
 #include <QTcpSocket>
-#include <qthread_p.h>
+#include <qthread.h>
 #include <QTcpServer>
 #include <qlibrary.h>
 #include <qhostinfo.h>
@@ -96,8 +96,10 @@ private slots:
     void blockingLookup();
 
     void raceCondition();
+#ifndef QT_NO_THREAD
     void threadSafety();
     void threadSafetyAsynchronousAPI();
+#endif
 
     void multipleSameLookups();
     void multipleDifferentLookups_data();
@@ -106,7 +108,9 @@ private slots:
     void cache();
 
     void abortHostLookup();
+#ifndef QT_NO_THREAD
     void abortHostLookupInDifferentThread();
+#endif
 protected slots:
     void resultsReady(const QHostInfo &);
 
@@ -399,6 +403,7 @@ void tst_QHostInfo::raceCondition()
     }
 }
 
+#ifndef QT_NO_THREAD
 class LookupThread : public QThread
 {
 protected:
@@ -473,6 +478,7 @@ void tst_QHostInfo::threadSafetyAsynchronousAPI()
         QCOMPARE(receiver->numrequests, 0);
     }
 }
+#endif // QT_NO_THREAD
 
 // this test is for the multi-threaded QHostInfo rewrite. It is about getting results at all,
 // not about getting correct IPs
@@ -602,6 +608,7 @@ void tst_QHostInfo::abortHostLookup()
     QCOMPARE(lookupsDoneCounter, 0);
 }
 
+#ifndef QT_NO_THREAD
 class LookupAborter : public QObject
 {
     Q_OBJECT
@@ -634,6 +641,7 @@ void tst_QHostInfo::abortHostLookupInDifferentThread()
     QTestEventLoop::instance().enterLoop(5);
     QCOMPARE(lookupsDoneCounter, 0);
 }
+#endif // QT_NO_THREAD
 
 QTEST_MAIN(tst_QHostInfo)
 
