@@ -40,11 +40,11 @@ public:
 
     static QString serverLocalName()
     {
-        return QString::fromLatin1("qt-test-server");
+        return QString::fromLatin1("httpbin");
     }
     static QString serverDomainName()
     {
-        return QString::fromLatin1("qt-test-net");
+        return QString::fromLatin1("org");
     }
     static QString serverName()
     {
@@ -62,6 +62,11 @@ public:
     static QHostAddress serverIP()
     {
         return QHostInfo::fromName(serverName()).addresses().first();
+    }
+
+    static QString serverIPs()
+    {
+        return QLatin1String("52.200.159.44 52.73.140.86");
     }
 
     static bool compareReplyIMAP(QByteArray const& actual)

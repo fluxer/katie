@@ -238,7 +238,7 @@ void tst_QHostInfo::lookupIPv4_data()
     QTest::addColumn<int>("err");
 
     // Test server lookup
-    QTest::newRow("lookup_01") << QtNetworkSettings::serverName() << QtNetworkSettings::serverIP().toString() << int(QHostInfo::NoError);
+    QTest::newRow("lookup_01") << QtNetworkSettings::serverName() << QtNetworkSettings::serverIPs() << int(QHostInfo::NoError);
     QTest::newRow("empty") << "" << "" << int(QHostInfo::HostNotFound);
 
     QTest::newRow("single_ip4") << "a-single" TEST_DOMAIN << "192.0.2.1" << int(QHostInfo::NoError);
