@@ -56,8 +56,8 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_NO_SYSTEMLOCALE
 static const qint16 systemLocaleIndex = localeTblSize + 1;
+#ifndef QT_NO_SYSTEMLOCALE
 static QSystemLocale *_systemLocale = Q_NULLPTR;
 class QSystemLocaleSingleton: public QSystemLocale
 {
