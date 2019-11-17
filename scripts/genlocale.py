@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #-*- coding: UTF-8 -*-
 
-# Data is from https://unicode.org/Public/cldr/35.1/core.zip
+# Data is from https://unicode.org/Public/cldr/36/core.zip
 
 import os, sys, glob, re
 import xml.etree.ElementTree as ET
@@ -33,6 +33,7 @@ def stripxmltext(fromxmltext):
 def normalizestring(fromstring):
     result = fromstring.replace(' ', '')
     result = result.replace('-', '')
+    result = result.replace(',', '')
     result = result.replace("'", '')
     result = result.replace('&', 'And')
     result = result.replace('(', '')
