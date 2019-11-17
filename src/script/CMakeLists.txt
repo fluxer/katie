@@ -6,7 +6,6 @@ add_definitions(
     -Djscyyerror=qtjscyyerror
     -DWTF=QTWTF
     -DQLALR_NO_QSCRIPTGRAMMAR_DEBUG_INFO
-    -DBUILDING_QT__
 )
 set(EXTRA_SCRIPT_LIBS KtCore ${PCRE_LIBRARIES})
 
