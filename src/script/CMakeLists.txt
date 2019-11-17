@@ -1,5 +1,4 @@
 add_definitions(
-    -DQT_BUILD_SCRIPT_LIB
     -DJSC=QTJSC
     -Djscyyparse=qtjscyyparse
     -Djscyylex=qtjscyylex

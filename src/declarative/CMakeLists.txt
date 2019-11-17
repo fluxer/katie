@@ -1,5 +1,4 @@
 add_definitions(
-    -DQT_BUILD_DECLARATIVE_LIB
     -DQT_NO_URL_CAST_FROM_STRING
 )
 set(EXTRA_DECLARATIVE_LIBS KtCore KtGui KtNetwork KtScript)

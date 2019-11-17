@@ -1,5 +1,4 @@
 add_definitions(
-    -DQT_BUILD_DBUS_LIB
     -DDBUS_API_SUBJECT_TO_CHANGE
 )
 set(EXTRA_DBUS_LIBS KtCore KtXml ${DBUS_LIBRARIES})

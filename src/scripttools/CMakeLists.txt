@@ -1,4 +1,4 @@
-add_definitions(-DQT_BUILD_SCRIPTTOOLS_LIB)
+# add_definitions()
 set(EXTRA_SCRIPTTOOLS_LIBS KtCore KtGui KtScript)
 
 set(SCRIPTTOOLS_PUBLIC_HEADERS

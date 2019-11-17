@@ -1,4 +1,4 @@
-add_definitions(-DQT_BUILD_XML_LIB)
+# add_definitions()
 set(EXTRA_XML_LIBS KtCore)
 
 set(XML_PUBLIC_HEADERS

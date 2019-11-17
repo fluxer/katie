@@ -1,4 +1,4 @@
-add_definitions(-DQT_BUILD_SQL_LIB)
+# add_definitions()
 set(EXTRA_SQL_LIBS KtCore)
 
 set(SQL_PUBLIC_HEADERS

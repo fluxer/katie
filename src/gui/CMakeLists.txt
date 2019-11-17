@@ -1,4 +1,4 @@
-add_definitions(-DQT_BUILD_GUI_LIB)
+# add_definitions()
 set(EXTRA_GUI_LIBS KtCore KtXml ${FREETYPE_LIBRARIES} ${X11_LIBRARIES} ${X11_X11_LIB} ${X11_Xt_LIB} ${X11_Xi_LIB})
 
 set(GUI_PUBLIC_HEADERS

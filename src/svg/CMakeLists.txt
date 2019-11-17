@@ -1,4 +1,4 @@
-add_definitions(-DQT_BUILD_SVG_LIB)
+# add_definitions()
 set(EXTRA_SVG_LIBS KtCore KtXml KtGui)
 
 set(SVG_PUBLIC_HEADERS
