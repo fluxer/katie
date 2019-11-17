@@ -35,8 +35,9 @@
 #include "qdir.h"
 #include "qset.h"
 #include "qabstractfileengine_p.h"
-#ifdef QT_BUILD_CORE_LIB
-#include "qresource_p.h"
+
+#ifndef QT_BOOTSTRAPPED
+#  include "qresource_p.h"
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -123,7 +124,7 @@ static bool _q_resolveEntryAndCreateLegacyEngine_recursive(QFileSystemEntry &ent
     if ((engine = qt_custom_file_engine_handler_create(filePath)))
         return _q_checkEntry(engine, resolvingEntry);
 
-#if defined(QT_BUILD_CORE_LIB)
+#ifndef QT_BOOTSTRAPPED
     for (int prefixSeparator = 0; prefixSeparator < filePath.size(); ++prefixSeparator) {
         QChar const ch = filePath[prefixSeparator];
         if (ch == QLatin1Char('/'))
@@ -157,7 +158,7 @@ static bool _q_resolveEntryAndCreateLegacyEngine_recursive(QFileSystemEntry &ent
         //  if (!ch.isLetterOrNumber())
         //      break;
     }
-#endif // defined(QT_BUILD_CORE_LIB)
+#endif // QT_BOOTSTRAPPED
 
     return _q_checkEntry(entry, data, resolvingEntry);
 }

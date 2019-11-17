@@ -44,8 +44,8 @@
 
 #include <errno.h>
 
-#if defined(QT_BUILD_CORE_LIB)
-#include "qcoreapplication.h"
+#ifndef QT_BOOTSTRAPPED
+#  include "qcoreapplication.h"
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -111,7 +111,7 @@ static bool createFileFromTemplate(NativeFileHandle &file,
     {
         Char *rIter = placeholderEnd;
 
-#if defined(QT_BUILD_CORE_LIB)
+#ifndef QT_BOOTSTRAPPED
         quint64 pid = quint64(QCoreApplication::applicationPid());
         do {
             *--rIter = Latin1Char((pid % 10) + '0');

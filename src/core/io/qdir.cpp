@@ -51,7 +51,7 @@
 #include "qfilesystemengine_p.h"
 #include "qscopedpointer.h"
 
-#ifdef QT_BUILD_CORE_LIB
+#ifndef QT_BOOTSTRAPPED
 #  include "qresource.h"
 #  include "qreadwritelock.h"
 #endif
@@ -60,7 +60,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifdef QT_BUILD_CORE_LIB
+#ifndef QT_BOOTSTRAPPED
 struct QCoreGlobalData {
     QMap<QString, QStringList> dirSearchPaths;
     QReadWriteLock dirSearchPathsLock;
@@ -855,7 +855,7 @@ void QDir::setNameFilters(const QStringList &nameFilters)
     d->nameFilters = nameFilters;
 }
 
-#ifdef QT_BUILD_CORE_LIB
+#ifndef QT_BOOTSTRAPPED
 /*!
     \since 4.3
 
@@ -928,7 +928,7 @@ QStringList QDir::searchPaths(const QString &prefix)
     return globalData()->dirSearchPaths.value(prefix);
 }
 
-#endif // QT_BUILD_CORE_LIB
+#endif // QT_BOOTSTRAPPED
 
 /*!
     Returns the value set by setFilter()
