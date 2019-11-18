@@ -3913,12 +3913,12 @@ bool QDateTimeParser::parseFormat(const QString &newFormat)
     QVector<SectionNode> newSectionNodes;
     Sections newDisplay = Q_NULLPTR;
     QStringList newSeparators;
-    int i, index = 0;
+    int index = 0;
     int add = 0;
     QChar status(zero);
     const int max = newFormat.size();
     int lastQuote = -1;
-    for (i = 0; i<max; ++i) {
+    for (int i = 0; i<max; ++i) {
         if (newFormat.at(i) == quote) {
             lastQuote = i;
             ++add;
@@ -5175,12 +5175,12 @@ QString QDateTimeParser::stateName(int s) const
 }
 
 #ifndef QT_NO_DATESTRING
-bool QDateTimeParser::fromString(const QString &t, QDate *date, QTime *time) const
+bool QDateTimeParser::fromString(const QString &format, QDate *date, QTime *time) const
 {
     QDateTime val(QDate(1900, 1, 1), QDATETIMEEDIT_TIME_MIN);
-    QString text = t;
+    QString formatcopy = format;
     int copy = -1;
-    const StateNode tmp = parse(text, copy, val, false);
+    const StateNode tmp = parse(formatcopy, copy, val, false);
     if (tmp.state != Acceptable || tmp.conflicts) {
         return false;
     }

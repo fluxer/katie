@@ -85,23 +85,23 @@ void QBenchmarkGlobalData::setMode(Mode mode)
 
 QBenchmarkMeasurerBase * QBenchmarkGlobalData::createMeasurer()
 {
-    QBenchmarkMeasurerBase *measurer = 0;
+    QBenchmarkMeasurerBase *m = 0;
     if (0) {
 #ifdef QTESTLIB_USE_VALGRIND
     } else if (mode_ == CallgrindChildProcess || mode_ == CallgrindParentProcess) {
-        measurer = new QBenchmarkCallgrindMeasurer;
+        m = new QBenchmarkCallgrindMeasurer;
 #endif
 #ifdef HAVE_TICK_COUNTER
     } else if (mode_ == TickCounter) {
-        measurer = new QBenchmarkTickMeasurer;
+        m = new QBenchmarkTickMeasurer;
 #endif
     } else if (mode_ == EventCounter) {
-        measurer = new QBenchmarkEvent;
+        m = new QBenchmarkEvent;
     } else {
-        measurer =  new QBenchmarkTimeMeasurer;
+        m =  new QBenchmarkTimeMeasurer;
     }
-    measurer->init();
-    return measurer;
+    m->init();
+    return m;
 }
 
 int QBenchmarkGlobalData::adjustMedianIterationCount()

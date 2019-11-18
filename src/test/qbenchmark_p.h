@@ -101,13 +101,13 @@ public:
     { }
 
     QBenchmarkResult(
-        const QBenchmarkContext &context, const qreal value, const int iterations,
-        QTest::QBenchmarkMetric metric, bool setByMacro)
-        : context(context)
-        , value(value)
-        , iterations(iterations)
-        , metric(metric)
-        , setByMacro(setByMacro)
+        const QBenchmarkContext &acontext, const qreal avalue, const int aiterations,
+        QTest::QBenchmarkMetric ametric, bool asetByMacro)
+        : context(acontext)
+        , value(avalue)
+        , iterations(aiterations)
+        , metric(ametric)
+        , setByMacro(asetByMacro)
         , valid(true)
     { }
 

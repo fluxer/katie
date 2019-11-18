@@ -1931,7 +1931,6 @@ int QObject::receivers(const char *signal) const
             return false;
         }
 
-        Q_D(const QObject);
         QMutexLocker locker(signalSlotLock(this));
         if (d->connectionLists) {
             if (signal_index < d->connectionLists->count()) {
