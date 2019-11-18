@@ -868,23 +868,6 @@ void QWidget::setAutoFillBackground(bool enabled)
 QWidgetMapper *QWidgetPrivate::mapper = 0;          // widget with wid
 QWidgetSet *QWidgetPrivate::allWidgets = 0;         // widgets with no wid
 
-
-/*****************************************************************************
-  QWidget utility functions
- *****************************************************************************/
-
-QRegion qt_dirtyRegion(QWidget *widget)
-{
-    if (!widget)
-        return QRegion();
-
-    QWidgetBackingStore *bs = qt_widget_private(widget)->maybeBackingStore();
-    if (!bs)
-        return QRegion();
-
-    return bs->dirtyRegion(widget);
-}
-
 /*****************************************************************************
   QWidget member functions
  *****************************************************************************/

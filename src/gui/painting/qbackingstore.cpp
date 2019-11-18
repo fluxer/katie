@@ -62,8 +62,6 @@
 
 QT_BEGIN_NAMESPACE
 
-extern QRegion qt_dirtyRegion(QWidget *);
-
 #ifdef Q_BACKINGSTORE_SUBSURFACES
 /*
    A version of QRect::intersects() that does not normalize the rects.
