@@ -1495,7 +1495,7 @@ void QRasterPaintEngine::fillRect(const QRectF &r, QSpanData *data)
     QRasterPaintEngineState *s = state();
 
     if (!s->flags.antialiased) {
-        uint txop = s->matrix.type();
+        QTransform::TransformationType txop = s->matrix.type();
         if (txop == QTransform::TxNone) {
             fillRect_normalized(toNormalizedFillRect(r), data, d);
             return;
@@ -3731,7 +3731,7 @@ void QSpanData::init(QRasterBuffer *rb, const QRasterPaintEngine *pe)
 {
     rasterBuffer = rb;
     type = None;
-    txop = 0;
+    txop = QTransform::TxNone;
     bilinear = false;
     m11 = m22 = m33 = 1.;
     m12 = m13 = m21 = m23 = dx = dy = 0.0;

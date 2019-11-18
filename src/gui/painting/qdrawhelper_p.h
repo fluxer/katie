@@ -279,7 +279,7 @@ struct QSpanData
         ConicalGradient,
         Texture
     } type;
-    int txop;
+    QTransform::TransformationType txop;
     bool bilinear;
     QImage *tempImage;
     union {
