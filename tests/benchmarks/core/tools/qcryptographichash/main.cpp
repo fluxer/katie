@@ -54,7 +54,9 @@ private slots:
     void append_data();
     void append();
     void append_once();
-    void hash();
+    void statichash();
+    void algorithms_data();
+    void algorithms();
 };
 
 void tst_qcryptographichash::append_data()
@@ -97,13 +99,36 @@ void tst_qcryptographichash::append_once()
     }
 }
 
-void tst_qcryptographichash::hash() {
+void tst_qcryptographichash::statichash() {
     QBENCHMARK {
         QByteArray hash = QCryptographicHash::hash(lorem, QCryptographicHash::Sha512);
         QVERIFY(!hash.isEmpty());
     }
 }
 
+void tst_qcryptographichash::algorithms_data()
+{
+    QTest::addColumn<QCryptographicHash::Algorithm>("algorithm");
+    QTest::newRow("Md4")  << QCryptographicHash::Md4;
+    QTest::newRow("Md5")  << QCryptographicHash::Md5;
+    QTest::newRow("Sha1")  << QCryptographicHash::Sha1;
+    QTest::newRow("Sha224")  << QCryptographicHash::Sha224;
+    QTest::newRow("Sha256")  << QCryptographicHash::Sha256;
+    QTest::newRow("Sha384")  << QCryptographicHash::Sha384;
+    QTest::newRow("Sha512")  << QCryptographicHash::Sha512;
+}
+
+void tst_qcryptographichash::algorithms() {
+    QFETCH(QCryptographicHash::Algorithm, algorithm);
+
+    QBENCHMARK {
+        QByteArray hash = QCryptographicHash::hash(lorem, algorithm);
+        QVERIFY(!hash.isEmpty());
+    }
+}
+
 QTEST_MAIN(tst_qcryptographichash)
+
+Q_DECLARE_METATYPE(QCryptographicHash::Algorithm)
 
 #include "moc_main.cpp"
