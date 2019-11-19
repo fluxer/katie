@@ -470,7 +470,6 @@ public:
     inline QStdWString toStdWString() const;
 #endif // QT_NO_STL_WCHAR
 
-    bool isSimpleText() const;
     bool isRightToLeft() const;
 
     QString(int size, Qt::Initialization);

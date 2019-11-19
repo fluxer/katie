@@ -6459,25 +6459,6 @@ QString QString::multiArg(int numArgs, const QString **args) const
     return result;
 }
 
-/*! \fn bool QString::isSimpleText() const
-
-    \internal
-*/
-bool QString::isSimpleText() const
-{
-    ushort *p = d->data;
-    ushort *end = p + d->size;
-    while (p < end) {
-        ushort uc = *p;
-        // sort out regions of complex text formatting
-        if (uc > 0x058f && (uc < 0x1100 || uc > 0xfb0f)) {
-            return false;
-        }
-        p++;
-    }
-    return true;
-}
-
 /*! \fn bool QString::isRightToLeft() const
 
     Returns true if the string is read right to left.
