@@ -12,12 +12,21 @@
 # Vim temporary files
 *.swp
 
-# Shiboken log files
-bindings/*.log
+# build directories
+apidocs/
+minsize/
+oldmake/
+debug/
 
-# build directories to ignore
-# ---------------------
-apidocs
-minsize
-oldmake
-debug
+# Debian build files and directories
+debian
+obj-*-linux-gnu/
+package/debian/.debhelper/
+package/debian/debhelper-build-stamp
+package/debian/files
+package/debian/katie-git.debhelper.log
+package/debian/katie-git.substvars
+package/debian/katie-git/
+
+# tarballs from oldmake.sh
+scripts/cmake-*.tar.gz
