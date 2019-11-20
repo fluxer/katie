@@ -215,7 +215,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1267"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1262"/>
         <source>Hu&amp;e:</source>
         <translation>ال&amp;صّبغة:</translation>
     </message>
@@ -255,7 +255,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>إختيار لون</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+129"/>
         <source>&amp;Basic colors</source>
         <translation>الألوان القا&amp;عديّة</translation>
     </message>
@@ -1377,19 +1377,19 @@ Script: %3</source>
 <context>
     <name>QDeclarativePixmap</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+309"/>
+        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+318"/>
         <source>Error decoding: %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+167"/>
-        <location line="+360"/>
+        <location line="+191"/>
+        <location line="+370"/>
         <source>Failed to get image from provider: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-342"/>
-        <location line="+360"/>
+        <location line="-352"/>
+        <location line="+370"/>
         <source>Cannot open: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2091,50 +2091,50 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+854"/>
+        <location line="+852"/>
         <source>Normal</source>
         <translation>عادي</translation>
     </message>
     <message>
-        <location line="-851"/>
+        <location line="-849"/>
         <location line="+12"/>
-        <location line="+827"/>
+        <location line="+825"/>
         <source>Bold</source>
         <translation>غليظ</translation>
     </message>
     <message>
-        <location line="-836"/>
-        <location line="+838"/>
+        <location line="-834"/>
+        <location line="+836"/>
         <source>Demi Bold</source>
         <translation>شبه غليظ</translation>
     </message>
     <message>
-        <location line="-835"/>
+        <location line="-833"/>
         <location line="+18"/>
-        <location line="+813"/>
+        <location line="+811"/>
         <source>Black</source>
         <translation>أسود</translation>
     </message>
     <message>
-        <location line="-823"/>
+        <location line="-821"/>
         <source>Demi</source>
         <translation>شبه</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+823"/>
+        <location line="+821"/>
         <source>Light</source>
         <translation>خفيف</translation>
     </message>
     <message>
-        <location line="-677"/>
-        <location line="+680"/>
+        <location line="-675"/>
+        <location line="+678"/>
         <source>Italic</source>
         <translation>مائل</translation>
     </message>
     <message>
-        <location line="-677"/>
-        <location line="+679"/>
+        <location line="-675"/>
+        <location line="+677"/>
         <source>Oblique</source>
         <translation>مائل</translation>
     </message>
@@ -2940,7 +2940,7 @@ Do you want to delete it anyway?</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+59"/>
         <source>Close</source>
         <translation>إغلاق</translation>
     </message>
@@ -2990,12 +2990,12 @@ Do you want to delete it anyway?</source>
         <translation>إ&amp;غلاق</translation>
     </message>
     <message>
-        <location line="-781"/>
+        <location line="-774"/>
         <source>- [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+45"/>
         <source>Maximize</source>
         <translation>تكبير</translation>
     </message>
@@ -6707,7 +6707,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5267"/>
         <source>*</source>
         <translation>*</translation>
     </message>

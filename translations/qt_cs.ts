@@ -215,7 +215,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1270"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1265"/>
         <source>&amp;Red:</source>
         <translation>&amp;Červená:</translation>
     </message>
@@ -240,12 +240,12 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Vybrat barvu</translation>
     </message>
     <message>
-        <location line="+133"/>
+        <location line="+131"/>
         <source>&amp;Add to Custom Colors</source>
         <translation>&amp;Přidat k uživatelem stanoveným barvám</translation>
     </message>
     <message>
-        <location line="-235"/>
+        <location line="-233"/>
         <source>Bl&amp;ue:</source>
         <translation>&amp;Modrá:</translation>
     </message>
@@ -255,7 +255,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>&amp;Zelená:</translation>
     </message>
     <message>
-        <location line="+234"/>
+        <location line="+232"/>
         <source>&amp;Basic colors</source>
         <translation>Základní &amp;barvy</translation>
     </message>
@@ -265,7 +265,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>&amp;Uživatelem stanovené barvy</translation>
     </message>
     <message>
-        <location line="-233"/>
+        <location line="-231"/>
         <source>A&amp;lpha channel:</source>
         <translation>A&amp;lfa kanál:</translation>
     </message>
@@ -1377,19 +1377,19 @@ Script: %3</source>
 <context>
     <name>QDeclarativePixmap</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+309"/>
+        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+318"/>
         <source>Error decoding: %1: %2</source>
         <translation>Chba při dekódování: %1: %2</translation>
     </message>
     <message>
-        <location line="+167"/>
-        <location line="+360"/>
+        <location line="+191"/>
+        <location line="+370"/>
         <source>Failed to get image from provider: %1</source>
         <translation>Obrazová data se od poskytovatele nepodařilo získat: %1</translation>
     </message>
     <message>
-        <location line="-342"/>
-        <location line="+360"/>
+        <location line="-352"/>
+        <location line="+370"/>
         <source>Cannot open: %1</source>
         <translation>Nelze otevřít: %1</translation>
     </message>
@@ -2092,49 +2092,49 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+97"/>
         <location line="+12"/>
-        <location line="+827"/>
+        <location line="+825"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location line="-825"/>
+        <location line="-823"/>
         <source>Demi</source>
         <translation>Polotučné</translation>
     </message>
     <message>
         <location line="-8"/>
         <location line="+18"/>
-        <location line="+813"/>
+        <location line="+811"/>
         <source>Black</source>
         <translation>Černé</translation>
     </message>
     <message>
-        <location line="-817"/>
-        <location line="+823"/>
+        <location line="-815"/>
+        <location line="+821"/>
         <source>Light</source>
         <translation>Jemné</translation>
     </message>
     <message>
-        <location line="-840"/>
-        <location line="+838"/>
+        <location line="-838"/>
+        <location line="+836"/>
         <source>Demi Bold</source>
         <translation>Polotučné</translation>
     </message>
     <message>
-        <location line="-675"/>
-        <location line="+680"/>
+        <location line="-673"/>
+        <location line="+678"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location line="-849"/>
-        <location line="+854"/>
+        <location line="-847"/>
+        <location line="+852"/>
         <source>Normal</source>
         <translation>Normální</translation>
     </message>
     <message>
-        <location line="-682"/>
-        <location line="+679"/>
+        <location line="-680"/>
+        <location line="+677"/>
         <source>Oblique</source>
         <translation>Skloněné</translation>
     </message>
@@ -2944,7 +2944,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+339"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+332"/>
         <source>Help</source>
         <translation>Nápověda</translation>
     </message>
@@ -2989,7 +2989,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>&amp;Zavřít</translation>
     </message>
     <message>
-        <location line="-781"/>
+        <location line="-774"/>
         <source>- [%1]</source>
         <translation>- [%1]</translation>
     </message>
@@ -2999,7 +2999,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="+768"/>
+        <location line="+761"/>
         <source>&amp;Restore</source>
         <translation>&amp;Obnovit</translation>
     </message>
@@ -6716,7 +6716,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5267"/>
         <source>*</source>
         <translation>*</translation>
     </message>

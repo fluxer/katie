@@ -215,7 +215,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1267"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1262"/>
         <source>Hu&amp;e:</source>
         <translation>Od&amp;tieň:</translation>
     </message>
@@ -255,7 +255,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Vybrať farbu</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+129"/>
         <source>&amp;Basic colors</source>
         <translation>&amp;Základné farby</translation>
     </message>
@@ -1377,19 +1377,19 @@ Script: %3</source>
 <context>
     <name>QDeclarativePixmap</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+309"/>
+        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+318"/>
         <source>Error decoding: %1: %2</source>
         <translation>Chyba dekódovania: %1: %2</translation>
     </message>
     <message>
-        <location line="+167"/>
-        <location line="+360"/>
+        <location line="+191"/>
+        <location line="+370"/>
         <source>Failed to get image from provider: %1</source>
         <translation>Nepodarilo sa získať obrázok od poskytovateľa: %1</translation>
     </message>
     <message>
-        <location line="-342"/>
-        <location line="+360"/>
+        <location line="-352"/>
+        <location line="+370"/>
         <source>Cannot open: %1</source>
         <translation>Nemôžem otvoriť: %1</translation>
     </message>
@@ -2091,50 +2091,50 @@ Chcete ho aj tak zmazať?</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+854"/>
+        <location line="+852"/>
         <source>Normal</source>
         <translation>Normálne</translation>
     </message>
     <message>
-        <location line="-851"/>
+        <location line="-849"/>
         <location line="+12"/>
-        <location line="+827"/>
+        <location line="+825"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location line="-836"/>
-        <location line="+838"/>
+        <location line="-834"/>
+        <location line="+836"/>
         <source>Demi Bold</source>
         <translation>Polotučné</translation>
     </message>
     <message>
-        <location line="-835"/>
+        <location line="-833"/>
         <location line="+18"/>
-        <location line="+813"/>
+        <location line="+811"/>
         <source>Black</source>
         <translation>Čierne</translation>
     </message>
     <message>
-        <location line="-823"/>
+        <location line="-821"/>
         <source>Demi</source>
         <translation>Polo</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+823"/>
+        <location line="+821"/>
         <source>Light</source>
         <translation>Svetlé</translation>
     </message>
     <message>
-        <location line="-677"/>
-        <location line="+680"/>
+        <location line="-675"/>
+        <location line="+678"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location line="-677"/>
-        <location line="+679"/>
+        <location line="-675"/>
+        <location line="+677"/>
         <source>Oblique</source>
         <translation>Sklonené</translation>
     </message>
@@ -2954,7 +2954,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+41"/>
         <source>Minimize</source>
         <translation>Minimalizovať</translation>
     </message>
@@ -6716,7 +6716,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5267"/>
         <source>*</source>
         <translation>*</translation>
     </message>

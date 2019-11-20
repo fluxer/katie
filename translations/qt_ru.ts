@@ -215,7 +215,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1267"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1262"/>
         <source>Hu&amp;e:</source>
         <translation>&amp;Тон:</translation>
     </message>
@@ -255,7 +255,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Выбор цвета</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+129"/>
         <source>&amp;Basic colors</source>
         <translation>&amp;Основные цвета</translation>
     </message>
@@ -1378,19 +1378,19 @@ Script: %3</source>
 <context>
     <name>QDeclarativePixmap</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+309"/>
+        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+318"/>
         <source>Error decoding: %1: %2</source>
         <translation>Ошибка декодирования: %1: %2</translation>
     </message>
     <message>
-        <location line="+167"/>
-        <location line="+360"/>
+        <location line="+191"/>
+        <location line="+370"/>
         <source>Failed to get image from provider: %1</source>
         <translation>Не удалось получить изображение от постащика изображений: %1</translation>
     </message>
     <message>
-        <location line="-342"/>
-        <location line="+360"/>
+        <location line="-352"/>
+        <location line="+370"/>
         <source>Cannot open: %1</source>
         <translation>Не удалось открыть: %1</translation>
     </message>
@@ -2092,50 +2092,50 @@ Please verify the correct directory name was given.</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+854"/>
+        <location line="+852"/>
         <source>Normal</source>
         <translation>Обычный</translation>
     </message>
     <message>
-        <location line="-851"/>
+        <location line="-849"/>
         <location line="+12"/>
-        <location line="+827"/>
+        <location line="+825"/>
         <source>Bold</source>
         <translation>Жирный</translation>
     </message>
     <message>
-        <location line="-836"/>
-        <location line="+838"/>
+        <location line="-834"/>
+        <location line="+836"/>
         <source>Demi Bold</source>
         <translation>Полужирный</translation>
     </message>
     <message>
-        <location line="-835"/>
+        <location line="-833"/>
         <location line="+18"/>
-        <location line="+813"/>
+        <location line="+811"/>
         <source>Black</source>
         <translation>Чёрный</translation>
     </message>
     <message>
-        <location line="-823"/>
+        <location line="-821"/>
         <source>Demi</source>
         <translation>Средний</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+823"/>
+        <location line="+821"/>
         <source>Light</source>
         <translation>Светлый</translation>
     </message>
     <message>
-        <location line="-677"/>
-        <location line="+680"/>
+        <location line="-675"/>
+        <location line="+678"/>
         <source>Italic</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location line="-677"/>
-        <location line="+679"/>
+        <location line="-675"/>
+        <location line="+677"/>
         <source>Oblique</source>
         <translation>Наклонный</translation>
     </message>
@@ -2950,7 +2950,7 @@ Please verify the correct directory name was given.</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+59"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -3030,7 +3030,7 @@ Please verify the correct directory name was given.</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location line="-73"/>
+        <location line="-66"/>
         <source>- [%1]</source>
         <translation>- [%1]</translation>
     </message>
@@ -6717,7 +6717,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5267"/>
         <source>*</source>
         <translation>*</translation>
     </message>

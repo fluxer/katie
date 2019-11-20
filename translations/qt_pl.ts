@@ -215,12 +215,12 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1507"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1500"/>
         <source>&amp;Add to Custom Colors</source>
         <translation>&amp;Dodaj do własnych kolorów</translation>
     </message>
     <message>
-        <location line="-234"/>
+        <location line="-232"/>
         <source>A&amp;lpha channel:</source>
         <translation>Kanał &amp;alfa:</translation>
     </message>
@@ -230,22 +230,22 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Wybierz kolor</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+129"/>
         <source>&amp;Basic colors</source>
         <translation>&amp;Kolory podstawowe</translation>
     </message>
     <message>
-        <location line="-233"/>
+        <location line="-231"/>
         <source>Bl&amp;ue:</source>
         <translation>Błęki&amp;t:</translation>
     </message>
     <message>
-        <location line="+234"/>
+        <location line="+232"/>
         <source>&amp;Custom colors</source>
         <translation>Wła&amp;sne kolory</translation>
     </message>
     <message>
-        <location line="-235"/>
+        <location line="-233"/>
         <source>&amp;Green:</source>
         <translation>&amp;Zieleń:</translation>
     </message>
@@ -1377,19 +1377,19 @@ Script: %3</source>
 <context>
     <name>QDeclarativePixmap</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+309"/>
+        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+318"/>
         <source>Error decoding: %1: %2</source>
         <translation>Błąd dekodowania: %1: %2</translation>
     </message>
     <message>
-        <location line="+167"/>
-        <location line="+360"/>
+        <location line="+191"/>
+        <location line="+370"/>
         <source>Failed to get image from provider: %1</source>
         <translation>Pobieranie obrazka od dostawcy zakończone błędem: %1</translation>
     </message>
     <message>
-        <location line="-342"/>
-        <location line="+360"/>
+        <location line="-352"/>
+        <location line="+370"/>
         <source>Cannot open: %1</source>
         <translation>Nie można otworzyć: %1</translation>
     </message>
@@ -2091,52 +2091,52 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+854"/>
+        <location line="+852"/>
         <source>Normal</source>
         <translation>Normalny</translation>
     </message>
     <message>
-        <location line="-851"/>
+        <location line="-849"/>
         <location line="+12"/>
-        <location line="+827"/>
+        <location line="+825"/>
         <source>Bold</source>
         <translation>Pogrubiony</translation>
     </message>
     <message>
-        <location line="-836"/>
-        <location line="+838"/>
+        <location line="-834"/>
+        <location line="+836"/>
         <source>Demi Bold</source>
         <translation>Na wpół pogrubiony</translation>
     </message>
     <message>
-        <location line="-835"/>
+        <location line="-833"/>
         <location line="+18"/>
-        <location line="+813"/>
+        <location line="+811"/>
         <source>Black</source>
         <translatorcomment>it&apos;s about font weight</translatorcomment>
         <translation>Bardzo gruby</translation>
     </message>
     <message>
-        <location line="-823"/>
+        <location line="-821"/>
         <source>Demi</source>
         <translation>Na wpół</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+823"/>
+        <location line="+821"/>
         <source>Light</source>
         <translatorcomment>it&apos;s about font weight</translatorcomment>
         <translation>Cienki</translation>
     </message>
     <message>
-        <location line="-677"/>
-        <location line="+680"/>
+        <location line="-675"/>
+        <location line="+678"/>
         <source>Italic</source>
         <translation>Kursywa</translation>
     </message>
     <message>
-        <location line="-677"/>
-        <location line="+679"/>
+        <location line="-675"/>
+        <location line="+677"/>
         <source>Oblique</source>
         <translation>Pochyły</translation>
     </message>
@@ -2951,7 +2951,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+59"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
@@ -3031,7 +3031,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Menu</translation>
     </message>
     <message>
-        <location line="-73"/>
+        <location line="-66"/>
         <source>- [%1]</source>
         <translation>- [%1]</translation>
     </message>
@@ -6718,7 +6718,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5267"/>
         <source>*</source>
         <translation>*</translation>
     </message>
