@@ -440,7 +440,6 @@ void QLocalePrivate::updateSystemPrivate()
     system_lp = static_cast<QLocalePrivate*>(::malloc(sizeof(QLocalePrivate)));
     ::memcpy(system_lp, sys_locale->fallbackLocale().d(), sizeof(QLocalePrivate));
 
-
     QVariant res = sys_locale->query(QSystemLocale::LanguageId, QVariant());
     if (!res.isNull()) {
         system_lp->m_language = QLocale::Language(res.toInt());
@@ -463,17 +462,23 @@ void QLocalePrivate::updateSystemPrivate()
     if (!res.isNull())
         system_lp->m_group = res.toString().at(0).unicode();
 
+    res = sys_locale->query(QSystemLocale::ListToSeparatedString, QVariant());
+    if (!res.isNull())
+        system_lp->m_list = res.toString().at(0).unicode();
+
     res = sys_locale->query(QSystemLocale::ZeroDigit, QVariant());
     if (!res.isNull())
         system_lp->m_zero = res.toString().at(0).unicode();
+
+    res = sys_locale->query(QSystemLocale::PositiveSign, QVariant());
+    if (!res.isNull())
+        system_lp->m_plus = res.toString().at(0).unicode();
 
     res = sys_locale->query(QSystemLocale::NegativeSign, QVariant());
     if (!res.isNull())
         system_lp->m_minus = res.toString().at(0).unicode();
 
-    res = sys_locale->query(QSystemLocale::PositiveSign, QVariant());
-    if (!res.isNull())
-        system_lp->m_plus = res.toString().at(0).unicode();
+    // ### exponential cannot be queried
 
 #ifdef QT_STD_LOCALE
     if (!default_lp)
