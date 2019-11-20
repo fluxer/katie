@@ -280,7 +280,6 @@ public:
         d->ref = 1;
         d->alloc = m_alloc;
         d->size = m_size;
-        d->sharable = 0;
         d->capacity = 0;
 
         QVector<T> v;
