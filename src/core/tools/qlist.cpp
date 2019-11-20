@@ -575,15 +575,6 @@ void **QListData::erase(void **xi)
     \internal
 */
 
-/*! \fn void QList::detachShared()
-
-    \internal
-
-    like detach(), but does nothing if we're shared_null.
-    This prevents needless mallocs, and makes QList more exception safe
-    in case of cleanup work done in destructors on empty lists.
-*/
-
 /*! \fn bool QList::isDetached() const
 
     \internal

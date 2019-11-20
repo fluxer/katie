@@ -119,13 +119,6 @@ public:
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
 
-    inline void detachShared()
-    {
-        // The "this->" qualification is needed for GCCE.
-        if (d->ref != 1 && this->d != &QListData::shared_null)
-            detach_helper();
-    }
-
     inline bool isDetached() const { return d->ref == 1; }
     inline void setSharable(bool sharable) { if (!sharable) detach(); d->sharable = sharable; }
     inline bool isSharedWith(const QList<T> &other) const { return d == other.d; }
