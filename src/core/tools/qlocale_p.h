@@ -54,7 +54,7 @@
 
 QT_BEGIN_NAMESPACE
 
-struct Q_CORE_EXPORT QLocalePrivate
+class Q_CORE_EXPORT QLocalePrivate
 {
 public:
     QChar decimal() const { return QChar(m_decimal); }
@@ -173,10 +173,10 @@ public:
     ushort m_exponential;
     ushort m_currency_digits;
     uint m_zero;
-    uint m_quotation_start;
-    uint m_quotation_end;
-    uint m_alternate_quotation_start;
-    uint m_alternate_quotation_end;
+    const uint m_quotation_start;
+    const uint m_quotation_end;
+    const uint m_alternate_quotation_start;
+    const uint m_alternate_quotation_end;
     const char* m_language_endonym;
     const char* m_country_endonym;
     const char* m_list_pattern_part_start;

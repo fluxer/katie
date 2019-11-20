@@ -118,7 +118,7 @@ private:
 };
 #endif // QT_NO_SYSTEMLOCALE
 
-struct QLocalePrivate;
+class QLocalePrivate;
 class Q_CORE_EXPORT QLocale
 {
     Q_GADGET
@@ -1422,7 +1422,7 @@ public:
 
     QString createSeparatedList(const QStringList &strl) const;
 private:
-    friend struct QLocalePrivate;
+    friend class QLocalePrivate;
     // ### We now use this field to pack an index into locale_data and NumberOptions.
     // ### Qt 5: change to a QLocaleData *d; uint numberOptions.
     struct Data {

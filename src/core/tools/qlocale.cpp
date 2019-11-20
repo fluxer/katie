@@ -66,7 +66,6 @@ public:
 };
 Q_GLOBAL_STATIC(QSystemLocaleSingleton, QSystemLocale_globalSystemLocale)
 static QLocalePrivate *system_lp = Q_NULLPTR;
-Q_GLOBAL_STATIC(QLocalePrivate, globalLocalePrivate)
 #endif
 
 #ifdef QT_STD_LOCALE
@@ -435,13 +434,11 @@ static const QSystemLocale *systemLocale()
 void QLocalePrivate::updateSystemPrivate()
 {
     const QSystemLocale *sys_locale = systemLocale();
-    if (!system_lp)
-        system_lp = globalLocalePrivate();
+    if (system_lp)
+        ::free(system_lp);
 
-    // tell the object that the system locale has changed.
-    sys_locale->query(QSystemLocale::LocaleChanged, QVariant());
-
-    *system_lp = *sys_locale->fallbackLocale().d();
+    system_lp = static_cast<QLocalePrivate*>(::malloc(sizeof(QLocalePrivate)));
+    ::memcpy(system_lp, sys_locale->fallbackLocale().d(), sizeof(QLocalePrivate));
 
 
     QVariant res = sys_locale->query(QSystemLocale::LanguageId, QVariant());
@@ -482,6 +479,9 @@ void QLocalePrivate::updateSystemPrivate()
     if (!default_lp)
         qt_initStdLocale(system_lp->bcp47Name());
 #endif
+
+    // tell the object that the system locale has changed.
+    sys_locale->query(QSystemLocale::LocaleChanged, QVariant());
 }
 #endif
 
