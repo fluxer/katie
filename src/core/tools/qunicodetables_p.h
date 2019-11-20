@@ -55,13 +55,18 @@ namespace QUnicodeTables {
 
     // required by QChar
     Q_CORE_EXPORT int QT_FASTCALL digitValue(uint ucs4);
-    Q_CORE_EXPORT int QT_FASTCALL digitValue(ushort ucs2);
+    inline int QT_FASTCALL digitValue(ushort ucs2)
+        { return QUnicodeTables::digitValue(uint(ucs2)); }
     Q_CORE_EXPORT QChar::Joining QT_FASTCALL joining(uint ucs4);
-    Q_CORE_EXPORT QChar::Joining QT_FASTCALL joining(ushort ucs2);
+    inline QChar::Joining QT_FASTCALL joining(ushort ucs2)
+        { return QUnicodeTables::joining(uint(ucs2)); }
     Q_CORE_EXPORT uint QT_FASTCALL mirroredChar(uint ucs4);
-    Q_CORE_EXPORT ushort QT_FASTCALL mirroredChar(ushort ucs2);
+    inline ushort QT_FASTCALL mirroredChar(ushort ucs2)
+        { return QUnicodeTables::mirroredChar(uint(ucs2)); }
     Q_CORE_EXPORT QChar::UnicodeVersion QT_FASTCALL unicodeVersion(uint ucs4);
-    Q_CORE_EXPORT QChar::UnicodeVersion QT_FASTCALL unicodeVersion(ushort ucs2);
+    inline QChar::UnicodeVersion QT_FASTCALL unicodeVersion(ushort ucs2)
+        { return QUnicodeTables::unicodeVersion(uint(ucs2)); }
+
 
     // required by Harfbuzz
     enum CombiningClass {

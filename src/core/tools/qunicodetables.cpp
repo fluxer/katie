@@ -1842,11 +1842,6 @@ Q_CORE_EXPORT int QT_FASTCALL QUnicodeTables::digitValue(uint ucs4)
     return -1;
 }
 
-Q_CORE_EXPORT int QT_FASTCALL QUnicodeTables::digitValue(ushort digit)
-{
-    return QUnicodeTables::digitValue(uint(digit));
-}
-
 Q_CORE_EXPORT QChar::Joining QT_FASTCALL QUnicodeTables::joining(uint ucs4)
 {
     switch (ucs4) {
@@ -2620,11 +2615,6 @@ Q_CORE_EXPORT QChar::Joining QT_FASTCALL QUnicodeTables::joining(uint ucs4)
     if (ucs4 <= 0xE01EF && ucs4 >= 0xE0100)
         return QChar::Transparent;
     return QChar::OtherJoining;
-}
-
-Q_CORE_EXPORT QChar::Joining QT_FASTCALL QUnicodeTables::joining(ushort ucs2)
-{
-    return QUnicodeTables::joining(uint(ucs2));
 }
 
 Q_CORE_EXPORT uint QT_FASTCALL QUnicodeTables::mirroredChar(uint ucs4)
@@ -3472,11 +3462,6 @@ Q_CORE_EXPORT uint QT_FASTCALL QUnicodeTables::mirroredChar(uint ucs4)
             return 0xFF62;
     }
     return ucs4;
-}
-
-Q_CORE_EXPORT ushort QT_FASTCALL QUnicodeTables::mirroredChar(ushort ucs2)
-{
-    return QUnicodeTables::mirroredChar(uint(ucs2));
 }
 
 Q_CORE_EXPORT QChar::UnicodeVersion QT_FASTCALL QUnicodeTables::unicodeVersion(uint ucs4)
@@ -6216,11 +6201,6 @@ Q_CORE_EXPORT QChar::UnicodeVersion QT_FASTCALL QUnicodeTables::unicodeVersion(u
     if (ucs4 <= 0x1FA95 && ucs4 >= 0x1FA90)
         return QChar::Unicode_12_0;
     return QChar::Unicode_Unassigned;
-}
-
-Q_CORE_EXPORT QChar::UnicodeVersion QT_FASTCALL QUnicodeTables::unicodeVersion(ushort ucs2)
-{
-    return QUnicodeTables::unicodeVersion(uint(ucs2));
 }
 
 Q_CORE_EXPORT QUnicodeTables::CombiningClass QT_FASTCALL QUnicodeTables::combiningClass(uint ucs4)
