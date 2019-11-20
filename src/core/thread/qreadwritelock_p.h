@@ -66,7 +66,7 @@ struct QReadWriteLockPrivate
     int waitingReaders;
     int waitingWriters;
 
-    bool recursive;
+    const bool recursive;
     Qt::HANDLE currentWriter;
     QHash<Qt::HANDLE, int> currentReaders;
 };
