@@ -37,7 +37,7 @@ QT_BEGIN_NAMESPACE
 
 QLinkedListData QLinkedListData::shared_null = {
     &QLinkedListData::shared_null, &QLinkedListData::shared_null,
-    QAtomicInt(1), 0, true
+    QAtomicInt(1), 0
 };
 
 /*! \class QLinkedList
@@ -187,16 +187,6 @@ QLinkedListData QLinkedListData::shared_null = {
 */
 
 /*! \fn bool QLinkedList::isDetached() const
-
-    \internal
-*/
-
-/*! \fn void QLinkedList::setSharable(bool sharable)
-
-    \internal
-*/
-
-/*! \fn bool QLinkedList::isSharedWith(const QLinkedList<T> &other) const
 
     \internal
 */

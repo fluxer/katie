@@ -61,7 +61,6 @@ struct Q_CORE_EXPORT QMapData
     int size;
     uint randomBits;
     bool insertInOrder;
-    bool sharable;
 
     static QMapData *createData();
     void continueFreeData(int offset);
@@ -157,8 +156,7 @@ class QMap
 
 public:
     inline QMap() : d(&QMapData::shared_null) { d->ref.ref(); }
-    inline QMap(const QMap<Key, T> &other) : d(other.d)
-    { d->ref.ref(); if (!d->sharable) detach(); }
+    inline QMap(const QMap<Key, T> &other) : d(other.d) { d->ref.ref(); }
     inline ~QMap() { if (!d->ref.deref()) freeData(d); }
 
     QMap<Key, T> &operator=(const QMap<Key, T> &other);
@@ -179,8 +177,6 @@ public:
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
     inline bool isDetached() const { return d->ref == 1; }
-    inline void setSharable(bool sharable) { if (!sharable) detach(); d->sharable = sharable; }
-    inline bool isSharedWith(const QMap<Key, T> &other) const { return d == other.d; }
     inline void setInsertInOrder(bool ordered) { d->insertInOrder = ordered; }
 
     void clear();
@@ -388,8 +384,6 @@ Q_INLINE_TEMPLATE QMap<Key, T> &QMap<Key, T>::operator=(const QMap<Key, T> &othe
         if (!d->ref.deref())
             freeData(d);
         d = o;
-        if (!d->sharable)
-            detach_helper();
     }
     return *this;
 }

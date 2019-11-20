@@ -45,7 +45,7 @@ QT_BEGIN_NAMESPACE
 QMapData QMapData::shared_null = {
     &shared_null,
     { &shared_null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-    QAtomicInt(1), 0, 0, 0, false, true
+    QAtomicInt(1), 0, 0, 0, false
 };
 
 QMapData *QMapData::createData()
@@ -60,7 +60,6 @@ QMapData *QMapData::createData()
     d->size = 0;
     d->randomBits = 0;
     d->insertInOrder = false;
-    d->sharable = true;
     return d;
 }
 
@@ -452,17 +451,7 @@ void QMapData::dump()
     \sa detach()
 */
 
-/*! \fn void QMap::setSharable(bool sharable)
-
-    \internal
-*/
-
-/*! \fn bool QMap::isSharedWith(const QMap<Key, T> &other) const
-
-    \internal
-*/
-
-/*! \fn void QMap::setInsertInOrder(bool sharable)
+/*! \fn void QMap::setInsertInOrder(bool ordered)
 
     \internal
 */

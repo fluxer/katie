@@ -50,7 +50,6 @@ struct Q_CORE_EXPORT QLinkedListData
     QLinkedListData *n, *p;
     QAtomicInt ref;
     int size;
-    bool sharable;
 
     static QLinkedListData shared_null;
 };
@@ -71,7 +70,7 @@ class QLinkedList
 
 public:
     inline QLinkedList() : d(&QLinkedListData::shared_null) { d->ref.ref(); }
-    inline QLinkedList(const QLinkedList<T> &l) : d(l.d) { d->ref.ref(); if (!d->sharable) detach(); }
+    inline QLinkedList(const QLinkedList<T> &l) : d(l.d) { d->ref.ref(); }
     ~QLinkedList();
     QLinkedList<T> &operator=(const QLinkedList<T> &);
 #ifdef Q_COMPILER_RVALUE_REFS
@@ -86,8 +85,6 @@ public:
     inline void detach()
     { if (d->ref != 1) detach_helper(); }
     inline bool isDetached() const { return d->ref == 1; }
-    inline void setSharable(bool sharable) { if (!sharable) detach(); d->sharable = sharable; }
-    inline bool isSharedWith(const QLinkedList<T> &other) const { return d == other.d; }
 
     inline bool isEmpty() const { return d->size == 0; }
 
@@ -241,7 +238,6 @@ void QLinkedList<T>::detach_helper()
     x.d = new QLinkedListData;
     x.d->ref = 1;
     x.d->size = d->size;
-    x.d->sharable = true;
     Node *original = e->n;
     Node *copy = x.e;
     while (original != e) {
@@ -293,8 +289,6 @@ QLinkedList<T> &QLinkedList<T>::operator=(const QLinkedList<T> &l)
         if (!d->ref.deref())
             freeData(d);
         d = o;
-        if (!d->sharable)
-            detach_helper();
     }
     return *this;
 }

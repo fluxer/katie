@@ -60,7 +60,6 @@ struct Q_CORE_EXPORT QListData {
     struct Data {
         QAtomicInt ref;
         int alloc, begin, end;
-        bool sharable;
         void *array[1];
     };
     enum { DataHeaderSize = sizeof(Data) - sizeof(void *) };
@@ -100,7 +99,7 @@ class QList
 
 public:
     inline QList() : d(&QListData::shared_null) { d->ref.ref(); }
-    inline QList(const QList<T> &l) : d(l.d) { d->ref.ref(); if (!d->sharable) detach_helper(); }
+    inline QList(const QList<T> &l) : d(l.d) { d->ref.ref(); }
     ~QList();
     QList<T> &operator=(const QList<T> &l);
 #ifdef Q_COMPILER_RVALUE_REFS
@@ -118,10 +117,7 @@ public:
     inline int size() const { return p.size(); }
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
-
     inline bool isDetached() const { return d->ref == 1; }
-    inline void setSharable(bool sharable) { if (!sharable) detach(); d->sharable = sharable; }
-    inline bool isSharedWith(const QList<T> &other) const { return d == other.d; }
 
     inline bool isEmpty() const { return p.isEmpty(); }
 
@@ -390,8 +386,6 @@ Q_INLINE_TEMPLATE QList<T> &QList<T>::operator=(const QList<T> &l)
             free(d);
         }
         d = o;
-        if (!d->sharable)
-            detach_helper();
     }
     return *this;
 }

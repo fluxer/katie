@@ -54,7 +54,6 @@ struct Q_CORE_EXPORT QContiguousCacheData
     int count;
     int start;
     int offset;
-    bool sharable;
 
 #ifdef QT_QCONTIGUOUSCACHE_DEBUG
     void dump() const;
@@ -85,13 +84,12 @@ public:
     typedef int size_type;
 
     explicit QContiguousCache(int capacity = 0);
-    QContiguousCache(const QContiguousCache<T> &v) : d(v.d) { d->ref.ref(); if (!d->sharable) detach_helper(); }
+    QContiguousCache(const QContiguousCache<T> &v) : d(v.d) { d->ref.ref(); }
 
     inline ~QContiguousCache() { if (!d) return; if (!d->ref.deref()) free(p); }
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
     inline bool isDetached() const { return d->ref == 1; }
-    inline void setSharable(bool sharable) { if (!sharable) detach(); d->sharable = sharable; }
 
     QContiguousCache<T> &operator=(const QContiguousCache<T> &other);
 #ifdef Q_COMPILER_RVALUE_REFS
@@ -166,7 +164,6 @@ void QContiguousCache<T>::detach_helper()
     x.d->start = d->start;
     x.d->offset = d->offset;
     x.d->alloc = d->alloc;
-    x.d->sharable = true;
 
     T *dest = x.p->array + x.d->start;
     T *src = p->array + d->start;
@@ -252,7 +249,6 @@ void QContiguousCache<T>::clear()
         x.d->ref = 1;
         x.d->alloc = d->alloc;
         x.d->count = x.d->start = x.d->offset = 0;
-        x.d->sharable = true;
         if (!d->ref.deref()) free(p);
         d = x.d;
     }
@@ -271,7 +267,6 @@ QContiguousCache<T>::QContiguousCache(int cap)
     d->ref = 1;
     d->alloc = cap;
     d->count = d->start = d->offset = 0;
-    d->sharable = true;
 }
 
 template <typename T>
@@ -281,8 +276,6 @@ QContiguousCache<T> &QContiguousCache<T>::operator=(const QContiguousCache<T> &o
     if (!d->ref.deref())
         free(d);
     d = other.d;
-    if (!d->sharable)
-        detach_helper();
     return *this;
 }
 

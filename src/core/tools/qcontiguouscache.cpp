@@ -139,10 +139,6 @@ MyRecord record(int row) const
     \internal
 */
 
-/*! \fn void QContiguousCache::setSharable(bool sharable)
-    \internal
-*/
-
 /*! \typedef QContiguousCache::value_type
   \internal
  */

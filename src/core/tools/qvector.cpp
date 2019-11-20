@@ -37,7 +37,7 @@
 
 QT_BEGIN_NAMESPACE
 
-QVectorData QVectorData::shared_null = { QAtomicInt(1), 0, 0, true, false };
+QVectorData QVectorData::shared_null = { QAtomicInt(1), 0, 0, false };
 
 QVectorData *QVectorData::allocate(int size)
 {
@@ -372,16 +372,6 @@ int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive
 */
 
 /*! \fn bool QVector::isDetached() const
-
-    \internal
-*/
-
-/*! \fn void QVector::setSharable(bool sharable)
-
-    \internal
-*/
-
-/*! \fn bool QVector::isSharedWith(const QVector<T> &other) const
 
     \internal
 */

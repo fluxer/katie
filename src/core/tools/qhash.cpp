@@ -143,7 +143,7 @@ static int countBits(int hint)
 const int MinNumBits = 4;
 
 QHashData QHashData::shared_null = {
-    0, 0, QAtomicInt(1), 0, 0, MinNumBits, 0, 0, true
+    0, 0, QAtomicInt(1), 0, 0, MinNumBits, 0, 0
 };
 
 QHashData *QHashData::detach_helper(void (*node_duplicate)(Node *, void *),
@@ -163,7 +163,6 @@ QHashData *QHashData::detach_helper(void (*node_duplicate)(Node *, void *),
     d->userNumBits = userNumBits;
     d->numBits = numBits;
     d->numBuckets = numBuckets;
-    d->sharable = true;
 
     if (numBuckets) {
         QT_TRY {
@@ -798,16 +797,6 @@ void QHashData::checkSanity()
     other hash object; otherwise returns false.
 
     \sa detach()
-*/
-
-/*! \fn void QHash::setSharable(bool sharable)
-
-    \internal
-*/
-
-/*! \fn bool QHash::isSharedWith(const QHash<Key, T> &other) const
-
-    \internal
 */
 
 /*! \fn void QHash::clear()

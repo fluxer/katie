@@ -47,7 +47,6 @@ struct Q_CORE_EXPORT QVectorData
     QAtomicInt ref;
     int alloc;
     int size;
-    bool sharable;
     bool capacity;
 
     static QVectorData shared_null;
@@ -83,7 +82,7 @@ public:
     inline QVector() : d(&QVectorData::shared_null) { d->ref.ref(); }
     explicit QVector(int size);
     QVector(int size, const T &t);
-    inline QVector(const QVector<T> &v) : d(v.d) { d->ref.ref(); if (!d->sharable) detach_helper(); }
+    inline QVector(const QVector<T> &v) : d(v.d) { d->ref.ref(); }
     inline ~QVector() { if (!d->ref.deref()) free(p); }
     QVector<T> &operator=(const QVector<T> &v);
 #ifdef Q_COMPILER_RVALUE_REFS
@@ -109,8 +108,6 @@ public:
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
     inline bool isDetached() const { return d->ref == 1; }
-    inline void setSharable(bool sharable) { if (!sharable) detach(); d->sharable = sharable; }
-    inline bool isSharedWith(const QVector<T> &other) const { return d == other.d; }
 
     inline T *data() { detach(); return p->array; }
     inline const T *data() const { return p->array; }
@@ -346,8 +343,6 @@ QVector<T> &QVector<T>::operator=(const QVector<T> &v)
     if (!d->ref.deref())
         free(p);
     d = o;
-    if (!d->sharable)
-        detach_helper();
     return *this;
 }
 
@@ -365,7 +360,6 @@ QVector<T>::QVector(int asize)
     d = malloc(asize);
     d->ref = 1;
     d->alloc = d->size = asize;
-    d->sharable = true;
     d->capacity = false;
     if (QTypeInfo<T>::isComplex) {
         T* b = p->array;
@@ -383,7 +377,6 @@ QVector<T>::QVector(int asize, const T &t)
     d = malloc(asize);
     d->ref = 1;
     d->alloc = d->size = asize;
-    d->sharable = true;
     d->capacity = false;
     T* i = p->array + d->size;
     while (i != p->array)
@@ -397,7 +390,6 @@ QVector<T>::QVector(std::initializer_list<T> args)
     d = malloc(int(args.size()));
     d->ref = 1;
     d->alloc = d->size = int(args.size());
-    d->sharable = true;
     d->capacity = false;
     T* i = p->array + d->size;
     auto it = args.end();
@@ -468,7 +460,6 @@ void QVector<T>::realloc(int asize, int aalloc)
         }
         x.d->ref = 1;
         x.d->alloc = aalloc;
-        x.d->sharable = true;
         x.d->capacity = d->capacity;
     }
 

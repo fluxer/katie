@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
     the number of elements in the list.
 */
 
-QListData::Data QListData::shared_null = { QAtomicInt(1), 0, 0, 0, true, { 0 } };
+QListData::Data QListData::shared_null = { QAtomicInt(1), 0, 0, 0, { 0 } };
 
 static int grow(int size)
 {
@@ -78,7 +78,6 @@ QListData::Data *QListData::detach_grow(int *idx, int num)
     Q_CHECK_PTR(t);
 
     t->ref = 1;
-    t->sharable = true;
     t->alloc = alloc;
     // The space reservation algorithm's optimization is biased towards appending:
     // Something which looks like an append will put the data at the beginning,
@@ -120,7 +119,6 @@ QListData::Data *QListData::detach(int alloc)
     Q_CHECK_PTR(t);
 
     t->ref = 1;
-    t->sharable = true;
     t->alloc = alloc;
     if (!alloc) {
         t->begin = 0;
@@ -576,16 +574,6 @@ void **QListData::erase(void **xi)
 */
 
 /*! \fn bool QList::isDetached() const
-
-    \internal
-*/
-
-/*! \fn void QList::setSharable(bool sharable)
-
-    \internal
-*/
-
-/*! \fn bool QList::isSharedWith(const QList<T> &other) const
 
     \internal
 */

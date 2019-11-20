@@ -74,7 +74,6 @@ public:
 
     inline void detach() { q_hash.detach(); }
     inline bool isDetached() const { return q_hash.isDetached(); }
-    inline void setSharable(bool sharable) { q_hash.setSharable(sharable); }
 
     inline void clear() { q_hash.clear(); }
 
@@ -314,12 +313,10 @@ class QMutableSetIterator
 public:
     inline QMutableSetIterator(QSet<T> &container)
         : c(&container)
-    { c->setSharable(false); i = c->begin(); n = c->end(); }
-    inline ~QMutableSetIterator()
-    { c->setSharable(true); }
+    { i = c->begin(); n = c->end(); }
+    inline ~QMutableSetIterator() { }
     inline QMutableSetIterator &operator=(QSet<T> &container)
-    { c->setSharable(true); c = &container; c->setSharable(false);
-      i = c->begin(); n = c->end(); return *this; }
+    { c = &container; i = c->begin(); n = c->end(); return *this; }
     inline void toFront() { i = c->begin(); n = c->end(); }
     inline void toBack() { i = c->end(); n = i; }
     inline bool hasNext() const { return c->constEnd() != i; }

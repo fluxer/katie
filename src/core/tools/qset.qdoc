@@ -245,11 +245,6 @@
 */
 
 /*!
-    \fn void QSet::setSharable(bool sharable)
-    \internal
-*/
-
-/*!
     \fn void QSet::clear()
 
     Removes all elements from the set.
