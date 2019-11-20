@@ -262,7 +262,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 
 QString QHostInfo::localHostName()
 {
-    char hostName[512];
+    char hostName[HOST_NAME_MAX];
     if (gethostname(hostName, sizeof(hostName)) == -1)
         return QString();
     hostName[sizeof(hostName) - 1] = '\0';
