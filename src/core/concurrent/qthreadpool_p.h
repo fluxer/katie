@@ -75,7 +75,6 @@ public:
     void startThread(QRunnable *runnable = 0);
     void reset();
     bool waitForDone(int msecs = -1);
-    bool startFrontRunnable();
     void stealRunnable(QRunnable *);
 
     QMutex mutex;

@@ -289,31 +289,6 @@ bool QThreadPoolPrivate::waitForDone(int msecs)
     return queue.isEmpty() && activeThreads == 0;
 }
 
-/*! \internal
-    Pulls a runnable from the front queue and runs it in the current thread. Blocks
-    until the runnable has completed. Returns true if a runnable was found.
-*/
-bool QThreadPoolPrivate::startFrontRunnable()
-{
-    QMutexLocker locker(&mutex);
-    if (queue.isEmpty())
-        return false;
-
-    QRunnable *runnable = queue.takeFirst().first;
-    const bool autoDelete = runnable->autoDelete();
-    bool del = autoDelete && !--runnable->ref;
-
-    locker.unlock();
-    runnable->run();
-    locker.relock();
-
-    if (del) {
-        delete runnable;
-    }
-
-    return true;
-}
-
 /*!
     \internal
     Searches for \a runnable in the queue, removes it from the queue and
