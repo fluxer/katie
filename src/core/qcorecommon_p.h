@@ -48,7 +48,7 @@ static inline quint32 qCRC32(const char *data, uint len)
 static inline uint foldCase(const ushort *ch, const ushort *start)
 {
     uint c = *ch;
-    if (QChar(c).isLowSurrogate() && ch > start && QChar(*(ch - 1)).isHighSurrogate())
+    if (QChar::isLowSurrogate(c) && ch > start && QChar::isHighSurrogate(*(ch - 1)))
         c = QChar::surrogateToUcs4(*(ch - 1), c);
     return QChar::toCaseFolded(*ch);
 }
@@ -56,7 +56,7 @@ static inline uint foldCase(const ushort *ch, const ushort *start)
 static inline uint foldCase(const uint ch, uint &last)
 {
     uint c = ch;
-    if (QChar(c).isLowSurrogate() && QChar(last).isHighSurrogate())
+    if (QChar::isLowSurrogate(c) && QChar::isHighSurrogate(last))
         c = QChar::surrogateToUcs4(last, c);
     last = ch;
     return QChar::toCaseFolded(ch);

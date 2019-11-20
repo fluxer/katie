@@ -2373,9 +2373,9 @@ static void mapToLowerCase(QString *str, int from)
                 d[i] = (uc | 0x20);
             }
         } else {
-            if (QChar(uc).isHighSurrogate() && i < str->size() - 1) {
+            if (QChar::isHighSurrogate(uc) && i < str->size() - 1) {
                 ushort low = str->at(i + 1).unicode();
-                if (QChar(low).isLowSurrogate()) {
+                if (QChar::isLowSurrogate(low)) {
                     uc = QChar::surrogateToUcs4(uc, low);
                     ++i;
                 }
@@ -2427,9 +2427,9 @@ static bool containsProhibitedOuptut(const QString *str, int from)
     const ushort *end = (ushort *)str->data() + str->size();
     for ( ; in < end; ++in) {
         uint uc = *in;
-        if (QChar(uc).isHighSurrogate() && in < end - 1) {
+        if (QChar::isHighSurrogate(uc) && in < end - 1) {
             ushort low = *(in + 1);
-            if (QChar(low).isLowSurrogate()) {
+            if (QChar::isLowSurrogate(low)) {
                 ++in;
                 uc = QChar::surrogateToUcs4(uc, low);
             } else {
@@ -2977,9 +2977,9 @@ void qt_nameprep(QString *source, int from)
     const QChar *in = out;
     for ( ; in < e; ++in) {
         uint uc = in->unicode();
-        if (QChar(uc).isHighSurrogate() && in < e - 1) {
+        if (QChar::isHighSurrogate(uc) && in < e - 1) {
             ushort low = in[1].unicode();
-            if (QChar(low).isLowSurrogate()) {
+            if (QChar::isLowSurrogate(low)) {
                 ++in;
                 uc = QChar::surrogateToUcs4(uc, low);
             }
@@ -3025,9 +3025,9 @@ void qt_nameprep(QString *source, int from)
     e = src + source->size();
     for (in = src + from; in < e && (!containsLCat || !containsRandALCat); ++in) {
         uint uc = in->unicode();
-        if (QChar(uc).isHighSurrogate() && in < e - 1) {
+        if (QChar::isHighSurrogate(uc) && in < e - 1) {
             ushort low = in[1].unicode();
-            if (QChar(low).isLowSurrogate()) {
+            if (QChar::isLowSurrogate(low)) {
                 ++in;
                 uc = QChar::surrogateToUcs4(uc, low);
             }
