@@ -755,8 +755,8 @@ public:
 
 #define Q_SCRIPT_REGEXPLITERAL_RULE2 8
 
-#include <lupdate.h>
-#include <translator.h>
+#include "lupdate.h"
+#include "translator.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/qdebug.h>

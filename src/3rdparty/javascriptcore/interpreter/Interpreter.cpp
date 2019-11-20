@@ -57,11 +57,12 @@
 #include "RegExpPrototype.h"
 #include "Register.h"
 #include "SamplingTool.h"
-#include <limits.h>
-#include <stdio.h>
 #include <wtf/Threading.h>
 
-#include "bridge/qscriptobject_p.h"
+#include "qscriptobject_p.h"
+
+#include <limits.h>
+#include <stdio.h>
 
 using namespace std;
 

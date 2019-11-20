@@ -50,6 +50,10 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
 )
 
+set(DECLARATIVE_HEADERS
+    ${DECLARATIVE_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativecommon_p.h
+)
 katie_generate_misc("${DECLARATIVE_HEADERS}" QtDeclarative)
 katie_generate_public("${DECLARATIVE_PUBLIC_HEADERS}" QtDeclarative)
 katie_generate_package(KtDeclarative "KtCore KtGui KtNetwork KtScript")

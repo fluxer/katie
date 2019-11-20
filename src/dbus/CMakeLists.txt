@@ -36,6 +36,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
+    ${CMAKE_BINARY_DIR}/include/QtDBus
+    ${CMAKE_BINARY_DIR}/privateinclude/QtDBus
     ${DBUS_INCLUDES}
 )
 

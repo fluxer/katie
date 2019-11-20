@@ -177,4 +177,4 @@ private slots:
 
 QTEST_MAIN(bench_QDir_10000)
 
-#include "10000/moc_bench_qdir_10000.cpp"
+#include "moc_bench_qdir_10000.cpp"

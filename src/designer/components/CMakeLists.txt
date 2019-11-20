@@ -10,14 +10,6 @@ include(tabordereditor/tabordereditor.cmake)
 include(taskmenu/taskmenu.cmake)
 include(widgetbox/widgetbox.cmake)
 
-set(DESIGNERCOMPONENTS_PUBLIC_HEADERS
-    ${DESIGNERCOMPONENTS_PUBLIC_HEADERS}
-)
-
-set(DESIGNERCOMPONENTS_HEADERS
-    ${DESIGNERCOMPONENTS_HEADERS}
-)
-
 set(DESIGNERCOMPONENTS_SOURCES
     ${DESIGNERCOMPONENTS_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_components.cpp

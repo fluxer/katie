@@ -41,22 +41,21 @@
 
 #include <QtDesigner/qdesigner_components.h>
 
-#include <actioneditor_p.h>
-#include <widgetdatabase_p.h>
-#include <widgetfactory_p.h>
-
-#include <formeditor/formeditor.h>
-#include <widgetbox/widgetbox.h>
-#include <propertyeditor/propertyeditor.h>
-#include <objectinspector/objectinspector.h>
-#include <taskmenu/taskmenu_component.h>
+#include "actioneditor_p.h"
+#include "widgetdatabase_p.h"
+#include "widgetfactory_p.h"
 #include "qtresourceview_p.h"
 #include "qdesigner_integration_p.h"
-#include <signalsloteditor/signalsloteditorwindow.h>
 
-#include <buddyeditor/buddyeditor_plugin.h>
-#include <signalsloteditor/signalsloteditor_plugin.h>
-#include <tabordereditor/tabordereditor_plugin.h>
+#include "formeditor/formeditor.h"
+#include "widgetbox/widgetbox.h"
+#include "propertyeditor/propertyeditor.h"
+#include "objectinspector/objectinspector.h"
+#include "taskmenu/taskmenu_component.h"
+#include "signalsloteditor/signalsloteditorwindow.h"
+#include "buddyeditor/buddyeditor_plugin.h"
+#include "signalsloteditor/signalsloteditor_plugin.h"
+#include "tabordereditor/tabordereditor_plugin.h"
 
 #include <QtDesigner/abstractlanguage.h>
 #include <QtDesigner/QExtensionManager>

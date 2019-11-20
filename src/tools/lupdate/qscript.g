@@ -81,8 +81,8 @@
 %start Program
 
 /.
-#include <lupdate.h>
-#include <translator.h>
+#include "lupdate.h"
+#include "translator.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/qdebug.h>

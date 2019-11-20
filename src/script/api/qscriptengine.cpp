@@ -59,12 +59,12 @@
 #include "PropertyNameArray.h"
 #include "Operations.h"
 
-#include "bridge/qscriptfunction_p.h"
-#include "bridge/qscriptclassobject_p.h"
-#include "bridge/qscriptvariant_p.h"
-#include "bridge/qscriptqobject_p.h"
-#include "bridge/qscriptglobalobject_p.h"
-#include "bridge/qscriptstaticscopeobject_p.h"
+#include "qscriptfunction_p.h"
+#include "qscriptclassobject_p.h"
+#include "qscriptvariant_p.h"
+#include "qscriptqobject_p.h"
+#include "qscriptglobalobject_p.h"
+#include "qscriptstaticscopeobject_p.h"
 
 #ifndef QT_NO_QOBJECT
 #include <QtCore/qcoreapplication.h>

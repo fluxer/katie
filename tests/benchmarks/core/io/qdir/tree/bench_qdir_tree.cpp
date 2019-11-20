@@ -240,5 +240,5 @@ private:
 
 QTEST_MAIN(bench_QDir_tree)
 
-#include "tree/moc_bench_qdir_tree.cpp"
-#include "tree/qrc_bench_qdir_tree.cpp"
+#include "moc_bench_qdir_tree.cpp"
+#include "qrc_bench_qdir_tree.cpp"
