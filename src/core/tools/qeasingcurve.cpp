@@ -332,7 +332,7 @@ public:
     virtual ~QEasingCurveFunction() {}
     virtual qreal value(qreal t);
     virtual QEasingCurveFunction *copy() const;
-    bool operator==(const QEasingCurveFunction& other);
+    bool operator==(const QEasingCurveFunction& other) const;
 
     QEasingCurve::Type _t;
     qreal _p;
@@ -350,7 +350,7 @@ QEasingCurveFunction *QEasingCurveFunction::copy() const
     return new QEasingCurveFunction(_t, _p, _a, _o);
 }
 
-bool QEasingCurveFunction::operator==(const QEasingCurveFunction& other)
+bool QEasingCurveFunction::operator==(const QEasingCurveFunction& other) const
 {
     return _t == other._t &&
            qFuzzyCompare(_p, other._p) &&

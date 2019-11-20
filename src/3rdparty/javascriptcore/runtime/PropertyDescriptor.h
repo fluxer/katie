@@ -66,7 +66,7 @@ namespace JSC {
         unsigned attributesWithOverride(const PropertyDescriptor& other) const;
     private:
         static unsigned defaultAttributes;
-        bool operator==(const PropertyDescriptor&){ return false; }
+        bool operator==(const PropertyDescriptor&) const { return false; }
         enum { WritablePresent = 1, EnumerablePresent = 2, ConfigurablePresent = 4};
         // May be a getter/setter
         JSValue m_value;

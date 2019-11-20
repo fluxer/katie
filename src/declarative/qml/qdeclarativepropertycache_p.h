@@ -66,7 +66,7 @@ public:
 
     struct Data {
         inline Data(); 
-        inline bool operator==(const Data &);
+        inline bool operator==(const Data &) const;
 
         enum Flag { 
                     NoFlags           = 0x00000000,
@@ -116,7 +116,7 @@ public:
 
     struct ValueTypeData {
         inline ValueTypeData();
-        inline bool operator==(const ValueTypeData &);
+        inline bool operator==(const ValueTypeData &) const;
         Data::Flags flags;     // flags of the access property on the value type proxy object
         int valueTypeCoreIdx;  // The prop index of the access property on the value type proxy object
         int valueTypePropType; // The QVariant::Type of access property on the value type proxy object
@@ -177,7 +177,7 @@ QDeclarativePropertyCache::Data::Data()
 {
 }
 
-bool QDeclarativePropertyCache::Data::operator==(const QDeclarativePropertyCache::Data &other)
+bool QDeclarativePropertyCache::Data::operator==(const QDeclarativePropertyCache::Data &other) const
 {
     return flags == other.flags &&
            propType == other.propType &&
@@ -209,7 +209,7 @@ QDeclarativePropertyCache::ValueTypeData::ValueTypeData()
 {
 }
 
-bool QDeclarativePropertyCache::ValueTypeData::operator==(const ValueTypeData &o) 
+bool QDeclarativePropertyCache::ValueTypeData::operator==(const ValueTypeData &o)  const
 { 
     return flags == o.flags &&
            valueTypeCoreIdx == o.valueTypeCoreIdx &&

@@ -144,7 +144,7 @@ struct QFormLayoutItem
     QRect geometry() const { return item->geometry(); }
 
     // For use with FixedColumnMatrix
-    bool operator==(const QFormLayoutItem& other) { return item == other.item; }
+    bool operator==(const QFormLayoutItem& other) const { return item == other.item; }
 
     QLayoutItem *item;
     bool fullRow;

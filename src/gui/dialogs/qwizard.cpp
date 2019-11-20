@@ -224,11 +224,11 @@ public:
     bool extension;
     bool sideWidget;
 
-    bool operator==(const QWizardLayoutInfo &other);
-    inline bool operator!=(const QWizardLayoutInfo &other) { return !operator==(other); }
+    bool operator==(const QWizardLayoutInfo &other) const;
+    inline bool operator!=(const QWizardLayoutInfo &other) const { return !operator==(other); }
 };
 
-bool QWizardLayoutInfo::operator==(const QWizardLayoutInfo &other)
+bool QWizardLayoutInfo::operator==(const QWizardLayoutInfo &other) const
 {
     return topLevelMarginLeft == other.topLevelMarginLeft
            && topLevelMarginRight == other.topLevelMarginRight
