@@ -8,7 +8,7 @@ pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i686' 'x86_64')
 url='https://github.com/fluxer/katie'
 license=('LGPL' 'FDL' 'custom')
-depends=('openssl' 'zlib' 'cups' 'libice' 'libsm' 'pcre' 'libxcursor'
+depends=('openssl' 'zlib' 'cups' 'libice' 'libsm' 'pcre' 'libxcursor' 'icu'
         'libxext' 'libxfixes' 'libxi' 'libxinerama' 'libxrandr' 'libxrender'
         'libx11' 'fontconfig' 'freetype2' 'libmng' 'zstd')
 makedepends=('cmake' 'git' 'postgresql' 'libmariadbclient' 'unixodbc' 'unifdef')

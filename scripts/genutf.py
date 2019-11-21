@@ -54,39 +54,7 @@ def printifrange(frommap):
 switchmap = {}
 rangemap = {}
 
-if 'digit' in sys.argv:
-    for line in readlines('extracted/DerivedNumericValues.txt'):
-        tablesplit = line.split(';')
-        codepoint = tablesplit[0].strip()
-        value = tablesplit[3].strip()
-        if '/' in value:
-            # TODO: handle fraction
-            continue
-        mapdecideinsert(switchmap, rangemap, value, codepoint)
-    printswitch(switchmap)
-    printifrange(rangemap)
-elif 'joining' in sys.argv:
-    for line in readlines('extracted/DerivedJoiningType.txt'):
-        tablesplit = line.split(';')
-        codepoint = tablesplit[0].strip()
-        value = tablesplit[1].strip()
-        if value == 'C':
-            value = 'QChar::Causing'
-        elif value == 'D':
-            value = 'QChar::Dual'
-        elif value == 'R':
-            value = 'QChar::Right'
-        elif value == 'L':
-            value = 'QChar::Left'
-        elif value == 'T':
-            value = 'QChar::Transparent'
-        else:
-            print('Unhandled joining type: %s' % value)
-            sys.exit(2)
-        mapdecideinsert(switchmap, rangemap, value, codepoint)
-    printswitch(switchmap)
-    printifrange(rangemap)
-elif 'combining' in sys.argv:
+if 'combining' in sys.argv:
     for line in readlines('extracted/DerivedCombiningClass.txt'):
         tablesplit = line.split(';')
         codepoint = tablesplit[0].strip()
@@ -205,23 +173,6 @@ elif 'combining' in sys.argv:
         else:
             print('Unhandled combining type: %s' % value)
             sys.exit(2)
-        mapdecideinsert(switchmap, rangemap, value, codepoint)
-    printswitch(switchmap)
-    printifrange(rangemap)
-elif 'mirror' in sys.argv:
-    for line in readlines('BidiMirroring.txt'):
-        tablesplit = line.split(';')
-        codepoint = tablesplit[0].strip()
-        value = tablesplit[1].strip()
-        mapdecideinsert(switchmap, rangemap, '0x%s' % value, codepoint)
-    printswitch(switchmap)
-    printifrange(rangemap)
-elif 'version' in sys.argv:
-    for line in readlines('DerivedAge.txt'):
-        tablesplit = line.split(';')
-        codepoint = tablesplit[0].strip()
-        value = tablesplit[1].strip()
-        value = 'QChar::Unicode_%s' % value.replace('.', '_')
         mapdecideinsert(switchmap, rangemap, value, codepoint)
     printswitch(switchmap)
     printifrange(rangemap)
@@ -348,7 +299,7 @@ elif 'special' in sys.argv:
             print('    0x%s, // %s' % (codepoint, value.replace('_', '')))
         scriptslist.append(value)
 else:
-    print('''usage: <digit|joining|combining|mirror|version|word|sentence|line|script|special>
+    print('''usage: <combining|word|sentence|line|script|special>
 
 Data is from https://unicode.org/Public/12.1.0/ucd/UCD.zip''')
     sys.exit(1)

@@ -44,10 +44,6 @@
 #include <QTextCodec>
 #include <QtTest/QtTest>
 
-#if !defined(QWS) && defined(Q_OS_MAC)
-#include "qcore_mac_p.h"
-#endif
-
 #ifdef Q_OS_UNIX
 #include <sys/ipc.h>
 #include <sys/mman.h>
@@ -83,18 +79,6 @@ private slots:
     void toLower() const;
     void toUpper() const;
     void toCaseFolded() const;
-
-#if !defined(QWS) && defined(Q_OS_MAC)
-    void QCFString_data() const;
-    void QCFString_toCFStringRef_data() const;
-    void QCFString_toCFStringRef() const;
-    void QCFString_operatorCFStringRef_data() const;
-    void QCFString_operatorCFStringRef() const;
-    void QCFString_toQString_data() const;
-    void QCFString_toQString() const;
-    void QCFString_operatorQString_data() const;
-    void QCFString_operatorQString() const;
-#endif // !defined(QWS) && defined(Q_OS_MAC)
 };
 
 void tst_QString::equals() const

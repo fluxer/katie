@@ -42,9 +42,9 @@
 #include "qchar.h"
 #include "qdatastream.h"
 #include "qtextcodec.h"
-#include "qunicodetables_p.h"
 
-#include "utf8proc.h"
+#include <unicode/uchar.h>
+#include <unicode/unorm2.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -407,22 +407,23 @@ static inline uint to_ascii_upper(uint ucs4)
     description of the values.
 
     \value NoDecomposition
-    \value Circle
-    \value Compat
-    \value Final
+    \value Canonical
     \value Font
-    \value Fraction
-    \value Initial
-    \value Isolated
-    \value Medial
-    \value Narrow
     \value NoBreak
-    \value Small
-    \value Square
-    \value Sub
+    \value Initial
+    \value Medial
+    \value Final
+    \value Isolated
+    \value Circle
     \value Super
+    \value Sub
     \value Vertical
     \value Wide
+    \value Narrow
+    \value Small
+    \value Square
+    \value Compat
+    \value Fraction
 
     \sa decomposition()
 */
@@ -600,15 +601,7 @@ QChar::QChar(const uchar ch)
 */
 bool QChar::isPrint() const
 {
-    const utf8proc_category_t category = utf8proc_category(ucs);
-    switch (category) {
-        case UTF8PROC_CATEGORY_CC:
-        case UTF8PROC_CATEGORY_CN:
-            return false;
-        default:
-            return true;
-    }
-    return true;
+    return u_isprint(ucs);
 }
 
 /*!
@@ -619,17 +612,7 @@ bool QChar::isSpace() const
 {
     if(ucs >= 9 && ucs <= 13)
         return true;
-
-    const utf8proc_category_t category = utf8proc_category(ucs);
-    switch (category) {
-        case UTF8PROC_CATEGORY_ZS:
-        case UTF8PROC_CATEGORY_ZL:
-        case UTF8PROC_CATEGORY_ZP:
-            return true;
-        default:
-            return false;
-    }
-    return false;
+    return u_isblank(ucs);
 }
 
 /*!
@@ -640,11 +623,11 @@ bool QChar::isSpace() const
 */
 bool QChar::isMark() const
 {
-    const utf8proc_category_t category = utf8proc_category(ucs);
+    const int8_t category = u_charType(ucs);
     switch (category) {
-        case UTF8PROC_CATEGORY_MN:
-        case UTF8PROC_CATEGORY_MC:
-        case UTF8PROC_CATEGORY_ME:
+        case U_NON_SPACING_MARK:
+        case U_COMBINING_SPACING_MARK:
+        case U_ENCLOSING_MARK:
             return true;
         default:
             return false;
@@ -658,20 +641,7 @@ bool QChar::isMark() const
 */
 bool QChar::isPunct() const
 {
-    const utf8proc_category_t category = utf8proc_category(ucs);
-    switch (category) {
-        case UTF8PROC_CATEGORY_PC:
-        case UTF8PROC_CATEGORY_PD:
-        case UTF8PROC_CATEGORY_PS:
-        case UTF8PROC_CATEGORY_PE:
-        case UTF8PROC_CATEGORY_PI:
-        case UTF8PROC_CATEGORY_PF:
-        case UTF8PROC_CATEGORY_PO:
-            return true;
-        default:
-            return false;
-    }
-    return false;
+    return u_ispunct(ucs);
 }
 
 /*!
@@ -680,18 +650,7 @@ bool QChar::isPunct() const
 */
 bool QChar::isLetter() const
 {
-    const utf8proc_category_t category = utf8proc_category(ucs);
-    switch (category) {
-        case UTF8PROC_CATEGORY_LU:
-        case UTF8PROC_CATEGORY_LL:
-        case UTF8PROC_CATEGORY_LT:
-        case UTF8PROC_CATEGORY_LM:
-        case UTF8PROC_CATEGORY_LO:
-            return true;
-        default:
-            return false;
-    }
-    return false;
+    return u_isalpha(ucs);
 }
 
 /*!
@@ -705,16 +664,7 @@ bool QChar::isNumber() const
     if (is_ascii_char(ucs)) {
         return is_ascii_number(ucs);
     }
-    const utf8proc_category_t category = utf8proc_category(ucs);
-    switch (category) {
-        case UTF8PROC_CATEGORY_ND:
-        case UTF8PROC_CATEGORY_NL:
-        case UTF8PROC_CATEGORY_NO:
-            return true;
-        default:
-            return false;
-    }
-    return false;
+    return u_isxdigit(ucs);
 }
 
 /*!
@@ -726,23 +676,7 @@ bool QChar::isLetterOrNumber() const
     if (is_ascii_char(ucs)) {
         return is_ascii_letterornumber(ucs);
     }
-    const utf8proc_category_t category = utf8proc_category(ucs);
-    switch (category) {
-        // letter
-        case UTF8PROC_CATEGORY_LU:
-        case UTF8PROC_CATEGORY_LL:
-        case UTF8PROC_CATEGORY_LT:
-        case UTF8PROC_CATEGORY_LM:
-        case UTF8PROC_CATEGORY_LO:
-        // number
-        case UTF8PROC_CATEGORY_ND:
-        case UTF8PROC_CATEGORY_NL:
-        case UTF8PROC_CATEGORY_NO:
-            return true;
-        default:
-            return false;
-    }
-    return false;
+    return u_isalnum(ucs);
 }
 
 
@@ -755,14 +689,7 @@ bool QChar::isDigit() const
     if (is_ascii_char(ucs)) {
         return is_ascii_number(ucs);
     }
-    const utf8proc_category_t category = utf8proc_category(ucs);
-    switch (category) {
-        case UTF8PROC_CATEGORY_ND:
-            return true;
-        default:
-            return false;
-    }
-    return false;
+    return u_isdigit(ucs);
 }
 
 
@@ -772,12 +699,12 @@ bool QChar::isDigit() const
 */
 bool QChar::isSymbol() const
 {
-    const utf8proc_category_t category = utf8proc_category(ucs);
+    const int8_t category = u_charType(ucs);
     switch (category) {
-        case UTF8PROC_CATEGORY_SM:
-        case UTF8PROC_CATEGORY_SC:
-        case UTF8PROC_CATEGORY_SK:
-        case UTF8PROC_CATEGORY_SO:
+        case U_MATH_SYMBOL:
+        case U_CURRENCY_SYMBOL:
+        case U_MODIFIER_SYMBOL:
+        case U_OTHER_SYMBOL:
             return true;
         default:
             return false;
@@ -859,7 +786,7 @@ bool QChar::isSymbol() const
 */
 int QChar::digitValue() const
 {
-    return QUnicodeTables::digitValue(ucs);
+    return QChar::digitValue(ucs);
 }
 
 /*!
@@ -869,7 +796,7 @@ int QChar::digitValue() const
 */
 int QChar::digitValue(const ushort ucs2)
 {
-    return QUnicodeTables::digitValue(ucs2);
+    return QChar::digitValue(uint(ucs2));
 }
 
 /*!
@@ -879,71 +806,71 @@ int QChar::digitValue(const ushort ucs2)
 */
 int QChar::digitValue(const uint ucs4)
 {
-    return QUnicodeTables::digitValue(ucs4);
+    return u_digit(ucs4, 10);
 }
 
 #define QCHAR_CATEGORY(c) \
-    const utf8proc_category_t category = utf8proc_category(c); \
+    const int8_t category = u_charType(c); \
     switch (category) { \
-        case UTF8PROC_CATEGORY_CN: \
+        case U_GENERAL_OTHER_TYPES: \
             return QChar::Other_NotAssigned; \
-        case UTF8PROC_CATEGORY_LU: \
+        case U_UPPERCASE_LETTER: \
             return QChar::Letter_Uppercase; \
-        case UTF8PROC_CATEGORY_LL: \
+        case U_LOWERCASE_LETTER: \
             return QChar::Letter_Lowercase; \
-        case UTF8PROC_CATEGORY_LT: \
+        case U_TITLECASE_LETTER: \
             return QChar::Letter_Titlecase; \
-        case UTF8PROC_CATEGORY_LM: \
+        case U_MODIFIER_LETTER: \
             return QChar::Letter_Modifier; \
-        case UTF8PROC_CATEGORY_LO: \
+        case U_OTHER_LETTER: \
             return QChar::Letter_Other; \
-        case UTF8PROC_CATEGORY_MN: \
+        case U_NON_SPACING_MARK: \
             return QChar::Mark_NonSpacing; \
-        case UTF8PROC_CATEGORY_MC: \
+        case U_COMBINING_SPACING_MARK: \
             return QChar::Mark_SpacingCombining; \
-        case UTF8PROC_CATEGORY_ME: \
+        case U_ENCLOSING_MARK: \
             return QChar::Mark_Enclosing; \
-        case UTF8PROC_CATEGORY_ND: \
+        case U_DECIMAL_DIGIT_NUMBER: \
             return QChar::Number_DecimalDigit; \
-        case UTF8PROC_CATEGORY_NL: \
+        case U_LETTER_NUMBER: \
             return QChar::Number_Letter; \
-        case UTF8PROC_CATEGORY_NO: \
+        case U_OTHER_NUMBER: \
             return QChar::Number_Other; \
-        case UTF8PROC_CATEGORY_PC: \
+        case U_CONNECTOR_PUNCTUATION: \
             return QChar::Punctuation_Connector; \
-        case UTF8PROC_CATEGORY_PD: \
+        case U_DASH_PUNCTUATION: \
             return QChar::Punctuation_Dash; \
-        case UTF8PROC_CATEGORY_PS: \
+        case U_START_PUNCTUATION: \
             return QChar::Punctuation_Open; \
-        case UTF8PROC_CATEGORY_PE: \
+        case U_END_PUNCTUATION: \
             return QChar::Punctuation_Close; \
-        case UTF8PROC_CATEGORY_PI: \
+        case U_INITIAL_PUNCTUATION: \
             return QChar::Punctuation_InitialQuote; \
-        case UTF8PROC_CATEGORY_PF: \
+        case U_FINAL_PUNCTUATION: \
             return QChar::Punctuation_FinalQuote; \
-        case UTF8PROC_CATEGORY_PO: \
+        case U_OTHER_PUNCTUATION: \
             return QChar::Punctuation_Other; \
-        case UTF8PROC_CATEGORY_SM: \
+        case U_MATH_SYMBOL: \
             return QChar::Symbol_Math; \
-        case UTF8PROC_CATEGORY_SC: \
+        case U_CURRENCY_SYMBOL: \
             return QChar::Symbol_Currency; \
-        case UTF8PROC_CATEGORY_SK: \
+        case U_MODIFIER_SYMBOL: \
             return QChar::Symbol_Modifier; \
-        case UTF8PROC_CATEGORY_SO: \
+        case U_OTHER_SYMBOL: \
             return QChar::Symbol_Other; \
-        case UTF8PROC_CATEGORY_ZS: \
+        case U_SPACE_SEPARATOR: \
             return QChar::Separator_Space; \
-        case UTF8PROC_CATEGORY_ZL: \
+        case U_LINE_SEPARATOR: \
             return QChar::Separator_Line; \
-        case UTF8PROC_CATEGORY_ZP: \
+        case U_PARAGRAPH_SEPARATOR: \
             return QChar::Separator_Paragraph; \
-        case UTF8PROC_CATEGORY_CC: \
+        case U_CONTROL_CHAR: \
             return QChar::Other_Control; \
-        case UTF8PROC_CATEGORY_CF: \
+        case U_FORMAT_CHAR: \
             return QChar::Other_Format; \
-        case UTF8PROC_CATEGORY_CS: \
+        case U_SURROGATE: \
             return QChar::Other_Surrogate; \
-        case UTF8PROC_CATEGORY_CO: \
+        case U_PRIVATE_USE_CHAR: \
             return QChar::Other_PrivateUse; \
     } \
     return QChar::Other_NotAssigned;
@@ -976,53 +903,53 @@ QChar::Category QChar::category(const ushort ucs2)
 }
 
 #define QCHAR_DIRECTION(c) \
-    const utf8proc_property_t *property = utf8proc_get_property(c); \
-    switch (property->bidi_class) { \
-        case UTF8PROC_BIDI_CLASS_L: \
+    const UCharDirection direction = u_charDirection(c); \
+    switch (direction) { \
+        case U_LEFT_TO_RIGHT: \
             return QChar::DirL; \
-        case UTF8PROC_BIDI_CLASS_LRE: \
+        case U_LEFT_TO_RIGHT_EMBEDDING: \
             return QChar::DirLRE; \
-        case UTF8PROC_BIDI_CLASS_LRO: \
+        case U_LEFT_TO_RIGHT_OVERRIDE: \
             return QChar::DirLRO; \
-        case UTF8PROC_BIDI_CLASS_R: \
+        case U_RIGHT_TO_LEFT: \
             return QChar::DirR; \
-        case UTF8PROC_BIDI_CLASS_AL: \
+        case U_RIGHT_TO_LEFT_ARABIC: \
             return QChar::DirAL; \
-        case UTF8PROC_BIDI_CLASS_RLE: \
+        case U_RIGHT_TO_LEFT_EMBEDDING: \
             return QChar::DirRLE; \
-        case UTF8PROC_BIDI_CLASS_RLO: \
+        case U_RIGHT_TO_LEFT_OVERRIDE: \
             return QChar::DirRLO; \
-        case UTF8PROC_BIDI_CLASS_PDF: \
+        case U_POP_DIRECTIONAL_FORMAT: \
             return QChar::DirPDF; \
-        case UTF8PROC_BIDI_CLASS_EN: \
+        case U_EUROPEAN_NUMBER: \
             return QChar::DirEN; \
-        case UTF8PROC_BIDI_CLASS_ES: \
+        case U_EUROPEAN_NUMBER_SEPARATOR: \
             return QChar::DirES; \
-        case UTF8PROC_BIDI_CLASS_ET: \
+        case U_EUROPEAN_NUMBER_TERMINATOR: \
             return QChar::DirET; \
-        case UTF8PROC_BIDI_CLASS_AN: \
+        case U_ARABIC_NUMBER: \
             return QChar::DirAN; \
-        case UTF8PROC_BIDI_CLASS_CS: \
+        case U_COMMON_NUMBER_SEPARATOR: \
             return QChar::DirCS; \
-        case UTF8PROC_BIDI_CLASS_NSM: \
+        case U_DIR_NON_SPACING_MARK: \
             return QChar::DirNSM; \
-        case UTF8PROC_BIDI_CLASS_BN: \
+        case U_BOUNDARY_NEUTRAL: \
             return QChar::DirBN; \
-        case UTF8PROC_BIDI_CLASS_B: \
+        case U_BLOCK_SEPARATOR: \
             return QChar::DirB; \
-        case UTF8PROC_BIDI_CLASS_S: \
+        case U_SEGMENT_SEPARATOR: \
             return QChar::DirS; \
-        case UTF8PROC_BIDI_CLASS_WS: \
+        case U_WHITE_SPACE_NEUTRAL: \
             return QChar::DirWS; \
-        case UTF8PROC_BIDI_CLASS_ON: \
+        case U_OTHER_NEUTRAL: \
             return QChar::DirON; \
-        case UTF8PROC_BIDI_CLASS_LRI: \
+        case U_LEFT_TO_RIGHT_ISOLATE: \
             return QChar::DirLRI; \
-        case UTF8PROC_BIDI_CLASS_RLI: \
+        case U_RIGHT_TO_LEFT_ISOLATE: \
             return QChar::DirRLI; \
-        case UTF8PROC_BIDI_CLASS_FSI: \
+        case U_FIRST_STRONG_ISOLATE: \
             return QChar::DirFSI; \
-        case UTF8PROC_BIDI_CLASS_PDI: \
+        case U_POP_DIRECTIONAL_ISOLATE: \
             return QChar::DirPDI; \
     } \
     return QChar::DirL;
@@ -1059,18 +986,7 @@ QChar::Direction QChar::direction(const ushort ucs2)
 */
 QChar::Joining QChar::joining() const
 {
-    return QUnicodeTables::joining(ucs);
-}
-
-/*!
-    \overload
-    Returns information about the joining properties of the UCS-4-encoded
-    character specified by \a ucs4 (needed for certain languages such as
-    Arabic).
-*/
-QChar::Joining QChar::joining(const uint ucs4)
-{
-    return QUnicodeTables::joining(ucs4);
+    return QChar::joining(uint(ucs));
 }
 
 /*!
@@ -1081,9 +997,35 @@ QChar::Joining QChar::joining(const uint ucs4)
 */
 QChar::Joining QChar::joining(const ushort ucs2)
 {
-    return QUnicodeTables::joining(ucs2);
+    return QChar::joining(uint(ucs2));
 }
 
+/*!
+    \overload
+    Returns information about the joining properties of the UCS-4-encoded
+    character specified by \a ucs4 (needed for certain languages such as
+    Arabic).
+*/
+QChar::Joining QChar::joining(const uint ucs4)
+{
+    const int32_t property = u_getIntPropertyValue(ucs4, UCHAR_JOINING_TYPE);
+    switch (property) {
+        case U_JT_JOIN_CAUSING:
+            return QChar::Causing;
+        case U_JT_DUAL_JOINING:
+            return QChar::Dual;
+        case U_JT_LEFT_JOINING:
+            return QChar::Left;
+        case U_JT_RIGHT_JOINING:
+            return QChar::Right;
+        case U_JT_TRANSPARENT:
+            return QChar::Transparent;
+        case U_JT_NON_JOINING:
+            // for compatibility
+            return QChar::OtherJoining;
+    }
+    return QChar::OtherJoining;
+}
 
 /*!
     Returns true if the character should be reversed if the text
@@ -1098,18 +1040,7 @@ bool QChar::hasMirrored() const
     if (is_ascii_char(ucs)) {
         return false;
     }
-    const utf8proc_property_t *property = utf8proc_get_property(ucs);
-    switch (property->bidi_class) {
-        case UTF8PROC_BIDI_CLASS_R:
-        case UTF8PROC_BIDI_CLASS_AL:
-        case UTF8PROC_BIDI_CLASS_RLE:
-        case UTF8PROC_BIDI_CLASS_RLO:
-        case UTF8PROC_BIDI_CLASS_RLI:
-            return true;
-        default:
-            return false;
-    }
-    return false;
+    return u_isMirrored(ucs);
 }
 
 /*!
@@ -1167,19 +1098,7 @@ bool QChar::isTitleCase() const
 */
 QChar QChar::mirroredChar() const
 {
-    return QUnicodeTables::mirroredChar(ucs);
-}
-
-/*!
-    \overload
-    Returns the mirrored character if the UCS-4-encoded character specified
-    by \a ucs4 is a mirrored character; otherwise returns the character itself.
-
-    \sa hasMirrored()
-*/
-uint QChar::mirroredChar(const uint ucs4)
-{
-    return QUnicodeTables::mirroredChar(ucs4);
+    return QChar::mirroredChar(ucs);
 }
 
 /*!
@@ -1191,7 +1110,19 @@ uint QChar::mirroredChar(const uint ucs4)
 */
 ushort QChar::mirroredChar(const ushort ucs2)
 {
-    return QUnicodeTables::mirroredChar(ucs2);
+    return QChar::mirroredChar(uint(ucs2));
+}
+
+/*!
+    \overload
+    Returns the mirrored character if the UCS-4-encoded character specified
+    by \a ucs4 is a mirrored character; otherwise returns the character itself.
+
+    \sa hasMirrored()
+*/
+uint QChar::mirroredChar(const uint ucs4)
+{
+    return u_charMirror(ucs4);
 }
 
 /*!
@@ -1210,14 +1141,26 @@ QString QChar::decomposition() const
 */
 QString QChar::decomposition(const uint ucs4)
 {
-    int buffer[4]; // ### use utf8proc_charwidth?
-    int boundclass;
-    const ssize_t decresult = utf8proc_decompose_char(ucs4, buffer, sizeof(buffer), UTF8PROC_DECOMPOSE, &boundclass);
-    if (Q_UNLIKELY(decresult < 1)) {
-        qWarning("QChar::decomposition: %s", utf8proc_errmsg(decresult));
+    UErrorCode errorcode = U_ZERO_ERROR;
+    const UNormalizer2 *normalizer = unorm2_getNFDInstance(&errorcode);
+    if (Q_UNLIKELY(U_FAILURE(errorcode))) {
+        qWarning("QChar::decomposition: %s", u_errorName(errorcode));
         return QString();
     }
-    return QString::fromUtf8(reinterpret_cast<char*>(buffer), decresult);
+
+    UChar buffer[4];
+    const int32_t decresult = unorm2_getDecomposition(normalizer, ucs4, buffer, sizeof(buffer), &errorcode);
+    if (Q_UNLIKELY(decresult < 1)) {
+        // no decomposition value
+        return QString();
+    }
+
+    if (Q_UNLIKELY(U_FAILURE(errorcode))) {
+        qWarning("QChar::decomposition: %s", u_errorName(errorcode));
+        return QString();
+    }
+
+    return QString::fromUtf16(reinterpret_cast<ushort*>(buffer), decresult);
 }
 
 /*!
@@ -1236,40 +1179,44 @@ QChar::Decomposition QChar::decompositionTag() const
 */
 QChar::Decomposition QChar::decompositionTag(const uint ucs4)
 {
-    const utf8proc_property_t *property = utf8proc_get_property(ucs4);
-    switch (property->decomp_type) {
-        case UTF8PROC_DECOMP_TYPE_FONT:
+    const int32_t property = u_getIntPropertyValue(ucs4, UCHAR_DECOMPOSITION_TYPE);
+    switch (property) {
+        case U_DT_CANONICAL:
+            return QChar::Canonical;
+        case U_DT_FONT:
             return QChar::Font;
-        case UTF8PROC_DECOMP_TYPE_NOBREAK:
+        case U_DT_NOBREAK:
             return QChar::NoBreak;
-        case UTF8PROC_DECOMP_TYPE_INITIAL:
+        case U_DT_INITIAL:
             return QChar::Initial;
-        case UTF8PROC_DECOMP_TYPE_MEDIAL:
+        case U_DT_MEDIAL:
             return QChar::Medial;
-        case UTF8PROC_DECOMP_TYPE_FINAL:
+        case U_DT_FINAL:
             return QChar::Final;
-        case UTF8PROC_DECOMP_TYPE_ISOLATED:
+        case U_DT_ISOLATED:
             return QChar::Isolated;
-        case UTF8PROC_DECOMP_TYPE_CIRCLE:
+        case U_DT_CIRCLE:
             return QChar::Circle;
-        case UTF8PROC_DECOMP_TYPE_SUPER:
+        case U_DT_SUPER:
             return QChar::Super;
-        case UTF8PROC_DECOMP_TYPE_SUB:
+        case U_DT_SUB:
             return QChar::Sub;
-        case UTF8PROC_DECOMP_TYPE_VERTICAL:
+        case U_DT_VERTICAL:
             return QChar::Vertical;
-        case UTF8PROC_DECOMP_TYPE_WIDE:
+        case U_DT_WIDE:
             return QChar::Wide;
-        case UTF8PROC_DECOMP_TYPE_NARROW:
+        case U_DT_NARROW:
             return QChar::Narrow;
-        case UTF8PROC_DECOMP_TYPE_SMALL:
+        case U_DT_SMALL:
             return QChar::Small;
-        case UTF8PROC_DECOMP_TYPE_SQUARE:
+        case U_DT_SQUARE:
             return QChar::Square;
-        case UTF8PROC_DECOMP_TYPE_FRACTION:
+        case U_DT_FRACTION:
             return QChar::Fraction;
-        case UTF8PROC_DECOMP_TYPE_COMPAT:
+        case U_DT_COMPAT:
             return QChar::Compat;
+        U_DT_NONE:
+            return QChar::NoDecomposition;
     }
     return QChar::NoDecomposition;
 }
@@ -1279,17 +1226,7 @@ QChar::Decomposition QChar::decompositionTag(const uint ucs4)
 */
 QChar::UnicodeVersion QChar::unicodeVersion() const
 {
-    return QUnicodeTables::unicodeVersion(ucs);
-}
-
-/*!
-    \overload
-    Returns the Unicode version that introduced the character specified in
-    its UCS-4-encoded form as \a ucs4.
-*/
-QChar::UnicodeVersion QChar::unicodeVersion(const uint ucs4)
-{
-    return QUnicodeTables::unicodeVersion(ucs4);
+    return QChar::unicodeVersion(ucs);
 }
 
 /*!
@@ -1299,7 +1236,67 @@ QChar::UnicodeVersion QChar::unicodeVersion(const uint ucs4)
 */
 QChar::UnicodeVersion QChar::unicodeVersion(const ushort ucs2)
 {
-    return QUnicodeTables::unicodeVersion(ucs2);
+    return QChar::unicodeVersion(uint(ucs2));
+}
+
+/*!
+    \overload
+    Returns the Unicode version that introduced the character specified in
+    its UCS-4-encoded form as \a ucs4.
+*/
+QChar::UnicodeVersion QChar::unicodeVersion(const uint ucs4)
+{
+    UVersionInfo info;
+    u_charAge(ucs4, info);
+    QByteArray version(U_MAX_VERSION_STRING_LENGTH, Qt::Uninitialized);
+    u_versionToString(info, version.data());
+
+    if (version == "1.1") {
+        return QChar::Unicode_1_1;
+    } else if (version == "2.0") {
+        return QChar::Unicode_2_0;
+    } else if (version == "2.1") {
+        return QChar::Unicode_2_1;
+    } else if (version == "3.0") {
+        return QChar::Unicode_3_0;
+    } else if (version == "3.1") {
+        return QChar::Unicode_3_1;
+    } else if (version == "3.2") {
+        return QChar::Unicode_3_2;
+    } else if (version == "4.0") {
+        return QChar::Unicode_4_0;
+    } else if (version == "4.1") {
+        return QChar::Unicode_4_1;
+    } else if (version == "5.0") {
+        return QChar::Unicode_5_0;
+    } else if (version == "5.1") {
+        return QChar::Unicode_5_1;
+    } else if (version == "5.2") {
+        return QChar::Unicode_5_2;
+    } else if (version == "6.0") {
+        return QChar::Unicode_6_0;
+    } else if (version == "6.1") {
+        return QChar::Unicode_6_1;
+    } else if (version == "6.2") {
+        return QChar::Unicode_6_2;
+    } else if (version == "6.3") {
+        return QChar::Unicode_6_3;
+    } else if (version == "7.0") {
+        return QChar::Unicode_7_0;
+    } else if (version == "8.0") {
+        return QChar::Unicode_8_0;
+    } else if (version == "9.0") {
+        return QChar::Unicode_9_0;
+    } else if (version == "10.0") {
+        return QChar::Unicode_10_0;
+    } else if (version == "11.0") {
+        return QChar::Unicode_11_0;
+    } else if (version == "12.0") {
+        return QChar::Unicode_12_0;
+    } else if (version == "12.1") {
+        return QChar::Unicode_12_1;
+    }
+    return QChar::Unicode_Unassigned;
 }
 
 /*!
@@ -1318,10 +1315,18 @@ QChar::UnicodeVersion QChar::currentUnicodeVersion()
 */
 QChar QChar::toLower() const
 {
-    if (is_ascii_char(ucs)) {
-        return to_ascii_lower(ucs);
-    }
-    return utf8proc_tolower(ucs);
+    return QChar::toLower(ucs);
+}
+
+/*!
+    \overload
+    Returns the lowercase equivalent of the UCS-2-encoded character specified
+    by \a ucs2 if the character is uppercase or titlecase; otherwise returns
+    the character itself.
+*/
+ushort QChar::toLower(const ushort ucs2)
+{
+    return QChar::toLower(uint(ucs2));
 }
 
 /*!
@@ -1335,21 +1340,7 @@ uint QChar::toLower(const uint ucs4)
     if (is_ascii_char(ucs4)) {
         return to_ascii_lower(ucs4);
     }
-    return utf8proc_tolower(ucs4);
-}
-
-/*!
-    \overload
-    Returns the lowercase equivalent of the UCS-2-encoded character specified
-    by \a ucs2 if the character is uppercase or titlecase; otherwise returns
-    the character itself.
-*/
-ushort QChar::toLower(const ushort ucs2)
-{
-    if (is_ascii_char(ucs2)) {
-        return to_ascii_lower(ucs2);
-    }
-    return utf8proc_tolower(ucs2);
+    return u_tolower(ucs4);
 }
 
 /*!
@@ -1358,10 +1349,18 @@ ushort QChar::toLower(const ushort ucs2)
 */
 QChar QChar::toUpper() const
 {
-    if (is_ascii_char(ucs)) {
-        return to_ascii_upper(ucs);
-    }
-    return utf8proc_toupper(ucs);
+    return QChar::toUpper(ucs);
+}
+
+/*!
+    \overload
+    Returns the uppercase equivalent of the UCS-2-encoded character specified
+    by \a ucs2 if the character is lowercase or titlecase; otherwise returns
+    the character itself.
+*/
+ushort QChar::toUpper(const ushort ucs2)
+{
+    return QChar::toUpper(uint(ucs2));
 }
 
 /*!
@@ -1375,21 +1374,7 @@ uint QChar::toUpper(const uint ucs4)
     if (is_ascii_char(ucs4)) {
         return to_ascii_upper(ucs4);
     }
-    return utf8proc_toupper(ucs4);
-}
-
-/*!
-    \overload
-    Returns the uppercase equivalent of the UCS-2-encoded character specified
-    by \a ucs2 if the character is lowercase or titlecase; otherwise returns
-    the character itself.
-*/
-ushort QChar::toUpper(const ushort ucs2)
-{
-    if (is_ascii_char(ucs2)) {
-        return to_ascii_upper(ucs2);
-    }
-    return utf8proc_toupper(ucs2);
+    return u_toupper(ucs4);
 }
 
 /*!
@@ -1398,10 +1383,18 @@ ushort QChar::toUpper(const ushort ucs2)
 */
 QChar QChar::toTitleCase() const
 {
-    if (is_ascii_char(ucs)) {
-        return to_ascii_upper(ucs);
-    }
-    return utf8proc_totitle(ucs);
+    return QChar::toTitleCase(ucs);
+}
+
+/*!
+    \overload
+    Returns the title case equivalent of the UCS-2-encoded character specified
+    by \a ucs2 if the character is lowercase or uppercase; otherwise returns
+    the character itself.
+*/
+ushort QChar::toTitleCase(const ushort ucs2)
+{
+    return QChar::toTitleCase(uint(ucs2));
 }
 
 /*!
@@ -1415,21 +1408,7 @@ uint QChar::toTitleCase(const uint ucs4)
     if (is_ascii_char(ucs4)) {
         return to_ascii_upper(ucs4);
     }
-    return utf8proc_totitle(ucs4);
-}
-
-/*!
-    \overload
-    Returns the title case equivalent of the UCS-2-encoded character specified
-    by \a ucs2 if the character is lowercase or uppercase; otherwise returns
-    the character itself.
-*/
-ushort QChar::toTitleCase(const ushort ucs2)
-{
-    if (is_ascii_char(ucs2)) {
-        return to_ascii_upper(ucs2);
-    }
-    return utf8proc_totitle(ucs2);
+    return u_totitle(ucs4);
 }
 
 /*!
@@ -1438,17 +1417,17 @@ ushort QChar::toTitleCase(const ushort ucs2)
 */
 QChar QChar::toCaseFolded() const
 {
-    if (is_ascii_char(ucs)) {
-        return to_ascii_lower(ucs);
-    }
-    int buffer[4]; // ### use utf8proc_charwidth?
-    int boundclass;
-    const ssize_t decresult = utf8proc_decompose_char(ucs, buffer, sizeof(buffer), UTF8PROC_CASEFOLD, &boundclass);
-    if (Q_UNLIKELY(decresult < 1)) {
-        qWarning("QChar::toCaseFolded: %s", utf8proc_errmsg(decresult));
-        return QChar(ucs);
-    }
-    return QChar(*buffer);
+    return QChar::toCaseFolded(ucs);
+}
+
+/*!
+    \overload
+    Returns the case folded equivalent of the UCS-2-encoded character specified
+    by \a ucs2. For most Unicode characters this is the same as toLowerCase().
+*/
+ushort QChar::toCaseFolded(const ushort ucs2)
+{
+    return QChar::toCaseFolded(uint(ucs2));
 }
 
 /*!
@@ -1461,36 +1440,8 @@ uint QChar::toCaseFolded(const uint ucs4)
     if (is_ascii_char(ucs4)) {
         return to_ascii_lower(ucs4);
     }
-    int buffer[4]; // ### use utf8proc_charwidth?
-    int boundclass;
-    const ssize_t decresult = utf8proc_decompose_char(ucs4, buffer, sizeof(buffer), UTF8PROC_CASEFOLD, &boundclass);
-    if (Q_UNLIKELY(decresult < 1)) {
-        qWarning("QChar::toCaseFolded: %s", utf8proc_errmsg(decresult));
-        return ucs4;
-    }
-    return uint(*buffer);
+    return u_foldCase(ucs4, U_FOLD_CASE_DEFAULT);
 }
-
-/*!
-    \overload
-    Returns the case folded equivalent of the UCS-2-encoded character specified
-    by \a ucs2. For most Unicode characters this is the same as toLowerCase().
-*/
-ushort QChar::toCaseFolded(const ushort ucs2)
-{
-    if (is_ascii_char(ucs2)) {
-        return to_ascii_lower(ucs2);
-    }
-    int buffer[4]; // ### use utf8proc_charwidth?
-    int boundclass;
-    const ssize_t decresult = utf8proc_decompose_char(ucs2, buffer, sizeof(buffer), UTF8PROC_CASEFOLD, &boundclass);
-    if (Q_UNLIKELY(decresult < 1)) {
-        qWarning("QChar::toCaseFolded: %s", utf8proc_errmsg(decresult));
-        return ucs2;
-    }
-    return ushort(*buffer);
-}
-
 
 /*!
     \fn char QChar::latin1() const

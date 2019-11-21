@@ -225,6 +225,15 @@ set_package_properties(ZLIB PROPERTIES
     TYPE REQUIRED
 )
 
+# v4.6 required for unorm2_getDecomposition
+find_package(ICU 4.6)
+set_package_properties(ICU PROPERTIES
+    PURPOSE "Required for locales support"
+    DESCRIPTION "Mature, widely used libraries providing Unicode and Globalization support"
+    URL "http://site.icu-project.org/"
+    TYPE REQUIRED
+)
+
 # v0.7.3+ required for ZSTD_getDecompressedSize()
 find_package(ZSTD 0.7.3)
 set_package_properties(ZSTD PROPERTIES

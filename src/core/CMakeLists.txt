@@ -1,5 +1,5 @@
 # add_definitions()
-set(EXTRA_CORE_LIBS ${ZLIB_LIBRARIES} ${OPENSSL_LIBRARIES} ${ZSTD_LIBRARIES})
+set(EXTRA_CORE_LIBS ${ZLIB_LIBRARIES} ${ICU_LIBRARIES} ${OPENSSL_LIBRARIES} ${ZSTD_LIBRARIES})
 
 set(CORE_PUBLIC_HEADERS
     ${CORE_PUBLIC_HEADERS}
@@ -239,19 +239,9 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${ZLIB_INCLUDE_DIRS}
+    ${ICU_INCLUDES}
     ${OPENSSL_INCLUDE_DIR}
     ${ZSTD_INCLUDES}
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc
-)
-
-set(CORE_SOURCES
-    ${CORE_SOURCES}
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc/utf8proc.c
-)
-
-set(CORE_HEADERS
-    ${CORE_HEADERS}
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc/utf8proc.h
 )
 
 if(${KATIE_PLATFORM} STREQUAL "linux")

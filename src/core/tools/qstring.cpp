@@ -50,13 +50,14 @@
 #include "qendian.h"
 #include "qmutex.h"
 #include "qcorecommon_p.h"
-#include "utf8proc.h"
 
 #include <limits.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
+
+#include <unicode/unorm2.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -5756,31 +5757,51 @@ QString QString::repeated(int times) const
 void qt_string_normalize(QString *data, QString::NormalizationForm mode, QChar::UnicodeVersion version, int from)
 {
     Q_UNUSED(version);
-    const utf8proc_uint8_t *d = reinterpret_cast<const utf8proc_uint8_t*>(data->constData() + from);
-    utf8proc_uint8_t *p = Q_NULLPTR;
+    UErrorCode errorcode = U_ZERO_ERROR;
+    const UNormalizer2 *normalizer = Q_NULLPTR;
 
     switch (mode) {
         case QString::NormalizationForm_D: {
-            p = utf8proc_NFKD(d);
+            normalizer = unorm2_getNFDInstance(&errorcode);
             break;
         }
         case QString::NormalizationForm_C: {
-            p = utf8proc_NFC(d);
+            normalizer = unorm2_getNFCInstance(&errorcode);
             break;
         }
         case QString::NormalizationForm_KD: {
-            p = utf8proc_NFKD(d);
+            normalizer = unorm2_getNFKDInstance(&errorcode);
             break;
         }
         case QString::NormalizationForm_KC: {
-            p = utf8proc_NFKC(d);
+            normalizer = unorm2_getNFKCInstance(&errorcode);
             break;
         }
     }
 
-    data->setUtf16(reinterpret_cast<const ushort*>(p), qstrlen(reinterpret_cast<char*>(p)));
-    if (p)
-        ::free(p);
+    if (Q_UNLIKELY(U_FAILURE(errorcode))) {
+        qWarning("QString::normalized: %s", u_errorName(errorcode));
+        data->clear();
+        return;
+    }
+
+    const int size = data->size() - from;
+    UChar buffer[size * 2];
+    const int32_t decresult = unorm2_normalize(normalizer, reinterpret_cast<const UChar*>(data->unicode() + from),
+        size, buffer, sizeof(buffer), &errorcode);
+    if (Q_UNLIKELY(decresult < 1)) {
+        // no normalization value
+        data->clear();
+        return;
+    }
+
+    if (Q_UNLIKELY(U_FAILURE(errorcode))) {
+        qWarning("QString::normalized: %s", u_errorName(errorcode));
+        data->clear();
+        return;
+    }
+
+    data->setUnicode(reinterpret_cast<const QChar*>(buffer), decresult);
 }
 
 /*!

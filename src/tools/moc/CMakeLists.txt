@@ -7,7 +7,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc
+    ${ICU_INCLUDES}
 )
 
 set(MOC_SOURCES
@@ -87,11 +87,11 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_std.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qunicodetables.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/utf8proc/utf8proc.c
 )
 
 add_executable(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})
 target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})
+target_link_libraries(bootstrap_moc ${ICU_LIBRARIES})
 
 add_executable(moc ${MOC_SOURCES})
 target_link_libraries(moc ${EXTRA_MOC_LIBS})

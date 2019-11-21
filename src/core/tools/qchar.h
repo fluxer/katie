@@ -149,6 +149,7 @@ public:
 
     enum Decomposition {
         NoDecomposition,
+        Canonical,
         Font,
         NoBreak,
         Initial,
