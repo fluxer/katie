@@ -49,14 +49,9 @@
 #include "qcoreapplication_p.h"
 #include "QtNetwork/qhostinfo.h"
 #include "QtCore/qmutex.h"
-#include "QtCore/qwaitcondition.h"
 #include "QtCore/qobject.h"
 #include "QtCore/qpointer.h"
-#include "QtCore/qthread.h"
-#include "QtCore/qthreadpool.h"
-#include "QtCore/qrunnable.h"
 #include "QtCore/qlist.h"
-#include "QtCore/qqueue.h"
 #include <QElapsedTimer>
 #include <QCache>
 
@@ -87,10 +82,6 @@ class QHostInfoAgent : public QObject
     Q_OBJECT
 public:
     static QHostInfo fromName(const QString &hostName);
-#ifndef QT_NO_BEARERMANAGEMENT
-    static QHostInfo fromName(const QString &hostName, QSharedPointer<QNetworkSession> networkSession);
-#endif
-
 };
 
 class QHostInfoPrivate
@@ -102,11 +93,6 @@ public:
           lookupId(0)
     {
     }
-#ifndef QT_NO_BEARERMANAGEMENT
-    //not a public API yet
-    static QHostInfo fromName(const QString &hostName, QSharedPointer<QNetworkSession> networkSession);
-#endif
-
     QHostInfo::HostInfoError err;
     QString errorStr;
     QList<QHostAddress> addrs;
@@ -116,7 +102,6 @@ public:
 
 // These functions are outside of the QHostInfo class and strictly internal.
 // Do NOT use them outside of QAbstractSocket.
-QHostInfo Q_NETWORK_EXPORT qt_qhostinfo_lookup(const QString &name, QObject *receiver, const char *member, bool *valid, int *id);
 void Q_AUTOTEST_EXPORT qt_qhostinfo_clear_cache();
 void Q_AUTOTEST_EXPORT qt_qhostinfo_enable_cache(bool e);
 
@@ -141,75 +126,6 @@ private:
     QCache<QString,QHostInfoCacheElement> cache;
     QMutex mutex;
 };
-
-// the following classes are used for the (normal) case: We use multiple threads to lookup DNS
-#ifndef QT_NO_THREAD
-class QHostInfoRunnable : public QRunnable
-{
-public:
-    QHostInfoRunnable (QString hn, int i);
-    void run();
-
-    QString toBeLookedUp;
-    int id;
-    QHostInfoResult resultEmitter;
-};
-
-
-class QAbstractHostInfoLookupManager : public QObject
-{
-    Q_OBJECT
-
-public:
-    ~QAbstractHostInfoLookupManager() {}
-    virtual void clear() = 0;
-
-    QHostInfoCache cache;
-
-protected:
-     QAbstractHostInfoLookupManager() {}
-     static QAbstractHostInfoLookupManager* globalInstance();
-
-};
-
-class QHostInfoLookupManager : public QAbstractHostInfoLookupManager
-{
-    Q_OBJECT
-public:
-    QHostInfoLookupManager();
-    ~QHostInfoLookupManager();
-
-    void clear();
-    void work();
-
-    // called from QHostInfo
-    void scheduleLookup(QHostInfoRunnable *r);
-    void abortLookup(int id);
-
-    // called from QHostInfoRunnable
-    void lookupFinished(QHostInfoRunnable *r);
-    bool wasAborted(int id);
-
-    friend class QHostInfoRunnable;
-protected:
-    QList<QHostInfoRunnable*> currentLookups; // in progress
-    QList<QHostInfoRunnable*> postponedLookups; // postponed because in progress for same host
-    QQueue<QHostInfoRunnable*> scheduledLookups; // not yet started
-    QList<QHostInfoRunnable*> finishedLookups; // recently finished
-    QList<int> abortedLookups; // ids of aborted lookups
-
-    QThreadPool threadPool;
-
-    QMutex mutex;
-
-    bool wasDeleted;
-
-private slots:
-    void waitForThreadPoolDone() { threadPool.waitForDone(); }
-};
-#endif // QT_NO_THREAD
-
-
 
 QT_END_NAMESPACE
 

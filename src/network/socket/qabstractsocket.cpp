@@ -1385,18 +1385,8 @@ void QAbstractSocket::connectToHostImplementation(const QString &hostName, quint
 #endif
     } else {
         if (d->threadData->eventDispatcher) {
-            // this internal API for QHostInfo either immediately gives us the desired
-            // QHostInfo from cache or later calls the _q_startConnecting slot.
-            bool immediateResultValid = false;
-            QHostInfo hostInfo = qt_qhostinfo_lookup(hostName,
-                                                     this,
-                                                     SLOT(_q_startConnecting(QHostInfo)),
-                                                     &immediateResultValid,
-                                                     &d->hostLookupId);
-            if (immediateResultValid) {
-                d->hostLookupId = -1;
-                d->_q_startConnecting(hostInfo);
-            }
+            d->hostLookupId = -1;
+            d->_q_startConnecting(QHostInfo::fromName(hostName));
         }
     }
 
@@ -1740,14 +1730,6 @@ bool QAbstractSocket::waitForConnected(int msecs)
 #endif
         QHostInfo::abortHostLookup(d->hostLookupId);
         d->hostLookupId = -1;
-#ifndef QT_NO_BEARERMANAGEMENT
-        QSharedPointer<QNetworkSession> networkSession;
-        QVariant v(property("_q_networksession"));
-        if (v.isValid()) {
-            networkSession = qvariant_cast< QSharedPointer<QNetworkSession> >(v);
-            d->_q_startConnecting(QHostInfoPrivate::fromName(d->hostName, networkSession));
-        } else
-#endif
         d->_q_startConnecting(QHostInfo::fromName(d->hostName));
     }
     if (state() == UnconnectedState)

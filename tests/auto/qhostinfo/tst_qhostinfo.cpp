@@ -105,12 +105,6 @@ private slots:
     void multipleDifferentLookups_data();
     void multipleDifferentLookups();
 
-    void cache();
-
-    void abortHostLookup();
-#ifndef QT_NO_THREAD
-    void abortHostLookupInDifferentThread();
-#endif
 protected slots:
     void resultsReady(const QHostInfo &);
 
@@ -539,49 +533,6 @@ void tst_QHostInfo::multipleDifferentLookups()
     QCOMPARE(lookupsDoneCounter, repeats*COUNT);
 }
 
-void tst_QHostInfo::cache()
-{
-    QFETCH_GLOBAL(bool, cache);
-    if (!cache)
-        return; // test makes only sense when cache enabled
-
-    // reset slot counter
-    lookupsDoneCounter = 0;
-
-    // lookup once, wait in event loop, result should not come directly.
-    bool valid = true;
-    int id = -1;
-    QHostInfo result = qt_qhostinfo_lookup("localhost", this, SLOT(resultsReady(QHostInfo)), &valid, &id);
-    QTestEventLoop::instance().enterLoop(5);
-    QVERIFY(!QTestEventLoop::instance().timeout());
-    QVERIFY(valid == false);
-    QVERIFY(result.addresses().isEmpty());
-
-    // loopkup second time, result should come directly
-    valid = false;
-    result = qt_qhostinfo_lookup("localhost", this, SLOT(resultsReady(QHostInfo)), &valid, &id);
-#if defined(Q_OS_LINUX)
-    if (valid != true)
-        QEXPECT_FAIL("", "QTBUG-28079", Continue);
-#endif
-    QVERIFY(valid == true);
-    QVERIFY(!result.addresses().isEmpty());
-
-    // clear the cache
-    qt_qhostinfo_clear_cache();
-
-    // lookup third time, result should not come directly.
-    valid = true;
-    result = qt_qhostinfo_lookup("localhost", this, SLOT(resultsReady(QHostInfo)), &valid, &id);
-    QTestEventLoop::instance().enterLoop(5);
-    QVERIFY(!QTestEventLoop::instance().timeout());
-    QVERIFY(valid == false);
-    QVERIFY(result.addresses().isEmpty());
-
-    // the slot should have been called 2 times.
-    QCOMPARE(lookupsDoneCounter, 2);
-}
-
 void tst_QHostInfo::resultsReady(const QHostInfo &hi)
 {
     lookupDone = true;
@@ -589,59 +540,6 @@ void tst_QHostInfo::resultsReady(const QHostInfo &hi)
     lookupsDoneCounter++;
     QMetaObject::invokeMethod(&QTestEventLoop::instance(), "exitLoop", Qt::QueuedConnection);
 }
-
-void tst_QHostInfo::abortHostLookup()
-{
-    //reset counter
-    lookupsDoneCounter = 0;
-    bool valid = false;
-    int id = -1;
-    QHostInfo result = qt_qhostinfo_lookup("a-single" TEST_DOMAIN, this, SLOT(resultsReady(QHostInfo)), &valid, &id);
-    QVERIFY(!valid);
-    //it is assumed that the DNS request/response in the backend is slower than it takes to call abort
-    QHostInfo::abortHostLookup(id);
-    QTestEventLoop::instance().enterLoop(5);
-#if defined(Q_OS_LINUX)
-    if (lookupsDoneCounter != 0)
-        QEXPECT_FAIL("", "QTBUG-28079", Continue);
-#endif
-    QCOMPARE(lookupsDoneCounter, 0);
-}
-
-#ifndef QT_NO_THREAD
-class LookupAborter : public QObject
-{
-    Q_OBJECT
-public slots:
-    void abort()
-    {
-        QHostInfo::abortHostLookup(id);
-        QThread::currentThread()->quit();
-    }
-public:
-    int id;
-};
-
-void tst_QHostInfo::abortHostLookupInDifferentThread()
-{
-    //reset counter
-    lookupsDoneCounter = 0;
-    bool valid = false;
-    int id = -1;
-    QHostInfo result = qt_qhostinfo_lookup("a-single" TEST_DOMAIN, this, SLOT(resultsReady(QHostInfo)), &valid, &id);
-    QVERIFY(!valid);
-    QThread thread;
-    LookupAborter aborter;
-    aborter.id = id;
-    aborter.moveToThread(&thread);
-    connect(&thread, SIGNAL(started()), &aborter, SLOT(abort()));
-    //it is assumed that the DNS request/response in the backend is slower than it takes to schedule the thread and call abort
-    thread.start();
-    QVERIFY(thread.wait(5000));
-    QTestEventLoop::instance().enterLoop(5);
-    QCOMPARE(lookupsDoneCounter, 0);
-}
-#endif // QT_NO_THREAD
 
 QTEST_MAIN(tst_QHostInfo)
 
