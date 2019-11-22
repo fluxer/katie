@@ -81,3 +81,5 @@ install(
     DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
+
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtDesignerComponents)
