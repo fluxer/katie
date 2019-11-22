@@ -656,10 +656,6 @@ int fromUtf8_qt47(ushort *dst, const char *chars, int len)
         if (state->flags & QTextCodec::ConvertInvalidToNull)
             replacement = QChar::Null;
         need = state->remainingChars;
-        if (need) {
-            uc = state->state_data[0];
-            min_uc = state->state_data[1];
-        }
     }
     if (!headerdone && len > 3
         && (uchar)chars[0] == 0xef && (uchar)chars[1] == 0xbb && (uchar)chars[2] == 0xbf) {
@@ -750,8 +746,6 @@ int fromUtf8_qt47(ushort *dst, const char *chars, int len)
         state->remainingChars = need;
         if (headerdone)
             state->flags |= QTextCodec::IgnoreHeader;
-        state->state_data[0] = need ? uc : 0;
-        state->state_data[1] = need ? min_uc : 0;
     }
     //return result;
     return qch - dst;

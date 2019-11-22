@@ -127,9 +127,6 @@ add_feature_info(tiff WITH_TIFF "build TIFF support")
 option(WITH_MNG "Build MNG support" ON)
 add_feature_info(mng WITH_MNG "build MNG support")
 
-option(WITH_ICONV "Build Iconv support" ON)
-add_feature_info(iconv WITH_ICONV "build Iconv support")
-
 option(WITH_DBUS "Build DBus support" ON)
 add_feature_info(dbus WITH_DBUS "build DBus support")
 
@@ -349,14 +346,6 @@ set_package_properties(MNG PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(Iconv)
-set_package_properties(Iconv PROPERTIES
-    PURPOSE "Iconv support"
-    DESCRIPTION "iconv() implementation, for use on systems which don't have one or lack Unicode support"
-    URL "http://www.gnu.org/software/libiconv/"
-    TYPE RECOMMENDED
-)
-
 find_package(Cups)
 set_package_properties(Cups PROPERTIES
     PURPOSE "Required for printing support"
@@ -495,11 +484,6 @@ endif()
 # conditional features
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
-endif()
-
-# optional packages with interface definition only for convenience
-if(NOT WITH_ICONV OR NOT ICONV_FOUND)
-    katie_definition(-DQT_NO_ICONV)
 endif()
 
 # keep in sync with the gui component CMake file, only definitions setup is needed here

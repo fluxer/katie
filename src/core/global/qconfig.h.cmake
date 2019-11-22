@@ -89,6 +89,7 @@
 #define QT_NO_RAWFONT
 #define QT_NO_IMAGE_TEXT
 #define QT_NO_GLIB
+#define QT_NO_ICONV
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -179,7 +180,6 @@
 #cmakedefine QT_NO_GROUPBOX
 #cmakedefine QT_NO_HTTP
 #cmakedefine QT_NO_ICON
-#cmakedefine QT_NO_ICONV
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
 #cmakedefine QT_NO_IMAGEFORMATPLUGIN
 #cmakedefine QT_NO_IMAGEFORMAT_BMP

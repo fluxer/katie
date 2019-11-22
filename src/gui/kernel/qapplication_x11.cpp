@@ -886,10 +886,10 @@ static void qt_set_input_encoding()
             qt_input_mapper = QTextCodec::codecForName((char *)data);
         // make sure we have an input codec
         if(!qt_input_mapper)
-            qt_input_mapper = QTextCodec::codecForName("ISO 8859-1");
+            qt_input_mapper = QTextCodec::codecForName("ISO-8859-1");
     }
     if (qt_input_mapper && qt_input_mapper->mibEnum() == 11) // 8859-8
-        qt_input_mapper = QTextCodec::codecForName("ISO 8859-8-I");
+        qt_input_mapper = QTextCodec::codecForName("ISO-8859-8-I");
     if(data)
         XFree((char *)data);
 }

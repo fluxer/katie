@@ -36,7 +36,7 @@
 #ifndef QT_NO_TEXTCODEC
 #include "qtextcodec.h"
 #endif
-#include "qutfcodec_p.h"
+#include "qicucodec_p.h"
 #include "qdatastream.h"
 #include "qlist.h"
 #include "qlocale.h"
@@ -3455,7 +3455,8 @@ QByteArray QString::toUtf8() const
     if (isNull())
         return QByteArray();
 
-    return QUtf8::convertFromUnicode(constData(), length(), Q_NULLPTR);
+    QTextCodec *c = QTextCodec::codecForName("UTF-8");
+    return c->fromUnicode(constData(), length(), Q_NULLPTR);
 }
 
 /*!
@@ -3618,7 +3619,8 @@ QString QString::fromUtf8(const char *str, int size)
     if (size < 0)
         size = qstrlen(str);
 
-    return QUtf8::convertToUnicode(str, size, Q_NULLPTR);
+    QTextCodec *c = QTextCodec::codecForName("UTF-8");
+    return c->toUnicode(str, size, Q_NULLPTR);
 }
 
 /*!
@@ -3647,7 +3649,8 @@ QString QString::fromUtf16(const ushort *unicode, int size)
         while (unicode[size] != 0)
             ++size;
     }
-    return QUtf16::convertToUnicode((const char *)unicode, size*2, Q_NULLPTR);
+    QTextCodec *c = QTextCodec::codecForName("UTF-16");
+    return c->toUnicode((const char *)unicode, size, Q_NULLPTR);
 }
 
 
@@ -3671,7 +3674,8 @@ QString QString::fromUcs4(const uint *unicode, int size)
         while (unicode[size] != 0)
             ++size;
     }
-    return QUtf32::convertToUnicode((const char *)unicode, size*4, Q_NULLPTR);
+    QTextCodec *c = QTextCodec::codecForName("UTF-32");
+    return c->toUnicode((const char *)unicode, size, Q_NULLPTR);
 }
 
 /*!
@@ -8535,7 +8539,8 @@ QByteArray QStringRef::toUtf8() const
     if (isNull())
         return QByteArray();
 
-    return QUtf8::convertFromUnicode(constData(), length(), Q_NULLPTR);
+    QTextCodec *c = QTextCodec::codecForName("UTF-8");
+    return c->fromUnicode(constData(), length(), Q_NULLPTR);
 }
 
 /*!
