@@ -1260,7 +1260,7 @@ static bool indic_shape_syllable(HB_Bool openType, HB_ShaperItem *item, bool inv
         // * In Kannada and Telugu, the base consonant cannot be
         //   farther than 3 consonants from the end of the syllable.
         // #### replace the HasReph property by testing if the feature exists in the font!
-        if (form(*uc) == Consonant || (script == HB_Script_Bengali && form(*uc) == IndependentVowel)) {
+        if (form(*uc) == Consonant) {
             if ((properties & HasReph) && (len > 2) &&
                 (*uc == ra || *uc == 0x9f0) && *(uc+1) == halant)
                 beginsWithRa = true;
@@ -1379,7 +1379,7 @@ static bool indic_shape_syllable(HB_Bool openType, HB_ShaperItem *item, bool inv
                     toPos++;
                 if (toPos < len-1 && uc[toPos] == ra && uc[toPos+1] == halant)
                     toPos += 2;
-                if (script == HB_Script_Devanagari || script == HB_Script_Gujarati || script == HB_Script_Bengali) {
+                if (script == HB_Script_Devanagari || script == HB_Script_Gujarati) {
                     if (matra_position == Post || matra_position == Split) {
                         toPos = matra+1;
                         matra -= 2;
@@ -1752,10 +1752,6 @@ static int indic_nextSyllableBoundary(HB_Script script, const HB_UChar16 *s, int
         case Halant:
             if (state == Nukta || state == Consonant)
                 break;
-            // Bengali has a special exception allowing the combination Vowel_A/E + Halant + Ya
-            if (script == HB_Script_Bengali && pos == 1 &&
-                 (uc[0] == 0x0985 || uc[0] == 0x098f))
-                break;
             // Sinhala uses the Halant as a component of certain matras. Allow these, but keep the state on Matra.
             if (script == HB_Script_Sinhala && state == Matra) {
                 ++pos;
@@ -1788,8 +1784,6 @@ static int indic_nextSyllableBoundary(HB_Script script, const HB_UChar16 *s, int
             // ### not sure if this is correct. If it is, does it apply only to Bengali or should
             // it work for all Indic languages?
             // the combination Independent_A + Vowel Sign AA is allowed.
-            if (script == HB_Script_Bengali && uc[pos] == 0x9be && uc[pos-1] == 0x985)
-                break;
             if (script == HB_Script_Tamil && state == Matra) {
                 if (uc[pos-1] == 0x0bc6 &&
                      (uc[pos] == 0xbbe || uc[pos] == 0xbd7))
