@@ -175,6 +175,7 @@ int QHostInfo::lookupHost(const QString &name, QObject *receiver,
 void QHostInfo::abortHostLookup(int id)
 {
     // nothing to do
+    Q_UNUSED(id);
 }
 
 /*!
