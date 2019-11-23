@@ -574,10 +574,12 @@ bool QMetaType::isRegistered(int type)
     if (type >= 0 && type < User) {
         // predefined type
         return true;
+    } else if (type < 0) {
+        return false;
     }
     QReadLocker locker(customTypesLock());
     const QVector<QCustomTypeInfo> * const ct = customTypes();
-    return ((ct && ct->count() > type - User) && !ct->at(type - User).typeName.isEmpty());
+    return (ct && (ct->count() > type - User) && !ct->at(type - User).typeName.isEmpty());
 }
 
 /*!
