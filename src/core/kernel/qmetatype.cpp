@@ -381,10 +381,10 @@ void QMetaType::registerStreamOperators(int idx, SaveOperator saveOp,
 {
     if (idx < User)
         return; //builtin types should not be registered;
+    QWriteLocker locker(customTypesLock());
     QVector<QCustomTypeInfo> *ct = customTypes();
     if (!ct)
         return;
-    QWriteLocker locker(customTypesLock());
     QCustomTypeInfo &inf = (*ct)[idx - User];
     inf.saveOp = saveOp;
     inf.loadOp = loadOp;
@@ -408,8 +408,8 @@ const char *QMetaType::typeName(int type)
     } else if (type >= FirstCoreExtType && type <= LastCoreExtType) {
         return types[type - FirstCoreExtType + GuiTypeCount + LastCoreType + 2].typeName;
     } else if (type >= User) {
-        const QVector<QCustomTypeInfo> * const ct = customTypes();
         QReadLocker locker(customTypesLock());
+        const QVector<QCustomTypeInfo> * const ct = customTypes();
         return ct && ct->count() > type - User && !ct->at(type - User).typeName.isEmpty()
                 ? ct->at(type - User).typeName.constData()
                 : static_cast<const char *>(0);
@@ -794,13 +794,13 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
         qMetaTypeGuiHelper[type - FirstGuiType].saveOp(stream, data);
         break;
     default: {
+        QReadLocker locker(customTypesLock());
         const QVector<QCustomTypeInfo> * const ct = customTypes();
         if (!ct)
             return false;
 
         SaveOperator saveOp = 0;
         {
-            QReadLocker locker(customTypesLock());
             saveOp = ct->at(type - User).saveOp;
         }
 
@@ -1000,13 +1000,13 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
         qMetaTypeGuiHelper[type - FirstGuiType].loadOp(stream, data);
         break;
     default: {
+        QReadLocker locker(customTypesLock());
         const QVector<QCustomTypeInfo> * const ct = customTypes();
         if (!ct)
             return false;
 
         LoadOperator loadOp = 0;
         {
-            QReadLocker locker(customTypesLock());
             loadOp = ct->at(type - User).loadOp;
         }
 
@@ -1229,8 +1229,8 @@ void *QMetaType::construct(int type, const void *copy)
             return 0;
         constr = qMetaTypeGuiHelper[type - FirstGuiType].constr;
     } else {
-        const QVector<QCustomTypeInfo> * const ct = customTypes();
         QReadLocker locker(customTypesLock());
+        const QVector<QCustomTypeInfo> * const ct = customTypes();
         if (type < User || !ct || ct->count() <= type - User)
             return 0;
         if (ct->at(type - User).typeName.isEmpty())
@@ -1390,8 +1390,8 @@ void QMetaType::destroy(int type, void *data)
                 return;
             destr = qMetaTypeGuiHelper[type - FirstGuiType].destr;
         } else {
-            const QVector<QCustomTypeInfo> * const ct = customTypes();
             QReadLocker locker(customTypesLock());
+            const QVector<QCustomTypeInfo> * const ct = customTypes();
             if (type < User || !ct || ct->count() <= type - User)
                 break;
             if (ct->at(type - User).typeName.isEmpty())
