@@ -50,7 +50,7 @@ class Q_TEST_EXPORT QTestEventLoop : public QObject
 
 public:
     inline QTestEventLoop(QObject *aParent = 0)
-        : QObject(aParent), inLoop(false), _timeout(false), timerId(-1), loop(0) {}
+        : QObject(aParent), _timeout(false), timerId(-1) {}
     inline void enterLoop(int secs);
 
 
@@ -69,53 +69,44 @@ public:
     }
 
 public Q_SLOTS:
-    inline void exitLoop();
+    void exitLoop();
 
 protected:
-    inline void timerEvent(QTimerEvent *e);
+    void timerEvent(QTimerEvent *e);
 
 private:
-    bool inLoop;
     bool _timeout;
     int timerId;
 
-    QEventLoop *loop;
+    QEventLoop loop;
 };
 
-inline void QTestEventLoop::enterLoop(int secs)
+void QTestEventLoop::enterLoop(int secs)
 {
-    Q_ASSERT(!loop);
+    Q_ASSERT(!loop.isRunning());
 
-    QEventLoop l;
-
-    inLoop = true;
     _timeout = false;
-
     timerId = startTimer(secs * 1000);
 
-    loop = &l;
-    l.exec();
-    loop = 0;
+    loop.exec();
 }
 
-inline void QTestEventLoop::exitLoop()
+void QTestEventLoop::exitLoop()
 {
     if (timerId != -1)
         killTimer(timerId);
+
     timerId = -1;
 
-    if (loop)
-        loop->exit();
-
-    inLoop = false;
+    loop.exit();
 }
 
-inline void QTestEventLoop::timerEvent(QTimerEvent *e)
+void QTestEventLoop::timerEvent(QTimerEvent *e)
 {
-    if (e->timerId() != timerId)
-        return;
-    _timeout = true;
-    exitLoop();
+    if (e->timerId() == timerId) {
+        _timeout = true;
+        exitLoop();
+    }
 }
 
 QT_END_NAMESPACE
