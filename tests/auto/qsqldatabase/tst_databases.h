@@ -39,11 +39,12 @@
 #include <QSqlDriver>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlTableModel>
 #include <QRegExp>
 #include <QDir>
 #include <QVariant>
 #include <QDebug>
-#include <QSqlTableModel>
+#include <QHostInfo>
 #include <QtTest>
 
 #include <unistd.h>
@@ -57,7 +58,6 @@
 #define DBMS_SPECIFIC(db, driver) \
     if (!db.driverName().startsWith(driver)) { QSKIP(driver " specific test", SkipSingle); return; }
 
-// ### use QSystem::hostName if it is integrated in qtest/main
 static QString qGetHostName()
 {
     static QString hostname;
@@ -65,14 +65,9 @@ static QString qGetHostName()
     if ( !hostname.isEmpty() )
         return hostname;
 
-    char hn[257];
-
-    if ( gethostname( hn, 255 ) == 0 ) {
-        hn[256] = '\0';
-        hostname = QString::fromLatin1( hn );
-        hostname.replace( QLatin1Char( '.' ), QLatin1Char( '_' ) );
-        hostname.replace( QLatin1Char( '-' ), QLatin1Char( '_' ) );
-    }
+    hostname = QHostInfo::localHostName();
+    hostname.replace( QLatin1Char( '.' ), QLatin1Char( '_' ) );
+    hostname.replace( QLatin1Char( '-' ), QLatin1Char( '_' ) );
 
     return hostname;
 }
