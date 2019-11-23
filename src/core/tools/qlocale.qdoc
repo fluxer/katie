@@ -168,7 +168,6 @@
     \value Awadhi
     \value Aymara
     \value Azerbaijani
-    \value Azeri
     \value Badaga
     \value Bafia
     \value Bafut
@@ -230,6 +229,7 @@
     \value Cherokee
     \value Cheyenne
     \value Chibcha
+    \value Chickasaw
     \value Chiga
     \value ChimborazoHighlandQuichua
     \value Chinese
@@ -248,7 +248,6 @@
     \value Cornish
     \value Corsican
     \value Cree
-    \value Creek
     \value CrimeanTurkish
     \value Croatian
     \value Czech
@@ -409,7 +408,6 @@
     \value Kurukh
     \value Kutenai
     \value Kwasio
-    \value Kyrgyz
     \value Ladino
     \value Lahnda
     \value Lakota
@@ -462,7 +460,6 @@
     \value Maltese
     \value Manchu
     \value Mandar
-    \value MandarinChinese
     \value Mandingo
     \value Manipuri
     \value Manx
@@ -503,8 +500,8 @@
     \value Mossi
     \value Multiplelanguages
     \value Mundang
+    \value Muscogee
     \value MuslimTat
-    \value MyanmarLanguage
     \value Myene
     \value NKo
     \value NajdiArabic
@@ -574,7 +571,6 @@
     \value Portuguese
     \value Prussian
     \value Punjabi
-    \value Pushto
     \value Quechua
     \value Rajasthani
     \value Rapanui
@@ -699,8 +695,6 @@
     \value Tuvinian
     \value Twi
     \value Tyap
-    \value UKEnglish
-    \value USEnglish
     \value Udmurt
     \value Ugaritic
     \value Uighur
@@ -709,7 +703,6 @@
     \value Unknownlanguage
     \value UpperSorbian
     \value Urdu
-    \value Uyghur
     \value Uzbek
     \value Vai
     \value Venda
@@ -795,7 +788,6 @@
     \value Bhutan
     \value Bolivia
     \value Bosnia
-    \value BosniaAndHerzegovina
     \value Botswana
     \value BouvetIsland
     \value Brazil
@@ -827,8 +819,6 @@
     \value Comoros
     \value CongoBrazzaville
     \value CongoDRC
-    \value CongoKinshasa
-    \value CongoRepublic
     \value CookIslands
     \value CostaRica
     \value CotedIvoire
@@ -837,7 +827,6 @@
     \value Curacao
     \value Cyprus
     \value CzechRepublic
-    \value Czechia
     \value Denmark
     \value DiegoGarcia
     \value Djibouti
@@ -859,7 +848,6 @@
     \value EuropeanUnion
     \value Eurozone
     \value FalklandIslands
-    \value FalklandIslandsIslasMalvinas
     \value FaroeIslands
     \value Fiji
     \value Finland
@@ -887,7 +875,6 @@
     \value HeardAndMcDonaldIslands
     \value Honduras
     \value HongKong
-    \value HongKongSARChina
     \value Hungary
     \value Iceland
     \value India
@@ -898,7 +885,6 @@
     \value IsleofMan
     \value Israel
     \value Italy
-    \value IvoryCoast
     \value Jamaica
     \value Japan
     \value Jersey
@@ -920,7 +906,6 @@
     \value Lithuania
     \value Luxembourg
     \value Macao
-    \value MacaoSARChina
     \value Madagascar
     \value Malawi
     \value Malaysia
@@ -945,7 +930,6 @@
     \value Morocco
     \value Mozambique
     \value Myanmar
-    \value MyanmarBurma
     \value Namibia
     \value Nauru
     \value Nepal
@@ -971,7 +955,6 @@
     \value Pakistan
     \value Palau
     \value Palestine
-    \value PalestinianTerritories
     \value Panama
     \value PapuaNewGuinea
     \value Paraguay
@@ -1025,7 +1008,6 @@
     \value Sudan
     \value Suriname
     \value SvalbardAndJanMayen
-    \value Swaziland
     \value Sweden
     \value Switzerland
     \value Syria
@@ -1033,7 +1015,6 @@
     \value Tajikistan
     \value Tanzania
     \value Thailand
-    \value TimorLeste
     \value Togo
     \value Tokelau
     \value Tonga
@@ -1050,9 +1031,6 @@
     \value Uganda
     \value Ukraine
     \value UnitedArabEmirates
-    \value UnitedKingdom
-    \value UnitedNations
-    \value UnitedStates
     \value UnitedStatesOutlyingIslands
     \value UnitedStatesVirginIslands
     \value UnknownRegion
@@ -1220,7 +1198,6 @@
     \value PahawhHmongScript
     \value PalmyreneScript
     \value PauCinHauScript
-    \value PersoArabicScript
     \value PhagspaScript
     \value PhoenicianScript
     \value PollardPhoneticScript
@@ -1237,12 +1214,10 @@
     \value SiddhamScript
     \value SignWritingScript
     \value SimplifiedHanScript
-    \value SimplifiedScript
     \value SinhalaScript
     \value SogdianScript
     \value SoraSompengScript
     \value SoyomboScript
-    \value SumeroAkkadianCuneiformScript
     \value SundaneseScript
     \value SylotiNagriScript
     \value SymbolsScript
@@ -1262,10 +1237,8 @@
     \value TifinaghScript
     \value TirhutaScript
     \value TraditionalHanScript
-    \value TraditionalScript
     \value UCASScript
     \value UgariticScript
-    \value UnifiedCanadianAboriginalSyllabicsScript
     \value UnwrittenScript
     \value VaiScript
     \value VarangKshitiScript
@@ -1275,6 +1248,7 @@
     \value WoleaiScript
     \value YiScript
     \value ZanabazarSquareScript
+    \value ZawgyiScript
     \omitvalue LastScript
 
     \sa script(), scriptToString(), languageToString()
