@@ -66,7 +66,7 @@ public:
 
     static QString serverIPs()
     {
-        return QLatin1String("52.200.159.44 52.73.140.86");
+        return QLatin1String("3.232.181.210 54.172.95.6");
     }
 
     static bool compareReplyIMAP(QByteArray const& actual)
