@@ -196,12 +196,20 @@ QHostInfo QHostInfo::fromName(const QString &name)
     qDebug("QHostInfo::fromName(\"%s\")",name.toLatin1().constData());
 #endif
 
-    QHostInfo hostInfo = QHostInfoAgent::fromName(name);
     QHostInfoCache* cache = globalHostInfoCache();
     if (cache && cache->isEnabled()) {
-        cache->put(name, hostInfo);
+        bool valid = false;
+        QHostInfo info = cache->get(name, &valid);
+        if (valid) {
+            return info;
+        }
     }
-    return hostInfo;
+
+    QHostInfo info = QHostInfoAgent::fromName(name);
+    if (cache && cache->isEnabled()) {
+        cache->put(name, info);
+    }
+    return info;
 }
 
 /*!
@@ -426,10 +434,6 @@ QHostInfo QHostInfoCache::get(const QString &name, bool *valid) const
         *valid = true;
         return element->info;
     }
-
-    // FIXME idea:
-    // if too old but not expired, trigger a new lookup
-    // to freshen our cache
 
     return QHostInfo();
 }
