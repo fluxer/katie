@@ -105,6 +105,8 @@ static bool nameMatch(const QByteArray &name, const QByteArray &test)
     return (*h == '\0');
 }
 
+static QList<QByteArray> icucodecs;
+
 static QTextCodec *createForName(const QByteArray &name)
 {
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
@@ -123,7 +125,17 @@ static QTextCodec *createForName(const QByteArray &name)
     Q_UNUSED(name);
 #endif
 
-    return new QIcuCodec(name.constData());
+    if (icucodecs.isEmpty()) {
+        icucodecs = QIcuCodec::availableCodecs();
+    }
+
+    foreach(const QByteArray codec, icucodecs) {
+        if (nameMatch(name, codec)) {
+            return new QIcuCodec(name.constData());
+        }
+    }
+
+    return Q_NULLPTR;
 }
 
 static QTextCodec *createForMib(int mib)
