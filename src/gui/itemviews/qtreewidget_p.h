@@ -51,7 +51,6 @@
 #include <QtGui/qtreewidget.h>
 #include "qtreeview_p.h"
 #include <QtGui/qheaderview.h>
-#include "qabstractitemmodel_p.h"
 
 #ifndef QT_NO_TREEWIDGET
 
