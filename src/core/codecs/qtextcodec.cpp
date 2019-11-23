@@ -444,6 +444,9 @@ QTextCodec::ConverterState::~ConverterState()
     \o windows-1256
     \o windows-1257
     \o windows-1258
+
+    \o System Any of the above depending on the system locale
+    \o Latin1 Obsolete
     \endlist
 
     QTextCodecs can be used as follows to convert some locally encoded
