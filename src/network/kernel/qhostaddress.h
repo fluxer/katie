@@ -113,7 +113,8 @@ public:
 
     static QPair<QHostAddress, int> parseSubnet(const QString &subnet);
 
-protected:
+private:
+    friend class QNetmaskAddress;
     QScopedPointer<QHostAddressPrivate> d;
 };
 
