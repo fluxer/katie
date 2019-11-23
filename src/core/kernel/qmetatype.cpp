@@ -799,10 +799,7 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
         if (!ct)
             return false;
 
-        SaveOperator saveOp = 0;
-        {
-            saveOp = ct->at(type - User).saveOp;
-        }
+        SaveOperator saveOp = ct->at(type - User).saveOp;
 
         if (!saveOp)
             return false;
@@ -1005,10 +1002,7 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
         if (!ct)
             return false;
 
-        LoadOperator loadOp = 0;
-        {
-            loadOp = ct->at(type - User).loadOp;
-        }
+        LoadOperator loadOp = ct->at(type - User).loadOp;
 
         if (!loadOp)
             return false;
