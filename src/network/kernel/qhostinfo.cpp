@@ -158,8 +158,8 @@ int QHostInfo::lookupHost(const QString &name, QObject *receiver,
         return id;
     }
 
-    QHostInfo info(id);
-    info.fromName(name);
+    QHostInfo info = QHostInfo::fromName(name);
+    info.setLookupId(id);
     QHostInfoResult result;
     QObject::connect(&result, SIGNAL(resultsReady(QHostInfo)), receiver, member);
     result.emitResultsReady(info);
