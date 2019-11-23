@@ -440,7 +440,7 @@ QString QIcuCodec::convertToUnicode(const char *chars, int length, QTextCodec::C
                        &uc, ucEnd,
                        &chars, end,
                        0, false, &error);
-        if (Q_UNLIKELY(U_FAILURE(error) && error != U_BUFFER_OVERFLOW_ERROR)) {
+        if (Q_UNLIKELY(U_FAILURE(error))) {
             qWarning("QIcuCodec::convertToUnicode: failed %s", u_errorName(error));
             failed = true;
             break;
