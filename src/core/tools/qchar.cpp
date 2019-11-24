@@ -1148,8 +1148,10 @@ QString QChar::decomposition(const uint ucs4)
         return QString();
     }
 
-    UChar buffer[4];
-    const int32_t decresult = unorm2_getDecomposition(normalizer, ucs4, buffer, sizeof(buffer), &errorcode);
+    errorcode = U_ZERO_ERROR;
+    QString result(4, Qt::Uninitialized);
+    const int decresult = unorm2_getDecomposition(normalizer, ucs4,
+        reinterpret_cast<UChar*>(result.data()), result.size(), &errorcode);
     if (Q_UNLIKELY(decresult < 1)) {
         // no decomposition value
         return QString();
@@ -1160,7 +1162,8 @@ QString QChar::decomposition(const uint ucs4)
         return QString();
     }
 
-    return QString::fromUtf16(reinterpret_cast<ushort*>(buffer), decresult);
+    result.resize(decresult);
+    return result;
 }
 
 /*!

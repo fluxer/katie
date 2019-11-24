@@ -5789,9 +5789,10 @@ void qt_string_normalize(QString *data, QString::NormalizationForm mode, QChar::
         return;
     }
 
+    errorcode = U_ZERO_ERROR;
     const int size = data->size() - from;
-    UChar buffer[size * 2];
-    const int32_t decresult = unorm2_normalize(normalizer, reinterpret_cast<const UChar*>(data->unicode() + from),
+    UChar buffer[QMAXUSTRLEN(size)];
+    const int decresult = unorm2_normalize(normalizer, reinterpret_cast<const UChar*>(data->unicode() + from),
         size, buffer, sizeof(buffer), &errorcode);
     if (Q_UNLIKELY(decresult < 1)) {
         // no normalization value

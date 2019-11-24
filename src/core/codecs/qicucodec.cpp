@@ -30,8 +30,8 @@
 ****************************************************************************/
 
 #include "qicucodec_p.h"
-
 #include "qtextcodec_p.h"
+#include "qcorecommon_p.h"
 #include "qdebug.h"
 
 #include <unicode/ucnv.h>
@@ -419,17 +419,14 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
     return conv;
 }
 
-// enough space to hold BOM, each char as surrogate pair and terminator
-#define QMAXSTRLEN(X) 1 + (X * 2) + 2
-
 QString QIcuCodec::convertToUnicode(const char *src, int length, QTextCodec::ConverterState *state) const
 {
     UConverter *conv = getConverter(state);
 
-    QString string(QMAXSTRLEN(length), Qt::Uninitialized);
-    UChar *dest = reinterpret_cast<UChar *>(string.data());
+    QString string(QMAXUSTRLEN(length), Qt::Uninitialized);
     UErrorCode error = U_ZERO_ERROR;
-    const int convresult = ucnv_toUChars(conv, dest, string.length(), src, length, &error);
+    const int convresult = ucnv_toUChars(conv, reinterpret_cast<UChar *>(string.data()),
+        string.length(), src, length, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QIcuCodec::convertToUnicode: failed %s", u_errorName(error));
         if (state) {
@@ -448,9 +445,9 @@ QString QIcuCodec::convertToUnicode(const char *src, int length, QTextCodec::Con
 
     if (!state)
         ucnv_close(conv);
+
     return string;
 }
-#undef QMAXSTRLEN
 
 QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length, QTextCodec::ConverterState *state) const
 {
@@ -458,10 +455,9 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length, QText
 
     int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
     QByteArray string(maxbytes, Qt::Uninitialized);
-    const UChar *src = reinterpret_cast<const UChar *>(unicode);
-    char *dest = reinterpret_cast<char *>(string.data());
     UErrorCode error = U_ZERO_ERROR;
-    const int convresult = ucnv_fromUChars(conv, dest, string.length(), src, length, &error);
+    const int convresult = ucnv_fromUChars(conv, reinterpret_cast<char *>(string.data()),
+        string.length(), reinterpret_cast<const UChar *>(unicode), length, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QIcuCodec::convertFromUnicode: failed %s", u_errorName(error));
         if (state) {
