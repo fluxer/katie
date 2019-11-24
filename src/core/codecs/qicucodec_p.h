@@ -60,7 +60,6 @@ public:
     ~QIcuCodec();
 
     static QList<QByteArray> availableCodecs();
-    static QList<int> availableMibs();
 
     QString convertToUnicode(const char *, int, ConverterState *) const final;
     QByteArray convertFromUnicode(const QChar *, int, ConverterState *) const final;
