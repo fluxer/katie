@@ -62,9 +62,8 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_TEXTCODEC
-QTextCodec *QString::codecForCStrings;
+QTextCodec *QString::codecForCStrings = QTextCodec::codecForName("UTF-8");
 #endif
-
 
 #ifdef QT_STD_LOCALE
 // qlocale_std.cpp
@@ -372,8 +371,8 @@ static int findChar(const QChar *str, int len, QChar ch, int from,
 
     QString converts the \c{const char *} data into Unicode using the
     fromAscii() function. By default, fromAscii() treats character
-    above 128 as Latin-1 characters, but this can be changed by
-    calling QTextCodec::setCodecForCStrings().
+    characters as UTF-8, but this can be changed by calling
+    QTextCodec::setCodecForCStrings().
 
     In all of the QString functions that take \c{const char *}
     parameters, the \c{const char *} is interpreted as a classic
@@ -513,7 +512,7 @@ static int findChar(const QChar *str, int len, QChar ch, int from,
     \list
     \o toAscii() returns an 8-bit string encoded using the codec
        specified by QTextCodec::codecForCStrings (by default, that is
-       Latin 1).
+       UTF-8).
     \o toLatin1() returns a Latin-1 (ISO 8859-1) encoded 8-bit string.
     \o toUtf8() returns a UTF-8 encoded 8-bit string. UTF-8 is a
        superset of US-ASCII (ANSI X3.4-1986) that supports the entire
