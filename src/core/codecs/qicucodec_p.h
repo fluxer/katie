@@ -62,12 +62,12 @@ public:
     static QList<QByteArray> availableCodecs();
     static QList<int> availableMibs();
 
-    QString convertToUnicode(const char *, int, ConverterState *) const override;
-    QByteArray convertFromUnicode(const QChar *, int, ConverterState *) const override;
+    QString convertToUnicode(const char *, int, ConverterState *) const final;
+    QByteArray convertFromUnicode(const QChar *, int, ConverterState *) const final;
 
-    QByteArray name() const override;
-    QList<QByteArray> aliases() const override;
-    int mibEnum() const override;
+    QByteArray name() const final;
+    QList<QByteArray> aliases() const final;
+    int mibEnum() const final;
 
 private:
     UConverter *getConverter(QTextCodec::ConverterState *state) const;
