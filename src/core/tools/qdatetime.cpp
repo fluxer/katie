@@ -4155,6 +4155,7 @@ int QDateTimeParser::sectionMaxSize(Section s, int count) const
 
     case CalendarPopupSection:
     case Internal:
+    case DaySectionMask:
     case TimeSectionMask:
     case DateSectionMask:
         qWarning("QDateTimeParser::sectionMaxSize: Invalid section %s",

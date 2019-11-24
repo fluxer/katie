@@ -558,7 +558,7 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
     lastModified  = fileinfo.lastModified().toString(Qt::ISODate);
 #endif
     QString regkey = QString::fromLatin1("Katie Plugin Cache %1.%2/%3")
-                     .arg(QT_VERSION_HEX_STR)
+                     .arg(QLatin1String(QT_VERSION_HEX_STR))
                      .arg(QLIBRARY_AS_DEBUG ? QLatin1String("debug") : QLatin1String("false"))
                      .arg(fileName);
 
