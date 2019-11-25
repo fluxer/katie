@@ -992,32 +992,6 @@ static void QT_FASTCALL _fragment(const char **ptr, QUrlParseData *parseData)
     parseData->fragmentLength = *ptr - parseData->fragment;
 }
 
-static const char * const idn_whitelist[] = {
-    "ac", "ar", "at",
-    "biz", "br",
-    "cat", "ch", "cl", "cn",
-    "de", "dk",
-    "es",
-    "fi",
-    "gr",
-    "hu",
-    "info", "io", "is",
-    "jp",
-    "kr",
-    "li", "lt",
-    "museum",
-    "no",
-    "org",
-    "se", "sh",
-    "th", "tm", "tw",
-    "vn",
-    "xn--mgbaam7a8h",           // UAE
-    "xn--mgberp4a5d4ar",        // Saudi Arabia
-    "xn--wgbh1c"                // Egypt
-};
-
-static QStringList *user_idn_whitelist = 0;
-
 QUrlPrivate::QUrlPrivate()
 {
     ref = 1;
@@ -3587,55 +3561,6 @@ QByteArray QUrl::toAce(const QString &domain)
 
     result.resize(idnaresult);
     return result.toLatin1();
-}
-
-/*!
-    \since 4.2
-
-    Returns the current whitelist of top-level domains that are allowed
-    to have non-ASCII characters in their compositions.
-
-    See setIdnWhitelist() for the rationale of this list.
-*/
-QStringList QUrl::idnWhitelist()
-{
-    if (user_idn_whitelist)
-        return *user_idn_whitelist;
-    QStringList list;
-    unsigned int i = 0;
-    while (i < sizeof(idn_whitelist)/sizeof(const char *)) {
-        list << QLatin1String(idn_whitelist[i]);
-        ++i;
-    }
-    return list;
-}
-
-/*!
-    \since 4.2
-
-    Sets the whitelist of Top-Level Domains (TLDs) that are allowed to have
-    non-ASCII characters in domains to the value of \a list.
-
-    Note that if you call this function, you need to do so \em before
-    you start any threads that might access idnWhitelist().
-
-    Qt has comes a default list that contains the Internet top-level domains
-    that have published support for Internationalized Domain Names (IDNs)
-    and rules to guarantee that no deception can happen between similarly-looking
-    characters (such as the Latin lowercase letter \c 'a' and the Cyrillic
-    equivalent, which in most fonts are visually identical).
-
-    This list is periodically maintained, as registrars publish new rules.
-
-    This function is provided for those who need to manipulate the list, in
-    order to add or remove a TLD. It is not recommended to change its value
-    for purposes other than testing, as it may expose users to security risks.
-*/
-void QUrl::setIdnWhitelist(const QStringList &list)
-{
-    if (!user_idn_whitelist)
-        user_idn_whitelist = new QStringList;
-    *user_idn_whitelist = list;
 }
 
 /*!
