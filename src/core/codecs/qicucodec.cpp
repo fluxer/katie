@@ -1121,7 +1121,8 @@ int QIcuCodec::mibEnum() const
     }
 
     qWarning("QIcuCodec::mibEnum: internal error, could not find MIB for %s", m_name);
-    return 0;
+    // 2 is for unknown, see https://www.iana.org/assignments/ianacharset-mib/ianacharset-mib
+    return 2;
 }
 
 QT_END_NAMESPACE
