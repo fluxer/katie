@@ -994,8 +994,9 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
                 } else {
                     ucnv_setSubstString(static_cast<UConverter *>(state->d), questionmarkchar, 1, &error);
                 }
-                if (Q_UNLIKELY(U_FAILURE(error)))
+                if (Q_UNLIKELY(U_FAILURE(error))) {
                     qWarning("QIcuCodec::getConverter: ucnv_setSubstString(%s) failed %s", m_name, u_errorName(error));
+                }
 
                 conv = static_cast<UConverter *>(state->d);
             }
@@ -1011,8 +1012,9 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
         if (conv) {
             error = U_ZERO_ERROR;
             ucnv_setSubstString(conv, questionmarkchar, 1, &error);
-            if (Q_UNLIKELY(U_FAILURE(error)))
+            if (Q_UNLIKELY(U_FAILURE(error))) {
                 qWarning("QIcuCodec::getConverter: ucnv_setSubstString(%s) failed %s", m_name, u_errorName(error));
+            }
         }
     }
     return conv;
@@ -1032,10 +1034,10 @@ QString QIcuCodec::convertToUnicode(const char *src, int length, QTextCodec::Con
             error = U_ZERO_ERROR;
             char errorbytes[10];
             int8_t invalidlen = 0;
-            ucnv_getInvalidChars(conv,
-                            errorbytes,
-                            &invalidlen,
-                            &error);
+            ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
+            if (Q_UNLIKELY(U_FAILURE(error))) {
+                qWarning("QIcuCodec::convertToUnicode: ucnv_getInvalidChars(%s) failed %s", m_name, u_errorName(error));
+            }
             state->invalidChars = invalidlen;
         }
     } else {
@@ -1063,10 +1065,10 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length, QText
             error = U_ZERO_ERROR;
             char errorbytes[10];
             int8_t invalidlen = 0;
-            ucnv_getInvalidChars(conv,
-                            errorbytes,
-                            &invalidlen,
-                            &error);
+            ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
+            if (Q_UNLIKELY(U_FAILURE(error))) {
+                qWarning("QIcuCodec::convertFromUnicode: ucnv_getInvalidChars(%s) failed %s", m_name, u_errorName(error));
+            }
             state->invalidChars = invalidlen;
         }
     } else {
