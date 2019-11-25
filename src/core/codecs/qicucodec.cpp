@@ -932,8 +932,8 @@ static const struct MIBTblData {
 };
 static const qint16 MIBTblSize = sizeof(MIBTbl) / sizeof(MIBTblData);
 
-static const UChar nullchar[] = { 0x5c, 0x30 };
-static const UChar questionmarkchar[] = { 0x3f };
+static const UChar nullchar[2] = { 0x5c, 0x30 };
+static const UChar questionmarkchar[1] = { 0x3f };
 
 QList<QByteArray> QIcuCodec::availableCodecs()
 {
