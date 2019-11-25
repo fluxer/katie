@@ -4406,12 +4406,6 @@ int QString::compare_helper(const QChar *data1, int length1, QLatin1String s2,
 */
 
 
-#if !defined(CSTR_LESS_THAN)
-#define CSTR_LESS_THAN    1
-#define CSTR_EQUAL        2
-#define CSTR_GREATER_THAN 3
-#endif
-
 /*!
     \overload localeAwareCompare()
 
