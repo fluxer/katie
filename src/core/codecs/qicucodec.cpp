@@ -932,8 +932,8 @@ static const struct MIBTblData {
 };
 static const qint16 MIBTblSize = sizeof(MIBTbl) / sizeof(MIBTblData);
 
-static const char *nullchar = "\0";
-static const char *questionmarkchar = "?";
+static const UChar nullchar[] = { 0x5c, 0x30 };
+static const UChar questionmarkchar[] = { 0x3f };
 
 QList<QByteArray> QIcuCodec::availableCodecs()
 {
@@ -989,10 +989,13 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
                 qWarning("QIcuCodec::getConverter: ucnv_open(%s) failed %s", m_name, u_errorName(error));
             } else {
                 error = U_ZERO_ERROR;
-                ucnv_setSubstChars(static_cast<UConverter *>(state->d),
-                                state->flags & QTextCodec::ConvertInvalidToNull ? nullchar : questionmarkchar, 1, &error);
+                if (state->flags & QTextCodec::ConvertInvalidToNull) {
+                    ucnv_setSubstString(static_cast<UConverter *>(state->d), nullchar, 2, &error);
+                } else {
+                    ucnv_setSubstString(static_cast<UConverter *>(state->d), questionmarkchar, 1, &error);
+                }
                 if (Q_UNLIKELY(U_FAILURE(error)))
-                    qWarning("QIcuCodec::getConverter: ucnv_setSubstChars(%s) failed %s", m_name, u_errorName(error));
+                    qWarning("QIcuCodec::getConverter: ucnv_setSubstString(%s) failed %s", m_name, u_errorName(error));
 
                 conv = static_cast<UConverter *>(state->d);
             }
@@ -1007,9 +1010,9 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
 
         if (conv) {
             error = U_ZERO_ERROR;
-            ucnv_setSubstChars(conv, questionmarkchar, 1, &error);
+            ucnv_setSubstString(conv, questionmarkchar, 1, &error);
             if (Q_UNLIKELY(U_FAILURE(error)))
-                qWarning("QIcuCodec::getConverter: ucnv_setSubstChars(%s) failed %s", m_name, u_errorName(error));
+                qWarning("QIcuCodec::getConverter: ucnv_setSubstString(%s) failed %s", m_name, u_errorName(error));
         }
     }
     return conv;
