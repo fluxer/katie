@@ -80,11 +80,9 @@ public:
     void addGlyph(QChar unicode, const QPainterPath &path, qreal horizAdvX = -1);
 
     void draw(QPainter *p, const QPointF &point, const QString &str, qreal pixelSize, Qt::Alignment alignment) const;
-public:
+private:
     QString m_familyName;
     qreal m_unitsPerEm;
-    qreal m_ascent;
-    qreal m_descent;
     qreal m_horizAdvX;
     QHash<QChar, QSvgGlyph> m_glyphs;
 };
