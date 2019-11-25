@@ -76,8 +76,8 @@ public:
 
     void append(int elemType, const char *elemName);
     void append(QTestData *data);
-    ElementList *elementAt(int index);
-    QTestData *dataAt(int index);
+    ElementList *elementAt(int index) const;
+    QTestData *dataAt(int index) const;
 
     static QTestTable *currentTestTable;
     static QTestTable *gTable;
@@ -86,7 +86,7 @@ public:
 QTestTable *QTestTablePrivate::currentTestTable = 0;
 QTestTable *QTestTablePrivate::gTable = 0;
 
-QTestTablePrivate::ElementList *QTestTablePrivate::elementAt(int index)
+QTestTablePrivate::ElementList *QTestTablePrivate::elementAt(int index) const
 {
     ElementList *iter = list;
     for (int i = 0; i < index; ++i) {
@@ -97,7 +97,7 @@ QTestTablePrivate::ElementList *QTestTablePrivate::elementAt(int index)
     return iter;
 }
 
-QTestData *QTestTablePrivate::dataAt(int index)
+QTestData *QTestTablePrivate::dataAt(int index) const
 {
     DataList *iter = dataList;
     for (int i = 0; i < index; ++i) {
