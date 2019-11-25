@@ -809,78 +809,22 @@ int QChar::digitValue(const uint ucs4)
     return u_digit(ucs4, 10);
 }
 
-#define QCHAR_CATEGORY(c) \
-    const int8_t category = u_charType(c); \
-    switch (category) { \
-        case U_GENERAL_OTHER_TYPES: \
-            return QChar::Other_NotAssigned; \
-        case U_UPPERCASE_LETTER: \
-            return QChar::Letter_Uppercase; \
-        case U_LOWERCASE_LETTER: \
-            return QChar::Letter_Lowercase; \
-        case U_TITLECASE_LETTER: \
-            return QChar::Letter_Titlecase; \
-        case U_MODIFIER_LETTER: \
-            return QChar::Letter_Modifier; \
-        case U_OTHER_LETTER: \
-            return QChar::Letter_Other; \
-        case U_NON_SPACING_MARK: \
-            return QChar::Mark_NonSpacing; \
-        case U_COMBINING_SPACING_MARK: \
-            return QChar::Mark_SpacingCombining; \
-        case U_ENCLOSING_MARK: \
-            return QChar::Mark_Enclosing; \
-        case U_DECIMAL_DIGIT_NUMBER: \
-            return QChar::Number_DecimalDigit; \
-        case U_LETTER_NUMBER: \
-            return QChar::Number_Letter; \
-        case U_OTHER_NUMBER: \
-            return QChar::Number_Other; \
-        case U_CONNECTOR_PUNCTUATION: \
-            return QChar::Punctuation_Connector; \
-        case U_DASH_PUNCTUATION: \
-            return QChar::Punctuation_Dash; \
-        case U_START_PUNCTUATION: \
-            return QChar::Punctuation_Open; \
-        case U_END_PUNCTUATION: \
-            return QChar::Punctuation_Close; \
-        case U_INITIAL_PUNCTUATION: \
-            return QChar::Punctuation_InitialQuote; \
-        case U_FINAL_PUNCTUATION: \
-            return QChar::Punctuation_FinalQuote; \
-        case U_OTHER_PUNCTUATION: \
-            return QChar::Punctuation_Other; \
-        case U_MATH_SYMBOL: \
-            return QChar::Symbol_Math; \
-        case U_CURRENCY_SYMBOL: \
-            return QChar::Symbol_Currency; \
-        case U_MODIFIER_SYMBOL: \
-            return QChar::Symbol_Modifier; \
-        case U_OTHER_SYMBOL: \
-            return QChar::Symbol_Other; \
-        case U_SPACE_SEPARATOR: \
-            return QChar::Separator_Space; \
-        case U_LINE_SEPARATOR: \
-            return QChar::Separator_Line; \
-        case U_PARAGRAPH_SEPARATOR: \
-            return QChar::Separator_Paragraph; \
-        case U_CONTROL_CHAR: \
-            return QChar::Other_Control; \
-        case U_FORMAT_CHAR: \
-            return QChar::Other_Format; \
-        case U_SURROGATE: \
-            return QChar::Other_Surrogate; \
-        case U_PRIVATE_USE_CHAR: \
-            return QChar::Other_PrivateUse; \
-    } \
-    return QChar::Other_NotAssigned;
-
 /*!
     Returns the character's category.
 */
 QChar::Category QChar::category() const
 {
-    QCHAR_CATEGORY(ucs)
+    return QChar::category(uint(ucs));
+}
+
+
+/*!
+    \overload
+    Returns the category of the UCS-2-encoded character specified by \a ucs2.
+*/
+QChar::Category QChar::category(const ushort ucs2)
+{
+    return QChar::category(uint(ucs2));
 }
 
 /*!
@@ -890,85 +834,78 @@ QChar::Category QChar::category() const
 */
 QChar::Category QChar::category(const uint ucs4)
 {
-    QCHAR_CATEGORY(ucs4)
+    const int8_t category = u_charType(ucs4);
+    switch (category) {
+        case U_GENERAL_OTHER_TYPES:
+            return QChar::Other_NotAssigned;
+        case U_UPPERCASE_LETTER:
+            return QChar::Letter_Uppercase;
+        case U_LOWERCASE_LETTER:
+            return QChar::Letter_Lowercase;
+        case U_TITLECASE_LETTER:
+            return QChar::Letter_Titlecase;
+        case U_MODIFIER_LETTER:
+            return QChar::Letter_Modifier;
+        case U_OTHER_LETTER:
+            return QChar::Letter_Other;
+        case U_NON_SPACING_MARK:
+            return QChar::Mark_NonSpacing;
+        case U_COMBINING_SPACING_MARK:
+            return QChar::Mark_SpacingCombining;
+        case U_ENCLOSING_MARK:
+            return QChar::Mark_Enclosing;
+        case U_DECIMAL_DIGIT_NUMBER:
+            return QChar::Number_DecimalDigit;
+        case U_LETTER_NUMBER:
+            return QChar::Number_Letter;
+        case U_OTHER_NUMBER:
+            return QChar::Number_Other;
+        case U_CONNECTOR_PUNCTUATION:
+            return QChar::Punctuation_Connector;
+        case U_DASH_PUNCTUATION:
+            return QChar::Punctuation_Dash;
+        case U_START_PUNCTUATION:
+            return QChar::Punctuation_Open;
+        case U_END_PUNCTUATION:
+            return QChar::Punctuation_Close;
+        case U_INITIAL_PUNCTUATION:
+            return QChar::Punctuation_InitialQuote;
+        case U_FINAL_PUNCTUATION:
+            return QChar::Punctuation_FinalQuote;
+        case U_OTHER_PUNCTUATION:
+            return QChar::Punctuation_Other;
+        case U_MATH_SYMBOL:
+            return QChar::Symbol_Math;
+        case U_CURRENCY_SYMBOL:
+            return QChar::Symbol_Currency;
+        case U_MODIFIER_SYMBOL:
+            return QChar::Symbol_Modifier;
+        case U_OTHER_SYMBOL:
+            return QChar::Symbol_Other;
+        case U_SPACE_SEPARATOR:
+            return QChar::Separator_Space;
+        case U_LINE_SEPARATOR:
+            return QChar::Separator_Line;
+        case U_PARAGRAPH_SEPARATOR:
+            return QChar::Separator_Paragraph;
+        case U_CONTROL_CHAR:
+            return QChar::Other_Control;
+        case U_FORMAT_CHAR:
+            return QChar::Other_Format;
+        case U_SURROGATE:
+            return QChar::Other_Surrogate;
+        case U_PRIVATE_USE_CHAR:
+            return QChar::Other_PrivateUse;
+    }
+    return QChar::Other_NotAssigned;
 }
-
-/*!
-    \overload
-    Returns the category of the UCS-2-encoded character specified by \a ucs2.
-*/
-QChar::Category QChar::category(const ushort ucs2)
-{
-    QCHAR_CATEGORY(ucs2)
-}
-
-#define QCHAR_DIRECTION(c) \
-    const UCharDirection direction = u_charDirection(c); \
-    switch (direction) { \
-        case U_LEFT_TO_RIGHT: \
-            return QChar::DirL; \
-        case U_LEFT_TO_RIGHT_EMBEDDING: \
-            return QChar::DirLRE; \
-        case U_LEFT_TO_RIGHT_OVERRIDE: \
-            return QChar::DirLRO; \
-        case U_RIGHT_TO_LEFT: \
-            return QChar::DirR; \
-        case U_RIGHT_TO_LEFT_ARABIC: \
-            return QChar::DirAL; \
-        case U_RIGHT_TO_LEFT_EMBEDDING: \
-            return QChar::DirRLE; \
-        case U_RIGHT_TO_LEFT_OVERRIDE: \
-            return QChar::DirRLO; \
-        case U_POP_DIRECTIONAL_FORMAT: \
-            return QChar::DirPDF; \
-        case U_EUROPEAN_NUMBER: \
-            return QChar::DirEN; \
-        case U_EUROPEAN_NUMBER_SEPARATOR: \
-            return QChar::DirES; \
-        case U_EUROPEAN_NUMBER_TERMINATOR: \
-            return QChar::DirET; \
-        case U_ARABIC_NUMBER: \
-            return QChar::DirAN; \
-        case U_COMMON_NUMBER_SEPARATOR: \
-            return QChar::DirCS; \
-        case U_DIR_NON_SPACING_MARK: \
-            return QChar::DirNSM; \
-        case U_BOUNDARY_NEUTRAL: \
-            return QChar::DirBN; \
-        case U_BLOCK_SEPARATOR: \
-            return QChar::DirB; \
-        case U_SEGMENT_SEPARATOR: \
-            return QChar::DirS; \
-        case U_WHITE_SPACE_NEUTRAL: \
-            return QChar::DirWS; \
-        case U_OTHER_NEUTRAL: \
-            return QChar::DirON; \
-        case U_LEFT_TO_RIGHT_ISOLATE: \
-            return QChar::DirLRI; \
-        case U_RIGHT_TO_LEFT_ISOLATE: \
-            return QChar::DirRLI; \
-        case U_FIRST_STRONG_ISOLATE: \
-            return QChar::DirFSI; \
-        case U_POP_DIRECTIONAL_ISOLATE: \
-            return QChar::DirPDI; \
-    } \
-    return QChar::DirL;
 
 /*!
     Returns the character's direction.
 */
 QChar::Direction QChar::direction() const
 {
-    QCHAR_DIRECTION(ucs)
-}
-
-/*!
-    \overload
-    Returns the direction of the UCS-4-encoded character specified by \a ucs4.
-*/
-QChar::Direction QChar::direction(const uint ucs4)
-{
-    QCHAR_DIRECTION(ucs4)
+    return QChar::direction(uint(ucs));
 }
 
 /*!
@@ -977,7 +914,65 @@ QChar::Direction QChar::direction(const uint ucs4)
 */
 QChar::Direction QChar::direction(const ushort ucs2)
 {
-    QCHAR_DIRECTION(ucs2)
+    return QChar::direction(uint(ucs2));
+}
+
+/*!
+    \overload
+    Returns the direction of the UCS-4-encoded character specified by \a ucs4.
+*/
+QChar::Direction QChar::direction(const uint ucs4)
+{
+    const UCharDirection direction = u_charDirection(ucs4);
+    switch (direction) {
+        case U_LEFT_TO_RIGHT:
+            return QChar::DirL;
+        case U_LEFT_TO_RIGHT_EMBEDDING:
+            return QChar::DirLRE;
+        case U_LEFT_TO_RIGHT_OVERRIDE:
+            return QChar::DirLRO;
+        case U_RIGHT_TO_LEFT:
+            return QChar::DirR;
+        case U_RIGHT_TO_LEFT_ARABIC:
+            return QChar::DirAL;
+        case U_RIGHT_TO_LEFT_EMBEDDING:
+            return QChar::DirRLE;
+        case U_RIGHT_TO_LEFT_OVERRIDE:
+            return QChar::DirRLO;
+        case U_POP_DIRECTIONAL_FORMAT:
+            return QChar::DirPDF;
+        case U_EUROPEAN_NUMBER:
+            return QChar::DirEN;
+        case U_EUROPEAN_NUMBER_SEPARATOR:
+            return QChar::DirES;
+        case U_EUROPEAN_NUMBER_TERMINATOR:
+            return QChar::DirET;
+        case U_ARABIC_NUMBER:
+            return QChar::DirAN;
+        case U_COMMON_NUMBER_SEPARATOR:
+            return QChar::DirCS;
+        case U_DIR_NON_SPACING_MARK:
+            return QChar::DirNSM;
+        case U_BOUNDARY_NEUTRAL:
+            return QChar::DirBN;
+        case U_BLOCK_SEPARATOR:
+            return QChar::DirB;
+        case U_SEGMENT_SEPARATOR:
+            return QChar::DirS;
+        case U_WHITE_SPACE_NEUTRAL:
+            return QChar::DirWS;
+        case U_OTHER_NEUTRAL:
+            return QChar::DirON;
+        case U_LEFT_TO_RIGHT_ISOLATE:
+            return QChar::DirLRI;
+        case U_RIGHT_TO_LEFT_ISOLATE:
+            return QChar::DirRLI;
+        case U_FIRST_STRONG_ISOLATE:
+            return QChar::DirFSI;
+        case U_POP_DIRECTIONAL_ISOLATE:
+            return QChar::DirPDI;
+    }
+    return QChar::DirL;
 }
 
 /*!
