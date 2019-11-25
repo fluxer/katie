@@ -5757,57 +5757,6 @@ QString QString::repeated(int times) const
     return result;
 }
 
-void qt_string_normalize(QString *data, QString::NormalizationForm mode, QChar::UnicodeVersion version, int from)
-{
-    Q_UNUSED(version);
-    UErrorCode errorcode = U_ZERO_ERROR;
-    const UNormalizer2 *normalizer = Q_NULLPTR;
-
-    switch (mode) {
-        case QString::NormalizationForm_D: {
-            normalizer = unorm2_getNFDInstance(&errorcode);
-            break;
-        }
-        case QString::NormalizationForm_C: {
-            normalizer = unorm2_getNFCInstance(&errorcode);
-            break;
-        }
-        case QString::NormalizationForm_KD: {
-            normalizer = unorm2_getNFKDInstance(&errorcode);
-            break;
-        }
-        case QString::NormalizationForm_KC: {
-            normalizer = unorm2_getNFKCInstance(&errorcode);
-            break;
-        }
-    }
-
-    if (Q_UNLIKELY(U_FAILURE(errorcode))) {
-        qWarning("QString::normalized: %s", u_errorName(errorcode));
-        data->clear();
-        return;
-    }
-
-    errorcode = U_ZERO_ERROR;
-    const int size = data->size() - from;
-    UChar buffer[QMAXUSTRLEN(size)];
-    const int decresult = unorm2_normalize(normalizer, reinterpret_cast<const UChar*>(data->unicode() + from),
-        size, buffer, sizeof(buffer), &errorcode);
-    if (Q_UNLIKELY(decresult < 1)) {
-        // no normalization value
-        data->clear();
-        return;
-    }
-
-    if (Q_UNLIKELY(U_FAILURE(errorcode))) {
-        qWarning("QString::normalized: %s", u_errorName(errorcode));
-        data->clear();
-        return;
-    }
-
-    data->setUnicode(reinterpret_cast<const QChar*>(buffer), decresult);
-}
-
 /*!
     \overload
     \fn QString QString::normalized(NormalizationForm mode, QChar::UnicodeVersion version) const
@@ -5817,9 +5766,48 @@ void qt_string_normalize(QString *data, QString::NormalizationForm mode, QChar::
 */
 QString QString::normalized(QString::NormalizationForm mode, QChar::UnicodeVersion version) const
 {
-    QString copy = *this;
-    qt_string_normalize(&copy, mode, version, 0);
-    return copy;
+    Q_UNUSED(version);
+    UErrorCode error = U_ZERO_ERROR;
+    const UNormalizer2 *normalizer = Q_NULLPTR;
+    switch (mode) {
+        case QString::NormalizationForm_D: {
+            normalizer = unorm2_getNFDInstance(&error);
+            break;
+        }
+        case QString::NormalizationForm_C: {
+            normalizer = unorm2_getNFCInstance(&error);
+            break;
+        }
+        case QString::NormalizationForm_KD: {
+            normalizer = unorm2_getNFKDInstance(&error);
+            break;
+        }
+        case QString::NormalizationForm_KC: {
+            normalizer = unorm2_getNFKCInstance(&error);
+            break;
+        }
+    }
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QString::normalized: unorm2_getInstance() failed %s", u_errorName(error));
+        return QString();
+    }
+
+    error = U_ZERO_ERROR;
+    const int srcsize = size();
+    QString result(QMAXUSTRLEN(srcsize), Qt::Uninitialized);
+    const int decresult = unorm2_normalize(normalizer,
+        reinterpret_cast<const UChar*>(unicode()), srcsize,
+        reinterpret_cast<UChar*>(result.data()), result.size(), &error);
+    if (Q_UNLIKELY(decresult < 1)) {
+        // no normalization value
+        return *this;
+    } else if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QString::normalized: unorm2_normalize() failed %s", u_errorName(error));
+        return QString();
+    }
+
+    result.resize(decresult);
+    return result;
 }
 
 struct ArgEscapeData
