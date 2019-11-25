@@ -1,6 +1,4 @@
-add_definitions(
-    -DQT_USE_SYSTEM_PROXIES
-)
+# add_definitions()
 set(EXTRA_NETWORK_LIBS KtCore)
 
 set(NETWORK_PUBLIC_HEADERS
