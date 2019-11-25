@@ -96,10 +96,6 @@ private slots:
     void blockingLookup();
 
     void raceCondition();
-#ifndef QT_NO_THREAD
-    void threadSafety();
-    void threadSafetyAsynchronousAPI();
-#endif
 
     void multipleSameLookups();
     void multipleDifferentLookups_data();
@@ -396,83 +392,6 @@ void tst_QHostInfo::raceCondition()
         socket.connectToHost("invalid" TEST_DOMAIN, 80);
     }
 }
-
-#ifndef QT_NO_THREAD
-class LookupThread : public QThread
-{
-protected:
-    inline void run()
-    {
-         QHostInfo info = QHostInfo::fromName("a-single" TEST_DOMAIN);
-         QCOMPARE(info.error(), QHostInfo::NoError);
-         QVERIFY(info.addresses().count() > 0);
-         QCOMPARE(info.addresses().at(0).toString(), QString("192.0.2.1"));
-    }
-};
-
-void tst_QHostInfo::threadSafety()
-{
-    const int nattempts = 5;
-    const int runs = 100;
-    LookupThread thr[nattempts];
-    for (int j = 0; j < runs; ++j) {
-        for (int i = 0; i < nattempts; ++i)
-            thr[i].start();
-        for (int k = nattempts - 1; k >= 0; --k)
-            thr[k].wait();
-    }
-}
-
-class LookupReceiver : public QObject
-{
-    Q_OBJECT
-public slots:
-    void start();
-    void resultsReady(const QHostInfo&);
-public:
-    QHostInfo result;
-    int numrequests;
-};
-
-void LookupReceiver::start()
-{
-    for (int i=0;i<numrequests;i++)
-        QHostInfo::lookupHost(QString("a-single" TEST_DOMAIN), this, SLOT(resultsReady(QHostInfo)));
-}
-
-void LookupReceiver::resultsReady(const QHostInfo &info)
-{
-    result = info;
-    numrequests--;
-    if (numrequests == 0 || info.error() != QHostInfo::NoError)
-        QThread::currentThread()->quit();
-}
-
-void tst_QHostInfo::threadSafetyAsynchronousAPI()
-{
-    const int nattempts = 10;
-    const int lookupsperthread = 10;
-    QList<QThread*> threads;
-    QList<LookupReceiver*> receivers;
-    for (int i = 0; i < nattempts; ++i) {
-        QThread* thread = new QThread;
-        LookupReceiver* receiver = new LookupReceiver;
-        receiver->numrequests = lookupsperthread;
-        receivers.append(receiver);
-        receiver->moveToThread(thread);
-        connect(thread, SIGNAL(started()), receiver, SLOT(start()));
-        thread->start();
-        threads.append(thread);
-    }
-    for (int k = threads.count() - 1; k >= 0; --k)
-        QVERIFY(threads.at(k)->wait(60000));
-    foreach (LookupReceiver* receiver, receivers) {
-        QCOMPARE(receiver->result.error(), QHostInfo::NoError);
-        QCOMPARE(receiver->result.addresses().at(0).toString(), QString("192.0.2.1"));
-        QCOMPARE(receiver->numrequests, 0);
-    }
-}
-#endif // QT_NO_THREAD
 
 // this test is for the multi-threaded QHostInfo rewrite. It is about getting results at all,
 // not about getting correct IPs
