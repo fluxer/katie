@@ -3,7 +3,7 @@
 #
 #  ODBC_FOUND - system has ODBC
 #  ODBC_INCLUDES - the ODBC include directory
-#  ODBC_LIBRARIES - The libraries needed to use ODBC
+#  ODBC_LIBRARIES - the libraries needed to use ODBC
 #
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

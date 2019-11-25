@@ -3,7 +3,7 @@
 #
 #  HARFBUZZ_FOUND - system has HarfBuzz
 #  HARFBUZZ_INCLUDES - the HarfBuzz include directory
-#  HARFBUZZ_LIBRARIES - The libraries needed to use HarfBuzz
+#  HARFBUZZ_LIBRARIES - the libraries needed to use HarfBuzz
 #
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

@@ -3,7 +3,7 @@
 #
 #  MYSQL_FOUND - system has MySQL
 #  MYSQL_INCLUDES - the MySQL include directory
-#  MYSQL_LIBRARIES - The libraries needed to use MySQL
+#  MYSQL_LIBRARIES - the libraries needed to use MySQL
 #
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

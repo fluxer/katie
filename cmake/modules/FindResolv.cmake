@@ -3,7 +3,7 @@
 #
 #  RESOLV_FOUND - system has resolv
 #  RESOLV_INCLUDES - the resolv include directory
-#  RESOLV_LIBRARIES - The libraries needed to use resolv
+#  RESOLV_LIBRARIES - the libraries needed to use resolv
 #
 # Copyright (c) 2016-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

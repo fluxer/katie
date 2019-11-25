@@ -3,7 +3,7 @@
 #
 #  NSL_FOUND - system has NSL
 #  NSL_INCLUDES - the NSL include directory
-#  NSL_LIBRARIES - The libraries needed to use NSL
+#  NSL_LIBRARIES - the libraries needed to use NSL
 #
 # Copyright (c) 2016-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

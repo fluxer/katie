@@ -4,7 +4,7 @@
 #  DBUS_FOUND - system has D-Bus message bus system
 #  DBUS_INCLUDES - the D-Bus message bus system include directory
 #  DBUS_ARCH_INCLUDES - the D-Bus message bus architecture include directory
-#  DBUS_LIBRARIES - The libraries needed to use D-Bus message bus system
+#  DBUS_LIBRARIES - the libraries needed to use D-Bus message bus system
 #
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

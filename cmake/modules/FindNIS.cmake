@@ -3,7 +3,7 @@
 #
 #  NIS_FOUND - system has NIS
 #  NIS_INCLUDES - the NIS include directory
-#  NIS_LIBRARIES - The libraries needed to use NIS
+#  NIS_LIBRARIES - the libraries needed to use NIS
 #
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

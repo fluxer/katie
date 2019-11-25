@@ -3,7 +3,7 @@
 #
 #  PCRE_FOUND - system has PCRE
 #  PCRE_INCLUDES - the PCRE include directory
-#  PCRE_LIBRARIES - The libraries needed to use PCRE
+#  PCRE_LIBRARIES - the libraries needed to use PCRE
 #
 # Copyright (c) 2016-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

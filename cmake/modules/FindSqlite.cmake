@@ -3,7 +3,7 @@
 #
 #  SQLITE_FOUND - system has SQL database engine
 #  SQLITE_INCLUDES - the SQL database engine include directory
-#  SQLITE_LIBRARIES - The libraries needed to use SQL database engine
+#  SQLITE_LIBRARIES - the libraries needed to use SQL database engine
 #
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

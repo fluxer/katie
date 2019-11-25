@@ -3,7 +3,7 @@
 #
 #  ICU_FOUND - system has ICU
 #  ICU_INCLUDES - the ICU include directory
-#  ICU_LIBRARIES - The libraries needed to use ICU
+#  ICU_LIBRARIES - the libraries needed to use ICU
 #
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

@@ -3,7 +3,7 @@
 #
 #  ZSTD_FOUND - system has ZSTD
 #  ZSTD_INCLUDES - the ZSTD include directory
-#  ZSTD_LIBRARIES - The libraries needed to use ZSTD
+#  ZSTD_LIBRARIES - the libraries needed to use ZSTD
 #
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

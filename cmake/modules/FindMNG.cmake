@@ -3,7 +3,7 @@
 #
 #  MNG_FOUND - system has libmng
 #  MNG_INCLUDES - the libmng include directory
-#  MNG_LIBRARIES - The libraries needed to use libmng
+#  MNG_LIBRARIES - the libraries needed to use libmng
 #
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #

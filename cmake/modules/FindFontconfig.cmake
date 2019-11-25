@@ -3,7 +3,7 @@
 #
 #  FONTCONFIG_FOUND - system has Fontconfig
 #  FONTCONFIG_INCLUDES - the Fontconfig include directory
-#  FONTCONFIG_LIBRARIES - The libraries needed to use Fontconfig
+#  FONTCONFIG_LIBRARIES - the libraries needed to use Fontconfig
 #
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #
