@@ -274,15 +274,12 @@ QString QHostInfo::localDomainName()
 // a dirty way to support both thread-safe/unsafe
 #if !defined(QT_NO_RESOLV) && defined(res_ninit)
     // using thread-safe version
-    res_state state = static_cast<res_state>(malloc(sizeof(res_state)));
-    Q_CHECK_PTR(state);
-    memset(state, 0, sizeof(res_state));
-    res_ninit(state);
-    QString domainName = QUrl::fromAce(state->defdname);
+    struct __res_state state;
+    res_ninit(&state);
+    QString domainName = QUrl::fromAce(state.defdname);
     if (domainName.isEmpty())
-        domainName = QUrl::fromAce(state->dnsrch[0]);
-    res_nclose(state);
-    free(state);
+        domainName = QUrl::fromAce(state.dnsrch[0]);
+    res_nclose(&state);
 
     return domainName;
 #elif !defined(QT_NO_RESOLV)
