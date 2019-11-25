@@ -116,7 +116,7 @@ void tst_qhostinfo::lookupSpeed()
         for (int i = 0; i < hostnameList.size(); i++)
             QHostInfo::lookupHost(hostnameList.at(i), &receiver, SLOT(resultsReady(const QHostInfo)));
         QTestEventLoop::instance().enterLoop(20);
-        QVERIFY(!QTestEventLoop::instance().timeout());
+        QVERIFY(receiver.receiveCount == COUNT);
     }
 }
 
