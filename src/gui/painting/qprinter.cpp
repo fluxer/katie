@@ -150,14 +150,6 @@ QSizeF qt_printerPaperSize(QPrinter::Orientation orientation,
 
 void QPrinterPrivate::createDefaultEngines()
 {
-    QPrinter::OutputFormat realOutputFormat = outputFormat;
-#if defined (Q_OS_UNIX)
-    if(outputFormat == QPrinter::NativeFormat) {
-        realOutputFormat = QPrinter::PostScriptFormat;
-    }
-#endif
-
-    // QPrinter::NativeFormat is purposely ignored
     switch (outputFormat) {
         case QPrinter::PdfFormat: {
             QPdfEngine *pdfEngine = new QPdfEngine(printerMode);
