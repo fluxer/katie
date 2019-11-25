@@ -158,19 +158,22 @@ void QPrinterPrivate::createDefaultEngines()
 #endif
 
     // QPrinter::NativeFormat is purposely ignored
-    switch (realOutputFormat) {
-    case QPrinter::PdfFormat: {
-        QPdfEngine *pdfEngine = new QPdfEngine(printerMode);
-        paintEngine = pdfEngine;
-        printEngine = pdfEngine;
-    }
-        break;
-    case QPrinter::PostScriptFormat: {
-        QPSPrintEngine *psEngine = new QPSPrintEngine(printerMode);
-        paintEngine = psEngine;
-        printEngine = psEngine;
-    }
-        break;
+    switch (outputFormat) {
+        case QPrinter::PdfFormat: {
+            QPdfEngine *pdfEngine = new QPdfEngine(printerMode);
+            paintEngine = pdfEngine;
+            printEngine = pdfEngine;
+            break;
+        }
+#if defined (Q_OS_UNIX)
+        case QPrinter::NativeFormat: // falltrough
+#endif
+        case QPrinter::PostScriptFormat: {
+            QPSPrintEngine *psEngine = new QPSPrintEngine(printerMode);
+            paintEngine = psEngine;
+            printEngine = psEngine;
+            break;
+        }
     }
     use_default_engine = true;
     had_default_engines = true;

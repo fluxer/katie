@@ -971,6 +971,11 @@ QChar::Direction QChar::direction(const uint ucs4)
             return QChar::DirFSI;
         case U_POP_DIRECTIONAL_ISOLATE:
             return QChar::DirPDI;
+        // just to silence compiler warning
+#ifndef U_HIDE_DEPRECATED_API
+        case U_CHAR_DIRECTION_COUNT:
+            return QChar::DirL;
+#endif
     }
     return QChar::DirL;
 }
@@ -1017,6 +1022,8 @@ QChar::Joining QChar::joining(const uint ucs4)
             return QChar::Transparent;
         case U_JT_NON_JOINING:
             // for compatibility
+            return QChar::OtherJoining;
+        default:
             return QChar::OtherJoining;
     }
     return QChar::OtherJoining;
@@ -1213,8 +1220,13 @@ QChar::Decomposition QChar::decompositionTag(const uint ucs4)
             return QChar::Fraction;
         case U_DT_COMPAT:
             return QChar::Compat;
-        U_DT_NONE:
+        case U_DT_NONE:
             return QChar::NoDecomposition;
+        // just to silence compiler warning
+#ifndef U_HIDE_DEPRECATED_API
+        case U_DT_COUNT:
+            return QChar::NoDecomposition;
+#endif
     }
     return QChar::NoDecomposition;
 }

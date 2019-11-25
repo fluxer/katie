@@ -348,7 +348,7 @@ struct  QtFontFamily
     QtFontFamily(const QString &n)
         :
 #ifdef Q_WS_X11
-        fixedPitch(true), synthetic(false), symbol_checked(false),
+        fixedPitch(true), synthetic(false),
 #else
         fixedPitch(false),
 #endif
@@ -365,7 +365,6 @@ struct  QtFontFamily
     bool fixedPitch : 1;
 #ifdef Q_WS_X11
     bool synthetic : 1;
-    bool symbol_checked : 1;
 #endif
 
     QString name;

@@ -219,15 +219,17 @@ QFontEngine *QFontPrivate::engineForScript(QUnicodeTables::Script script) const
 
 void QFontPrivate::alterCharForCapitalization(QChar &c) const {
     switch (capital) {
-    case QFont::AllUppercase:
-    case QFont::SmallCaps:
-        c = c.toUpper();
-        break;
-    case QFont::AllLowercase:
-        c = c.toLower();
-        break;
-    case QFont::MixedCase:
-        break;
+        case QFont::AllUppercase:
+        case QFont::SmallCaps:
+            c = c.toUpper();
+            break;
+        case QFont::AllLowercase:
+            c = c.toLower();
+            break;
+        // handled by the text engine
+        case QFont::MixedCase:
+        case QFont::Capitalize:
+            break;
     }
 }
 

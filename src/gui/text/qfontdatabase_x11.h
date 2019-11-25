@@ -708,44 +708,6 @@ static void loadFontConfig()
 }
 #endif // QT_NO_FONTCONFIG
 
-static void checkSymbolFont(QtFontFamily *family)
-{
-#ifndef QT_NO_FONTCONFIG
-    if (!family || family->symbol_checked || family->fontFilename.isEmpty())
-        return;
-    family->symbol_checked = true;
-
-    QFontEngine::FaceId id;
-    id.filename = family->fontFilename;
-    id.index = family->fontFileIndex;
-    QFreetypeFace *f = QFreetypeFace::getFace(id);
-    if (!f) {
-        qWarning("checkSymbolFonts: Couldn't open face %s (%s/%d)",
-                 qPrintable(family->name), family->fontFilename.data(), family->fontFileIndex);
-        return;
-    }
-    f->release(id);
-#else
-    Q_UNUSED(family);
-#endif
-}
-
-static void checkSymbolFonts(const QString &family = QString())
-{
-#ifndef QT_NO_FONTCONFIG
-    QFontDatabasePrivate *d = privateDb();
-
-    if (family.isEmpty()) {
-        for (int i = 0; i < d->count; ++i)
-            checkSymbolFont(d->families[i]);
-    } else {
-        checkSymbolFont(d->family(family));
-    }
-#else
-    Q_UNUSED(family);
-#endif
-}
-
 static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt);
 
 static void initializeFontDb()
