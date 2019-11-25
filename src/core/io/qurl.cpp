@@ -3539,6 +3539,7 @@ QString QUrl::fromAce(const QByteArray &domain)
         return QString::fromUtf8(domain);
     }
 
+    result.resize(idnaresult);
     return result;
 }
 
@@ -3583,6 +3584,7 @@ QByteArray QUrl::toAce(const QString &domain)
         return QByteArray();
     }
 
+    result.resize(idnaresult);
     return result.toLatin1();
 }
 
