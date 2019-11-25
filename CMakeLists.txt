@@ -224,7 +224,7 @@ set_package_properties(ZLIB PROPERTIES
     TYPE REQUIRED
 )
 
-# v4.6 required for unorm2_getDecomposition
+# v4.6+ required for unorm2_getDecomposition
 find_package(ICU 4.6)
 set_package_properties(ICU PROPERTIES
     PURPOSE "Required for locales support"
