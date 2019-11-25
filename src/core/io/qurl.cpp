@@ -2063,8 +2063,10 @@ void QUrl::setScheme(const QString &scheme)
 QString QUrl::scheme() const
 {
     if (!d) return QString();
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
+    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) {
+        QMutexLocker lock(&d->mutex);
+        d->parse();
+    }
 
     return d->scheme;
 }
@@ -2416,8 +2418,10 @@ void QUrl::setPort(int port)
 int QUrl::port(int defaultPort) const
 {
     if (!d) return defaultPort;
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
+    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) {
+        QMutexLocker lock(&d->mutex);
+        d->parse();
+    }
     return d->port == -1 ? defaultPort : d->port;
 }
 
