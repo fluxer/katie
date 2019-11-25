@@ -3526,17 +3526,18 @@ QString QUrl::fromAce(const QByteArray &domain)
         return QByteArray();
     }
 
+    const QString utf8 = QString::fromUtf8(domain);
     UErrorCode error = U_ZERO_ERROR;
     UIDNAInfo info = UIDNA_INFO_INITIALIZER;
     QString result(domain.size() * 4, Qt::Uninitialized);
     const int idnaresult = uidna_nameToUnicode(globalidna,
-        reinterpret_cast<const UChar*>(domain.constData()), domain.size(),
+        reinterpret_cast<const UChar*>(utf8.constData()), utf8.size(),
         reinterpret_cast<UChar*>(result.data()), result.size(),
         &info, &error);
 
     if (Q_UNLIKELY(U_FAILURE(error) && info.errors != 0)) {
         qWarning("QUrl::fromAce: failed %s", u_errorName(error));
-        return QString::fromUtf8(domain);
+        return utf8;
     }
 
     result.resize(idnaresult);
