@@ -75,34 +75,9 @@ typedef QHash<QByteArray, QTextCodec *> QTextCodecCache;
 Q_GLOBAL_STATIC(QTextCodecCache, qTextCodecCache)
 
 
-static bool nameMatch(const QByteArray &name, const QByteArray &test)
+static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
 {
-    const char *n = name.constData();
-    const char *h = test.constData();
-
-    // if they're the same, return a perfect score
-    if (qstricmp(n, h) == 0)
-        return true;
-
-    // if the letters and numbers are the same, we have a match
-    while (*n != '\0') {
-        if (qIsAlnum(*n)) {
-            for (;;) {
-                if (*h == '\0')
-                    return false;
-                if (qIsAlnum(*h))
-                    break;
-                ++h;
-            }
-            if (qToLower(*n) != qToLower(*h))
-                return false;
-            ++h;
-        }
-        ++n;
-    }
-    while (*h && !qIsAlnum(*h))
-           ++h;
-    return (*h == '\0');
+    return (ucnv_compareNames(name.constData(), name2.constData()) == 0);
 }
 
 static QList<QByteArray> icucodecs;
