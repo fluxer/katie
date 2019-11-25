@@ -87,8 +87,8 @@ private:
     void updateItem(WidgetItem *item);
     void insertRow(QGridLayout *layout, int row) const;
     void removeRow(QGridLayout *layout, int row) const;
-    int gridRow(WidgetItem *item) const;
-    int gridSpan(WidgetItem *item) const;
+    int gridRow(const WidgetItem *item) const;
+    int gridSpan(const WidgetItem *item) const;
     void setExpanded(WidgetItem *item, bool expanded);
     QToolButton *createButton(QWidget *panret = 0) const;
 
@@ -118,7 +118,7 @@ QToolButton *QtButtonPropertyBrowserPrivate::createButton(QWidget *parent) const
     return button;
 }
 
-int QtButtonPropertyBrowserPrivate::gridRow(WidgetItem *item) const
+int QtButtonPropertyBrowserPrivate::gridRow(const WidgetItem *item) const
 {
     QList<WidgetItem *> siblings;
     if (item->parent)
@@ -127,9 +127,7 @@ int QtButtonPropertyBrowserPrivate::gridRow(WidgetItem *item) const
         siblings = m_children;
 
     int row = 0;
-    QListIterator<WidgetItem *> it(siblings);
-    while (it.hasNext()) {
-        WidgetItem *sibling = it.next();
+    foreach (const WidgetItem *sibling, siblings) {
         if (sibling == item)
             return row;
         row += gridSpan(sibling);
@@ -137,7 +135,7 @@ int QtButtonPropertyBrowserPrivate::gridRow(WidgetItem *item) const
     return -1;
 }
 
-int QtButtonPropertyBrowserPrivate::gridSpan(WidgetItem *item) const
+int QtButtonPropertyBrowserPrivate::gridSpan(const WidgetItem *item) const
 {
     if (item->container && item->expanded)
         return 2;
