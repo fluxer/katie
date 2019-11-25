@@ -391,7 +391,7 @@ void tst_QHostInfo::blockingLookup()
 
 void tst_QHostInfo::raceCondition()
 {
-    for (int i = 0; i < 1000; ++i) {
+    for (int i = 0; i < 10; ++i) {
         QTcpSocket socket;
         socket.connectToHost("invalid" TEST_DOMAIN, 80);
     }
