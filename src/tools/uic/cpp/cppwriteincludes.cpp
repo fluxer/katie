@@ -756,9 +756,6 @@ static const qint16 ClassTblSize = sizeof(ClassTbl) / sizeof(ClassTblData);
 WriteIncludes::WriteIncludes(Uic *uic)
     : m_uic(uic), m_output(uic->output()), m_scriptsActivated(false), m_laidOut(false)
 {
-    for (qint16 i = 0; i < ClassTblSize; i++) {
-        m_classToHeader.insert(ClassTbl[i].klass, ClassTbl[i].header);
-    }
 }
 
 void WriteIncludes::acceptUI(DomUI *node)
@@ -839,11 +836,17 @@ void WriteIncludes::insertIncludeForClass(const QString &className, QString head
         if (!header.isEmpty())
             break;
 
-        // Known class        
-        const StringMap::const_iterator it = m_classToHeader.constFind(className);
-        if (it != m_classToHeader.constEnd()) {
-            header = it.value();
-            global =  true;
+        // Known class
+        bool isknown = false;
+        for (qint16 i = 0; i < ClassTblSize; i++) {
+            if (ClassTbl[i].klass == className) {
+                header = ClassTbl[i].header;
+                global =  true;
+                isknown = true;
+                break;
+            }
+        }
+        if (isknown) {
             break;
         }
 
@@ -915,7 +918,14 @@ void WriteIncludes::acceptCustomWidget(DomCustomWidget *node)
         // custom header unless it is a built-in qt class
         QString header;
         bool global = false;
-        if (!m_classToHeader.contains(className)) {
+        bool isknown = false;
+        for (qint16 i = 0; i < ClassTblSize; i++) {
+            if (ClassTbl[i].klass == className) {
+                isknown = true;
+                break;
+            }
+        }
+        if (!isknown) {
             global = node->elementHeader()->attributeLocation().toLower() == QLatin1String("global");
             header = node->elementHeader()->text();
         }

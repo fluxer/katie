@@ -94,9 +94,6 @@ private:
 
     QSet<QString> m_knownClasses;
 
-    typedef QMap<QString, QString> StringMap;
-    StringMap m_classToHeader;
-
     bool m_scriptsActivated;
     bool m_laidOut;
 };
