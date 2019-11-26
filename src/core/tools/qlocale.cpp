@@ -897,8 +897,6 @@ QString QLocale::bcp47Name() const
 
 QString QLocale::languageToString(Language language)
 {
-    if (language > QLocale::LastLanguage)
-        return QLatin1String("Unknown");
     return QString::fromUtf8(languageTbl[language].name);
 }
 
@@ -910,8 +908,6 @@ QString QLocale::languageToString(Language language)
 
 QString QLocale::countryToString(Country country)
 {
-    if (country > QLocale::LastCountry)
-        return QLatin1String("Unknown");
     return QString::fromUtf8(countryTbl[country].name);
 }
 
@@ -924,8 +920,6 @@ QString QLocale::countryToString(Country country)
 */
 QString QLocale::scriptToString(QLocale::Script script)
 {
-    if (script > QLocale::LastScript)
-        return QLatin1String("Unknown");
     return QString::fromUtf8(scriptTbl[script].name);
 }
 
@@ -1691,10 +1685,6 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
                                         QLocale::Script script,
                                         QLocale::Country country)
 {
-    if (language > QLocale::LastLanguage || script > QLocale::LastScript ||
-            country > QLocale::LastCountry)
-        return QList<QLocale>();
-
     if (language == QLocale::C)
         return QList<QLocale>() << QLocale(QLocale::C);
 
