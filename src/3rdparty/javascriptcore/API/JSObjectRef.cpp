@@ -341,9 +341,9 @@ void* JSObjectGetPrivate(JSObjectRef object)
 {
     JSObject* jsObject = toJS(object);
     
-    if (jsObject->inherits(&JSCallbackObject<JSGlobalObject>::info))
+    if (jsObject->inherits(&JSGlobalObject::info))
         return static_cast<JSCallbackObject<JSGlobalObject>*>(jsObject)->getPrivate();
-    else if (jsObject->inherits(&JSCallbackObject<JSObject>::info))
+    else if (jsObject->inherits(&JSObject::info))
         return static_cast<JSCallbackObject<JSObject>*>(jsObject)->getPrivate();
     
     return 0;
@@ -353,10 +353,10 @@ bool JSObjectSetPrivate(JSObjectRef object, void* data)
 {
     JSObject* jsObject = toJS(object);
     
-    if (jsObject->inherits(&JSCallbackObject<JSGlobalObject>::info)) {
+    if (jsObject->inherits(&JSGlobalObject::info)) {
         static_cast<JSCallbackObject<JSGlobalObject>*>(jsObject)->setPrivate(data);
         return true;
-    } else if (jsObject->inherits(&JSCallbackObject<JSObject>::info)) {
+    } else if (jsObject->inherits(&JSObject::info)) {
         static_cast<JSCallbackObject<JSObject>*>(jsObject)->setPrivate(data);
         return true;
     }

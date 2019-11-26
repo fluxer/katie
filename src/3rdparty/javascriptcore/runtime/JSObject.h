@@ -89,6 +89,8 @@ namespace JSC {
 
         virtual UString className() const;
 
+        static const ClassInfo info;
+
         JSValue get(ExecState*, const Identifier& propertyName) const;
         JSValue get(ExecState*, unsigned propertyName) const;
 

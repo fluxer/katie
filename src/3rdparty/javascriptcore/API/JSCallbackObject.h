@@ -43,8 +43,6 @@ public:
     void setPrivate(void* data);
     void* getPrivate();
 
-    static const ClassInfo info;
-
     JSClassRef classRef() const { return m_callbackObjectData->jsClass; }
     bool inherits(JSClassRef) const;
 
@@ -77,7 +75,7 @@ private:
 
     virtual ConstructType getConstructData(ConstructData&);
     virtual CallType getCallData(CallData&);
-    virtual const ClassInfo* classInfo() const { return &info; }
+    virtual const ClassInfo* classInfo() const { return &Base::info; }
 
     void init(ExecState*);
  

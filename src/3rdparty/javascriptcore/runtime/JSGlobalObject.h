@@ -49,6 +49,9 @@ namespace JSC {
     class RegisterFile;
 
     class JSGlobalObject : public JSVariableObject {
+    public:
+        static const ClassInfo info;
+
     protected:
         using JSVariableObject::JSVariableObjectData;
 
