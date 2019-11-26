@@ -92,7 +92,7 @@ static QSqlError qMakeError(sqlite3 *access, const QString &descr, QSqlError::Er
                             int errorCode = -1)
 {
     return QSqlError(descr,
-                     QString(reinterpret_cast<const QChar *>(sqlite3_errmsg16(access))),
+                     QString::fromUtf8(reinterpret_cast<const char *>(sqlite3_errmsg(access))),
                      type, errorCode);
 }
 
@@ -160,13 +160,13 @@ void QSQLiteResultPrivate::initColumns(bool emptyResultset)
     q->init(nCols);
 
     for (int i = 0; i < nCols; ++i) {
-        QString colName = QString(reinterpret_cast<const QChar *>(
-                    sqlite3_column_name16(stmt, i))
+        QString colName = QString::fromUtf8(reinterpret_cast<const char *>(
+                    sqlite3_column_name(stmt, i))
                     ).remove(QLatin1Char('"'));
 
         // must use typeName for resolving the type to match QSqliteDriver::record
-        QString typeName = QString(reinterpret_cast<const QChar *>(
-                    sqlite3_column_decltype16(stmt, i)));
+        QString typeName = QString::fromUtf8(reinterpret_cast<const char *>(
+                    sqlite3_column_decltype(stmt, i)));
         // sqlite3_column_type is documented to have undefined behavior if the result set is empty
         int stp = emptyResultset ? -1 : sqlite3_column_type(stmt, i);
 
@@ -267,9 +267,9 @@ bool QSQLiteResultPrivate::fetchNext(QSqlCachedResult::ValueCache &values, int i
                 values[i + idx] = QVariant(QVariant::String);
                 break;
             default:
-                values[i + idx] = QString(reinterpret_cast<const QChar *>(
-                            sqlite3_column_text16(stmt, i)),
-                            sqlite3_column_bytes16(stmt, i) / sizeof(QChar));
+                values[i + idx] = QString::fromUtf8(reinterpret_cast<const char *>(
+                            sqlite3_column_text(stmt, i)),
+                            sqlite3_column_bytes(stmt, i) / sizeof(char));
                 break;
             }
         }
@@ -348,13 +348,13 @@ bool QSQLiteResult::prepare(const QString &query)
 
     setSelect(false);
 
-    const void *pzTail = NULL;
+    const char *pzTail = NULL;
 
 #if (SQLITE_VERSION_NUMBER >= 3003011)
-    int res = sqlite3_prepare16_v2(d->access, query.constData(), (query.size() + 1) * sizeof(QChar),
+    int res = sqlite3_prepare_v2(d->access, query.toUtf8().constData(), (query.size() + 1) * sizeof(char),
                                    &d->stmt, &pzTail);
 #else
-    int res = sqlite3_prepare16(d->access, query.constData(), (query.size() + 1) * sizeof(QChar),
+    int res = sqlite3_prepare(d->access, query.toUtf8().constData(), (query.size() + 1) * sizeof(char),
                                 &d->stmt, &pzTail);
 #endif
 
@@ -363,7 +363,7 @@ bool QSQLiteResult::prepare(const QString &query)
                      "Unable to execute statement"), QSqlError::StatementError, res));
         d->finalize();
         return false;
-    } else if (pzTail && !QString(reinterpret_cast<const QChar *>(pzTail)).trimmed().isEmpty()) {
+    } else if (pzTail && !QString::fromUtf8(pzTail).trimmed().isEmpty()) {
         setLastError(qMakeError(d->access, QCoreApplication::translate("QSQLiteResult",
             "Unable to execute multiple statements at a time"), QSqlError::StatementError, SQLITE_MISUSE));
         d->finalize();
@@ -417,14 +417,14 @@ bool QSQLiteResult::exec()
                 case QVariant::String: {
                     // lifetime of string == lifetime of its qvariant
                     const QString *str = static_cast<const QString*>(value.constData());
-                    res = sqlite3_bind_text16(d->stmt, i + 1, str->utf16(),
-                                              (str->size()) * sizeof(QChar), SQLITE_STATIC);
+                    res = sqlite3_bind_text(d->stmt, i + 1, str->toUtf8().constData(),
+                                              (str->size()) * sizeof(char), SQLITE_STATIC);
                     break; }
                 default: {
                     QString str = value.toString();
                     // SQLITE_TRANSIENT makes sure that sqlite buffers the data
-                    res = sqlite3_bind_text16(d->stmt, i + 1, str.utf16(),
-                                              (str.size()) * sizeof(QChar), SQLITE_TRANSIENT);
+                    res = sqlite3_bind_text(d->stmt, i + 1, str.toUtf8().constData(),
+                                              (str.size()) * sizeof(char), SQLITE_TRANSIENT);
                     break; }
                 }
             }
