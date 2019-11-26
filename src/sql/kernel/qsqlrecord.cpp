@@ -42,7 +42,6 @@
 #include "qsqlrecord.h"
 
 #include "qdebug.h"
-#include "qstringlist.h"
 #include "qatomic.h"
 #include "qsqlfield.h"
 #include "qstring.h"
