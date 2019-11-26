@@ -1023,8 +1023,11 @@ QChar::Joining QChar::joining(const uint ucs4)
         case U_JT_NON_JOINING:
             // for compatibility
             return QChar::OtherJoining;
-        default:
+        // just to silence compiler warning
+#ifndef U_HIDE_DEPRECATED_API
+        case U_JT_COUNT:
             return QChar::OtherJoining;
+#endif
     }
     return QChar::OtherJoining;
 }
