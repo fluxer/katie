@@ -220,6 +220,8 @@ QSqlField::~QSqlField()
 */
 void QSqlField::setRequiredStatus(RequiredStatus required)
 {
+    if (d->req == required)
+        return;
     detach();
     d->req = required;
 }
