@@ -2002,7 +2002,7 @@ bool QDockAreaLayoutInfo::restoreState(QDataStream &stream, QList<QDockWidget*> 
 }
 
 #ifndef QT_NO_TABBAR
-void QDockAreaLayoutInfo::updateSeparatorWidgets() const
+void QDockAreaLayoutInfo::updateSeparatorWidgets()
 {
     if (tabbed) {
         separatorWidgets.clear();
@@ -3130,7 +3130,7 @@ int QDockAreaLayout::separatorMove(const QList<int> &separator, const QPoint &or
 #ifndef QT_NO_TABBAR
 // Sets the correct positions for the separator widgets
 // Allocates new sepearator widgets with getSeparatorWidget
-void QDockAreaLayout::updateSeparatorWidgets() const
+void QDockAreaLayout::updateSeparatorWidgets()
 {
     int j = 0;
 
