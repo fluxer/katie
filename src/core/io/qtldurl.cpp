@@ -84,8 +84,9 @@ Q_CORE_EXPORT bool qIsEffectiveTLD(const QString &domain)
     if (containsTLDEntry(domain))
         return true;
 
-    if (domain.contains(QLatin1Char('.'))) {
-        int count = domain.size() - domain.indexOf(QLatin1Char('.'));
+    const int dotindex = domain.indexOf(QLatin1Char('.'));
+    if (dotindex > 0) {
+        int count = (domain.size() - dotindex);
         QString wildCardDomain;
         wildCardDomain.reserve(count + 1);
         wildCardDomain.append(QLatin1Char('*'));
