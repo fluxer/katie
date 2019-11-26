@@ -24,7 +24,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qresource_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qresource_iterator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qurl.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qurltlds_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qtldurl_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qsettings.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qsettings_p.h
