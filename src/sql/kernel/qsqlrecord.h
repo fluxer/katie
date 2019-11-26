@@ -42,7 +42,6 @@ QT_BEGIN_NAMESPACE
 
 class QDebug;
 class QSqlField;
-class QStringList;
 class QVariant;
 class QSqlRecordPrivate;
 
