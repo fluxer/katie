@@ -224,7 +224,7 @@ QString QSqlRecord::fieldName(int index) const
 int QSqlRecord::indexOf(const QString& name) const
 {
     QString nm = name.toUpper();
-    for (int i = 0; i < count(); ++i) {
+    for (int i = 0; i < d->fields.count(); ++i) {
         if (d->fields.at(i).name().toUpper() == nm) // TODO: case-insensitive comparison
             return i;
     }
@@ -351,8 +351,7 @@ bool QSqlRecord::contains(const QString& name) const
 void QSqlRecord::clearValues()
 {
     detach();
-    int count = d->fields.count();
-    for (int i = 0; i < count; ++i)
+    for (int i = 0; i < d->fields.count(); ++i)
         d->fields[i].clear();
 }
 
