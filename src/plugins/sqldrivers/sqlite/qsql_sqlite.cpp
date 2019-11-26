@@ -89,7 +89,7 @@ static QVariant::Type qGetColumnType(const QString &tpName)
 }
 
 static QSqlError qMakeError(sqlite3 *access, const QString &descr, QSqlError::ErrorType type,
-                            int errorCode = -1)
+                            int errorCode)
 {
     return QSqlError(descr,
                      QString::fromUtf8(reinterpret_cast<const char *>(sqlite3_errmsg(access))),
@@ -563,15 +563,23 @@ bool QSQLiteDriver::open(const QString & db, const QString &, const QString &, c
 
     sqlite3_enable_shared_cache(sharedCache);
 
-    if (sqlite3_open_v2(db.toUtf8().constData(), &d->access, openMode, NULL) == SQLITE_OK) {
+    const int res = sqlite3_open_v2(db.toUtf8().constData(), &d->access, openMode, NULL);
+
+    if (res == SQLITE_OK) {
         sqlite3_busy_timeout(d->access, timeOut);
         setOpen(true);
         setOpenError(false);
         return true;
     } else {
         setLastError(qMakeError(d->access, tr("Error opening database"),
-                     QSqlError::ConnectionError));
+                     QSqlError::ConnectionError, res));
         setOpenError(true);
+
+        if (d->access) {
+            sqlite3_close(d->access);
+            d->access = 0;
+        }
+
         return false;
     }
 }
@@ -582,9 +590,10 @@ void QSQLiteDriver::close()
         foreach (QSQLiteResult *result, d->results)
             result->d->finalize();
 
-        if (sqlite3_close(d->access) != SQLITE_OK)
-            setLastError(qMakeError(d->access, tr("Error closing database"),
-                                    QSqlError::ConnectionError));
+        const int res = sqlite3_close(d->access);
+
+        if (res != SQLITE_OK)
+            setLastError(qMakeError(d->access, tr("Error closing database"), QSqlError::ConnectionError, res));
         d->access = 0;
         setOpen(false);
         setOpenError(false);
