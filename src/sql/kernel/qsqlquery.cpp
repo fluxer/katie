@@ -593,11 +593,9 @@ bool QSqlQuery::next()
 {
     if (!isSelect() || !isActive())
         return false;
-    bool b = false;
     switch (at()) {
     case QSql::BeforeFirstRow:
-        b = d->sqlResult->fetchFirst();
-        return b;
+        return d->sqlResult->fetchFirst();
     case QSql::AfterLastRow:
         return false;
     default:
@@ -647,13 +645,11 @@ bool QSqlQuery::previous()
         return false;
     }
 
-    bool b = false;
     switch (at()) {
     case QSql::BeforeFirstRow:
         return false;
     case QSql::AfterLastRow:
-        b = d->sqlResult->fetchLast();
-        return b;
+        return d->sqlResult->fetchLast();
     default:
         if (!d->sqlResult->fetchPrevious()) {
             d->sqlResult->setAt(QSql::BeforeFirstRow);
@@ -681,9 +677,7 @@ bool QSqlQuery::first()
         qWarning("QSqlQuery::seek: cannot seek backwards in a forward only query");
         return false;
     }
-    bool b = false;
-    b = d->sqlResult->fetchFirst();
-    return b;
+    return d->sqlResult->fetchFirst();
 }
 
 /*!
@@ -702,9 +696,7 @@ bool QSqlQuery::last()
 {
     if (!isSelect() || !isActive())
         return false;
-    bool b = false;
-    b = d->sqlResult->fetchLast();
-    return b;
+    return d->sqlResult->fetchLast();
 }
 
 /*!
