@@ -60,13 +60,15 @@ QT_BEGIN_NAMESPACE
 
 static QString _q_escapeIdentifier(const QString &identifier) 
 {
-    QString res = identifier;
-    if(!identifier.isEmpty() && identifier.left(1) != QString(QLatin1Char('"')) && identifier.right(1) != QString(QLatin1Char('"')) ) {
+    const int size = identifier.size();
+    if(size > 2 && identifier.at(0) != QLatin1Char('"') && identifier.at(size) != QLatin1Char('"')) {
+        QString res = identifier;
         res.replace(QLatin1Char('"'), QLatin1String("\"\""));
         res.prepend(QLatin1Char('"')).append(QLatin1Char('"'));
         res.replace(QLatin1Char('.'), QLatin1String("\".\""));
+        return res;
     }
-    return res;
+    return identifier;
 }
 
 static QVariant::Type qGetColumnType(const QString &tpName)
