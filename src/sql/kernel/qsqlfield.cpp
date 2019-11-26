@@ -160,8 +160,8 @@ public:
     \sa setRequiredStatus() setLength() setPrecision() setDefaultValue() setGenerated() setReadOnly()
 */
 QSqlField::QSqlField(const QString& fieldName, QVariant::Type type)
+    : d(new QSqlFieldPrivate(fieldName, type))
 {
-    d = new QSqlFieldPrivate(fieldName, type);
     val = QVariant(type);
 }
 
