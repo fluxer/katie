@@ -231,8 +231,8 @@ QSqlQueryPrivate::~QSqlQueryPrivate()
 */
 
 QSqlQuery::QSqlQuery(QSqlResult *result)
+    : d(new QSqlQueryPrivate(result))
 {
-    d = new QSqlQueryPrivate(result);
 }
 
 /*!
@@ -279,8 +279,8 @@ static void qInit(QSqlQuery *q, const QString& query, QSqlDatabase db)
     \sa QSqlDatabase
 */
 QSqlQuery::QSqlQuery(const QString& query, QSqlDatabase db)
+    : d(QSqlQueryPrivate::shared_null())
 {
-    d = QSqlQueryPrivate::shared_null();
     qInit(this, query, db);
 }
 
@@ -292,8 +292,8 @@ QSqlQuery::QSqlQuery(const QString& query, QSqlDatabase db)
 */
 
 QSqlQuery::QSqlQuery(QSqlDatabase db)
+    : d(QSqlQueryPrivate::shared_null())
 {
-    d = QSqlQueryPrivate::shared_null();
     qInit(this, QString(), db);
 }
 
