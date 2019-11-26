@@ -2613,15 +2613,13 @@ struct QStringCapture
 */
 QString& QString::replace(const QRegExp &rx, const QString &after)
 {
-    QRegExp rx2(rx);
-
-    if (isEmpty() && rx2.indexIn(*this) == -1)
+    if (isEmpty() && rx.indexIn(*this) == -1)
         return *this;
 
     reallocData(d->size);
 
     int index = 0;
-    const int numCaptures = rx2.captureCount();
+    const int numCaptures = rx.captureCount();
     const int al = after.length();
     QRegExp::CaretMode caretMode = QRegExp::CaretAtZero;
 
@@ -2667,21 +2665,21 @@ QString& QString::replace(const QRegExp &rx, const QString &after)
             }
 
             while (index <= length()) {
-                index = rx2.indexIn(*this, index, caretMode);
+                index = rx.indexIn(*this, index, caretMode);
                 if (index == -1)
                     break;
 
                 QString after2(after);
                 for (j = numBackRefs - 1; j >= 0; j--) {
                     const QStringCapture &capture = captures[j];
-                    after2.replace(capture.pos, capture.len, rx2.cap(capture.no));
+                    after2.replace(capture.pos, capture.len, rx.cap(capture.no));
                 }
 
-                replace(index, rx2.matchedLength(), after2);
+                replace(index, rx.matchedLength(), after2);
                 index += after2.length();
 
                 // avoid infinite loop on 0-length matches (e.g., QRegExp("[a-z]*"))
-                if (rx2.matchedLength() == 0)
+                if (rx.matchedLength() == 0)
                     ++index;
 
                 caretMode = QRegExp::CaretWontMatch;
@@ -2703,10 +2701,10 @@ QString& QString::replace(const QRegExp &rx, const QString &after)
         int pos = 0;
         int adjust = 0;
         while (pos < 2047) {
-            index = rx2.indexIn(*this, index, caretMode);
+            index = rx.indexIn(*this, index, caretMode);
             if (index == -1)
                 break;
-            int ml = rx2.matchedLength();
+            int ml = rx.matchedLength();
             replacements[pos].pos = index;
             replacements[pos++].length = ml;
             index += ml;
@@ -2859,8 +2857,7 @@ int QString::count(const QStringRef &str, Qt::CaseSensitivity cs) const
 */
 int QString::indexOf(const QRegExp& rx, int from) const
 {
-    QRegExp rx2(rx);
-    return rx2.indexIn(*this, from);
+    return rx.indexIn(*this, from);
 }
 
 /*!
@@ -2896,8 +2893,7 @@ int QString::indexOf(QRegExp& rx, int from) const
 */
 int QString::lastIndexOf(const QRegExp& rx, int from) const
 {
-    QRegExp rx2(rx);
-    return rx2.lastIndexIn(*this, from);
+    return rx.lastIndexIn(*this, from);
 }
 
 /*!
@@ -2934,12 +2930,11 @@ int QString::lastIndexOf(QRegExp& rx, int from) const
 */
 int QString::count(const QRegExp& rx) const
 {
-    QRegExp rx2(rx);
     int count = 0;
     int index = -1;
     int len = length();
     while (index < len - 1) {                 // count overlapping matches
-        index = rx2.indexIn(*this, index + 1);
+        index = rx.indexIn(*this, index + 1);
         if (index == -1)
             break;
         count++;
@@ -5664,13 +5659,12 @@ QStringList QString::split(const QChar &sep, SplitBehavior behavior, Qt::CaseSen
 */
 QStringList QString::split(const QRegExp &rx, SplitBehavior behavior) const
 {
-    QRegExp rx2(rx);
     QStringList list;
     int start = 0;
     int extra = 0;
     int end;
-    while ((end = rx2.indexIn(*this, start + extra)) != -1) {
-        int matchedLen = rx2.matchedLength();
+    while ((end = rx.indexIn(*this, start + extra)) != -1) {
+        int matchedLen = rx.matchedLength();
         if (start != end || behavior == KeepEmptyParts)
             list.append(mid(start, end - start));
         start = end + matchedLen;
