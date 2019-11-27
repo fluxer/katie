@@ -974,14 +974,14 @@ QTextCodec *QIcuCodec::codecForText(const QByteArray &text, QTextCodec *defaultC
     UErrorCode error = U_ZERO_ERROR;
     UCharsetDetector *detector = ucsdet_open(&error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextCodec::codecForUtfText: ucsdet_open() failed %s", u_errorName(error));
+        qWarning("QIcuCodec::codecForText: ucsdet_open() failed %s", u_errorName(error));
         return defaultCodec;
     }
 
     error = U_ZERO_ERROR;
     ucsdet_setText(detector, text.constData(), text.size(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextCodec::codecForUtfText: ucsdet_setText() failed %s", u_errorName(error));
+        qWarning("QIcuCodec::codecForText: ucsdet_setText() failed %s", u_errorName(error));
         ucsdet_close(detector);
         return defaultCodec;
     }
@@ -989,7 +989,7 @@ QTextCodec *QIcuCodec::codecForText(const QByteArray &text, QTextCodec *defaultC
     error = U_ZERO_ERROR;
     const UCharsetMatch *match = ucsdet_detect(detector, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextCodec::codecForUtfText: ucsdet_detect() failed %s", u_errorName(error));
+        qWarning("QIcuCodec::codecForText: ucsdet_detect() failed %s", u_errorName(error));
         ucsdet_close(detector);
         return defaultCodec;
     }
@@ -997,7 +997,7 @@ QTextCodec *QIcuCodec::codecForText(const QByteArray &text, QTextCodec *defaultC
     error = U_ZERO_ERROR;
     const char *name = ucsdet_getName(match, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextCodec::codecForUtfText: ucsdet_getName() failed %s", u_errorName(error));
+        qWarning("QIcuCodec::codecForText: ucsdet_getName() failed %s", u_errorName(error));
         ucsdet_close(detector);
         return defaultCodec;
     }
