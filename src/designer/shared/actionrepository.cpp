@@ -58,7 +58,6 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QToolBar>
 #include <QtGui/QMenu>
-#include <QtGui/qevent.h>
 #include <QtCore/QSet>
 #include <QtCore/QDebug>
 

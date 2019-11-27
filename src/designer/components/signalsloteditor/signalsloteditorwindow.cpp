@@ -61,7 +61,6 @@
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QDebug>
 #include <QtGui/QAction>
-#include <QtGui/QButtonGroup>
 #include <QtGui/QMenu>
 #include <QtGui/QSortFilterProxyModel>
 #include <QtGui/QStandardItemModel>

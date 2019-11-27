@@ -62,7 +62,6 @@
 #include <QtGui/QComboBox>
 #include <QtGui/QToolButton>
 #include <QtGui/QMessageBox>
-#include <QtGui/QLabel>
 #include <QtGui/QGroupBox>
 
 #include <QtCore/QSet>

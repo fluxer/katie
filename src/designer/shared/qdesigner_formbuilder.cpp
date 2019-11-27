@@ -49,7 +49,6 @@
 #include <formbuilderextra_p.h>
 // sdk
 #include <QtDesigner/container.h>
-#include <QtUiTools/customwidget.h>
 #include <QtDesigner/propertysheet.h>
 #include <QtDesigner/QExtensionManager>
 #include <QtDesigner/abstractformeditor.h>

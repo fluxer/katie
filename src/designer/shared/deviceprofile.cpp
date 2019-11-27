@@ -53,7 +53,6 @@
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QStyle>
 #include <QtGui/QStyleFactory>
-#include <QtGui/QApplication>
 
 
 static const char *dpiXPropertyC = "_q_customDpiX";

@@ -49,7 +49,6 @@
 #include "qdesigner_propertysheet_p.h"
 
 #include <QtGui/qevent.h>
-#include <QtGui/qevent.h>
 #include <QtGui/QMessageBox>
 #include <QtGui/QIcon>
 #include <QtGui/QErrorMessage>

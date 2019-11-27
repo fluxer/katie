@@ -42,7 +42,6 @@
 #include "qdesigner_promotion_p.h"
 #include "widgetdatabase_p.h"
 #include "metadatabase_p.h"
-#include "widgetdatabase_p.h"
 
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractformwindow.h>

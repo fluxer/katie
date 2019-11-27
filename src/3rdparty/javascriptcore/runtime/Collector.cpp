@@ -35,12 +35,13 @@
 #include "MarkStack.h"
 #include "Nodes.h"
 #include "Tracing.h"
+#include <wtf/FastMalloc.h>
+#include <wtf/HashCountedSet.h>
+
 #include <algorithm>
 #include <limits.h>
 #include <setjmp.h>
 #include <stdlib.h>
-#include <wtf/FastMalloc.h>
-#include <wtf/HashCountedSet.h>
 
 #if OS(HAIKU)
 
@@ -48,7 +49,6 @@
 
 #elif OS(UNIX)
 
-#include <stdlib.h>
 #if !OS(HAIKU)
 #include <sys/mman.h>
 #endif

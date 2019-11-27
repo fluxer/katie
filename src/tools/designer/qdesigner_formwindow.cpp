@@ -56,7 +56,6 @@
 #include <QtCore/QFile>
 
 #include <QtGui/QAction>
-#include <QtGui/qevent.h>
 #include <QtGui/QFileDialog>
 #include <QtGui/QMessageBox>
 #include <QtGui/QPushButton>

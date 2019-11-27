@@ -95,9 +95,6 @@
 #include <QtGui/QMdiArea>
 #include <QtGui/QWorkspace>
 #include <QtGui/QWizard>
-#include <QtGui/qwizard.h>
-
-#include <QtCore/qdebug.h>
 
 #include <limits.h>
 

@@ -42,7 +42,6 @@
 #include "propertylineedit_p.h"
 
 #include <QtGui/qevent.h>
-#include <QtGui/qevent.h>
 #include <QtGui/QMenu>
 
 QT_BEGIN_NAMESPACE

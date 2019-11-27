@@ -61,7 +61,6 @@
 #include "qdeclarativerewrite_p.h"
 #include "qdeclarativescriptstring.h"
 #include "qdeclarativeglobal_p.h"
-#include "qdeclarativescriptparser_p.h"
 #include "qdeclarativebinding_p.h"
 #include "qdeclarativecompiledbindings_p.h"
 #include "qdeclarativeglobalscriptclass_p.h"

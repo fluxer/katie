@@ -50,7 +50,6 @@
 
 #include <QtGui/QFileDialog>
 #include <QtGui/QStyleFactory>
-#include <QtGui/QFileDialog>
 #include <QtGui/QMessageBox>
 #include <QtCore/QPair>
 #include <QtCore/QList>

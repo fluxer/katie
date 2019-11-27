@@ -50,7 +50,6 @@
 #include <QtGui/QPixmap>
 #include <QtGui/QMatrix>
 #include <QtGui/QApplication>
-#include <QtGui/qevent.h>
 #include <QtGui/QMenu>
 #include <QtGui/QAction>
 

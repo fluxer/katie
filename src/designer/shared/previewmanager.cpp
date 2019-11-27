@@ -43,7 +43,6 @@
 #include "previewmanager_p.h"
 #include "qdesigner_formbuilder_p.h"
 #include "shared_settings_p.h"
-#include "shared_settings_p.h"
 #include "zoomwidget_p.h"
 #include "formwindowbase_p.h"
 #include "widgetfactory_p.h"

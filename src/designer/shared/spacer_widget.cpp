@@ -43,7 +43,6 @@
 #include "layoutinfo_p.h"
 
 #include <QtDesigner/abstractformwindow.h>
-#include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/propertysheet.h>
 #include <QtDesigner/QExtensionManager>

@@ -52,7 +52,6 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QDebug>
-#include <QtCore/QDir>
 #include <QtCore/QTemporaryFile>
 
 #include <QtGui/QApplication>

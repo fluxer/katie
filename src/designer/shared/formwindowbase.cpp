@@ -71,7 +71,6 @@
 #include <QtGui/QToolBox>
 #include <QtGui/QToolBar>
 #include <QtGui/QStatusBar>
-#include <QtGui/QMenu>
 #include <QtGui/QAction>
 #include <QtGui/QLabel>
 

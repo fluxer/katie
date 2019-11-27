@@ -24,7 +24,6 @@
 ***********************************************************************/
 
 #include "qjsonobject.h"
-#include "qjsonvalue.h"
 #include "qjsonarray.h"
 #include "qjsonvalue.h"
 #include "qstringlist.h"

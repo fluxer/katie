@@ -61,7 +61,6 @@
 #include <QtGui/QToolBar>
 #include <QtGui/QMenu>
 #include <QtGui/qevent.h>
-#include <QtGui/QApplication>
 #include <QtCore/QDebug>
 
 QT_BEGIN_NAMESPACE

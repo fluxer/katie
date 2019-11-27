@@ -57,7 +57,6 @@
 #include <QtCore/QDebug>
 #include <QtCore/QByteArray>
 #include <QtCore/QBuffer>
-#include <QtCore/QDir>
 #include <QtCore/QTextStream>
 #include <QtGui/QHeaderView>
 #include <QtGui/qtreewidget.h>

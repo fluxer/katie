@@ -46,7 +46,6 @@
 // shared
 #include <iconloader_p.h>
 #include <sheet_delegate_p.h>
-#include <QtDesigner/abstractsettings_p.h>
 #include <ui4_p.h>
 #include "qdesigner_utils_p.h"
 #include <pluginmanager_p.h>

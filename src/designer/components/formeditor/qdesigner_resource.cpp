@@ -56,7 +56,6 @@
 #include "layout_propertysheet.h"
 #include "qdesignercommon_p.h"
 
-#include <ui4_p.h>
 #include <formbuilderextra_p.h>
 #include <resourcebuilder_p.h>
 #include <textbuilder_p.h>
