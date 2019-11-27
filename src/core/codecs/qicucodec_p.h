@@ -60,9 +60,10 @@ public:
     ~QIcuCodec();
 
     static QList<QByteArray> availableCodecs();
+    static QTextCodec* codecForText(const QByteArray &text, QTextCodec *defaultCodec);
 
-    QString convertToUnicode(const char *, int, ConverterState *) const final;
-    QByteArray convertFromUnicode(const QChar *, int, ConverterState *) const final;
+    QString convertToUnicode(const char *data, int len, ConverterState *state) const final;
+    QByteArray convertFromUnicode(const QChar *unicode, int len, ConverterState *state) const final;
 
     QByteArray name() const final;
     QList<QByteArray> aliases() const final;
