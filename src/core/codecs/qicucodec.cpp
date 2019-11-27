@@ -1062,10 +1062,10 @@ QString QIcuCodec::convertToUnicode(const char *src, int length, QTextCodec::Con
 {
     UConverter *conv = getConverter(state);
 
-    QString string(QMAXUSTRLEN(length), Qt::Uninitialized);
+    QString result(QMAXUSTRLEN(length), Qt::Uninitialized);
     UErrorCode error = U_ZERO_ERROR;
-    const int convresult = ucnv_toUChars(conv, reinterpret_cast<UChar *>(string.data()),
-        string.length(), src, length, &error);
+    const int convresult = ucnv_toUChars(conv, reinterpret_cast<UChar *>(result.data()),
+        result.length(), src, length, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QIcuCodec::convertToUnicode: ucnv_toUChars(%s) failed %s", m_name, u_errorName(error));
         if (state) {
@@ -1079,13 +1079,13 @@ QString QIcuCodec::convertToUnicode(const char *src, int length, QTextCodec::Con
             state->invalidChars = invalidlen;
         }
     } else {
-        string.resize(convresult);
+        result.resize(convresult);
     }
 
     if (!state)
         ucnv_close(conv);
 
-    return string;
+    return result;
 }
 
 QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length, QTextCodec::ConverterState *state) const
