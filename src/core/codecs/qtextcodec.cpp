@@ -1206,7 +1206,7 @@ QTextCodec *QTextCodec::codecForHtml(const QByteArray &ba)
 */
 QTextCodec *QTextCodec::codecForUtfText(const QByteArray &ba, QTextCodec *defaultCodec)
 {
-    return QIcuCodec::codecForText(ba, defaultCodec);
+    return QIcuCodec::codecForUtf(ba, defaultCodec);
 }
 
 /*!

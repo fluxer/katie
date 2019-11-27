@@ -60,7 +60,7 @@ public:
     ~QIcuCodec();
 
     static QList<QByteArray> availableCodecs();
-    static QTextCodec* codecForText(const QByteArray &text, QTextCodec *defaultCodec);
+    static QTextCodec* codecForUtf(const QByteArray &text, QTextCodec *defaultCodec);
 
     QString convertToUnicode(const char *data, int len, ConverterState *state) const final;
     QByteArray convertFromUnicode(const QChar *unicode, int len, ConverterState *state) const final;

@@ -969,41 +969,20 @@ QList<QByteArray> QIcuCodec::availableCodecs()
     return codecs;
 }
 
-QTextCodec *QIcuCodec::codecForText(const QByteArray &text, QTextCodec *defaultCodec)
+QTextCodec *QIcuCodec::codecForUtf(const QByteArray &text, QTextCodec *defaultCodec)
 {
     UErrorCode error = U_ZERO_ERROR;
-    UCharsetDetector *detector = ucsdet_open(&error);
+    const char* name = ucnv_detectUnicodeSignature(text.constData(), text.size(), Q_NULLPTR, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QIcuCodec::codecForText: ucsdet_open() failed %s", u_errorName(error));
+        qWarning("QIcuCodec::codecForText: ucnv_detectUnicodeSignature() failed %s", u_errorName(error));
         return defaultCodec;
     }
 
-    error = U_ZERO_ERROR;
-    ucsdet_setText(detector, text.constData(), text.size(), &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QIcuCodec::codecForText: ucsdet_setText() failed %s", u_errorName(error));
-        ucsdet_close(detector);
-        return defaultCodec;
+    if (name) {
+        return QTextCodec::codecForName(name);
     }
 
-    error = U_ZERO_ERROR;
-    const UCharsetMatch *match = ucsdet_detect(detector, &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QIcuCodec::codecForText: ucsdet_detect() failed %s", u_errorName(error));
-        ucsdet_close(detector);
-        return defaultCodec;
-    }
-
-    error = U_ZERO_ERROR;
-    const char *name = ucsdet_getName(match, &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QIcuCodec::codecForText: ucsdet_getName() failed %s", u_errorName(error));
-        ucsdet_close(detector);
-        return defaultCodec;
-    }
-
-    ucsdet_close(detector);
-    return QTextCodec::codecForName(name);
+    return defaultCodec;
 }
 
 QIcuCodec::QIcuCodec(const char *name)
