@@ -995,44 +995,40 @@ QIcuCodec::~QIcuCodec()
 
 UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
 {
-    UConverter *conv = Q_NULLPTR;
-    if (state) {
-        if (!state->d) {
-            // first time
-            UErrorCode error = U_ZERO_ERROR;
-            state->d = ucnv_open(m_name, &error);
-            if (Q_UNLIKELY(U_FAILURE(error))) {
-                qWarning("QIcuCodec::getConverter: ucnv_open(%s) failed %s", m_name, u_errorName(error));
-            } else {
-                error = U_ZERO_ERROR;
-                if (state->flags & QTextCodec::ConvertInvalidToNull) {
-                    ucnv_setSubstString(static_cast<UConverter *>(state->d), nullchar, 2, &error);
-                } else {
-                    ucnv_setSubstString(static_cast<UConverter *>(state->d), questionmarkchar, 1, &error);
-                }
-                if (Q_UNLIKELY(U_FAILURE(error))) {
-                    qWarning("QIcuCodec::getConverter: ucnv_setSubstString(%s) failed %s", m_name, u_errorName(error));
-                }
-
-                conv = static_cast<UConverter *>(state->d);
-            }
-        }
-    }
-    if (!conv) {
-        // stateless conversion
+    if (state && !state->d) {
+        // first time
         UErrorCode error = U_ZERO_ERROR;
-        conv = ucnv_open(m_name, &error);
-        if (Q_UNLIKELY(U_FAILURE(error)))
+        state->d = ucnv_open(m_name, &error);
+        if (Q_UNLIKELY(U_FAILURE(error))) {
             qWarning("QIcuCodec::getConverter: ucnv_open(%s) failed %s", m_name, u_errorName(error));
-
-        if (conv) {
+        } else {
             error = U_ZERO_ERROR;
-            ucnv_setSubstString(conv, questionmarkchar, 1, &error);
+            if (state->flags & QTextCodec::ConvertInvalidToNull) {
+                ucnv_setSubstString(static_cast<UConverter *>(state->d), nullchar, 2, &error);
+            } else {
+                ucnv_setSubstString(static_cast<UConverter *>(state->d), questionmarkchar, 1, &error);
+            }
             if (Q_UNLIKELY(U_FAILURE(error))) {
                 qWarning("QIcuCodec::getConverter: ucnv_setSubstString(%s) failed %s", m_name, u_errorName(error));
             }
+
+            return static_cast<UConverter *>(state->d);
         }
     }
+
+    // stateless conversion
+    UErrorCode error = U_ZERO_ERROR;
+    UConverter *conv = ucnv_open(m_name, &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QIcuCodec::getConverter: ucnv_open(%s) failed %s", m_name, u_errorName(error));
+    } else {
+        error = U_ZERO_ERROR;
+        ucnv_setSubstString(conv, questionmarkchar, 1, &error);
+        if (Q_UNLIKELY(U_FAILURE(error))) {
+            qWarning("QIcuCodec::getConverter: ucnv_setSubstString(%s) failed %s", m_name, u_errorName(error));
+        }
+    }
+
     return conv;
 }
 
