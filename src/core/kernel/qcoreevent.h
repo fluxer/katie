@@ -158,68 +158,64 @@ public:
         AccessibilityHelp = 89,                 // accessibility help text request
         AccessibilityDescription = 90,          // accessibility description text request
 
-#ifdef QT_KEYPAD_NAVIGATION
-        EnterEditFocus = 91,                    // enter edit mode in keypad navigation (Defined only with QT_KEYPAD_NAVIGATION)
-        LeaveEditFocus = 92,                    // leave edit mode in keypad navigation (Defined only with QT_KEYPAD_NAVIGATION)
-#endif
-        AcceptDropsChange = 93,
+        AcceptDropsChange = 91,
 
-        GraphicsSceneMouseMove = 94,            // GraphicsView
-        GraphicsSceneMousePress = 95,
-        GraphicsSceneMouseRelease = 96,
-        GraphicsSceneMouseDoubleClick = 97,
-        GraphicsSceneContextMenu = 98,
-        GraphicsSceneHoverEnter = 99,
-        GraphicsSceneHoverMove = 100,
-        GraphicsSceneHoverLeave = 101,
-        GraphicsSceneLeave = 102,               // internal
-        GraphicsSceneHelp = 103,
-        GraphicsSceneDragEnter = 104,
-        GraphicsSceneDragMove = 105,
-        GraphicsSceneDragLeave = 106,
-        GraphicsSceneDrop = 107,
-        GraphicsSceneWheel = 108,
+        GraphicsSceneMouseMove = 92,            // GraphicsView
+        GraphicsSceneMousePress = 93,
+        GraphicsSceneMouseRelease = 94,
+        GraphicsSceneMouseDoubleClick = 95,
+        GraphicsSceneContextMenu = 96,
+        GraphicsSceneHoverEnter = 97,
+        GraphicsSceneHoverMove = 98,
+        GraphicsSceneHoverLeave = 99,
+        GraphicsSceneLeave = 100,               // internal
+        GraphicsSceneHelp = 101,
+        GraphicsSceneDragEnter = 102,
+        GraphicsSceneDragMove = 103,
+        GraphicsSceneDragLeave = 104,
+        GraphicsSceneDrop = 105,
+        GraphicsSceneWheel = 106,
 
-        KeyboardLayoutChange = 109,             // keyboard layout changed
+        KeyboardLayoutChange = 107,             // keyboard layout changed
 
-        DynamicPropertyChange = 110,            // A dynamic property was changed through setProperty/property
+        DynamicPropertyChange = 108,            // A dynamic property was changed through setProperty/property
 
-        NonClientAreaMouseMove = 111,
-        NonClientAreaMouseButtonPress = 112,
-        NonClientAreaMouseButtonRelease = 113,
-        NonClientAreaMouseButtonDblClick = 114,
+        NonClientAreaMouseMove = 109,
+        NonClientAreaMouseButtonPress = 110,
+        NonClientAreaMouseButtonRelease = 111,
+        NonClientAreaMouseButtonDblClick = 112,
 
-        ContentsRectChange = 115,               // sent by QWidget::setContentsMargins (internal)
+        ContentsRectChange = 113,               // sent by QWidget::setContentsMargins (internal)
 
-        FutureCallOut = 116,
+        FutureCallOut = 114,
 
-        GraphicsSceneResize  = 117,
-        GraphicsSceneMove  = 118,
+        GraphicsSceneResize  = 115,
+        GraphicsSceneMove  = 116,
 
-        CursorChange = 119,
-        ToolTipChange = 120,
+        CursorChange = 117,
+        ToolTipChange = 118,
 
-        NetworkReplyUpdated = 121,              // Internal for QNetworkReply
+        NetworkReplyUpdated = 119,              // Internal for QNetworkReply
 
-        GrabMouse = 122,
-        UngrabMouse = 123,
-        GrabKeyboard = 124,
-        UngrabKeyboard = 125,
+        GrabMouse = 120,
+        UngrabMouse = 121,
+        GrabKeyboard = 122,
+        UngrabKeyboard = 123,
 
-        TouchBegin = 126,
-        TouchUpdate = 127,
-        TouchEnd = 128,
+        TouchBegin = 124,
+        TouchUpdate = 125,
+        TouchEnd = 126,
 
 #ifndef QT_NO_GESTURES
-        NativeGesture = 129,                    // Internal for platform gesture support
+        NativeGesture = 127,                    // Internal for platform gesture support
 #endif
-        RequestSoftwareInputPanel = 130,
-        CloseSoftwareInputPanel = 131,
+        RequestSoftwareInputPanel = 128,
+        CloseSoftwareInputPanel = 129,
 
-        WinIdChange = 132,
+        WinIdChange = 130,
 #ifndef QT_NO_GESTURES
-        Gesture = 133,
-        GestureOverride = 134,
+        Gesture = 131,
+        GestureOverride = 132,
 #endif
 
         User = 1000,                            // first user event id

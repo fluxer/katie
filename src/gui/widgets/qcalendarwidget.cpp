@@ -921,16 +921,12 @@ protected:
     void wheelEvent(QWheelEvent *event);
 #endif
     void keyPressEvent(QKeyEvent *event);
-    bool event(QEvent *event);
 
     QDate handleMouseEvent(QMouseEvent *event);
 public:
     bool readOnly;
 private:
     bool validDateClicked;
-#ifdef QT_KEYPAD_NAVIGATION
-    QDate origDate;
-#endif
 };
 
 QCalendarModel::QCalendarModel(QObject *parent)
@@ -1339,24 +1335,6 @@ QModelIndex QCalendarView::moveCursor(CursorAction cursorAction, Qt::KeyboardMod
 
 void QCalendarView::keyPressEvent(QKeyEvent *event)
 {
-#ifdef QT_KEYPAD_NAVIGATION
-    if (event->key() == Qt::Key_Select) {
-        if (QApplication::keypadNavigationEnabled()) {
-            if (!hasEditFocus()) {
-                setEditFocus(true);
-                return;
-            }
-        }
-    } else if (event->key() == Qt::Key_Back) {
-        if (QApplication::keypadNavigationEnabled() && hasEditFocus()) {
-            if (qobject_cast<QCalendarModel *>(model())) {
-                emit changeDate(origDate, true); //changes selection back to origDate, but doesn't activate
-                setEditFocus(false);
-                return;
-            }
-        }
-    }
-#endif
 
     if (!readOnly) {
         switch (event->key()) {
@@ -1383,19 +1361,6 @@ void QCalendarView::wheelEvent(QWheelEvent *event)
     emit showDate(currentDate);
 }
 #endif
-
-bool QCalendarView::event(QEvent *event)
-{
-#ifdef QT_KEYPAD_NAVIGATION
-    if (event->type() == QEvent::FocusIn) {
-        if (QCalendarModel *calendarModel = qobject_cast<QCalendarModel *>(model())) {
-            origDate = calendarModel->m_date;
-        }
-    }
-#endif
-
-    return QTableView::event(event);
-}
 
 QDate QCalendarView::handleMouseEvent(QMouseEvent *event)
 {

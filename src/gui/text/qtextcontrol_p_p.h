@@ -139,9 +139,6 @@ public:
                                const QPoint &globalPos);
     void contextMenuEvent(const QPoint &screenPos, const QPointF &docPos, QWidget *contextWidget);
     void focusEvent(QFocusEvent *e);
-#ifdef QT_KEYPAD_NAVIGATION
-    void editFocusEvent(QEvent *e);
-#endif
     bool dragEnterEvent(QEvent *e, const QMimeData *mimeData);
     void dragLeaveEvent();
     bool dragMoveEvent(QEvent *e, const QMimeData *mimeData, const QPointF &pos);
@@ -191,9 +188,6 @@ public:
 
     QPalette palette;
     bool hasFocus;
-#ifdef QT_KEYPAD_NAVIGATION
-    bool hasEditFocus;
-#endif
     bool isEnabled;
 
     QString highlightedAnchor; // Anchor below cursor

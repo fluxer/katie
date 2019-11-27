@@ -404,12 +404,6 @@ public:
     void updateFrameStrut();
     QRect frameStrut() const;
 
-#ifdef QT_KEYPAD_NAVIGATION
-    static bool navigateToDirection(Direction direction);
-    static QWidget *widgetInNavigationDirection(Direction direction);
-    static bool canKeypadNavigate(Qt::Orientation orientation);
-    static bool inTabWidget(QWidget *widget);
-#endif
 
     void setWindowIconText_sys(const QString &cap);
     void setWindowIconText_helper(const QString &cap);
@@ -566,9 +560,6 @@ public:
     // This should just ensure that all widgets are deleted by QApplication
     static QWidgetMapper *mapper;
     static QWidgetSet *allWidgets;
-#ifdef QT_KEYPAD_NAVIGATION
-    static QPointer<QWidget> editingWidget;
-#endif
 
     // Implicit pointers (shared_null/shared_empty).
     QRegion opaqueChildren;

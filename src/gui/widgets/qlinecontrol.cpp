@@ -1253,12 +1253,10 @@ void QLineControl::complete(int key)
         if (!advanceToEnabledItem(n))
             return;
     } else {
-#ifndef QT_KEYPAD_NAVIGATION
         if (text.isEmpty()) {
             m_completer->popup()->hide();
             return;
         }
-#endif
         m_completer->setCompletionPrefix(text);
     }
 
@@ -1316,29 +1314,6 @@ void QLineControl::timerEvent(QTimerEvent *event)
 
 bool QLineControl::processEvent(QEvent* ev)
 {
-#ifdef QT_KEYPAD_NAVIGATION
-    if (QApplication::keypadNavigationEnabled()) {
-        if ((ev->type() == QEvent::KeyPress) || (ev->type() == QEvent::KeyRelease)) {
-            QKeyEvent *ke = (QKeyEvent *)ev;
-            if (ke->key() == Qt::Key_Back) {
-                if (ke->isAutoRepeat()) {
-                    // Swallow it. We don't want back keys running amok.
-                    ke->accept();
-                    return true;
-                }
-                if ((ev->type() == QEvent::KeyRelease)
-                    && !isReadOnly()
-                    && m_deleteAllTimer) {
-                    killTimer(m_deleteAllTimer);
-                    m_deleteAllTimer = 0;
-                    backspace();
-                    ke->accept();
-                    return true;
-                }
-            }
-        }
-    }
-#endif
     switch(ev->type()){
 #ifndef QT_NO_GRAPHICSVIEW
         case QEvent::GraphicsSceneMouseDoubleClick:
@@ -1483,11 +1458,6 @@ void QLineControl::processKeyEvent(QKeyEvent* event)
             case Qt::Key_Enter:
             case Qt::Key_Return:
             case Qt::Key_F4:
-#ifdef QT_KEYPAD_NAVIGATION
-            case Qt::Key_Select:
-                if (!QApplication::keypadNavigationEnabled())
-                    break;
-#endif
                 m_completer->popup()->hide(); // just hide. will end up propagating to parent
             default:
                 break; // normal key processing
@@ -1497,11 +1467,6 @@ void QLineControl::processKeyEvent(QKeyEvent* event)
             case Qt::Key_Enter:
             case Qt::Key_Return:
             case Qt::Key_F4:
-#ifdef QT_KEYPAD_NAVIGATION
-            case Qt::Key_Select:
-                if (!QApplication::keypadNavigationEnabled())
-                    break;
-#endif
                 if (!m_completer->currentCompletion().isEmpty() && hasSelectedText()
                     && textAfterSelection().isEmpty()) {
                     setText(m_completer->currentCompletion());
@@ -1530,12 +1495,6 @@ void QLineControl::processKeyEvent(QKeyEvent* event)
         && !passwordEchoEditing()
         && !isReadOnly()
         && !event->text().isEmpty()
-#ifdef QT_KEYPAD_NAVIGATION
-        && event->key() != Qt::Key_Select
-        && event->key() != Qt::Key_Up
-        && event->key() != Qt::Key_Down
-        && event->key() != Qt::Key_Back
-#endif
         && !(event->modifiers() & Qt::ControlModifier)) {
         // Clear the edit and reset to normal echo mode while editing; the
         // echo mode switches back when the edit loses focus
@@ -1718,25 +1677,6 @@ void QLineControl::processKeyEvent(QKeyEvent* event)
 #endif
                 }
                 break;
-#ifdef QT_KEYPAD_NAVIGATION
-            case Qt::Key_Back:
-                if (QApplication::keypadNavigationEnabled() && !event->isAutoRepeat()
-                    && !isReadOnly()) {
-                    if (text().length() == 0) {
-                        setText(m_cancelText);
-
-                        if (passwordEchoEditing())
-                            updatePasswordEchoEditing(false);
-
-                        emit editFocusChange(false);
-                    } else if (!m_deleteAllTimer) {
-                        m_deleteAllTimer = startTimer(750);
-                    }
-                } else {
-                    unknown = true;
-                }
-                break;
-#endif
             default:
                 unknown = true;
             }

@@ -68,10 +68,6 @@ public:
                       collapsibleSeparators(true), activationRecursionGuard(false),
                       hasHadMouse(false), aboutToHide(false), motions(0),
                       currentAction(0),
-#ifdef QT_KEYPAD_NAVIGATION
-                      selectAction(0),
-                      cancelAction(0),
-#endif
                       scroll(0), eventLoop(0), tearoff(false), tornoff(false), tearoffHighlighted(false),
                       hasCheckableItems(false), sloppyDelayTimer(0), sloppyAction(0), doChildEffects(false)
     { }
@@ -111,10 +107,6 @@ public:
     bool aboutToHide;
     int motions;
     QAction *currentAction;
-#ifdef QT_KEYPAD_NAVIGATION
-    QAction *selectAction;
-    QAction *cancelAction;
-#endif
     QBasicTimer menuDelayTimer;
     enum SelectionReason {
         SelectedFromKeyboard,

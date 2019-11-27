@@ -1158,15 +1158,6 @@ QModelIndex QListView::moveCursor(CursorAction cursorAction, Qt::KeyboardModifie
         while (intersectVector.isEmpty()) {
             rect.translate(0, -rect.height());
             if (rect.bottom() <= 0) {
-#ifdef QT_KEYPAD_NAVIGATION
-                if (QApplication::keypadNavigationEnabled()) {
-                    int row = d->batchStartRow() - 1;
-                    while (row >= 0 && d->isHiddenOrDisabled(row))
-                        --row;
-                    if (row >= 0)
-                        return d->model->index(row, d->column, d->root);
-                }
-#endif
                 return current;
             }
             if (rect.top() < 0)
@@ -1186,16 +1177,6 @@ QModelIndex QListView::moveCursor(CursorAction cursorAction, Qt::KeyboardModifie
         while (intersectVector.isEmpty()) {
             rect.translate(0, rect.height());
             if (rect.top() >= contents.height()) {
-#ifdef QT_KEYPAD_NAVIGATION
-                if (QApplication::keypadNavigationEnabled()) {
-                    int rowCount = d->model->rowCount(d->root);
-                    int row = 0;
-                    while (row < rowCount && d->isHiddenOrDisabled(row))
-                        ++row;
-                    if (row < rowCount)
-                        return d->model->index(row, d->column, d->root);
-                }
-#endif
                 return current;
             }
             if (rect.bottom() > contents.height())

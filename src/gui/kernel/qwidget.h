@@ -545,10 +545,6 @@ public:
     void ensurePolished() const;
     bool isAncestorOf(const QWidget *child) const;
 
-#ifdef QT_KEYPAD_NAVIGATION
-    bool hasEditFocus() const;
-    void setEditFocus(bool on);
-#endif
 
     bool autoFillBackground() const;
     void setAutoFillBackground(bool enabled);

@@ -1258,11 +1258,7 @@ bool QCompleter::eventFilter(QObject *o, QEvent *e)
         d->eatFocusOut = true;
         if (!d->widget || e->isAccepted() || !d->popup->isVisible()) {
             // widget lost focus, hide the popup
-            if (d->widget && (!d->widget->hasFocus()
-#ifdef QT_KEYPAD_NAVIGATION
-                || (QApplication::keypadNavigationEnabled() && !d->widget->hasEditFocus())
-#endif
-                ))
+            if (d->widget && (!d->widget->hasFocus()))
                 d->popup->hide();
             if (e->isAccepted())
                 return true;
@@ -1270,11 +1266,6 @@ bool QCompleter::eventFilter(QObject *o, QEvent *e)
 
         // default implementation for keys not handled by the widget when popup is open
         switch (key) {
-#ifdef QT_KEYPAD_NAVIGATION
-        case Qt::Key_Select:
-            if (!QApplication::keypadNavigationEnabled())
-                break;
-#endif
         case Qt::Key_Return:
         case Qt::Key_Enter:
         case Qt::Key_Tab:
@@ -1300,42 +1291,8 @@ bool QCompleter::eventFilter(QObject *o, QEvent *e)
         return true;
     }
 
-#ifdef QT_KEYPAD_NAVIGATION
-    case QEvent::KeyRelease: {
-        QKeyEvent *ke = static_cast<QKeyEvent *>(e);
-        if (QApplication::keypadNavigationEnabled() && ke->key() == Qt::Key_Back) {
-            // Send the event to the 'widget'. This is what we did for KeyPress, so we need
-            // to do the same for KeyRelease, in case the widget's KeyPress event set
-            // up something (such as a timer) that is relying on also receiving the
-            // key release. I see this as a bug in Qt, and should really set it up for all
-            // the affected keys. However, it is difficult to tell how this will affect
-            // existing code, and I can't test for every combination!
-            d->eatFocusOut = false;
-            static_cast<QObject *>(d->widget)->event(ke);
-            d->eatFocusOut = true;
-        }
-        break;
-    }
-#endif
 
     case QEvent::MouseButtonPress: {
-#ifdef QT_KEYPAD_NAVIGATION
-        if (QApplication::keypadNavigationEnabled()) {
-            // if we've clicked in the widget (or its descendant), let it handle the click
-            QWidget *source = qobject_cast<QWidget *>(o);
-            if (source) {
-                QPoint pos = source->mapToGlobal((static_cast<QMouseEvent *>(e))->pos());
-                QWidget *target = QApplication::widgetAt(pos);
-                if (target && (d->widget->isAncestorOf(target) ||
-                    target == d->widget)) {
-                    d->eatFocusOut = false;
-                    static_cast<QObject *>(target)->event(e);
-                    d->eatFocusOut = true;
-                    return true;
-                }
-            }
-        }
-#endif
         if (!d->popup->underMouse()) {
             d->popup->hide();
             return true;

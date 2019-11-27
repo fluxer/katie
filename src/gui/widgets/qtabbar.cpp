@@ -303,13 +303,6 @@ void QTabBarPrivate::init()
     rightB->setAutoRepeat(true);
     QObject::connect(rightB, SIGNAL(clicked()), q, SLOT(_q_scrollTabs()));
     rightB->hide();
-#ifdef QT_KEYPAD_NAVIGATION
-    if (QApplication::keypadNavigationEnabled()) {
-        leftB->setFocusPolicy(Qt::NoFocus);
-        rightB->setFocusPolicy(Qt::NoFocus);
-        q->setFocusPolicy(Qt::NoFocus);
-    } else
-#endif
     q->setFocusPolicy(Qt::TabFocus);
     q->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     elideMode = Qt::TextElideMode(q->style()->styleHint(QStyle::SH_TabBar_ElideMode, 0, q));

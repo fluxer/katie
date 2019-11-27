@@ -1008,12 +1008,6 @@ bool QTextEdit::event(QEvent *e)
         d->sendControlEvent(e);
     }
 #endif // QT_NO_CONTEXTMENU
-#ifdef QT_KEYPAD_NAVIGATION
-    if (e->type() == QEvent::EnterEditFocus || e->type() == QEvent::LeaveEditFocus) {
-        if (QApplication::keypadNavigationEnabled())
-            d->sendControlEvent(e);
-    }
-#endif
     return QAbstractScrollArea::event(e);
 }
 
@@ -1055,12 +1049,6 @@ void QTextEdit::timerEvent(QTimerEvent *e)
                                        : QAbstractSlider::SliderSingleStepAdd);
         }
     }
-#ifdef QT_KEYPAD_NAVIGATION
-    else if (e->timerId() == d->deleteAllTimer.timerId()) {
-        d->deleteAllTimer.stop();
-        clear();
-    }
-#endif
 }
 
 /*!
@@ -1124,50 +1112,6 @@ void QTextEdit::keyPressEvent(QKeyEvent *e)
 {
     Q_D(QTextEdit);
 
-#ifdef QT_KEYPAD_NAVIGATION
-    switch (e->key()) {
-        case Qt::Key_Select:
-            if (QApplication::keypadNavigationEnabled()) {
-                // code assumes linksaccessible + editable isn't meaningful
-                if (d->control->textInteractionFlags() & Qt::TextEditable) {
-                    setEditFocus(!hasEditFocus());
-                } else {
-                    if (!hasEditFocus())
-                        setEditFocus(true);
-                    else {
-                        QTextCursor cursor = d->control->textCursor();
-                        QTextCharFormat charFmt = cursor.charFormat();
-                        if (!(d->control->textInteractionFlags() & Qt::LinksAccessibleByKeyboard)
-                            || !cursor.hasSelection() || charFmt.anchorHref().isEmpty()) {
-                            e->accept();
-                            return;
-                        }
-                    }
-                }
-            }
-            break;
-        case Qt::Key_Back:
-        case Qt::Key_No:
-            if (!QApplication::keypadNavigationEnabled()
-                    || (QApplication::keypadNavigationEnabled() && !hasEditFocus())) {
-                e->ignore();
-                return;
-            }
-            break;
-        default:
-            if (QApplication::keypadNavigationEnabled()) {
-                if (!hasEditFocus() && !(e->modifiers() & Qt::ControlModifier)) {
-                    if (e->text()[0].isPrint())
-                        setEditFocus(true);
-                    else {
-                        e->ignore();
-                        return;
-                    }
-                }
-            }
-            break;
-    }
-#endif
 #ifndef QT_NO_SHORTCUT
 
     Qt::TextInteractionFlags tif = d->control->textInteractionFlags();
@@ -1239,69 +1183,6 @@ void QTextEdit::keyPressEvent(QKeyEvent *e)
     }
 
     d->sendControlEvent(e);
-#ifdef QT_KEYPAD_NAVIGATION
-    if (!e->isAccepted()) {
-        switch (e->key()) {
-            case Qt::Key_Up:
-            case Qt::Key_Down:
-                if (QApplication::keypadNavigationEnabled()) {
-                    // Cursor position didn't change, so we want to leave
-                    // these keys to change focus.
-                    e->ignore();
-                    return;
-                }
-                break;
-            case Qt::Key_Back:
-                if (!e->isAutoRepeat()) {
-                    if (QApplication::keypadNavigationEnabled()) {
-                        if (document()->isEmpty() || !(d->control->textInteractionFlags() & Qt::TextEditable)) {
-                            setEditFocus(false);
-                            e->accept();
-                        } else if (!d->deleteAllTimer.isActive()) {
-                            e->accept();
-                            d->deleteAllTimer.start(750, this);
-                        }
-                    } else {
-                        e->ignore();
-                        return;
-                    }
-                }
-                break;
-            default: break;
-        }
-    }
-#endif
-}
-
-/*! \reimp
-*/
-void QTextEdit::keyReleaseEvent(QKeyEvent *e)
-{
-#ifdef QT_KEYPAD_NAVIGATION
-    Q_D(QTextEdit);
-    if (QApplication::keypadNavigationEnabled()) {
-        if (!e->isAutoRepeat() && e->key() == Qt::Key_Back
-            && d->deleteAllTimer.isActive()) {
-            d->deleteAllTimer.stop();
-            QTextCursor cursor = d->control->textCursor();
-            QTextBlockFormat blockFmt = cursor.blockFormat();
-
-            QTextList *list = cursor.currentList();
-            if (list && cursor.atBlockStart()) {
-                list->remove(cursor.block());
-            } else if (cursor.atBlockStart() && blockFmt.indent() > 0) {
-                blockFmt.setIndent(blockFmt.indent() - 1);
-                cursor.setBlockFormat(blockFmt);
-            } else {
-                cursor.deletePreviousChar();
-            }
-            setTextCursor(cursor);
-            e->accept();
-            return;
-        }
-    }
-#endif
-    e->ignore();
 }
 
 /*!
@@ -1483,10 +1364,6 @@ void QTextEditPrivate::updateDefaultTextOption()
 void QTextEdit::mousePressEvent(QMouseEvent *e)
 {
     Q_D(QTextEdit);
-#ifdef QT_KEYPAD_NAVIGATION
-    if (QApplication::keypadNavigationEnabled() && !hasEditFocus())
-        setEditFocus(true);
-#endif
     d->sendControlEvent(e);
 }
 

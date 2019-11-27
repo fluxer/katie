@@ -377,10 +377,6 @@ void QSlider::mousePressEvent(QMouseEvent *ev)
         ev->ignore();
         return;
     }
-#ifdef QT_KEYPAD_NAVIGATION
-    if (QApplication::keypadNavigationEnabled())
-        setEditFocus(true);
-#endif
     ev->accept();
     if ((ev->button() & style()->styleHint(QStyle::SH_Slider_AbsoluteSetButtons)) == ev->button()) {
         QStyleOptionSlider opt;

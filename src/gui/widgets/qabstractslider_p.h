@@ -63,9 +63,6 @@ public:
 
     int minimum, maximum, pageStep, value, position, pressValue;
 
-    /**
-     * Call effectiveSingleStep() when changing the slider value.
-     */
     int singleStep;
 
     float offset_accumulated;
@@ -79,35 +76,6 @@ public:
     QBasicTimer repeatActionTimer;
     int repeatActionTime;
     QAbstractSlider::SliderAction repeatAction;
-
-#ifdef QT_KEYPAD_NAVIGATION
-    int origValue;
-
-    /**
-     */
-    bool isAutoRepeating;
-
-    /**
-     * When we're auto repeating, we multiply singleStep with this value to
-     * get our effective step.
-     */
-    qreal repeatMultiplier;
-
-    /**
-     * The time of when the first auto repeating key press event occurs.
-     */
-    QElapsedTimer firstRepeat;
-
-#endif
-
-    inline int effectiveSingleStep() const
-    {
-        return singleStep
-#ifdef QT_KEYPAD_NAVIGATION
-        * repeatMultiplier
-#endif
-        ;
-    }
 
     virtual int bound(int val) const { return qMax(minimum, qMin(maximum, val)); }
     inline int overflowSafeAdd(int add) const

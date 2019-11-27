@@ -253,7 +253,6 @@ protected:
     virtual bool event(QEvent *e);
     virtual void timerEvent(QTimerEvent *e);
     virtual void keyPressEvent(QKeyEvent *e);
-    virtual void keyReleaseEvent(QKeyEvent *e);
     virtual void resizeEvent(QResizeEvent *e);
     virtual void paintEvent(QPaintEvent *e);
     virtual void mousePressEvent(QMouseEvent *e);

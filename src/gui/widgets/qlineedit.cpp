@@ -104,10 +104,6 @@ void QLineEdit::initStyleOption(QStyleOptionFrame *option) const
     option->state |= QStyle::State_Sunken;
     if (d->control->isReadOnly())
         option->state |= QStyle::State_ReadOnly;
-#ifdef QT_KEYPAD_NAVIGATION
-    if (hasEditFocus())
-        option->state |= QStyle::State_HasEditFocus;
-#endif
     option->features = QStyleOptionFrame::None;
 }
 
@@ -1333,20 +1329,6 @@ bool QLineEdit::event(QEvent * e)
         }
     }
 
-#ifdef QT_KEYPAD_NAVIGATION
-    if (QApplication::keypadNavigationEnabled()) {
-        if (e->type() == QEvent::EnterEditFocus) {
-            end(false);
-            d->setCursorVisible(true);
-            d->control->setCursorBlinkPeriod(QApplication::cursorFlashTime());
-        } else if (e->type() == QEvent::LeaveEditFocus) {
-            d->setCursorVisible(false);
-            d->control->setCursorBlinkPeriod(0);
-            if (d->control->hasAcceptableInput() || d->control->fixup())
-                emit editingFinished();
-        }
-    }
-#endif
     return QWidget::event(e);
 }
 
@@ -1357,14 +1339,6 @@ void QLineEdit::mousePressEvent(QMouseEvent* e)
     Q_D(QLineEdit);
     if (e->button() == Qt::RightButton)
         return;
-#ifdef QT_KEYPAD_NAVIGATION
-    if (QApplication::keypadNavigationEnabled() && !hasEditFocus()) {
-        setEditFocus(true);
-        // Get the completion list to pop up.
-        if (d->control->completer())
-            d->control->completer()->complete();
-    }
-#endif
     if (d->tripleClickTimer.isActive() && (e->pos() - d->tripleClick).manhattanLength() <
          QApplication::startDragDistance()) {
         selectAll();
@@ -1479,48 +1453,6 @@ void QLineEdit::mouseDoubleClickEvent(QMouseEvent* e)
 void QLineEdit::keyPressEvent(QKeyEvent *event)
 {
     Q_D(QLineEdit);
-    #ifdef QT_KEYPAD_NAVIGATION
-    bool select = false;
-    switch (event->key()) {
-        case Qt::Key_Select:
-            if (QApplication::keypadNavigationEnabled()) {
-                if (hasEditFocus()) {
-                    setEditFocus(false);
-                    if (d->control->completer() && d->control->completer()->popup()->isVisible())
-                        d->control->completer()->popup()->hide();
-                    select = true;
-                }
-            }
-            break;
-        case Qt::Key_Back:
-        case Qt::Key_No:
-            if (!QApplication::keypadNavigationEnabled() || !hasEditFocus()) {
-                event->ignore();
-                return;
-            }
-            break;
-        default:
-            if (QApplication::keypadNavigationEnabled()) {
-                if (!hasEditFocus() && !(event->modifiers() & Qt::ControlModifier)) {
-                    if (!event->text().isEmpty() && event->text().at(0).isPrint()
-                        && !isReadOnly())
-                        setEditFocus(true);
-                    else {
-                        event->ignore();
-                        return;
-                    }
-                }
-            }
-    }
-
-
-
-    if (QApplication::keypadNavigationEnabled() && !select && !hasEditFocus()) {
-        setEditFocus(true);
-        if (event->key() == Qt::Key_Select)
-            return; // Just start. No action.
-    }
-#endif
     d->control->processKeyEvent(event);
     if (event->isAccepted()) {
         if (layoutDirection() != d->control->layoutDirection())
@@ -1556,20 +1488,12 @@ void QLineEdit::focusInEvent(QFocusEvent *e)
     } else if (e->reason() == Qt::MouseFocusReason) {
         d->clickCausedFocus = 1;
     }
-#ifdef QT_KEYPAD_NAVIGATION
-    if (!QApplication::keypadNavigationEnabled() || (hasEditFocus() && ( e->reason() == Qt::PopupFocusReason
-            ))) {
-#endif
     d->control->setCursorBlinkPeriod(QApplication::cursorFlashTime());
     QStyleOptionFrameV2 opt;
     initStyleOption(&opt);
     if((!hasSelectedText() && d->control->preeditAreaText().isEmpty())
        || style()->styleHint(QStyle::SH_BlinkCursorWhenTextSelected, &opt, this))
         d->setCursorVisible(true);
-#ifdef QT_KEYPAD_NAVIGATION
-        d->control->setCancelText(d->control->text());
-    }
-#endif
 #ifndef QT_NO_COMPLETER
     if (d->control->completer()) {
         d->control->completer()->setWidget(this);
@@ -1601,18 +1525,11 @@ void QLineEdit::focusOutEvent(QFocusEvent *e)
 
     d->setCursorVisible(false);
     d->control->setCursorBlinkPeriod(0);
-#ifdef QT_KEYPAD_NAVIGATION
-    // editingFinished() is already emitted on LeaveEditFocus
-    if (!QApplication::keypadNavigationEnabled())
-#endif
     if (reason != Qt::PopupFocusReason
         || !(QApplication::activePopupWidget() && QApplication::activePopupWidget()->parentWidget() == this)) {
             if (hasAcceptableInput() || d->control->fixup())
                 emit editingFinished();
     }
-#ifdef QT_KEYPAD_NAVIGATION
-    d->control->setCancelText(QString());
-#endif
 #ifndef QT_NO_COMPLETER
     if (d->control->completer()) {
         QObject::disconnect(d->control->completer(), 0, this, 0);
@@ -1726,9 +1643,6 @@ void QLineEdit::paintEvent(QPaintEvent *)
 
     int flags = QLineControl::DrawText;
 
-#ifdef QT_KEYPAD_NAVIGATION
-    if (!QApplication::keypadNavigationEnabled() || hasEditFocus())
-#endif
     if (d->control->hasSelectedText() || (d->cursorVisible && !d->control->inputMask().isEmpty() && !d->control->isReadOnly())){
         flags |= QLineControl::DrawSelections;
         // Palette only used for selections/mask and may not be in sync

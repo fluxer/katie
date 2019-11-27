@@ -440,9 +440,6 @@ void QAbstractButtonPrivate::moveFocus(int key)
     }
 
     if (exclusive
-#ifdef QT_KEYPAD_NAVIGATION
-        && !QApplication::keypadNavigationEnabled()
-#endif
         && candidate
         && fb->d_func()->checked
         && candidate->d_func()->checkable)
@@ -1165,15 +1162,6 @@ void QAbstractButton::keyPressEvent(QKeyEvent *e)
         // fall through
     case Qt::Key_Right:
     case Qt::Key_Down:
-#ifdef QT_KEYPAD_NAVIGATION
-        if ((QApplication::keypadNavigationEnabled()
-                && (e->key() == Qt::Key_Left || e->key() == Qt::Key_Right))
-                || (!QApplication::navigationMode() == Qt::NavigationModeKeypadDirectional
-                || (e->key() == Qt::Key_Up || e->key() == Qt::Key_Down))) {
-            e->ignore();
-            return;
-        }
-#endif
         QWidget *pw;
         if (d->autoExclusive
 #ifndef QT_NO_BUTTONGROUP
@@ -1254,9 +1242,6 @@ void QAbstractButton::timerEvent(QTimerEvent *e)
 void QAbstractButton::focusInEvent(QFocusEvent *e)
 {
     Q_D(QAbstractButton);
-#ifdef QT_KEYPAD_NAVIGATION
-    if (!QApplication::keypadNavigationEnabled())
-#endif
     d->fixFocusPolicy();
     QWidget::focusInEvent(e);
 }

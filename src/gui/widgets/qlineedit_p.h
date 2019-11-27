@@ -110,9 +110,6 @@ public:
     void _q_handleWindowActivate();
     void _q_textEdited(const QString &);
     void _q_cursorPositionChanged(int, int);
-#ifdef QT_KEYPAD_NAVIGATION
-    void _q_editFocusChange(bool);
-#endif
     void _q_selectionChanged();
     void _q_updateNeeded(const QRect &);
 #ifndef QT_NO_COMPLETER

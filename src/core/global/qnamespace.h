@@ -1329,15 +1329,6 @@ public:
     Q_DECLARE_FLAGS(GestureFlags, GestureFlag)
 #endif // QT_NO_GESTURES
 
-    enum NavigationMode
-    {
-        NavigationModeNone,
-        NavigationModeKeypadTabOrder,
-        NavigationModeKeypadDirectional,
-        NavigationModeCursorAuto,
-        NavigationModeCursorForceVisible
-    };
-
     enum CursorMoveStyle {
         LogicalMoveStyle,
         VisualMoveStyle

@@ -314,9 +314,6 @@ public:
     void _q_emitCurrentIndexChanged(const QModelIndex &index);
     void _q_modelDestroyed();
     void _q_modelReset();
-#ifdef QT_KEYPAD_NAVIGATION
-    void _q_completerActivated();
-#endif
     void _q_resetButton();
     void _q_dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
     void _q_updateIndexBeforeChange();

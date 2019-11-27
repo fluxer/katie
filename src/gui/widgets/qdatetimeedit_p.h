@@ -129,9 +129,6 @@ public:
     QStyle::StateFlag arrowState;
     QCalendarPopup *monthCalendar;
 
-#ifdef QT_KEYPAD_NAVIGATION
-    bool focusOnButton;
-#endif
 };
 
 

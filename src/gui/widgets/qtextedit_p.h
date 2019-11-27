@@ -115,9 +115,6 @@ public:
 
     QString anchorToScrollToWhenVisible;
 
-#ifdef QT_KEYPAD_NAVIGATION
-    QBasicTimer deleteAllTimer;
-#endif
 };
 #endif // QT_NO_TEXTEDIT
 

@@ -125,8 +125,6 @@ Q_SIGNALS:
     void actionTriggered(int action);
 
 protected:
-    bool event(QEvent *e);
-
     void setRepeatAction(SliderAction action, int thresholdTime = 500, int repeatTime = 50);
     SliderAction repeatAction() const;
 

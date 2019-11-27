@@ -236,17 +236,10 @@ int main(int argc, char *argv[]) \
 
 #include <QtTest/qtest_gui.h>
 
-#ifdef QT_KEYPAD_NAVIGATION
-#  define QTEST_DISABLE_KEYPAD_NAVIGATION QApplication::setNavigationMode(Qt::NavigationModeNone);
-#else
-#  define QTEST_DISABLE_KEYPAD_NAVIGATION
-#endif
-
 #define QTEST_MAIN(TestObject) \
 int main(int argc, char *argv[]) \
 { \
     QApplication app(argc, argv); \
-    QTEST_DISABLE_KEYPAD_NAVIGATION \
     TestObject tc; \
     return QTest::qExec(&tc, argc, argv); \
 }

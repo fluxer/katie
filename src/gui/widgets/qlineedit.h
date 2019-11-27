@@ -216,9 +216,6 @@ public:
 private:
     friend class QAbstractSpinBox;
     friend class QAccessibleLineEdit;
-#ifdef QT_KEYPAD_NAVIGATION
-    friend class QDateTimeEdit;
-#endif
     Q_DISABLE_COPY(QLineEdit)
     Q_DECLARE_PRIVATE(QLineEdit)
     Q_PRIVATE_SLOT(d_func(), void _q_handleWindowActivate())
@@ -226,9 +223,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_cursorPositionChanged(int, int))
 #ifndef QT_NO_COMPLETER
     Q_PRIVATE_SLOT(d_func(), void _q_completionHighlighted(const QString&))
-#endif
-#ifdef QT_KEYPAD_NAVIGATION
-    Q_PRIVATE_SLOT(d_func(), void _q_editFocusChange(bool))
 #endif
     Q_PRIVATE_SLOT(d_func(), void _q_selectionChanged())
     Q_PRIVATE_SLOT(d_func(), void _q_updateNeeded(const QRect &))

@@ -160,9 +160,6 @@ public:
     bool pageUpDownLastCursorYIsValid;
 
 
-#ifdef QT_KEYPAD_NAVIGATION
-    QBasicTimer deleteAllTimer;
-#endif
 
     void _q_cursorPositionChanged();
     void _q_modificationChanged(bool);

@@ -211,9 +211,6 @@ public:
 
     static QString styleOverride;
 
-#ifdef QT_KEYPAD_NAVIGATION
-    static Qt::NavigationMode navigationMode;
-#endif
 
 #if defined(Q_WS_X11)
     void _q_alertTimeOut();

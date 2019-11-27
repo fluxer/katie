@@ -1747,22 +1747,6 @@ void QMenu::popup(const QPoint &p, QAction *atAction)
         }
     }
 
-#ifdef QT_KEYPAD_NAVIGATION
-    if (!atAction && QApplication::keypadNavigationEnabled()) {
-        // Try to have one item activated
-        if (d->defaultAction && d->defaultAction->isEnabled()) {
-            atAction = d->defaultAction;
-            // TODO: This works for first level menus, not yet sub menus
-        } else {
-            foreach (QAction *action, d->actions)
-                if (action->isEnabled()) {
-                    atAction = action;
-                    break;
-                }
-        }
-        d->currentAction = atAction;
-    }
-#endif
     if (d->ncols > 1) {
         pos.setY(screen.top() + desktopFrame);
     } else if (atAction) {
@@ -2534,9 +2518,6 @@ void QMenu::keyPressEvent(QKeyEvent *e)
         break;
 
     case Qt::Key_Escape:
-#ifdef QT_KEYPAD_NAVIGATION
-    case Qt::Key_Back:
-#endif
         key_consumed = true;
         if (d->tornoff) {
             close();
@@ -2558,9 +2539,6 @@ void QMenu::keyPressEvent(QKeyEvent *e)
         if (!style()->styleHint(QStyle::SH_Menu_SpaceActivatesItem, 0, this))
             break;
         // for motif, fall through
-#ifdef QT_KEYPAD_NAVIGATION
-    case Qt::Key_Select:
-#endif
     case Qt::Key_Return:
     case Qt::Key_Enter: {
         if (!d->currentAction) {

@@ -200,12 +200,6 @@ public:
     static void setQuitOnLastWindowClosed(bool quit);
     static bool quitOnLastWindowClosed();
 
-#ifdef QT_KEYPAD_NAVIGATION
-    static Q_DECL_DEPRECATED void setKeypadNavigationEnabled(bool);
-    static bool keypadNavigationEnabled();
-    static void setNavigationMode(Qt::NavigationMode mode);
-    static Qt::NavigationMode navigationMode();
-#endif
 
 Q_SIGNALS:
     void lastWindowClosed();
