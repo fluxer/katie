@@ -53,7 +53,7 @@
 QT_BEGIN_NAMESPACE
 
 template <typename T>
-inline const T *v_cast(const QVariant::Private *d, T * = Q_NULLPTR)
+inline const T *v_cast(const QVariant::Private *d)
 {
     return ((sizeof(T) > sizeof(QVariant::Private::Data))
             ? static_cast<const T *>(d->data.shared->ptr)
@@ -61,7 +61,7 @@ inline const T *v_cast(const QVariant::Private *d, T * = Q_NULLPTR)
 }
 
 template <typename T>
-inline T *v_cast(QVariant::Private *d, T * = Q_NULLPTR)
+inline T *v_cast(QVariant::Private *d)
 {
     return ((sizeof(T) > sizeof(QVariant::Private::Data))
             ? static_cast<T *>(d->data.shared->ptr)
@@ -81,7 +81,7 @@ private:
 
 // constructs a new variant if copy is 0, otherwise copy-constructs
 template <class T>
-inline void v_construct(QVariant::Private *x, const void *copy, T * = Q_NULLPTR)
+inline void v_construct(QVariant::Private *x, const void *copy)
 {
     if (sizeof(T) > sizeof(QVariant::Private::Data)) {
         x->data.shared = copy ? new QVariantPrivateSharedEx<T>(*static_cast<const T *>(copy))
@@ -108,7 +108,7 @@ inline void v_construct(QVariant::Private *x, const T &t)
 
 // deletes the internal structures
 template <class T>
-inline void v_clear(QVariant::Private *d, T* = Q_NULLPTR)
+inline void v_clear(QVariant::Private *d)
 {
     if (sizeof(T) > sizeof(QVariant::Private::Data)) {
         //now we need to cast
