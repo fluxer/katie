@@ -10,7 +10,7 @@
 QT_BEGIN_NAMESPACE
 
 // enough space to hold BOM, each char as surrogate pair and terminator
-#define QMAXUSTRLEN(X) 1 + (X * 2) + 2
+#define QMAXUSTRLEN(X) 4 + (X * 2) + 2
 
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && _POSIX_VERSION >= 200112L
 // There are two incompatible versions of strerror_r:
