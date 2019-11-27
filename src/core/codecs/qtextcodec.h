@@ -99,8 +99,10 @@ public:
         ConversionFlags flags;
         int remainingChars;
         int invalidChars;
-        void *d;
     private:
+        friend class QIcuCodec;
+        void *d;
+
         Q_DISABLE_COPY(ConverterState)
     };
 
