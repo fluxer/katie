@@ -631,7 +631,6 @@ QTextCodec* QTextCodec::codecForMib(int mib)
             return codec;
     }
 
-    QList<QTextCodec*>::ConstIterator i;
     for (int i = 0; i < all->size(); ++i) {
         QTextCodec *cursor = all->at(i);
         if (cursor->mibEnum() == mib) {
