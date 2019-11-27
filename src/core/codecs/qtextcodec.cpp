@@ -433,7 +433,6 @@ QTextCodec::ConverterState::~ConverterState()
     \o windows-1258
 
     \o System Any of the above depending on the system locale
-    \o Latin1 Obsolete
     \endlist
 
     QTextCodecs can be used as follows to convert some locally encoded
@@ -575,8 +574,6 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
 
     if (name == "System")
         return QTextCodec::codecForLocale();
-    else if (name == "Latin1")
-        return QTextCodec::codecForName("US-ASCII");
 
 #ifndef QT_NO_THREAD
     QMutexLocker locker(textCodecsMutex());
@@ -668,7 +665,7 @@ QList<QByteArray> QTextCodec::availableCodecs()
     setup();
 
     QList<QByteArray> codecs;
-    codecs << "System" << "Latin1";
+    codecs << "System";
     for (int i = 0; i < all->size(); ++i) {
         codecs += all->at(i)->name();
         codecs += all->at(i)->aliases();
