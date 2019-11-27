@@ -50,7 +50,6 @@ static const struct MIBTblData {
     { 3, "ANSI_X3.4-1986\0" },
     { 3, "ISO_646.irv:1991\0" },
     { 3, "ISO646-US\0" },
-    { 3, "US-ASCII\0" },
     { 3, "us\0" },
     { 3, "IBM367\0" },
     { 3, "cp367\0" },

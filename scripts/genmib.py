@@ -7,8 +7,14 @@ from collections import OrderedDict
 
 mibmap = OrderedDict()
 
+def fixalias(alias):
+    # if alias contains space remove everything after it, spaces are not
+    # allowed in encoding names, example of such case is Amiga-1251 alias
+    alias = alias.replace('\n', ' ')
+    return alias.split(' ')[0]
+
 tree = ET.parse('character-sets.xml')
-registry = tree.findall('{http://www.iana.org/assignments}registry')[0]
+registry = tree.find('{http://www.iana.org/assignments}registry')
 for record in registry.getchildren():
     recordnames = []
     recordvalue = None
@@ -19,12 +25,16 @@ for record in registry.getchildren():
         elif recordchild.tag == '{http://www.iana.org/assignments}value':
             recordvalue = recordchild.text
         elif recordchild.tag == '{http://www.iana.org/assignments}alias':
-            recordnames.append(recordchild.text)
+            alias = recordchild.text
+            if alias in recordnames:
+                # alias to self, e.g. US-ASCII
+                continue
+            recordnames.append(fixalias(alias))
 
     mibmap[recordvalue] = recordnames
 
 print('''static const struct MIBTblData {
-    const int mib;
+    const qint16 mib;
     const char* name;
 } MIBTbl[] = {''')
 
