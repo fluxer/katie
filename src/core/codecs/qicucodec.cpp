@@ -1067,7 +1067,7 @@ QString QIcuCodec::convertToUnicode(const char *src, int length, QTextCodec::Con
     const int convresult = ucnv_toUChars(conv, reinterpret_cast<UChar *>(string.data()),
         string.length(), src, length, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QIcuCodec::convertToUnicode: ucnv_fromUChars(%s) failed %s", m_name, u_errorName(error));
+        qWarning("QIcuCodec::convertToUnicode: ucnv_toUChars(%s) failed %s", m_name, u_errorName(error));
         if (state) {
             error = U_ZERO_ERROR;
             char errorbytes[10];
