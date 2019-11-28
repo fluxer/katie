@@ -958,16 +958,16 @@ QStringList qt_make_filter_list(const QString &filter)
     if (filter.isEmpty())
         return QStringList();
 
-    QString sep(QLatin1String(";;"));
-    int i = filter.indexOf(sep, 0);
-    if (i == -1) {
-        if (filter.indexOf(QLatin1Char('\n'), 0) != -1) {
-            sep = QLatin1Char('\n');
-            i = filter.indexOf(sep, 0);
-        }
+    QLatin1String sep(";;");
+    QLatin1Char sep2('\n');
+
+    if (filter.contains(sep)) {
+        return filter.split(sep);
+    } else if (filter.contains(sep2)) {
+        return filter.split(sep2);
     }
 
-    return filter.split(sep);
+    return QStringList() << filter;
 }
 
 /*!
