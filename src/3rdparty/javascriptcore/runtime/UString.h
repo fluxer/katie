@@ -273,7 +273,8 @@ namespace JSC {
 
         void writeTo(UChar* destination)
         {
-            memcpy(destination, reinterpret_cast<const UChar*>(m_buffer), m_length * sizeof(UChar));
+            for (unsigned i = 0; i < m_length; ++i)
+                destination[i] = m_buffer[i];
         }
 
     private:
@@ -294,7 +295,8 @@ namespace JSC {
 
         void writeTo(UChar* destination)
         {
-            memcpy(destination, reinterpret_cast<const UChar*>(m_buffer), m_length * sizeof(UChar));
+            for (unsigned i = 0; i < m_length; ++i)
+                destination[i] = m_buffer[i];
         }
 
     private:
@@ -315,7 +317,8 @@ namespace JSC {
 
         void writeTo(UChar* destination)
         {
-            memcpy(destination, m_data, m_length * sizeof(UChar));
+            for (unsigned i = 0; i < m_length; ++i)
+                destination[i] = m_data[i];
         }
 
     private:

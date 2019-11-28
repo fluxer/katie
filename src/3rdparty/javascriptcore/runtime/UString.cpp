@@ -376,8 +376,8 @@ UString& UString::operator=(const char* c)
     UChar* d = 0;
     m_rep = Rep::tryCreateUninitialized(l, d);
     if (m_rep) {
-         // use unsigned char to zero-extend instead of sign-extend
-        memcpy(d, reinterpret_cast<const unsigned char*>(c), l * sizeof(unsigned char));
+        for (int i = 0; i < l; i++)
+            d[i] = static_cast<unsigned char>(c[i]); // use unsigned char to zero-extend instead of sign-extend
     } else
         makeNull();
 
