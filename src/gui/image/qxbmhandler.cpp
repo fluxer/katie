@@ -186,15 +186,14 @@ static bool write_xbm_image(const QImage &sourceImage, QIODevice *device, const 
     int	       w = image.width();
     int	       h = image.height();
     int	       i;
-    QString    s = fileName; // get file base name
-    int        msize = s.length() + 100;
+    int        msize = fileName.length() + 100;
     char *buf = new char[msize];
 
-    qsnprintf(buf, msize, "#define %s_width %d\n", s.toAscii().data(), w);
+    qsnprintf(buf, msize, "#define %s_width %d\n", fileName.toAscii().data(), w);
     device->write(buf, qstrlen(buf));
-    qsnprintf(buf, msize, "#define %s_height %d\n", s.toAscii().data(), h);
+    qsnprintf(buf, msize, "#define %s_height %d\n", fileName.toAscii().data(), h);
     device->write(buf, qstrlen(buf));
-    qsnprintf(buf, msize, "static char %s_bits[] = {\n ", s.toAscii().data());
+    qsnprintf(buf, msize, "static char %s_bits[] = {\n ", fileName.toAscii().data());
     device->write(buf, qstrlen(buf));
 
     if (image.format() != QImage::Format_MonoLSB)

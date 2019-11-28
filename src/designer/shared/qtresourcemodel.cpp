@@ -217,8 +217,7 @@ void QtResourceModelPrivate::registerResourceSet(QtResourceSet *resourceSet)
         return;
 
     // unregister old paths (all because the order of registration is important), later it can be optimized a bit
-    QStringList toRegister = resourceSet->activeQrcPaths();
-    QStringListIterator itRegister(toRegister);
+    QStringListIterator itRegister(resourceSet->activeQrcPaths());
     while (itRegister.hasNext()) {
         const QString path = itRegister.next();
         if (debugResourceModel)
@@ -230,8 +229,7 @@ void QtResourceModelPrivate::registerResourceSet(QtResourceSet *resourceSet)
                 if (!QResource::registerResource(reinterpret_cast<const uchar *>(data->constData()))) {
                     qWarning() << "** WARNING: Failed to register " << path << " (QResource failure).";
                 } else {
-                    QStringList contents = m_pathToContents.value(path);
-                    QStringListIterator itContents(contents);
+                    QStringListIterator itContents(m_pathToContents.value(path));
                     while (itContents.hasNext()) {
                         const QString filePath = itContents.next();
                         if (!m_fileToQrc.contains(filePath)) // the first loaded resource has higher priority in qt resource system
@@ -249,8 +247,7 @@ void QtResourceModelPrivate::unregisterResourceSet(QtResourceSet *resourceSet)
         return;
 
     // unregister old paths (all because the order of registration is importans), later it can be optimized a bit
-    QStringList toUnregister = resourceSet->activeQrcPaths();
-    QStringListIterator itUnregister(toUnregister);
+    QStringListIterator itUnregister(resourceSet->activeQrcPaths());
     while (itUnregister.hasNext()) {
         const QString path = itUnregister.next();
         if (debugResourceModel)
@@ -308,10 +305,9 @@ void QtResourceModelPrivate::activate(QtResourceSet *resourceSet, const QStringL
             m_pathToModified.insert(path, false);
             m_pathToContents.insert(path, contents);
             newResourceSetChanged = true;
-            const QMap<QString, QList<QtResourceSet *> >::iterator itReload = m_pathToResourceSet.find(path);
-            if (itReload != m_pathToResourceSet.end()) {
-                QList<QtResourceSet *> resources = itReload.value();
-                QListIterator<QtResourceSet *> itRes(resources);
+            const QMap<QString, QList<QtResourceSet *> >::const_iterator itReload = m_pathToResourceSet.constFind(path);
+            if (itReload != m_pathToResourceSet.constEnd()) {
+                QListIterator<QtResourceSet *> itRes(itReload.value());
                 while (itRes.hasNext()) {
                     QtResourceSet *res = itRes.next();
                     if (res != resourceSet) {
@@ -323,11 +319,9 @@ void QtResourceModelPrivate::activate(QtResourceSet *resourceSet, const QStringL
         }
     }
 
-    QList<const QByteArray *> oldData = m_pathToData.values();
     QList<const QByteArray *> newData = newPathToData.values();
-
     QList<const QByteArray *> toDelete;
-    QListIterator<const QByteArray *> itOld(oldData);
+    QListIterator<const QByteArray *> itOld(m_pathToData.values());
     if (itOld.hasNext()) {
         const QByteArray *array = itOld.next();
         if (array && !newData.contains(array))
@@ -360,8 +354,7 @@ void QtResourceModelPrivate::activate(QtResourceSet *resourceSet, const QStringL
 
     const bool needReregister = (oldActivePaths != newPaths) || newResourceSetChanged;
 
-    QMap<QtResourceSet *, bool>::iterator itNew = m_newlyCreated.find(resourceSet);
-    if (itNew != m_newlyCreated.end()) {
+    if (m_newlyCreated.contains(resourceSet)) {
         m_newlyCreated.remove(resourceSet);
         if (needReregister)
             newResourceSetChanged = true;
@@ -518,8 +511,7 @@ void QtResourceModel::setModified(const QString &path)
     if (it == d_ptr->m_pathToResourceSet.constEnd())
         return;
 
-    QList<QtResourceSet *> resourceList = it.value();
-    QListIterator<QtResourceSet *> itReload(resourceList);
+    QListIterator<QtResourceSet *> itReload(it.value());
     while (itReload.hasNext())
         d_ptr->m_resourceSetToReload.insert(itReload.next(), true);
 }

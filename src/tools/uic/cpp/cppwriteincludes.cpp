@@ -972,9 +972,7 @@ void WriteIncludes::writeHeaders(const OrderedSet &headers, bool global)
     const QChar closingQuote = global ? QLatin1Char('>') : QLatin1Char('"');
 
     // Check for the old headers 'qslider.h' and replace by 'QtGui/QSlider'
-    const OrderedSet::const_iterator cend = headers.constEnd();
-    for (OrderedSet::const_iterator sit = headers.constBegin(); sit != cend; ++sit) {
-        const  QString header =  sit.key();
+    foreach (const QString &header, headers.keys()) {
         if (!header.trimmed().isEmpty()) {
             m_output << "#include " << openingQuote << header << closingQuote << QLatin1Char('\n');
         }

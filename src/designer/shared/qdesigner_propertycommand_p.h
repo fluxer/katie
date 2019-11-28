@@ -165,7 +165,7 @@ protected:
     bool initList(const ObjectList &list, const QString &apropertyName, QObject *referenceObject = 0);
 
     // set a new value, return update mask
-    unsigned setValue(QVariant value, bool changed, unsigned subPropertyMask);
+    unsigned setValue(const QVariant &value, bool changed, unsigned subPropertyMask);
 
     // restore old value,  return update mask
     unsigned  restoreOldValue();

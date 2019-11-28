@@ -954,8 +954,7 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
             }
             else if (state & State_Sunken) {
                 painter->drawImage(rect, QImage(qt_cleanlooks_radiobutton));
-                QColor bgc = buttonShadow;
-                painter->setBrush(bgc);
+                painter->setBrush(buttonShadow);
                 painter->setPen(Qt::NoPen);
                 painter->drawEllipse(rect.adjusted(1, 1, -1, -1));                }
             else {

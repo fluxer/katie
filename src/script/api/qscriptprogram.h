@@ -39,7 +39,7 @@ class Q_SCRIPT_EXPORT QScriptProgram
 public:
     QScriptProgram();
     QScriptProgram(const QString &sourceCode,
-                   const QString fileName = QString(),
+                   const QString &fileName = QString(),
                    int firstLineNumber = 1);
     QScriptProgram(const QScriptProgram &other);
     ~QScriptProgram();

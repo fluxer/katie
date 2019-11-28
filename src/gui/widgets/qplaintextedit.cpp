@@ -288,15 +288,14 @@ void QPlainTextDocumentLayout::documentChanged(int from, int /*charsRemoved*/, i
     QTextBlock changeEndBlock = doc->findBlock(qMax(0, from + charsAdded - 1));
 
     if (changeStartBlock == changeEndBlock && newBlockCount == d->blockCount) {
-        QTextBlock block = changeStartBlock;
-        int blockLineCount = block.layout()->lineCount();
-        if (block.isValid() && blockLineCount) {
-            QRectF oldBr = blockBoundingRect(block);
-            layoutBlock(block);
-            QRectF newBr = blockBoundingRect(block);
+        int blockLineCount = changeStartBlock.layout()->lineCount();
+        if (changeStartBlock.isValid() && blockLineCount) {
+            QRectF oldBr = blockBoundingRect(changeStartBlock);
+            layoutBlock(changeStartBlock);
+            QRectF newBr = blockBoundingRect(changeStartBlock);
             if (newBr.height() == oldBr.height()) {
                 if (!d->blockUpdate)
-                    emit updateBlock(block);
+                    emit updateBlock(changeStartBlock);
                 return;
             }
         }

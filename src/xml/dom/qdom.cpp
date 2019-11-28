@@ -4986,7 +4986,7 @@ bool QDomElement::hasAttribute(const QString& name) const
 
     \sa setAttributeNS() attributeNodeNS() setAttributeNodeNS() attribute()
 */
-QString QDomElement::attributeNS(const QString nsURI, const QString& localName, const QString& defValue) const
+QString QDomElement::attributeNS(const QString& nsURI, const QString& localName, const QString& defValue) const
 {
     if (!impl)
         return defValue;
@@ -5005,7 +5005,7 @@ QString QDomElement::attributeNS(const QString nsURI, const QString& localName, 
 
     \sa attributeNS() setAttributeNodeNS() setAttribute()
 */
-void QDomElement::setAttributeNS(const QString nsURI, const QString& qName, const QString& value)
+void QDomElement::setAttributeNS(const QString& nsURI, const QString& qName, const QString& value)
 {
     if (!impl)
         return;
@@ -5027,7 +5027,7 @@ void QDomElement::setAttributeNS(const QString nsURI, const QString& qName, cons
 /*!
     \overload
 */
-void QDomElement::setAttributeNS(const QString nsURI, const QString& qName, qlonglong value)
+void QDomElement::setAttributeNS(const QString& nsURI, const QString& qName, qlonglong value)
 {
     if (!impl)
         return;
@@ -5039,7 +5039,7 @@ void QDomElement::setAttributeNS(const QString nsURI, const QString& qName, qlon
 /*!
     \overload
 */
-void QDomElement::setAttributeNS(const QString nsURI, const QString& qName, qulonglong value)
+void QDomElement::setAttributeNS(const QString& nsURI, const QString& qName, qulonglong value)
 {
     if (!impl)
         return;
@@ -5051,7 +5051,7 @@ void QDomElement::setAttributeNS(const QString nsURI, const QString& qName, qulo
 /*!
     \overload
 */
-void QDomElement::setAttributeNS(const QString nsURI, const QString& qName, double value)
+void QDomElement::setAttributeNS(const QString& nsURI, const QString& qName, double value)
 {
     if (!impl)
         return;

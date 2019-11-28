@@ -230,7 +230,7 @@ void tryReal(QDeclarativeNullableValue<qreal> &value, const QString &string)
         value.invalidate();
 }
 
-void QDeclarativeParentChange::setX(QDeclarativeScriptString x)
+void QDeclarativeParentChange::setX(const QDeclarativeScriptString &x)
 {
     Q_D(QDeclarativeParentChange);
     d->xString = x;
@@ -249,7 +249,7 @@ QDeclarativeScriptString QDeclarativeParentChange::y() const
     return d->yString.value;
 }
 
-void QDeclarativeParentChange::setY(QDeclarativeScriptString y)
+void QDeclarativeParentChange::setY(const QDeclarativeScriptString &y)
 {
     Q_D(QDeclarativeParentChange);
     d->yString = y;
@@ -268,7 +268,7 @@ QDeclarativeScriptString QDeclarativeParentChange::width() const
     return d->widthString.value;
 }
 
-void QDeclarativeParentChange::setWidth(QDeclarativeScriptString width)
+void QDeclarativeParentChange::setWidth(const QDeclarativeScriptString &width)
 {
     Q_D(QDeclarativeParentChange);
     d->widthString = width;
@@ -287,7 +287,7 @@ QDeclarativeScriptString QDeclarativeParentChange::height() const
     return d->heightString.value;
 }
 
-void QDeclarativeParentChange::setHeight(QDeclarativeScriptString height)
+void QDeclarativeParentChange::setHeight(const QDeclarativeScriptString &height)
 {
     Q_D(QDeclarativeParentChange);
     d->heightString = height;
@@ -306,7 +306,7 @@ QDeclarativeScriptString QDeclarativeParentChange::scale() const
     return d->scaleString.value;
 }
 
-void QDeclarativeParentChange::setScale(QDeclarativeScriptString scale)
+void QDeclarativeParentChange::setScale(const QDeclarativeScriptString &scale)
 {
     Q_D(QDeclarativeParentChange);
     d->scaleString = scale;
@@ -325,7 +325,7 @@ QDeclarativeScriptString QDeclarativeParentChange::rotation() const
     return d->rotationString.value;
 }
 
-void QDeclarativeParentChange::setRotation(QDeclarativeScriptString rotation)
+void QDeclarativeParentChange::setRotation(const QDeclarativeScriptString &rotation)
 {
     Q_D(QDeclarativeParentChange);
     d->rotationString = rotation;

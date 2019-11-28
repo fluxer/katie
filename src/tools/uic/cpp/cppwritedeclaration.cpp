@@ -162,10 +162,7 @@ void WriteDeclaration::acceptUI(DomUI *node)
            << "{\n"
            << "public:\n";
 
-    const QStringList connections = m_uic->databaseInfo()->connections();
-    for (int i=0; i<connections.size(); ++i) {
-        const QString connection = connections.at(i);
-
+    foreach (const QString &connection, m_uic->databaseInfo()->connections()) {
         if (connection == QLatin1String("(default)"))
             continue;
 

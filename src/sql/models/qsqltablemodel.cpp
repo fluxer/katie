@@ -154,7 +154,7 @@ void QSqlTableModelPrivate::clearGenerated(QSqlRecord &rec)
         rec.setGenerated(i, false);
 }
 
-void QSqlTableModelPrivate::setGeneratedValue(QSqlRecord &rec, int c, QVariant v)
+void QSqlTableModelPrivate::setGeneratedValue(QSqlRecord &rec, int c, const QVariant &v)
 {
     rec.setValue(c, v);
     rec.setGenerated(c, true);

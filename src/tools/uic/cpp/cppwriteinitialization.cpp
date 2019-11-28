@@ -515,9 +515,7 @@ void WriteInitialization::acceptUI(DomUI *node)
     if (m_activateScripts)
         writeSetupUIScriptVariableDeclarations(m_indent, m_output);
 
-    const QStringList connections = m_uic->databaseInfo()->connections();
-    for (int i=0; i<connections.size(); ++i) {
-        QString connection = connections.at(i);
+    foreach (const QString &connection, m_uic->databaseInfo()->connections()) {
 
         if (connection == QLatin1String("(default)"))
             continue;
@@ -828,9 +826,7 @@ void WriteInitialization::acceptWidget(DomWidget *node)
     if (node->elementLayout().isEmpty())
         m_layoutChain.pop();
 
-    const QStringList zOrder = node->elementZOrder();
-    for (int i = 0; i < zOrder.size(); ++i) {
-        const QString name = zOrder.at(i);
+    foreach (const QString &name, node->elementZOrder()) {
 
         if (!m_registeredWidgets.contains(name)) {
             fprintf(stderr, "%s: Warning: Z-order assignment: '%s' is not a valid widget.\n",

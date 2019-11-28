@@ -265,8 +265,7 @@ void TextEditor::buttonClicked()
     }
         break;
     case ValidationURL: {
-        QString oldPath = oldText;
-        if (oldPath.isEmpty() || oldPath.startsWith(QLatin1String("qrc:")))
+        if (oldText.isEmpty() || oldText.startsWith(QLatin1String("qrc:")))
             resourceActionActivated();
         else
             fileActionActivated();
@@ -2802,10 +2801,7 @@ void ResetDecorator::slotPropertyChanged(QtProperty *property)
     if (prIt == m_createdResetWidgets.constEnd())
         return;
 
-    const QList<ResetWidget *> editors = prIt.value();
-    const QList<ResetWidget *>::ConstIterator cend = editors.constEnd();
-    for (QList<ResetWidget *>::ConstIterator itEditor = editors.constBegin(); itEditor != cend; ++itEditor) {
-        ResetWidget *widget = *itEditor;
+    foreach (ResetWidget *widget, prIt.value()) {
         widget->setResetEnabled(property->isModified());
         widget->setValueText(property->valueText());
         widget->setValueIcon(property->valueIcon());

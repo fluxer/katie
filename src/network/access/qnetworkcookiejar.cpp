@@ -145,7 +145,7 @@ static inline bool isParentPath(QString path, QString reference)
     return path.startsWith(reference);
 }
 
-static inline bool isParentDomain(QString domain, QString reference)
+static inline bool isParentDomain(const QString &domain, const QString &reference)
 {
     if (!reference.startsWith(QLatin1Char('.')))
         return domain == reference;

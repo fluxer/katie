@@ -71,27 +71,27 @@ public:
     QDeclarativeItem *originalParent() const;
 
     QDeclarativeScriptString x() const;
-    void setX(QDeclarativeScriptString x);
+    void setX(const QDeclarativeScriptString &x);
     bool xIsSet() const;
 
     QDeclarativeScriptString y() const;
-    void setY(QDeclarativeScriptString y);
+    void setY(const QDeclarativeScriptString &y);
     bool yIsSet() const;
 
     QDeclarativeScriptString width() const;
-    void setWidth(QDeclarativeScriptString width);
+    void setWidth(const QDeclarativeScriptString &width);
     bool widthIsSet() const;
 
     QDeclarativeScriptString height() const;
-    void setHeight(QDeclarativeScriptString height);
+    void setHeight(const QDeclarativeScriptString &height);
     bool heightIsSet() const;
 
     QDeclarativeScriptString scale() const;
-    void setScale(QDeclarativeScriptString scale);
+    void setScale(const QDeclarativeScriptString &scale);
     bool scaleIsSet() const;
 
     QDeclarativeScriptString rotation() const;
-    void setRotation(QDeclarativeScriptString rotation);
+    void setRotation(const QDeclarativeScriptString &rotation);
     bool rotationIsSet() const;
 
     virtual ActionList actions();

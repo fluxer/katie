@@ -761,7 +761,7 @@ void QNetworkAccessHttpBackend::checkForRedirect(const int statusCode)
 }
 
 void QNetworkAccessHttpBackend::replyDownloadMetaData
-        (QList<QPair<QByteArray,QByteArray> > hm,
+        (const QList<QPair<QByteArray,QByteArray> > &hm,
          int sc,QString rp,bool pu,
          QSharedPointer<char> db,
          qint64 contentLength)
@@ -780,9 +780,8 @@ void QNetworkAccessHttpBackend::replyDownloadMetaData
     setAttribute(QNetworkRequest::HttpPipeliningWasUsedAttribute, pu);
 
     // reconstruct the HTTP header
-    QList<QPair<QByteArray, QByteArray> > headerMap = hm;
-    QList<QPair<QByteArray, QByteArray> >::ConstIterator it = headerMap.constBegin(),
-                                                        end = headerMap.constEnd();
+    QList<QPair<QByteArray, QByteArray> >::ConstIterator it = hm.constBegin(),
+                                                        end = hm.constEnd();
     QByteArray header;
 
     for (; it != end; ++it) {

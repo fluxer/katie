@@ -116,7 +116,7 @@ QScriptProgram::QScriptProgram()
   fileName and \a firstLineNumber.
 */
 QScriptProgram::QScriptProgram(const QString &sourceCode,
-                               const QString fileName,
+                               const QString &fileName,
                                int firstLineNumber)
     : d_ptr(new QScriptProgramPrivate(sourceCode, fileName, firstLineNumber))
 {

@@ -64,7 +64,7 @@ PreviewFrame::PreviewFrame(QWidget *parent)
     previewWidget->setAutoFillBackground(true);
 }
 
-void PreviewFrame::setPreviewPalette(QPalette pal)
+void PreviewFrame::setPreviewPalette(const QPalette &pal)
 {
     previewWidget->setPalette(pal);
 }

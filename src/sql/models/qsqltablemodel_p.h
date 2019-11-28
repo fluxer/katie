@@ -65,7 +65,7 @@ public:
     virtual void clearEditBuffer();
     virtual void clearCache();
     static void clearGenerated(QSqlRecord &rec);
-    static void setGeneratedValue(QSqlRecord &rec, int c, QVariant v);
+    static void setGeneratedValue(QSqlRecord &rec, int c, const QVariant &v);
     QSqlRecord record(const QVector<QVariant> &values) const;
 
     bool exec(const QString &stmt, bool prepStatement,

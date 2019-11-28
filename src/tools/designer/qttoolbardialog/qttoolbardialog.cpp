@@ -1271,8 +1271,7 @@ void QtToolBarDialogPrivate::removeToolBar(ToolBarItem *item)
     QMap<ToolBarItem *, QSet<QAction *> >::ConstIterator itToolBar =
             toolBarToWidgetActions.constFind(item);
     if (itToolBar != toolBarToWidgetActions.constEnd()) {
-        QSet<QAction *> actions = itToolBar.value();
-        QSetIterator<QAction *> itAction(actions);
+        QSetIterator<QAction *> itAction(itToolBar.value());
         while (itAction.hasNext()) {
             QAction *action = itAction.next();
             widgetActionToToolBar.insert(action, 0);
