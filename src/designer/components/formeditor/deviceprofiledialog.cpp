@@ -64,15 +64,11 @@ static inline QString fileFilter()
 }
 
 // Populate a combo with a sequence of integers, also set them as data.
-template <class IntIterator>
-    static void populateNumericCombo(IntIterator i1, IntIterator i2, QComboBox *cb)
+static inline void populateNumericCombo(const QList<int> &numbers, QComboBox *cb)
 {
-    QString s;
     cb->setEditable(false);
-    for ( ; i1 != i2 ; ++i1) {
-        const int n = *i1;
-        s.setNum(n);
-        cb->addItem(s, QVariant(n));
+    foreach (const int num, numbers) {
+        cb->addItem(QString::number(num), QVariant(num));
     }
 }
 
@@ -86,8 +82,7 @@ DeviceProfileDialog::DeviceProfileDialog(QDesignerDialogGuiInterface *dlgGui, QW
     setModal(true);
     m_ui->setupUi(this);
 
-    const QList<int> standardFontSizes = QFontDatabase::standardSizes();
-    populateNumericCombo(standardFontSizes.constBegin(), standardFontSizes.constEnd(), m_ui->m_systemFontSizeCombo);
+    populateNumericCombo(QFontDatabase::standardSizes(), m_ui->m_systemFontSizeCombo);
 
     // Styles
     const QStringList styles = QStyleFactory::keys();
