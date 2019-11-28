@@ -938,6 +938,7 @@ QStringList QFileDialog::selectedFiles() const
 
     QModelIndexList indexes = d->qFileDialogUi->listView->selectionModel()->selectedRows();
     QStringList files;
+    files.reserve(indexes.count());
     for (int i = 0; i < indexes.count(); ++i)
         files.append(indexes.at(i).data(QFileSystemModel::FilePathRole).toString());
 
