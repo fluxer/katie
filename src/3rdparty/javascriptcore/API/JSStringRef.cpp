@@ -30,6 +30,8 @@
 #include "OpaqueJSString.h"
 #include <wtf/unicode/UTF8.h>
 
+#include <QTextCodec>
+
 using namespace JSC;
 using namespace WTF::Unicode;
 
@@ -43,11 +45,12 @@ JSStringRef JSStringCreateWithUTF8CString(const char* string)
 {
     initializeThreading();
     if (string) {
-        size_t length = strlen(string);
-        Vector<UChar, 1024> buffer(length);
-        UChar* p = buffer.data();
-        if (conversionOK == convertUTF8ToUTF16(&string, string + length, &p, p + length))
-            return OpaqueJSString::create(buffer.data(), p - buffer.data()).releaseRef();
+        QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+        QTextDecoder decoder(codec, QTextCodec::DefaultConversion);
+        QString result = decoder.toUnicode(string, strlen(string));
+        if (!decoder.hasFailure()) {
+            return OpaqueJSString::create(reinterpret_cast<const UChar*>(result.unicode()), result.size()).releaseRef();
+        }
     }
 
     // Null string.
@@ -86,14 +89,15 @@ size_t JSStringGetUTF8CString(JSStringRef string, char* buffer, size_t bufferSiz
     if (!bufferSize)
         return 0;
 
-    char* p = buffer;
-    const UChar* d = string->characters();
-    ConversionResult result = convertUTF16ToUTF8(&d, d + string->length(), &p, p + bufferSize - 1, true);
-    *p++ = '\0';
-    if (result != conversionOK && result != targetExhausted)
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    QTextEncoder encoder(codec, QTextCodec::DefaultConversion);
+    QByteArray result = encoder.fromUnicode(reinterpret_cast<const QChar*>(string->characters()), string->length());
+    if (encoder.hasFailure()) {
+        buffer = Q_NULLPTR;
         return 0;
-
-    return p - buffer;
+    }
+    buffer = result.data();
+    return result.size();
 }
 
 bool JSStringIsEqual(JSStringRef a, JSStringRef b)

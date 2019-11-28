@@ -47,6 +47,8 @@
 #include <strings.h>
 #endif
 
+#include <QTextCodec>
+
 using namespace WTF;
 using namespace WTF::Unicode;
 using namespace std;
@@ -130,13 +132,14 @@ UString UString::createFromUTF8(const char* string)
     if (!string)
         return null();
 
-    size_t length = strlen(string);
-    Vector<UChar, 1024> buffer(length);
-    UChar* p = buffer.data();
-    if (conversionOK != convertUTF8ToUTF16(&string, string + length, &p, p + length))
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    QTextDecoder decoder(codec, QTextCodec::DefaultConversion);
+    QString result = decoder.toUnicode(string, strlen(string));
+    if (decoder.hasFailure()) {
         return null();
+    }
 
-    return UString(buffer.data(), p - buffer.data());
+    return UString(reinterpret_cast<const UChar*>(result.unicode()), result.size());
 }
 
 UString UString::from(int i)
@@ -780,18 +783,13 @@ bool equal(const UString::Rep* r, const UString::Rep* b)
 
 const char* UString::UTF8String(bool strict) const
 {
-    // Allocate a buffer big enough to hold all the characters.
-    const int length = size();
-    Vector<char, 1024> buffer(length * 3);
-
-    // Convert to runs of 8-bit characters.
-    char* p = buffer.data();
-    const UChar* d = &data()[0];
-    ConversionResult result = convertUTF16ToUTF8(&d, d + length, &p, p + buffer.size(), strict);
-    if (result != conversionOK)
-        return 0;
-
-    return buffer.data();
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    QTextEncoder encoder(codec, QTextCodec::DefaultConversion);
+    QByteArray result = encoder.fromUnicode(reinterpret_cast<const QChar*>(data()), size());
+    if (encoder.hasFailure()) {
+        return Q_NULLPTR;
+    }
+    return result.constData();
 }
 
 // For use in error handling code paths -- having this not be inlined helps avoid PIC branches to fetch the global on Mac OS X.
