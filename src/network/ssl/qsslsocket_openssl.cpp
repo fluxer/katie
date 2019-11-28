@@ -251,14 +251,14 @@ init_context:
         ctx = 0; // SSL 3 not supported by the system, but chosen deliberately -> error
 #endif
         break;
+    case QSsl::TlsV1:
+        ctx = SSL_CTX_new(client ? TLSv1_client_method() : TLSv1_server_method());
+        break;
     case QSsl::SecureProtocols: // SslV2 will be disabled below
     case QSsl::TlsV1SslV3: // SslV2 will be disabled below
     case QSsl::AnyProtocol:
     default:
         ctx = SSL_CTX_new(client ? SSLv23_client_method() : SSLv23_server_method());
-        break;
-    case QSsl::TlsV1:
-        ctx = SSL_CTX_new(client ? TLSv1_client_method() : TLSv1_server_method());
         break;
     }
     if (!ctx) {
