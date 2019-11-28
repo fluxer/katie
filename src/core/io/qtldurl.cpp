@@ -8832,11 +8832,10 @@ static const char* TLDTbl[8787] = {
 };
 static const qint16 TLDTblSize = 8787;
 
-static bool containsTLDEntry(const QString &entry)
+static inline bool containsTLDEntry(const QString &entry)
 {
     for (qint16 i = 0; i < TLDTblSize; i++) {
-        QString currentEntry = QString::fromUtf8(TLDTbl[i]);
-        if (currentEntry == entry)
+        if (entry == QString::fromUtf8(TLDTbl[i]))
             return true;
     }
     return false;
