@@ -45,8 +45,6 @@
 #include <QtScript/QScriptEngine>
 #include <QtScriptTools/QScriptEngineDebugger>
 
-#include "bytearrayclass.h"
-
 #include <stdlib.h>
 
 QT_USE_NAMESPACE
@@ -153,9 +151,6 @@ int main(int argc, char *argv[])
         qscript.setProperty(QLatin1String("importExtension"), eng->newFunction(importExtension));
         globalObject.property(QLatin1String("qt")).setProperty(QLatin1String("script"), qscript);
     }
-
-    ByteArrayClass *byteArrayClass = new ByteArrayClass(eng);
-    globalObject.setProperty(QLatin1String("ByteArray"), byteArrayClass->constructor());
 
     if (! *++argv) {
         interactive(eng);

@@ -14,20 +14,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtScriptTools
 )
 
-set(QSCRIPT_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/bytearrayclass.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bytearrayprototype.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qscript.cpp
-)
-
-set(QSCRIPT_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/bytearrayclass.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bytearrayprototype.h
-)
-
-katie_setup_target(qscript ${QSCRIPT_SOURCES} ${QSCRIPT_HEADERS})
-
-add_executable(qscript ${qscript_SOURCES})
+add_executable(qscript ${CMAKE_CURRENT_SOURCE_DIR}/qscript.cpp)
 target_link_libraries(qscript ${EXTRA_QTSCRIPT_LIBS})
 
 set_target_properties(qscript PROPERTIES
