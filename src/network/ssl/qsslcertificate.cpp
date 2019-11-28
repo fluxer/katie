@@ -435,7 +435,11 @@ QMultiMap<QSsl::AlternateNameEntryType, QString> QSslCertificate::alternateSubje
                 continue;
             }
 
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
             const char *altNameStr = reinterpret_cast<const char *>(ASN1_STRING_data(genName->d.ia5));
+#else
+            const char *altNameStr = reinterpret_cast<const char *>(ASN1_STRING_get0_data(genName->d.ia5));
+#endif
             const QString altName = QString::fromLatin1(altNameStr, len);
             if (genName->type == GEN_DNS)
                 result.insert(QSsl::DnsEntry, altName);
