@@ -361,9 +361,7 @@ const QPixmap *QLabel::pixmap() const
 
 void QLabel::setNum(int num)
 {
-    QString str;
-    str.setNum(num);
-    setText(str);
+    setText(QString::number(num));
 }
 
 /*!
@@ -381,9 +379,7 @@ void QLabel::setNum(int num)
 
 void QLabel::setNum(double num)
 {
-    QString str;
-    str.setNum(num);
-    setText(str);
+    setText(QString::number(num));
 }
 
 /*!

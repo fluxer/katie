@@ -665,12 +665,11 @@ void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
         trans.map(ti.width.toReal()/size, (ti.ascent.toReal()-ti.descent.toReal())/size, &x2, &y2);
 
         uint annot = addXrefEntry(-1);
-        QByteArray x1s, y1s, x2s, y2s;
-        x1s.setNum(static_cast<double>(x1), 'f');
-        y1s.setNum(static_cast<double>(y1), 'f');
-        x2s.setNum(static_cast<double>(x2), 'f');
-        y2s.setNum(static_cast<double>(y2), 'f');
-        QByteArray rectData = x1s + ' ' + y1s + ' ' + x2s + ' ' + y2s;
+
+        QByteArray rectData = QByteArray::number(static_cast<double>(x1), 'f') + ' '
+            + QByteArray::number(static_cast<double>(y1), 'f') + ' '
+            + QByteArray::number(static_cast<double>(x2), 'f') + ' '
+            + QByteArray::number(static_cast<double>(y2), 'f');
         xprintf("<<\n/Type /Annot\n/Subtype /Link\n/Rect [");
         xprintf(rectData.constData());
 #ifdef Q_DEBUG_PDF_LINKS

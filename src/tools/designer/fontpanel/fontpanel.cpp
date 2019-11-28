@@ -223,9 +223,9 @@ void FontPanel::updatePointSizes(const QString &family, const QString &styleStri
 
     //  try to maintain selection or select closest.
     if (hasSizes) {
-        QString n;
-        foreach (int pointSize, pointSizes)
-            m_pointSizeComboBox->addItem(n.setNum(pointSize), QVariant(pointSize));
+        foreach (int pointSize, pointSizes) {
+            m_pointSizeComboBox->addItem(QString::number(pointSize), QVariant(pointSize));
+        }
         const int closestIndex = closestPointSizeIndex(oldPointSize);
         if (closestIndex != -1)
             m_pointSizeComboBox->setCurrentIndex(closestIndex);

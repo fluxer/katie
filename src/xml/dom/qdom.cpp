@@ -4839,9 +4839,7 @@ void QDomElement::setAttribute(const QString& name, qlonglong value)
 {
     if (!impl)
         return;
-    QString x;
-    x.setNum(value);
-    IMPL->setAttribute(name, x);
+    IMPL->setAttribute(name, QString::number(value));
 }
 
 /*!
@@ -4853,9 +4851,7 @@ void QDomElement::setAttribute(const QString& name, qulonglong value)
 {
     if (!impl)
         return;
-    QString x;
-    x.setNum(value);
-    IMPL->setAttribute(name, x);
+    IMPL->setAttribute(name, QString::number(value));
 }
 
 /*!
@@ -4867,9 +4863,7 @@ void QDomElement::setAttribute(const QString& name, float value)
 {
     if (!impl)
         return;
-    QString x;
-    x.setNum(value);
-    IMPL->setAttribute(name, x);
+    IMPL->setAttribute(name, QString::number(value));
 }
 
 /*!
@@ -5031,9 +5025,7 @@ void QDomElement::setAttributeNS(const QString& nsURI, const QString& qName, qlo
 {
     if (!impl)
         return;
-    QString x;
-    x.setNum(value);
-    IMPL->setAttributeNS(nsURI, qName, x);
+    IMPL->setAttributeNS(nsURI, qName, QString::number(value));
 }
 
 /*!
@@ -5043,9 +5035,7 @@ void QDomElement::setAttributeNS(const QString& nsURI, const QString& qName, qul
 {
     if (!impl)
         return;
-    QString x;
-    x.setNum(value);
-    IMPL->setAttributeNS(nsURI, qName, x);
+    IMPL->setAttributeNS(nsURI, qName, QString::number(value));
 }
 
 /*!
@@ -5055,9 +5045,7 @@ void QDomElement::setAttributeNS(const QString& nsURI, const QString& qName, dou
 {
     if (!impl)
         return;
-    QString x;
-    x.setNum(value);
-    IMPL->setAttributeNS(nsURI, qName, x);
+    IMPL->setAttributeNS(nsURI, qName, QString::number(value));
 }
 
 /*!
