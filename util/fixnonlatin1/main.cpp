@@ -40,6 +40,8 @@
 ****************************************************************************/
 #include <QtCore/QtCore>
 
+QT_USE_NAMESPACE
+
 // Scans files for characters >127 and replaces them with the \nnn octal representation
 
 int main(int argc, char *argv[])

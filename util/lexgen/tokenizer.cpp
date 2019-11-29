@@ -38,6 +38,9 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+
+QT_BEGIN_NAMESPACE
+
 // auto generated. DO NOT EDIT.
 class RegExpTokenizer
 {
@@ -234,4 +237,6 @@ int RegExpTokenizer::lex()
     }
     return token;
 }
+
+QT_END_NAMESPACE
 

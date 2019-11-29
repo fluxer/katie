@@ -54,6 +54,7 @@
 #define QLALR_NO_DEBUG_LOOKAHEADS
 
 QT_BEGIN_NAMESPACE
+
 QTextStream qerr (stderr, QIODevice::WriteOnly);
 QTextStream qout (stdout, QIODevice::WriteOnly);
 
@@ -71,7 +72,6 @@ bool operator < (StatePointer a, StatePointer b)
 {
   return &*a < &*b;
 }
-QT_END_NAMESPACE
 
 bool Read::operator < (const Read &other) const
 {
@@ -782,3 +782,5 @@ void Automaton::dump (QTextStream &out, const Lookback &lp)
 {
   out << "(" << id (lp.state) << ", " << lp.nt << ")";
 }
+
+QT_END_NAMESPACE

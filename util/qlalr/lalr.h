@@ -44,6 +44,8 @@
 #include <QtCore/QTextStream>
 #include <QtCore/QPair>
 
+QT_BEGIN_NAMESPACE
+
 class Rule;
 class State;
 class Grammar;
@@ -474,21 +476,19 @@ private:
   int _M_includes_dfn;
 };
 
-QT_BEGIN_NAMESPACE
 bool operator < (Name a, Name b);
 bool operator < (StatePointer a, StatePointer b);
 bool operator < (ItemPointer a, ItemPointer b);
-QT_END_NAMESPACE
 
 QTextStream &operator << (QTextStream &out, const Name &n);
 QTextStream &operator << (QTextStream &out, const Rule &r);
 QTextStream &operator << (QTextStream &out, const Item &item);
 QTextStream &operator << (QTextStream &out, const NameSet &ns);
 
-QT_BEGIN_NAMESPACE
 // ... hmm
 extern QTextStream qerr;
 extern QTextStream qout;
+
 QT_END_NAMESPACE
 
 #endif // LALR_H

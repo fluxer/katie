@@ -48,6 +48,8 @@
 #include <iostream>
 #include "compress.h"
 
+QT_BEGIN_NAMESPACE
+
 #define QLALR_NO_CHECK_SORTED_TABLE
 
 struct _Fit: public std::binary_function<int, int, bool>
@@ -284,3 +286,5 @@ void Compress::operator () (int *table, int row_count, int column_count)
     }
 #endif
 }
+
+QT_END_NAMESPACE

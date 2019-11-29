@@ -40,7 +40,10 @@
 ****************************************************************************/
 #include "nfa.h"
 #include <QSet>
+
 #include <limits.h>
+
+QT_BEGIN_NAMESPACE
 
 NFA NFA::createSingleInputNFA(InputType input)
 {
@@ -245,7 +248,6 @@ void NFA::debug()
 }
 
 // helper
-QT_BEGIN_NAMESPACE
 typedef QSet<int> DFAState;
 
 // that's a bad hash, but it's good enough for us
@@ -257,7 +259,6 @@ inline uint qHash(const DFAState &state)
         val |= qHash(s);
     return val;
 }
-QT_END_NAMESPACE
 
 DFA NFA::toDFA() const
 {
@@ -507,4 +508,4 @@ DFA DFA::minimize() const
     return *this;
 }
 
-
+QT_END_NAMESPACE

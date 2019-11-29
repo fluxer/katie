@@ -40,6 +40,8 @@
 
 #include "configfile.h"
 
+QT_BEGIN_NAMESPACE
+
 #if 1
 typedef int InputType;
 
@@ -101,5 +103,7 @@ struct Config
     QString ruleFile;
     ConfigFile::SectionMap configSections;
 };
+
+QT_END_NAMESPACE
 
 #endif // GLOBAL_H

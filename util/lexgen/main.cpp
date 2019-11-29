@@ -49,6 +49,8 @@
 #include <QFileInfo>
 #include <QDateTime>
 
+QT_USE_NAMESPACE
+
 struct Symbol
 {
     QString token;

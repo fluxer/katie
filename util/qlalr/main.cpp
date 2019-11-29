@@ -55,6 +55,8 @@
 #define QLALR_NO_DEBUG_TABLE
 #define QLALR_NO_DEBUG_DOT
 
+QT_USE_NAMESPACE
+
 static void help_me ()
 {
   qerr << "Usage: qlalr [options] [input file name]" << endl

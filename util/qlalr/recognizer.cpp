@@ -44,6 +44,8 @@
 #include <cstring>
 #include <cctype>
 
+QT_BEGIN_NAMESPACE
+
 Recognizer::Recognizer (Grammar *grammar, bool no_lines):
   tos(0),
   stack_size(0),
@@ -486,3 +488,4 @@ case 43: {
   return false;
 }
 
+QT_END_NAMESPACE

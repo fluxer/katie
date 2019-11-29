@@ -38,6 +38,8 @@
 
 #include "nfa.h"
 
+QT_BEGIN_NAMESPACE
+
 class LineStream
 {
 private:
@@ -209,5 +211,7 @@ public:
 private:
     QVector<TransitionSequence> charFunctionRanges;
 };
+
+QT_END_NAMESPACE
 
 #endif

@@ -43,6 +43,8 @@
 
 #include <QFile>
 
+QT_BEGIN_NAMESPACE
+
 void Function::printDeclaration(CodeBlock &block, const QString &funcNamePrefix) const
 {
     block << (iline ? "inline " : "") << signature(funcNamePrefix) << (iline ? QLatin1String(" {") : QLatin1String(";"));
@@ -530,3 +532,4 @@ QString Generator::generate()
     return header + klass.declaration() + klass.definition();
 }
 
+QT_END_NAMESPACE

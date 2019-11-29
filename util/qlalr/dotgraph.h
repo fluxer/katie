@@ -36,6 +36,8 @@
 
 #include <QTextStream>
 
+QT_BEGIN_NAMESPACE
+
 class Automaton;
 
 class DotGraph
@@ -48,5 +50,7 @@ public:
 private:
   QTextStream &out;
 };
+
+QT_END_NAMESPACE
 
 #endif // DOTGRAPH_H

@@ -36,6 +36,8 @@
 
 #include <QtCore/QVector>
 
+QT_BEGIN_NAMESPACE
+
 class Compress
 {
 public:
@@ -48,5 +50,7 @@ public:
   QVector<int> info;
   QVector<int> check;
 };
+
+QT_END_NAMESPACE
 
 #endif // COMPRESS_H

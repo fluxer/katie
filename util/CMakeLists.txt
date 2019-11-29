@@ -1,6 +1,3 @@
-# FIXME: most utils are not namespaces aware
-add_definitions(-DQT_NAMESPACE_COMPAT)
-
 add_subdirectory(fixnonlatin1)
 add_subdirectory(lexgen)
 add_subdirectory(normalize)

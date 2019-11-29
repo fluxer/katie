@@ -44,6 +44,8 @@
 
 #include <cstdlib>
 
+QT_BEGIN_NAMESPACE
+
 class Recognizer: protected grammar
 {
 public:
@@ -104,5 +106,7 @@ protected:
   QString _M_current_value;
   bool _M_no_lines;
 };
+
+QT_END_NAMESPACE
 
 #endif // RECOGNIZER_H

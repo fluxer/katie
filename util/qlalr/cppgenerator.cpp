@@ -46,6 +46,8 @@
 #include "lalr.h"
 #include "recognizer.h"
 
+QT_BEGIN_NAMESPACE
+
 QString CppGenerator::copyrightHeader() const
 {
   return QLatin1String(
@@ -736,3 +738,5 @@ void CppGenerator::generateImpl (QTextStream &out)
     }
   out << "};" << endl << endl;
 }
+
+QT_END_NAMESPACE

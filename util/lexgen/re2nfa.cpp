@@ -42,6 +42,8 @@
 #include "re2nfa.h"
 #include "tokenizer.cpp"
 
+QT_BEGIN_NAMESPACE
+
 RE2NFA::RE2NFA(const QMap<QString, NFA> &macros, const QSet<InputType> &maxInputSet, Qt::CaseSensitivity cs)
     : macros(macros), index(0), errorColumn(-1), maxInputSet(maxInputSet), caseSensitivity(cs)
 {
@@ -545,3 +547,4 @@ QString RE2NFA::lexemUntil(Token t)
     return lexem;
 }
 
+QT_END_NAMESPACE

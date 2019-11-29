@@ -45,6 +45,8 @@
 #include "lalr.h"
 #include "dotgraph.h"
 
+QT_BEGIN_NAMESPACE
+
 DotGraph::DotGraph(QTextStream &o):
   out (o)
 {
@@ -100,3 +102,5 @@ void DotGraph::operator () (Automaton *aut)
   out << "}" << endl;
   out << endl << endl << "}" << endl;
 }
+
+QT_END_NAMESPACE

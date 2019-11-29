@@ -34,6 +34,10 @@
 #ifndef GRAMMAR_P_H
 #define GRAMMAR_P_H
 
+#include <qglobal.h>
+
+QT_BEGIN_NAMESPACE
+
 class grammar
 {
 public:
@@ -106,6 +110,7 @@ public:
   }
 };
 
+QT_END_NAMESPACE
 
 #endif // GRAMMAR_P_H
 

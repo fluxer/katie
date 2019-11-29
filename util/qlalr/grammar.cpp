@@ -41,6 +41,8 @@
 
 #include "grammar_p.h"
 
+QT_BEGIN_NAMESPACE
+
 const char *const grammar::spell [] = {
   "end of file", "identifier", "string literal", "%decl", "%expect", "%expect-lr", "%impl", "%left", "%merged_output", "%nonassoc", 
   "%parser", "%prec", "%right", "%start", "%token", "%token_prefix", ":", "|", ";", 0, 
@@ -121,3 +123,4 @@ const int grammar::action_check [] = {
   -1, -1, -1, 8, -1, -1, -1, -1, -1, -1, 
   -1, -1, -1, -1, -1, -1, -1, -1, -1};
 
+QT_END_NAMESPACE

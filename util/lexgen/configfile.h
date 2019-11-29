@@ -37,6 +37,8 @@
 #include <QMap>
 #include <QVector>
 
+QT_BEGIN_NAMESPACE
+
 struct ConfigFile
 {
     struct Entry
@@ -68,6 +70,8 @@ struct ConfigFile
     static SectionMap parse(const QString &fileName);
     static SectionMap parse(QIODevice *dev);
 };
+
+QT_END_NAMESPACE
 
 #endif // CONFIGFILE_H
 

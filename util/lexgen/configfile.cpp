@@ -42,6 +42,8 @@
 
 #include <QFile>
 
+QT_BEGIN_NAMESPACE
+
 ConfigFile::SectionMap ConfigFile::parse(const QString &fileName)
 {
     QFile f(fileName);
@@ -97,3 +99,5 @@ ConfigFile::SectionMap ConfigFile::parse(QIODevice *dev)
     }
     return sections;
 }
+
+QT_END_NAMESPACE

@@ -37,6 +37,8 @@
 #include "nfa.h"
 #include <QSet>
 
+QT_BEGIN_NAMESPACE
+
 class RE2NFA
 {
 public:
@@ -103,6 +105,8 @@ private:
     const QSet<InputType> maxInputSet;
     Qt::CaseSensitivity caseSensitivity;
 };
+
+QT_END_NAMESPACE
 
 #endif // RE2NFA_H
 

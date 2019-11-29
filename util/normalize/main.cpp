@@ -44,11 +44,12 @@
 #include <qmetaobject.h>
 #include <qstring.h>
 #include <qtextstream.h>
-
 #include <qdebug.h>
 
 #include <limits.h>
 #include <stdio.h>
+
+QT_USE_NAMESPACE
 
 static bool printFilename = true;
 static bool modify = false;

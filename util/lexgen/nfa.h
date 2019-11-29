@@ -44,6 +44,8 @@
 
 #include "global.h"
 
+QT_BEGIN_NAMESPACE
+
 typedef QHash<InputType, int> TransitionMap;
 
 struct State
@@ -114,6 +116,8 @@ public:
 
     QVector<State> states;
 };
+
+QT_END_NAMESPACE
 
 #endif // NFA_H
 

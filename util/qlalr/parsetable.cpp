@@ -44,6 +44,8 @@
 #include "lalr.h"
 #include "parsetable.h"
 
+QT_BEGIN_NAMESPACE
+
 ParseTable::ParseTable (QTextStream &o):
   out (o)
 {
@@ -125,3 +127,5 @@ void ParseTable::operator () (Automaton *aut)
       out << endl;
     }
 }
+
+QT_END_NAMESPACE

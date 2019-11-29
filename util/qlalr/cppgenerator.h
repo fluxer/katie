@@ -37,6 +37,8 @@
 #include "lalr.h"
 #include "compress.h"
 
+QT_BEGIN_NAMESPACE
+
 class Grammar;
 class Automaton;
 class Recognizer;
@@ -86,5 +88,7 @@ private:
   QVector<int> count;
   QVector<int> defgoto;
 };
+
+QT_END_NAMESPACE
 
 #endif // CPPGENERATOR_H

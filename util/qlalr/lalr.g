@@ -125,6 +125,8 @@
 
 #include <cstdlib>
 
+QT_BEGIN_NAMESPACE
+
 class Recognizer: protected $table
 {
 public:
@@ -185,6 +187,8 @@ protected:
   QString _M_current_value;
   bool _M_no_lines;
 };
+
+QT_END_NAMESPACE
 :/
 
 /.
@@ -233,6 +237,8 @@ protected:
 #include <cstdlib>
 #include <cstring>
 #include <cctype>
+
+QT_BEGIN_NAMESPACE
 
 Recognizer::Recognizer (Grammar *grammar, bool no_lines):
   tos(0),
@@ -795,5 +801,7 @@ case $rule_number: {
   qerr << _M_input_file << ":" << _M_line << ": Syntax error" << endl;
   return false;
 }
+
+QT_END_NAMESPACE
 
 ./
