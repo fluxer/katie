@@ -102,10 +102,8 @@ if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
         ${EXTRA_GUI_LIBS}
         ${HARFBUZZ_LIBRARIES}
     )
-    include_directories(${HARFBUZZ_INCLUDE_DIRS})
+    include_directories(${HARFBUZZ_INCLUDES})
 else()
-    # TODO: move to main CMakeLists?
-    add_definitions(-DHB_EXPORT=Q_CORE_EXPORT -DQT_NO_OPENTYPE)
     set(GUI_SOURCES
         ${GUI_SOURCES}
         ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-buffer.c
