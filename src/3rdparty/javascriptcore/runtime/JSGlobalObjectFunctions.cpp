@@ -53,7 +53,7 @@ namespace JSC {
 static JSValue encode(ExecState* exec, const ArgList& args, const char* doNotEscape)
 {
     UString str = args.at(0).toString(exec);
-    const char* cstr = str.UTF8String(true);
+    const char* cstr = str.UTF8String();
     if (!cstr)
         return throwError(exec, URIError, "String contained an illegal UTF-16 sequence.");
 

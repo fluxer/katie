@@ -781,7 +781,7 @@ bool equal(const UString::Rep* r, const UString::Rep* b)
     return true;
 }
 
-const char* UString::UTF8String(bool strict) const
+const char* UString::UTF8String() const
 {
     QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     QTextEncoder encoder(codec, QTextCodec::DefaultConversion);

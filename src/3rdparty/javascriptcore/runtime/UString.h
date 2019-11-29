@@ -124,7 +124,7 @@ namespace JSC {
          * guaranteed to be otherwise valid.
          * In strict mode, error is returned as null CString.
          */
-        const char* UTF8String(bool strict = false) const;
+        const char* UTF8String() const;
 
         UString& operator=(const char*c);
 
