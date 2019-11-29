@@ -1369,14 +1369,14 @@ DomLayoutItem *QDesignerResource::createDom(QLayoutItem *item, DomLayout *ui_lay
 
         ui_item = new DomLayoutItem();
         ui_item->setElementSpacer(spacer);
-        m_laidout.insert(item->widget(), true);
+        m_laidout.insert(item->widget());
     } else if (QLayoutWidget *layoutWidget = qobject_cast<QLayoutWidget*>(item->widget())) {
         // Do not save a QLayoutWidget if it is within a layout (else it is saved as "QWidget"
         Q_ASSERT(layoutWidget->layout());
         DomLayout *l = createDom(layoutWidget->layout(), ui_layout, ui_parentWidget);
         ui_item = new DomLayoutItem();
         ui_item->setElementLayout(l);
-        m_laidout.insert(item->widget(), true);
+        m_laidout.insert(item->widget());
     } else if (!item->spacerItem()) { // we use spacer as fake item in the Designer
         ui_item = QAbstractFormBuilder::createDom(item, ui_layout, ui_parentWidget);
     } else {
