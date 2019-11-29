@@ -108,6 +108,11 @@ if(NOT KATIE_FOUND)
         set(QT_LIBRARIES ${KATIE_LIBRARIES})
         set(QT_USE_FILE "${KATIE_CMAKE_DIR}/Qt4UseFile.cmake")
         set(QT_MKSPECS_DIR "${KATIE_MKSPECS_DIR}")
+        set(QT_LIBRARY_DIR ${KATIE_LIBRARIES_PATH})
+        set(QT_BINARY_DIR ${KATIE_BINARIES_PATH})
+        set(QT_PLUGINS_DIR ${KATIE_PLUGINS_PATH})
+        set(QT_IMPORTS_DIR ${KATIE_IMPORTS_PATH})
+        set(QT_TRANSLATIONS_DIR ${KATIE_TRANSLATIONS_PATH})
 
         # those are exceptions because they have "q" prefix which the macros from Qt4Macros do not expect
         set(QT_DBUSXML2CPP_EXECUTABLE "${KATIE_BINARIES_PATH}/qdbusxml2cpp${KATIE_TOOLS_SUFFIX}${CMAKE_EXECUTABLE_SUFFIX}")
