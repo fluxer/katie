@@ -37,8 +37,8 @@ macro(KATIE_RESOURCES RESOURCES)
                     get_directory_property(dirdefs COMPILE_DEFINITIONS)
                     get_directory_property(dirincs INCLUDE_DIRECTORIES)
                     set(mocargs)
+                    # COMPILE_DEFINITIONS does not include undefine definitions
                     foreach(ddef ${dirdefs})
-                        # TODO: filter non -D, support -U too
                         set(mocargs ${mocargs} -D${ddef})
                     endforeach()
                     foreach(incdir ${dirincs})
