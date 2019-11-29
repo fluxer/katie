@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \class QDesignerExtraInfoExtension
     \brief The QDesignerExtraInfoExtension class provides extra information about a widget in
-    Qt Designer.
+    Katie Designer.
     \inmodule QtDesigner
     \internal
 */

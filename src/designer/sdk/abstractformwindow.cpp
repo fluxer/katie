@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -60,7 +60,7 @@ QT_BEGIN_NAMESPACE
     \class QDesignerFormWindowInterface
 
     \brief The QDesignerFormWindowInterface class allows you to query
-    and manipulate form windows appearing in Qt Designer's workspace.
+    and manipulate form windows appearing in Katie Designer's workspace.
 
     \inmodule QtDesigner
 
@@ -384,7 +384,7 @@ QDesignerFormWindowInterface *QDesignerFormWindowInterface::findFormWindow(QObje
     displayed in the window.  The export macro is used when the form
     is compiled to create a widget plugin.
 
-    \sa {Creating Custom Widgets for Qt Designer}
+    \sa {Creating Custom Widgets for Katie Designer}
 */
 
 /*!
@@ -685,7 +685,7 @@ QDesignerFormWindowInterface *QDesignerFormWindowInterface::findFormWindow(QObje
 
     Switches the form window into editing mode.
 
-    \sa \l {Qt Designer's Form Editing Mode}
+    \sa \l {Katie Designer's Form Editing Mode}
 
     \internal
 */

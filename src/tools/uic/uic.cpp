@@ -155,7 +155,7 @@ DomUI *Uic::parseUiFile(QXmlStreamReader &reader)
                 && !ui) {
                 const double version = versionFromUiAttribute(reader);
                 if (version < 4.0) {
-                    const QString msg = QString::fromLatin1("uic: File generated with too old version of Qt Designer (%1)").arg(version);
+                    const QString msg = QString::fromLatin1("uic: File generated with too old version of Katie Designer (%1)").arg(version);
                     fprintf(stderr, "%s\n", qPrintable(msg));
                     return 0;
                 }
@@ -194,7 +194,7 @@ bool Uic::write(QIODevice *in)
     if (version < 4.0) {
         delete ui;
 
-        fprintf(stderr, "uic: File generated with too old version of Qt Designer\n");
+        fprintf(stderr, "uic: File generated with too old version of Katie Designer\n");
         return false;
     }
 

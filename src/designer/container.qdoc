@@ -28,7 +28,7 @@
 /*!
     \class QDesignerContainerExtension
     \brief The QDesignerContainerExtension class allows you to add pages to
-    a custom multi-page container in Qt Designer's workspace.
+    a custom multi-page container in Katie Designer's workspace.
     \inmodule QtDesigner
 
     QDesignerContainerExtension provide an interface for creating

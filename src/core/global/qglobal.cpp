@@ -126,7 +126,7 @@ QT_BEGIN_NAMESPACE
     \section1 Flags and the Meta-Object System
 
     The Q_DECLARE_FLAGS() macro does not expose the flags to the meta-object
-    system, so they cannot be used by Qt Script or edited in Qt Designer.
+    system, so they cannot be used by Qt Script or edited in Katie Designer.
     To make the flags available for these purposes, the Q_FLAGS() macro must
     be used:
 

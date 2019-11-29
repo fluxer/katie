@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \class QDesignerMetaDataBaseInterface
-    \brief The QDesignerMetaDataBaseInterface class provides an interface to Qt Designer's
+    \brief The QDesignerMetaDataBaseInterface class provides an interface to Katie Designer's
     object meta database.
     \inmodule QtDesigner
     \internal
@@ -103,7 +103,7 @@ QDesignerMetaDataBaseInterface::~QDesignerMetaDataBaseInterface()
 /*!
     \class QDesignerMetaDataBaseItemInterface
     \brief The QDesignerMetaDataBaseItemInterface class provides an interface to individual
-    items in Qt Designer's meta database.
+    items in Katie Designer's meta database.
     \inmodule QtDesigner
     \internal
 

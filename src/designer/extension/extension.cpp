@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -47,7 +47,7 @@ QT_BEGIN_NAMESPACE
     \class QAbstractExtensionFactory
 
     \brief The QAbstractExtensionFactory class provides an interface
-    for extension factories in Qt Designer.
+    for extension factories in Katie Designer.
 
     \inmodule QtDesigner
 
@@ -88,7 +88,7 @@ QT_BEGIN_NAMESPACE
     \class QAbstractExtensionManager
 
     \brief The QAbstractExtensionManager class provides an interface
-    for extension managers in Qt Designer.
+    for extension managers in Katie Designer.
 
     \inmodule QtDesigner
 

@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -49,8 +49,8 @@ QT_BEGIN_NAMESPACE
     \class QDesignerFormWindowManagerInterface
 
     \brief The QDesignerFormWindowManagerInterface class allows you to
-    manipulate the collection of form windows in Qt Designer, and
-    control Qt Designer's form editing actions.
+    manipulate the collection of form windows in Katie Designer, and
+    control Katie Designer's form editing actions.
 
     \inmodule QtDesigner
 
@@ -68,7 +68,7 @@ QT_BEGIN_NAMESPACE
     example above) is provided by the
     QDesignerCustomWidgetInterface::initialize() function's parameter.
     You must subclass the QDesignerCustomWidgetInterface to expose
-    your plugin to Qt Designer.
+    your plugin to Katie Designer.
 
     The form window manager interface provides the createFormWindow()
     function that enables you to create a new form window which you

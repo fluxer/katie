@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -47,7 +47,7 @@ QT_BEGIN_NAMESPACE
     \internal
     \class QDesignerFormEditorPluginInterface
     \brief The QDesignerFormEditorPluginInterface class provides an interface that is used to
-    manage plugins for Qt Designer's form editor component.
+    manage plugins for Katie Designer's form editor component.
     \inmodule QtDesigner
 
     \sa QDesignerFormEditorInterface

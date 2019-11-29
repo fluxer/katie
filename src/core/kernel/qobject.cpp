@@ -495,7 +495,7 @@ void QMetaCallEvent::placeMetaCall(QObject *object)
     and setProperty() to write them.
 
     From Qt 4.3, dynamic properties are supported by
-    \l{Qt Designer's Widget Editing Mode#The Property Editor}{Qt Designer},
+    \l{Katie Designer's Widget Editing Mode#The Property Editor}{Katie Designer},
     and both standard Qt widgets and user-created forms can be given dynamic
     properties.
 

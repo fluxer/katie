@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \class QDesignerWidgetDataBaseInterface
     \brief The QDesignerWidgetDataBaseInterface class provides an interface that is used to
-    access and modify Qt Designer's widget database.
+    access and modify Katie Designer's widget database.
     \inmodule QtDesigner
     \internal
 */
@@ -173,7 +173,7 @@ bool QDesignerWidgetDataBaseInterface::isCustom(QObject *object, bool resolveNam
 /*!
     \class QDesignerWidgetDataBaseItemInterface
     \brief The QDesignerWidgetDataBaseItemInterface class provides an interface that is used to
-    access individual items in Qt Designer's widget database.
+    access individual items in Katie Designer's widget database.
     \inmodule QtDesigner
     \internal
 

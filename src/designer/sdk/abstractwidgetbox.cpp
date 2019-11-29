@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -47,7 +47,7 @@ QT_BEGIN_NAMESPACE
     \class QDesignerWidgetBoxInterface
 
     \brief The QDesignerWidgetBoxInterface class allows you to control
-    the contents of Qt Designer's widget box.
+    the contents of Katie Designer's widget box.
 
     \inmodule QtDesigner
 
@@ -222,7 +222,7 @@ int QDesignerWidgetBoxInterface::findOrInsertCategory(const QString &categoryNam
 
     \class QDesignerWidgetBoxInterface::Widget
 
-    \brief The Widget class specified a widget in Qt Designer's widget
+    \brief The Widget class specified a widget in Katie Designer's widget
     box component.
 */
 
@@ -276,7 +276,7 @@ int QDesignerWidgetBoxInterface::findOrInsertCategory(const QString &categoryNam
 
 /*!
     \class QDesignerWidgetBoxInterface::Category
-    \brief The Category class specifies a category in Qt Designer's widget box component.
+    \brief The Category class specifies a category in Katie Designer's widget box component.
     \internal
 */
 

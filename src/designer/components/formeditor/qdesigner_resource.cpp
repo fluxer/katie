@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -445,7 +445,7 @@ QDesignerResource::~QDesignerResource()
 
 static inline QString messageBoxTitle()
 {
-    return QApplication::translate("Designer", "Qt Designer");
+    return QApplication::translate("Designer", "Katie Designer");
 }
 
 void QDesignerResource::save(QIODevice *dev, QWidget *widget)
@@ -712,7 +712,7 @@ QWidget *QDesignerResource::load(QIODevice *dev, QWidget *parentWidget)
         if (w) {
             const QString message = QApplication::translate("Designer",
                                      "This file was created using Designer from Qt-%1 and"
-                                     " will be converted to a new form by Qt Designer.").arg(version);
+                                     " will be converted to a new form by Katie Designer.").arg(version);
             const QString infoMessage = QApplication::translate("Designer",
                                      "The old form has not been touched, but you will have to save the form"
                                      " under a new name.");

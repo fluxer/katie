@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -62,7 +62,7 @@ QT_BEGIN_NAMESPACE
     {QExtensionManager}{extension manager}.
 
     The QExtensionManager class provides extension management
-    facilities for Qt Designer. When an extension is required, Qt
+    facilities for Katie Designer. When an extension is required, Qt
     Designer's \l {QExtensionManager}{extension manager} will run
     through all its registered factories calling
     QExtensionFactory::createExtension() for each until the first one
@@ -70,7 +70,7 @@ QT_BEGIN_NAMESPACE
     object, is found. This factory will then make an instance of the
     extension.
 
-    There are four available types of extensions in Qt Designer:
+    There are four available types of extensions in Katie Designer:
     QDesignerContainerExtension , QDesignerMemberSheetExtension,
     QDesignerPropertySheetExtension and QDesignerTaskMenuExtension. Qt
     Designer's behavior is the same whether the requested extension is
@@ -92,7 +92,7 @@ QT_BEGIN_NAMESPACE
     \l {designer/taskmenuextension}{Task Menu Extension example}. The
     example shows how to create a custom widget plugin for Qt
     Designer, and how to to use the QDesignerTaskMenuExtension class
-    to add custom items to Qt Designer's task menu.
+    to add custom items to Katie Designer's task menu.
 
     \sa QExtensionManager, QAbstractExtensionFactory
 */

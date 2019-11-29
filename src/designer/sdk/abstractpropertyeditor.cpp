@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -47,7 +47,7 @@ QT_BEGIN_NAMESPACE
     \class QDesignerPropertyEditorInterface
 
     \brief The QDesignerPropertyEditorInterface class allows you to
-    query and manipulate the current state of Qt Designer's property
+    query and manipulate the current state of Katie Designer's property
     editor.
 
     \inmodule QtDesigner

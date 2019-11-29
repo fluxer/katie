@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** GNU Lesser General Public License Usage
@@ -39,7 +39,7 @@
 //  -------------
 //
 // This file is not part of the Katie API.  It exists for the convenience
-// of Qt Designer.  This header
+// of Katie Designer.  This header
 // file may change from version to version without notice, or even be removed.
 //
 // We mean it.

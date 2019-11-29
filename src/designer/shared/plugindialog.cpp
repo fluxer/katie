@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the Qt Designer of the Katie Toolkit.
+** This file is part of the Katie Designer of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -131,10 +131,10 @@ void PluginDialog::populateTreeWidget()
     }
 
     if (ui.treeWidget->topLevelItemCount() == 0) {
-        ui.label->setText(tr("Qt Designer couldn't find any plugins"));
+        ui.label->setText(tr("Katie Designer couldn't find any plugins"));
         ui.treeWidget->hide();
     } else {
-        ui.label->setText(tr("Qt Designer found the following plugins"));
+        ui.label->setText(tr("Katie Designer found the following plugins"));
     }
 }
 

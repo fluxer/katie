@@ -149,7 +149,7 @@ QPolygonF calcLines(const QStyleOptionSlider *dial)
     qreal xc = width / 2 + 0.5;
     qreal yc = height / 2 + 0.5;
     const int ns = dial->tickInterval;
-    if (!ns) // Invalid values may be set by Qt Designer.
+    if (!ns) // Invalid values may be set by Katie Designer.
         return poly;
     int notches = (dial->maximum + ns - 1 - dial->minimum) / ns;
     if (notches <= 0)

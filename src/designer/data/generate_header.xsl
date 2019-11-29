@@ -380,7 +380,7 @@
 //  -------------
 //
 // This file is not part of the Katie API.  It exists for the convenience
-// of Qt Designer.  This header
+// of Katie Designer.  This header
 // file may change from version to version without notice, or even be removed.
 //
 // We mean it.

@@ -28,7 +28,7 @@
 /*!
     \class QDesignerCustomWidgetInterface
 
-    \brief The QDesignerCustomWidgetInterface class enables Qt Designer
+    \brief The QDesignerCustomWidgetInterface class enables Katie Designer
     to access and construct custom widgets.
 
     \inmodule QtDesigner
@@ -111,7 +111,7 @@
     for \QD.
 
     \sa QDesignerCustomWidgetCollectionInterface {Creating Custom
-    Widgets for Qt Designer}
+    Widgets for Katie Designer}
 */
 
 /*!
@@ -238,7 +238,7 @@
     \dots
     \snippet examples/designer/worldtimeclockplugin/worldtimeclock.h 2
 
-    \sa {Creating Custom Widgets for Qt Designer}
+    \sa {Creating Custom Widgets for Katie Designer}
 */
 
 
@@ -279,7 +279,7 @@
     use them.
 
     \sa QDesignerCustomWidgetInterface, {Creating Custom Widgets for
-    Qt Designer}
+    Katie Designer}
 */
 
 /*!
