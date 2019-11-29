@@ -34,9 +34,6 @@
 #include "qcorecommon_p.h"
 #include "qdebug.h"
 
-#include <unicode/ucnv.h>
-#include <unicode/ucsdet.h>
-
 QT_BEGIN_NAMESPACE
 
 // generated via genmib.py
