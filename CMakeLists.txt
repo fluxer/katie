@@ -184,8 +184,7 @@ add_definitions(
     -DQT_NO_OPENTYPE
 )
 
-# this enabled on everything but Integrity and Windows (MinGW),
-# QT_LARGEFILE_SUPPORT is used in qconfig.h
+# used in qconfig.h
 set(QT_LARGEFILE_SUPPORT 64)
 add_definitions(
     -D_LARGEFILE64_SOURCE
@@ -510,10 +509,8 @@ if(NOT X11_SM_FOUND)
     katie_definition(-DQT_NO_SESSIONMANAGER)
 endif()
 
-# semi-shared
 add_subdirectory(src/shared)
 
-# major components
 add_subdirectory(src/core)
 add_subdirectory(src/xml)
 if(WITH_DBUS AND DBUS_FOUND)
@@ -532,18 +529,14 @@ add_subdirectory(src/svg)
 add_subdirectory(src/test)
 add_subdirectory(src/uitools)
 
-# generators
 add_subdirectory(src/tools)
 
-# translations
 add_subdirectory(translations)
 
-# tests and benchmarks
 if(ENABLE_TESTING)
     add_subdirectory(tests)
 endif()
 
-# utilities for maintainance
 if(KATIE_UTILS)
     add_subdirectory(util)
 endif()
