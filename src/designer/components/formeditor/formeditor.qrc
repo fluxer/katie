@@ -29,37 +29,6 @@
     <file>images/downplus.png</file>
     <file>images/leveldown.png</file>
     <file>images/levelup.png</file>
-    <file>images/mac/adjustsize.png</file>
-    <file>images/mac/widgettool.png</file>
-    <file>images/mac/signalslottool.png</file>
-    <file>images/mac/tabordertool.png</file>
-    <file>images/mac/buddytool.png</file>
-    <file>images/mac/editbreaklayout.png</file>
-    <file>images/mac/editcopy.png</file>
-    <file>images/mac/editcut.png</file>
-    <file>images/mac/editdelete.png</file>
-    <file>images/mac/editgrid.png</file>
-    <file>images/mac/editform.png</file>
-    <file>images/mac/edithlayout.png</file>
-    <file>images/mac/edithlayoutsplit.png</file>
-    <file>images/mac/editlower.png</file>
-    <file>images/mac/editpaste.png</file>
-    <file>images/mac/editraise.png</file>
-    <file>images/mac/editvlayout.png</file>
-    <file>images/mac/editvlayoutsplit.png</file>
-    <file>images/mac/filenew.png</file>
-    <file>images/mac/insertimage.png</file>
-    <file>images/mac/undo.png</file>
-    <file>images/mac/redo.png</file>
-    <file>images/mac/fileopen.png</file>
-    <file>images/mac/filesave.png</file>
-    <file>images/mac/resourceeditortool.png</file>
-    <file>images/mac/plus.png</file>
-    <file>images/mac/minus.png</file>
-    <file>images/mac/back.png</file>
-    <file>images/mac/forward.png</file>
-    <file>images/mac/down.png</file>
-    <file>images/mac/up.png</file>
     <file>images/katie.png</file>
     <file>images/resetproperty.png</file>
     <file>images/cleartext.png</file>
@@ -156,17 +125,6 @@
     <file>images/win/forward.png</file>
     <file>images/win/down.png</file>
     <file>images/win/up.png</file>
-    <file>images/mac/textanchor.png</file>
-    <file>images/mac/textbold.png</file>
-    <file>images/mac/textitalic.png</file>
-    <file>images/mac/textunder.png</file>
-    <file>images/mac/textleft.png</file>
-    <file>images/mac/textcenter.png</file>
-    <file>images/mac/textright.png</file>
-    <file>images/mac/textjustify.png</file>
-    <file>images/mac/textsuperscript.png</file>
-    <file>images/mac/textsubscript.png</file>
-    <file>images/mac/simplifyrichtext.png</file>
   </qresource>
   <qresource prefix="/trolltech/brushes">
     <file>defaultbrushes.xml</file>
