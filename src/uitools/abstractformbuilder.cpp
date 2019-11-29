@@ -1564,7 +1564,7 @@ DomLayoutItem *QAbstractFormBuilder::createDom(QLayoutItem *item, DomLayout *ui_
 
     if (item->widget())  {
         ui_item->setElementWidget(createDom(item->widget(), ui_parentWidget));
-        m_laidout.insert(item->widget(), true);
+        m_laidout.insert(item->widget());
     } else if (item->layout()) {
         ui_item->setElementLayout(createDom(item->layout(), ui_layout, ui_parentWidget));
     } else if (item->spacerItem()) {

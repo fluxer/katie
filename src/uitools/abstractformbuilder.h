@@ -36,6 +36,7 @@
 
 #include <QtCore/QList>
 #include <QtCore/QHash>
+#include <QtCore/QSet>
 #include <QtCore/QDir>
 #include <QtGui/QSizePolicy>
 #include <QtGui/QPalette>
@@ -243,7 +244,7 @@ protected:
     QPixmap domPropertyToPixmap(const DomResourcePixmap* p);
     QPixmap domPropertyToPixmap(const DomProperty* p);
 
-    QHash<QObject*, bool> m_laidout;
+    QSet<QObject*> m_laidout;
     QHash<QString, QAction*> m_actions;
     QHash<QString, QActionGroup*> m_actionGroups;
     int m_defaultMargin;
