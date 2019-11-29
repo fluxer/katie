@@ -285,24 +285,22 @@ QList<QNetworkCookie> QNetworkCookieJar::cookiesForUrl(const QUrl &url) const
     bool isEncrypted = url.scheme().toLower() == QLatin1String("https");
 
     // scan our cookies for something that matches
-    QList<QNetworkCookie>::ConstIterator it = d->allCookies.constBegin(),
-                                        end = d->allCookies.constEnd();
-    for ( ; it != end; ++it) {
-        if (!isParentDomain(url.host(), it->domain()))
+    foreach (const QNetworkCookie &cookie, d->allCookies) {
+        if (!isParentDomain(url.host(), cookie.domain()))
             continue;
-        if (!isParentPath(url.path(), it->path()))
+        if (!isParentPath(url.path(), cookie.path()))
             continue;
-        if (!(*it).isSessionCookie() && (*it).expirationDate() < now)
+        if (!cookie.isSessionCookie() && cookie.expirationDate() < now)
             continue;
-        if ((*it).isSecure() && !isEncrypted)
+        if (cookie.isSecure() && !isEncrypted)
             continue;
 
         // insert this cookie into result, sorted by path
         QList<QNetworkCookie>::Iterator insertIt = result.begin();
         while (insertIt != result.end()) {
-            if (insertIt->path().length() < it->path().length()) {
+            if (insertIt->path().length() < cookie.path().length()) {
                 // insert here
-                insertIt = result.insert(insertIt, *it);
+                insertIt = result.insert(insertIt, cookie);
                 break;
             } else {
                 ++insertIt;
@@ -311,7 +309,7 @@ QList<QNetworkCookie> QNetworkCookieJar::cookiesForUrl(const QUrl &url) const
 
         // this is the shortest path yet, just append
         if (insertIt == result.end())
-            result += *it;
+            result += cookie;
     }
 
     return result;
