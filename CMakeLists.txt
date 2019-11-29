@@ -387,7 +387,8 @@ set_package_properties(DBus PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(Sqlite)
+# v3.5.0+ required for sqlite3_open_v2
+find_package(Sqlite 3.5.0)
 set_package_properties(Sqlite PROPERTIES
     PURPOSE "Required for SQLite database support"
     DESCRIPTION "Software library that implements SQL database engine"
