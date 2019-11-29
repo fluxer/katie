@@ -141,7 +141,7 @@ void PluginDialog::populateTreeWidget()
 QIcon PluginDialog::pluginIcon(const QIcon &icon)
 {
     if (icon.isNull())
-        return QIcon(QLatin1String(":/trolltech/formeditor/images/qtlogo.png"));
+        return QIcon(QLatin1String(":/trolltech/formeditor/images/katie.png"));
 
     return icon;
 }
