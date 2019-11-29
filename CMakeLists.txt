@@ -228,7 +228,7 @@ set_package_properties(ZLIB PROPERTIES
     TYPE REQUIRED
 )
 
-# v4.6+ required for unorm2_getDecomposition
+# v4.6+ required for unorm2_getDecomposition()
 find_package(ICU 4.6)
 set_package_properties(ICU PROPERTIES
     PURPOSE "Required for locales support"
@@ -378,7 +378,7 @@ set_package_properties(HarfBuzz PROPERTIES
     TYPE RECOMMENDED
 )
 
-# v1.2+ required for dbus_watch_get_unix_fd
+# v1.2+ required for dbus_watch_get_unix_fd()
 find_package(DBus 1.2)
 set_package_properties(DBus PROPERTIES
     PURPOSE "Required for D-Bus support"
@@ -387,7 +387,7 @@ set_package_properties(DBus PROPERTIES
     TYPE RECOMMENDED
 )
 
-# v3.5.0+ required for sqlite3_open_v2
+# v3.5.0+ required for sqlite3_open_v2()
 find_package(Sqlite 3.5.0)
 set_package_properties(Sqlite PROPERTIES
     PURPOSE "Required for SQLite database support"
