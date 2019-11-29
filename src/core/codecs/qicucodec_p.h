@@ -59,15 +59,15 @@ public:
     QIcuCodec(const char *name);
     ~QIcuCodec();
 
-    static QList<QByteArray> availableCodecs();
-    static QTextCodec* codecForUtf(const QByteArray &text, QTextCodec *defaultCodec);
-
     QString convertToUnicode(const char *data, int len, ConverterState *state) const final;
     QByteArray convertFromUnicode(const QChar *unicode, int len, ConverterState *state) const final;
 
     QByteArray name() const final;
     QList<QByteArray> aliases() const final;
     int mibEnum() const final;
+
+    static QList<QByteArray> availableCodecs();
+    static QTextCodec* codecForUtf(const QByteArray &text, QTextCodec *defaultCodec);
 
 private:
     UConverter *getConverter(QTextCodec::ConverterState *state) const;
