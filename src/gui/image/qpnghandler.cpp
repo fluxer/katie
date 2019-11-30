@@ -721,18 +721,6 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
     return true;
 }
 
-static bool write_png_image(const QImage &image, QIODevice *device,
-                            int quality, float gamma)
-{
-    QPNGImageWriter writer(device);
-    if (quality >= 0) {
-        quality = qMin(quality, 100);
-        quality = (100-quality) * 9 / 91; // map [0,100] -> [9,0]
-    }
-    writer.setGamma(gamma);
-    return writer.writeImage(image, quality);
-}
-
 QPngHandler::QPngHandler()
     : d(new QPngHandlerPrivate(this))
 {
@@ -777,7 +765,14 @@ bool QPngHandler::read(QImage *image)
 
 bool QPngHandler::write(const QImage &image)
 {
-    return write_png_image(image, device(), d->quality, d->gamma);
+    QPNGImageWriter writer(device());
+    int quality = d->quality;
+    if (quality >= 0) {
+        quality = qMin(quality, 100);
+        quality = (100-quality) * 9 / 91; // map [0,100] -> [9,0]
+    }
+    writer.setGamma(d->gamma);
+    return writer.writeImage(image, quality);
 }
 
 bool QPngHandler::supportsOption(ImageOption option) const
