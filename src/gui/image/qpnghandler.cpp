@@ -131,10 +131,6 @@ public:
     explicit QPNGImageWriter(QIODevice*);
     ~QPNGImageWriter();
 
-    enum DisposalMethod { Unspecified, NoDisposal, RestoreBackground, RestoreImage };
-    void setDisposalMethod(DisposalMethod);
-    void setLooping(int loops=0); // 0 == infinity
-    void setFrameDelay(int msecs);
     void setGamma(float);
 
     bool writeImage(const QImage& img, int x, int y);
@@ -149,9 +145,6 @@ public:
 private:
     QIODevice* dev;
     int frames_written;
-    DisposalMethod disposal;
-    int looping;
-    int ms_delay;
     float gamma;
 };
 
@@ -549,30 +542,12 @@ QImage::Format QPngHandlerPrivate::readImageFormat()
 QPNGImageWriter::QPNGImageWriter(QIODevice* iod) :
     dev(iod),
     frames_written(0),
-    disposal(Unspecified),
-    looping(-1),
-    ms_delay(-1),
     gamma(0.0)
 {
 }
 
 QPNGImageWriter::~QPNGImageWriter()
 {
-}
-
-void QPNGImageWriter::setDisposalMethod(DisposalMethod dm)
-{
-    disposal = dm;
-}
-
-void QPNGImageWriter::setLooping(int loops)
-{
-    looping = loops;
-}
-
-void QPNGImageWriter::setFrameDelay(int msecs)
-{
-    ms_delay = msecs;
 }
 
 void QPNGImageWriter::setGamma(float g)
@@ -708,22 +683,6 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
         png_set_filler(png_ptr, 0,
             QSysInfo::ByteOrder == QSysInfo::BigEndian ?
                 PNG_FILLER_BEFORE : PNG_FILLER_AFTER);
-
-    if (looping >= 0 && frames_written == 0) {
-        uchar data[13] = "NETSCAPE2.0";
-        //                0123456789aBC
-        data[0xB] = looping%0x100;
-        data[0xC] = looping/0x100;
-        png_write_chunk(png_ptr, (png_byte*)"gIFx", data, 13);
-    }
-    if (ms_delay >= 0 || disposal!=Unspecified) {
-        uchar data[4];
-        data[0] = disposal;
-        data[1] = 0;
-        data[2] = (ms_delay/10)/0x100; // hundredths
-        data[3] = (ms_delay/10)%0x100;
-        png_write_chunk(png_ptr, (png_byte*)"gIFg", data, 4);
-    }
 
     int height = image.height();
     int width = image.width();
