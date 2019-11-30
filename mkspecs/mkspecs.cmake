@@ -89,7 +89,7 @@ try_compile(bsymbolic_functions_test
     CMAKE_FLAGS -shared -Wl,-Bsymbolic-functions -fPIC
     OUTPUT_VARIABLE bsymbolic_functions_test_output
 )
-if(NOT bsymbolic_functions_test)
+if(NOT bsymbolic_functions_test OR NOT CMAKE_POSITION_INDEPENDENT_CODE)
     katie_definition(-DQ_NO_DATA_RELOCATION)
 endif()
 
