@@ -844,7 +844,6 @@ static QString translateKeySym(KeySym keysym, uint xmodifiers,
     // Qt keycodes between 128 and 255, but should rather use the
     // QKeyEvent::text().
     //
-    extern QTextCodec *qt_input_mapper; // from qapplication_x11.cpp
     if (keysym < 128 || (keysym < 256 && (!qt_input_mapper || qt_input_mapper->mibEnum()==4))) {
         // upper-case key, if known
         code = isprint((int)keysym) ? toupper((int)keysym) : 0;
