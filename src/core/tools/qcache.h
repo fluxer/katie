@@ -64,16 +64,18 @@ public:
     inline bool insert(const Key &key, T *object, int cost = 1);
     inline T *object(const Key &key) const { return hash.value(key, Q_NULLPTR); }
     inline bool contains(const Key &key) const { return hash.contains(key); }
-    inline T *operator[](const Key &key) const;
+    inline T *operator[](const Key &key) const { return object(key); }
 
-    inline bool remove(const Key &key);
-    inline T *take(const Key &key);
+    inline bool remove(const Key &key) { return hash.remove(key) != 0; }
+    inline T *take(const Key &key) { return hash.take(key); }
 };
 
 template <class Key, class T>
 inline QCache<Key, T>::QCache(int amaxCost)
     : mx(amaxCost)
-{ hash.reserve(amaxCost); }
+{
+    hash.reserve(amaxCost);
+}
 
 template <class Key, class T>
 inline void QCache<Key,T>::setMaxCost(int m)
@@ -81,20 +83,6 @@ inline void QCache<Key,T>::setMaxCost(int m)
     mx = m;
     hash.clear();
     hash.reserve(m);
-}
-
-template <class Key, class T>
-inline T *QCache<Key,T>::operator[](const Key &key) const
-{ return object(key); }
-
-template <class Key, class T>
-inline bool QCache<Key,T>::remove(const Key &key)
-{ return hash.remove(key) != 0; }
-
-template <class Key, class T>
-inline T *QCache<Key,T>::take(const Key &key)
-{
-    return hash.take(key);
 }
 
 template <class Key, class T>
