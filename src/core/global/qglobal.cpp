@@ -1798,20 +1798,13 @@ void qsrand(uint seed)
 
     \sa qsrand()
 */
-thread_local bool almostrandom = false;
+thread_local uint almostrandom = 0;
 int qrand()
 {
-    // Seed the PRNG once per thread with a combination of current time, a
-    // stack address and a serial counter (since thread stack addresses are
-    // re-used).
+    // Seed the PRNG once per thread with a combination of current time and its address
     if (!almostrandom) {
-        uint *pseed = new uint;
-        static QAtomicInt serial = QAtomicInt(2);
-        std::srand(*pseed = QDateTime::currentDateTime().toTime_t()
-                + quintptr(&pseed)
-                + serial.fetchAndAddRelaxed(1));
-        delete pseed;
-        almostrandom = true;
+        almostrandom = QDateTime::currentDateTime().toTime_t();
+        std::srand(almostrandom + quintptr(&almostrandom));
     }
     return std::rand();
 }
