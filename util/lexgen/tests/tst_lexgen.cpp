@@ -40,8 +40,11 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
+#include <QDir>
 #define AUTOTEST
 #include "../main.cpp"
+
+QT_USE_NAMESPACE
 
 class tst_LexGen : public QObject
 {
