@@ -429,6 +429,7 @@ void QThreadPool::start(QRunnable *runnable, int priority)
 
     Q_D(QThreadPool);
     QMutexLocker locker(&d->mutex);
+
     if (!d->tryStart(runnable)) {
         d->enqueueTask(runnable, priority);
 
@@ -459,7 +460,6 @@ bool QThreadPool::tryStart(QRunnable *runnable)
         return false;
 
     Q_D(QThreadPool);
-
     QMutexLocker locker(&d->mutex);
 
     if (d->allThreads.isEmpty() == false && d->activeThreadCount() >= d->maxThreadCount)
@@ -491,6 +491,8 @@ int QThreadPool::expiryTimeout() const
 void QThreadPool::setExpiryTimeout(int expiryTimeout)
 {
     Q_D(QThreadPool);
+    QMutexLocker locker(&d->mutex);
+
     if (d->expiryTimeout == expiryTimeout)
         return;
     d->expiryTimeout = expiryTimeout;
