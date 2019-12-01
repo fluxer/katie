@@ -130,6 +130,7 @@ class Q_CORE_EXPORT QLocale
     friend class QDoubleValidatorPrivate;
     friend class QTextStream;
     friend class QTextStreamPrivate;
+    friend class QLocalePrivate;
 
 public:
 // GENERATED PART STARTS HERE
@@ -1311,6 +1312,7 @@ public:
     QLocale(Language language, Country country = AnyCountry);
     QLocale(Language language, Script script, Country country);
     QLocale(const QLocale &other);
+    ~QLocale();
 
     QLocale &operator=(const QLocale &other);
 
@@ -1410,7 +1412,7 @@ public:
     static QLocale c() { return QLocale(C); }
     static QLocale system();
 
-    static QList<QLocale> matchingLocales(QLocale::Language language, QLocale::Script script, QLocale::Country country);
+    static QList<QLocale> matchingLocales(Language language, Script script, Country country);
     static QList<Country> countriesForLanguage(Language lang);
 
     void setNumberOptions(NumberOptions options);
@@ -1423,11 +1425,7 @@ public:
     QString createSeparatedList(const QStringList &strl) const;
 
 private:
-    friend class QLocalePrivate;
-
-    quint16 index;
-    QLocale::NumberOptions numberoptions;
-
+    QLocalePrivate *p;
     const QLocalePrivate *d() const;
 };
 Q_DECLARE_TYPEINFO(QLocale, Q_MOVABLE_TYPE);

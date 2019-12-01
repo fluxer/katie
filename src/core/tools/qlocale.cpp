@@ -47,6 +47,8 @@
 #include "qdebug.h"
 #include "qcorecommon_p.h"
 
+#include <unicode/ulocdata.h>
+
 // #define QLOCALE_DEBUG
 #if defined (QLOCALE_DEBUG) && !defined(QT_NO_DEBUG_STREAM)
 #  define QLOCALEDEBUG qDebug()
@@ -176,34 +178,182 @@ QString QLocalePrivate::bcp47Name() const
 }
 
 #ifndef QT_NO_SYSTEMLOCALE
-static qint16 default_index = QLocalePrivate::findSystemIndex();
+static QString default_locale = QLocalePrivate::findSystem();
 #else
-static qint16 default_index = 0;
+static QString default_locale = QLatin1String("C");
 #endif
 static QLocale::NumberOptions default_number_options = 0;
 
-static const QLocalePrivate *findByName(const QString &name)
+QLocalePrivate::QLocalePrivate(const QString &name)
+    : numberoptions(default_number_options),
+    m_language(QLocale::Language::AnyLanguage),
+    m_script(QLocale::Script::AnyScript),
+    m_country(QLocale::Country::AnyCountry),
+    m_first_day_of_week(Qt::Monday),
+    m_weekend_start(Qt::Saturday),
+    m_weekend_end(Qt::Sunday),
+    m_decimal('.'),
+    m_group(','),
+    m_list(';'),
+    m_percent('%'),
+    m_zero('0'),
+    m_minus('-'),
+    m_plus('+'),
+    m_exponential('e'), // default in CLDR is E
+    m_currency_digits('2'),
+    m_quotation_start('"'), // default in CLDR is “
+    m_quotation_end('"'), //  default in CLDR is ”
+    m_alternate_quotation_start('\''), //  default in CLDR is ‘
+    m_alternate_quotation_end('\''), //  default in CLDR is ’
+    m_language_endonym(Q_NULLPTR),
+    m_country_endonym(Q_NULLPTR),
+    m_list_pattern_part_start("%1, %2"),
+    m_list_pattern_part_mid("%1, %2"),
+    m_list_pattern_part_end("%1, %2"),
+    m_list_pattern_part_two("%1, %2"),
+    m_short_date_format("d MMM yyyy"), //  default in CLDR is y-MM-dd
+    m_long_date_format("d MMMM yyyy"),
+    m_short_time_format("HH:mm:ss"), //  default in CLDR is HH:mm
+    m_long_time_format("HH:mm:ss z"),
+    m_am("AM"),
+    m_pm("PM"),
+    m_currency_symbol(Q_NULLPTR),
+    m_currency_format("%1%2"),
+    m_currency_negative_format(Q_NULLPTR),
+    m_currency_iso_code(Q_NULLPTR),
+    m_currency_display_name(Q_NULLPTR),
+    m_standalone_short_month_names({"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}),
+    m_standalone_long_month_names({"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}),
+    m_standalone_narrow_month_names({"J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"}),
+    m_short_month_names({"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}),
+    m_long_month_names({"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}),
+    m_narrow_month_names({"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}),
+    m_standalone_short_day_names({"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"}),
+    m_standalone_long_day_names({"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}),
+    m_standalone_narrow_day_names({"M", "T", "W", "T", "F", "S", "S"}),
+    m_short_day_names({"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"}),
+    m_long_day_names({"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}),
+    m_narrow_day_names({"1", "2", "3", "4", "5", "6", "7"})
 {
-    QLocale::Language lang;
+    QLocale::Language language;
     QLocale::Script script;
-    QLocale::Country cntry;
-    QLocalePrivate::getLangAndCountry(name, lang, script, cntry);
+    QLocale::Country country;
+    QLocalePrivate::getLangAndCountry(name, language, script, country);
 
-    return QLocalePrivate::findLocale(lang, script, cntry);
-}
-
-static quint16 localePrivateIndex(const QLocalePrivate *p)
-{
-    for (qint16 i = 0; i < localeTblSize; i++) {
-        if (p->m_language == localeTbl[i].m_language
-            && p->m_country == localeTbl[i].m_country
-            && p->m_script == localeTbl[i].m_script)
-            return i;
+    // check likely substitutes first
+    for (qint16 i = 0; i < subtagAliasTblSize; i++) {
+        if (subtagAliasTbl[i].fromlanguage == language
+            && subtagAliasTbl[i].fromscript == script
+            && subtagAliasTbl[i].fromcountry == country) {
+            QLOCALEDEBUG << "from" << language << script << country;
+            language = subtagAliasTbl[i].tolanguage;
+            script = subtagAliasTbl[i].toscript;
+            country = subtagAliasTbl[i].tocountry;
+            QLOCALEDEBUG << "to" << language << script << country;
+            break;
+        }
     }
-    return 0;
+
+    // TODO:
+    m_language = language;
+    m_script = script;
+    m_country = country;
+
+    UErrorCode error = U_ZERO_ERROR;
+    ULocaleData *data = ulocdata_open(name.toLatin1().constData(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QLocalePrivate: ulocdata_open(%s) failed %s", name.toLatin1().constData(), u_errorName(error));
+        return;
+    }
+
+    error = U_ZERO_ERROR;
+    QString delimiter(10, Qt::Uninitialized);
+    const int locresult = ulocdata_getDelimiter(data, ULOCDATA_QUOTATION_START,
+        reinterpret_cast<UChar*>(delimiter.data()), delimiter.size(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QLocalePrivate: ulocdata_getDelimiter(%s) failed %s", name.toLatin1().constData(), u_errorName(error));
+        ulocdata_close(data);
+        return;
+    }
+    delimiter.resize(locresult);
+    qDebug() << name << delimiter;
+
+    ulocdata_close(data);
 }
 
-int QLocalePrivate::findSystemIndex()
+QLocalePrivate::QLocalePrivate(QLocale::Language language, QLocale::Script script,
+                   QLocale::Country country)
+    : numberoptions(default_number_options),
+    m_language(QLocale::Language::AnyLanguage),
+    m_script(QLocale::Script::AnyScript),
+    m_country(QLocale::Country::AnyCountry),
+    m_first_day_of_week(Qt::Monday),
+    m_weekend_start(Qt::Saturday),
+    m_weekend_end(Qt::Sunday),
+    m_decimal('.'),
+    m_group(','),
+    m_list(';'),
+    m_percent('%'),
+    m_zero('0'),
+    m_minus('-'),
+    m_plus('+'),
+    m_exponential('e'), // default in CLDR is E
+    m_currency_digits('2'),
+    m_quotation_start('"'), // default in CLDR is “
+    m_quotation_end('"'), //  default in CLDR is ”
+    m_alternate_quotation_start('\''), //  default in CLDR is ‘
+    m_alternate_quotation_end('\''), //  default in CLDR is ’
+    m_language_endonym(Q_NULLPTR),
+    m_country_endonym(Q_NULLPTR),
+    m_list_pattern_part_start("%1, %2"),
+    m_list_pattern_part_mid("%1, %2"),
+    m_list_pattern_part_end("%1, %2"),
+    m_list_pattern_part_two("%1, %2"),
+    m_short_date_format("d MMM yyyy"), //  default in CLDR is y-MM-dd
+    m_long_date_format("d MMMM yyyy"),
+    m_short_time_format("HH:mm:ss"), //  default in CLDR is HH:mm
+    m_long_time_format("HH:mm:ss z"),
+    m_am("AM"),
+    m_pm("PM"),
+    m_currency_symbol(Q_NULLPTR),
+    m_currency_format("%1%2"),
+    m_currency_negative_format(Q_NULLPTR),
+    m_currency_iso_code(Q_NULLPTR),
+    m_currency_display_name(Q_NULLPTR),
+    m_standalone_short_month_names({"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}),
+    m_standalone_long_month_names({"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}),
+    m_standalone_narrow_month_names({"J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"}),
+    m_short_month_names({"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}),
+    m_long_month_names({"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}),
+    m_narrow_month_names({"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}),
+    m_standalone_short_day_names({"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"}),
+    m_standalone_long_day_names({"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}),
+    m_standalone_narrow_day_names({"M", "T", "W", "T", "F", "S", "S"}),
+    m_short_day_names({"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"}),
+    m_long_day_names({"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}),
+    m_narrow_day_names({"1", "2", "3", "4", "5", "6", "7"})
+{
+    // check likely substitutes first
+    for (qint16 i = 0; i < subtagAliasTblSize; i++) {
+        if (subtagAliasTbl[i].fromlanguage == language
+            && subtagAliasTbl[i].fromscript == script
+            && subtagAliasTbl[i].fromcountry == country) {
+            language = subtagAliasTbl[i].tolanguage;
+            script = subtagAliasTbl[i].toscript;
+            country = subtagAliasTbl[i].tocountry;
+            QLOCALEDEBUG << "to" << language << script << country;
+            break;
+        }
+    }
+
+    m_language = language;
+    m_script = script;
+    m_country = country;
+
+    // TODO:
+}
+
+QString QLocalePrivate::findSystem()
 {
     // copy from qlocale_unix.cpp
     QByteArray lang = qgetenv("LC_ALL");
@@ -213,44 +363,9 @@ int QLocalePrivate::findSystemIndex()
     if (lang.isEmpty())
         lang = qgetenv("LANG");
     if (lang.isEmpty())
-        return 0;
+        return QLatin1String("C");
 
-    return localePrivateIndex(findByName(QString::fromLatin1(lang.constData())));
-}
-
-const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
-{
-    // check likely substitutes first
-    for (qint16 i = 0; i < subtagAliasTblSize; i++) {
-        if (subtagAliasTbl[i].fromlanguage == language
-            && subtagAliasTbl[i].fromscript == script
-            && subtagAliasTbl[i].fromcountry == country) {
-            QLOCALEDEBUG << "from" << language << script << country;
-            QLOCALEDEBUG << "to" << subtagAliasTbl[i].tolanguage
-                << subtagAliasTbl[i].toscript << subtagAliasTbl[i].tocountry;
-            return QLocalePrivate::findLocale(subtagAliasTbl[i].tolanguage,
-                                              subtagAliasTbl[i].toscript, subtagAliasTbl[i].tocountry);
-        }
-    }
-
-    for (qint16 i = 0; i < localeTblSize; i++) {
-        if ((language == QLocale::AnyLanguage || localeTbl[i].m_language == language)
-            && (script == QLocale::AnyScript || localeTbl[i].m_script == QLocale::AnyScript || localeTbl[i].m_script == script)
-            && (country == QLocale::AnyCountry || localeTbl[i].m_country == QLocale::AnyCountry || localeTbl[i].m_country == country)) {
-            QLOCALEDEBUG << "exact match for" << language << script << country;
-            return &localeTbl[i];
-        }
-    }
-
-    // for compatibility match invalid cases, e.g. en_zz, to the first match for that language
-    for (qint16 i = 0; i < localeTblSize; i++) {
-        if (localeTbl[i].m_language == language) {
-            QLOCALEDEBUG << "greedy match for" << language << script << country;
-            return &localeTbl[i];
-        }
-    }
-
-    return &localeTbl[0];
+    return QString::fromLatin1(lang.constData());
 }
 
 static const int bcp47max = 11;  // worst case according to BCP47
@@ -409,7 +524,7 @@ QSystemLocale::QSystemLocale()
     _systemLocale = this;
 
 #ifdef QT_STD_LOCALE
-    if (!default_index)
+    if (default_locale != QLatin1String("C"))
         qt_initStdLocale(fallbackLocale().bcp47Name());
 #endif
 
@@ -496,9 +611,8 @@ QDataStream &operator>>(QDataStream &ds, QLocale &l)
 */
 
 QLocale::QLocale(const QString &name)
+    : p(new QLocalePrivate(name))
 {
-    numberoptions = 0;
-    index = localePrivateIndex(findByName(name));
 }
 
 /*!
@@ -510,9 +624,8 @@ QLocale::QLocale(const QString &name)
 */
 
 QLocale::QLocale()
+    : p(new QLocalePrivate(default_locale))
 {
-    numberoptions = default_number_options;
-    index = default_index;
 }
 
 /*!
@@ -535,16 +648,12 @@ QLocale::QLocale()
 */
 
 QLocale::QLocale(Language language, Country country)
+    : p(new QLocalePrivate(language, QLocale::AnyScript, country))
 {
-    const QLocalePrivate *dd = QLocalePrivate::findLocale(language, QLocale::AnyScript, country);
-
     // If not found, should default to system
-    if (dd->m_language == QLocale::C && language != QLocale::C) {
-        numberoptions = default_number_options;
-        index = default_index;
-    } else {
-        numberoptions = 0;
-        index = localePrivateIndex(dd);
+    if (p->m_language == QLocale::C && language != QLocale::C) {
+        delete p;
+        p = new QLocalePrivate(default_locale);
     }
 }
 \
@@ -573,17 +682,18 @@ QLocale::QLocale(Language language, Country country)
 */
 
 QLocale::QLocale(Language language, Script script, Country country)
+    : p(new QLocalePrivate(language, script, country))
 {
-    const QLocalePrivate *dd = QLocalePrivate::findLocale(language, script, country);
-
     // If not found, should default to system
-    if (dd->m_language == QLocale::C && language != QLocale::C) {
-        numberoptions = default_number_options;
-        index = default_index;
-    } else {
-        numberoptions = 0;
-        index = localePrivateIndex(dd);
+    if (p->m_language == QLocale::C && language != QLocale::C) {
+        delete p;
+        p = new QLocalePrivate(default_locale);
     }
+}
+
+QLocale::~QLocale()
+{
+    delete p;
 }
 
 /*!
@@ -592,13 +702,12 @@ QLocale::QLocale(Language language, Script script, Country country)
 
 QLocale::QLocale(const QLocale &other)
 {
-    numberoptions = other.numberoptions;
-    index = other.index;
+    p = other.p;
 }
 
 const QLocalePrivate *QLocale::d() const
 {
-    return &localeTbl[index];
+    return p;
 }
 
 /*!
@@ -608,8 +717,7 @@ const QLocalePrivate *QLocale::d() const
 
 QLocale &QLocale::operator=(const QLocale &other)
 {
-    numberoptions = other.numberoptions;
-    index = other.index;
+    p = other.p;
     return *this;
 }
 
@@ -621,7 +729,7 @@ QLocale &QLocale::operator=(const QLocale &other)
 */
 void QLocale::setNumberOptions(NumberOptions options)
 {
-    numberoptions = options;
+    p->numberoptions = options;
 }
 
 /*!
@@ -634,7 +742,7 @@ void QLocale::setNumberOptions(NumberOptions options)
 */
 QLocale::NumberOptions QLocale::numberOptions() const
 {
-    return numberoptions;
+    return p->numberoptions;
 }
 
 /*!
@@ -705,7 +813,7 @@ QString QLocale::createSeparatedList(const QStringList &list) const
 
 void QLocale::setDefault(const QLocale &locale)
 {
-    default_index = locale.index;
+    default_locale = locale.bcp47Name();
     default_number_options = locale.numberOptions();
 
 #ifdef QT_STD_LOCALE
@@ -961,7 +1069,7 @@ uint QLocale::toUInt(const QString &s, bool *ok, int base) const
 qlonglong QLocale::toLongLong(const QString &s, bool *ok, int base) const
 {
     QLocalePrivate::GroupSeparatorMode mode
-        = numberoptions & RejectGroupSeparator
+        = p->numberoptions & RejectGroupSeparator
             ? QLocalePrivate::FailOnGroupSeparators
             : QLocalePrivate::ParseGroupSeparators;
 
@@ -989,7 +1097,7 @@ qlonglong QLocale::toLongLong(const QString &s, bool *ok, int base) const
 qulonglong QLocale::toULongLong(const QString &s, bool *ok, int base) const
 {
     QLocalePrivate::GroupSeparatorMode mode
-        = numberoptions & RejectGroupSeparator
+        = p->numberoptions & RejectGroupSeparator
             ? QLocalePrivate::FailOnGroupSeparators
             : QLocalePrivate::ParseGroupSeparators;
 
@@ -1048,7 +1156,7 @@ float QLocale::toFloat(const QString &s, bool *ok) const
 double QLocale::toDouble(const QString &s, bool *ok) const
 {
     QLocalePrivate::GroupSeparatorMode mode
-        = numberoptions & RejectGroupSeparator
+        = p->numberoptions & RejectGroupSeparator
             ? QLocalePrivate::FailOnGroupSeparators
             : QLocalePrivate::ParseGroupSeparators;
 
@@ -1063,7 +1171,7 @@ double QLocale::toDouble(const QString &s, bool *ok) const
 
 QString QLocale::toString(qlonglong i) const
 {
-    int flags = numberoptions & OmitGroupSeparator
+    int flags = p->numberoptions & OmitGroupSeparator
                     ? 0
                     : QLocalePrivate::ThousandsGroup;
 
@@ -1078,7 +1186,7 @@ QString QLocale::toString(qlonglong i) const
 
 QString QLocale::toString(qulonglong i) const
 {
-    int flags = numberoptions & OmitGroupSeparator
+    int flags = p->numberoptions & OmitGroupSeparator
                     ? 0
                     : QLocalePrivate::ThousandsGroup;
 
@@ -1485,7 +1593,7 @@ QString QLocale::toString(double i, char f, int prec) const
             break;
     }
 
-    if (!(numberoptions & OmitGroupSeparator))
+    if (!(p->numberoptions & OmitGroupSeparator))
         flags |= QLocalePrivate::ThousandsGroup;
     return d()->doubleToString(i, prec, form, -1, flags);
 }
@@ -1531,6 +1639,7 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
         return QList<QLocale>() << QLocale(QLocale::C);
 
     QList<QLocale> result;
+#if 0 // TODO:
     for (qint16 i = 0; i < localeTblSize; i++) {
         if ((language == QLocale::AnyLanguage || localeTbl[i].m_language == language)
             && (script == QLocale::AnyScript || localeTbl[i].m_script == script)
@@ -1539,6 +1648,7 @@ QList<QLocale> QLocale::matchingLocales(QLocale::Language language,
             result.append(locale);
         }
     }
+#endif
     return result;
 }
 
@@ -1561,10 +1671,8 @@ QList<QLocale::Country> QLocale::countriesForLanguage(Language language)
         return result;
     }
 
-    for (qint16 i = 0; i < localeTblSize; i++) {
-        if (localeTbl[i].m_language == language) {
-            result.append(localeTbl[i].m_country);
-        }
+    foreach (const QLocale &locale, matchingLocales(language, QLocale::AnyScript, QLocale::AnyCountry)) {
+        result.append(locale.country());
     }
 
     return result;
@@ -1688,16 +1796,6 @@ Qt::DayOfWeek QLocale::firstDayOfWeek() const
     return d()->m_first_day_of_week;
 }
 
-QLocale::MeasurementSystem QLocalePrivate::measurementSystem() const
-{
-    for (qint16 i = 0; i < imperialTblSize; ++i) {
-        if (imperialTbl[i] == m_country) {
-            return QLocale::ImperialSystem;
-        }
-    }
-    return QLocale::MetricSystem;
-}
-
 /*!
     \since 4.8
 
@@ -1723,7 +1821,12 @@ QList<Qt::DayOfWeek> QLocale::weekdays() const
 */
 QLocale::MeasurementSystem QLocale::measurementSystem() const
 {
-    return d()->measurementSystem();
+    for (qint16 i = 0; i < imperialTblSize; ++i) {
+        if (imperialTbl[i] == d()->m_country) {
+            return QLocale::ImperialSystem;
+        }
+    }
+    return QLocale::MetricSystem;
 }
 
 /*!

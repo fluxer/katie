@@ -57,6 +57,10 @@ QT_BEGIN_NAMESPACE
 class Q_CORE_EXPORT QLocalePrivate
 {
 public:
+    QLocalePrivate(const QString &name);
+    QLocalePrivate(QLocale::Language language, QLocale::Script script,
+                   QLocale::Country country);
+
     QChar decimal() const { return QChar(m_decimal); }
     QChar group() const { return QChar(m_group); }
     QChar list() const { return QChar(m_list); }
@@ -73,13 +77,7 @@ public:
     static QLocale::Country codeToCountry(const QString &code);
     static void getLangAndCountry(const QString &name, QLocale::Language &lang,
                                   QLocale::Script &script, QLocale::Country &cntry);
-    static const QLocalePrivate *findLocale(QLocale::Language language,
-                                            QLocale::Script script,
-                                            QLocale::Country country);
-    static int findSystemIndex();
-
-
-    QLocale::MeasurementSystem measurementSystem() const;
+    static QString findSystem();
 
     enum DoubleForm {
         DFExponent = 0,
@@ -157,54 +155,55 @@ public:
     QString dateTimeToString(const QString &format, const QDate *date, const QTime *time,
                              const QLocale *q) const;
 
-    const QLocale::Language m_language;
-    const QLocale::Script m_script;
-    const QLocale::Country m_country;
-    const Qt::DayOfWeek m_first_day_of_week;
-    const Qt::DayOfWeek m_weekend_start;
-    const Qt::DayOfWeek m_weekend_end;
-    const ushort m_decimal;
-    const ushort m_group;
-    const ushort m_list;
-    const ushort m_percent;
-    const ushort m_minus;
-    const ushort m_plus;
-    const ushort m_exponential;
-    const ushort m_currency_digits;
-    const uint m_zero;
-    const uint m_quotation_start;
-    const uint m_quotation_end;
-    const uint m_alternate_quotation_start;
-    const uint m_alternate_quotation_end;
-    const char* m_language_endonym;
-    const char* m_country_endonym;
-    const char* m_list_pattern_part_start;
-    const char* m_list_pattern_part_mid;
-    const char* m_list_pattern_part_end;
-    const char* m_list_pattern_part_two;
-    const char* m_short_date_format;
-    const char* m_long_date_format;
-    const char* m_short_time_format;
-    const char* m_long_time_format;
-    const char* m_am;
-    const char* m_pm;
-    const char* m_currency_symbol;
-    const char* m_currency_format;
-    const char* m_currency_negative_format;
-    const char* m_currency_iso_code;
-    const char* m_currency_display_name;
-    const char* m_standalone_short_month_names[12];
-    const char* m_standalone_long_month_names[12];
-    const char* m_standalone_narrow_month_names[12];
-    const char* m_short_month_names[12];
-    const char* m_long_month_names[12];
-    const char* m_narrow_month_names[12];
-    const char* m_standalone_short_day_names[7];
-    const char* m_standalone_long_day_names[7];
-    const char* m_standalone_narrow_day_names[7];
-    const char* m_short_day_names[7];
-    const char* m_long_day_names[7];
-    const char* m_narrow_day_names[7];
+    QLocale::NumberOptions numberoptions;
+    QLocale::Language m_language;
+    QLocale::Script m_script;
+    QLocale::Country m_country;
+    Qt::DayOfWeek m_first_day_of_week;
+    Qt::DayOfWeek m_weekend_start;
+    Qt::DayOfWeek m_weekend_end;
+    ushort m_decimal;
+    ushort m_group;
+    ushort m_list;
+    ushort m_percent;
+    ushort m_minus;
+    ushort m_plus;
+    ushort m_exponential;
+    ushort m_currency_digits;
+    uint m_zero;
+    uint m_quotation_start;
+    uint m_quotation_end;
+    uint m_alternate_quotation_start;
+    uint m_alternate_quotation_end;
+    char* m_language_endonym;
+    char* m_country_endonym;
+    char* m_list_pattern_part_start;
+    char* m_list_pattern_part_mid;
+    char* m_list_pattern_part_end;
+    char* m_list_pattern_part_two;
+    char* m_short_date_format;
+    char* m_long_date_format;
+    char* m_short_time_format;
+    char* m_long_time_format;
+    char* m_am;
+    char* m_pm;
+    char* m_currency_symbol;
+    char* m_currency_format;
+    char* m_currency_negative_format;
+    char* m_currency_iso_code;
+    char* m_currency_display_name;
+    char* m_standalone_short_month_names[12];
+    char* m_standalone_long_month_names[12];
+    char* m_standalone_narrow_month_names[12];
+    char* m_short_month_names[12];
+    char* m_long_month_names[12];
+    char* m_narrow_month_names[12];
+    char* m_standalone_short_day_names[7];
+    char* m_standalone_long_day_names[7];
+    char* m_standalone_narrow_day_names[7];
+    char* m_short_day_names[7];
+    char* m_long_day_names[7];
+    char* m_narrow_day_names[7];
 };
 
 inline char QLocalePrivate::digitToCLocale(const QChar &in) const
