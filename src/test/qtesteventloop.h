@@ -69,10 +69,10 @@ public:
     }
 
 public Q_SLOTS:
-    void exitLoop();
+    inline void exitLoop();
 
 protected:
-    void timerEvent(QTimerEvent *e);
+    inline void timerEvent(QTimerEvent *e);
 
 private:
     bool _timeout;
@@ -81,7 +81,7 @@ private:
     QEventLoop loop;
 };
 
-void QTestEventLoop::enterLoop(int secs)
+inline void QTestEventLoop::enterLoop(int secs)
 {
     Q_ASSERT(!loop.isRunning());
 
@@ -91,7 +91,7 @@ void QTestEventLoop::enterLoop(int secs)
     loop.exec();
 }
 
-void QTestEventLoop::exitLoop()
+inline void QTestEventLoop::exitLoop()
 {
     if (timerId != -1)
         killTimer(timerId);
@@ -101,7 +101,7 @@ void QTestEventLoop::exitLoop()
     loop.exit();
 }
 
-void QTestEventLoop::timerEvent(QTimerEvent *e)
+inline void QTestEventLoop::timerEvent(QTimerEvent *e)
 {
     if (e->timerId() == timerId) {
         _timeout = true;
