@@ -50,10 +50,6 @@ public:
     {
         return serverLocalName() + QLatin1Char('.') + serverDomainName();
     }
-    static QString winServerName()
-    {
-        return serverName();
-    }
     static QString wildcardServerName()
     {
         return QLatin1String("qt-test-server.wildcard.dev.") + serverDomainName();
