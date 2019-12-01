@@ -69,7 +69,6 @@ struct WriteIncludes : public TreeWalker
 //
 // include hints
 //
-    void acceptIncludes(DomIncludes *node);
     void acceptInclude(DomInclude *node);
 
     bool scriptsActivated() const { return m_scriptsActivated; }
