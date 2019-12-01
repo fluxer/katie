@@ -1452,11 +1452,6 @@ public:
         switch (type) {
         case DateTimeFormatLong: return QLatin1String("dddd ddd dd d MMMM MMM MM M yyyy hh:mm:ss.zzz");
         case DateTimeFormatShort: return QLatin1String("d M yy h:m");
-        case DateTimeToStringLong:
-        case DateTimeToStringShort:
-            return in.toDateTime().toString(type == DateTimeToStringShort
-                                            ? QLatin1String("dMyyhm")
-                                            : QLatin1String("ddMMyyyyhhmmsszzz"));
         default:
             break;
         }
@@ -1469,16 +1464,10 @@ public:
 void tst_QLocale::queryDateTime()
 {
     SystemLocale loc;
-    QCOMPARE(QLocale::system().dateTimeFormat(QLocale::LongFormat),
-             loc.query(QSystemLocale::DateTimeFormatLong, QVariant()).toString());
-    QCOMPARE(QLocale::system().dateTimeFormat(QLocale::ShortFormat),
-             loc.query(QSystemLocale::DateTimeFormatShort, QVariant()).toString());
-    QCOMPARE(QLocale::system().toString(QDateTime(QDate(1974, 12, 1), QTime(1, 2, 3, 4)), QLocale::ShortFormat),
-             QString("1127412"));
-    QCOMPARE(QLocale::system().toString(QDateTime(QDate(1974, 12, 1), QTime(1, 2, 3, 4)), QLocale::NarrowFormat),
-             QLocale::system().toString(QDateTime(QDate(1974, 12, 1), QTime(1, 2, 3, 4)), QLocale::ShortFormat));
-    QCOMPARE(QLocale::system().toString(QDateTime(QDate(1974, 12, 1), QTime(1, 2, 3, 4)), QLocale::LongFormat),
-             QString("01121974010203004"));
+    QCOMPARE(loc.query(QSystemLocale::DateTimeFormatLong, QVariant()).toString(),
+             QLatin1String("dddd ddd dd d MMMM MMM MM M yyyy hh:mm:ss.zzz"));
+    QCOMPARE(loc.query(QSystemLocale::DateTimeFormatShort, QVariant()).toString(),
+             QLatin1String("d M yy h:m"));
 }
 
 void tst_QLocale::queryMeasureSystem_data()

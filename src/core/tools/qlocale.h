@@ -1421,16 +1421,13 @@ public:
     QString quoteString(const QStringRef &str, QuotationStyle style = StandardQuotation) const;
 
     QString createSeparatedList(const QStringList &strl) const;
+
 private:
     friend class QLocalePrivate;
-    // ### We now use this field to pack an index into locale_data and NumberOptions.
-    // ### Qt 5: change to a QLocaleData *d; uint numberOptions.
-    struct Data {
-        quint16 index;
-        QLocale::NumberOptions numberOptions;
-    };
 
-    Data p;
+    quint16 index;
+    QLocale::NumberOptions numberoptions;
+
     const QLocalePrivate *d() const;
 };
 Q_DECLARE_TYPEINFO(QLocale, Q_MOVABLE_TYPE);
