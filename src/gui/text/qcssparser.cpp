@@ -343,23 +343,14 @@ static const QCssKnownValue styleFeatures[NumKnownStyleFeatures - 1] = {
     { "none", StyleFeature_None }
 };
 
-static inline bool operator<(const QString &name, const QCssKnownValue &prop)
+static inline quint64 findKnownValue(const QString &name, const QCssKnownValue *iter, int numValues)
 {
-    return QString::compare(name, QLatin1String(prop.name), Qt::CaseInsensitive) < 0;
-}
-
-static inline bool operator<(const QCssKnownValue &prop, const QString &name)
-{
-    return QString::compare(QLatin1String(prop.name), name, Qt::CaseInsensitive) < 0;
-}
-
-static quint64 findKnownValue(const QString &name, const QCssKnownValue *start, int numValues)
-{
-    const QCssKnownValue *end = &start[numValues - 1];
-    const QCssKnownValue *prop = qBinaryFind(start, end, name);
-    if (prop == end)
-        return 0;
-    return prop->id;
+    for (int i = 0; i < numValues; i++) {
+        if (name.compare(QLatin1String(iter[i].name), Qt::CaseInsensitive) == 0) {
+            return iter[i].id;
+        }
+    }
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
