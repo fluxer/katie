@@ -1,4 +1,4 @@
-%pure_parser
+%pure-parser
 %lex-param { void *globalPtr }
 %parse-param { void *globalPtr }
 

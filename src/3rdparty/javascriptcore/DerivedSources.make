@@ -27,11 +27,8 @@
 VPATH = \
     $(JavaScriptCore) \
     $(JavaScriptCore)/parser \
-    $(JavaScriptCore)/pcre \
-    $(JavaScriptCore)/docs \
     $(JavaScriptCore)/runtime \
-    $(JavaScriptCore)/interpreter \
-    $(JavaScriptCore)/jit \
+    $(JavaScriptCore)/interpreter
 #
 
 .PHONY : all
@@ -45,8 +42,7 @@ all : \
     NumberConstructor.lut.h \
     RegExpConstructor.lut.h \
     RegExpObject.lut.h \
-    StringPrototype.lut.h \
-    docs/bytecode.html \
+    StringPrototype.lut.h
 #
 
 # lookup tables for classes
@@ -59,12 +55,9 @@ Lexer.lut.h: create_hash_table Keywords.table
 # JavaScript language grammar
 
 Grammar.cpp: Grammar.y
-	bison -d -p jscyy $< -o $@ > bison_out.txt 2>&1
+	bison --no-lines -d -p jscyy $< -o $@ > bison_out.txt 2>&1
 	perl -p -e 'END { if ($$conflict) { unlink "Grammar.cpp"; die; } } $$conflict ||= /conflict/' < bison_out.txt
 	touch Grammar.cpp.h
 	touch Grammar.hpp
 	cat Grammar.cpp.h Grammar.hpp > Grammar.h
 	rm -f Grammar.cpp.h Grammar.hpp bison_out.txt
-
-docs/bytecode.html: make-bytecode-docs.pl Interpreter.cpp 
-	perl $^ $@
