@@ -55,16 +55,6 @@ WriteIconDeclaration::WriteIconDeclaration(Uic *uic)
 {
 }
 
-void WriteIconDeclaration::acceptUI(DomUI *node)
-{
-    TreeWalker::acceptUI(node);
-}
-
-void WriteIconDeclaration::acceptImages(DomImages *images)
-{
-    TreeWalker::acceptImages(images);
-}
-
 void WriteIconDeclaration::acceptImage(DomImage *image)
 {
     QString name = image->attributeName();

@@ -53,7 +53,6 @@ public:
     ExtractImages(const Option &opt);
 
     void acceptUI(DomUI *node);
-    void acceptImages(DomImages *images);
     void acceptImage(DomImage *image);
 
 private:
