@@ -40,7 +40,7 @@ public:
 
     static QString serverLocalName()
     {
-        return QString::fromLatin1("httpbin");
+        return QString::fromLatin1("w3");
     }
     static QString serverDomainName()
     {
@@ -66,7 +66,7 @@ public:
 
     static QString serverIPs()
     {
-        return QLatin1String("3.232.181.210 54.172.95.6");
+        return QLatin1String("128.30.52.100 2603:400A:FFFF:804:801E:34:0:64");
     }
 
     static bool compareReplyIMAP(QByteArray const& actual)
