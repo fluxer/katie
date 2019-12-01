@@ -3,6 +3,13 @@
 import os, sys, subprocess
 import xml.etree.ElementTree as ET
 
+def medianvalues(v1, v2):
+    maxv = 1000000
+    if v1 > maxv and v2 > maxv:
+        v1 = v1 / 1024
+        v2 = v2 / 1024
+    return (v1, v2)
+
 if len(sys.argv) < 3:
     print("usage: <path to Katie test> <path to Qt4 test>")
     sys.exit(1)
@@ -82,6 +89,7 @@ for ktag in katiemap:
     iqvalue = float(qvalue)
     tagalign = tagmax - len(ktag) + 1
     winner = 'Katie'
+    ikvalue, iqvalue = medianvalues(ikvalue, iqvalue)
     if ikvalue > iqvalue:
         winner = 'Qt4'
     ktotal += ikvalue
