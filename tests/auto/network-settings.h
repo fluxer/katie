@@ -32,7 +32,16 @@
 ****************************************************************************/
 
 #include <QString>
-#include <QtNetwork/QHostInfo>
+#include <QHostInfo>
+#include <QTcpServer>
+
+#if !defined(QT_NO_GETADDRINFO)
+#  include <sys/types.h>
+# if defined(Q_OS_UNIX)
+#  include <sys/socket.h>
+# endif
+#  include <netdb.h>
+#endif
 
 class QtNetworkSettings
 {
@@ -40,7 +49,7 @@ public:
 
     static QString serverLocalName()
     {
-        return QString::fromLatin1("httpbin");
+        return QString::fromLatin1("w3");
     }
     static QString serverDomainName()
     {
@@ -49,10 +58,6 @@ public:
     static QString serverName()
     {
         return serverLocalName() + QLatin1Char('.') + serverDomainName();
-    }
-    static QString winServerName()
-    {
-        return serverName();
     }
     static QString wildcardServerName()
     {
@@ -66,7 +71,10 @@ public:
 
     static QString serverIPs()
     {
-        return QLatin1String("3.232.181.210 54.172.95.6");
+        if (supportsIPv6() && systemSupportsIPv6()) {
+            return QLatin1String("128.30.52.100 2603:400A:FFFF:804:801E:34:0:64");
+        }
+        return QLatin1String("128.30.52.100");
     }
 
     static bool compareReplyIMAP(QByteArray const& actual)
@@ -103,6 +111,39 @@ public:
 
         return false;
     }
+
+    static bool supportsIPv6() {
+        QTcpServer server;
+        if (server.listen(QHostAddress("::1"))) {
+            return true;
+        }
+        return false;
+    }
+
+    static bool systemSupportsIPv6() {
+#if !defined(QT_NO_GETADDRINFO)
+        // check if the system getaddrinfo can do IPv6 lookups
+        struct addrinfo hint, *result = 0;
+        memset(&hint, 0, sizeof hint);
+        hint.ai_family = AF_UNSPEC;
+# ifdef AI_ADDRCONFIG
+        hint.ai_flags = AI_ADDRCONFIG;
+# endif
+
+        int res = getaddrinfo("::1", "80", &hint, &result);
+        if (res == 0) {
+            // this test worked
+            freeaddrinfo(result);
+            res = getaddrinfo("aaaa-single.test.qt-project.org", "80", &hint, &result);
+            if (res == 0 && result != 0 && result->ai_family != AF_INET) {
+                freeaddrinfo(result);
+                return true;
+            }
+        }
+#endif // QT_NO_GETADDRINFO
+        return false;
+    }
+
 };
 
 // ### remove, only Symbian needed that

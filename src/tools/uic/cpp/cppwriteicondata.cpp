@@ -101,16 +101,6 @@ WriteIconData::WriteIconData(Uic *uic)
 {
 }
 
-void WriteIconData::acceptUI(DomUI *node)
-{
-    TreeWalker::acceptUI(node);
-}
-
-void WriteIconData::acceptImages(DomImages *images)
-{
-    TreeWalker::acceptImages(images);
-}
-
 void WriteIconData::acceptImage(DomImage *image)
 {
     // Limit line length when writing code.

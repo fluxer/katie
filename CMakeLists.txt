@@ -156,6 +156,12 @@ option(WITH_NSL "Build NSL support" ON)
 add_feature_info(nsl WITH_NSL "build NSL support")
 
 # optional features
+option(KATIE_TESTS "Build automatic tests" OFF)
+add_feature_info(tests KATIE_TESTS "build automatic tests")
+
+option(KATIE_BENCHMARKS "Build automatic benchmarks" OFF)
+add_feature_info(benchmarks KATIE_BENCHMARKS "build automatic benchmarks")
+
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
@@ -419,7 +425,7 @@ set_package_properties(MySQL PROPERTIES
     TYPE OPTIONAL
 )
 
-if(ENABLE_TESTING)
+if(KATIE_TESTS OR KATIE_BENCHMARKS)
     message(WARNING
         "\nUnless it is intentionall you should not enable testing, deploying tests builds"
         " is a bad idea."
@@ -533,7 +539,7 @@ add_subdirectory(src/tools)
 
 add_subdirectory(translations)
 
-if(ENABLE_TESTING)
+if(KATIE_TESTS OR KATIE_BENCHMARKS)
     add_subdirectory(tests)
 endif()
 

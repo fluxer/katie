@@ -938,11 +938,6 @@ void WriteIncludes::acceptCustomWidgets(DomCustomWidgets *node)
     Q_UNUSED(node);
 }
 
-void WriteIncludes::acceptIncludes(DomIncludes *node)
-{
-    TreeWalker::acceptIncludes(node);
-}
-
 void WriteIncludes::acceptInclude(DomInclude *node)
 {
     bool global = true;

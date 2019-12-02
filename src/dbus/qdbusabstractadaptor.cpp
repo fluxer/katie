@@ -258,11 +258,8 @@ void QDBusAdaptorConnector::polish()
         return;                 // avoid working multiple times if multiple adaptors were added
 
     waitingForPolish = false;
-    const QObjectList &objs = parent()->children();
-    QObjectList::ConstIterator it = objs.constBegin();
-    QObjectList::ConstIterator end = objs.constEnd();
-    for ( ; it != end; ++it) {
-        QDBusAbstractAdaptor *adaptor = qobject_cast<QDBusAbstractAdaptor *>(*it);
+    foreach (QObject *obj, parent()->children()) {
+        QDBusAbstractAdaptor *adaptor = qobject_cast<QDBusAbstractAdaptor *>(obj);
         if (adaptor)
             addAdaptor(adaptor);
     }

@@ -106,11 +106,6 @@ void ExtractImages::acceptUI(DomUI *node)
     }
 }
 
-void ExtractImages::acceptImages(DomImages *images)
-{
-    TreeWalker::acceptImages(images);
-}
-
 void ExtractImages::acceptImage(DomImage *image)
 {
     QString format = image->elementData()->attributeFormat();

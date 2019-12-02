@@ -94,7 +94,7 @@ if(NOT bsymbolic_functions_test OR NOT CMAKE_POSITION_INDEPENDENT_CODE)
 endif()
 
 if(NOT KATIE_KEY)
-    set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")
+    set(KATIE_KEY "${KATIE_ARCHITECTURE}-${KATIE_PLATFORM}-${KATIE_COMPILER}")
 endif()
 
 # Set compiler standard to C++ 11, appending to CMAKE_CXX_FLAGS is done so that try_compile() is

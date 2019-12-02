@@ -86,11 +86,6 @@ QString WriteIconInitialization::iconFromDataFunction()
     return QLatin1String("qt_get_icon");
 }
 
-void WriteIconInitialization::acceptImages(DomImages *images)
-{
-    TreeWalker::acceptImages(images);
-}
-
 void WriteIconInitialization::acceptImage(DomImage *image)
 {
     QString img = image->attributeName() + QLatin1String("_data");

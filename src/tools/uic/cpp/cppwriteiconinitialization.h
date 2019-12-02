@@ -54,7 +54,6 @@ public:
     WriteIconInitialization(Uic *uic);
 
     void acceptUI(DomUI *node);
-    void acceptImages(DomImages *images);
     void acceptImage(DomImage *image);
 
     static QString iconFromDataFunction();
