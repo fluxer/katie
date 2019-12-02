@@ -47,18 +47,6 @@
 #include <QtNetwork/qnetworksession.h>
 #endif
 
-#include <time.h>
-#include <unistd.h>
-#include <signal.h>
-
-#if !defined(QT_NO_GETADDRINFO)
-#  include <sys/types.h>
-# if defined(Q_OS_UNIX)
-#  include <sys/socket.h>
-# endif
-#  include <netdb.h>
-#endif
-
 #include "../network-settings.h"
 #include "../../shared/util.h"
 
@@ -172,35 +160,8 @@ void tst_QHostInfo::initTestCase()
     }
 #endif
 
-    ipv6Available = false;
-    ipv6LookupsAvailable = false;
-
-    QTcpServer server;
-    if (server.listen(QHostAddress("::1"))) {
-        // We have IPv6 support
-        ipv6Available = true;
-    }
-
-#if !defined(QT_NO_GETADDRINFO)
-    // check if the system getaddrinfo can do IPv6 lookups
-    struct addrinfo hint, *result = 0;
-    memset(&hint, 0, sizeof hint);
-    hint.ai_family = AF_UNSPEC;
-# ifdef AI_ADDRCONFIG
-    hint.ai_flags = AI_ADDRCONFIG;
-# endif
-
-    int res = getaddrinfo("::1", "80", &hint, &result);
-    if (res == 0) {
-        // this test worked
-        freeaddrinfo(result);
-        res = getaddrinfo("aaaa-single" TEST_DOMAIN, "80", &hint, &result);
-        if (res == 0 && result != 0 && result->ai_family != AF_INET) {
-            freeaddrinfo(result);
-            ipv6LookupsAvailable = true;
-        }
-    }
-#endif
+    ipv6Available = QtNetworkSettings::supportsIPv6();
+    ipv6LookupsAvailable = QtNetworkSettings::systemSupportsIPv6();
 
     // run each testcase with and without test enabled
     QTest::addColumn<bool>("cache");
