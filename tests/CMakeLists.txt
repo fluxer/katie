@@ -38,8 +38,15 @@ include_directories(
 # FIXME: most tests are not namespaces aware
 add_definitions(-DQT_NAMESPACE_COMPAT)
 
-file(GLOB_RECURSE CMAKEFILES "${CMAKE_CURRENT_SOURCE_DIR}/*/CMakeLists.txt")
-foreach(cmakefile ${CMAKEFILES})
+set(AUTOCMAKEFILES)
+set(BENCHMARKSMAKEFILES)
+if(KATIE_TESTS)
+    file(GLOB_RECURSE AUTOCMAKEFILES "${CMAKE_CURRENT_SOURCE_DIR}/auto/*/CMakeLists.txt")
+endif()
+if(KATIE_BENCHMARKS)
+    file(GLOB_RECURSE BENCHMARKSMAKEFILES "${CMAKE_CURRENT_SOURCE_DIR}/benchmarks/*/CMakeLists.txt")
+endif()
+foreach(cmakefile ${AUTOCMAKEFILES} ${BENCHMARKSMAKEFILES})
     get_filename_component(dirname ${cmakefile} PATH)
     # message(STATUS "Adding sub-directory: ${dirname}")
     add_subdirectory(${dirname})

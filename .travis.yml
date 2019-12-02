@@ -19,7 +19,7 @@ before_install:
     - sudo dpkg -i *.deb
 script:
     - mkdir build && cd build
-    - if [ "$CXX" == "clang++" ];then cmake ../ -GNinja -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -Wno-dev ;fi
-    - if [ "$CXX" == "g++" ];then cmake ../ -GNinja -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON -Wno-dev ;fi
+    - if [ "$CXX" == "clang++" ];then cmake ../ -GNinja -DCMAKE_BUILD_TYPE=Release -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON -Wno-dev ;fi
+    - if [ "$CXX" == "g++" ];then cmake ../ -GNinja -DCMAKE_BUILD_TYPE=Release -DKATIE_TESTS=ON -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON -Wno-dev ;fi
     - ninja
     - if [ "$CXX" == "g++" ];then ctest -V ;fi

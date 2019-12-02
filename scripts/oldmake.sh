@@ -17,9 +17,9 @@ mkdir -p "$cwd/../oldmake"
 cd "$cwd/../oldmake"
 
 tar -xaf "$cwd/$cmake.tar.gz"
-"$cmake/bin/cmake" ../ -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON $@
+"$cmake/bin/cmake" ../ -DCMAKE_BUILD_TYPE=Release -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON $@
 rm -rf *
 
 tar -xaf "$cwd/$cmake.tar.gz"
-"$cmake/bin/cmake" ../ -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON $@
+"$cmake/bin/cmake" ../ -DCMAKE_BUILD_TYPE=Release -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON $@
 # not making on purpose
