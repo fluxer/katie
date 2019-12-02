@@ -688,6 +688,7 @@ void tst_QThreadPool::reserveAndStart() // QTBUG-21051
 
         void run()
         {
+            QTest::qSleep(3000);
             count.ref();
             waitForStarted.release();
         }
