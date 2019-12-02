@@ -54,6 +54,7 @@ endif()
 set(CPACK_PACKAGE_FILE_NAME "Katie-4.9.0-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_BUILD_TYPE}")
 include(CPack)
 
+# enable symbols visibility preset for all targets
 if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
     cmake_policy(SET CMP0063 NEW)
 endif()
