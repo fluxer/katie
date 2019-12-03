@@ -1022,35 +1022,6 @@ void QPalette::setColorGroup(ColorGroup cg, const QBrush &foreground, const QBru
     Use simple assignment instead.
 */
 
-/*!
-    \fn void QPalette::setNormal(const QColorGroup &colorGroup)
-
-    Sets the normal color group to \a colorGroup.
-
-    \sa QColorGroup
-*/
-
-/*!
-    \fn void QPalette::setActive(const QColorGroup &colorGroup)
-
-    Sets the active color group to \a colorGroup.
-    \sa QColorGroup
-*/
-
-/*!
-    \fn void QPalette::setDisabled(const QColorGroup &colorGroup)
-
-    Sets the disabled color group to \a colorGroup.
-    \sa QColorGroup
-*/
-
-/*!
-    \fn void QPalette::setInactive(const QColorGroup &colorGroup)
-
-    Sets the inactive color group.
-    \sa QColorGroup
-*/
-
 QT_END_NAMESPACE
 
 
