@@ -61,7 +61,7 @@ QT_BEGIN_NAMESPACE
 static QString _q_escapeIdentifier(const QString &identifier) 
 {
     const int size = identifier.size();
-    if(size > 2 && identifier.at(0) != QLatin1Char('"') && identifier.at(size) != QLatin1Char('"')) {
+    if(size > 2 && identifier.at(0) != QLatin1Char('"') && identifier.at(size - 1) != QLatin1Char('"')) {
         QString res = identifier;
         res.replace(QLatin1Char('"'), QLatin1String("\"\""));
         res.prepend(QLatin1Char('"')).append(QLatin1Char('"'));
