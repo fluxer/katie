@@ -66,11 +66,6 @@ static void* threadEntryPoint(void* contextData)
 
 ThreadIdentifier createThread(ThreadFunction entryPoint, void* data, const char* name)
 {
-    // Visual Studio has a 31-character limit on thread names. Longer names will
-    // be truncated silently, but we'd like callers to know about the limit.
-    if (strlen(name) > 31)
-        qCritical("Thread name \"%s\" is longer than 31 characters and will be truncated by Visual Studio", name);
-
     NewThreadContext* context = new NewThreadContext(entryPoint, data, name);
 
     // Prevent the thread body from executing until we've established the thread identifier.
