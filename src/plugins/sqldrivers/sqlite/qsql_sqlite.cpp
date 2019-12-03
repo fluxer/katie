@@ -350,14 +350,8 @@ bool QSQLiteResult::prepare(const QString &query)
 
     const char *pzTail = NULL;
 
-#if (SQLITE_VERSION_NUMBER >= 3003011)
-    int res = sqlite3_prepare_v2(d->access, query.toUtf8().constData(), (query.size() + 1) * sizeof(char),
-                                   &d->stmt, &pzTail);
-#else
-    int res = sqlite3_prepare(d->access, query.toUtf8().constData(), (query.size() + 1) * sizeof(char),
-                                &d->stmt, &pzTail);
-#endif
-
+    int res = sqlite3_prepare_v2(d->access, query.toUtf8().constData(),
+                                 (query.size() + 1) * sizeof(char), &d->stmt, &pzTail);
     if (res != SQLITE_OK) {
         setLastError(qMakeError(d->access, QCoreApplication::translate("QSQLiteResult",
                      "Unable to execute statement"), QSqlError::StatementError, res));
