@@ -1379,8 +1379,6 @@ static inline void qt_print_backtrace()
             } else {
                 printf(" %s\n", sym);
             }
-            
-            
         } else {
             printf("qt_print_backtrace: unable to obtain symbol name for this frame\n");
         }
