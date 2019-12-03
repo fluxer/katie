@@ -268,19 +268,15 @@ public:
     {
         addDbs();
 
-        QStringList::Iterator it = dbNames.begin();
-
-        while ( it != dbNames.end() ) {
-            QSqlDatabase db = QSqlDatabase::database(( *it ), false );
-            qDebug() << "Opening:" << (*it);
+        foreach (const QString &name, dbNames) {
+            QSqlDatabase db = QSqlDatabase::database( name, false );
+            qDebug() << "Opening:" << name;
 
             if ( db.isValid() && !db.isOpen() ) {
                 if ( !db.open() ) {
-                    qWarning( "tst_Databases: Unable to open %s on %s:\n%s", qPrintable( db.driverName() ), qPrintable( *it ), qPrintable( db.lastError().databaseText() ) );
+                    qWarning( "tst_Databases: Unable to open %s on %s:\n%s", qPrintable( db.driverName() ), qPrintable( name ), qPrintable( db.lastError().databaseText() ) );
                     // well... opening failed, so we just ignore the server, maybe it is not running
-                    it = dbNames.erase( it );
-                } else {
-                    ++it;
+                    dbNames.removeAll( name );
                 }
             }
         }
@@ -288,15 +284,15 @@ public:
 
     void close()
     {
-        for ( QStringList::Iterator it = dbNames.begin(); it != dbNames.end(); ++it ) {
+        foreach (const QString &name, dbNames) {
             {
-                QSqlDatabase db = QSqlDatabase::database(( *it ), false );
+                QSqlDatabase db = QSqlDatabase::database( name, false );
 
                 if ( db.isValid() && db.isOpen() )
                     db.close();
             }
 
-            QSqlDatabase::removeDatabase(( *it ) );
+            QSqlDatabase::removeDatabase( name );
         }
 
         dbNames.clear();
