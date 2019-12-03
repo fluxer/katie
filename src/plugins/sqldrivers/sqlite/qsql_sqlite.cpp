@@ -349,9 +349,9 @@ bool QSQLiteResult::prepare(const QString &query)
     setSelect(false);
 
     const char *pzTail = NULL;
-
-    int res = sqlite3_prepare_v2(d->access, query.toUtf8().constData(),
-                                 (query.size() + 1) * sizeof(char), &d->stmt, &pzTail);
+    const QByteArray utf8query = query.toUtf8();
+    int res = sqlite3_prepare_v2(d->access, utf8query.constData(),
+                                 (utf8query.size() + 1) * sizeof(char), &d->stmt, &pzTail);
     if (res != SQLITE_OK) {
         setLastError(qMakeError(d->access, QCoreApplication::translate("QSQLiteResult",
                      "Unable to execute statement"), QSqlError::StatementError, res));
@@ -411,13 +411,14 @@ bool QSQLiteResult::exec()
                 case QVariant::String: {
                     // lifetime of string == lifetime of its qvariant
                     const QString *str = static_cast<const QString*>(value.constData());
-                    res = sqlite3_bind_text(d->stmt, i + 1, str->toUtf8().constData(),
-                                              (str->size()) * sizeof(char), SQLITE_STATIC);
+                    const QByteArray utfstr = str->toUtf8();
+                    res = sqlite3_bind_text(d->stmt, i + 1, utfstr.constData(),
+                                              (utfstr.size()) * sizeof(char), SQLITE_STATIC);
                     break; }
                 default: {
-                    QString str = value.toString();
+                    QByteArray str = value.toString().toUtf8();
                     // SQLITE_TRANSIENT makes sure that sqlite buffers the data
-                    res = sqlite3_bind_text(d->stmt, i + 1, str.toUtf8().constData(),
+                    res = sqlite3_bind_text(d->stmt, i + 1, str.constData(),
                                               (str.size()) * sizeof(char), SQLITE_TRANSIENT);
                     break; }
                 }
