@@ -2116,7 +2116,7 @@ QDataStream& operator<<(QDataStream &s, const QVariant::Type p)
 
 template <typename T>
 inline T qVariantToHelper(const QVariant::Private &d, QVariant::Type t,
-                          const QVariant::Handler *handler, T * = Q_NULLPTR)
+                          const QVariant::Handler *handler)
 {
     if (d.type == t)
         return *v_cast<T>(&d);
