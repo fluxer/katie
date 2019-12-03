@@ -2933,39 +2933,39 @@ bool QVariant::canConvert(Type t) const
     /* Hash */
     /* EasingCurve */
     } else if (currentType == QVariant::JsonValue) {
-        switch (t) {
-        case QMetaType::QString:
-        case QMetaType::Bool:
-        case QMetaType::Int:
-        case QMetaType::UInt:
-        case QMetaType::Double:
-        case QMetaType::Float:
+        switch (uint(t)) {
+        case QVariant::String:
+        case QVariant::Bool:
+        case QVariant::Int:
+        case QVariant::UInt:
+        case QVariant::Double:
+        case QVariant::Float:
         case QMetaType::ULong:
         case QMetaType::Long:
-        case QMetaType::LongLong:
-        case QMetaType::ULongLong:
+        case QVariant::LongLong:
+        case QVariant::ULongLong:
         case QMetaType::UShort:
         case QMetaType::UChar:
         case QMetaType::Char:
         case QMetaType::Short:
-        case QMetaType::QVariantList:
-        case QMetaType::QVariantMap:
-        case QMetaType::QVariantHash:
+        case QVariant::List:
+        case QVariant::Map:
+        case QVariant::Hash:
             return true;
         default:
             return false;
         }
     } else if (currentType == QVariant::JsonObject) {
         switch (t) {
-        case QMetaType::QVariantMap:
-        case QMetaType::QVariantHash:
+        case QVariant::Map:
+        case QVariant::Hash:
             return true;
         default:
             return false;
         }
     } else if (currentType == QVariant::JsonArray) {
-        switch (uint(t)) {
-        case QMetaType::QVariantList:
+        switch (t) {
+        case QVariant::List:
             return true;
         default:
             return false;
@@ -2974,7 +2974,7 @@ bool QVariant::canConvert(Type t) const
     }
 
     if (currentType > QVariant::LastCoreType || t > QVariant::LastCoreType) {
-        switch (t) {
+        switch (uint(t)) {
         case QVariant::Int:
             return currentType == QVariant::KeySequence
                    || currentType == QMetaType::ULong
