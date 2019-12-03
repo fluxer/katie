@@ -94,23 +94,6 @@ inline static bool testWhiteSpaceNames( const QString &name )
            || name.startsWith( QLatin1String("QMYSQL") );
 }
 
-inline static QString toHex( const QString& binary )
-{
-    QString str;
-    static char const hexchars[] = "0123456789ABCDEF";
-
-    for ( int i = 0; i < binary.size(); i++ ) {
-        ushort code = binary.at(i).unicode();
-        str += (QChar)(hexchars[ (code >> 12) & 0x0F ]);
-        str += (QChar)(hexchars[ (code >> 8) & 0x0F ]);
-        str += (QChar)(hexchars[ (code >> 4) & 0x0F ]);
-        str += (QChar)(hexchars[ code & 0x0F ]);
-    }
-
-    return str;
-}
-
-
 class tst_Databases
 {
 
