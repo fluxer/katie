@@ -53,7 +53,8 @@
 #endif
 
 #ifndef QT_NO_COMPRESS
-#define QT_CACHE_NORMALIZED_TYPE
+#  define QT_CACHE_NORMALIZED_TYPE
+#  include <qmutexlocker.h>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -167,6 +168,7 @@ static inline bool is_space(char s)
 #ifdef QT_CACHE_NORMALIZED_TYPE
 typedef QHash<quint32, QByteArray> QNormalizedTypeHash;
 Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
+Q_GLOBAL_STATIC(QMutex, qGlobalNormalizedTypeMutex)
 #endif
 
 // This code is shared with moc.cpp
@@ -174,11 +176,13 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 {
     const int len = e - t;
 #ifdef QT_CACHE_NORMALIZED_TYPE
+    QMutexLocker lock(qGlobalNormalizedTypeMutex());
     const quint32 cachekey = qCRC32(t, len);
     QByteArray cached = qGlobalNormalizedTypeHash()->value(cachekey);
     if (!cached.isEmpty()) {
         return cached;
     }
+    lock.unlock();
 #endif
 
     QByteArray result = QByteArray(t, len);
@@ -232,6 +236,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
     result.replace("unsigned char", "uchar");
 
 #ifdef QT_CACHE_NORMALIZED_TYPE
+    lock.relock();
     qGlobalNormalizedTypeHash()->insert(cachekey, result);
 #endif
 
