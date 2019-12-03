@@ -2660,91 +2660,6 @@ QVariantList QVariant::toList() const
     Use convert() instead.
 */
 
-
-static const quint32 qCanConvertMatrix[QVariant::LastCoreType + 1] =
-{
-/*Invalid*/     0,
-
-/*Bool*/          1 << QVariant::Double     | 1 << QVariant::Int        | 1 << QVariant::UInt
-                | 1 << QVariant::LongLong   | 1 << QVariant::ULongLong  | 1 << QVariant::ByteArray
-                | 1 << QVariant::String     | 1 << QVariant::Char,
-
-/*Int*/           1 << QVariant::UInt       | 1 << QVariant::String     | 1 << QVariant::Double
-                | 1 << QVariant::Bool       | 1 << QVariant::LongLong   | 1 << QVariant::ULongLong
-                | 1 << QVariant::Char       | 1 << QVariant::ByteArray,
-
-/*UInt*/          1 << QVariant::Int        | 1 << QVariant::String     | 1 << QVariant::Double
-                | 1 << QVariant::Bool       | 1 << QVariant::LongLong   | 1 << QVariant::ULongLong
-                | 1 << QVariant::Char       | 1 << QVariant::ByteArray,
-
-/*LLong*/         1 << QVariant::Int        | 1 << QVariant::String     | 1 << QVariant::Double
-                | 1 << QVariant::Bool       | 1 << QVariant::UInt       | 1 << QVariant::ULongLong
-                | 1 << QVariant::Char       | 1 << QVariant::ByteArray,
-
-/*ULlong*/        1 << QVariant::Int        | 1 << QVariant::String     | 1 << QVariant::Double
-                | 1 << QVariant::Bool       | 1 << QVariant::UInt       | 1 << QVariant::LongLong
-                | 1 << QVariant::Char       | 1 << QVariant::ByteArray,
-
-/*double*/        1 << QVariant::Int        | 1 << QVariant::String     | 1 << QVariant::ULongLong
-                | 1 << QVariant::Bool       | 1 << QVariant::UInt       | 1 << QVariant::LongLong
-                | 1 << QVariant::ByteArray,
-/*float*/         1 << QVariant::Int        | 1 << QVariant::String     | 1 << QVariant::ULongLong
-                | 1 << QVariant::Bool       | 1 << QVariant::UInt       | 1 << QVariant::LongLong
-                | 1 << QVariant::ByteArray,
-
-/*QChar*/         1 << QVariant::Int        | 1 << QVariant::UInt       | 1 << QVariant::LongLong
-                | 1 << QVariant::ULongLong,
-
-/*QMap*/          0,
-
-/*QList*/         1 << QVariant::StringList,
-
-/*QString*/       1 << QVariant::StringList | 1 << QVariant::ByteArray  | 1 << QVariant::Int
-                | 1 << QVariant::UInt       | 1 << QVariant::Bool       | 1 << QVariant::Double
-                | 1 << QVariant::Date       | 1 << QVariant::Time       | 1 << QVariant::DateTime
-                | 1 << QVariant::LongLong   | 1 << QVariant::ULongLong  | 1 << QVariant::Char
-                | 1 << QVariant::Url,
-
-/*QStringList*/   1 << QVariant::List       | 1 << QVariant::String,
-
-/*QByteArray*/    1 << QVariant::String     | 1 << QVariant::Int        | 1 << QVariant::UInt | 1 << QVariant::Bool
-                | 1 << QVariant::Double     | 1 << QVariant::LongLong   | 1 << QVariant::ULongLong,
-
-/*QBitArray*/     0,
-
-/*QDate*/         1 << QVariant::String     | 1 << QVariant::DateTime,
-
-/*QTime*/         1 << QVariant::String     | 1 << QVariant::DateTime,
-
-/*QDateTime*/     1 << QVariant::String     | 1 << QVariant::Date,
-
-/*QUrl*/          1 << QVariant::String,
-
-/*QLocale*/       0,
-
-/*QRect*/         1 << QVariant::RectF,
-
-/*QRectF*/        1 << QVariant::Rect,
-
-/*QSize*/         1 << QVariant::SizeF,
-
-/*QSizeF*/        1 << QVariant::Size,
-
-/*QLine*/         1 << QVariant::LineF,
-
-/*QLineF*/        1 << QVariant::Line,
-
-/*QPoint*/        1 << QVariant::PointF,
-
-/*QPointF*/       1 << QVariant::Point,
-
-/*QRegExp*/       0,
-
-/*QHash*/         0,
-
-/*QEasingCurve*/  0
-};
-
 /*!
     Returns true if the variant's type can be cast to the requested
     type, \a t. Such casting is done automatically when calling the
@@ -2775,18 +2690,250 @@ static const quint32 qCanConvertMatrix[QVariant::LastCoreType + 1] =
     \row \o \l Time \o \l String
     \row \o \l UInt \o \l Bool, \l Char, \l Double, \l Int, \l LongLong, \l String, \l ULongLong
     \row \o \l ULongLong \o \l Bool, \l Char, \l Double, \l Int, \l LongLong, \l String, \l UInt
+    \row \o \l JsonValue \o \l QString, \l Bool, \l Int, \l UInt, \l Double, \l Float, \l ULong
+                            \l Long, \l LongLong, \l ULongLong, \l UShort, \l UChar, \l Char, \l Short,
+                            \l List, \l Map, \l Hash
+    \row \o \l JsonObject \o \l Map, \l Hash
+    \row \o \l JsonArray \o \l List
     \endtable
 
     \sa convert()
 */
 bool QVariant::canConvert(Type t) const
 {
-    const uint currentType = d.type;
-    if (currentType == uint(t))
+    const int currentType = d.type;
+    if (currentType == t)
         return true;
 
-    if (currentType == QMetaType::QJsonValue) {
-        switch (uint(t)) {
+    if (t == QVariant::Invalid) {
+        return false;
+    } else if (t == QVariant::Bool) {
+        switch (currentType) {
+        case QVariant::Double:
+        case QVariant::Int:
+        case QVariant::UInt:
+        case QVariant::LongLong:
+        case QVariant::ULongLong:
+        case QVariant::ByteArray:
+        case QVariant::String:
+        case QVariant::Char:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Int) {
+        switch (currentType) {
+        case QVariant::UInt:
+        case QVariant::String:
+        case QVariant::Double:
+        case QVariant::Bool:
+        case QVariant::LongLong:
+        case QVariant::ULongLong:
+        case QVariant::Char:
+        case QVariant::ByteArray:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::UInt) {
+        switch (currentType) {
+        case QVariant::Int:
+        case QVariant::String:
+        case QVariant::Double:
+        case QVariant::Bool:
+        case QVariant::LongLong:
+        case QVariant::ULongLong:
+        case QVariant::Char:
+        case QVariant::ByteArray:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::LongLong) {
+        switch (currentType) {
+        case QVariant::Int:
+        case QVariant::String:
+        case QVariant::Double:
+        case QVariant::Bool:
+        case QVariant::UInt:
+        case QVariant::ULongLong:
+        case QVariant::Char:
+        case QVariant::ByteArray:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::ULongLong) {
+        switch (currentType) {
+        case QVariant::Int:
+        case QVariant::String:
+        case QVariant::Double:
+        case QVariant::Bool:
+        case QVariant::UInt:
+        case QVariant::LongLong:
+        case QVariant::Char:
+        case QVariant::ByteArray:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Double || t == QVariant::Float) {
+        switch (currentType) {
+        case QVariant::Int:
+        case QVariant::String:
+        case QVariant::ULongLong:
+        case QVariant::Bool:
+        case QVariant::UInt:
+        case QVariant::LongLong:
+        case QVariant::ByteArray:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Char) {
+        switch (currentType) {
+        case QVariant::Int:
+        case QVariant::UInt:
+        case QVariant::LongLong:
+        case QVariant::ULongLong:
+            return true;
+        default:
+            return false;
+        }
+    /* Map */
+    } else if (t == QVariant::List) {
+        switch (currentType) {
+        case QVariant::StringList:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::String) {
+        switch (currentType) {
+        case QVariant::StringList:
+        case QVariant::ByteArray:
+        case QVariant::Int:
+        case QVariant::UInt:
+        case QVariant::Bool:
+        case QVariant::Double:
+        case QVariant::Date:
+        case QVariant::Time:
+        case QVariant::DateTime:
+        case QVariant::LongLong:
+        case QVariant::ULongLong:
+        case QVariant::Char:
+        case QVariant::Url:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::StringList) {
+        switch (currentType) {
+        case QVariant::List:
+        case QVariant::String:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::ByteArray) {
+        switch (currentType) {
+        case QVariant::String:
+        case QVariant::Int:
+        case QVariant::UInt:
+        case QVariant::Bool:
+        case QVariant::Double:
+        case QVariant::LongLong:
+        case QVariant::ULongLong:
+            return true;
+        default:
+            return false;
+        }
+    /* BitArray */
+    } else if (t == QVariant::Date || t == QVariant::Time) {
+        switch (currentType) {
+        case QVariant::String:
+        case QVariant::DateTime:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::DateTime) {
+        switch (currentType) {
+        case QVariant::String:
+        case QVariant::Date:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Url) {
+        switch (currentType) {
+        case QVariant::String:
+            return true;
+        default:
+            return false;
+        }
+    /* Locale */
+    } else if (t == QVariant::Rect) {
+        switch (currentType) {
+        case QVariant::RectF:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::RectF) {
+        switch (currentType) {
+        case QVariant::Rect:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Size) {
+        switch (currentType) {
+        case QVariant::SizeF:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::SizeF) {
+        switch (currentType) {
+        case QVariant::Size:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Line) {
+        switch (currentType) {
+        case QVariant::LineF:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::LineF) {
+        switch (currentType) {
+        case QVariant::Line:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Point) {
+        switch (currentType) {
+        case QVariant::PointF:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::PointF) {
+        switch (currentType) {
+        case QVariant::Point:
+            return true;
+        default:
+            return false;
+        }
+    /* RegExp */
+    /* Hash */
+    /* EasingCurve */
+    } else if (currentType == QVariant::JsonValue) {
+        switch (t) {
         case QMetaType::QString:
         case QMetaType::Bool:
         case QMetaType::Int:
@@ -2808,14 +2955,26 @@ bool QVariant::canConvert(Type t) const
         default:
             return false;
         }
+    } else if (currentType == QVariant::JsonObject) {
+        switch (t) {
+        case QMetaType::QVariantMap:
+        case QMetaType::QVariantHash:
+            return true;
+        default:
+            return false;
+        }
+    } else if (currentType == QVariant::JsonArray) {
+        switch (uint(t)) {
+        case QMetaType::QVariantList:
+            return true;
+        default:
+            return false;
+        }
+    /* JsonDocument */
     }
-    if (currentType == QMetaType::QJsonArray)
-        return currentType == QMetaType::QVariantList;
-    if (currentType == QMetaType::QJsonObject)
-        return currentType == QMetaType::QVariantMap || currentType == QMetaType::QVariantHash;
 
     if (currentType > QVariant::LastCoreType || t > QVariant::LastCoreType) {
-        switch (uint(t)) {
+        switch (t) {
         case QVariant::Int:
             return currentType == QVariant::KeySequence
                    || currentType == QMetaType::ULong
@@ -2850,17 +3009,31 @@ bool QVariant::canConvert(Type t) const
         case QMetaType::UChar:
         case QMetaType::ULong:
         case QMetaType::Short:
-        case QMetaType::UShort:
-            return qCanConvertMatrix[QVariant::Int] & (1 << currentType) || currentType == QVariant::Int;
+        case QMetaType::UShort: {
+            // almost the same as Int case
+            switch (currentType) {
+                case QVariant::Int: // Int included
+                case QVariant::UInt:
+                case QVariant::String:
+                case QVariant::Double:
+                case QVariant::Bool:
+                case QVariant::LongLong:
+                case QVariant::ULongLong:
+                case QVariant::Char:
+                case QVariant::ByteArray:
+                    return true;
+                default:
+                    return false;
+            }
+        }
         default:
             return false;
         }
     }
 
-    if(t == String && currentType == StringList)
+    if (t == QVariant::String && currentType == QVariant::StringList)
         return v_cast<QStringList>(&d)->count() == 1;
-    else
-        return qCanConvertMatrix[t] & (1 << currentType);
+    return false;
 }
 
 /*!
