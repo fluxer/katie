@@ -928,6 +928,7 @@ const HB_ScriptEngine HB_ScriptEngines[] = {
     // Zawgyi
     { HB_BasicShape, 0},
 };
+static const int NumEngines = sizeof(HB_ScriptEngines)/sizeof(HB_ScriptEngine);
 
 void HB_GetCharAttributes(const HB_UChar16 *string, hb_uint32 stringLength,
                           const HB_ScriptItem *items, hb_uint32 numItems,
@@ -1493,12 +1494,14 @@ static const OTScripts ot_scripts [] = {
     // Zawgyi
     { DefaultScript, 0 },
 };
-enum { NumOTScripts = sizeof(ot_scripts)/sizeof(OTScripts) };
+static const int NumOTScripts = sizeof(ot_scripts)/sizeof(OTScripts);
 
 static HB_Bool checkScript(HB_Face face, int script)
 {
     assert(script <= HB_ScriptCount);
-    assert(NumOTScripts == HB_ScriptCount);
+    // HB_ScriptCount is the last script, first script is 0
+    assert((NumOTScripts - 1) == HB_ScriptCount);
+    assert((NumEngines - 1) == HB_ScriptCount);
 
     if (!face->gsub && !face->gpos)
         return false;
