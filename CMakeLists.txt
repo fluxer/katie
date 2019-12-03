@@ -157,7 +157,7 @@ add_feature_info(resolv WITH_RESOLV "build resolv support")
 option(WITH_NSL "Build NSL support" ON)
 add_feature_info(nsl WITH_NSL "build NSL support")
 
-option(WITH_UNWIND "Build Unwind support" ON)
+option(WITH_UNWIND "Build Unwind support" OFF)
 add_feature_info(unwind WITH_UNWIND "build Unwind support")
 
 # optional features
