@@ -1326,7 +1326,7 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('m', 'e', 'n', 'd'), 0 },
     // MeroiticCursive
     { HB_MAKE_TAG('m', 'e', 'r', 'c'), 0 },
-    // MeroiticHieroglyphs
+    // Meroitic
     { HB_MAKE_TAG('m', 'e', 'r', 'o'), 0 },
     // Modi
     { HB_MAKE_TAG('m', 'o', 'd', 'i'), 0 },
@@ -1390,7 +1390,7 @@ static const OTScripts ot_scripts [] = {
     { HB_MAKE_TAG('p', 'a', 'l', 'm'), 0 },
     // PauCinHau
     { HB_MAKE_TAG('p', 'a', 'u', 'c'), 0 },
-    // PhagsPa
+    // Phagspa
     { HB_MAKE_TAG('p', 'h', 'a', 'g'), 0 },
     // Phoenician
     { HB_MAKE_TAG('p', 'h', 'n', 'x'), 0 },
