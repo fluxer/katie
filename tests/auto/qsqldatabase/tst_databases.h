@@ -109,8 +109,8 @@ public:
     ~tst_Databases()
     {
         close();
-        for (int i = m_sqLiteFiles.size() - 1; i >= 0; --i) {
-            QFile sqLiteFile(m_sqLiteFiles.at(i));
+        foreach (const QString &sqlfile, m_sqLiteFiles) {
+            QFile sqLiteFile(sqlfile);
             if (sqLiteFile.exists() && !sqLiteFile.remove()) {
                 qWarning() << "Cannot remove " << QDir::toNativeSeparators(sqLiteFile.fileName())
                            << ':' << sqLiteFile.errorString();
@@ -125,14 +125,14 @@ public:
         QTest::addColumn<QString>( "dbName" );
         int count = 0;
 
-        for ( int i = 0; i < dbNames.count(); ++i ) {
-            QSqlDatabase db = QSqlDatabase::database( dbNames.at( i ) );
+        foreach (const QString &name, dbNames) {
+            QSqlDatabase db = QSqlDatabase::database( name );
 
             if ( !db.isValid() )
                 continue;
 
             if ( driverPrefix.isEmpty() || db.driverName().startsWith( driverPrefix ) ) {
-                QTest::newRow( dbNames.at( i ).toLatin1() ) << dbNames.at( i );
+                QTest::newRow( name.toLatin1() ) << name;
                 ++count;
             }
         }
@@ -146,16 +146,16 @@ public:
         QTest::addColumn<int>("submitpolicy_i");
         int count = 0;
 
-        for ( int i = 0; i < dbNames.count(); ++i ) {
-            QSqlDatabase db = QSqlDatabase::database( dbNames.at( i ) );
+        foreach (const QString &name, dbNames) {
+            QSqlDatabase db = QSqlDatabase::database( name );
 
             if ( !db.isValid() )
                 continue;
 
             if ( driverPrefix.isEmpty() || db.driverName().startsWith( driverPrefix ) ) {
-                QTest::newRow( QString("%1 [field]").arg(dbNames.at( i )).toLatin1() ) << dbNames.at( i ) << (int)QSqlTableModel::OnFieldChange;
-                QTest::newRow( QString("%1 [row]").arg(dbNames.at( i )).toLatin1() ) << dbNames.at( i ) << (int)QSqlTableModel::OnRowChange;
-                QTest::newRow( QString("%1 [manual]").arg(dbNames.at( i )).toLatin1() ) << dbNames.at( i ) << (int)QSqlTableModel::OnManualSubmit;
+                QTest::newRow( QString("%1 [field]").arg(name).toLatin1() ) << name << (int)QSqlTableModel::OnFieldChange;
+                QTest::newRow( QString("%1 [row]").arg(name).toLatin1() ) << name << (int)QSqlTableModel::OnRowChange;
+                QTest::newRow( QString("%1 [manual]").arg(name).toLatin1() ) << name << (int)QSqlTableModel::OnManualSubmit;
                 ++count;
             }
         }
