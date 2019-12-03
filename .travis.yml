@@ -13,7 +13,7 @@ services:
     - xvfb
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get install -qq ninja-build libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng-dev libjpeg-dev libtiff-dev libmng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libdbus-1-dev libicu-dev unixodbc-dev libpq-dev libpqtypes-dev libmysqld-dev libaio-dev libwrap0-dev liblz4-dev libsqlite3-dev xorg-dev
+    - sudo apt-get install -qq ninja-build libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng-dev libjpeg-dev libtiff-dev libmng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libdbus-1-dev libicu-dev unixodbc-dev libpq-dev libpqtypes-dev libmysqld-dev libaio-dev libwrap0-dev liblz4-dev libsqlite3-dev libunwind-dev xorg-dev
     - wget 'http://mirrors.kernel.org/ubuntu/pool/universe/libz/libzstd/libzstd1_1.3.1+dfsg-1~ubuntu0.16.04.1_amd64.deb'
     - wget 'http://mirrors.kernel.org/ubuntu/pool/universe/libz/libzstd/libzstd1-dev_1.3.1+dfsg-1~ubuntu0.16.04.1_amd64.deb'
     - sudo dpkg -i *.deb

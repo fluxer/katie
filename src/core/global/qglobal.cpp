@@ -56,6 +56,12 @@
 #  include <exception>
 #endif
 
+#ifndef QT_NO_UNWIND
+#  define UNW_LOCAL_ONLY
+#  include <libunwind.h>
+#  include <cxxabi.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 
@@ -1352,11 +1358,42 @@ void qBadAlloc()
     QT_THROW(std::bad_alloc());
 }
 
+static inline void qt_print_backtrace()
+{
+#ifndef QT_NO_UNWIND
+    unw_cursor_t cursor;
+    unw_context_t context;
+
+    unw_getcontext(&context);
+    unw_init_local(&cursor, &context);
+
+    while (unw_step(&cursor) > 0) {
+        unw_word_t offset;
+        char sym[256];
+        if (unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0) {
+            int status;
+            char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
+            if (status == 0) {
+                printf(" %s\n", demangled);
+                free(demangled);
+            } else {
+                printf(" %s\n", sym);
+            }
+            
+            
+        } else {
+            printf("qt_print_backtrace: unable to obtain symbol name for this frame\n");
+        }
+    }
+#endif
+}
+
 /*
   The Q_ASSERT macro calls this function when the test fails.
 */
 void qt_assert(const char *assertion, const char *file, int line)
 {
+    qt_print_backtrace();
     qFatal("ASSERT: \"%s\" in file %s, line %d", assertion, file, line);
 }
 
@@ -1365,6 +1402,7 @@ void qt_assert(const char *assertion, const char *file, int line)
 */
 void qt_assert_x(const char *where, const char *what, const char *file, int line)
 {
+    qt_print_backtrace();
     qFatal("ASSERT failure in %s: \"%s\", file %s, line %d", where, what, file, line);
 }
 

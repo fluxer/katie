@@ -321,6 +321,7 @@
 #cmakedefine QT_NO_UNDOSTACK
 #cmakedefine QT_NO_UNDOVIEW
 #cmakedefine QT_NO_UNSETENV
+#cmakedefine QT_NO_UNWIND
 #cmakedefine QT_NO_URLINFO
 #cmakedefine QT_NO_URL_CAST_FROM_STRING
 #cmakedefine QT_NO_VALIDATOR
