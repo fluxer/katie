@@ -1088,9 +1088,7 @@ QTextCodec *QIcuCodec::codecForUtf(const QByteArray &text, QTextCodec *defaultCo
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QIcuCodec::codecForText: ucnv_detectUnicodeSignature() failed %s", u_errorName(error));
         return defaultCodec;
-    }
-
-    if (name) {
+    } else if (name) {
         return QTextCodec::codecForName(name);
     }
 
