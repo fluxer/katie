@@ -114,7 +114,7 @@ namespace JSC {
 
         // NOTE: This method should only be used for *debugging* purposes as it
         // is neither Unicode safe nor free from side effects nor thread-safe.
-        char* ascii() const;
+        const char* ascii() const;
 
         /**
          * Convert the string to UTF-8, assuming it is UTF-16 encoded.

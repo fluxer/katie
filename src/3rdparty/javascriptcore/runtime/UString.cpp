@@ -343,7 +343,7 @@ bool UString::getCString(CStringBuffer& buffer) const
     return !(ored & 0xFF00);
 }
 
-char* UString::ascii() const
+const char* UString::ascii() const
 {
     static char* asciiBuffer = 0;
 
