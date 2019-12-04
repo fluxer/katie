@@ -171,6 +171,25 @@ Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
 Q_GLOBAL_STATIC(QMutex, qGlobalNormalizedTypeMutex)
 #endif
 
+static const struct TypeTblData {
+    const char* original;
+    const int originalsize;
+    const char* substitute;
+    const int substitutesize;
+} TypeTbl[] = {
+    // remove 'struct', 'class', and 'enum' in the middle
+    { " struct ", 8, " ", 1 },
+    { " class ", 7, " ", 1 },
+    { " enum ", 6, " ", 1 },
+    // substitute 'unsigned x' with those defined in global header
+    { "unsigned int", 12, "uint", 4 },
+    { "unsigned long long", 18, "ulonglong", 9 },
+    { "unsigned long", 13, "ulong", 5 },
+    { "unsigned short", 14, "ushort", 6 },
+    { "unsigned char", 13, "uchar", 5 }
+};
+static const qint16 TypeTblSize = sizeof(TypeTbl) / sizeof(TypeTblData);
+
 // This code is shared with moc.cpp
 static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 {
@@ -225,12 +244,11 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
         result.remove(0, 5);
     }
 
-    // substitute 'unsigned x' with those defined in global header
-    result.replace("unsigned int", "uint");
-    result.replace("unsigned long long", "ulonglong");
-    result.replace("unsigned long", "ulong");
-    result.replace("unsigned short", "ushort");
-    result.replace("unsigned char", "uchar");
+    // discard from table, does not use overload and avoids strlen() call
+    for (qint16 i = 0; i < TypeTblSize; i++) {
+        result.replace(TypeTbl[i].original, TypeTbl[i].originalsize,
+            TypeTbl[i].substitute, TypeTbl[i].substitutesize);
+     }
 
 #ifdef QT_CACHE_NORMALIZED_TYPE
     lock.relock();
