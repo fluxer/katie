@@ -193,18 +193,15 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
       'char * const *' into 'const char **' and we must beware of
       'Bar<const Bla>'.
     */
-    int searchindex = 1;
+    int searchindex = result.indexOf(" const", 1);
     while (searchindex > 0) {
-        searchindex = result.indexOf(" const", searchindex);
-        if (searchindex > 1) {
-            char prevchar = result.at(searchindex - 1);
-            if (prevchar != '*') {
-                result.remove(searchindex, 6);
-                if (!result.startsWith("const ")) {
-                    result.prepend("const ");
-                }
+        if (result.at(searchindex - 1) != '*') {
+            result.remove(searchindex, 6);
+            if (!result.startsWith("const ")) {
+                result.prepend("const ");
             }
         }
+        searchindex = result.indexOf(" const", searchindex + 1);
     }
 
     // convert const reference to value and const value to value
