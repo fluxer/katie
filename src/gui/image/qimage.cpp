@@ -4351,7 +4351,7 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
         image = QImage(); // null image
         return s;
     }
-    image = QImageReader(s.device(), 0).read();
+    image = QImageReader(s.device(), "png").read();
     return s;
 }
 #endif // QT_NO_DATASTREAM
