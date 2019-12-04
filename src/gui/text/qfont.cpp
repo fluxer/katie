@@ -2029,7 +2029,7 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
     s << font.d->request.family;
 
     double pointSize = font.d->request.pointSize;
-    qint32 pixelSize = font.d->request.pixelSize;
+    double pixelSize = font.d->request.pixelSize;
     s << pointSize;
     s << pixelSize;
 
@@ -2058,7 +2058,7 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     font.d = new QFontPrivate;
     font.resolve_mask = QFont::AllPropertiesResolved;
 
-    quint8 styleHint, styleStrategy = QFont::PreferDefault, bits;
+    qint8 styleHint, styleStrategy = QFont::PreferDefault, bits;
     qint8 weight;
 
     s >> font.d->request.family;
