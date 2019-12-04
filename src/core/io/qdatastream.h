@@ -282,6 +282,7 @@ QDataStream &operator>>(QDataStream &in, QSet<T> &set)
     set.clear();
     quint32 c;
     in >> c;
+    set.reserve(c);
     for (quint32 i = 0; i < c; ++i) {
         T t;
         in >> t;
@@ -310,6 +311,7 @@ Q_OUTOFLINE_TEMPLATE QDataStream &operator>>(QDataStream &in, QHash<Key, T> &has
 
     quint32 n;
     in >> n;
+    hash.reserve(n);
 
     for (quint32 i = 0; i < n; ++i) {
         if (in.status() != QDataStream::Ok)
