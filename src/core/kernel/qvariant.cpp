@@ -523,7 +523,7 @@ static qlonglong qMetaTypeNumber(const QVariant::Private *d)
         return qRound64(d->data.d);
 #ifndef QT_BOOTSTRAPPED
     case QMetaType::QJsonValue:
-        return v_cast<QJsonValue>(d)->toDouble();
+        return v_cast<QJsonValue>(d)->toDouble(0.0);
 #endif
     }
     Q_ASSERT(false);
@@ -565,7 +565,7 @@ static qlonglong qConvertToNumber(const QVariant::Private *d, bool *ok)
     case QMetaType::QJsonValue:
         if (!v_cast<QJsonValue>(d)->isDouble())
             break;
-        // no break
+        return qlonglong(v_cast<QJsonValue>(d)->toDouble(0.0));
 #endif
     case QVariant::Double:
     case QVariant::Int:
@@ -604,7 +604,7 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
     case QMetaType::QJsonValue:
         if (!v_cast<QJsonValue>(d)->isDouble())
             break;
-        // no break
+        return qulonglong(v_cast<QJsonValue>(d)->toDouble(0.0));
 #endif
     case QVariant::Double:
     case QVariant::Int:
