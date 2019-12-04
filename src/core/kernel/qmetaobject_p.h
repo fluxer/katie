@@ -176,8 +176,8 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 {
     const int len = e - t;
 #ifdef QT_CACHE_NORMALIZED_TYPE
-    QMutexLocker lock(qGlobalNormalizedTypeMutex());
     const quint32 cachekey = qCRC32(t, len);
+    QMutexLocker lock(qGlobalNormalizedTypeMutex());
     QByteArray cached = qGlobalNormalizedTypeHash()->value(cachekey);
     if (!cached.isEmpty()) {
         return cached;
