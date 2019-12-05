@@ -114,7 +114,8 @@ void (*QAbstractDeclarativeData::objectNameChanged)(QAbstractDeclarativeData *, 
 QObjectData::~QObjectData() {}
 
 QObjectPrivate::QObjectPrivate(int version)
-    : threadData(0), connectionLists(0), senders(0), currentSender(0), currentChildBeingDeleted(Q_NULLPTR)
+    : threadData(Q_NULLPTR), connectionLists(Q_NULLPTR), senders(Q_NULLPTR),
+    currentSender(Q_NULLPTR), currentChildBeingDeleted(Q_NULLPTR)
 {
     if (version != QObjectPrivateVersion)
         qFatal("Cannot mix incompatible Qt library (version 0x%x) with this library (version 0x%x)",
@@ -654,9 +655,9 @@ QObject::~QObject()
         QAbstractDeclarativeData::destroyed(d->declarativeData, this);
 
     // set ref to zero to indicate that this object has been deleted
-    if (d->currentSender != 0)
+    if (d->currentSender)
         d->currentSender->ref = 0;
-    d->currentSender = 0;
+    d->currentSender = Q_NULLPTR;
 
     if (d->connectionLists || d->senders) {
         QMutexLocker locker(signalSlotLock(this));
@@ -1224,7 +1225,7 @@ void QObjectPrivate::setThreadData_helper(QThreadData *currentData, QThreadData 
     // the current emitting thread shouldn't restore currentSender after calling moveToThread()
     if (currentSender)
         currentSender->ref = 0;
-    currentSender = 0;
+    currentSender = Q_NULLPTR;
 
     // set new thread data
     targetData->ref();
