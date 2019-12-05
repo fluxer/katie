@@ -1356,30 +1356,31 @@ QString qt_error_string(int errorCode)
         errorCode = errno;
 
     switch (errorCode) {
-    case 0:
-        break;
-    case EACCES:
-        s = QT_TRANSLATE_NOOP("QIODevice", "Permission denied");
-        break;
-    case EMFILE:
-        s = QT_TRANSLATE_NOOP("QIODevice", "Too many open files");
-        break;
-    case ENOENT:
-        s = QT_TRANSLATE_NOOP("QIODevice", "No such file or directory");
-        break;
-    case ENOSPC:
-        s = QT_TRANSLATE_NOOP("QIODevice", "No space left on device");
-        break;
-    default: {
+        case 0:
+            break;
+        case EACCES:
+            s = QT_TRANSLATE_NOOP("QIODevice", "Permission denied");
+            break;
+        case EMFILE:
+            s = QT_TRANSLATE_NOOP("QIODevice", "Too many open files");
+            break;
+        case ENOENT:
+            s = QT_TRANSLATE_NOOP("QIODevice", "No such file or directory");
+            break;
+        case ENOSPC:
+            s = QT_TRANSLATE_NOOP("QIODevice", "No space left on device");
+            break;
+        default: {
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && _POSIX_VERSION >= 200112L
-        QByteArray buf(1024, '\0');
-        ret = fromstrerror_helper(strerror_r(errorCode, buf.data(), buf.size()), buf);
+            QByteArray buf(1024, '\0');
+            ret = fromstrerror_helper(strerror_r(errorCode, buf.data(), buf.size()), buf);
 #else
-        ret = QString::fromLocal8Bit(strerror(errorCode));
+            ret = QString::fromLocal8Bit(strerror(errorCode));
 #endif
-    break; }
+            break;
+        }
     }
-    if (s)
+    if (Q_LIKELY(s))
         // ######## this breaks moc build currently
 //         ret = QCoreApplication::translate("QIODevice", s);
         ret = QString::fromLatin1(s);
@@ -1454,7 +1455,7 @@ static void qEmergencyOut(QtMsgType msgType, const char *msg, va_list ap)
 {
     char emergency_buf[256] = { '\0' };
     emergency_buf[255] = '\0';
-    if (msg)
+    if (Q_LIKELY(msg))
         qvsnprintf(emergency_buf, 255, msg, ap);
     qt_message_output(msgType, emergency_buf);
 }
@@ -1471,10 +1472,10 @@ static void qt_message(QtMsgType msgType, const char *msg, va_list ap)
         return;
     }
 #endif
-    QByteArray buf;
-    if (msg) {
+    if (Q_LIKELY(msg)) {
         QT_TRY {
-            buf = QString().vsprintf(msg, ap).toLocal8Bit();
+            QByteArray buf = QString().vsprintf(msg, ap).toLocal8Bit();
+            qt_message_output(msgType, buf.constData());
         } QT_CATCH(const std::bad_alloc &) {
 #if !defined(QT_NO_EXCEPTIONS)
             qEmergencyOut(msgType, msg, ap);
@@ -1483,7 +1484,6 @@ static void qt_message(QtMsgType msgType, const char *msg, va_list ap)
 #endif
         }
     }
-    qt_message_output(msgType, buf.constData());
 }
 
 #undef qDebug
@@ -1613,7 +1613,7 @@ void qErrnoWarning(const char *msg, ...)
     QString buf;
     va_list ap;
     va_start(ap, msg);
-    if (msg)
+    if (Q_LIKELY(msg))
         buf.vsprintf(msg, ap);
     va_end(ap);
 
@@ -1627,7 +1627,7 @@ void qErrnoWarning(int code, const char *msg, ...)
     QString buf;
     va_list ap;
     va_start(ap, msg);
-    if (msg)
+    if (Q_LIKELY(msg))
         buf.vsprintf(msg, ap);
     va_end(ap);
 
