@@ -131,9 +131,6 @@ bool QFontDef::exactMatch(const QFontDef &other) const
             && (this_foundry.isEmpty()
                 || other_foundry.isEmpty()
                 || this_foundry == other_foundry)
-#ifdef Q_WS_X11
-            && addStyle == other.addStyle
-#endif // Q_WS_X11
        );
 }
 
@@ -747,9 +744,6 @@ void QFont::setFamily(const QString &family)
     detach();
 
     d->request.family = family;
-#if defined(Q_WS_X11)
-    d->request.addStyle.clear();
-#endif // Q_WS_X11
 
     resolve_mask |= QFont::FamilyResolved;
 }
@@ -1313,10 +1307,6 @@ void QFont::setStyleHint(StyleHint hint, StyleStrategy strategy)
     d->request.styleStrategy = strategy;
     resolve_mask |= QFont::StyleHintResolved;
     resolve_mask |= QFont::StyleStrategyResolved;
-
-#if defined(Q_WS_X11)
-    d->request.addStyle.clear();
-#endif // Q_WS_X11
 }
 
 /*!
@@ -1602,9 +1592,6 @@ bool QFont::operator<(const QFont &f) const
     if (r1.styleHint != r2.styleHint) return r1.styleHint < r2.styleHint;
     if (r1.styleStrategy != r2.styleStrategy) return r1.styleStrategy < r2.styleStrategy;
     if (r1.family != r2.family) return r1.family < r2.family;
-#ifdef Q_WS_X11
-    if (r1.addStyle != r2.addStyle) return r1.addStyle < r2.addStyle;
-#endif // Q_WS_X11
     if (f.d->capital != d->capital) return f.d->capital < d->capital;
 
     if (f.d->letterSpacingIsAbsolute != d->letterSpacingIsAbsolute) return f.d->letterSpacingIsAbsolute < d->letterSpacingIsAbsolute;
