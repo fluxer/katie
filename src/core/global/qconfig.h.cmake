@@ -351,6 +351,11 @@
 #define QT_NO_CONCURRENT
 #endif
 
+// Future
+#if !defined(QT_NO_QFUTURE) && defined(QT_NO_CONCURRENT)
+#define QT_NO_QFUTURE
+#endif
+
 // Process
 #if !defined(QT_NO_PROCESS) && defined(QT_NO_THREAD)
 #define QT_NO_PROCESS
