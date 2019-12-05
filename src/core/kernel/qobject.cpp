@@ -659,8 +659,7 @@ QObject::~QObject()
     d->currentSender = 0;
 
     if (d->connectionLists || d->senders) {
-        QMutex *signalSlotMutex = signalSlotLock(this);
-        QMutexLocker locker(signalSlotMutex);
+        QMutexLocker locker(signalSlotLock(this));
 
         // disconnect all receivers
         if (d->connectionLists) {
@@ -678,7 +677,7 @@ QObject::~QObject()
                     }
 
                     QMutex *m = signalSlotLock(c->receiver);
-                    bool needToUnlock = QOrderedMutexLocker::relock(signalSlotMutex, m);
+                    bool needToUnlock = QOrderedMutexLocker::relock(locker.mutex(), m);
 
                     if (c->receiver) {
                         *c->prev = c->next;
@@ -706,7 +705,7 @@ QObject::~QObject()
             QObject *sender = node->sender;
             QMutex *m = signalSlotLock(sender);
             node->prev = &node;
-            bool needToUnlock = QOrderedMutexLocker::relock(signalSlotMutex, m);
+            bool needToUnlock = QOrderedMutexLocker::relock(locker.mutex(), m);
             //the node has maybe been removed while the mutex was unlocked in relock?
             if (!node || node->sender != sender) {
                 m->unlock();
