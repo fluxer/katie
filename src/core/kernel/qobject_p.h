@@ -124,7 +124,7 @@ public:
     {
         QObject *sender;
         int signal;
-        int ref;
+        QAtomicInt ref;
     };
 
 
