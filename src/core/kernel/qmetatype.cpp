@@ -874,11 +874,9 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
     case QMetaType::UChar:
         stream >> *static_cast<uchar *>(data);
         break;
-    case QMetaType::Bool: {
-        qint8 b;
-        stream >> b;
-        *static_cast<bool *>(data) = b;
-        break; }
+    case QMetaType::Bool:
+        stream >> *static_cast<bool *>(data);
+        break;
     case QMetaType::Float:
         stream >> *static_cast<float *>(data);
         break;
