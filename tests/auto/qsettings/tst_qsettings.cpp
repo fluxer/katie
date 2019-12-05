@@ -2301,7 +2301,7 @@ void tst_QSettings::testEscapes()
         /*qDebug() << QString("testVariant(): reference=\"%1\" result=\"%2\"").arg(escStr).arg(s); */\
         QCOMPARE(s, escStr); \
         QCOMPARE(QVariant(QSettingsPrivate::stringToVariant(escStr)), v); \
-        QVERIFY(val == v.func()); \
+        QVERIFY((val) == v.func()); \
     }
 
 #define testBadEscape(escStr, vStr) \
