@@ -1006,79 +1006,10 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_WS_MAC
-    \relates <QtGlobal>
-
-    Defined on Mac OS X.
-
-    \sa Q_WS_WIN, Q_WS_X11
-*/
-
-/*!
-    \macro Q_WS_WIN
-    \relates <QtGlobal>
-
-    Defined on Windows.
-
-    \sa Q_WS_MAC, Q_WS_X11
-*/
-
-/*!
     \macro Q_WS_X11
     \relates <QtGlobal>
 
     Defined on X11.
-
-    \sa Q_WS_MAC, Q_WS_WIN
-*/
-
-/*!
-    \macro Q_OS_DARWIN
-    \relates <QtGlobal>
-
-    Defined on Darwin OS (synonym for Q_OS_MAC).
-*/
-
-/*!
-    \macro Q_OS_MSDOS
-    \relates <QtGlobal>
-
-    Defined on MS-DOS and Windows.
-*/
-
-/*!
-    \macro Q_OS_OS2
-    \relates <QtGlobal>
-
-    Defined on OS/2.
-*/
-
-/*!
-    \macro Q_OS_OS2EMX
-    \relates <QtGlobal>
-
-    Defined on XFree86 on OS/2 (not PM).
-*/
-
-/*!
-    \macro Q_OS_WIN32
-    \relates <QtGlobal>
-
-    Defined on all supported versions of Windows.
-*/
-
-/*!
-    \macro Q_OS_WINCE
-    \relates <QtGlobal>
-
-    Defined on Windows CE.
-*/
-
-/*!
-    \macro Q_OS_CYGWIN
-    \relates <QtGlobal>
-
-    Defined on Cygwin.
 */
 
 /*!
@@ -1135,13 +1066,6 @@ bool qSharedBuild()
     \relates <QtGlobal>
 
     Defined on BSD/OS.
-*/
-
-/*!
-    \macro Q_OS_IRIX
-    \relates <QtGlobal>
-
-    Defined on SGI Irix.
 */
 
 /*!
@@ -1235,17 +1159,6 @@ bool qSharedBuild()
     Defined if the application is compiled using C++ front-end for the LLVM
     compiler.
 */
-
-/*!
-  \macro Q_OS_MAC
-  \relates <QtGlobal>
-
-  Defined on MAC OS (synonym for Darwin).
- */
-
-/*!
-  \sa Q_WS_MAC, Q_WS_WIN, Q_WS_X11
- */
 
 
 /*!
