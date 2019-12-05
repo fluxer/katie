@@ -153,6 +153,18 @@ static void construct(QVariant::Private *x, const void *copy)
     case QVariant::EasingCurve:
         v_construct<QEasingCurve>(x, copy);
         break;
+    case QVariant::JsonValue:
+        v_construct<QJsonValue>(x, copy);
+        break;
+    case QVariant::JsonObject:
+        v_construct<QJsonObject>(x, copy);
+        break;
+    case QVariant::JsonArray:
+        v_construct<QJsonArray>(x, copy);
+        break;
+    case QVariant::JsonDocument:
+        v_construct<QJsonDocument>(x, copy);
+        break;
 #endif
     case QVariant::Int:
         x->data.i = copy ? *static_cast<const int *>(copy) : 0;
@@ -273,6 +285,18 @@ static void clear(QVariant::Private *d)
     case QVariant::EasingCurve:
         v_clear<QEasingCurve>(d);
         break;
+    case QVariant::JsonValue:
+        v_clear<QJsonValue>(d);
+        break;
+    case QVariant::JsonObject:
+        v_clear<QJsonObject>(d);
+        break;
+    case QVariant::JsonArray:
+        v_clear<QJsonArray>(d);
+        break;
+    case QVariant::JsonDocument:
+        v_clear<QJsonDocument>(d);
+        break;
 #endif
     case QVariant::LongLong:
     case QVariant::ULongLong:
@@ -333,6 +357,12 @@ static bool isNull(const QVariant::Private *d)
         return v_cast<QPointF>(d)->isNull();
 #endif
 #ifndef QT_BOOTSTRAPPED
+    case QVariant::JsonValue:
+        return v_cast<QJsonValue>(d)->isNull();
+    case QVariant::JsonDocument:
+        return v_cast<QJsonDocument>(d)->isNull();
+    case QVariant::JsonObject:
+    case QVariant::JsonArray:
     case QVariant::EasingCurve:
     case QVariant::Url:
 #endif
@@ -458,6 +488,14 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
 #ifndef QT_BOOTSTRAPPED
     case QVariant::EasingCurve:
         return *v_cast<QEasingCurve>(a) == *v_cast<QEasingCurve>(b);
+    case QVariant::JsonValue:
+        return *v_cast<QJsonValue>(a) == *v_cast<QJsonValue>(b);
+    case QVariant::JsonObject:
+        return *v_cast<QJsonObject>(a) == *v_cast<QJsonObject>(b);
+    case QVariant::JsonArray:
+        return *v_cast<QJsonArray>(a) == *v_cast<QJsonArray>(b);
+    case QVariant::JsonDocument:
+        return *v_cast<QJsonDocument>(a) == *v_cast<QJsonDocument>(b);
 #endif
     case QVariant::ByteArray:
         return *v_cast<QByteArray>(a) == *v_cast<QByteArray>(b);
@@ -1179,6 +1217,18 @@ static void streamDebug(QDebug dbg, const QVariant &v)
     case QVariant::EasingCurve:
         dbg.nospace() << v.toEasingCurve();
         break;
+    case QVariant::JsonValue:
+        dbg.nospace() << v.toJsonValue();
+        break;
+    case QVariant::JsonObject:
+        dbg.nospace() << v.toJsonObject();
+        break;
+    case QVariant::JsonArray:
+        dbg.nospace() << v.toJsonArray();
+        break;
+    case QVariant::JsonDocument:
+        dbg.nospace() << v.toJsonDocument();
+        break;
 #endif
     case QVariant::ByteArray:
         dbg.nospace() << v.toByteArray();
@@ -1795,6 +1845,10 @@ QVariant::QVariant(const QDateTime &val)
 #ifndef QT_BOOTSTRAPPED
 QVariant::QVariant(const QEasingCurve &val)
 { d.is_null = false; d.type = EasingCurve; v_construct<QEasingCurve>(&d, val); }
+QVariant::QVariant(const QJsonValue &jsonValue) { d.is_null = false; d.type = JsonValue; v_construct<QJsonValue>(&d, jsonValue); }
+QVariant::QVariant(const QJsonObject &jsonObject) { d.is_null = false; d.type = JsonObject; v_construct<QJsonObject>(&d, jsonObject); }
+QVariant::QVariant(const QJsonArray &jsonArray) { d.is_null = false; d.type = JsonArray; v_construct<QJsonArray>(&d, jsonArray); }
+QVariant::QVariant(const QJsonDocument &jsonDocument) { d.is_null = false; d.type = JsonDocument; v_construct<QJsonDocument>(&d, jsonDocument); }
 #endif
 QVariant::QVariant(const QList<QVariant> &list)
 { d.is_null = false; d.type = List; v_construct<QVariantList>(&d, list); }
@@ -1818,12 +1872,6 @@ QVariant::QVariant(const QUrl &u) { d.is_null = false; d.type = Url; v_construct
 QVariant::QVariant(const QLocale &l) { d.is_null = false; d.type = Locale; v_construct<QLocale>(&d, l); }
 #ifndef QT_NO_REGEXP
 QVariant::QVariant(const QRegExp &regExp) { d.is_null = false; d.type = RegExp; v_construct<QRegExp>(&d, regExp); }
-#endif
-#ifndef QT_BOOTSTRAPPED
-QVariant::QVariant(const QJsonValue &jsonValue) { d.is_null = false; d.type = JsonValue; v_construct<QJsonValue>(&d, jsonValue); }
-QVariant::QVariant(const QJsonObject &jsonObject) { d.is_null = false; d.type = JsonObject; v_construct<QJsonObject>(&d, jsonObject); }
-QVariant::QVariant(const QJsonArray &jsonArray) { d.is_null = false; d.type = JsonArray; v_construct<QJsonArray>(&d, jsonArray); }
-QVariant::QVariant(const QJsonDocument &jsonDocument) { d.is_null = false; d.type = JsonDocument; v_construct<QJsonDocument>(&d, jsonDocument); }
 #endif
 
 /*!
@@ -2223,7 +2271,21 @@ QDateTime QVariant::toDateTime() const
     return qVariantToHelper<QDateTime>(d, DateTime, handler);
 }
 
+/*!
+    \since 4.7
+    \fn QEasingCurve QVariant::toEasingCurve() const
+
+    Returns the variant as a QEasingCurve if the variant has type() \l
+    EasingCurve; otherwise returns a default easing curve.
+
+    \sa canConvert(), convert()
+*/
 #ifndef QT_BOOTSTRAPPED
+QEasingCurve QVariant::toEasingCurve() const
+{
+    return qVariantToHelper<QEasingCurve>(d, EasingCurve, handler);
+}
+
 /*!
     \since 4.9
 
@@ -2274,22 +2336,6 @@ QJsonArray QVariant::toJsonArray() const
 QJsonDocument QVariant::toJsonDocument() const
 {
     return qVariantToHelper<QJsonDocument>(d, JsonDocument, handler);
-}
-#endif
-
-/*!
-    \since 4.7
-    \fn QEasingCurve QVariant::toEasingCurve() const
-
-    Returns the variant as a QEasingCurve if the variant has type() \l
-    EasingCurve; otherwise returns a default easing curve.
-
-    \sa canConvert(), convert()
-*/
-#ifndef QT_BOOTSTRAPPED
-QEasingCurve QVariant::toEasingCurve() const
-{
-    return qVariantToHelper<QEasingCurve>(d, EasingCurve, handler);
 }
 #endif
 
