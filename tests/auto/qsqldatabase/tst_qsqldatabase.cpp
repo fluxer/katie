@@ -180,7 +180,6 @@ private:
 
 // number of records to be inserted per testfunction
 static const int ITERATION_COUNT = 2;
-static int pkey = 1;
 
 //helper class for database specific tests
 struct FieldDef {
