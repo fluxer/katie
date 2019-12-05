@@ -39,21 +39,20 @@
 #include "qmap.h"
 #include "qdatetime.h"
 #include "qmath.h"
-#ifndef QT_BOOTSTRAPPED
-#include "qeasingcurve.h"
-#endif
 #include "qlist.h"
 #include "qstring.h"
 #include "qstringlist.h"
 #include "qurl.h"
+#include "qlocale.h"
+#include "qvariant_p.h"
+
 #ifndef QT_BOOTSTRAPPED
+#include "qeasingcurve.h"
 #include "qjsonvalue.h"
 #include "qjsonobject.h"
 #include "qjsonarray.h"
 #include "qjsondocument.h"
 #endif
-#include "qlocale.h"
-#include "qvariant_p.h"
 
 #ifndef QT_NO_GEOM_VARIANT
 #include "qsize.h"

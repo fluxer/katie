@@ -40,8 +40,13 @@
 #include "qstringlist.h"
 #include "qvector.h"
 #include "qlocale.h"
+
 #ifndef QT_BOOTSTRAPPED
 #include "qeasingcurve.h"
+#include "qjsonvalue.h"
+#include "qjsonobject.h"
+#include "qjsonarray.h"
+#include "qjsondocument.h"
 #endif
 
 #ifdef QT_BOOTSTRAPPED
@@ -1110,6 +1115,12 @@ void *QMetaType::construct(int type, const void *copy)
 #ifndef QT_BOOTSTRAPPED
         case QMetaType::QEasingCurve:
             return new NS(QEasingCurve)(*static_cast<const NS(QEasingCurve)*>(copy));
+        case QMetaType::QJsonValue:
+            return new NS(QJsonValue)(*static_cast<const NS(QJsonValue)*>(copy));
+        case QMetaType::QJsonArray:
+            return new NS(QJsonArray)(*static_cast<const NS(QJsonArray)*>(copy));
+        case QMetaType::QJsonDocument:
+            return new NS(QJsonDocument)(*static_cast<const NS(QJsonDocument)*>(copy));
 #endif
         case QMetaType::Void:
             return 0;
@@ -1369,6 +1380,15 @@ void QMetaType::destroy(int type, void *data)
 #ifndef QT_BOOTSTRAPPED
     case QMetaType::QEasingCurve:
         delete static_cast< NS(QEasingCurve)* >(data);
+        break;
+    case QMetaType::QJsonValue:
+        delete static_cast< NS(QJsonValue)* >(data);
+        break;
+    case QMetaType::QJsonArray:
+        delete static_cast< NS(QJsonArray)* >(data);
+        break;
+    case QMetaType::QJsonDocument:
+        delete static_cast< NS(QJsonDocument)* >(data);
         break;
 #endif
     case QMetaType::Void:
