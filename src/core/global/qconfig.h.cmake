@@ -491,11 +491,6 @@
 #define QT_NO_TEXTODFWRITER
 #endif
 
-// Translation (UTF-8 representation)
-#if !defined(QT_NO_TRANSLATION_UTF8) && (defined(QT_NO_TRANSLATION) || defined(QT_NO_TEXTCODEC))
-#define QT_NO_TRANSLATION_UTF8
-#endif
-
 // QUndoGroup
 #if !defined(QT_NO_UNDOGROUP) && (defined(QT_NO_UNDOSTACK))
 #define QT_NO_UNDOGROUP
