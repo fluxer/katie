@@ -75,7 +75,7 @@ public:
 
 protected:
     int metric(QPaintDevice::PaintDeviceMetric metric) const;
-    void createPixmapForImage(QImage &sourceImage, Qt::ImageConversionFlags flags, bool inPlace);
+    void createPixmapForImage(const QImage &sourceImage, Qt::ImageConversionFlags flags);
     void setImage(const QImage &image);
     QImage image;
 

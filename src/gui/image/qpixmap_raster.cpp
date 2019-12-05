@@ -101,15 +101,14 @@ bool QRasterPixmapData::fromData(const uchar *buffer, uint len, const char *form
     if (image.isNull())
         return false;
 
-    createPixmapForImage(image, flags, /* inplace = */true);
+    createPixmapForImage(image, flags);
     return !isNull();
 }
 
 void QRasterPixmapData::fromImage(const QImage &sourceImage,
                                   Qt::ImageConversionFlags flags)
 {
-    QImage image = sourceImage;
-    createPixmapForImage(image, flags, /* inplace = */false);
+    createPixmapForImage(sourceImage, flags);
 }
 
 void QRasterPixmapData::fromImageReader(QImageReader *imageReader,
@@ -119,7 +118,7 @@ void QRasterPixmapData::fromImageReader(QImageReader *imageReader,
     if (image.isNull())
         return;
 
-    createPixmapForImage(image, flags, /* inplace = */true);
+    createPixmapForImage(image, flags);
 }
 
 // from qwindowsurface.cpp
@@ -270,7 +269,7 @@ int QRasterPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
     return 0;
 }
 
-void QRasterPixmapData::createPixmapForImage(QImage &sourceImage, Qt::ImageConversionFlags flags, bool inPlace)
+void QRasterPixmapData::createPixmapForImage(const QImage &sourceImage, Qt::ImageConversionFlags flags)
 {
     QImage::Format format;
     if (flags & Qt::NoFormatConversion) {
@@ -296,15 +295,6 @@ void QRasterPixmapData::createPixmapForImage(QImage &sourceImage, Qt::ImageConve
             } else if ((flags & Qt::NoOpaqueDetection) == 0
                        && !sourceImage.data_ptr()->checkForAlphaPixels())
             {
-                // image has alpha format but is really opaque, so try to do a
-                // more efficient conversion
-                if (sourceImage.format() == QImage::Format_ARGB32
-                    || sourceImage.format() == QImage::Format_ARGB32_Premultiplied)
-                {
-                    if (!inPlace)
-                        sourceImage.detach();
-                    sourceImage.d->format = QImage::Format_RGB32;
-                }
                 format = opaqueFormat;
             } else {
                 format = alphaFormat;
