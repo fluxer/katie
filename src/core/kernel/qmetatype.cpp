@@ -1117,6 +1117,8 @@ void *QMetaType::construct(int type, const void *copy)
             return new NS(QEasingCurve)(*static_cast<const NS(QEasingCurve)*>(copy));
         case QMetaType::QJsonValue:
             return new NS(QJsonValue)(*static_cast<const NS(QJsonValue)*>(copy));
+        case QMetaType::QJsonObject:
+            return new NS(QJsonObject)(*static_cast<const NS(QJsonObject)*>(copy));
         case QMetaType::QJsonArray:
             return new NS(QJsonArray)(*static_cast<const NS(QJsonArray)*>(copy));
         case QMetaType::QJsonDocument:
@@ -1383,6 +1385,9 @@ void QMetaType::destroy(int type, void *data)
         break;
     case QMetaType::QJsonValue:
         delete static_cast< NS(QJsonValue)* >(data);
+        break;
+    case QMetaType::QJsonObject:
+        delete static_cast< NS(QJsonObject)* >(data);
         break;
     case QMetaType::QJsonArray:
         delete static_cast< NS(QJsonArray)* >(data);
