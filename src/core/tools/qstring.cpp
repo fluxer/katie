@@ -6951,12 +6951,6 @@ QDataStream &operator<<(QDataStream &out, const QString &str)
 
 QDataStream &operator>>(QDataStream &in, QString &str)
 {
-#ifdef QT_QSTRING_UCS_4
-#if defined(Q_CC_GNU)
-#warning "operator>> not working properly"
-#endif
-#endif
-
     quint32 bytes = 0;
     in >> bytes;                                  // read size of string
     if (bytes == 0xffffffff) {                    // null string
