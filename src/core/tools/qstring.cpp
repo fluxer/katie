@@ -65,11 +65,6 @@ QT_BEGIN_NAMESPACE
 QTextCodec *QString::codecForCStrings = QTextCodec::codecForName("UTF-8");
 #endif
 
-#ifdef QT_STD_LOCALE
-// qlocale_std.cpp
-extern bool qt_ucol_strcoll(const QChar *source, int sourceLength, const QChar *target, int targetLength, int *result);
-#endif
-
 // internal
 int qFindString(const QChar *haystack, int haystackLen, int from,
     const QChar *needle, int needleLen, Qt::CaseSensitivity cs);
@@ -4430,14 +4425,13 @@ int QString::localeAwareCompare_helper(const QChar *data1, int length1,
     if (length1 == 0 || length2 == 0)
         return ucstrcmp(data1, length1, data2, length2);
 
-#if defined(QT_STD_LOCALE)
     int res;
     if (qt_ucol_strcoll(data1, length1, data2, length2, &res)) {
         if (res == 0)
             res = ucstrcmp(data1, length1, data2, length2);
         return res;
     } // else fall through
-#endif
+
     // declared in <string.h>
     int delta = strcoll(toLocal8Bit_helper(data1, length1).constData(),
                         toLocal8Bit_helper(data2, length2).constData());
@@ -6951,12 +6945,6 @@ QDataStream &operator<<(QDataStream &out, const QString &str)
 
 QDataStream &operator>>(QDataStream &in, QString &str)
 {
-#ifdef QT_QSTRING_UCS_4
-#if defined(Q_CC_GNU)
-#warning "operator>> not working properly"
-#endif
-#endif
-
     quint32 bytes = 0;
     in >> bytes;                                  // read size of string
     if (bytes == 0xffffffff) {                    // null string

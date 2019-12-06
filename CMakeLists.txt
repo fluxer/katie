@@ -54,11 +54,13 @@ endif()
 set(CPACK_PACKAGE_FILE_NAME "Katie-4.9.0-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_BUILD_TYPE}")
 include(CPack)
 
+# enable symbols visibility preset for all targets
 if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
     cmake_policy(SET CMP0063 NEW)
 endif()
 
 include(CheckIncludeFile)
+include(CheckIncludeFileCXX)
 include(CheckTypeSize)
 include(FeatureSummary)
 include(KatieMacros)
@@ -155,6 +157,9 @@ add_feature_info(resolv WITH_RESOLV "build resolv support")
 option(WITH_NSL "Build NSL support" ON)
 add_feature_info(nsl WITH_NSL "build NSL support")
 
+option(WITH_UNWIND "Build Unwind support" OFF)
+add_feature_info(unwind WITH_UNWIND "build Unwind support")
+
 # optional features
 option(KATIE_TESTS "Build automatic tests" OFF)
 add_feature_info(tests KATIE_TESTS "build automatic tests")
@@ -176,7 +181,6 @@ include(mkspecs/mkspecs.cmake)
 # these conditionals are probably going to become default in the future
 add_definitions(
     -DQT_POSIX_IPC
-    -DQT_STD_LOCALE
     -DQT_USE_SYSTEM_PROXIES
     # -DQT_STRICT_ITERATORS
     # -DQT_ASCII_CAST_WARNINGS
@@ -201,6 +205,9 @@ add_definitions(
 if(KATIE_ALLINONE)
     add_definitions(-DQT_ALLINONE)
 endif()
+
+# for symbols mangling while unwinding in core component
+check_include_file_cxx(cxxabi.h HAVE_CXXABI)
 
 # for 3rd party source used in test component
 check_include_file(sys/time.h HAVE_SYS_TIME_H)
@@ -425,6 +432,14 @@ set_package_properties(MySQL PROPERTIES
     TYPE OPTIONAL
 )
 
+find_package(Unwind)
+set_package_properties(Unwind PROPERTIES
+    PURPOSE "Required for stack traces on assert"
+    DESCRIPTION "A (mostly) platform-independent unwind API"
+    URL "https://www.nongnu.org/libunwind/index.html"
+    TYPE OPTIONAL
+)
+
 if(KATIE_TESTS OR KATIE_BENCHMARKS)
     message(WARNING
         "\nUnless it is intentionall you should not enable testing, deploying tests builds"
@@ -491,6 +506,10 @@ endif()
 
 if(NOT WITH_TIFF OR NOT TIFF_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
+endif()
+
+if(NOT WITH_UNWIND OR NOT UNWIND_FOUND OR NOT HAVE_CXXABI)
+    katie_definition(-DQT_NO_UNWIND)
 endif()
 
 # conditional features

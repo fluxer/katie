@@ -259,6 +259,15 @@ if(WITH_THREADS AND THREADS_FOUND)
     )
 endif()
 
+if(WITH_UNWIND AND UNWIND_FOUND AND HAVE_CXXABI)
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        ${UNWIND_LIBRARIES}
+    )
+    include_directories(${UNWIND_INCLUDES})
+endif()
+     
+
 set(CORE_HEADERS
     ${CORE_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/qcorecommon_p.h

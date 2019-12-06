@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the QtCore module of the Katie Toolkit.
+** This file is part of the test suite of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** GNU Lesser General Public License Usage
@@ -31,49 +31,41 @@
 **
 ****************************************************************************/
 
-#include "qdebug.h"
+#include <QtTest/QtTest>
 
-#ifdef QT_STD_LOCALE
-
-#include <locale>
-#include <cstring>
-
-QT_BEGIN_NAMESPACE
-
-bool qt_initStdLocale(const QString &localeString)
+class tst_QRand: public QObject
 {
-    return std::setlocale(LC_COLLATE, localeString.toLatin1().constData());
+    Q_OBJECT
+private slots:
+    void random_data();
+    void random();
+};
+
+void tst_QRand::random_data()
+{
+    QTest::addColumn<bool>("seed");
+
+    QTest::newRow("with_seed") << true;
+    QTest::newRow("without_seed") << false;
 }
 
-bool qt_ucol_strcoll(const QChar *source, int sourceLength, const QChar *target, int targetLength, int *result)
+void tst_QRand::random()
 {
-    Q_ASSERT(result);
-    Q_ASSERT(source);
-    Q_ASSERT(target);
-    Q_UNUSED(sourceLength);
-    Q_UNUSED(targetLength);
+    QFETCH(bool, seed);
 
-    *result = std::strcoll(reinterpret_cast<const char*>(source), reinterpret_cast<const char*>(target));
+    static int lastvalue = 0;
+    static const int numcalls = 10000;
+    for (int i = 0; i < numcalls; i++) {
+        if (seed) {
+            qsrand(i);
+        }
 
-    return true;
+        const int value = qrand();
+        QVERIFY(lastvalue != value);
+        lastvalue = value;
+    }
 }
 
-bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale)
-{
-    Q_ASSERT(out);
-    std::locale l = std::locale(locale.bcp47Name().toLatin1().constData());
-    *out = QString::fromUtf8(std::toupper(str.toLatin1().constData(), l));
-    return true;
-}
+QTEST_MAIN(tst_QRand)
 
-bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale)
-{
-    Q_ASSERT(out);
-    std::locale l = std::locale(locale.bcp47Name().toLatin1().constData());
-    *out = QString::fromUtf8(std::tolower(str.toLatin1().constData(), l));
-    return true;
-}
-
-QT_END_NAMESPACE
-
-#endif // QT_STD_LOCALE
+#include "moc_tst_qrand.cpp"

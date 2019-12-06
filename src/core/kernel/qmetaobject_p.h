@@ -53,7 +53,8 @@
 #endif
 
 #ifndef QT_NO_COMPRESS
-#define QT_CACHE_NORMALIZED_TYPE
+#  define QT_CACHE_NORMALIZED_TYPE
+#  include <qmutexlocker.h>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -167,7 +168,27 @@ static inline bool is_space(char s)
 #ifdef QT_CACHE_NORMALIZED_TYPE
 typedef QHash<quint32, QByteArray> QNormalizedTypeHash;
 Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
+Q_GLOBAL_STATIC(QMutex, qGlobalNormalizedTypeMutex)
 #endif
+
+static const struct TypeTblData {
+    const char* original;
+    const int originalsize;
+    const char* substitute;
+    const int substitutesize;
+} TypeTbl[] = {
+    // remove 'struct', 'class', and 'enum' in the middle
+    { " struct ", 8, " ", 1 },
+    { " class ", 7, " ", 1 },
+    { " enum ", 6, " ", 1 },
+    // substitute 'unsigned x' with those defined in global header
+    { "unsigned int", 12, "uint", 4 },
+    { "unsigned long long", 18, "ulonglong", 9 },
+    { "unsigned long", 13, "ulong", 5 },
+    { "unsigned short", 14, "ushort", 6 },
+    { "unsigned char", 13, "uchar", 5 }
+};
+static const qint16 TypeTblSize = sizeof(TypeTbl) / sizeof(TypeTblData);
 
 // This code is shared with moc.cpp
 static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
@@ -175,10 +196,12 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
     const int len = e - t;
 #ifdef QT_CACHE_NORMALIZED_TYPE
     const quint32 cachekey = qCRC32(t, len);
+    QMutexLocker lock(qGlobalNormalizedTypeMutex());
     QByteArray cached = qGlobalNormalizedTypeHash()->value(cachekey);
     if (!cached.isEmpty()) {
         return cached;
     }
+    lock.unlock();
 #endif
 
     QByteArray result = QByteArray(t, len);
@@ -189,18 +212,15 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
       'char * const *' into 'const char **' and we must beware of
       'Bar<const Bla>'.
     */
-    int searchindex = 1;
+    int searchindex = result.indexOf(" const", 1);
     while (searchindex > 0) {
-        searchindex = result.indexOf(" const", searchindex);
-        if (searchindex > 1) {
-            char prevchar = result.at(searchindex - 1);
-            if (prevchar != '*') {
-                result.remove(searchindex, 6);
-                if (!result.startsWith("const ")) {
-                    result.prepend("const ");
-                }
+        if (result.at(searchindex - 1) != '*') {
+            result.remove(searchindex, 6);
+            if (!result.startsWith("const ")) {
+                result.prepend("const ");
             }
         }
+        searchindex = result.indexOf(" const", searchindex + 1);
     }
 
     // convert const reference to value and const value to value
@@ -224,14 +244,14 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
         result.remove(0, 5);
     }
 
-    // substitute 'unsigned x' with those defined in global header
-    result.replace("unsigned int", "uint");
-    result.replace("unsigned long long", "ulonglong");
-    result.replace("unsigned long", "ulong");
-    result.replace("unsigned short", "ushort");
-    result.replace("unsigned char", "uchar");
+    // discard from table, does not use overload and avoids strlen() call
+    for (qint16 i = 0; i < TypeTblSize; i++) {
+        result.replace(TypeTbl[i].original, TypeTbl[i].originalsize,
+            TypeTbl[i].substitute, TypeTbl[i].substitutesize);
+     }
 
 #ifdef QT_CACHE_NORMALIZED_TYPE
+    lock.relock();
     qGlobalNormalizedTypeHash()->insert(cachekey, result);
 #endif
 

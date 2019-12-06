@@ -30,12 +30,9 @@ namespace WTF {
     // These functions call CRASH() if an allocation fails.
     void* fastMalloc(size_t);
     void* fastZeroedMalloc(size_t);
-    void* fastCalloc(size_t numElements, size_t elementSize);
     void* fastRealloc(void*, size_t);
 
     void* tryFastMalloc(size_t n);
-    void* tryFastZeroedMalloc(size_t n);
-    void* tryFastCalloc(size_t n_elements, size_t element_size);
     void* tryFastRealloc(void* p, size_t n);
 
     void fastFree(void*);
@@ -44,19 +41,12 @@ namespace WTF {
     void fastMallocForbid();
     void fastMallocAllow();
 #endif
-
-    // This defines a type which holds an unsigned integer and is the same
-    // size as the minimally aligned memory allocation.
-    typedef unsigned long long AllocAlignmentInteger;
 } // namespace WTF
 
 using WTF::fastMalloc;
 using WTF::fastZeroedMalloc;
-using WTF::fastCalloc;
 using WTF::fastRealloc;
 using WTF::tryFastMalloc;
-using WTF::tryFastZeroedMalloc;
-using WTF::tryFastCalloc;
 using WTF::tryFastRealloc;
 using WTF::fastFree;
 

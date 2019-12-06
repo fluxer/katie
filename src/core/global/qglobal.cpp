@@ -56,6 +56,12 @@
 #  include <exception>
 #endif
 
+#ifndef QT_NO_UNWIND
+#  define UNW_LOCAL_ONLY
+#  include <libunwind.h>
+#  include <cxxabi.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 
@@ -1000,79 +1006,10 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_WS_MAC
-    \relates <QtGlobal>
-
-    Defined on Mac OS X.
-
-    \sa Q_WS_WIN, Q_WS_X11
-*/
-
-/*!
-    \macro Q_WS_WIN
-    \relates <QtGlobal>
-
-    Defined on Windows.
-
-    \sa Q_WS_MAC, Q_WS_X11
-*/
-
-/*!
     \macro Q_WS_X11
     \relates <QtGlobal>
 
     Defined on X11.
-
-    \sa Q_WS_MAC, Q_WS_WIN
-*/
-
-/*!
-    \macro Q_OS_DARWIN
-    \relates <QtGlobal>
-
-    Defined on Darwin OS (synonym for Q_OS_MAC).
-*/
-
-/*!
-    \macro Q_OS_MSDOS
-    \relates <QtGlobal>
-
-    Defined on MS-DOS and Windows.
-*/
-
-/*!
-    \macro Q_OS_OS2
-    \relates <QtGlobal>
-
-    Defined on OS/2.
-*/
-
-/*!
-    \macro Q_OS_OS2EMX
-    \relates <QtGlobal>
-
-    Defined on XFree86 on OS/2 (not PM).
-*/
-
-/*!
-    \macro Q_OS_WIN32
-    \relates <QtGlobal>
-
-    Defined on all supported versions of Windows.
-*/
-
-/*!
-    \macro Q_OS_WINCE
-    \relates <QtGlobal>
-
-    Defined on Windows CE.
-*/
-
-/*!
-    \macro Q_OS_CYGWIN
-    \relates <QtGlobal>
-
-    Defined on Cygwin.
 */
 
 /*!
@@ -1129,13 +1066,6 @@ bool qSharedBuild()
     \relates <QtGlobal>
 
     Defined on BSD/OS.
-*/
-
-/*!
-    \macro Q_OS_IRIX
-    \relates <QtGlobal>
-
-    Defined on SGI Irix.
 */
 
 /*!
@@ -1229,17 +1159,6 @@ bool qSharedBuild()
     Defined if the application is compiled using C++ front-end for the LLVM
     compiler.
 */
-
-/*!
-  \macro Q_OS_MAC
-  \relates <QtGlobal>
-
-  Defined on MAC OS (synonym for Darwin).
- */
-
-/*!
-  \sa Q_WS_MAC, Q_WS_WIN, Q_WS_X11
- */
 
 
 /*!
@@ -1352,11 +1271,40 @@ void qBadAlloc()
     QT_THROW(std::bad_alloc());
 }
 
+static inline void qt_print_backtrace()
+{
+#ifndef QT_NO_UNWIND
+    unw_cursor_t cursor;
+    unw_context_t context;
+
+    unw_getcontext(&context);
+    unw_init_local(&cursor, &context);
+
+    while (unw_step(&cursor) > 0) {
+        unw_word_t offset;
+        char sym[256];
+        if (unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0) {
+            int status;
+            char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
+            if (status == 0) {
+                printf(" %s\n", demangled);
+                free(demangled);
+            } else {
+                printf(" %s\n", sym);
+            }
+        } else {
+            printf("qt_print_backtrace: unable to obtain symbol name for this frame\n");
+        }
+    }
+#endif
+}
+
 /*
   The Q_ASSERT macro calls this function when the test fails.
 */
 void qt_assert(const char *assertion, const char *file, int line)
 {
+    qt_print_backtrace();
     qFatal("ASSERT: \"%s\" in file %s, line %d", assertion, file, line);
 }
 
@@ -1365,6 +1313,7 @@ void qt_assert(const char *assertion, const char *file, int line)
 */
 void qt_assert_x(const char *where, const char *what, const char *file, int line)
 {
+    qt_print_backtrace();
     qFatal("ASSERT failure in %s: \"%s\", file %s, line %d", where, what, file, line);
 }
 
@@ -1407,30 +1356,31 @@ QString qt_error_string(int errorCode)
         errorCode = errno;
 
     switch (errorCode) {
-    case 0:
-        break;
-    case EACCES:
-        s = QT_TRANSLATE_NOOP("QIODevice", "Permission denied");
-        break;
-    case EMFILE:
-        s = QT_TRANSLATE_NOOP("QIODevice", "Too many open files");
-        break;
-    case ENOENT:
-        s = QT_TRANSLATE_NOOP("QIODevice", "No such file or directory");
-        break;
-    case ENOSPC:
-        s = QT_TRANSLATE_NOOP("QIODevice", "No space left on device");
-        break;
-    default: {
+        case 0:
+            break;
+        case EACCES:
+            s = QT_TRANSLATE_NOOP("QIODevice", "Permission denied");
+            break;
+        case EMFILE:
+            s = QT_TRANSLATE_NOOP("QIODevice", "Too many open files");
+            break;
+        case ENOENT:
+            s = QT_TRANSLATE_NOOP("QIODevice", "No such file or directory");
+            break;
+        case ENOSPC:
+            s = QT_TRANSLATE_NOOP("QIODevice", "No space left on device");
+            break;
+        default: {
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && _POSIX_VERSION >= 200112L
-        QByteArray buf(1024, '\0');
-        ret = fromstrerror_helper(strerror_r(errorCode, buf.data(), buf.size()), buf);
+            QByteArray buf(1024, '\0');
+            ret = fromstrerror_helper(strerror_r(errorCode, buf.data(), buf.size()), buf);
 #else
-        ret = QString::fromLocal8Bit(strerror(errorCode));
+            ret = QString::fromLocal8Bit(strerror(errorCode));
 #endif
-    break; }
+            break;
+        }
     }
-    if (s)
+    if (Q_LIKELY(s))
         // ######## this breaks moc build currently
 //         ret = QCoreApplication::translate("QIODevice", s);
         ret = QString::fromLatin1(s);
@@ -1505,7 +1455,7 @@ static void qEmergencyOut(QtMsgType msgType, const char *msg, va_list ap)
 {
     char emergency_buf[256] = { '\0' };
     emergency_buf[255] = '\0';
-    if (msg)
+    if (Q_LIKELY(msg))
         qvsnprintf(emergency_buf, 255, msg, ap);
     qt_message_output(msgType, emergency_buf);
 }
@@ -1522,10 +1472,10 @@ static void qt_message(QtMsgType msgType, const char *msg, va_list ap)
         return;
     }
 #endif
-    QByteArray buf;
-    if (msg) {
+    if (Q_LIKELY(msg)) {
         QT_TRY {
-            buf = QString().vsprintf(msg, ap).toLocal8Bit();
+            QByteArray buf = QString().vsprintf(msg, ap).toLocal8Bit();
+            qt_message_output(msgType, buf.constData());
         } QT_CATCH(const std::bad_alloc &) {
 #if !defined(QT_NO_EXCEPTIONS)
             qEmergencyOut(msgType, msg, ap);
@@ -1534,7 +1484,6 @@ static void qt_message(QtMsgType msgType, const char *msg, va_list ap)
 #endif
         }
     }
-    qt_message_output(msgType, buf.constData());
 }
 
 #undef qDebug
@@ -1664,7 +1613,7 @@ void qErrnoWarning(const char *msg, ...)
     QString buf;
     va_list ap;
     va_start(ap, msg);
-    if (msg)
+    if (Q_LIKELY(msg))
         buf.vsprintf(msg, ap);
     va_end(ap);
 
@@ -1678,7 +1627,7 @@ void qErrnoWarning(int code, const char *msg, ...)
     QString buf;
     va_list ap;
     va_start(ap, msg);
-    if (msg)
+    if (Q_LIKELY(msg))
         buf.vsprintf(msg, ap);
     va_end(ap);
 
@@ -1975,56 +1924,6 @@ int qrand()
     Expands to the size of a pointer in bytes (4 or 8). This is
     equivalent to \c sizeof(void *) but can be used in a preprocessor
     directive.
-*/
-
-/*!
-    \macro TRUE
-    \relates <QtGlobal>
-    \obsolete
-
-    Synonym for \c true.
-
-    \sa FALSE
-*/
-
-/*!
-    \macro FALSE
-    \relates <QtGlobal>
-    \obsolete
-
-    Synonym for \c false.
-
-    \sa TRUE
-*/
-
-/*!
-    \macro QABS(n)
-    \relates <QtGlobal>
-    \obsolete
-
-    Use qAbs(\a n) instead.
-
-    \sa QMIN(), QMAX()
-*/
-
-/*!
-    \macro QMIN(x, y)
-    \relates <QtGlobal>
-    \obsolete
-
-    Use qMin(\a x, \a y) instead.
-
-    \sa QMAX(), QABS()
-*/
-
-/*!
-    \macro QMAX(x, y)
-    \relates <QtGlobal>
-    \obsolete
-
-    Use qMax(\a x, \a y) instead.
-
-    \sa QMIN(), QABS()
 */
 
 /*!

@@ -69,9 +69,6 @@ void tst_QGuiMetaType::constructGuiType_data()
 {
     QTest::addColumn<int>("typeId");
     for (int i = QMetaType::FirstGuiType; i <= QMetaType::LastGuiType; ++i) {
-#ifndef QT3_SUPPORT
-        if (i != 63) // QMetaType::QColorGroup (63) requires QT3_SUPPORT
-#endif
         QTest::newRow(QMetaType::typeName(i)) << i;
     }
 }

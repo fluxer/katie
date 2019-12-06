@@ -321,6 +321,7 @@
 #cmakedefine QT_NO_UNDOSTACK
 #cmakedefine QT_NO_UNDOVIEW
 #cmakedefine QT_NO_UNSETENV
+#cmakedefine QT_NO_UNWIND
 #cmakedefine QT_NO_URLINFO
 #cmakedefine QT_NO_URL_CAST_FROM_STRING
 #cmakedefine QT_NO_VALIDATOR
@@ -348,6 +349,11 @@
 // Concurrent
 #if !defined(QT_NO_CONCURRENT) && defined(QT_NO_THREAD)
 #define QT_NO_CONCURRENT
+#endif
+
+// Future
+#if !defined(QT_NO_QFUTURE) && defined(QT_NO_CONCURRENT)
+#define QT_NO_QFUTURE
 #endif
 
 // Process
@@ -488,11 +494,6 @@
 // OdfWriter
 #if !defined(QT_NO_TEXTODFWRITER) && (defined(QT_NO_XMLSTREAMWRITER))
 #define QT_NO_TEXTODFWRITER
-#endif
-
-// Translation (UTF-8 representation)
-#if !defined(QT_NO_TRANSLATION_UTF8) && (defined(QT_NO_TRANSLATION) || defined(QT_NO_TEXTCODEC))
-#define QT_NO_TRANSLATION_UTF8
 #endif
 
 // QUndoGroup

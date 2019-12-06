@@ -116,7 +116,6 @@ public:
     void disable();
 
     QAtomicInt ref;
-    QSqlDatabase *q;
     QSqlDriver* driver;
     QString dbname;
     QString uname;
@@ -258,7 +257,6 @@ QSqlDatabase QSqlDatabasePrivate::database(const QString& name, bool open)
 */
 void QSqlDatabasePrivate::copy(const QSqlDatabasePrivate *other)
 {
-    q = other->q;
     dbname = other->dbname;
     uname = other->uname;
     pword = other->pword;

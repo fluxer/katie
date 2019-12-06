@@ -78,12 +78,7 @@
 #include "FastMalloc.h"
 
 #include "Assertions.h"
-#include <limits>
-
-#if defined(__HP_aCC)
-// HP'a aCC compiler has broken for scoping
-# define for if(0){}else for
-#endif
+#include <string.h>
 
 #ifndef NDEBUG
 namespace WTF {
@@ -107,22 +102,11 @@ void fastMallocAllow()
 } // namespace WTF
 #endif // NDEBUG
 
-#include <string.h>
-
 namespace WTF {
 
 void* fastZeroedMalloc(size_t n)
 {
     void* result = fastMalloc(n);
-    memset(result, 0, n);
-    return result;
-}
-
-void* tryFastZeroedMalloc(size_t n)
-{
-    void* result = tryFastMalloc(n);
-    if (!result)
-        return 0;
     memset(result, 0, n);
     return result;
 }
@@ -143,23 +127,6 @@ void* fastMalloc(size_t n)
     Q_ASSERT(!isForbidden());
 
     void* result = malloc(n);
-    if (!result)
-        CRASH();
-    return result;
-}
-
-void* tryFastCalloc(size_t n_elements, size_t element_size)
-{
-    Q_ASSERT(!isForbidden());
-
-    return calloc(n_elements, element_size);
-}
-
-void* fastCalloc(size_t n_elements, size_t element_size)
-{
-    Q_ASSERT(!isForbidden());
-
-    void* result = calloc(n_elements, element_size);
     if (!result)
         CRASH();
     return result;

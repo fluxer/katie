@@ -403,9 +403,8 @@ QStringList QSettingsPrivate::variantListToStringList(const QVariantList &l)
 {
     QStringList result;
     result.reserve(l.count());
-    QVariantList::const_iterator it = l.constBegin();
-    for (; it != l.constEnd(); ++it)
-        result.append(variantToString(*it));
+    foreach (const QVariant &v, l)
+        result.append(variantToString(v));
     return result;
 }
 

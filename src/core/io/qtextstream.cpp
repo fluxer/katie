@@ -225,11 +225,6 @@ static const int QTEXTSTREAM_BUFFERSIZE = 16384;
 #include "qtextcodec.h"
 #endif
 
-#include <locale.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <new>
-
 #if defined QTEXTSTREAM_DEBUG
 #include <ctype.h>
 
@@ -533,7 +528,7 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
 
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStreamPrivate::fillReadBuffer(), device->read(\"%s\", %d) == %d",
-           qt_prettyDebug(buffer, qMin(32,bytesRead), bytesRead).constData(), int(maxBytes), bytesRead);
+           qt_prettyDebug(buffer.constData(), qMin(32,bytesRead), bytesRead).constData(), int(maxBytes), bytesRead);
 #endif
 
     if (bytesRead <= 0)
@@ -582,8 +577,9 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
     }
 
 #if defined (QTEXTSTREAM_DEBUG)
+    const QByteArray latin = readBuffer.toLatin1();
     qDebug("QTextStreamPrivate::fillReadBuffer() read %d bytes from device. readBuffer = [%s]", bytesRead,
-           qt_prettyDebug(readBuffer.toLatin1(), readBuffer.size(), readBuffer.size()).data());
+           qt_prettyDebug(latin.constData(), latin.size(), latin.size()).data());
 #endif
     return true;
 }

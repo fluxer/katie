@@ -182,15 +182,6 @@ static inline int methodNameLength(const QMetaMethod &method)
 }
 
 /*! \internal
-  Makes a deep copy of the first \a nameLength characters of the given
-  method \a signature and returns the copy.
-*/
-static inline QByteArray methodName(const char *signature, int nameLength)
-{
-    return QByteArray(signature, nameLength);
-}
-
-/*! \internal
 
   Returns true if the name of the given \a method is the same as that
   specified by the (signature, nameLength) pair, otherwise returns
@@ -838,7 +829,7 @@ static JSC::JSValue delegateQtMethod(JSC::ExecState *exec, QMetaMethod::MethodTy
 //#ifndef Q_SCRIPT_NO_EVENT_NOTIFY
 //        engine->notifyFunctionEntry(context);
 //#endif
-        QString funName = QString::fromLatin1(methodName(initialMethodSignature, nameLength));
+        QString funName = QString::fromLatin1(initialMethodSignature, nameLength);
         if (!conversionFailed.isEmpty()) {
             QString message = QString::fromLatin1("incompatible type of argument(s) in call to %0(); candidates were\n")
                               .arg(funName);
@@ -884,9 +875,9 @@ static JSC::JSValue delegateQtMethod(JSC::ExecState *exec, QMetaMethod::MethodTy
                 && (metaArgs.args.count() == candidates.at(1).args.count())
                 && (metaArgs.matchDistance == candidates.at(1).matchDistance)) {
                 // ambiguous call
-                QByteArray funName = methodName(initialMethodSignature, nameLength);
+                QString funName = QString::fromLatin1(initialMethodSignature, nameLength);
                 QString message = QString::fromLatin1("ambiguous call of overloaded function %0(); candidates were\n")
-                                  .arg(QLatin1String(funName));
+                                  .arg(funName);
                 for (int i = 0; i < candidates.size(); ++i) {
                     if (i > 0)
                         message += QLatin1String("\n");

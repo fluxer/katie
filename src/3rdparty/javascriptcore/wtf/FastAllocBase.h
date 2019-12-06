@@ -38,11 +38,7 @@
 //        T*    fastNew<T>();
 //        T*    fastNew<T>(arg);
 //        T*    fastNew<T>(arg, arg);
-//        T*    fastNewArray<T>(count);
 //        void  fastDelete(T* p);
-//        void  fastDeleteArray(T* p);
-//        void  fastNonNullDelete(T* p);
-//        void  fastNonNullDeleteArray(T* p);
 //    }
 //
 // FastDelete assumes that the underlying
@@ -53,26 +49,14 @@
 //    char* charPtr = fastNew<char>();
 //    fastDelete(charPtr);
 //
-//    char* charArrayPtr = fastNewArray<char>(37);
-//    fastDeleteArray(charArrayPtr);
-//
 //    void** voidPtrPtr = fastNew<void*>();
 //    fastDelete(voidPtrPtr);
-//
-//    void** voidPtrArrayPtr = fastNewArray<void*>(37);
-//    fastDeleteArray(voidPtrArrayPtr);
 //
 //    POD* podPtr = fastNew<POD>();
 //    fastDelete(podPtr);
 //
-//    POD* podArrayPtr = fastNewArray<POD>(37);
-//    fastDeleteArray(podArrayPtr);
-//
 //    Object* objectPtr = fastNew<Object>();
 //    fastDelete(objectPtr);
-//
-//    Object* objectArrayPtr = fastNewArray<Object>(37);
-//    fastDeleteArray(objectArrayPtr);
 //
 
 #include <new>
@@ -180,98 +164,6 @@ namespace WTF {
         return ::new(p) T(arg1, arg2, arg3, arg4, arg5);
     }
 
-    namespace Internal {
-
-        // We define a union of pointer to an integer and pointer to T.
-        // When non-POD arrays are allocated we add a few leading bytes to tell what
-        // the size of the array is. We return to the user the pointer to T.
-        // The way to think of it is as if we allocate a struct like so:
-        //    struct Array {
-        //        AllocAlignmentInteger m_size;
-        //        T m_T[array count];
-        //    };
-
-        template <typename T>
-        union ArraySize {
-            AllocAlignmentInteger* size;
-            T* t;
-        };
-
-        // This is a support template for fastNewArray.
-        // This handles the case wherein T has a trivial ctor and a trivial dtor.
-        template <typename T, bool trivialCtor, bool trivialDtor>
-        struct NewArrayImpl {
-            static T* fastNewArray(size_t count)
-            {
-                return static_cast<T*>(fastMalloc(sizeof(T) * count));
-            }
-        };
-
-        // This is a support template for fastNewArray.
-        // This handles the case wherein T has a non-trivial ctor and a trivial dtor.
-        template <typename T>
-        struct NewArrayImpl<T, false, true> {
-            static T* fastNewArray(size_t count)
-            {
-                T* p = static_cast<T*>(fastMalloc(sizeof(T) * count));
-
-                if (!p)
-                    return 0;
-
-                for (T* pObject = p, *pObjectEnd = pObject + count; pObject != pObjectEnd; ++pObject)
-                    ::new(pObject) T;
-
-                return p;
-            }
-        };
-
-        // This is a support template for fastNewArray.
-        // This handles the case wherein T has a trivial ctor and a non-trivial dtor.
-        template <typename T>
-        struct NewArrayImpl<T, true, false> {
-            static T* fastNewArray(size_t count)
-            {
-                void* p = fastMalloc(sizeof(AllocAlignmentInteger) + (sizeof(T) * count));
-                ArraySize<T> a = { static_cast<AllocAlignmentInteger*>(p) };
-
-                if (!p)
-                    return 0;
-
-                *a.size++ = count;
-                // No need to construct the objects in this case.
-
-                return a.t;
-            }
-        };
-
-        // This is a support template for fastNewArray.
-        // This handles the case wherein T has a non-trivial ctor and a non-trivial dtor.
-        template <typename T>
-        struct NewArrayImpl<T, false, false> {
-            static T* fastNewArray(size_t count)
-            {
-                void* p = fastMalloc(sizeof(AllocAlignmentInteger) + (sizeof(T) * count));
-                ArraySize<T> a = { static_cast<AllocAlignmentInteger*>(p) };
-
-                if (!p)
-                    return 0;
-
-                *a.size++ = count;
-
-                for (T* pT = a.t, *pTEnd = pT + count; pT != pTEnd; ++pT)
-                    ::new(pT) T;
-
-                return a.t;
-            }
-        };
-    } // namespace Internal
-
-    template <typename T>
-    inline T* fastNewArray(size_t count)
-    {
-        return Internal::NewArrayImpl<T, WTF::HasTrivialConstructor<T>::value, WTF::HasTrivialDestructor<T>::value>::fastNewArray(count);
-    }
-
     template <typename T>
     inline void fastDelete(T* p)
     {
@@ -282,107 +174,8 @@ namespace WTF {
         fastFree(p);
     }
 
-    template <typename T>
-    inline void fastDeleteSkippingDestructor(T* p)
-    {
-        if (!p)
-            return;
-
-        fastFree(p);
-    }
-
-    namespace Internal {
-        // This is a support template for fastDeleteArray.
-        // This handles the case wherein T has a trivial dtor.
-        template <typename T, bool trivialDtor>
-        struct DeleteArrayImpl {
-            static void fastDeleteArray(void* p)
-            {
-                // No need to destruct the objects in this case.
-                // We expect that fastFree checks for null.
-                fastFree(p);
-            }
-        };
-
-        // This is a support template for fastDeleteArray.
-        // This handles the case wherein T has a non-trivial dtor.
-        template <typename T>
-        struct DeleteArrayImpl<T, false> {
-            static void fastDeleteArray(T* p)
-            {
-                if (!p)
-                    return;
-
-                ArraySize<T> a;
-                a.t = p;
-                a.size--; // Decrement size pointer
-
-                T* pEnd = p + *a.size;
-                while (pEnd-- != p)
-                    pEnd->~T();
-
-                fastFree(a.size);
-            }
-        };
-
-    } // namespace Internal
-
-    template <typename T>
-    void fastDeleteArray(T* p)
-    {
-        Internal::DeleteArrayImpl<T, WTF::HasTrivialDestructor<T>::value>::fastDeleteArray(p);
-    }
-
-
-    template <typename T>
-    inline void fastNonNullDelete(T* p)
-    {
-        p->~T();
-        fastFree(p);
-    }
-
-    namespace Internal {
-        // This is a support template for fastDeleteArray.
-        // This handles the case wherein T has a trivial dtor.
-        template <typename T, bool trivialDtor>
-        struct NonNullDeleteArrayImpl {
-            static void fastNonNullDeleteArray(void* p)
-            {
-                // No need to destruct the objects in this case.
-                fastFree(p);
-            }
-        };
-
-        // This is a support template for fastDeleteArray.
-        // This handles the case wherein T has a non-trivial dtor.
-        template <typename T>
-        struct NonNullDeleteArrayImpl<T, false> {
-            static void fastNonNullDeleteArray(T* p)
-            {
-                ArraySize<T> a;
-                a.t = p;
-                a.size--;
-
-                T* pEnd = p + *a.size;
-                while (pEnd-- != p)
-                    pEnd->~T();
-
-                fastFree(a.size);
-            }
-        };
-
-    } // namespace Internal
-
-    template <typename T>
-    void fastNonNullDeleteArray(T* p)
-    {
-        Internal::NonNullDeleteArrayImpl<T, WTF::HasTrivialDestructor<T>::value>::fastNonNullDeleteArray(p);
-    }
-
-
 } // namespace WTF
 
 using WTF::FastAllocBase;
-using WTF::fastDeleteSkippingDestructor;
 
 #endif // FastAllocBase_h

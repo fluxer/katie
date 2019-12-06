@@ -19,7 +19,7 @@ if(NOT WIN32)
     pkg_check_modules(PC_MYSQL QUIET libmariadb)
 endif()
 
-# However, they provide both mysql_config
+# However, both provide mysql_config
 if(NOT PC_MYSQL_FOUND)
     find_program(MYSQL_CONFIG
         NAMES

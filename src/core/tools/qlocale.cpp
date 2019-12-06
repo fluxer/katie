@@ -68,12 +68,6 @@ public:
 Q_GLOBAL_STATIC(QSystemLocaleSingleton, QSystemLocale_globalSystemLocale)
 #endif
 
-#ifdef QT_STD_LOCALE
-extern bool qt_initStdLocale(const QString &localeName);
-extern bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale);
-extern bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale);
-#endif
-
 /******************************************************************************
 ** Helpers for accessing Qt locale database
 */
@@ -276,7 +270,7 @@ QLocalePrivate::QLocalePrivate(const QString &name)
         return;
     }
     delimiter.resize(locresult);
-    qDebug() << name << delimiter;
+    // qDebug() << name << delimiter;
 
     ulocdata_close(data);
 }
@@ -523,10 +517,8 @@ QSystemLocale::QSystemLocale()
     delete _systemLocale;
     _systemLocale = this;
 
-#ifdef QT_STD_LOCALE
     if (default_locale != QLatin1String("C"))
-        qt_initStdLocale(fallbackLocale().bcp47Name());
-#endif
+        qt_initLocale(fallbackLocale().bcp47Name());
 
     // tell the object that the system locale has changed.
     query(QSystemLocale::LocaleChanged, QVariant());
@@ -816,9 +808,7 @@ void QLocale::setDefault(const QLocale &locale)
     default_locale = locale.bcp47Name();
     default_number_options = locale.numberOptions();
 
-#ifdef QT_STD_LOCALE
-    qt_initStdLocale(locale.bcp47Name());
-#endif
+    qt_initLocale(locale.bcp47Name());
 }
 
 /*!
@@ -1854,11 +1844,9 @@ Qt::LayoutDirection QLocale::textDirection() const
 */
 QString QLocale::toUpper(const QString &str) const
 {
-#ifdef QT_STD_LOCALE
     QString result;
     if (qt_u_strToUpper(str, &result, *this))
         return result;
-#endif
     return str.toUpper();
 }
 
@@ -1869,11 +1857,9 @@ QString QLocale::toUpper(const QString &str) const
 */
 QString QLocale::toLower(const QString &str) const
 {
-#ifdef QT_STD_LOCALE
     QString result;
     if (qt_u_strToLower(str, &result, *this))
         return result;
-#endif
     return str.toLower();
 }
 

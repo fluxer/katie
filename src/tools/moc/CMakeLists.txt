@@ -39,6 +39,7 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_COMPRESS
     -DQT_NO_EXCEPTIONS
     -DQT_NO_REGEXP
+    -DQT_NO_UNWIND
 )
 
 set(BOOTSTRAP_SOURCES
@@ -81,7 +82,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvector.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvsnprintf.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_std.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qunicodetables.cpp
 )
 

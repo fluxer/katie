@@ -180,7 +180,6 @@ private:
 
 // number of records to be inserted per testfunction
 static const int ITERATION_COUNT = 2;
-static int pkey = 1;
 
 //helper class for database specific tests
 struct FieldDef {
@@ -352,8 +351,8 @@ void tst_QSqlDatabase::initTestCase()
 {
     dbs.open();
 
-    for (QStringList::ConstIterator it = dbs.dbNames.begin(); it != dbs.dbNames.end(); ++it) {
-        QSqlDatabase db = QSqlDatabase::database((*it));
+    foreach (const QString &name, dbs.dbNames) {
+        QSqlDatabase db = QSqlDatabase::database(name);
         CHECK_DATABASE(db);
         dropTestTables(db); //in case of leftovers
         createTestTables(db);
@@ -363,8 +362,8 @@ void tst_QSqlDatabase::initTestCase()
 
 void tst_QSqlDatabase::cleanupTestCase()
 {
-    for (QStringList::ConstIterator it = dbs.dbNames.begin(); it != dbs.dbNames.end(); ++it) {
-        QSqlDatabase db = QSqlDatabase::database((*it));
+    foreach (const QString &name, dbs.dbNames) {
+        QSqlDatabase db = QSqlDatabase::database(name);
         CHECK_DATABASE(db);
         dropTestTables(db);
     }

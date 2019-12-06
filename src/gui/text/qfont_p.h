@@ -71,10 +71,6 @@ struct QFontDef
     QString family;
     QString styleName;
 
-#ifdef Q_WS_X11
-    QString addStyle;
-#endif // Q_WS_X11
-
     qreal pointSize;
     qreal pixelSize;
 
@@ -101,11 +97,7 @@ struct QFontDef
                     && ignorePitch == other.ignorePitch && fixedPitch == other.fixedPitch
                     && family == other.family
                     && (styleName.isEmpty() || other.styleName.isEmpty() || styleName == other.styleName)
-                    && hintingPreference == other.hintingPreference
-#ifdef Q_WS_X11
-                    && addStyle == other.addStyle
-#endif
-                          ;
+                    && hintingPreference == other.hintingPreference;
     }
     inline bool operator<(const QFontDef &other) const
     {
@@ -119,11 +111,6 @@ struct QFontDef
         if (!styleName.isEmpty() && !other.styleName.isEmpty() && styleName != other.styleName)
             return styleName < other.styleName;
         if (hintingPreference != other.hintingPreference) return hintingPreference < other.hintingPreference;
-
-#ifdef Q_WS_X11
-        if (addStyle != other.addStyle) return addStyle < other.addStyle;
-#endif // Q_WS_X11
-
         if (ignorePitch != other.ignorePitch) return ignorePitch < other.ignorePitch;
         if (fixedPitch != other.fixedPitch) return fixedPitch < other.fixedPitch;
         return false;

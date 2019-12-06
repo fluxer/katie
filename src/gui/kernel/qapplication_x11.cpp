@@ -720,28 +720,26 @@ bool QApplicationPrivate::x11_apply_settings()
       Font Substitutions/...     - QStringList
     */
 
-    QStringList strlist;
-    int i;
     QPalette pal(Qt::black);
     int groupCount = 0;
-    strlist = settings.value(QLatin1String("Palette/active")).toStringList();
+    QStringList strlist = settings.value(QLatin1String("Palette/active")).toStringList();
     if (!strlist.isEmpty()) {
         ++groupCount;
-        for (i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
+        for (int i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
             pal.setColor(QPalette::Active, (QPalette::ColorRole) i,
                          QColor(strlist[i]));
     }
     strlist = settings.value(QLatin1String("Palette/inactive")).toStringList();
     if (!strlist.isEmpty()) {
         ++groupCount;
-        for (i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
+        for (int i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
             pal.setColor(QPalette::Inactive, (QPalette::ColorRole) i,
                          QColor(strlist[i]));
     }
     strlist = settings.value(QLatin1String("Palette/disabled")).toStringList();
     if (!strlist.isEmpty()) {
         ++groupCount;
-        for (i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
+        for (int i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
             pal.setColor(QPalette::Disabled, (QPalette::ColorRole) i,
                          QColor(strlist[i]));
     }
@@ -786,20 +784,17 @@ bool QApplicationPrivate::x11_apply_settings()
         }
     }
 
-    int num =
-        settings.value(QLatin1String("doubleClickInterval"),
-                       QApplication::doubleClickInterval()).toInt();
+    int num = settings.value(QLatin1String("doubleClickInterval"),
+                             QApplication::doubleClickInterval()).toInt();
     QApplication::setDoubleClickInterval(num);
 
-    num =
-        settings.value(QLatin1String("cursorFlashTime"),
-                       QApplication::cursorFlashTime()).toInt();
+    num = settings.value(QLatin1String("cursorFlashTime"),
+                         QApplication::cursorFlashTime()).toInt();
     QApplication::setCursorFlashTime(num);
 
 #ifndef QT_NO_WHEELEVENT
-    num =
-        settings.value(QLatin1String("wheelScrollLines"),
-                       QApplication::wheelScrollLines()).toInt();
+    num = settings.value(QLatin1String("wheelScrollLines"),
+                         QApplication::wheelScrollLines()).toInt();
     QApplication::setWheelScrollLines(num);
 #endif
 
@@ -835,8 +830,7 @@ bool QApplicationPrivate::x11_apply_settings()
 
     if (!qt_x11Data->has_fontconfig) {
         settings.beginGroup(QLatin1String("Font Substitutions"));
-        QStringList fontsubs = settings.childKeys();
-        for (const QString fam: fontsubs) {
+        foreach (const QString &fam, settings.childKeys()) {
             QStringList subs = settings.value(fam).toStringList();
             QFont::insertSubstitutions(fam, subs);
         }
@@ -934,8 +928,7 @@ static void qt_get_net_supported()
         nitems = buffer.size() / sizeof(Atom);
         qt_x11Data->net_supported_list = new Atom[nitems + 1];
         Atom *a = (Atom *) buffer.data();
-        uint i;
-        for (i = 0; i < nitems; i++)
+        for (uint i = 0; i < nitems; i++)
             qt_x11Data->net_supported_list[i] = a[i];
         qt_x11Data->net_supported_list[nitems] = 0;
     }
@@ -1003,8 +996,7 @@ static void qt_get_net_virtual_roots()
         nitems = buffer.size() / sizeof(Window);
         qt_x11Data->net_virtual_root_list = new Window[nitems + 1];
         Window *a = (Window *) buffer.data();
-        uint i;
-        for (i = 0; i < nitems; i++)
+        for (uint i = 0; i < nitems; i++)
             qt_x11Data->net_virtual_root_list[i] = a[i];
         qt_x11Data->net_virtual_root_list[nitems] = 0;
     }
@@ -1860,7 +1852,7 @@ void QApplication::restoreOverrideCursor()
 Window QX11Data::findClientWindow(Window win, Atom property, bool leaf)
 {
     Atom   type = XNone;
-    int           format, i;
+    int    format;
     ulong  nitems, after;
     uchar *data = 0;
     Window root, parent, target=0, *children=0;
@@ -1877,7 +1869,7 @@ Window QX11Data::findClientWindow(Window win, Atom property, bool leaf)
             XFree((char *)children);
         return 0;
     }
-    for (i=nchildren-1; !target && i >= 0; i--)
+    for (int i=nchildren-1; !target && i >= 0; i--)
         target = qt_x11Data->findClientWindow(children[i], property, leaf);
     if (children)
         XFree((char *)children);
@@ -2732,8 +2724,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
 
                 // emit the workAreaResized() signal
                 QDesktopWidget *desktop = QApplication::desktop();
-                int numScreens = desktop->screenCount();
-                for (int i = 0; i < numScreens; ++i)
+                for (int i = 0; i < desktop->screenCount(); ++i)
                     emit desktop->workAreaResized(i);
             }
         } else if (widget) {
@@ -3406,9 +3397,8 @@ bool QETWidget::translatePropertyEvent(const XEvent *event)
             if (e == Success && ret == XA_ATOM && format == 32 && nitems > 0) {
                 Atom *states = (Atom *) data;
 
-                unsigned long i;
                 uint maximized = 0;
-                for (i = 0; i < nitems; i++) {
+                for (unsigned long i = 0; i < nitems; i++) {
                     if (states[i] == ATOM(_NET_WM_STATE_MAXIMIZED_VERT))
                         maximized |= 1;
                     else if (states[i] == ATOM(_NET_WM_STATE_MAXIMIZED_HORZ))

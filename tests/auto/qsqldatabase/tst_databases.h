@@ -94,23 +94,6 @@ inline static bool testWhiteSpaceNames( const QString &name )
            || name.startsWith( QLatin1String("QMYSQL") );
 }
 
-inline static QString toHex( const QString& binary )
-{
-    QString str;
-    static char const hexchars[] = "0123456789ABCDEF";
-
-    for ( int i = 0; i < binary.size(); i++ ) {
-        ushort code = binary.at(i).unicode();
-        str += (QChar)(hexchars[ (code >> 12) & 0x0F ]);
-        str += (QChar)(hexchars[ (code >> 8) & 0x0F ]);
-        str += (QChar)(hexchars[ (code >> 4) & 0x0F ]);
-        str += (QChar)(hexchars[ code & 0x0F ]);
-    }
-
-    return str;
-}
-
-
 class tst_Databases
 {
 
@@ -126,8 +109,8 @@ public:
     ~tst_Databases()
     {
         close();
-        for (int i = m_sqLiteFiles.size() - 1; i >= 0; --i) {
-            QFile sqLiteFile(m_sqLiteFiles.at(i));
+        foreach (const QString &sqlfile, m_sqLiteFiles) {
+            QFile sqLiteFile(sqlfile);
             if (sqLiteFile.exists() && !sqLiteFile.remove()) {
                 qWarning() << "Cannot remove " << QDir::toNativeSeparators(sqLiteFile.fileName())
                            << ':' << sqLiteFile.errorString();
@@ -142,14 +125,14 @@ public:
         QTest::addColumn<QString>( "dbName" );
         int count = 0;
 
-        for ( int i = 0; i < dbNames.count(); ++i ) {
-            QSqlDatabase db = QSqlDatabase::database( dbNames.at( i ) );
+        foreach (const QString &name, dbNames) {
+            QSqlDatabase db = QSqlDatabase::database( name );
 
             if ( !db.isValid() )
                 continue;
 
             if ( driverPrefix.isEmpty() || db.driverName().startsWith( driverPrefix ) ) {
-                QTest::newRow( dbNames.at( i ).toLatin1() ) << dbNames.at( i );
+                QTest::newRow( name.toLatin1() ) << name;
                 ++count;
             }
         }
@@ -163,16 +146,16 @@ public:
         QTest::addColumn<int>("submitpolicy_i");
         int count = 0;
 
-        for ( int i = 0; i < dbNames.count(); ++i ) {
-            QSqlDatabase db = QSqlDatabase::database( dbNames.at( i ) );
+        foreach (const QString &name, dbNames) {
+            QSqlDatabase db = QSqlDatabase::database( name );
 
             if ( !db.isValid() )
                 continue;
 
             if ( driverPrefix.isEmpty() || db.driverName().startsWith( driverPrefix ) ) {
-                QTest::newRow( QString("%1 [field]").arg(dbNames.at( i )).toLatin1() ) << dbNames.at( i ) << (int)QSqlTableModel::OnFieldChange;
-                QTest::newRow( QString("%1 [row]").arg(dbNames.at( i )).toLatin1() ) << dbNames.at( i ) << (int)QSqlTableModel::OnRowChange;
-                QTest::newRow( QString("%1 [manual]").arg(dbNames.at( i )).toLatin1() ) << dbNames.at( i ) << (int)QSqlTableModel::OnManualSubmit;
+                QTest::newRow( QString("%1 [field]").arg(name).toLatin1() ) << name << (int)QSqlTableModel::OnFieldChange;
+                QTest::newRow( QString("%1 [row]").arg(name).toLatin1() ) << name << (int)QSqlTableModel::OnRowChange;
+                QTest::newRow( QString("%1 [manual]").arg(name).toLatin1() ) << name << (int)QSqlTableModel::OnManualSubmit;
                 ++count;
             }
         }
@@ -268,19 +251,15 @@ public:
     {
         addDbs();
 
-        QStringList::Iterator it = dbNames.begin();
-
-        while ( it != dbNames.end() ) {
-            QSqlDatabase db = QSqlDatabase::database(( *it ), false );
-            qDebug() << "Opening:" << (*it);
+        foreach (const QString &name, dbNames) {
+            QSqlDatabase db = QSqlDatabase::database( name, false );
+            qDebug() << "Opening:" << name;
 
             if ( db.isValid() && !db.isOpen() ) {
                 if ( !db.open() ) {
-                    qWarning( "tst_Databases: Unable to open %s on %s:\n%s", qPrintable( db.driverName() ), qPrintable( *it ), qPrintable( db.lastError().databaseText() ) );
+                    qWarning( "tst_Databases: Unable to open %s on %s:\n%s", qPrintable( db.driverName() ), qPrintable( name ), qPrintable( db.lastError().databaseText() ) );
                     // well... opening failed, so we just ignore the server, maybe it is not running
-                    it = dbNames.erase( it );
-                } else {
-                    ++it;
+                    dbNames.removeAll( name );
                 }
             }
         }
@@ -288,15 +267,15 @@ public:
 
     void close()
     {
-        for ( QStringList::Iterator it = dbNames.begin(); it != dbNames.end(); ++it ) {
+        foreach (const QString &name, dbNames) {
             {
-                QSqlDatabase db = QSqlDatabase::database(( *it ), false );
+                QSqlDatabase db = QSqlDatabase::database( name, false );
 
                 if ( db.isValid() && db.isOpen() )
                     db.close();
             }
 
-            QSqlDatabase::removeDatabase(( *it ) );
+            QSqlDatabase::removeDatabase( name );
         }
 
         dbNames.clear();
