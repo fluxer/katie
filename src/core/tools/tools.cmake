@@ -89,7 +89,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineparser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_std.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qunicodetables.cpp
 )
 

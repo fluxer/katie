@@ -114,6 +114,11 @@ double qstrtod(const char *s00, char const **se, bool *ok);
 qlonglong qstrtoll(const char *nptr, const char **endptr, int base, bool *ok);
 qulonglong qstrtoull(const char *nptr, const char **endptr, int base, bool *ok);
 
+bool qt_initLocale(const QString &locale);
+bool qt_ucol_strcoll(const QChar *source, int sourceLength, const QChar *target, int targetLength, int *result);
+bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale);
+bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale);
+
 QT_END_NAMESPACE
 
 #endif

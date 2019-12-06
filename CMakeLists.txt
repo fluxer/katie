@@ -181,7 +181,6 @@ include(mkspecs/mkspecs.cmake)
 # these conditionals are probably going to become default in the future
 add_definitions(
     -DQT_POSIX_IPC
-    -DQT_STD_LOCALE
     -DQT_USE_SYSTEM_PROXIES
     # -DQT_STRICT_ITERATORS
     # -DQT_ASCII_CAST_WARNINGS

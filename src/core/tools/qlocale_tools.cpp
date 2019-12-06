@@ -34,6 +34,7 @@
 #include "qlocale_tools_p.h"
 #include "qlocale_p.h"
 #include "qstring.h"
+#include "qcorecommon_p.h"
 
 #include <ctype.h>
 #include <float.h>
@@ -46,6 +47,9 @@
 #if defined(Q_OS_LINUX) && !defined(__UCLIBC__)
 #    include <fenv.h>
 #endif
+
+#include <unicode/ucol.h>
+#include <unicode/ustring.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -267,6 +271,86 @@ double qstrtod(const char *s00, const char **se, bool *ok)
         *ok = true; // the result will be that we don't report underflow in this case
     }
     return ret;
+}
+
+
+/******************************************************************************
+** Helpers string casing and collation
+*/
+static UCollator *icuCollator = Q_NULLPTR;
+
+bool qt_initLocale(const QString &locale)
+{
+    if (icuCollator) {
+        ucol_close(icuCollator);
+        icuCollator = Q_NULLPTR;
+    }
+
+    UErrorCode error = U_ZERO_ERROR;
+    icuCollator = ucol_open(locale.toLatin1().constData(), &error);
+
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("ucol_open(%s) failed %s",
+            locale.toLatin1().constData(), u_errorName(error));
+        return false;
+    }
+
+    return true;
+}
+
+bool qt_ucol_strcoll(const QChar *source, int sourceLength, const QChar *target, int targetLength, int *result)
+{
+    Q_ASSERT(result);
+    Q_ASSERT(source);
+    Q_ASSERT(target);
+
+    if (!icuCollator)
+        return false;
+
+    *result = ucol_strcoll(icuCollator, reinterpret_cast<const UChar *>(source), int32_t(sourceLength),
+                           reinterpret_cast<const UChar *>(target), int32_t(targetLength));
+
+    return true;
+}
+
+bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale)
+{
+    Q_ASSERT(out);
+    out->resize(QMAXUSTRLEN(str.size()));
+
+    UErrorCode error = U_ZERO_ERROR;
+    const int upperresult = u_strToUpper(reinterpret_cast<UChar*>(out->data()), out->size(),
+        reinterpret_cast<const UChar*>(str.unicode()), str.size(),
+        locale.bcp47Name().toLatin1().constData(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("u_strToUpper(%s) failed %s",
+            locale.bcp47Name().toLatin1().constData(), u_errorName(error));
+        out->clear();
+        return false;
+    }
+
+    out->resize(upperresult);
+    return true;
+}
+
+bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale)
+{
+    Q_ASSERT(out);
+    out->resize(QMAXUSTRLEN(str.size()));
+
+    UErrorCode error = U_ZERO_ERROR;
+    const int lowerresult = u_strToLower(reinterpret_cast<UChar*>(out->data()), out->size(),
+        reinterpret_cast<const UChar*>(str.unicode()), str.size(),
+        locale.bcp47Name().toLatin1().constData(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("u_strToLower(%s) failed %s",
+            locale.bcp47Name().toLatin1().constData(), u_errorName(error));
+        out->clear();
+        return false;
+    }
+
+    out->resize(lowerresult);
+    return true;
 }
 
 QT_END_NAMESPACE
