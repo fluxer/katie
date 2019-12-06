@@ -32,53 +32,30 @@
 ****************************************************************************/
 
 #include "qelapsedtimer.h"
+
 #include <sys/time.h>
 #include <time.h>
 #include <unistd.h>
 
-#if defined(QT_NO_CLOCK_MONOTONIC) || defined(QT_BOOTSTRAPPED)
-// turn off the monotonic clock
-# ifdef _POSIX_MONOTONIC_CLOCK
-#  undef _POSIX_MONOTONIC_CLOCK
-# endif
-# define _POSIX_MONOTONIC_CLOCK -1
-#endif
-
 QT_BEGIN_NAMESPACE
 
-#if (_POSIX_MONOTONIC_CLOCK-0 != 0)
-static const bool monotonicClockChecked = true;
-static const bool monotonicClockAvailable = _POSIX_MONOTONIC_CLOCK > 0;
-#else
-static int monotonicClockChecked = false;
-static int monotonicClockAvailable = false;
+#ifndef QT_NO_CLOCK_MONOTONIC
+#  if defined(_SC_MONOTONIC_CLOCK)
+static const bool monotonicClockAvailable = (sysconf(_SC_MONOTONIC_CLOCK) >= 200112L);
+#  elif (_POSIX_MONOTONIC_CLOCK-0 != 0)
+static const bool monotonicClockAvailable = (_POSIX_MONOTONIC_CLOCK > 0);
+#  else
+#    define QT_NO_CLOCK_MONOTONIC
+static const bool monotonicClockAvailable = false;
+#  endif
 #endif
-
-#define load_acquire(x) ((volatile const int&)(x))
-#define store_release(x,v) ((volatile int&)(x) = (v))
-
-static inline void unixCheckClockType()
-{
-#if (_POSIX_MONOTONIC_CLOCK-0 == 0)
-    if (Q_LIKELY(load_acquire(monotonicClockChecked)))
-        return;
-
-# if defined(_SC_MONOTONIC_CLOCK)
-    // detect if the system support monotonic timers
-    long x = sysconf(_SC_MONOTONIC_CLOCK);
-    store_release(monotonicClockAvailable, x >= 200112L);
-# endif
-
-    store_release(monotonicClockChecked, true);
-#endif
-}
 
 static inline qint64 fractionAdjustment()
 {
     // disabled, but otherwise indicates bad usage of QElapsedTimer
     //Q_ASSERT(monotonicClockChecked);
 
-    if (monotonicClockAvailable) {
+    if (Q_LIKELY(monotonicClockAvailable)) {
         // the monotonic timer is measured in nanoseconds
         // 1 ms = 1000000 ns
         return 1000*1000ull;
@@ -91,20 +68,16 @@ static inline qint64 fractionAdjustment()
 
 bool QElapsedTimer::isMonotonic()
 {
-    unixCheckClockType();
     return monotonicClockAvailable;
 }
 
 QElapsedTimer::ClockType QElapsedTimer::clockType()
 {
-    unixCheckClockType();
     return monotonicClockAvailable ? MonotonicClock : SystemTime;
 }
 
 static inline void do_gettime(qint64 *sec, qint64 *frac)
 {
-#if (_POSIX_MONOTONIC_CLOCK-0 >= 0)
-    unixCheckClockType();
     if (Q_LIKELY(monotonicClockAvailable)) {
         timespec ts;
         clock_gettime(CLOCK_MONOTONIC, &ts);
@@ -112,7 +85,6 @@ static inline void do_gettime(qint64 *sec, qint64 *frac)
         *frac = ts.tv_nsec;
         return;
     }
-#endif
     // use gettimeofday
     struct timeval tv;
     ::gettimeofday(&tv, Q_NULLPTR);
@@ -128,7 +100,7 @@ timeval qt_gettime()
 
     timeval tv;
     tv.tv_sec = sec;
-    if (monotonicClockAvailable)
+    if (Q_LIKELY(monotonicClockAvailable))
         tv.tv_usec = frac / 1000;
     else
         tv.tv_usec = frac;
@@ -161,7 +133,7 @@ qint64 QElapsedTimer::nsecsElapsed() const
     do_gettime(&sec, &frac);
     sec = sec - t1;
     frac = frac - t2;
-    if (!monotonicClockAvailable)
+    if (Q_UNLIKELY(!monotonicClockAvailable))
         frac *= 1000;
     return sec * Q_INT64_C(1000000000) + frac;
 }
