@@ -78,7 +78,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstringlist.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstringmatcher.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvector.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/tools/qvsnprintf.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
 )
 
