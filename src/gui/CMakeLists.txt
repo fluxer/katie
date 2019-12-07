@@ -441,6 +441,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${FREETYPE_INCLUDE_DIRS}
     ${X11_INCLUDE_DIR}
+    ${ICU_INCLUDES}
 )
 
 # keep in sync with the top-level CMake file, only libraries setup is needed here

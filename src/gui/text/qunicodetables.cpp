@@ -39,7 +39,7 @@
 
 QT_BEGIN_NAMESPACE
 
-Q_CORE_EXPORT QUnicodeTables::CombiningClass QT_FASTCALL QUnicodeTables::combiningClass(uint ucs4)
+Q_GUI_EXPORT QUnicodeTables::CombiningClass QT_FASTCALL QUnicodeTables::combiningClass(uint ucs4)
 {
     switch (ucs4) {
         case 0x1CD4:
@@ -597,7 +597,7 @@ Q_CORE_EXPORT QUnicodeTables::CombiningClass QT_FASTCALL QUnicodeTables::combini
     return QUnicodeTables::Combining_NotOrdered;
 }
 
-Q_CORE_EXPORT QUnicodeTables::GraphemeBreak QT_FASTCALL QUnicodeTables::graphemeBreak(uint ucs4)
+Q_GUI_EXPORT QUnicodeTables::GraphemeBreak QT_FASTCALL QUnicodeTables::graphemeBreak(uint ucs4)
 {
     const int32_t property = u_getIntPropertyValue(ucs4, UCHAR_GRAPHEME_CLUSTER_BREAK);
     switch (property) {
@@ -623,7 +623,7 @@ Q_CORE_EXPORT QUnicodeTables::GraphemeBreak QT_FASTCALL QUnicodeTables::grapheme
     return GraphemeBreak_Other;
 }
 
-Q_CORE_EXPORT QUnicodeTables::WordBreak QT_FASTCALL QUnicodeTables::wordBreak(uint ucs4)
+Q_GUI_EXPORT QUnicodeTables::WordBreak QT_FASTCALL QUnicodeTables::wordBreak(uint ucs4)
 {
     switch (ucs4) {
         case 0x00AD:
@@ -815,7 +815,7 @@ Q_CORE_EXPORT QUnicodeTables::WordBreak QT_FASTCALL QUnicodeTables::wordBreak(ui
     return WordBreak_Other;
 }
 
-Q_CORE_EXPORT QUnicodeTables::SentenceBreak QT_FASTCALL QUnicodeTables::sentenceBreak(uint ucs4)
+Q_GUI_EXPORT QUnicodeTables::SentenceBreak QT_FASTCALL QUnicodeTables::sentenceBreak(uint ucs4)
 {
     switch (ucs4) {
         case 0x0085:
@@ -2965,7 +2965,7 @@ Q_CORE_EXPORT QUnicodeTables::SentenceBreak QT_FASTCALL QUnicodeTables::sentence
     return SentenceBreak_Other;
 }
 
-Q_CORE_EXPORT QUnicodeTables::LineBreak QT_FASTCALL QUnicodeTables::lineBreakClass(uint ucs4)
+Q_GUI_EXPORT QUnicodeTables::LineBreak QT_FASTCALL QUnicodeTables::lineBreakClass(uint ucs4)
 {
     switch (ucs4) {
         case 0x0009:
@@ -8016,7 +8016,7 @@ Q_CORE_EXPORT QUnicodeTables::LineBreak QT_FASTCALL QUnicodeTables::lineBreakCla
     return QUnicodeTables::LineBreak_BK;
 }
 
-Q_CORE_EXPORT QUnicodeTables::Script QT_FASTCALL QUnicodeTables::script(uint ucs4)
+Q_GUI_EXPORT QUnicodeTables::Script QT_FASTCALL QUnicodeTables::script(uint ucs4)
 {
     switch (ucs4) {
         case 0x00AA:

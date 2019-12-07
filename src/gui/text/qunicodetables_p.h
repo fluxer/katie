@@ -47,7 +47,7 @@
 #ifndef QUNICODETABLES_P_H
 #define QUNICODETABLES_P_H
 
-#include <QtCore/qchar.h>
+#include "qglobal.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -185,11 +185,11 @@ namespace QUnicodeTables {
         LineBreak_BK
     };
 
-    Q_CORE_EXPORT CombiningClass QT_FASTCALL combiningClass(uint ucs4);
-    Q_CORE_EXPORT GraphemeBreak QT_FASTCALL graphemeBreak(uint ucs4);
-    Q_CORE_EXPORT WordBreak QT_FASTCALL wordBreak(uint ucs4);
-    Q_CORE_EXPORT SentenceBreak QT_FASTCALL sentenceBreak(uint ucs4);
-    Q_CORE_EXPORT LineBreak QT_FASTCALL lineBreakClass(uint ucs4);
+    Q_GUI_EXPORT CombiningClass QT_FASTCALL combiningClass(uint ucs4);
+    Q_GUI_EXPORT GraphemeBreak QT_FASTCALL graphemeBreak(uint ucs4);
+    Q_GUI_EXPORT WordBreak QT_FASTCALL wordBreak(uint ucs4);
+    Q_GUI_EXPORT SentenceBreak QT_FASTCALL sentenceBreak(uint ucs4);
+    Q_GUI_EXPORT LineBreak QT_FASTCALL lineBreakClass(uint ucs4);
 
     // required by text engine and font database
     // See https://www.unicode.org/reports/tr24/
@@ -350,7 +350,7 @@ namespace QUnicodeTables {
         ScriptCount
     };
 
-    Q_CORE_EXPORT Script QT_FASTCALL script(uint ucs4);
+    Q_GUI_EXPORT Script QT_FASTCALL script(uint ucs4);
 
 } // namespace QUnicodeTables
 
