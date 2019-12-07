@@ -307,8 +307,8 @@ bool qt_ucol_strcoll(const QChar *source, int sourceLength, const QChar *target,
     if (!icuCollator)
         return false;
 
-    *result = ucol_strcoll(icuCollator, reinterpret_cast<const UChar *>(source), int32_t(sourceLength),
-                           reinterpret_cast<const UChar *>(target), int32_t(targetLength));
+    *result = ucol_strcoll(icuCollator, reinterpret_cast<const UChar *>(source), sourceLength,
+                           reinterpret_cast<const UChar *>(target), targetLength);
 
     return true;
 }
