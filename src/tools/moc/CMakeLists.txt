@@ -39,10 +39,10 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_EXCEPTIONS
     -DQT_NO_REGEXP
     -DQT_NO_UNWIND
+    -DQT_NO_TEXTCODEC
 )
 
 set(BOOTSTRAP_SOURCES
-    ${CMAKE_SOURCE_DIR}/src/core/codecs/qtextcodec.cpp
     ${CMAKE_SOURCE_DIR}/src/core/codecs/qicucodec.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qnumeric.cpp

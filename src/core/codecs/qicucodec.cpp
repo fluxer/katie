@@ -30,7 +30,6 @@
 ****************************************************************************/
 
 #include "qicucodec_p.h"
-#include "qtextcodec_p.h"
 #include "qcorecommon_p.h"
 #include "qdebug.h"
 
@@ -1048,6 +1047,7 @@ int QIcuCodec::mibEnum() const
     return 2;
 }
 
+#ifndef QT_NO_TEXTCODEC
 QList<QByteArray> QIcuCodec::availableCodecs()
 {
     QList<QByteArray> codecs;
@@ -1094,6 +1094,7 @@ QTextCodec *QIcuCodec::codecForUtf(const QByteArray &text, QTextCodec *defaultCo
 
     return defaultCodec;
 }
+#endif
 
 UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
 {

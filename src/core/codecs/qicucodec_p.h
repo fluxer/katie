@@ -45,11 +45,9 @@
 // We mean it.
 //
 
-#include <qglobal.h>
+#include "qtextcodec_p.h"
 
 #include <unicode/ucnv.h>
-
-#ifndef QT_NO_TEXTCODEC
 
 QT_BEGIN_NAMESPACE
 
@@ -59,15 +57,17 @@ public:
     QIcuCodec(const char *name);
     ~QIcuCodec();
 
-    QString convertToUnicode(const char *data, int len, ConverterState *state) const final;
-    QByteArray convertFromUnicode(const QChar *unicode, int len, ConverterState *state) const final;
+    QString convertToUnicode(const char *data, int len, ConverterState *state) const;
+    QByteArray convertFromUnicode(const QChar *unicode, int len, ConverterState *state) const;
 
-    QByteArray name() const final;
-    QList<QByteArray> aliases() const final;
-    int mibEnum() const final;
+    QByteArray name() const;
+    QList<QByteArray> aliases() const;
+    int mibEnum() const;
 
+#ifndef QT_NO_TEXTCODEC
     static QList<QByteArray> availableCodecs();
     static QTextCodec* codecForUtf(const QByteArray &text, QTextCodec *defaultCodec);
+#endif
 
 private:
     UConverter *getConverter(QTextCodec::ConverterState *state) const;
@@ -76,7 +76,5 @@ private:
 };
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_TEXTCODEC
 
 #endif
