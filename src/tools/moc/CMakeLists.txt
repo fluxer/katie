@@ -81,7 +81,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvector.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvsnprintf.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/tools/qunicodetables.cpp
 )
 
 add_executable(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})
