@@ -85,14 +85,12 @@ static QList<QByteArray> icucodecs;
 static QTextCodec *createForName(const QByteArray &name)
 {
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    QFactoryLoader *l = codecsloader();
-    QStringList keys = l->keys();
-    for (int i = 0; i < keys.size(); ++i) {
-        if (nameMatch(name, keys.at(i).toLatin1())) {
-            QString realName = keys.at(i);
+    const QFactoryLoader *l = codecsloader();
+    foreach (const QString &key, l->keys()) {
+        if (nameMatch(name, key.toLatin1())) {
             if (QTextCodecFactoryInterface *factory
-                = qobject_cast<QTextCodecFactoryInterface*>(l->instance(realName))) {
-                return factory->create(realName);
+                = qobject_cast<QTextCodecFactoryInterface*>(l->instance(key))) {
+                return factory->create(key);
             }
         }
     }
@@ -675,11 +673,10 @@ QList<QByteArray> QTextCodec::availableCodecs()
 #endif
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    QFactoryLoader *l = codecsloader();
-    QStringList keys = l->keys();
-    for (int i = 0; i < keys.size(); ++i) {
-        if (!keys.at(i).startsWith(QLatin1String("MIB: "))) {
-            QByteArray name = keys.at(i).toLatin1();
+    const QFactoryLoader *l = codecsloader();
+    foreach (const QString &key, l->keys()) {
+        if (!key.startsWith(QLatin1String("MIB: "))) {
+            QByteArray name = key.toLatin1();
             if (!codecs.contains(name))
                 codecs += name;
         }
@@ -711,11 +708,10 @@ QList<int> QTextCodec::availableMibs()
 #endif
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    QFactoryLoader *l = codecsloader();
-    QStringList keys = l->keys();
-    for (int i = 0; i < keys.size(); ++i) {
-        if (keys.at(i).startsWith(QLatin1String("MIB: "))) {
-            int mib = keys.at(i).mid(5).toInt();
+    const QFactoryLoader *l = codecsloader();
+    foreach (const QString &key, l->keys()) {
+        if (key.startsWith(QLatin1String("MIB: "))) {
+            int mib = key.mid(5).toInt();
             if (!codecs.contains(mib))
                 codecs += mib;
         }
