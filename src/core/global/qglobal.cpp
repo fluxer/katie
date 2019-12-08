@@ -1480,7 +1480,6 @@ static void qt_message(QtMsgType msgType, const char *msg, va_list ap)
 #if !defined(QT_NO_EXCEPTIONS)
             qEmergencyOut(msgType, msg, ap);
             // don't rethrow - we use qWarning and friends in destructors.
-            return;
 #endif
         }
     }
