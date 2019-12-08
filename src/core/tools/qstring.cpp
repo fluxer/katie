@@ -171,7 +171,8 @@ static inline int ucstrcmp(const QChar *a, int alen, const QChar *b, int blen)
 // Unicode case-insensitive compare two same-sized strings
 static inline int ucstrnicmp(const ushort *a, const ushort *b, int l)
 {
-    return u_strncasecmp(reinterpret_cast<const UChar*>(a), reinterpret_cast<const UChar*>(b), l, U_FOLD_CASE_DEFAULT);
+    return u_strncasecmp(reinterpret_cast<const UChar*>(a),
+        reinterpret_cast<const UChar*>(b), l, U_FOLD_CASE_DEFAULT);
 }
 
 static inline bool qMemEquals(const QChar *a, const QChar *b, int length)
