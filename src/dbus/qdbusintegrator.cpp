@@ -252,7 +252,7 @@ static dbus_bool_t qDBusAddWatch(DBusWatch *watch, void *data)
         ev->subtype = QDBusConnectionCallbackEvent::AddWatch;
         ev->watch = watch;
         ev->fd = fd;
-        ev->extra = flags;
+        ev->flags = flags;
         d->postEventToThread(AddWatchAction, d, ev);
         return true;
     }
@@ -1106,7 +1106,7 @@ void QDBusConnectionPrivate::customEvent(QEvent *e)
         break;
 
     case QDBusConnectionCallbackEvent::AddWatch:
-        qDBusRealAddWatch(this, ev->watch, ev->extra, ev->fd);
+        qDBusRealAddWatch(this, ev->watch, ev->flags, ev->fd);
         break;
 
     case QDBusConnectionCallbackEvent::ToggleWatch:
