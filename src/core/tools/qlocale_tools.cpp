@@ -275,7 +275,7 @@ double qstrtod(const char *s00, const char **se, bool *ok)
 
 
 /******************************************************************************
-** Helpers string casing and collation
+** Helpers for string casing and collation
 */
 static UCollator *icuCollator = Q_NULLPTR;
 
@@ -290,7 +290,7 @@ bool qt_initLocale(const QString &locale)
     icuCollator = ucol_open(locale.toLatin1().constData(), &error);
 
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("ucol_open(%s) failed %s",
+        qWarning("qt_initLocale: ucol_open(%s) failed %s",
             locale.toLatin1().constData(), u_errorName(error));
         return false;
     }
@@ -323,7 +323,7 @@ bool qt_u_strToUpper(const QString &str, QString *out, const QLocale &locale)
         reinterpret_cast<const UChar*>(str.unicode()), str.size(),
         locale.bcp47Name().toLatin1().constData(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("u_strToUpper(%s) failed %s",
+        qWarning("qt_u_strToUpper: u_strToUpper(%s) failed %s",
             locale.bcp47Name().toLatin1().constData(), u_errorName(error));
         out->clear();
         return false;
@@ -343,7 +343,7 @@ bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale)
         reinterpret_cast<const UChar*>(str.unicode()), str.size(),
         locale.bcp47Name().toLatin1().constData(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("u_strToLower(%s) failed %s",
+        qWarning("qt_u_strToLower: u_strToLower(%s) failed %s",
             locale.bcp47Name().toLatin1().constData(), u_errorName(error));
         out->clear();
         return false;
