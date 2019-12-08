@@ -943,6 +943,7 @@ QIcuCodec::~QIcuCodec()
 QString QIcuCodec::convertToUnicode(const char *src, int length, QTextCodec::ConverterState *state) const
 {
     UConverter *conv = getConverter(state);
+    Q_ASSERT(conv);
 
     QString result(QMAXUSTRLEN(length), Qt::Uninitialized);
     UErrorCode error = U_ZERO_ERROR;
@@ -973,6 +974,7 @@ QString QIcuCodec::convertToUnicode(const char *src, int length, QTextCodec::Con
 QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length, QTextCodec::ConverterState *state) const
 {
     UConverter *conv = getConverter(state);
+    Q_ASSERT(conv);
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
     QByteArray result(maxbytes, Qt::Uninitialized);
@@ -1104,6 +1106,7 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
         state->d = ucnv_open(m_name, &error);
         if (Q_UNLIKELY(U_FAILURE(error))) {
             qWarning("QIcuCodec::getConverter: ucnv_open(%s) failed %s", m_name, u_errorName(error));
+            return Q_NULLPTR;
         } else {
             error = U_ZERO_ERROR;
             if (state->flags & QTextCodec::ConvertInvalidToNull) {
