@@ -56,7 +56,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
-#if defined (_XOPEN_UNIX) && !defined(Q_OS_OSF)
+#if defined(_XOPEN_UNIX) && !defined(Q_OS_OSF)
 #include <langinfo.h>
 #endif
 
@@ -240,9 +240,9 @@ static void setupLocaleMapper()
 
     }
 
-#if defined (_XOPEN_UNIX) && !defined(Q_OS_OSF)
+#if defined(_XOPEN_UNIX) && !defined(Q_OS_OSF)
     if (!localeMapper) {
-        char *charset = nl_langinfo (CODESET);
+        const char *charset = nl_langinfo(CODESET);
         if (charset)
             localeMapper = QTextCodec::codecForName(charset);
     }
