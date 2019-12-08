@@ -94,8 +94,6 @@ static QTextCodec *createForName(const QByteArray &name)
             }
         }
     }
-#else
-    Q_UNUSED(name);
 #endif
 
     if (icucodecs.isEmpty()) {
