@@ -122,6 +122,10 @@ static inline int ucstricmp(const QChar *a, int alen, const QChar *b, int blen)
     const int cmpresult = u_strCaseCompare(reinterpret_cast<const UChar*>(a), alen,
         reinterpret_cast<const UChar*>(b), blen,
         U_FOLD_CASE_DEFAULT, &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QString::compare: u_strCaseCompare() failed %s", u_errorName(error));
+        // falltrough
+    }
     return cmpresult;
 }
 
