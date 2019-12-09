@@ -4641,7 +4641,7 @@ QString &QString::sprintf(const char *cformat, ...)
 
 QString &QString::vsprintf(const char* cformat, va_list ap)
 {
-    if (!cformat || !*cformat) {
+    if (Q_UNLIKELY(!cformat || !*cformat)) {
         // Qt 1.x compat
         *this = fromLatin1("");
         return *this;
