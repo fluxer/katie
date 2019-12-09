@@ -1428,28 +1428,8 @@ ushort QXmlStreamReaderPrivate::getChar_helper()
             atEnd = true;
             return 0;
         }
-        int mib = 106; // UTF-8
 
-        // look for byte order mark
-        uchar ch1 = rawReadBuffer.at(0);
-        uchar ch2 = rawReadBuffer.at(1);
-        uchar ch3 = rawReadBuffer.at(2);
-        uchar ch4 = rawReadBuffer.at(3);
-
-        if ((ch1 == 0 && ch2 == 0 && ch3 == 0xfe && ch4 == 0xff) ||
-            (ch1 == 0xff && ch2 == 0xfe && ch3 == 0 && ch4 == 0))
-            mib = 1017; // UTF-32 with byte order mark
-        else if (ch1 == 0x3c && ch2 == 0x00 && ch3 == 0x00 && ch4 == 0x00)
-            mib = 1019; // UTF-32LE
-        else if (ch1 == 0x00 && ch2 == 0x00 && ch3 == 0x00 && ch4 == 0x3c)
-            mib = 1018; // UTF-32BE
-        else if ((ch1 == 0xfe && ch2 == 0xff) || (ch1 == 0xff && ch2 == 0xfe))
-            mib = 1015; // UTF-16 with byte order mark
-        else if (ch1 == 0x3c && ch2 == 0x00)
-            mib = 1014; // UTF-16LE
-        else if (ch1 == 0x00 && ch2 == 0x3c)
-            mib = 1013; // UTF-16BE
-        codec = QTextCodec::codecForMib(mib);
+        codec = QTextCodec::codecForUtfText(rawReadBuffer);
         Q_ASSERT(codec);
         decoder = codec->makeDecoder();
     }
