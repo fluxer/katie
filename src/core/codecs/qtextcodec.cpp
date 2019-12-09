@@ -80,8 +80,6 @@ static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
     return (ucnv_compareNames(name.constData(), name2.constData()) == 0);
 }
 
-static QList<QByteArray> icucodecs;
-
 static QTextCodec *createForName(const QByteArray &name)
 {
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
@@ -96,11 +94,7 @@ static QTextCodec *createForName(const QByteArray &name)
     }
 #endif
 
-    if (icucodecs.isEmpty()) {
-        icucodecs = QIcuCodec::availableCodecs();
-    }
-
-    foreach(const QByteArray codec, icucodecs) {
+    foreach(const QByteArray codec, QIcuCodec::allCodecs()) {
         if (nameMatch(name, codec)) {
             return new QIcuCodec(name.constData());
         }
@@ -116,9 +110,14 @@ static QTextCodec *createForMib(int mib)
     if (QTextCodecFactoryInterface *factory
         = qobject_cast<QTextCodecFactoryInterface*>(codecsloader()->instance(name)))
         return factory->create(name);
-#else
-    Q_UNUSED(mib);
 #endif
+
+    foreach(const int codec, QIcuCodec::allMibs()) {
+        if (mib == codec) {
+            return new QIcuCodec(mib);
+        }
+    }
+
     return Q_NULLPTR;
 }
 
@@ -654,21 +653,8 @@ QTextCodec* QTextCodec::codecForMib(int mib)
 */
 QList<QByteArray> QTextCodec::availableCodecs()
 {
-#ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
-#endif
-    setup();
-
     QList<QByteArray> codecs;
-    codecs << "System";
-    for (int i = 0; i < all->size(); ++i) {
-        codecs += all->at(i)->name();
-        codecs += all->at(i)->aliases();
-    }
-
-#ifndef QT_NO_THREAD
-    locker.unlock();
-#endif
+    codecs << "System" << QIcuCodec::allCodecs();
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
     const QFactoryLoader *l = codecsloader();
@@ -692,18 +678,8 @@ QList<QByteArray> QTextCodec::availableCodecs()
 */
 QList<int> QTextCodec::availableMibs()
 {
-#ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
-#endif
-    setup();
-
     QList<int> codecs;
-    for (int i = 0; i < all->size(); ++i)
-        codecs += all->at(i)->mibEnum();
-
-#ifndef QT_NO_THREAD
-    locker.unlock();
-#endif
+    codecs << QIcuCodec::allMibs();
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
     const QFactoryLoader *l = codecsloader();

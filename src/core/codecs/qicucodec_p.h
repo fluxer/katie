@@ -54,7 +54,8 @@ QT_BEGIN_NAMESPACE
 class QIcuCodec : public QTextCodec
 {
 public:
-    QIcuCodec(const char *name);
+    explicit QIcuCodec(const char *name);
+    explicit QIcuCodec(const int mib);
     ~QIcuCodec();
 
     QString convertToUnicode(const char *data, int len, ConverterState *state) const;
@@ -65,7 +66,8 @@ public:
     int mibEnum() const;
 
 #ifndef QT_NO_TEXTCODEC
-    static QList<QByteArray> availableCodecs();
+    static QList<QByteArray> allCodecs();
+    static QList<int> allMibs();
     static QTextCodec* codecForUtf(const QByteArray &text, QTextCodec *defaultCodec);
 #endif
 
