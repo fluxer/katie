@@ -1430,6 +1430,10 @@ ushort QXmlStreamReaderPrivate::getChar_helper()
         }
 
         codec = QTextCodec::codecForUtfText(rawReadBuffer);
+        if (!codec) {
+            // fallback to UTF-8 even for non-UTF data
+            codec = QTextCodec::codecForName("UTF-8");
+        }
         Q_ASSERT(codec);
         decoder = codec->makeDecoder();
     }
