@@ -4641,8 +4641,6 @@ QString &QString::sprintf(const char *cformat, ...)
 
 QString &QString::vsprintf(const char* cformat, va_list ap)
 {
-    QLocale locale(QLocale::C);
-
     if (!cformat || !*cformat) {
         // Qt 1.x compat
         *this = fromLatin1("");
@@ -4650,7 +4648,7 @@ QString &QString::vsprintf(const char* cformat, va_list ap)
     }
 
     // Parse cformat
-
+    QLocale locale(QLocale::C);
     QString result;
     const char *c = cformat;
     for (;;) {
