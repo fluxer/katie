@@ -236,7 +236,7 @@ find_package(ZLIB)
 set_package_properties(ZLIB PROPERTIES
     PURPOSE "Required for compression support"
     DESCRIPTION "A Massively Spiffy Yet Delicately Unobtrusive Compression Library"
-    URL "http://zlib.net"
+    URL "https://zlib.net"
     TYPE REQUIRED
 )
 
@@ -262,7 +262,7 @@ find_package(OpenSSL)
 set_package_properties(OpenSSL PROPERTIES
     PURPOSE "Required for HTTPS support"
     DESCRIPTION "Support for secure network communications (SSL and TLS)"
-    URL "http://openssl.org"
+    URL "https://openssl.org"
     TYPE REQUIRED
 )
 
@@ -271,7 +271,7 @@ find_package(PCRE 7.7)
 set_package_properties(PCRE PROPERTIES
     PURPOSE "Required for regexp support in script component"
     DESCRIPTION "Perl Compatible Regular Expressions"
-    URL "http://www.pcre.org/"
+    URL "https://www.pcre.org/"
     TYPE REQUIRED
 )
 
@@ -279,7 +279,7 @@ find_package(X11)
 set_package_properties(X11 PROPERTIES
     PURPOSE "Required for X11/X.Org integration support"
     DESCRIPTION "Open source implementation of the X Window System"
-    URL "http://www.x.org"
+    URL "https://www.x.org"
     TYPE REQUIRED
 )
 
@@ -287,7 +287,7 @@ find_package(Freetype)
 set_package_properties(Freetype PROPERTIES
     PURPOSE "Required for fonts configuration support"
     DESCRIPTION "Freely available software library to render fonts"
-    URL "http://www.freetype.org"
+    URL "https://www.freetype.org"
     TYPE REQUIRED
 )
 
@@ -344,7 +344,7 @@ find_package(JPEG)
 set_package_properties(JPEG PROPERTIES
     PURPOSE "JPEG format handler"
     DESCRIPTION "JPEG image codec with accelerated baseline compression and decompression"
-    URL "http://libjpeg-turbo.virtualgl.org/"
+    URL "https://libjpeg-turbo.virtualgl.org/"
     TYPE RECOMMENDED
 )
 
@@ -352,7 +352,7 @@ find_package(TIFF)
 set_package_properties(TIFF PROPERTIES
     PURPOSE "TIFF format handler"
     DESCRIPTION "Library for manipulation of TIFF images"
-    URL "http://www.remotesensing.org/libtiff/"
+    URL "http://www.libtiff.org/"
     TYPE RECOMMENDED
 )
 
@@ -360,7 +360,7 @@ find_package(MNG)
 set_package_properties(MNG PROPERTIES
     PURPOSE "MNG format handler"
     DESCRIPTION "THE reference library for reading, displaying, writing and examining Multiple-Image Network Graphics"
-    URL "http://sourceforge.net/projects/libmng/"
+    URL "https://sourceforge.net/projects/libmng/"
     TYPE RECOMMENDED
 )
 
@@ -368,7 +368,7 @@ find_package(Cups)
 set_package_properties(Cups PROPERTIES
     PURPOSE "Required for printing support"
     DESCRIPTION "CUPS is the standards-based, open source printing system"
-    URL "http://www.cups.org"
+    URL "https://www.cups.org"
     TYPE RECOMMENDED
 )
 
@@ -377,7 +377,7 @@ find_package(Fontconfig 2.4.2)
 set_package_properties(Fontconfig PROPERTIES
     PURPOSE "Required for fonts configuration support"
     DESCRIPTION "Library for configuring and customizing font access"
-    URL "http://www.freedesktop.org/wiki/Software/fontconfig"
+    URL "https://www.freedesktop.org/wiki/Software/fontconfig/"
     TYPE RECOMMENDED
 )
 
@@ -386,7 +386,7 @@ find_package(HarfBuzz)
 set_package_properties(HarfBuzz PROPERTIES
     PURPOSE "Currently none"
     DESCRIPTION "OpenType text shaping engine"
-    URL "http://www.freedesktop.org/wiki/Software/HarfBuzz/"
+    URL "https://www.freedesktop.org/wiki/Software/HarfBuzz/"
     TYPE RECOMMENDED
 )
 
@@ -395,7 +395,7 @@ find_package(DBus 1.2)
 set_package_properties(DBus PROPERTIES
     PURPOSE "Required for D-Bus support"
     DESCRIPTION "Message bus system, a simple way for applications to talk to one another"
-    URL "http://www.freedesktop.org/wiki/Software/dbus"
+    URL "https://www.freedesktop.org/wiki/Software/dbus"
     TYPE RECOMMENDED
 )
 
@@ -420,7 +420,7 @@ find_package(PostgreSQL)
 set_package_properties(PostgreSQL PROPERTIES
     PURPOSE "Required for PostgreSQL database support"
     DESCRIPTION "The world's most advanced open source database"
-    URL "http://www.postgresql.org"
+    URL "https://www.postgresql.org/"
     TYPE OPTIONAL
 )
 
@@ -428,7 +428,7 @@ find_package(MySQL)
 set_package_properties(MySQL PROPERTIES
     PURPOSE "Required for MySQL database support"
     DESCRIPTION "The world's most popular open source database"
-    URL "http://www.mysql.com"
+    URL "https://www.mysql.com/"
     TYPE OPTIONAL
 )
 
