@@ -1203,8 +1203,7 @@ bool QMainWindow::restoreState(const QByteArray &state, int version)
 {
     if (state.isEmpty())
         return false;
-    QByteArray sd = state;
-    QDataStream stream(&sd, QIODevice::ReadOnly);
+    QDataStream stream(state);
     int marker, v;
     stream >> marker;
     stream >> v;
