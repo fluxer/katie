@@ -241,21 +241,13 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
 
     data.entryFlags &= ~what;
 
-    const char * nativeFilePath;
-    int nativeFilePathLength;
-    {
-        const QByteArray &path = entry.nativeFilePath();
-        nativeFilePath = path.constData();
-        nativeFilePathLength = path.size();
-        Q_UNUSED(nativeFilePathLength);
-    }
-
+    const QByteArray &path = entry.nativeFilePath();
     bool entryExists = true; // innocent until proven otherwise
 
     QT_STATBUF statBuffer;
     bool statBufferValid = false;
     if (what & QFileSystemMetaData::LinkType) {
-        if (QT_LSTAT(nativeFilePath, &statBuffer) == 0) {
+        if (QT_LSTAT(path.constData(), &statBuffer) == 0) {
             if (S_ISLNK(statBuffer.st_mode)) {
                 data.entryFlags |= QFileSystemMetaData::LinkType;
             } else {
@@ -271,7 +263,7 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
 
     if (statBufferValid || (what & QFileSystemMetaData::PosixStatFlags)) {
         if (entryExists && !statBufferValid)
-            statBufferValid = (QT_STAT(nativeFilePath, &statBuffer) == 0);
+            statBufferValid = (QT_STAT(path.constData(), &statBuffer) == 0);
 
         if (statBufferValid)
             data.fillFromStatBuf(statBuffer);
@@ -295,15 +287,15 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
 
         if (entryExists) {
             if (what & QFileSystemMetaData::UserReadPermission) {
-                if (QT_ACCESS(nativeFilePath, R_OK) == 0)
+                if (QT_ACCESS(path.constData(), R_OK) == 0)
                     data.entryFlags |= QFileSystemMetaData::UserReadPermission;
             }
             if (what & QFileSystemMetaData::UserWritePermission) {
-                if (QT_ACCESS(nativeFilePath, W_OK) == 0)
+                if (QT_ACCESS(path.constData(), W_OK) == 0)
                     data.entryFlags |= QFileSystemMetaData::UserWritePermission;
             }
             if (what & QFileSystemMetaData::UserExecutePermission) {
-                if (QT_ACCESS(nativeFilePath, X_OK) == 0)
+                if (QT_ACCESS(path.constData(), X_OK) == 0)
                     data.entryFlags |= QFileSystemMetaData::UserExecutePermission;
             }
         }
