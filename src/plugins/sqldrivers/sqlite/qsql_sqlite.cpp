@@ -438,13 +438,13 @@ bool QSQLiteResult::exec()
                         // lifetime of string == lifetime of its qvariant
                         const QString *str = static_cast<const QString*>(value.constData());
                         const QByteArray utfstr = str->toUtf8();
+                        // SQLITE_TRANSIENT makes sure that sqlite buffers the data
                         res = sqlite3_bind_text(d->stmt, i + 1, utfstr.constData(),
-                                                (utfstr.size()) * sizeof(char), SQLITE_STATIC);
+                                                (utfstr.size()) * sizeof(char), SQLITE_TRANSIENT);
                         break;
                     }
                     default: {
                         QByteArray str = value.toString().toUtf8();
-                        // SQLITE_TRANSIENT makes sure that sqlite buffers the data
                         res = sqlite3_bind_text(d->stmt, i + 1, str.constData(),
                                                 (str.size()) * sizeof(char), SQLITE_TRANSIENT);
                         break;
