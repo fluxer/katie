@@ -117,11 +117,6 @@ public:
         QByteArray matchRule;
     };
 
-    enum TreeNodeType {
-        Object = 0x0,
-        VirtualObject = 0x01000000
-    };
-
     struct ObjectTreeNode
     {
         typedef QVector<ObjectTreeNode> DataList;
@@ -136,10 +131,7 @@ public:
             { return QStringRef(&name) < other; }
 
         QString name;
-        union {
-            QObject *obj;
-            QDBusVirtualObject *treeNode;
-        };
+        QObject *obj;
         int flags;
 
         DataList children;

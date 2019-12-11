@@ -59,7 +59,6 @@ class QDBusError;
 class QDBusMessage;
 class QDBusPendingCall;
 class QDBusConnectionInterface;
-class QDBusVirtualObject;
 class QObject;
 
 class QDBusConnectionPrivate;
@@ -99,13 +98,6 @@ public:
         UnregisterTree
     };
     Q_DECLARE_FLAGS(RegisterOptions, RegisterOption)
-
-    enum VirtualObjectRegisterOption {
-        SingleNode = 0x0,
-        SubPath = 0x1
-        // Reserved = 0xff000000
-    };
-    Q_DECLARE_FLAGS(VirtualObjectRegisterOptions, VirtualObjectRegisterOption)
 
     enum ConnectionCapability {
         UnixFileDescriptorPassing = 0x0001
@@ -157,9 +149,6 @@ public:
     void unregisterObject(const QString &path, UnregisterMode mode = UnregisterNode);
     QObject *objectRegisteredAt(const QString &path) const;
 
-    bool registerVirtualObject(const QString &path, QDBusVirtualObject *object,
-                          VirtualObjectRegisterOption options = SingleNode);
-
     bool registerService(const QString &serviceName);
     bool unregisterService(const QString &serviceName);
 
@@ -189,7 +178,6 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QDBusConnection::RegisterOptions)
-Q_DECLARE_OPERATORS_FOR_FLAGS(QDBusConnection::VirtualObjectRegisterOptions)
 
 QT_END_NAMESPACE
 

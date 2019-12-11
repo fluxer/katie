@@ -216,18 +216,6 @@ void QDBusConnectionManager::setConnection(const QString &name, QDBusConnectionP
 */
 
 /*!
-    \internal
-    \since 4.8
-    \enum QDBusConnection::VirtualObjectRegisterOption
-    Specifies the options for registering virtual objects with the connection. The possible values are:
-
-    \value SingleNode                           register a virtual object to handle one path only
-    \value SubPath                              register a virtual object so that it handles all sub paths
-
-    \sa registerVirtualObject(), QDBusVirtualObject
-*/
-
-/*!
     \enum QDBusConnection::UnregisterMode
     The mode for unregistering an object path:
 
@@ -798,18 +786,9 @@ bool QDBusConnection::registerObject(const QString &path, QObject *object, Regis
             if (node->obj)
                 return false;
 
-            if (options & QDBusConnectionPrivate::VirtualObject) {
-                // technically the check for children needs to go even deeper
-                if (options & SubPath) {
-                    foreach (const QDBusConnectionPrivate::ObjectTreeNode &child, node->children) {
-                        if (child.obj)
-                            return false;
-                    }
-                }
-            } else {
-                if ((options & ExportChildObjects && !node->children.isEmpty()))
-                    return false;
-            }
+            if ((options & ExportChildObjects && !node->children.isEmpty()))
+                return false;
+  
             // we can add the object here
             node->obj = object;
             node->flags = options;
@@ -817,13 +796,6 @@ bool QDBusConnection::registerObject(const QString &path, QObject *object, Regis
             d->registerObject(node);
             //qDebug("REGISTERED FOR %s", path.toLocal8Bit().constData());
             return true;
-        }
-
-        // if a virtual object occupies this path, return false
-        if (node->obj && (node->flags & QDBusConnectionPrivate::VirtualObject) && (node->flags & QDBusConnection::SubPath)) {
-            qDebug("Cannot register object at %s because QDBusVirtualObject handles all sub-paths.",
-                   qPrintable(path));
-            return false;
         }
 
         // find the position where we'd insert the node
@@ -850,21 +822,6 @@ bool QDBusConnection::registerObject(const QString &path, QObject *object, Regis
     }
 
     Q_UNREACHABLE();
-}
-
-/*!
-    \internal
-    \since 4.8
-    Registers a QDBusTreeNode for a path. It can handle a path including all child paths, thus
-    handling multiple DBus nodes.
-
-    To unregister a QDBusTreeNode use the unregisterObject() function with its path.
-*/
-bool QDBusConnection::registerVirtualObject(const QString &path, QDBusVirtualObject *treeNode,
-                      VirtualObjectRegisterOption options)
-{
-    int opts = options | QDBusConnectionPrivate::VirtualObject;
-    return registerObject(path, (QObject*) treeNode, (RegisterOptions) opts);
 }
 
 /*!
@@ -931,8 +888,6 @@ QObject *QDBusConnection::objectRegisteredAt(const QString &path) const
     int i = 1;
     while (node) {
         if (pathComponents.count() == i)
-            return node->obj;
-        if ((node->flags & QDBusConnectionPrivate::VirtualObject) && (node->flags & QDBusConnection::SubPath))
             return node->obj;
 
         QDBusConnectionPrivate::ObjectTreeNode::DataList::ConstIterator it =

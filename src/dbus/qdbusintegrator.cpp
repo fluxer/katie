@@ -58,7 +58,6 @@
 #include "qdbusabstractadaptor.h"
 #include "qdbusabstractadaptor_p.h"
 #include "qdbusutil_p.h"
-#include "qdbusvirtualobject.h"
 #include "qdbusmessage_p.h"
 #include "qdbuscontext_p.h"
 #include "qdbuspendingcall_p.h"
@@ -453,8 +452,6 @@ static bool findObject(const QDBusConnectionPrivate::ObjectTreeNode *root,
     const QDBusConnectionPrivate::ObjectTreeNode *node = root;
     while (start < length && node) {
         if (node->flags & QDBusConnection::ExportChildObjects)
-            break;
-        if ((node->flags & QDBusConnectionPrivate::VirtualObject) && (node->flags & QDBusConnection::SubPath))
             break;
         int end = fullpath.indexOf(QLatin1Char('/'), start);
         end = (end == -1 ? length : end);
@@ -1368,15 +1365,6 @@ void QDBusConnectionPrivate::activateObject(ObjectTreeNode &node, const QDBusMes
     // The call is routed through the adaptor sub-objects if we have any
 
     // object may be null
-
-    if (node.flags & QDBusConnectionPrivate::VirtualObject) {
-        if (node.treeNode->handleMessage(msg, q(this))) {
-            return;
-        } else {
-            if (activateInternalFilters(node, msg))
-                return;
-        }
-    }
 
     if (pathStartPos != msg.path().length()) {
         node.flags &= ~QDBusConnection::ExportAllSignals;

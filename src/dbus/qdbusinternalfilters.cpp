@@ -55,7 +55,6 @@
 #include "qdbusmetatype_p.h"
 #include "qdbusmessage_p.h"
 #include "qdbusutil_p.h"
-#include "qdbusvirtualobject.h"
 
 #include <dbus/dbus.h>
 
@@ -161,11 +160,6 @@ QString qDBusIntrospectObject(const QDBusConnectionPrivate::ObjectTreeNode &node
 
                 xml_data += ifaceXml;
             }
-        }
-
-        // is it a virtual node that handles introspection itself?
-        if (node.flags & QDBusConnectionPrivate::VirtualObject) {
-            xml_data += node.treeNode->introspect(path);
         }
 
         xml_data += QLatin1String( propertiesInterfaceXml );
