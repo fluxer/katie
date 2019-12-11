@@ -209,9 +209,9 @@ int main(int argc, char *argv[])
     // do not exit until the debugger has been closed
     if (debugger && eng->hasUncaughtException()) {
         app->processEvents();
-        delete debugger;
     }
 
+    delete debugger;
     delete eng;
     delete app;
 
