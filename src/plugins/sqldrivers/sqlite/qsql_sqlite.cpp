@@ -177,22 +177,27 @@ void QSQLiteResultPrivate::initColumns(bool emptyResultset)
         } else {
             // Get the proper type for the field based on stp value
             switch (stp) {
-            case SQLITE_INTEGER:
-                fieldType = QVariant::Int;
-                break;
-            case SQLITE_FLOAT:
-                fieldType = QVariant::Double;
-                break;
-            case SQLITE_BLOB:
-                fieldType = QVariant::ByteArray;
-                break;
-            case SQLITE_TEXT:
-                fieldType = QVariant::String;
-                break;
-            case SQLITE_NULL:
-            default:
-                fieldType = QVariant::Invalid;
-                break;
+                case SQLITE_INTEGER: {
+                    fieldType = QVariant::Int;
+                    break;
+                }
+                case SQLITE_FLOAT: {
+                    fieldType = QVariant::Double;
+                    break;
+                }
+                case SQLITE_BLOB: {
+                    fieldType = QVariant::ByteArray;
+                    break;
+                }
+                case SQLITE_TEXT: {
+                    fieldType = QVariant::String;
+                    break;
+                }
+                case SQLITE_NULL:
+                default: {
+                    fieldType = QVariant::Invalid;
+                    break;
+                }
             }
         }
 
@@ -217,7 +222,7 @@ bool QSQLiteResultPrivate::fetchNext(QSqlCachedResult::ValueCache &values, int i
     }
     skipRow = initialFetch;
 
-    if(initialFetch) {
+    if (initialFetch) {
         firstRow.clear();
         firstRow.resize(sqlite3_column_count(stmt));
     }
@@ -230,75 +235,89 @@ bool QSQLiteResultPrivate::fetchNext(QSqlCachedResult::ValueCache &values, int i
     }
     res = sqlite3_step(stmt);
 
-    switch(res) {
-    case SQLITE_ROW:
-        // check to see if should fill out columns
-        if (rInf.isEmpty())
-            // must be first call.
-            initColumns(false);
-        if (idx < 0 && !initialFetch)
-            return true;
-        for (i = 0; i < rInf.count(); ++i) {
-            switch (sqlite3_column_type(stmt, i)) {
-            case SQLITE_BLOB:
-                values[i + idx] = QByteArray(static_cast<const char *>(
-                            sqlite3_column_blob(stmt, i)),
-                            sqlite3_column_bytes(stmt, i));
-                break;
-            case SQLITE_INTEGER:
-                values[i + idx] = sqlite3_column_int64(stmt, i);
-                break;
-            case SQLITE_FLOAT:
-                switch(q->numericalPrecisionPolicy()) {
-                    case QSql::LowPrecisionInt32:
-                        values[i + idx] = sqlite3_column_int(stmt, i);
+    switch (res) {
+        case SQLITE_ROW: {
+            // check to see if should fill out columns
+            if (rInf.isEmpty()) {
+                // must be first call.
+                initColumns(false);
+            }
+            if (idx < 0 && !initialFetch)
+                return true;
+            for (i = 0; i < rInf.count(); ++i) {
+                switch (sqlite3_column_type(stmt, i)) {
+                    case SQLITE_BLOB: {
+                        values[i + idx] = QByteArray(static_cast<const char *>(
+                                    sqlite3_column_blob(stmt, i)),
+                                    sqlite3_column_bytes(stmt, i));
                         break;
-                    case QSql::LowPrecisionInt64:
+                    }
+                    case SQLITE_INTEGER: {
                         values[i + idx] = sqlite3_column_int64(stmt, i);
                         break;
-                    case QSql::LowPrecisionDouble:
-                    case QSql::HighPrecision:
-                    default:
-                        values[i + idx] = sqlite3_column_double(stmt, i);
+                    }
+                    case SQLITE_FLOAT: {
+                        switch (q->numericalPrecisionPolicy()) {
+                            case QSql::LowPrecisionInt32: {
+                                values[i + idx] = sqlite3_column_int(stmt, i);
+                                break;
+                            }
+                            case QSql::LowPrecisionInt64: {
+                                values[i + idx] = sqlite3_column_int64(stmt, i);
+                                break;
+                            }
+                            case QSql::LowPrecisionDouble:
+                            case QSql::HighPrecision:
+                            default: {
+                                values[i + idx] = sqlite3_column_double(stmt, i);
+                                break;
+                            }
+                        };
                         break;
-                };
-                break;
-            case SQLITE_NULL:
-                values[i + idx] = QVariant(QVariant::String);
-                break;
-            default:
-                values[i + idx] = QString::fromUtf8(reinterpret_cast<const char *>(
-                            sqlite3_column_text(stmt, i)),
-                            sqlite3_column_bytes(stmt, i) / sizeof(char));
-                break;
+                    }
+                    case SQLITE_NULL: {
+                        values[i + idx] = QVariant(QVariant::String);
+                        break;
+                    }
+                    default: {
+                        values[i + idx] = QString::fromUtf8(reinterpret_cast<const char *>(
+                                    sqlite3_column_text(stmt, i)),
+                                    sqlite3_column_bytes(stmt, i) / sizeof(char));
+                        break;
+                    }
+                }
             }
+            return true;
         }
-        return true;
-    case SQLITE_DONE:
-        if (rInf.isEmpty())
-            // must be first call.
-            initColumns(true);
-        q->setAt(QSql::AfterLastRow);
-        sqlite3_reset(stmt);
-        return false;
-    case SQLITE_CONSTRAINT:
-    case SQLITE_ERROR:
-        // SQLITE_ERROR is a generic error code and we must call sqlite3_reset()
-        // to get the specific error message.
-        res = sqlite3_reset(stmt);
-        q->setLastError(qMakeError(access, QCoreApplication::translate("QSQLiteResult",
-                        "Unable to fetch row"), QSqlError::ConnectionError, res));
-        q->setAt(QSql::AfterLastRow);
-        return false;
-    case SQLITE_MISUSE:
-    case SQLITE_BUSY:
-    default:
-        // something wrong, don't get col info, but still return false
-        q->setLastError(qMakeError(access, QCoreApplication::translate("QSQLiteResult",
-                        "Unable to fetch row"), QSqlError::ConnectionError, res));
-        sqlite3_reset(stmt);
-        q->setAt(QSql::AfterLastRow);
-        return false;
+        case SQLITE_DONE: {
+            if (rInf.isEmpty()) {
+                // must be first call.
+                initColumns(true);
+            }
+            q->setAt(QSql::AfterLastRow);
+            sqlite3_reset(stmt);
+            return false;
+        }
+        case SQLITE_CONSTRAINT:
+        case SQLITE_ERROR: {
+            // SQLITE_ERROR is a generic error code and we must call sqlite3_reset()
+            // to get the specific error message.
+            res = sqlite3_reset(stmt);
+            q->setLastError(qMakeError(access, QCoreApplication::translate("QSQLiteResult",
+                            "Unable to fetch row"), QSqlError::ConnectionError, res));
+            q->setAt(QSql::AfterLastRow);
+            return false;
+        }
+        case SQLITE_MISUSE:
+        case SQLITE_BUSY:
+        default: {
+            // something wrong, don't get col info, but still return false
+            q->setLastError(qMakeError(access, QCoreApplication::translate("QSQLiteResult",
+                            "Unable to fetch row"), QSqlError::ConnectionError, res));
+            sqlite3_reset(stmt);
+            q->setAt(QSql::AfterLastRow);
+            return false;
+        }
     }
     return false;
 }
@@ -323,12 +342,15 @@ QSQLiteResult::~QSQLiteResult()
 void QSQLiteResult::virtual_hook(int id, void *data)
 {
     switch (id) {
-    case QSqlResult::DetachFromResultSet:
-        if (d->stmt)
-            sqlite3_reset(d->stmt);
-        break;
-    default:
-        QSqlCachedResult::virtual_hook(id, data);
+        case QSqlResult::DetachFromResultSet: {
+            if (d->stmt)
+                sqlite3_reset(d->stmt);
+            break;
+        }
+        default: {
+            QSqlCachedResult::virtual_hook(id, data);
+            break;
+        }
     }
 }
 
@@ -393,34 +415,40 @@ bool QSQLiteResult::exec()
                 res = sqlite3_bind_null(d->stmt, i + 1);
             } else {
                 switch (value.type()) {
-                case QVariant::ByteArray: {
-                    const QByteArray *ba = static_cast<const QByteArray*>(value.constData());
-                    res = sqlite3_bind_blob(d->stmt, i + 1, ba->constData(),
-                                            ba->size(), SQLITE_STATIC);
-                    break; }
-                case QVariant::Int:
-                    res = sqlite3_bind_int(d->stmt, i + 1, value.toInt());
-                    break;
-                case QVariant::Double:
-                    res = sqlite3_bind_double(d->stmt, i + 1, value.toDouble());
-                    break;
-                case QVariant::UInt:
-                case QVariant::LongLong:
-                    res = sqlite3_bind_int64(d->stmt, i + 1, value.toLongLong());
-                    break;
-                case QVariant::String: {
-                    // lifetime of string == lifetime of its qvariant
-                    const QString *str = static_cast<const QString*>(value.constData());
-                    const QByteArray utfstr = str->toUtf8();
-                    res = sqlite3_bind_text(d->stmt, i + 1, utfstr.constData(),
-                                              (utfstr.size()) * sizeof(char), SQLITE_STATIC);
-                    break; }
-                default: {
-                    QByteArray str = value.toString().toUtf8();
-                    // SQLITE_TRANSIENT makes sure that sqlite buffers the data
-                    res = sqlite3_bind_text(d->stmt, i + 1, str.constData(),
-                                              (str.size()) * sizeof(char), SQLITE_TRANSIENT);
-                    break; }
+                    case QVariant::ByteArray: {
+                        const QByteArray *ba = static_cast<const QByteArray*>(value.constData());
+                        res = sqlite3_bind_blob(d->stmt, i + 1, ba->constData(),
+                                                ba->size(), SQLITE_STATIC);
+                        break;
+                    }
+                    case QVariant::Int: {
+                        res = sqlite3_bind_int(d->stmt, i + 1, value.toInt());
+                        break;
+                    }
+                    case QVariant::Double: {
+                        res = sqlite3_bind_double(d->stmt, i + 1, value.toDouble());
+                        break;
+                    }
+                    case QVariant::UInt:
+                    case QVariant::LongLong: {
+                        res = sqlite3_bind_int64(d->stmt, i + 1, value.toLongLong());
+                        break;
+                    }
+                    case QVariant::String: {
+                        // lifetime of string == lifetime of its qvariant
+                        const QString *str = static_cast<const QString*>(value.constData());
+                        const QByteArray utfstr = str->toUtf8();
+                        res = sqlite3_bind_text(d->stmt, i + 1, utfstr.constData(),
+                                                (utfstr.size()) * sizeof(char), SQLITE_STATIC);
+                        break;
+                    }
+                    default: {
+                        QByteArray str = value.toString().toUtf8();
+                        // SQLITE_TRANSIENT makes sure that sqlite buffers the data
+                        res = sqlite3_bind_text(d->stmt, i + 1, str.constData(),
+                                                (str.size()) * sizeof(char), SQLITE_TRANSIENT);
+                        break;
+                    }
                 }
             }
             if (res != SQLITE_OK) {
@@ -509,22 +537,22 @@ QSQLiteDriver::~QSQLiteDriver()
 bool QSQLiteDriver::hasFeature(DriverFeature f) const
 {
     switch (f) {
-    case BLOB:
-    case Transactions:
-    case Unicode:
-    case LastInsertId:
-    case PreparedQueries:
-    case PositionalPlaceholders:
-    case SimpleLocking:
-    case FinishQuery:
-    case LowPrecisionNumbers:
-        return true;
-    case QuerySize:
-    case NamedPlaceholders:
-    case BatchOperations:
-    case EventNotifications:
-    case MultipleResultSets:
-        return false;
+        case BLOB:
+        case Transactions:
+        case Unicode:
+        case LastInsertId:
+        case PreparedQueries:
+        case PositionalPlaceholders:
+        case SimpleLocking:
+        case FinishQuery:
+        case LowPrecisionNumbers:
+            return true;
+        case QuerySize:
+        case NamedPlaceholders:
+        case BatchOperations:
+        case EventNotifications:
+        case MultipleResultSets:
+            return false;
     }
     return false;
 }
