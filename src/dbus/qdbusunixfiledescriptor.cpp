@@ -96,10 +96,6 @@ QT_BEGIN_NAMESPACE
     continue to operate, so code need not have compile-time checks for the
     availability of this feature.
 
-    On non-Unix systems, QDBusUnixFileDescriptor will always report an
-    invalid state and QDBusUnixFileDescriptor::isSupported() will return
-    false.
-
     \sa QDBusConnection::ConnectionCapabilities, QDBusConnection::connectionCapabilities()
 */
 
@@ -214,23 +210,6 @@ bool QDBusUnixFileDescriptor::isValid() const
 int QDBusUnixFileDescriptor::fileDescriptor() const
 {
     return d ? d->fd.operator int() : -1;
-}
-
-// qdoc documentation is generated on Unix
-
-/*!
-    Returns true if Unix file descriptors are supported on this platform. In
-    other words, this function returns true if this is a Unix platform.
-
-    Note that QDBusUnixFileDescriptor continues to operate even if this
-    function returns false. The only difference is that the
-    QDBusUnixFileDescriptor objects will always be in the isValid() == false
-    state and fileDescriptor() will always return -1. The class will not
-    consume any operating system resources.
-*/
-bool QDBusUnixFileDescriptor::isSupported()
-{
-    return true;
 }
 
 /*!
