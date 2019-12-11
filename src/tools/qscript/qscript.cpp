@@ -164,9 +164,8 @@ int main(int argc, char *argv[])
             debugger = new QScriptEngineDebugger(app);
             debugger->attachTo(eng);
             debugger->setAutoShowStandardWindow(true);
-        }
-
-        if (fn == QLatin1String("-i")) {
+            continue;
+        } else if (fn == QLatin1String("-i")) {
             interactive(eng);
             break;
         }
