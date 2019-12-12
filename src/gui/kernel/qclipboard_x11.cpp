@@ -97,14 +97,6 @@ static int pending_timer_id = 0;
 static bool pending_clipboard_changed = false;
 static bool pending_selection_changed = false;
 
-
-// event capture mechanism for qt_xclb_wait_for_event
-static bool waiting_for_data = false;
-static bool has_captured_event = false;
-static Window capture_event_win = XNone;
-static int capture_event_type = -1;
-static XEvent captured_event;
-
 class QClipboardWatcher; // forward decl
 static QClipboardWatcher *selection_watcher = 0;
 static QClipboardWatcher *clipboard_watcher = 0;
@@ -282,19 +274,6 @@ static bool qt_x11_incr_event_filter(void *message, long *result)
     if (prev_event_filter)
         return prev_event_filter(event, result);
     return false;
-}
-
-/*
-  called when no INCR activity has happened for 'clipboard_timeout'
-  milliseconds... we assume that all unfinished transactions have
-  timed out and remove everything from the transaction map
-*/
-static void qt_xclb_incr_timeout(void)
-{
-    qWarning("QClipboard: Timed out while sending data");
-
-    while (transactions)
-        delete *transactions->begin();
 }
 
 QClipboardINCRTransaction::QClipboardINCRTransaction(Window w, Atom p, Atom t, int f,
@@ -487,22 +466,6 @@ bool QClipboard::ownsMode(Mode mode) const
         return false;
 }
 
-
-// event filter function... captures interesting events while
-// qt_xclb_wait_for_event is running the event loop
-static bool qt_x11_clipboard_event_filter(void *message, long *)
-{
-    XEvent *event = reinterpret_cast<XEvent *>(message);
-    if (event->xany.type == capture_event_type &&
-        event->xany.window == capture_event_win) {
-        VDEBUG("QClipboard: event_filter(): caught event type %d", event->type);
-        has_captured_event = true;
-        captured_event = *event;
-        return true;
-    }
-    return false;
-}
-
 static Bool checkForClipboardEvents(Display *, XEvent *e, XPointer)
 {
     return ((e->type == SelectionRequest && (e->xselectionrequest.selection == XA_PRIMARY
@@ -517,81 +480,32 @@ bool QX11Data::clipboardWaitForEvent(Window win, int type, XEvent *event, int ti
     started.start();
     QElapsedTimer now = started;
 
-    if (QAbstractEventDispatcher::instance()->inherits("QtMotif")
-        || QApplication::clipboard()->property("useEventLoopWhenWaiting").toBool()) {
-        if (waiting_for_data) {
-            Q_ASSERT(!"QClipboard: internal error, qt_xclb_wait_for_event recursed");
+    do {
+        if (XCheckTypedWindowEvent(qt_x11Data->display,win,type,event))
+            return true;
+
+        if (checkManager && XGetSelectionOwner(qt_x11Data->display, ATOM(CLIPBOARD_MANAGER)) == XNone)
             return false;
-        }
-        waiting_for_data = true;
 
+        // process other clipboard events, since someone is probably requesting data from us
+        XEvent e;
+        // Pass the event through the event dispatcher filter so that applications
+        // which install an event filter on the dispatcher get to handle it first.
+        if (XCheckIfEvent(qt_x11Data->display, &e, checkForClipboardEvents, 0) &&
+            !QAbstractEventDispatcher::instance()->filterEvent(&e))
+            qApp->x11ProcessEvent(&e);
 
-        has_captured_event = false;
-        capture_event_win = win;
-        capture_event_type = type;
+        now.start();
 
-        QApplication::EventFilter old_event_filter =
-            qApp->setEventFilter(qt_x11_clipboard_event_filter);
+        XFlush(qt_x11Data->display);
 
-        do {
-            if (XCheckTypedWindowEvent(display, win, type, event)) {
-                waiting_for_data = false;
-                qApp->setEventFilter(old_event_filter);
-                return true;
-            }
+        // sleep 50 ms, so we don't use up CPU cycles all the time.
+        struct timeval usleep_tv;
+        usleep_tv.tv_sec = 0;
+        usleep_tv.tv_usec = 50000;
+        select(0, 0, 0, 0, &usleep_tv);
+    } while (started.msecsTo(now) < timeout);
 
-            if (checkManager && XGetSelectionOwner(qt_x11Data->display, ATOM(CLIPBOARD_MANAGER)) == XNone)
-                return false;
-
-            XSync(qt_x11Data->display, false);
-            usleep(50000);
-
-            now.start();
-
-            QEventLoop::ProcessEventsFlags flags(QEventLoop::ExcludeUserInputEvents
-                                                 | QEventLoop::ExcludeSocketNotifiers
-                                                 | QEventLoop::WaitForMoreEvents
-                                                 | QEventLoop::X11ExcludeTimers);
-            QAbstractEventDispatcher *eventDispatcher = QAbstractEventDispatcher::instance();
-            eventDispatcher->processEvents(flags);
-
-            if (has_captured_event) {
-                waiting_for_data = false;
-                *event = captured_event;
-                qApp->setEventFilter(old_event_filter);
-                return true;
-            }
-        } while (started.msecsTo(now) < timeout);
-
-        waiting_for_data = false;
-        qApp->setEventFilter(old_event_filter);
-    } else {
-        do {
-            if (XCheckTypedWindowEvent(qt_x11Data->display,win,type,event))
-                return true;
-
-            if (checkManager && XGetSelectionOwner(qt_x11Data->display, ATOM(CLIPBOARD_MANAGER)) == XNone)
-                return false;
-
-            // process other clipboard events, since someone is probably requesting data from us
-            XEvent e;
-            // Pass the event through the event dispatcher filter so that applications
-            // which install an event filter on the dispatcher get to handle it first.
-            if (XCheckIfEvent(qt_x11Data->display, &e, checkForClipboardEvents, 0) &&
-                !QAbstractEventDispatcher::instance()->filterEvent(&e))
-                qApp->x11ProcessEvent(&e);
-
-            now.start();
-
-            XFlush(qt_x11Data->display);
-
-            // sleep 50 ms, so we don't use up CPU cycles all the time.
-            struct timeval usleep_tv;
-            usleep_tv.tv_sec = 0;
-            usleep_tv.tv_usec = 50000;
-            select(0, 0, 0, 0, &usleep_tv);
-        } while (started.msecsTo(now) < timeout);
-    }
     return false;
 }
 
@@ -864,9 +778,6 @@ bool QClipboard::event(QEvent *e)
     if (e->type() == QEvent::Timer) {
         QTimerEvent *te = static_cast<QTimerEvent *>(e);
 
-        if (waiting_for_data) // should never happen
-            return false;
-
         if (te->timerId() == timer_id) {
             killTimer(timer_id);
             timer_id = 0;
@@ -900,7 +811,15 @@ bool QClipboard::event(QEvent *e)
             killTimer(incr_timer_id);
             incr_timer_id = 0;
 
-            qt_xclb_incr_timeout();
+
+            /*
+            no INCR activity has happened for 'clipboard_timeout'
+            milliseconds... we assume that all unfinished transactions have
+            timed out and remove everything from the transaction map
+            */
+            qWarning("QClipboard: Timed out while sending data");
+            while (transactions)
+                delete *transactions->begin();
 
             return true;
         } else {
@@ -954,14 +873,8 @@ bool QClipboard::event(QEvent *e)
                   XGetSelectionOwner(dpy, XA_PRIMARY),
                   xevent->xselectionclear.time, d->timestamp);
 
-            if (! waiting_for_data) {
-                d->clear();
-                emitChanged(QClipboard::Selection);
-            } else {
-                pending_selection_changed = true;
-                if (! pending_timer_id)
-                    pending_timer_id = QApplication::clipboard()->startTimer(0);
-            }
+            d->clear();
+            emitChanged(QClipboard::Selection);
         } else if (xevent->xselectionclear.selection == ATOM(CLIPBOARD)) {
             QClipboardData *d = clipboardData();
 
@@ -973,14 +886,8 @@ bool QClipboard::event(QEvent *e)
                   XGetSelectionOwner(dpy, ATOM(CLIPBOARD)),
                   xevent->xselectionclear.time, d->timestamp);
 
-            if (! waiting_for_data) {
-                d->clear();
-                emitChanged(QClipboard::Clipboard);
-            } else {
-                pending_clipboard_changed = true;
-                if (! pending_timer_id)
-                    pending_timer_id = QApplication::clipboard()->startTimer(0);
-            }
+            d->clear();
+            emitChanged(QClipboard::Clipboard);
         } else {
             qWarning("QClipboard: Unknown SelectionClear event received");
             return false;
@@ -1451,14 +1358,7 @@ bool qt_check_selection_sentinel()
     }
 
     if (doIt) {
-        if (waiting_for_data) {
-            pending_selection_changed = true;
-            if (! pending_timer_id)
-                pending_timer_id = QApplication::clipboard()->startTimer(0);
-            doIt = false;
-        } else {
-            selectionData()->clear();
-        }
+        selectionData()->clear();
     }
 
     return doIt;
@@ -1491,14 +1391,7 @@ bool qt_check_clipboard_sentinel()
     }
 
     if (doIt) {
-        if (waiting_for_data) {
-            pending_clipboard_changed = true;
-            if (! pending_timer_id)
-                pending_timer_id = QApplication::clipboard()->startTimer(0);
-            doIt = false;
-        } else {
-            clipboardData()->clear();
-        }
+        clipboardData()->clear();
     }
 
     return doIt;
