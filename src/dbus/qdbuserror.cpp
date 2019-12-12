@@ -48,105 +48,58 @@
 
 QT_BEGIN_NAMESPACE
 
-/*
- * Use the following Perl script to generate the error string index list:
-===== PERL SCRIPT ====
-print "static const char errorMessages_string[] =\n";
-$counter = 0;
-$i = 0;
-while (<STDIN>) {
-    chomp;
-    print "    \"$_\\0\"\n";
-    $sizes[$i++] = $counter;
-    $counter += 1 + length $_;
-}
-print "    \"\\0\";\n\nstatic const int errorMessages_indices[] = {\n    ";
-for ($j = 0; $j < $i; ++$j) {
-    printf "$sizes[$j], ";
-}
-print "0\n};\n";
-===== PERL SCRIPT ====
- 
- * The input data is as follows:
-other
-org.freedesktop.DBus.Error.Failed
-org.freedesktop.DBus.Error.NoMemory
-org.freedesktop.DBus.Error.ServiceUnknown
-org.freedesktop.DBus.Error.NoReply
-org.freedesktop.DBus.Error.BadAddress
-org.freedesktop.DBus.Error.NotSupported
-org.freedesktop.DBus.Error.LimitsExceeded
-org.freedesktop.DBus.Error.AccessDenied
-org.freedesktop.DBus.Error.NoServer
-org.freedesktop.DBus.Error.Timeout
-org.freedesktop.DBus.Error.NoNetwork
-org.freedesktop.DBus.Error.AddressInUse
-org.freedesktop.DBus.Error.Disconnected
-org.freedesktop.DBus.Error.InvalidArgs
-org.freedesktop.DBus.Error.UnknownMethod
-org.freedesktop.DBus.Error.TimedOut
-org.freedesktop.DBus.Error.InvalidSignature
-org.freedesktop.DBus.Error.UnknownInterface
-com.trolltech.QtDBus.Error.InternalError
-org.freedesktop.DBus.Error.UnknownObject
-com.trolltech.QtDBus.Error.InvalidService
-com.trolltech.QtDBus.Error.InvalidObjectPath
-com.trolltech.QtDBus.Error.InvalidInterface
-com.trolltech.QtDBus.Error.InvalidMember
-*/
-
 // in the same order as KnownErrors!
-static const char errorMessages_string[] =
-    "other\0"
-    "org.freedesktop.DBus.Error.Failed\0"
-    "org.freedesktop.DBus.Error.NoMemory\0"
-    "org.freedesktop.DBus.Error.ServiceUnknown\0"
-    "org.freedesktop.DBus.Error.NoReply\0"
-    "org.freedesktop.DBus.Error.BadAddress\0"
-    "org.freedesktop.DBus.Error.NotSupported\0"
-    "org.freedesktop.DBus.Error.LimitsExceeded\0"
-    "org.freedesktop.DBus.Error.AccessDenied\0"
-    "org.freedesktop.DBus.Error.NoServer\0"
-    "org.freedesktop.DBus.Error.Timeout\0"
-    "org.freedesktop.DBus.Error.NoNetwork\0"
-    "org.freedesktop.DBus.Error.AddressInUse\0"
-    "org.freedesktop.DBus.Error.Disconnected\0"
-    "org.freedesktop.DBus.Error.InvalidArgs\0"
-    "org.freedesktop.DBus.Error.UnknownMethod\0"
-    "org.freedesktop.DBus.Error.TimedOut\0"
-    "org.freedesktop.DBus.Error.InvalidSignature\0"
-    "org.freedesktop.DBus.Error.UnknownInterface\0"
-    "com.trolltech.QtDBus.Error.InternalError\0"
-    "org.freedesktop.DBus.Error.UnknownObject\0"
-    "com.trolltech.QtDBus.Error.InvalidService\0"
-    "com.trolltech.QtDBus.Error.InvalidObjectPath\0"
-    "com.trolltech.QtDBus.Error.InvalidInterface\0"
-    "com.trolltech.QtDBus.Error.InvalidMember\0"
-    "\0";
-
-static const int errorMessages_indices[] = {
-       0,    6,   40,   76,  118,  153,  191,  231,
-     273,  313,  349,  384,  421,  461,  501,  540,
-     581,  617,  661,  705,  746,  787,  829,  874,
-     918,    0
+static const struct ErrorTblData {
+    const QDBusError::ErrorType code;
+    const char* name;
+} ErrorTbl[] = {
+    { QDBusError::Other, "other\0" },
+    { QDBusError::Failed, "org.freedesktop.DBus.Error.Failed\0" },
+    { QDBusError::NoMemory, "org.freedesktop.DBus.Error.NoMemory\0" },
+    { QDBusError::ServiceUnknown, "org.freedesktop.DBus.Error.ServiceUnknown\0" },
+    { QDBusError::NoReply, "org.freedesktop.DBus.Error.NoReply\0" },
+    { QDBusError::BadAddress, "org.freedesktop.DBus.Error.BadAddress\0" },
+    { QDBusError::NotSupported, "org.freedesktop.DBus.Error.NotSupported\0" },
+    { QDBusError::LimitsExceeded, "org.freedesktop.DBus.Error.LimitsExceeded\0" },
+    { QDBusError::AccessDenied, "org.freedesktop.DBus.Error.AccessDenied\0" },
+    { QDBusError::NoServer, "org.freedesktop.DBus.Error.NoServer\0" },
+    { QDBusError::Timeout, "org.freedesktop.DBus.Error.Timeout\0" },
+    { QDBusError::NoNetwork, "org.freedesktop.DBus.Error.NoNetwork\0" },
+    { QDBusError::AddressInUse, "org.freedesktop.DBus.Error.AddressInUse\0" },
+    { QDBusError::Disconnected, "org.freedesktop.DBus.Error.Disconnected\0" },
+    { QDBusError::InvalidArgs, "org.freedesktop.DBus.Error.InvalidArgs\0" },
+    { QDBusError::UnknownMethod, "org.freedesktop.DBus.Error.UnknownMethod\0" },
+    { QDBusError::TimedOut, "org.freedesktop.DBus.Error.TimedOut\0" },
+    { QDBusError::InvalidSignature, "org.freedesktop.DBus.Error.InvalidSignature\0" },
+    { QDBusError::UnknownInterface, "org.freedesktop.DBus.Error.UnknownInterface\0" },
+    { QDBusError::InternalError, "com.trolltech.QtDBus.Error.InternalError\0" },
+    { QDBusError::UnknownObject, "org.freedesktop.DBus.Error.UnknownObject\0" },
+    { QDBusError::InvalidService, "com.trolltech.QtDBus.Error.InvalidService\0" },
+    { QDBusError::InvalidObjectPath, "com.trolltech.QtDBus.Error.InvalidObjectPath\0" },
+    { QDBusError::InvalidInterface, "com.trolltech.QtDBus.Error.InvalidInterface\0" },
+    { QDBusError::InvalidMember, "com.trolltech.QtDBus.Error.InvalidMember\0" },
 };
-
-static const int errorMessages_count = sizeof errorMessages_indices /
-                                       sizeof errorMessages_indices[0];
+static const qint16 ErrorTblSize = sizeof(ErrorTbl) / sizeof(ErrorTblData);
 
 static inline const char *getError(QDBusError::ErrorType code)
 {
-    int intcode = qBound(0, int(code) - int(QDBusError::Other), errorMessages_count);
-    return errorMessages_string + errorMessages_indices[intcode];
+    for (qint16 i = 0; i < ErrorTblSize; i++) {
+        if (ErrorTbl[i].code == code) {
+            return ErrorTbl[i].name;
+        }
+    }
+    return ErrorTbl[0].name;
 }
 
 static inline QDBusError::ErrorType getError(const char *name)
 {
     if (!name || !*name)
         return QDBusError::NoError;
-    for (int i = 0; i < errorMessages_count; ++i)
-        if (strcmp(name, errorMessages_string + errorMessages_indices[i]) == 0)
-            return QDBusError::ErrorType(i + int(QDBusError::Other));
+    for (qint16 i = 0; i < ErrorTblSize; i++) {
+        if (strcmp(ErrorTbl[i].name, name) == 0) {
+            return ErrorTbl[i].code;
+        }
+    }
     return QDBusError::Other;
 }
 
