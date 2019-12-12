@@ -1684,19 +1684,6 @@ QT_END_INCLUDE_NAMESPACE
          (r1)->bottom() >= (r2)->top() && \
          (r1)->top() <= (r2)->bottom())
 
-/*
- *  update region extents
- */
-#define EXTENTS(r,idRect){\
-            if((r)->left() < (idRect)->extents.left())\
-              (idRect)->extents.setLeft((r)->left());\
-            if((r)->top() < (idRect)->extents.top())\
-              (idRect)->extents.setTop((r)->top());\
-            if((r)->right() > (idRect)->extents.right())\
-              (idRect)->extents.setRight((r)->right());\
-            if((r)->bottom() > (idRect)->extents.bottom())\
-              (idRect)->extents.setBottom((r)->bottom());\
-        }
 
 /*
  *   Check to see if there is enough memory in the present region.
