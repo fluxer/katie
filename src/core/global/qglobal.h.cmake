@@ -1241,15 +1241,9 @@ for (QForeachContainer<__typeof__(container)> _container_(container); \
 #  endif
 #endif
 
-#if defined(Q_CC_GNU) || defined(Q_CC_CLANG)
-#define Q_UNREACHABLE_IMPL() __builtin_unreachable()
-#else
-#define Q_UNREACHABLE_IMPL()
-#endif
-
 #define Q_UNREACHABLE() \
     Q_ASSERT_X(false, "Q_UNREACHABLE()", "Q_UNREACHABLE was reached"); \
-    Q_UNREACHABLE_IMPL()
+    __builtin_unreachable()
 
 template <typename T> static inline T *qGetPtrHelper(T *ptr) { return ptr; }
 template <typename Wrapper> static inline typename Wrapper::pointer qGetPtrHelper(const Wrapper &p) { return p.data(); }
