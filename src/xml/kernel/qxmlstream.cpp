@@ -671,55 +671,20 @@ void QXmlStreamReader::skipCurrentElement()
     }
 }
 
-/*
- * Use the following Perl script to generate the error string index list:
-===== PERL SCRIPT ====
-print "static const char QXmlStreamReader_tokenTypeString_string[] =\n";
-$counter = 0;
-$i = 0;
-while (<STDIN>) {
-    chomp;
-    print "    \"$_\\0\"\n";
-    $sizes[$i++] = $counter;
-    $counter += length 1 + $_;
-}
-print "    \"\\0\";\n\nstatic const short QXmlStreamReader_tokenTypeString_indices[] = {\n    ";
-for ($j = 0; $j < $i; ++$j) {
-    printf "$sizes[$j], ";
-}
-print "0\n};\n";
-===== PERL SCRIPT ====
-
- * The input data is as follows (copied from qxmlstream.h):
-NoToken
-Invalid
-StartDocument
-EndDocument
-StartElement
-EndElement
-Characters
-Comment
-DTD
-EntityReference
-ProcessingInstruction
-*/
-static const char QXmlStreamReader_tokenTypeString_string[] =
-    "NoToken\0"
-    "Invalid\0"
-    "StartDocument\0"
-    "EndDocument\0"
-    "StartElement\0"
-    "EndElement\0"
-    "Characters\0"
-    "Comment\0"
-    "DTD\0"
-    "EntityReference\0"
-    "ProcessingInstruction\0";
-
-static const short QXmlStreamReader_tokenTypeString_indices[] = {
-    0, 8, 16, 30, 42, 55, 66, 77, 85, 89, 105, 0
+// order must be the same as the enums
+static const QLatin1String QXmlStreamReader_tokenTypeString[11] = {
+    QLatin1String("NoToken\0"),
+    QLatin1String("Invalid\0"),
+    QLatin1String("StartDocument\0"),
+    QLatin1String("EndDocument\0"),
+    QLatin1String("StartElement\0"),
+    QLatin1String("EndElement\0"),
+    QLatin1String("Characters\0"),
+    QLatin1String("Comment\0"),
+    QLatin1String("DTD\0"),
+    QLatin1String("EntityReference\0"),
+    QLatin1String("ProcessingInstruction\0")
 };
-
 
 /*!
     \property  QXmlStreamReader::namespaceProcessing
@@ -752,8 +717,7 @@ bool QXmlStreamReader::namespaceProcessing() const
 QString QXmlStreamReader::tokenString() const
 {
     Q_D(const QXmlStreamReader);
-    return QLatin1String(QXmlStreamReader_tokenTypeString_string +
-                         QXmlStreamReader_tokenTypeString_indices[d->type]);
+    return QXmlStreamReader_tokenTypeString[d->type];
 }
 
 #endif // QT_NO_XMLSTREAMREADER
