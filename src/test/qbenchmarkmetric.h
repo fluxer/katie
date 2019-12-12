@@ -44,9 +44,6 @@ QT_BEGIN_NAMESPACE
 namespace QTest {
 
 enum QBenchmarkMetric {
-    FramesPerSecond,
-    BitsPerSecond,
-    BytesPerSecond,
     WalltimeMilliseconds,
     CPUTicks,
     InstructionReads,
