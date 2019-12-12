@@ -1614,7 +1614,6 @@ static void miRegionOp(QRegionPrivate &dest, const QRegionPrivate *reg1, const Q
 
 #define RectangleOut 0
 #define RectangleIn 1
-#define RectanglePart 2
 #define EvenOddRule 0
 #define WindingRule 1
 
@@ -2743,7 +2742,7 @@ static bool RectInRegion(QRegionPrivate *region, int rx, int ry, uint rwidth, ui
             break;
         }
     }
-    return partIn ? ((ry <= prect->bottom()) ? RectanglePart : RectangleIn) : RectangleOut;
+    return partIn ? RectangleIn : RectangleOut;
 }
 // END OF Region.c extract
 // START OF poly.h extract
