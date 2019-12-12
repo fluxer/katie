@@ -629,7 +629,7 @@ static Bool qt_sync_request_scanner(Display*, XEvent *event, XPointer arg)
         (Atom)event->xclient.data.l[0] == ATOM(_NET_WM_SYNC_REQUEST)) {
         QWidget *w = QWidget::find(event->xany.window);
         if (QTLWExtra *tlw = ((QETWidget*)w)->d_func()->maybeTopData()) {
-            const ulong timestamp = (const ulong) event->xclient.data.l[1];
+            const Time timestamp = event->xclient.data.l[1];
             if (timestamp > qt_x11Data->time)
                 qt_x11Data->time = timestamp;
             if (timestamp == CurrentTime || timestamp > tlw->syncRequestTimestamp) {
@@ -2098,7 +2098,7 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
                 }
 #ifndef QT_NO_XSYNC
             } else if (a == ATOM(_NET_WM_SYNC_REQUEST)) {
-                const ulong timestamp = (const ulong) event->xclient.data.l[1];
+                const Time timestamp = event->xclient.data.l[1];
                 if (timestamp > qt_x11Data->time)
                     qt_x11Data->time = timestamp;
                 if (QTLWExtra *tlw = w->d_func()->maybeTopData()) {
