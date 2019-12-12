@@ -1466,7 +1466,7 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
     \value CT_Menu A menu, like QMenu.
     \value CT_MenuBar A menu bar, like QMenuBar.
     \value CT_MenuBarItem A menu bar item, like the buttons in a QMenuBar.
-    \value CT_MenuItem A menu item, like QMenuItem.
+    \value CT_MenuItem A menu item, like QAction.
     \value CT_ProgressBar A progress bar, like QProgressBar.
     \value CT_PushButton A push button, like QPushButton.
     \value CT_RadioButton A radio button, like QRadioButton.

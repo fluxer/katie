@@ -5582,7 +5582,7 @@ void QWidget::setFocus(Qt::FocusReason reason)
         QApplicationPrivate::setFocusWidget(f, reason);
 #ifndef QT_NO_ACCESSIBILITY
         // menus update the focus manually and this would create bogus events
-        if (!(f->inherits("QMenuBar") || f->inherits("QMenu") || f->inherits("QMenuItem")))
+        if (!(f->inherits("QMenuBar") || f->inherits("QMenu")))
             QAccessible::updateAccessibility(f, 0, QAccessible::Focus);
 #endif
 #ifndef QT_NO_GRAPHICSVIEW

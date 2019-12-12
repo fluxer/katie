@@ -3147,12 +3147,6 @@ void QMenu::setSeparatorsCollapsible(bool collapse)
 */
 
 /*!
-    \fn QMenuItem *QMenu::findItem(int id) const
-
-    Use actions instead.
-*/
-
-/*!
     \fn void QMenu::popup(const QPoint & pos, int indexAtPoint)
 
     Use popup() on the relevant QAction instead.
@@ -3180,12 +3174,6 @@ void QMenu::setSeparatorsCollapsible(bool collapse)
     \fn int QMenu::itemHeight(int index)
 
     Use actionGeometry(actions().value(index)).height() instead.
-*/
-
-/*!
-    \fn int QMenu::itemHeight(QMenuItem *mi)
-
-    Use actionGeometry() instead.
 */
 
 /*!

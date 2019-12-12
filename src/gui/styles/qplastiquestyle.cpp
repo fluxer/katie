@@ -5600,9 +5600,7 @@ void QPlastiqueStyle::polish(QWidget *widget)
         widget->setAttribute(Qt::WA_Hover);
     }
 
-    if (widget->inherits("QWorkspaceTitleBar")
-        || widget->inherits("QDockSeparator")
-        || widget->inherits("QDockWidgetSeparator")) {
+    if (widget->inherits("QWorkspaceTitleBar")) {
         widget->setAttribute(Qt::WA_Hover);
     }
 
@@ -5655,9 +5653,7 @@ void QPlastiqueStyle::unpolish(QWidget *widget)
         widget->setAttribute(Qt::WA_Hover, false);
     }
 
-    if (widget->inherits("QWorkspaceTitleBar")
-        || widget->inherits("QDockSeparator")
-        || widget->inherits("QDockWidgetSeparator")) {
+    if (widget->inherits("QWorkspaceTitleBar")) {
         widget->setAttribute(Qt::WA_Hover, false);
     }
 

@@ -3858,10 +3858,7 @@ void QCleanlooksStyle::polish(QWidget *widget)
 #ifndef QT_NO_SPINBOX
         || qobject_cast<QAbstractSpinBox *>(widget)
 #endif
-        || (widget->inherits("QWorkspaceChild"))
-        || (widget->inherits("QDockSeparator"))
-        || (widget->inherits("QDockWidgetSeparator"))
-        ) {
+        || (widget->inherits("QWorkspaceChild"))) {
         widget->setAttribute(Qt::WA_Hover, true);
     }
 }
@@ -3905,10 +3902,7 @@ void QCleanlooksStyle::unpolish(QWidget *widget)
 #ifndef QT_NO_SPINBOX
         || qobject_cast<QAbstractSpinBox *>(widget)
 #endif
-        || (widget->inherits("QWorkspaceChild"))
-        || (widget->inherits("QDockSeparator"))
-        || (widget->inherits("QDockWidgetSeparator"))
-        ) {
+        || widget->inherits("QWorkspaceChild")) {
         widget->setAttribute(Qt::WA_Hover, false);
     }
 }
