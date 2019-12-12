@@ -2652,8 +2652,6 @@ static bool EqualRegion(const QRegionPrivate *r1, const QRegionPrivate *r2)
 
 static bool PointInRegion(QRegionPrivate *pRegion, int x, int y)
 {
-    int i;
-
     if (isEmptyHelper(pRegion))
         return false;
     if (!pRegion->extents.contains(x, y))
@@ -2662,7 +2660,7 @@ static bool PointInRegion(QRegionPrivate *pRegion, int x, int y)
         return pRegion->extents.contains(x, y);
     if (pRegion->innerRect.contains(x, y))
         return true;
-    for (i = 0; i < pRegion->numRects; ++i) {
+    for (int i = 0; i < pRegion->numRects; ++i) {
         if (pRegion->rects[i].contains(x, y))
             return true;
     }
