@@ -147,10 +147,6 @@ static const char * xlfd_for_id(int id)
 
 #ifndef QT_NO_FONTCONFIG
 
-#ifndef FC_WIDTH
-#define FC_WIDTH "width"
-#endif
-
 static int getFCWeight(int fc_weight)
 {
     int qtweight = QFont::Black;
@@ -1221,11 +1217,6 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
     }
     QFontCache::instance()->insertEngine(key, fe);
 }
-
-// Needed for fontconfig version < 2.2.97
-#ifndef FC_FAMILYLANG
-#define FC_FAMILYLANG "familylang"
-#endif
 
 static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
 {
