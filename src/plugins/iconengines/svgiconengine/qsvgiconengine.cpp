@@ -65,15 +65,15 @@ public:
     ~QSvgIconEnginePrivate()
         { delete addedPixmaps; delete svgBuffers; }
 
-    static int hashKey(QIcon::Mode mode, QIcon::State state)
+    inline static int hashKey(QIcon::Mode mode, QIcon::State state)
         { return (((mode)<<4)|state); }
 
-    QString pmcKey(const QSize &size, QIcon::Mode mode, QIcon::State state)
+    inline QString pmcKey(const QSize &size, QIcon::Mode mode, QIcon::State state) const
         { return QLatin1String("$qt_svgicon_")
                  + QString::number(serialNum, 16).append(QLatin1Char('_'))
                  + QString::number((((((size.width()<<11)|size.height())<<11)|mode)<<4)|state, 16); }
 
-    void stepSerialNum()
+    inline void stepSerialNum()
         { serialNum = lastSerialNum.fetchAndAddRelaxed(1); }
 
     void loadDataForModeAndState(QSvgRenderer *renderer, QIcon::Mode mode, QIcon::State state);
