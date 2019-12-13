@@ -67,6 +67,30 @@
 
 QT_BEGIN_NAMESPACE
 
+#if !defined(QT_NO_IMAGEFORMAT_PNG)
+#  define QIMAGE_STREAM_FORMAT "png"
+#elif !defined(QT_NO_IMAGEFORMAT_JPEG)
+#  define QIMAGE_STREAM_FORMAT "jpeg"
+#elif !defined(QT_NO_IMAGEFORMAT_MNG)
+#  define QIMAGE_STREAM_FORMAT "mng"
+#elif !defined(QT_NO_IMAGEFORMAT_BMP)
+#  define QIMAGE_STREAM_FORMAT "bmp"
+#elif !defined(QT_NO_IMAGEFORMAT_TIFF)
+#  define QIMAGE_STREAM_FORMAT "tiff"
+#elif !defined(QT_NO_IMAGEFORMAT_GIF)
+#  define QIMAGE_STREAM_FORMAT "gif"
+#elif !defined(QT_NO_IMAGEFORMAT_TGA)
+#  define QIMAGE_STREAM_FORMAT "tga"
+#elif !defined(QT_NO_IMAGEFORMAT_PPM)
+#  define QIMAGE_STREAM_FORMAT "ppm"
+#elif !defined(QT_NO_IMAGEFORMAT_XBM)
+#  define QIMAGE_STREAM_FORMAT "xbm"
+#elif !defined(QT_NO_IMAGEFORMAT_XPM)
+#  define QIMAGE_STREAM_FORMAT "xpm"
+#else
+#  error No image format available for streaming
+#endif
+
 static inline bool checkPixelSize(const QImage::Format format)
 {
     switch (format) {
@@ -4328,7 +4352,7 @@ QDataStream &operator<<(QDataStream &s, const QImage &image)
         return s;
     }
     s << (qint32) 1;
-    QImageWriter writer(s.device(), "png");
+    QImageWriter writer(s.device(), QIMAGE_STREAM_FORMAT);
     writer.write(image);
     return s;
 }
@@ -4351,7 +4375,7 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
         image = QImage(); // null image
         return s;
     }
-    image = QImageReader(s.device(), "png").read();
+    image = QImageReader(s.device(), QIMAGE_STREAM_FORMAT).read();
     return s;
 }
 #endif // QT_NO_DATASTREAM
