@@ -360,19 +360,17 @@ QModelIndex QColumnView::moveCursor(CursorAction cursorAction, Qt::KeyboardModif
             cursorAction = MoveLeft;
     }
     switch (cursorAction) {
-    case MoveLeft:
+    case MoveLeft: {
         if (current.parent().isValid() && current.parent() != rootIndex())
             return (current.parent());
-        else
-            return current;
-        break;
+        return current;
+    }
 
-    case MoveRight:
+    case MoveRight: {
         if (model()->hasChildren(current))
             return model()->index(0, 0, current);
-        else
-            return current.sibling(current.row() + 1, current.column());
-        break;
+        return current.sibling(current.row() + 1, current.column());
+    }
 
     default:
         break;

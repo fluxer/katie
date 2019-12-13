@@ -1315,16 +1315,13 @@ Q_CORE_EXPORT QString qt_regexp_toCanonical(const QString &pattern, QRegExp::Pat
 #ifndef QT_NO_REGEXP_WILDCARD
         case QRegExp::Wildcard: {
             return wc2rx(pattern, false);
-            break;
         }
         case QRegExp::WildcardUnix: {
             return wc2rx(pattern, true);
-            break;
         }
 #endif
         case QRegExp::FixedString: {
             return QRegExp::escape(pattern);
-            break;
         }
         default:
             return pattern;

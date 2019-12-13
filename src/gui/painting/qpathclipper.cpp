@@ -1598,17 +1598,16 @@ QPainterPath QPathClipper::clip(Operation operation)
         } else if (subjectBounds.contains(clipBounds)) {
             if (subjectIsRect) {
                 switch (op) {
-                case BoolSub:
+                case BoolSub: {
                     if (clipPath.fillRule() == Qt::OddEvenFill) {
                         QPainterPath result = clipPath;
                         result.addRect(subjectBounds);
                         return result;
-                    } else {
-                        QPainterPath result = clipPath.simplified();
-                        result.addRect(subjectBounds);
-                        return result;
                     }
-                    break;
+                    QPainterPath result = clipPath.simplified();
+                    result.addRect(subjectBounds);
+                    return result;
+                }
                 case BoolAnd:
                     return clipPath;
                 case BoolOr:
