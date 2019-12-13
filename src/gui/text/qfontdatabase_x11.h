@@ -1235,7 +1235,6 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
             return;
     }
 
-    QString fileNameForQuery = fnt->fileName;
     int id = 0;
     FcBlanks *blanks = FcConfigGetBlanks(0);
     int count = 0;
@@ -1243,9 +1242,8 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
     QStringList families;
     QFontDatabasePrivate *db = privateDb();
 
-    FcPattern *pattern = Q_NULLPTR;
-    do {
-        pattern = queryFont((const FcChar8 *)QFile::encodeName(fileNameForQuery).constData(),
+    while (id < count) {
+        FcPattern *pattern = queryFont((const FcChar8 *)QFile::encodeName(fnt->fileName).constData(),
                             fnt->data, id, blanks, &count);
         if (!pattern)
             return;
@@ -1254,9 +1252,9 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
         QByteArray cs = fnt->fileName.toUtf8();
         FcPatternAddString(pattern, FC_FILE, (const FcChar8 *) cs.constData());
 
-        FcChar8 *fam = 0, *familylang = 0;
-        int i, n = 0;
-        for (i = 0; ; i++) {
+        int n = 0;
+        for (int i = 0; ; i++) {
+            FcChar8 *familylang = Q_NULLPTR;
             if (FcPatternGetString(pattern, FC_FAMILYLANG, i, &familylang) != FcResultMatch)
                 break;
             QString familyLang = QString::fromUtf8((const char *) familylang);
@@ -1266,16 +1264,16 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
             }
         }
 
+        FcChar8 *fam = Q_NULLPTR;
         if (FcPatternGetString(pattern, FC_FAMILY, n, &fam) == FcResultMatch) {
-            QString family = QString::fromUtf8(reinterpret_cast<const char *>(fam));
-            families << family;
+            families << QString::fromUtf8(reinterpret_cast<const char *>(fam));
         }
 
         if (!FcFontSetAdd(set, pattern))
             return;
 
         ++id;
-    } while (pattern && id < count);
+    }
 
     fnt->families = families;
 #endif
