@@ -1581,35 +1581,13 @@ QString QXmlInputSource::fromRawData(const QByteArray &data, bool beginning)
         d->encodingDeclChars.clear();
         d->lookingForEncodingDecl = true;
 
-        // look for byte order mark and read the first 5 characters
-        if (data.size() >= 4) {
-            uchar ch1 = data.at(0);
-            uchar ch2 = data.at(1);
-            uchar ch3 = data.at(2);
-            uchar ch4 = data.at(3);
-
-            if ((ch1 == 0 && ch2 == 0 && ch3 == 0xfe && ch4 == 0xff) ||
-                (ch1 == 0xff && ch2 == 0xfe && ch3 == 0 && ch4 == 0))
-                mib = 1017; // UTF-32 with byte order mark
-            else if (ch1 == 0x3c && ch2 == 0x00 && ch3 == 0x00 && ch4 == 0x00)
-                mib = 1019; // UTF-32LE
-            else if (ch1 == 0x00 && ch2 == 0x00 && ch3 == 0x00 && ch4 == 0x3c)
-                mib = 1018; // UTF-32BE
+        QTextCodec *codec = QTextCodec::codecForUtfText(data);
+        if (!codec) {
+            // fallback to UTF-8 even for non-UTF data
+            codec = QTextCodec::codecForName("UTF-8");
         }
-        if (mib == 106 && data.size() >= 2) {
-            uchar ch1 = data.at(0);
-            uchar ch2 = data.at(1);
-
-            if ((ch1 == 0xfe && ch2 == 0xff) || (ch1 == 0xff && ch2 == 0xfe))
-                mib = 1015; // UTF-16 with byte order mark
-            else if (ch1 == 0x3c && ch2 == 0x00)
-                mib = 1014; // UTF-16LE
-            else if (ch1 == 0x00 && ch2 == 0x3c)
-                mib = 1013; // UTF-16BE
-        }
-
-        QTextCodec *codec = QTextCodec::codecForMib(mib);
         Q_ASSERT(codec);
+        mib = codec->mibEnum();
 
         d->encMapper = codec->makeDecoder();
     }

@@ -21,7 +21,6 @@ set(DBUS_PUBLIC_HEADERS
     QDBusServer
     QDBusServiceWatcher
     QDBusUnixFileDescriptor
-    QDBusVirtualObject
     # mixed
     QDBusObjectPath
     QDBusPendingCallWatcher
@@ -58,7 +57,6 @@ set(DBUS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuspendingcall.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuspendingreply.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuscontext.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qdbusvirtualobject.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusconnection_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusmessage_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusinterface_p.h
@@ -104,7 +102,6 @@ set(DBUS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuspendingreply.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusservicewatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusunixfiledescriptor.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qdbusvirtualobject.cpp
 )
 
 katie_generate_misc("${DBUS_HEADERS}" QtDBus)

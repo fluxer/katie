@@ -1962,12 +1962,6 @@ QWidget *QMenuBar::cornerWidget(Qt::Corner corner) const
 */
 
 /*!
-    \fn QMenuItem *QMenuBar::findItem(int id) const
-
-    Use actions instead.
-*/
-
-/*!
     \fn Separator QMenuBar::separator() const
 
     This function is provided only to make old code compile.

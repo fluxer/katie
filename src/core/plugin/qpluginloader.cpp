@@ -130,8 +130,6 @@ QPluginLoader::QPluginLoader(QObject *parent)
     Unix, - \c .dylib on Mac OS X, and \c .dll on Windows. The suffix
     can be verified with QLibrary::isLibrary().
 
-    Note: In Symbian the \a fileName must point to plugin stub file.
-
     \sa setFileName()
 */
 QPluginLoader::QPluginLoader(const QString &fileName, QObject *parent)

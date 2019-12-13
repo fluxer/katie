@@ -165,7 +165,7 @@ public:
     virtual QValidator::State validate(QString& input, int& pos) const;
 
     void setRegExp(const QRegExp& rx);
-    const QRegExp& regExp() const { return r; } // ### make inline for 5.0
+    const QRegExp& regExp() const { return r; }
 
 
 private:

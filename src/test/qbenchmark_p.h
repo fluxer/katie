@@ -96,6 +96,7 @@ public:
     QBenchmarkResult()
     : value(-1)
     , iterations(-1)
+    , metric(QTest::WalltimeMilliseconds)
     , setByMacro(true)
     , valid(false)
     { }

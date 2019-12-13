@@ -112,7 +112,6 @@ classlist = [
     "QDBusServiceWatcher",
     "QDBusUnixFileDescriptor",
     "QDBusVariant",
-    "QDBusVirtualObject",
     "QDebug",
     "QDeclarativeAttachedPropertiesFunc",
     "QDeclarativeComponent",

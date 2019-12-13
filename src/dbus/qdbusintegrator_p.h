@@ -124,24 +124,24 @@ private:
 class QDBusConnectionCallbackEvent : public QEvent
 {
 public:
-    QDBusConnectionCallbackEvent()
-        : QEvent(User), subtype(Subtype(0))
-    { }
-
-    DBusWatch *watch;
-    union {
-        int timerId;
-        int fd;
-    };
-    int extra;
-
     enum Subtype {
         AddTimeout = 0,
         KillTimer,
         AddWatch,
         //RemoveWatch,
         ToggleWatch
-    } subtype;
+    };
+
+    QDBusConnectionCallbackEvent()
+        : QEvent(User), subtype(Subtype::AddTimeout)
+    { }
+
+    DBusWatch *watch;
+    int timerId;
+    int fd;
+    int flags;
+
+    Subtype subtype;
 };
 
 QT_END_NAMESPACE

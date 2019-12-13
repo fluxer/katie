@@ -38,6 +38,9 @@ namespace JSC {
     class PropertySlot {
     public:
         PropertySlot()
+            : m_getterFunc(Q_NULLPTR),
+            m_valueSlot(Q_NULLPTR),
+            m_registerSlot(Q_NULLPTR)
         {
             clearBase();
             clearOffset();
@@ -45,7 +48,10 @@ namespace JSC {
         }
 
         explicit PropertySlot(const JSValue base)
-            : m_slotBase(base)
+            : m_slotBase(base),
+            m_getterFunc(Q_NULLPTR),
+            m_valueSlot(Q_NULLPTR),
+            m_registerSlot(Q_NULLPTR)
         {
             clearOffset();
             clearValue();
@@ -56,18 +62,18 @@ namespace JSC {
         JSValue getValue(ExecState* exec, const Identifier& propertyName) const
         {
             if (m_getValue == JSC_VALUE_SLOT_MARKER)
-                return *m_data.valueSlot;
+                return *m_valueSlot;
             if (m_getValue == JSC_REGISTER_SLOT_MARKER)
-                return (*m_data.registerSlot).jsValue();
+                return (*m_registerSlot).jsValue();
             return m_getValue(exec, propertyName, *this);
         }
 
         JSValue getValue(ExecState* exec, unsigned propertyName) const
         {
             if (m_getValue == JSC_VALUE_SLOT_MARKER)
-                return *m_data.valueSlot;
+                return *m_valueSlot;
             if (m_getValue == JSC_REGISTER_SLOT_MARKER)
-                return (*m_data.registerSlot).jsValue();
+                return (*m_registerSlot).jsValue();
             return m_getValue(exec, Identifier::from(exec, propertyName), *this);
         }
 
@@ -84,7 +90,7 @@ namespace JSC {
             clearBase();
             clearOffset();
             m_getValue = JSC_VALUE_SLOT_MARKER;
-            m_data.valueSlot = valueSlot;
+            m_valueSlot = valueSlot;
         }
         
         void setValueSlot(JSValue slotBase, JSValue* valueSlot)
@@ -92,7 +98,7 @@ namespace JSC {
             Q_ASSERT(valueSlot);
             m_getValue = JSC_VALUE_SLOT_MARKER;
             m_slotBase = slotBase;
-            m_data.valueSlot = valueSlot;
+            m_valueSlot = valueSlot;
         }
         
         void setValueSlot(JSValue slotBase, JSValue* valueSlot, size_t offset)
@@ -100,7 +106,7 @@ namespace JSC {
             Q_ASSERT(valueSlot);
             m_getValue = JSC_VALUE_SLOT_MARKER;
             m_slotBase = slotBase;
-            m_data.valueSlot = valueSlot;
+            m_valueSlot = valueSlot;
             m_offset = offset;
         }
         
@@ -111,7 +117,7 @@ namespace JSC {
             clearOffset();
             m_getValue = JSC_VALUE_SLOT_MARKER;
             m_value = value;
-            m_data.valueSlot = &m_value;
+            m_valueSlot = &m_value;
         }
 
         void setRegisterSlot(Register* registerSlot)
@@ -120,7 +126,7 @@ namespace JSC {
             clearBase();
             clearOffset();
             m_getValue = JSC_REGISTER_SLOT_MARKER;
-            m_data.registerSlot = registerSlot;
+            m_registerSlot = registerSlot;
         }
 
         void setCustom(JSValue slotBase, GetValueFunc getValue)
@@ -137,14 +143,14 @@ namespace JSC {
             Q_ASSERT(getValue);
             m_getValue = getValue;
             m_slotBase = slotBase;
-            m_data.index = index;
+            m_index = index;
         }
         
         void setGetterSlot(JSObject* getterFunc)
         {
             Q_ASSERT(getterFunc);
             m_getValue = functionGetter;
-            m_data.getterFunc = getterFunc;
+            m_getterFunc = getterFunc;
         }
         
         void setUndefined()
@@ -185,7 +191,7 @@ namespace JSC {
             m_offset = WTF::notFound;
         }
 
-        unsigned index() const { return m_data.index; }
+        unsigned index() const { return m_index; }
 
     private:
         static JSValue functionGetter(ExecState*, const Identifier&, const PropertySlot&);
@@ -193,14 +199,12 @@ namespace JSC {
         GetValueFunc m_getValue;
         
         JSValue m_slotBase;
-        union {
-            JSObject* getterFunc;
-            JSValue* valueSlot;
-            Register* registerSlot;
-            unsigned index;
-        } m_data;
-
         JSValue m_value;
+
+        JSObject* m_getterFunc;
+        JSValue* m_valueSlot;
+        Register* m_registerSlot;
+        unsigned m_index;
 
         size_t m_offset;
     };

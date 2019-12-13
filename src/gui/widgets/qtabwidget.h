@@ -134,6 +134,9 @@ public:
     bool documentMode() const;
     void setDocumentMode(bool set);
 
+    QTabBar* tabBar() const;
+    void setTabBar(QTabBar *);
+
     void clear();
 
 public Q_SLOTS:
@@ -152,8 +155,6 @@ protected:
     void resizeEvent(QResizeEvent *);
     void keyPressEvent(QKeyEvent *);
     void paintEvent(QPaintEvent *);
-    void setTabBar(QTabBar *);
-    QTabBar* tabBar() const;
     void changeEvent(QEvent *);
     bool event(QEvent *);
     void initStyleOption(QStyleOptionTabWidgetFrame *option) const;

@@ -55,10 +55,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#ifndef QSETTINGS_P_H_VERSION
-#define QSETTINGS_P_H_VERSION 1
-#endif
-
 //TESTED_FILES=
 
 class tst_QSettings : public QObject
@@ -2219,23 +2215,9 @@ static QStringList iniUnescapedStringList(const QByteArray &ba)
 {
     QStringList result;
     QString str;
-#if QSETTINGS_P_H_VERSION >= 2
-    bool isStringList = QSettingsPrivate::iniUnescapedStringList(ba, 0, ba.size(), str, result
-#if QSETTINGS_P_H_VERSION >= 3
-                                                                 , 0
-#endif
-                                                                    );
+    bool isStringList = QSettingsPrivate::iniUnescapedStringList(ba, 0, ba.size(), str, result , 0);
     if (!isStringList)
         result = QStringList(str);
-#else
-    QStringList *strList = QSettingsPrivate::iniUnescapedStringList(ba, 0, ba.size(), str);
-    if (strList) {
-        result = *strList;
-        delete strList;
-    } else {
-        result = QStringList(str);
-    }
-#endif
     return result;
 }
 #endif

@@ -1614,7 +1614,6 @@ static void miRegionOp(QRegionPrivate &dest, const QRegionPrivate *reg1, const Q
 
 #define RectangleOut 0
 #define RectangleIn 1
-#define RectanglePart 2
 #define EvenOddRule 0
 #define WindingRule 1
 
@@ -1680,24 +1679,10 @@ QT_END_INCLUDE_NAMESPACE
  *  Remember, x2 and y2 are not in the region
  */
 #define EXTENTCHECK(r1, r2) \
-        ((r1)->right() >= (r2)->left() && \
-         (r1)->left() <= (r2)->right() && \
-         (r1)->bottom() >= (r2)->top() && \
-         (r1)->top() <= (r2)->bottom())
-
-/*
- *  update region extents
- */
-#define EXTENTS(r,idRect){\
-            if((r)->left() < (idRect)->extents.left())\
-              (idRect)->extents.setLeft((r)->left());\
-            if((r)->top() < (idRect)->extents.top())\
-              (idRect)->extents.setTop((r)->top());\
-            if((r)->right() > (idRect)->extents.right())\
-              (idRect)->extents.setRight((r)->right());\
-            if((r)->bottom() > (idRect)->extents.bottom())\
-              (idRect)->extents.setBottom((r)->bottom());\
-        }
+        (r1.right() >= r2.left() && \
+         r1.left() <= r2.right() && \
+         r1.bottom() >= r2.top() && \
+         r1.top() <= r2.bottom())
 
 /*
  *   Check to see if there is enough memory in the present region.
@@ -2593,7 +2578,7 @@ static void SubtractRegion(QRegionPrivate *regM, QRegionPrivate *regS,
 {
     Q_ASSERT(!isEmptyHelper(regM));
     Q_ASSERT(!isEmptyHelper(regS));
-    Q_ASSERT(EXTENTCHECK(&regM->extents, &regS->extents));
+    Q_ASSERT(EXTENTCHECK(regM->extents, regS->extents));
     Q_ASSERT(!regS->contains(*regM));
     Q_ASSERT(!EqualRegion(regM, regS));
 
@@ -2612,7 +2597,7 @@ static void SubtractRegion(QRegionPrivate *regM, QRegionPrivate *regS,
 static void XorRegion(QRegionPrivate *sra, QRegionPrivate *srb, QRegionPrivate &dest)
 {
     Q_ASSERT(!isEmptyHelper(sra) && !isEmptyHelper(srb));
-    Q_ASSERT(EXTENTCHECK(&sra->extents, &srb->extents));
+    Q_ASSERT(EXTENTCHECK(sra->extents, srb->extents));
     Q_ASSERT(!EqualRegion(sra, srb));
 
     QRegionPrivate tra, trb;
@@ -2667,8 +2652,6 @@ static bool EqualRegion(const QRegionPrivate *r1, const QRegionPrivate *r2)
 
 static bool PointInRegion(QRegionPrivate *pRegion, int x, int y)
 {
-    int i;
-
     if (isEmptyHelper(pRegion))
         return false;
     if (!pRegion->extents.contains(x, y))
@@ -2677,7 +2660,7 @@ static bool PointInRegion(QRegionPrivate *pRegion, int x, int y)
         return pRegion->extents.contains(x, y);
     if (pRegion->innerRect.contains(x, y))
         return true;
-    for (i = 0; i < pRegion->numRects; ++i) {
+    for (int i = 0; i < pRegion->numRects; ++i) {
         if (pRegion->rects[i].contains(x, y))
             return true;
     }
@@ -2686,28 +2669,24 @@ static bool PointInRegion(QRegionPrivate *pRegion, int x, int y)
 
 static bool RectInRegion(QRegionPrivate *region, int rx, int ry, uint rwidth, uint rheight)
 {
-    const QRect *pbox;
-    const QRect *pboxEnd;
     QRect rect(rx, ry, rwidth, rheight);
-    QRect *prect = &rect;
-    int partIn, partOut;
 
-    if (!region || region->numRects == 0 || !EXTENTCHECK(&region->extents, prect))
+    if (!region || region->numRects == 0 || !EXTENTCHECK(region->extents, rect))
         return RectangleOut;
 
-    partOut = false;
-    partIn = false;
+    bool partOut = false;
+    bool partIn = false;
 
-    /* can stop when both partOut and partIn are true, or we reach prect->y2 */
-    pbox = (region->numRects == 1) ? &region->extents : region->rects.constData();
-    pboxEnd = pbox + region->numRects;
+    /* can stop when both partOut and partIn are true, or we reach rect->y2 */
+    const QRect *pbox = (region->numRects == 1) ? &region->extents : region->rects.constData();
+    const QRect *pboxEnd = pbox + region->numRects;
     for (; pbox < pboxEnd; ++pbox) {
         if (pbox->bottom() < ry)
            continue;
 
         if (pbox->top() > ry) {
            partOut = true;
-           if (partIn || pbox->top() > prect->bottom())
+           if (partIn || pbox->top() > rect.bottom())
               break;
            ry = pbox->top();
         }
@@ -2721,17 +2700,17 @@ static bool RectInRegion(QRegionPrivate *region, int rx, int ry, uint rwidth, ui
               break;
         }
 
-        if (pbox->left() <= prect->right()) {
+        if (pbox->left() <= rect.right()) {
             partIn = true;      /* definitely overlap */
             if (partOut)
                break;
         }
 
-        if (pbox->right() >= prect->right()) {
+        if (pbox->right() >= rect.right()) {
            ry = pbox->bottom() + 1;     /* finished with this band */
-           if (ry > prect->bottom())
+           if (ry > rect.bottom())
               break;
-           rx = prect->left();  /* reset x out to left again */
+           rx = rect.left();  /* reset x out to left again */
         } else {
             /*
              * Because boxes in a band are maximal width, if the first box
@@ -2743,7 +2722,7 @@ static bool RectInRegion(QRegionPrivate *region, int rx, int ry, uint rwidth, ui
             break;
         }
     }
-    return partIn ? ((ry <= prect->bottom()) ? RectanglePart : RectangleIn) : RectangleOut;
+    return partIn ? RectangleIn : RectangleOut;
 }
 // END OF Region.c extract
 // START OF poly.h extract
@@ -4069,7 +4048,7 @@ QRegion& QRegion::operator+=(const QRect &r)
 QRegion QRegion::intersect(const QRegion &r) const
 {
     if (isEmptyHelper(d->qt_rgn) || isEmptyHelper(r.d->qt_rgn)
-        || !EXTENTCHECK(&d->qt_rgn->extents, &r.d->qt_rgn->extents))
+        || !EXTENTCHECK(d->qt_rgn->extents, r.d->qt_rgn->extents))
         return QRegion();
 
     /* this is fully contained in r */
@@ -4114,7 +4093,7 @@ QRegion QRegion::intersect(const QRegion &r) const
 QRegion QRegion::intersect(const QRect &r) const
 {
     if (isEmptyHelper(d->qt_rgn) || r.isEmpty()
-        || !EXTENTCHECK(&d->qt_rgn->extents, &r))
+        || !EXTENTCHECK(d->qt_rgn->extents, r))
         return QRegion();
 
     /* this is fully contained in r */
@@ -4143,7 +4122,7 @@ QRegion QRegion::subtract(const QRegion &r) const
         return *this;
     if (r.d->qt_rgn->contains(*d->qt_rgn))
         return QRegion();
-    if (!EXTENTCHECK(&d->qt_rgn->extents, &r.d->qt_rgn->extents))
+    if (!EXTENTCHECK(d->qt_rgn->extents, r.d->qt_rgn->extents))
         return *this;
     if (d == r.d || EqualRegion(d->qt_rgn, r.d->qt_rgn))
         return QRegion();
@@ -4168,7 +4147,7 @@ QRegion QRegion::eor(const QRegion &r) const
         return r;
     } else if (isEmptyHelper(r.d->qt_rgn)) {
         return *this;
-    } else if (!EXTENTCHECK(&d->qt_rgn->extents, &r.d->qt_rgn->extents)) {
+    } else if (!EXTENTCHECK(d->qt_rgn->extents, r.d->qt_rgn->extents)) {
         return (*this + r);
     } else if (d == r.d || EqualRegion(d->qt_rgn, r.d->qt_rgn)) {
         return QRegion();

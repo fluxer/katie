@@ -617,27 +617,6 @@ void QDBusAbstractInterface::disconnectNotify(const char *signal)
 }
 
 /*!
-    \internal
-    Get the value of the property \a propname.
-*/
-QVariant QDBusAbstractInterface::internalPropGet(const char *propname) const
-{
-    // assume this property exists and is readable
-    // we're only called from generated code anyways
-
-    return property(propname);
-}
-
-/*!
-    \internal
-    Set the value of the property \a propname to \a value.
-*/
-void QDBusAbstractInterface::internalPropSet(const char *propname, const QVariant &value)
-{
-    setProperty(propname, value);
-}
-
-/*!
     Calls the method \a method on this interface and passes the parameters to this function to the
     method.
 

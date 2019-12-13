@@ -21,7 +21,6 @@ set(MOC_SOURCES
 
 set(BOOTSTRAP_DEFINITIONS
     -DQT_BOOTSTRAPPED
-    -DQT_TEXTCODEC
     -DQT_NO_CAST_FROM_BYTEARRAY
     -DQT_NO_CAST_FROM_ASCII
     -DQT_NO_CAST_TO_ASCII
@@ -33,17 +32,16 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_SYSTEMLOCALE
     -DQT_NO_TEXTSTREAM
     -DQT_NO_THREAD
-    -DQT_NO_UNICODETABLES
     -DQT_NO_USING_NAMESPACE
     -DQT_NO_DEPRECATED
     -DQT_NO_COMPRESS
     -DQT_NO_EXCEPTIONS
     -DQT_NO_REGEXP
     -DQT_NO_UNWIND
+    -DQT_NO_TEXTCODEC
 )
 
 set(BOOTSTRAP_SOURCES
-    ${CMAKE_SOURCE_DIR}/src/core/codecs/qtextcodec.cpp
     ${CMAKE_SOURCE_DIR}/src/core/codecs/qicucodec.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qnumeric.cpp
@@ -80,9 +78,7 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstringlist.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstringmatcher.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvector.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/tools/qvsnprintf.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/tools/qunicodetables.cpp
 )
 
 add_executable(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})

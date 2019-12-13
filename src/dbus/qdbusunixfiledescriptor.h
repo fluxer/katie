@@ -68,8 +68,6 @@ public:
     void giveFileDescriptor(int fileDescriptor);
     int takeFileDescriptor();
 
-    static bool isSupported();
-
 #if defined(Q_COMPILER_RVALUE_REFS)
     QDBusUnixFileDescriptor(QDBusUnixFileDescriptor &&other) : d(static_cast<Data &&>(other.d))
     { }

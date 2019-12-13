@@ -56,7 +56,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
-#if defined (_XOPEN_UNIX) && !defined(Q_OS_OSF)
+#if defined(_XOPEN_UNIX) && !defined(Q_OS_OSF)
 #include <langinfo.h>
 #endif
 
@@ -80,31 +80,21 @@ static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
     return (ucnv_compareNames(name.constData(), name2.constData()) == 0);
 }
 
-static QList<QByteArray> icucodecs;
-
 static QTextCodec *createForName(const QByteArray &name)
 {
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    QFactoryLoader *l = codecsloader();
-    QStringList keys = l->keys();
-    for (int i = 0; i < keys.size(); ++i) {
-        if (nameMatch(name, keys.at(i).toLatin1())) {
-            QString realName = keys.at(i);
+    const QFactoryLoader *l = codecsloader();
+    foreach (const QString &key, l->keys()) {
+        if (nameMatch(name, key.toLatin1())) {
             if (QTextCodecFactoryInterface *factory
-                = qobject_cast<QTextCodecFactoryInterface*>(l->instance(realName))) {
-                return factory->create(realName);
+                = qobject_cast<QTextCodecFactoryInterface*>(l->instance(key))) {
+                return factory->create(key);
             }
         }
     }
-#else
-    Q_UNUSED(name);
 #endif
 
-    if (icucodecs.isEmpty()) {
-        icucodecs = QIcuCodec::availableCodecs();
-    }
-
-    foreach(const QByteArray codec, icucodecs) {
+    foreach(const QByteArray codec, QIcuCodec::allCodecs()) {
         if (nameMatch(name, codec)) {
             return new QIcuCodec(name.constData());
         }
@@ -120,9 +110,14 @@ static QTextCodec *createForMib(int mib)
     if (QTextCodecFactoryInterface *factory
         = qobject_cast<QTextCodecFactoryInterface*>(codecsloader()->instance(name)))
         return factory->create(name);
-#else
-    Q_UNUSED(mib);
 #endif
+
+    foreach(const int codec, QIcuCodec::allMibs()) {
+        if (mib == codec) {
+            return new QIcuCodec(mib);
+        }
+    }
+
     return Q_NULLPTR;
 }
 
@@ -242,9 +237,9 @@ static void setupLocaleMapper()
 
     }
 
-#if defined (_XOPEN_UNIX) && !defined(Q_OS_OSF)
+#if defined(_XOPEN_UNIX) && !defined(Q_OS_OSF)
     if (!localeMapper) {
-        char *charset = nl_langinfo (CODESET);
+        const char *charset = nl_langinfo(CODESET);
         if (charset)
             localeMapper = QTextCodec::codecForName(charset);
     }
@@ -658,28 +653,14 @@ QTextCodec* QTextCodec::codecForMib(int mib)
 */
 QList<QByteArray> QTextCodec::availableCodecs()
 {
-#ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
-#endif
-    setup();
-
     QList<QByteArray> codecs;
-    codecs << "System";
-    for (int i = 0; i < all->size(); ++i) {
-        codecs += all->at(i)->name();
-        codecs += all->at(i)->aliases();
-    }
-
-#ifndef QT_NO_THREAD
-    locker.unlock();
-#endif
+    codecs << "System" << QIcuCodec::allCodecs();
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    QFactoryLoader *l = codecsloader();
-    QStringList keys = l->keys();
-    for (int i = 0; i < keys.size(); ++i) {
-        if (!keys.at(i).startsWith(QLatin1String("MIB: "))) {
-            QByteArray name = keys.at(i).toLatin1();
+    const QFactoryLoader *l = codecsloader();
+    foreach (const QString &key, l->keys()) {
+        if (!key.startsWith(QLatin1String("MIB: "))) {
+            QByteArray name = key.toLatin1();
             if (!codecs.contains(name))
                 codecs += name;
         }
@@ -697,25 +678,14 @@ QList<QByteArray> QTextCodec::availableCodecs()
 */
 QList<int> QTextCodec::availableMibs()
 {
-#ifndef QT_NO_THREAD
-    QMutexLocker locker(textCodecsMutex());
-#endif
-    setup();
-
     QList<int> codecs;
-    for (int i = 0; i < all->size(); ++i)
-        codecs += all->at(i)->mibEnum();
-
-#ifndef QT_NO_THREAD
-    locker.unlock();
-#endif
+    codecs << QIcuCodec::allMibs();
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    QFactoryLoader *l = codecsloader();
-    QStringList keys = l->keys();
-    for (int i = 0; i < keys.size(); ++i) {
-        if (keys.at(i).startsWith(QLatin1String("MIB: "))) {
-            int mib = keys.at(i).mid(5).toInt();
+    const QFactoryLoader *l = codecsloader();
+    foreach (const QString &key, l->keys()) {
+        if (key.startsWith(QLatin1String("MIB: "))) {
+            int mib = key.mid(5).toInt();
             if (!codecs.contains(mib))
                 codecs += mib;
         }

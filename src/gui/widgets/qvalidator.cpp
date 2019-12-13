@@ -47,6 +47,7 @@
 #include "qlocale_p.h"
 
 #include <limits.h>
+#include <float.h>
 #include <math.h>
 
 QT_BEGIN_NAMESPACE
@@ -606,7 +607,7 @@ QValidator::State QDoubleValidatorPrivate::validateWithLocale(QString &input, QL
 
     if (notation == QDoubleValidator::StandardNotation) {
         double max = qMax(qAbs(q->b), qAbs(q->t));
-        if (max < LLONG_MAX) {
+        if (max < DBL_MAX) {
             qlonglong n = pow10(numDigits(qlonglong(max))) - 1;
             if (qAbs(i) > n)
                 return QValidator::Invalid;

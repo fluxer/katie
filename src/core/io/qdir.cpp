@@ -155,7 +155,7 @@ inline void QDirPrivate::setPath(const QString &path)
         p.truncate(p.length() - 1);
     }
 
-    dirEntry = QFileSystemEntry(p, QFileSystemEntry::FromInternalPath());
+    dirEntry = QFileSystemEntry(p);
     metaData.clear();
     initFileEngine();
     clearFileLists();
@@ -186,7 +186,7 @@ inline void QDirPrivate::resolveAbsoluteEntry() const
         absoluteName = fileEngine->fileName(QAbstractFileEngine::AbsoluteName);
     }
 
-    absoluteDirEntry = QFileSystemEntry(QDir::cleanPath(absoluteName), QFileSystemEntry::FromInternalPath());
+    absoluteDirEntry = QFileSystemEntry(QDir::cleanPath(absoluteName));
 }
 
 /* For sorting */

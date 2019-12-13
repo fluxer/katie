@@ -164,9 +164,8 @@ int main(int argc, char *argv[])
             debugger = new QScriptEngineDebugger(app);
             debugger->attachTo(eng);
             debugger->setAutoShowStandardWindow(true);
-        }
-
-        if (fn == QLatin1String("-i")) {
+            continue;
+        } else if (fn == QLatin1String("-i")) {
             interactive(eng);
             break;
         }
@@ -210,9 +209,9 @@ int main(int argc, char *argv[])
     // do not exit until the debugger has been closed
     if (debugger && eng->hasUncaughtException()) {
         app->processEvents();
-        delete debugger;
     }
 
+    delete debugger;
     delete eng;
     delete app;
 

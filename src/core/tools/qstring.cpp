@@ -33,9 +33,6 @@
 
 #include "qstringlist.h"
 #include "qregexp.h"
-#ifndef QT_NO_TEXTCODEC
-#include "qtextcodec.h"
-#endif
 #include "qicucodec_p.h"
 #include "qdatastream.h"
 #include "qlist.h"
@@ -51,18 +48,48 @@
 #include "qmutex.h"
 #include "qcorecommon_p.h"
 
+#ifndef QT_NO_TEXTCODEC
+#include "qtextcodec.h"
+#endif
+
 #include <limits.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
 
+#include <unicode/ustring.h>
 #include <unicode/unorm2.h>
 
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_TEXTCODEC
 QTextCodec *QString::codecForCStrings = QTextCodec::codecForName("UTF-8");
+#else
+struct QUtfCodecs {
+    QUtfCodecs();
+    ~QUtfCodecs();
+
+    QIcuCodec *utf8codec;
+    QIcuCodec *utf16codec;
+    QIcuCodec *utf32codec;
+};
+
+QUtfCodecs::QUtfCodecs()
+    : utf8codec(new QIcuCodec("UTF-8"))
+    , utf16codec(new QIcuCodec("UTF-16"))
+    , utf32codec(new QIcuCodec("UTF-32"))
+{
+}
+
+QUtfCodecs::~QUtfCodecs()
+{
+    delete utf8codec;
+    delete utf16codec;
+    delete utf32codec;
+}
+
+Q_GLOBAL_STATIC(QUtfCodecs, qGlobalUtfCodecs)
 #endif
 
 // internal
@@ -89,37 +116,17 @@ static inline bool qt_ends_with(const QChar *haystack, int haystackLen,
                                 const QLatin1String &needle, Qt::CaseSensitivity cs);
 
 // Unicode case-insensitive comparison
-static int ucstricmp(const ushort *a, const ushort *ae, const ushort *b, const ushort *be)
+static inline int ucstricmp(const QChar *a, int alen, const QChar *b, int blen)
 {
-    if (a == b)
-        return (ae - be);
-    if (!a)
-        return 1;
-    if (!b)
-        return -1;
-
-    const ushort *e = ae;
-    if (be - b < ae - a)
-        e = a + (be - b);
-
-    uint alast = 0;
-    uint blast = 0;
-    while (a < e) {
-//         qDebug() << hex << alast << blast;
-//         qDebug() << hex << "*a=" << *a << "alast=" << alast << "folded=" << foldCase (*a, alast);
-//         qDebug() << hex << "*b=" << *b << "blast=" << blast << "folded=" << foldCase (*b, blast);
-        int diff = foldCase(*a, alast) - foldCase(*b, blast);
-        if ((diff))
-            return diff;
-        ++a;
-        ++b;
+    UErrorCode error = U_ZERO_ERROR;
+    const int cmpresult = u_strCaseCompare(reinterpret_cast<const UChar*>(a), alen,
+        reinterpret_cast<const UChar*>(b), blen,
+        U_FOLD_CASE_DEFAULT, &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QString::compare: u_strCaseCompare() failed %s", u_errorName(error));
+        // falltrough
     }
-    if (a == ae) {
-        if (b == be)
-            return 0;
-        return -1;
-    }
-    return 1;
+    return cmpresult;
 }
 
 // Case-insensitive comparison between a Unicode string and a QLatin1String
@@ -149,72 +156,23 @@ static int ucstricmp(const ushort *a, const ushort *ae, const uchar *b)
 }
 
 // Unicode case-sensitive compare two same-sized strings
-static int ucstrncmp(const QChar *a, const QChar *b, int l)
+static inline int ucstrncmp(const QChar *a, const QChar *b, int l)
 {
-   if (!l)
-         return 0;
-
-    union {
-        const QChar *w;
-        const quint32 *d;
-        quintptr value;
-    } sa, sb;
-    sa.w = a;
-    sb.w = b;
-
-    // check alignment
-    if ((sa.value & 2) == (sb.value & 2)) {
-        // both addresses have the same alignment
-        if (sa.value & 2) {
-            // both addresses are not aligned to 4-bytes boundaries
-            // compare the first character
-            if (*sa.w != *sb.w)
-                return sa.w->unicode() - sb.w->unicode();
-            --l;
-            ++sa.w;
-            ++sb.w;
-
-            // now both addresses are 4-bytes aligned
-        }
-
-        // both addresses are 4-bytes aligned
-        // do a fast 32-bit comparison
-        const quint32 *e = sa.d + (l >> 1);
-        for ( ; sa.d != e; ++sa.d, ++sb.d) {
-            if (*sa.d != *sb.d) {
-                if (*sa.w != *sb.w)
-                    return sa.w->unicode() - sb.w->unicode();
-                return sa.w[1].unicode() - sb.w[1].unicode();
-            }
-        }
-
-        // do we have a tail?
-        return (l & 1) ? sa.w->unicode() - sb.w->unicode() : 0;
-    } else {
-        // one of the addresses isn't 4-byte aligned but the other is
-        const QChar *e = sa.w + l;
-        for ( ; sa.w != e; ++sa.w, ++sb.w) {
-            if (*sa.w != *sb.w)
-                return sa.w->unicode() - sb.w->unicode();
-        }
-    }
-    return 0;
+    return u_strncmp(reinterpret_cast<const UChar*>(a), reinterpret_cast<const UChar*>(b), l);
 }
 
 // Unicode case-sensitive comparison
-static int ucstrcmp(const QChar *a, int alen, const QChar *b, int blen)
+static inline int ucstrcmp(const QChar *a, int alen, const QChar *b, int blen)
 {
-    if (a == b && alen == blen)
-        return 0;
-    int l = qMin(alen, blen);
-    int cmp = ucstrncmp(a, b, l);
-    return cmp ? cmp : (alen-blen);
+    return u_strCompare(reinterpret_cast<const UChar*>(a), alen,
+        reinterpret_cast<const UChar*>(b), blen, false);
 }
 
 // Unicode case-insensitive compare two same-sized strings
 static inline int ucstrnicmp(const ushort *a, const ushort *b, int l)
 {
-    return ucstricmp(a, a + l, b, b + l);
+    return u_strncasecmp(reinterpret_cast<const UChar*>(a),
+        reinterpret_cast<const UChar*>(b), l, U_FOLD_CASE_DEFAULT);
 }
 
 static inline bool qMemEquals(const QChar *a, const QChar *b, int length)
@@ -3444,8 +3402,12 @@ QByteArray QString::toUtf8() const
     if (isNull())
         return QByteArray();
 
+#ifndef QT_NO_TEXTCODEC
     QTextCodec *c = QTextCodec::codecForName("UTF-8");
     return c->fromUnicode(constData(), length(), Q_NULLPTR);
+#else
+    return qGlobalUtfCodecs()->utf8codec->convertFromUnicode(constData(), length(), Q_NULLPTR);
+#endif
 }
 
 /*!
@@ -3608,8 +3570,12 @@ QString QString::fromUtf8(const char *str, int size)
     if (size < 0)
         size = qstrlen(str);
 
+#ifndef QT_NO_TEXTCODEC
     QTextCodec *c = QTextCodec::codecForName("UTF-8");
     return c->toUnicode(str, size, Q_NULLPTR);
+#else
+    return qGlobalUtfCodecs()->utf8codec->convertToUnicode(str, size, Q_NULLPTR);
+#endif
 }
 
 /*!
@@ -3638,8 +3604,12 @@ QString QString::fromUtf16(const ushort *unicode, int size)
         while (unicode[size] != 0)
             ++size;
     }
+#ifndef QT_NO_TEXTCODEC
     QTextCodec *c = QTextCodec::codecForName("UTF-16");
     return c->toUnicode((const char *)unicode, size, Q_NULLPTR);
+#else
+    return qGlobalUtfCodecs()->utf16codec->convertToUnicode((const char *)unicode, size, Q_NULLPTR);
+#endif
 }
 
 
@@ -3663,8 +3633,12 @@ QString QString::fromUcs4(const uint *unicode, int size)
         while (unicode[size] != 0)
             ++size;
     }
+#ifndef QT_NO_TEXTCODEC
     QTextCodec *c = QTextCodec::codecForName("UTF-32");
     return c->toUnicode((const char *)unicode, size, Q_NULLPTR);
+#else
+    return qGlobalUtfCodecs()->utf32codec->convertToUnicode((const char *)unicode, size, Q_NULLPTR);
+#endif
 }
 
 /*!
@@ -4282,7 +4256,7 @@ int QString::compare(const QString &other, Qt::CaseSensitivity cs) const
 {
     if (cs == Qt::CaseSensitive)
         return ucstrcmp(constData(), length(), other.constData(), other.length());
-    return ucstricmp(d->data, d->data + d->size, other.d->data, other.d->data + other.d->size);
+    return ucstricmp(unicode(), d->size, other.unicode(), other.d->size);
 }
 
 /*!
@@ -4294,9 +4268,7 @@ int QString::compare_helper(const QChar *data1, int length1, const QChar *data2,
 {
     if (cs == Qt::CaseSensitive)
         return ucstrcmp(data1, length1, data2, length2);
-    const ushort *s1 = reinterpret_cast<const ushort *>(data1);
-    const ushort *s2 = reinterpret_cast<const ushort *>(data2);
-    return ucstricmp(s1, s1 + length1, s2, s2 + length2);
+    return ucstricmp(data1, length1, data2, length2);
 }
 
 /*!
@@ -4669,16 +4641,14 @@ QString &QString::sprintf(const char *cformat, ...)
 
 QString &QString::vsprintf(const char* cformat, va_list ap)
 {
-    QLocale locale(QLocale::C);
-
-    if (!cformat || !*cformat) {
+    if (Q_UNLIKELY(!cformat || !*cformat)) {
         // Qt 1.x compat
         *this = fromLatin1("");
         return *this;
     }
 
     // Parse cformat
-
+    QLocale locale(QLocale::C);
     QString result;
     const char *c = cformat;
     for (;;) {
@@ -8503,8 +8473,12 @@ QByteArray QStringRef::toUtf8() const
     if (isNull())
         return QByteArray();
 
+#ifndef QT_NO_TEXTCODEC
     QTextCodec *c = QTextCodec::codecForName("UTF-8");
     return c->fromUnicode(constData(), length(), Q_NULLPTR);
+#else
+    return qGlobalUtfCodecs()->utf8codec->convertFromUnicode(constData(), length(), Q_NULLPTR);
+#endif
 }
 
 /*!

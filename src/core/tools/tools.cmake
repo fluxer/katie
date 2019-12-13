@@ -44,7 +44,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtextboundaryfinder.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtimeline.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qunicodetables_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvarlengtharray.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineoption.h
@@ -89,7 +88,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineparser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qunicodetables.cpp
 )
 
 # Note: libm should be present by default becaue this is C++

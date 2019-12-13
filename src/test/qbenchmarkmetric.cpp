@@ -49,9 +49,6 @@ QT_BEGIN_NAMESPACE
 
   This enum lists all the things that can be benchmarked.
   
-  \value FramesPerSecond        Frames per second
-  \value BitsPerSecond          Bits per second
-  \value BytesPerSecond         Bytes per second
   \value WalltimeMilliseconds   Clock time in milliseconds
   \value CPUTicks               CPU time
   \value InstructionReads       Instruction reads
@@ -69,23 +66,16 @@ QT_BEGIN_NAMESPACE
 const char * QTest::benchmarkMetricName(QBenchmarkMetric metric)
 {
     switch (metric) {
-    case FramesPerSecond:
-        return "FramesPerSecond";
-    case BitsPerSecond:
-        return "BitsPerSecond";
-    case BytesPerSecond:
-        return "BytesPerSecond";
-    case WalltimeMilliseconds:
-        return "WalltimeMilliseconds";
-    case CPUTicks:
-        return "CPUTicks";
-    case InstructionReads:
-        return "InstructionReads";
-    case Events:
-        return "Events";
-    default:
-        return "";
+        case WalltimeMilliseconds:
+            return "WalltimeMilliseconds";
+        case CPUTicks:
+            return "CPUTicks";
+        case InstructionReads:
+            return "InstructionReads";
+        case Events:
+            return "Events";
     }
+    return "";
 }
 
 /*!
@@ -96,23 +86,16 @@ const char * QTest::benchmarkMetricName(QBenchmarkMetric metric)
 const char * QTest::benchmarkMetricUnit(QBenchmarkMetric metric)
 {
     switch (metric) {
-    case FramesPerSecond:
-        return "fps";
-    case BitsPerSecond:
-        return "bits/s";
-    case BytesPerSecond:
-        return "bytes/s";
-    case WalltimeMilliseconds:
-        return "msecs";
-    case CPUTicks:
-        return "CPU ticks";
-    case InstructionReads:
-        return "instruction reads";
-    case Events:
-        return "events";
-    default:
-        return "";
+        case WalltimeMilliseconds:
+            return "msecs";
+        case CPUTicks:
+            return "CPU ticks";
+        case InstructionReads:
+            return "instruction reads";
+        case Events:
+            return "events";
     }
+    return "";
 }
 
 QT_END_NAMESPACE

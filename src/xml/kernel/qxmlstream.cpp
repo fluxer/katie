@@ -671,55 +671,20 @@ void QXmlStreamReader::skipCurrentElement()
     }
 }
 
-/*
- * Use the following Perl script to generate the error string index list:
-===== PERL SCRIPT ====
-print "static const char QXmlStreamReader_tokenTypeString_string[] =\n";
-$counter = 0;
-$i = 0;
-while (<STDIN>) {
-    chomp;
-    print "    \"$_\\0\"\n";
-    $sizes[$i++] = $counter;
-    $counter += length 1 + $_;
-}
-print "    \"\\0\";\n\nstatic const short QXmlStreamReader_tokenTypeString_indices[] = {\n    ";
-for ($j = 0; $j < $i; ++$j) {
-    printf "$sizes[$j], ";
-}
-print "0\n};\n";
-===== PERL SCRIPT ====
-
- * The input data is as follows (copied from qxmlstream.h):
-NoToken
-Invalid
-StartDocument
-EndDocument
-StartElement
-EndElement
-Characters
-Comment
-DTD
-EntityReference
-ProcessingInstruction
-*/
-static const char QXmlStreamReader_tokenTypeString_string[] =
-    "NoToken\0"
-    "Invalid\0"
-    "StartDocument\0"
-    "EndDocument\0"
-    "StartElement\0"
-    "EndElement\0"
-    "Characters\0"
-    "Comment\0"
-    "DTD\0"
-    "EntityReference\0"
-    "ProcessingInstruction\0";
-
-static const short QXmlStreamReader_tokenTypeString_indices[] = {
-    0, 8, 16, 30, 42, 55, 66, 77, 85, 89, 105, 0
+// order must be the same as the enums
+static const QLatin1String QXmlStreamReader_tokenTypeString[11] = {
+    QLatin1String("NoToken\0"),
+    QLatin1String("Invalid\0"),
+    QLatin1String("StartDocument\0"),
+    QLatin1String("EndDocument\0"),
+    QLatin1String("StartElement\0"),
+    QLatin1String("EndElement\0"),
+    QLatin1String("Characters\0"),
+    QLatin1String("Comment\0"),
+    QLatin1String("DTD\0"),
+    QLatin1String("EntityReference\0"),
+    QLatin1String("ProcessingInstruction\0")
 };
-
 
 /*!
     \property  QXmlStreamReader::namespaceProcessing
@@ -752,8 +717,7 @@ bool QXmlStreamReader::namespaceProcessing() const
 QString QXmlStreamReader::tokenString() const
 {
     Q_D(const QXmlStreamReader);
-    return QLatin1String(QXmlStreamReader_tokenTypeString_string +
-                         QXmlStreamReader_tokenTypeString_indices[d->type]);
+    return QXmlStreamReader_tokenTypeString[d->type];
 }
 
 #endif // QT_NO_XMLSTREAMREADER
@@ -1428,28 +1392,12 @@ ushort QXmlStreamReaderPrivate::getChar_helper()
             atEnd = true;
             return 0;
         }
-        int mib = 106; // UTF-8
 
-        // look for byte order mark
-        uchar ch1 = rawReadBuffer.at(0);
-        uchar ch2 = rawReadBuffer.at(1);
-        uchar ch3 = rawReadBuffer.at(2);
-        uchar ch4 = rawReadBuffer.at(3);
-
-        if ((ch1 == 0 && ch2 == 0 && ch3 == 0xfe && ch4 == 0xff) ||
-            (ch1 == 0xff && ch2 == 0xfe && ch3 == 0 && ch4 == 0))
-            mib = 1017; // UTF-32 with byte order mark
-        else if (ch1 == 0x3c && ch2 == 0x00 && ch3 == 0x00 && ch4 == 0x00)
-            mib = 1019; // UTF-32LE
-        else if (ch1 == 0x00 && ch2 == 0x00 && ch3 == 0x00 && ch4 == 0x3c)
-            mib = 1018; // UTF-32BE
-        else if ((ch1 == 0xfe && ch2 == 0xff) || (ch1 == 0xff && ch2 == 0xfe))
-            mib = 1015; // UTF-16 with byte order mark
-        else if (ch1 == 0x3c && ch2 == 0x00)
-            mib = 1014; // UTF-16LE
-        else if (ch1 == 0x00 && ch2 == 0x3c)
-            mib = 1013; // UTF-16BE
-        codec = QTextCodec::codecForMib(mib);
+        codec = QTextCodec::codecForUtfText(rawReadBuffer);
+        if (!codec) {
+            // fallback to UTF-8 even for non-UTF data
+            codec = QTextCodec::codecForName("UTF-8");
+        }
         Q_ASSERT(codec);
         decoder = codec->makeDecoder();
     }

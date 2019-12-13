@@ -43,6 +43,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase_x11.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/text/qunicodetables_p.h
 )
 
 set(GUI_SOURCES
@@ -77,6 +78,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/text/qunicodetables.cpp
 )
 
 if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
