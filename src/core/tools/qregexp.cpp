@@ -755,86 +755,91 @@ static QString wc2rx(const QString &wc_str, const bool enableEscaping)
     while (i < wclen) {
         const QChar c = wc[i++];
         switch (c.unicode()) {
-        case '\\':
-            if (enableEscaping) {
-                if (isEscaping) {
-                    rx += QLatin1String("\\\\");
-                } // we insert the \\ later if necessary
-                if (i == wclen) { // the end
+            case '\\': {
+                if (enableEscaping) {
+                    if (isEscaping) {
+                        rx += QLatin1String("\\\\");
+                    } // we insert the \\ later if necessary
+                    if (i == wclen) { // the end
+                        rx += QLatin1String("\\\\");
+                    }
+                } else {
                     rx += QLatin1String("\\\\");
                 }
-            } else {
-                rx += QLatin1String("\\\\");
+                isEscaping = true;
+                break;
             }
-            isEscaping = true;
-            break;
-        case '*':
-            if (isEscaping) {
-                rx += QLatin1String("\\*");
-                isEscaping = false;
-            } else {
-                rx += QLatin1String(".*");
+            case '*': {
+                if (isEscaping) {
+                    rx += QLatin1String("\\*");
+                    isEscaping = false;
+                } else {
+                    rx += QLatin1String(".*");
+                }
+                break;
             }
-            break;
-        case '?':
-            if (isEscaping) {
-                rx += QLatin1String("\\?");
-                isEscaping = false;
-            } else {
-                rx += QLatin1Char('.');
-            }
+            case '?': {
+                if (isEscaping) {
+                    rx += QLatin1String("\\?");
+                    isEscaping = false;
+                } else {
+                    rx += QLatin1Char('.');
+                }
 
-            break;
-        case '$':
-        case '(':
-        case ')':
-        case '+':
-        case '.':
-        case '^':
-        case '{':
-        case '|':
-        case '}':
-            if (isEscaping) {
-                isEscaping = false;
-                rx += QLatin1String("\\\\");
+                break;
             }
-            rx += QLatin1Char('\\');
-            rx += c;
-            break;
-         case '[':
-            if (isEscaping) {
-                isEscaping = false;
-                rx += QLatin1String("\\[");
-            } else {
+            case '$':
+            case '(':
+            case ')':
+            case '+':
+            case '.':
+            case '^':
+            case '{':
+            case '|':
+            case '}': {
+                if (isEscaping) {
+                    isEscaping = false;
+                    rx += QLatin1String("\\\\");
+                }
+                rx += QLatin1Char('\\');
                 rx += c;
-                if (wc[i] == QLatin1Char('^'))
-                    rx += wc[i++];
-                if (i < wclen) {
-                    if (rx[i] == QLatin1Char(']'))
+                break;
+            }
+            case '[': {
+                if (isEscaping) {
+                    isEscaping = false;
+                    rx += QLatin1String("\\[");
+                } else {
+                    rx += c;
+                    if (wc[i] == QLatin1Char('^'))
                         rx += wc[i++];
-                    while (i < wclen && wc[i] != QLatin1Char(']')) {
-                        if (wc[i] == QLatin1Char('\\'))
-                            rx += QLatin1Char('\\');
-                        rx += wc[i++];
+                    if (i < wclen) {
+                        if (rx[i] == QLatin1Char(']'))
+                            rx += wc[i++];
+                        while (i < wclen && wc[i] != QLatin1Char(']')) {
+                            if (wc[i] == QLatin1Char('\\'))
+                                rx += QLatin1Char('\\');
+                            rx += wc[i++];
+                        }
                     }
                 }
+                break;
             }
-             break;
-
-        case ']':
-            if(isEscaping){
-                isEscaping = false;
-                rx += QLatin1String("\\");
+            case ']': {
+                if(isEscaping){
+                    isEscaping = false;
+                    rx += QLatin1String("\\");
+                }
+                rx += c;
+                break;
             }
-            rx += c;
-            break;
-
-        default:
-            if(isEscaping){
-                isEscaping = false;
-                rx += QLatin1String("\\\\");
+            default: {
+                if(isEscaping){
+                    isEscaping = false;
+                    rx += QLatin1String("\\\\");
+                }
+                rx += c;
             }
-            rx += c;
         }
     }
     return rx;
@@ -1308,18 +1313,21 @@ Q_CORE_EXPORT QString qt_regexp_toCanonical(const QString &pattern, QRegExp::Pat
 {
     switch (patternSyntax) {
 #ifndef QT_NO_REGEXP_WILDCARD
-    case QRegExp::Wildcard:
-        return wc2rx(pattern, false);
-        break;
-    case QRegExp::WildcardUnix:
-        return wc2rx(pattern, true);
-        break;
+        case QRegExp::Wildcard: {
+            return wc2rx(pattern, false);
+            break;
+        }
+        case QRegExp::WildcardUnix: {
+            return wc2rx(pattern, true);
+            break;
+        }
 #endif
-    case QRegExp::FixedString:
-        return QRegExp::escape(pattern);
-        break;
-    default:
-        return pattern;
+        case QRegExp::FixedString: {
+            return QRegExp::escape(pattern);
+            break;
+        }
+        default:
+            return pattern;
     }
 }
 
@@ -2749,132 +2757,141 @@ int QRegExpEngine::getEscape()
 
     switch (prevCh) {
 #ifndef QT_NO_REGEXP_ESCAPE
-    case '0':
-        val = 0;
-        for (i = 0; i < 3; i++) {
-            if (yyCh >= '0' && yyCh <= '7')
-                val = (val << 3) | (yyCh - '0');
-            else
-                break;
-            yyCh = getChar();
-        }
-        if ((val & ~0377) != 0)
-            error(RXERR_OCTAL);
-        return Tok_Char | val;
-#endif
-#ifndef QT_NO_REGEXP_ESCAPE
-    case 'B':
-        return Tok_NonWord;
-#endif
-#ifndef QT_NO_REGEXP_CCLASS
-    case 'D':
-        // see QChar::isDigit()
-        yyCharClass->addCategories(uint(-1) ^ FLAG(QChar::Number_DecimalDigit));
-        return Tok_CharClass;
-    case 'S':
-        // see QChar::isSpace()
-        yyCharClass->addCategories(uint(-1) ^ (FLAG(QChar::Separator_Space) |
-                                               FLAG(QChar::Separator_Line) |
-                                               FLAG(QChar::Separator_Paragraph) |
-                                               FLAG(QChar::Other_Control)));
-        yyCharClass->addRange(0x0000, 0x0008);
-        yyCharClass->addRange(0x000e, 0x001f);
-        yyCharClass->addRange(0x007f, 0x009f);
-        return Tok_CharClass;
-    case 'W':
-        // see QChar::isLetterOrNumber() and QChar::isMark()
-        yyCharClass->addCategories(uint(-1) ^ (FLAG(QChar::Mark_NonSpacing) |
-                                               FLAG(QChar::Mark_SpacingCombining) |
-                                               FLAG(QChar::Mark_Enclosing) |
-                                               FLAG(QChar::Number_DecimalDigit) |
-                                               FLAG(QChar::Number_Letter) |
-                                               FLAG(QChar::Number_Other) |
-                                               FLAG(QChar::Letter_Uppercase) |
-                                               FLAG(QChar::Letter_Lowercase) |
-                                               FLAG(QChar::Letter_Titlecase) |
-                                               FLAG(QChar::Letter_Modifier) |
-                                               FLAG(QChar::Letter_Other) |
-                                               FLAG(QChar::Punctuation_Connector)));
-        yyCharClass->addRange(0x203f, 0x2040);
-        yyCharClass->addSingleton(0x2040);
-        yyCharClass->addSingleton(0x2054);
-        yyCharClass->addSingleton(0x30fb);
-        yyCharClass->addRange(0xfe33, 0xfe34);
-        yyCharClass->addRange(0xfe4d, 0xfe4f);
-        yyCharClass->addSingleton(0xff3f);
-        yyCharClass->addSingleton(0xff65);
-        return Tok_CharClass;
-#endif
-#ifndef QT_NO_REGEXP_ESCAPE
-    case 'b':
-        return Tok_Word;
-#endif
-#ifndef QT_NO_REGEXP_CCLASS
-    case 'd':
-        // see QChar::isDigit()
-        yyCharClass->addCategories(FLAG(QChar::Number_DecimalDigit));
-        return Tok_CharClass;
-    case 's':
-        // see QChar::isSpace()
-        yyCharClass->addCategories(FLAG(QChar::Separator_Space) |
-                                   FLAG(QChar::Separator_Line) |
-                                   FLAG(QChar::Separator_Paragraph));
-        yyCharClass->addRange(0x0009, 0x000d);
-        return Tok_CharClass;
-    case 'w':
-        // see QChar::isLetterOrNumber() and QChar::isMark()
-        yyCharClass->addCategories(FLAG(QChar::Mark_NonSpacing) |
-                                   FLAG(QChar::Mark_SpacingCombining) |
-                                   FLAG(QChar::Mark_Enclosing) |
-                                   FLAG(QChar::Number_DecimalDigit) |
-                                   FLAG(QChar::Number_Letter) |
-                                   FLAG(QChar::Number_Other) |
-                                   FLAG(QChar::Letter_Uppercase) |
-                                   FLAG(QChar::Letter_Lowercase) |
-                                   FLAG(QChar::Letter_Titlecase) |
-                                   FLAG(QChar::Letter_Modifier) |
-                                   FLAG(QChar::Letter_Other));
-        yyCharClass->addSingleton(0x005f); // '_'
-        return Tok_CharClass;
-    case 'I':
-    case 'i':
-        return Tok_CharClass;
-    case 'C':
-    case 'c':
-        return Tok_CharClass;
-    case 'P':
-    case 'p':
-        return Tok_CharClass;
-#endif
-#ifndef QT_NO_REGEXP_ESCAPE
-    case 'x':
-        val = 0;
-        for (i = 0; i < 4; i++) {
-            low = QChar(yyCh).toLower().unicode();
-            if (low >= '0' && low <= '9')
-                val = (val << 4) | (low - '0');
-            else if (low >= 'a' && low <= 'f')
-                val = (val << 4) | (low - 'a' + 10);
-            else
-                break;
-            yyCh = getChar();
-        }
-        return Tok_Char | val;
-#endif
-    default:
-        if (prevCh >= '1' && prevCh <= '9') {
-#ifndef QT_NO_REGEXP_BACKREF
-            val = prevCh - '0';
-            while (yyCh >= '0' && yyCh <= '9') {
-                val = (val * 10) + (yyCh - '0');
+        case '0': {
+            val = 0;
+            for (i = 0; i < 3; i++) {
+                if (yyCh >= '0' && yyCh <= '7')
+                    val = (val << 3) | (yyCh - '0');
+                else
+                    break;
                 yyCh = getChar();
             }
-            return Tok_BackRef | val;
-#else
-            error(RXERR_DISABLED);
-#endif
+            if ((val & ~0377) != 0)
+                error(RXERR_OCTAL);
+            return Tok_Char | val;
         }
-        return Tok_Char | prevCh;
+#endif
+#ifndef QT_NO_REGEXP_ESCAPE
+        case 'B':
+            return Tok_NonWord;
+#endif
+#ifndef QT_NO_REGEXP_CCLASS
+        case 'D': {
+            // see QChar::isDigit()
+            yyCharClass->addCategories(uint(-1) ^ FLAG(QChar::Number_DecimalDigit));
+            return Tok_CharClass;
+        }
+        case 'S': {
+            // see QChar::isSpace()
+            yyCharClass->addCategories(uint(-1) ^ (FLAG(QChar::Separator_Space) |
+                                                FLAG(QChar::Separator_Line) |
+                                                FLAG(QChar::Separator_Paragraph) |
+                                                FLAG(QChar::Other_Control)));
+            yyCharClass->addRange(0x0000, 0x0008);
+            yyCharClass->addRange(0x000e, 0x001f);
+            yyCharClass->addRange(0x007f, 0x009f);
+            return Tok_CharClass;
+        }
+        case 'W': {
+            // see QChar::isLetterOrNumber() and QChar::isMark()
+            yyCharClass->addCategories(uint(-1) ^ (FLAG(QChar::Mark_NonSpacing) |
+                                                FLAG(QChar::Mark_SpacingCombining) |
+                                                FLAG(QChar::Mark_Enclosing) |
+                                                FLAG(QChar::Number_DecimalDigit) |
+                                                FLAG(QChar::Number_Letter) |
+                                                FLAG(QChar::Number_Other) |
+                                                FLAG(QChar::Letter_Uppercase) |
+                                                FLAG(QChar::Letter_Lowercase) |
+                                                FLAG(QChar::Letter_Titlecase) |
+                                                FLAG(QChar::Letter_Modifier) |
+                                                FLAG(QChar::Letter_Other) |
+                                                FLAG(QChar::Punctuation_Connector)));
+            yyCharClass->addRange(0x203f, 0x2040);
+            yyCharClass->addSingleton(0x2040);
+            yyCharClass->addSingleton(0x2054);
+            yyCharClass->addSingleton(0x30fb);
+            yyCharClass->addRange(0xfe33, 0xfe34);
+            yyCharClass->addRange(0xfe4d, 0xfe4f);
+            yyCharClass->addSingleton(0xff3f);
+            yyCharClass->addSingleton(0xff65);
+            return Tok_CharClass;
+        }
+#endif
+#ifndef QT_NO_REGEXP_ESCAPE
+        case 'b':
+            return Tok_Word;
+#endif
+#ifndef QT_NO_REGEXP_CCLASS
+        case 'd': {
+            // see QChar::isDigit()
+            yyCharClass->addCategories(FLAG(QChar::Number_DecimalDigit));
+            return Tok_CharClass;
+        }
+        case 's': {
+            // see QChar::isSpace()
+            yyCharClass->addCategories(FLAG(QChar::Separator_Space) |
+                                    FLAG(QChar::Separator_Line) |
+                                    FLAG(QChar::Separator_Paragraph));
+            yyCharClass->addRange(0x0009, 0x000d);
+            return Tok_CharClass;
+        }
+        case 'w': {
+            // see QChar::isLetterOrNumber() and QChar::isMark()
+            yyCharClass->addCategories(FLAG(QChar::Mark_NonSpacing) |
+                                    FLAG(QChar::Mark_SpacingCombining) |
+                                    FLAG(QChar::Mark_Enclosing) |
+                                    FLAG(QChar::Number_DecimalDigit) |
+                                    FLAG(QChar::Number_Letter) |
+                                    FLAG(QChar::Number_Other) |
+                                    FLAG(QChar::Letter_Uppercase) |
+                                    FLAG(QChar::Letter_Lowercase) |
+                                    FLAG(QChar::Letter_Titlecase) |
+                                    FLAG(QChar::Letter_Modifier) |
+                                    FLAG(QChar::Letter_Other));
+            yyCharClass->addSingleton(0x005f); // '_'
+            return Tok_CharClass;
+        }
+        case 'I':
+        case 'i':
+            return Tok_CharClass;
+        case 'C':
+        case 'c':
+            return Tok_CharClass;
+        case 'P':
+        case 'p':
+            return Tok_CharClass;
+#endif
+#ifndef QT_NO_REGEXP_ESCAPE
+        case 'x': {
+            val = 0;
+            for (i = 0; i < 4; i++) {
+                low = QChar(yyCh).toLower().unicode();
+                if (low >= '0' && low <= '9')
+                    val = (val << 4) | (low - '0');
+                else if (low >= 'a' && low <= 'f')
+                    val = (val << 4) | (low - 'a' + 10);
+                else
+                    break;
+                yyCh = getChar();
+            }
+            return Tok_Char | val;
+        }
+#endif
+        default: {
+            if (prevCh >= '1' && prevCh <= '9') {
+#ifndef QT_NO_REGEXP_BACKREF
+                val = prevCh - '0';
+                while (yyCh >= '0' && yyCh <= '9') {
+                    val = (val * 10) + (yyCh - '0');
+                    yyCh = getChar();
+                }
+                return Tok_BackRef | val;
+#else
+                error(RXERR_DISABLED);
+#endif
+            }
+            return Tok_Char | prevCh;
+        }
     }
 }
 
@@ -2946,145 +2963,154 @@ int QRegExpEngine::getToken()
     yyCh = getChar();
 
     switch (prevCh) {
-    case EOS:
-        yyPos0 = yyPos;
-        return Tok_Eos;
-    case '$':
-        return Tok_Dollar;
-    case '(':
-        if (yyCh == '?') {
-            prevCh = getChar();
-            yyCh = getChar();
-            switch (prevCh) {
-#ifndef QT_NO_REGEXP_LOOKAHEAD
-            case '!':
-                return Tok_NegLookahead;
-            case '=':
-                return Tok_PosLookahead;
-#endif
-            case ':':
-                return Tok_MagicLeftParen;
-            case '<':
-                error(RXERR_LOOKBEHIND);
-                return Tok_MagicLeftParen;
-            default:
-                error(RXERR_LOOKAHEAD);
-                return Tok_MagicLeftParen;
-            }
-        } else {
-            return Tok_LeftParen;
+        case EOS: {
+            yyPos0 = yyPos;
+            return Tok_Eos;
         }
-    case ')':
-        return Tok_RightParen;
-    case '*':
-        yyMinRep = 0;
-        yyMaxRep = InftyRep;
-        return Tok_Quantifier;
-    case '+':
-        yyMinRep = 1;
-        yyMaxRep = InftyRep;
-        return Tok_Quantifier;
-    case '.':
-#ifndef QT_NO_REGEXP_CCLASS
-        yyCharClass->setNegative(true);
-#endif
-        return Tok_CharClass;
-    case '?':
-        yyMinRep = 0;
-        yyMaxRep = 1;
-        return Tok_Quantifier;
-    case '[':
-#ifndef QT_NO_REGEXP_CCLASS
-        if (yyCh == '^') {
-            yyCharClass->setNegative(true);
-            yyCh = getChar();
-        }
-        charPending = false;
-        rangePending = false;
-        do {
-            if (yyCh == '-' && charPending && !rangePending) {
-                rangePending = true;
+        case '$':
+            return Tok_Dollar;
+        case '(': {
+            if (yyCh == '?') {
+                prevCh = getChar();
                 yyCh = getChar();
+                switch (prevCh) {
+#ifndef QT_NO_REGEXP_LOOKAHEAD
+                    case '!':
+                        return Tok_NegLookahead;
+                    case '=':
+                        return Tok_PosLookahead;
+#endif
+                    case ':':
+                        return Tok_MagicLeftParen;
+                    case '<':
+                        error(RXERR_LOOKBEHIND);
+                        return Tok_MagicLeftParen;
+                    default:
+                        error(RXERR_LOOKAHEAD);
+                        return Tok_MagicLeftParen;
+                    }
             } else {
-                if (charPending && !rangePending) {
-                    yyCharClass->addSingleton(pendingCh);
-                    charPending = false;
-                }
-                if (yyCh == '\\') {
+                return Tok_LeftParen;
+            }
+        }
+        case ')':
+            return Tok_RightParen;
+        case '*': {
+            yyMinRep = 0;
+            yyMaxRep = InftyRep;
+            return Tok_Quantifier;
+        }
+        case '+': {
+            yyMinRep = 1;
+            yyMaxRep = InftyRep;
+            return Tok_Quantifier;
+        }
+        case '.':
+#ifndef QT_NO_REGEXP_CCLASS
+            yyCharClass->setNegative(true);
+#endif
+            return Tok_CharClass;
+        case '?': {
+            yyMinRep = 0;
+            yyMaxRep = 1;
+            return Tok_Quantifier;
+        }
+        case '[': {
+#ifndef QT_NO_REGEXP_CCLASS
+            if (yyCh == '^') {
+                yyCharClass->setNegative(true);
+                yyCh = getChar();
+            }
+            charPending = false;
+            rangePending = false;
+            do {
+                if (yyCh == '-' && charPending && !rangePending) {
+                    rangePending = true;
                     yyCh = getChar();
-                    tok = getEscape();
-                    if (tok == Tok_Word)
-                        tok = '\b';
                 } else {
-                    tok = Tok_Char | yyCh;
-                    yyCh = getChar();
-                }
-                if (tok == Tok_CharClass) {
-                    if (rangePending) {
-                        yyCharClass->addSingleton('-');
+                    if (charPending && !rangePending) {
                         yyCharClass->addSingleton(pendingCh);
                         charPending = false;
-                        rangePending = false;
                     }
-                } else if ((tok & Tok_Char) != 0) {
-                    if (rangePending) {
-                        yyCharClass->addRange(pendingCh, tok ^ Tok_Char);
-                        charPending = false;
-                        rangePending = false;
+                    if (yyCh == '\\') {
+                        yyCh = getChar();
+                        tok = getEscape();
+                        if (tok == Tok_Word)
+                            tok = '\b';
                     } else {
-                        pendingCh = tok ^ Tok_Char;
-                        charPending = true;
+                        tok = Tok_Char | yyCh;
+                        yyCh = getChar();
                     }
-                } else {
-                    error(RXERR_CHARCLASS);
+                    if (tok == Tok_CharClass) {
+                        if (rangePending) {
+                            yyCharClass->addSingleton('-');
+                            yyCharClass->addSingleton(pendingCh);
+                            charPending = false;
+                            rangePending = false;
+                        }
+                    } else if ((tok & Tok_Char) != 0) {
+                        if (rangePending) {
+                            yyCharClass->addRange(pendingCh, tok ^ Tok_Char);
+                            charPending = false;
+                            rangePending = false;
+                        } else {
+                            pendingCh = tok ^ Tok_Char;
+                            charPending = true;
+                        }
+                    } else {
+                        error(RXERR_CHARCLASS);
+                    }
                 }
-            }
-        }  while (yyCh != ']' && yyCh != EOS);
-        if (rangePending)
-            yyCharClass->addSingleton('-');
-        if (charPending)
-            yyCharClass->addSingleton(pendingCh);
-        if (yyCh == EOS)
+            }  while (yyCh != ']' && yyCh != EOS);
+            if (rangePending)
+                yyCharClass->addSingleton('-');
+            if (charPending)
+                yyCharClass->addSingleton(pendingCh);
+            if (yyCh == EOS)
+                error(RXERR_END);
+            else
+                yyCh = getChar();
+            return Tok_CharClass;
+#else
             error(RXERR_END);
-        else
-            yyCh = getChar();
-        return Tok_CharClass;
-#else
-        error(RXERR_END);
-        return Tok_Char | '[';
+            return Tok_Char | '[';
 #endif
-    case '\\':
-        return getEscape();
-    case ']':
-        error(RXERR_LEFTDELIM);
-        return Tok_Char | ']';
-    case '^':
-        return Tok_Caret;
-    case '{':
-#ifndef QT_NO_REGEXP_INTERVAL
-        yyMinRep = getRep(0);
-        yyMaxRep = yyMinRep;
-        if (yyCh == ',') {
-            yyCh = getChar();
-            yyMaxRep = getRep(InftyRep);
         }
-        if (yyMaxRep < yyMinRep)
-            error(RXERR_INTERVAL);
-        if (yyCh != '}')
-            error(RXERR_REPETITION);
-        yyCh = getChar();
-        return Tok_Quantifier;
+        case '\\':
+            return getEscape();
+        case ']': {
+            error(RXERR_LEFTDELIM);
+            return Tok_Char | ']';
+        }
+        case '^':
+            return Tok_Caret;
+        case '{': {
+#ifndef QT_NO_REGEXP_INTERVAL
+            yyMinRep = getRep(0);
+            yyMaxRep = yyMinRep;
+            if (yyCh == ',') {
+                yyCh = getChar();
+                yyMaxRep = getRep(InftyRep);
+            }
+            if (yyMaxRep < yyMinRep)
+                error(RXERR_INTERVAL);
+            if (yyCh != '}')
+                error(RXERR_REPETITION);
+            yyCh = getChar();
+            return Tok_Quantifier;
 #else
-        error(RXERR_DISABLED);
-        return Tok_Char | '{';
+            error(RXERR_DISABLED);
+            return Tok_Char | '{';
 #endif
-    case '|':
-        return Tok_Bar;
-    case '}':
-        error(RXERR_LEFTDELIM);
-        return Tok_Char | '}';
-    default:
-        return Tok_Char | prevCh;
+        }
+        case '|':
+            return Tok_Bar;
+        case '}': {
+            error(RXERR_LEFTDELIM);
+            return Tok_Char | '}';
+        }
+        default:
+            return Tok_Char | prevCh;
     }
 }
 
@@ -3123,16 +3149,17 @@ int QRegExpEngine::parse(const QChar *pattern, int len)
 #ifndef QT_NO_REGEXP_CAPTURE
     for (int i = 0; i < nf; ++i) {
         switch (f[i].capture) {
-        case QRegExpAtom::NoCapture:
-            break;
-        case QRegExpAtom::OfficialCapture:
-            f[i].capture = ncap;
-            captureForOfficialCapture.append(ncap);
-            ++ncap;
-            ++officialncap;
-            break;
-        case QRegExpAtom::UnofficialCapture:
-            f[i].capture = greedyQuantifiers ? ncap++ : QRegExpAtom::NoCapture;
+            case QRegExpAtom::NoCapture:
+                break;
+            case QRegExpAtom::OfficialCapture: {
+                f[i].capture = ncap;
+                captureForOfficialCapture.append(ncap);
+                ++ncap;
+                ++officialncap;
+                break;
+            }
+            case QRegExpAtom::UnofficialCapture:
+                f[i].capture = greedyQuantifiers ? ncap++ : QRegExpAtom::NoCapture;
         }
     }
 
@@ -3208,56 +3235,65 @@ void QRegExpEngine::parseAtom(Box *box)
         trivial = false;
 #endif
         switch (yyTok) {
-        case Tok_Dollar:
-            box->catAnchor(Anchor_Dollar);
-            break;
-        case Tok_Caret:
-            box->catAnchor(Anchor_Caret);
-            break;
+            case Tok_Dollar: {
+                box->catAnchor(Anchor_Dollar);
+                break;
+            }
+            case Tok_Caret: {
+                box->catAnchor(Anchor_Caret);
+                break;
+            }
 #ifndef QT_NO_REGEXP_LOOKAHEAD
-        case Tok_PosLookahead:
-        case Tok_NegLookahead:
-            neg = (yyTok == Tok_NegLookahead);
-            eng = new QRegExpEngine(cs, greedyQuantifiers);
-            len = eng->parse(yyIn + yyPos - 1, yyLen - yyPos + 1);
-            if (len >= 0)
-                skipChars(len);
-            else
-                error(RXERR_LOOKAHEAD);
-            box->catAnchor(addLookahead(eng, neg));
-            yyTok = getToken();
-            if (yyTok != Tok_RightParen)
-                error(RXERR_LOOKAHEAD);
-            break;
+            case Tok_PosLookahead:
+            case Tok_NegLookahead: {
+                neg = (yyTok == Tok_NegLookahead);
+                eng = new QRegExpEngine(cs, greedyQuantifiers);
+                len = eng->parse(yyIn + yyPos - 1, yyLen - yyPos + 1);
+                if (len >= 0)
+                    skipChars(len);
+                else
+                    error(RXERR_LOOKAHEAD);
+                box->catAnchor(addLookahead(eng, neg));
+                yyTok = getToken();
+                if (yyTok != Tok_RightParen)
+                    error(RXERR_LOOKAHEAD);
+                break;
+            }
 #endif
 #ifndef QT_NO_REGEXP_ESCAPE
-        case Tok_Word:
-            box->catAnchor(Anchor_Word);
-            break;
-        case Tok_NonWord:
-            box->catAnchor(Anchor_NonWord);
-            break;
+            case Tok_Word: {
+                box->catAnchor(Anchor_Word);
+                break;
+            }
+            case Tok_NonWord: {
+                box->catAnchor(Anchor_NonWord);
+                break;
+            }
 #endif
-        case Tok_LeftParen:
-        case Tok_MagicLeftParen:
-            yyTok = getToken();
-            parseExpression(box);
-            if (yyTok != Tok_RightParen)
-                error(RXERR_END);
-            break;
-        case Tok_CharClass:
-            box->set(*yyCharClass);
-            break;
-        case Tok_Quantifier:
-            error(RXERR_REPETITION);
-            break;
-        default:
+            case Tok_LeftParen:
+            case Tok_MagicLeftParen: {
+                yyTok = getToken();
+                parseExpression(box);
+                if (yyTok != Tok_RightParen)
+                    error(RXERR_END);
+                break;
+            }
+            case Tok_CharClass: {
+                box->set(*yyCharClass);
+                break;
+            }
+            case Tok_Quantifier: {
+                error(RXERR_REPETITION);
+                break;
+            }
+            default: {
 #ifndef QT_NO_REGEXP_BACKREF
-            if ((yyTok & Tok_BackRef) != 0)
-                box->set(yyTok ^ Tok_BackRef);
-            else
+                if ((yyTok & Tok_BackRef) != 0)
+                    box->set(yyTok ^ Tok_BackRef);
+                else
 #endif
-                error(RXERR_DISABLED);
+                    error(RXERR_DISABLED);
+            }
         }
     }
     yyTok = getToken();
@@ -4062,21 +4098,21 @@ QString QRegExp::escape(const QString &str)
     for (int i = 0; i < count; i++) {
         const QChar c = str.at(i);
         switch (c.toLatin1()) {
-        case '$':
-        case '(':
-        case ')':
-        case '*':
-        case '+':
-        case '.':
-        case '?':
-        case '[':
-        case '\\':
-        case ']':
-        case '^':
-        case '{':
-        case '|':
-        case '}':
-            quoted.append(backslash);
+            case '$':
+            case '(':
+            case ')':
+            case '*':
+            case '+':
+            case '.':
+            case '?':
+            case '[':
+            case '\\':
+            case ']':
+            case '^':
+            case '{':
+            case '|':
+            case '}':
+                quoted.append(backslash);
         }
         quoted.append(c);
     }
