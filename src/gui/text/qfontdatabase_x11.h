@@ -836,8 +836,7 @@ static const char *styleHint(const QFontDef &request)
 }
 
 #ifndef QT_NO_FONTCONFIG
-
-void qt_addPatternProps(FcPattern *pattern, int screen, int script, const QFontDef &request)
+static void qt_addPatternProps(FcPattern *pattern, int screen, int script, const QFontDef &request)
 {
     double size_value = qMax(qreal(1.), request.pixelSize);
     FcPatternDel(pattern, FC_PIXEL_SIZE);
