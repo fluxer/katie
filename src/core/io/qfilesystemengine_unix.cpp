@@ -44,6 +44,10 @@
 #include <pwd.h>
 #include <grp.h>
 
+#ifdef Q_OS_LINUX
+#  include <sys/sendfile.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 bool QFileSystemEngine::isCaseSensitive()
@@ -370,9 +374,58 @@ bool QFileSystemEngine::createLink(const QFileSystemEntry &source, const QFileSy
 //static
 bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSystemEntry &target, QSystemError &error)
 {
+#ifdef Q_OS_LINUX
+
+// not in qplatformdefs.h since it is Linux specific
+#if defined(QT_USE_XOPEN_LFS_EXTENSIONS) && defined(QT_LARGEFILE_SUPPORT)
+#  define QT_SENDFILE ::sendfile64
+#else
+#  define QT_SENDFILE ::sendfile
+#endif
+
+    QT_STATBUF st;
+    if (QT_STAT(source.nativeFilePath().constData(), &st) != -1) {
+        if (!S_ISREG(st.st_mode))
+            return false;
+    }
+
+    const int sourcefd = QT_OPEN(source.nativeFilePath().constData(), O_RDONLY);
+    if (sourcefd == -1) {
+        error = QSystemError(errno, QSystemError::StandardLibraryError);
+        return false;
+    }
+
+    const int targetfd = QT_CREAT(target.nativeFilePath().constData(), st.st_mode);
+    if (targetfd == -1) {
+        ::close(sourcefd);
+        error = QSystemError(errno, QSystemError::StandardLibraryError);
+        return false;
+    }
+
+    QT_OFF_T tosend = st.st_size;
+    ssize_t sendresult = QT_SENDFILE(targetfd, sourcefd, Q_NULLPTR, tosend);
+    while (sendresult != tosend) {
+        if (sendresult == -1) {
+            error = QSystemError(errno, QSystemError::StandardLibraryError);
+            ::close(sourcefd);
+            ::close(targetfd);
+            return false;
+        }
+        tosend -= sendresult;
+        sendresult = QT_SENDFILE(targetfd, sourcefd, &tosend, tosend);
+    }
+
+    ::close(sourcefd);
+    ::close(targetfd);
+    return true;
+
+#undef QT_SENDFILE
+
+#else
     Q_UNUSED(source);
     Q_UNUSED(target);
     error = QSystemError(ENOSYS, QSystemError::StandardLibraryError); //Function not implemented
+#endif // Q_OS_LINUX
     return false;
 }
 

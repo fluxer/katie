@@ -93,6 +93,7 @@
 #define QT_LSEEK                ::lseek64
 #define QT_FSTAT                ::fstat64
 #define QT_FTRUNCATE            ::ftruncate64
+#define QT_CREAT                ::creat64
 
 // Standard C89
 #define QT_FOPEN                ::fopen64
@@ -125,6 +126,7 @@
 #define QT_LSEEK                ::lseek
 #define QT_FSTAT                ::fstat
 #define QT_FTRUNCATE            ::ftruncate
+#define QT_CREAT                ::creat
 
 // Posix extensions to C89
 #if !defined(QT_NO_USE_FSEEKO)
