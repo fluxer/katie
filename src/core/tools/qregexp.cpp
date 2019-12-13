@@ -4093,7 +4093,7 @@ QString QRegExp::escape(const QString &str)
 {
     QString quoted;
     const int count = str.count();
-    quoted.reserve(count * 2);
+    quoted.reserve(count);
     const QLatin1Char backslash('\\');
     for (int i = 0; i < count; i++) {
         const QChar c = str.at(i);
