@@ -32,7 +32,7 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <QtXml/QtXml>
+#include <QtXml/QDomDocument>
 #include <QDir>
 #include <QFileInfo>
 #include <QDebug>
@@ -118,44 +118,44 @@ void tst_QCssParser::scanner_data()
 }
 
 
-static char *tokenName(QCss::TokenType t)
+static QString tokenName(QCss::TokenType t)
 {
     switch (t) {
-        case QCss::NONE: return "NONE";
-        case QCss::S: return "S";
-        case QCss::CDO: return "CDO";
-        case QCss::CDC: return "CDC";
-        case QCss::INCLUDES: return "INCLUDES";
-        case QCss::DASHMATCH: return "DASHMATCH";
-        case QCss::LBRACE: return "LBRACE";
-        case QCss::PLUS: return "PLUS";
-        case QCss::GREATER: return "GREATER";
-        case QCss::COMMA: return "COMMA";
-        case QCss::STRING: return "STRING";
-        case QCss::INVALID: return "INVALID";
-        case QCss::IDENT: return "IDENT";
-        case QCss::HASH: return "HASH";
-        case QCss::ATKEYWORD_SYM: return "ATKEYWORD_SYM";
-        case QCss::EXCLAMATION_SYM: return "EXCLAMATION_SYM";
-        case QCss::LENGTH: return "LENGTH";
-        case QCss::PERCENTAGE: return "PERCENTAGE";
-        case QCss::NUMBER: return "NUMBER";
-        case QCss::FUNCTION: return "FUNCTION";
-        case QCss::COLON: return "COLON";
-        case QCss::SEMICOLON: return "SEMICOLON";
-        case QCss::RBRACE: return "RBRACE";
-        case QCss::SLASH: return "SLASH";
-        case QCss::MINUS: return "MINUS";
-        case QCss::DOT: return "DOT";
-        case QCss::STAR: return "STAR";
-        case QCss::LBRACKET: return "LBRACKET";
-        case QCss::RBRACKET: return "RBRACKET";
-        case QCss::EQUAL: return "EQUAL";
-        case QCss::LPAREN: return "LPAREN";
-        case QCss::RPAREN: return "RPAREN";
-        case QCss::OR: return "OR";
+        case QCss::NONE: return QLatin1String("NONE");
+        case QCss::S: return QLatin1String("S");
+        case QCss::CDO: return QLatin1String("CDO");
+        case QCss::CDC: return QLatin1String("CDC");
+        case QCss::INCLUDES: return QLatin1String("INCLUDES");
+        case QCss::DASHMATCH: return QLatin1String("DASHMATCH");
+        case QCss::LBRACE: return QLatin1String("LBRACE");
+        case QCss::PLUS: return QLatin1String("PLUS");
+        case QCss::GREATER: return QLatin1String("GREATER");
+        case QCss::COMMA: return QLatin1String("COMMA");
+        case QCss::STRING: return QLatin1String("STRING");
+        case QCss::INVALID: return QLatin1String("INVALID");
+        case QCss::IDENT: return QLatin1String("IDENT");
+        case QCss::HASH: return QLatin1String("HASH");
+        case QCss::ATKEYWORD_SYM: return QLatin1String("ATKEYWORD_SYM");
+        case QCss::EXCLAMATION_SYM: return QLatin1String("EXCLAMATION_SYM");
+        case QCss::LENGTH: return QLatin1String("LENGTH");
+        case QCss::PERCENTAGE: return QLatin1String("PERCENTAGE");
+        case QCss::NUMBER: return QLatin1String("NUMBER");
+        case QCss::FUNCTION: return QLatin1String("FUNCTION");
+        case QCss::COLON: return QLatin1String("COLON");
+        case QCss::SEMICOLON: return QLatin1String("SEMICOLON");
+        case QCss::RBRACE: return QLatin1String("RBRACE");
+        case QCss::SLASH: return QLatin1String("SLASH");
+        case QCss::MINUS: return QLatin1String("MINUS");
+        case QCss::DOT: return QLatin1String("DOT");
+        case QCss::STAR: return QLatin1String("STAR");
+        case QCss::LBRACKET: return QLatin1String("LBRACKET");
+        case QCss::RBRACKET: return QLatin1String("RBRACKET");
+        case QCss::EQUAL: return QLatin1String("EQUAL");
+        case QCss::LPAREN: return QLatin1String("LPAREN");
+        case QCss::RPAREN: return QLatin1String("RPAREN");
+        case QCss::OR: return QLatin1String("OR");
     }
-    return "";
+    return QLatin1String("");
 }
 
 static void debug(const QVector<QCss::Symbol> &symbols, int index = -1)
@@ -204,7 +204,7 @@ void tst_QCssParser::scanner()
         QCOMPARE(l.count(), 2);
         const QString expectedToken = l.at(0);
         const QString expectedLexem = l.at(1);
-        QString actualToken = QString::fromLatin1(tokenName(symbols.at(i).token));
+        QString actualToken = tokenName(symbols.at(i).token);
         if (actualToken != expectedToken) {
             debug(symbols, i);
             QCOMPARE(actualToken, expectedToken);
