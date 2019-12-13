@@ -1047,13 +1047,13 @@ private:
 #else
 struct QRegExpCharClass
 {
-    int dummy;
-
 #ifndef QT_NO_REGEXP_OPTIM
     QRegExpCharClass() { occ1.fill(0, NumBadChars); }
 
     const QVector<int> &firstOccurrence() const { return occ1; }
     QVector<int> occ1;
+#else
+    int dummy;
 #endif
 };
 #endif
