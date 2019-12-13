@@ -54,14 +54,11 @@ class QFileSystemEntry
 public:
     typedef QByteArray NativePath;
     struct FromNativePath{};
-    struct FromInternalPath{};
 
     QFileSystemEntry();
     explicit QFileSystemEntry(const QString &filePath);
-
-    QFileSystemEntry(const QString &filePath, FromInternalPath dummy);
-    QFileSystemEntry(const NativePath &nativeFilePath, FromNativePath dummy);
-    QFileSystemEntry(const QString &filePath, const NativePath &nativeFilePath);
+    explicit QFileSystemEntry(const NativePath &nativeFilePath, FromNativePath dummy);
+    explicit QFileSystemEntry(const QString &filePath, const NativePath &nativeFilePath);
 
     QString filePath() const;
     QString fileName() const;

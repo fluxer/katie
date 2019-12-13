@@ -275,9 +275,8 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
         qfilename.append(QLatin1String(".XXXXXX"));
 
     // "Nativify" :-)
-    QFileSystemEntry::NativePath filename = QFileSystemEngine::absoluteName(
-            QFileSystemEntry(qfilename, QFileSystemEntry::FromInternalPath()))
-        .nativeFilePath();
+    QFileSystemEntry::NativePath filename =
+        QFileSystemEngine::absoluteName(QFileSystemEntry(qfilename)).nativeFilePath();
 
     // Find mask in native path
     phPos = filename.length();
