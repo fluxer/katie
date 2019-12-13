@@ -148,17 +148,16 @@ static const char * xlfd_for_id(int id)
 #ifndef QT_NO_FONTCONFIG
 static inline int getFCWeight(int fc_weight)
 {
-    int qtweight = QFont::Black;
     if (fc_weight <= (FC_WEIGHT_LIGHT + FC_WEIGHT_MEDIUM) / 2)
-        qtweight = QFont::Light;
+        return QFont::Light;
     else if (fc_weight <= (FC_WEIGHT_MEDIUM + FC_WEIGHT_DEMIBOLD) / 2)
-        qtweight = QFont::Normal;
+        return QFont::Normal;
     else if (fc_weight <= (FC_WEIGHT_DEMIBOLD + FC_WEIGHT_BOLD) / 2)
-        qtweight = QFont::DemiBold;
+        return QFont::DemiBold;
     else if (fc_weight <= (FC_WEIGHT_BOLD + FC_WEIGHT_BLACK) / 2)
-        qtweight = QFont::Bold;
+        return QFont::Bold;
 
-    return qtweight;
+    return QFont::Black;
 }
 
 QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
