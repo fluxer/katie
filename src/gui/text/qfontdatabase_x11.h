@@ -146,8 +146,7 @@ static const char * xlfd_for_id(int id)
 #endif
 
 #ifndef QT_NO_FONTCONFIG
-
-static int getFCWeight(int fc_weight)
+static inline int getFCWeight(int fc_weight)
 {
     int qtweight = QFont::Black;
     if (fc_weight <= (FC_WEIGHT_LIGHT + FC_WEIGHT_MEDIUM) / 2)
