@@ -64,7 +64,7 @@ public:
         LocateFile = 0x0,
         LocateDirectory = 0x1
     };
-    typedef QFlags<LocateOption> LocateOptions;
+    Q_DECLARE_FLAGS(LocateOptions, LocateOption);
 
     static QString locate(StandardLocation type, const QString &fileName, LocateOptions options = LocateFile);
     static QStringList locateAll(StandardLocation type, const QString &fileName, LocateOptions options = LocateFile);
