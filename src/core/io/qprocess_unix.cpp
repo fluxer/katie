@@ -258,8 +258,8 @@ void QProcessManager::catchDeadChildren()
 
     // try to catch all children whose pid we have registered, and whose
     // deathPipe is still valid (i.e, we have not already notified it).
-    QHash<int, QProcessInfo *>::Iterator it = children.begin();
-    while (it != children.end()) {
+    QHash<int, QProcessInfo *>::const_iterator it = children.constBegin();
+    while (it != children.constEnd()) {
         // notify all children that they may have died. they need to run
         // waitpid() in their own thread.
         QProcessInfo *info = it.value();
