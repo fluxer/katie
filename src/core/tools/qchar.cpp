@@ -1171,9 +1171,9 @@ QString QChar::decomposition() const
 QString QChar::decomposition(const uint ucs4)
 {
     UErrorCode errorcode = U_ZERO_ERROR;
-    const UNormalizer2 *normalizer = unorm2_getNFDInstance(&errorcode);
+    const UNormalizer2 *normalizer = unorm2_getNFKDInstance(&errorcode);
     if (Q_UNLIKELY(U_FAILURE(errorcode))) {
-        qWarning("QChar::decomposition: %s", u_errorName(errorcode));
+        qWarning("QChar::decomposition: unorm2_getNFKDInstance() failed %s", u_errorName(errorcode));
         return QString();
     }
 
@@ -1187,7 +1187,7 @@ QString QChar::decomposition(const uint ucs4)
     }
 
     if (Q_UNLIKELY(U_FAILURE(errorcode))) {
-        qWarning("QChar::decomposition: %s", u_errorName(errorcode));
+        qWarning("QChar::decomposition: unorm2_getDecomposition() failed %s", u_errorName(errorcode));
         return QString();
     }
 
