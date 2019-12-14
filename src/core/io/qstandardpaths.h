@@ -76,10 +76,8 @@ class Q_CORE_EXPORT QStandardPaths
    static void setTestModeEnabled(bool testMode);
    static bool isTestModeEnabled();
 
- private:
-   // prevent construction
-   QStandardPaths();
-   ~QStandardPaths();
+private:
+    Q_DISABLE_COPY(QStandardPaths)
 };
 
 #endif // QT_NO_STANDARDPATHS
