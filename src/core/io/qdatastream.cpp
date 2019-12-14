@@ -513,13 +513,7 @@ void QDataStream::setByteOrder(ByteOrder bo)
     This enum provides symbolic synonyms for the data serialization
     format version numbers.
 
-    \value Qt_4_0 Version 1 (Qt 4.0, Qt 4.1)
-    \value Qt_4_1 Version 1 (Qt 4.0, Qt 4.1)
-    \value Qt_4_2 Version 2 (Qt 4.2)
-    \value Qt_4_3 Version 3 (Qt 4.3)
-    \value Qt_4_4 Version 4 (Qt 4.4)
-    \value Qt_4_5 Version 5 (Qt 4.5)
-    \value Qt_4_6 Version 6 (Qt 4.6, Qt 4.7, Qt 4.8, Katie 4.9)
+    \value Qt_4_6 Version 12 (Qt 4.6, Qt 4.7, Qt 4.8, Katie 4.9)
     \value Qt_4_7 Same as Qt_4_6.
     \value Qt_4_8 Same as Qt_4_6.
     \value Qt_4_9 Same as Qt_4_6.
