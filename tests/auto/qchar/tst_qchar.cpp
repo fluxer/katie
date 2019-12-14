@@ -522,22 +522,14 @@ void tst_QChar::normalization_data()
                     columns[i].append(QChar(uc));
                 } else {
                     // convert to utf16
-                    ushort high = QChar::highSurrogate(uc);
-                    ushort low = QChar::lowSurrogate(uc);
-                    columns[i].append(QChar::highSurrogate(high));
-                    columns[i].append(QChar::lowSurrogate(low));
+                    columns[i].append(QChar(QChar::highSurrogate(uc)));
+                    columns[i].append(QChar(QChar::lowSurrogate(uc)));
                 }
             }
         }
 
         QString nm = QString("line #%1:").arg(linenum);
         QTest::newRow(nm.toLatin1()) << columns << part;
-
-        // the test depends on ICU being able to normalize the input, it may
-        // not be the case with old versions thus only the first 10k are tested
-        if (linenum > 10000) {
-            break;
-        }
     }
 }
 
