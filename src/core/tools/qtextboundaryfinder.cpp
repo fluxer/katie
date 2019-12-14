@@ -32,18 +32,64 @@
 ****************************************************************************/
 
 #include "qtextboundaryfinder.h"
-#include "qdebug.h"
+
+#include <unicode/ubrk.h>
 
 QT_BEGIN_NAMESPACE
 
 class QTextBoundaryFinderPrivate
 {
 public:
+    QTextBoundaryFinderPrivate();
+    QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other);
+
     QTextBoundaryFinder::BoundaryType type;
     int pos;
-    int length;
     QString string;
+    UBreakIterator *breakiter;
+
+    QTextBoundaryFinderPrivate& operator=(const QTextBoundaryFinderPrivate &other);
 };
+
+static inline UBreakIteratorType getBreakType(const QTextBoundaryFinder::BoundaryType type)
+{
+    switch (type) {
+        case QTextBoundaryFinder::Grapheme:
+            return UBRK_CHARACTER;
+        case QTextBoundaryFinder::Word:
+            return UBRK_WORD;
+        case QTextBoundaryFinder::Line:
+            return UBRK_LINE;
+        case QTextBoundaryFinder::Sentence:
+            return UBRK_SENTENCE;
+    }
+    return UBRK_CHARACTER;
+}
+
+QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate()
+    : type(QTextBoundaryFinder::Grapheme), pos(0), breakiter(Q_NULLPTR)
+{
+}
+
+QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other)
+{
+    QTextBoundaryFinderPrivate::operator=(other);
+}
+
+QTextBoundaryFinderPrivate& QTextBoundaryFinderPrivate::operator=(const QTextBoundaryFinderPrivate &other)
+{
+    type = other.type;
+    pos = other.pos;
+    string = other.string;
+
+    UErrorCode error = U_ZERO_ERROR;
+    breakiter = ubrk_safeClone(other.breakiter, Q_NULLPTR, Q_NULLPTR, &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QTextBoundaryFinder::cloneBreakIter: ubrk_safeClone() failed %s", u_errorName(error));
+        breakiter = Q_NULLPTR;
+    }
+    return *this;
+}
 
 /*! 
     \class QTextBoundaryFinder
@@ -107,11 +153,8 @@ public:
   Constructs an invalid QTextBoundaryFinder object.
 */
 QTextBoundaryFinder::QTextBoundaryFinder()
-    : d(new QTextBoundaryFinderPrivate)
+    : d(new QTextBoundaryFinderPrivate())
 {
-    d->type = QTextBoundaryFinder::Grapheme;
-    d->pos = -1;
-    d->length = -1;
 }
 
 /*!
@@ -127,8 +170,7 @@ QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
 */
 QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &other)
 {
-    if (this != &other)
-        memcpy(d, other.d, sizeof(QTextBoundaryFinderPrivate));
+    d = other.d;
     return *this;
 }
 
@@ -137,20 +179,28 @@ QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &o
 */
 QTextBoundaryFinder::~QTextBoundaryFinder()
 {
+    if (d->breakiter) {
+        ubrk_close(d->breakiter);
+    }
     delete d;
-    d = 0;
 }
 
 /*!
   Creates a QTextBoundaryFinder object of \a type operating on \a string.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &string)
-    : d(new QTextBoundaryFinderPrivate)
+    : d(new QTextBoundaryFinderPrivate())
 {
     d->type = type;
-    d->pos = 0;
-    d->length = string.size();
     d->string = string;
+
+    UErrorCode error = U_ZERO_ERROR;
+    d->breakiter = ubrk_open(getBreakType(type), "C",
+        reinterpret_cast<const UChar*>(string.unicode()), string.size(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
+        d->breakiter = Q_NULLPTR;
+    }
 }
 
 /*!
@@ -158,12 +208,18 @@ QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &strin
   with \a length.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, const int length)
-    : d(new QTextBoundaryFinderPrivate)
+    : d(new QTextBoundaryFinderPrivate())
 {
     d->type = type;
-    d->pos = 0;
-    d->length = length;
     d->string = QString::fromRawData(chars, length);
+
+    UErrorCode error = U_ZERO_ERROR;
+    d->breakiter = ubrk_open(getBreakType(type), "C",
+        reinterpret_cast<const UChar*>(d->string.unicode()), d->string.size(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
+        d->breakiter = Q_NULLPTR;
+    }
 }
 
 /*!
@@ -183,7 +239,7 @@ void QTextBoundaryFinder::toStart()
 */
 void QTextBoundaryFinder::toEnd()
 {
-    d->pos = d->length;
+    d->pos = d->string.size();
 }
 
 /*!
@@ -210,7 +266,7 @@ int QTextBoundaryFinder::position() const
 */
 void QTextBoundaryFinder::setPosition(const int position)
 {
-    d->pos = qBound(0, position, d->length);
+    d->pos = qBound(0, position, d->string.size());
 }
 
 /*! \fn QTextBoundaryFinder::BoundaryType QTextBoundaryFinder::type() const
@@ -236,7 +292,6 @@ QString QTextBoundaryFinder::string() const
     return d->string;
 }
 
-
 /*!
   Moves the QTextBoundaryFinder to the next boundary position and returns that position.
 
@@ -244,37 +299,11 @@ QString QTextBoundaryFinder::string() const
 */
 int QTextBoundaryFinder::toNextBoundary()
 {
-    if (d->pos < 0 || d->pos >= d->length) {
-        d->pos = -1;
-        return d->pos;
-    }
-    ++d->pos;
-    if (d->pos == d->length)
-        return d->pos;
-
-    switch(d->type) {
-        case QTextBoundaryFinder::Grapheme: {
-            while (d->pos < d->length && d->string[d->pos].isLetterOrNumber())
-                ++d->pos;
-            break;
-        }
-        case QTextBoundaryFinder::Word: {
-            while (d->pos < d->length && !d->string[d->pos].isSpace())
-                ++d->pos;
-            break;
-        }
-        case QTextBoundaryFinder::Sentence: {
-            while (d->pos < d->length && !d->string[d->pos].isPunct())
-                ++d->pos;
-            break;
-        }
-        case QTextBoundaryFinder::Line: {
-            while (d->pos < d->length && d->string[d->pos].category() != QChar::Separator_Line)
-                ++d->pos;
-            break;
-        }
-    }
-
+    if (!d->breakiter)
+        return -1;
+    if (d->pos != -1)
+        ubrk_following(d->breakiter, d->pos - 1);
+    d->pos = ubrk_next(d->breakiter);
     return d->pos;
 }
 
@@ -285,37 +314,11 @@ int QTextBoundaryFinder::toNextBoundary()
 */
 int QTextBoundaryFinder::toPreviousBoundary()
 {
-    if (d->pos <= 0 || d->pos >= d->length) {
-        d->pos = -1;
-        return d->pos;
-    }
-    --d->pos;
-    if (d->pos == 0)
-        return d->pos;
-
-    switch(d->type) {
-        case QTextBoundaryFinder::Grapheme: {
-            while (d->pos > 0 && d->string[d->pos].isLetterOrNumber())
-                --d->pos;
-            break;
-        }
-        case QTextBoundaryFinder::Word: {
-            while (d->pos > 0 && !d->string[d->pos].isSpace())
-                --d->pos;
-            break;
-        }
-        case QTextBoundaryFinder::Sentence: {
-            while (d->pos > 0 && !d->string[d->pos].isPunct())
-                --d->pos;
-            break;
-        }
-        case QTextBoundaryFinder::Line: {
-            while (d->pos > 0 && d->string[d->pos].category() != QChar::Separator_Line)
-                --d->pos;
-            break;
-        }
-    }
-
+    if (!d->breakiter)
+        return -1;
+    if (d->pos != -1)
+        ubrk_preceding(d->breakiter, d->pos + 1);
+    d->pos = ubrk_previous(d->breakiter);
     return d->pos;
 }
 
@@ -324,23 +327,9 @@ int QTextBoundaryFinder::toPreviousBoundary()
 */
 bool QTextBoundaryFinder::isAtBoundary() const
 {
-    if (d->pos < 0)
+    if (!d->breakiter)
         return false;
-
-    if (d->pos == d->length)
-        return true;
-
-    switch(d->type) {
-        case QTextBoundaryFinder::Grapheme:
-            return !d->string[d->pos].isLetterOrNumber();
-        case QTextBoundaryFinder::Word:
-            return d->string[d->pos].isSpace();
-        case QTextBoundaryFinder::Line:
-            return (d->pos > 0) ? d->string[d->pos].category() == QChar::Separator_Line : true;
-        case QTextBoundaryFinder::Sentence:
-            return d->string[d->pos].isPunct();
-    }
-    return false;
+    return ubrk_isBoundary(d->breakiter, d->pos);
 }
 
 /*!
@@ -348,30 +337,22 @@ bool QTextBoundaryFinder::isAtBoundary() const
 */
 QTextBoundaryFinder::BoundaryReasons QTextBoundaryFinder::boundaryReasons() const
 {
-    if (!isAtBoundary())
+    if (!isAtBoundary()) {
         return QTextBoundaryFinder::NotAtBoundary;
-    if (d->pos == 0) {
-        if (d->string[d->pos].isSpace())
-            return QTextBoundaryFinder::NotAtBoundary;
+    } else if (d->pos == 0) {
         return QTextBoundaryFinder::StartWord;
-    }
-    if (d->pos == d->length) {
-        if (d->string[d->length-1].isSpace())
-            return QTextBoundaryFinder::NotAtBoundary;
+    } else if (d->pos == d->string.size()) {
         return QTextBoundaryFinder::EndWord;
     }
 
-    const bool nextIsSpace = d->string[d->pos].isSpace();
-    const bool prevIsSpace = d->string[d->pos - 1].isSpace();
-
-    if (prevIsSpace && !nextIsSpace)
-        return QTextBoundaryFinder::StartWord;
-    else if (!prevIsSpace && nextIsSpace)
-        return QTextBoundaryFinder::EndWord;
-    else if (!prevIsSpace && !nextIsSpace)
-        return BoundaryReasons(QTextBoundaryFinder::StartWord | QTextBoundaryFinder::EndWord);
-    else
-        return QTextBoundaryFinder::NotAtBoundary;
+    uint reasons;
+    if (ubrk_isBoundary(d->breakiter, d->pos - 1)) {
+        reasons |= QTextBoundaryFinder::StartWord;
+    }
+    if (ubrk_isBoundary(d->breakiter, d->pos + 1)) {
+        reasons |= QTextBoundaryFinder::EndWord;
+    }
+    return QTextBoundaryFinder::BoundaryReason(reasons);
 }
 
 QT_END_NAMESPACE
