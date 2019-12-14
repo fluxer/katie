@@ -39,17 +39,10 @@
 #include "qprocess.h"
 #include "qprocess_p.h"
 #include "qcore_unix_p.h"
-#include "qcoreapplication_p.h"
 #include "qthread_p.h"
 #include "qfile.h"
-#include "qfileinfo.h"
-#include "qlist.h"
-#include "qhash.h"
-#include "qmutex.h"
-#include "qsemaphore.h"
 #include "qsocketnotifier.h"
 #include "qthread.h"
-#include "qelapsedtimer.h"
 
 #include <errno.h>
 #include <stdlib.h>
