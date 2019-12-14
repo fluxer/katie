@@ -397,8 +397,8 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 
     const int targetfd = QT_CREAT(target.nativeFilePath().constData(), st.st_mode);
     if (targetfd == -1) {
-        ::close(sourcefd);
         error = QSystemError(errno, QSystemError::StandardLibraryError);
+        ::close(sourcefd);
         return false;
     }
 
