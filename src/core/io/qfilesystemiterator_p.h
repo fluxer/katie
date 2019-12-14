@@ -49,9 +49,6 @@
 
 #ifndef QT_NO_FILESYSTEMITERATOR
 
-#include "qdiriterator.h"
-#include "qstringlist.h"
-#include "qscopedpointer.h"
 #include "qfilesystementry_p.h"
 #include "qfilesystemmetadata_p.h"
 
