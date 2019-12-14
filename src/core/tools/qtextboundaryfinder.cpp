@@ -85,7 +85,7 @@ QTextBoundaryFinderPrivate& QTextBoundaryFinderPrivate::operator=(const QTextBou
     UErrorCode error = U_ZERO_ERROR;
     breakiter = ubrk_safeClone(other.breakiter, Q_NULLPTR, Q_NULLPTR, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextBoundaryFinder::cloneBreakIter: ubrk_safeClone() failed %s", u_errorName(error));
+        qWarning("QTextBoundaryFinder: ubrk_safeClone() failed %s", u_errorName(error));
         breakiter = Q_NULLPTR;
     }
     return *this;
