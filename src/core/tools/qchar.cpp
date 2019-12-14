@@ -1181,13 +1181,11 @@ QString QChar::decomposition(const uint ucs4)
     QString result(4, Qt::Uninitialized);
     const int decresult = unorm2_getDecomposition(normalizer, ucs4,
         reinterpret_cast<UChar*>(result.data()), result.size(), &errorcode);
-    if (Q_UNLIKELY(decresult < 1)) {
-        // no decomposition value
-        return QString();
-    }
-
     if (Q_UNLIKELY(U_FAILURE(errorcode))) {
         qWarning("QChar::decomposition: unorm2_getDecomposition() failed %s", u_errorName(errorcode));
+        return QString();
+    } else if (Q_UNLIKELY(decresult < 1)) {
+        // no decomposition value
         return QString();
     }
 
