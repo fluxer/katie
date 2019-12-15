@@ -429,11 +429,6 @@ public:
     void setLayoutItemMargins(int left, int top, int right, int bottom);
     void setLayoutItemMargins(QStyle::SubElement element, const QStyleOption *opt = Q_NULLPTR);
 
-    // aboutToDestroy() is called just before the contents of
-    // QWidget::destroy() is executed. It's used to signal QWidget
-    // sub-classes that their internals are about to be released.
-    virtual void aboutToDestroy() {}
-
     inline QWidget *effectiveFocusWidget() {
         QWidget *w = q_func();
         while (w->focusProxy())
