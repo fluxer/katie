@@ -199,18 +199,15 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 )
             endif()
         elseif("${rscext}" MATCHES ".ts")
-            get_filename_component(trname ${resource} NAME_WE)
-            get_filename_component(trdir ${resource} DIRECTORY)
-            string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" trdir ${trdir})
-            make_directory(${trdir})
-            set(trout "${trdir}/${trname}.qm")
+            make_directory(${CMAKE_CURRENT_BINARY_DIR})
+            set(rscout "${CMAKE_CURRENT_BINARY_DIR}/${rscname}.qm")
             add_custom_target(
-                ${FORTARGET}_${trname} ALL
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}" "${resource}" -qm "${trout}"
+                ${FORTARGET}_${rscname} ALL
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}" "${resource}" -qm "${rscout}"
                 DEPENDS "${KATIE_LRELEASE}"
             )
-            set_source_files_properties(${trout} PROPERTIES GENERATED TRUE)
-            install(FILES ${trout} DESTINATION ${KATIE_TRANSLATIONS_RELATIVE})
+            set_source_files_properties(${rscout} PROPERTIES GENERATED TRUE)
+            install(FILES ${rscout} DESTINATION ${KATIE_TRANSLATIONS_RELATIVE})
 
         endif()
     endforeach()
