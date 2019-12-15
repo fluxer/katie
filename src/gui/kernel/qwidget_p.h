@@ -253,13 +253,6 @@ public:
         CloseWithSpontaneousEvent
     };
 
-    enum Direction {
-        DirectionNorth = 0x01,
-        DirectionEast = 0x10,
-        DirectionSouth = 0x02,
-        DirectionWest = 0x20
-    };
-
     // Functions.
     explicit QWidgetPrivate(int version = QObjectPrivateVersion);
     ~QWidgetPrivate();
