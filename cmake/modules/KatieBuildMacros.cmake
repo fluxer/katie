@@ -163,7 +163,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
             add_custom_command(
-                COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${CMAKE_BINARY_DIR}/bin/${KATIE_UIC}" "${resource}" -o "${rscout}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_UIC}" "${resource}" -o "${rscout}"
                 DEPENDS "${KATIE_UIC}"
                 OUTPUT "${rscout}"
             )
@@ -172,7 +172,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
             add_custom_command(
-                COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
                 DEPENDS "${KATIE_RCC}"
                 OUTPUT "${rscout}"
             )
@@ -193,7 +193,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 endforeach()
                 make_directory(${rscpath})
                 add_custom_command(
-                    COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
                     DEPENDS "${KATIE_MOC}"
                     OUTPUT "${rscout}"
                 )
@@ -206,7 +206,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(trout "${trdir}/${trname}.qm")
             add_custom_target(
                 ${FORTARGET}_${trname} ALL
-                COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}" "${resource}" -qm "${trout}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}" "${resource}" -qm "${trout}"
                 DEPENDS "${KATIE_LRELEASE}"
             )
             set_source_files_properties(${trout} PROPERTIES GENERATED TRUE)
@@ -311,9 +311,9 @@ endmacro()
 
 # a macro to add tests easily by setting them up with the assumptions they make
 macro(KATIE_TEST TESTNAME TESTSOURCES)
-    katie_resources(${TESTSOURCES} ${ARGN})
+    katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
-    add_executable(${TESTNAME} ${TESTSOURCES} ${ARGN})
+    add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
 
     target_link_libraries(${TESTNAME} KtCore KtTest)
     target_compile_definitions(
