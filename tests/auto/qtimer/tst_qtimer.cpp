@@ -77,11 +77,13 @@ private slots:
     void recurringTimer_data();
     void recurringTimer();
     void deleteLaterOnQTimer(); // long name, don't want to shadow QObject::deleteLater()
-    void moveToThread();
     void restartedTimerFiresTooSoon();
     void timerFiresOnlyOncePerProcessEvents_data();
     void timerFiresOnlyOncePerProcessEvents();
+#ifndef QT_NO_THREAD
     void timerIdPersistsAfterThreadExit();
+    void moveToThread();
+#endif
     void cancelLongTimer();
     void singleShotStaticFunctionZeroTimeout();
     void recurseOnTimeoutAndStopTimer();
@@ -396,34 +398,6 @@ void tst_QTimer::deleteLaterOnQTimer()
     QVERIFY(pointer.isNull());
 }
 
-void tst_QTimer::moveToThread()
-{
-    QTimer ti1;
-    QTimer ti2;
-    ti1.start(MOVETOTHREAD_TIMEOUT);
-    ti2.start(MOVETOTHREAD_TIMEOUT);
-    QVERIFY((ti1.timerId() & 0xffffff) != (ti2.timerId() & 0xffffff));
-    QThread tr;
-    ti1.moveToThread(&tr);
-    connect(&ti1,SIGNAL(timeout()), &tr, SLOT(quit()));
-    tr.start();
-    QTimer ti3;
-    ti3.start(MOVETOTHREAD_TIMEOUT);
-    QVERIFY((ti3.timerId() & 0xffffff) != (ti2.timerId() & 0xffffff));
-    QVERIFY((ti3.timerId() & 0xffffff) != (ti1.timerId() & 0xffffff));
-    QTest::qWait(MOVETOTHREAD_WAIT);
-    QVERIFY(tr.wait());
-    ti2.stop();
-    QTimer ti4;
-    ti4.start(MOVETOTHREAD_TIMEOUT);
-    ti3.stop();
-    ti2.start(MOVETOTHREAD_TIMEOUT);
-    ti3.start(MOVETOTHREAD_TIMEOUT);
-    QVERIFY((ti4.timerId() & 0xffffff) != (ti2.timerId() & 0xffffff));
-    QVERIFY((ti3.timerId() & 0xffffff) != (ti2.timerId() & 0xffffff));
-    QVERIFY((ti3.timerId() & 0xffffff) != (ti1.timerId() & 0xffffff));
-}
-
 class RestartedTimerFiresTooSoonObject : public QObject
 {
     Q_OBJECT
@@ -536,6 +510,7 @@ void tst_QTimer::timerFiresOnlyOncePerProcessEvents()
     QCOMPARE(longSlot.count, 1);
 }
 
+#ifndef QT_NO_THREAD
 class TimerIdPersistsAfterThreadExitThread : public QThread
 {
 public:
@@ -574,6 +549,35 @@ void tst_QTimer::timerIdPersistsAfterThreadExit()
     int timerId = thread.startTimer(100);
     QVERIFY((timerId & 0xffffff) != (thread.timerId & 0xffffff));
 }
+
+void tst_QTimer::moveToThread()
+{
+    QTimer ti1;
+    QTimer ti2;
+    ti1.start(MOVETOTHREAD_TIMEOUT);
+    ti2.start(MOVETOTHREAD_TIMEOUT);
+    QVERIFY((ti1.timerId() & 0xffffff) != (ti2.timerId() & 0xffffff));
+    QThread tr;
+    ti1.moveToThread(&tr);
+    connect(&ti1,SIGNAL(timeout()), &tr, SLOT(quit()));
+    tr.start();
+    QTimer ti3;
+    ti3.start(MOVETOTHREAD_TIMEOUT);
+    QVERIFY((ti3.timerId() & 0xffffff) != (ti2.timerId() & 0xffffff));
+    QVERIFY((ti3.timerId() & 0xffffff) != (ti1.timerId() & 0xffffff));
+    QTest::qWait(MOVETOTHREAD_WAIT);
+    QVERIFY(tr.wait());
+    ti2.stop();
+    QTimer ti4;
+    ti4.start(MOVETOTHREAD_TIMEOUT);
+    ti3.stop();
+    ti2.start(MOVETOTHREAD_TIMEOUT);
+    ti3.start(MOVETOTHREAD_TIMEOUT);
+    QVERIFY((ti4.timerId() & 0xffffff) != (ti2.timerId() & 0xffffff));
+    QVERIFY((ti3.timerId() & 0xffffff) != (ti2.timerId() & 0xffffff));
+    QVERIFY((ti3.timerId() & 0xffffff) != (ti1.timerId() & 0xffffff));
+}
+#endif // QT_NO_THREAD
 
 void tst_QTimer::cancelLongTimer()
 {
