@@ -1,11 +1,11 @@
 # Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-set(KATIE_UIC "${CMAKE_BINARY_DIR}/bin/uic")
-set(KATIE_RCC "${CMAKE_BINARY_DIR}/bin/rcc")
-set(KATIE_MOC "${CMAKE_BINARY_DIR}/bin/bootstrap_moc")
-set(KATIE_LRELEASE "${CMAKE_BINARY_DIR}/bin/lrelease")
-set(KATIE_QDBUSXML2CPP "${CMAKE_BINARY_DIR}/bin/qdbusxml2cpp")
+set(KATIE_UIC "uic")
+set(KATIE_RCC "rcc")
+set(KATIE_MOC "bootstrap_moc")
+set(KATIE_LRELEASE "lrelease")
+set(KATIE_QDBUSXML2CPP "qdbusxml2cpp")
 
 # a macro to print a dev warning but only when the build type is Debug
 macro(KATIE_WARNING MESSAGESTR)
@@ -163,7 +163,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
             add_custom_command(
-                COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${KATIE_UIC}" "${resource}" -o "${rscout}"
+                COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${CMAKE_BINARY_DIR}/bin/${KATIE_UIC}" "${resource}" -o "${rscout}"
                 DEPENDS "${KATIE_UIC}"
                 OUTPUT "${rscout}"
             )
@@ -172,7 +172,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
             add_custom_command(
-                COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
+                COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
                 DEPENDS "${KATIE_RCC}"
                 OUTPUT "${rscout}"
             )
@@ -193,7 +193,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 endforeach()
                 make_directory(${rscpath})
                 add_custom_command(
-                    COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
                     DEPENDS "${KATIE_MOC}"
                     OUTPUT "${rscout}"
                 )
@@ -206,7 +206,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(trout "${trdir}/${trname}.qm")
             add_custom_target(
                 ${FORTARGET}_${trname} ALL
-                COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${KATIE_LRELEASE}" "${resource}" -qm "${trout}"
+                COMMAND ${CMAKE_BINARY_DIR}/exec.sh "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}" "${resource}" -qm "${trout}"
                 DEPENDS "${KATIE_LRELEASE}"
             )
             set_source_files_properties(${trout} PROPERTIES GENERATED TRUE)
