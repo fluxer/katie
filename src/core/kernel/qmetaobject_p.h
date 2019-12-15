@@ -224,13 +224,11 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
     }
 
     // convert const reference to value and const value to value
-    if (result.startsWith("const ")) {
-        char lastchar = result.at(result.size()-1);
+    char lastchar = result.at(result.size()-1);
+    if (result.startsWith("const ") && lastchar != '*') {
+        result.remove(0, 6);
         if (lastchar == '&') {
-            result.remove(0, 6);
             result.chop(1);
-        } else if (is_ident_char(lastchar) || lastchar == '>') {
-            result.remove(0, 6);
         }
     }
 
