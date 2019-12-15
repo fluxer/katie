@@ -65,11 +65,6 @@ static inline uint foldCase(const uint ch, uint &last)
     return QChar::toCaseFolded(ch);
 }
 
-static inline ushort foldCase(const ushort ch)
-{
-    return QChar::toCaseFolded(ch);
-}
-
 static inline QString timeZone()
 {
     tzset();
