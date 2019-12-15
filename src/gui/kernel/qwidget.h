@@ -208,7 +208,6 @@ public:
 
     bool isEnabled() const;
     bool isEnabledTo(QWidget*) const;
-    bool isEnabledToTLW() const;
 
 public Q_SLOTS:
     void setEnabled(bool);
@@ -272,7 +271,6 @@ public:
 
     QWidget *window() const;
     QWidget *nativeParentWidget() const;
-    inline QWidget *topLevelWidget() const { return window(); }
 
     // Widget appearance functions
     const QPalette &palette() const;
@@ -699,9 +697,6 @@ inline bool QWidget::isEnabled() const
 
 inline bool QWidget::isModal() const
 { return data->window_modality != Qt::NonModal; }
-
-inline bool QWidget::isEnabledToTLW() const
-{ return isEnabled(); }
 
 inline int QWidget::minimumWidth() const
 { return minimumSize().width(); }

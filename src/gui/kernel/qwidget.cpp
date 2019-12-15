@@ -2734,13 +2734,6 @@ QList<QAction*> QWidget::actions() const
 #endif // QT_NO_ACTION
 
 /*!
-  \fn bool QWidget::isEnabledToTLW() const
-  \obsolete
-
-  This function is deprecated. It is equivalent to isEnabled()
-*/
-
-/*!
     \property QWidget::enabled
     \brief whether the widget is enabled
 
@@ -3728,14 +3721,6 @@ QWidget *QWidget::nativeParentWidget() const
         parent = parent->parentWidget();
     return parent;
 }
-
-/*! \fn QWidget *QWidget::topLevelWidget() const
-    \obsolete
-
-    Use window() instead.
-*/
-
-
 
 /*!
   Returns the background role of the widget.
