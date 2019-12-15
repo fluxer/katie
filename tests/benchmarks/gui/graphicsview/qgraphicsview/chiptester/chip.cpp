@@ -182,4 +182,4 @@ void Chip::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     update();
 }
 
-#include "chiptester/moc_chiptester.h"
+#include "moc_chiptester.h"
