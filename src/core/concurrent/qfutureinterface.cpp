@@ -439,7 +439,7 @@ void QFutureInterfaceBasePrivate::internal_setThrottled(bool enable)
     }
 }
 
-void QFutureInterfaceBasePrivate::sendCallOut(const QFutureCallOutEvent &callOutEvent)
+void QFutureInterfaceBasePrivate::sendCallOut(const QFutureCallOutEvent &callOutEvent) const
 {
     if (outputConnections.isEmpty())
         return;
@@ -449,7 +449,7 @@ void QFutureInterfaceBasePrivate::sendCallOut(const QFutureCallOutEvent &callOut
 }
 
 void QFutureInterfaceBasePrivate::sendCallOuts(const QFutureCallOutEvent &callOutEvent1,
-                                     const QFutureCallOutEvent &callOutEvent2)
+                                     const QFutureCallOutEvent &callOutEvent2) const
 {
     if (outputConnections.isEmpty())
         return;
