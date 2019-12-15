@@ -40,7 +40,7 @@
 //TESTED_CLASS=
 //TESTED_FILES=
 
-#define UNICODE_LAST_CODEPOINT 0xffff
+#define UNICODE_LAST_CODEPOINT 0x10ffff
 
 class tst_QChar : public QObject
 {
