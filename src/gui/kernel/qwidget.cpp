@@ -9798,19 +9798,6 @@ void QWidget::fontChange(const QFont &) { }  // compat
 void QWidget::windowActivationChange(bool) { }  // compat
 void QWidget::languageChange() { }  // compat
 
-
-/*!
-    \enum QWidget::BackgroundOrigin
-
-    \compat
-
-    \value WidgetOrigin
-    \value ParentOrigin
-    \value WindowOrigin
-    \value AncestorOrigin
-
-*/
-
 /*!
     \fn bool QWidget::isVisibleToTLW() const
 
@@ -10000,28 +9987,6 @@ void QWidget::languageChange() { }  // compat
     \fn void QWidget::setPalette(const QPalette &p, bool b)
 
     Use the single-argument overload instead.
-*/
-
-/*!
-    \fn void QWidget::setBackgroundOrigin(BackgroundOrigin background)
-
-    \obsolete
-*/
-
-/*!
-    \fn BackgroundOrigin QWidget::backgroundOrigin() const
-
-    \obsolete
-
-    Always returns \c WindowOrigin.
-*/
-
-/*!
-    \fn QPoint QWidget::backgroundOffset() const
-
-    \obsolete
-
-    Always returns QPoint().
 */
 
 /*!
