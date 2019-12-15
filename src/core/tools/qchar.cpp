@@ -612,6 +612,16 @@ bool QChar::isSpace() const
 {
     if(ucs >= 9 && ucs <= 13)
         return true;
+    const int8_t category = u_charType(ucs);
+    switch (category) {
+        case U_SPACE_SEPARATOR:
+        case U_LINE_SEPARATOR:
+        case U_PARAGRAPH_SEPARATOR:
+            return true;
+        default:
+            return false;
+    }
+    // special characters check
     return u_isblank(ucs);
 }
 
@@ -676,7 +686,21 @@ bool QChar::isLetterOrNumber() const
     if (is_ascii_char(ucs)) {
         return is_ascii_letterornumber(ucs);
     }
-    return u_isalnum(ucs);
+    const int8_t category = u_charType(ucs);
+    switch (category) {
+        case U_UPPERCASE_LETTER:
+        case U_LOWERCASE_LETTER:
+        case U_TITLECASE_LETTER:
+        case U_MODIFIER_LETTER:
+        case U_OTHER_LETTER:
+        case U_DECIMAL_DIGIT_NUMBER:
+        case U_LETTER_NUMBER:
+        case U_OTHER_NUMBER:
+            return true;
+        default:
+            return false;
+    }
+    return false;
 }
 
 
@@ -1147,9 +1171,9 @@ QString QChar::decomposition() const
 QString QChar::decomposition(const uint ucs4)
 {
     UErrorCode errorcode = U_ZERO_ERROR;
-    const UNormalizer2 *normalizer = unorm2_getNFDInstance(&errorcode);
+    const UNormalizer2 *normalizer = unorm2_getNFKDInstance(&errorcode);
     if (Q_UNLIKELY(U_FAILURE(errorcode))) {
-        qWarning("QChar::decomposition: %s", u_errorName(errorcode));
+        qWarning("QChar::decomposition: unorm2_getNFKDInstance() failed %s", u_errorName(errorcode));
         return QString();
     }
 
@@ -1157,13 +1181,11 @@ QString QChar::decomposition(const uint ucs4)
     QString result(4, Qt::Uninitialized);
     const int decresult = unorm2_getDecomposition(normalizer, ucs4,
         reinterpret_cast<UChar*>(result.data()), result.size(), &errorcode);
-    if (Q_UNLIKELY(decresult < 1)) {
-        // no decomposition value
-        return QString();
-    }
-
     if (Q_UNLIKELY(U_FAILURE(errorcode))) {
-        qWarning("QChar::decomposition: %s", u_errorName(errorcode));
+        qWarning("QChar::decomposition: unorm2_getDecomposition() failed %s", u_errorName(errorcode));
+        return QString();
+    } else if (Q_UNLIKELY(decresult < 1)) {
+        // no decomposition value
         return QString();
     }
 

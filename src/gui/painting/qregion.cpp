@@ -1906,15 +1906,11 @@ static void OffsetRegion(QRegionPrivate &region, int x, int y)
 static void miIntersectO(QRegionPrivate &dest, const QRect *r1, const QRect *r1End,
                          const QRect *r2, const QRect *r2End, int y1, int y2)
 {
-    int x1;
-    int x2;
-    QRect *pNextRect;
-
-    pNextRect = dest.rects.data() + dest.numRects;
+    QRect *pNextRect = dest.rects.data() + dest.numRects;
 
     while (r1 != r1End && r2 != r2End) {
-        x1 = qMax(r1->left(), r2->left());
-        x2 = qMin(r1->right(), r2->right());
+        int x1 = qMax(r1->left(), r2->left());
+        int x2 = qMin(r1->right(), r2->right());
 
         /*
          * If there's any overlap between the two rectangles, add that
@@ -2316,9 +2312,7 @@ static void miRegionOp(QRegionPrivate &dest,
 static void miUnionNonO(QRegionPrivate &dest, const QRect *r, const QRect *rEnd,
                         int y1, int y2)
 {
-    QRect *pNextRect;
-
-    pNextRect = dest.rects.data() + dest.numRects;
+    QRect *pNextRect = dest.rects.data() + dest.numRects;
 
     Q_ASSERT(y1 <= y2);
 
@@ -2352,9 +2346,7 @@ static void miUnionNonO(QRegionPrivate &dest, const QRect *r, const QRect *rEnd,
 static void miUnionO(QRegionPrivate &dest, const QRect *r1, const QRect *r1End,
                      const QRect *r2, const QRect *r2End, int y1, int y2)
 {
-    QRect *pNextRect;
-
-    pNextRect = dest.rects.data() + dest.numRects;
+    QRect *pNextRect = dest.rects.data() + dest.numRects;
 
 #define MERGERECT(r)             \
     if ((dest.numRects != 0) &&  \
@@ -2441,9 +2433,7 @@ static void UnionRegion(const QRegionPrivate *reg1, const QRegionPrivate *reg2, 
 static void miSubtractNonO1(QRegionPrivate &dest, const QRect *r,
                             const QRect *rEnd, int y1, int y2)
 {
-    QRect *pNextRect;
-
-    pNextRect = dest.rects.data() + dest.numRects;
+    QRect *pNextRect = dest.rects.data() + dest.numRects;
 
     Q_ASSERT(y1<=y2);
 
@@ -2475,13 +2465,10 @@ static void miSubtractNonO1(QRegionPrivate &dest, const QRect *r,
 static void miSubtractO(QRegionPrivate &dest, const QRect *r1, const QRect *r1End,
                         const QRect *r2, const QRect *r2End, int y1, int y2)
 {
-    QRect *pNextRect;
-    int x1;
-
-    x1 = r1->left();
+    QRect *pNextRect = dest.rects.data() + dest.numRects;
+    int x1 = r1->left();
 
     Q_ASSERT(y1 <= y2);
-    pNextRect = dest.rects.data() + dest.numRects;
 
     while (r1 != r1End && r2 != r2End) {
         if (r2->right() < x1) {

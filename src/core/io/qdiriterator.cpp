@@ -93,6 +93,7 @@
 #include "qfilesystemengine_p.h"
 #include "qfsfileengine.h"
 #include "qfileinfo_p.h"
+#include "qscopedpointer.h"
 
 QT_BEGIN_NAMESPACE
 

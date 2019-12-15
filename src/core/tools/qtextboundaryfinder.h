@@ -63,7 +63,6 @@ public:
         NotAtBoundary = 0,
         StartWord = 1,
         EndWord = 2
-        //Hyphen
     };
     Q_DECLARE_FLAGS(BoundaryReasons, BoundaryReason)
 

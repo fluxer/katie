@@ -5750,12 +5750,12 @@ QString QString::normalized(QString::NormalizationForm mode, QChar::UnicodeVersi
     const int decresult = unorm2_normalize(normalizer,
         reinterpret_cast<const UChar*>(unicode()), srcsize,
         reinterpret_cast<UChar*>(result.data()), result.size(), &error);
-    if (Q_UNLIKELY(decresult < 1)) {
-        // no normalization value
-        return *this;
-    } else if (Q_UNLIKELY(U_FAILURE(error))) {
+    if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QString::normalized: unorm2_normalize() failed %s", u_errorName(error));
         return QString();
+    } else if (Q_UNLIKELY(decresult < 1)) {
+        // no normalization value
+        return *this;
     }
 
     result.resize(decresult);

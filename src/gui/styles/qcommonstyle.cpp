@@ -2718,9 +2718,7 @@ QRect QCommonStyle::subElementRect(SubElement sr, const QStyleOption *opt,
                 //be sure to call drawPrimitive(QStyle::SE_FrameContents) on the proxy style
                 if (widget)
                     return widget->style()->subElementRect(QStyle::SE_FrameContents, opt, widget);
-                else
-                    return subElementRect(QStyle::SE_FrameContents, opt, widget);
-                break;
+                return subElementRect(QStyle::SE_FrameContents, opt, widget);
 
             case QFrame::WinPanel:
                 frameWidth = 2;

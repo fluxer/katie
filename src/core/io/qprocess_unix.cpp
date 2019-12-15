@@ -39,17 +39,10 @@
 #include "qprocess.h"
 #include "qprocess_p.h"
 #include "qcore_unix_p.h"
-#include "qcoreapplication_p.h"
 #include "qthread_p.h"
 #include "qfile.h"
-#include "qfileinfo.h"
-#include "qlist.h"
-#include "qhash.h"
-#include "qmutex.h"
-#include "qsemaphore.h"
 #include "qsocketnotifier.h"
 #include "qthread.h"
-#include "qelapsedtimer.h"
 
 #include <errno.h>
 #include <stdlib.h>
@@ -265,8 +258,8 @@ void QProcessManager::catchDeadChildren()
 
     // try to catch all children whose pid we have registered, and whose
     // deathPipe is still valid (i.e, we have not already notified it).
-    QHash<int, QProcessInfo *>::Iterator it = children.begin();
-    while (it != children.end()) {
+    QHash<int, QProcessInfo *>::const_iterator it = children.constBegin();
+    while (it != children.constEnd()) {
         // notify all children that they may have died. they need to run
         // waitpid() in their own thread.
         QProcessInfo *info = it.value();

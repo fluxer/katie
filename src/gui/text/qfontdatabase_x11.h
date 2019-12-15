@@ -146,24 +146,18 @@ static const char * xlfd_for_id(int id)
 #endif
 
 #ifndef QT_NO_FONTCONFIG
-
-#ifndef FC_WIDTH
-#define FC_WIDTH "width"
-#endif
-
-static int getFCWeight(int fc_weight)
+static inline int getFCWeight(int fc_weight)
 {
-    int qtweight = QFont::Black;
     if (fc_weight <= (FC_WEIGHT_LIGHT + FC_WEIGHT_MEDIUM) / 2)
-        qtweight = QFont::Light;
+        return QFont::Light;
     else if (fc_weight <= (FC_WEIGHT_MEDIUM + FC_WEIGHT_DEMIBOLD) / 2)
-        qtweight = QFont::Normal;
+        return QFont::Normal;
     else if (fc_weight <= (FC_WEIGHT_DEMIBOLD + FC_WEIGHT_BOLD) / 2)
-        qtweight = QFont::DemiBold;
+        return QFont::DemiBold;
     else if (fc_weight <= (FC_WEIGHT_BOLD + FC_WEIGHT_BLACK) / 2)
-        qtweight = QFont::Bold;
+        return QFont::Bold;
 
-    return qtweight;
+    return QFont::Black;
 }
 
 QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
@@ -842,8 +836,7 @@ static const char *styleHint(const QFontDef &request)
 }
 
 #ifndef QT_NO_FONTCONFIG
-
-void qt_addPatternProps(FcPattern *pattern, int screen, int script, const QFontDef &request)
+static void qt_addPatternProps(FcPattern *pattern, int screen, int script, const QFontDef &request)
 {
     double size_value = qMax(qreal(1.), request.pixelSize);
     FcPatternDel(pattern, FC_PIXEL_SIZE);
@@ -1222,11 +1215,6 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
     QFontCache::instance()->insertEngine(key, fe);
 }
 
-// Needed for fontconfig version < 2.2.97
-#ifndef FC_FAMILYLANG
-#define FC_FAMILYLANG "familylang"
-#endif
-
 static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
 {
 #if defined(QT_NO_FONTCONFIG)
@@ -1247,7 +1235,6 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
             return;
     }
 
-    QString fileNameForQuery = fnt->fileName;
     int id = 0;
     FcBlanks *blanks = FcConfigGetBlanks(0);
     int count = 0;
@@ -1255,9 +1242,8 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
     QStringList families;
     QFontDatabasePrivate *db = privateDb();
 
-    FcPattern *pattern = Q_NULLPTR;
-    do {
-        pattern = queryFont((const FcChar8 *)QFile::encodeName(fileNameForQuery).constData(),
+    while (id < count) {
+        FcPattern *pattern = queryFont((const FcChar8 *)QFile::encodeName(fnt->fileName).constData(),
                             fnt->data, id, blanks, &count);
         if (!pattern)
             return;
@@ -1266,9 +1252,9 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
         QByteArray cs = fnt->fileName.toUtf8();
         FcPatternAddString(pattern, FC_FILE, (const FcChar8 *) cs.constData());
 
-        FcChar8 *fam = 0, *familylang = 0;
-        int i, n = 0;
-        for (i = 0; ; i++) {
+        int n = 0;
+        for (int i = 0; ; i++) {
+            FcChar8 *familylang = Q_NULLPTR;
             if (FcPatternGetString(pattern, FC_FAMILYLANG, i, &familylang) != FcResultMatch)
                 break;
             QString familyLang = QString::fromUtf8((const char *) familylang);
@@ -1278,16 +1264,16 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
             }
         }
 
+        FcChar8 *fam = Q_NULLPTR;
         if (FcPatternGetString(pattern, FC_FAMILY, n, &fam) == FcResultMatch) {
-            QString family = QString::fromUtf8(reinterpret_cast<const char *>(fam));
-            families << family;
+            families << QString::fromUtf8(reinterpret_cast<const char *>(fam));
         }
 
         if (!FcFontSetAdd(set, pattern))
             return;
 
         ++id;
-    } while (pattern && id < count);
+    }
 
     fnt->families = families;
 #endif

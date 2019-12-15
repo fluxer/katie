@@ -740,7 +740,7 @@ bool RCCResourceLibrary::writeHeader()
         writeString("/****************************************************************************\n");
         writeString("** Resource object code\n");
         writeString("**\n");
-        writeString("** Created by: The Resource Compiler for Qt version ");
+        writeString("** Created by: The Resource Compiler for Katie version ");
         writeByteArray(QT_VERSION_STR);
         writeString("\n**\n");
         writeString("** WARNING! All changes made in this file will be lost!\n");
