@@ -70,11 +70,6 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, codecsloader,
     (QTextCodecFactoryInterface_iid, QLatin1String("/codecs")))
 #endif
 
-//Cache for QTextCodec::codecForName and codecForMib.
-typedef QHash<QByteArray, QTextCodec *> QTextCodecCache;
-Q_GLOBAL_STATIC(QTextCodecCache, qTextCodecCache)
-
-
 static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
 {
     return (ucnv_compareNames(name.constData(), name2.constData()) == 0);
@@ -543,9 +538,6 @@ QTextCodec::~QTextCodec()
         QMutexLocker locker(textCodecsMutex());
 #endif
         all->removeAll(this);
-        QTextCodecCache *cache = qTextCodecCache();
-        if (cache)
-            cache->clear();
     }
 }
 
@@ -575,34 +567,19 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
 #endif
     setup();
 
-    QTextCodecCache *cache = qTextCodecCache();
-    QTextCodec *codec;
-    if (cache) {
-        codec = cache->value(name);
-        if (codec)
-            return codec;
-    }
-
     for (int i = 0; i < all->size(); ++i) {
         QTextCodec *cursor = all->at(i);
         if (nameMatch(cursor->name(), name)) {
-            if (cache)
-                cache->insert(name, cursor);
             return cursor;
         }
         QList<QByteArray> aliases = cursor->aliases();
         for (int y = 0; y < aliases.size(); ++y)
             if (nameMatch(aliases.at(y), name)) {
-                if (cache)
-                    cache->insert(name, cursor);
                 return cursor;
             }
     }
 
-    codec = createForName(name);
-    if (codec && cache)
-        cache->insert(name, codec);
-    return codec;
+    return createForName(name);
 }
 
 
@@ -617,29 +594,14 @@ QTextCodec* QTextCodec::codecForMib(int mib)
 #endif
     setup();
 
-    QByteArray key = "MIB: " + QByteArray::number(mib);
-    QTextCodecCache *cache = qTextCodecCache();
-    QTextCodec *codec;
-    if (cache) {
-        codec = cache->value(key);
-        if (codec)
-            return codec;
-    }
-
     for (int i = 0; i < all->size(); ++i) {
         QTextCodec *cursor = all->at(i);
         if (cursor->mibEnum() == mib) {
-            if (cache)
-                cache->insert(key, cursor);
             return cursor;
         }
     }
 
-    codec = createForMib(mib);
-
-    if (codec && cache)
-        cache->insert(key, codec);
-    return codec;
+    return createForMib(mib);
 }
 
 /*!
