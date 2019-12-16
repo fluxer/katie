@@ -54,7 +54,7 @@ QT_BEGIN_NAMESPACE
 class QIcuCodec : public QTextCodec
 {
 public:
-    explicit QIcuCodec(const char *name);
+    explicit QIcuCodec(const QByteArray &name);
     explicit QIcuCodec(const int mib);
     ~QIcuCodec();
 
@@ -74,7 +74,7 @@ public:
 private:
     UConverter *getConverter(QTextCodec::ConverterState *state) const;
 
-    const char *m_name;
+    QByteArray m_name;
 };
 
 QT_END_NAMESPACE
