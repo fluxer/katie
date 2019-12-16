@@ -264,17 +264,6 @@ static void setup()
     all = new QList<QTextCodec*>;
     // create the cleanup object to cleanup all codecs on exit
     (void) createQTextCodecCleanup();
-
-#if !defined(QT_NO_TEXTCODEC)
-    // codecs have to be explicitly created for use in QString
-    (void) new QIcuCodec("US-ASCII");
-    (void) new QIcuCodec("UTF-8");
-    (void) new QIcuCodec("UTF-16");
-    (void) new QIcuCodec("UTF-32");
-#endif
-
-    if (!localeMapper)
-        setupLocaleMapper();
 }
 
 /*!
