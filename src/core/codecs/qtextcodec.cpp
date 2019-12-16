@@ -572,11 +572,11 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
         if (nameMatch(cursor->name(), name)) {
             return cursor;
         }
-        QList<QByteArray> aliases = cursor->aliases();
-        for (int y = 0; y < aliases.size(); ++y)
-            if (nameMatch(aliases.at(y), name)) {
+        foreach (const QByteArray &alias, cursor->aliases()) {
+            if (nameMatch(alias, name)) {
                 return cursor;
             }
+        }
     }
 
     return createForName(name);
