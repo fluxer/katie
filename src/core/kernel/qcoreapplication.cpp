@@ -1644,10 +1644,10 @@ QString QCoreApplication::applicationFilePath()
         QByteArray pEnv = qgetenv("PATH");
         QDir currentDir = QDir::current();
         QStringList paths = QString::fromLocal8Bit(pEnv.constData()).split(QLatin1Char(':'));
-        for (QStringList::const_iterator p = paths.constBegin(); p != paths.constEnd(); ++p) {
-            if ((*p).isEmpty())
+        foreach (const QString &p, paths) {
+            if (p.isEmpty())
                 continue;
-            QString candidate = currentDir.absoluteFilePath(*p + QLatin1Char('/') + argv0);
+            QString candidate = currentDir.absoluteFilePath(p + QLatin1Char('/') + argv0);
             QFileInfo candidate_fi(candidate);
             if (candidate_fi.exists() && !candidate_fi.isDir()) {
                 absPath = candidate;
