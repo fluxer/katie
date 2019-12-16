@@ -69,6 +69,7 @@ public:
     static QList<QByteArray> allCodecs();
     static QList<int> allMibs();
     static QTextCodec* codecForUtf(const QByteArray &text, QTextCodec *defaultCodec);
+    static QTextCodec* codecForData(const QByteArray &text, QTextCodec *defaultCodec);
 #endif
 
 private:
