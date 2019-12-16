@@ -1134,7 +1134,7 @@ QTextCodec *QIcuCodec::codecForUtf(const QByteArray &text, QTextCodec *defaultCo
     UErrorCode error = U_ZERO_ERROR;
     const char* name = ucnv_detectUnicodeSignature(text.constData(), text.size(), Q_NULLPTR, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QIcuCodec::codecForText: ucnv_detectUnicodeSignature() failed %s",
+        qWarning("QIcuCodec::codecForUtf: ucnv_detectUnicodeSignature() failed %s",
             u_errorName(error));
         return defaultCodec;
     } else if (name) {
