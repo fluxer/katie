@@ -306,7 +306,7 @@ QTextCodec::ConverterState::~ConverterState()
     non-Unicode formats to and from Unicode. You can also create your
     own codec classes.
 
-    The supported encodings are:
+    Some of the supported encodings are:
 
     \list
     \o Adobe-Standard-Encoding
