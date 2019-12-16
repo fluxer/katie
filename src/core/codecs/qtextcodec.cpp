@@ -506,7 +506,7 @@ QTextCodec::QTextCodec()
     QMutexLocker locker(textCodecsMutex());
 #endif
     setup();
-    all->prepend(this);
+    all->append(this);
 }
 
 
