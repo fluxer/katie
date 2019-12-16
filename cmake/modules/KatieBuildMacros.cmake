@@ -162,7 +162,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
             add_custom_command(
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_UIC}" "${resource}" -o "${rscout}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_UIC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}"
                 DEPENDS "${KATIE_UIC}"
                 OUTPUT "${rscout}"
             )
@@ -171,7 +171,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
             add_custom_command(
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}" -name "${rscname}"
                 DEPENDS "${KATIE_RCC}"
                 OUTPUT "${rscout}"
             )
@@ -202,7 +202,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(rscout "${CMAKE_CURRENT_BINARY_DIR}/${rscname}.qm")
             add_custom_target(
                 ${FORTARGET}_${rscname} ALL
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}" "${resource}" -qm "${rscout}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}${KATIE_TOOLS_SUFFIX}" "${resource}" -qm "${rscout}"
                 DEPENDS "${KATIE_LRELEASE}"
             )
             set_source_files_properties(${rscout} PROPERTIES GENERATED TRUE)
