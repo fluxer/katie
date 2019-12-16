@@ -529,14 +529,14 @@ QTextCodec::QTextCodec()
 */
 QTextCodec::~QTextCodec()
 {
+#ifndef QT_NO_THREAD
+    QMutexLocker locker(textCodecsMutex());
+#endif
 #ifdef Q_DEBUG_TEXTCODEC
     if (Q_UNLIKELY(!destroying_is_ok))
         qWarning("QTextCodec::~QTextCodec: Called by application");
 #endif
     if (all) {
-#ifndef QT_NO_THREAD
-        QMutexLocker locker(textCodecsMutex());
-#endif
         all->removeAll(this);
     }
 }
@@ -683,13 +683,11 @@ void QTextCodec::setCodecForLocale(QTextCodec *c)
 
 QTextCodec* QTextCodec::codecForLocale()
 {
-    if (localeMapper)
-        return localeMapper;
-
 #ifndef QT_NO_THREAD
     QMutexLocker locker(textCodecsMutex());
 #endif
-    setupLocaleMapper();
+    if (!localeMapper)
+        setupLocaleMapper();
 
     return localeMapper;
 }
