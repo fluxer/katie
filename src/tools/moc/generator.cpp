@@ -921,7 +921,7 @@ void Generator::generateStaticMetacall()
             }
             fprintf(out, " break;\n");
         }
-        fprintf(out, "        default: ;\n");
+        fprintf(out, "        default: break;\n");
         fprintf(out, "        }\n");
         fprintf(out, "    }");
         needElse = true;
