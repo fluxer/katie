@@ -53,7 +53,7 @@ static inline uint foldCase(const ushort *ch, const ushort *start)
     uint c = *ch;
     if (QChar::isLowSurrogate(c) && ch > start && QChar::isHighSurrogate(*(ch - 1)))
         c = QChar::surrogateToUcs4(*(ch - 1), c);
-    return QChar::toCaseFolded(*ch);
+    return QChar::toCaseFolded(c);
 }
 
 static inline uint foldCase(const uint ch, uint &last)
@@ -61,8 +61,8 @@ static inline uint foldCase(const uint ch, uint &last)
     uint c = ch;
     if (QChar::isLowSurrogate(c) && QChar::isHighSurrogate(last))
         c = QChar::surrogateToUcs4(last, c);
-    last = ch;
-    return QChar::toCaseFolded(ch);
+    last = c;
+    return QChar::toCaseFolded(c);
 }
 
 static inline QString timeZone()
