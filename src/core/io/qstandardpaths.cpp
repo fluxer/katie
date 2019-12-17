@@ -39,7 +39,7 @@ QT_BEGIN_NAMESPACE
     \class QStandardPaths
     \inmodule QtCore
     \brief The QStandardPaths class provides methods for accessing standard paths.
-    \since 5.0
+    \since 4.9
 
     This class contains functions to query standard locations on the local
     filesystem, for common tasks such as user-specific directories or system-wide

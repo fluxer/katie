@@ -39,7 +39,7 @@ QT_BEGIN_NAMESPACE
     \inmodule QtCore
     \ingroup json
     \reentrant
-    \since 5.0
+    \since 4.9
 
     \brief The QJsonArray class encapsulates a JSON array.
 
