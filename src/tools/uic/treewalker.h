@@ -118,8 +118,6 @@ struct TreeWalker
     virtual void acceptActionRef(DomActionRef *actionRef);
     virtual void acceptConnections(DomConnections *connections);
     virtual void acceptConnection(DomConnection *connection);
-    virtual void acceptConnectionHints(DomConnectionHints *connectionHints);
-    virtual void acceptConnectionHint(DomConnectionHint *connectionHint);
     virtual void acceptButtonGroups(const DomButtonGroups *buttonGroups);
     virtual void acceptButtonGroup(const DomButtonGroup *buttonGroup);
 };
