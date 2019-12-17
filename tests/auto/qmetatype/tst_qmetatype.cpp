@@ -53,7 +53,9 @@ private:
 
 private slots:
     void defined();
+#ifndef QT_NO_THREAD
     void threadSafety();
+#endif
     void namespaces();
     void qMetaTypeId();
     void properties();
@@ -96,6 +98,7 @@ public:
 
 int Bar::failureCount = 0;
 
+#ifndef QT_NO_THREAD
 class MetaTypeTorturer: public QThread
 {
     Q_OBJECT
@@ -157,6 +160,7 @@ void tst_QMetaType::threadSafety()
     QCOMPARE(t3.failureCount, 0);
     QCOMPARE(Bar::failureCount, 0);
 }
+#endif // QT_NO_THREAD
 
 namespace TestSpace
 {

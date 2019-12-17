@@ -1,5 +1,7 @@
-katie_test(tst_qsqlthread
-    ${CMAKE_CURRENT_SOURCE_DIR}/tst_qsqlthread.cpp
-)
+if(WITH_THREADS AND THREADS_FOUND)
+    katie_test(tst_qsqlthread
+        ${CMAKE_CURRENT_SOURCE_DIR}/tst_qsqlthread.cpp
+    )
 
-target_link_libraries(tst_qsqlthread KtSql KtNetwork)
+    target_link_libraries(tst_qsqlthread KtSql KtNetwork)
+endif()

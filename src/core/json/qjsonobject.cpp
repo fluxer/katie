@@ -582,7 +582,7 @@ QJsonObject::const_iterator QJsonObject::constFind(const QString &key) const
     \inmodule QtCore
     \ingroup json
     \reentrant
-    \since 5.0
+    \since 4.9
 
     \brief The QJsonObject::iterator class provides an STL-style non-const iterator for QJsonObject.
 

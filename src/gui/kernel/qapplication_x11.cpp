@@ -573,7 +573,7 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
             qsnprintf(buffer, 256, "%s.%d", extensionName, err->minor_code);
             XGetErrorDatabaseText(dpy, "XRequest", buffer, "", minor_str, 256);
         } else {
-            extensionName = "Uknown extension";
+            extensionName = "Unknown extension";
             qsnprintf(minor_str, 256, "Unknown request");
         }
         qWarning( "X Error: %s %d\n"

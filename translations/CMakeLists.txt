@@ -1,2 +1,2 @@
 file(GLOB TRANSLATIONS "*.ts")
-katie_translations(${TRANSLATIONS})
+katie_setup_target(translations ${TRANSLATIONS})

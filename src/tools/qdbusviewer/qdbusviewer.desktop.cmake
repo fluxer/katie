@@ -6,4 +6,4 @@ Icon=@KATIE_PIXMAPS_FULL@/qdbusviewer@KATIE_TOOLS_SUFFIX@.png
 Terminal=false
 Encoding=UTF-8
 Type=Application
-Categories=Qt;Development;Debugger; 
+Categories=Qt;Development;Debugger;

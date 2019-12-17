@@ -90,10 +90,10 @@ set(KATIE_PRODUCT "AwesomeSauce")
 include(GNUInstallDirs)
 set(KATIE_PREFIX_FULL "${CMAKE_INSTALL_PREFIX}" CACHE PATH "General installation prefix")
 set(KATIE_HEADERS_FULL "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
-set(KATIE_LIBRARIES_FULL "${CMAKE_INSTALL_FULL_LIBDIR}/katie" CACHE PATH "Libraries installation path")
+set(KATIE_LIBRARIES_FULL "${CMAKE_INSTALL_FULL_LIBDIR}" CACHE PATH "Libraries installation path")
 set(KATIE_BINARIES_FULL "${CMAKE_INSTALL_FULL_BINDIR}" CACHE PATH "Binaries installation path")
-set(KATIE_PLUGINS_FULL "${KATIE_LIBRARIES_FULL}/plugins" CACHE PATH "Plugins installation path")
-set(KATIE_IMPORTS_FULL "${KATIE_LIBRARIES_FULL}/imports" CACHE PATH "Declerative imports installation path")
+set(KATIE_PLUGINS_FULL "${KATIE_LIBRARIES_FULL}/katie/plugins" CACHE PATH "Plugins installation path")
+set(KATIE_IMPORTS_FULL "${KATIE_LIBRARIES_FULL}/katie/imports" CACHE PATH "Declerative imports installation path")
 set(KATIE_DATA_FULL "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
 set(KATIE_TRANSLATIONS_FULL "${KATIE_DATA_FULL}/translations" CACHE PATH "Translations instllation path")
 set(KATIE_SETTINGS_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg" CACHE PATH "Settings runtime path")
@@ -103,7 +103,7 @@ set(KATIE_PROFILE_FULL "${KATIE_DATA_FULL}/profile.d" CACHE PATH "Shell profile 
 set(KATIE_MAN_FULL "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages installation path")
 set(KATIE_APPLICATIONS_FULL "${KATIE_DATA_FULL}/applications" CACHE PATH "Desktop applications register installation path")
 set(KATIE_PIXMAPS_FULL "${KATIE_DATA_FULL}/pixmaps" CACHE PATH "Desktop applications icon installation path")
-set(KATIE_PKGCONFIG_FULL "${KATIE_DATA_FULL}/pkgconfig" CACHE PATH "pkg-config installation path")
+set(KATIE_PKGCONFIG_FULL "${KATIE_LIBRARIES_FULL}/pkgconfig" CACHE PATH "pkg-config installation path")
 set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 katie_setup_paths()
 
@@ -283,7 +283,8 @@ set_package_properties(X11 PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(Freetype)
+# v2.1.10+ required for FT_GlyphSlot_Embolden()
+find_package(Freetype 2.1.10)
 set_package_properties(Freetype PROPERTIES
     PURPOSE "Required for fonts configuration support"
     DESCRIPTION "Freely available software library to render fonts"
@@ -447,18 +448,19 @@ if(KATIE_TESTS OR KATIE_BENCHMARKS)
     )
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)
-
-    configure_file(
-        ${CMAKE_SOURCE_DIR}/cmake/runtest.sh.cmake
-        ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/runtest.sh
-        @ONLY
-    )
-    file(
-        COPY ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/runtest.sh
-        DESTINATION ${CMAKE_BINARY_DIR}
-        FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-    )
 endif()
+
+
+configure_file(
+    ${CMAKE_SOURCE_DIR}/cmake/exec.sh.cmake
+    ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/exec.sh
+    @ONLY
+)
+file(
+    COPY ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/exec.sh
+    DESTINATION ${CMAKE_BINARY_DIR}
+    FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+)
 
 # optional packages
 if(NOT WITH_THREADS OR NOT THREADS_FOUND)

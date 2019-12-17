@@ -294,18 +294,7 @@ void TreeWalker::acceptConnections(DomConnections *connections)
 
 void TreeWalker::acceptConnection(DomConnection *connection)
 {
-    acceptConnectionHints(connection->elementHints());
-}
-
-void TreeWalker::acceptConnectionHints(DomConnectionHints *connectionHints)
-{
-    for (int i=0; i<connectionHints->elementHint().size(); ++i)
-        acceptConnectionHint(connectionHints->elementHint().at(i));
-}
-
-void TreeWalker::acceptConnectionHint(DomConnectionHint *connectionHint)
-{
-    Q_UNUSED(connectionHint);
+    Q_UNUSED(connection);
 }
 
 void TreeWalker::acceptWidgetScripts(const DomScripts &, DomWidget *, const  DomWidgets &)

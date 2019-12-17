@@ -253,13 +253,6 @@ public:
         CloseWithSpontaneousEvent
     };
 
-    enum Direction {
-        DirectionNorth = 0x01,
-        DirectionEast = 0x10,
-        DirectionSouth = 0x02,
-        DirectionWest = 0x20
-    };
-
     // Functions.
     explicit QWidgetPrivate(int version = QObjectPrivateVersion);
     ~QWidgetPrivate();
@@ -428,11 +421,6 @@ public:
     void getLayoutItemMargins(int *left, int *top, int *right, int *bottom) const;
     void setLayoutItemMargins(int left, int top, int right, int bottom);
     void setLayoutItemMargins(QStyle::SubElement element, const QStyleOption *opt = Q_NULLPTR);
-
-    // aboutToDestroy() is called just before the contents of
-    // QWidget::destroy() is executed. It's used to signal QWidget
-    // sub-classes that their internals are about to be released.
-    virtual void aboutToDestroy() {}
 
     inline QWidget *effectiveFocusWidget() {
         QWidget *w = q_func();

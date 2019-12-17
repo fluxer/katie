@@ -1516,10 +1516,7 @@ QString QCoreApplication::translate(const char *context, const char *sourceText,
         return result;
 
     if (self && !self->d_func()->translators.isEmpty()) {
-        QList<QTranslator*>::ConstIterator it;
-        QTranslator *translationFile;
-        for (it = self->d_func()->translators.constBegin(); it != self->d_func()->translators.constEnd(); ++it) {
-            translationFile = *it;
+        foreach (const QTranslator *translationFile, self->d_func()->translators) {
             result = translationFile->translate(context, sourceText, disambiguation, n);
             if (!result.isEmpty())
                 break;
@@ -1647,10 +1644,10 @@ QString QCoreApplication::applicationFilePath()
         QByteArray pEnv = qgetenv("PATH");
         QDir currentDir = QDir::current();
         QStringList paths = QString::fromLocal8Bit(pEnv.constData()).split(QLatin1Char(':'));
-        for (QStringList::const_iterator p = paths.constBegin(); p != paths.constEnd(); ++p) {
-            if ((*p).isEmpty())
+        foreach (const QString &p, paths) {
+            if (p.isEmpty())
                 continue;
-            QString candidate = currentDir.absoluteFilePath(*p + QLatin1Char('/') + argv0);
+            QString candidate = currentDir.absoluteFilePath(p + QLatin1Char('/') + argv0);
             QFileInfo candidate_fi(candidate);
             if (candidate_fi.exists() && !candidate_fi.isDir()) {
                 absPath = candidate;

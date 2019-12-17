@@ -141,7 +141,7 @@ static int ucstricmp(const ushort *a, const ushort *ae, const uchar *b)
         return -1;
 
     while (a < ae && *b) {
-        int diff = foldCase(*a) - foldCase(*b);
+        int diff = QChar::toCaseFolded(*a) - QChar::toCaseFolded(static_cast<uint>(*b));
         if ((diff))
             return diff;
         ++a;
@@ -210,9 +210,9 @@ static int findChar(const QChar *str, int len, QChar ch, int from,
                 if (*n == c)
                     return  n - s;
         } else {
-            c = foldCase(c);
+            c = QChar::toCaseFolded(c);
             while (++n != e)
-                if (foldCase(*n) == c)
+                if (QChar::toCaseFolded(*n) == c)
                     return  n - s;
         }
     }
@@ -1508,9 +1508,9 @@ QString &QString::remove(QChar ch, Qt::CaseSensitivity cs)
             else
                 i++;
     } else {
-        c = foldCase(c);
+        c = QChar::toCaseFolded(c);
         while (i < d->size)
-            if (foldCase(d->data[i]) == c)
+            if (QChar::toCaseFolded(d->data[i]) == c)
                 remove(i, 1);
             else
                 i++;
@@ -1798,9 +1798,9 @@ QString& QString::replace(QChar before, QChar after, Qt::CaseSensitivity cs)
                 if (*i == b)
                     *i = a;
         } else {
-            b = foldCase(b);
+            b = QChar::toCaseFolded(b);
             for (; i != e; ++i)
-                if (foldCase(*i) == b)
+                if (QChar::toCaseFolded(*i) == b)
                     *i = a;
         }
     }
@@ -3198,7 +3198,7 @@ bool QString::startsWith(const QChar &c, Qt::CaseSensitivity cs) const
     return d->size
            && (cs == Qt::CaseSensitive
                ? d->data[0] == c
-               : foldCase(d->data[0]) == foldCase(c.unicode()));
+               : QChar::toCaseFolded(d->data[0]) == QChar::toCaseFolded(c.unicode()));
 }
 
 /*!
@@ -3272,7 +3272,7 @@ bool QString::endsWith(const QChar &c, Qt::CaseSensitivity cs) const
     return d->size
            && (cs == Qt::CaseSensitive
                ? d->data[d->size - 1] == c
-               : foldCase(d->data[d->size - 1]) == foldCase(c.unicode()));
+               : QChar::toCaseFolded(d->data[d->size - 1]) == QChar::toCaseFolded(c.unicode()));
 }
 
 /*! \fn const char *QString::ascii() const
@@ -8086,7 +8086,7 @@ bool QStringRef::startsWith(QChar ch, Qt::CaseSensitivity cs) const
         const ushort *data = reinterpret_cast<const ushort*>(unicode());
         return (cs == Qt::CaseSensitive
                 ? data[0] == ch
-                : foldCase(data[0]) == foldCase(ch.unicode()));
+                : QChar::toCaseFolded(data[0]) == QChar::toCaseFolded(ch.unicode()));
     } else {
         return false;
     }
@@ -8127,7 +8127,7 @@ bool QStringRef::endsWith(QChar ch, Qt::CaseSensitivity cs) const
         const int size = length();
         return (cs == Qt::CaseSensitive
                 ? data[size - 1] == ch
-                : foldCase(data[size - 1]) == foldCase(ch.unicode()));
+                : QChar::toCaseFolded(data[size - 1]) == QChar::toCaseFolded(ch.unicode()));
     } else {
         return false;
     }
@@ -8222,9 +8222,9 @@ static inline int qt_last_index_of(const QChar *haystack, int haystackLen, const
                 if (*n == c)
                     return n - b;
         } else {
-            c = foldCase(c);
+            c = QChar::toCaseFolded(c);
             for (; n >= b; --n)
-                if (foldCase(*n) == c)
+                if (QChar::toCaseFolded(*n) == c)
                     return n - b;
         }
     }
@@ -8262,9 +8262,9 @@ static inline int qt_string_count(const QChar *unicode, int size, const QChar &c
             if (*--i == c)
                 ++num;
     } else {
-        c = foldCase(c);
+        c = QChar::toCaseFolded(c);
         while (i != b)
-            if (foldCase(*(--i)) == c)
+            if (QChar::toCaseFolded(*(--i)) == c)
                 ++num;
     }
     return num;
@@ -8327,7 +8327,7 @@ static inline bool qt_starts_with(const QChar *haystack, int haystackLen,
                 return false;
     } else {
         for (int i = 0; i < slen; ++i)
-            if (foldCase(data[i]) != foldCase((ushort)latin[i]))
+            if (QChar::toCaseFolded(data[i]) != QChar::toCaseFolded((ushort)latin[i]))
                 return false;
     }
     return true;
@@ -8379,7 +8379,7 @@ static inline bool qt_ends_with(const QChar *haystack, int haystackLen,
                 return false;
     } else {
         for (int i = 0; i < slen; i++)
-            if (foldCase(data[pos+i]) != foldCase((ushort)latin[i]))
+            if (QChar::toCaseFolded(data[pos+i]) != QChar::toCaseFolded((ushort)latin[i]))
                 return false;
     }
     return true;

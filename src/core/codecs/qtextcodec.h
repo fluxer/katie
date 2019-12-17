@@ -77,6 +77,9 @@ public:
     static QTextCodec *codecForUtfText(const QByteArray &ba);
     static QTextCodec *codecForUtfText(const QByteArray &ba, QTextCodec *defaultCodec);
 
+    static QTextCodec *codecForText(const QByteArray &ba);
+    static QTextCodec *codecForText(const QByteArray &ba, QTextCodec *defaultCodec);
+
     bool canEncode(QChar) const;
     bool canEncode(const QString&) const;
 

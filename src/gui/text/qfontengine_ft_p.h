@@ -134,7 +134,7 @@ public:
         signed char advance;
         signed char format;
         uchar *data;
-        unsigned int uploadedToServer : 1;
+        bool uploadedToServer;
     };
 
     enum SubpixelAntialiasingType {

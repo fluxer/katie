@@ -5,7 +5,6 @@ set(KATIE_UIC "uic")
 set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
 set(KATIE_LRELEASE "lrelease")
-set(KATIE_QDBUSXML2CPP "qdbusxml2cpp")
 
 # a macro to print a dev warning but only when the build type is Debug
 macro(KATIE_WARNING MESSAGESTR)
@@ -163,7 +162,8 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
             add_custom_command(
-                COMMAND "${KATIE_UIC}" "${resource}" -o "${rscout}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_UIC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}"
+                DEPENDS "${KATIE_UIC}"
                 OUTPUT "${rscout}"
             )
         elseif("${rscext}" STREQUAL ".qrc")
@@ -171,7 +171,8 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
             add_custom_command(
-                COMMAND "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}" -name "${rscname}"
+                DEPENDS "${KATIE_RCC}"
                 OUTPUT "${rscout}"
             )
         elseif("${rscext}" MATCHES "(.h|.hpp|.cc|.cpp)")
@@ -191,10 +192,22 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 endforeach()
                 make_directory(${rscpath})
                 add_custom_command(
-                    COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    DEPENDS "${KATIE_MOC}"
                     OUTPUT "${rscout}"
                 )
             endif()
+        elseif("${rscext}" MATCHES ".ts")
+            make_directory(${CMAKE_CURRENT_BINARY_DIR})
+            set(rscout "${CMAKE_CURRENT_BINARY_DIR}/${rscname}.qm")
+            add_custom_target(
+                ${FORTARGET}_${rscname} ALL
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}${KATIE_TOOLS_SUFFIX}" "${resource}" -qm "${rscout}"
+                DEPENDS "${KATIE_LRELEASE}"
+            )
+            set_source_files_properties(${rscout} PROPERTIES GENERATED TRUE)
+            install(FILES ${rscout} DESTINATION ${KATIE_TRANSLATIONS_RELATIVE})
+
         endif()
     endforeach()
     set_source_files_properties(${resourcesdep} PROPERTIES OBJECT_DEPENDS "${targetresources}")
@@ -294,9 +307,9 @@ endmacro()
 
 # a macro to add tests easily by setting them up with the assumptions they make
 macro(KATIE_TEST TESTNAME TESTSOURCES)
-    katie_resources(${TESTSOURCES} ${ARGN})
+    katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
-    add_executable(${TESTNAME} ${TESTSOURCES} ${ARGN})
+    add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
 
     target_link_libraries(${TESTNAME} KtCore KtTest)
     target_compile_definitions(
@@ -310,7 +323,7 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
 
     add_test(
         NAME ${TESTNAME}
-        COMMAND ${CMAKE_BINARY_DIR}/runtest.sh ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME} -tickcounter
+        COMMAND ${CMAKE_BINARY_DIR}/exec.sh ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME} -tickcounter
     )
 endmacro()
 

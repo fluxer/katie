@@ -2734,13 +2734,6 @@ QList<QAction*> QWidget::actions() const
 #endif // QT_NO_ACTION
 
 /*!
-  \fn bool QWidget::isEnabledToTLW() const
-  \obsolete
-
-  This function is deprecated. It is equivalent to isEnabled()
-*/
-
-/*!
     \property QWidget::enabled
     \brief whether the widget is enabled
 
@@ -3728,14 +3721,6 @@ QWidget *QWidget::nativeParentWidget() const
         parent = parent->parentWidget();
     return parent;
 }
-
-/*! \fn QWidget *QWidget::topLevelWidget() const
-    \obsolete
-
-    Use window() instead.
-*/
-
-
 
 /*!
   Returns the background role of the widget.
@@ -9813,19 +9798,6 @@ void QWidget::fontChange(const QFont &) { }  // compat
 void QWidget::windowActivationChange(bool) { }  // compat
 void QWidget::languageChange() { }  // compat
 
-
-/*!
-    \enum QWidget::BackgroundOrigin
-
-    \compat
-
-    \value WidgetOrigin
-    \value ParentOrigin
-    \value WindowOrigin
-    \value AncestorOrigin
-
-*/
-
 /*!
     \fn bool QWidget::isVisibleToTLW() const
 
@@ -10015,28 +9987,6 @@ void QWidget::languageChange() { }  // compat
     \fn void QWidget::setPalette(const QPalette &p, bool b)
 
     Use the single-argument overload instead.
-*/
-
-/*!
-    \fn void QWidget::setBackgroundOrigin(BackgroundOrigin background)
-
-    \obsolete
-*/
-
-/*!
-    \fn BackgroundOrigin QWidget::backgroundOrigin() const
-
-    \obsolete
-
-    Always returns \c WindowOrigin.
-*/
-
-/*!
-    \fn QPoint QWidget::backgroundOffset() const
-
-    \obsolete
-
-    Always returns QPoint().
 */
 
 /*!

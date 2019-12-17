@@ -20,7 +20,7 @@ qscript [script-file]
 =head1 DESCRIPTION
 
 qscript can be used as a stand-alone tool to run Qt scripts which could be
-usefull when testing. Since the scripts are basicly ECMAScript you should see
+useful when testing. Since the scripts are basically ECMAScript you should see
 the ECMA-262 specification for more details about built-in objects, functions
 and properties supported.
 

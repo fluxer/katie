@@ -35,6 +35,8 @@
 #include <QtTest/QtTest>
 #include "qhttpnetworkconnection_p.h"
 
+#ifndef QT_NO_HTTP
+
 class tst_QHttpNetworkReply: public QObject
 {
     Q_OBJECT
@@ -125,3 +127,9 @@ void tst_QHttpNetworkReply::parseHeader()
 QTEST_MAIN(tst_QHttpNetworkReply)
 
 #include "moc_tst_qhttpnetworkreply.cpp"
+
+#else
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_HTTP

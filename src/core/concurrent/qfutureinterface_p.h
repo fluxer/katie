@@ -146,8 +146,8 @@ public:
     bool internal_waitForNextResult();
     bool internal_updateProgress(int progress, const QString &progressText = QString());
     void internal_setThrottled(bool enable);
-    void sendCallOut(const QFutureCallOutEvent &callOut);
-    void sendCallOuts(const QFutureCallOutEvent &callOut1, const QFutureCallOutEvent &callOut2);
+    void sendCallOut(const QFutureCallOutEvent &callOut) const;
+    void sendCallOuts(const QFutureCallOutEvent &callOut1, const QFutureCallOutEvent &callOut2) const;
     void connectOutputInterface(QFutureCallOutInterface *iface);
     void disconnectOutputInterface(QFutureCallOutInterface *iface);
 

@@ -94,8 +94,10 @@ private slots:
     void rainersSlowRegExpCopyBug();
     void nonExistingBackReferenceBug();
 
+#ifndef QT_NO_THREAD
     void reentrancy();
     void threadsafeEngineCache();
+#endif
 
     void QTBUG_7049_data();
     void QTBUG_7049();
@@ -1071,6 +1073,7 @@ void tst_QRegExp::nonExistingBackReferenceBug()
     }
 }
 
+#ifndef QT_NO_THREAD
 class Thread : public QThread
 {
 public:
@@ -1152,7 +1155,7 @@ void tst_QRegExp::threadsafeEngineCache()
     for (int i = 0; i < int(sizeof(threads) / sizeof(threads[0])); ++i)
         delete threads[i];
 }
-
+#endif // QT_NO_THREAD
 
 void tst_QRegExp::prepareEngineOptimization()
 {
