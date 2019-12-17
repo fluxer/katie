@@ -122,7 +122,6 @@
 #cmakedefine QT_NO_CAST_TO_ASCII
 #cmakedefine QT_NO_CLIPBOARD
 #cmakedefine QT_NO_CLOCK_MONOTONIC
-#cmakedefine QT_NO_CODECS
 #cmakedefine QT_NO_CODEC_FOR_C_STRINGS
 #cmakedefine QT_NO_COLORDIALOG
 #cmakedefine QT_NO_COLORNAMES
@@ -369,11 +368,6 @@
 // QButtonGroup
 #if !defined(QT_NO_BUTTONGROUP) && (defined(QT_NO_GROUPBOX))
 #define QT_NO_BUTTONGROUP
-#endif
-
-// Codecs
-#if !defined(QT_NO_CODECS) && (defined(QT_NO_TEXTCODEC))
-#define QT_NO_CODECS
 #endif
 
 // QDate/QTime/QDateTime
