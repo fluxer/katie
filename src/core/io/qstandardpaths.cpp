@@ -335,8 +335,8 @@ QString QStandardPaths::findExecutable(const QString &executableName, const QStr
     }
 
     if (paths.isEmpty()) {
-        const QStringList paths = QString::fromLocal8Bit(::getenv("PATH")).split(QLatin1Char(':'), QString::SkipEmptyParts);
-        return searchExecutable(paths, executableName);
+        const QStringList envPaths = QString::fromLocal8Bit(::getenv("PATH")).split(QLatin1Char(':'), QString::SkipEmptyParts);
+        return searchExecutable(envPaths, executableName);
     }
 
     return searchExecutable(paths, executableName);
