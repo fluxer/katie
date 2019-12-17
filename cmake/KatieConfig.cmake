@@ -42,15 +42,11 @@ if(NOT KATIE_FOUND)
     set(KATIE_APPLICATIONS_PATH "@KATIE_APPLICATIONS_FULL@")
     set(KATIE_PIXMAPS_PATH "@KATIE_PIXMAPS_FULL@")
 
-    # Compute paths
-    get_filename_component(KATIE_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)
-    get_filename_component(KATIE_PREFIX ${KATIE_CMAKE_DIR}/ ABSOLUTE)
-
     # Include definitions for IMPORTED targets
-    include("${KATIE_CMAKE_DIR}/KatieLibraryTargets.cmake")
-    include("${KATIE_CMAKE_DIR}/KatieBinaryTargets.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/KatieLibraryTargets.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/KatieBinaryTargets.cmake")
     # Include version info, required for the Qt4 compatibility setup
-    include("${KATIE_CMAKE_DIR}/KatieConfigVersion.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/KatieConfigVersion.cmake")
 
     # These are pre-set and dynamically set variables, some use IMPORTED targets
     set(KATIE_DEFINITIONS @KATIE_DEFINITIONS@)
@@ -59,7 +55,7 @@ if(NOT KATIE_FOUND)
     set(KATIE_COMPONENTS @KATIE_COMPONENTS@)
     set(KATIE_TOOLS @KATIE_TOOLS@)
     set(KATIE_TOOLS_SUFFIX "@KATIE_TOOLS_SUFFIX@")
-    set(KATIE_MKSPECS_DIR "${KATIE_CMAKE_DIR}/mkspecs")
+    set(KATIE_MKSPECS_DIR "${CMAKE_CURRENT_LIST_DIR}/mkspecs")
     set(KATIE_TYPE @KATIE_TYPE@)
     set(KATIE_KEY "@KATIE_KEY@")
 
@@ -79,7 +75,7 @@ if(NOT KATIE_FOUND)
     endforeach()
 
     # Include macros, tools variables must be set before that
-    include("${KATIE_CMAKE_DIR}/KatieMacros.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/KatieMacros.cmake")
 
     # Platform specific stuff and some tests
     include("${KATIE_MKSPECS_DIR}/mkspecs.cmake")
@@ -106,7 +102,7 @@ if(NOT KATIE_FOUND)
         set(QT_INCLUDE_DIR ${KATIE_INCLUDES})
         set(QT4_INCLUDE_DIR ${KATIE_INCLUDES})
         set(QT_LIBRARIES ${KATIE_LIBRARIES})
-        set(QT_USE_FILE "${KATIE_CMAKE_DIR}/Qt4UseFile.cmake")
+        set(QT_USE_FILE "${CMAKE_CURRENT_LIST_DIR}/Qt4UseFile.cmake")
         set(QT_MKSPECS_DIR "${KATIE_MKSPECS_DIR}")
         set(QT_LIBRARY_DIR ${KATIE_LIBRARIES_PATH})
         set(QT_BINARY_DIR ${KATIE_BINARIES_PATH})

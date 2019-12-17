@@ -1,7 +1,4 @@
-# KatieConfig overrides KATIE_MKSPECS_DIR, KATIE_TYPE and KATIE_KEY
-if(NOT KATIE_MKSPECS_DIR)
-    set(KATIE_MKSPECS_DIR ${CMAKE_SOURCE_DIR}/mkspecs)
-endif()
+# KatieConfig overrides KATIE_TYPE and KATIE_KEY
 
 if(NOT KATIE_TYPE)
     set(KATIE_TYPE SHARED)
@@ -85,7 +82,7 @@ endif()
 
 try_compile(bsymbolic_functions_test
     ${CMAKE_BINARY_DIR}
-    ${KATIE_MKSPECS_DIR}/bsymbolic_functions.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/bsymbolic_functions.cpp
     CMAKE_FLAGS -shared -Wl,-Bsymbolic-functions -fPIC
     OUTPUT_VARIABLE bsymbolic_functions_test_output
 )
