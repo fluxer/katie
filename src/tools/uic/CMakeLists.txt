@@ -10,8 +10,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp
-    # for class_lib_map.h
-    ${CMAKE_SOURCE_DIR}/src/shared
 )
 
 set(UIC_SOURCES
