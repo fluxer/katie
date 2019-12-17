@@ -299,7 +299,7 @@ void Moc::parseFunctionArguments(FunctionDef *def)
             arg.rightType += lexem();
         }
         QByteArray argType = (arg.type.name + ' ' + arg.rightType);
-        QByteArray typeCast = (noRef(arg.type.name) + "(*)" + arg.rightType);
+        QByteArray typeCast = (noRef(arg.type.name) + "*" + arg.rightType);
         arg.normalizedType = normalizeType(argType.constData());
         arg.typeNameForCast = normalizeType(typeCast.constData());
         if (test(EQ))
