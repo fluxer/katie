@@ -283,7 +283,8 @@ set_package_properties(X11 PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(Freetype)
+# v2.1.10+ required for FT_GlyphSlot_Embolden()
+find_package(Freetype 2.1.10)
 set_package_properties(Freetype PROPERTIES
     PURPOSE "Required for fonts configuration support"
     DESCRIPTION "Freely available software library to render fonts"
