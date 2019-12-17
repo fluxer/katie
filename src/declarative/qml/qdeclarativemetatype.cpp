@@ -1135,9 +1135,7 @@ bool QDeclarativeMetaType::canCopy(int type)
     case QMetaType::QPoint:
     case QMetaType::QPointF:
     case QMetaType::QVector3D:
-#ifndef QT_NO_REGEXP
     case QMetaType::QRegExp:
-#endif
     case QMetaType::Void:
     case QMetaType::QFont:
     case QMetaType::QPixmap:
@@ -1299,11 +1297,9 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
         case QMetaType::QVector3D:
             *static_cast<NS(QVector3D) *>(data) = *static_cast<const NS(QVector3D)*>(copy);
             return true;
-#ifndef QT_NO_REGEXP
         case QMetaType::QRegExp:
             *static_cast<NS(QRegExp) *>(data) = *static_cast<const NS(QRegExp)*>(copy);
             return true;
-#endif
         case QMetaType::Void:
             return true;
 
@@ -1502,11 +1498,9 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
         case QMetaType::QVector3D:
             *static_cast<NS(QVector3D) *>(data) = NS(QVector3D)();
             return true;
-#ifndef QT_NO_REGEXP
         case QMetaType::QRegExp:
             *static_cast<NS(QRegExp) *>(data) = NS(QRegExp)();
             return true;
-#endif
         case QMetaType::Void:
             return true;
 

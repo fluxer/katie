@@ -97,9 +97,7 @@ namespace QScript
     class QObjectPrototype;
     class QMetaObjectPrototype;
     class QVariantPrototype;
-#ifndef QT_NO_QOBJECT
     class QObjectData;
-#endif
     class TimeoutCheckerProxy;
 
     qint32 ToInt32(qsreal);
@@ -143,9 +141,7 @@ struct GlobalClientData : public JSC::JSGlobalData::ClientData
 } // namespace QScript
 
 class QScriptEnginePrivate
-#ifndef QT_NO_QOBJECT
     : public QObjectPrivate
-#endif
 {
     Q_DECLARE_PUBLIC(QScriptEngine)
 public:
@@ -173,9 +169,7 @@ public:
     static inline JSC::UString toString(JSC::ExecState *, JSC::JSValue);
 
     static inline QDateTime toDateTime(JSC::ExecState *, JSC::JSValue);
-#ifndef QT_NO_REGEXP
     static QRegExp toRegExp(JSC::ExecState*, JSC::JSValue);
-#endif
     static QVariant toVariant(JSC::ExecState *, JSC::JSValue);
     static inline QObject *toQObject(JSC::ExecState *, JSC::JSValue);
     static inline const QMetaObject *toQMetaObject(JSC::ExecState *, JSC::JSValue);
@@ -302,9 +296,7 @@ public:
     static inline JSC::JSValue newDate(JSC::ExecState *, const QDateTime &);
     inline JSC::JSValue newObject();
 
-#ifndef QT_NO_REGEXP
     static JSC::JSValue newRegExp(JSC::ExecState *, const QRegExp &);
-#endif
 
     static JSC::JSValue newRegExp(JSC::ExecState *, const QString &pattern, const QString &flags);
     JSC::JSValue newVariant(const QVariant &);
@@ -315,7 +307,6 @@ public:
 
     JSC::UString translationContextFromUrl(const JSC::UString &);
 
-#ifndef QT_NO_QOBJECT
     void markQObjectData(JSC::MarkStack&);
     JSC::JSValue newQObject(QObject *object,
         QScriptEngine::ValueOwnership ownership = QScriptEngine::QtOwnership,
@@ -355,7 +346,6 @@ public:
 
     // private slots
     void _q_objectDestroyed(QObject *);
-#endif
 
     JSC::JSGlobalData *globalData;
     JSC::JSObject *originalGlobalObjectProxy;
@@ -400,13 +390,8 @@ public:
 
     QSet<JSC::JSObject*> visitedConversionObjects;
 
-#ifndef QT_NO_QOBJECT
     QHash<QObject*, QScript::QObjectData*> m_qobjectData;
-#endif
 
-#ifdef QT_NO_QOBJECT
-    QScriptEngine *q_ptr;
-#endif
 };
 
 namespace QScript
@@ -929,7 +914,6 @@ inline bool QScriptEnginePrivate::isVariant(JSC::JSValue value)
 
 inline bool QScriptEnginePrivate::isQObject(JSC::JSValue value)
 {
-#ifndef QT_NO_QOBJECT
     if (!isObject(value) || !value.inherits(&QScriptObject::info))
         return false;
     QScriptObject *object = static_cast<QScriptObject*>(JSC::asObject(value));
@@ -937,18 +921,11 @@ inline bool QScriptEnginePrivate::isQObject(JSC::JSValue value)
     return (delegate && (delegate->type() == QScriptObjectDelegate::QtObject ||
                          (delegate->type() == QScriptObjectDelegate::DeclarativeClassObject &&
                           static_cast<QScript::DeclarativeObjectDelegate*>(delegate)->scriptClass()->isQObject())));
-#else
-    return false;
-#endif
 }
 
 inline bool QScriptEnginePrivate::isQMetaObject(JSC::JSValue value)
 {
-#ifndef QT_NO_QOBJECT
     return isObject(value) && JSC::asObject(value)->inherits(&QScript::QMetaObjectWrapperObject::info);
-#else
-    return false;
-#endif
 }
 
 inline bool QScriptEnginePrivate::toBool(JSC::ExecState *exec, JSC::JSValue value)
@@ -1030,7 +1007,6 @@ inline QDateTime QScriptEnginePrivate::toDateTime(JSC::ExecState *exec, JSC::JSV
 
 inline QObject *QScriptEnginePrivate::toQObject(JSC::ExecState *exec, JSC::JSValue value)
 {
-#ifndef QT_NO_QOBJECT
     if (isObject(value) && value.inherits(&QScriptObject::info)) {
         QScriptObject *object = static_cast<QScriptObject*>(JSC::asObject(value));
         QScriptObjectDelegate *delegate = object->delegate();
@@ -1050,16 +1026,13 @@ inline QObject *QScriptEnginePrivate::toQObject(JSC::ExecState *exec, JSC::JSVal
         QScript::QScriptActivationObject *proxy = static_cast<QScript::QScriptActivationObject *>(JSC::asObject(value));
         return toQObject(exec, proxy->delegate());
     }
-#endif
     return 0;
 }
 
 inline const QMetaObject *QScriptEnginePrivate::toQMetaObject(JSC::ExecState*, JSC::JSValue value)
 {
-#ifndef QT_NO_QOBJECT
     if (isQMetaObject(value))
         return static_cast<QScript::QMetaObjectWrapperObject*>(JSC::asObject(value))->value();
-#endif
     return 0;
 }
 

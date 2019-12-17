@@ -1392,7 +1392,6 @@ void QColorDialogPrivate::init(const QColor &initial)
 
     initRGB();
 
-#ifndef QT_NO_SETTINGS
     if (!customSet) {
         QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
         for (int i = 0; i < 2*8; ++i) {
@@ -1403,7 +1402,6 @@ void QColorDialogPrivate::init(const QColor &initial)
             }
         }
     }
-#endif
 
     if (!smallDisplay) {
         standard = new QColorWell(q, 6, 8, stdrgb);
@@ -1811,13 +1809,11 @@ QColorDialog::~QColorDialog()
 {
     Q_D(QColorDialog);
 
-#ifndef QT_NO_SETTINGS
     if (!customSet) {
         QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
         for (int i = 0; i < 2*8; ++i)
             settings.setValue(QLatin1String("Qt/customColors/") + QString::number(i), cusrgb[i]);
     }
-#endif
     if (d->nativeDialogInUse)
         qt_guiPlatformPlugin()->colorDialogDelete(this);
 

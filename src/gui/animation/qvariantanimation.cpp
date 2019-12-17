@@ -438,9 +438,7 @@ void QVariantAnimation::registerInterpolator(QVariantAnimation::Interpolator fun
     // in such an order that we get here with interpolators == NULL,
     // to continue causes the app to crash on exit with a SEGV
     if (interpolators) {
-#ifndef QT_NO_THREAD
         QMutexLocker locker(QMutexPool::globalInstanceGet(interpolators));
-#endif
         if (interpolationType >= interpolators->count())
             interpolators->resize(interpolationType + 1);
         interpolators->replace(interpolationType, func);
@@ -450,9 +448,7 @@ void QVariantAnimation::registerInterpolator(QVariantAnimation::Interpolator fun
 QVariantAnimation::Interpolator QVariantAnimationPrivate::getInterpolator(int interpolationType)
 {
     QInterpolatorVector *interpolators = registeredInterpolators();
-#ifndef QT_NO_THREAD
     QMutexLocker locker(QMutexPool::globalInstanceGet(interpolators));
-#endif
     if (interpolationType < interpolators->count()) {
         QVariantAnimation::Interpolator ret = interpolators->at(interpolationType);
         if (ret) return ret;

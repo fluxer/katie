@@ -298,7 +298,7 @@ set_package_properties(Threads PROPERTIES
     PURPOSE "Required for threads support"
     DESCRIPTION "Platform dependent threads implementation"
     URL ""
-    TYPE RECOMMENDED
+    TYPE REQUIRED
 )
 
 find_package(Git)

@@ -969,12 +969,10 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
 
     q->data = &data;
 
-#ifndef QT_NO_THREAD
     if (!parent) {
         Q_ASSERT_X(q->thread() == qApp->thread(), "QWidget",
                    "Widgets must be created in the GUI thread.");
     }
-#endif
 
 #if defined(Q_WS_X11)
     if (desktopWidget) {

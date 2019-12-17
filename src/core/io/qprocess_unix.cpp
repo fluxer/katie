@@ -43,6 +43,7 @@
 #include "qfile.h"
 #include "qsocketnotifier.h"
 #include "qthread.h"
+#include "qstandardpaths.h"
 
 #include <errno.h>
 #include <stdlib.h>
@@ -1153,16 +1154,11 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
             argv[arguments.size() + 1] = 0;
 
             if (!program.contains(QLatin1Char('/'))) {
-                const QString path = QString::fromLocal8Bit(::getenv("PATH"));
+                const QString path = QStandardPaths::findExecutable(program);
                 if (!path.isEmpty()) {
-                    QStringList pathEntries = path.split(QLatin1Char(':'));
-                    for (int k = 0; k < pathEntries.size(); ++k) {
-                        QByteArray tmp = QFile::encodeName(pathEntries.at(k));
-                        if (!tmp.endsWith('/')) tmp += '/';
-                        tmp += QFile::encodeName(program);
-                        argv[0] = tmp.data();
-                        qt_safe_execv(argv[0], argv);
-                    }
+                    QByteArray tmp = QFile::encodeName(program);
+                    argv[0] = tmp.data();
+                    qt_safe_execv(argv[0], argv);
                 }
             } else {
                 QByteArray tmp = QFile::encodeName(program);

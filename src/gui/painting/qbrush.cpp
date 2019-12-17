@@ -319,7 +319,6 @@ struct QBrushDataPointerDeleter
     \sa Qt::BrushStyle, QPainter, QColor
 */
 
-#ifndef QT_NO_THREAD
 // Special deleter that only deletes if the ref-count goes to zero
 template <>
 class QGlobalStaticDeleter<QBrushData>
@@ -338,7 +337,6 @@ public:
         globalStatic.destroyed = true;
     }
 };
-#endif
 
 Q_GLOBAL_STATIC_WITH_INITIALIZER(QBrushData, nullBrushInstance,
                                  {

@@ -55,7 +55,6 @@
 #endif
 
 #include "qplatformdefs.h"
-
 #include "qclipboard.h"
 
 #ifndef QT_NO_CLIPBOARD
@@ -79,6 +78,7 @@
 #include "qdnd_p.h"
 #include "qwidget_p.h"
 #include "qevent_p.h"
+#include "qthread.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -500,10 +500,7 @@ bool QX11Data::clipboardWaitForEvent(Window win, int type, XEvent *event, int ti
         XFlush(qt_x11Data->display);
 
         // sleep 50 ms, so we don't use up CPU cycles all the time.
-        struct timeval usleep_tv;
-        usleep_tv.tv_sec = 0;
-        usleep_tv.tv_usec = 50000;
-        select(0, 0, 0, 0, &usleep_tv);
+        QThread::usleep(50000);
     } while (started.msecsTo(now) < timeout);
 
     return false;

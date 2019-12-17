@@ -742,10 +742,8 @@ static bool Equals(QScriptValue lhs, QScriptValue rhs)
         case QScript::Object:
             if (lhs.isVariant())
                 return lhs.strictlyEquals(rhs) || (lhs.toVariant() == rhs.toVariant());
-#ifndef QT_NO_QOBJECT
             else if (lhs.isQObject())
                 return (lhs.strictlyEquals(rhs)) || (lhs.toQObject() == rhs.toQObject());
-#endif
             else
                 return lhs.strictlyEquals(rhs);
         }
@@ -1271,7 +1269,6 @@ QDateTime QScriptValue::toDateTime() const
     return QScriptEnginePrivate::toDateTime(d->engine->currentFrame, d->jscValue);
 }
 
-#ifndef QT_NO_REGEXP
 /*!
   Returns the QRegExp representation of this value.
   If this QScriptValue is not a regular expression, an empty
@@ -1287,7 +1284,6 @@ QRegExp QScriptValue::toRegExp() const
     QScript::APIShim shim(d->engine);
     return QScriptEnginePrivate::toRegExp(d->engine->currentFrame, d->jscValue);
 }
-#endif // QT_NO_REGEXP
 
 /*!
   If this QScriptValue is a QObject, returns the QObject pointer

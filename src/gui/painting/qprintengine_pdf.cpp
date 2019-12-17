@@ -57,9 +57,7 @@
 #ifndef QT_NO_PRINTER
 #include <limits.h>
 #include <math.h>
-#ifndef QT_NO_COMPRESS
 #include <zlib.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -69,11 +67,7 @@ QT_BEGIN_NAMESPACE
 // Can't use it though, as gs generates completely wrong images if this is true.
 static const bool interpolateImages = false;
 
-#ifdef QT_NO_COMPRESS
-static const bool do_compress = false;
-#else
 static const bool do_compress = true;
-#endif
 
 QPdfPage::QPdfPage()
     : QPdf::ByteStream(true) // Enable file backing
@@ -742,7 +736,6 @@ void QPdfEnginePrivate::xprintf(const char* fmt, ...)
 
 int QPdfEnginePrivate::writeCompressed(QIODevice *dev)
 {
-#ifndef QT_NO_COMPRESS
     if (do_compress) {
         int size = QPdfPage::chunkSize();
         int sum = 0;
@@ -800,7 +793,6 @@ int QPdfEnginePrivate::writeCompressed(QIODevice *dev)
 
         return sum;
     } else
-#endif
     {
         QByteArray arr;
         int sum = 0;
@@ -816,7 +808,6 @@ int QPdfEnginePrivate::writeCompressed(QIODevice *dev)
 
 int QPdfEnginePrivate::writeCompressed(const char *src, int len)
 {
-#ifndef QT_NO_COMPRESS
     if(do_compress) {
         uLongf destLen = len + len/100 + 13; // zlib requirement
         Bytef* dest = new Bytef[destLen];
@@ -829,7 +820,6 @@ int QPdfEnginePrivate::writeCompressed(const char *src, int len)
         delete [] dest;
         len = destLen;
     } else
-#endif
     {
         stream->writeRawData(src,len);
     }

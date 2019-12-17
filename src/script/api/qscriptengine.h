@@ -25,16 +25,9 @@
 #define QSCRIPTENGINE_H
 
 #include <QtCore/qmetatype.h>
-
 #include <QtCore/qvariant.h>
 #include <QtCore/qsharedpointer.h>
-
-#ifndef QT_NO_QOBJECT
 #include <QtCore/qobject.h>
-#else
-#include <QtCore/qobjectdefs.h>
-#endif
-
 #include <QtScript/qscriptvalue.h>
 #include <QtScript/qscriptcontext.h>
 #include <QtScript/qscriptstring.h>
@@ -50,7 +43,6 @@ class QScriptClass;
 class QScriptEngineAgent;
 class QScriptEnginePrivate;
 
-#ifndef QT_NO_QOBJECT
 
 template <class T>
 inline QScriptValue qscriptQMetaObjectConstructor(QScriptContext *, QScriptEngine *, T *)
@@ -58,11 +50,8 @@ inline QScriptValue qscriptQMetaObjectConstructor(QScriptContext *, QScriptEngin
     return QScriptValue();
 }
 
-#endif // QT_NO_QOBJECT
 
-#ifndef QT_NO_REGEXP
 class QRegExp;
-#endif
 
 template <typename T>
 inline QScriptValue qScriptValueFromValue(QScriptEngine *, const T &);
@@ -101,13 +90,9 @@ private:
 };
 
 class Q_SCRIPT_EXPORT QScriptEngine
-#ifndef QT_NO_QOBJECT
     : public QObject
-#endif
 {
-#ifndef QT_NO_QOBJECT
     Q_OBJECT
-#endif
 public:
     enum ValueOwnership {
         QtOwnership,
@@ -130,9 +115,7 @@ public:
     Q_DECLARE_FLAGS(QObjectWrapOptions, QObjectWrapOption)
 
     QScriptEngine();
-#ifndef QT_NO_QOBJECT
     explicit QScriptEngine(QObject *parent);
-#endif
     virtual ~QScriptEngine();
 
     QScriptValue globalObject() const;
@@ -172,9 +155,7 @@ public:
     QScriptValue newVariant(const QVariant &value);
     QScriptValue newVariant(const QScriptValue &object, const QVariant &value);
 
-#ifndef QT_NO_REGEXP
     QScriptValue newRegExp(const QRegExp &regexp);
-#endif
 
     QScriptValue newObject();
     QScriptValue newObject(QScriptClass *scriptClass, const QScriptValue &data = QScriptValue());
@@ -184,7 +165,6 @@ public:
     QScriptValue newDate(const QDateTime &value);
     QScriptValue newActivationObject();
 
-#ifndef QT_NO_QOBJECT
     QScriptValue newQObject(QObject *object, ValueOwnership ownership = QtOwnership,
                             const QObjectWrapOptions &options = 0);
     QScriptValue newQObject(const QScriptValue &scriptObject, QObject *qtObject,
@@ -195,7 +175,6 @@ public:
 
     template <class T> QScriptValue scriptValueFromQMetaObject();
 
-#endif // QT_NO_QOBJECT
 
 
 
@@ -239,10 +218,8 @@ public:
 
     QScriptValue objectById(qint64 id) const;
 
-#ifndef QT_NO_QOBJECT
 Q_SIGNALS:
     void signalHandlerException(const QScriptValue &exception);
-#endif
 
 private:
     QScriptValue create(int type, const void *ptr);
@@ -261,23 +238,14 @@ private:
     friend inline bool qscriptvalue_cast_helper(const QScriptValue &, int, void *);
 
 protected:
-#ifdef QT_NO_QOBJECT
-    QScriptEnginePrivate* d_ptr;
-
-    QScriptEngine(QScriptEnginePrivate &dd);
-#else
     QScriptEngine(QScriptEnginePrivate &dd, QObject *parent = Q_NULLPTR);
-#endif
 
 private:
     Q_DECLARE_PRIVATE(QScriptEngine)
     Q_DISABLE_COPY(QScriptEngine)
-#ifndef QT_NO_QOBJECT
     Q_PRIVATE_SLOT(d_func(), void _q_objectDestroyed(QObject *))
-#endif
 };
 
-#ifndef QT_NO_QOBJECT
 
 #define Q_SCRIPT_DECLARE_QMETAOBJECT(T, _Arg1) \
 template<> inline QScriptValue qscriptQMetaObjectConstructor<T>(QScriptContext *ctx, QScriptEngine *eng, T *) \
@@ -299,7 +267,6 @@ template <class T> QScriptValue QScriptEngine::scriptValueFromQMetaObject()
                             newFunction(reinterpret_cast<FunctionWithArgSignature>(cptr), 0));
 }
 
-#endif // QT_NO_QOBJECT
 
 inline QScriptValue qScriptValueFromValue_helper(QScriptEngine *engine, int type, const void *ptr)
 {
@@ -407,14 +374,12 @@ int qScriptRegisterSequenceMetaType(
                                       qScriptValueToSequence, prototype);
 }
 
-#ifndef QT_NO_QOBJECT
 Q_SCRIPT_EXPORT bool qScriptConnect(QObject *sender, const char *signal,
                                     const QScriptValue &receiver,
                                     const QScriptValue &function);
 Q_SCRIPT_EXPORT bool qScriptDisconnect(QObject *sender, const char *signal,
                                        const QScriptValue &receiver,
                                        const QScriptValue &function);
-#endif // QT_NO_QOBJECT
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QScriptEngine::QObjectWrapOptions)
 

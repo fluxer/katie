@@ -355,7 +355,6 @@ bool QFileSystemIteratorPrivate::matchesFilters(const QAbstractFileEngineIterato
     const bool includeHidden = (filters & QDir::Hidden);
     const bool includeSystem = (filters & QDir::System);
 
-#ifndef QT_NO_REGEXP
     // Prepare name filters
     QList<QRegExp> regexps;
     bool hasNameFilters = !nameFilters.isEmpty() && !(nameFilters.contains(QLatin1String("*")));
@@ -366,7 +365,6 @@ bool QFileSystemIteratorPrivate::matchesFilters(const QAbstractFileEngineIterato
                                QRegExp::Wildcard);
         }
     }
-#endif
 
     QString fileName = it->currentFileName();
     if (fileName.isEmpty()) {
@@ -377,7 +375,6 @@ bool QFileSystemIteratorPrivate::matchesFilters(const QAbstractFileEngineIterato
     QFileInfo fi = it->currentFileInfo();
     QString filePath = it->currentFilePath();
 
-#ifndef QT_NO_REGEXP
     // Pass all entries through name filters, except dirs if the AllDirs
     // filter is passed.
     if (hasNameFilters && !((filters & QDir::AllDirs) && fi.isDir())) {
@@ -391,7 +388,6 @@ bool QFileSystemIteratorPrivate::matchesFilters(const QAbstractFileEngineIterato
         if (!matched)
             return false;
     }
-#endif
     
     bool dotOrDotDot = (fileName == QLatin1String(".") || fileName == QLatin1String(".."));
     if ((filters & QDir::NoDotAndDotDot) && dotOrDotDot)

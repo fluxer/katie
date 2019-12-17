@@ -31,7 +31,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_NO_STANDARDPATHS
 
 class Q_CORE_EXPORT QStandardPaths
 {
@@ -80,7 +79,6 @@ private:
     Q_DISABLE_COPY(QStandardPaths)
 };
 
-#endif // QT_NO_STANDARDPATHS
 
 QT_END_NAMESPACE
 

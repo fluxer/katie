@@ -388,9 +388,6 @@ void tst_QLocale::ctor()
 
 void tst_QLocale::emptyCtor()
 {
-#if defined(QT_NO_PROCESS)
-    QSKIP("Qt was compiled with QT_NO_PROCESS", SkipAll);
-#else
 #define TEST_CTOR(req_lc, exp_str) \
     { \
     /* Test constructor without arguments. Needs separate process */ \
@@ -469,7 +466,6 @@ void tst_QLocale::emptyCtor()
     TEST_CTOR("123456", defaultLoc);
 
 #undef TEST_CTOR
-#endif
 }
 
 void tst_QLocale::unixLocaleName()

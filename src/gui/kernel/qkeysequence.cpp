@@ -47,13 +47,11 @@
 
 #include "qshortcut.h"
 #include "qdebug.h"
-#ifndef QT_NO_REGEXP
-# include "qregexp.h"
-#endif
+#include "qvariant.h"
+
 #ifndef QT_NO_DATASTREAM
 # include "qdatastream.h"
 #endif
-#include "qvariant.h"
 
 QT_BEGIN_NAMESPACE
 

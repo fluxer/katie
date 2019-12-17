@@ -107,6 +107,26 @@
 #cmakedefine QT_LARGEFILE_SUPPORT ${QT_LARGEFILE_SUPPORT}
 #cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
 
+// not supported, used to bootstrap
+#cmakedefine QT_NO_QOBJECT
+#cmakedefine QT_NO_COMPRESS
+#cmakedefine QT_NO_THREAD
+#cmakedefine QT_NO_PROCESS
+#cmakedefine QT_NO_DATASTREAM
+#cmakedefine QT_NO_TEXTSTREAM
+#cmakedefine QT_NO_REGEXP
+#cmakedefine QT_NO_REGEXP_ANCHOR_ALT
+#cmakedefine QT_NO_REGEXP_BACKREF
+#cmakedefine QT_NO_REGEXP_CAPTURE
+#cmakedefine QT_NO_REGEXP_CCLASS
+#cmakedefine QT_NO_REGEXP_ESCAPE
+#cmakedefine QT_NO_REGEXP_INTERVAL
+#cmakedefine QT_NO_REGEXP_LOOKAHEAD
+#cmakedefine QT_NO_REGEXP_OPTIM
+#cmakedefine QT_NO_REGEXP_WILDCARD
+#cmakedefine QT_NO_STANDARDPATHS
+#cmakedefine QT_NO_SETTINGS
+
 #cmakedefine QT_NO_USING_NAMESPACE
 #cmakedefine QT_NO_ACCESSIBILITY
 #cmakedefine QT_NO_ACTION
@@ -128,13 +148,11 @@
 #cmakedefine QT_NO_COLUMNVIEW
 #cmakedefine QT_NO_COMBOBOX
 #cmakedefine QT_NO_COMPLETER
-#cmakedefine QT_NO_COMPRESS
 #cmakedefine QT_NO_CONCURRENT
 #cmakedefine QT_NO_CONTEXTMENU
 #cmakedefine QT_NO_CSSPARSER
 #cmakedefine QT_NO_CUPS
 #cmakedefine QT_NO_CURSOR
-#cmakedefine QT_NO_DATASTREAM
 #cmakedefine QT_NO_DATAWIDGETMAPPER
 #cmakedefine QT_NO_DATESTRING
 #cmakedefine QT_NO_DATETIMEEDIT
@@ -236,27 +254,15 @@
 #cmakedefine QT_NO_PROXYMODEL
 #cmakedefine QT_NO_QCOLUMNVIEW
 #cmakedefine QT_NO_QFUTURE
-#cmakedefine QT_NO_QOBJECT
 #cmakedefine QT_NO_QOBJECT_CHECK
 #cmakedefine QT_NO_QUATERNION
 #cmakedefine QT_NO_QUUID_STRING
-#cmakedefine QT_NO_REGEXP
-#cmakedefine QT_NO_REGEXP_ANCHOR_ALT
-#cmakedefine QT_NO_REGEXP_BACKREF
-#cmakedefine QT_NO_REGEXP_CAPTURE
-#cmakedefine QT_NO_REGEXP_CCLASS
-#cmakedefine QT_NO_REGEXP_ESCAPE
-#cmakedefine QT_NO_REGEXP_INTERVAL
-#cmakedefine QT_NO_REGEXP_LOOKAHEAD
-#cmakedefine QT_NO_REGEXP_OPTIM
-#cmakedefine QT_NO_REGEXP_WILDCARD
 #cmakedefine QT_NO_RESIZEHANDLER
 #cmakedefine QT_NO_RESOLV
 #cmakedefine QT_NO_RUBBERBAND
 #cmakedefine QT_NO_SCROLLAREA
 #cmakedefine QT_NO_SCROLLBAR
 #cmakedefine QT_NO_SESSIONMANAGER
-#cmakedefine QT_NO_SETTINGS
 #cmakedefine QT_NO_SHAREDMEMORY
 #cmakedefine QT_NO_SHARED_EXPORT
 #cmakedefine QT_NO_SHORTCUT
@@ -270,7 +276,6 @@
 #cmakedefine QT_NO_SPLITTER
 #cmakedefine QT_NO_STACKEDWIDGET
 #cmakedefine QT_NO_STANDARDITEMMODEL
-#cmakedefine QT_NO_STANDARDPATHS
 #cmakedefine QT_NO_STATUSBAR
 #cmakedefine QT_NO_STATUSTIP
 #cmakedefine QT_NO_STL_WCHAR
@@ -304,8 +309,6 @@
 #cmakedefine QT_NO_TEXTEDIT
 #cmakedefine QT_NO_TEXTHTMLPARSER
 #cmakedefine QT_NO_TEXTODFWRITER
-#cmakedefine QT_NO_TEXTSTREAM
-#cmakedefine QT_NO_THREAD
 #cmakedefine QT_NO_TOOLBAR
 #cmakedefine QT_NO_TOOLBOX
 #cmakedefine QT_NO_TOOLBUTTON
@@ -345,19 +348,9 @@
 #cmakedefine QT_NO_XSHM
 #cmakedefine QT_NO_XSYNC
 
-// Concurrent
-#if !defined(QT_NO_CONCURRENT) && defined(QT_NO_THREAD)
-#define QT_NO_CONCURRENT
-#endif
-
 // Future
 #if !defined(QT_NO_QFUTURE) && defined(QT_NO_CONCURRENT)
 #define QT_NO_QFUTURE
-#endif
-
-// Process
-#if !defined(QT_NO_PROCESS) && defined(QT_NO_THREAD)
-#define QT_NO_PROCESS
 #endif
 
 // Animation
@@ -383,21 +376,6 @@
 // QFileSystemModel
 #if !defined(QT_NO_FILESYSTEMMODEL) && (defined(QT_NO_FILESYSTEMWATCHER))
 #define QT_NO_FILESYSTEMMODEL
-#endif
-
-// QHostInfo
-#if !defined(QT_NO_HOSTINFO) && (defined(QT_NO_TEXTSTREAM))
-#define QT_NO_HOSTINFO
-#endif
-
-// XPM Image Format
-#if !defined(QT_NO_IMAGEFORMAT_XPM) && (defined(QT_NO_TEXTSTREAM))
-#define QT_NO_IMAGEFORMAT_XPM
-#endif
-
-// QLibrary
-#if !defined(QT_NO_LIBRARY) && (defined(QT_NO_SETTINGS))
-#define QT_NO_LIBRARY
 #endif
 
 // QMenu
@@ -511,7 +489,7 @@
 #endif
 
 // Hyper Text Transfer Protocol
-#if !defined(QT_NO_HTTP) && (defined(QT_NO_HOSTINFO) || defined(QT_NO_THREAD))
+#if !defined(QT_NO_HTTP) && defined(QT_NO_HOSTINFO)
 #define QT_NO_HTTP
 #endif
 
@@ -521,7 +499,7 @@
 #endif
 
 // QPrinter
-#if !defined(QT_NO_PRINTER) && (defined(QT_NO_TEXTSTREAM) || defined(QT_NO_TEMPORARYFILE))
+#if !defined(QT_NO_PRINTER) && defined(QT_NO_TEMPORARYFILE)
 #define QT_NO_PRINTER
 #endif
 

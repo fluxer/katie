@@ -45,17 +45,9 @@ QT_BEGIN_NAMESPACE
 class QIODevice;
 class QSettingsPrivate;
 
-#ifndef QT_NO_QOBJECT
 class Q_CORE_EXPORT QSettings : public QObject
-#else
-class Q_CORE_EXPORT QSettings
-#endif
 {
-#ifndef QT_NO_QOBJECT
     Q_OBJECT
-#else
-    QSettingsPrivate* d_ptr;
-#endif
     Q_DECLARE_PRIVATE(QSettings)
 
 public:
@@ -93,7 +85,6 @@ public:
         SystemScope
     };
 
-#ifndef QT_NO_QOBJECT
     explicit QSettings(const QString &organization,
                        const QString &application = QString(), QObject *parent = Q_NULLPTR);
     QSettings(Scope scope, const QString &organization,
@@ -102,15 +93,6 @@ public:
               const QString &application = QString(), QObject *parent = Q_NULLPTR);
     QSettings(const QString &fileName, Format format, QObject *parent = Q_NULLPTR);
     explicit QSettings(QObject *parent = Q_NULLPTR);
-#else
-    explicit QSettings(const QString &organization,
-                       const QString &application = QString());
-    QSettings(Scope scope, const QString &organization,
-              const QString &application = QString());
-    QSettings(Format format, Scope scope, const QString &organization,
-              const QString &application = QString());
-    QSettings(const QString &fileName, Format format);
-#endif
     ~QSettings();
 
     void clear();
@@ -166,9 +148,7 @@ public:
                                  Qt::CaseSensitivity caseSensitivity = Qt::CaseSensitive);
 
 protected:
-#ifndef QT_NO_QOBJECT
     bool event(QEvent *event);
-#endif
 
 private:
     Q_DISABLE_COPY(QSettings)

@@ -1402,7 +1402,6 @@ bool QFileSystemModel::nameFilterDisables() const
 void QFileSystemModel::setNameFilters(const QStringList &filters)
 {
     // Prep the regexp's ahead of time
-#ifndef QT_NO_REGEXP
     Q_D(QFileSystemModel);
 
     if (!d->bypassFilters.isEmpty()) {
@@ -1432,7 +1431,6 @@ void QFileSystemModel::setNameFilters(const QStringList &filters)
     }
     d->forceSort = true;
     d->delayedSort();
-#endif
 }
 
 /*!
@@ -1442,11 +1440,9 @@ QStringList QFileSystemModel::nameFilters() const
 {
     Q_D(const QFileSystemModel);
     QStringList filters;
-#ifndef QT_NO_REGEXP
     for (int i = 0; i < d->nameFilters.size(); ++i) {
          filters << d->nameFilters.at(i).pattern();
     }
-#endif
     return filters;
 }
 
@@ -1799,7 +1795,6 @@ bool QFileSystemModelPrivate::filtersAcceptsNode(const QFileSystemNode *node) co
  */
 bool QFileSystemModelPrivate::passNameFilters(const QFileSystemNode *node) const
 {
-#ifndef QT_NO_REGEXP
     if (nameFilters.isEmpty())
         return true;
 
@@ -1811,7 +1806,6 @@ bool QFileSystemModelPrivate::passNameFilters(const QFileSystemNode *node) const
         }
         return false;
     }
-#endif
     return true;
 }
 
