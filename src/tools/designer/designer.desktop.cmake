@@ -7,4 +7,4 @@ MimeType=application/x-designer;
 Terminal=false
 Encoding=UTF-8
 Type=Application
-Categories=Qt;Development; 
+Categories=Qt;Development;GUIDesigner;
