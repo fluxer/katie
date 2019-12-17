@@ -388,13 +388,7 @@ void Generator::generateCode()
         }
     }
     if (!purestSuperClass.isEmpty() && !isQObject) {
-        QByteArray superClass = purestSuperClass;
-        // workaround for VC6
-        if (superClass.contains("::")) {
-            fprintf(out, "    typedef %s QMocSuperClass;\n", superClass.constData());
-            superClass = "QMocSuperClass";
-        }
-        fprintf(out, "    return %s::qt_metacast(_clname);\n", superClass.constData());
+        fprintf(out, "    return %s::qt_metacast(_clname);\n", purestSuperClass.constData());
     } else {
         fprintf(out, "    return Q_NULLPTR;\n");
     }
