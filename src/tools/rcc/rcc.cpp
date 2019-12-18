@@ -226,7 +226,6 @@ qint64 RCCFileInfo::writeDataBlob(RCCResourceLibrary &lib, qint64 offset,
     }
     QByteArray data = file.readAll();
 
-#ifndef QT_NO_COMPRESS
     // Check if compression is useful for this file
     if (m_compressLevel != 0 && data.size() != 0) {
         QByteArray compressed =
@@ -238,7 +237,6 @@ qint64 RCCFileInfo::writeDataBlob(RCCResourceLibrary &lib, qint64 offset,
             m_flags |= Compressed;
         }
     }
-#endif // QT_NO_COMPRESS
 
     // some info
     if (text) {

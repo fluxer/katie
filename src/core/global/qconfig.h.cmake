@@ -91,13 +91,7 @@
 #define QT_NO_GLIB
 #define QT_NO_ICONV
 
-/* Qt build specs */
-#define QT_KATIE
-#cmakedefine QT_VISIBILITY_AVAILABLE
-#cmakedefine QT_LARGEFILE_SUPPORT ${QT_LARGEFILE_SUPPORT}
-#cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
-
-// not supported, used to bootstrap
+// Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
 #cmakedefine QT_NO_COMPRESS
 #cmakedefine QT_NO_THREAD
@@ -116,6 +110,12 @@
 #cmakedefine QT_NO_REGEXP_WILDCARD
 #cmakedefine QT_NO_STANDARDPATHS
 #cmakedefine QT_NO_SETTINGS
+
+/* Build specs */
+#define QT_KATIE
+#cmakedefine QT_VISIBILITY_AVAILABLE
+#cmakedefine QT_LARGEFILE_SUPPORT ${QT_LARGEFILE_SUPPORT}
+#cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
 
 #cmakedefine QT_NO_USING_NAMESPACE
 #cmakedefine QT_NO_ACCESSIBILITY

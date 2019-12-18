@@ -76,7 +76,6 @@ static QByteArray transformImageData(const QString &data)
 
 static QByteArray unzipXPM(const QString &data, ulong& length)
 {
-#ifndef QT_NO_COMPRESS
     const int lengthOffset = 4;
     QByteArray ba(lengthOffset, ' ');
 
@@ -88,11 +87,6 @@ static QByteArray unzipXPM(const QString &data, ulong& length)
     ba[3] = (length & 0x000000ff);
     ba.append(transformImageData(data));
     return qUncompress(ba);
-#else
-    Q_UNUSED(data);
-    Q_UNUSED(length);
-    return QByteArray();
-#endif
 }
 
 
