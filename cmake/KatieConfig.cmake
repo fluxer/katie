@@ -19,7 +19,6 @@
 #  KATIE_TOOLS_SUFFIX           - tools suffix set when the project was build
 #  KATIE_COMPONENTS             - components that were build
 #  KATIE_TOOLS                  - tools that were build
-#  KATIE_KEY                    - build key, used in plugins verification check
 
 # avoiding use of return()
 if(NOT KATIE_FOUND)
@@ -57,7 +56,6 @@ if(NOT KATIE_FOUND)
     set(KATIE_TOOLS_SUFFIX "@KATIE_TOOLS_SUFFIX@")
     set(KATIE_MKSPECS_DIR "${CMAKE_CURRENT_LIST_DIR}/mkspecs")
     set(KATIE_TYPE @KATIE_TYPE@)
-    set(KATIE_KEY "@KATIE_KEY@")
 
     foreach(component ${KATIE_COMPONENTS})
         string(TOUPPER ${component} uppercomp)

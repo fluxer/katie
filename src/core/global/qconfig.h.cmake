@@ -93,14 +93,6 @@
 
 /* Qt build specs */
 #define QT_KATIE
-#ifndef QT_EDITION
-#  define QT_EDITION QT_EDITION_DESKTOP
-#endif
-
-#ifndef QT_BUILD_KEY
-#  define QT_BUILD_KEY "${KATIE_KEY}"
-#endif
-
 #cmakedefine QT_VISIBILITY_AVAILABLE
 #cmakedefine QT_LARGEFILE_SUPPORT ${QT_LARGEFILE_SUPPORT}
 #cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}

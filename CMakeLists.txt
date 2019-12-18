@@ -72,8 +72,8 @@ set(KATIE_MINOR "9")
 set(KATIE_MICRO "0")
 set(KATIE_HEX "0x040900")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
-# this one is set via macro later, if possible
-set(KATIE_GIT "unknown")
+# this one is set via macro later, if possible. also used in config.cpp.cmake
+set(KATIE_GIT "unstable-${KATIE_VERSION}")
 
 # components and tools that will be build, changed depending on the requirements availability
 # NOTE: excluding DesignerComponents as it was never used as public component, currently only

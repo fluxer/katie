@@ -1,4 +1,4 @@
-# KatieConfig overrides KATIE_TYPE and KATIE_KEY
+# KatieConfig overrides KATIE_TYPE
 
 if(NOT KATIE_TYPE)
     set(KATIE_TYPE SHARED)
@@ -88,10 +88,6 @@ try_compile(bsymbolic_functions_test
 )
 if(NOT bsymbolic_functions_test OR NOT CMAKE_POSITION_INDEPENDENT_CODE)
     katie_definition(-DQ_NO_DATA_RELOCATION)
-endif()
-
-if(NOT KATIE_KEY)
-    set(KATIE_KEY "${KATIE_ARCHITECTURE}-${KATIE_PLATFORM}-${KATIE_COMPILER}")
 endif()
 
 # Set compiler standard to C++ 11, appending to CMAKE_CXX_FLAGS is done so that try_compile() is
