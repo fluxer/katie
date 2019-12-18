@@ -428,7 +428,7 @@ JSValue QT_FASTCALL globalFuncUnescape(ExecState* exec, JSObject*, JSValue, cons
     return jsString(exec, builder.release());
 }
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 JSValue QT_FASTCALL globalFuncJSCPrint(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     CStringBuffer string;

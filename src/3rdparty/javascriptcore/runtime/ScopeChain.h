@@ -44,7 +44,7 @@ namespace JSC {
             Q_ASSERT(globalData);
             Q_ASSERT(globalObject);
         }
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         // Due to the number of subtle and timing dependent bugs that have occurred due
         // to deleted but still "valid" ScopeChainNodes we now deliberately clobber the
         // contents in debug builds.
@@ -86,7 +86,7 @@ namespace JSC {
         ScopeChainIterator begin() const;
         ScopeChainIterator end() const;
 
-#ifndef NDEBUG        
+#ifndef QT_NO_DEBUG        
         void print() const;
 #endif
     };
@@ -184,7 +184,7 @@ namespace JSC {
         {
             if (m_node)
                 m_node->deref();
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             m_node = 0;
 #endif
         }
@@ -214,7 +214,7 @@ namespace JSC {
         // Returns the depth of the current call frame's scope chain
         int localDepth() const;
 
-#ifndef NDEBUG        
+#ifndef QT_NO_DEBUG        
         void print() const { m_node->print(); }
 #endif
 

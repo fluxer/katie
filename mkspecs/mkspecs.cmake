@@ -77,7 +77,7 @@ if(NOT KATIE_ARCHITECTURE)
 endif()
 
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-    katie_definition(-DQT_NO_DEBUG -DNDEBUG)
+    katie_definition(-DQT_NO_DEBUG)
 endif()
 
 try_compile(bsymbolic_functions_test

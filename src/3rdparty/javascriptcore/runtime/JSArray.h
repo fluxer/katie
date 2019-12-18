@@ -157,7 +157,7 @@ namespace JSC {
     {
         Q_ASSERT(Heap::isCellMarked(cell));
         if (!cell->structure()->typeInfo().overridesMarkChildren()) {
-#ifdef NDEBUG
+#ifdef QT_NO_DEBUG
             asObject(cell)->markChildrenDirect(*this);
 #else
             Q_ASSERT(!m_isCheckingForDefaultMarkViolation);

@@ -190,7 +190,7 @@ namespace JSC {
         void setTransitionTable(TransitionTable* table)
         {
             Q_ASSERT(usingSingleTransitionSlot());
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             setSingleTransition(0);
 #endif
             m_transitions.m_table = table;

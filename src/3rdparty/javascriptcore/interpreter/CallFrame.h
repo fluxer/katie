@@ -89,7 +89,7 @@ namespace JSC  {
         const MarkedArgumentBuffer& emptyList() const { return *globalData().emptyList; }
         Interpreter* interpreter() { return globalData().interpreter; }
         Heap* heap() { return &globalData().heap; }
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         void dumpCaller();
 #endif
         static const HashTable* arrayTable(CallFrame* callFrame) { return callFrame->globalData().arrayTable; }

@@ -95,7 +95,7 @@ int QDesignerWidgetDataBaseInterface::indexOf(QDesignerWidgetDataBaseItemInterfa
 */
 void QDesignerWidgetDataBaseInterface::insert(int index, QDesignerWidgetDataBaseItemInterface *item)
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     qDebug() << "insert at " << index << ' ' << item->name() << " derived from " << item->extends(); 
 #endif
     m_items.insert(index, item);
@@ -105,7 +105,7 @@ void QDesignerWidgetDataBaseInterface::insert(int index, QDesignerWidgetDataBase
 */
 void QDesignerWidgetDataBaseInterface::append(QDesignerWidgetDataBaseItemInterface *item)
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     qDebug() << "append " << item->name() << " derived from " << item->extends();
 #endif
     m_items.append(item);

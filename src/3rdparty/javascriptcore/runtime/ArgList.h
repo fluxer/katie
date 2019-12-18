@@ -46,7 +46,7 @@ namespace JSC {
         MarkedArgumentBuffer()
             : m_isUsingInlineBuffer(true)
             , m_markSet(Q_NULLPTR)
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             , m_isReadOnly(false)
 #endif
         {
@@ -60,7 +60,7 @@ namespace JSC {
             , m_size(size)
             , m_isUsingInlineBuffer(true)
             , m_markSet(Q_NULLPTR)
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             , m_isReadOnly(true)
 #endif
         {
@@ -73,7 +73,7 @@ namespace JSC {
 
             m_buffer = buffer;
             m_size = size;
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             m_isReadOnly = true;
 #endif
         }
@@ -151,7 +151,7 @@ namespace JSC {
 
         VectorType m_vector;
         ListSet* m_markSet;
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         bool m_isReadOnly;
 #endif
 

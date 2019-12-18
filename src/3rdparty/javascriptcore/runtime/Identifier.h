@@ -93,7 +93,7 @@ namespace JSC {
         static PassRefPtr<UString::Rep> add(ExecState* exec, UString::Rep* r)
         {
             if (r->isIdentifier()) {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
                 checkSameIdentifierTable(exec);
 #endif
                 return r;
@@ -103,7 +103,7 @@ namespace JSC {
         static PassRefPtr<UString::Rep> add(JSGlobalData* globalData, UString::Rep* r)
         {
             if (r->isIdentifier()) {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
                 checkSameIdentifierTable(globalData);
 #endif
                 return r;
@@ -114,7 +114,7 @@ namespace JSC {
         static PassRefPtr<UString::Rep> addSlowCase(ExecState*, UString::Rep* r);
         static PassRefPtr<UString::Rep> addSlowCase(JSGlobalData*, UString::Rep* r);
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         static void checkSameIdentifierTable(ExecState*);
         static void checkSameIdentifierTable(JSGlobalData*);
 #endif

@@ -29,7 +29,7 @@
 
 namespace JSC {
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 
 void ScopeChainNode::print() const
 {

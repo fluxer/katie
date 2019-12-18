@@ -36,7 +36,7 @@
 
 #define DUMP_STRUCTURE_ID_STATISTICS 0
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 #define DO_PROPERTYMAP_CONSTENCY_CHECK 0
 #else
 #define DO_PROPERTYMAP_CONSTENCY_CHECK 0
@@ -56,7 +56,7 @@ static const unsigned tinyMapThreshold = 20;
 
 static const unsigned newTableSize = 16;
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 static bool shouldIgnoreLeaks;
 static HashSet<Structure*>& ignoreSet = *(new HashSet<Structure*>);
 #endif
@@ -127,7 +127,7 @@ Structure::Structure(JSValue prototype, const TypeInfo& typeInfo)
     Q_ASSERT(m_prototype);
     Q_ASSERT(m_prototype.isObject() || m_prototype.isNull());
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     if (shouldIgnoreLeaks)
         ignoreSet.add(this);
     else
@@ -164,7 +164,7 @@ Structure::~Structure()
         fastFree(m_propertyTable);
     }
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     HashSet<Structure*>::iterator it = ignoreSet.find(this);
     if (it != ignoreSet.end())
         ignoreSet.remove(it);
@@ -176,7 +176,7 @@ Structure::~Structure()
     liveStructureSet.remove(this);
 #endif
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     if (m_count) {
         qDebug("LEAK: %u Structure", m_count);
     }
@@ -185,14 +185,14 @@ Structure::~Structure()
 
 void Structure::startIgnoringLeaks()
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     shouldIgnoreLeaks = true;
 #endif
 }
 
 void Structure::stopIgnoringLeaks()
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     shouldIgnoreLeaks = false;
 #endif
 }

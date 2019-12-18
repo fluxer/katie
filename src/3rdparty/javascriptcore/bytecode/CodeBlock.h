@@ -109,7 +109,7 @@ namespace JSC {
 
         static void dumpStatistics();
 
-#if !defined(NDEBUG) || ENABLE_OPCODE_SAMPLING
+#if !defined(QT_NO_DEBUG) || ENABLE_OPCODE_SAMPLING
         void dump(ExecState*) const;
         void printStructures(const Instruction*) const;
         void printStructure(const char* name, const Instruction*, int operand) const;
@@ -142,7 +142,7 @@ namespace JSC {
         Vector<Instruction>& instructions() { return m_instructions; }
         void discardBytecode() { m_instructions.clear(); }
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         unsigned instructionCount() { return m_instructionCount; }
         void setInstructionCount(unsigned instructionCount) { m_instructionCount = instructionCount; }
 #endif
@@ -243,7 +243,7 @@ namespace JSC {
         int m_numParameters;
 
     private:
-#if !defined(NDEBUG) || ENABLE(OPCODE_SAMPLING)
+#if !defined(QT_NO_DEBUG) || ENABLE(OPCODE_SAMPLING)
         void dump(ExecState*, const Vector<Instruction>::const_iterator& begin, Vector<Instruction>::const_iterator&) const;
 
         const char* registerName(ExecState*, int r) const;
@@ -266,7 +266,7 @@ namespace JSC {
         JSGlobalData* m_globalData;
 
         Vector<Instruction> m_instructions;
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         unsigned m_instructionCount;
 #endif
 

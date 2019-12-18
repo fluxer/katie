@@ -422,7 +422,7 @@ void WidgetDataBase::loadPlugins()
             }
         }
     }
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     qDebug() << "WidgetDataBase::loadPlugins(): " << addedPlugins << " added, " << replacedPlugins << " replaced, " << removedPlugins << "deleted.";
 #endif
 }
@@ -780,7 +780,7 @@ QDESIGNER_SHARED_EXPORT QDesignerWidgetDataBaseItemInterface *
                       const QString &includeFile,
                       bool promoted, bool custom)
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     qDebug() << "appendDerived " << className << " derived from " << baseClassName;
 #endif
     // Check.
@@ -817,7 +817,7 @@ QDESIGNER_SHARED_EXPORT QDesignerWidgetDataBaseItemInterface *
     // Create this item, inheriting its base properties
     const int baseIndex = db->indexOfClassName(baseClassName);
     if (baseIndex == -1) {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         qDebug() << "appendDerived failed due to missing base class";
 #endif
         return 0;

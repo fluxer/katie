@@ -314,7 +314,7 @@ Interpreter::Interpreter()
 #endif
 }
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 
 void Interpreter::dumpCallFrame(CallFrame* callFrame)
 {

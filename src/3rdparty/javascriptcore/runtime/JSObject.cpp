@@ -65,14 +65,14 @@ static inline void getClassPropertyNames(ExecState* exec, const ClassInfo* class
 
 void JSObject::markChildren(MarkStack& markStack)
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     bool wasCheckingForDefaultMarkViolation = markStack.m_isCheckingForDefaultMarkViolation;
     markStack.m_isCheckingForDefaultMarkViolation = false;
 #endif
 
     markChildrenDirect(markStack);
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     markStack.m_isCheckingForDefaultMarkViolation = wasCheckingForDefaultMarkViolation;
 #endif
 }

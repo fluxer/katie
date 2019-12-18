@@ -129,7 +129,7 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
         const int numMatches = pcre_exec(m_regExp, Q_NULLPTR, s.ascii(), s.size(), startOffset, 0, offsetVector, offsetVectorSize);
 
         if (numMatches < 0) {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             if (numMatches != PCRE_ERROR_NOMATCH)
                 fprintf(stderr, "jsRegExpExecute failed with result %d\n", numMatches);
 #endif

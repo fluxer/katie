@@ -199,7 +199,7 @@ namespace JSC {
         bool isCell() const;
         JSCell* asCell() const;
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         char* description();
 #endif
 

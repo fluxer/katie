@@ -535,7 +535,7 @@ void QZipReaderPrivate::scanFiles()
 
 void QZipWriterPrivate::addEntry(EntryType type, const QString &fileName, const QByteArray &contents/*, QFile::Permissions permissions, QZip::Method m*/)
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     static const char *entryTypes[] = {
         "directory",
         "file     ",

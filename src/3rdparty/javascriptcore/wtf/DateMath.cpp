@@ -463,7 +463,7 @@ LocalTimeOffset calculateLocalTimeOffset(double ms)
 
 void initializeDates()
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     static bool alreadyInitialized;
     Q_ASSERT(!alreadyInitialized);
     alreadyInitialized = true;

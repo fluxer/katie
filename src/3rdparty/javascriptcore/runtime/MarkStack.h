@@ -40,7 +40,7 @@ namespace JSC {
     public:
         MarkStack(void* jsArrayVPtr)
             : m_jsArrayVPtr(jsArrayVPtr)
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             , m_isCheckingForDefaultMarkViolation(false)
 #endif
         {
@@ -170,7 +170,7 @@ namespace JSC {
         MarkStackArray<JSCell*> m_values;
         static size_t s_pageSize;
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     public:
         bool m_isCheckingForDefaultMarkViolation;
 #endif

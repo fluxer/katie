@@ -105,7 +105,7 @@ JSObject* JSValue::synthesizePrototype(ExecState* exec) const
     return new (exec) JSNotAnObject(exec, exception);
 }
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 char* JSValue::description()
 {
     static const size_t size = 32;

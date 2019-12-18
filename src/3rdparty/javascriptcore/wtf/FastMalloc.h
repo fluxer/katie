@@ -37,7 +37,7 @@ namespace WTF {
 
     void fastFree(void*);
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     void fastMallocForbid();
     void fastMallocAllow();
 #endif
@@ -50,7 +50,7 @@ using WTF::tryFastMalloc;
 using WTF::tryFastRealloc;
 using WTF::fastFree;
 
-#ifndef NDEBUG    
+#ifndef QT_NO_DEBUG    
 using WTF::fastMallocForbid;
 using WTF::fastMallocAllow;
 #endif

@@ -80,7 +80,7 @@
 #include "Assertions.h"
 #include <string.h>
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 namespace WTF {
 
 static bool staticIsForbidden;
@@ -100,7 +100,7 @@ void fastMallocAllow()
 }
 
 } // namespace WTF
-#endif // NDEBUG
+#endif // QT_NO_DEBUG
 
 namespace WTF {
 

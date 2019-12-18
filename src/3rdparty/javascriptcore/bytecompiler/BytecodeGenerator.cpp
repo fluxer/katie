@@ -115,13 +115,13 @@ namespace JSC {
     expected by the callee.
 */
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 static bool s_dumpsGeneratedCode = false;
 #endif
 
 void BytecodeGenerator::setDumpsGeneratedCode(bool dumpsGeneratedCode)
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     s_dumpsGeneratedCode = dumpsGeneratedCode;
 #else
     Q_UNUSED(dumpsGeneratedCode);
@@ -130,7 +130,7 @@ void BytecodeGenerator::setDumpsGeneratedCode(bool dumpsGeneratedCode)
 
 bool BytecodeGenerator::dumpsGeneratedCode()
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     return s_dumpsGeneratedCode;
 #else
     return false;
@@ -143,7 +143,7 @@ void BytecodeGenerator::generate()
 
     m_scopeNode->emitBytecode(*this);
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     m_codeBlock->setInstructionCount(m_codeBlock->instructions().size());
 
     if (s_dumpsGeneratedCode)
