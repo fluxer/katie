@@ -1156,7 +1156,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
             if (!program.contains(QLatin1Char('/'))) {
                 const QString path = QStandardPaths::findExecutable(program);
                 if (!path.isEmpty()) {
-                    QByteArray tmp = QFile::encodeName(program);
+                    QByteArray tmp = QFile::encodeName(path);
                     argv[0] = tmp.data();
                     qt_safe_execv(argv[0], argv);
                 }
