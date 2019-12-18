@@ -520,7 +520,7 @@ QFileSystemEntry QFileSystemEngine::currentPath()
     QFileSystemEntry result;
     QT_STATBUF st;
     if (QT_STAT(".", &st) == 0) {
-#if defined(__GLIBC__) && !defined(PATH_MAX)
+#if defined(__GLIBC__)
         char *currentName = ::get_current_dir_name();
         if (currentName) {
             result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
