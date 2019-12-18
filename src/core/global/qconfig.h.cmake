@@ -92,11 +92,9 @@
 #define QT_NO_ICONV
 
 /* Qt build specs */
+#define QT_KATIE
 #ifndef QT_EDITION
 #  define QT_EDITION QT_EDITION_DESKTOP
-#endif
-#ifndef QT_KATIE
-#  define QT_KATIE
 #endif
 
 #ifndef QT_BUILD_KEY
