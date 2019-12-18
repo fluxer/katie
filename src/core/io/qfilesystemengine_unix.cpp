@@ -490,10 +490,10 @@ bool QFileSystemEngine::setPermissions(const QFileSystemEntry &entry, QFile::Per
 
 QString QFileSystemEngine::homePath()
 {
-    QString home = QFile::decodeName(qgetenv("HOME"));
-    if (home.isEmpty())
-        home = rootPath();
-    return QDir::cleanPath(home);
+    const QString home = QFile::decodeName(qgetenv("HOME"));
+    if (Q_LIKELY(!home.isEmpty()))
+        return QDir::cleanPath(home);
+    return rootPath();
 }
 
 QString QFileSystemEngine::rootPath()
@@ -503,10 +503,10 @@ QString QFileSystemEngine::rootPath()
 
 QString QFileSystemEngine::tempPath()
 {
-    QString temp = QFile::decodeName(qgetenv("TMPDIR"));
-    if (temp.isEmpty())
-        temp = QLatin1String("/tmp/");
-    return QDir::cleanPath(temp);
+    const QString temp = QFile::decodeName(qgetenv("TMPDIR"));
+    if (!temp.isEmpty())
+        return QDir::cleanPath(temp);
+    return QLatin1String("/tmp");
 }
 
 bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &path)
