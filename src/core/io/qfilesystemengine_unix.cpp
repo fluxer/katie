@@ -511,10 +511,8 @@ QString QFileSystemEngine::tempPath()
 
 bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &path)
 {
-    int r;
     const char* cPath = path.nativeFilePath().constData();
-    r = QT_CHDIR(cPath);
-    return r >= 0;
+    return (QT_CHDIR(cPath) >= 0);
 }
 
 QFileSystemEntry QFileSystemEngine::currentPath()
