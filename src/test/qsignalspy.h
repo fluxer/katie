@@ -49,7 +49,7 @@ class QVariant;
 
 /* ### Qt5: change the class to use regular BC mechanisms, such that we can
  * implement things like suggested in task 160192. */
-class QSignalSpy: public QObject, public QList<QList<QVariant> >
+class Q_TEST_EXPORT QSignalSpy: public QObject, public QList<QList<QVariant> >
 {
 public:
     QSignalSpy(QObject *obj, const char *aSignal)

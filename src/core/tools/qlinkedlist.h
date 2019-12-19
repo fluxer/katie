@@ -63,7 +63,7 @@ struct QLinkedListNode
 };
 
 template <class T>
-class QLinkedList
+class Q_CORE_EXPORT QLinkedList
 {
     typedef QLinkedListNode<T> Node;
     union { QLinkedListData *d; QLinkedListNode<T> *e; };

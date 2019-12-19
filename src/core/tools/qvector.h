@@ -68,7 +68,7 @@ struct QVectorTypedData : private QVectorData
 class QRegion;
 
 template <typename T>
-class QVector
+class Q_CORE_EXPORT QVector
 {
     typedef QVectorTypedData<T> Data;
     union {

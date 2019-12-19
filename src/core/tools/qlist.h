@@ -87,7 +87,7 @@ struct Q_CORE_EXPORT QListData {
 };
 
 template <typename T>
-class QList
+class Q_CORE_EXPORT QList
 {
     struct Node { void *v;
         Q_INLINE_TEMPLATE T &t()

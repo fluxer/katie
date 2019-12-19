@@ -41,7 +41,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 template <class T>
-class QPointer
+class Q_CORE_EXPORT QPointer
 {
     QWeakPointer<T> wp;
 public:

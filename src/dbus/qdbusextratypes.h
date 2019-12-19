@@ -142,7 +142,7 @@ inline bool operator<(const QDBusSignature &lhs, const QDBusSignature &rhs)
 inline uint qHash(const QDBusSignature &signature)
 { return qHash(signature.signature()); }
 
-class QDBusVariant : private QVariant
+class Q_DBUS_EXPORT QDBusVariant : private QVariant
 {
 public:
     inline QDBusVariant() { }

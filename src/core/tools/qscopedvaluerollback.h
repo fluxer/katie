@@ -40,7 +40,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 template <typename T>
-class QScopedValueRollback
+class Q_CORE_EXPORT QScopedValueRollback
 {
 public:
     QScopedValueRollback(T &var) :
