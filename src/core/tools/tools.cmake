@@ -34,7 +34,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qscopedvaluerollback.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qshareddata.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsharedpointer.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsharedpointer_impl.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qset.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsize.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstack.h
