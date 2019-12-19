@@ -123,7 +123,7 @@ QMutex *QMutexPool::createMutex(int index)
 {
     // mutex not created, create one
     QMutex *newMutex = new QMutex(recursionMode);
-    if (!mutexes[index].testAndSetOrdered(0, newMutex))
+    if (!mutexes[index].testAndSetOrdered(Q_NULLPTR, newMutex))
         delete newMutex;
     return mutexes[index];
 }
@@ -134,8 +134,8 @@ QMutex *QMutexPool::createMutex(int index)
 QMutex *QMutexPool::globalInstanceGet(const void *address)
 {
     QMutexPool * const globalInstance = globalMutexPool();
-    if (globalInstance == 0)
-        return 0;
+    if (!globalInstance)
+        return Q_NULLPTR;
     return globalInstance->get(address);
 }
 
