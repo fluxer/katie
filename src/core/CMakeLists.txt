@@ -24,7 +24,6 @@ set(CORE_PUBLIC_HEADERS
     QLinkedListNode
     QFutureInterfaceBase
     QLibrary
-    QEventTransition
     QStringListIterator
     QMutableLinkedListIterator
     QMultiHash
@@ -45,7 +44,6 @@ set(CORE_PUBLIC_HEADERS
     QTextStream
     QDebug
     QScopedPointerDeleter
-    QAbstractTransition
     QMetaTypeId2
     QContiguousCache
     QFileInfo
@@ -87,7 +85,6 @@ set(CORE_PUBLIC_HEADERS
     QStdWString
     QtAlgorithms
     QAbstractItemModel
-    QSignalTransition
     QTextBoundaryFinder
     QExplicitlySharedDataPointer
     QTimerEvent
@@ -137,7 +134,6 @@ set(CORE_PUBLIC_HEADERS
     QMetaObject
     QMapData
     QByteRef
-    QIntegerForSize
     QStringRef
     QChildEvent
     QGlobalStaticDeleter
