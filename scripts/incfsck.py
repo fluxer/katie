@@ -67,6 +67,7 @@ incmap = {
         'Q_PID': 'qprocess.h',
         'Qt': 'qnamespace.h',
         'QtAlgorithms': 'qalgorithms.h',
+        'QtContainerFwd': 'qcontainerfwd.h',
         'QtDebug': 'qdebug.h',
         'QtEndian': 'qendian.h',
         'QtGlobal': 'qglobal.h',
