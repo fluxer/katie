@@ -66,8 +66,6 @@ set(CORE_PUBLIC_HEADERS
     QIODevice
     QtConfig
     QPair
-    QHashDummyNode
-    QHashDummyValue
     QFutureWatcherBase
     QPoint
     QByteArray

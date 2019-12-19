@@ -71,7 +71,7 @@ inline uint qHash(const SubArray &key)
 struct Symbol
 {
 #ifdef USE_LEXEM_STORE
-    typedef QHash<SubArray, QHashDummyValue> LexemStore;
+    typedef QSet<SubArray> LexemStore;
     static LexemStore lexemStore;
 
     inline Symbol() : lineNum(-1),token(NOTOKEN){}
@@ -87,7 +87,7 @@ struct Symbol
             lex = it.key().array;
         } else {
             lex = lexem.mid(from, len);
-            lexemStore.insert(lex, QHashDummyValue());
+            lexemStore.insert(lex);
         }
     }
     int lineNum;

@@ -299,8 +299,6 @@ classlist = [
     "QGuiPlatformPlugin",
     "QHash",
     "QHashData",
-    "QHashDummyNode",
-    "QHashDummyValue",
     "QHashNode",
     "QHBoxLayout",
     "QHeaderView",
