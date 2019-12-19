@@ -666,8 +666,7 @@ void QCacheItem::writeHeader(QFile *device) const
     out << qint32(CacheMagic);
     out << qint32(CurrentCacheVersion);
     out << metaData;
-    bool compressed = canCompress();
-    out << compressed;
+    out << canCompress();
 }
 
 void QCacheItem::writeCompressedData(QFile *device) const
