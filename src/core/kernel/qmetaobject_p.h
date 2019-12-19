@@ -54,7 +54,7 @@
 
 #ifndef QT_NO_COMPRESS
 #  define QT_CACHE_NORMALIZED_TYPE
-#  include <qmutexlocker.h>
+#  include <qmutex.h>
 #endif
 
 QT_BEGIN_NAMESPACE
