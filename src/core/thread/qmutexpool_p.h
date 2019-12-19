@@ -63,12 +63,11 @@ public:
     ~QMutexPool();
 
     inline QMutex *get(const void *address) {
-        int index = uint(quintptr(address)) % mutexes.size();
+        int index = std::intptr_t(address) % mutexes.size();
         QMutex *m = mutexes[index];
         if (m)
             return m;
-        else
-            return createMutex(index);
+        return createMutex(index);
     }
     static QMutexPool *instance();
     static QMutex *globalInstanceGet(const void *address);
