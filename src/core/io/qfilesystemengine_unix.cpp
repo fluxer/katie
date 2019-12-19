@@ -518,29 +518,27 @@ bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &path)
 QFileSystemEntry QFileSystemEngine::currentPath()
 {
     QFileSystemEntry result;
-    QT_STATBUF st;
-    if (QT_STAT(".", &st) == 0) {
 #if defined(__GLIBC__)
-        char *currentName = ::get_current_dir_name();
-        if (currentName) {
-            result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
-            ::free(currentName);
-        }
-#else
-        char currentName[PATH_MAX+1];
-        if (::getcwd(currentName, PATH_MAX)) {
-            result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
-        }
-# if defined(QT_DEBUG)
-        if (result.isEmpty())
-            qWarning("QFSFileEngine::currentPath: getcwd() failed");
-# endif
-#endif
-    } else {
-# if defined(QT_DEBUG)
-        qWarning("QFSFileEngine::currentPath: stat(\".\") failed");
-# endif
+#define GETCWDFUNCNAME get_current_dir_name
+    char *currentName = ::get_current_dir_name();
+    if (currentName) {
+        result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
+        ::free(currentName);
     }
+#else
+#define GETCWDFUNCNAME getcwd
+    char currentName[PATH_MAX+1];
+    if (::getcwd(currentName, PATH_MAX)) {
+        result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
+    }
+#endif // __GLIBC__
+
+#ifndef QT_NO_DEBUG
+    if (result.isEmpty())
+        qWarning("QFSFileEngine::currentPath: " GETCWDFUNCNAME "() failed");
+#endif
+#undef GETCWDFUNCNAME
+
     return result;
 }
 QT_END_NAMESPACE
