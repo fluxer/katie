@@ -519,14 +519,14 @@ QFileSystemEntry QFileSystemEngine::currentPath()
 {
     QFileSystemEntry result;
 #if defined(__GLIBC__)
-#define GETCWDFUNCNAME get_current_dir_name
+#define GETCWDFUNCNAME "get_current_dir_name"
     char *currentName = ::get_current_dir_name();
     if (currentName) {
         result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
         ::free(currentName);
     }
 #else
-#define GETCWDFUNCNAME getcwd
+#define GETCWDFUNCNAME "getcwd"
     char currentName[PATH_MAX+1];
     if (::getcwd(currentName, PATH_MAX)) {
         result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
