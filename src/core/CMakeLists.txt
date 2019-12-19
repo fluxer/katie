@@ -9,23 +9,15 @@ set(CORE_PUBLIC_HEADERS
     QSystemSemaphore
     QProcess
     QTextDecoder
-    QVectorData
     QBuffer
     QStringMatcher
     QFutureIterator
     QScopedPointer
-    QIncompatibleFlag
     QSet
-    QLinkedListIterator
     QDynamicPropertyChangeEvent
     QHash
-    QTextStreamManipulator
     QMutableMapIterator
-    QLinkedListNode
-    QFutureInterfaceBase
     QLibrary
-    QStringListIterator
-    QMutableLinkedListIterator
     QMultiHash
     QObjectCleanupHandler
     QAbstractFileEngine
@@ -33,9 +25,7 @@ set(CORE_PUBLIC_HEADERS
     QFuture
     QCryptographicHash
     QWaitCondition
-    QContiguousCacheData
     QMimeData
-    QTypeInfo
     QtConcurrentMap
     QBitArray
     QChar
@@ -43,12 +33,9 @@ set(CORE_PUBLIC_HEADERS
     QMap
     QTextStream
     QDebug
-    QScopedPointerDeleter
-    QMetaTypeId2
     QContiguousCache
     QFileInfo
     QFutureInterface
-    QAbstractFileEngineHandler
     QSharedDataPointer
     QMultiMap
     QDateTime
@@ -61,7 +48,6 @@ set(CORE_PUBLIC_HEADERS
     QFSFileEngine
     QLine
     QIODevice
-    QtConfig
     QPair
     QFutureWatcherBase
     QPoint
@@ -90,7 +76,6 @@ set(CORE_PUBLIC_HEADERS
     QTimer
     QElapsedTimer
     QUrl
-    QMutableHashIterator
     QFutureWatcher
     QVector
     QLibraryInfo
@@ -188,7 +173,22 @@ set(CORE_PUBLIC_HEADERS
     # aliases
     QtPlugin
     QtDebug
+    QtConfig
     # mixed
+    QAbstractFileEngineHandler
+    QMetaTypeId2
+    QScopedPointerDeleter
+    QTypeInfo
+    QContiguousCacheData
+    QStringListIterator
+    QMutableLinkedListIterator
+    QMutableHashIterator
+    QFutureInterfaceBase
+    QTextStreamManipulator
+    QLinkedListNode
+    QLinkedListIterator
+    QIncompatibleFlag
+    QFutureIterator
     QVariantMap
     QVariantList
     QVariantHash
@@ -210,6 +210,7 @@ set(CORE_PUBLIC_HEADERS
     QScopedArrayPointer
     QJsonParseError
     QPersistentModelIndex
+    QVectorData
     # obsolete
     QFlags
     Qt

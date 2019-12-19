@@ -5,7 +5,6 @@ set(GUI_PUBLIC_HEADERS
     ${GUI_PUBLIC_HEADERS}
     QPropertyAnimation
     QPauseAnimation
-    QAnimationDriver
     QAnimationGroup
     QVariantAnimation
     QSequentialAnimationGroup
@@ -26,7 +25,6 @@ set(GUI_PUBLIC_HEADERS
     QAccessibleObject
     QAccessiblePlugin
     QAccessibleTextInterface
-    QAccessibleValueInterface
     QAccessibleWidget
     QAccessibleWidgetEx
     QAction
@@ -303,6 +301,8 @@ set(GUI_PUBLIC_HEADERS
     QX11EmbedContainer
     QX11EmbedWidget
     # mixed
+    QAccessibleValueInterface
+    QAnimationDriver
     QUndoCommand
     QPolygonF
     QTextLine
