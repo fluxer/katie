@@ -108,9 +108,6 @@ set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 katie_setup_paths()
 
 # optional package
-option(WITH_THREADS "Build threads support" ON)
-add_feature_info(threads WITH_THREADS "build threads support")
-
 option(WITH_NIS "Build NIS support" ON)
 add_feature_info(nis WITH_NIS "build NIS support")
 
@@ -463,10 +460,6 @@ file(
 )
 
 # optional packages
-if(NOT WITH_THREADS OR NOT THREADS_FOUND)
-    katie_definition(-DQT_NO_THREAD)
-endif()
-
 if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)
     katie_definition(-DQT_NO_FONTCONFIG)
 endif()
