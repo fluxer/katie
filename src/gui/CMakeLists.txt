@@ -32,14 +32,12 @@ set(GUI_PUBLIC_HEADERS
     QAction
     QActionGroup
     QApplication
-    QAuthDevice
     QBitmap
     QBoxLayout
     QBrush
     QBrushData
     QButtonGroup
     QCalendarWidget
-    QCDEStyle
     QCheckBox
     QCleanlooksStyle
     QClipboard
@@ -68,7 +66,6 @@ set(GUI_PUBLIC_HEADERS
     QErrorMessage
     QFileDialog
     QFileIconProvider
-    QFileOpenEvent
     QFileSystemModel
     QFocusFrame
     QFont
@@ -132,7 +129,6 @@ set(GUI_PUBLIC_HEADERS
     QItemEditorCreatorBase
     QItemEditorFactory
     QItemSelectionModel
-    QKeyEventTransition
     QKeySequence
     QLabel
     QLayout
@@ -157,9 +153,6 @@ set(GUI_PUBLIC_HEADERS
     QMenu
     QMenuBar
     QMotifStyle
-    QMouseDriverFactory
-    QMouseDriverPlugin
-    QMouseEventTransition
     QMovie
     QPageSetupDialog
     QPaintDevice
@@ -177,18 +170,7 @@ set(GUI_PUBLIC_HEADERS
     QPlainTextDocumentLayout
     QPlainTextEdit
     QPlastiqueStyle
-    QPlatformCursor
-    QPlatformCursorImage
-    QPlatformCursorPrivate
-    QPlatformEventLoopIntegration
-    QPlatformFontDatabase
-    QPlatformIntegration
-    QPlatformIntegrationFactoryInterface
-    QPlatformIntegrationPlugin
-    QPlatformNativeInterface
-    QPlatformScreen
     QPolygon
-    QPoolEntry
     QPrintDialog
     QPrintEngine
     QPrinter
@@ -198,23 +180,14 @@ set(GUI_PUBLIC_HEADERS
     QProgressBar
     QProgressDialog
     QProxyModel
-    QProxyScreen
-    QProxyScreenCursor
     QProxyStyle
     QPushButton
-    QQnxMouseHandler
-    QQnxScreen
     QQuaternion
     QRadialGradient
     QRadioButton
     QRegion
     QRgb
     QRubberBand
-    QScreen
-    QScreenCursor
-    QScreenDriverFactory
-    QScreenDriverFactoryInterface
-    QScreenDriverPlugin
     QScrollArea
     QScrollBar
     QSessionManager
@@ -298,8 +271,6 @@ set(GUI_PUBLIC_HEADERS
     QToolButton
     QToolTip
     QTransform
-    QTransformedScreen
-    QTransportAuth
     QTreeView
     QTreeWidget
     QTreeWidgetItemIterator
@@ -312,11 +283,6 @@ set(GUI_PUBLIC_HEADERS
     QVector2D
     QVector3D
     QVector4D
-    QVFbHeader
-    QVFbKeyboardHandler
-    QVFbKeyData
-    QVFbMouseHandler
-    QVFbScreen
     QWhatsThis
     QWhatsThisClickedEvent
     QWidget

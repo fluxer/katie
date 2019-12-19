@@ -49,7 +49,6 @@ set(CORE_PUBLIC_HEADERS
     QFileInfo
     QFutureInterface
     QAbstractFileEngineHandler
-    QMetaObjectExtraData
     QSharedDataPointer
     QMultiMap
     QDateTime
@@ -174,7 +173,6 @@ set(CORE_PUBLIC_HEADERS
     QStringList
     QGlobalStatic
     QEasingCurve
-    QMutexData
     QSystemLocale
     QVectorTypedData
     QMapPayloadNode

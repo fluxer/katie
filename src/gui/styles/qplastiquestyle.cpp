@@ -1011,7 +1011,7 @@ QPlastiqueStylePrivate::~QPlastiqueStylePrivate()
     KDE 3.2.
 
     \img qplastiquestyle.png
-    \sa QWindowsStyle, QCDEStyle, QMotifStyle
+    \sa QWindowsStyle, QMotifStyle
 */
 
 /*!
