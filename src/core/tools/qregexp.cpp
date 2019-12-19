@@ -1032,7 +1032,7 @@ public:
     const QVector<int> &firstOccurrence() const { return occ1; }
 #endif
 
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
     void dump() const;
 #endif
 
@@ -1101,7 +1101,7 @@ public:
     void heuristicallyChooseHeuristic();
 #endif
 
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
     void dump() const;
 #endif
 
@@ -1214,7 +1214,7 @@ private:
         void setupHeuristics();
 #endif
 
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
         void dump() const;
 #endif
 
@@ -1632,7 +1632,7 @@ void QRegExpEngine::heuristicallyChooseHeuristic()
 }
 #endif
 
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
 void QRegExpEngine::dump() const
 {
     int i, j;
@@ -2428,7 +2428,7 @@ bool QRegExpCharClass::in(QChar ch) const
     return n;
 }
 
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
 void QRegExpCharClass::dump() const
 {
     int i;
@@ -2689,7 +2689,7 @@ void QRegExpEngine::Box::setupHeuristics()
 }
 #endif
 
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
 void QRegExpEngine::Box::dump() const
 {
     int i;

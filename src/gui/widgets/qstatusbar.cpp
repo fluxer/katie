@@ -411,7 +411,7 @@ void QStatusBar::removeWidget(QWidget *widget)
 
     if (found)
         reformat();
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
     else
         qDebug("QStatusBar::removeWidget(): Widget not found.");
 #endif

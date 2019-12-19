@@ -121,7 +121,7 @@ bool QDBusArgumentPrivate::checkWrite(QDBusArgumentPrivate *&d)
         return true;
     }
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     qFatal("QDBusArgument: write from a read-only object");
 #else
     qWarning("QDBusArgument: write from a read-only object");
@@ -136,7 +136,7 @@ bool QDBusArgumentPrivate::checkRead(QDBusArgumentPrivate *d)
     if (d->direction == Demarshalling)
         return true;
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     qFatal("QDBusArgument: read from a write-only object");
 #else
     qWarning("QDBusArgument: read from a write-only object");

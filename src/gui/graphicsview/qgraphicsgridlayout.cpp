@@ -101,7 +101,7 @@ public:
     QLayoutStyleInfo styleInfo() const;
 
     QGridLayoutEngine engine;
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     void dump(int indent) const;
 #endif
 };
@@ -622,7 +622,7 @@ void QGraphicsGridLayout::invalidate()
     QGraphicsLayout::invalidate();
 }
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
 void QGraphicsGridLayoutPrivate::dump(int indent) const
 {
     if (qt_graphicsLayoutDebug()) {
@@ -647,7 +647,7 @@ void QGraphicsGridLayout::setGeometry(const QRectF &rect)
         qSwap(left, right);
     effectiveRect.adjust(+left, +top, -right, -bottom);
     d->engine.setGeometries(d->styleInfo(), effectiveRect);
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     if (qt_graphicsLayoutDebug()) {
         static int counter = 0;
         qDebug("==== BEGIN DUMP OF QGraphicsGridLayout (%d)====", counter++);

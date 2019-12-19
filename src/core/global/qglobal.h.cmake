@@ -720,10 +720,6 @@ Q_CORE_EXPORT bool qSharedBuild();
    Debugging and error handling
 */
 
-#if !defined(QT_NO_DEBUG) && !defined(QT_DEBUG)
-#  define QT_DEBUG
-#endif
-
 #if (defined(QT_NO_DEBUG_OUTPUT) || defined(QT_NO_TEXTSTREAM)) && !defined(QT_NO_DEBUG_STREAM)
 #define QT_NO_DEBUG_STREAM
 #endif

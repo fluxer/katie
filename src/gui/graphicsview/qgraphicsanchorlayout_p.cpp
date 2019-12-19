@@ -45,7 +45,7 @@
 #include <QtCore/qstack.h>
 #include <QtCore/qqueue.h>
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
 #include <QtCore/qfile.h>
 #endif
 
@@ -559,7 +559,7 @@ void SequentialAnchorData::calculateSizeHints()
     sizeAtMaximum = prefSize;
 }
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
 void AnchorData::dump(int indent) {
     if (type == Parallel) {
         qDebug("%*s type: parallel:", indent, "");
@@ -607,7 +607,7 @@ QSimplexConstraint *GraphPath::constraint(const GraphPath &path) const
     return c;
 }
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
 QString GraphPath::toString() const
 {
     QString string(QLatin1String("Path: "));
@@ -867,7 +867,7 @@ bool QGraphicsAnchorLayoutPrivate::replaceVertex(Orientation orientation, Anchor
         AnchorData *ad = edges[i];
         AnchorVertex *otherV = replaceVertex_helper(ad, oldV, newV);
 
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
         ad->name = QString::fromAscii("%1 --to--> %2").arg(ad->from->toString()).arg(ad->to->toString());
 #endif
 
@@ -1730,7 +1730,7 @@ void QGraphicsAnchorLayoutPrivate::addAnchor_helper(QGraphicsLayoutItem *firstIt
     // so we still know that the anchor direction is from 1 to 2.
     data->from = v1;
     data->to = v2;
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     data->name = QString::fromAscii("%1 --to--> %2").arg(v1->toString()).arg(v2->toString());
 #endif
     // ### bit to track internal anchors, since inside AnchorData methods
@@ -2073,7 +2073,7 @@ QList<AnchorData *> getVariables(const QList<QSimplexConstraint *> &constraints)
 void QGraphicsAnchorLayoutPrivate::calculateGraphs(
     QGraphicsAnchorLayoutPrivate::Orientation orientation)
 {
-#if defined(QT_DEBUG) || defined(Q_AUTOTEST_EXPORT)
+#if !defined(QT_NO_DEBUG) || defined(Q_AUTOTEST_EXPORT)
     lastCalculationUsedSimplex[orientation] = false;
 #endif
 
@@ -2237,7 +2237,7 @@ bool QGraphicsAnchorLayoutPrivate::calculateTrunk(Orientation orientation, const
         sizeHints[orientation][Qt::MaximumSize] = ad->sizeAtMaximum;
     }
 
-#if defined(QT_DEBUG) || defined(Q_AUTOTEST_EXPORT)
+#if !defined(QT_NO_DEBUG) || defined(Q_AUTOTEST_EXPORT)
     lastCalculationUsedSimplex[orientation] = needsSimplex;
 #endif
 
@@ -2960,7 +2960,7 @@ bool QGraphicsAnchorLayoutPrivate::hasConflicts() const
     return graphHasConflicts[0] || graphHasConflicts[1] || floatConflict;
 }
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
 void QGraphicsAnchorLayoutPrivate::dumpGraph(const QString &name)
 {
     QFile file(QString::fromAscii("anchorlayout.%1.dot").arg(name));

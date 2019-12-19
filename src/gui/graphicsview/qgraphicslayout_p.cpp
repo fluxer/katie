@@ -71,7 +71,7 @@ void QGraphicsLayoutPrivate::reparentChildItems(QGraphicsItem *newParent)
             l->d_func()->reparentChildItems(newParent);
         } else if (QGraphicsItem *itemChild = layoutChild->graphicsItem()){
             QGraphicsItem *childParent = itemChild->parentItem();
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
             if (childParent && childParent != newParent && itemChild->isWidget() && qt_graphicsLayoutDebug()) {
                 QGraphicsWidget *w = static_cast<QGraphicsWidget*>(layoutChild);
                 qWarning("QGraphicsLayout::addChildLayout: widget %s \"%s\" in wrong parent; moved to correct parent",
@@ -163,7 +163,7 @@ void QGraphicsLayoutPrivate::addChildLayoutItem(QGraphicsLayoutItem *layoutItem)
             if (oldParent == newParent || !newParent)
                 return;
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
             if (oldParent && item->isWidget()) {
                 QGraphicsWidget *w = static_cast<QGraphicsWidget*>(item);
                 qWarning("QGraphicsLayout::addChildLayoutItem: %s \"%s\" in wrong parent; moved to correct parent",

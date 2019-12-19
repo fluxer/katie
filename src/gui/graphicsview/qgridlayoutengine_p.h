@@ -139,7 +139,7 @@ public:
     void combine(const QGridLayoutBox &other);
     void normalize();
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     void dump(int indent = 0) const;
 #endif
     // This code could use the union-struct-array trick, but a compiler
@@ -229,7 +229,7 @@ public:
     QGridLayoutBox totalBox(int start, int end) const;
     void stealBox(int start, int end, int which, qreal *positions, qreal *sizes);
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     void dump(int indent = 0) const;
 #endif
 
@@ -290,7 +290,7 @@ public:
     void insertOrRemoveRows(int row, int delta, Qt::Orientation orientation = Qt::Vertical);
     QSizeF effectiveMaxSize(const QSizeF &constraint) const;
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     void dump(int indent = 0) const;
 #endif
 
@@ -310,7 +310,7 @@ public:
 
     void insertOrRemoveRows(int row, int delta);
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     void dump(int indent = 0) const;
 #endif
 
@@ -393,7 +393,7 @@ public:
     void transpose();
     void setVisualDirection(Qt::LayoutDirection direction);
     Qt::LayoutDirection visualDirection() const;
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     void dump(int indent = 0) const;
 #endif
 

@@ -85,7 +85,7 @@ QNetworkAccessCache::CacheableObject::CacheableObject()
 
 QNetworkAccessCache::CacheableObject::~CacheableObject()
 {
-#if 0 //def QT_DEBUG
+#if 0 // ifndef QT_NO_DEBUG
     if (!key.isEmpty() && Ptr()->hasEntry(key))
         qWarning() << "QNetworkAccessCache: object" << (void*)this << "key" << key
                    << "destroyed without being removed from cache first!";

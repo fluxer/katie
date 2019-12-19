@@ -82,7 +82,7 @@ struct AnchorVertex {
     AnchorVertex()
         : m_item(0), m_edge(Qt::AnchorPoint(0)), m_type(Normal) {}
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     inline QString toString() const;
 #endif
 
@@ -127,7 +127,7 @@ struct AnchorData : public QSimplexVariable {
     virtual void updateChildrenSizes() {}
     void refreshSizeHints(const QLayoutStyleInfo *styleInfo = 0);
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     void dump(int indent = 2);
     inline QString toString() const;
     QString name;
@@ -171,7 +171,7 @@ struct AnchorData : public QSimplexVariable {
     uint orientation;
 };
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
 inline QString AnchorData::toString() const
 {
     return QString::fromAscii("Anchor(%1)").arg(name);
@@ -185,7 +185,7 @@ struct SequentialAnchorData : public AnchorData
     {
         type = AnchorData::Sequential;
         orientation = m_edges.at(0)->orientation;
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
         name = QString::fromAscii("%1 -- %2").arg(vertices.first()->toString(), vertices.last()->toString());
 #endif
     }
@@ -213,7 +213,7 @@ struct ParallelAnchorData : public AnchorData
         // direction as the first anchor.
         from = first->from;
         to = first->to;
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
         name = QString::fromAscii("%1 | %2").arg(first->toString(), second->toString());
 #endif
     }
@@ -249,7 +249,7 @@ struct AnchorVertexPair : public AnchorVertex {
     QList<AnchorData *> m_secondAnchors;
 };
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
 inline QString AnchorVertex::toString() const
 {
     if (m_type == Pair) {
@@ -312,7 +312,7 @@ public:
     GraphPath() {}
 
     QSimplexConstraint *constraint(const GraphPath &path) const;
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     QString toString() const;
 #endif
     QSet<AnchorData *> positives;
@@ -525,7 +525,7 @@ public:
                         const QList<AnchorData *> &variables);
     bool hasConflicts() const;
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     void dumpGraph(const QString &name = QString());
 #endif
 
@@ -566,7 +566,7 @@ public:
     bool graphHasConflicts[2];
     QSet<QGraphicsLayoutItem *> m_floatItems[2];
 
-#if defined(QT_DEBUG) || defined(Q_AUTOTEST_EXPORT)
+#if !defined(QT_NO_DEBUG) || defined(Q_AUTOTEST_EXPORT)
     bool lastCalculationUsedSimplex[2];
 #endif
 
