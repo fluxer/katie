@@ -177,13 +177,9 @@ QPSPrintEnginePrivate::QPSPrintEnginePrivate(QPrinter::PrinterMode m)
 
     firstPage = true;
 
-#ifndef QT_NO_SETTINGS
     QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
     settings.beginGroup(QLatin1String("Qt"));
     embedFonts = settings.value(QLatin1String("embedFonts"), true).toBool();
-#else
-    embedFonts = true;
-#endif
 }
 
 QPSPrintEnginePrivate::~QPSPrintEnginePrivate()
@@ -664,9 +660,7 @@ static void ignoreSigPipe(bool b)
     static struct sigaction *users_sigpipe_handler = 0;
     static int lockCount = 0;
 
-#ifndef QT_NO_THREAD
     QMutexLocker locker(QMutexPool::globalInstanceGet(&users_sigpipe_handler));
-#endif
 
     if (b) {
         if (lockCount++ > 0)

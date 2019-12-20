@@ -425,8 +425,8 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     Q_UNUSED(source);
     Q_UNUSED(target);
     error = QSystemError(ENOSYS, QSystemError::StandardLibraryError); //Function not implemented
-#endif // Q_OS_LINUX
     return false;
+#endif // Q_OS_LINUX
 }
 
 //static
@@ -490,10 +490,10 @@ bool QFileSystemEngine::setPermissions(const QFileSystemEntry &entry, QFile::Per
 
 QString QFileSystemEngine::homePath()
 {
-    QString home = QFile::decodeName(qgetenv("HOME"));
-    if (home.isEmpty())
-        home = rootPath();
-    return QDir::cleanPath(home);
+    const QString home = QFile::decodeName(qgetenv("HOME"));
+    if (Q_LIKELY(!home.isEmpty()))
+        return QDir::cleanPath(home);
+    return rootPath();
 }
 
 QString QFileSystemEngine::rootPath()
@@ -503,46 +503,42 @@ QString QFileSystemEngine::rootPath()
 
 QString QFileSystemEngine::tempPath()
 {
-    QString temp = QFile::decodeName(qgetenv("TMPDIR"));
-    if (temp.isEmpty())
-        temp = QLatin1String("/tmp/");
-    return QDir::cleanPath(temp);
+    const QString temp = QFile::decodeName(qgetenv("TMPDIR"));
+    if (!temp.isEmpty())
+        return QDir::cleanPath(temp);
+    return QLatin1String("/tmp");
 }
 
 bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &path)
 {
-    int r;
     const char* cPath = path.nativeFilePath().constData();
-    r = QT_CHDIR(cPath);
-    return r >= 0;
+    return (QT_CHDIR(cPath) >= 0);
 }
 
 QFileSystemEntry QFileSystemEngine::currentPath()
 {
     QFileSystemEntry result;
-    QT_STATBUF st;
-    if (QT_STAT(".", &st) == 0) {
-#if defined(__GLIBC__) && !defined(PATH_MAX)
-        char *currentName = ::get_current_dir_name();
-        if (currentName) {
-            result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
-            ::free(currentName);
-        }
-#else
-        char currentName[PATH_MAX+1];
-        if (::getcwd(currentName, PATH_MAX)) {
-            result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
-        }
-# if defined(QT_DEBUG)
-        if (result.isEmpty())
-            qWarning("QFSFileEngine::currentPath: getcwd() failed");
-# endif
-#endif
-    } else {
-# if defined(QT_DEBUG)
-        qWarning("QFSFileEngine::currentPath: stat(\".\") failed");
-# endif
+#if defined(__GLIBC__)
+#define GETCWDFUNCNAME "get_current_dir_name"
+    char *currentName = ::get_current_dir_name();
+    if (currentName) {
+        result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
+        ::free(currentName);
     }
+#else
+#define GETCWDFUNCNAME "getcwd"
+    char currentName[PATH_MAX+1];
+    if (::getcwd(currentName, PATH_MAX)) {
+        result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
+    }
+#endif // __GLIBC__
+
+#ifndef QT_NO_DEBUG
+    if (result.isEmpty())
+        qWarning("QFSFileEngine::currentPath: " GETCWDFUNCNAME "() failed");
+#endif
+#undef GETCWDFUNCNAME
+
     return result;
 }
 QT_END_NAMESPACE

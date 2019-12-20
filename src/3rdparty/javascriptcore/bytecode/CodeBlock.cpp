@@ -42,7 +42,7 @@
 
 namespace JSC {
 
-#if !defined(NDEBUG) || ENABLE(OPCODE_SAMPLING)
+#if !defined(QT_NO_DEBUG) || ENABLE(OPCODE_SAMPLING)
 
 static UString escapeQuotes(const UString& str)
 {
@@ -991,7 +991,7 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
     }
 }
 
-#endif // !defined(NDEBUG) || ENABLE(OPCODE_SAMPLING)
+#endif // !defined(QT_NO_DEBUG) || ENABLE(OPCODE_SAMPLING)
 
 #if DUMP_CODE_BLOCK_STATISTICS
 static HashSet<CodeBlock*> liveCodeBlockSet;
@@ -1138,7 +1138,7 @@ CodeBlock::CodeBlock(ScriptExecutable* ownerExecutable, CodeType codeType, PassR
     , m_numParameters(0)
     , m_ownerExecutable(ownerExecutable)
     , m_globalData(0)
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     , m_instructionCount(0)
 #endif
     , m_needsFullScopeChain(ownerExecutable->needsActivation())

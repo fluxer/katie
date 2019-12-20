@@ -3223,7 +3223,7 @@ QList<QByteArray> QObject::dynamicPropertyNames() const
 
 static void dumpRecursive(int level, QObject *object)
 {
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
     if (object) {
         QByteArray buf;
         buf.fill(' ', level / 2 * 8);
@@ -3255,7 +3255,7 @@ static void dumpRecursive(int level, QObject *object)
 #else
     Q_UNUSED(level)
     Q_UNUSED(object)
-#endif
+#endif // QT_NO_DEBUG
 }
 
 /*!
@@ -3286,7 +3286,7 @@ void QObject::dumpObjectTree()
 
 void QObject::dumpObjectInfo()
 {
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
     qDebug("OBJECT %s::%s", metaObject()->className(),
            objectName().isEmpty() ? "unnamed" : objectName().toLocal8Bit().data());
 
@@ -3350,7 +3350,7 @@ void QObject::dumpObjectInfo()
     } else {
         qDebug("        <None>");
     }
-#endif
+#endif // QT_NO_DEBUG
 }
 
 #ifndef QT_NO_DEBUG_STREAM

@@ -817,7 +817,7 @@ bool QLayout::adoptLayout(QLayout *layout)
     return ok;
 }
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
 static bool layoutDebug()
 {
     static int checked_env = -1;
@@ -843,7 +843,7 @@ void QLayoutPrivate::reparentChildWidgets(QWidget *mw)
         QLayoutItem *item = q->itemAt(i);
         if (QWidget *w = item->widget()) {
             QWidget *pw = w->parentWidget();
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
             if (pw && pw != mw && layoutDebug()) {
                 qWarning("QLayout::addChildLayout: widget %s \"%s\" in wrong parent; moved to correct parent",
                          w->metaObject()->className(), w->objectName().toLocal8Bit().data());
@@ -878,7 +878,7 @@ void QLayout::addChildWidget(QWidget *w)
     if (pw && w->testAttribute(Qt::WA_LaidOut)) {
         QLayout *l = pw->layout();
         if (l && removeWidgetRecursively(l, w)) {
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
             if (layoutDebug())
                 qWarning("QLayout::addChildWidget: %s \"%s\" is already in a layout; moved to new layout",
                          w->metaObject()->className(), w->objectName().toLocal8Bit().data());
@@ -886,7 +886,7 @@ void QLayout::addChildWidget(QWidget *w)
         }
     }
     if (pw && mw && pw != mw) {
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
             if (layoutDebug())
                 qWarning("QLayout::addChildWidget: %s \"%s\" in wrong parent; moved to correct parent",
                          w->metaObject()->className(), w->objectName().toLocal8Bit().data());

@@ -1343,8 +1343,8 @@ void QMetaType::destroy(int type, void *data)
 #ifndef QT_BOOTSTRAPPED
     case QMetaType::QUrl:
         delete static_cast< NS(QUrl)* >(data);
-#endif
         break;
+#endif
     case QMetaType::QLocale:
         delete static_cast< NS(QLocale)* >(data);
         break;

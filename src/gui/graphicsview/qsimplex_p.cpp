@@ -543,7 +543,7 @@ qreal QSimplex::solver(solverFactor factor)
     solveMaxHelper();
     collectResults();
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     for (int i = 0; i < constraints.size(); ++i) {
         Q_ASSERT(constraints[i]->isSatisfied());
     }

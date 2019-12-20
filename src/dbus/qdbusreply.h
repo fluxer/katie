@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 Q_DBUS_EXPORT void qDBusReplyFill(const QDBusMessage &reply, QDBusError &error, QVariant &data);
 
 template<typename T>
-class QDBusReply
+class Q_DBUS_EXPORT QDBusReply
 {
     typedef T Type;
 public:

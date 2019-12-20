@@ -253,7 +253,7 @@ void QRasterWindowSurface::prepareBuffer(QImage::Format format)
     d->image = new QImage(width, height, format);
 
     if (oldImage && d->inSetGeometry && hasStaticContents()) {
-        const uchar *src = oldImage->bits();
+        const uchar *src = oldImage->constBits();
         uchar *dst = d->image->bits();
 
         const int srcBytesPerLine = oldImage->bytesPerLine();

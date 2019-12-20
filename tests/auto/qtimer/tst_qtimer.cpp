@@ -80,10 +80,8 @@ private slots:
     void restartedTimerFiresTooSoon();
     void timerFiresOnlyOncePerProcessEvents_data();
     void timerFiresOnlyOncePerProcessEvents();
-#ifndef QT_NO_THREAD
     void timerIdPersistsAfterThreadExit();
     void moveToThread();
-#endif
     void cancelLongTimer();
     void singleShotStaticFunctionZeroTimeout();
     void recurseOnTimeoutAndStopTimer();
@@ -510,7 +508,6 @@ void tst_QTimer::timerFiresOnlyOncePerProcessEvents()
     QCOMPARE(longSlot.count, 1);
 }
 
-#ifndef QT_NO_THREAD
 class TimerIdPersistsAfterThreadExitThread : public QThread
 {
 public:
@@ -577,7 +574,6 @@ void tst_QTimer::moveToThread()
     QVERIFY((ti3.timerId() & 0xffffff) != (ti2.timerId() & 0xffffff));
     QVERIFY((ti3.timerId() & 0xffffff) != (ti1.timerId() & 0xffffff));
 }
-#endif // QT_NO_THREAD
 
 void tst_QTimer::cancelLongTimer()
 {

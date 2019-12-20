@@ -36,7 +36,7 @@ JSValue CallFrame::thisValue()
     return this[codeBlock()->thisRegister()].jsValue();
 }
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 void CallFrame::dumpCaller()
 {
     int signedLineNumber;

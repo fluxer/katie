@@ -219,7 +219,7 @@ bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
     This style is Qt's default GUI style on Windows.
 
     \img qwindowsstyle.png
-    \sa QPlastiqueStyle, QCDEStyle, QMotifStyle
+    \sa QPlastiqueStyle, QMotifStyle
 */
 
 /*!
@@ -393,8 +393,6 @@ int QWindowsStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QW
     case PM_DockWidgetFrameWidth:
         ret = 4;
         break;
-    break;
-
 #endif // QT_NO_MENU
 
     case PM_SplitterWidth:

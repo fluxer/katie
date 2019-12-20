@@ -122,7 +122,7 @@
 #include "qgraphicslinearlayout.h"
 #include "qgraphicswidget.h"
 #include "qgridlayoutengine_p.h"
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
 #include <QtCore/qdebug.h>
 #endif
 #include "qguicommon_p.h"
@@ -503,7 +503,7 @@ void QGraphicsLinearLayout::setGeometry(const QRectF &rect)
     if (visualDir == Qt::RightToLeft)
         qSwap(left, right);
     effectiveRect.adjust(+left, +top, -right, -bottom);
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     if (qt_graphicsLayoutDebug()) {
         static int counter = 0;
         qDebug() << counter++ << "QGraphicsLinearLayout::setGeometry - " << rect;
@@ -511,7 +511,7 @@ void QGraphicsLinearLayout::setGeometry(const QRectF &rect)
     }
 #endif
     d->engine.setGeometries(d->styleInfo(), effectiveRect);
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     if (qt_graphicsLayoutDebug()) {
         qDebug() << "post dump";
         dump(1);
@@ -546,7 +546,7 @@ void QGraphicsLinearLayout::invalidate()
 */
 void QGraphicsLinearLayout::dump(int indent) const
 {
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     if (qt_graphicsLayoutDebug()) {
         Q_D(const QGraphicsLinearLayout);
         qDebug("%*s%s layout", indent, "",

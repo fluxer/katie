@@ -366,13 +366,11 @@ QWidget *WidgetFactory::createWidget(const QString &widgetName, QWidget *parentW
         }
 
 #define DECLARE_LAYOUT(L, C)
-#define DECLARE_COMPAT_WIDGET(W, C) /*DECLARE_WIDGET(W, C)*/
 #define DECLARE_WIDGET(W, C) else if (!qstrcmp(widgetNameC, #W)) { Q_ASSERT(w == 0); w = new W(parentWidget); }
 #define DECLARE_WIDGET_1(W, C) else if (!qstrcmp(widgetNameC, #W)) { Q_ASSERT(w == 0); w = new W(0, parentWidget); }
 
 #include "widgets.table"
 
-#undef DECLARE_COMPAT_WIDGET
 #undef DECLARE_LAYOUT
 #undef DECLARE_WIDGET
 #undef DECLARE_WIDGET_1

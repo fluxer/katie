@@ -1251,7 +1251,7 @@ void QCoreApplication::removePostedEvents(QObject *receiver, int eventType)
         }
     }
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     if (receiver && eventType == 0) {
         Q_ASSERT(!receiver->d_func()->postedEvents);
     }
@@ -1288,7 +1288,7 @@ void QCoreApplicationPrivate::removePostedEvent(QEvent * event)
     QMutexLocker locker(&data->postEventList.mutex);
 
     if (data->postEventList.size() == 0) {
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
         qDebug("QCoreApplication::removePostedEvent: Internal error: %p %d is posted",
                 (void*)event, event->type());
         return;

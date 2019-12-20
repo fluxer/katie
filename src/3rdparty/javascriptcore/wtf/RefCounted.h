@@ -51,7 +51,7 @@ public:
 protected:
     RefCountedBase()
         : m_refCount(1)
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         , m_deletionHasBegun(false)
 #endif
     {
@@ -67,7 +67,7 @@ protected:
         Q_ASSERT(!m_deletionHasBegun);
         Q_ASSERT(m_refCount > 0);
         if (m_refCount == 1) {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             m_deletionHasBegun = true;
 #endif
             return true;
@@ -77,7 +77,7 @@ protected:
         return false;
     }
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     bool deletionHasBegun() const
     {
         return m_deletionHasBegun;
@@ -89,7 +89,7 @@ private:
     friend class CrossThreadRefCounted;
 
     int m_refCount;
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     bool m_deletionHasBegun;
 #endif
 };

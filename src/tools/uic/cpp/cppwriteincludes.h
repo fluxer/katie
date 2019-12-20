@@ -44,7 +44,6 @@
 QT_BEGIN_NAMESPACE
 
 class QTextStream;
-class Driver;
 class Uic;
 
 namespace CPP {

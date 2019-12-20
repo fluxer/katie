@@ -74,7 +74,7 @@ namespace WTF {
         CrossThreadRefCounted(T* data, ThreadSafeSharedBase* threadedCounter)
             : m_threadSafeRefCounter(threadedCounter)
             , m_data(data)
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             , m_threadId(0)
 #endif
         {
@@ -88,14 +88,14 @@ namespace WTF {
 
         void threadSafeDeref();
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         bool isOwnedByCurrentThread() const { return !m_threadId || m_threadId == currentThread(); }
 #endif
 
         RefCountedBase m_refCounter;
         ThreadSafeSharedBase* m_threadSafeRefCounter;
         T* m_data;
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         ThreadIdentifier m_threadId;
 #endif
     };
@@ -105,7 +105,7 @@ namespace WTF {
     {
         Q_ASSERT(isOwnedByCurrentThread());
         m_refCounter.ref();
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         // Store the threadId as soon as the ref count gets to 2.
         // The class gets created with a ref count of 1 and then passed
         // to another thread where to ref count get increased.  This
@@ -124,7 +124,7 @@ namespace WTF {
             threadSafeDeref();
             delete this;
         } else {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             // Clear the threadId when the ref goes to 1 because it
             // is safe to be passed to another thread at this point.
             if (m_threadId && m_refCounter.refCount() == 1)

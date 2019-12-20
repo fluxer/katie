@@ -131,11 +131,7 @@ private:
 };
 
 class QDeclarativePixmapData;
-#ifndef QT_NO_THREAD
 class QDeclarativePixmapReader : public QThread
-#else
-class QDeclarativePixmapReader : public QObject
-#endif
 {
     Q_OBJECT
 public:
@@ -150,9 +146,6 @@ public:
 
 protected:
     void run();
-#ifdef QT_NO_THREAD
-    void timerEvent(QTimerEvent *event);
-#endif
 
 private:
     friend class QDeclarativePixmapReaderThreadObject;
@@ -163,9 +156,7 @@ private:
     QList<QDeclarativePixmapReply*> jobs;
     QList<QDeclarativePixmapReply*> cancelled;
     QDeclarativeEngine *engine;
-#ifndef QT_NO_THREAD
     QObject *eventLoopQuitHack;
-#endif
 
     QMutex mutex;
     QDeclarativePixmapReaderThreadObject *threadObject;
@@ -176,9 +167,6 @@ private:
 
     QHash<QNetworkReply*,QDeclarativePixmapReply*> replies;
 
-#ifdef QT_NO_THREAD
-    int timerid;
-#endif
 
     static int replyDownloadProgress;
     static int replyFinished;
@@ -322,31 +310,19 @@ static bool readImage(const QUrl& url, QIODevice *dev, QImage *image, QString *e
 }
 
 QDeclarativePixmapReader::QDeclarativePixmapReader(QDeclarativeEngine *eng)
-#ifndef QT_NO_THREAD
     : QThread(eng),
-#else
-    : QObject(eng),
-#endif
     engine(eng),
     threadObject(0),
     accessManager(0)
 {
-#ifndef QT_NO_THREAD
     eventLoopQuitHack = new QObject;
     eventLoopQuitHack->moveToThread(this);
     connect(eventLoopQuitHack, SIGNAL(destroyed(QObject*)), SLOT(quit()), Qt::DirectConnection);
     start(QThread::IdlePriority);
-#else
-    run();
-    timerid = startTimer(500);
-#endif
 }
 
 QDeclarativePixmapReader::~QDeclarativePixmapReader()
 {
-#ifdef QT_NO_THREAD
-    killTimer(timerid);
-#endif
 
     readerMutex.lock();
     readers.remove(engine);
@@ -367,17 +343,11 @@ QDeclarativePixmapReader::~QDeclarativePixmapReader()
     }
     if (threadObject) {
         threadObject->processJobs();
-#ifdef QT_NO_THREAD
-        delete threadObject;
-        threadObject = 0;
-#endif
     }
     mutex.unlock();
 
-#ifndef QT_NO_THREAD
     eventLoopQuitHack->deleteLater();
     wait();
-#endif
 }
 
 void QDeclarativePixmapReader::networkRequestDone(QNetworkReply *reply)
@@ -603,22 +573,13 @@ void QDeclarativePixmapReader::run()
     threadObject = new QDeclarativePixmapReaderThreadObject(this);
     mutex.unlock();
 
-#ifndef QT_NO_THREAD
     processJobs();
     exec();
 
     delete threadObject;
     threadObject = 0;
-#endif
 }
 
-#ifdef QT_NO_THREAD
-void QDeclarativePixmapReader::timerEvent(QTimerEvent *event)
-{
-    if (event->timerId() == timerid)
-        processJobs();
-}
-#endif
 
 class QDeclarativePixmapKey
 {

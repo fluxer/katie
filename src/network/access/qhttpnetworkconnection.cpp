@@ -217,13 +217,8 @@ void QHttpNetworkConnectionPrivate::prepareRequest(HttpMessagePair &messagePair)
     // encoding.
     value = request.headerField("accept-encoding");
     if (value.isEmpty()) {
-#ifndef QT_NO_COMPRESS
         request.setHeaderField("Accept-Encoding", "gzip");
         request.d->autoDecompress = true;
-#else
-        // if zlib is not available set this to false always
-        request.d->autoDecompress = false;
-#endif
     }
 
     // some websites mandate an accept-language header and fail

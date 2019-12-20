@@ -330,11 +330,9 @@ QFileDialog::QFileDialog(const QFileDialogArgs &args)
 QFileDialog::~QFileDialog()
 {
     Q_D(QFileDialog);
-#ifndef QT_NO_SETTINGS
     QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
     settings.beginGroup(QLatin1String("Qt"));
     settings.setValue(QLatin1String("filedialog"), saveState());
-#endif
     d->deleteNativeDialog_sys();
 }
 
@@ -2027,13 +2025,11 @@ void QFileDialogPrivate::init(const QString &directory, const QString &nameFilte
     retranslateStrings();
     q->setFileMode(fileMode);
 
-#ifndef QT_NO_SETTINGS
     QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
     settings.beginGroup(QLatin1String("Qt"));
     if (!directory.isEmpty())
         setLastVisitedDirectory(workingDirectory(directory));
     q->restoreState(settings.value(QLatin1String("filedialog")).toByteArray());
-#endif
 
     // Default case
     if (!nameFilter.isEmpty())

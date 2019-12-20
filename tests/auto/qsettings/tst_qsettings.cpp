@@ -523,9 +523,7 @@ void tst_QSettings::testByteArray_data()
     QByteArray bytes("Hello world!");
 
     QTest::newRow("latin1") << bytes;
-#ifndef QT_NO_COMPRESS
     QTest::newRow("compressed") << qCompress(bytes);
-#endif
     QTest::newRow("with \\0") << bytes + '\0' + bytes;
 }
 

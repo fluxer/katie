@@ -23,7 +23,6 @@ set(DESIGNER_PUBLIC_HEADERS
     QDesignerCustomWidgetInterface
     QDesignerDnDItemInterface
     QDesignerDynamicPropertySheetExtension
-    QDesignerExportWidget
     QDesignerExtraInfoExtension
     QDesignerFormEditorInterface
     QDesignerFormEditorPluginInterface

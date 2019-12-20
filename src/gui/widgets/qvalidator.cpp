@@ -426,7 +426,6 @@ void QIntValidator::setTop(int top)
 }
 
 
-#ifndef QT_NO_REGEXP
 
 /*!
     \internal
@@ -803,7 +802,6 @@ void QRegExpValidator::setRegExp(const QRegExp& rx)
     r = rx;
 }
 
-#endif
 
 QT_END_NAMESPACE
 

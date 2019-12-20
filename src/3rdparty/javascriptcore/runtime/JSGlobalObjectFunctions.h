@@ -47,7 +47,7 @@ namespace JSC {
     JSValue QT_FASTCALL globalFuncEncodeURIComponent(ExecState*, JSObject*, JSValue, const ArgList&);
     JSValue QT_FASTCALL globalFuncEscape(ExecState*, JSObject*, JSValue, const ArgList&);
     JSValue QT_FASTCALL globalFuncUnescape(ExecState*, JSObject*, JSValue, const ArgList&);
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     JSValue QT_FASTCALL globalFuncJSCPrint(ExecState*, JSObject*, JSValue, const ArgList&);
 #endif
 

@@ -117,7 +117,7 @@ QStyle *QStyleFactory::create(const QString& key)
     else
 #endif
     { } // Keep these here - they make the #ifdefery above work
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
+#if !defined(QT_NO_LIBRARY)
     if(!ret) {
         if (QStyleFactoryInterface *factory = qobject_cast<QStyleFactoryInterface*>(stylesloader()->instance(style)))
             ret = factory->create(style);
@@ -136,7 +136,7 @@ QStyle *QStyleFactory::create(const QString& key)
 */
 QStringList QStyleFactory::keys()
 {
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
+#if !defined(QT_NO_LIBRARY)
     QStringList list = stylesloader()->keys();
 #else
     QStringList list;

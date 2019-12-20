@@ -132,9 +132,7 @@ void QSvgIconEnginePrivate::loadDataForModeAndState(QSvgRenderer *renderer, QIco
             buf = svgBuffers->value(hashKey(QIcon::Normal, QIcon::Off));
     }
     if (!buf.isEmpty()) {
-#ifndef QT_NO_COMPRESS
         buf = qFastUncompress(buf);
-#endif
         renderer->load(buf);
     } else {
         QString svgFile = svgFiles.value(hashKey(mode, state));
@@ -209,10 +207,8 @@ void QSvgIconEngine::addFile(const QString &fileName, const QSize &,
         if (fileName.at(0) != QLatin1Char(':'))
             abs = QFileInfo(fileName).absoluteFilePath();
         if (abs.endsWith(QLatin1String(".svg"), Qt::CaseInsensitive)
-#ifndef QT_NO_COMPRESS
                 || abs.endsWith(QLatin1String(".svgz"), Qt::CaseInsensitive)
                 || abs.endsWith(QLatin1String(".svg.gz"), Qt::CaseInsensitive))
-#endif
         {
             QSvgRenderer renderer(abs);
             if (renderer.isValid()) {
@@ -250,19 +246,11 @@ bool QSvgIconEngine::read(QDataStream &in)
     d->svgBuffers = new QHash<int, QByteArray>;
 
     int isCompressed;
-    QHash<int, QString> fileNames;  // For memoryoptimization later
-    in >> fileNames >> isCompressed >> *d->svgBuffers;
-#ifndef QT_NO_COMPRESS
+    in >> isCompressed >> *d->svgBuffers;
     if (!isCompressed) {
         foreach(int key, d->svgBuffers->keys())
             d->svgBuffers->insert(key, qFastCompress(d->svgBuffers->value(key)));
     }
-#else
-    if (isCompressed) {
-        qWarning("QSvgIconEngine: Can not decompress SVG data");
-        d->svgBuffers->clear();
-    }
-#endif
     int hasAddedPixmaps;
     in >> hasAddedPixmaps;
     if (hasAddedPixmaps) {
@@ -284,16 +272,10 @@ bool QSvgIconEngine::write(QDataStream &out) const
         QFile f(d->svgFiles.value(key));
         if (f.open(QIODevice::ReadOnly))
             buf = f.readAll();
-#ifndef QT_NO_COMPRESS
         buf = qFastCompress(buf);
-#endif
         svgBuffers.insert(key, buf);
     }
-#ifndef QT_NO_COMPRESS
-    out << d->svgFiles << 1 << svgBuffers;
-#else
-    out << d->svgFiles << 0 << svgBuffers;
-#endif
+    out << 1 << svgBuffers;
     if (d->addedPixmaps)
         out << (int)1 << *d->addedPixmaps;
     else

@@ -106,8 +106,7 @@ QLibraryInfo::licensedProducts()
 /*!
     Returns a unique key identifying this build of Qt and its
     configurations. This key is not globally unique, rather only useful
-    for establishing of two configurations are compatible. This can be
-    used to compare with the \c QT_BUILD_KEY preprocessor symbol.
+    for establishing of two configurations are compatible.
 
     \sa location()
 */
@@ -115,7 +114,7 @@ QLibraryInfo::licensedProducts()
 QString
 QLibraryInfo::buildKey()
 {
-    return QString::fromLatin1(QT_BUILD_KEY);
+    return QString::fromLatin1(qt_configure_build_key_str);
 }
 
 /*!
@@ -127,7 +126,7 @@ QLibraryInfo::buildKey()
 QDate
 QLibraryInfo::buildDate()
 {
-    return QDate::fromString(QString::fromLatin1(qt_configure_installation), Qt::ISODate);
+    return QDate::fromString(QString::fromLatin1(qt_configure_build_date_str), Qt::ISODate);
 }
 #endif //QT_NO_DATESTRING
 

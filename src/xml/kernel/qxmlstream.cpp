@@ -1199,7 +1199,7 @@ inline int QXmlStreamReaderPrivate::fastScanContentCharList()
                 break;
             }
             return n;
-        } break;
+        }
         case '\r':
             if ((c = filterCarriageReturn()) == 0)
                 return n;

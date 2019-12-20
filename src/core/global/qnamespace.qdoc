@@ -1072,7 +1072,6 @@
     \omitvalue WA_WState_Reparented
     \omitvalue WA_WState_Visible
     \omitvalue WA_SetWindowIcon
-    \omitvalue WA_PendingUpdate
     \omitvalue WA_LaidOut
     \omitvalue WA_GrabbedShortcut
     \omitvalue WA_DontShowOnScreen

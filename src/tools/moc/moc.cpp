@@ -778,7 +778,7 @@ void Moc::generate(FILE *out)
         fn = filename.mid(i);
     fprintf(out, "/****************************************************************************\n"
             "** Meta object code from reading C++ file '%s'\n**\n" , fn.constData());
-    fprintf(out, "** Created by: The Qt Meta Object Compiler version %d (Qt %s)\n**\n" , Q_MOC_OUTPUT_REVISION, QT_VERSION_STR);
+    fprintf(out, "** Created by: The Katie Meta Object Compiler version %d (Katie %s)\n**\n" , Q_MOC_OUTPUT_REVISION, QT_VERSION_STR);
     fprintf(out, "** WARNING! All changes made in this file will be lost!\n"
             "*****************************************************************************/\n\n");
 

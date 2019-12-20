@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 
 // Prealloc = 256 by default, specified in qcontainerfwd.h
 template<class T, int Prealloc>
-class QVarLengthArray
+class Q_CORE_EXPORT QVarLengthArray
 {
 public:
     inline explicit QVarLengthArray(int size = 0);

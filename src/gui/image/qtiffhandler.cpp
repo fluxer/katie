@@ -135,6 +135,27 @@ inline void rotate_right_mirror_vertical(QImage *const image) // rotate right->m
     *image = generated;
 }
 
+
+static void qConvert32BitOrder(void *buffer, int width)
+{
+    uint32 *target = reinterpret_cast<uint32 *>(buffer);
+    for (int32 x=0; x<width; ++x) {
+        uint32 p = target[x];
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+        target[x] = (p & 0xff000000) >> 24
+                    | (p & 0x00ff0000) << 8
+                    | (p & 0x0000ff00) << 8
+                    | (p & 0x000000ff) << 8;
+#else
+        // convert between ARGB and ABGR
+        target[x] = (p & 0xff000000)
+                    | ((p & 0x00ff0000) >> 16)
+                    | (p & 0x0000ff00)
+                    | ((p & 0x000000ff) << 16);
+#endif
+    }
+}
+
 QTiffHandler::QTiffHandler() : QImageIOHandler()
 {
     compression = NoCompression;
@@ -279,7 +300,7 @@ bool QTiffHandler::read(QImage *image)
                 const int stopOnError = 1;
                 if (TIFFReadRGBAImageOriented(tiff, width, height, reinterpret_cast<uint32 *>(image->bits()), ORIENTATION_TOPLEFT, stopOnError)) {
                     for (uint32 y=0; y<height; ++y)
-                        convert32BitOrder(image->scanLine(y), width);
+                        qConvert32BitOrder(image->scanLine(y), width);
                 } else {
                     TIFFClose(tiff);
                     return false;
@@ -576,10 +597,7 @@ bool QTiffHandler::write(const QImage &image)
             int chunkStart = y;
             int chunkEnd = y + chunk.height();
             while (y < chunkEnd) {
-                if (QSysInfo::ByteOrder == QSysInfo::LittleEndian)
-                    convert32BitOrder(chunk.scanLine(y - chunkStart), width);
-                else
-                    convert32BitOrderBigEndian(chunk.scanLine(y - chunkStart), width);
+                qConvert32BitOrder(chunk.scanLine(y - chunkStart), width);
 
                 if (TIFFWriteScanline(tiff, reinterpret_cast<uint32 *>(chunk.scanLine(y - chunkStart)), y) != 1) {
                     TIFFClose(tiff);
@@ -645,31 +663,6 @@ bool QTiffHandler::supportsOption(ImageOption option) const
     return option == CompressionRatio
             || option == Size
             || option == ImageFormat;
-}
-
-void QTiffHandler::convert32BitOrder(void *buffer, int width)
-{
-    uint32 *target = reinterpret_cast<uint32 *>(buffer);
-    for (int32 x=0; x<width; ++x) {
-        uint32 p = target[x];
-        // convert between ARGB and ABGR
-        target[x] = (p & 0xff000000)
-                    | ((p & 0x00ff0000) >> 16)
-                    | (p & 0x0000ff00)
-                    | ((p & 0x000000ff) << 16);
-    }
-}
-
-void QTiffHandler::convert32BitOrderBigEndian(void *buffer, int width)
-{
-    uint32 *target = reinterpret_cast<uint32 *>(buffer);
-    for (int32 x=0; x<width; ++x) {
-        uint32 p = target[x];
-        target[x] = (p & 0xff000000) >> 24
-                    | (p & 0x00ff0000) << 8
-                    | (p & 0x0000ff00) << 8
-                    | (p & 0x000000ff) << 8;
-    }
 }
 
 QT_END_NAMESPACE

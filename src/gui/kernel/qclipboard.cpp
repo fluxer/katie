@@ -50,6 +50,7 @@
 #include "qbuffer.h"
 #include "qimage.h"
 #include "qtextcodec.h"
+#include "qthread.h"
 
 QT_BEGIN_NAMESPACE
 

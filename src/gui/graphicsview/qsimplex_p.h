@@ -112,7 +112,7 @@ struct QSimplexConstraint
         }
     }
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
     QString toString() {
         QString result;
         result += QString::fromAscii("-- QSimplexConstraint %1 --").arg(quintptr(this), 0, 16);
@@ -135,7 +135,7 @@ struct QSimplexConstraint
 
         return result;
     }
-#endif
+#endif // QT_NO_DEBUG
 };
 
 class QSimplex

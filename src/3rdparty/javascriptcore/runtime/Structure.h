@@ -38,7 +38,7 @@
 #include <wtf/PassRefPtr.h>
 #include <wtf/RefCounted.h>
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 #define DUMP_PROPERTYMAP_STATS 0
 #else
 #define DUMP_PROPERTYMAP_STATS 0
@@ -179,7 +179,7 @@ namespace JSC {
         
         bool isValid(ExecState*, StructureChain* cachedPrototypeChain) const;
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         volatile int m_count;
 #endif
 

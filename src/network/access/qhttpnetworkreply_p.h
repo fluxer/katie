@@ -47,8 +47,7 @@
 #include <qplatformdefs.h>
 #ifndef QT_NO_HTTP
 
-#ifndef QT_NO_COMPRESS
-#    include <zlib.h>
+#include <zlib.h>
 static const unsigned char gz_magic[2] = {0x1f, 0x8b}; // gzip magic header
 // gzip flag byte
 #define HEAD_CRC     0x02 // bit 1 set: header CRC present
@@ -57,7 +56,6 @@ static const unsigned char gz_magic[2] = {0x1f, 0x8b}; // gzip magic header
 #define COMMENT      0x10 // bit 4 set: file comment present
 #define RESERVED     0xE0 // bits 5..7: reserved
 #define CHUNK 16384
-#endif
 
 #include <QtNetwork/qtcpsocket.h>
 // it's safe to include these even if SSL support is not enabled
@@ -196,11 +194,9 @@ public:
     bool isChunked();
     bool isConnectionCloseEnabled();
     bool isGzipped();
-#ifndef QT_NO_COMPRESS
     bool gzipCheckHeader(QByteArray &content, int &pos);
     int gunzipBodyPartially(QByteArray &compressed, QByteArray &inflated);
     void gunzipBodyPartiallyEnd();
-#endif
     void removeAutoDecompressHeader();
 
     enum ReplyState {
@@ -233,9 +229,7 @@ public:
     QPointer<QHttpNetworkConnectionChannel> connectionChannel;
     bool initInflate;
     bool streamEnd;
-#ifndef QT_NO_COMPRESS
     z_stream inflateStrm;
-#endif
     bool autoDecompress;
 
     QByteDataBuffer responseData; // uncompressed body

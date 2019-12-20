@@ -7797,11 +7797,7 @@ bool QXmlSimpleReaderPrivate::processReference()
 */
 bool QXmlSimpleReaderPrivate::parseString()
 {
-    const signed char InpCharExpected  = 0; // the character that was expected
-    const signed char InpUnknown       = 1;
-
     signed char state; // state in this function is the position in the string s
-    signed char input;
 
     if (parseStack==0 || parseStack->isEmpty()) {
         Done = parseString_s.length();
@@ -7836,11 +7832,6 @@ bool QXmlSimpleReaderPrivate::parseString()
             return false;
         }
         if (c == parseString_s[(int)state]) {
-            input = InpCharExpected;
-        } else {
-            input = InpUnknown;
-        }
-        if (input == InpCharExpected) {
             state++;
         } else {
             // Error

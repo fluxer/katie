@@ -460,9 +460,7 @@ void QHttpNetworkConnectionChannel::_q_receiveReply()
                     emit reply->readyRead();
                     emit reply->dataReadProgress(replyPrivate->totalProgress, replyPrivate->bodyLength);
                 }
-            }
-            else
-            {
+            } else {
                 // use the traditional slower reading (for compressed encoding, chunked encoding,
                 // no content-length etc)
                 QByteDataBuffer byteDatas;
@@ -483,12 +481,10 @@ void QHttpNetworkConnectionChannel::_q_receiveReply()
                             emit reply->dataReadProgress(replyPrivate->totalProgress, replyPrivate->bodyLength);
                         }
                     }
-#ifndef QT_NO_COMPRESS
                     else if (!expand(false)) { // expand a chunk if possible
                         // If expand() failed we can just return, it had already called connection->emitReplyError()
                         return;
                     }
-#endif
                 }
             }
             // still in ReadingDataState? This function will be called again by the socket's readyRead
@@ -641,7 +637,6 @@ bool QHttpNetworkConnectionChannel::ensureConnection()
 }
 
 
-#ifndef QT_NO_COMPRESS
 bool QHttpNetworkConnectionChannel::expand(bool dataComplete)
 {
     Q_ASSERT(socket);
@@ -679,13 +674,11 @@ bool QHttpNetworkConnectionChannel::expand(bool dataComplete)
     }
     return true;
 }
-#endif
 
 
 void QHttpNetworkConnectionChannel::allDone()
 {
     Q_ASSERT(reply);
-#ifndef QT_NO_COMPRESS
     // expand the whole data.
     if (reply->d_func()->expectContent() && reply->d_func()->autoDecompress && !reply->d_func()->streamEnd) {
         bool expandResult = expand(true);
@@ -693,7 +686,6 @@ void QHttpNetworkConnectionChannel::allDone()
         if (!expandResult)
             return;
     }
-#endif
 
     if (!reply) {
         qWarning() << "QHttpNetworkConnectionChannel::allDone() called without reply. Please report at http://bugreports.qt-project.org/";

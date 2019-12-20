@@ -41,7 +41,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 template <class Key, class T>
-class QCache
+class Q_CORE_EXPORT QCache
 {
     QHash<Key, T*> hash;
     int mx;

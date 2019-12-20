@@ -31,7 +31,6 @@
 #include "qobject.h"
 #include "qcoreapplication.h"
 
-#ifndef QT_NO_STANDARDPATHS
 
 QT_BEGIN_NAMESPACE
 
@@ -338,4 +337,3 @@ QString QStandardPaths::displayName(StandardLocation type)
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_STANDARDPATHS

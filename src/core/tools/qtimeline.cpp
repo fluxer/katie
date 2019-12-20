@@ -505,7 +505,6 @@ QTimeLine::CurveShape QTimeLine::curveShape() const
 {
     Q_D(const QTimeLine);
     switch (d->easingCurve.type()) {
-    default:
     case QEasingCurve::InOutSine:
         return EaseInOutCurve;
     case QEasingCurve::InCurve:
@@ -518,14 +517,14 @@ QTimeLine::CurveShape QTimeLine::curveShape() const
         return SineCurve;
     case QEasingCurve::CosineCurve:
         return CosineCurve;
+    default:
+        return EaseInOutCurve;
     }
-    return EaseInOutCurve;
 }
 
 void QTimeLine::setCurveShape(CurveShape shape)
 {
     switch (shape) {
-    default:
     case EaseInOutCurve:
         setEasingCurve(QEasingCurve(QEasingCurve::InOutSine));
         break;
@@ -543,6 +542,9 @@ void QTimeLine::setCurveShape(CurveShape shape)
         break;
     case CosineCurve:
         setEasingCurve(QEasingCurve(QEasingCurve::CosineCurve));
+        break;
+    default:
+        setEasingCurve(QEasingCurve(QEasingCurve::InOutSine));
         break;
     }
 }

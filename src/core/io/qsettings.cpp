@@ -45,6 +45,7 @@
 #include "qmutex.h"
 #include "qlibraryinfo.h"
 #include "qtemporaryfile.h"
+#include "qcoreapplication.h"
 
 #ifndef QT_NO_TEXTCODEC
 #  include "qtextcodec.h"
@@ -55,10 +56,6 @@
 #include "qpoint.h"
 #include "qrect.h"
 #endif // !QT_NO_GEOM_VARIANT
-
-#ifndef QT_NO_QOBJECT
-#include "qcoreapplication.h"
-#endif
 
 #include <stdlib.h>
 
@@ -390,12 +387,8 @@ void QSettingsPrivate::requestUpdate()
 {
     if (!pendingChanges) {
         pendingChanges = true;
-#ifndef QT_NO_QOBJECT
         Q_Q(QSettings);
         QCoreApplication::postEvent(q, new QEvent(QEvent::UpdateRequest));
-#else
-        update();
-#endif
     }
 }
 
@@ -2262,7 +2255,6 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     \sa setPath()
 */
 
-#ifndef QT_NO_QOBJECT
 /*!
     Constructs a QSettings object for accessing settings of the
     application called \a application from the organization called \a
@@ -2407,33 +2399,6 @@ QSettings::QSettings(QObject *parent)
 {
 }
 
-#else
-QSettings::QSettings(const QString &organization, const QString &application)
-    : d_ptr(QSettingsPrivate::create(globalDefaultFormat, QSettings::UserScope, organization, application))
-{
-    d_ptr->q_ptr = this;
-}
-
-QSettings::QSettings(Scope scope, const QString &organization, const QString &application)
-    : d_ptr(QSettingsPrivate::create(globalDefaultFormat, scope, organization, application))
-{
-    d_ptr->q_ptr = this;
-}
-
-QSettings::QSettings(Format format, Scope scope, const QString &organization,
-                     const QString &application)
-    : d_ptr(QSettingsPrivate::create(format, scope, organization, application))
-{
-    d_ptr->q_ptr = this;
-}
-
-QSettings::QSettings(const QString &fileName, Format format)
-    : d_ptr(QSettingsPrivate::create(fileName, format))
-{
-    d_ptr->q_ptr = this;
-}
-#endif
-
 /*!
     Destroys the QSettings object.
 
@@ -2452,9 +2417,6 @@ QSettings::~QSettings()
             ; // ok. then don't sync but at least don't throw in the destructor
         }
     }
-#ifdef QT_NO_QOBJECT
-    delete d_ptr;
-#endif
 }
 
 /*!
@@ -2995,7 +2957,6 @@ bool QSettings::fallbacksEnabled() const
     return d->fallbacks;
 }
 
-#ifndef QT_NO_QOBJECT
 /*!
     \reimp
 */
@@ -3008,7 +2969,6 @@ bool QSettings::event(QEvent *event)
     }
     return QObject::event(event);
 }
-#endif
 
 /*!
     Returns the value for setting \a key. If the setting doesn't
@@ -3222,9 +3182,7 @@ QSettings::Format QSettings::registerFormat(const QString &extension, ReadFunc r
     return QSettings::Format((int)QSettings::CustomFormat1 + index);
 }
 
-#ifndef QT_NO_QOBJECT
 #include "moc_qsettings.h"
-#endif
 
 QT_END_NAMESPACE
 

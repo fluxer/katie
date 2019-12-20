@@ -139,7 +139,7 @@ JSGlobalData::~JSGlobalData()
     // By the time this is destroyed, heap.destroy() must already have been called.
 
     delete interpreter;
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     // Zeroing out to make the behavior more predictable when someone attempts to use a deleted instance.
     interpreter = 0;
 #endif

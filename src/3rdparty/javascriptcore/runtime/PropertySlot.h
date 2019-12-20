@@ -172,14 +172,14 @@ namespace JSC {
 
         void clearBase()
         {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             m_slotBase = JSValue();
 #endif
         }
 
         void clearValue()
         {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             m_value = JSValue();
 #endif
         }

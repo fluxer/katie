@@ -54,9 +54,7 @@
 #include "qstack.h"
 #include "qdebug.h"
 
-#ifndef QT_NO_COMPRESS
 #include <zlib.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -74,7 +72,6 @@ QSvgTinyDocument::~QSvgTinyDocument()
 {
 }
 
-#ifndef QT_NO_COMPRESS
 static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
 {
     if (!device)
@@ -159,7 +156,6 @@ static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
     inflateEnd(&zlibStream);
     return destination;
 }
-#endif
 
 QSvgTinyDocument * QSvgTinyDocument::load(const QString &fileName)
 {
@@ -170,12 +166,10 @@ QSvgTinyDocument * QSvgTinyDocument::load(const QString &fileName)
         return 0;
     }
 
-#ifndef QT_NO_COMPRESS
     if (fileName.endsWith(QLatin1String(".svgz"), Qt::CaseInsensitive)
             || fileName.endsWith(QLatin1String(".svg.gz"), Qt::CaseInsensitive)) {
         return load(qt_inflateGZipDataFrom(&file));
     }
-#endif
 
     QSvgTinyDocument *doc = 0;
     QSvgHandler handler(&file);
@@ -191,13 +185,11 @@ QSvgTinyDocument * QSvgTinyDocument::load(const QString &fileName)
 
 QSvgTinyDocument * QSvgTinyDocument::load(const QByteArray &contents)
 {
-#ifndef QT_NO_COMPRESS
     // Check for gzip magic number and inflate if appropriate
     if (contents.startsWith("\x1f\x8b")) {
         QBuffer buffer(const_cast<QByteArray *>(&contents));
         return load(qt_inflateGZipDataFrom(&buffer));
     }
-#endif
 
     QSvgHandler handler(contents);
 

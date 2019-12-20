@@ -60,7 +60,7 @@ QT_BEGIN_NAMESPACE
 class QGraphicsLayoutItem;
 class QGraphicsWidget;
 
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
 inline bool qt_graphicsLayoutDebug()
 {
     static int checked_env = -1;

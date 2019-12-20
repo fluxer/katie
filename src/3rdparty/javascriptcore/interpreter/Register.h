@@ -97,7 +97,7 @@ namespace JSC {
 
     ALWAYS_INLINE Register::Register()
     {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         *this = JSValue();
 #endif
     }

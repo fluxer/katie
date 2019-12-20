@@ -2755,6 +2755,7 @@ bool QVariant::canConvert(Type t) const
     } else if (t == QVariant::Bool) {
         switch (currentType) {
         case QVariant::Double:
+        case QVariant::Float:
         case QVariant::Int:
         case QVariant::UInt:
         case QVariant::LongLong:
@@ -2771,6 +2772,7 @@ bool QVariant::canConvert(Type t) const
         case QVariant::UInt:
         case QVariant::String:
         case QVariant::Double:
+        case QVariant::Float:
         case QVariant::Bool:
         case QVariant::LongLong:
         case QVariant::ULongLong:
@@ -2785,6 +2787,7 @@ bool QVariant::canConvert(Type t) const
         case QVariant::Int:
         case QVariant::String:
         case QVariant::Double:
+        case QVariant::Float:
         case QVariant::Bool:
         case QVariant::LongLong:
         case QVariant::ULongLong:
@@ -2799,6 +2802,7 @@ bool QVariant::canConvert(Type t) const
         case QVariant::Int:
         case QVariant::String:
         case QVariant::Double:
+        case QVariant::Float:
         case QVariant::Bool:
         case QVariant::UInt:
         case QVariant::ULongLong:
@@ -2813,6 +2817,7 @@ bool QVariant::canConvert(Type t) const
         case QVariant::Int:
         case QVariant::String:
         case QVariant::Double:
+        case QVariant::Float:
         case QVariant::Bool:
         case QVariant::UInt:
         case QVariant::LongLong:
@@ -2855,12 +2860,12 @@ bool QVariant::canConvert(Type t) const
         }
     } else if (t == QVariant::String) {
         switch (currentType) {
-        case QVariant::StringList:
         case QVariant::ByteArray:
         case QVariant::Int:
         case QVariant::UInt:
         case QVariant::Bool:
         case QVariant::Double:
+        case QVariant::Float:
         case QVariant::Date:
         case QVariant::Time:
         case QVariant::DateTime:
@@ -2869,6 +2874,8 @@ bool QVariant::canConvert(Type t) const
         case QVariant::Char:
         case QVariant::Url:
             return true;
+        case QVariant::StringList:
+            return v_cast<QStringList>(&d)->count() == 1;
         default:
             return false;
         }
@@ -2887,6 +2894,7 @@ bool QVariant::canConvert(Type t) const
         case QVariant::UInt:
         case QVariant::Bool:
         case QVariant::Double:
+        case QVariant::Float:
         case QVariant::LongLong:
         case QVariant::ULongLong:
             return true;
@@ -3061,6 +3069,7 @@ bool QVariant::canConvert(Type t) const
                 case QVariant::UInt:
                 case QVariant::String:
                 case QVariant::Double:
+                case QVariant::Float:
                 case QVariant::Bool:
                 case QVariant::LongLong:
                 case QVariant::ULongLong:
@@ -3076,8 +3085,6 @@ bool QVariant::canConvert(Type t) const
         }
     }
 
-    if (t == QVariant::String && currentType == QVariant::StringList)
-        return v_cast<QStringList>(&d)->count() == 1;
     return false;
 }
 

@@ -42,7 +42,7 @@ QT_BEGIN_NAMESPACE
 
 
 template <class T>
-class QSet
+class Q_CORE_EXPORT QSet
 {
     typedef QHash<T, bool> Hash;
 

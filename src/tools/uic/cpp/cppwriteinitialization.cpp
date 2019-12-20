@@ -1845,7 +1845,6 @@ QString WriteInitialization::pixCall(const DomProperty *p) const
         qWarning("%s: Warning: Unknown icon format encountered. The ui-file was generated with a too-recent version of Designer.",
                  qPrintable(m_option.messagePrefix()));
         return QLatin1String("QIcon()");
-        break;
     }
     return pixCall(type, s);
 }

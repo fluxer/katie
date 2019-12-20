@@ -94,9 +94,7 @@ public:
     ~QApplicationPrivate();
 
 #if defined(Q_WS_X11)
-#ifndef QT_NO_SETTINGS
     static bool x11_apply_settings();
-#endif
     static void reset_instance_pointer();
 #endif
     static bool quitOnLastWindowClosed;

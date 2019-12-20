@@ -32,18 +32,6 @@
 
 namespace WTF {
 
-#ifdef QT_NO_THREAD
-
-void initializeThreading() { }
-ThreadIdentifier createThreadInternal(ThreadFunction, void*, const char*) { return ThreadIdentifier(); }
-int waitForThreadCompletion(ThreadIdentifier, void**) { return 0; }
-void detachThread(ThreadIdentifier) { }
-ThreadIdentifier currentThread() { return ThreadIdentifier(); }
-
-void lockAtomicallyInitializedStaticMutex() { }
-void unlockAtomicallyInitializedStaticMutex() { }
-
-#else // QT_NO_THREAD
 
 QT_USE_NAMESPACE
 
@@ -199,6 +187,5 @@ ThreadIdentifier currentThread()
     return establishIdentifierForThread(currentThread);
 }
 
-#endif
 
 } // namespace WTF

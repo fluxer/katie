@@ -46,7 +46,6 @@
 //
 
 #include "qtextcodec.h"
-#include <string.h>
 
 QT_BEGIN_NAMESPACE
 

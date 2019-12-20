@@ -54,7 +54,6 @@
 #endif
 #include <unistd.h>
 
-#ifndef QT_NO_THREAD
 #if OS(SOLARIS)
 #include <thread.h>
 #else
@@ -64,7 +63,6 @@
 #if HAVE(PTHREAD_NP_H)
 #include <pthread_np.h>
 #endif
-#endif // QT_NO_THREAD
 
 #endif
 
@@ -387,7 +385,6 @@ static void *hpux_get_stack_base()
 }
 #endif
 
-#ifndef QT_NO_THREAD
 static inline void* currentThreadStackBase()
 {
 #if OS(HPUX)
@@ -445,7 +442,6 @@ static inline void* currentThreadStackBase()
 #error Need a way to get the stack base on this platform
 #endif
 }
-#endif // QT_NO_THREAD
 
 inline bool isPointerAligned(void* p)
 {
@@ -523,12 +519,7 @@ void NEVER_INLINE Heap::markCurrentThreadConservativelyInternal(MarkStack& markS
 {
     void* dummy;
     void* stackPointer = &dummy;
-#ifndef QT_NO_THREAD
     void* stackBase = currentThreadStackBase();
-#else
-    void* dummy2;
-    void* stackBase = &dummy2;
-#endif
     markConservatively(markStack, stackPointer, stackBase);
 }
 

@@ -66,7 +66,6 @@
 #include "qscriptglobalobject_p.h"
 #include "qscriptstaticscopeobject_p.h"
 
-#ifndef QT_NO_QOBJECT
 #include <QtCore/qcoreapplication.h>
 #include <QtCore/qdir.h>
 #include <QtCore/qfile.h>
@@ -75,12 +74,9 @@
 #include <QtCore/qset.h>
 #include <QtCore/qtextstream.h>
 #include "qscriptextensioninterface.h"
-#endif
 
 Q_DECLARE_METATYPE(QScriptValue)
-#ifndef QT_NO_QOBJECT
 Q_DECLARE_METATYPE(QObjectList)
-#endif
 Q_DECLARE_METATYPE(QList<int>)
 
 QT_BEGIN_NAMESPACE
@@ -591,7 +587,6 @@ static JSC::JSValue QT_FASTCALL functionDisconnect(JSC::ExecState*, JSC::JSObjec
 
 JSC::JSValue QT_FASTCALL functionDisconnect(JSC::ExecState *exec, JSC::JSObject * /*callee*/, JSC::JSValue thisObject, const JSC::ArgList &args)
 {
-#ifndef QT_NO_QOBJECT
     if (args.size() == 0) {
         return JSC::throwError(exec, JSC::GeneralError, "Function.prototype.disconnect: no arguments given");
     }
@@ -646,16 +641,10 @@ JSC::JSValue QT_FASTCALL functionDisconnect(JSC::ExecState *exec, JSC::JSObject 
         return JSC::throwError(exec, JSC::GeneralError, message);
     }
     return JSC::jsUndefined();
-#else
-    Q_UNUSED(eng);
-    return context->throwError(QScriptContext::TypeError,
-                               QLatin1String("Function.prototype.disconnect"));
-#endif // QT_NO_QOBJECT
 }
 
 JSC::JSValue QT_FASTCALL functionConnect(JSC::ExecState *exec, JSC::JSObject * /*callee*/, JSC::JSValue thisObject, const JSC::ArgList &args)
 {
-#ifndef QT_NO_QOBJECT
     if (args.size() == 0) {
         return JSC::throwError(exec, JSC::GeneralError,"Function.prototype.connect: no arguments given");
     }
@@ -728,12 +717,6 @@ JSC::JSValue QT_FASTCALL functionConnect(JSC::ExecState *exec, JSC::JSObject * /
         return JSC::throwError(exec, JSC::GeneralError, message);
     }
     return JSC::jsUndefined();
-#else
-    Q_UNUSED(eng);
-    Q_UNUSED(classInfo);
-    return context->throwError(QScriptContext::TypeError,
-                               QLatin1String("Function.prototype.connect"));
-#endif // QT_NO_QOBJECT
 }
 
 static JSC::JSValue QT_FASTCALL functionPrint(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
@@ -790,11 +773,8 @@ JSC::JSValue QT_FASTCALL functionQsTranslate(JSC::ExecState *exec, JSC::JSObject
         return JSC::throwError(exec, JSC::GeneralError, "qsTranslate(): fourth argument (encoding) must be a string");
     if ((args.size() > 4) && !args.at(4).isNumber())
         return JSC::throwError(exec, JSC::GeneralError, "qsTranslate(): fifth argument (n) must be a number");
-#ifndef QT_NO_QOBJECT
     JSC::UString context = args.at(0).toString(exec);
-#endif
     JSC::UString text = args.at(1).toString(exec);
-#ifndef QT_NO_QOBJECT
     JSC::UString comment;
     if (args.size() > 2)
         comment = args.at(2).toString(exec);
@@ -811,16 +791,10 @@ JSC::JSValue QT_FASTCALL functionQsTranslate(JSC::ExecState *exec, JSC::JSObject
     int n = -1;
     if (args.size() > 4)
         n = args.at(4).toInt32(exec);
-#endif
-    JSC::UString result;
-#ifndef QT_NO_QOBJECT
-    result = QCoreApplication::translate(context.UTF8String(),
-                                         text.UTF8String(),
-                                         comment.UTF8String(),
-                                         encoding, n);
-#else
-    result = text;
-#endif
+    JSC::UString result = QCoreApplication::translate(context.UTF8String(),
+                                                      text.UTF8String(),
+                                                      comment.UTF8String(),
+                                                      encoding, n);
     return JSC::jsString(exec, result);
 }
 
@@ -841,7 +815,6 @@ JSC::JSValue QT_FASTCALL functionQsTr(JSC::ExecState *exec, JSC::JSObject*, JSC:
         return JSC::throwError(exec, JSC::GeneralError, "qsTr(): second argument (comment) must be a string");
     if ((args.size() > 2) && !args.at(2).isNumber())
         return JSC::throwError(exec, JSC::GeneralError, "qsTr(): third argument (n) must be a number");
-#ifndef QT_NO_QOBJECT
     QScriptEnginePrivate *engine = scriptEngineFromExec(exec);
     JSC::UString context;
     // The first non-empty source URL in the call stack determines the translation context.
@@ -856,25 +829,17 @@ JSC::JSValue QT_FASTCALL functionQsTr(JSC::ExecState *exec, JSC::JSObject*, JSC:
             frame = frame->callerFrame()->removeHostCallFrameFlag();
         }
     }
-#endif
     JSC::UString text = args.at(0).toString(exec);
-#ifndef QT_NO_QOBJECT
     JSC::UString comment;
     if (args.size() > 1)
         comment = args.at(1).toString(exec);
     int n = -1;
     if (args.size() > 2)
         n = args.at(2).toInt32(exec);
-#endif
-    JSC::UString result;
-#ifndef QT_NO_QOBJECT
-    result = QCoreApplication::translate(context.UTF8String(),
-                                         text.UTF8String(),
-                                         comment.UTF8String(),
-                                         QCoreApplication::UnicodeUTF8, n);
-#else
-    result = text;
-#endif
+    JSC::UString result = QCoreApplication::translate(context.UTF8String(),
+                                                      text.UTF8String(),
+                                                      comment.UTF8String(),
+                                                      QCoreApplication::UnicodeUTF8, n);
     return JSC::jsString(exec, result);
 }
 
@@ -901,7 +866,7 @@ JSC::JSValue QT_FASTCALL stringProtoFuncArg(JSC::ExecState *exec, JSC::JSObject*
 }
 
 
-#if !defined(QT_NO_QOBJECT) && !defined(QT_NO_LIBRARY)
+#if !defined(QT_NO_LIBRARY)
 static QScriptValue __setupPackage__(QScriptContext *ctx, QScriptEngine *eng)
 {
     QString path = ctx->argument(0).toString();
@@ -918,7 +883,7 @@ static QScriptValue __setupPackage__(QScriptContext *ctx, QScriptEngine *eng)
     }
     return o;
 }
-#endif
+#endif // QT_NO_LIBRARY
 
 } // namespace QScript
 
@@ -932,9 +897,7 @@ QScriptEnginePrivate::QScriptEnginePrivate()
 {
     qMetaTypeId<QScriptValue>();
     qMetaTypeId<QList<int> >();
-#ifndef QT_NO_QOBJECT
     qMetaTypeId<QObjectList>();
-#endif
 
     if (!QCoreApplication::instance()) {
         qFatal("QScriptEngine: Must construct a Q(Core)Application before a QScriptEngine");
@@ -1270,9 +1233,7 @@ void QScriptEnginePrivate::mark(JSC::MarkStack& markStack)
         }
     }
 
-#ifndef QT_NO_QOBJECT
     markQObjectData(markStack);
-#endif
 }
 
 bool QScriptEnginePrivate::isCollecting() const
@@ -1417,7 +1378,6 @@ void QScriptEnginePrivate::uncaughtException(JSC::ExecState *exec, unsigned byte
     }
 }
 
-#ifndef QT_NO_QOBJECT
 
 void QScriptEnginePrivate::markQObjectData(JSC::MarkStack& markStack)
 {
@@ -1618,7 +1578,6 @@ bool QScriptEnginePrivate::scriptDisconnect(JSC::JSValue signal, JSC::JSValue re
     return scriptDisconnect(fun->qobject(), index, receiver, function);
 }
 
-#endif
 
 void QScriptEnginePrivate::detachAllRegisteredScriptPrograms()
 {
@@ -1654,7 +1613,6 @@ void QScriptEnginePrivate::detachAllRegisteredScriptStrings()
     registeredScriptStrings = 0;
 }
 
-#ifndef QT_NO_REGEXP
 
 Q_CORE_EXPORT QString qt_regexp_toCanonical(const QString &, QRegExp::PatternSyntax);
 
@@ -1710,7 +1668,6 @@ JSC::JSValue QScriptEnginePrivate::newRegExp(JSC::ExecState *exec, const QRegExp
     return JSC::constructRegExp(exec, args);
 }
 
-#endif
 
 JSC::JSValue QScriptEnginePrivate::newRegExp(JSC::ExecState *exec, const QString &pattern, const QString &flags)
 {
@@ -1759,7 +1716,6 @@ JSC::JSValue QScriptEnginePrivate::newVariant(JSC::JSValue objectValue,
     return objectValue;
 }
 
-#ifndef QT_NO_REGEXP
 
 QRegExp QScriptEnginePrivate::toRegExp(JSC::ExecState *exec, JSC::JSValue value)
 {
@@ -1772,7 +1728,6 @@ QRegExp QScriptEnginePrivate::toRegExp(JSC::ExecState *exec, JSC::JSValue value)
     return QRegExp(pattern, kase, QRegExp::RegExp2);
 }
 
-#endif
 
 QVariant QScriptEnginePrivate::toVariant(JSC::ExecState *exec, JSC::JSValue value)
 {
@@ -1781,16 +1736,12 @@ QVariant QScriptEnginePrivate::toVariant(JSC::ExecState *exec, JSC::JSValue valu
     } else if (isObject(value)) {
         if (isVariant(value))
             return variantValue(value);
-#ifndef QT_NO_QOBJECT
         else if (isQObject(value))
             return QVariant::fromValue(toQObject(exec, value));
-#endif
         else if (isDate(value))
             return QVariant(toDateTime(exec, value));
-#ifndef QT_NO_REGEXP
         else if (isRegExp(value))
             return QVariant(toRegExp(exec, value));
-#endif
         else if (isArray(value))
             return variantListFromArray(exec, JSC::asArray(value));
         else if (QScriptDeclarativeClass *dc = declarativeClass(value))
@@ -1958,10 +1909,8 @@ QScriptValue::PropertyFlags QScriptEnginePrivate::propertyFlags(JSC::ExecState *
         result |= QScriptValue::PropertyGetter;
     if (attribs & JSC::Setter || !object->lookupSetter(exec, id).isUndefinedOrNull())
         result |= QScriptValue::PropertySetter;
-#ifndef QT_NO_QOBJECT
     if (attribs & QScript::QObjectMemberAttribute)
         result |= QScriptValue::QObjectMember;
-#endif
     result |= QScriptValue::PropertyFlag(attribs & QScriptValue::UserRange);
     return result;
 }
@@ -1975,22 +1924,6 @@ QScriptString QScriptEnginePrivate::toStringHandle(const JSC::Identifier &name)
     return result;
 }
 
-#ifdef QT_NO_QOBJECT
-
-QScriptEngine::QScriptEngine()
-    : d_ptr(new QScriptEnginePrivate)
-{
-    d_ptr->q_ptr = this;
-}
-
-/*! \internal
-*/
-QScriptEngine::QScriptEngine(QScriptEnginePrivate &dd)
-    : d_ptr(&dd)
-{
-    d_ptr->q_ptr = this;
-}
-#else
 
 /*!
     Constructs a QScriptEngine object.
@@ -2021,17 +1954,12 @@ QScriptEngine::QScriptEngine(QScriptEnginePrivate &dd, QObject *parent)
     : QObject(dd, parent)
 {
 }
-#endif
 
 /*!
   Destroys this QScriptEngine.
 */
 QScriptEngine::~QScriptEngine()
 {
-#ifdef QT_NO_QOBJECT
-    delete d_ptr;
-    d_ptr = 0;
-#endif
 }
 
 /*!
@@ -2137,7 +2065,6 @@ QScriptValue QScriptEngine::newFunction(QScriptEngine::FunctionSignature fun,
     return result;
 }
 
-#ifndef QT_NO_REGEXP
 
 /*!
   Creates a QtScript object of class RegExp with the given
@@ -2152,7 +2079,6 @@ QScriptValue QScriptEngine::newRegExp(const QRegExp &regexp)
     return d->scriptValueFromJSCValue(d->newRegExp(d->currentFrame, regexp));
 }
 
-#endif // QT_NO_REGEXP
 
 /*!
   Creates a QtScript object holding the given variant \a value.
@@ -2206,7 +2132,6 @@ QScriptValue QScriptEngine::newVariant(const QScriptValue &object,
     return d->scriptValueFromJSCValue(d->newVariant(jsObject, value));
 }
 
-#ifndef QT_NO_QOBJECT
 /*!
   Creates a QtScript object that wraps the given QObject \a
   object, using the given \a ownership. The given \a options control
@@ -2291,7 +2216,6 @@ QScriptValue QScriptEngine::newQObject(const QScriptValue &scriptObject,
     return scriptObject;
 }
 
-#endif // QT_NO_QOBJECT
 
 /*!
   Creates a QtScript object of class Object.
@@ -2473,7 +2397,6 @@ QScriptValue QScriptEngine::newDate(const QDateTime &value)
     return d->scriptValueFromJSCValue(d->newDate(d->currentFrame, value));
 }
 
-#ifndef QT_NO_QOBJECT
 /*!
   Creates a QtScript object that represents a QObject class, using the
   the given \a metaObject and constructor \a ctor.
@@ -2511,7 +2434,6 @@ QScriptValue QScriptEngine::newQMetaObject(
 
   \sa QScriptEngine::newQMetaObject()
 */
-#endif // QT_NO_QOBJECT
 
 /*!
   \obsolete
@@ -3065,17 +2987,13 @@ JSC::JSValue QScriptEnginePrivate::create(JSC::ExecState *exec, int type, const 
         case QMetaType::QDate:
             result = newDate(exec, QDateTime(*reinterpret_cast<const QDate *>(ptr)));
             break;
-#ifndef QT_NO_REGEXP
         case QMetaType::QRegExp:
             result = newRegExp(exec, *reinterpret_cast<const QRegExp *>(ptr));
             break;
-#endif
-#ifndef QT_NO_QOBJECT
         case QMetaType::QObjectStar:
         case QMetaType::QWidgetStar:
             result = eng->newQObject(*reinterpret_cast<QObject* const *>(ptr));
             break;
-#endif
         case QMetaType::QVariant:
             result = eng->newVariant(*reinterpret_cast<const QVariant*>(ptr));
             break;
@@ -3086,13 +3004,11 @@ JSC::JSValue QScriptEnginePrivate::create(JSC::ExecState *exec, int type, const 
                     return JSC::jsUndefined();
             }
 
-#ifndef QT_NO_QOBJECT
             // lazy registration of some common list types
             else if (type == qMetaTypeId<QObjectList>()) {
                 qScriptRegisterSequenceMetaType<QObjectList>(eng->q_func());
                 return create(exec, type, ptr);
             }
-#endif
             else if (type == qMetaTypeId<QList<int> >()) {
                 qScriptRegisterSequenceMetaType<QList<int> >(eng->q_func());
                 return create(exec, type, ptr);
@@ -3191,14 +3107,11 @@ bool QScriptEnginePrivate::convertValue(JSC::ExecState *exec, JSC::JSValue value
             *reinterpret_cast<QDate *>(ptr) = toDateTime(exec, value).date();
             return true;
         } break;
-#ifndef QT_NO_REGEXP
     case QMetaType::QRegExp:
         if (isRegExp(value)) {
             *reinterpret_cast<QRegExp *>(ptr) = toRegExp(exec, value);
             return true;
         } break;
-#endif
-#ifndef QT_NO_QOBJECT
     case QMetaType::QObjectStar:
         if (isQObject(value) || value.isNull()) {
             *reinterpret_cast<QObject* *>(ptr) = toQObject(exec, value);
@@ -3212,7 +3125,6 @@ bool QScriptEnginePrivate::convertValue(JSC::ExecState *exec, JSC::JSValue value
                 return true;
             }
         } break;
-#endif
     case QMetaType::QStringList:
         if (isArray(value)) {
             *reinterpret_cast<QStringList *>(ptr) = stringListFromArray(exec, value);
@@ -3236,10 +3148,8 @@ bool QScriptEnginePrivate::convertValue(JSC::ExecState *exec, JSC::JSValue value
     }
 
     QByteArray name = QMetaType::typeName(type);
-#ifndef QT_NO_QOBJECT
     if (convertToNativeQObject(exec, value, name, reinterpret_cast<void* *>(ptr)))
         return true;
-#endif
     if (isVariant(value) && name.endsWith('*')) {
         int valueType = QMetaType::type(name.left(name.size()-1));
         QVariant &var = variantValue(value);
@@ -3255,13 +3165,11 @@ bool QScriptEnginePrivate::convertValue(JSC::ExecState *exec, JSC::JSValue value
                     canCast = (type == variantValue(proto).userType())
                               || (valueType && (valueType == variantValue(proto).userType()));
                 }
-#ifndef QT_NO_QOBJECT
                 else if (isQObject(proto)) {
                     QByteArray className = name.left(name.size()-1);
                     if (QObject *qobject = toQObject(exec, proto))
                         canCast = qobject->qt_metacast(className) != 0;
                 }
-#endif
                 if (canCast) {
                     QByteArray varTypeName = QMetaType::typeName(var.userType());
                     if (varTypeName.endsWith('*'))
@@ -3284,14 +3192,12 @@ bool QScriptEnginePrivate::convertValue(JSC::ExecState *exec, JSC::JSValue value
     }
 
     // lazy registration of some common list types
-#ifndef QT_NO_QOBJECT
     else if (type == qMetaTypeId<QObjectList>()) {
         if (!eng)
             return false;
         qScriptRegisterSequenceMetaType<QObjectList>(eng->q_func());
         return convertValue(exec, value, type, ptr);
     }
-#endif
     else if (type == qMetaTypeId<QList<int> >()) {
         if (!eng)
             return false;
@@ -3540,7 +3446,7 @@ void QScriptEngine::installTranslatorFunctions(const QScriptValue &object)
 */
 QScriptValue QScriptEngine::importExtension(const QString &extension)
 {
-#if defined(QT_NO_QOBJECT) || defined(QT_NO_LIBRARY) || defined(QT_NO_SETTINGS)
+#if defined(QT_NO_LIBRARY)
     Q_UNUSED(extension);
 #else
     Q_D(QScriptEngine);
@@ -3704,7 +3610,7 @@ QScriptValue QScriptEngine::importExtension(const QString &extension)
         d->importedExtensions.insert(ext);
         d->extensionsBeingImported.remove(ext);
     } // for (i)
-#endif // QT_NO_QOBJECT
+#endif // QT_NO_LIBRARY
     return undefinedValue();
 }
 
@@ -3719,7 +3625,7 @@ QScriptValue QScriptEngine::importExtension(const QString &extension)
 */
 QStringList QScriptEngine::availableExtensions() const
 {
-#if defined(QT_NO_QOBJECT) || defined(QT_NO_LIBRARY) || defined(QT_NO_SETTINGS)
+#if defined(QT_NO_LIBRARY)
     return QStringList();
 #else
     QCoreApplication *app = QCoreApplication::instance();
@@ -3780,7 +3686,7 @@ QStringList QScriptEngine::availableExtensions() const
     QStringList lst = result.toList();
     qSort(lst);
     return lst;
-#endif
+#endif // QT_NO_LIBRARY
 }
 
 /*!
@@ -4162,7 +4068,6 @@ void QScriptEngine::abortEvaluation(const QScriptValue &result)
     JSC::throwError(d->currentFrame, JSC::createInterruptedExecutionException(&d->currentFrame->globalData()).toObject(d->currentFrame));
 }
 
-#ifndef QT_NO_QOBJECT
 
 /*!
   \since 4.4
@@ -4232,7 +4137,6 @@ QT_BEGIN_INCLUDE_NAMESPACE
 #include "moc_qscriptengine.h"
 QT_END_INCLUDE_NAMESPACE
 
-#endif // QT_NO_QOBJECT
 
 /*!
   \since 4.4

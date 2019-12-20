@@ -43,7 +43,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 
-class QStylePainter : public QPainter
+class Q_GUI_EXPORT QStylePainter : public QPainter
 {
 public:
     inline QStylePainter() : QPainter(), widget(0), wstyle(0) {}

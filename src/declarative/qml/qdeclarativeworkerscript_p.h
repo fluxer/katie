@@ -59,11 +59,7 @@ QT_BEGIN_NAMESPACE
 
 class QDeclarativeWorkerScript;
 class QDeclarativeWorkerScriptEnginePrivate;
-#ifndef QT_NO_THREAD
 class QDeclarativeWorkerScriptEngine : public QThread
-#else
-class QDeclarativeWorkerScriptEngine : public QObject
-#endif
 {
 Q_OBJECT
 public:
@@ -76,18 +72,9 @@ public:
     void sendMessage(int, const QVariant &);
 
 protected:
-#ifndef QT_NO_THREAD
     virtual void run();
-#else
-    virtual void timerEvent(QTimerEvent *event);
-public Q_SLOTS:
-    void quit();
-#endif
 
 private:
-#ifdef QT_NO_THREAD
-    int timerid;
-#endif
     QDeclarativeWorkerScriptEnginePrivate *d;
 };
 

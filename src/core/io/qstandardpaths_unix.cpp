@@ -35,7 +35,6 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#ifndef QT_NO_STANDARDPATHS
 
 QT_BEGIN_NAMESPACE
 
@@ -269,4 +268,3 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_STANDARDPATHS

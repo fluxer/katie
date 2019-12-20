@@ -1342,7 +1342,7 @@ qstring_to_xtp(const QString& s)
         tl[0] = mapped.data();
         tl[1] = 0;
         errCode = XmbTextListToTextProperty(qt_x11Data->display, tl, 1, XStdICCTextStyle, &tp);
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
         if (errCode < 0)
             qDebug("qstring_to_xtp result code %d", errCode);
 #endif

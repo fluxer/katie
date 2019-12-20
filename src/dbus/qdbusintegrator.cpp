@@ -1442,9 +1442,7 @@ void QDBusConnectionPrivate::handleObjectCall(const QDBusMessage &msg)
     ObjectTreeNode result;
     int usedLength;
     QThread *objThread = 0;
-#ifndef QT_NO_THREAD
     QSemaphore sem;
-#endif
     bool semWait;
 
     {
@@ -1478,23 +1476,19 @@ void QDBusConnectionPrivate::handleObjectCall(const QDBusMessage &msg)
                               new QDBusActivateObjectEvent(QDBusConnection(this), this, result,
                                                            usedLength, msg));
             return;
-#ifndef QT_NO_THREAD
         } else if (objThread != QThread::currentThread()) {
             // synchronize with other thread
             postEventToThread(HandleObjectCallPostEventAction, result.obj,
                               new QDBusActivateObjectEvent(QDBusConnection(this), this, result,
                                                            usedLength, msg, &sem));
             semWait = true;
-#endif
         } else {
             semWait = false;
         }
     } // release the lock
 
     if (semWait) {
-#ifndef QT_NO_THREAD
         SEM_ACQUIRE(HandleObjectCallSemaphoreAction, sem);
-#endif
     } else {
         activateObject(result, msg, usedLength);
     }

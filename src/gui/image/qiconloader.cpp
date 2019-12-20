@@ -141,7 +141,6 @@ QIconTheme::QIconTheme(const QString &themeName)
             break;
         }
     }
-#ifndef QT_NO_SETTINGS
     if (themeIndex.exists()) {
         const QSettings indexReader(themeIndex.fileName(), QSettings::IniFormat);
         QStringListIterator keyIterator(indexReader.allKeys());
@@ -194,7 +193,6 @@ QIconTheme::QIconTheme(const QString &themeName)
         if (!m_parents.contains(QLatin1String("hicolor")))
             m_parents.append(QLatin1String("hicolor"));
     }
-#endif //QT_NO_SETTINGS
 }
 
 QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,

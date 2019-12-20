@@ -63,12 +63,11 @@
 #include "qimagewriter.h"
 #include "qbuffer.h"
 #include "qtextcodec.h"
-
+#include "qthread.h"
 #include "qdnd_p.h"
 #include "qapplication_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
-
 #include "qwidget_p.h"
 #include "qcursor_p.h"
 
@@ -1983,10 +1982,7 @@ Qt::DropAction QDragManager::drag(QDrag * o)
                 qApp->x11ProcessEvent(&event);
 
             // sleep 50 ms, so we don't use up CPU cycles all the time.
-            struct timeval usleep_tv;
-            usleep_tv.tv_sec = 0;
-            usleep_tv.tv_usec = 50000;
-            select(0, 0, 0, 0, &usleep_tv);
+            QThread::usleep(50000);
         } while (object && timer.hasExpired(1000));
     }
 

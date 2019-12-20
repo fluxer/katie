@@ -2551,8 +2551,6 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     QFontEngine *fontEngine = ti.fontEngine;
 
 #if defined(Q_WS_X11)
-
-
     if (fontEngine->type() != QFontEngine::Freetype) {
         QPaintEngineEx::drawTextItem(p, ti);
         return;
@@ -2571,11 +2569,9 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 
     if (!drawCachedGlyphs(glyphs.size(), glyphs.constData(), positions.constData(), fontEngine))
         QPaintEngine::drawTextItem(p, ti);
-
-    return;
-#endif
-
+#else
     QPaintEngineEx::drawTextItem(p, ti);
+#endif
 }
 
 /*!

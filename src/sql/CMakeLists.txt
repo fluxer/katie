@@ -3,31 +3,24 @@ set(EXTRA_SQL_LIBS KtCore)
 
 set(SQL_PUBLIC_HEADERS
     ${SQL_PUBLIC_HEADERS}
-    QMYSQLDriver
-    QMYSQLResult
-    QODBCDriver
-    QODBCResult
-    QPSQLDriver
-    QPSQLResult
     QSqlDatabase
     QSqlDriver
-    QSqlDriverCreator
-    QSqlDriverCreatorBase
-    QSqlDriverFactoryInterface
     QSqlDriverPlugin
     QSqlError
     QSqlField
     QSqlIndex
-    QSQLiteDriver
-    QSQLiteResult
     QSqlQuery
     QSqlQueryModel
     QSqlRecord
-    QSqlRelation
     QSqlRelationalDelegate
     QSqlRelationalTableModel
     QSqlResult
     QSqlTableModel
+    # mixed
+    QSqlDriverCreator
+    QSqlDriverCreatorBase
+    QSqlDriverFactoryInterface
+    QSqlRelation
 )
 
 include(kernel/kernel.cmake)

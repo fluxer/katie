@@ -56,7 +56,7 @@ class Driver
 {
 public:
     Driver();
-    virtual ~Driver();
+    ~Driver();
 
     // tools
     bool printDependencies(const QString &fileName);

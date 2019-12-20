@@ -291,10 +291,8 @@ void QHttpNetworkReplyPrivate::clearHttpLayerInformation()
     currentChunkRead = 0;
     lastChunkRead = false;
     connectionCloseEnabled = true;
-#ifndef QT_NO_COMPRESS
     if (initInflate)
         inflateEnd(&inflateStrm);
-#endif
     initInflate = false;
     streamEnd = false;
     fields.clear();
@@ -376,7 +374,6 @@ QAuthenticatorPrivate::Method QHttpNetworkReplyPrivate::authenticationMethod(boo
     return method;
 }
 
-#ifndef QT_NO_COMPRESS
 bool QHttpNetworkReplyPrivate::gzipCheckHeader(QByteArray &content, int &pos)
 {
     int method = 0; // method byte
@@ -496,7 +493,6 @@ void QHttpNetworkReplyPrivate::gunzipBodyPartiallyEnd()
     }
 }
 
-#endif
 
 qint64 QHttpNetworkReplyPrivate::readStatus(QAbstractSocket *socket)
 {

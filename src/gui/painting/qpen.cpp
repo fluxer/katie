@@ -241,7 +241,6 @@ inline QPenPrivate::QPenPrivate(const QBrush &_brush, qreal _width, Qt::PenStyle
 static const Qt::PenCapStyle qpen_default_cap = Qt::SquareCap;
 static const Qt::PenJoinStyle qpen_default_join = Qt::BevelJoin;
 
-#ifndef QT_NO_THREAD
 // Special deleter that only deletes if the ref-count goes to zero
 template <>
 class QGlobalStaticDeleter<QPenPrivate>
@@ -260,7 +259,6 @@ public:
         globalStatic.destroyed = true;
     }
 };
-#endif
 
 Q_GLOBAL_STATIC_WITH_ARGS(QPenPrivate, defaultPenInstance,
                           (Qt::black, 0, Qt::SolidLine, qpen_default_cap, qpen_default_join))

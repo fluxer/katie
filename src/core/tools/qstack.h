@@ -42,7 +42,7 @@ QT_BEGIN_NAMESPACE
 
 
 template<class T>
-class QStack : public QVector<T>
+class Q_CORE_EXPORT QStack : public QVector<T>
 {
 public:
     inline QStack() {}

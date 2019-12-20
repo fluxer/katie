@@ -169,7 +169,7 @@ struct QHashNode
 };
 
 template <class Key, class T>
-class QHash
+class Q_CORE_EXPORT QHash
 {
     typedef QHashNode<Key, T> Node;
 
@@ -794,7 +794,7 @@ Q_OUTOFLINE_TEMPLATE bool QHash<Key, T>::operator==(const QHash<Key, T> &other) 
 }
 
 template <class Key, class T>
-class QMultiHash : public QHash<Key, T>
+class Q_CORE_EXPORT QMultiHash : public QHash<Key, T>
 {
 public:
     QMultiHash() {}

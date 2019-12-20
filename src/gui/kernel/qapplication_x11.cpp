@@ -276,7 +276,7 @@ static const char *appFont = 0;                         // application font
 static const char *mwGeometry = 0;                      // main widget geometry
 static const char *mwTitle = 0;                         // main widget title
 static bool        appSync = false;                     // X11 synchronization
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
 static bool        appNoGrab = false;                   // X11 grabbing enabled
 static bool        appDoGrab = false;                   // X11 grabbing override (gdb)
 #endif
@@ -1109,7 +1109,7 @@ static void getXDefault(const char *group, const char *key, bool *val)
 }
 #endif
 
-#if defined(QT_DEBUG) && defined(Q_OS_LINUX)
+#if !defined(QT_NO_DEBUG) && defined(Q_OS_LINUX)
 // Find out if our parent process is gdb by looking at the 'exe' symlink under /proc,.
 // or, for older Linuxes, read out 'cmdline'.
 bool runningUnderDebugger()
@@ -1306,7 +1306,7 @@ void qt_init(QApplicationPrivate *priv, int,
         }
         else if (arg == "-sync")
             appSync = !appSync;
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
         else if (arg == "-nograb")
             appNoGrab = !appNoGrab;
         else if (arg == "-dograb")
@@ -1318,7 +1318,7 @@ void qt_init(QApplicationPrivate *priv, int,
 
     priv->argc = j;
 
-#if defined(QT_DEBUG) && defined(Q_OS_LINUX)
+#if !defined(QT_NO_DEBUG) && defined(Q_OS_LINUX)
     if (!appNoGrab && !appDoGrab && runningUnderDebugger()) {
         appNoGrab = true;
         qDebug("Qt: gdb: -nograb added to command-line options.\n"
@@ -1755,7 +1755,7 @@ const char *QX11Info::appClass()                                // get applicati
 
 bool qt_nograb()                                // application no-grab option
 {
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
     return appNoGrab;
 #else
     return false;

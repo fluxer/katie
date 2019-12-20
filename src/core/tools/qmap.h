@@ -139,7 +139,7 @@ private:
 };
 
 template <class Key, class T>
-class QMap
+class Q_CORE_EXPORT QMap
 {
     typedef QMapNode<Key, T> Node;
     typedef QMapPayloadNode<Key, T> PayloadNode;

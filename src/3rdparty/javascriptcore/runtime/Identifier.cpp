@@ -214,7 +214,7 @@ PassRefPtr<UString::Rep> Identifier::addSlowCase(JSGlobalData* globalData, UStri
         if (c <= 0xFF) {
             r = globalData->smallStrings.singleCharacterStringRep(c);
             if (r->isIdentifier()) {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
                 checkSameIdentifierTable(globalData);
 #endif
                 return r;
@@ -238,7 +238,7 @@ void Identifier::remove(UString::Rep* r)
     currentIdentifierTable()->remove(r);
 }
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
 void Identifier::checkSameIdentifierTable(ExecState* exec)
 {
     Q_UNUSED(exec);

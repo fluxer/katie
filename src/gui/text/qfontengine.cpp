@@ -132,7 +132,6 @@ static HB_Fixed hb_getFontMetric(HB_Font font, HB_FontMetric metric)
     switch (metric) {
     case HB_FontAscent:
         return fe->ascent().value();
-        break;
     default:
         return 0;
     }

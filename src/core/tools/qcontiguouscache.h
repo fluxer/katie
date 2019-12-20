@@ -70,7 +70,7 @@ struct QContiguousCacheTypedData: private QContiguousCacheData
 };
 
 template<typename T>
-class QContiguousCache {
+class Q_CORE_EXPORT QContiguousCache {
     typedef QContiguousCacheTypedData<T> Data;
     union { QContiguousCacheData *d; QContiguousCacheTypedData<T> *p; };
 public:

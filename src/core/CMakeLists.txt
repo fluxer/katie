@@ -1,5 +1,5 @@
 # add_definitions()
-set(EXTRA_CORE_LIBS ${ZLIB_LIBRARIES} ${ICU_LIBRARIES} ${OPENSSL_LIBRARIES} ${ZSTD_LIBRARIES})
+set(EXTRA_CORE_LIBS ${ZLIB_LIBRARIES} ${ICU_LIBRARIES} ${OPENSSL_LIBRARIES} ${ZSTD_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
 set(CORE_PUBLIC_HEADERS
     ${CORE_PUBLIC_HEADERS}
@@ -9,24 +9,15 @@ set(CORE_PUBLIC_HEADERS
     QSystemSemaphore
     QProcess
     QTextDecoder
-    QVectorData
     QBuffer
     QStringMatcher
     QFutureIterator
     QScopedPointer
-    QIncompatibleFlag
     QSet
-    QLinkedListIterator
     QDynamicPropertyChangeEvent
     QHash
-    QTextStreamManipulator
     QMutableMapIterator
-    QLinkedListNode
-    QFutureInterfaceBase
     QLibrary
-    QEventTransition
-    QStringListIterator
-    QMutableLinkedListIterator
     QMultiHash
     QObjectCleanupHandler
     QAbstractFileEngine
@@ -34,9 +25,7 @@ set(CORE_PUBLIC_HEADERS
     QFuture
     QCryptographicHash
     QWaitCondition
-    QContiguousCacheData
     QMimeData
-    QTypeInfo
     QtConcurrentMap
     QBitArray
     QChar
@@ -44,14 +33,9 @@ set(CORE_PUBLIC_HEADERS
     QMap
     QTextStream
     QDebug
-    QScopedPointerDeleter
-    QAbstractTransition
-    QMetaTypeId2
     QContiguousCache
     QFileInfo
     QFutureInterface
-    QAbstractFileEngineHandler
-    QMetaObjectExtraData
     QSharedDataPointer
     QMultiMap
     QDateTime
@@ -64,10 +48,7 @@ set(CORE_PUBLIC_HEADERS
     QFSFileEngine
     QLine
     QIODevice
-    QtConfig
     QPair
-    QHashDummyNode
-    QHashDummyValue
     QFutureWatcherBase
     QPoint
     QByteArray
@@ -89,14 +70,12 @@ set(CORE_PUBLIC_HEADERS
     QStdWString
     QtAlgorithms
     QAbstractItemModel
-    QSignalTransition
     QTextBoundaryFinder
     QExplicitlySharedDataPointer
     QTimerEvent
     QTimer
     QElapsedTimer
     QUrl
-    QMutableHashIterator
     QFutureWatcher
     QVector
     QLibraryInfo
@@ -139,7 +118,6 @@ set(CORE_PUBLIC_HEADERS
     QMetaObject
     QMapData
     QByteRef
-    QIntegerForSize
     QStringRef
     QChildEvent
     QGlobalStaticDeleter
@@ -180,7 +158,6 @@ set(CORE_PUBLIC_HEADERS
     QStringList
     QGlobalStatic
     QEasingCurve
-    QMutexData
     QSystemLocale
     QVectorTypedData
     QMapPayloadNode
@@ -196,7 +173,22 @@ set(CORE_PUBLIC_HEADERS
     # aliases
     QtPlugin
     QtDebug
+    QtConfig
     # mixed
+    QAbstractFileEngineHandler
+    QMetaTypeId2
+    QScopedPointerDeleter
+    QTypeInfo
+    QContiguousCacheData
+    QStringListIterator
+    QMutableLinkedListIterator
+    QMutableHashIterator
+    QFutureInterfaceBase
+    QTextStreamManipulator
+    QLinkedListNode
+    QLinkedListIterator
+    QIncompatibleFlag
+    QFutureIterator
     QVariantMap
     QVariantList
     QVariantHash
@@ -218,6 +210,7 @@ set(CORE_PUBLIC_HEADERS
     QScopedArrayPointer
     QJsonParseError
     QPersistentModelIndex
+    QVectorData
     # obsolete
     QFlags
     Qt
@@ -249,13 +242,6 @@ if(${KATIE_PLATFORM} STREQUAL "linux")
         ${EXTRA_CORE_LIBS}
         dl
         rt
-    )
-endif()
-
-if(WITH_THREADS AND THREADS_FOUND)
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        ${CMAKE_THREAD_LIBS_INIT}
     )
 endif()
 

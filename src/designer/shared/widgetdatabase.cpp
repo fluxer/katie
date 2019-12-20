@@ -262,12 +262,10 @@ WidgetDataBase::WidgetDataBase(QDesignerFormEditorInterface *core, QObject *pare
       m_core(core)
 {
 #define DECLARE_LAYOUT(L, C)
-#define DECLARE_COMPAT_WIDGET(W, C) DECLARE_WIDGET(W, C)
 #define DECLARE_WIDGET(W, C) append(new WidgetDataBaseItem(QString::fromUtf8(#W)));
 
 #include "widgets.table"
 
-#undef DECLARE_COMPAT_WIDGET
 #undef DECLARE_LAYOUT
 #undef DECLARE_WIDGET
 #undef DECLARE_WIDGET_1
@@ -422,7 +420,7 @@ void WidgetDataBase::loadPlugins()
             }
         }
     }
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     qDebug() << "WidgetDataBase::loadPlugins(): " << addedPlugins << " added, " << replacedPlugins << " replaced, " << removedPlugins << "deleted.";
 #endif
 }
@@ -780,7 +778,7 @@ QDESIGNER_SHARED_EXPORT QDesignerWidgetDataBaseItemInterface *
                       const QString &includeFile,
                       bool promoted, bool custom)
 {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
     qDebug() << "appendDerived " << className << " derived from " << baseClassName;
 #endif
     // Check.
@@ -817,7 +815,7 @@ QDESIGNER_SHARED_EXPORT QDesignerWidgetDataBaseItemInterface *
     // Create this item, inheriting its base properties
     const int baseIndex = db->indexOfClassName(baseClassName);
     if (baseIndex == -1) {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         qDebug() << "appendDerived failed due to missing base class";
 #endif
         return 0;

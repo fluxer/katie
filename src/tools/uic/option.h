@@ -41,15 +41,15 @@ QT_BEGIN_NAMESPACE
 
 struct Option
 {
-    unsigned int headerProtection : 1;
-    unsigned int copyrightHeader : 1;
-    unsigned int generateImplemetation : 1;
-    unsigned int generateNamespace : 1;
-    unsigned int autoConnection : 1;
-    unsigned int dependencies : 1;
-    unsigned int extractImages : 1;
-    unsigned int limitXPM_LineLength : 1;
-    unsigned int implicitIncludes: 1;
+    bool headerProtection;
+    bool copyrightHeader;
+    bool generateImplemetation;
+    bool generateNamespace;
+    bool autoConnection;
+    bool dependencies;
+    bool extractImages;
+    bool limitXPM_LineLength;
+    bool implicitIncludes;
 
     QString inputFile;
     QString outputFile;
@@ -60,15 +60,15 @@ struct Option
     QString translateFunction;
 
     Option()
-        : headerProtection(1),
-          copyrightHeader(1),
-          generateImplemetation(0),
-          generateNamespace(1),
-          autoConnection(1),
-          dependencies(0),
-          extractImages(0),
-          limitXPM_LineLength(0),
-          implicitIncludes(1),
+        : headerProtection(true),
+          copyrightHeader(true),
+          generateImplemetation(false),
+          generateNamespace(true),
+          autoConnection(true),
+          dependencies(false),
+          extractImages(false),
+          limitXPM_LineLength(false),
+          implicitIncludes(true),
           prefix(QLatin1String("Ui_"))
     { indent.fill(QLatin1Char(' '), 4); }
 

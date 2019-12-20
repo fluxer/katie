@@ -140,7 +140,7 @@ public:
     {
         // Creates a bidirectional edge
         if (edgeData(first, second)) {
-#ifdef QT_DEBUG
+#ifndef QT_NO_DEBUG
             qWarning("%s-%s already has an edge", qPrintable(first->toString()), qPrintable(second->toString()));
 #endif
         }
@@ -198,7 +198,7 @@ public:
         return conns;
     }
 
-#if defined(QT_DEBUG)
+#ifndef QT_NO_DEBUG
     QString serializeToDot() {   // traversal
         QString strVertices;
         QString edges;
@@ -227,7 +227,7 @@ public:
         }
         return QString::fromAscii("%1\n%2\n").arg(strVertices).arg(edges);
     }
-#endif
+#endif // QT_NO_DEBUG
 
 protected:
     void createDirectedEdge(Vertex *from, Vertex *to, EdgeData *data)

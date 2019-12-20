@@ -50,7 +50,6 @@ There are several things you should be aware before considering Katie:
   - building with IODBC instead of unixODBC is possible
   - building with LTO is possible and supported, if the toolchain can handle it
   - building without resolv is possible
-  - building without threads is possible
   - alternative libc implementations support
   - additional text codecs via ICU converter
   - Unicode v5.0+ characters and partial scripts support

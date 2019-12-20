@@ -44,7 +44,7 @@ namespace WTF {
         {
             Q_ASSERT(!(reinterpret_cast<intptr_t>(ptr) & 3));
             m_ptrAndFlags = reinterpret_cast<intptr_t>(ptr) | (m_ptrAndFlags & 3);
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             m_leaksPtr = ptr;
 #endif
         }
@@ -54,7 +54,7 @@ namespace WTF {
 
     protected:
         intptr_t m_ptrAndFlags;
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         void* m_leaksPtr; // Only used to allow tools like leaks on OSX to detect that the memory is referenced.
 #endif
     };

@@ -106,7 +106,6 @@ private:
     int t;
 };
 
-#ifndef QT_NO_REGEXP
 
 class QDoubleValidatorPrivate;
 
@@ -174,7 +173,6 @@ private:
     QRegExp r;
 };
 
-#endif // QT_NO_REGEXP
 
 #endif // QT_NO_VALIDATOR
 

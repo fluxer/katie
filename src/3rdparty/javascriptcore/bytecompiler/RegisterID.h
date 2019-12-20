@@ -40,7 +40,7 @@ namespace JSC {
         RegisterID()
             : m_refCount(0)
             , m_isTemporary(false)
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             , m_didSetIndex(false)
 #endif
         {
@@ -50,7 +50,7 @@ namespace JSC {
             : m_refCount(0)
             , m_index(index)
             , m_isTemporary(false)
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             , m_didSetIndex(true)
 #endif
         {
@@ -59,7 +59,7 @@ namespace JSC {
         void setIndex(int index)
         {
             Q_ASSERT(!m_refCount);
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             m_didSetIndex = true;
 #endif
             m_index = index;
@@ -102,7 +102,7 @@ namespace JSC {
         int m_refCount;
         int m_index;
         bool m_isTemporary;
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         bool m_didSetIndex;
 #endif
     };

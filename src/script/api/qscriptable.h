@@ -31,7 +31,6 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 
-#ifndef QT_NO_QOBJECT
 
 class QScriptEngine;
 class QScriptContext;
@@ -58,7 +57,6 @@ private:
     Q_DECLARE_PRIVATE(QScriptable)
 };
 
-#endif // QT_NO_QOBJECT
 
 QT_END_NAMESPACE
 
