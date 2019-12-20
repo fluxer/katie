@@ -2860,7 +2860,6 @@ bool QVariant::canConvert(Type t) const
         }
     } else if (t == QVariant::String) {
         switch (currentType) {
-        case QVariant::StringList:
         case QVariant::ByteArray:
         case QVariant::Int:
         case QVariant::UInt:
@@ -2875,6 +2874,8 @@ bool QVariant::canConvert(Type t) const
         case QVariant::Char:
         case QVariant::Url:
             return true;
+        case QVariant::StringList:
+            return v_cast<QStringList>(&d)->count() == 1;
         default:
             return false;
         }
@@ -3084,8 +3085,6 @@ bool QVariant::canConvert(Type t) const
         }
     }
 
-    if (t == QVariant::String && currentType == QVariant::StringList)
-        return v_cast<QStringList>(&d)->count() == 1;
     return false;
 }
 
