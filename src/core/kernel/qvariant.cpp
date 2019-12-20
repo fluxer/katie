@@ -589,7 +589,7 @@ static qlonglong qConvertToNumber(const QVariant::Private *d, bool *ok)
 {
     *ok = true;
 
-    switch (uint(d->type)) {
+    switch (int(d->type)) {
     case QVariant::String:
         return v_cast<QString>(d)->toLongLong(ok);
     case QVariant::Char:
@@ -628,7 +628,7 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
 {
     *ok = true;
 
-    switch (uint(d->type)) {
+    switch (int(d->type)) {
     case QVariant::String:
         return v_cast<QString>(d)->toULongLong(ok);
     case QVariant::Char:
@@ -677,14 +677,14 @@ inline bool qt_convertToBool(const QVariant::Private *const d)
  */
 static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, bool *ok)
 {
-    Q_ASSERT(d->type != uint(t));
+    Q_ASSERT(d->type != int(t));
     Q_ASSERT(result);
 
     bool dummy;
     if (!ok)
         ok = &dummy;
 
-    switch (uint(t)) {
+    switch (int(t)) {
 #ifndef QT_BOOTSTRAPPED
     case QVariant::Url:
         switch (d->type) {
@@ -2047,7 +2047,7 @@ void QVariant::load(QDataStream &s)
 {
     clear();
 
-    quint32 u;
+    qint32 u;
     s >> u;
     qint8 is_null = false;
     s >> is_null;
@@ -2086,7 +2086,7 @@ void QVariant::load(QDataStream &s)
 */
 void QVariant::save(QDataStream &s) const
 {
-    quint32 tp = type();
+    qint32 tp = type();
     s << tp;
     s << qint8(d.is_null);
     if (tp == QVariant::UserType) {
@@ -2135,7 +2135,7 @@ QDataStream& operator<<(QDataStream &s, const QVariant &p)
 */
 QDataStream& operator>>(QDataStream &s, QVariant::Type &p)
 {
-    quint32 u;
+    qint32 u;
     s >> u;
     p = (QVariant::Type)u;
 
@@ -2147,7 +2147,7 @@ QDataStream& operator>>(QDataStream &s, QVariant::Type &p)
 */
 QDataStream& operator<<(QDataStream &s, const QVariant::Type p)
 {
-    s << static_cast<quint32>(p);
+    s << static_cast<qint32>(p);
 
     return s;
 }
@@ -3001,7 +3001,7 @@ bool QVariant::canConvert(Type t) const
     /* Hash */
     /* EasingCurve */
     } else if (currentType == QVariant::JsonValue) {
-        switch (uint(t)) {
+        switch (int(t)) {
         case QVariant::String:
         case QVariant::Bool:
         case QVariant::Int:
@@ -3042,7 +3042,7 @@ bool QVariant::canConvert(Type t) const
     }
 
     if (currentType > QVariant::LastCoreType || t > QVariant::LastCoreType) {
-        switch (uint(t)) {
+        switch (int(t)) {
         case QVariant::Int:
             return currentType == QVariant::KeySequence
                    || currentType == QMetaType::ULong
@@ -3117,7 +3117,7 @@ bool QVariant::canConvert(Type t) const
 
 bool QVariant::convert(Type t)
 {
-    if (d.type == uint(t))
+    if (d.type == int(t))
         return true;
 
     QVariant oldValue = *this;
