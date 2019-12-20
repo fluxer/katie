@@ -2827,7 +2827,7 @@ bool QVariant::canConvert(Type t) const
         default:
             return false;
         }
-    } else if (t == QVariant::Double || t == QVariant::Float) {
+    } else if (t == QVariant::Double) {
         switch (currentType) {
         case QVariant::Int:
         case QVariant::String:
@@ -2836,6 +2836,21 @@ bool QVariant::canConvert(Type t) const
         case QVariant::UInt:
         case QVariant::LongLong:
         case QVariant::ByteArray:
+        case QVariant::Float:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Float) {
+        switch (currentType) {
+        case QVariant::Int:
+        case QVariant::String:
+        case QVariant::ULongLong:
+        case QVariant::Bool:
+        case QVariant::UInt:
+        case QVariant::LongLong:
+        case QVariant::ByteArray:
+        case QVariant::Double:
             return true;
         default:
             return false;
