@@ -380,7 +380,7 @@ static bool isNull(const QVariant::Private *d)
     case QVariant::ULongLong:
     case QVariant::Bool:
     case QVariant::Double:
-    case QMetaType::Float:
+    case QVariant::Float:
     case QMetaType::QObjectStar:
         break;
     }
@@ -599,7 +599,7 @@ static qlonglong qConvertToNumber(const QVariant::Private *d, bool *ok)
     case QVariant::Bool:
         return qlonglong(d->data.b);
 #ifndef QT_BOOTSTRAPPED
-    case QMetaType::QJsonValue:
+    case QVariant::JsonValue:
         if (!v_cast<QJsonValue>(d)->isDouble())
             break;
         return qlonglong(v_cast<QJsonValue>(d)->toDouble(0.0));
@@ -609,7 +609,7 @@ static qlonglong qConvertToNumber(const QVariant::Private *d, bool *ok)
     case QMetaType::Char:
     case QMetaType::Short:
     case QMetaType::Long:
-    case QMetaType::Float:
+    case QVariant::Float:
     case QMetaType::LongLong:
         return qMetaTypeNumber(d);
     case QVariant::ULongLong:
@@ -638,7 +638,7 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
     case QVariant::Bool:
         return qulonglong(d->data.b);
 #ifndef QT_BOOTSTRAPPED
-    case QMetaType::QJsonValue:
+    case QVariant::JsonValue:
         if (!v_cast<QJsonValue>(d)->isDouble())
             break;
         return qulonglong(v_cast<QJsonValue>(d)->toDouble(0.0));
@@ -768,7 +768,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QMetaType::Char:
         case QMetaType::Short:
         case QMetaType::Long:
-        case QMetaType::Float:
+        case QVariant::Float:
             *static_cast<QChar *>(result) = QChar(ushort(qMetaTypeNumber(d)));
             return true;
         case QVariant::UInt:
@@ -999,7 +999,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QVariant::Bool:
             *static_cast<double *>(result) = double(d->data.b);
             return true;
-        case QMetaType::Float:
+        case QVariant::Float:
             *static_cast<double *>(result) = double(d->data.f);
             return true;
         case QVariant::LongLong:
