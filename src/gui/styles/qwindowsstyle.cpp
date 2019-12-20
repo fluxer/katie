@@ -393,8 +393,6 @@ int QWindowsStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QW
     case PM_DockWidgetFrameWidth:
         ret = 4;
         break;
-    break;
-
 #endif // QT_NO_MENU
 
     case PM_SplitterWidth:

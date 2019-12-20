@@ -501,10 +501,11 @@ void QDataStream::setStatus(DataStatus status)
 void QDataStream::setByteOrder(ByteOrder bo)
 {
     byteorder = bo;
-    if (QSysInfo::ByteOrder == QSysInfo::BigEndian)
-        noswap = (byteorder == BigEndian);
-    else
-        noswap = (byteorder == LittleEndian);
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+    noswap = (byteorder == BigEndian);
+#else
+    noswap = (byteorder == LittleEndian);
+#endif
 }
 
 /*!

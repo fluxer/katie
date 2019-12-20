@@ -38,57 +38,53 @@ QT_BEGIN_NAMESPACE
 /*!
     Returns the bit pattern for an infinite number as a double.
 */
-static const union { unsigned char c[8]; double d; } qt_be_inf_bytes = { { 0x7f, 0xf0, 0, 0, 0, 0, 0, 0 } };
-static const union { unsigned char c[8]; double d; } qt_le_inf_bytes = { { 0, 0, 0, 0, 0, 0, 0xf0, 0x7f } };
 #ifdef QT_ARMFPA
-static const union { unsigned char c[8]; double d; } qt_armfpa_inf_bytes = { { 0, 0, 0xf0, 0x7f, 0, 0, 0, 0 } };
 #endif
 Q_CORE_EXPORT double qInf()
 {
 #ifdef QT_ARMFPA
+    static const union { unsigned char c[8]; double d; } qt_armfpa_inf_bytes = { { 0, 0, 0xf0, 0x7f, 0, 0, 0, 0 } };
     return qt_armfpa_inf_bytes.d;
+#elif Q_BYTE_ORDER == Q_BIG_ENDIAN
+    static const union { unsigned char c[8]; double d; } qt_be_inf_bytes = { { 0x7f, 0xf0, 0, 0, 0, 0, 0, 0 } };
+    return qt_be_inf_bytes.d;
 #else
-    return (QSysInfo::ByteOrder == QSysInfo::BigEndian
-            ? qt_be_inf_bytes.d
-            : qt_le_inf_bytes.d);
+    static const union { unsigned char c[8]; double d; } qt_le_inf_bytes = { { 0, 0, 0, 0, 0, 0, 0xf0, 0x7f } };
+    return qt_le_inf_bytes.d;
 #endif
 }
 
 /*!
     Returns the bit pattern of a signalling NaN as a double.
 */
-static const union { unsigned char c[8]; double d; } qt_be_snan_bytes = { { 0x7f, 0xf8, 0, 0, 0, 0, 0, 0 } };
-static const union { unsigned char c[8]; double d; } qt_le_snan_bytes = { { 0, 0, 0, 0, 0, 0, 0xf8, 0x7f } };
-#ifdef QT_ARMFPA
-static const union { unsigned char c[8]; double d; } qt_armfpa_snan_bytes = { { 0, 0, 0xf8, 0x7f, 0, 0, 0, 0 } };
-#endif
 Q_CORE_EXPORT double qSNaN()
 {
 #ifdef QT_ARMFPA
+    static const union { unsigned char c[8]; double d; } qt_armfpa_snan_bytes = { { 0, 0, 0xf8, 0x7f, 0, 0, 0, 0 } };
     return qt_armfpa_snan_bytes.d;
+#elif Q_BYTE_ORDER == Q_BIG_ENDIAN
+    static const union { unsigned char c[8]; double d; } qt_be_snan_bytes = { { 0x7f, 0xf8, 0, 0, 0, 0, 0, 0 } };
+    return qt_be_snan_bytes.d;
 #else
-    return (QSysInfo::ByteOrder == QSysInfo::BigEndian
-            ? qt_be_snan_bytes.d
-            : qt_le_snan_bytes.d);
+    static const union { unsigned char c[8]; double d; } qt_le_snan_bytes = { { 0, 0, 0, 0, 0, 0, 0xf8, 0x7f } };
+    return qt_le_snan_bytes.d;
 #endif
 }
 
 /*!
     Returns the bit pattern of a quiet NaN as a double.
 */
-static const union { unsigned char c[8]; double d; } qt_be_qnan_bytes = { { 0xff, 0xf8, 0, 0, 0, 0, 0, 0 } };
-static const union { unsigned char c[8]; double d; } qt_le_qnan_bytes = { { 0, 0, 0, 0, 0, 0, 0xf8, 0xff } };
-#ifdef QT_ARMFPA
-static const union { unsigned char c[8]; double d; } qt_armfpa_qnan_bytes = { { 0, 0, 0xf8, 0xff, 0, 0, 0, 0 } };
-#endif
 Q_CORE_EXPORT double qQNaN()
 {
 #ifdef QT_ARMFPA
+    static const union { unsigned char c[8]; double d; } qt_armfpa_qnan_bytes = { { 0, 0, 0xf8, 0xff, 0, 0, 0, 0 } };
     return qt_armfpa_qnan_bytes.d;
+#elif Q_BYTE_ORDER == Q_BIG_ENDIAN
+    static const union { unsigned char c[8]; double d; } qt_be_qnan_bytes = { { 0xff, 0xf8, 0, 0, 0, 0, 0, 0 } };
+    return qt_be_qnan_bytes.d;
 #else
-    return (QSysInfo::ByteOrder == QSysInfo::BigEndian
-            ? qt_be_qnan_bytes.d
-            : qt_le_qnan_bytes.d);
+    static const union { unsigned char c[8]; double d; } qt_le_qnan_bytes = { { 0, 0, 0, 0, 0, 0, 0xf8, 0xff } };
+    return qt_le_qnan_bytes.d;
 #endif
 }
 

@@ -4888,7 +4888,6 @@ QSize QStyleSheetStyle::sizeFromContents(ContentsType ct, const QStyleOption *op
         return (rule.hasContentsSize())
             ? rule.size(sz)
             : rule.boxSize(baseStyle()->sizeFromContents(ct, opt, sz, w));
-        break;
 
     case CT_Slider:
         if (rule.hasBorder() || rule.hasBox() || rule.hasGeometry())
@@ -5408,10 +5407,9 @@ QRect QStyleSheetStyle::subControlRect(ComplexControl cc, const QStyleOptionComp
                         return sr;
                     } else if (sc == SC_ScrollBarSubPage) {
                         return QRect(contentRect.topLeft(), sb->orientation == Qt::Horizontal ? sr.bottomLeft() : sr.topRight());
-                    } else { // SC_ScrollBarAddPage
-                        return QRect(sb->orientation == Qt::Horizontal ? sr.topRight() : sr.bottomLeft(), contentRect.bottomRight());
                     }
-                    break;
+                    // SC_ScrollBarAddPage
+                    return QRect(sb->orientation == Qt::Horizontal ? sr.topRight() : sr.bottomLeft(), contentRect.bottomRight());
                 }
                 case SC_ScrollBarAddLine: pe = PseudoElement_ScrollBarAddLine; break;
                 case SC_ScrollBarSubLine: pe = PseudoElement_ScrollBarSubLine; break;
@@ -5463,7 +5461,7 @@ QRect QStyleSheetStyle::subControlRect(ComplexControl cc, const QStyleOptionComp
                 cr = horizontal ? QRect(cr.x() + sliderPos, cr.y(), len, thickness)
                                   : QRect(cr.x(), cr.y() + sliderPos, thickness, len);
                 return subRule2.borderRect(cr);
-                break; }
+            }
             case SC_SliderTickmarks:
                 // TODO...
             default:

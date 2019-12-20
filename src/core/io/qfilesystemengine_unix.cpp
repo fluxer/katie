@@ -425,8 +425,8 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     Q_UNUSED(source);
     Q_UNUSED(target);
     error = QSystemError(ENOSYS, QSystemError::StandardLibraryError); //Function not implemented
-#endif // Q_OS_LINUX
     return false;
+#endif // Q_OS_LINUX
 }
 
 //static

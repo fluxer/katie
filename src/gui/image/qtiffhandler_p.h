@@ -60,8 +60,6 @@ public:
         LzwCompression = 1
     };
 private:
-    void convert32BitOrder(void *buffer, int width);
-    void convert32BitOrderBigEndian(void *buffer, int width);
     int compression;
 };
 

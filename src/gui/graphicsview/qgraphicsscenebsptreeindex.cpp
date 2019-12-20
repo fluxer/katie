@@ -693,21 +693,17 @@ void QGraphicsSceneBspTreeIndex::itemChange(const QGraphicsItem *item, QGraphics
 bool QGraphicsSceneBspTreeIndex::event(QEvent *event)
 {
     Q_D(QGraphicsSceneBspTreeIndex);
-    switch (event->type()) {
-    case QEvent::Timer:
-            if (d->indexTimerId && static_cast<QTimerEvent *>(event)->timerId() == d->indexTimerId) {
-                if (d->restartIndexTimer) {
-                    d->restartIndexTimer = false;
-                } else {
-                    // this call will kill the timer
-                    d->_q_updateIndex();
-                }
+    if (event->type() == QEvent::Timer) {
+        if (d->indexTimerId && static_cast<QTimerEvent *>(event)->timerId() == d->indexTimerId) {
+            if (d->restartIndexTimer) {
+                d->restartIndexTimer = false;
+            } else {
+                // this call will kill the timer
+                d->_q_updateIndex();
             }
-     // Fallthrough intended - support timers in subclasses.
-    default:
-        return QObject::event(event);
+        }
     }
-    return true;
+    return QObject::event(event);
 }
 
 QT_END_NAMESPACE

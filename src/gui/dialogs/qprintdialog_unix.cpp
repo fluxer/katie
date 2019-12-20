@@ -1054,7 +1054,6 @@ QVariant QPPDOptionsModel::data(const QModelIndex& index, int role) const
             }
             return QVariant();
         }
-        break;
 
         case Qt::DisplayRole: {
             QOptionTreeItem* itm;
@@ -1067,16 +1066,13 @@ QVariant QPPDOptionsModel::data(const QModelIndex& index, int role) const
                 return cups->unicodeString(itm->description);
             else if (itm->type == QOptionTreeItem::Option && itm->selected > -1)
                 return cups->unicodeString(itm->selDescription);
-            else
-                return QVariant();
+            return QVariant();
         }
-        break;
 
         default:
             return QVariant();
     }
-    if (role != Qt::DisplayRole)
-        return QVariant();
+    return QVariant();
 }
 
 QModelIndex QPPDOptionsModel::index(int row, int column, const QModelIndex& parent) const

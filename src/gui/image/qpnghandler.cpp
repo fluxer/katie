@@ -163,7 +163,7 @@ static void iod_read_fn(png_structp png_ptr, png_bytep data, png_size_t length)
         int nr = in->read((char*)data, length);
         if (nr <= 0) {
             png_error(png_ptr, "Read Error");
-            return;
+            break;
         }
         length -= nr;
     }
@@ -178,7 +178,6 @@ static void qpiw_write_fn(png_structp png_ptr, png_bytep data, png_size_t length
     uint nr = out->write((char*)data, length);
     if (nr != length) {
         png_error(png_ptr, "Write Error");
-        return;
     }
 }
 
@@ -234,8 +233,9 @@ void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float scre
                 if (image.isNull())
                     return;
             }
-            if (QSysInfo::ByteOrder == QSysInfo::BigEndian)
-                png_set_swap_alpha(png_ptr);
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+            png_set_swap_alpha(png_ptr);
+#endif
 
             png_read_update_info(png_ptr, info_ptr);
         } else {
@@ -327,8 +327,9 @@ void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float scre
                 return;
         }
 
-        if (QSysInfo::ByteOrder == QSysInfo::BigEndian)
-            png_set_swap_alpha(png_ptr);
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+        png_set_swap_alpha(png_ptr);
+#endif
 
         png_read_update_info(png_ptr, info_ptr);
     }
@@ -649,9 +650,9 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
 
     // Swap ARGB to RGBA (normal PNG format) before saving on
     // BigEndian machines
-    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
-        png_set_swap_alpha(png_ptr);
-    }
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+    png_set_swap_alpha(png_ptr);
+#endif
 
     // Qt==ARGB==Big(ARGB)==Little(BGRA). But RGB888 is RGB regardless
     if (QSysInfo::ByteOrder == QSysInfo::LittleEndian

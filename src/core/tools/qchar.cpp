@@ -109,8 +109,6 @@ static inline uint to_ascii_lower(uint ucs4)
         case 'Y':
         case 'Z':
             return ucs4 + 32;
-        default:
-            return ucs4;
     }
     return ucs4;
 }
@@ -145,8 +143,6 @@ static inline uint to_ascii_upper(uint ucs4)
         case 'y':
         case 'z':
             return ucs4 - 32;
-        default:
-            return ucs4;
     }
     return ucs4;
 }
