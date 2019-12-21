@@ -450,7 +450,7 @@ QFile::setFileName(const QString &name)
 QByteArray
 QFile::encodeName(const QString &fileName)
 {
-    return fileName.toLocal8Bit();;
+    return fileName.toLocal8Bit();
 }
 
 /*!
