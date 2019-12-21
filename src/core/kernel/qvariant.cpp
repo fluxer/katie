@@ -2778,6 +2778,7 @@ bool QVariant::canConvert(Type t) const
         case QVariant::ULongLong:
         case QVariant::Char:
         case QVariant::ByteArray:
+        case QVariant::KeySequence:
             return true;
         default:
             return false;
@@ -2888,6 +2889,9 @@ bool QVariant::canConvert(Type t) const
         case QVariant::ULongLong:
         case QVariant::Char:
         case QVariant::Url:
+        case QVariant::KeySequence:
+        case QVariant::Font:
+        case QVariant::Color:
             return true;
         case QVariant::StringList:
             return v_cast<QStringList>(&d)->count() == 1;
@@ -2912,6 +2916,7 @@ bool QVariant::canConvert(Type t) const
         case QVariant::Float:
         case QVariant::LongLong:
         case QVariant::ULongLong:
+        case QVariant::Color:
             return true;
         default:
             return false;
@@ -3039,39 +3044,89 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     /* JsonDocument */
+    } else if (t == QVariant::Font) {
+        switch (currentType) {
+        case QVariant::String:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Pixmap) {
+        switch (currentType) {
+        case QVariant::Image:
+        case QVariant::Bitmap:
+        case QVariant::Brush:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Brush) {
+        switch (currentType) {
+        case QVariant::Color:
+        case QVariant::Pixmap:
+            return true;
+        default:
+            return false;
+        }
+    } else if (t == QVariant::Color) {
+        switch (currentType) {
+        case QVariant::String:
+        case QVariant::ByteArray:
+        case QVariant::Brush:
+            return true;
+        default:
+            return false;
+        }
+    /* Palette */
+    /* Icon */
+    } else if (t == QVariant::Image) {
+        switch (currentType) {
+        case QVariant::Pixmap:
+        case QVariant::Bitmap:
+            return true;
+        default:
+            return false;
+        }
+    /* Polygon */
+    /* Region */
+    } else if (t == QVariant::Bitmap) {
+        switch (currentType) {
+        case QVariant::Pixmap:
+        case QVariant::Image:
+            return true;
+        default:
+            return false;
+        }
+    /* Cursor */
+    /* SizePolicy */
+    } else if (t == QVariant::KeySequence) {
+        switch (currentType) {
+        case QVariant::String:
+        case QVariant::Int:
+            return true;
+        default:
+            return false;
+        }
+    /* Pen */
+    /* TextLength */
+    /* TextFormat */
+    /* Matrix */
+    /* Transform */
+    /* Matrix4x4 */
+    /* Vector2D */
+    /* Vector3D */
+    /* Vector4D */
+    /* Quaternion */
     }
 
-    if (currentType > QVariant::LastCoreType || t > QVariant::LastCoreType) {
-        switch (int(t)) {
+    switch (currentType) {
         case QVariant::Int:
-            return currentType == QVariant::KeySequence
-                   || currentType == QMetaType::ULong
-                   || currentType == QMetaType::Long
-                   || currentType == QMetaType::UShort
-                   || currentType == QMetaType::UChar
-                   || currentType == QMetaType::Char
-                   || currentType == QMetaType::Short;
-        case QVariant::Image:
-            return currentType == QVariant::Pixmap || currentType == QVariant::Bitmap;
-        case QVariant::Pixmap:
-            return currentType == QVariant::Image || currentType == QVariant::Bitmap
-                              || currentType == QVariant::Brush;
-        case QVariant::Bitmap:
-            return currentType == QVariant::Pixmap || currentType == QVariant::Image;
-        case QVariant::ByteArray:
-            return currentType == QVariant::Color;
-        case QVariant::String:
-            return currentType == QVariant::KeySequence || currentType == QVariant::Font
-                              || currentType == QVariant::Color;
-        case QVariant::KeySequence:
-            return currentType == QVariant::String || currentType == QVariant::Int;
-        case QVariant::Font:
-            return currentType == QVariant::String;
-        case QVariant::Color:
-            return currentType == QVariant::String || currentType == QVariant::ByteArray
-                              || currentType == QVariant::Brush;
-        case QVariant::Brush:
-            return currentType == QVariant::Color || currentType == QVariant::Pixmap;
+            return t == QMetaType::ULong
+                   || t == QMetaType::Long
+                   || t == QMetaType::UShort
+                   || t == QMetaType::UChar
+                   || t == QMetaType::Char
+                   || t == QMetaType::Short;
         case QMetaType::Long:
         case QMetaType::Char:
         case QMetaType::UChar:
@@ -3079,7 +3134,7 @@ bool QVariant::canConvert(Type t) const
         case QMetaType::Short:
         case QMetaType::UShort: {
             // almost the same as Int case
-            switch (currentType) {
+            switch (t) {
                 case QVariant::Int: // Int included
                 case QVariant::UInt:
                 case QVariant::String:
@@ -3090,13 +3145,11 @@ bool QVariant::canConvert(Type t) const
                 case QVariant::ULongLong:
                 case QVariant::Char:
                 case QVariant::ByteArray:
+                case QVariant::KeySequence:
                     return true;
                 default:
                     return false;
             }
-        }
-        default:
-            return false;
         }
     }
 
