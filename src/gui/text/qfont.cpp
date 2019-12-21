@@ -1975,12 +1975,14 @@ bool QFont::fromString(const QString &descrip)
     if (count > 1 && l[1].toDouble() > 0.0)
         setPointSizeF(l[1].toDouble());
     if (count == 9) {
-        setStyleHint((StyleHint) l[2].toInt());
-        setWeight(qMax(qMin(99, l[3].toInt()), 0));
-        setItalic(l[4].toInt());
-        setUnderline(l[5].toInt());
-        setStrikeOut(l[6].toInt());
-        setFixedPitch(l[7].toInt());
+        if (l[2].toInt() > 0)
+            setPixelSize(l[2].toInt());
+        setStyleHint((StyleHint) l[3].toInt());
+        setWeight(qMax(qMin(99, l[4].toInt()), 0));
+        setItalic(l[5].toInt());
+        setUnderline(l[6].toInt());
+        setStrikeOut(l[7].toInt());
+        setFixedPitch(l[8].toInt());
 
         if (!d->request.fixedPitch) // assume 'false' fixedPitch equals default
             d->request.ignorePitch = true;
