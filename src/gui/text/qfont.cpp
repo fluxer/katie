@@ -1940,7 +1940,7 @@ QString QFont::key() const
  */
 QString QFont::toString() const
 {
-    const QChar comma(QLatin1Char(','));
+    const QLatin1Char comma(',');
     return family() + comma +
         QString::number(     pointSizeF()) + comma +
         QString::number(      pixelSize()) + comma +
@@ -1949,7 +1949,7 @@ QString QFont::toString() const
         QString::number((int)     style()) + comma +
         QString::number((int) underline()) + comma +
         QString::number((int) strikeOut()) + comma +
-        QString::number((int)fixedPitch()) + comma;
+        QString::number((int)fixedPitch());
 }
 
 
@@ -1965,7 +1965,7 @@ bool QFont::fromString(const QString &descrip)
     QStringList l(descrip.split(QLatin1Char(',')));
 
     int count = l.count();
-    if (!count || (count > 2 && count < 9) || count > 11) {
+    if (!count || count > 9) {
         qWarning("QFont::fromString: Invalid description '%s'",
                  descrip.isEmpty() ? "(empty)" : descrip.toLatin1().data());
         return false;
@@ -1981,18 +1981,10 @@ bool QFont::fromString(const QString &descrip)
         setUnderline(l[5].toInt());
         setStrikeOut(l[6].toInt());
         setFixedPitch(l[7].toInt());
-    } else if (count == 10) {
-        if (l[2].toInt() > 0)
-            setPixelSize(l[2].toInt());
-        setStyleHint((StyleHint) l[3].toInt());
-        setWeight(qMax(qMin(99, l[4].toInt()), 0));
-        setStyle(static_cast<QFont::Style>(l[5].toInt()));
-        setUnderline(l[6].toInt());
-        setStrikeOut(l[7].toInt());
-        setFixedPitch(l[8].toInt());
+
+        if (!d->request.fixedPitch) // assume 'false' fixedPitch equals default
+            d->request.ignorePitch = true;
     }
-    if (count >= 9 && !d->request.fixedPitch) // assume 'false' fixedPitch equals default
-        d->request.ignorePitch = true;
 
     return true;
 }
