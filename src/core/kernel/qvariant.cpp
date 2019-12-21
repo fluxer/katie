@@ -3230,13 +3230,13 @@ bool QVariant::convert(Type t)
     with qRegisterMetaType().
 */
 
-static inline bool qIsNumericType(uint tp)
+static inline bool qIsNumericType(int tp)
 {
     return (tp >= QVariant::Bool && tp <= QVariant::Double)
            || (tp >= QMetaType::Long && tp <= QVariant::Float);
 }
 
-static inline bool qIsFloatingPoint(uint tp)
+static inline bool qIsFloatingPoint(int tp)
 {
     return tp == QVariant::Double || tp == QVariant::Float;
 }
