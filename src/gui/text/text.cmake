@@ -42,7 +42,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase_x11.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qunicodetables_p.h
 )
 

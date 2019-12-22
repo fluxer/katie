@@ -600,7 +600,7 @@ QMutex *qt_fontdatabase_mutex()
 
 QT_BEGIN_INCLUDE_NAMESPACE
 #if defined(Q_WS_X11)
-#  include "qfontdatabase_x11.h"
+#  include "qfontdatabase_x11_p.h"
 #endif
 QT_END_INCLUDE_NAMESPACE
 
