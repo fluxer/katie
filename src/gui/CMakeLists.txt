@@ -103,6 +103,7 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsRotation
     QGraphicsScale
     QGraphicsScene
+    QGraphicsSceneEvent
     QGraphicsSimpleTextItem
     QGraphicsView
     QGraphicsWidget
