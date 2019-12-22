@@ -15,4 +15,4 @@ bin="$1"
 shift
 
 cd "$(dirname "$bin")"
-exec "./$(basename "$bin")" $@
+exec @KATIE_CROSS_EXEC@ "./$(basename "$bin")" $@
