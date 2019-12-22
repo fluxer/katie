@@ -115,60 +115,54 @@ QT_BEGIN_NAMESPACE
     \value Bool \c bool
     \value Int \c int
     \value UInt \c{unsigned int}
+    \value LongLong LongLong
+    \value ULongLong ULongLong
     \value Double \c double
+    \value Float \c float
     \value QChar QChar
     \value QString QString
-    \value QByteArray QByteArray
-
-    \value VoidStar \c{void *}
-    \value Long \c{long}
-    \value LongLong LongLong
-    \value Short \c{short}
-    \value Char \c{char}
-    \value ULong \c{unsigned long}
-    \value ULongLong ULongLong
-    \value UShort \c{unsigned short}
-    \value UChar \c{unsigned char}
-    \value Float \c float
-    \value QObjectStar QObject *
-    \value QWidgetStar QWidget *
-    \value QVariant QVariant
-
-    \value QCursor QCursor
-    \value QDate QDate
-    \value QSize QSize
-    \value QTime QTime
-    \value QVariantList QVariantList
-    \value QPolygon QPolygon
-    \value QColor QColor
-    \value QSizeF QSizeF
-    \value QRectF QRectF
-    \value QLine QLine
-    \value QTextLength QTextLength
     \value QStringList QStringList
-    \value QVariantMap QVariantMap
-    \value QVariantHash QVariantHash
-    \value QIcon QIcon
-    \value QPen QPen
-    \value QLineF QLineF
-    \value QTextFormat QTextFormat
-    \value QRect QRect
-    \value QPoint QPoint
-    \value QUrl QUrl
-    \value QRegExp QRegExp
-    \value QDateTime QDateTime
-    \value QPointF QPointF
-    \value QPalette QPalette
-    \value QFont QFont
-    \value QBrush QBrush
-    \value QRegion QRegion
+    \value QByteArray QByteArray
     \value QBitArray QBitArray
-    \value QImage QImage
-    \value QKeySequence QKeySequence
-    \value QSizePolicy QSizePolicy
-    \value QPixmap QPixmap
+    \value QDate QDate
+    \value QTime QTime
+    \value QDateTime QDateTime
+    \value QUrl QUrl
     \value QLocale QLocale
+    \value QRect QRect
+    \value QRectF QRectF
+    \value QSize QSize
+    \value QSizeF QSizeF
+    \value QLine QLine
+    \value QLineF QLineF
+    \value QPoint QPoint
+    \value QPointF QPointF
+    \value QRegExp QRegExp
+    \value QEasingCurve QEasingCurve
+    \value QJsonValue QJsonValue
+    \value QJsonObject QJsonObject
+    \value QJsonArray QJsonArray
+    \value QJsonDocument QJsonDocument
+    \value QVariantHash QVariantHash
+    \value QVariantList QVariantList
+    \value QVariantMap QVariantMap
+
+    \value QFont QFont
+    \value QPixmap QPixmap
+    \value QBrush QBrush
+    \value QColor QColor
+    \value QPalette QPalette
+    \value QIcon QIcon
+    \value QImage QImage
+    \value QPolygon QPolygon
+    \value QRegion QRegion
     \value QBitmap QBitmap
+    \value QCursor QCursor
+    \value QSizePolicy QSizePolicy
+    \value QKeySequence QKeySequence
+    \value QPen QPen
+    \value QTextLength QTextLength
+    \value QTextFormat QTextFormat
     \value QMatrix QMatrix
     \value QTransform QTransform
     \value QMatrix4x4 QMatrix4x4
@@ -176,11 +170,17 @@ QT_BEGIN_NAMESPACE
     \value QVector3D QVector3D
     \value QVector4D QVector4D
     \value QQuaternion QQuaternion
-    \value QEasingCurve QEasingCurve
-    \value QJsonValue QJsonValue
-    \value QJsonObject QJsonObject
-    \value QJsonArray QJsonArray
-    \value QJsonDocument QJsonDocument
+
+    \value VoidStar \c{void *}
+    \value Long \c{long}
+    \value Short \c{short}
+    \value Char \c{char}
+    \value ULong \c{unsigned long}
+    \value UShort \c{unsigned short}
+    \value UChar \c{unsigned char}
+    \value QObjectStar QObject *
+    \value QWidgetStar QWidget *
+    \value QVariant QVariant
 
     \value User  Base value for user types
 
@@ -245,9 +245,8 @@ static const struct MetaTypeTblData {
     QT_ADD_STATIC_METATYPE("qlonglong", QMetaType::LongLong),
     QT_ADD_STATIC_METATYPE("qulonglong", QMetaType::ULongLong),
     QT_ADD_STATIC_METATYPE("double", QMetaType::Double),
+    QT_ADD_STATIC_METATYPE("float", QMetaType::Float),
     QT_ADD_STATIC_METATYPE("QChar", QMetaType::QChar),
-    QT_ADD_STATIC_METATYPE("QVariantMap", QMetaType::QVariantMap),
-    QT_ADD_STATIC_METATYPE("QVariantList", QMetaType::QVariantList),
     QT_ADD_STATIC_METATYPE("QString", QMetaType::QString),
     QT_ADD_STATIC_METATYPE("QStringList", QMetaType::QStringList),
     QT_ADD_STATIC_METATYPE("QByteArray", QMetaType::QByteArray),
@@ -266,12 +265,14 @@ static const struct MetaTypeTblData {
     QT_ADD_STATIC_METATYPE("QPoint", QMetaType::QPoint),
     QT_ADD_STATIC_METATYPE("QPointF", QMetaType::QPointF),
     QT_ADD_STATIC_METATYPE("QRegExp", QMetaType::QRegExp),
-    QT_ADD_STATIC_METATYPE("QVariantHash", QMetaType::QVariantHash),
     QT_ADD_STATIC_METATYPE("QEasingCurve", QMetaType::QEasingCurve),
     QT_ADD_STATIC_METATYPE("QJsonValue", QMetaType:: QJsonValue),
     QT_ADD_STATIC_METATYPE("QJsonObject", QMetaType::QJsonObject),
     QT_ADD_STATIC_METATYPE("QJsonArray", QMetaType::QJsonArray),
     QT_ADD_STATIC_METATYPE("QJsonDocument", QMetaType::QJsonDocument),
+    QT_ADD_STATIC_METATYPE("QVariantHash", QMetaType::QVariantHash),
+    QT_ADD_STATIC_METATYPE("QVariantList", QMetaType::QVariantList),
+    QT_ADD_STATIC_METATYPE("QVariantMap", QMetaType::QVariantMap),
 
     /* All GUI types */
     QT_ADD_STATIC_METATYPE("QFont", QMetaType::QFont),
@@ -306,7 +307,6 @@ static const struct MetaTypeTblData {
     QT_ADD_STATIC_METATYPE("ulong", QMetaType::ULong),
     QT_ADD_STATIC_METATYPE("ushort", QMetaType::UShort),
     QT_ADD_STATIC_METATYPE("uchar", QMetaType::UChar),
-    QT_ADD_STATIC_METATYPE("float", QMetaType::Float),
     QT_ADD_STATIC_METATYPE("QObject*", QMetaType::QObjectStar),
     QT_ADD_STATIC_METATYPE("QWidget*", QMetaType::QWidgetStar),
     QT_ADD_STATIC_METATYPE("QVariant", QMetaType::QVariant),
@@ -327,10 +327,9 @@ static const struct MetaTypeTblData {
     QT_ADD_STATIC_METATYPE("quint32", QMetaType::UInt),
     QT_ADD_STATIC_METATYPE("qint64", QMetaType::LongLong),
     QT_ADD_STATIC_METATYPE("quint64", QMetaType::ULongLong),
+    QT_ADD_STATIC_METATYPE("QHash<QString,QVariant>", QMetaType::QVariantHash),
     QT_ADD_STATIC_METATYPE("QList<QVariant>", QMetaType::QVariantList),
     QT_ADD_STATIC_METATYPE("QMap<QString,QVariant>", QMetaType::QVariantMap),
-    QT_ADD_STATIC_METATYPE("QHash<QString,QVariant>", QMetaType::QVariantHash),
-    // let QMetaTypeId2 figure out the type at compile time
     QT_ADD_STATIC_METATYPE("qreal", QMetaType::QReal),
 };
 static const qint16 MetaTypeTblSize = sizeof(MetaTypeTbl) / sizeof(MetaTypeTblData);

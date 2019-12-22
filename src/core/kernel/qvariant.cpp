@@ -3232,8 +3232,8 @@ bool QVariant::convert(Type t)
 
 static inline bool qIsNumericType(int tp)
 {
-    return (tp >= QVariant::Bool && tp <= QVariant::Double)
-           || (tp >= QMetaType::Long && tp <= QVariant::Float);
+    return (tp >= QVariant::Bool && tp <= QVariant::Float)
+           || (tp >= QMetaType::Long && tp <= QMetaType::UChar);
 }
 
 static inline bool qIsFloatingPoint(int tp)
