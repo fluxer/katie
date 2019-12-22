@@ -992,10 +992,7 @@ QLibrary::LoadHints QLibrary::loadHints() const
 /* Internal, for debugging */
 bool qt_debug_component()
 {
-    static int debug_env = -1;
-    if (debug_env == -1)
-       debug_env = QT_PREPEND_NAMESPACE(qgetenv)("QT_DEBUG_PLUGINS").toInt();
-
+    static int debug_env = qgetenv("QT_DEBUG_PLUGINS").toInt();
     return debug_env != 0;
 }
 
