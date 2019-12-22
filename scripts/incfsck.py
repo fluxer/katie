@@ -281,6 +281,9 @@ incmap = {
         'QWidgetList': 'qwindowdefs.h',
         'QWindowStateChangeEvent': 'qevent.h',
         'QWizardPage': 'qwizard.h',
+        'QX11EmbedContainer': 'qx11embed_x11.h',
+        'QX11EmbedWidget': 'qx11embed_x11.h',
+        'QX11Info': 'qx11info_x11.h',
         'QtEvents': 'qevent.h',
     },
     'QtNetwork': {
@@ -361,7 +364,7 @@ incmap = {
 if '--printmap' in sys.argv:
     for component in incmap:
         for key in incmap[component]:
-            print('katie_generate_obsolete(%s.h %s %s)' % (key.lower(), component, incmap[component][key]))
+            print('katie_generate_obsolete(%s %s %s)' % (key, component, incmap[component][key]))
     sys.exit(0)
 elif '--sortmap' in sys.argv:
     for component in sorted(incmap):

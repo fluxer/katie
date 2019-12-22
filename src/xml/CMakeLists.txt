@@ -3,49 +3,7 @@ set(EXTRA_XML_LIBS KtCore)
 
 set(XML_PUBLIC_HEADERS
     ${XML_PUBLIC_HEADERS}
-    # mixed
-    QXmlAttributes
-    QXmlSimpleReader
-    QXmlParseException
-    QXmlContentHandler
-    QDomDocument
-    QDomElement
-    QDomNode
-    QDomNodeList
-    QDomCDATASection
-    QDomCharacterData
-    QDomComment
-    QDomDocumentFragment
-    QDomDocumentType
-    QDomEntity
-    QDomEntityReference
-    QDomImplementation
-    QDomNamedNodeMap
-    QDomNotation
-    QDomProcessingInstruction
-    QDomText
-    QDomAttr
-    QXmlDeclHandler
-    QXmlDTDHandler
-    QXmlEntityResolver
-    QXmlErrorHandler
-    QXmlLexicalHandler
-    QXmlLocator
-    QXmlNamespaceSupport
-    QXmlReader
-    QXmlDefaultHandler
-    QXmlInputSource
-    QXmlStreamAttribute
-    QXmlStreamAttributes
-    QXmlStreamNotationDeclaration
-    QXmlStreamNotationDeclarations
-    QXmlStreamEntityDeclaration
-    QXmlStreamEntityDeclarations
-    QXmlStreamNamespaceDeclaration
-    QXmlStreamNamespaceDeclarations
-    QXmlStreamEntityResolver
-    QXmlStreamReader
-    QXmlStreamWriter
+    # all headers are aliases
 )
 
 include(dom/dom.cmake)
