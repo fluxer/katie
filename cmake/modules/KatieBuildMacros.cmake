@@ -195,6 +195,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 make_directory(${rscpath})
                 add_custom_command(
                     COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    DEPENDS "${KATIE_MOC}"
                     OUTPUT "${rscout}"
                 )
             endif()
