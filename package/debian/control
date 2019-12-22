@@ -13,7 +13,7 @@ Build-Depends: debhelper (>= 9~), libssl-dev, zlib1g-dev, libzstd-dev,
  libmariadbd-dev, libaio-dev, libsqlite3-dev, xorg-dev, cmake, git
 
 Package: katie-git
-Architecture: alpha arm avr32 i386 ia64 m68k mips hppa powerpc s390 sparc sh3
+Architecture: alpha armhf avr32 i386 ia64 m68k mips hppa powerpc s390 sparc sh3
  sh4 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, openssl, zlib1g, libzstd1, libc6,
  libpng16-16, libjpeg62-turbo, libtiffxx5, libmng1, libcups2, libfreetype6,
