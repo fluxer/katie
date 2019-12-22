@@ -325,7 +325,7 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
     }
 
     ulong fdlen = file.size();
-    const char *filedata = (char *) file.map(0, fdlen);
+    const char *filedata = reinterpret_cast<char*>(file.map(0, fdlen));
     if (filedata == 0) {
         // try reading the data into memory instead
         const QByteArray data = file.readAll();
