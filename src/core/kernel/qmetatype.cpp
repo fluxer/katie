@@ -342,14 +342,14 @@ struct QMetaTypeGuiHelper
     QMetaType::LoadOperator loadOp;
 #endif
 };
-Q_CORE_EXPORT const QMetaTypeGuiHelper *qMetaTypeGuiHelper = 0;
+Q_CORE_EXPORT const QMetaTypeGuiHelper *qMetaTypeGuiHelper = Q_NULLPTR;
 
 class QCustomTypeInfo
 {
 public:
-    QCustomTypeInfo() : typeName(), constr(0), destr(0)
+    QCustomTypeInfo() : constr(Q_NULLPTR), destr(Q_NULLPTR)
 #ifndef QT_NO_DATASTREAM
-    , saveOp(0), loadOp(0)
+    , saveOp(Q_NULLPTR), loadOp(Q_NULLPTR)
 #endif
     {}
 
