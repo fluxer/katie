@@ -232,8 +232,11 @@ QT_BEGIN_NAMESPACE
     { STR, sizeof(STR) - 1, TP }
 
 /* Note: these MUST be in the order of the enums */
-static const struct { const char * typeName; int typeNameLength; int type; } types[] = {
-
+static const struct MetaTypeTblData {
+    const char* typeName;
+    const int typeNameLength;
+    const QMetaType::Type type;
+} MetaTypeTbl[] = {
     /* All Core types */
     QT_ADD_STATIC_METATYPE("void", QMetaType::Void),
     QT_ADD_STATIC_METATYPE("bool", QMetaType::Bool),
@@ -328,10 +331,9 @@ static const struct { const char * typeName; int typeNameLength; int type; } typ
     QT_ADD_STATIC_METATYPE("QMap<QString,QVariant>", QMetaType::QVariantMap),
     QT_ADD_STATIC_METATYPE("QHash<QString,QVariant>", QMetaType::QVariantHash),
     // let QMetaTypeId2 figure out the type at compile time
-    QT_ADD_STATIC_METATYPE("qreal", QMetaTypeId2<qreal>::MetaType),
-
-    {0, 0, QMetaType::Void}
+    QT_ADD_STATIC_METATYPE("qreal", QMetaType::QReal),
 };
+static const qint16 MetaTypeTblSize = sizeof(MetaTypeTbl) / sizeof(MetaTypeTblData);
 
 struct QMetaTypeGuiHelper
 {
@@ -397,7 +399,7 @@ void QMetaType::registerStreamOperators(int idx, SaveOperator saveOp,
 #endif // QT_NO_DATASTREAM
 
 /*!
-    Returns the type name associated with the given \a type, or 0 if no
+    Returns the type name associated with the given \a type, or null if no
     matching type was found. The returned pointer must not be deleted.
 
     \sa type(), isRegistered(), Type
@@ -407,20 +409,19 @@ const char *QMetaType::typeName(int type)
     enum { GuiTypeCount = LastGuiType - FirstGuiType };
 
     if (type >= 0 && type <= LastCoreType) {
-        return types[type].typeName;
+        return MetaTypeTbl[type].typeName;
     } else if (type >= FirstGuiType && type <= LastGuiType) {
-        return types[type - FirstGuiType + LastCoreType + 1].typeName;
+        return MetaTypeTbl[type - FirstGuiType + LastCoreType + 1].typeName;
     } else if (type >= FirstCoreExtType && type <= LastCoreExtType) {
-        return types[type - FirstCoreExtType + GuiTypeCount + LastCoreType + 2].typeName;
+        return MetaTypeTbl[type - FirstCoreExtType + GuiTypeCount + LastCoreType + 2].typeName;
     } else if (type >= User) {
         QReadLocker locker(customTypesLock());
         const QVector<QCustomTypeInfo> * const ct = customTypes();
         return ct && ct->count() > type - User && !ct->at(type - User).typeName.isEmpty()
-                ? ct->at(type - User).typeName.constData()
-                : static_cast<const char *>(0);
+                ? ct->at(type - User).typeName.constData() : Q_NULLPTR;
     }
 
-    return 0;
+    return Q_NULLPTR;
 }
 
 /*! \internal
@@ -428,12 +429,12 @@ const char *QMetaType::typeName(int type)
 */
 static inline int qMetaTypeStaticType(const char *typeName, int length)
 {
-    int i = 0;
-    while (types[i].typeName && ((length != types[i].typeNameLength)
-                                 || strcmp(typeName, types[i].typeName))) {
-        ++i;
-    }
-    return types[i].type;
+    for (qint16 i = 0; i < MetaTypeTblSize; i++) {
+        if (length == MetaTypeTbl[i].typeNameLength && strcmp(typeName, MetaTypeTbl[i].typeName) == 0) {
+            return MetaTypeTbl[i].type;
+        }
+     }
+    return 0;
 }
 
 /*! \internal
