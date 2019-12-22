@@ -97,7 +97,7 @@ set(KATIE_IMPORTS_FULL "${KATIE_LIBRARIES_FULL}/katie/imports" CACHE PATH "Decle
 set(KATIE_DATA_FULL "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
 set(KATIE_TRANSLATIONS_FULL "${KATIE_DATA_FULL}/translations" CACHE PATH "Translations instllation path")
 set(KATIE_SETTINGS_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg" CACHE PATH "Settings runtime path")
-set(KATIE_CMAKE_FULL "${KATIE_DATA_FULL}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
+set(KATIE_CMAKE_FULL "${KATIE_LIBRARIES_FULL}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
 set(KATIE_LDCONF_FULL "${KATIE_DATA_FULL}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
 set(KATIE_PROFILE_FULL "${KATIE_DATA_FULL}/profile.d" CACHE PATH "Shell profile scripts installation path")
 set(KATIE_MAN_FULL "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages installation path")
