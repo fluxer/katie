@@ -124,7 +124,6 @@
 #cmakedefine QT_NO_ANIMATION
 #cmakedefine QT_NO_BACKINGSTORE
 #cmakedefine QT_NO_BEARERMANAGEMENT
-#cmakedefine QT_NO_BIG_CODECS
 #cmakedefine QT_NO_BUTTONGROUP
 #cmakedefine QT_NO_CALENDARWIDGET
 #cmakedefine QT_NO_CAST_FROM_ASCII
@@ -201,7 +200,6 @@
 #cmakedefine QT_NO_IMAGEFORMAT_XBM
 #cmakedefine QT_NO_IMAGEFORMAT_XPM
 #cmakedefine QT_NO_IMAGE_HEURISTIC_MASK
-#cmakedefine QT_NO_INOTIFY
 #cmakedefine QT_NO_INPUTDIALOG
 #cmakedefine QT_NO_IPV6
 #cmakedefine QT_NO_IPV6IFNAME
@@ -219,7 +217,6 @@
 #cmakedefine QT_NO_MAINWINDOW
 #cmakedefine QT_NO_MATRIX4X4
 #cmakedefine QT_NO_MDIAREA
-#cmakedefine QT_NO_MENU
 #cmakedefine QT_NO_MENU
 #cmakedefine QT_NO_MENUBAR
 #cmakedefine QT_NO_MESSAGEBOX
@@ -388,7 +385,7 @@
 #define QT_NO_SCROLLBAR
 #endif
 
-//  SOCKS5
+// SOCKS5
 #if !defined(QT_NO_SOCKS5) && (defined(QT_NO_NETWORKPROXY))
 #define QT_NO_SOCKS5
 #endif
