@@ -2779,6 +2779,12 @@ bool QVariant::canConvert(Type t) const
         case QVariant::Char:
         case QVariant::ByteArray:
         case QVariant::KeySequence:
+        case QMetaType::ULong:
+        case QMetaType::Long:
+        case QMetaType::UShort:
+        case QMetaType::UChar:
+        case QMetaType::Char:
+        case QMetaType::Short:
             return true;
         default:
             return false;
@@ -3119,14 +3125,7 @@ bool QVariant::canConvert(Type t) const
     /* Quaternion */
     }
 
-    switch (currentType) {
-        case QVariant::Int:
-            return t == QMetaType::ULong
-                   || t == QMetaType::Long
-                   || t == QMetaType::UShort
-                   || t == QMetaType::UChar
-                   || t == QMetaType::Char
-                   || t == QMetaType::Short;
+    switch (int(t)) {
         case QMetaType::Long:
         case QMetaType::Char:
         case QMetaType::UChar:
@@ -3134,7 +3133,7 @@ bool QVariant::canConvert(Type t) const
         case QMetaType::Short:
         case QMetaType::UShort: {
             // almost the same as Int case
-            switch (t) {
+            switch (currentType) {
                 case QVariant::Int: // Int included
                 case QVariant::UInt:
                 case QVariant::String:
