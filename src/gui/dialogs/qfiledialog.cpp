@@ -58,6 +58,7 @@
 #include "qapplication.h"
 #include "qstylepainter.h"
 #include "qfileiconprovider_p.h"
+#include "qcoreapplication_p.h"
 #include "ui_qfiledialog.h"
 
 #include <stdlib.h>
@@ -330,9 +331,8 @@ QFileDialog::QFileDialog(const QFileDialogArgs &args)
 QFileDialog::~QFileDialog()
 {
     Q_D(QFileDialog);
-    QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
-    settings.beginGroup(QLatin1String("Qt"));
-    settings.setValue(QLatin1String("filedialog"), saveState());
+    QSettings *settings = QCoreApplicationPrivate::staticConf();
+    settings->setValue(QLatin1String("Qt/filedialog"), saveState());
     d->deleteNativeDialog_sys();
 }
 
@@ -2025,11 +2025,10 @@ void QFileDialogPrivate::init(const QString &directory, const QString &nameFilte
     retranslateStrings();
     q->setFileMode(fileMode);
 
-    QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
-    settings.beginGroup(QLatin1String("Qt"));
+    QSettings *settings = QCoreApplicationPrivate::staticConf();
     if (!directory.isEmpty())
         setLastVisitedDirectory(workingDirectory(directory));
-    q->restoreState(settings.value(QLatin1String("filedialog")).toByteArray());
+    q->restoreState(settings->value(QLatin1String("Qt/filedialog")).toByteArray());
 
     // Default case
     if (!nameFilter.isEmpty())

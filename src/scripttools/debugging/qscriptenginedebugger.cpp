@@ -44,6 +44,7 @@
 #include "qscriptenginedebuggerfrontend_p.h"
 #include "qscriptdebuggerstandardwidgetfactory_p.h"
 #include "qobject_p.h"
+#include "qcoreapplication_p.h"
 
 #include <QtCore/qsettings.h>
 #include <QtGui/qapplication.h>
@@ -308,11 +309,11 @@ QScriptEngineDebuggerPrivate::~QScriptEngineDebuggerPrivate()
     delete frontend;
 #ifndef QT_NO_MAINWINDOW
     if (standardWindow) {
-        QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
+        QSettings *settings = QCoreApplicationPrivate::staticConf();
         QByteArray geometry = standardWindow->saveGeometry();
-        settings.setValue(QLatin1String("Qt/scripttools/debugging/mainWindowGeometry"), geometry);
+        settings->setValue(QLatin1String("Qt/scripttools/debugging/mainWindowGeometry"), geometry);
         QByteArray state = standardWindow->saveState();
-        settings.setValue(QLatin1String("Qt/scripttools/debugging/mainWindowState"), state);
+        settings->setValue(QLatin1String("Qt/scripttools/debugging/mainWindowState"), state);
         if (standardWindow->parent() == 0)
             delete standardWindow;
     }
@@ -595,11 +596,11 @@ QMainWindow *QScriptEngineDebugger::standardWindow() const
 
     win->setWindowTitle(tr("Katie Script Debugger"));
 
-    QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
-    QVariant geometry = settings.value(QLatin1String("Qt/scripttools/debugging/mainWindowGeometry"));
+    QSettings *settings = QCoreApplicationPrivate::staticConf();
+    QVariant geometry = settings->value(QLatin1String("Qt/scripttools/debugging/mainWindowGeometry"));
     if (geometry.isValid())
         win->restoreGeometry(geometry.toByteArray());
-    QVariant state = settings.value(QLatin1String("Qt/scripttools/debugging/mainWindowState"));
+    QVariant state = settings->value(QLatin1String("Qt/scripttools/debugging/mainWindowState"));
     if (state.isValid())
         win->restoreState(state.toByteArray());
 

@@ -697,9 +697,7 @@ bool QApplicationPrivate::x11_apply_settings()
         return true;
     }
 
-    QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
-
-    settings.beginGroup(QLatin1String("Qt"));
+    QSettings *settings = QCoreApplicationPrivate::staticConf();
 
     /*
       Qt settings. This is now they are written into the datastream.
@@ -722,21 +720,21 @@ bool QApplicationPrivate::x11_apply_settings()
 
     QPalette pal(Qt::black);
     int groupCount = 0;
-    QStringList strlist = settings.value(QLatin1String("Palette/active")).toStringList();
+    QStringList strlist = settings->value(QLatin1String("Qt/Palette/active")).toStringList();
     if (!strlist.isEmpty()) {
         ++groupCount;
         for (int i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
             pal.setColor(QPalette::Active, (QPalette::ColorRole) i,
                          QColor(strlist[i]));
     }
-    strlist = settings.value(QLatin1String("Palette/inactive")).toStringList();
+    strlist = settings->value(QLatin1String("Qt/Palette/inactive")).toStringList();
     if (!strlist.isEmpty()) {
         ++groupCount;
         for (int i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
             pal.setColor(QPalette::Inactive, (QPalette::ColorRole) i,
                          QColor(strlist[i]));
     }
-    strlist = settings.value(QLatin1String("Palette/disabled")).toStringList();
+    strlist = settings->value(QLatin1String("Qt/Palette/disabled")).toStringList();
     if (!strlist.isEmpty()) {
         ++groupCount;
         for (int i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
@@ -749,7 +747,7 @@ bool QApplicationPrivate::x11_apply_settings()
         QApplicationPrivate::setSystemPalette(pal);
 
     if (!appFont) {
-        QString fontDescription = settings.value(QLatin1String("font")).toString();
+        QString fontDescription = settings->value(QLatin1String("Qt/font")).toString();
         if (!fontDescription .isEmpty()) {
             QFont font(QApplication::font());
             font.fromString(fontDescription );
@@ -758,8 +756,7 @@ bool QApplicationPrivate::x11_apply_settings()
     }
 
     // read library (ie. plugin) path list
-    QString libpathkey = QString::fromLatin1("libraryPath");
-    QStringList pathlist = settings.value(libpathkey).toString().split(QLatin1Char(':'));
+    QStringList pathlist = settings->value(QLatin1String("Qt/libraryPath")).toString().split(QLatin1Char(':'));
     if (! pathlist.isEmpty()) {
         QStringList::ConstIterator it = pathlist.constBegin();
         while (it != pathlist.constEnd())
@@ -767,7 +764,7 @@ bool QApplicationPrivate::x11_apply_settings()
     }
 
     // read new QStyle
-    QString stylename = settings.value(QLatin1String("style")).toString();
+    QString stylename = settings->value(QLatin1String("Qt/style")).toString();
 
     if (stylename.isEmpty() && QApplicationPrivate::styleOverride.isNull() && qt_x11Data->use_xrender) {
         stylename = qt_guiPlatformPlugin()->styleName();
@@ -784,21 +781,21 @@ bool QApplicationPrivate::x11_apply_settings()
         }
     }
 
-    int num = settings.value(QLatin1String("doubleClickInterval"),
+    int num = settings->value(QLatin1String("Qt/doubleClickInterval"),
                              QApplication::doubleClickInterval()).toInt();
     QApplication::setDoubleClickInterval(num);
 
-    num = settings.value(QLatin1String("cursorFlashTime"),
+    num = settings->value(QLatin1String("Qt/cursorFlashTime"),
                          QApplication::cursorFlashTime()).toInt();
     QApplication::setCursorFlashTime(num);
 
 #ifndef QT_NO_WHEELEVENT
-    num = settings.value(QLatin1String("wheelScrollLines"),
+    num = settings->value(QLatin1String("Qt/wheelScrollLines"),
                          QApplication::wheelScrollLines()).toInt();
     QApplication::setWheelScrollLines(num);
 #endif
 
-    QString defaultcodec = settings.value(QLatin1String("defaultCodec"),
+    QString defaultcodec = settings->value(QLatin1String("Qt/defaultCodec"),
                                           QVariant(QLatin1String("none"))).toString();
     if (defaultcodec != QLatin1String("none")) {
         QTextCodec *codec = QTextCodec::codecForName(defaultcodec.toLatin1());
@@ -806,13 +803,13 @@ bool QApplicationPrivate::x11_apply_settings()
             QTextCodec::setCodecForTr(codec);
     }
 
-    int w = settings.value(QLatin1String("globalStrut/width")).toInt();
-    int h = settings.value(QLatin1String("globalStrut/height")).toInt();
+    int w = settings->value(QLatin1String("Qt/globalStrut/width")).toInt();
+    int h = settings->value(QLatin1String("Qt/globalStrut/height")).toInt();
     QSize strut(w, h);
     if (strut.isValid())
         QApplication::setGlobalStrut(strut);
 
-    QStringList effects = settings.value(QLatin1String("GUIEffects")).toStringList();
+    QStringList effects = settings->value(QLatin1String("Qt/GUIEffects")).toStringList();
     QApplication::setEffectEnabled(Qt::UI_General,
                                    effects.contains(QLatin1String("general")));
     QApplication::setEffectEnabled(Qt::UI_AnimateMenu,
@@ -829,17 +826,16 @@ bool QApplicationPrivate::x11_apply_settings()
                                    effects.contains(QLatin1String("animatetoolbox")));
 
     if (!qt_x11Data->has_fontconfig) {
-        settings.beginGroup(QLatin1String("Font Substitutions"));
-        foreach (const QString &fam, settings.childKeys()) {
-            QStringList subs = settings.value(fam).toStringList();
+        foreach (const QString &fam, settings->keys()) {
+            if (!fam.startsWith(QLatin1String("Qt/Font Substitutions/"))) {
+                continue;
+            }
+            QStringList subs = settings->value(fam).toStringList();
             QFont::insertSubstitutions(fam, subs);
         }
-        settings.endGroup();
     }
 
-    qt_use_rtl_extensions = settings.value(QLatin1String("useRtlExtensions"), false).toBool();
-
-    settings.endGroup(); // Qt
+    qt_use_rtl_extensions = settings->value(QLatin1String("Qt/useRtlExtensions"), false).toBool();
 
     QIconLoader::instance()->updateSystemTheme();
 
@@ -1648,27 +1644,23 @@ void qt_init(QApplicationPrivate *priv, int,
         // read some non-GUI settings when not using the X server...
 
         if (QApplication::desktopSettingsAware()) {
-            QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
-            settings.beginGroup(QLatin1String("Qt"));
+            QSettings *settings = QCoreApplicationPrivate::staticConf();
 
             // read library (ie. plugin) path list
-            QString libpathkey = QString::fromLatin1("libraryPath");
-            QStringList pathlist = settings.value(libpathkey).toString().split(QLatin1Char(':'));
+            QStringList pathlist = settings->value(QLatin1String("Qt/libraryPath")).toString().split(QLatin1Char(':'));
             if (!pathlist.isEmpty()) {
                 QStringList::ConstIterator it = pathlist.constBegin();
                 while (it != pathlist.constEnd())
                     QApplication::addLibraryPath(*it++);
             }
 
-            QString defaultcodec = settings.value(QLatin1String("defaultCodec"),
+            QString defaultcodec = settings->value(QLatin1String("Qt/defaultCodec"),
                                                   QVariant(QLatin1String("none"))).toString();
             if (defaultcodec != QLatin1String("none")) {
                 QTextCodec *codec = QTextCodec::codecForName(defaultcodec.toLatin1());
                 if (codec)
                     QTextCodec::setCodecForTr(codec);
             }
-
-            settings.endGroup(); // Qt
         }
     }
 }

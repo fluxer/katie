@@ -34,22 +34,18 @@
 #include "qdebug.h"
 #include "qplatformdefs.h"
 #include "qsettings.h"
+#include "qjsondocument.h"
+#include "qjsonobject.h"
+#include "qstandardpaths.h"
+#include "qmutex.h"
+#include "qcoreapplication.h"
+#include "qlibraryinfo.h"
 
 #ifndef QT_NO_SETTINGS
 
 #include "qsettings_p.h"
-#include "qcache.h"
 #include "qfile.h"
 #include "qdir.h"
-#include "qfileinfo.h"
-#include "qmutex.h"
-#include "qlibraryinfo.h"
-#include "qtemporaryfile.h"
-#include "qcoreapplication.h"
-
-#ifndef QT_NO_TEXTCODEC
-#  include "qtextcodec.h"
-#endif
 
 #ifndef QT_NO_GEOM_VARIANT
 #include "qsize.h"
@@ -59,45 +55,23 @@
 
 #include <stdlib.h>
 
-#ifdef Q_AUTOTEST_EXPORT
-#  define Q_AUTOTEST_EXPORT_HELPER Q_AUTOTEST_EXPORT
-#else
-#  define Q_AUTOTEST_EXPORT_HELPER static
-#endif
-
-// ************************************************************************
-// QConfFile
-
-/*
-    QConfFile objects are explicitly shared within the application.
-    This ensures that modification to the settings done through one
-    QSettings object are immediately reflected in other setting
-    objects of the same application.
-*/
-
 QT_BEGIN_NAMESPACE
 
-struct QConfFileCustomFormat
+struct QSettingsCustomFormat
 {
+    QSettings::Format format;
     QString extension;
     QSettings::ReadFunc readFunc;
     QSettings::WriteFunc writeFunc;
-    Qt::CaseSensitivity caseSensitivity;
 };
 
-typedef QHash<QString, QConfFile *> ConfFileHash;
-typedef QCache<QString, QConfFile> ConfFileCache;
-typedef QHash<int, QString> PathHash;
-typedef QVector<QConfFileCustomFormat> CustomFormatVector;
-
-Q_GLOBAL_STATIC(ConfFileHash, usedHashFunc)
-Q_GLOBAL_STATIC(ConfFileCache, unusedCacheFunc)
-Q_GLOBAL_STATIC(PathHash, pathHashFunc)
+typedef QVector<QSettingsCustomFormat> CustomFormatVector;
+typedef QVector<QSettings*> QSettingsVector;
+Q_GLOBAL_STATIC(QSettingsVector, qGlobalSettings)
 Q_GLOBAL_STATIC(CustomFormatVector, customFormatVectorFunc)
-Q_GLOBAL_STATIC(QMutex, globalMutex)
-static QSettings::Format globalDefaultFormat = QSettings::NativeFormat;
+Q_GLOBAL_STATIC(QMutex, qSettingsMutex)
 
-inline bool qt_isEvilFsTypeName(const char *name)
+static inline bool qt_isEvilFsTypeName(const char *name)
 {
     return (qstrncmp(name, "nfs", 3) == 0
             || qstrncmp(name, "autofs", 6) == 0
@@ -110,7 +84,7 @@ QT_BEGIN_INCLUDE_NAMESPACE
 # include <sys/mount.h>
 QT_END_INCLUDE_NAMESPACE
 
-Q_AUTOTEST_EXPORT_HELPER bool qIsLikelyToBeNfs(int handle)
+static inline bool qIsLikelyToBeNfs(int handle)
 {
     struct statfs buf;
     if (fstatfs(handle, &buf) != 0)
@@ -136,7 +110,7 @@ QT_END_INCLUDE_NAMESPACE
 #  define AUTOFSNG_SUPER_MAGIC  0x7d92b1a0
 # endif
 
-Q_AUTOTEST_EXPORT_HELPER bool qIsLikelyToBeNfs(int handle)
+static inline bool qIsLikelyToBeNfs(int handle)
 {
     struct statfs buf;
     if (fstatfs(handle, &buf) != 0)
@@ -153,7 +127,7 @@ QT_BEGIN_INCLUDE_NAMESPACE
 # include <sys/statvfs.h>
 QT_END_INCLUDE_NAMESPACE
 
-Q_AUTOTEST_EXPORT_HELPER bool qIsLikelyToBeNfs(int handle)
+static inline bool qIsLikelyToBeNfs(int handle)
 {
     struct statvfs buf;
     if (fstatvfs(handle, &buf) != 0)
@@ -165,7 +139,7 @@ Q_AUTOTEST_EXPORT_HELPER bool qIsLikelyToBeNfs(int handle)
 #endif
 }
 #else
-Q_AUTOTEST_EXPORT_HELPER inline bool qIsLikelyToBeNfs(int /* handle */)
+static inline inline bool qIsLikelyToBeNfs(int /* handle */)
 {
     return true;
 }
@@ -190,237 +164,291 @@ static bool unixLock(int handle, int lockType)
     return fcntl(handle, F_SETLKW, &fl) == 0;
 }
 
-QConfFile::QConfFile(const QString &fileName, bool _userPerms)
-    : name(fileName), size(0), ref(1), userPerms(_userPerms)
+// ************************************************************************
+// Native format
+static bool json_settings_read(QIODevice &device, QSettings::SettingsMap &map)
 {
-    usedHashFunc()->insert(name, this);
-}
-
-QConfFile::~QConfFile()
-{
-    if (usedHashFunc())
-        usedHashFunc()->remove(name);
-}
-
-ParsedSettingsMap QConfFile::mergedKeyMap() const
-{
-    ParsedSettingsMap result = originalKeys;
-    ParsedSettingsMap::const_iterator i;
-
-    for (i = removedKeys.begin(); i != removedKeys.end(); ++i)
-        result.remove(i.key());
-    for (i = addedKeys.begin(); i != addedKeys.end(); ++i)
-        result.insert(i.key(), i.value());
-    return result;
-}
-
-bool QConfFile::isWritable() const
-{
-    QFileInfo fileInfo(name);
-
-#ifndef QT_NO_TEMPORARYFILE
-    if (fileInfo.exists()) {
-#endif
-        QFile file(name);
-        return file.open(QFile::ReadWrite);
-#ifndef QT_NO_TEMPORARYFILE
-    } else {
-        // Create the directories to the file.
-        QDir dir(fileInfo.absolutePath());
-        if (!dir.exists()) {
-            if (!dir.mkpath(dir.absolutePath()))
-                return false;
-        }
-
-        // we use a temporary file to avoid race conditions
-        QTemporaryFile file(name);
-        return file.open();
+    QByteArray data = device.readAll();
+    if (Q_UNLIKELY(data.isEmpty())) {
+        return false;
     }
-#endif
+
+    QJsonDocument jsondoc = QJsonDocument::fromJson(data);
+    if (Q_UNLIKELY(jsondoc.isNull())) {
+        return false;
+    }
+
+    map = jsondoc.object().toVariantMap();
+
+    // qDebug() << "json_settings_read" << jsondoc.toJson();
+    return true;
 }
 
-QConfFile *QConfFile::fromName(const QString &fileName, bool _userPerms)
+static bool json_settings_write(QIODevice &device, const QSettings::SettingsMap &map)
 {
-    QString absPath = QFileInfo(fileName).absoluteFilePath();
-
-    ConfFileHash *usedHash = usedHashFunc();
-    ConfFileCache *unusedCache = unusedCacheFunc();
-
-    QConfFile *confFile = Q_NULLPTR;
-    QMutexLocker locker(globalMutex());
-
-    if (!(confFile = usedHash->value(absPath))) {
-        if ((confFile = unusedCache->take(absPath)))
-            usedHash->insert(absPath, confFile);
+    QJsonDocument jsondoc = QJsonDocument(QJsonObject::fromVariantMap(map));
+    QByteArray jsondata = jsondoc.toJson();
+    if (Q_UNLIKELY(jsondoc.isNull() || jsondata.isNull())) {
+        return false;
     }
-    if (confFile) {
-        confFile->ref.ref();
-        return confFile;
-    }
-    return new QConfFile(absPath, _userPerms);
-}
 
-void QConfFile::clearCache()
-{
-    QMutexLocker locker(globalMutex());
-    unusedCacheFunc()->clear();
+    // qDebug() << "json_settings_write" << jsondata;
+    return device.write(jsondata);
 }
 
 // ************************************************************************
-// QSettingsPrivate
-
-QSettingsPrivate::QSettingsPrivate(QSettings::Format format)
-    : format(format), scope(QSettings::UserScope /* nothing better to put */), iniCodec(0), spec(0), fallbacks(true),
-      pendingChanges(false), status(QSettings::NoError)
+// INI format
+static bool ini_settings_read(QIODevice &device, QSettings::SettingsMap &map)
 {
+    QByteArray section; // keys without section are allowed
+
+    bool parsedsomething = false;
+    while (!device.atEnd()) {
+        const QByteArray line = device.readLine().trimmed();
+        if (line.isEmpty() || line.startsWith(';')) {
+            continue;
+        } else if (line.startsWith('[') && line.endsWith(']')) {
+            section = line.mid(1, line.size() - 2);
+            continue;
+        }
+
+        const QList<QByteArray> splitline = line.split('=');
+        if (splitline.size() < 2) {
+            continue;
+        }
+
+        const QByteArray key = splitline.at(0).trimmed();
+        const QByteArray value = splitline.at(1).trimmed();
+        const QVariant variantvalue = QSettingsPrivate::stringToVariant(value);
+        if (section.isEmpty()) {
+            map.insert(key, variantvalue);
+        } else {
+            const QString actualkey = section + QLatin1Char('/') + key;
+            map.insert(actualkey, variantvalue);
+        }
+
+        parsedsomething = true;
+    }
+
+    // qDebug() << "ini_settings_read" << map;
+    return parsedsomething;
 }
 
-QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope,
-                                   const QString &organization, const QString &application)
-    : format(format), scope(scope), organizationName(organization), applicationName(application),
-      iniCodec(0), spec(0), fallbacks(true), pendingChanges(false), status(QSettings::NoError)
+static bool ini_settings_write(QIODevice &device, const QSettings::SettingsMap &map)
 {
+    QString lastsection;
+    foreach (const QString &key, map.keys()) {
+        QString section;
+        int keypos = 0;
+        const QList<QString> splitkey = key.split(QLatin1Char('/'));
+        if (splitkey.size() > 1) {
+            section = QLatin1Char('[') + splitkey.at(0) + QLatin1String("]\n");
+            keypos = 1;
+        }
+
+        QString keyname;
+        for (int i = keypos; i < splitkey.size(); i++) {
+            if (i == keypos) {
+                keyname += splitkey.at(i);
+            } else {
+                keyname += QLatin1Char('/') + splitkey.at(i);
+            }
+        }
+
+        if (section != lastsection) {
+            // separate each section with two line separators, do only for
+            // sections after the first one
+            if (!lastsection.isEmpty() && !device.write("\n")) {
+                return false;
+            }
+            if (!section.isEmpty() && !device.write(section.toAscii())) {
+                return false;
+            }
+        }
+        lastsection = section;
+
+        if (!device.write(keyname.toAscii())) {
+            return false;
+        }
+
+        const QString stringvalue = QSettingsPrivate::variantToString(map.value(key));
+        const QString datavalue = QLatin1Char('=') + stringvalue + QLatin1Char('\n');
+        if (!device.write(datavalue.toAscii())) {
+            return false;
+        }
+
+        // qDebug() << "ini_settings_write" << section << keyname << variantvalue;
+    }
+
+    return true;
+}
+
+
+// ************************************************************************
+// QSettingsPrivate
+static QSettingsCustomFormat getSettingsFormat(QSettings::Format format)
+{
+    QSettingsCustomFormat result;
+
+    if (format == QSettings::NativeFormat) {
+        result.extension = QLatin1String(".json");
+        result.readFunc = json_settings_read;
+        result.writeFunc = json_settings_write;
+        return result;
+    } else if (format == QSettings::IniFormat) {
+        result.extension = QLatin1String(".ini");
+        result.readFunc = ini_settings_read;
+        result.writeFunc = ini_settings_write;
+        return result;
+    }
+
+    QMutexLocker locker(qSettingsMutex());
+    const CustomFormatVector *customFormatVector = customFormatVectorFunc();
+    for (int i = 0; i < customFormatVector->size(); i++) {
+        const QSettingsCustomFormat &custom = customFormatVector->at(i);
+        if (custom.format == format) {
+            result.extension = custom.extension;
+            result.readFunc = custom.readFunc;
+            result.writeFunc = custom.writeFunc;
+            return result;
+        }
+    }
+
+    qWarning("QSettingsPrivate::getSettingsFormat: format not found %d", format);
+    result.extension = QLatin1String(".json");
+    result.readFunc = json_settings_read;
+    result.writeFunc = json_settings_write;
+    return result;
+}
+
+QString getSettingsPath(QSettings::Scope scope, const QString &filename, const QString &extension)
+{
+    QFileInfo info(filename);
+    if (info.isAbsolute()) {
+        return filename;
+    }
+
+    QString nameandext = filename;
+    if (!filename.endsWith(extension)) {
+        nameandext += extension;
+    }
+
+    QStringList locations = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
+    if (scope == QSettings::UserScope) {
+        locations = QStandardPaths::standardLocations(QStandardPaths::GenericConfigLocation);
+    }
+
+    foreach (const QString &location, locations) {
+        QDir dir(location);
+        if (dir.exists(location)) {
+            return location + QDir::separator() + nameandext;
+        }
+    }
+
+    const QString fallback = QLibraryInfo::location(QLibraryInfo::SettingsPath);
+    QDir fallbackdir(fallback);
+    if (!fallbackdir.mkpath(fallback)) {
+        qWarning("QSettingsPrivate::getSettingsPath: no settings location");
+        fallbackdir.currentPath() + QDir::separator() + nameandext;
+    }
+    return fallback + QDir::separator() + nameandext;
+}
+
+QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)
+    : format(format), scope(scope), status(QSettings::NoError)
+{
+    QSettingsCustomFormat handler = getSettingsFormat(format);
+    filename = getSettingsPath(scope, QCoreApplication::applicationName(), handler.extension);
+    readFunc = handler.readFunc;
+    writeFunc = handler.writeFunc;
+}
+
+QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
+    : format(format), scope(QSettings::UserScope), status(QSettings::NoError)
+{
+    QSettingsCustomFormat handler = getSettingsFormat(format);
+    filename = getSettingsPath(scope, fileName, handler.extension);
+    readFunc = handler.readFunc;
+    writeFunc = handler.writeFunc;
 }
 
 QSettingsPrivate::~QSettingsPrivate()
 {
 }
 
-QString QSettingsPrivate::actualKey(const QString &key) const
+void QSettingsPrivate::read()
 {
-    QString n = normalizedKey(key);
-    Q_ASSERT_X(!n.isEmpty(), "QSettings", "empty key");
-    n.prepend(groupPrefix);
-    return n;
-}
-
-/*
-    Returns a string that never starts nor ends with a slash (or an
-    empty string). Examples:
-
-            "foo"            becomes   "foo"
-            "/foo//bar///"   becomes   "foo/bar"
-            "///"            becomes   ""
-
-    This function is optimized to avoid a QString deep copy in the
-    common case where the key is already normalized.
-*/
-QString QSettingsPrivate::normalizedKey(const QString &key)
-{
-    QString result = key;
-
-    int i = 0;
-    while (i < result.size()) {
-        while (result.at(i) == QLatin1Char('/')) {
-            result.remove(i, 1);
-            if (i == result.size())
-                goto after_loop;
-        }
-        while (result.at(i) != QLatin1Char('/')) {
-            ++i;
-            if (i == result.size())
-                return result;
-        }
-        ++i; // leave the slash alone
+    QFileInfo info(filename);
+    if (!info.isReadable() || info.size() == 0) {
+        status = QSettings::AccessError;
+        // no warning, info.exists() may return false if not readable
+        return;
     }
 
-after_loop:
-    if (!result.isEmpty())
-        result.truncate(i - 1); // remove the trailing slash
-    return result;
-}
-
-QSettingsPrivate *QSettingsPrivate::create(QSettings::Format format, QSettings::Scope scope,
-                                           const QString &organization, const QString &application)
-{
-    return new QConfFileSettingsPrivate(format, scope, organization, application);
-}
-
-QSettingsPrivate *QSettingsPrivate::create(const QString &fileName, QSettings::Format format)
-{
-    return new QConfFileSettingsPrivate(fileName, format);
-}
-
-void QSettingsPrivate::processChild(QString key, ChildSpec spec, QMap<QString, QString> &result)
-{
-    if (spec != AllKeys) {
-        int slashPos = key.indexOf(QLatin1Char('/'));
-        if (slashPos == -1) {
-            if (spec != ChildKeys)
-                return;
-        } else {
-            if (spec != ChildGroups)
-                return;
-            key.truncate(slashPos);
-        }
+    QFile file(filename);
+    if (Q_UNLIKELY(!file.open(QFile::ReadOnly))) {
+        status = QSettings::AccessError;
+        qWarning("QSettingsPrivate::read: failed to open %s", filename.toLocal8Bit().constData());
+        return;
     }
-    result.insert(key, QString());
+
+    if (Q_UNLIKELY(!unixLock(file.handle(), F_RDLCK))) {
+        status = QSettings::AccessError;
+        qWarning("QSettingsPrivate::read: failed to lock %s", filename.toLocal8Bit().constData());
+        return;
+    }
+
+    QSettings::SettingsMap syncMap;
+    if (Q_UNLIKELY(!readFunc(file, syncMap))) {
+        status = QSettings::FormatError;
+        qWarning("QSettingsPrivate::read: could not read %s", filename.toLocal8Bit().constData());
+        return;
+    }
+
+    foreach (const QString &key, syncMap.keys()) {
+        map.insert(key, syncMap.value(key));
+    }
+
+    timestamp = info.lastModified();
 }
 
-void QSettingsPrivate::beginGroupOrArray(const QSettingsGroup &group)
+void QSettingsPrivate::write()
 {
-    groupStack.push(group);
-    if (!group.name().isEmpty()) {
-        groupPrefix += group.name();
-        groupPrefix += QLatin1Char('/');
+    QFileInfo info(filename);
+    const QDateTime newstamp = info.lastModified();
+    if (timestamp < newstamp || !newstamp.isValid()) {
+        QSettingsPrivate::read();
+    }
+
+    QFile file(filename);
+    if (Q_UNLIKELY(!file.open(QFile::WriteOnly))) {
+        status = QSettings::AccessError;
+        qWarning("QSettingsPrivate::write: failed to open %s", filename.toLocal8Bit().constData());
+        return;
+    }
+
+    if (Q_UNLIKELY(!unixLock(file.handle(), F_WRLCK))) {
+        status = QSettings::AccessError;
+        qWarning("QSettingsPrivate::write: failed to lock %s", filename.toLocal8Bit().constData());
+        return;
+    }
+
+    if (Q_UNLIKELY(!writeFunc(file, map))) {
+        status = QSettings::FormatError;
+        qWarning("QSettingsPrivate::write: could not write %s", filename.toLocal8Bit().constData());
     }
 }
 
-/*
-    We only set an error if there isn't one set already. This way the user always gets the
-    first error that occurred. We always allow clearing errors.
-*/
-
-void QSettingsPrivate::setStatus(QSettings::SettingsStatus status) const
+void QSettingsPrivate::notify()
 {
-    if (status == QSettings::NoError || this->status == QSettings::NoError)
-        this->status = status;
-}
-
-void QSettingsPrivate::update()
-{
-    sync();
-    pendingChanges = false;
-}
-
-void QSettingsPrivate::requestUpdate()
-{
-    if (!pendingChanges) {
-        pendingChanges = true;
-        Q_Q(QSettings);
-        QCoreApplication::postEvent(q, new QEvent(QEvent::UpdateRequest));
-    }
-}
-
-QStringList QSettingsPrivate::variantListToStringList(const QVariantList &l)
-{
-    QStringList result;
-    result.reserve(l.count());
-    foreach (const QVariant &v, l)
-        result.append(variantToString(v));
-    return result;
-}
-
-QVariant QSettingsPrivate::stringListToVariantList(const QStringList &l)
-{
-    QStringList outStringList = l;
-    for (int i = 0; i < outStringList.count(); ++i) {
-        const QString &str = outStringList.at(i);
-
-        if (str.startsWith(QLatin1Char('@'))) {
-            if (str.length() >= 2 && str.at(1) == QLatin1Char('@')) {
-                outStringList[i].remove(0, 1);
-            } else {
-                QVariantList variantList;
-                const int stringCount = l.count();
-                variantList.reserve(stringCount);
-                for (int j = 0; j < stringCount; ++j)
-                    variantList.append(stringToVariant(l.at(j)));
-                return variantList;
-            }
+    Q_Q(QSettings);
+    QMutexLocker locker(qSettingsMutex());
+    for (int i = 0; i < qGlobalSettings()->size(); i++) {
+        QSettings *setting = qGlobalSettings()->at(i);
+        if (setting != q && setting->fileName() == q->fileName()) {
+            setting->d_func()->map = map;
         }
     }
-    return outStringList;
 }
 
 QString QSettingsPrivate::variantToString(const QVariant &v)
@@ -546,375 +574,11 @@ QVariant QSettingsPrivate::stringToVariant(const QString &s)
         }
         if (s.startsWith(QLatin1String("@@")))
             return QVariant(s.mid(1));
+    } else if (s.contains(QLatin1Char(','))) {
+        return QVariant(s.split(QLatin1Char(',')));
     }
 
     return QVariant(s);
-}
-
-static const char hexDigits[] = "0123456789ABCDEF";
-
-void QSettingsPrivate::iniEscapedKey(const QString &key, QByteArray &result)
-{
-    result.reserve(result.length() + key.length() * 3 / 2);
-    for (int i = 0; i < key.size(); ++i) {
-        uint ch = key.at(i).unicode();
-
-        if (ch == '/') {
-            result += '\\';
-        } else if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')
-                || ch == '_' || ch == '-' || ch == '.') {
-            result += (char)ch;
-        } else if (ch <= 0xFF) {
-            result += '%';
-            result += hexDigits[ch / 16];
-            result += hexDigits[ch % 16];
-        } else {
-            result += "%U";
-            QByteArray hexCode;
-            for (int i = 0; i < 4; ++i) {
-                hexCode.prepend(hexDigits[ch % 16]);
-                ch >>= 4;
-            }
-            result += hexCode;
-        }
-    }
-}
-
-bool QSettingsPrivate::iniUnescapedKey(const QByteArray &key, int from, int to, QString &result)
-{
-    bool lowercaseOnly = true;
-    int i = from;
-    result.reserve(result.length() + (to - from));
-    while (i < to) {
-        int ch = (uchar)key.at(i);
-
-        if (ch == '\\') {
-            result += QLatin1Char('/');
-            ++i;
-            continue;
-        }
-
-        if (ch != '%' || i == to - 1) {
-            if (uint(ch - 'A') <= 'Z' - 'A') // only for ASCII
-                lowercaseOnly = false;
-            result += QLatin1Char(ch);
-            ++i;
-            continue;
-        }
-
-        int numDigits = 2;
-        int firstDigitPos = i + 1;
-
-        ch = key.at(i + 1);
-        if (ch == 'U') {
-            ++firstDigitPos;
-            numDigits = 4;
-        }
-
-        if (firstDigitPos + numDigits > to) {
-            result += QLatin1Char('%');
-            // ### missing U
-            ++i;
-            continue;
-        }
-
-        bool ok;
-        ch = key.mid(firstDigitPos, numDigits).toInt(&ok, 16);
-        if (!ok) {
-            result += QLatin1Char('%');
-            // ### missing U
-            ++i;
-            continue;
-        }
-
-        QChar qch(ch);
-        if (qch.isUpper())
-            lowercaseOnly = false;
-        result += qch;
-        i = firstDigitPos + numDigits;
-    }
-    return lowercaseOnly;
-}
-
-void QSettingsPrivate::iniEscapedString(const QString &str, QByteArray &result, QTextCodec *codec)
-{
-    bool needsQuotes = false;
-    bool escapeNextIfDigit = false;
-    bool useCodec = codec && !str.startsWith(QLatin1String("@ByteArray("))
-                    && !str.startsWith(QLatin1String("@Variant("));
-
-    int i;
-    int startPos = result.size();
-
-    result.reserve(startPos + str.size() * 3 / 2);
-    for (i = 0; i < str.size(); ++i) {
-        uint ch = str.at(i).unicode();
-        if (ch == ';' || ch == ',' || ch == '=')
-            needsQuotes = true;
-
-        if (escapeNextIfDigit
-                && ((ch >= '0' && ch <= '9')
-                    || (ch >= 'a' && ch <= 'f')
-                    || (ch >= 'A' && ch <= 'F'))) {
-            result += "\\x";
-            result += QByteArray::number(ch, 16);
-            continue;
-        }
-
-        escapeNextIfDigit = false;
-
-        switch (ch) {
-        case '\0':
-            result += "\\0";
-            escapeNextIfDigit = true;
-            break;
-        case '\a':
-            result += "\\a";
-            break;
-        case '\b':
-            result += "\\b";
-            break;
-        case '\f':
-            result += "\\f";
-            break;
-        case '\n':
-            result += "\\n";
-            break;
-        case '\r':
-            result += "\\r";
-            break;
-        case '\t':
-            result += "\\t";
-            break;
-        case '\v':
-            result += "\\v";
-            break;
-        case '"':
-        case '\\':
-            result += '\\';
-            result += (char)ch;
-            break;
-        default:
-            if (ch <= 0x1F || (ch >= 0x7F && !useCodec)) {
-                result += "\\x";
-                result += QByteArray::number(ch, 16);
-                escapeNextIfDigit = true;
-#ifndef QT_NO_TEXTCODEC
-            } else if (useCodec) {
-                // slow
-                result += codec->fromUnicode(str.at(i));
-#endif
-            } else {
-                result += (char)ch;
-            }
-        }
-    }
-
-    if (needsQuotes
-            || (startPos < result.size() && (result.at(startPos) == ' '
-                                                || result.at(result.size() - 1) == ' '))) {
-        result.insert(startPos, '"');
-        result += '"';
-    }
-}
-
-inline static void iniChopTrailingSpaces(QString &str)
-{
-    int n = str.size() - 1;
-    QChar ch;
-    while (n >= 0 && ((ch = str.at(n)) == QLatin1Char(' ') || ch == QLatin1Char('\t')))
-        str.truncate(n--);
-}
-
-void QSettingsPrivate::iniEscapedStringList(const QStringList &strs, QByteArray &result, QTextCodec *codec)
-{
-    if (strs.isEmpty()) {
-        /*
-            We need to distinguish between empty lists and one-item
-            lists that contain an empty string. Ideally, we'd have a
-            @EmptyList() symbol but that would break compatibility
-            with Qt 4.0. @Invalid() stands for QVariant(), and
-            QVariant().toStringList() returns an empty QStringList,
-            so we're in good shape.
-
-            ### Qt 5: Use a nicer syntax, e.g. @List, for variant lists
-        */
-        result += "@Invalid()";
-    } else {
-        for (int i = 0; i < strs.size(); ++i) {
-            if (i != 0)
-                result += ", ";
-            iniEscapedString(strs.at(i), result, codec);
-        }
-    }
-}
-
-bool QSettingsPrivate::iniUnescapedStringList(const QByteArray &str, int from, int to,
-                                              QString &stringResult, QStringList &stringListResult,
-                                              QTextCodec *codec)
-{
-#ifdef QT_NO_TEXTCODE
-    Q_UNUSED(codec);
-#endif
-    static const char escapeCodes[][2] =
-    {
-        { 'a', '\a' },
-        { 'b', '\b' },
-        { 'f', '\f' },
-        { 'n', '\n' },
-        { 'r', '\r' },
-        { 't', '\t' },
-        { 'v', '\v' },
-        { '"', '"' },
-        { '?', '?' },
-        { '\'', '\'' },
-        { '\\', '\\' }
-    };
-    static const int numEscapeCodes = sizeof(escapeCodes) / sizeof(escapeCodes[0]);
-
-    bool isStringList = false;
-    bool inQuotedString = false;
-    bool currentValueIsQuoted = false;
-    int escapeVal = 0;
-    int i = from;
-    char ch;
-
-StSkipSpaces:
-    while (i < to && ((ch = str.at(i)) == ' ' || ch == '\t'))
-        ++i;
-    // fallthrough
-
-StNormal:
-    while (i < to) {
-        switch (str.at(i)) {
-        case '\\':
-            ++i;
-            if (i >= to)
-                goto end;
-
-            ch = str.at(i++);
-            for (int j = 0; j < numEscapeCodes; ++j) {
-                if (ch == escapeCodes[j][0]) {
-                    stringResult += QLatin1Char(escapeCodes[j][1]);
-                    goto StNormal;
-                }
-            }
-
-            if (ch == 'x') {
-                escapeVal = 0;
-
-                if (i >= to)
-                    goto end;
-
-                ch = str.at(i);
-                if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'F') || (ch >= 'a' && ch <= 'f'))
-                    goto StHexEscape;
-            } else if (ch >= '0' && ch <= '7') {
-                escapeVal = ch - '0';
-                goto StOctEscape;
-            } else if (ch == '\n' || ch == '\r') {
-                if (i < to) {
-                    char ch2 = str.at(i);
-                    // \n, \r, \r\n, and \n\r are legitimate line terminators in INI files
-                    if ((ch2 == '\n' || ch2 == '\r') && ch2 != ch)
-                        ++i;
-                }
-            } else {
-                // the character is skipped
-            }
-            break;
-        case '"':
-            ++i;
-            currentValueIsQuoted = true;
-            inQuotedString = !inQuotedString;
-            if (!inQuotedString)
-                goto StSkipSpaces;
-            break;
-        case ',':
-            if (!inQuotedString) {
-                if (!currentValueIsQuoted)
-                    iniChopTrailingSpaces(stringResult);
-                if (!isStringList) {
-                    isStringList = true;
-                    stringListResult.clear();
-                    stringResult.squeeze();
-                }
-                stringListResult.append(stringResult);
-                stringResult.clear();
-                currentValueIsQuoted = false;
-                ++i;
-                goto StSkipSpaces;
-            }
-            // fallthrough
-        default: {
-            int j = i + 1;
-            while (j < to) {
-                ch = str.at(j);
-                if (ch == '\\' || ch == '"' || ch == ',')
-                    break;
-                ++j;
-            }
-
-#ifndef QT_NO_TEXTCODEC
-            if (codec) {
-                stringResult += codec->toUnicode(str.constData() + i, j - i);
-            } else
-#endif
-            {
-                int n = stringResult.size();
-                stringResult.resize(n + (j - i));
-                QChar *resultData = stringResult.data() + n;
-                for (int k = i; k < j; ++k)
-                    *resultData++ = QLatin1Char(str.at(k));
-            }
-            i = j;
-        }
-        }
-    }
-    goto end;
-
-StHexEscape:
-    if (i >= to) {
-        stringResult += QChar(escapeVal);
-        goto end;
-    }
-
-    ch = str.at(i);
-    if (ch >= 'a')
-        ch -= 'a' - 'A';
-    if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'F')) {
-        escapeVal <<= 4;
-        escapeVal += strchr(hexDigits, ch) - hexDigits;
-        ++i;
-        goto StHexEscape;
-    } else {
-        stringResult += QChar(escapeVal);
-        goto StNormal;
-    }
-
-StOctEscape:
-    if (i >= to) {
-        stringResult += QChar(escapeVal);
-        goto end;
-    }
-
-    ch = str.at(i);
-    if (ch >= '0' && ch <= '7') {
-        escapeVal <<= 3;
-        escapeVal += ch - '0';
-        ++i;
-        goto StOctEscape;
-    } else {
-        stringResult += QChar(escapeVal);
-        goto StNormal;
-    }
-
-end:
-    if (!currentValueIsQuoted)
-        iniChopTrailingSpaces(stringResult);
-    if (isStringList)
-        stringListResult.append(stringResult);
-    return isStringList;
 }
 
 QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
@@ -943,875 +607,6 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
     return result;
 }
 
-// ************************************************************************
-// QConfFileSettingsPrivate
-
-void QConfFileSettingsPrivate::initFormat()
-{
-    extension = (format == QSettings::NativeFormat) ? QLatin1String(".conf") : QLatin1String(".ini");
-    readFunc = 0;
-    writeFunc = 0;
-    caseSensitivity = IniCaseSensitivity;
-
-    if (format > QSettings::IniFormat) {
-        QMutexLocker locker(globalMutex());
-        const CustomFormatVector *customFormatVector = customFormatVectorFunc();
-
-        int i = (int)format - (int)QSettings::CustomFormat1;
-        if (i >= 0 && i < customFormatVector->size()) {
-            QConfFileCustomFormat info = customFormatVector->at(i);
-            extension = info.extension;
-            readFunc = info.readFunc;
-            writeFunc = info.writeFunc;
-            caseSensitivity = info.caseSensitivity;
-        }
-    }
-}
-
-void QConfFileSettingsPrivate::initAccess()
-{
-    if (confFiles[spec]) {
-        if (format > QSettings::IniFormat) {
-            if (!readFunc)
-                setStatus(QSettings::AccessError);
-        }
-    }
-
-    sync();       // loads the files the first time
-}
-
-static inline int pathHashKey(QSettings::Format format, QSettings::Scope scope)
-{
-    return int((uint(format) << 1) | uint(scope == QSettings::SystemScope));
-}
-
-static void initDefaultPaths(QMutexLocker *locker)
-{
-    PathHash *pathHash = pathHashFunc();
-    QString homePath = QDir::homePath();
-    QString systemPath;
-
-    locker->unlock();
-
-    /*
-       QLibraryInfo::location() uses QSettings, so in order to
-       avoid a dead-lock, we can't hold the global mutex while
-       calling it.
-    */
-    systemPath = QLibraryInfo::location(QLibraryInfo::SettingsPath);
-    systemPath += QLatin1Char('/');
-
-    locker->relock();
-    if (pathHash->isEmpty()) {
-        /*
-           Lazy initialization of pathHash. We initialize the
-           IniFormat paths and (on Unix) the NativeFormat paths.
-       */
-        QString userPath;
-        char *env = getenv("XDG_CONFIG_HOME");
-        if (env == 0) {
-            userPath = homePath + QLatin1Char('/') + QLatin1String(".config");
-        } else if (*env == '/') {
-            userPath = QFile::decodeName(env);
-        } else {
-            userPath = homePath + QLatin1Char('/') + QFile::decodeName(env);
-        }
-        userPath += QLatin1Char('/');
-
-        pathHash->insert(pathHashKey(QSettings::IniFormat, QSettings::UserScope), userPath);
-        pathHash->insert(pathHashKey(QSettings::IniFormat, QSettings::SystemScope), systemPath);
-        pathHash->insert(pathHashKey(QSettings::NativeFormat, QSettings::UserScope), userPath);
-        pathHash->insert(pathHashKey(QSettings::NativeFormat, QSettings::SystemScope), systemPath);
-    }
-}
-
-static QString getPath(QSettings::Format format, QSettings::Scope scope)
-{
-    Q_ASSERT((int)QSettings::NativeFormat == 0);
-    Q_ASSERT((int)QSettings::IniFormat == 1);
-
-    QMutexLocker locker(globalMutex());
-    PathHash *pathHash = pathHashFunc();
-    if (pathHash->isEmpty())
-        initDefaultPaths(&locker);
-
-    QString result = pathHash->value(pathHashKey(format, scope));
-    if (!result.isEmpty())
-        return result;
-
-    // fall back on INI path
-    return pathHash->value(pathHashKey(QSettings::IniFormat, scope));
-}
-
-QConfFileSettingsPrivate::QConfFileSettingsPrivate(QSettings::Format format,
-                                                   QSettings::Scope scope,
-                                                   const QString &organization,
-                                                   const QString &application)
-    : QSettingsPrivate(format, scope, organization, application),
-      nextPosition(0x40000000) // big positive number
-{
-    int i;
-    initFormat();
-
-    QString org = organization;
-    if (org.isEmpty()) {
-        setStatus(QSettings::AccessError);
-        org = QLatin1String("Unknown Organization");
-    }
-
-    const QString appFile = org + QDir::separator() + application + extension;
-    const QString orgFile = org + extension;
-
-    if (scope == QSettings::UserScope) {
-        const QString userPath = getPath(format, QSettings::UserScope);
-        if (!application.isEmpty())
-            confFiles[F_User | F_Application].reset(QConfFile::fromName(userPath + appFile, true));
-        confFiles[F_User | F_Organization].reset(QConfFile::fromName(userPath + orgFile, true));
-    }
-
-    const QString systemPath = getPath(format, QSettings::SystemScope);
-    if (!application.isEmpty())
-        confFiles[F_System | F_Application].reset(QConfFile::fromName(systemPath + appFile, false));
-    confFiles[F_System | F_Organization].reset(QConfFile::fromName(systemPath + orgFile, false));
-
-    for (i = 0; i < NumConfFiles; ++i) {
-        if (confFiles[i]) {
-            spec = i;
-            break;
-        }
-    }
-
-    initAccess();
-}
-
-QConfFileSettingsPrivate::QConfFileSettingsPrivate(const QString &fileName,
-                                                   QSettings::Format format)
-    : QSettingsPrivate(format),
-      nextPosition(0x40000000) // big positive number
-{
-    initFormat();
-
-    confFiles[0].reset(QConfFile::fromName(fileName, true));
-
-    initAccess();
-}
-
-QConfFileSettingsPrivate::~QConfFileSettingsPrivate()
-{
-    QMutexLocker locker(globalMutex());
-    ConfFileHash *usedHash = usedHashFunc();
-    ConfFileCache *unusedCache = unusedCacheFunc();
-
-    for (int i = 0; i < NumConfFiles; ++i) {
-        if (confFiles[i] && !confFiles[i]->ref.deref()) {
-            if (confFiles[i]->size == 0) {
-                delete confFiles[i].take();
-            } else {
-                if (usedHash)
-                    usedHash->remove(confFiles[i]->name);
-                if (unusedCache) {
-                    QT_TRY {
-                        // compute a better size?
-                        unusedCache->insert(confFiles[i]->name, confFiles[i].data(),
-                                        10 + (confFiles[i]->originalKeys.size() / 4));
-                        confFiles[i].take();
-                    } QT_CATCH(...) {
-                        // out of memory. Do not cache the file.
-                        delete confFiles[i].take();
-                    }
-                } else {
-                    // unusedCache is gone - delete the entry to prevent a memory leak
-                    delete confFiles[i].take();
-                }
-            }
-        }
-        // prevent the ScopedPointer to deref it again.
-        confFiles[i].take();
-    }
-}
-
-void QConfFileSettingsPrivate::remove(const QString &key)
-{
-    QConfFile *confFile = confFiles[spec].data();
-    if (!confFile)
-        return;
-
-    QSettingsKey theKey(key, caseSensitivity);
-    QSettingsKey prefix(key + QLatin1Char('/'), caseSensitivity);
-    QMutexLocker locker(&confFile->mutex);
-
-    ensureSectionParsed(confFile, theKey);
-    ensureSectionParsed(confFile, prefix);
-
-    ParsedSettingsMap::iterator i = confFile->addedKeys.lowerBound(prefix);
-    while (i != confFile->addedKeys.end() && i.key().startsWith(prefix))
-        i = confFile->addedKeys.erase(i);
-    confFile->addedKeys.remove(theKey);
-
-    ParsedSettingsMap::const_iterator j = const_cast<const ParsedSettingsMap *>(&confFile->originalKeys)->lowerBound(prefix);
-    while (j != confFile->originalKeys.constEnd() && j.key().startsWith(prefix)) {
-        confFile->removedKeys.insert(j.key(), QVariant());
-        ++j;
-    }
-    if (confFile->originalKeys.contains(theKey))
-        confFile->removedKeys.insert(theKey, QVariant());
-}
-
-void QConfFileSettingsPrivate::set(const QString &key, const QVariant &value)
-{
-    QConfFile *confFile = confFiles[spec].data();
-    if (!confFile)
-        return;
-
-    QSettingsKey theKey(key, caseSensitivity, nextPosition++);
-    QMutexLocker locker(&confFile->mutex);
-    confFile->removedKeys.remove(theKey);
-    confFile->addedKeys.insert(theKey, value);
-}
-
-bool QConfFileSettingsPrivate::get(const QString &key, QVariant *value) const
-{
-    QSettingsKey theKey(key, caseSensitivity);
-    ParsedSettingsMap::const_iterator j;
-    bool found = false;
-
-    for (int i = 0; i < NumConfFiles; ++i) {
-        if (QConfFile *confFile = confFiles[i].data()) {
-            QMutexLocker locker(&confFile->mutex);
-
-            if (!confFile->addedKeys.isEmpty()) {
-                j = confFile->addedKeys.constFind(theKey);
-                found = (j != confFile->addedKeys.constEnd());
-            }
-            if (!found) {
-                ensureSectionParsed(confFile, theKey);
-                j = confFile->originalKeys.constFind(theKey);
-                found = (j != confFile->originalKeys.constEnd()
-                         && !confFile->removedKeys.contains(theKey));
-            }
-
-            if (found && value)
-                *value = *j;
-
-            if (found)
-                return true;
-            if (!fallbacks)
-                break;
-        }
-    }
-    return false;
-}
-
-QStringList QConfFileSettingsPrivate::children(const QString &prefix, ChildSpec spec) const
-{
-    QMap<QString, QString> result;
-    ParsedSettingsMap::const_iterator j;
-
-    QSettingsKey thePrefix(prefix, caseSensitivity);
-    int startPos = prefix.size();
-
-    for (int i = 0; i < NumConfFiles; ++i) {
-        if (QConfFile *confFile = confFiles[i].data()) {
-            QMutexLocker locker(&confFile->mutex);
-
-            if (thePrefix.isEmpty()) {
-                ensureAllSectionsParsed(confFile);
-            } else {
-                ensureSectionParsed(confFile, thePrefix);
-            }
-
-            j = const_cast<const ParsedSettingsMap *>(
-                    &confFile->originalKeys)->lowerBound( thePrefix);
-            while (j != confFile->originalKeys.constEnd() && j.key().startsWith(thePrefix)) {
-                if (!confFile->removedKeys.contains(j.key()))
-                    processChild(j.key().originalCaseKey().mid(startPos), spec, result);
-                ++j;
-            }
-
-            j = const_cast<const ParsedSettingsMap *>(
-                    &confFile->addedKeys)->lowerBound(thePrefix);
-            while (j != confFile->addedKeys.constEnd() && j.key().startsWith(thePrefix)) {
-                processChild(j.key().originalCaseKey().mid(startPos), spec, result);
-                ++j;
-            }
-
-            if (!fallbacks)
-                break;
-        }
-    }
-    return result.keys();
-}
-
-void QConfFileSettingsPrivate::clear()
-{
-    QConfFile *confFile = confFiles[spec].data();
-    if (!confFile)
-        return;
-
-    QMutexLocker locker(&confFile->mutex);
-    ensureAllSectionsParsed(confFile);
-    confFile->addedKeys.clear();
-    confFile->removedKeys = confFile->originalKeys;
-}
-
-void QConfFileSettingsPrivate::sync()
-{
-    // people probably won't be checking the status a whole lot, so in case of
-    // error we just try to go on and make the best of it
-
-    for (int i = 0; i < NumConfFiles; ++i) {
-        QConfFile *confFile = confFiles[i].data();
-        if (confFile) {
-            QMutexLocker locker(&confFile->mutex);
-            syncConfFile(i);
-        }
-    }
-}
-
-QString QConfFileSettingsPrivate::fileName() const
-{
-    QConfFile *confFile = confFiles[spec].data();
-    if (!confFile)
-        return QString();
-    return confFile->name;
-}
-
-bool QConfFileSettingsPrivate::isWritable() const
-{
-    if (format > QSettings::IniFormat && !writeFunc)
-        return false;
-
-    QConfFile *confFile = confFiles[spec].data();
-    if (!confFile)
-        return false;
-
-    return confFile->isWritable();
-}
-
-void QConfFileSettingsPrivate::syncConfFile(int confFileNo)
-{
-    QConfFile *confFile = confFiles[confFileNo].data();
-    bool readOnly = confFile->addedKeys.isEmpty() && confFile->removedKeys.isEmpty();
-    bool ok;
-
-    /*
-        We can often optimize the read-only case, if the file on disk
-        hasn't changed.
-    */
-    if (readOnly && confFile->size > 0) {
-        QFileInfo fileInfo(confFile->name);
-        if (confFile->size == fileInfo.size() && confFile->timeStamp == fileInfo.lastModified())
-            return;
-    }
-
-    /*
-        Open the configuration file and try to use it using a named
-        semaphore on Windows and an advisory lock on Unix-based
-        systems. This protect us against other QSettings instances
-        trying to access the same file from other threads or
-        processes.
-
-        As it stands now, the locking mechanism doesn't work for
-        .plist files.
-    */
-    QFile file(confFile->name);
-    bool createFile = !file.exists();
-    if (!readOnly && confFile->isWritable())
-        file.open(QFile::ReadWrite);
-    if (!file.isOpen())
-        file.open(QFile::ReadOnly);
-
-    if (!createFile && !file.isOpen())
-        setStatus(QSettings::AccessError);
-
-    // If we have created the file, apply the file perms
-    if (file.isOpen()) {
-        unixLock(file.handle(), readOnly ? F_RDLCK : F_WRLCK);
-
-        if (createFile) {
-            QFile::Permissions perms = file.permissions() | QFile::ReadOwner | QFile::WriteOwner;
-            if (!confFile->userPerms)
-                perms |= QFile::ReadGroup | QFile::ReadOther;
-            file.setPermissions(perms);
-        }
-    }
-
-    /*
-        We hold the lock. Let's reread the file if it has changed
-        since last time we read it.
-    */
-    QFileInfo fileInfo(confFile->name);
-    bool mustReadFile = true;
-
-    if (!readOnly)
-        mustReadFile = (confFile->size != fileInfo.size()
-                        || (confFile->size != 0 && confFile->timeStamp != fileInfo.lastModified()));
-
-    if (mustReadFile) {
-        confFile->unparsedIniSections.clear();
-        confFile->originalKeys.clear();
-
-        /*
-            Files that we can't read (because of permissions or
-            because they don't exist) are treated as empty files.
-        */
-        if (file.isReadable() && fileInfo.size() != 0) {
-            if (format <= QSettings::IniFormat) {
-                QByteArray data = file.readAll();
-                ok = readIniFile(data, &confFile->unparsedIniSections);
-            } else {
-                if (readFunc) {
-                    QSettings::SettingsMap tempNewKeys;
-                    ok = readFunc(file, tempNewKeys);
-
-                    if (ok) {
-                        QSettings::SettingsMap::const_iterator i = tempNewKeys.constBegin();
-                        while (i != tempNewKeys.constEnd()) {
-                            confFile->originalKeys.insert(QSettingsKey(i.key(),
-                                                                        caseSensitivity),
-                                                            i.value());
-                            ++i;
-                        }
-                    }
-                } else {
-                    ok = false;
-                }
-            }
-
-            if (!ok)
-                setStatus(QSettings::FormatError);
-        }
-
-        confFile->size = fileInfo.size();
-        confFile->timeStamp = fileInfo.lastModified();
-    }
-
-    /*
-        We also need to save the file. We still hold the file lock,
-        so everything is under control.
-    */
-    if (!readOnly) {
-        ensureAllSectionsParsed(confFile);
-        ParsedSettingsMap mergedKeys = confFile->mergedKeyMap();
-
-        if (file.isWritable()) {
-            file.seek(0);
-            file.resize(0);
-
-            if (format <= QSettings::IniFormat) {
-                ok = writeIniFile(file, mergedKeys);
-                if (!ok) {
-                    // try to restore old data; might work if the disk was full and the new data
-                    // was larger than the old data
-                    file.seek(0);
-                    file.resize(0);
-                    writeIniFile(file, confFile->originalKeys);
-                }
-            } else {
-                if (writeFunc) {
-                    QSettings::SettingsMap tempOriginalKeys;
-
-                    ParsedSettingsMap::const_iterator i = mergedKeys.constBegin();
-                    while (i != mergedKeys.constEnd()) {
-                        tempOriginalKeys.insert(i.key(), i.value());
-                        ++i;
-                    }
-                    ok = writeFunc(file, tempOriginalKeys);
-                } else {
-                    ok = false;
-                }
-            }
-        } else {
-            ok = false;
-        }
-
-        if (ok) {
-            confFile->unparsedIniSections.clear();
-            confFile->originalKeys = mergedKeys;
-            confFile->addedKeys.clear();
-            confFile->removedKeys.clear();
-
-            QFileInfo fileInfo(confFile->name);
-            confFile->size = fileInfo.size();
-            confFile->timeStamp = fileInfo.lastModified();
-        } else {
-            setStatus(QSettings::AccessError);
-        }
-    }
-}
-
-enum { Space = 0x1, Special = 0x2 };
-
-static const char charTraits[256] =
-{
-    // Space: '\t', '\n', '\r', ' '
-    // Special: '\n', '\r', '"', ';', '=', '\\'
-
-    0, 0, 0, 0, 0, 0, 0, 0, 0, Space, Space | Special, 0, 0, Space | Special, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    Space, 0, Special, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Special, 0, Special, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Special, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-};
-
-bool QConfFileSettingsPrivate::readIniLine(const QByteArray &data, int &dataPos,
-                                           int &lineStart, int &lineLen, int &equalsPos)
-{
-    int dataLen = data.length();
-    bool inQuotes = false;
-
-    equalsPos = -1;
-
-    lineStart = dataPos;
-    while (lineStart < dataLen && (charTraits[uint(uchar(data.at(lineStart)))] & Space))
-        ++lineStart;
-
-    int i = lineStart;
-    while (i < dataLen) {
-        while (!(charTraits[uint(uchar(data.at(i)))] & Special)) {
-            if (++i == dataLen)
-                goto break_out_of_outer_loop;
-        }
-
-        char ch = data.at(i++);
-        if (ch == '=') {
-            if (!inQuotes && equalsPos == -1)
-                equalsPos = i - 1;
-        } else if (ch == '\n' || ch == '\r') {
-            if (i == lineStart + 1) {
-                ++lineStart;
-            } else if (!inQuotes) {
-                --i;
-                goto break_out_of_outer_loop;
-            }
-        } else if (ch == '\\') {
-            if (i < dataLen) {
-                char ch = data.at(i++);
-                if (i < dataLen) {
-                    char ch2 = data.at(i);
-                    // \n, \r, \r\n, and \n\r are legitimate line terminators in INI files
-                    if ((ch == '\n' && ch2 == '\r') || (ch == '\r' && ch2 == '\n'))
-                        ++i;
-                }
-            }
-        } else if (ch == '"') {
-            inQuotes = !inQuotes;
-        } else {
-            Q_ASSERT(ch == ';');
-
-            if (i == lineStart + 1) {
-                char ch;
-                while (i < dataLen && ((ch = data.at(i) != '\n') && ch != '\r'))
-                    ++i;
-                lineStart = i;
-            } else if (!inQuotes) {
-                --i;
-                goto break_out_of_outer_loop;
-            }
-        }
-    }
-
-break_out_of_outer_loop:
-    dataPos = i;
-    lineLen = i - lineStart;
-    return lineLen > 0;
-}
-
-/*
-    Returns false on parse error. However, as many keys are read as
-    possible, so if the user doesn't check the status he will get the
-    most out of the file anyway.
-*/
-bool QConfFileSettingsPrivate::readIniFile(const QByteArray &data,
-                                           UnparsedSettingsMap *unparsedIniSections)
-{
-#define FLUSH_CURRENT_SECTION() \
-    { \
-        QByteArray &sectionData = (*unparsedIniSections)[QSettingsKey(currentSection, \
-                                                                      IniCaseSensitivity, \
-                                                                      sectionPosition)]; \
-        if (!sectionData.isEmpty()) \
-            sectionData.append('\n'); \
-        sectionData += data.mid(currentSectionStart, lineStart - currentSectionStart); \
-        sectionPosition = ++position; \
-    }
-
-    QString currentSection;
-    int currentSectionStart = 0;
-    int dataPos = 0;
-    int lineStart;
-    int lineLen;
-    int equalsPos;
-    int position = 0;
-    int sectionPosition = 0;
-    bool ok = true;
-
-    while (readIniLine(data, dataPos, lineStart, lineLen, equalsPos)) {
-        char ch = data.at(lineStart);
-        if (ch == '[') {
-            FLUSH_CURRENT_SECTION();
-
-            // this is a section
-            QByteArray iniSection;
-            int idx = data.indexOf(']', lineStart);
-            if (idx == -1 || idx >= lineStart + lineLen) {
-                ok = false;
-                iniSection = data.mid(lineStart + 1, lineLen - 1);
-            } else {
-                iniSection = data.mid(lineStart + 1, idx - lineStart - 1);
-            }
-
-            iniSection = iniSection.trimmed();
-
-            if (qstricmp(iniSection.constData(), "general") == 0) {
-                currentSection.clear();
-            } else {
-                if (qstricmp(iniSection.constData(), "%general") == 0) {
-                    currentSection = QLatin1String(iniSection.constData() + 1);
-                } else {
-                    currentSection.clear();
-                    iniUnescapedKey(iniSection, 0, iniSection.size(), currentSection);
-                }
-                currentSection += QLatin1Char('/');
-            }
-            currentSectionStart = dataPos;
-        }
-        ++position;
-    }
-
-    Q_ASSERT(lineStart == data.length());
-    FLUSH_CURRENT_SECTION();
-
-    return ok;
-
-#undef FLUSH_CURRENT_SECTION
-}
-
-bool QConfFileSettingsPrivate::readIniSection(const QSettingsKey &section, const QByteArray &data,
-                                              ParsedSettingsMap *settingsMap, QTextCodec *codec)
-{
-    QStringList strListValue;
-    bool sectionIsLowercase = (section == section.originalCaseKey());
-    int equalsPos;
-
-    bool ok = true;
-    int dataPos = 0;
-    int lineStart;
-    int lineLen;
-    int position = section.originalKeyPosition();
-
-    while (readIniLine(data, dataPos, lineStart, lineLen, equalsPos)) {
-        char ch = data.at(lineStart);
-        Q_ASSERT(ch != '[');
-
-        if (equalsPos == -1) {
-            if (ch != ';')
-                ok = false;
-            continue;
-        }
-
-        int keyEnd = equalsPos;
-        while (keyEnd > lineStart && ((ch = data.at(keyEnd - 1)) == ' ' || ch == '\t'))
-            --keyEnd;
-        int valueStart = equalsPos + 1;
-
-        QString key = section.originalCaseKey();
-        bool keyIsLowercase = (iniUnescapedKey(data, lineStart, keyEnd, key) && sectionIsLowercase);
-
-        QString strValue;
-        strValue.reserve(lineLen - (valueStart - lineStart));
-        bool isStringList = iniUnescapedStringList(data, valueStart, lineStart + lineLen,
-                                                   strValue, strListValue, codec);
-        QVariant variant;
-        if (isStringList) {
-            variant = stringListToVariantList(strListValue);
-        } else {
-            variant = stringToVariant(strValue);
-        }
-
-        /*
-            We try to avoid the expensive toLower() call in
-            QSettingsKey by passing Qt::CaseSensitive when the
-            key is already in lowercase.
-        */
-        settingsMap->insert(QSettingsKey(key, keyIsLowercase ? Qt::CaseSensitive
-                                                             : IniCaseSensitivity,
-                                         position),
-                            variant);
-        ++position;
-    }
-
-    return ok;
-}
-
-class QSettingsIniKey : public QString
-{
-public:
-    inline QSettingsIniKey() : position(-1) {}
-    inline QSettingsIniKey(const QString &str, int pos = -1) : QString(str), position(pos) {}
-
-    int position;
-};
-
-static bool operator<(const QSettingsIniKey &k1, const QSettingsIniKey &k2)
-{
-    if (k1.position != k2.position)
-        return k1.position < k2.position;
-    return static_cast<const QString &>(k1) < static_cast<const QString &>(k2);
-}
-
-typedef QMap<QSettingsIniKey, QVariant> IniKeyMap;
-
-struct QSettingsIniSection
-{
-    int position;
-    IniKeyMap keyMap;
-
-    inline QSettingsIniSection() : position(-1) {}
-};
-
-typedef QMap<QString, QSettingsIniSection> IniMap;
-
-/*
-    This would be more straightforward if we didn't try to remember the original
-    key order in the .ini file, but we do.
-*/
-bool QConfFileSettingsPrivate::writeIniFile(QIODevice &device, const ParsedSettingsMap &map)
-{
-    IniMap iniMap;
-    IniMap::const_iterator i;
-
-    const char eol = '\n';
-
-    for (ParsedSettingsMap::const_iterator j = map.constBegin(); j != map.constEnd(); ++j) {
-        QString section;
-        QSettingsIniKey key(j.key().originalCaseKey(), j.key().originalKeyPosition());
-        int slashPos;
-
-        if ((slashPos = key.indexOf(QLatin1Char('/'))) != -1) {
-            section = key.left(slashPos);
-            key.remove(0, slashPos + 1);
-        }
-
-        QSettingsIniSection &iniSection = iniMap[section];
-
-        // -1 means infinity
-        if (uint(key.position) < uint(iniSection.position))
-            iniSection.position = key.position;
-        iniSection.keyMap[key] = j.value();
-    }
-
-    const int sectionCount = iniMap.size();
-    QVector<QSettingsIniKey> sections;
-    sections.reserve(sectionCount);
-    for (i = iniMap.constBegin(); i != iniMap.constEnd(); ++i)
-        sections.append(QSettingsIniKey(i.key(), i.value().position));
-    qSort(sections);
-
-    bool writeError = false;
-    for (int j = 0; !writeError && j < sectionCount; ++j) {
-        i = iniMap.constFind(sections.at(j));
-        Q_ASSERT(i != iniMap.constEnd());
-
-        QByteArray realSection;
-
-        iniEscapedKey(i.key(), realSection);
-
-        if (realSection.isEmpty()) {
-            realSection = "[General]";
-        } else if (qstricmp(realSection.constData(), "general") == 0) {
-            realSection = "[%General]";
-        } else {
-            realSection.prepend('[');
-            realSection.append(']');
-        }
-
-        if (j != 0)
-            realSection.prepend(eol);
-        realSection += eol;
-
-        device.write(realSection);
-
-        const IniKeyMap &ents = i.value().keyMap;
-        for (IniKeyMap::const_iterator j = ents.constBegin(); j != ents.constEnd(); ++j) {
-            QByteArray block;
-            iniEscapedKey(j.key(), block);
-            block += '=';
-
-            const QVariant &value = j.value();
-
-            /*
-                The size() != 1 trick is necessary because
-                QVariant(QString("foo")).toList() returns an empty
-                list, not a list containing "foo".
-            */
-            if (value.type() == QVariant::StringList
-                    || (value.type() == QVariant::List && value.toList().size() != 1)) {
-                iniEscapedStringList(variantListToStringList(value.toList()), block, iniCodec);
-            } else {
-                iniEscapedString(variantToString(value), block, iniCodec);
-            }
-            block += eol;
-            if (device.write(block) == -1) {
-                writeError = true;
-                break;
-            }
-        }
-    }
-    return !writeError;
-}
-
-void QConfFileSettingsPrivate::ensureAllSectionsParsed(QConfFile *confFile) const
-{
-    UnparsedSettingsMap::const_iterator i = confFile->unparsedIniSections.constBegin();
-    const UnparsedSettingsMap::const_iterator end = confFile->unparsedIniSections.constEnd();
-
-    for (; i != end; ++i) {
-        if (!QConfFileSettingsPrivate::readIniSection(i.key(), i.value(), &confFile->originalKeys, iniCodec))
-            setStatus(QSettings::FormatError);
-    }
-    confFile->unparsedIniSections.clear();
-}
-
-void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
-                                                   const QSettingsKey &key) const
-{
-    if (confFile->unparsedIniSections.isEmpty())
-        return;
-
-    UnparsedSettingsMap::iterator i;
-
-    int indexOfSlash = key.indexOf(QLatin1Char('/'));
-    if (indexOfSlash != -1) {
-        i = confFile->unparsedIniSections.upperBound(key);
-        if (i == confFile->unparsedIniSections.begin())
-            return;
-        --i;
-        if (i.key().isEmpty() || !key.startsWith(i.key()))
-            return;
-    } else {
-        i = confFile->unparsedIniSections.begin();
-        if (i == confFile->unparsedIniSections.end() || !i.key().isEmpty())
-            return;
-    }
-
-    if (!QConfFileSettingsPrivate::readIniSection(i.key(), i.value(), &confFile->originalKeys, iniCodec))
-        setStatus(QSettings::FormatError);
-    confFile->unparsedIniSections.erase(i);
-}
-
 /*!
     \class QSettings
     \brief The QSettings class provides persistent platform-independent application settings.
@@ -1821,11 +616,9 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     \reentrant
 
     Users normally expect an application to remember its settings
-    (window sizes and positions, options, etc.) across sessions. This
-    information is often stored in the system registry on Windows,
-    and in XML preferences files on Mac OS X. On Unix systems, in the
-    absence of a standard, many applications (including the KDE
-    applications) use INI text files.
+    (window sizes and positions, options, etc.) across sessions.
+    On Unix systems, in the absence of a standard, many applications
+    (including the KDE applications) use INI text files.
 
     QSettings is an abstraction around these technologies, enabling
     you to save and restore application settings in a portable
@@ -1843,64 +636,30 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
 
     \section1 Basic Usage
 
-    When creating a QSettings object, you must pass the name of your
-    company or organization as well as the name of your application.
-    For example, if your product is called Star Runner and your
-    company is called MySoft, you would construct the QSettings
-    object as follows:
-
-    \snippet doc/src/snippets/settings/settings.cpp 0
-
-    QSettings objects can be created either on the stack or on
-    the heap (i.e. using \c new). Constructing and destroying a
-    QSettings object is very fast.
-
     If you use QSettings from many places in your application, you
-    might want to specify the organization name and the application
-    name using QCoreApplication::setOrganizationName() and
-    QCoreApplication::setApplicationName(), and then use the default
+    might want to specify the application name using
+    QCoreApplication::setApplicationName() and then use the default
     QSettings constructor:
-
-    \snippet doc/src/snippets/settings/settings.cpp 1
-    \snippet doc/src/snippets/settings/settings.cpp 2
-    \snippet doc/src/snippets/settings/settings.cpp 3
-    \dots
-    \snippet doc/src/snippets/settings/settings.cpp 4
-
-    (Here, we also specify the organization's Internet domain. When
-    the Internet domain is set, it is used on Mac OS X instead of the
-    organization name, since Mac OS X applications conventionally use
-    Internet domains to identify themselves. If no domain is set, a
-    fake domain is derived from the organization name. See the
-    \l{Platform-Specific Notes} below for details.)
 
     QSettings stores settings. Each setting consists of a QString
     that specifies the setting's name (the \e key) and a QVariant
     that stores the data associated with the key. To write a setting,
-    use setValue(). For example:
-
-    \snippet doc/src/snippets/settings/settings.cpp 5
+    use setValue().
 
     If there already exists a setting with the same key, the existing
     value is overwritten by the new value. For efficiency, the
     changes may not be saved to permanent storage immediately. (You
     can always call sync() to commit your changes.)
 
-    You can get a setting's value back using value():
-
-    \snippet doc/src/snippets/settings/settings.cpp 6
-
-    If there is no setting with the specified name, QSettings
-    returns a null QVariant (which can be converted to the integer 0).
-    You can specify another default value by passing a second
-    argument to value():
-
-    \snippet doc/src/snippets/settings/settings.cpp 7
+    You can get a setting's value back using value(). If there is no
+    setting with the specified name, QSettings returns a null QVariant
+    (which can be converted to the integer 0). You can specify
+    another default value by passing a second argument to value():
 
     To test whether a given key exists, call contains(). To remove
     the setting associated with a key, call remove(). To obtain the
-    list of all keys, call allKeys(). To remove all keys, call
-    clear().
+    list of all keys, call keys(). To get a map of all settings, call
+    map(). To remove all keys, call clear().
 
     \section1 QVariant and GUI Types
 
@@ -1908,27 +667,20 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     conversion functions to data types such as QColor, QImage, and
     QPixmap, which are part of \l QtGui. In other words, there is no
     \c toColor(), \c toImage(), or \c toPixmap() functions in QVariant.
-
     Instead, you can use the QVariant::value() or the qVariantValue()
-    template function. For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 0
+    template function.
 
     The inverse conversion (e.g., from QColor to QVariant) is
     automatic for all data types supported by QVariant, including
-    GUI-related types:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 1
+    GUI-related types.
 
     Custom types registered using qRegisterMetaType() and
     qRegisterMetaTypeStreamOperators() can be stored using QSettings.
 
     \section1 Section and Key Syntax
 
-    Setting keys can contain any Unicode characters. The Windows
-    registry and INI files use case-insensitive keys, whereas the
-    Carbon Preferences API on Mac OS X uses case-sensitive keys. To
-    avoid portability problems, follow these simple rules:
+    Setting keys can contain any Unicode characters. To avoid portability
+    problems, follow these simple rules:
 
     \list 1
     \o Always refer to the same key using the same case. For example,
@@ -1939,134 +691,35 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
        example, if you have a key called "MainWindow", don't try to
        save another key as "mainwindow".
 
-    \o Do not use slashes ('/' and '\\') in section or key names; the
-       backslash character is used to separate sub keys (see below). On
+    \o Do not use slashes ('/' and '\\') in key names. The backslash
+       character is used to separate sub keys (see below). On
        windows '\\' are converted by QSettings to '/', which makes
        them identical.
     \endlist
 
     You can form hierarchical keys using the '/' character as a
-    separator, similar to Unix file paths. For example:
+    separator, similar to Unix file paths.
 
-    \snippet doc/src/snippets/settings/settings.cpp 8
-    \snippet doc/src/snippets/settings/settings.cpp 9
-    \snippet doc/src/snippets/settings/settings.cpp 10
-
-    If you want to save or restore many settings with the same
-    prefix, you can specify the prefix using beginGroup() and call
-    endGroup() at the end. Here's the same example again, but this
-    time using the group mechanism:
-
-    \snippet doc/src/snippets/settings/settings.cpp 11
-    \codeline
-    \snippet doc/src/snippets/settings/settings.cpp 12
-
-    If a group is set using beginGroup(), the behavior of most
-    functions changes consequently. Groups can be set recursively.
-
-    In addition to groups, QSettings also supports an "array"
-    concept. See beginReadArray() and beginWriteArray() for details.
-
-    \section1 Fallback Mechanism
-
-    Let's assume that you have created a QSettings object with the
-    organization name MySoft and the application name Star Runner.
-    When you look up a value, up to four locations are searched in
-    that order:
-
-    \list 1
-    \o a user-specific location for the Star Runner application
-    \o a user-specific location for all applications by MySoft
-    \o a system-wide location for the Star Runner application
-    \o a system-wide location for all applications by MySoft
-    \endlist
-
-    (See \l{Platform-Specific Notes} below for information on what
-    these locations are on the different platforms supported by Qt.)
-
-    If a key cannot be found in the first location, the search goes
-    on in the second location, and so on. This enables you to store
-    system-wide or organization-wide settings and to override them on
-    a per-user or per-application basis. To turn off this mechanism,
-    call setFallbacksEnabled(false).
-
-    Although keys from all four locations are available for reading,
-    only the first file (the user-specific location for the
-    application at hand) is accessible for writing. To write to any
-    of the other files, omit the application name and/or specify
-    QSettings::SystemScope (as opposed to QSettings::UserScope, the
-    default).
-
-    Let's see with an example:
-
-    \snippet doc/src/snippets/settings/settings.cpp 13
-    \snippet doc/src/snippets/settings/settings.cpp 14
-
-    The table below summarizes which QSettings objects access
-    which location. "\bold{X}" means that the location is the main
-    location associated to the QSettings object and is used both
-    for reading and for writing; "o" means that the location is used
-    as a fallback when reading.
-
-    \table
-    \header \o Locations               \o \c{obj1} \o \c{obj2} \o \c{obj3} \o \c{obj4}
-    \row    \o 1. User, Application    \o \bold{X} \o          \o          \o
-    \row    \o 2. User, Organization   \o o        \o \bold{X} \o          \o
-    \row    \o 3. System, Application  \o o        \o          \o \bold{X} \o
-    \row    \o 4. System, Organization \o o        \o o        \o o        \o \bold{X}
-    \endtable
-
-    The beauty of this mechanism is that it works on all platforms
-    supported by Qt and that it still gives you a lot of flexibility,
-    without requiring you to specify any file names or registry
-    paths.
-
-    If you want to use INI files on all platforms instead of the
-    native API, you can pass QSettings::IniFormat as the first
-    argument to the QSettings constructor, followed by the scope, the
-    organization name, and the application name:
-
-    \snippet doc/src/snippets/settings/settings.cpp 15
-
-    The \l{tools/settingseditor}{Settings Editor} example lets you
-    experiment with different settings location and with fallbacks
-    turned on or off.
+    If you want to use specific format instead of the native, you
+    can pass QSettings::IniFormat as the first argument to the
+    QSettings constructor, followed by the scope.
 
     \section1 Restoring the State of a GUI Application
 
-    QSettings is often used to store the state of a GUI
-    application. The following example illustrates how to use QSettings
-    to save and restore the geometry of an application's main window.
-
-    \snippet doc/src/snippets/settings/settings.cpp 16
-    \codeline
-    \snippet doc/src/snippets/settings/settings.cpp 17
-
+    QSettings is often used to store the state of a GUI application.
     See \l{Window Geometry} for a discussion on why it is better to
-    call QWidget::resize() and QWidget::move() rather than QWidget::setGeometry()
-    to restore a window's geometry.
+    call QWidget::resize() and QWidget::move() rather than
+    QWidget::setGeometry() to restore a window's geometry.
 
     The \c readSettings() and \c writeSettings() functions must be
-    called from the main window's constructor and close event handler
-    as follows:
-
-    \snippet doc/src/snippets/settings/settings.cpp 18
-    \dots
-    \snippet doc/src/snippets/settings/settings.cpp 19
-    \snippet doc/src/snippets/settings/settings.cpp 20
-    \codeline
-    \snippet doc/src/snippets/settings/settings.cpp 21
-
-    See the \l{mainwindows/application}{Application} example for a
-    self-contained example that uses QSettings.
+    called from the main window's constructor and close event handler.
 
     \section1 Accessing Settings from Multiple Threads or Processes Simultaneously
 
-    QSettings is \l{reentrant}. This means that you can use
-    distinct QSettings object in different threads
-    simultaneously. This guarantee stands even when the QSettings
-    objects refer to the same files on disk (or to the same entries
-    in the system registry). If a setting is modified through one
+    QSettings is \l{reentrant}. This means that you can use distinct
+    QSettings object in different threads simultaneously. This
+    guarantee stands even when the QSettings objects refer to the
+    same files on disk. If a setting is modified through one
     QSettings object, the change will immediately be visible in
     any other QSettings objects that operate on the same location
     and that live in the same process.
@@ -2083,54 +736,37 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
 
     \section2 Locations Where Application Settings Are Stored
 
-    As mentioned in the \l{Fallback Mechanism} section, QSettings
-    stores settings for an application in up to four locations,
+    QSettings stores settings for an application in two locations,
     depending on whether the settings are user-specific or
-    system-wide and whether the settings are application-specific
-    or organization-wide. For simplicity, we're assuming the
-    organization is called MySoft and the application is called Star
-    Runner.
+    system-wide. For simplicity, we're assuming the application is
+    called MySoft.
 
     On Unix systems, if the file format is NativeFormat, the
     following files are used by default:
 
     \list 1
-    \o \c{$HOME/.config/MySoft/Star Runner.conf} (Qt for Embedded Linux: \c{$HOME/Settings/MySoft/Star Runner.conf})
-    \o \c{$HOME/.config/MySoft.conf} (Qt for Embedded Linux: \c{$HOME/Settings/MySoft.conf})
-    \o \c{/etc/xdg/MySoft/Star Runner.conf}
-    \o \c{/etc/xdg/MySoft.conf}
+    \o \c{$HOME/.config/MySoft.json}
+    \o \c{/etc/xdg/MySoft.json}
     \endlist
 
     If the file format is IniFormat, the following files are
     used on Unix:
 
     \list 1
-    \o \c{$HOME/.config/MySoft/Star Runner.ini} (Qt for Embedded Linux: \c{$HOME/Settings/MySoft/Star Runner.ini})
-    \o \c{$HOME/.config/MySoft.ini} (Qt for Embedded Linux: \c{$HOME/Settings/MySoft.ini})
-    \o \c{/etc/xdg/MySoft/Star Runner.ini}
+    \o \c{$HOME/.config/MySoft.ini}
     \o \c{/etc/xdg/MySoft.ini}
     \endlist
 
-    The SystemScope settings location is determined from the installation
-    drive and Secure ID (UID3) of the application. If the application is
-    built-in on the ROM, the drive used for SystemScope is \c c:.
+    The paths for the \c .ini and \c .json files can be changed by the
+    user by setting the \c XDG_CONFIG_HOME environment variable.
 
-    The paths for the \c .ini and \c .conf files can be changed using
-    setPath(). On Unix, the user can override them by setting the
-    \c XDG_CONFIG_HOME environment variable; see setPath() for details.
+    \section2 Accessing Files Directly
 
-    \section2 Accessing INI and .plist Files Directly
-
-    Sometimes you do want to access settings stored in a specific
-    file or registry path. On all platforms, if you want to read an
-    INI file directly, you can use the QSettings constructor that
-    takes a file name as first argument and pass QSettings::IniFormat
-    as second argument. For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 2
-
-    You can then use the QSettings object to read and write settings
-    in the file.
+    Sometimes you do want to access settings stored in a specific file.
+    If you want to read an INI file directly, you can use the QSettings
+    constructor that takes a file name as first argument and pass
+    QSettings::IniFormat as second argument. You can then use the
+    QSettings object to read and write settingsin the file.
 
     \section2 Platform Limitations
 
@@ -2146,7 +782,7 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
 
     \endlist
 
-    \sa QVariant, QSessionManager, {Settings Editor Example}, {Application Example}
+    \sa QVariant, QSessionManager
 */
 
 /*! \enum QSettings::SettingsStatus
@@ -2164,12 +800,7 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
 
     This enum type specifies the storage format used by QSettings.
 
-    \value NativeFormat  Store the settings using the most
-                         appropriate storage format for the platform.
-                         On Windows, this means the system registry;
-                         on Mac OS X, this means the CFPreferences
-                         API; on Unix, this means textual
-                         configuration files in INI format.
+    \value NativeFormat  Store the settings in JSON files.
     \value IniFormat  Store the settings in INI files.
     \value InvalidFormat Special value returned by registerFormat().
     \omitvalue CustomFormat1
@@ -2188,10 +819,6 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     \omitvalue CustomFormat14
     \omitvalue CustomFormat15
     \omitvalue CustomFormat16
-
-    On Unix, NativeFormat and IniFormat mean the same thing, except
-    that the file extension is different (\c .conf for NativeFormat,
-    \c .ini for IniFormat).
 
     The INI file format is a Windows file format that Qt supports on
     all platforms. In the absence of an INI standard, we try to
@@ -2231,11 +858,10 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
         we accept and conservative in what we generate, QSettings
         will accept Latin-1 encoded INI files, but generate pure
         ASCII files, where non-ASCII values are encoded using standard
-        INI escape sequences. To make the INI files more readable (but
-        potentially less compatible), call setIniCodec().
+        INI escape sequences.
     \endlist
 
-    \sa registerFormat(), setPath()
+    \sa registerFormat()
 */
 
 /*! \enum QSettings::Scope
@@ -2249,31 +875,7 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     \value SystemScope  Store settings in a global location, so that
                         all users on the same machine access the same
                         set of settings.
-    \omitvalue User
-    \omitvalue Global
-
-    \sa setPath()
 */
-
-/*!
-    Constructs a QSettings object for accessing settings of the
-    application called \a application from the organization called \a
-    organization, and with parent \a parent.
-
-    Example:
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 10
-
-    The scope is set to QSettings::UserScope, and the format is
-    set to QSettings::NativeFormat (i.e. calling setDefaultFormat()
-    before calling this constructor has no effect).
-
-    \sa setDefaultFormat(), {Fallback Mechanism}
-*/
-QSettings::QSettings(const QString &organization, const QString &application, QObject *parent)
-    : QObject(*QSettingsPrivate::create(NativeFormat, UserScope, organization, application),
-              parent)
-{
-}
 
 /*!
     Constructs a QSettings object for accessing settings of the
@@ -2281,23 +883,19 @@ QSettings::QSettings(const QString &organization, const QString &application, QO
     organization, and with parent \a parent.
 
     If \a scope is QSettings::UserScope, the QSettings object searches
-    user-specific settings first, before it searches system-wide
-    settings as a fallback. If \a scope is QSettings::SystemScope, the
-    QSettings object ignores user-specific settings and provides
+    user-specific settings only. If \a scope is QSettings::SystemScope,
+    the QSettings object ignores user-specific settings and provides
     access to system-wide settings.
 
-    The storage format is set to QSettings::NativeFormat (i.e. calling
-    setDefaultFormat() before calling this constructor has no effect).
-
-    If no application name is given, the QSettings object will
-    only access the organization-wide \l{Fallback Mechanism}{locations}.
-
-    \sa setDefaultFormat()
+    The storage format is set to QSettings::NativeFormat.
 */
-QSettings::QSettings(Scope scope, const QString &organization, const QString &application,
-                     QObject *parent)
-    : QObject(*QSettingsPrivate::create(NativeFormat, scope, organization, application), parent)
+QSettings::QSettings(Scope scope, QObject *parent)
+    : QObject(*new QSettingsPrivate(NativeFormat, scope), parent)
 {
+    QMutexLocker locker(qSettingsMutex());
+    qGlobalSettings()->append(this);
+    Q_D(QSettings);
+    d->read();
 }
 
 /*!
@@ -2306,22 +904,21 @@ QSettings::QSettings(Scope scope, const QString &organization, const QString &ap
     \a organization, and with parent \a parent.
 
     If \a scope is QSettings::UserScope, the QSettings object searches
-    user-specific settings first, before it searches system-wide
-    settings as a fallback. If \a scope is
-    QSettings::SystemScope, the QSettings object ignores user-specific
-    settings and provides access to system-wide settings.
+    user-specific settings only. If \a scope is QSettings::SystemScope,
+    the QSettings object ignores user-specific settings and provides
+    access to system-wide settings.
 
-    If \a format is QSettings::NativeFormat, the native API is used for
-    storing settings. If \a format is QSettings::IniFormat, the INI format
-    is used.
-
-    If no application name is given, the QSettings object will
-    only access the organization-wide \l{Fallback Mechanism}{locations}.
+    If \a format is QSettings::NativeFormat, the native JSON API is used
+    for storing settings. If \a format is QSettings::IniFormat, the INI
+    format is used.
 */
-QSettings::QSettings(Format format, Scope scope, const QString &organization,
-                     const QString &application, QObject *parent)
-    : QObject(*QSettingsPrivate::create(format, scope, organization, application), parent)
+QSettings::QSettings(Format format, Scope scope, QObject *parent)
+    : QObject(*new QSettingsPrivate(format, scope), parent)
 {
+    QMutexLocker locker(qSettingsMutex());
+    qGlobalSettings()->append(this);
+    Q_D(QSettings);
+    d->read();
 }
 
 /*!
@@ -2329,19 +926,12 @@ QSettings::QSettings(Format format, Scope scope, const QString &organization,
     stored in the file called \a fileName, with parent \a parent. If
     the file doesn't already exist, it is created.
 
-    If \a format is QSettings::NativeFormat, the meaning of \a
-    fileName depends on the platform. On Unix, \a fileName is the
-    name of an INI file. On Mac OS X, \a fileName is the name of a
-    \c .plist file. On Windows, \a fileName is a path in the system
-    registry.
+    The meaning of \a fileName depends on the format. If \a format is
+    QSettings::NativeFormat, the filename will end with end with .json
+    suffix, if it is QSettings::IniFormat it will be suffixed with .ini.
 
     If \a format is QSettings::IniFormat, \a fileName is the name of an INI
     file.
-
-    \warning This function is provided for convenience. It works well for
-    accessing INI or \c .plist files generated by Qt, but might fail on some
-    syntaxes found in such files originated by other programs. In particular,
-    be aware of the following limitations:
 
     \list
     \o QSettings provides no way of reading INI "path" entries, i.e., entries
@@ -2355,48 +945,31 @@ QSettings::QSettings(Format format, Scope scope, const QString &organization,
     \sa fileName()
 */
 QSettings::QSettings(const QString &fileName, Format format, QObject *parent)
-    : QObject(*QSettingsPrivate::create(fileName, format), parent)
+    : QObject(*new QSettingsPrivate(fileName, format), parent)
 {
+    QMutexLocker locker(qSettingsMutex());
+    qGlobalSettings()->append(this);
+    Q_D(QSettings);
+    d->read();
 }
 
 /*!
     Constructs a QSettings object for accessing settings of the
-    application and organization set previously with a call to
-    QCoreApplication::setOrganizationName(),
-    QCoreApplication::setOrganizationDomain(), and
+    application set previously with a call to
     QCoreApplication::setApplicationName().
 
     The scope is QSettings::UserScope and the format is
-    defaultFormat() (QSettings::NativeFormat by default).
-    Use setDefaultFormat() before calling this constructor
-    to change the default format used by this constructor.
+    QSettings::NativeFormat.
 
-    The code
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 11
-
-    is equivalent to
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 12
-
-    If QCoreApplication::setOrganizationName() and
-    QCoreApplication::setApplicationName() has not been previously
-    called, the QSettings object will not be able to read or write
-    any settings, and status() will return AccessError.
-
-    \sa QCoreApplication::setOrganizationName(),
-        QCoreApplication::setOrganizationDomain(),
-        QCoreApplication::setApplicationName(),
-        setDefaultFormat()
+    \sa QCoreApplication::setApplicationName()
 */
 QSettings::QSettings(QObject *parent)
-    : QObject(*QSettingsPrivate::create(globalDefaultFormat, UserScope,
-                                        QCoreApplication::organizationName().isEmpty()
-                                            ? QCoreApplication::organizationDomain()
-                                            : QCoreApplication::organizationName()
-                                        , QCoreApplication::applicationName()),
-              parent)
+    : QObject(*new QSettingsPrivate(QSettings::NativeFormat, UserScope), parent)
 {
+    QMutexLocker locker(qSettingsMutex());
+    qGlobalSettings()->append(this);
+    Q_D(QSettings);
+    d->read();
 }
 
 /*!
@@ -2409,32 +982,23 @@ QSettings::QSettings(QObject *parent)
 */
 QSettings::~QSettings()
 {
-    Q_D(QSettings);
-    if (d->pendingChanges) {
-        QT_TRY {
-            d->sync();
-        } QT_CATCH(...) {
-            ; // ok. then don't sync but at least don't throw in the destructor
-        }
-    }
+    QSettings::sync();
+    QMutexLocker locker(qSettingsMutex());
+    const int index = qGlobalSettings()->indexOf(this);
+    qGlobalSettings()->remove(index);
 }
 
 /*!
     Removes all entries in the primary location associated to this
     QSettings object.
 
-    Entries in fallback locations are not removed.
-
-    If you only want to remove the entries in the current group(),
-    use remove("") instead.
-
-    \sa remove(), setFallbacksEnabled()
+    \sa remove()
 */
 void QSettings::clear()
 {
     Q_D(QSettings);
-    d->clear();
-    d->requestUpdate();
+    d->map.clear();
+    d->notify();
 }
 
 /*!
@@ -2451,22 +1015,20 @@ void QSettings::clear()
 void QSettings::sync()
 {
     Q_D(QSettings);
-    d->sync();
+    d->write();
+    d->notify();
 }
 
 /*!
     Returns the path where settings written using this QSettings
     object are stored.
 
-    On Windows, if the format is QSettings::NativeFormat, the return value
-    is a system registry path, not a file path.
-
     \sa isWritable(), format()
 */
 QString QSettings::fileName() const
 {
     Q_D(const QSettings);
-    return d->fileName();
+    return d->filename;
 }
 
 /*!
@@ -2474,7 +1036,7 @@ QString QSettings::fileName() const
 
     Returns the format used for storing the settings.
 
-    \sa defaultFormat(), fileName(), scope(), organizationName(), applicationName()
+    \sa fileName(), scope()
 */
 QSettings::Format QSettings::format() const
 {
@@ -2487,94 +1049,13 @@ QSettings::Format QSettings::format() const
 
     Returns the scope used for storing the settings.
 
-    \sa format(), organizationName(), applicationName()
+    \sa format()
 */
 QSettings::Scope QSettings::scope() const
 {
     Q_D(const QSettings);
     return d->scope;
 }
-
-/*!
-    \since 4.4
-
-    Returns the organization name used for storing the settings.
-
-    \sa QCoreApplication::organizationName(), format(), scope(), applicationName()
-*/
-QString QSettings::organizationName() const
-{
-    Q_D(const QSettings);
-    return d->organizationName;
-}
-
-/*!
-    \since 4.4
-
-    Returns the application name used for storing the settings.
-
-    \sa QCoreApplication::applicationName(), format(), scope(), organizationName()
-*/
-QString QSettings::applicationName() const
-{
-    Q_D(const QSettings);
-    return d->applicationName;
-}
-
-#ifndef QT_NO_TEXTCODEC
-
-/*!
-    \since 4.5
-
-    Sets the codec for accessing INI files (including \c .conf files on Unix)
-    to \a codec. The codec is used for decoding any data that is read from
-    the INI file, and for encoding any data that is written to the file. By
-    default, no codec is used, and non-ASCII characters are encoded using
-    standard INI escape sequences.
-
-    \warning The codec must be set immediately after creating the QSettings
-    object, before accessing any data.
-
-    \sa iniCodec()
-*/
-void QSettings::setIniCodec(QTextCodec *codec)
-{
-    Q_D(QSettings);
-    d->iniCodec = codec;
-}
-
-/*!
-    \since 4.5
-    \overload
-
-    Sets the codec for accessing INI files (including \c .conf files on Unix)
-    to the QTextCodec for the encoding specified by \a codecName. Common
-    values for \c codecName include "ISO 8859-1", "UTF-8", and "UTF-16".
-    If the encoding isn't recognized, nothing happens.
-
-    \sa QTextCodec::codecForName()
-*/
-void QSettings::setIniCodec(const char *codecName)
-{
-    Q_D(QSettings);
-    if (QTextCodec *codec = QTextCodec::codecForName(codecName))
-        d->iniCodec = codec;
-}
-
-/*!
-    \since 4.5
-
-    Returns the codec that is used for accessing INI files. By default,
-    no codec is used, so a null pointer is returned.
-*/
-
-QTextCodec *QSettings::iniCodec() const
-{
-    Q_D(const QSettings);
-    return d->iniCodec;
-}
-
-#endif // QT_NO_TEXTCODEC
 
 /*!
     Returns a status code indicating the first error that was met by
@@ -2593,250 +1074,30 @@ QSettings::SettingsStatus QSettings::status() const
 }
 
 /*!
-    Appends \a prefix to the current group.
+    Returns a map of all keys, with their values, that the QSettings
+    object holds.
 
-    The current group is automatically prepended to all keys
-    specified to QSettings. In addition, query functions such as
-    childGroups(), childKeys(), and allKeys() are based on the group.
-    By default, no group is set.
-
-    Groups are useful to avoid typing in the same setting paths over
-    and over. For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 13
-
-    This will set the value of three settings:
-
-    \list
-    \o \c mainwindow/size
-    \o \c mainwindow/fullScreen
-    \o \c outputpanel/visible
-    \endlist
-
-    Call endGroup() to reset the current group to what it was before
-    the corresponding beginGroup() call. Groups can be nested.
-
-    \sa endGroup(), group()
+    \sa keys()
 */
-void QSettings::beginGroup(const QString &prefix)
-{
-    Q_D(QSettings);
-    d->beginGroupOrArray(QSettingsGroup(d->normalizedKey(prefix)));
-}
-
-/*!
-    Resets the group to what it was before the corresponding
-    beginGroup() call.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 14
-
-    \sa beginGroup(), group()
-*/
-void QSettings::endGroup()
-{
-    Q_D(QSettings);
-    if (d->groupStack.isEmpty()) {
-        qWarning("QSettings::endGroup: No matching beginGroup()");
-        return;
-    }
-
-    QSettingsGroup group = d->groupStack.pop();
-    int len = group.toString().size();
-    if (len > 0)
-        d->groupPrefix.truncate(d->groupPrefix.size() - (len + 1));
-
-    if (group.isArray())
-        qWarning("QSettings::endGroup: Expected endArray() instead");
-}
-
-/*!
-    Returns the current group.
-
-    \sa beginGroup(), endGroup()
-*/
-QString QSettings::group() const
+QSettings::SettingsMap QSettings::map() const
 {
     Q_D(const QSettings);
-    return d->groupPrefix.left(d->groupPrefix.size() - 1);
-}
-
-/*!
-    Adds \a prefix to the current group and starts reading from an
-    array. Returns the size of the array.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 15
-
-    Use beginWriteArray() to write the array in the first place.
-
-    \sa beginWriteArray(), endArray(), setArrayIndex()
-*/
-int QSettings::beginReadArray(const QString &prefix)
-{
-    Q_D(QSettings);
-    d->beginGroupOrArray(QSettingsGroup(d->normalizedKey(prefix), false));
-    return value(QLatin1String("size")).toInt();
-}
-
-/*!
-    Adds \a prefix to the current group and starts writing an array
-    of size \a size. If \a size is -1 (the default), it is automatically
-    determined based on the indexes of the entries written.
-
-    If you have many occurrences of a certain set of keys, you can
-    use arrays to make your life easier. For example, let's suppose
-    that you want to save a variable-length list of user names and
-    passwords. You could then write:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 16
-
-    The generated keys will have the form
-
-    \list
-    \o \c logins/size
-    \o \c logins/1/userName
-    \o \c logins/1/password
-    \o \c logins/2/userName
-    \o \c logins/2/password
-    \o \c logins/3/userName
-    \o \c logins/3/password
-    \o ...
-    \endlist
-
-    To read back an array, use beginReadArray().
-
-    \sa beginReadArray(), endArray(), setArrayIndex()
-*/
-void QSettings::beginWriteArray(const QString &prefix, int size)
-{
-    Q_D(QSettings);
-    d->beginGroupOrArray(QSettingsGroup(d->normalizedKey(prefix), size < 0));
-
-    if (size < 0)
-        remove(QLatin1String("size"));
-    else
-        setValue(QLatin1String("size"), size);
-}
-
-/*!
-    Closes the array that was started using beginReadArray() or
-    beginWriteArray().
-
-    \sa beginReadArray(), beginWriteArray()
-*/
-void QSettings::endArray()
-{
-    Q_D(QSettings);
-    if (d->groupStack.isEmpty()) {
-        qWarning("QSettings::endArray: No matching beginArray()");
-        return;
-    }
-
-    QSettingsGroup group = d->groupStack.top();
-    int len = group.toString().size();
-    d->groupStack.pop();
-    if (len > 0)
-        d->groupPrefix.truncate(d->groupPrefix.size() - (len + 1));
-
-    if (group.arraySizeGuess() != -1)
-        setValue(group.name() + QLatin1String("/size"), group.arraySizeGuess());
-
-    if (!group.isArray())
-        qWarning("QSettings::endArray: Expected endGroup() instead");
-}
-
-/*!
-    Sets the current array index to \a i. Calls to functions such as
-    setValue(), value(), remove(), and contains() will operate on the
-    array entry at that index.
-
-    You must call beginReadArray() or beginWriteArray() before you
-    can call this function.
-*/
-void QSettings::setArrayIndex(int i)
-{
-    Q_D(QSettings);
-    if (d->groupStack.isEmpty() || !d->groupStack.top().isArray()) {
-        qWarning("QSettings::setArrayIndex: Missing beginArray()");
-        return;
-    }
-
-    QSettingsGroup &top = d->groupStack.top();
-    int len = top.toString().size();
-    top.setArrayIndex(qMax(i, 0));
-    d->groupPrefix.replace(d->groupPrefix.size() - len - 1, len, top.toString());
-}
-
-/*!
-    Returns a list of all keys, including subkeys, that can be read
-    using the QSettings object.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 17
-
-    If a group is set using beginGroup(), only the keys in the group
-    are returned, without the group prefix:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 18
-
-    \sa childGroups(), childKeys()
-*/
-QStringList QSettings::allKeys() const
-{
-    Q_D(const QSettings);
-    return d->children(d->groupPrefix, QSettingsPrivate::AllKeys);
-}
-
-/*!
-    Returns a list of all top-level keys that can be read using the
-    QSettings object.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 19
-
-    If a group is set using beginGroup(), the top-level keys in that
-    group are returned, without the group prefix:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 20
-
-    You can navigate through the entire setting hierarchy using
-    childKeys() and childGroups() recursively.
-
-    \sa childGroups(), allKeys()
-*/
-QStringList QSettings::childKeys() const
-{
-    Q_D(const QSettings);
-    return d->children(d->groupPrefix, QSettingsPrivate::ChildKeys);
+    return d->map;
 }
 
 /*!
     Returns a list of all key top-level groups that contain keys that
     can be read using the QSettings object.
 
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 21
-
-    If a group is set using beginGroup(), the first-level keys in
-    that group are returned, without the group prefix.
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 22
-
     You can navigate through the entire setting hierarchy using
-    childKeys() and childGroups() recursively.
+    keys() and map().
 
-    \sa childKeys(), allKeys()
+    \sa map()
 */
-QStringList QSettings::childGroups() const
+QStringList QSettings::keys() const
 {
     Q_D(const QSettings);
-    return d->children(d->groupPrefix, QSettingsPrivate::ChildGroups);
+    return d->map.keys();
 }
 
 /*!
@@ -2854,7 +1115,8 @@ QStringList QSettings::childGroups() const
 bool QSettings::isWritable() const
 {
     Q_D(const QSettings);
-    return d->isWritable();
+    QFileInfo info(d->filename);
+    return info.isWritable();
 }
 
 /*!
@@ -2862,112 +1124,37 @@ bool QSettings::isWritable() const
   Sets the value of setting \a key to \a value. If the \a key already
   exists, the previous value is overwritten.
 
-  Example:
-
-  \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 23
-
   \sa value(), remove(), contains()
 */
 void QSettings::setValue(const QString &key, const QVariant &value)
 {
     Q_D(QSettings);
-    QString k = d->actualKey(key);
-    d->set(k, value);
-    d->requestUpdate();
+    d->map.insert(key, value);
+    d->notify();
 }
 
 /*!
-    Removes the setting \a key and any sub-settings of \a key.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 24
-
-    Be aware that if one of the fallback locations contains a setting
-    with the same key, that setting will be visible after calling
-    remove().
-
-    If \a key is an empty string, all keys in the current group() are
-    removed. For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 25
+    Removes the setting \a key.
 
     \sa setValue(), value(), contains()
 */
 void QSettings::remove(const QString &key)
 {
     Q_D(QSettings);
-    /*
-        We cannot use actualKey(), because remove() supports empty
-        keys. The code is also tricky because of slash handling.
-    */
-    QString theKey = d->normalizedKey(key);
-    if (theKey.isEmpty())
-        theKey = group();
-    else
-        theKey.prepend(d->groupPrefix);
-
-    if (theKey.isEmpty()) {
-        d->clear();
-    } else {
-        d->remove(theKey);
-    }
-    d->requestUpdate();
+    d->map.remove(key);
+    d->notify();
 }
 
 /*!
     Returns true if there exists a setting called \a key; returns
     false otherwise.
 
-    If a group is set using beginGroup(), \a key is taken to be
-    relative to that group.
-
     \sa value(), setValue()
 */
 bool QSettings::contains(const QString &key) const
 {
     Q_D(const QSettings);
-    QString k = d->actualKey(key);
-    return d->get(k, 0);
-}
-
-/*!
-    Sets whether fallbacks are enabled to \a b.
-
-    By default, fallbacks are enabled.
-
-    \sa fallbacksEnabled()
-*/
-void QSettings::setFallbacksEnabled(bool b)
-{
-    Q_D(QSettings);
-    d->fallbacks = !!b;
-}
-
-/*!
-    Returns true if fallbacks are enabled; returns false otherwise.
-
-    By default, fallbacks are enabled.
-
-    \sa setFallbacksEnabled()
-*/
-bool QSettings::fallbacksEnabled() const
-{
-    Q_D(const QSettings);
-    return d->fallbacks;
-}
-
-/*!
-    \reimp
-*/
-bool QSettings::event(QEvent *event)
-{
-    Q_D(QSettings);
-    if (event->type() == QEvent::UpdateRequest) {
-        d->update();
-        return true;
-    }
-    return QObject::event(event);
+    return d->map.contains(key);
 }
 
 /*!
@@ -2977,116 +1164,12 @@ bool QSettings::event(QEvent *event)
     If no default value is specified, a default QVariant is
     returned.
 
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 26
-
     \sa setValue(), contains(), remove()
 */
 QVariant QSettings::value(const QString &key, const QVariant &defaultValue) const
 {
     Q_D(const QSettings);
-    QVariant result = defaultValue;
-    QString k = d->actualKey(key);
-    d->get(k, &result);
-    return result;
-}
-
-/*!
-    \since 4.4
-
-    Sets the default file format to the given \a format, which is used
-    for storing settings for the QSettings(QObject *) constructor.
-
-    If no default format is set, QSettings::NativeFormat is used. See
-    the documentation for the QSettings constructor you are using to
-    see if that constructor will ignore this function.
-
-    \sa format()
-*/
-void QSettings::setDefaultFormat(Format format)
-{
-    globalDefaultFormat = format;
-}
-
-/*!
-    \since 4.4
-
-    Returns default file format used for storing settings for the QSettings(QObject *) constructor.
-    If no default format is set, QSettings::NativeFormat is used.
-
-    \sa format()
-*/
-QSettings::Format QSettings::defaultFormat()
-{
-    return globalDefaultFormat;
-}
-
-/*!
-    \obsolete
-
-    Use setPath() instead.
-
-    \oldcode
-        setSystemIniPath(path);
-    \newcode
-        setPath(QSettings::NativeFormat, QSettings::SystemScope, path);
-        setPath(QSettings::IniFormat, QSettings::SystemScope, path);
-    \endcode
-*/
-void QSettings::setSystemIniPath(const QString &dir)
-{
-    setPath(IniFormat, SystemScope, dir);
-    setPath(NativeFormat, SystemScope, dir);
-}
-
-/*!
-    \obsolete
-
-    Use setPath() instead.
-*/
-
-void QSettings::setUserIniPath(const QString &dir)
-{
-    setPath(IniFormat, UserScope, dir);
-    setPath(NativeFormat, UserScope, dir);
-}
-
-/*!
-    \since 4.1
-
-    Sets the path used for storing settings for the given \a format
-    and \a scope, to \a path. The \a format can be a custom format.
-
-    The table below summarizes the default values:
-
-    \table
-    \header \o Platform         \o Format                       \o Scope       \o Path
-    \row    \o{1,2} Unix        \o{1,2} NativeFormat, IniFormat \o UserScope   \o \c $HOME/.config
-    \row                                                        \o SystemScope \o \c /etc/xdg
-    \endtable
-
-    The default UserScope paths on Unix and Mac OS X (\c
-    $HOME/.config or $HOME/Settings) can be overridden by the user by setting the
-    \c XDG_CONFIG_HOME environment variable. The default SystemScope
-    paths on Unix and Mac OS X (\c /etc/xdg) can be overridden when
-    building the Qt library using the \c configure script's \c
-    --sysconfdir flag (see QLibraryInfo for details).
-
-    Setting the NativeFormat paths on Windows and Mac OS X has no
-    effect.
-
-    \warning This function doesn't affect existing QSettings objects.
-
-    \sa registerFormat()
-*/
-void QSettings::setPath(Format format, Scope scope, const QString &path)
-{
-    QMutexLocker locker(globalMutex());
-    PathHash *pathHash = pathHashFunc();
-    if (pathHash->isEmpty())
-        initDefaultPaths(&locker);
-    pathHash->insert(pathHashKey(format, scope), path + QDir::separator());
+    return d->map.value(key, defaultValue);
 }
 
 /*!
@@ -3141,45 +1224,25 @@ void QSettings::setPath(Format format, Scope scope, const QString &path)
     functions that read and write a set of key/value pairs. The
     QIODevice parameter to the read and write functions is always
     opened in binary mode (i.e., without the QIODevice::Text flag).
-
-    The \a caseSensitivity parameter specifies whether keys are case
-    sensitive or not. This makes a difference when looking up values
-    using QSettings. The default is case sensitive.
-
-    By default, if you use one of the constructors that work in terms
-    of an organization name and an application name, the file system
-    locations used are the same as for IniFormat. Use setPath() to
-    specify other locations.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 29
-
-    \sa setPath()
 */
 QSettings::Format QSettings::registerFormat(const QString &extension, ReadFunc readFunc,
-                                            WriteFunc writeFunc,
-                                            Qt::CaseSensitivity caseSensitivity)
+                                            WriteFunc writeFunc)
 {
-#ifdef QT_QSETTINGS_ALWAYS_CASE_SENSITIVE_AND_FORGET_ORIGINAL_KEY_ORDER
-    Q_ASSERT(caseSensitivity == Qt::CaseSensitive);
-#endif
-
-    QMutexLocker locker(globalMutex());
+    QMutexLocker locker(qSettingsMutex());
     CustomFormatVector *customFormatVector = customFormatVectorFunc();
     int index = customFormatVector->size();
     if (index == 16) // the QSettings::Format enum has room for 16 custom formats
         return QSettings::InvalidFormat;
 
-    QConfFileCustomFormat info;
+    QSettingsCustomFormat info;
+    info.format = static_cast<QSettings::Format>(QSettings::CustomFormat1 + index);
     info.extension = QLatin1Char('.');
     info.extension += extension;
     info.readFunc = readFunc;
     info.writeFunc = writeFunc;
-    info.caseSensitivity = caseSensitivity;
     customFormatVector->append(info);
 
-    return QSettings::Format((int)QSettings::CustomFormat1 + index);
+    return info.format;
 }
 
 #include "moc_qsettings.h"

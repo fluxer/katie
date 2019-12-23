@@ -67,6 +67,7 @@
 #include "qdebug.h"
 #include "qdrawhelper_p.h"
 #include "qmutexpool_p.h"
+#include "qcoreapplication_p.h"
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -177,9 +178,8 @@ QPSPrintEnginePrivate::QPSPrintEnginePrivate(QPrinter::PrinterMode m)
 
     firstPage = true;
 
-    QSettings settings(QSettings::UserScope, QLatin1String("Katie"));
-    settings.beginGroup(QLatin1String("Qt"));
-    embedFonts = settings.value(QLatin1String("embedFonts"), true).toBool();
+    QSettings *settings = QCoreApplicationPrivate::staticConf();
+    embedFonts = settings->value(QLatin1String("Qt/embedFonts"), true).toBool();
 }
 
 QPSPrintEnginePrivate::~QPSPrintEnginePrivate()

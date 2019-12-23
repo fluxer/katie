@@ -56,7 +56,7 @@ QT_BEGIN_NAMESPACE
   */
 
 QDesignerQSettings::QDesignerQSettings() :
-    m_settings(qApp->organizationName(), settingsApplicationName())
+    m_settings(settingsApplicationName(), QSettings::NativeFormat)
 {
 }
 
@@ -67,12 +67,13 @@ QString QDesignerQSettings::settingsApplicationName()
 
 void QDesignerQSettings::beginGroup(const QString &prefix)
 {
-    m_settings.beginGroup(prefix);
+    Q_ASSERT(m_group.isEmpty()); // no sub-groups support
+    m_group = prefix;
 }
 
 void QDesignerQSettings::endGroup()
 {
-    m_settings.endGroup();
+    m_group.clear();
 }
 
 bool QDesignerQSettings::contains(const QString &key) const
@@ -82,17 +83,29 @@ bool QDesignerQSettings::contains(const QString &key) const
 
 void QDesignerQSettings::setValue(const QString &key, const QVariant &value)
 {
-    m_settings.setValue(key, value);
+    if (m_group.isEmpty()) {
+        m_settings.setValue(key, value);
+    } else {
+        m_settings.setValue(m_group + QLatin1Char('/') + key, value);
+    }
 }
 
 QVariant QDesignerQSettings::value(const QString &key, const QVariant &defaultValue) const
 {
-    return m_settings.value(key, defaultValue);
+    if (m_group.isEmpty()) {
+        return m_settings.value(key, defaultValue);
+    }
+    return m_settings.value(m_group + QLatin1Char('/') + key, defaultValue);
 }
 
 void QDesignerQSettings::remove(const QString &key)
 {
     m_settings.remove(key);
+}
+
+QSettings::SettingsStatus QDesignerQSettings::status() const
+{
+    return m_settings.status();
 }
 
 QT_END_NAMESPACE

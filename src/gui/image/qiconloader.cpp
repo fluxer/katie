@@ -143,7 +143,7 @@ QIconTheme::QIconTheme(const QString &themeName)
     }
     if (themeIndex.exists()) {
         const QSettings indexReader(themeIndex.fileName(), QSettings::IniFormat);
-        QStringListIterator keyIterator(indexReader.allKeys());
+        QStringListIterator keyIterator(indexReader.keys());
         while (keyIterator.hasNext()) {
 
             const QString key = keyIterator.next();

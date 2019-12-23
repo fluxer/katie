@@ -160,7 +160,7 @@ Q_CORE_EXPORT bool qt_locale_initialized = false;
   be thrown out of QSetting's cache for unused settings.
   */
 #ifndef QT_NO_SETTINGS
-Q_GLOBAL_STATIC_WITH_ARGS(QSettings, staticKatieConf, (QSettings::UserScope, QLatin1String("Katie")))
+Q_GLOBAL_STATIC_WITH_ARGS(QSettings, staticKatieConf, (QLatin1String("Katie"), QSettings::NativeFormat))
 
 QSettings *QCoreApplicationPrivate::staticConf()
 {
