@@ -208,8 +208,11 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 DEPENDS "${KATIE_LRELEASE}"
             )
             set_source_files_properties(${rscout} PROPERTIES GENERATED TRUE)
-            install(FILES ${rscout} DESTINATION ${KATIE_TRANSLATIONS_RELATIVE})
-
+            install(
+                FILES "${rscout}"
+                DESTINATION "${KATIE_TRANSLATIONS_RELATIVE}"
+                COMPONENT Runtime
+            )
         endif()
     endforeach()
     set_source_files_properties(${resourcesdep} PROPERTIES OBJECT_DEPENDS "${targetresources}")
