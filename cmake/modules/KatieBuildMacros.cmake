@@ -13,28 +13,34 @@ macro(KATIE_WARNING MESSAGESTR)
     endif()
 endmacro()
 
+# a macro to write data to file, does nothing if the file exists and its
+# content is the same as the data
+macro(KATIE_WRITE_FILE OUTFILE DATA)
+    file(WRITE "${CMAKE_BINARY_DIR}/katie_write_file.tmp" "${DATA}")
+    configure_file("${CMAKE_BINARY_DIR}/katie_write_file.tmp" "${OUTFILE}" COPYONLY)
+endmacro()
+
 # a macro to create camel-case headers pointing to their lower-case alternative
-# with a dev warning for possibly non-existent headers
+# as well as meta header that includes component headers
 macro(KATIE_GENERATE_PUBLIC PUBLIC_INCLUDES SUBDIR)
-    set(metaout ${CMAKE_BINARY_DIR}/include/${SUBDIR}/${SUBDIR})
-    set(metadata "#ifndef Qt${SUBDIR}_META_H\n#define Qt${SUBDIR}_META_H\n\n")
     foreach(pubheader ${PUBLIC_INCLUDES})
         string(TOLOWER ${pubheader} pubname)
-        get_filename_component(pubname ${pubname} NAME_WE)
-        set(pubout ${CMAKE_BINARY_DIR}/include/${SUBDIR}/${pubheader})
-        set(pubcheck ${CMAKE_BINARY_DIR}/include/${SUBDIR}/${pubname}.h)
-        if(NOT EXISTS ${pubout})
-            file(WRITE ${pubout} "#include <${pubname}.h>\n")
+        set(pubout "${CMAKE_BINARY_DIR}/include/${SUBDIR}/${pubheader}")
+        katie_write_file("${pubout}" "#include <${pubname}.h>\n")
+    endforeach()
+
+    file(GLOB PUBLIC_LIST "${CMAKE_BINARY_DIR}/include/${SUBDIR}/*.h")
+    set(metaout "${CMAKE_BINARY_DIR}/include/${SUBDIR}/${SUBDIR}")
+    set(metadata "#ifndef ${SUBDIR}_META_H\n#define ${SUBDIR}_META_H\n\n")
+    foreach(pubheader ${PUBLIC_LIST})
+        get_filename_component(pubname ${pubheader} NAME)
+        # qtest_gui.h is exception because it requires explicit gui component linkage
+        if(NOT "${pubname}" STREQUAL "qtest_gui.h")
+            set(metadata "${metadata}#include <${SUBDIR}/${pubname}>\n")
         endif()
-        if(NOT EXISTS ${pubcheck})
-            katie_warning("Bogus public header: ${pubheader} (${pubcheck})")
-        # qttestgui is exception because it requires explicit gui component linkage
-        elseif(NOT "${pubname}" STREQUAL "qttestgui")
-            set(metadata "${metadata}#include <${SUBDIR}/${pubname}.h>\n")
-        endif()
-    endforeach(pubheader)
+    endforeach()
     set(metadata "${metadata}\n#endif\n")
-    file(WRITE ${metaout} "${metadata}")
+    katie_write_file("${metaout}" "${metadata}")
 endmacro()
 
 # a macro to copy headers into specific directory based on their base names
@@ -43,19 +49,17 @@ macro(KATIE_GENERATE_MISC MISC_INCLUDES SUBDIR)
     foreach(mischeader ${MISC_INCLUDES})
         get_filename_component(headername ${mischeader} NAME)
         if("${headername}" MATCHES "(_p.h)")
-            set(headout ${CMAKE_BINARY_DIR}/privateinclude/${SUBDIR}/${headername})
+            set(headout "${CMAKE_BINARY_DIR}/privateinclude/${SUBDIR}/${headername}")
         else()
-            set(headout ${CMAKE_BINARY_DIR}/include/${SUBDIR}/${headername})
+            set(headout "${CMAKE_BINARY_DIR}/include/${SUBDIR}/${headername}")
         endif()
-        configure_file(${mischeader} ${headout} COPYONLY)
+        configure_file("${mischeader}" "${headout}" COPYONLY)
     endforeach(mischeader)
 endmacro()
 
 macro(KATIE_GENERATE_OBSOLETE OBSOLETE_INCLUDE SUBDIR REDIRECT)
-    set(pubout ${CMAKE_BINARY_DIR}/include/${SUBDIR}/${OBSOLETE_INCLUDE})
-    if(NOT EXISTS "${pubout}")
-        file(WRITE "${pubout}" "#include <${SUBDIR}/${REDIRECT}>\n")
-    endif()
+    set(pubout "${CMAKE_BINARY_DIR}/include/${SUBDIR}/${OBSOLETE_INCLUDE}")
+    katie_write_file("${pubout}" "#include <${SUBDIR}/${REDIRECT}>\n")
 endmacro()
 
 # a macro for creating pkgconfig files for major components
@@ -73,13 +77,13 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
         set(PACKAGE_FLAGS "${PACKAGE_FLAGS} ${KATIE_DEFINITIONS}")
     endif()
     configure_file(
-        ${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake
-        ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
+        "${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake"
+        "${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc"
     )
     katie_setup_paths()
     install(
-        FILES ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
-        DESTINATION ${KATIE_PKGCONFIG_RELATIVE}
+        FILES "${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc"
+        DESTINATION "${KATIE_PKGCONFIG_RELATIVE}"
         COMPONENT Devel
     )
 endmacro()
@@ -118,7 +122,7 @@ function(KATIE_GIT_CHECKOUT GITEXE OUTSTR)
         set(${OUTSTR} "unknown" PARENT_SCOPE)
     else()
         execute_process(
-            COMMAND ${GITEXE} rev-parse HEAD
+            COMMAND "${GITEXE}" rev-parse HEAD
             WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
             RESULT_VARIABLE git_result
             ERROR_VARIABLE git_output
@@ -147,20 +151,18 @@ endmacro()
 function(KATIE_SETUP_TARGET FORTARGET)
     # this can be simpler if continue() was supported by old CMake versions
     set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
-    if(NOT EXISTS "${resourcesdep}")
-        file(WRITE "${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
-    endif()
+    katie_write_file("${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
     set(targetresources)
     set(rscpath "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources")
-    include_directories(${rscpath})
+    include_directories("${rscpath}")
     foreach(tmpres ${ARGN})
-        get_filename_component(resource ${tmpres} ABSOLUTE)
-        get_filename_component(rscext ${resource} EXT)
-        get_filename_component(rscname ${resource} NAME_WE)
+        get_filename_component(resource "${tmpres}" ABSOLUTE)
+        get_filename_component(rscext "${resource}" EXT)
+        get_filename_component(rscname "${resource}" NAME_WE)
         if("${rscext}" STREQUAL ".ui")
             set(rscout "${rscpath}/ui_${rscname}.h")
-            set(targetresources ${targetresources} ${rscout})
-            make_directory(${rscpath})
+            set(targetresources ${targetresources} "${rscout}")
+            make_directory("${rscpath}")
             add_custom_command(
                 COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_UIC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}"
                 DEPENDS "${KATIE_UIC}"
@@ -168,8 +170,8 @@ function(KATIE_SETUP_TARGET FORTARGET)
             )
         elseif("${rscext}" STREQUAL ".qrc")
             set(rscout "${rscpath}/qrc_${rscname}.cpp")
-            set(targetresources ${targetresources} ${rscout})
-            make_directory(${rscpath})
+            set(targetresources ${targetresources} "${rscout}")
+            make_directory("${rscpath}")
             add_custom_command(
                 COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}" -name "${rscname}"
                 DEPENDS "${KATIE_RCC}"
@@ -179,7 +181,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             file(READ "${resource}" rsccontent)
             if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
                 set(rscout "${rscpath}/moc_${rscname}${rscext}")
-                set(targetresources ${targetresources} ${rscout})
+                set(targetresources ${targetresources} "${rscout}")
                 get_directory_property(dirdefs COMPILE_DEFINITIONS)
                 get_directory_property(dirincs INCLUDE_DIRECTORIES)
                 set(mocargs)
@@ -190,56 +192,56 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 foreach(incdir ${dirincs})
                     set(mocargs ${mocargs} -I${incdir})
                 endforeach()
-                make_directory(${rscpath})
+                make_directory("${rscpath}")
                 add_custom_command(
-                    COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    DEPENDS "${KATIE_MOC}"
                     OUTPUT "${rscout}"
                 )
             endif()
         elseif("${rscext}" MATCHES ".ts")
-            make_directory(${CMAKE_CURRENT_BINARY_DIR})
+            make_directory("${CMAKE_CURRENT_BINARY_DIR}")
             set(rscout "${CMAKE_CURRENT_BINARY_DIR}/${rscname}.qm")
             add_custom_target(
                 ${FORTARGET}_${rscname} ALL
                 COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}${KATIE_TOOLS_SUFFIX}" "${resource}" -qm "${rscout}"
                 DEPENDS "${KATIE_LRELEASE}"
             )
-            set_source_files_properties(${rscout} PROPERTIES GENERATED TRUE)
-            install(FILES ${rscout} DESTINATION ${KATIE_TRANSLATIONS_RELATIVE})
-
+            set_source_files_properties("${rscout}" PROPERTIES GENERATED TRUE)
+            install(
+                FILES "${rscout}"
+                DESTINATION "${KATIE_TRANSLATIONS_RELATIVE}"
+                COMPONENT Runtime
+            )
         endif()
     endforeach()
-    set_source_files_properties(${resourcesdep} PROPERTIES OBJECT_DEPENDS "${targetresources}")
+    set_source_files_properties("${resourcesdep}" PROPERTIES OBJECT_DEPENDS "${targetresources}")
 
     if(NOT KATIE_ALLINONE)
         set(filteredsources)
         foreach(srcstring ${ARGN})
-            get_filename_component(srcext ${srcstring} EXT)
+            get_filename_component(srcext "${srcstring}" EXT)
             if(NOT "${srcext}" MATCHES "(.qrc|.ui)")
-                set(filteredsources ${filteredsources} ${srcstring})
+                set(filteredsources ${filteredsources} "${srcstring}")
             endif()
         endforeach()
-        set(${FORTARGET}_SOURCES ${resourcesdep} ${filteredsources} PARENT_SCOPE)
+        set(${FORTARGET}_SOURCES "${resourcesdep}" ${filteredsources} PARENT_SCOPE)
     else()
-        # use temporary file, then configure_file() to avoid all-in-one target rebuilds when the
-        # project is reconfigured
-        set(allinonetemp "${CMAKE_CURRENT_BINARY_DIR}/allinone_temporary.cpp")
         set(allinonesource "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_allinone.cpp")
         set(allinonedata)
         set(excludesources)
         foreach(srcstring ${ARGN})
-            get_filename_component(srcext ${srcstring} EXT)
-            get_source_file_property(skip ${srcstring} ALLINONE_EXCLUDE)
+            get_filename_component(srcext "${srcstring}" EXT)
+            get_source_file_property(skip "${srcstring}" ALLINONE_EXCLUDE)
             if(skip OR "${srcext}" STREQUAL ".c")
                 katie_warning("Source is excluded: ${srcstring}")
-                set(excludesources ${excludesources} ${srcstring})
+                set(excludesources ${excludesources} "${srcstring}")
             elseif(NOT "${srcext}" MATCHES "(.h|.qrc|.ui)")
                 set(allinonedata "${allinonedata}#include \"${srcstring}\"\n")
             endif()
         endforeach()
-        file(WRITE "${allinonetemp}" "${allinonedata}")
-        configure_file("${allinonetemp}" "${allinonesource}")
-        set(${FORTARGET}_SOURCES ${resourcesdep} ${allinonesource} ${excludesources} PARENT_SCOPE)
+        katie_write_file("${allinonesource}" "${allinonedata}")
+        set(${FORTARGET}_SOURCES ${resourcesdep} "${allinonesource}" ${excludesources} PARENT_SCOPE)
     endif()
 endfunction()
 
@@ -283,7 +285,6 @@ function(KATIE_SETUP_PATHS)
         string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${KATIE${instpath}_FULL}")
         string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
         set(KATIE${instpath}_RELATIVE "${modpath}" PARENT_SCOPE)
-        # message(STATUS "KATIE${instpath}_RELATIVE: ${modpath}")
     endforeach()
 endfunction()
 
@@ -299,7 +300,7 @@ macro(KATIE_OPTIMIZE_HEADERS DIR)
             SCRIPT "${CMAKE_SOURCE_DIR}/cmake/modules/OptimizeHeaders.cmake"
         )
     else()
-        get_filename_component(basename ${DIR} NAME)
+        get_filename_component(basename "${DIR}" NAME)
         katie_warning("unifdef not installed, cannot optimize headers for: ${basename}")
     endif()
 endmacro()
@@ -317,12 +318,12 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
     )
     set_target_properties(
         ${TESTNAME} PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     )
 
     add_test(
         NAME ${TESTNAME}
-        COMMAND ${CMAKE_BINARY_DIR}/exec.sh ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME} -tickcounter
+        COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}" -tickcounter
     )
 endmacro()
 

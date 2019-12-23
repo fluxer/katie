@@ -600,7 +600,7 @@ QMutex *qt_fontdatabase_mutex()
 
 QT_BEGIN_INCLUDE_NAMESPACE
 #if defined(Q_WS_X11)
-#  include "qfontdatabase_x11.h"
+#  include "qfontdatabase_x11_p.h"
 #endif
 QT_END_INCLUDE_NAMESPACE
 
@@ -1580,15 +1580,11 @@ bool QFontDatabasePrivate::isApplicationFont(const QString &fileName)
 */
 int QFontDatabase::addApplicationFont(const QString &fileName)
 {
-    QByteArray data;
     QFile f(fileName);
-    if (!(f.fileEngine()->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)) {
-        if (!f.open(QIODevice::ReadOnly))
-            return -1;
-        data = f.readAll();
-    }
+    if (!f.open(QIODevice::ReadOnly))
+        return -1;
     QMutexLocker locker(fontDatabaseMutex());
-    return privateDb()->addAppFont(data, fileName);
+    return privateDb()->addAppFont(f.readAll(), fileName);
 }
 
 /*!

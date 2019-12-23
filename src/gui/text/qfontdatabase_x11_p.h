@@ -1242,7 +1242,7 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
     QStringList families;
     QFontDatabasePrivate *db = privateDb();
 
-    while (id < count) {
+    do {
         FcPattern *pattern = queryFont((const FcChar8 *)QFile::encodeName(fnt->fileName).constData(),
                             fnt->data, id, blanks, &count);
         if (!pattern)
@@ -1273,7 +1273,7 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
             return;
 
         ++id;
-    }
+    } while (id < count);
 
     fnt->families = families;
 #endif

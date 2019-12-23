@@ -21,11 +21,6 @@ set(DBUS_PUBLIC_HEADERS
     QDBusServer
     QDBusServiceWatcher
     QDBusUnixFileDescriptor
-    # mixed
-    QDBusObjectPath
-    QDBusPendingCallWatcher
-    # obsolete
-    QDBusVariant
 )
 
 include_directories(

@@ -1,5 +1,10 @@
 #!/usr/bin/make -f
 
+KATIE_CROSS_EXEC=""
+ifneq ($(DEB_HOST_ARCH_CPU),$(DEB_BUILD_ARCH_CPU))
+	KATIE_CROSS_EXEC="qemu-$(DEB_HOST_ARCH_CPU)-static"
+endif
+
 %:
 	dh $@ --parallel
 
@@ -12,7 +17,8 @@ override_dh_auto_configure:
 		-DKATIE_SETTINGS_FULL=/etc/xdg \
 		-DKATIE_PROFILE_FULL=/etc/profile.d \
 		-DKATIE_TOOLS_SUFFIX="-katie" \
-		-DKATIE_ALLINONE=OFF
+		-DKATIE_ALLINONE=OFF \
+		-DKATIE_CROSS_EXEC=$(KATIE_CROSS_EXEC)
 
 override_dh_auto_build:
 	dh_auto_build

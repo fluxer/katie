@@ -36,16 +36,6 @@ set(NETWORK_PUBLIC_HEADERS
     QUdpSocket
     QUrlInfo
     QHttpMultiPart
-    # mixed
-    QNetworkAddressEntry
-    QNetworkConfigurationManager
-    QNetworkCacheMetaData
-    QHttpHeader
-    QHttpPart
-    QHttpRequestHeader
-    QHttpResponseHeader
-    QNetworkProxyFactory
-    QNetworkProxyQuery
 )
 
 include(access/access.cmake)

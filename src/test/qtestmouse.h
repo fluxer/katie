@@ -35,6 +35,9 @@
 #define QTESTMOUSE_H
 
 #include <QtTest/qtest_global.h>
+
+#ifdef QT_GUI_LIB
+
 #include <QtTest/qtestassert.h>
 #include <QtTest/qtestsystem.h>
 #include <QtTest/qtestspontaneevent.h>
@@ -126,5 +129,7 @@ namespace QTest
 QT_END_NAMESPACE
 
 QT_END_HEADER
+
+#endif // QT_GUI_LIB
 
 #endif // QTESTMOUSE_H

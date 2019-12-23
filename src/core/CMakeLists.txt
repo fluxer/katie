@@ -170,50 +170,6 @@ set(CORE_PUBLIC_HEADERS
     QJsonValue
     QCommandLineOption
     QCommandLineParser
-    # aliases
-    QtPlugin
-    QtDebug
-    QtConfig
-    # mixed
-    QAbstractFileEngineHandler
-    QMetaTypeId2
-    QScopedPointerDeleter
-    QTypeInfo
-    QContiguousCacheData
-    QStringListIterator
-    QMutableLinkedListIterator
-    QMutableHashIterator
-    QFutureInterfaceBase
-    QTextStreamManipulator
-    QLinkedListNode
-    QLinkedListIterator
-    QIncompatibleFlag
-    QFutureIterator
-    QVariantMap
-    QVariantList
-    QVariantHash
-    QAbstractListModel
-    QAbstractTableModel
-    QProcessEnvironment
-    QModelIndex
-    QModelIndexList
-    QSizeF
-    QRectF
-    QLineF
-    QWeakPointer
-    QDate
-    QTime
-    QListIterator
-    QMetaMethod
-    QMetaEnum
-    QMutexLocker
-    QScopedArrayPointer
-    QJsonParseError
-    QPersistentModelIndex
-    QVectorData
-    # obsolete
-    QFlags
-    Qt
 )
 
 include(codecs/codecs.cmake)

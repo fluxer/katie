@@ -325,7 +325,7 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
     }
 
     ulong fdlen = file.size();
-    const char *filedata = (char *) file.map(0, fdlen);
+    const char *filedata = reinterpret_cast<char*>(file.map(0, fdlen));
     if (filedata == 0) {
         // try reading the data into memory instead
         const QByteArray data = file.readAll();
@@ -992,10 +992,7 @@ QLibrary::LoadHints QLibrary::loadHints() const
 /* Internal, for debugging */
 bool qt_debug_component()
 {
-    static int debug_env = -1;
-    if (debug_env == -1)
-       debug_env = QT_PREPEND_NAMESPACE(qgetenv)("QT_DEBUG_PLUGINS").toInt();
-
+    static int debug_env = qgetenv("QT_DEBUG_PLUGINS").toInt();
     return debug_env != 0;
 }
 

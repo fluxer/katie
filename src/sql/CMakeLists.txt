@@ -16,11 +16,6 @@ set(SQL_PUBLIC_HEADERS
     QSqlRelationalTableModel
     QSqlResult
     QSqlTableModel
-    # mixed
-    QSqlDriverCreator
-    QSqlDriverCreatorBase
-    QSqlDriverFactoryInterface
-    QSqlRelation
 )
 
 include(kernel/kernel.cmake)

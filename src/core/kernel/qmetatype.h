@@ -54,15 +54,14 @@ public:
     enum Type {
         // these are merged with QVariant
         Void = 0, Bool = 1, Int = 2, UInt = 3, LongLong = 4, ULongLong = 5,
-        Double = 6, QChar = 7, QVariantMap = 8, QVariantList = 9,
-        QString = 10, QStringList = 11, QByteArray = 12,
-        QBitArray = 13, QDate = 14, QTime = 15, QDateTime = 16, QUrl = 17,
-        QLocale = 18, QRect = 19, QRectF = 20, QSize = 21, QSizeF = 22,
-        QLine = 23, QLineF = 24, QPoint = 25, QPointF = 26, QRegExp = 27,
-        QVariantHash = 28, QEasingCurve = 29, QJsonValue = 30,
-        QJsonObject = 31, QJsonArray = 32, QJsonDocument = 33,
-        LastCoreType = QJsonDocument,
-
+        Double = 6, Float = 7, QChar = 8, QString = 9, QStringList = 10,
+        QByteArray = 11, QBitArray = 12, QDate = 13, QTime = 14,
+        QDateTime = 15, QUrl = 16, QLocale = 17, QRect = 18, QRectF = 19,
+        QSize = 20, QSizeF = 21, QLine = 22, QLineF = 23, QPoint = 24,
+        QPointF = 25, QRegExp = 26, QEasingCurve = 27, QJsonValue = 28,
+        QJsonObject = 29, QJsonArray = 30, QJsonDocument = 31,
+        QVariantHash = 32, QVariantList = 33, QVariantMap = 34,
+        LastCoreType = QVariantMap,
 
         FirstGuiType = 64 /* QFont */,
         QFont = 64, QPixmap = 65, QBrush = 66, QColor = 67, QPalette = 68,
@@ -75,8 +74,8 @@ public:
 
         FirstCoreExtType = 128 /* VoidStar */,
         VoidStar = 128, Long = 129, Short = 130, Char = 131, ULong = 132,
-        UShort = 133, UChar = 134, Float = 135, QObjectStar = 136, QWidgetStar = 137,
-        QVariant = 138,
+        UShort = 133, UChar = 134, QObjectStar = 135, QWidgetStar = 136,
+        QVariant = 137,
         LastCoreExtType = QVariant,
 
 // This logic must match the one in qglobal.h
@@ -319,9 +318,8 @@ Q_DECLARE_BUILTIN_METATYPE(uint, UInt)
 Q_DECLARE_BUILTIN_METATYPE(qlonglong, LongLong)
 Q_DECLARE_BUILTIN_METATYPE(qulonglong, ULongLong)
 Q_DECLARE_BUILTIN_METATYPE(double, Double)
+Q_DECLARE_BUILTIN_METATYPE(float, Float)
 Q_DECLARE_BUILTIN_METATYPE(QChar, QChar)
-// QVariantMap
-// QVariantList
 Q_DECLARE_BUILTIN_METATYPE(QString, QString)
 Q_DECLARE_BUILTIN_METATYPE(QStringList, QStringList)
 Q_DECLARE_BUILTIN_METATYPE(QByteArray, QByteArray)
@@ -342,12 +340,14 @@ Q_DECLARE_BUILTIN_METATYPE(QPointF, QPointF)
 #ifndef QT_NO_REGEXP
 Q_DECLARE_BUILTIN_METATYPE(QRegExp, QRegExp)
 #endif
-// QVariantHash
 Q_DECLARE_BUILTIN_METATYPE(QEasingCurve, QEasingCurve)
 Q_DECLARE_BUILTIN_METATYPE(QJsonValue, QJsonValue)
 Q_DECLARE_BUILTIN_METATYPE(QJsonObject, QJsonObject)
 Q_DECLARE_BUILTIN_METATYPE(QJsonArray, QJsonArray)
 Q_DECLARE_BUILTIN_METATYPE(QJsonDocument, QJsonDocument)
+// QVariantHash
+// QVariantList
+// QVariantMap
 
 Q_DECLARE_BUILTIN_METATYPE(QFont, QFont)
 Q_DECLARE_BUILTIN_METATYPE(QPixmap, QPixmap)
@@ -381,7 +381,6 @@ Q_DECLARE_BUILTIN_METATYPE(signed char, Char)
 Q_DECLARE_BUILTIN_METATYPE(ulong, ULong)
 Q_DECLARE_BUILTIN_METATYPE(ushort, UShort)
 Q_DECLARE_BUILTIN_METATYPE(uchar, UChar)
-Q_DECLARE_BUILTIN_METATYPE(float, Float)
 Q_DECLARE_BUILTIN_METATYPE(QObject *, QObjectStar)
 Q_DECLARE_BUILTIN_METATYPE(QWidget *, QWidgetStar)
 Q_DECLARE_BUILTIN_METATYPE(QVariant, QVariant)
