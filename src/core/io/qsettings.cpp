@@ -283,7 +283,6 @@ static bool ini_settings_write(QIODevice &device, const QSettings::SettingsMap &
     return true;
 }
 
-
 // ************************************************************************
 // QSettingsPrivate
 static QSettingsCustomFormat getSettingsFormat(QSettings::Format format)
@@ -352,6 +351,42 @@ QString getSettingsPath(QSettings::Scope scope, const QString &filename, const Q
         fallbackdir.currentPath() + QDir::separator() + nameandext;
     }
     return fallback + QDir::separator() + nameandext;
+}
+
+class QSettingsLocker
+{
+public:
+    QSettingsLocker();
+    ~QSettingsLocker();
+
+    void addMutex(QMutex *mutex);
+    void lock();
+
+private:
+    QList<QMutex*> mutexes;
+};
+
+QSettingsLocker::QSettingsLocker()
+{
+}
+
+QSettingsLocker::~QSettingsLocker()
+{
+    foreach (QMutex *mutex, mutexes) {
+        mutex->unlock();
+    }
+}
+
+void QSettingsLocker::addMutex(QMutex *mutex)
+{
+    mutexes.append(mutex);
+}
+
+void QSettingsLocker::lock()
+{
+    foreach (QMutex *mutex, mutexes) {
+        mutex->lock();
+    }
 }
 
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)
@@ -425,6 +460,17 @@ void QSettingsPrivate::write()
     }
 
     QMutexLocker locker(qSettingsMutex());
+    QSettingsLocker settingslocker;
+    for (int i = 0; i < qGlobalSettings()->size(); i++) {
+        QSettings *setting = qGlobalSettings()->at(i);
+        QSettingsPrivate *settingpriv = setting->d_func();
+        if (settingpriv != this && settingpriv->filename == filename) {
+            settingslocker.addMutex(&settingpriv->mutex);
+        }
+    }
+    settingslocker.lock();
+    locker.unlock();
+
     QFile file(filename);
     if (Q_UNLIKELY(!file.open(QFile::WriteOnly))) {
         status = QSettings::AccessError;
