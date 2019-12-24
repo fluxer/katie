@@ -212,19 +212,19 @@ static bool ini_settings_read(QIODevice &device, QSettings::SettingsMap &map)
             continue;
         }
 
-        const QList<QByteArray> splitline = line.split('=');
-        if (splitline.size() < 2) {
+        // extract key/value
+        const int separatorpos = line.indexOf('=');
+        if (separatorpos < 1) {
             continue;
         }
 
-        const QByteArray key = splitline.at(0).trimmed();
-        const QByteArray value = splitline.at(1).trimmed();
+        const QByteArray key = line.left(separatorpos).trimmed();
+        const QByteArray value = line.mid(separatorpos + 1).trimmed();
         const QVariant variantvalue = QSettingsPrivate::stringToVariant(value);
         if (section.isEmpty()) {
             map.insert(key, variantvalue);
         } else {
-            const QString actualkey = section + QLatin1Char('/') + key;
-            map.insert(actualkey, variantvalue);
+            map.insert(section + '/' + key, variantvalue);
         }
 
         parsedsomething = true;
@@ -239,20 +239,12 @@ static bool ini_settings_write(QIODevice &device, const QSettings::SettingsMap &
     QString lastsection;
     foreach (const QString &key, map.keys()) {
         QString section;
-        int keypos = 0;
-        const QList<QString> splitkey = key.split(QLatin1Char('/'));
-        if (splitkey.size() > 1) {
-            section = QLatin1Char('[') + splitkey.at(0) + QLatin1String("]\n");
-            keypos = 1;
-        }
-
-        QString keyname;
-        for (int i = keypos; i < splitkey.size(); i++) {
-            if (i == keypos) {
-                keyname += splitkey.at(i);
-            } else {
-                keyname += QLatin1Char('/') + splitkey.at(i);
-            }
+        QString actualkey = key;
+        // extract section from the key
+        const int separatorpos = key.indexOf(QLatin1Char('/'));
+        if (separatorpos > 1) {
+            section = QLatin1Char('[') + key.left(separatorpos) + QLatin1String("]\n");
+            actualkey = key.mid(separatorpos + 1, key.size() - separatorpos - 1);
         }
 
         if (section != lastsection) {
@@ -267,7 +259,7 @@ static bool ini_settings_write(QIODevice &device, const QSettings::SettingsMap &
         }
         lastsection = section;
 
-        if (!device.write(keyname.toAscii())) {
+        if (!device.write(actualkey.toAscii())) {
             return false;
         }
 
@@ -277,7 +269,7 @@ static bool ini_settings_write(QIODevice &device, const QSettings::SettingsMap &
             return false;
         }
 
-        // qDebug() << "ini_settings_write" << section << keyname << variantvalue;
+        // qDebug() << "ini_settings_write" << section << actualkey << stringvalue;
     }
 
     return true;
