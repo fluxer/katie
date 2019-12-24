@@ -25,6 +25,7 @@ override_dh_auto_build:
 
 override_dh_auto_install:
 	dh_auto_install
+	rm -vrf debian/katie-git/etc/
 
 override_dh_auto_clean:
 	dh_auto_clean
