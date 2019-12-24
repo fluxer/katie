@@ -398,15 +398,15 @@ void QSettingsPrivate::read()
         return;
     }
 
-    QSettings::SettingsMap syncMap;
-    if (Q_UNLIKELY(!readFunc(file, syncMap))) {
+    QSettings::SettingsMap readmap;
+    if (Q_UNLIKELY(!readFunc(file, readmap))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::read: could not read %s", filename.toLocal8Bit().constData());
         return;
     }
 
-    foreach (const QString &key, syncMap.keys()) {
-        map.insert(key, syncMap.value(key));
+    foreach (const QString &key, readmap.keys()) {
+        map.insert(key, readmap.value(key));
     }
 
     timestamp = info.lastModified();
@@ -414,12 +414,17 @@ void QSettingsPrivate::read()
 
 void QSettingsPrivate::write()
 {
+    QSettings::SettingsMap checkmap = map;
     QFileInfo info(filename);
     const QDateTime newstamp = info.lastModified();
     if (timestamp < newstamp || !newstamp.isValid()) {
         QSettingsPrivate::read();
     }
+    if (checkmap == map) {
+        return;
+    }
 
+    QMutexLocker lock(qSettingsMutex());
     QFile file(filename);
     if (Q_UNLIKELY(!file.open(QFile::WriteOnly))) {
         status = QSettings::AccessError;
