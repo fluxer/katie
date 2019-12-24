@@ -47,21 +47,13 @@
 
 #include "qdatetime.h"
 #include "qstringlist.h"
-
-#ifndef QT_NO_QOBJECT
 #include "qobject_p.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
 class Q_AUTOTEST_EXPORT QSettingsPrivate
-#ifndef QT_NO_QOBJECT
     : public QObjectPrivate
-#endif
 {
-#ifdef QT_NO_QOBJECT
-    QSettings *q_ptr;
-#endif
     Q_DECLARE_PUBLIC(QSettings)
 
 public:
@@ -71,13 +63,12 @@ public:
 
     void read();
     void write();
+    void notify();
 
     // INI parser functions
     static QString variantToString(const QVariant &v);
     static QVariant stringToVariant(const QString &s);
     static QStringList splitArgs(const QString &s, int idx);
-
-    void notify();
 
     QSettings::Format format;
     QSettings::Scope scope;
