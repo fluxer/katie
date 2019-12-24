@@ -2,13 +2,8 @@
 set(EXTRA_XML_LIBS KtCore)
 
 set(XML_PUBLIC_HEADERS
-    ${XML_PUBLIC_HEADERS}
     # all headers are aliases
 )
-
-include(dom/dom.cmake)
-include(kernel/kernel.cmake)
-include(sax/sax.cmake)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
@@ -18,6 +13,10 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
 )
+
+include(dom/dom.cmake)
+include(kernel/kernel.cmake)
+include(sax/sax.cmake)
 
 set(XML_HEADERS
     ${XML_HEADERS}

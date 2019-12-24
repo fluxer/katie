@@ -177,16 +177,6 @@ set(CORE_PUBLIC_HEADERS
     QCommandLineParser
 )
 
-include(codecs/codecs.cmake)
-include(concurrent/concurrent.cmake)
-include(global/global.cmake)
-include(io/io.cmake)
-include(json/json.cmake)
-include(kernel/kernel.cmake)
-include(plugin/plugin.cmake)
-include(thread/thread.cmake)
-include(tools/tools.cmake)
-
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
@@ -197,6 +187,16 @@ include_directories(
     ${OPENSSL_INCLUDE_DIR}
     ${ZSTD_INCLUDES}
 )
+
+include(codecs/codecs.cmake)
+include(concurrent/concurrent.cmake)
+include(global/global.cmake)
+include(io/io.cmake)
+include(json/json.cmake)
+include(kernel/kernel.cmake)
+include(plugin/plugin.cmake)
+include(thread/thread.cmake)
+include(tools/tools.cmake)
 
 if(${KATIE_PLATFORM} STREQUAL "linux")
     set(EXTRA_CORE_LIBS
