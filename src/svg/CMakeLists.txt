@@ -1,6 +1,7 @@
 # add_definitions()
 set(EXTRA_SVG_LIBS
     KtCore KtXml KtGui
+    ${ZLIB_LIBRARIES}
 )
 
 set(SVG_PUBLIC_HEADERS
