@@ -39,11 +39,6 @@
 
 #include <QtCore>
 #include <QtSql>
-#include "qdebug.h"
-
-#ifdef Q_OS_LINUX
-#include <pthread.h>
-#endif
 
 const QString qtest(qTableName("qtest", __FILE__));
 // set this define if Oracle is built with threading support
@@ -142,9 +137,7 @@ public:
             q.bindValue(1, "threaddy");
             q.bindValue(2, 10);
             QVERIFY_SQL(q, exec());
-#ifdef Q_OS_LINUX
-            pthread_yield();
-#endif
+            QThread::yieldCurrentThread();
         }
     }
 
@@ -180,9 +173,7 @@ public:
             q2.bindValue("id", q1.value(0));
             q1.clear();
             QVERIFY_SQL(q2, exec());
-#ifdef Q_OS_LINUX
-            pthread_yield();
-#endif
+            QThread::yieldCurrentThread();
         }
     }
 
