@@ -424,7 +424,7 @@ void QSettingsPrivate::write()
         return;
     }
 
-    QMutexLocker lock(qSettingsMutex());
+    QMutexLocker locker(qSettingsMutex());
     QFile file(filename);
     if (Q_UNLIKELY(!file.open(QFile::WriteOnly))) {
         status = QSettings::AccessError;
