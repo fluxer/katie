@@ -35,7 +35,6 @@
 #include "qsharedmemory_p.h"
 #include "qsystemsemaphore.h"
 #include "qdir.h"
-#include "qcryptographichash.h"
 #include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
@@ -55,11 +54,7 @@ QString QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,
     if (key.isEmpty())
         return QString();
 
-    QString part1 = key;
-    part1.replace(QRegExp(QLatin1String("[^A-Za-z]")), QString());
-
-    QByteArray hex = QCryptographicHash::hash(key.toUtf8(), QCryptographicHash::Sha1).toHex();
-    QString result = (part1 + QString::fromLatin1(hex.constData()));
+    QString result = prefix + key.toUtf8().toHex();
 #if defined(QT_POSIX_IPC)
     return QLatin1Char('/') + result;
 #else
