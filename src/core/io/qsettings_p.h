@@ -79,7 +79,7 @@ public:
     QSettings::ReadFunc readFunc;
     QSettings::WriteFunc writeFunc;
     QDateTime timestamp;
-    QMutex mutex;
+    bool shouldwrite;
 };
 
 QT_END_NAMESPACE

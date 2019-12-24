@@ -345,44 +345,8 @@ QString getSettingsPath(QSettings::Scope scope, const QString &filename, const Q
     return fallback + QDir::separator() + nameandext;
 }
 
-class QSettingsLocker
-{
-public:
-    QSettingsLocker();
-    ~QSettingsLocker();
-
-    void addMutex(QMutex *mutex);
-    void lock();
-
-private:
-    QList<QMutex*> mutexes;
-};
-
-QSettingsLocker::QSettingsLocker()
-{
-}
-
-QSettingsLocker::~QSettingsLocker()
-{
-    foreach (QMutex *mutex, mutexes) {
-        mutex->unlock();
-    }
-}
-
-void QSettingsLocker::addMutex(QMutex *mutex)
-{
-    mutexes.append(mutex);
-}
-
-void QSettingsLocker::lock()
-{
-    foreach (QMutex *mutex, mutexes) {
-        mutex->lock();
-    }
-}
-
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)
-    : format(format), scope(scope), status(QSettings::NoError)
+    : format(format), scope(scope), status(QSettings::NoError), shouldwrite(false)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(scope, QCoreApplication::applicationName(), handler.extension);
@@ -391,7 +355,7 @@ QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope sc
 }
 
 QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
-    : format(format), scope(QSettings::UserScope), status(QSettings::NoError)
+    : format(format), scope(QSettings::UserScope), status(QSettings::NoError), shouldwrite(false)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(scope, fileName, handler.extension);
@@ -441,28 +405,17 @@ void QSettingsPrivate::read()
 
 void QSettingsPrivate::write()
 {
-    QSettings::SettingsMap checkmap = map;
+    if (!shouldwrite) {
+        return;
+    }
+
     QFileInfo info(filename);
     const QDateTime newstamp = info.lastModified();
     if (timestamp < newstamp || !newstamp.isValid()) {
         QSettingsPrivate::read();
     }
-    if (checkmap == map) {
-        return;
-    }
 
     QMutexLocker locker(qSettingsMutex());
-    QSettingsLocker settingslocker;
-    for (int i = 0; i < qGlobalSettings()->size(); i++) {
-        QSettings *setting = qGlobalSettings()->at(i);
-        QSettingsPrivate *settingpriv = setting->d_func();
-        if (settingpriv != this && settingpriv->filename == filename) {
-            settingslocker.addMutex(&settingpriv->mutex);
-        }
-    }
-    settingslocker.lock();
-    locker.unlock();
-
     QFile file(filename);
     if (Q_UNLIKELY(!file.open(QFile::WriteOnly))) {
         status = QSettings::AccessError;
@@ -480,6 +433,8 @@ void QSettingsPrivate::write()
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::write: could not write %s", filename.toLocal8Bit().constData());
     }
+
+    shouldwrite = false;
 }
 
 void QSettingsPrivate::notify()
@@ -490,6 +445,7 @@ void QSettingsPrivate::notify()
         QSettings *setting = qGlobalSettings()->at(i);
         if (setting != q && setting->fileName() == q->fileName()) {
             setting->d_func()->map = map;
+            setting->d_func()->shouldwrite = shouldwrite;
         }
     }
 }
@@ -1041,6 +997,7 @@ void QSettings::clear()
 {
     Q_D(QSettings);
     d->map.clear();
+    d->shouldwrite = true;
     d->notify();
 }
 
@@ -1173,6 +1130,7 @@ void QSettings::setValue(const QString &key, const QVariant &value)
 {
     Q_D(QSettings);
     d->map.insert(key, value);
+    d->shouldwrite = true;
     d->notify();
 }
 
@@ -1185,6 +1143,7 @@ void QSettings::remove(const QString &key)
 {
     Q_D(QSettings);
     d->map.remove(key);
+    d->shouldwrite = true;
     d->notify();
 }
 
