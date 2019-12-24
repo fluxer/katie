@@ -1,10 +1,12 @@
 add_definitions(
     -DDBUS_API_SUBJECT_TO_CHANGE
 )
-set(EXTRA_DBUS_LIBS KtCore KtXml ${DBUS_LIBRARIES})
+set(EXTRA_DBUS_LIBS
+    KtCore KtXml
+    ${DBUS_LIBRARIES}
+)
 
 set(DBUS_PUBLIC_HEADERS
-    ${DBUS_PUBLIC_HEADERS}
     QDBusAbstractAdaptor
     QDBusAbstractInterface
     QDBusArgument
@@ -36,7 +38,6 @@ include_directories(
 )
 
 set(DBUS_HEADERS
-    ${DBUS_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusargument.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusconnectioninterface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuserror.h
@@ -71,7 +72,6 @@ set(DBUS_HEADERS
 )
 
 set(DBUS_SOURCES
-    ${DBUS_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusconnection.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusconnectioninterface.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuserror.cpp
@@ -105,7 +105,7 @@ katie_generate_package(KtDBus "KtCore KtXml")
 katie_setup_target(KtDBus ${DBUS_SOURCES} ${DBUS_HEADERS})
 
 add_library(KtDBus ${KATIE_TYPE} ${KtDBus_SOURCES})
-target_link_libraries(KtDBus ${EXTRA_DBUS_LIBS})
+target_link_libraries(KtDBus PRIVATE ${EXTRA_DBUS_LIBS})
 set_target_properties(KtDBus PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

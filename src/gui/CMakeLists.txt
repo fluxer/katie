@@ -1,8 +1,14 @@
 # add_definitions()
-set(EXTRA_GUI_LIBS KtCore KtXml ${FREETYPE_LIBRARIES} ${X11_LIBRARIES} ${X11_X11_LIB} ${X11_Xt_LIB} ${X11_Xi_LIB})
+set(EXTRA_GUI_LIBS
+    KtCore KtXml
+    ${FREETYPE_LIBRARIES}
+    ${X11_LIBRARIES}
+    ${X11_X11_LIB}
+    ${X11_Xt_LIB}
+    ${X11_Xi_LIB}
+)
 
 set(GUI_PUBLIC_HEADERS
-    ${GUI_PUBLIC_HEADERS}
     QPropertyAnimation
     QPauseAnimation
     QAnimationGroup
@@ -299,6 +305,20 @@ set(GUI_PUBLIC_HEADERS
     QGuiPlatformPlugin
 )
 
+include_directories(
+    ${CMAKE_BINARY_DIR}/include
+    ${CMAKE_BINARY_DIR}/privateinclude
+    ${CMAKE_BINARY_DIR}/include/QtCore
+    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
+    ${CMAKE_BINARY_DIR}/include/QtXml
+    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
+    ${CMAKE_BINARY_DIR}/include/QtGui
+    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
+    ${FREETYPE_INCLUDE_DIRS}
+    ${X11_INCLUDE_DIR}
+    ${ICU_INCLUDES}
+)
+
 include(accessible/accessible.cmake)
 include(animation/animation.cmake)
 include(dialogs/dialogs.cmake)
@@ -313,20 +333,6 @@ include(styles/styles.cmake)
 include(text/text.cmake)
 include(util/util.cmake)
 include(widgets/widgets.cmake)
-
-include_directories(
-    ${CMAKE_BINARY_DIR}/include
-    ${CMAKE_BINARY_DIR}/privateinclude
-    ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
-    ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
-    ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
-    ${FREETYPE_INCLUDE_DIRS}
-    ${X11_INCLUDE_DIR}
-    ${ICU_INCLUDES}
-)
 
 # keep in sync with the top-level CMake file, only libraries setup is needed here
 foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xinput Xext)
@@ -407,7 +413,7 @@ katie_generate_package(KtGui "KtCore KtXml")
 katie_setup_target(KtGui ${GUI_SOURCES} ${GUI_HEADERS})
 
 add_library(KtGui ${KATIE_TYPE} ${KtGui_SOURCES})
-target_link_libraries(KtGui ${EXTRA_GUI_LIBS})
+target_link_libraries(KtGui PRIVATE ${EXTRA_GUI_LIBS})
 set_target_properties(KtGui PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

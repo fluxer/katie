@@ -1,5 +1,7 @@
 # add_definitions()
-set(EXTRA_QTSCRIPT_LIBS KtCore KtScript KtGui KtScriptTools)
+set(EXTRA_QTSCRIPT_LIBS
+    KtCore KtScript KtGui KtScriptTools
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include

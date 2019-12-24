@@ -1,12 +1,11 @@
 # add_definitions()
-set(EXTRA_SCRIPTTOOLS_LIBS KtCore KtGui KtScript)
-
-set(SCRIPTTOOLS_PUBLIC_HEADERS
-    ${SSCRIPTTOOLS_PUBLIC_HEADERS}
-    QScriptEngineDebugger
+set(EXTRA_SCRIPTTOOLS_LIBS
+    KtCore KtGui KtScript
 )
 
-include(debugging/debugging.cmake)
+set(SCRIPTTOOLS_PUBLIC_HEADERS
+    QScriptEngineDebugger
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
@@ -21,6 +20,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtScriptTools
 )
 
+include(debugging/debugging.cmake)
+
 set(SCRIPTTOOLS_HEADERS
     ${SCRIPTTOOLS_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/qscripttoolscommon_p.h
@@ -32,7 +33,7 @@ katie_generate_package(KtScriptTools "KtCore KtGui KtScript")
 katie_setup_target(KtScriptTools ${SCRIPTTOOLS_SOURCES} ${SCRIPTTOOLS_HEADERS})
 
 add_library(KtScriptTools ${KATIE_TYPE} ${KtScriptTools_SOURCES})
-target_link_libraries(KtScriptTools ${EXTRA_SCRIPTTOOLS_LIBS})
+target_link_libraries(KtScriptTools PRIVATE ${EXTRA_SCRIPTTOOLS_LIBS})
 set_target_properties(KtScriptTools PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

@@ -1,5 +1,7 @@
 add_definitions(-DQT_UIC)
-set(EXTRA_UIC_LIBS KtCore KtXml)
+set(EXTRA_UIC_LIBS
+    KtCore KtXml
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include

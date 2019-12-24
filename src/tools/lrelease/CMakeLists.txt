@@ -2,7 +2,9 @@ add_definitions(
     -DQT_NO_CAST_FROM_ASCII
     -DQT_NO_CAST_TO_ASCII
 )
-set(EXTRA_LRELEASE_LIBS KtCore KtXml)
+set(EXTRA_LRELEASE_LIBS
+    KtCore KtXml
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include

@@ -1,5 +1,7 @@
 # add_definitions()
-set(EXTRA_PARTICLES_LIBS KtDeclarative)
+set(EXTRA_PARTICLES_LIBS
+    KtDeclarative
+)
 
 set(PARTICLES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativeparticles.cpp

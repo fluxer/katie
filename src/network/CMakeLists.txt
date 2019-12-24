@@ -1,8 +1,9 @@
 # add_definitions()
-set(EXTRA_NETWORK_LIBS KtCore)
+set(EXTRA_NETWORK_LIBS
+    KtCore
+)
 
 set(NETWORK_PUBLIC_HEADERS
-    ${NETWORK_PUBLIC_HEADERS}
     QAbstractNetworkCache
     QAbstractSocket
     QAuthenticator
@@ -38,12 +39,6 @@ set(NETWORK_PUBLIC_HEADERS
     QHttpMultiPart
 )
 
-include(access/access.cmake)
-include(bearer/bearer.cmake)
-include(kernel/kernel.cmake)
-include(socket/socket.cmake)
-include(ssl/ssl.cmake)
-
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
@@ -53,6 +48,12 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
     ${OPENSSL_INCLUDE_DIR}
 )
+
+include(access/access.cmake)
+include(bearer/bearer.cmake)
+include(kernel/kernel.cmake)
+include(socket/socket.cmake)
+include(ssl/ssl.cmake)
 
 if(WITH_RESOLV AND RESOLV_FOUND)
     set(EXTRA_NETWORK_LIBS
@@ -73,7 +74,7 @@ katie_generate_package(KtNetwork "KtCore")
 katie_setup_target(KtNetwork ${NETWORK_SOURCES} ${NETWORK_HEADERS})
 
 add_library(KtNetwork ${KATIE_TYPE} ${KtNetwork_SOURCES})
-target_link_libraries(KtNetwork ${EXTRA_NETWORK_LIBS})
+target_link_libraries(KtNetwork PRIVATE ${EXTRA_NETWORK_LIBS})
 set_target_properties(KtNetwork PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

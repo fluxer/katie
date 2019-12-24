@@ -1,5 +1,7 @@
 add_definitions(-DQT_RCC)
-set(EXTRA_RCC_LIBS KtCore KtCore KtXml)
+set(EXTRA_RCC_LIBS
+    KtCore KtXml
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include

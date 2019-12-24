@@ -1,5 +1,7 @@
 # add_definitions()
-set(EXTRA_QDBUSVIEWER_LIBS KtCore KtGui KtXml KtDBus)
+set(EXTRA_QDBUSVIEWER_LIBS
+    KtCore KtGui KtXml KtDBus
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
@@ -15,14 +17,12 @@ include_directories(
 )
 
 set(QDBUSVIEWER_HEADERS
-    ${QDBUSVIEWER_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusmodel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/propertydialog.h
 )
 
 set(QDBUSVIEWER_SOURCES
-    ${QDBUSVIEWER_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusmodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/propertydialog.cpp
@@ -35,7 +35,6 @@ configure_file(
     ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
     @ONLY
 )
-
 
 katie_setup_target(qdbusviewer ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
 

@@ -1,8 +1,7 @@
 # add_definitions()
-set(EXTRA_DESIGNERBIN_LIBS KtCore KtGui KtXml KtDesigner KtDesignerComponents KtUiTools)
-
-include(fontpanel/fontpanel.cmake)
-include(qttoolbardialog/qttoolbardialog.cmake)
+set(EXTRA_DESIGNERBIN_LIBS
+    KtCore KtGui KtXml KtDesigner KtDesignerComponents KtUiTools
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
@@ -24,6 +23,9 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/fontpanel
     ${CMAKE_CURRENT_BINARY_DIR}/qttoolbardialog
 )
+
+include(fontpanel/fontpanel.cmake)
+include(qttoolbardialog/qttoolbardialog.cmake)
 
 set(DESIGNERBIN_HEADERS
     ${DESIGNERBIN_HEADERS}

@@ -2,16 +2,11 @@ add_definitions(
     -DQT_SCRIPT_LIB
     -DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}"
 )
-set(EXTRA_DESIGNER_LIBS KtCore KtGui KtXml KtUiTools)
-
-include(extension/extension.cmake)
-include(sdk/sdk.cmake)
-include(shared/shared.cmake)
-
-add_subdirectory(components)
+set(EXTRA_DESIGNER_LIBS
+    KtCore KtGui KtXml KtUiTools
+)
 
 set(DESIGNER_PUBLIC_HEADERS
-    ${DESIGNER_PUBLIC_HEADERS}
     QAbstractExtensionFactory
     QAbstractExtensionManager
     QAbstractFormBuilder
@@ -51,6 +46,12 @@ set(DESIGNER_PUBLIC_HEADERS
     QExtensionManager
     QFormBuilder
 )
+
+include(extension/extension.cmake)
+include(sdk/sdk.cmake)
+include(shared/shared.cmake)
+
+add_subdirectory(components)
 
 set(DESIGNER_HEADERS
     ${DESIGNER_HEADERS}
@@ -111,7 +112,7 @@ add_library(KtDesigner ${KATIE_TYPE} ${KtDesigner_SOURCES}
     $<TARGET_OBJECTS:sharedqtpropertybrowser>
     $<TARGET_OBJECTS:sharedfindwidget>
 )
-target_link_libraries(KtDesigner ${EXTRA_DESIGNER_LIBS})
+target_link_libraries(KtDesigner PRIVATE ${EXTRA_DESIGNER_LIBS})
 set_target_properties(KtDesigner PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

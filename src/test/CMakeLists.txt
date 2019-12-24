@@ -6,7 +6,6 @@ add_definitions(
 set(EXTRA_TEST_LIBS KtCore)
 
 set(TEST_PUBLIC_HEADERS
-    ${TEST_PUBLIC_HEADERS}
     QSignalSpy
     QTest
     QTestBasicStreamer
@@ -23,8 +22,18 @@ set(TEST_PUBLIC_HEADERS
     QTestXunitStreamer
 )
 
+include_directories(
+    ${CMAKE_BINARY_DIR}/include
+    ${CMAKE_BINARY_DIR}/privateinclude
+    ${CMAKE_BINARY_DIR}/include/QtCore
+    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
+    ${CMAKE_BINARY_DIR}/include/QtTest
+    ${CMAKE_BINARY_DIR}/privateinclude/QtTest
+    # for fftw and valgrind
+    ${CMAKE_SOURCE_DIR}/src
+)
+
 set(TEST_HEADERS
-    ${TEST_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmark.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qsignalspy.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestaccessible.h
@@ -67,7 +76,6 @@ set(TEST_HEADERS
 )
 
 set(TEST_SOURCES
-    ${TEST_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestcase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestlog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qtesttable.cpp
@@ -93,17 +101,6 @@ set(TEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestfilelogger.cpp
 )
 
-include_directories(
-    ${CMAKE_BINARY_DIR}/include
-    ${CMAKE_BINARY_DIR}/privateinclude
-    ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
-    ${CMAKE_BINARY_DIR}/include/QtTest
-    ${CMAKE_BINARY_DIR}/privateinclude/QtTest
-    # for fftw and valgrind
-    ${CMAKE_SOURCE_DIR}/src
-)
-
 katie_generate_misc("${TEST_HEADERS}" QtTest)
 katie_generate_public("${TEST_PUBLIC_HEADERS}" QtTest)
 katie_generate_package(KtTest "KtCore")
@@ -117,7 +114,7 @@ else()
 endif()
 
 add_library(KtTest ${KATIE_TYPE} ${KtTest_SOURCES})
-target_link_libraries(KtTest ${EXTRA_TEST_LIBS})
+target_link_libraries(KtTest PRIVATE ${EXTRA_TEST_LIBS})
 set_target_properties(KtTest PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

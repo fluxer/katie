@@ -1,5 +1,7 @@
 # add_definitions()
-set(EXTRA_GESTURES_LIBS KtDeclarative)
+set(EXTRA_GESTURES_LIBS
+    KtDeclarative
+)
 
 set(GESTURES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativegesturearea.cpp

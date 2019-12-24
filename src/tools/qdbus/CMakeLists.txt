@@ -1,4 +1,7 @@
-set(EXTRA_QDBUS_LIBS KtCore KtXml KtDBus)
+# add_definitions()
+set(EXTRA_QDBUS_LIBS
+    KtCore KtXml KtDBus
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
