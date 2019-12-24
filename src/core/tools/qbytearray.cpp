@@ -3389,10 +3389,10 @@ qulonglong QByteArray::toULongLong(bool *ok, int base) const
 int QByteArray::toInt(bool *ok, int base) const
 {
     qlonglong v = toLongLong(ok, base);
-    if (v < INT_MIN || v > INT_MAX) {
+    if (Q_UNLIKELY(v < INT_MIN || v > INT_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return int(v);
 }
@@ -3420,10 +3420,10 @@ int QByteArray::toInt(bool *ok, int base) const
 uint QByteArray::toUInt(bool *ok, int base) const
 {
     qulonglong v = toULongLong(ok, base);
-    if (v > UINT_MAX) {
+    if (Q_UNLIKELY(v > UINT_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return uint(v);
 }
@@ -3454,10 +3454,10 @@ uint QByteArray::toUInt(bool *ok, int base) const
 long QByteArray::toLong(bool *ok, int base) const
 {
     qlonglong v = toLongLong(ok, base);
-    if (v < LONG_MIN || v > LONG_MAX) {
+    if (Q_UNLIKELY(v < LONG_MIN || v > LONG_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return long(v);
 }
@@ -3486,10 +3486,10 @@ long QByteArray::toLong(bool *ok, int base) const
 ulong QByteArray::toULong(bool *ok, int base) const
 {
     qulonglong v = toULongLong(ok, base);
-    if (v > ULONG_MAX) {
+    if (Q_UNLIKELY(v > ULONG_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return ulong(v);
 }
@@ -3517,10 +3517,10 @@ ulong QByteArray::toULong(bool *ok, int base) const
 short QByteArray::toShort(bool *ok, int base) const
 {
     qlonglong v = toLongLong(ok, base);
-    if (v < SHRT_MIN || v > SHRT_MAX) {
+    if (Q_UNLIKELY(v < SHRT_MIN || v > SHRT_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return short(v);
 }
@@ -3548,10 +3548,10 @@ short QByteArray::toShort(bool *ok, int base) const
 ushort QByteArray::toUShort(bool *ok, int base) const
 {
     qulonglong v = toULongLong(ok, base);
-    if (v > USHRT_MAX) {
+    if (Q_UNLIKELY(v > USHRT_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return ushort(v);
 }
