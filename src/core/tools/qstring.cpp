@@ -5745,17 +5745,24 @@ QString QString::normalized(QString::NormalizationForm mode, QChar::UnicodeVersi
     }
 
     error = U_ZERO_ERROR;
-    const int srcsize = size();
-    QString result(QMAXUSTRLEN(srcsize), Qt::Uninitialized);
+    const bool normresult = unorm2_isNormalized(normalizer,
+        reinterpret_cast<const UChar*>(unicode()), size(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QString::normalized: unorm2_isNormalized() failed %s", u_errorName(error));
+        return QString();
+    } else if (normresult) {
+        // already normalized
+        return *this;
+    }
+
+    error = U_ZERO_ERROR;
+    QString result(QMAXUSTRLEN(size()), Qt::Uninitialized);
     const int decresult = unorm2_normalize(normalizer,
-        reinterpret_cast<const UChar*>(unicode()), srcsize,
+        reinterpret_cast<const UChar*>(unicode()), size(),
         reinterpret_cast<UChar*>(result.data()), result.size(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QString::normalized: unorm2_normalize() failed %s", u_errorName(error));
         return QString();
-    } else if (Q_UNLIKELY(decresult < 1)) {
-        // no normalization value
-        return *this;
     }
 
     result.resize(decresult);
