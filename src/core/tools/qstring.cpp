@@ -6437,20 +6437,16 @@ QString QString::multiArg(int numArgs, const QString **args) const
 */
 bool QString::isRightToLeft() const
 {
-    const ushort *p = d->data;
-    const ushort *end = p + d->size;
-    while (p < end) {
-        switch(QChar::direction(*p))
-        {
-        case QChar::DirL:
-            return false;
-        case QChar::DirR:
-        case QChar::DirAL:
-            return true;
-        default:
-            break;
+    for (int i = 0; i < d->size; i++) {
+        switch(QChar::direction(d->data[i])) {
+            case QChar::DirL:
+                return false;
+            case QChar::DirR:
+            case QChar::DirAL:
+                return true;
+            default:
+                break;
         }
-        ++p;
     }
     return false;
 }
