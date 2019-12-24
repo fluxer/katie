@@ -588,7 +588,7 @@ void tst_QVariant::canConvert()
     QCOMPARE(val.canConvert(QVariant::Date), DateCast);
     QCOMPARE(val.canConvert(QVariant::DateTime), DateTimeCast);
     QCOMPARE(val.canConvert(QVariant::Double), DoubleCast);
-    QCOMPARE(val.canConvert(QVariant::Type(QMetaType::Float)), DoubleCast);
+    QCOMPARE(val.canConvert(QVariant::Float), DoubleCast);
     QCOMPARE(val.canConvert(QVariant::Font), FontCast);
     QCOMPARE(val.canConvert(QVariant::Icon), IconCast);
     QCOMPARE(val.canConvert(QVariant::Image), ImageCast);
@@ -1647,17 +1647,17 @@ void tst_QVariant::writeToReadFromDataStream()
             break;
 
         // compare types know by QMetaType but not QVariant (QVariant::operator==() knows nothing about them)
-        case QMetaType::Int:
+        case QVariant::Int:
             QCOMPARE(qvariant_cast<long>(readVariant), qvariant_cast<long>(writeVariant));
             QCOMPARE(qvariant_cast<short>(readVariant), qvariant_cast<short>(writeVariant));
             QCOMPARE(qvariant_cast<char>(readVariant), qvariant_cast<char>(writeVariant));
             break;
-        case QMetaType::UInt:
+        case QVariant::UInt:
             QCOMPARE(qvariant_cast<ulong>(readVariant), qvariant_cast<ulong>(writeVariant));
             QCOMPARE(qvariant_cast<ushort>(readVariant), qvariant_cast<ushort>(writeVariant));
             QCOMPARE(qvariant_cast<uchar>(readVariant), qvariant_cast<uchar>(writeVariant));
             break;
-        case QMetaType::Float:
+        case QVariant::Float:
             {
                 // the uninitialized float can be NaN (observed on Windows Mobile 5 ARMv4i)
                 float readFloat = qvariant_cast<float>(readVariant);
@@ -1968,7 +1968,7 @@ void tst_QVariant::typeName_data()
     QTest::newRow("17") << int(QVariant::UInt) << QByteArray("uint");
     QTest::newRow("18") << int(QVariant::Bool) << QByteArray("bool");
     QTest::newRow("19") << int(QVariant::Double) << QByteArray("double");
-    QTest::newRow("20") << int(QMetaType::Float) << QByteArray("float");
+    QTest::newRow("20") << int(QVariant::Float) << QByteArray("float");
     QTest::newRow("21") << int(QVariant::Polygon) << QByteArray("QPolygon");
     QTest::newRow("22") << int(QVariant::Region) << QByteArray("QRegion");
     QTest::newRow("23") << int(QVariant::Bitmap) << QByteArray("QBitmap");
@@ -2307,7 +2307,7 @@ void tst_QVariant::basicUserType()
         float f = 4.5f;
         v = QVariant(QMetaType::Float, &f);
     }
-    QCOMPARE(v.userType(), int(QMetaType::Float));
+    QCOMPARE(v.type(), QVariant::Float);
     QCOMPARE(v.toDouble(), 4.5);
 
     {
@@ -2857,7 +2857,7 @@ void tst_QVariant::task172061_invalidDate() const
     QVERIFY(!variant.convert(QVariant::Double));
 
     variant = foo;
-    QVERIFY(!variant.convert(QVariant::Type(QMetaType::Float)));
+    QVERIFY(!variant.convert(QVariant::Float));
 }
 
 struct WontCompare
