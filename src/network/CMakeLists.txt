@@ -1,6 +1,7 @@
 # add_definitions()
 set(EXTRA_NETWORK_LIBS
     KtCore
+    ${OPENSSL_LIBRARIES}
 )
 
 set(NETWORK_PUBLIC_HEADERS
