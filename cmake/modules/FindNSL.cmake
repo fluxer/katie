@@ -33,7 +33,7 @@ find_library(NSL_LIBRARIES
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(NSL
-    REQUIRED_VARS NSL_INCLUDES NSL_LIBRARIES
+    REQUIRED_VARS NSL_LIBRARIES NSL_INCLUDES
 )
 
 mark_as_advanced(NSL_INCLUDES NSL_LIBRARIES)
