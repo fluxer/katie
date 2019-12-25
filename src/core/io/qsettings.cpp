@@ -619,10 +619,9 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
     QSettings can safely be used from different processes (which can
     be different instances of your application running at the same
     time or different applications altogether) to read and write to
-    the same system locations. It uses advisory file locking and a
-    smart merging algorithm to ensure data integrity. Note that sync()
-    imports changes made by other processes (in addition to writing
-    the changes from this QSettings).
+    the same system locations. Note that sync() imports changes made
+    by other processes (in addition to writing the changes from this
+    QSettings).
 
     \section1 Platform-Specific Notes
 
@@ -662,8 +661,9 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
 
     \warning No attempt is made to lock the file thus if you want to use
     QSettings to access settings file used by applications that do not use
-    QSettings you will have to do file locking yourself. QSettings guarantees
-    only internal state integrity.
+    QSettings you will have to do file locking yourself. As is with QFile
+    or any other disk I/O related class, QSettings guarantees only internal
+    state integrity.
 
     \sa QVariant, QSessionManager
 */
