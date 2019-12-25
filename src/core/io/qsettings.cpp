@@ -112,6 +112,7 @@ static bool ini_settings_read(QIODevice &device, QSettings::SettingsMap &map)
         const QByteArray line = device.readLine().trimmed();
         if (line.isEmpty() || line.startsWith(';')) {
             continue;
+        // extract section
         } else if (line.startsWith('[') && line.endsWith(']')) {
             section = line.mid(1, line.size() - 2);
             continue;
@@ -584,9 +585,7 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
        save another key as "mainwindow".
 
     \o Do not use slashes ('/' and '\\') in key names. The backslash
-       character is used to separate sub keys (see below). On
-       windows '\\' are converted by QSettings to '/', which makes
-       them identical.
+       character is used to separate sub keys (see below).
     \endlist
 
     You can form hierarchical keys using the '/' character as a
@@ -709,14 +708,14 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
 
     \list
     \o  If you store types that QVariant can't convert to QString
-        (e.g., QPoint, QRect, and QSize), Qt uses an \c{@}-based
-        syntax to encode the type. For example:
+        (e.g., QPoint, QRect, and QSize),an \c{@}-based syntax to
+        encode the type is used. For example:
 
         \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 8
 
         To minimize compatibility issues, any \c @ that doesn't
         appear at the first position in the value or that isn't
-        followed by a Qt type (\c Point, \c Rect, \c Size, etc.) is
+        followed by a type (\c Point, \c Rect, \c Size, etc.) is
         treated as a normal character.
 
     \o  Although backslash is a special character in INI files, most
@@ -729,19 +728,12 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
         provides no API for reading or writing such entries.
 
     \o  The INI file format has severe restrictions on the syntax of
-        a key. Qt works around this by using \c % as an escape
-        character in keys. In addition, if you save a top-level
-        setting (a key with no slashes in it, e.g., "someKey"), it
-        will appear in the INI file's "General" section. To avoid
-        overwriting other keys, if you save something using the a key
-        such as "General/someKey", the key will be located in the
-        "%General" section, \e not in the "General" section.
+        a key. If you save a top-level setting (a key with no slashes
+        in it, e.g., "someKey"), it will appear in the INI file without
+        section.
 
-    \o  Following the philosophy that we should be liberal in what
-        we accept and conservative in what we generate, QSettings
-        will accept Latin-1 encoded INI files, but generate pure
-        ASCII files, where non-ASCII values are encoded using standard
-        INI escape sequences.
+    \o  The codec used to read and write the settings files is the
+        same codec used for C-strings, UTF-8 by default.
     \endlist
 
     \sa registerFormat()
@@ -817,11 +809,8 @@ QSettings::QSettings(Format format, Scope scope, QObject *parent)
     file.
 
     \list
-    \o QSettings provides no way of reading INI "path" entries, i.e., entries
-       with unescaped slash characters. (This is because these entries are
-       ambiguous and cannot be resolved automatically.)
     \o In INI files, QSettings uses the \c @ character as a metacharacter in some
-       contexts, to encode Qt-specific data types (e.g., \c @Rect), and might
+       contexts, to encode Katie-specific data types (e.g., \c @Rect), and might
        therefore misinterpret it when it occurs in pure INI files.
     \endlist
 
@@ -872,8 +861,7 @@ QSettings::~QSettings()
 }
 
 /*!
-    Removes all entries in the primary location associated to this
-    QSettings object.
+    Removes all entries in the file associated to this QSettings object.
 
     \sa remove()
 */
@@ -890,9 +878,8 @@ void QSettings::clear()
     settings that have been changed in the meantime by another
     application.
 
-    This function is called automatically from QSettings's destructor and
-    by the event loop at regular intervals, so you normally don't need to
-    call it yourself.
+    This function is called automatically from QSettings's destructor,
+    so you normally don't need to call it yourself.
 
     \sa status()
 */
