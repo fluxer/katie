@@ -589,7 +589,7 @@ static qlonglong qConvertToNumber(const QVariant::Private *d, bool *ok)
 {
     *ok = true;
 
-    switch (int(d->type)) {
+    switch (d->type) {
     case QVariant::String:
         return v_cast<QString>(d)->toLongLong(ok);
     case QVariant::Char:
@@ -628,7 +628,7 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
 {
     *ok = true;
 
-    switch (int(d->type)) {
+    switch (d->type) {
     case QVariant::String:
         return v_cast<QString>(d)->toULongLong(ok);
     case QVariant::Char:
@@ -2746,14 +2746,13 @@ QVariantList QVariant::toList() const
 */
 bool QVariant::canConvert(Type t) const
 {
-    const int currentType = d.type;
-    if (currentType == t)
+    if (d.type == t)
         return true;
 
     if (t == QVariant::Invalid) {
         return false;
     } else if (t == QVariant::Bool) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Double:
         case QVariant::Float:
         case QVariant::Int:
@@ -2768,7 +2767,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::Int) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::UInt:
         case QVariant::String:
         case QVariant::Double:
@@ -2790,7 +2789,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::UInt) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Int:
         case QVariant::String:
         case QVariant::Double:
@@ -2805,7 +2804,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::LongLong) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Int:
         case QVariant::String:
         case QVariant::Double:
@@ -2820,7 +2819,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::ULongLong) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Int:
         case QVariant::String:
         case QVariant::Double:
@@ -2835,7 +2834,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::Double) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Int:
         case QVariant::String:
         case QVariant::ULongLong:
@@ -2849,7 +2848,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::Float) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Int:
         case QVariant::String:
         case QVariant::ULongLong:
@@ -2863,7 +2862,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::Char) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Int:
         case QVariant::UInt:
         case QVariant::LongLong:
@@ -2874,14 +2873,14 @@ bool QVariant::canConvert(Type t) const
         }
     /* Map */
     } else if (t == QVariant::List) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::StringList:
             return true;
         default:
             return false;
         }
     } else if (t == QVariant::String) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::ByteArray:
         case QVariant::Int:
         case QVariant::UInt:
@@ -2905,7 +2904,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::StringList) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::List:
         case QVariant::String:
             return true;
@@ -2913,7 +2912,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::ByteArray) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::String:
         case QVariant::Int:
         case QVariant::UInt:
@@ -2929,7 +2928,7 @@ bool QVariant::canConvert(Type t) const
         }
     /* BitArray */
     } else if (t == QVariant::Date || t == QVariant::Time) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::String:
         case QVariant::DateTime:
             return true;
@@ -2937,7 +2936,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::DateTime) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::String:
         case QVariant::Date:
             return true;
@@ -2945,7 +2944,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::Url) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::String:
             return true;
         default:
@@ -2953,56 +2952,56 @@ bool QVariant::canConvert(Type t) const
         }
     /* Locale */
     } else if (t == QVariant::Rect) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::RectF:
             return true;
         default:
             return false;
         }
     } else if (t == QVariant::RectF) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Rect:
             return true;
         default:
             return false;
         }
     } else if (t == QVariant::Size) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::SizeF:
             return true;
         default:
             return false;
         }
     } else if (t == QVariant::SizeF) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Size:
             return true;
         default:
             return false;
         }
     } else if (t == QVariant::Line) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::LineF:
             return true;
         default:
             return false;
         }
     } else if (t == QVariant::LineF) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Line:
             return true;
         default:
             return false;
         }
     } else if (t == QVariant::Point) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::PointF:
             return true;
         default:
             return false;
         }
     } else if (t == QVariant::PointF) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Point:
             return true;
         default:
@@ -3011,7 +3010,7 @@ bool QVariant::canConvert(Type t) const
     /* RegExp */
     /* Hash */
     /* EasingCurve */
-    } else if (currentType == QVariant::JsonValue) {
+    } else if (d.type == QVariant::JsonValue) {
         switch (int(t)) {
         case QVariant::String:
         case QVariant::Bool:
@@ -3034,7 +3033,7 @@ bool QVariant::canConvert(Type t) const
         default:
             return false;
         }
-    } else if (currentType == QVariant::JsonObject) {
+    } else if (d.type == QVariant::JsonObject) {
         switch (t) {
         case QVariant::Map:
         case QVariant::Hash:
@@ -3042,7 +3041,7 @@ bool QVariant::canConvert(Type t) const
         default:
             return false;
         }
-    } else if (currentType == QVariant::JsonArray) {
+    } else if (d.type == QVariant::JsonArray) {
         switch (t) {
         case QVariant::List:
             return true;
@@ -3051,14 +3050,14 @@ bool QVariant::canConvert(Type t) const
         }
     /* JsonDocument */
     } else if (t == QVariant::Font) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::String:
             return true;
         default:
             return false;
         }
     } else if (t == QVariant::Pixmap) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Image:
         case QVariant::Bitmap:
         case QVariant::Brush:
@@ -3067,7 +3066,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::Brush) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Color:
         case QVariant::Pixmap:
             return true;
@@ -3075,7 +3074,7 @@ bool QVariant::canConvert(Type t) const
             return false;
         }
     } else if (t == QVariant::Color) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::String:
         case QVariant::ByteArray:
         case QVariant::Brush:
@@ -3086,7 +3085,7 @@ bool QVariant::canConvert(Type t) const
     /* Palette */
     /* Icon */
     } else if (t == QVariant::Image) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Pixmap:
         case QVariant::Bitmap:
             return true;
@@ -3096,7 +3095,7 @@ bool QVariant::canConvert(Type t) const
     /* Polygon */
     /* Region */
     } else if (t == QVariant::Bitmap) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::Pixmap:
         case QVariant::Image:
             return true;
@@ -3106,7 +3105,7 @@ bool QVariant::canConvert(Type t) const
     /* Cursor */
     /* SizePolicy */
     } else if (t == QVariant::KeySequence) {
-        switch (currentType) {
+        switch (d.type) {
         case QVariant::String:
         case QVariant::Int:
             return true;
@@ -3133,7 +3132,7 @@ bool QVariant::canConvert(Type t) const
         case QMetaType::Short:
         case QMetaType::UShort: {
             // almost the same as Int case
-            switch (currentType) {
+            switch (d.type) {
                 case QVariant::Int: // Int included
                 case QVariant::UInt:
                 case QVariant::String:
