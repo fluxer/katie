@@ -65,6 +65,7 @@ There are several things you should be aware before considering Katie:
   - improved signal/slot template arguments handling
   - improved OpenSSL default certificate and certificates directory detection
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
+  - improved cross-compilation support
   - script component relies on PCRE instead of internal copy
   - tests and benchmarks can be run without prior installation
 
