@@ -356,7 +356,7 @@ QString QSettingsPrivate::variantToString(const QVariant &v)
         case QVariant::ByteArray: {
             QByteArray a = v.toByteArray();
             result = QLatin1String("@ByteArray(");
-            result += QString::fromLatin1(a.constData(), a.size());
+            result += QString::fromAscii(a.constData(), a.size());
             result += QLatin1Char(')');
             break;
         }
@@ -417,7 +417,7 @@ QString QSettingsPrivate::variantToString(const QVariant &v)
             }
 
             result = QLatin1String("@Variant(");
-            result += QString::fromLatin1(a.constData(), a.size());
+            result += QString::fromAscii(a.constData(), a.size());
             result += QLatin1Char(')');
 #else
             Q_ASSERT(!"QSettings: Cannot save custom types without QDataStream support");
