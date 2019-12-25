@@ -1212,7 +1212,6 @@ void QDBusConnectionPrivate::relaySignal(QObject *obj, const QMetaObject *mo, in
 void QDBusConnectionPrivate::serviceOwnerChangedNoLock(const QString &name,
                                                        const QString &oldOwner, const QString &newOwner)
 {
-    Q_UNUSED(oldOwner);
 //    QDBusWriteLocker locker(UpdateSignalHookOwnerAction, this);
     WatchedServicesHash::Iterator it = watchedServices.find(name);
     if (it == watchedServices.end())
