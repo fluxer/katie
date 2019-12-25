@@ -248,9 +248,6 @@
         <xsl:text>();&endl;&endl;</xsl:text>
 
         <xsl:text>    void read(QXmlStreamReader &amp;reader);&endl;</xsl:text>
-        <xsl:text>#ifdef QUILOADER_QDOM_READ&endl;</xsl:text>
-        <xsl:text>    void read(const QDomElement &amp;node);&endl;</xsl:text>
-        <xsl:text>#endif&endl;</xsl:text>
         <xsl:text>    void write(QXmlStreamWriter &amp;writer, const QString &amp;tagName = QString()) const;&endl;</xsl:text>
 
         <xsl:if test="$hasText">
@@ -398,21 +395,12 @@
 #include &lt;QtCore/QXmlStreamWriter&gt;
 #include &lt;QtCore/qglobal.h&gt;
 
-#if defined(QT_UIC3)
- #define QUILOADER_QDOM_READ
-#endif
-
 QT_BEGIN_NAMESPACE
-
-#ifdef QUILOADER_QDOM_READ
- class QDomElement;
-#endif
-
 
 #define QDESIGNER_UILIB_EXTERN Q_DECL_EXPORT
 #define QDESIGNER_UILIB_IMPORT Q_DECL_IMPORT
 
-#if defined(QT_DESIGNER_STATIC) || defined(QT_UIC) || defined(QT_UIC3)
+#if defined(QT_DESIGNER_STATIC) || defined(QT_UIC)
 #  define QDESIGNER_UILIB_EXPORT
 #elif defined(QDESIGNER_UILIB_LIBRARY)
 #  define QDESIGNER_UILIB_EXPORT QDESIGNER_UILIB_EXTERN
