@@ -431,10 +431,10 @@ QVariant QSettingsPrivate::stringToVariant(const QString &s)
     if (s.startsWith(QLatin1Char('@'))) {
         if (s.endsWith(QLatin1Char(')'))) {
             if (s.startsWith(QLatin1String("@ByteArray("))) {
-                return QVariant(s.toLatin1().mid(11, s.size() - 12));
+                return QVariant(s.toAscii().mid(11, s.size() - 12));
             } else if (s.startsWith(QLatin1String("@Variant("))) {
 #ifndef QT_NO_DATASTREAM
-                QByteArray a(s.toLatin1().mid(9));
+                QByteArray a(s.toAscii().mid(9));
                 QDataStream stream(&a, QIODevice::ReadOnly);
                 QVariant result;
                 stream >> result;
