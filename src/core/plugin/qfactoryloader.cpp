@@ -101,14 +101,13 @@ void QFactoryLoader::updateDir(const QString &pluginDir, QSettings *settings)
         return;
 
     QStringList plugins = QDir(path).entryList(QDir::Files);
-    QLibraryPrivate *library = 0;
     for (int j = 0; j < plugins.count(); ++j) {
         QString fileName = QDir::cleanPath(path + QLatin1Char('/') + plugins.at(j));
 
         if (qt_debug_component()) {
             qDebug() << "QFactoryLoader::QFactoryLoader() looking at" << fileName;
         }
-        library = QLibraryPrivate::findOrCreate(QFileInfo(fileName).canonicalFilePath());
+        QLibraryPrivate *library = QLibraryPrivate::findOrCreate(QFileInfo(fileName).canonicalFilePath());
         if (!library->isPlugin(settings)) {
             if (qt_debug_component()) {
                 qDebug() << library->errorString;
