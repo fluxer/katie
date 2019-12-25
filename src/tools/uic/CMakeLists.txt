@@ -1,4 +1,4 @@
-add_definitions(-DQT_UIC)
+add_definitions(-DQT_DESIGNER_STATIC)
 set(EXTRA_UIC_LIBS
     KtCore KtXml
 )

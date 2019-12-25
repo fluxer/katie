@@ -1,4 +1,4 @@
-add_definitions(-DQT_RCC)
+# add_definitions()
 set(EXTRA_RCC_LIBS
     KtCore KtXml
 )
