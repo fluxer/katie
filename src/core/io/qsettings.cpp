@@ -346,21 +346,17 @@ void QSettingsPrivate::notify()
 
 QString QSettingsPrivate::variantToString(const QVariant &v)
 {
-    QString result;
-
     switch (v.type()) {
-        case QVariant::Invalid:
-            result = QLatin1String("@Invalid()");
-            break;
-
+        case QVariant::Invalid: {
+            return QLatin1String("@Invalid()");
+        }
         case QVariant::ByteArray: {
             QByteArray a = v.toByteArray();
-            result = QLatin1String("@ByteArray(");
+            QString result = QLatin1String("@ByteArray(");
             result += QString::fromAscii(a.constData(), a.size());
             result += QLatin1Char(')');
-            break;
+            return result;
         }
-
         case QVariant::String:
         case QVariant::LongLong:
         case QVariant::ULongLong:
@@ -369,15 +365,15 @@ QString QSettingsPrivate::variantToString(const QVariant &v)
         case QVariant::Bool:
         case QVariant::Double:
         case QVariant::KeySequence: {
-            result = v.toString();
+            QString result = v.toString();
             if (result.startsWith(QLatin1Char('@')))
                 result.prepend(QLatin1Char('@'));
-            break;
+            return result;
         }
 #ifndef QT_NO_GEOM_VARIANT
         case QVariant::Rect: {
             QRect r = qvariant_cast<QRect>(v);
-            result += QLatin1String("@Rect(");
+            QString result = QLatin1String("@Rect(");
             result += QString::number(r.x());
             result += QLatin1Char(' ');
             result += QString::number(r.y());
@@ -386,25 +382,25 @@ QString QSettingsPrivate::variantToString(const QVariant &v)
             result += QLatin1Char(' ');
             result += QString::number(r.height());
             result += QLatin1Char(')');
-            break;
+            return result;
         }
         case QVariant::Size: {
             QSize s = qvariant_cast<QSize>(v);
-            result += QLatin1String("@Size(");
+            QString result = QLatin1String("@Size(");
             result += QString::number(s.width());
             result += QLatin1Char(' ');
             result += QString::number(s.height());
             result += QLatin1Char(')');
-            break;
+            return result;
         }
         case QVariant::Point: {
             QPoint p = qvariant_cast<QPoint>(v);
-            result += QLatin1String("@Point(");
+            QString result = QLatin1String("@Point(");
             result += QString::number(p.x());
             result += QLatin1Char(' ');
             result += QString::number(p.y());
             result += QLatin1Char(')');
-            break;
+            return result;
         }
 #endif // !QT_NO_GEOM_VARIANT
 
@@ -416,17 +412,17 @@ QString QSettingsPrivate::variantToString(const QVariant &v)
                 s << v;
             }
 
-            result = QLatin1String("@Variant(");
+            QString result = QLatin1String("@Variant(");
             result += QString::fromAscii(a.constData(), a.size());
             result += QLatin1Char(')');
+            return result;
 #else
             Q_ASSERT(!"QSettings: Cannot save custom types without QDataStream support");
+            return QString();
 #endif
-            break;
         }
     }
-
-    return result;
+    return QString();
 }
 
 
