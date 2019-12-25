@@ -53,8 +53,6 @@
 #include "qrect.h"
 #endif // !QT_NO_GEOM_VARIANT
 
-#include <stdlib.h>
-
 QT_BEGIN_NAMESPACE
 
 struct QSettingsCustomFormat
@@ -70,99 +68,6 @@ typedef QVector<QSettings*> QSettingsVector;
 Q_GLOBAL_STATIC(QSettingsVector, qGlobalSettings)
 Q_GLOBAL_STATIC(CustomFormatVector, customFormatVectorFunc)
 Q_GLOBAL_STATIC(QMutex, qSettingsMutex)
-
-static inline bool qt_isEvilFsTypeName(const char *name)
-{
-    return (qstrncmp(name, "nfs", 3) == 0
-            || qstrncmp(name, "autofs", 6) == 0
-            || qstrncmp(name, "cachefs", 7) == 0);
-}
-
-#if defined(Q_OS_BSD4) && !defined(Q_OS_NETBSD)
-QT_BEGIN_INCLUDE_NAMESPACE
-# include <sys/param.h>
-# include <sys/mount.h>
-QT_END_INCLUDE_NAMESPACE
-
-static inline bool qIsLikelyToBeNfs(int handle)
-{
-    struct statfs buf;
-    if (fstatfs(handle, &buf) != 0)
-        return false;
-    return qt_isEvilFsTypeName(buf.f_fstypename);
-}
-
-#elif defined(Q_OS_LINUX) || defined(Q_OS_HURD)
-QT_BEGIN_INCLUDE_NAMESPACE
-# include <sys/vfs.h>
-# ifdef QT_LINUXBASE
-   // LSB 3.2 has fstatfs in sys/statfs.h, sys/vfs.h is just an empty dummy header
-#  include <sys/statfs.h>
-# endif
-QT_END_INCLUDE_NAMESPACE
-# ifndef NFS_SUPER_MAGIC
-#  define NFS_SUPER_MAGIC       0x00006969
-# endif
-# ifndef AUTOFS_SUPER_MAGIC
-#  define AUTOFS_SUPER_MAGIC    0x00000187
-# endif
-# ifndef AUTOFSNG_SUPER_MAGIC
-#  define AUTOFSNG_SUPER_MAGIC  0x7d92b1a0
-# endif
-
-static inline bool qIsLikelyToBeNfs(int handle)
-{
-    struct statfs buf;
-    if (fstatfs(handle, &buf) != 0)
-        return false;
-    return buf.f_type == NFS_SUPER_MAGIC
-           || buf.f_type == AUTOFS_SUPER_MAGIC
-           || buf.f_type == AUTOFSNG_SUPER_MAGIC;
-}
-
-#elif defined(Q_OS_SOLARIS) || defined(Q_OS_AIX) || defined(Q_OS_HPUX) \
-      || defined(Q_OS_OSF) || defined(Q_OS_SCO) \
-      || defined(Q_OS_UNIXWARE) || defined(Q_OS_RELIANT) || defined(Q_OS_NETBSD)
-QT_BEGIN_INCLUDE_NAMESPACE
-# include <sys/statvfs.h>
-QT_END_INCLUDE_NAMESPACE
-
-static inline bool qIsLikelyToBeNfs(int handle)
-{
-    struct statvfs buf;
-    if (fstatvfs(handle, &buf) != 0)
-        return false;
-#if defined(Q_OS_NETBSD)
-    return qt_isEvilFsTypeName(buf.f_fstypename);
-#else
-    return qt_isEvilFsTypeName(buf.f_basetype);
-#endif
-}
-#else
-static inline inline bool qIsLikelyToBeNfs(int /* handle */)
-{
-    return true;
-}
-#endif
-
-static bool unixLock(int handle, int lockType)
-{
-    /*
-        NFS hangs on the fcntl() call below when statd or lockd isn't
-        running. There's no way to detect this. Our work-around for
-        now is to disable locking when we detect NFS (or AutoFS or
-        CacheFS, which are probably wrapping NFS).
-    */
-    if (qIsLikelyToBeNfs(handle))
-        return false;
-
-    struct flock fl;
-    fl.l_whence = SEEK_SET;
-    fl.l_start = 0;
-    fl.l_len = 0;
-    fl.l_type = lockType;
-    return fcntl(handle, F_SETLKW, &fl) == 0;
-}
 
 // ************************************************************************
 // Native format
@@ -383,12 +288,6 @@ void QSettingsPrivate::read()
         return;
     }
 
-    if (Q_UNLIKELY(!unixLock(file.handle(), F_RDLCK))) {
-        status = QSettings::AccessError;
-        qWarning("QSettingsPrivate::read: failed to lock %s", filename.toLocal8Bit().constData());
-        return;
-    }
-
     QSettings::SettingsMap readmap;
     if (Q_UNLIKELY(!readFunc(file, readmap))) {
         status = QSettings::FormatError;
@@ -420,12 +319,6 @@ void QSettingsPrivate::write()
     if (Q_UNLIKELY(!file.open(QFile::WriteOnly))) {
         status = QSettings::AccessError;
         qWarning("QSettingsPrivate::write: failed to open %s", filename.toLocal8Bit().constData());
-        return;
-    }
-
-    if (Q_UNLIKELY(!unixLock(file.handle(), F_WRLCK))) {
-        status = QSettings::AccessError;
-        qWarning("QSettingsPrivate::write: failed to lock %s", filename.toLocal8Bit().constData());
         return;
     }
 
@@ -767,19 +660,10 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
     QSettings::IniFormat as second argument. You can then use the
     QSettings object to read and write settingsin the file.
 
-    \section2 Platform Limitations
-
-    While QSettings attempts to smooth over the differences between
-    the different supported platforms, there are still a few
-    differences that you should be aware of when porting your
-    application:
-
-    \list
-    \o On Unix systems, the advisory file locking is disabled if NFS (or AutoFS
-       or CacheFS) is detected to work around a bug in the NFS fcntl()
-       implementation, which hangs forever if statd or lockd aren't running.
-
-    \endlist
+    \warning No attempt is made to lock the file thus if you want to use
+    QSettings to access settings file used by applications that do not use
+    QSettings you will have to do file locking yourself. QSettings guarantees
+    only internal state integrity.
 
     \sa QVariant, QSessionManager
 */
