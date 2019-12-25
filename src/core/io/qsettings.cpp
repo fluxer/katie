@@ -983,7 +983,12 @@ bool QSettings::isWritable() const
 {
     Q_D(const QSettings);
     QFileInfo info(d->filename);
-    return info.isWritable();
+    if (info.isWritable()) {
+        return true;
+    }
+    // if the file does not exist, check if it can be created
+    QFileInfo dirinfo(info.absolutePath());
+    return dirinfo.isWritable();
 }
 
 /*!
