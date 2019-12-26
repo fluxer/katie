@@ -545,6 +545,25 @@ static const uint specialChars[] = {
 };
 enum { SpecialCharCount = sizeof(specialChars) / sizeof(uint) };
 
+static const struct DefaultFontTblData {
+    const QLatin1String name;
+    const bool fixedpitch;
+} DefaultFontTbl[] = {
+    { QLatin1String("Serif"), false },
+    { QLatin1String("Sans Serif"), false },
+    { QLatin1String("Monospace"), true },
+};
+static const qint16 DefaultFontTblSize = sizeof(DefaultFontTbl) / sizeof(DefaultFontTblData);
+
+static const char* PatternPropertiesTbl[] = {
+    FC_FAMILY, FC_STYLE, FC_WEIGHT, FC_SLANT,
+    FC_SPACING, FC_FILE, FC_INDEX,
+    FC_LANG, FC_CHARSET, FC_FOUNDRY, FC_SCALABLE, FC_PIXEL_SIZE, FC_WEIGHT,
+    FC_WIDTH,
+    FC_CAPABILITY,
+};
+static const qint16 PatternPropertiesTblSize = 15;
+
 static void loadFontConfig()
 {
     Q_ASSERT_X(qt_x11Data, "QFontDatabase",
@@ -581,18 +600,8 @@ static void loadFontConfig()
     {
         FcObjectSet *os = FcObjectSetCreate();
         FcPattern *pattern = FcPatternCreate();
-        const char *properties [] = {
-            FC_FAMILY, FC_STYLE, FC_WEIGHT, FC_SLANT,
-            FC_SPACING, FC_FILE, FC_INDEX,
-            FC_LANG, FC_CHARSET, FC_FOUNDRY, FC_SCALABLE, FC_PIXEL_SIZE, FC_WEIGHT,
-            FC_WIDTH,
-            FC_CAPABILITY,
-            (const char *)0
-        };
-        const char **p = properties;
-        while (*p) {
-            FcObjectSetAdd(os, *p);
-            ++p;
+        for (qint16 i = 0; i < PatternPropertiesTblSize; i++) {
+            FcObjectSetAdd(os, PatternPropertiesTbl[i]);
         }
         fonts = FcFontList(0, pattern, os);
         FcObjectSetDestroy(os);
@@ -670,34 +679,22 @@ static void loadFontConfig()
 
     FcFontSetDestroy (fonts);
 
-    struct FcDefaultFont {
-        const char *qtname;
-        bool fixed;
-    };
-    const FcDefaultFont defaults[] = {
-        { "Serif", false },
-        { "Sans Serif", false },
-        { "Monospace", true },
-        { 0, false }
-    };
-    const FcDefaultFont *f = defaults;
-    while (f->qtname) {
-        QtFontFamily *family = db->family(QLatin1String(f->qtname), true);
-        family->fixedPitch = f->fixed;
+    for (qint16 i = 0; i < DefaultFontTblSize; i++) {
+        QtFontFamily *family = db->family(DefaultFontTbl[i].name, true);
+        family->fixedPitch = DefaultFontTbl[i].fixedpitch;
         family->synthetic = true;
         QtFontFoundry *foundry = family->foundry(QString(), true);
 
         QtFontStyle::Key styleKey;
-        for (int i = 0; i < 4; ++i) {
-            styleKey.style = (i%2) ? QFont::StyleNormal : QFont::StyleItalic;
-            styleKey.weight = (i > 1) ? QFont::Bold : QFont::Normal;
+        for (int j = 0; j < 4; j++) {
+            styleKey.style = (j%2) ? QFont::StyleNormal : QFont::StyleItalic;
+            styleKey.weight = (j > 1) ? QFont::Bold : QFont::Normal;
             QtFontStyle *style = foundry->style(styleKey, QString(), true);
             style->smoothScalable = true;
             QtFontSize *size = style->pixelSize(SMOOTH_SCALABLE, true);
             QtFontEncoding *enc = size->encodingID(-1, 0, 0, 0, 0, true);
-            enc->pitch = (f->fixed ? 'm' : 'p');
+            enc->pitch = (DefaultFontTbl[i].fixedpitch ? 'm' : 'p');
         }
-        ++f;
     }
 }
 #endif // QT_NO_FONTCONFIG
