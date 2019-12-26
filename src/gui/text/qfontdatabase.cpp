@@ -670,9 +670,6 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
                          QtFontStyle::Key styleKey, int pixelSize, char pitch,
                          QtFontDesc *desc, int force_encoding_id)
 {
-    Q_UNUSED(force_encoding_id);
-    Q_UNUSED(pitch);
-
     desc->foundry = 0;
     desc->style = 0;
     desc->size = 0;
