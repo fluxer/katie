@@ -245,14 +245,7 @@ QString QFont::defaultFamily() const
     }
 }
 
-/*
-  Returns a last resort raw font name for the font matching algorithm.
-  This is used if even the last resort family is not available. It
-  returns \e something, almost no matter what.  The current
-  implementation tries a wide variety of common fonts, returning the
-  first one it finds. The implementation may change at any time.
-*/
-static const char * const tryFonts[] = {
+static const char* LastResortFontsTbl[] = {
     "-*-helvetica-medium-r-*-*-*-120-*-*-*-*-*-*",
     "-*-courier-medium-r-*-*-*-120-*-*-*-*-*-*",
     "-*-times-medium-r-*-*-*-120-*-*-*-*-*-*",
@@ -271,37 +264,35 @@ static const char * const tryFonts[] = {
     "8x13",
     "9x15",
     "fixed",
-    0
 };
+static const qint16 LastResortFontsTblSize = 18;
 
-// Returns true if the font exists, false otherwise
-static bool fontExists(const QString &fontName)
-{
-    int count;
-    char **fontNames = XListFonts(QX11Info::display(), (char*)fontName.toLatin1().constData(), 32768, &count);
-    if (fontNames) XFreeFontNames(fontNames);
-
-    return count != 0;
-}
-
+/*
+  Returns a last resort raw font name for the font matching algorithm.
+  This is used if even the last resort family is not available. It
+  returns \e something, almost no matter what.  The current
+  implementation tries a wide variety of common fonts, returning the
+  first one it finds. The implementation may change at any time.
+*/
 QString QFont::lastResortFont() const
 {
     static QString last;
 
     // already found
-    if (! last.isNull())
+    if (!last.isNull())
         return last;
 
-    int i = 0;
-    const char* f;
+    for (qint16 i = 0; i < LastResortFontsTblSize; i++) {
+        int count;
+        char **fontNames = XListFonts(QX11Info::display(), LastResortFontsTbl[i], SHRT_MAX, &count);
+        if (fontNames) {
+            XFreeFontNames(fontNames);
+        }
 
-    while ((f = tryFonts[i])) {
-        last = QString::fromLatin1(f);
-
-        if (fontExists(last))
+        if (count != 0) {
+            last = QString::fromLatin1(LastResortFontsTbl[i]);
             return last;
-
-        i++;
+        }
     }
 
 #if defined(CHECK_NULL)
