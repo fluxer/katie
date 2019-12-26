@@ -66,9 +66,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define QFONTLOADER_DEBUG
-#define QFONTLOADER_DEBUG_VERBOSE
-
 QT_BEGIN_NAMESPACE
 
 double qt_pixelSize(double pointSize, int dpi)
