@@ -48,11 +48,11 @@
 #include "qtextboundaryfinder.h"
 #include "qvarlengtharray.h"
 #include "qfont.h"
-#include "qfont_p.h"
 #include "qfontengine_p.h"
 #include "qunicodetables_p.h"
 #include "qtextdocument_p.h"
 #include "qapplication.h"
+#include "qx11info_x11.h"
 
 #if defined(Q_WS_X11)
 #   include "qfontengine_ft_p.h"
@@ -897,7 +897,7 @@ void QTextEngine::shapeText(int item) const
     QFixed wordSpacing = font.d->wordSpacing;
 
     if (letterSpacingIsAbsolute && letterSpacing.value())
-        letterSpacing *= font.d->dpi / qt_defaultDpiY();
+        letterSpacing *= font.d->dpi / QX11Info::appDpiY();
 
     if (letterSpacing != 0) {
         for (int i = 1; i < si.num_glyphs; ++i) {
@@ -2427,9 +2427,9 @@ QFixed QTextEngine::calculateTabWidth(int item, QFixed x) const
     if (block.docHandle() && block.docHandle()->layout()) {
         QPaintDevice *pdev = block.docHandle()->layout()->paintDevice();
         if (pdev)
-            dpiScale = QFixed::fromReal(pdev->logicalDpiY() / qreal(qt_defaultDpiY()));
+            dpiScale = QFixed::fromReal(pdev->logicalDpiY() / qreal(QX11Info::appDpiY()));
     } else {
-        dpiScale = QFixed::fromReal(fnt.d->dpi / qreal(qt_defaultDpiY()));
+        dpiScale = QFixed::fromReal(fnt.d->dpi / qreal(QX11Info::appDpiY()));
     }
 
     QList<QTextOption::Tab> tabArray = option.tabs();

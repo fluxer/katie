@@ -134,35 +134,8 @@ bool QFontDef::exactMatch(const QFontDef &other) const
        );
 }
 
-extern bool qt_is_gui_used;
-
-Q_GUI_EXPORT int qt_defaultDpiX()
-{
-    if (!qt_is_gui_used)
-        return 75;
-
-#ifdef Q_WS_X11
-    return QX11Info::appDpiX();
-#endif // Q_WS_X11
-}
-
-Q_GUI_EXPORT int qt_defaultDpiY()
-{
-    if (!qt_is_gui_used)
-        return 75;
-
-#ifdef Q_WS_X11
-    return QX11Info::appDpiY();
-#endif // Q_WS_X11
-}
-
-Q_GUI_EXPORT int qt_defaultDpi()
-{
-    return qt_defaultDpiY();
-}
-
 QFontPrivate::QFontPrivate()
-    : engineData(0), dpi(qt_defaultDpi()), screen(0),
+    : engineData(0), dpi(QX11Info::appDpiY()), screen(0),
       underline(false), overline(false), strikeOut(false), kerning(true),
       capital(QFont::MixedCase), letterSpacingIsAbsolute(false), scFont(0)
 {

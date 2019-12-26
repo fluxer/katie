@@ -50,6 +50,7 @@
 #include "qpalette.h"
 #include "qtextbrowser.h"
 #include "qthread.h"
+#include "qx11info_x11.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -120,7 +121,7 @@ static QSize getPixmapSize(QTextDocument *doc, const QTextImageFormat &format)
         if (pm.isNull())
             pm = getPixmap(doc, format);
         if (!pm.isNull())
-            scale = qreal(pdev->logicalDpiY()) / qreal(qt_defaultDpi());
+            scale = qreal(pdev->logicalDpiY()) / qreal(QX11Info::appDpiY());
     }
     size *= scale;
 
@@ -185,7 +186,7 @@ static QSize getImageSize(QTextDocument *doc, const QTextImageFormat &format)
         if (image.isNull())
             image = getImage(doc, format);
         if (!image.isNull())
-            scale = qreal(pdev->logicalDpiY()) / qreal(qt_defaultDpi());
+            scale = qreal(pdev->logicalDpiY()) / qreal(QX11Info::appDpiY());
     }
     size *= scale;
 

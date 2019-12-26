@@ -57,6 +57,7 @@
 #include "qstyle.h"
 #include "qbasictimer.h"
 #include "qfontmetrics.h"
+#include "qx11info_x11.h"
 
 #include <limits.h>
 
@@ -800,7 +801,7 @@ QFixed QTextDocumentLayoutPrivate::blockIndent(const QTextBlockFormat &blockForm
 
     qreal scale = 1;
     if (paintDevice) {
-        scale = qreal(paintDevice->logicalDpiY()) / qreal(qt_defaultDpi());
+        scale = qreal(paintDevice->logicalDpiY()) / qreal(QX11Info::appDpiY());
     }
 
     return QFixed::fromReal(indent * scale * document->indentWidth());
@@ -2542,7 +2543,7 @@ void QTextDocumentLayoutPrivate::layoutBlock(const QTextBlock &bl, int blockPosi
     if (previousBlockFormat) {
         qreal margin = qMax(blockFormat.topMargin(), previousBlockFormat->bottomMargin());
         if (margin > 0 && q->paintDevice()) {
-            margin *= qreal(q->paintDevice()->logicalDpiY()) / qreal(qt_defaultDpi());
+            margin *= qreal(q->paintDevice()->logicalDpiY()) / qreal(QX11Info::appDpiY());
         }
         layoutStruct->y += QFixed::fromReal(margin);
     }
@@ -2661,8 +2662,8 @@ void QTextDocumentLayoutPrivate::layoutBlock(const QTextBlock &bl, int blockPosi
             }
 
             QFixed lineBreakHeight, lineHeight, lineAdjustment;
-            qreal scaling = (q->paintDevice() && q->paintDevice()->logicalDpiY() != qt_defaultDpi()) ?
-                            qreal(q->paintDevice()->logicalDpiY()) / qreal(qt_defaultDpi()) : 1;
+            qreal scaling = (q->paintDevice() && q->paintDevice()->logicalDpiY() != QX11Info::appDpiY()) ?
+                            qreal(q->paintDevice()->logicalDpiY()) / qreal(QX11Info::appDpiY()) : 1;
             getLineHeightParams(blockFormat, line, scaling, &lineAdjustment, &lineBreakHeight, &lineHeight);
 
             if (layoutStruct->pageHeight > 0 && layoutStruct->absoluteY() + lineBreakHeight > layoutStruct->pageBottom) {
@@ -2699,8 +2700,8 @@ void QTextDocumentLayoutPrivate::layoutBlock(const QTextBlock &bl, int blockPosi
                 = qMax(layoutStruct->contentsWidth, QFixed::fromReal(line.x() + tl->lineAt(i).naturalTextWidth()) + totalRightMargin);
 
             QFixed lineBreakHeight, lineHeight, lineAdjustment;
-            qreal scaling = (q->paintDevice() && q->paintDevice()->logicalDpiY() != qt_defaultDpi()) ?
-                            qreal(q->paintDevice()->logicalDpiY()) / qreal(qt_defaultDpi()) : 1;
+            qreal scaling = (q->paintDevice() && q->paintDevice()->logicalDpiY() != QX11Info::appDpiY()) ?
+                            qreal(q->paintDevice()->logicalDpiY()) / qreal(QX11Info::appDpiY()) : 1;
             getLineHeightParams(blockFormat, line, scaling, &lineAdjustment, &lineBreakHeight, &lineHeight);
 
             if (layoutStruct->pageHeight != QFIXED_MAX) {
@@ -3263,14 +3264,14 @@ qreal QTextDocumentLayoutPrivate::scaleToDevice(qreal value) const
 {
     if (!paintDevice)
         return value;
-    return value * paintDevice->logicalDpiY() / qreal(qt_defaultDpi());
+    return value * paintDevice->logicalDpiY() / qreal(QX11Info::appDpiY());
 }
 
 QFixed QTextDocumentLayoutPrivate::scaleToDevice(QFixed value) const
 {
     if (!paintDevice)
         return value;
-    return value * QFixed(paintDevice->logicalDpiY()) / QFixed(qt_defaultDpi());
+    return value * QFixed(paintDevice->logicalDpiY()) / QFixed(QX11Info::appDpiY());
 }
 
 QT_END_NAMESPACE

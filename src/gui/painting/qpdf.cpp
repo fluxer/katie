@@ -47,7 +47,7 @@
 #include "qcups_p.h"
 #include "qprinterinfo.h"
 #include "qnumeric.h"
-#include "qfont_p.h"
+#include "qx11info_x11.h"
 
 #ifdef Q_OS_UNIX
 #include "qcore_unix_p.h" // overrides QT_OPEN
@@ -1606,7 +1606,7 @@ QPdfBaseEnginePrivate::QPdfBaseEnginePrivate(QPrinter::PrinterMode m)
     if (m == QPrinter::HighResolution)
         resolution = 1200;
     else if (m == QPrinter::ScreenResolution)
-        resolution = qt_defaultDpi();
+        resolution = QX11Info::appDpiY();
 
     postscript = false;
     currentObject = 1;

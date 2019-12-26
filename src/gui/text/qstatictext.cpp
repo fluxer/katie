@@ -46,6 +46,7 @@
 #include "qfontmetrics.h"
 #include "qabstracttextdocumentlayout.h"
 #include "qapplication.h"
+#include "qx11info_x11.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -503,11 +504,11 @@ namespace {
                 break;
             case PdmDpiX:
             case PdmPhysicalDpiX:
-                val = qt_defaultDpiX();
+                val = QX11Info::appDpiX();
                 break;
             case PdmDpiY:
             case PdmPhysicalDpiY:
-                val = qt_defaultDpiY();
+                val = QX11Info::appDpiY();
                 break;
             case PdmNumColors:
                 val = 16777216;

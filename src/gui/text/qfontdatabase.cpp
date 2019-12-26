@@ -1246,7 +1246,7 @@ QList<int> QFontDatabase::pointSizes(const QString &family,
 #ifdef Q_WS_X11
     int dpi = QX11Info::appDpiY();
 #else
-    const int dpi = qt_defaultDpiY(); // embedded
+    const int dpi = QX11Info::appDpiY(); // embedded
 #endif
 
     for (int j = 0; j < fam->count; j++) {
@@ -1346,7 +1346,7 @@ QList<int> QFontDatabase::smoothSizes(const QString &family,
 #ifdef Q_WS_X11
     const int dpi = QX11Info::appDpiY();
 #else
-    const int dpi = qt_defaultDpiY(); // embedded
+    const int dpi = QX11Info::appDpiY(); // embedded
 #endif
 
     for (int j = 0; j < fam->count; j++) {

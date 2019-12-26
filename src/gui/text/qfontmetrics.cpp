@@ -181,7 +181,7 @@ QFontMetrics::QFontMetrics(const QFont &font)
 */
 QFontMetrics::QFontMetrics(const QFont &font, QPaintDevice *paintdevice)
 {
-    int dpi = paintdevice ? paintdevice->logicalDpiY() : qt_defaultDpi();
+    int dpi = paintdevice ? paintdevice->logicalDpiY() : QX11Info::appDpiY();
 #ifdef Q_WS_X11
     const QX11Info *info = qt_x11Info(paintdevice);
     int screen = info ? info->screen() : 0;
@@ -1050,7 +1050,7 @@ QFontMetricsF::QFontMetricsF(const QFont &font)
 */
 QFontMetricsF::QFontMetricsF(const QFont &font, QPaintDevice *paintdevice)
 {
-    int dpi = paintdevice ? paintdevice->logicalDpiY() : qt_defaultDpi();
+    int dpi = paintdevice ? paintdevice->logicalDpiY() : QX11Info::appDpiY();
 #ifdef Q_WS_X11
     const QX11Info *info = qt_x11Info(paintdevice);
     int screen = info ? info->screen() : 0;
