@@ -45,8 +45,6 @@ QT_BEGIN_NAMESPACE
 struct QX11InfoData;
 class QX11Info;
 class QPaintDevice;
-class QApplicationPrivate;
-class QX11InfoPrivate;
 
 class Q_GUI_EXPORT QX11Info
 {
