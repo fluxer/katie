@@ -483,73 +483,40 @@ QByteArray qUncompress(const uchar* data, int nbytes)
     if (Q_UNLIKELY(!data)) {
         qWarning("qUncompress: Data is null");
         return QByteArray();
-    }
-    if (Q_UNLIKELY(nbytes <= 4)) {
-        if (nbytes < 4 || (data[0]!=0 || data[1]!=0 || data[2]!=0 || data[3]!=0))
-            qWarning("qUncompress: Input data is corrupted");
+    } else if (Q_UNLIKELY(nbytes <= 4)) {
+        qWarning("qUncompress: Input data is corrupted");
         return QByteArray();
     }
-    ulong expectedSize = (data[0] << 24) | (data[1] << 16) |
-                       (data[2] <<  8) | (data[3]      );
-    ulong len = qMax(expectedSize, 1ul);
-    QScopedPointer<QByteArray::Data, QScopedPointerPodDeleter> d;
 
-    forever {
-        ulong alloc = len;
-        if (Q_UNLIKELY(len  >= ulong(1 << 31) - sizeof(QByteArray::Data))) {
-            //QByteArray does not support that huge size anyway.
-            qWarning("qUncompress: Input data is corrupted");
-            return QByteArray();
+    ulong len = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | (data[3]);
+    QByteArray baunzip(len, Qt::Uninitialized);
+    const int res = ::uncompress(reinterpret_cast<uchar*>(baunzip.data()),
+        &len, data + 4, nbytes - 4);
+
+    switch (res) {
+        case Z_OK: {
+            baunzip.resize(len);
+            break;
         }
-        QByteArray::Data *p = static_cast<QByteArray::Data *>(realloc(d.data(), sizeof(QByteArray::Data) + alloc));
-        if (!Q_UNLIKELY(p)) {
-            // we are not allowed to crash here when compiling with QT_NO_EXCEPTIONS
-            qWarning("qUncompress: could not allocate enough memory to uncompress data");
-            return QByteArray();
-        }
-        d.take(); // realloc was successful
-        d.reset(p);
-
-        int res = ::uncompress((uchar*)d->array, &len,
-                               (uchar*)data+4, nbytes-4);
-
-        switch (res) {
-        case Z_OK:
-            if (len != alloc) {
-                if (Q_UNLIKELY(len  >= ulong(1 << 31) - sizeof(QByteArray::Data))) {
-                    //QByteArray does not support that huge size anyway.
-                    qWarning("qUncompress: Input data is corrupted");
-                    return QByteArray();
-                }
-                QByteArray::Data *p = static_cast<QByteArray::Data *>(realloc(d.data(), sizeof(QByteArray::Data) + len));
-                if (Q_UNLIKELY(!p)) {
-                    // we are not allowed to crash here when compiling with QT_NO_EXCEPTIONS
-                    qWarning("qUncompress: could not allocate enough memory to uncompress data");
-                    return QByteArray();
-                }
-                d.take(); // realloc was successful
-                d.reset(p);
-            }
-            d->ref = 1;
-            d->alloc = d->size = len;
-            d->data = d->array;
-            d->array[len] = 0;
-
-            return QByteArray(d.take(), 0, 0);
-
-        case Z_MEM_ERROR:
-            qWarning("qUncompress: Z_MEM_ERROR: Not enough memory");
-            return QByteArray();
-
         case Z_BUF_ERROR:
-            len *= 2;
-            continue;
-
-        case Z_DATA_ERROR:
-            qWarning("qUncompress: Z_DATA_ERROR: Input data is corrupted");
-            return QByteArray();
+        case Z_MEM_ERROR: {
+            qWarning("qUncompress: Not enough memory");
+            baunzip.clear();
+            break;
         }
-    }
+        case Z_DATA_ERROR: {
+             qWarning("qUncompress: Z_DATA_ERROR: Input data is corrupted");
+            baunzip.clear();
+            break;
+         }
+        default: {
+            qWarning("qUncompress: Unknown error (%d)", res);
+            baunzip.clear();
+            break;
+        }
+     }
+
+    return baunzip;
 #endif // QT_FAST_COMPRESS
 }
 
