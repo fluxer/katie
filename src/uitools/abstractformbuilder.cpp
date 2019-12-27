@@ -1073,10 +1073,7 @@ QBrush QAbstractFormBuilder::setupBrush(DomBrush *brush)
         const QGradient::CoordinateMode coord = enumKeyToValue<QGradient::CoordinateMode>(gradientCoordinate_enum, gradient->attributeCoordinateMode().toLatin1());
         gr->setCoordinateMode(coord);
 
-        const QList<DomGradientStop *> stops = gradient->elementGradientStop();
-        QListIterator<DomGradientStop *> it(stops);
-        while (it.hasNext()) {
-            const DomGradientStop *stop = it.next();
+        foreach (const DomGradientStop *stop, gradient->elementGradientStop()) {
             const DomColor *color = stop->elementColor();
             gr->setColorAt(stop->attributePosition(), QColor::fromRgb(color->elementRed(),
                             color->elementGreen(), color->elementBlue(), color->attributeAlpha()));
@@ -1334,9 +1331,9 @@ DomWidget *QAbstractFormBuilder::createDom(QWidget *widget, DomWidget *ui_parent
         const QList<QWidget *> zOrder = qvariant_cast<QWidgetList>(widget->property("_q_zOrder"));
         if (list != zOrder) {
             QStringList zOrderList;
-            QListIterator<QWidget* > itZOrder(zOrder);
-            while (itZOrder.hasNext())
-                zOrderList.append(itZOrder.next()->objectName());
+            foreach (const QWidget *w, zOrder) {
+                zOrderList.append(w->objectName());
+            }
             ui_widget->setElementZOrder(zOrderList);
         }
     }
@@ -1347,11 +1344,9 @@ DomWidget *QAbstractFormBuilder::createDom(QWidget *widget, DomWidget *ui_parent
                 continue;
 
             if (QMenu *menu = qobject_cast<QMenu *>(childWidget)) {
-                QList<QAction *> actions = menu->parentWidget()->actions();
-                QListIterator<QAction *> it(actions);
                 bool found = false;
-                while (it.hasNext()) {
-                    if (it.next()->menu() == menu)
+                foreach (const QAction *action, menu->parentWidget()->actions()) {
+                    if (action->menu() == menu)
                         found = true;
                 }
                 if (!found)
