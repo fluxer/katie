@@ -184,7 +184,7 @@ struct QWExtra {
     QPointer<QStyle> style;
     QPointer<QWidget> focus_proxy;
 
-    // Implicit pointers (shared_empty/shared_null).
+    // Implicit pointers (shared_null).
     QRegion mask; // widget mask
     QString styleSheet;
 
@@ -549,7 +549,7 @@ public:
     static QWidgetMapper *mapper;
     static QWidgetSet *allWidgets;
 
-    // Implicit pointers (shared_null/shared_empty).
+    // Implicit pointers (shared_null).
     QRegion opaqueChildren;
     QRegion dirty;
 #ifndef QT_NO_TOOLTIP

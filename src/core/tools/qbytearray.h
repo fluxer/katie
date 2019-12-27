@@ -299,7 +299,6 @@ public:
 private:
     operator bool() const;
     static Data shared_null;
-    static Data shared_empty;
     Data *d;
     QByteArray(Data *dd, int /*dummy*/, int /*dummy*/) : d(dd) {}
     static void freeData(Data *);

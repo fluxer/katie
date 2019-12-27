@@ -639,10 +639,7 @@ QByteArray qFastUncompress(const char* data, int nbytes)
 }
 #endif // QT_NO_COMPRESS
 
-QByteArray::Data QByteArray::shared_null = { QAtomicInt(1),
-                                             0, 0, shared_null.array, {0} };
-QByteArray::Data QByteArray::shared_empty = { QAtomicInt(1),
-                                              0, 0, shared_empty.array, {0} };
+QByteArray::Data QByteArray::shared_null = { QAtomicInt(1), 0, 0, shared_null.array, {0} };
 
 /*!
     \class QByteArray
@@ -944,10 +941,8 @@ QByteArray &QByteArray::operator=(const QByteArray & other)
 QByteArray &QByteArray::operator=(const char *str)
 {
     Data *x;
-    if (!str) {
+    if (!str || !*str) {
         x = &shared_null;
-    } else if (!*str) {
-        x = &shared_empty;
     } else {
         int len = qstrlen(str);
         if (d->ref != 1 || len > d->alloc || (len < d->size && len < d->alloc >> 1))
@@ -1343,10 +1338,8 @@ void QByteArray::chop(int n)
 QByteArray::QByteArray(const char *data)
 {
     int size = qstrlen(data);
-    if (!data) {
+    if (!data || size <= 0) {
         d = &shared_null;
-    } else if (size <= 0) {
-        d = &shared_empty;
     } else {
         d = static_cast<Data *>(malloc(sizeof(Data) + size));
         Q_CHECK_PTR(d);
@@ -1372,10 +1365,8 @@ QByteArray::QByteArray(const char *data)
 
 QByteArray::QByteArray(const char *data, int size)
 {
-    if (!data) {
+    if (!data || size <= 0) {
         d = &shared_null;
-    } else if (size <= 0) {
-        d = &shared_empty;
     } else {
         d = static_cast<Data *>(malloc(sizeof(Data) + size));
         Q_CHECK_PTR(d);
@@ -1420,7 +1411,7 @@ QByteArray::QByteArray(int size, char ch)
 QByteArray::QByteArray(int size, Qt::Initialization)
 {
     if (size <= 0) {
-        d = &shared_empty;
+        d = &shared_null;
     } else {
         d = static_cast<Data *>(malloc(sizeof(Data)+size));
         Q_CHECK_PTR(d);
@@ -1448,27 +1439,10 @@ QByteArray::QByteArray(int size, Qt::Initialization)
 void QByteArray::resize(int size)
 {
     if (size <= 0) {
-        Data *x = &shared_empty;
+        Data *x = &shared_null;
         x->ref.ref();
         if (!d->ref.deref())
             freeData(d);
-        d = x;
-    } else if (d == &shared_null) {
-        //
-        // Optimize the idiom:
-        //    QByteArray a;
-        //    a.resize(sz);
-        //    ...
-        // which is used in place of the Qt 3 idiom:
-        //    QByteArray a(sz);
-        //
-        Data *x = static_cast<Data *>(malloc(sizeof(Data)+size));
-        Q_CHECK_PTR(x);
-        x->ref = 1;
-        x->alloc = x->size = size;
-        x->data = x->array;
-        x->array[size] = '\0';
-        (void) d->ref.deref(); // cannot be 0, x points to shared_null
         d = x;
     } else {
         if (d->ref != 1 || size != d->size)
@@ -1575,7 +1549,7 @@ QByteArray QByteArray::nulTerminated() const
 
 QByteArray &QByteArray::prepend(const QByteArray &ba)
 {
-    if ((d == &shared_null || d == &shared_empty) && !IS_RAW_DATA(ba.d)) {
+    if (d == &shared_null && !IS_RAW_DATA(ba.d)) {
         *this = ba;
     } else if (ba.d != &shared_null) {
         QByteArray tmp = *this;
@@ -1659,7 +1633,7 @@ QByteArray &QByteArray::prepend(char ch)
 
 QByteArray &QByteArray::append(const QByteArray &ba)
 {
-    if ((d == &shared_null || d == &shared_empty) && !IS_RAW_DATA(ba.d)) {
+    if (d == &shared_null && !IS_RAW_DATA(ba.d)) {
         *this = ba;
     } else if (ba.d != &shared_null) {
         if (d->ref != 1 || d->size + ba.d->size > d->alloc)
@@ -2667,7 +2641,7 @@ QByteArray QByteArray::right(int len) const
 
 QByteArray QByteArray::mid(int pos, int len) const
 {
-    if (d == &shared_null || d == &shared_empty || pos >= d->size)
+    if (d == &shared_null || pos >= d->size)
         return QByteArray();
     if (len < 0)
         len = d->size - pos;
@@ -3169,8 +3143,7 @@ QByteArray QByteArray::trimmed() const
     }
     int l = end - start + 1;
     if (l <= 0) {
-        shared_empty.ref.ref();
-        return QByteArray(&shared_empty, 0, 0);
+        return QByteArray();
     }
     return QByteArray(s+start, l);
 }

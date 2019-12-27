@@ -491,7 +491,6 @@ private:
         ushort array[1];
     };
     static Data shared_null;
-    static Data shared_empty;
     Data *d;
     QString(Data *dd, int /*dummy*/) : d(dd) {}
 #ifndef QT_NO_TEXTCODEC
