@@ -587,6 +587,8 @@ static int findChar(const QChar *str, int len, QChar ch, int from,
 
 QString::Data QString::shared_null = { QAtomicInt(1),
                                        0, 0, 0, shared_null.array, {0} };
+QString::Data QString::shared_empty = { QAtomicInt(1),
+                                        0, 0, 0, shared_empty.array, {0} };
 
 int QString::grow(int size)
 {
@@ -832,8 +834,11 @@ int QString::toWCharArray(wchar_t *array) const
 */
 QString::QString(const QChar *unicode, int size)
 {
-   if (!unicode || size <= 0) {
+   if (!unicode) {
         d = &shared_null;
+        d->ref.ref();
+    } else if (size <= 0) {
+        d = &shared_empty;
         d->ref.ref();
     } else {
         d = (Data*) malloc(sizeof(Data)+size*sizeof(QChar));
@@ -856,7 +861,7 @@ QString::QString(const QChar *unicode, int size)
 QString::QString(const int size, const QChar ch)
 {
    if (size <= 0) {
-        d = &shared_null;
+        d = &shared_empty;
         d->ref.ref();
     } else {
         d = (Data*) malloc(sizeof(Data)+size*sizeof(QChar));
@@ -968,7 +973,7 @@ QString::QString(const QChar ch)
 
 void QString::freeData(Data *d)
 {
-    if(d != &shared_null)
+    if(d != &shared_null && d != &shared_empty)
         free(d);
 }
 
@@ -1008,7 +1013,7 @@ void QString::resize(int size)
         size = 0;
 
     if (size == 0 && !d->capacity) {
-        Data *x = &shared_null;
+        Data *x = &shared_empty;
         x->ref.ref();
         if (!d->ref.deref())
             QString::freeData(d);
@@ -3427,8 +3432,11 @@ QVector<uint> QString::toUcs4() const
 QString::Data *QString::fromLatin1_helper(const char *str, int size)
 {
     Data *d;
-    if (!str || size == 0 || (!*str && size < 0)) {
+    if (!str) {
         d = &shared_null;
+        d->ref.ref();
+    } else if (size == 0 || (!*str && size < 0)) {
+        d = &shared_empty;
         d->ref.ref();
     } else {
         if (size < 0)
@@ -3452,8 +3460,11 @@ QString::Data *QString::fromAscii_helper(const char *str, int size)
 #ifndef QT_NO_TEXTCODEC
     if (codecForCStrings) {
         Data *d;
-        if (!str || size == 0 || (!*str && size < 0)) {
+        if (!str) {
             d = &shared_null;
+            d->ref.ref();
+        } else if (size == 0 || (!*str && size < 0)) {
+            d = &shared_empty;
             d->ref.ref();
         } else {
             if (size < 0)
@@ -3691,7 +3702,8 @@ QString QString::simplified() const
             break;
         if (++from == fromEnd) {
             // All-whitespace string
-            return QString();
+            shared_empty.ref.ref();
+            return QString(&shared_empty, 0);
         }
     }
     // This loop needs no underflow check, as we already determined that
@@ -3784,7 +3796,8 @@ QString QString::trimmed() const
     }
     int l = end - start + 1;
     if (l <= 0) {
-        return QString();
+        shared_empty.ref.ref();
+        return QString(&shared_empty, 0);
     }
     return QString(s + start, l);
 }

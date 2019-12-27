@@ -729,12 +729,12 @@ QKeySequence::QKeySequence(StandardKey key)
 
 
 /*!
-    Constructs an null key sequence.
+    Constructs an empty key sequence.
 */
 QKeySequence::QKeySequence()
 {
-    static QKeySequencePrivate shared_null;
-    d = &shared_null;
+    static QKeySequencePrivate shared_empty;
+    d = &shared_empty;
     d->ref.ref();
 }
 
