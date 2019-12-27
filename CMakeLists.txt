@@ -331,7 +331,8 @@ set_package_properties(NSL PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(PNG)
+# v1.5.4+ for png_longjmp_ptr() without noreturn attribute
+find_package(PNG 1.5.4)
 set_package_properties(PNG PROPERTIES
     PURPOSE "PNG format handler"
     DESCRIPTION "A collection of routines used to create PNG format graphics files"
