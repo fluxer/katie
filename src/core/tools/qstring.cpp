@@ -3702,8 +3702,7 @@ QString QString::simplified() const
             break;
         if (++from == fromEnd) {
             // All-whitespace string
-            shared_empty.ref.ref();
-            return QString(&shared_empty, 0);
+            return QString();
         }
     }
     // This loop needs no underflow check, as we already determined that
@@ -3796,8 +3795,7 @@ QString QString::trimmed() const
     }
     int l = end - start + 1;
     if (l <= 0) {
-        shared_empty.ref.ref();
-        return QString(&shared_empty, 0);
+        return QString();
     }
     return QString(s + start, l);
 }
