@@ -41,10 +41,6 @@
 #include <stdarg.h>
 #include <string>
 
-#ifdef truncate
-#error qbytearray.h must be included before any header file that defines truncate
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
