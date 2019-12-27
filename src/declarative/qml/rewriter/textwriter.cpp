@@ -54,15 +54,11 @@ static inline bool overlaps(int posA, int lengthA, int posB, int lengthB) {
             || (posA < posB && posA + lengthA > posB);
 }
 
-bool TextWriter::hasOverlap(int pos, int length)
+bool TextWriter::hasOverlap(int pos, int length) const
 {
-    {
-        QListIterator<Replace> i(replaceList);
-        while (i.hasNext()) {
-            const Replace &cmd = i.next();
-            if (overlaps(pos, length, cmd.pos, cmd.length))
-                return true;
-        }
+    foreach (const Replace &cmd, replaceList) {
+        if (overlaps(pos, length, cmd.pos, cmd.length))
+            return true;
     }
     return false;
 }

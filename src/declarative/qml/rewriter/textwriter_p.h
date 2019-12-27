@@ -53,7 +53,7 @@ class TextWriter
 
 	QList<Replace> replaceList;
 
-	bool hasOverlap(int pos, int length);
+	bool hasOverlap(int pos, int length) const;
 
 public:
 	TextWriter();
