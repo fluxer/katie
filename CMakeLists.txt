@@ -348,7 +348,8 @@ set_package_properties(JPEG PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(TIFF)
+# v3.6.0+ for TIFFReadRGBAImageOriented()
+find_package(TIFF 3.6.0)
 set_package_properties(TIFF PROPERTIES
     PURPOSE "TIFF format handler"
     DESCRIPTION "Library for manipulation of TIFF images"
