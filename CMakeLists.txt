@@ -229,7 +229,8 @@ configure_file(
     ${CMAKE_BINARY_DIR}/include/QtCore/qglobal.h
 )
 
-find_package(ZLIB)
+# v1.2.0 for compressBound()
+find_package(ZLIB 1.2.0)
 set_package_properties(ZLIB PROPERTIES
     PURPOSE "Required for compression support"
     DESCRIPTION "A Massively Spiffy Yet Delicately Unobtrusive Compression Library"

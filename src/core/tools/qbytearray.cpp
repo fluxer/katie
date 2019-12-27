@@ -415,30 +415,32 @@ QByteArray qCompress(const uchar* data, int nbytes, int compressionLevel)
     if (compressionLevel < -1 || compressionLevel > 9)
         compressionLevel = -1;
 
-    ulong len = nbytes + nbytes / 100 + 13;
-    QByteArray bazip;
-    int res;
-    do {
-        bazip.resize(len + 4);
-        res = ::compress2((uchar*)bazip.data()+4, &len, (uchar*)data, nbytes, compressionLevel);
+    ulong len = ::compressBound(nbytes) + 4;
+    QByteArray bazip(len, Qt::Uninitialized);
+    const int res = ::compress2(reinterpret_cast<uchar*>(bazip.data() + 4),
+        &len, data, nbytes, compressionLevel);
 
-        switch (res) {
-        case Z_OK:
+    switch (res) {
+        case Z_OK: {
             bazip.resize(len + 4);
             bazip[0] = (nbytes & 0xff000000) >> 24;
             bazip[1] = (nbytes & 0x00ff0000) >> 16;
             bazip[2] = (nbytes & 0x0000ff00) >> 8;
             bazip[3] = (nbytes & 0x000000ff);
             break;
-        case Z_MEM_ERROR:
-            qWarning("qCompress: Z_MEM_ERROR: Not enough memory");
-            bazip.resize(0);
-            break;
+        }
         case Z_BUF_ERROR:
-            len *= 2;
+        case Z_MEM_ERROR: {
+            qWarning("qCompress: Not enough memory");
+            bazip.clear();
             break;
         }
-    } while (res == Z_BUF_ERROR);
+        default: {
+            qWarning("qCompress: Unknown error (%d)", res);
+            bazip.clear();
+            break;
+        }
+    };
 
     return bazip;
 #endif // QT_FAST_COMPRESS
