@@ -3169,8 +3169,7 @@ QByteArray QByteArray::trimmed() const
     }
     int l = end - start + 1;
     if (l <= 0) {
-        shared_empty.ref.ref();
-        return QByteArray(&shared_empty, 0, 0);
+        return QByteArray();
     }
     return QByteArray(s+start, l);
 }
