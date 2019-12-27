@@ -405,13 +405,14 @@ QByteArray qCompress(const uchar* data, int nbytes, int compressionLevel)
 #ifdef QT_FAST_COMPRESS
     return qFastCompress(reinterpret_cast<const char*>(data), nbytes, compressionLevel);
 #else
-    if (nbytes == 0) {
-        return QByteArray(4, '\0');
-    }
     if (Q_UNLIKELY(!data)) {
         qWarning("qCompress: Data is null");
         return QByteArray();
+    } else if (Q_UNLIKELY(nbytes <= 0)) {
+        qWarning("qCompress:  Data size is negative or zero");
+        return QByteArray(4, '\0');
     }
+
     if (compressionLevel < -1 || compressionLevel > 9)
         compressionLevel = -1;
 
