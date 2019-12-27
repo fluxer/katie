@@ -31,6 +31,7 @@
 
 #include "qicucodec_p.h"
 #include "qcorecommon_p.h"
+#include "qmutex.h"
 #include "qdebug.h"
 
 #include <unicode/ucsdet.h>
@@ -936,6 +937,7 @@ static const UChar questionmarkchar[1] = { 0x3f };
 #ifndef QT_NO_TEXTCODEC
 static QList<QByteArray> allcodecs;
 static QList<int> allmibs;
+Q_GLOBAL_STATIC(QMutex, qICUCodecMutex);
 #endif
 
 QIcuCodec::QIcuCodec(const QByteArray &name)
@@ -1083,6 +1085,7 @@ QList<QByteArray> QIcuCodec::allCodecs()
         return allcodecs;
     }
 
+    QMutexLocker locker(qICUCodecMutex());
     const int count = ucnv_countAvailable();
     for (int i = 0; i < count; ++i) {
         const char *name = ucnv_getAvailableName(i);
@@ -1120,6 +1123,7 @@ QList<int> QIcuCodec::allMibs()
         return allmibs;
     }
 
+    QMutexLocker locker(qICUCodecMutex());
     foreach(const QByteArray &name, QIcuCodec::allCodecs()) {
         for (qint16 i = 0; i < MIBTblSize; i++) {
             if (ucnv_compareNames(name.constData(), MIBTbl[i].name) == 0) {
