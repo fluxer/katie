@@ -574,56 +574,6 @@
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template name="read-impl-qdom">
-        <xsl:param name="node"/>
-        <xsl:variable name="name" select="concat('Dom', $node/@name)"/>
-
-        <xsl:text>#ifdef QUILOADER_QDOM_READ&endl;</xsl:text>
-
-        <xsl:text>void </xsl:text>
-        <xsl:value-of select="$name"/>
-        <xsl:text>::read(const QDomElement &amp;node)&endl;</xsl:text>
-
-        <xsl:text>{</xsl:text>
-
-        <xsl:call-template name="read-impl-qdom-load-attributes">
-            <xsl:with-param name="node" select="$node"/>
-        </xsl:call-template>
-
-        <xsl:text>&endl;</xsl:text>
-
-        <xsl:text>    for (QDomNode n = node.firstChild(); !n.isNull(); n = n.nextSibling()) {&endl;</xsl:text>
-        <xsl:text>        if (!n.isElement())&endl;</xsl:text>
-        <xsl:text>            continue;&endl;</xsl:text>
-        <xsl:text>        QDomElement e = n.toElement();&endl;</xsl:text>
-        <xsl:text>        QString tag = e.tagName().toLower();&endl;</xsl:text>
-
-        <xsl:for-each select="$node//xs:sequence | $node//xs:choice | $node//xs:all">
-            <xsl:call-template name="read-impl-qdom-load-child-element">
-                <xsl:with-param name="node" select="."/>
-            </xsl:call-template>
-        </xsl:for-each>
-
-        <xsl:text>    }&endl;</xsl:text>
-
-        <xsl:choose>
-            <xsl:when test="$node[@mixed='true']">
-                <xsl:text>    m_text = QLatin1String("");&endl;</xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:text>    m_text.clear();&endl;</xsl:text>
-            </xsl:otherwise>
-        </xsl:choose>
-
-        <xsl:text>    for (QDomNode child = node.firstChild(); !child.isNull(); child = child.nextSibling()) {&endl;</xsl:text>
-        <xsl:text>        if (child.isText())&endl;</xsl:text>
-        <xsl:text>            m_text.append(child.nodeValue());&endl;</xsl:text>
-        <xsl:text>     }&endl;</xsl:text>
-
-        <xsl:text>}&endl;</xsl:text>
-        <xsl:text>#endif&endl;</xsl:text>
-        <xsl:text>&endl;</xsl:text>
-    </xsl:template>
 <!-- Implementation: write() -->
 
     <xsl:template name="write-impl-save-attributes">
@@ -1132,10 +1082,6 @@
 ****************************************************************************/
 </xsl:text>
         <xsl:text>#include "ui4_p.h"&endl;</xsl:text>
-        <xsl:text>&endl;</xsl:text>
-        <xsl:text>#ifdef QUILOADER_QDOM_READ&endl;</xsl:text>
-        <xsl:text>#include &lt;QtXml/QDomElement&gt;&endl;</xsl:text>
-        <xsl:text>#endif&endl;</xsl:text>
         <xsl:text>&endl;</xsl:text>
         <xsl:text>QT_BEGIN_NAMESPACE&endl;</xsl:text>
 

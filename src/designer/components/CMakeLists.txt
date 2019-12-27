@@ -1,18 +1,6 @@
 add_definitions(-DQT_STATICPLUGIN)
-set(EXTRA_DESIGNERCOMPONENTS_LIBS KtCore KtGui KtXml KtDesigner KtScript)
-
-include(buddyeditor/buddyeditor.cmake)
-include(formeditor/formeditor.cmake)
-include(objectinspector/objectinspector.cmake)
-include(propertyeditor/propertyeditor.cmake)
-include(signalsloteditor/signalsloteditor.cmake)
-include(tabordereditor/tabordereditor.cmake)
-include(taskmenu/taskmenu.cmake)
-include(widgetbox/widgetbox.cmake)
-
-set(DESIGNERCOMPONENTS_SOURCES
-    ${DESIGNERCOMPONENTS_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_components.cpp
+set(EXTRA_DESIGNERCOMPONENTS_LIBS
+    KtCore KtGui KtXml KtDesigner KtScript
 )
 
 include_directories(
@@ -32,6 +20,20 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtDesigner
     ${CMAKE_BINARY_DIR}/include/QtDesignerComponents
     ${CMAKE_BINARY_DIR}/privateinclude/QtDesignerComponents
+)
+
+include(buddyeditor/buddyeditor.cmake)
+include(formeditor/formeditor.cmake)
+include(objectinspector/objectinspector.cmake)
+include(propertyeditor/propertyeditor.cmake)
+include(signalsloteditor/signalsloteditor.cmake)
+include(tabordereditor/tabordereditor.cmake)
+include(taskmenu/taskmenu.cmake)
+include(widgetbox/widgetbox.cmake)
+
+set(DESIGNERCOMPONENTS_SOURCES
+    ${DESIGNERCOMPONENTS_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_components.cpp
 )
 
 if(KATIE_TYPE STREQUAL SHARED)
@@ -60,7 +62,7 @@ add_library(KtDesignerComponents ${KATIE_TYPE} ${KtDesignerComponents_SOURCES}
     $<TARGET_OBJECTS:sharedqtpropertybrowser>
     $<TARGET_OBJECTS:sharedqtgradienteditor>
 )
-target_link_libraries(KtDesignerComponents ${EXTRA_DESIGNERCOMPONENTS_LIBS})
+target_link_libraries(KtDesignerComponents PRIVATE ${EXTRA_DESIGNERCOMPONENTS_LIBS})
 set_target_properties(KtDesignerComponents PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

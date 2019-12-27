@@ -1,10 +1,11 @@
 add_definitions(
     -DQT_NO_URL_CAST_FROM_STRING
 )
-set(EXTRA_DECLARATIVE_LIBS KtCore KtGui KtNetwork KtScript)
+set(EXTRA_DECLARATIVE_LIBS
+    KtCore KtGui KtNetwork KtScript
+)
 
 set(DECLARATIVE_PUBLIC_HEADERS
-    ${DECLARATIVE_PUBLIC_HEADERS}
     QDeclarativeAttachedPropertiesFunc
     QDeclarativeComponent
     QDeclarativeContext
@@ -30,10 +31,6 @@ set(DECLARATIVE_PUBLIC_HEADERS
     QDeclarativeView
 )
 
-include(util/util.cmake)
-include(graphicsitems/graphicsitems.cmake)
-include(qml/qml.cmake)
-
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
@@ -50,6 +47,10 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
 )
 
+include(util/util.cmake)
+include(graphicsitems/graphicsitems.cmake)
+include(qml/qml.cmake)
+
 set(DECLARATIVE_HEADERS
     ${DECLARATIVE_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativecommon_p.h
@@ -60,7 +61,7 @@ katie_generate_package(KtDeclarative "KtCore KtGui KtNetwork KtScript")
 katie_setup_target(KtDeclarative ${DECLARATIVE_SOURCES} ${DECLARATIVE_HEADERS})
 
 add_library(KtDeclarative ${KATIE_TYPE} ${KtDeclarative_SOURCES})
-target_link_libraries(KtDeclarative ${EXTRA_DECLARATIVE_LIBS})
+target_link_libraries(KtDeclarative PRIVATE ${EXTRA_DECLARATIVE_LIBS})
 set_target_properties(KtDeclarative PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

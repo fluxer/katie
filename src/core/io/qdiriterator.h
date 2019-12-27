@@ -62,7 +62,7 @@ public:
                  QDir::Filters filters = QDir::NoFilter,
                  IteratorFlags flags = NoIteratorFlags);
 
-    virtual ~QDirIterator();
+    ~QDirIterator();
 
     QString next();
     bool hasNext() const;

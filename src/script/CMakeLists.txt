@@ -6,14 +6,12 @@ add_definitions(
     -DWTF=QTWTF
     -DQLALR_NO_QSCRIPTGRAMMAR_DEBUG_INFO
 )
-set(EXTRA_SCRIPT_LIBS KtCore ${PCRE_LIBRARIES})
-
-include(api/api.cmake)
-include(bridge/bridge.cmake)
-include(parser/parser.cmake)
+set(EXTRA_SCRIPT_LIBS
+    KtCore
+    ${PCRE_LIBRARIES}
+)
 
 set(SCRIPT_PUBLIC_HEADERS
-    ${SCRIPT_PUBLIC_HEADERS}
     QScriptable
     QScriptClass
     QScriptClassPropertyIterator
@@ -52,6 +50,10 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/generated
     ${PCRE_INCLUDES}
 )
+
+include(api/api.cmake)
+include(bridge/bridge.cmake)
+include(parser/parser.cmake)
 
 set(SCRIPT_SOURCES
     ${SCRIPT_SOURCES}
@@ -175,7 +177,7 @@ katie_generate_package(KtScript "KtCore")
 katie_setup_target(KtScript ${SCRIPT_SOURCES} ${SCRIPT_HEADERS})
 
 add_library(KtScript ${KATIE_TYPE} ${KtScript_SOURCES})
-target_link_libraries(KtScript ${EXTRA_SCRIPT_LIBS})
+target_link_libraries(KtScript PRIVATE ${EXTRA_SCRIPT_LIBS})
 set_target_properties(KtScript PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

@@ -248,19 +248,19 @@ int QRasterPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
     case QPaintDevice::PdmHeight:
         return h;
     case QPaintDevice::PdmWidthMM:
-        return qRound(d->width * 25.4 / qt_defaultDpiX());
+        return qRound(d->width * 25.4 / QX11Info::appDpiX());
     case QPaintDevice::PdmHeightMM:
-        return qRound(d->height * 25.4 / qt_defaultDpiY());
+        return qRound(d->height * 25.4 / QX11Info::appDpiY());
     case QPaintDevice::PdmNumColors:
         return d->colortable.size();
     case QPaintDevice::PdmDepth:
         return depth();
     case QPaintDevice::PdmDpiX: // fall-through
     case QPaintDevice::PdmPhysicalDpiX:
-        return qt_defaultDpiX();
+        return QX11Info::appDpiX();
     case QPaintDevice::PdmDpiY: // fall-through
     case QPaintDevice::PdmPhysicalDpiY:
-        return qt_defaultDpiY();
+        return QX11Info::appDpiY();
     default:
         qWarning("QRasterPixmapData::metric(): Unhandled metric type %d", metric);
         break;

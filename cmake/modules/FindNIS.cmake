@@ -32,7 +32,7 @@ find_library(NIS_LIBRARIES
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(NIS
-    REQUIRED_VARS NIS_INCLUDES NIS_LIBRARIES
+    REQUIRED_VARS NIS_LIBRARIES NIS_INCLUDES
 )
 
 mark_as_advanced(NIS_INCLUDES NIS_LIBRARIES)

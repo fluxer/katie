@@ -3,6 +3,6 @@ if(WITH_DBUS AND DBUS_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     )
 
-    target_link_libraries(tst_bench_qdbustype KtDBus)
+    target_link_libraries(tst_bench_qdbustype KtDBus ${DBUS_LIBRARIES})
     include_directories(${DBUS_INCLUDES})
 endif()

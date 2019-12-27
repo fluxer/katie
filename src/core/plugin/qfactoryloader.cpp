@@ -71,8 +71,8 @@ public:
 
 QFactoryLoaderPrivate::~QFactoryLoaderPrivate()
 {
-    for (int i = 0; i < libraryList.count(); ++i)
-        libraryList.at(i)->release();
+    foreach (QLibraryPrivate *library, libraryList)
+        library->release();
 }
 
 QFactoryLoader::QFactoryLoader(const char *iid,
@@ -85,7 +85,6 @@ QFactoryLoader::QFactoryLoader(const char *iid,
     d->iid = iid;
     d->cs = cs;
     d->suffix = suffix;
-
 
     QMutexLocker locker(qt_factoryloader_mutex());
     update();
@@ -101,14 +100,13 @@ void QFactoryLoader::updateDir(const QString &pluginDir, QSettings *settings)
         return;
 
     QStringList plugins = QDir(path).entryList(QDir::Files);
-    QLibraryPrivate *library = 0;
-    for (int j = 0; j < plugins.count(); ++j) {
-        QString fileName = QDir::cleanPath(path + QLatin1Char('/') + plugins.at(j));
+    foreach (const QString &plugin, plugins) {
+        QString fileName = QDir::cleanPath(path + QLatin1Char('/') + plugin);
 
         if (qt_debug_component()) {
             qDebug() << "QFactoryLoader::QFactoryLoader() looking at" << fileName;
         }
-        library = QLibraryPrivate::findOrCreate(QFileInfo(fileName).canonicalFilePath());
+        QLibraryPrivate *library = QLibraryPrivate::findOrCreate(QFileInfo(fileName).canonicalFilePath());
         if (!library->isPlugin(settings)) {
             if (qt_debug_component()) {
                 qDebug() << library->errorString;
@@ -188,9 +186,7 @@ void QFactoryLoader::update()
 {
 #ifdef QT_SHARED
     Q_D(QFactoryLoader);
-    QStringList paths = QCoreApplication::libraryPaths();
-    for (int i = 0; i < paths.count(); ++i) {
-        const QString &pluginDir = paths.at(i);
+    foreach (const QString &pluginDir, QCoreApplication::libraryPaths()) {
         // Already loaded, skip it...
         if (d->loadedPaths.contains(pluginDir))
             continue;

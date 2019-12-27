@@ -3702,8 +3702,7 @@ QString QString::simplified() const
             break;
         if (++from == fromEnd) {
             // All-whitespace string
-            shared_empty.ref.ref();
-            return QString(&shared_empty, 0);
+            return QString();
         }
     }
     // This loop needs no underflow check, as we already determined that
@@ -3796,8 +3795,7 @@ QString QString::trimmed() const
     }
     int l = end - start + 1;
     if (l <= 0) {
-        shared_empty.ref.ref();
-        return QString(&shared_empty, 0);
+        return QString();
     }
     return QString(s + start, l);
 }
@@ -5745,17 +5743,24 @@ QString QString::normalized(QString::NormalizationForm mode, QChar::UnicodeVersi
     }
 
     error = U_ZERO_ERROR;
-    const int srcsize = size();
-    QString result(QMAXUSTRLEN(srcsize), Qt::Uninitialized);
+    const bool normresult = unorm2_isNormalized(normalizer,
+        reinterpret_cast<const UChar*>(unicode()), size(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QString::normalized: unorm2_isNormalized() failed %s", u_errorName(error));
+        return QString();
+    } else if (normresult) {
+        // already normalized
+        return *this;
+    }
+
+    error = U_ZERO_ERROR;
+    QString result(QMAXUSTRLEN(size()), Qt::Uninitialized);
     const int decresult = unorm2_normalize(normalizer,
-        reinterpret_cast<const UChar*>(unicode()), srcsize,
+        reinterpret_cast<const UChar*>(unicode()), size(),
         reinterpret_cast<UChar*>(result.data()), result.size(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QString::normalized: unorm2_normalize() failed %s", u_errorName(error));
         return QString();
-    } else if (Q_UNLIKELY(decresult < 1)) {
-        // no normalization value
-        return *this;
     }
 
     result.resize(decresult);
@@ -6430,20 +6435,16 @@ QString QString::multiArg(int numArgs, const QString **args) const
 */
 bool QString::isRightToLeft() const
 {
-    const ushort *p = d->data;
-    const ushort *end = p + d->size;
-    while (p < end) {
-        switch(QChar::direction(*p))
-        {
-        case QChar::DirL:
-            return false;
-        case QChar::DirR:
-        case QChar::DirAL:
-            return true;
-        default:
-            break;
+    for (int i = 0; i < d->size; i++) {
+        switch(QChar::direction(d->data[i])) {
+            case QChar::DirL:
+                return false;
+            case QChar::DirR:
+            case QChar::DirAL:
+                return true;
+            default:
+                break;
         }
-        ++p;
     }
     return false;
 }

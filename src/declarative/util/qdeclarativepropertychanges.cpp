@@ -532,9 +532,7 @@ bool QDeclarativePropertyChanges::containsValue(const QString &name) const
     Q_D(const QDeclarativePropertyChanges);
     typedef QPair<QString, QVariant> PropertyEntry;
 
-    QListIterator<PropertyEntry> propertyIterator(d->properties);
-    while (propertyIterator.hasNext()) {
-        const PropertyEntry &entry = propertyIterator.next();
+    foreach (const PropertyEntry &entry, d->properties) {
         if (entry.first == name) {
             return true;
         }
@@ -548,9 +546,7 @@ bool QDeclarativePropertyChanges::containsExpression(const QString &name) const
     Q_D(const QDeclarativePropertyChanges);
     typedef QDeclarativePropertyChangesPrivate::ExpressionChange ExpressionEntry;
 
-    QListIterator<ExpressionEntry> expressionIterator(d->expressions);
-    while (expressionIterator.hasNext()) {
-        const ExpressionEntry &entry = expressionIterator.next();
+    foreach (const ExpressionEntry &entry, d->expressions) {
         if (entry.name == name) {
             return true;
         }
@@ -705,17 +701,13 @@ QVariant QDeclarativePropertyChanges::property(const QString &name) const
     typedef QPair<QString, QVariant> PropertyEntry;
     typedef QDeclarativePropertyChangesPrivate::ExpressionChange ExpressionEntry;
 
-    QListIterator<PropertyEntry> propertyIterator(d->properties);
-    while (propertyIterator.hasNext()) {
-        const PropertyEntry &entry = propertyIterator.next();
+    foreach (const PropertyEntry &entry, d->properties) {
         if (entry.first == name) {
             return entry.second;
         }
     }
 
-    QListIterator<ExpressionEntry> expressionIterator(d->expressions);
-    while (expressionIterator.hasNext()) {
-        const ExpressionEntry &entry = expressionIterator.next();
+    foreach (const ExpressionEntry &entry, d->expressions) {
         if (entry.name == name) {
             return QVariant(entry.expression->expression());
         }
@@ -756,9 +748,7 @@ QVariant QDeclarativePropertyChanges::value(const QString &name) const
     Q_D(const QDeclarativePropertyChanges);
     typedef QPair<QString, QVariant> PropertyEntry;
 
-    QListIterator<PropertyEntry> propertyIterator(d->properties);
-    while (propertyIterator.hasNext()) {
-        const PropertyEntry &entry = propertyIterator.next();
+    foreach (const PropertyEntry &entry, d->properties) {
         if (entry.first == name) {
             return entry.second;
         }
@@ -772,9 +762,7 @@ QString QDeclarativePropertyChanges::expression(const QString &name) const
     Q_D(const QDeclarativePropertyChanges);
     typedef QDeclarativePropertyChangesPrivate::ExpressionChange ExpressionEntry;
 
-    QListIterator<ExpressionEntry> expressionIterator(d->expressions);
-    while (expressionIterator.hasNext()) {
-        const ExpressionEntry &entry = expressionIterator.next();
+    foreach (const ExpressionEntry &entry, d->expressions) {
         if (entry.name == name) {
             return entry.expression->expression();
         }

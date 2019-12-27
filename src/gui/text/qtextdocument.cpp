@@ -1736,7 +1736,7 @@ void QTextDocument::print(QPrinter *printer) const
     QPointF pageNumberPos;
 
     if (documentPaginated) {
-        qreal sourceDpiX = qt_defaultDpi();
+        qreal sourceDpiX = QX11Info::appDpiY();
         qreal sourceDpiY = sourceDpiX;
 
         QPaintDevice *dev = doc->documentLayout()->paintDevice();

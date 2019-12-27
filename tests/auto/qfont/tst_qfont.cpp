@@ -132,33 +132,14 @@ void tst_QFont::exactMatch()
 {
     // Check if a non-existing font hasn't an exact match
     QFont font( "BogusFont", 33 );
-    QVERIFY( !font.exactMatch() );
+    QVERIFY(!font.exactMatch() );
 
 #ifdef Q_WS_X11
-    bool sansseriftested = false;
-    bool sanstested = false;
-    bool seriftested = false;
-    bool monospacetested = false;
     QFontDatabase fdb;
-    foreach (const QString &family, fdb.families()) {
-        if (family.compare("sans serif", Qt::CaseInsensitive) && !sansseriftested) {
-            qDebug() << "Checking sans-serif";
-            QVERIFY(QFont("sans-serif").exactMatch());
-            sansseriftested = true;
-        } else if (family.compare("sans", Qt::CaseInsensitive) && !sanstested) {
-            qDebug() << "Checking sans";
-            QVERIFY(QFont("sans").exactMatch());
-            sanstested = true;
-        } else if (family.compare("serif", Qt::CaseInsensitive) && !seriftested) {
-            qDebug() << "Checking serif";
-            QVERIFY(QFont("serif").exactMatch());
-            seriftested = true;
-        } else if (family.compare("monospace", Qt::CaseInsensitive) && !monospacetested) {
-            qDebug() << "Checking monospace";
-            QVERIFY(QFont("monospace").exactMatch());
-            monospacetested = true;
-        }
-    }
+    QVERIFY(!QFont("sans-serif").exactMatch());
+    QVERIFY(!QFont("sans").exactMatch());
+    QVERIFY(!QFont("serif").exactMatch());
+    QVERIFY(!QFont("monospace").exactMatch());
 #endif
 }
 

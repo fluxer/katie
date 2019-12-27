@@ -543,10 +543,9 @@ void QCalendarDateValidator::setInitialDate(const QDate &date)
 QString QCalendarDateValidator::currentText() const
 {
     QString str;
-    QStringListIterator itSep(m_separators);
     QListIterator<SectionToken *> itTok(m_tokens);
-    while (itSep.hasNext()) {
-        str += itSep.next();
+    foreach (const QString &itSep, m_separators) {
+        str += itSep;
         if (itTok.hasNext()) {
             SectionToken *token = itTok.next();
             QCalendarDateSectionValidator *validator = token->validator;

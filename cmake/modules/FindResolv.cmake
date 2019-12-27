@@ -33,7 +33,7 @@ find_library(RESOLV_LIBRARIES
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Resolv
-    REQUIRED_VARS RESOLV_INCLUDES RESOLV_LIBRARIES
+    REQUIRED_VARS RESOLV_LIBRARIES RESOLV_INCLUDES
 )
 
 mark_as_advanced(RESOLV_INCLUDES RESOLV_LIBRARIES)

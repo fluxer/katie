@@ -40,12 +40,10 @@
 ****************************************************************************/
 
 #include "qdeclarativevaluetype_p.h"
-
 #include "qdeclarativemetatype_p.h"
-#include "qfont_p.h"
-
-#include <QtGui/qapplication.h>
-#include <QtCore/qdebug.h>
+#include "qx11info_x11.h"
+#include "qapplication.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -932,7 +930,7 @@ qreal QDeclarativeFontValueType::pointSize() const
 {
     if (font.pointSizeF() == -1) {
         if (dpi.isNull)
-            dpi = qt_defaultDpi();
+            dpi = QX11Info::appDpiY();
         return font.pixelSize() * qreal(72.) / qreal(dpi);
     }
     return font.pointSizeF();
@@ -957,7 +955,7 @@ int QDeclarativeFontValueType::pixelSize() const
 {
     if (font.pixelSize() == -1) {
         if (dpi.isNull)
-            dpi = qt_defaultDpi();
+            dpi = QX11Info::appDpiY();
         return (font.pointSizeF() * dpi) / qreal(72.);
     }
     return font.pixelSize();

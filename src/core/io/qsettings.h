@@ -85,32 +85,20 @@ public:
         SystemScope
     };
 
-    explicit QSettings(const QString &organization,
-                       const QString &application = QString(), QObject *parent = Q_NULLPTR);
-    QSettings(Scope scope, const QString &organization,
-              const QString &application = QString(), QObject *parent = Q_NULLPTR);
-    QSettings(Format format, Scope scope, const QString &organization,
-              const QString &application = QString(), QObject *parent = Q_NULLPTR);
-    QSettings(const QString &fileName, Format format, QObject *parent = Q_NULLPTR);
+    typedef QMap<QString, QVariant> SettingsMap;
+
     explicit QSettings(QObject *parent = Q_NULLPTR);
+    QSettings(Scope scope, QObject *parent = Q_NULLPTR);
+    QSettings(Format format, Scope scope, QObject *parent = Q_NULLPTR);
+    QSettings(const QString &fileName, Format format, QObject *parent = Q_NULLPTR);
     ~QSettings();
 
     void clear();
     void sync();
     SettingsStatus status() const;
 
-    void beginGroup(const QString &prefix);
-    void endGroup();
-    QString group() const;
-
-    int beginReadArray(const QString &prefix);
-    void beginWriteArray(const QString &prefix, int size = -1);
-    void endArray();
-    void setArrayIndex(int i);
-
-    QStringList allKeys() const;
-    QStringList childKeys() const;
-    QStringList childGroups() const;
+    SettingsMap map() const;
+    QStringList keys() const;
     bool isWritable() const;
 
     void setValue(const QString &key, const QVariant &value);
@@ -119,36 +107,14 @@ public:
     void remove(const QString &key);
     bool contains(const QString &key) const;
 
-    void setFallbacksEnabled(bool b);
-    bool fallbacksEnabled() const;
-
     QString fileName() const;
     Format format() const;
     Scope scope() const;
-    QString organizationName() const;
-    QString applicationName() const;
 
-#ifndef QT_NO_TEXTCODEC
-    void setIniCodec(QTextCodec *codec);
-    void setIniCodec(const char *codecName);
-    QTextCodec *iniCodec() const;
-#endif
-
-    static void setDefaultFormat(Format format);
-    static Format defaultFormat();
-    static void setSystemIniPath(const QString &dir); // ### remove in 5.0 (use setPath() instead)
-    static void setUserIniPath(const QString &dir);   // ### remove in 5.0 (use setPath() instead)
-    static void setPath(Format format, Scope scope, const QString &path);
-
-    typedef QMap<QString, QVariant> SettingsMap;
     typedef bool (*ReadFunc)(QIODevice &device, SettingsMap &map);
     typedef bool (*WriteFunc)(QIODevice &device, const SettingsMap &map);
 
-    static Format registerFormat(const QString &extension, ReadFunc readFunc, WriteFunc writeFunc,
-                                 Qt::CaseSensitivity caseSensitivity = Qt::CaseSensitive);
-
-protected:
-    bool event(QEvent *event);
+    static Format registerFormat(const QString &extension, ReadFunc readFunc, WriteFunc writeFunc);
 
 private:
     Q_DISABLE_COPY(QSettings)

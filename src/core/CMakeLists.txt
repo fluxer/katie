@@ -1,8 +1,13 @@
 # add_definitions()
-set(EXTRA_CORE_LIBS ${ZLIB_LIBRARIES} ${ICU_LIBRARIES} ${OPENSSL_LIBRARIES} ${ZSTD_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+set(EXTRA_CORE_LIBS
+    ${ZLIB_LIBRARIES}
+    ${ICU_LIBRARIES}
+    ${OPENSSL_LIBRARIES}
+    ${ZSTD_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+)
 
 set(CORE_PUBLIC_HEADERS
-    ${CORE_PUBLIC_HEADERS}
     QVarLengthArray
     QList
     QMutableStringListIterator
@@ -172,16 +177,6 @@ set(CORE_PUBLIC_HEADERS
     QCommandLineParser
 )
 
-include(codecs/codecs.cmake)
-include(concurrent/concurrent.cmake)
-include(global/global.cmake)
-include(io/io.cmake)
-include(json/json.cmake)
-include(kernel/kernel.cmake)
-include(plugin/plugin.cmake)
-include(thread/thread.cmake)
-include(tools/tools.cmake)
-
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
@@ -192,6 +187,16 @@ include_directories(
     ${OPENSSL_INCLUDE_DIR}
     ${ZSTD_INCLUDES}
 )
+
+include(codecs/codecs.cmake)
+include(concurrent/concurrent.cmake)
+include(global/global.cmake)
+include(io/io.cmake)
+include(json/json.cmake)
+include(kernel/kernel.cmake)
+include(plugin/plugin.cmake)
+include(thread/thread.cmake)
+include(tools/tools.cmake)
 
 if(${KATIE_PLATFORM} STREQUAL "linux")
     set(EXTRA_CORE_LIBS
@@ -221,7 +226,7 @@ katie_generate_package(KtCore "")
 katie_setup_target(KtCore ${CORE_SOURCES} ${CORE_HEADERS})
 
 add_library(KtCore ${KATIE_TYPE} ${KtCore_SOURCES})
-target_link_libraries(KtCore ${EXTRA_CORE_LIBS})
+target_link_libraries(KtCore PRIVATE ${EXTRA_CORE_LIBS})
 set_target_properties(KtCore PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}

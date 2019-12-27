@@ -66,12 +66,15 @@ public:
     virtual QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const;
     virtual void remove(const QString &key);
 
+    virtual QSettings::SettingsStatus status() const;
+
     // The application name to be used for settings. Allows for including
     // the Qt version to prevent settings of different Qt versions from
     // interfering.
     static QString settingsApplicationName();
 
 private:
+    QString m_group;
     QSettings m_settings;
 };
 

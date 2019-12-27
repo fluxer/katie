@@ -60,19 +60,6 @@ QT_BEGIN_NAMESPACE
 class QSocketNotifier;
 class QTimer;
 
-class QProcEnvKey
-{
-public:
-    QProcEnvKey() : hash(0) {}
-    explicit QProcEnvKey(const QByteArray &other) : key(other), hash(qHash(key)) {}
-    QProcEnvKey(const QProcEnvKey &other) { *this = other; }
-    bool operator==(const QProcEnvKey &other) const { return key == other.key; }
-
-    QByteArray key;
-    uint hash;
-};
-inline uint qHash(const QProcEnvKey &key) { return key.hash; }
-
 class QProcEnvValue
 {
 public:
@@ -103,23 +90,22 @@ public:
     mutable QString stringValue;
 };
 Q_DECLARE_TYPEINFO(QProcEnvValue, Q_MOVABLE_TYPE);
-Q_DECLARE_TYPEINFO(QProcEnvKey, Q_MOVABLE_TYPE);
 
 class QProcessEnvironmentPrivate: public QSharedData
 {
 public:
-    typedef QProcEnvKey Key;
+    typedef QByteArray Key;
     typedef QProcEnvValue Value;
     inline Key prepareName(const QString &name) const
     {
         Key &ent = nameMap[name];
-        if (ent.key.isEmpty())
-            ent = Key(name.toLocal8Bit());
+        if (ent.isEmpty())
+            ent = name.toLocal8Bit();
         return ent;
     }
     inline QString nameToString(const Key &name) const
     {
-        const QString sname = QString::fromLocal8Bit(name.key.constData());
+        const QString sname = QString::fromLocal8Bit(name.constData());
         nameMap[sname] = name;
         return sname;
     }

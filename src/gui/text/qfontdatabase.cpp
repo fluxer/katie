@@ -670,9 +670,6 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
                          QtFontStyle::Key styleKey, int pixelSize, char pitch,
                          QtFontDesc *desc, int force_encoding_id)
 {
-    Q_UNUSED(force_encoding_id);
-    Q_UNUSED(pitch);
-
     desc->foundry = 0;
     desc->style = 0;
     desc->size = 0;
@@ -1249,7 +1246,7 @@ QList<int> QFontDatabase::pointSizes(const QString &family,
 #ifdef Q_WS_X11
     int dpi = QX11Info::appDpiY();
 #else
-    const int dpi = qt_defaultDpiY(); // embedded
+    const int dpi = QX11Info::appDpiY(); // embedded
 #endif
 
     for (int j = 0; j < fam->count; j++) {
@@ -1349,7 +1346,7 @@ QList<int> QFontDatabase::smoothSizes(const QString &family,
 #ifdef Q_WS_X11
     const int dpi = QX11Info::appDpiY();
 #else
-    const int dpi = qt_defaultDpiY(); // embedded
+    const int dpi = QX11Info::appDpiY(); // embedded
 #endif
 
     for (int j = 0; j < fam->count; j++) {

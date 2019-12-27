@@ -342,12 +342,12 @@ QDeclarativeStatePrivate::generateActionList(QDeclarativeStateGroup *group) cons
     inState = true;
 
     if (!extends.isEmpty()) {
-        QList<QDeclarativeState *> states = group->states();
-        for (int ii = 0; ii < states.count(); ++ii)
-            if (states.at(ii)->name() == extends) {
-                qmlExecuteDeferred(states.at(ii));
-                applyList = static_cast<QDeclarativeStatePrivate*>(states.at(ii)->d_func())->generateActionList(group);
+        foreach (QDeclarativeState *state, group->states()) {
+            if (state->name() == extends) {
+                qmlExecuteDeferred(state);
+                applyList = static_cast<QDeclarativeStatePrivate*>(state->d_func())->generateActionList(group);
             }
+        }
     }
 
     foreach(QDeclarativeStateOperation *op, operations)
@@ -389,12 +389,9 @@ bool QDeclarativeState::containsPropertyInRevertList(QObject *target, const QStr
     Q_D(const QDeclarativeState);
 
     if (isStateActive()) {
-        QListIterator<QDeclarativeSimpleAction> revertListIterator(d->revertList);
-
-        while (revertListIterator.hasNext()) {
-            const QDeclarativeSimpleAction &simpleAction = revertListIterator.next();
-            if (simpleAction.specifiedObject() == target && simpleAction.specifiedProperty() == name)
-                return true;
+        foreach (const QDeclarativeSimpleAction &simpleAction, d->revertList) {
+        if (simpleAction.specifiedObject() == target && simpleAction.specifiedProperty() == name)
+            return true;
         }
     }
 
@@ -536,10 +533,7 @@ QVariant QDeclarativeState::valueInRevertList(QObject *target, const QString &na
     Q_D(const QDeclarativeState);
 
     if (isStateActive()) {
-        QListIterator<QDeclarativeSimpleAction> revertListIterator(d->revertList);
-
-        while (revertListIterator.hasNext()) {
-            const QDeclarativeSimpleAction &simpleAction = revertListIterator.next();
+        foreach (const QDeclarativeSimpleAction &simpleAction, d->revertList) {
             if (simpleAction.specifiedObject() == target && simpleAction.specifiedProperty() == name)
                 return simpleAction.value();
         }
@@ -553,10 +547,7 @@ QDeclarativeAbstractBinding *QDeclarativeState::bindingInRevertList(QObject *tar
     Q_D(const QDeclarativeState);
 
     if (isStateActive()) {
-        QListIterator<QDeclarativeSimpleAction> revertListIterator(d->revertList);
-
-        while (revertListIterator.hasNext()) {
-            const QDeclarativeSimpleAction &simpleAction = revertListIterator.next();
+        foreach (const QDeclarativeSimpleAction &simpleAction, d->revertList) {
             if (simpleAction.specifiedObject() == target && simpleAction.specifiedProperty() == name)
                 return simpleAction.binding();
         }

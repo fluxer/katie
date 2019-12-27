@@ -13,5 +13,5 @@ if(WITH_DBUS AND DBUS_FOUND)
     )
     add_executable(performance_server ${performance_server_SOURCES})
 
-    target_link_libraries(performance_server KtDBus)
+    target_link_libraries(performance_server KtCore KtDBus)
 endif()

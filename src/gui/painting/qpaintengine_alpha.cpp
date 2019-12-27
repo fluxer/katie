@@ -44,7 +44,8 @@
 #ifndef QT_NO_PRINTER
 #include "qdebug.h"
 #include "qpaintengine_alpha_p.h"
-#include "qfont_p.h"
+#include "qfont.h"
+#include "qx11info_x11.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -322,8 +323,8 @@ void QAlphaPaintEngine::flushAndInit(bool init)
 
         // make sure the output from QImage is unscaled
         QTransform mtx;
-        mtx.scale(1.0f / (qreal(d->m_pdev->logicalDpiX()) / qreal(qt_defaultDpiX())),
-                  1.0f / (qreal(d->m_pdev->logicalDpiY()) / qreal(qt_defaultDpiY())));
+        mtx.scale(1.0f / (qreal(d->m_pdev->logicalDpiX()) / qreal(QX11Info::appDpiX())),
+                  1.0f / (qreal(d->m_pdev->logicalDpiY()) / qreal(QX11Info::appDpiY())));
         painter()->setTransform(mtx);
         painter()->drawImage(0, 0, *d->m_pic);
 

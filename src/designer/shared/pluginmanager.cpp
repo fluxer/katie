@@ -549,7 +549,7 @@ QDesignerPluginManager::QDesignerPluginManager(QDesignerFormEditorInterface *cor
     m_d(new QDesignerPluginManagerPrivate(core))
 {
     m_d->m_pluginPaths = defaultPluginPaths();
-    const QSettings settings(qApp->organizationName(), QDesignerQSettings::settingsApplicationName());
+    const QDesignerQSettings settings;
     m_d->m_disabledPlugins = unique(settings.value(QLatin1String("PluginManager/DisabledPlugins")).toStringList());
 
     // Register plugins
@@ -709,7 +709,7 @@ void QDesignerPluginManager::registerPlugin(const QString &plugin)
 
 bool QDesignerPluginManager::syncSettings()
 {
-    QSettings settings(qApp->organizationName(), QDesignerQSettings::settingsApplicationName());
+    QDesignerQSettings settings;
     settings.beginGroup(QLatin1String("PluginManager"));
     settings.setValue(QLatin1String("DisabledPlugins"), m_d->m_disabledPlugins);
     settings.endGroup();

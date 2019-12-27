@@ -1,5 +1,7 @@
 # add_definitions()
-set(EXTRA_LUPDATE_LIBS KtCore KtXml)
+set(EXTRA_LUPDATE_LIBS
+    KtCore KtXml
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include

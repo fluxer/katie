@@ -517,7 +517,8 @@ void tst_QChar::normalization_data()
 
             for (int j = 0; j < c.size(); ++j) {
                 bool ok;
-                uint uc = c.at(j).toInt(&ok, 16);
+                uint uc = c.at(j).toUInt(&ok, 16);
+                QVERIFY(ok);
                 if (!QChar::requiresSurrogates(uc)) {
                     columns[i].append(QChar(uc));
                 } else {

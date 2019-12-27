@@ -3959,8 +3959,7 @@ bool QUrl::isParentOf(const QUrl &childUrl) const
 */
 QDataStream &operator<<(QDataStream &out, const QUrl &url)
 {
-    QByteArray u = url.toEncoded();
-    out << u;
+    out << (QByteArray)url.toEncoded();
     return out;
 }
 

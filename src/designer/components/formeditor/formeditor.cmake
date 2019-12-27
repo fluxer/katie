@@ -74,4 +74,3 @@ set(DESIGNERCOMPONENTS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/templateoptionspage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/formeditor.qrc
 )
-

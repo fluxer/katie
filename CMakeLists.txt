@@ -229,7 +229,8 @@ configure_file(
     ${CMAKE_BINARY_DIR}/include/QtCore/qglobal.h
 )
 
-find_package(ZLIB)
+# v1.2.0+ for compressBound()
+find_package(ZLIB 1.2.0)
 set_package_properties(ZLIB PROPERTIES
     PURPOSE "Required for compression support"
     DESCRIPTION "A Massively Spiffy Yet Delicately Unobtrusive Compression Library"
@@ -330,7 +331,8 @@ set_package_properties(NSL PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(PNG)
+# v1.5.4+ for png_longjmp_ptr() without noreturn attribute
+find_package(PNG 1.5.4)
 set_package_properties(PNG PROPERTIES
     PURPOSE "PNG format handler"
     DESCRIPTION "A collection of routines used to create PNG format graphics files"
@@ -346,7 +348,8 @@ set_package_properties(JPEG PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(TIFF)
+# v3.6.0+ for TIFFReadRGBAImageOriented()
+find_package(TIFF 3.6.0)
 set_package_properties(TIFF PROPERTIES
     PURPOSE "TIFF format handler"
     DESCRIPTION "Library for manipulation of TIFF images"

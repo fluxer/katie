@@ -1,5 +1,7 @@
 # add_definitions()
-set(EXTRA_FOLDERLISTMODEL_LIBS KtDeclarative)
+set(EXTRA_FOLDERLISTMODEL_LIBS
+    KtDeclarative
+)
 
 set(FOLDERLISTMODEL_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativefolderlistmodel.cpp

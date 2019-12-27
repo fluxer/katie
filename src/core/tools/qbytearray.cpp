@@ -303,22 +303,6 @@ int qstrnicmp(const char *str1, const char *str2, uint len)
     return 0;
 }
 
-/*!
-    \internal
- */
-int qstrcmp(const QByteArray &str1, const char *str2)
-{
-    return qstrcmp(str1.constData(), str2);
-}
-
-/*!
-    \internal
- */
-int qstrcmp(const QByteArray &str1, const QByteArray &str2)
-{
-    return qstrcmp(str1.constData(), str2.constData());
-}
-
 // the CRC table below is created by the following piece of code
 #if 0
 static void createCRC16Table()                        // build CRC16 lookup table
@@ -421,40 +405,43 @@ QByteArray qCompress(const uchar* data, int nbytes, int compressionLevel)
 #ifdef QT_FAST_COMPRESS
     return qFastCompress(reinterpret_cast<const char*>(data), nbytes, compressionLevel);
 #else
-    if (nbytes == 0) {
-        return QByteArray(4, '\0');
-    }
     if (Q_UNLIKELY(!data)) {
         qWarning("qCompress: Data is null");
         return QByteArray();
+    } else if (Q_UNLIKELY(nbytes <= 0)) {
+        qWarning("qCompress:  Data size is negative or zero");
+        return QByteArray(4, '\0');
     }
+
     if (compressionLevel < -1 || compressionLevel > 9)
         compressionLevel = -1;
 
-    ulong len = nbytes + nbytes / 100 + 13;
-    QByteArray bazip;
-    int res;
-    do {
-        bazip.resize(len + 4);
-        res = ::compress2((uchar*)bazip.data()+4, &len, (uchar*)data, nbytes, compressionLevel);
+    ulong len = ::compressBound(nbytes) + 4;
+    QByteArray bazip(len, Qt::Uninitialized);
+    const int res = ::compress2(reinterpret_cast<uchar*>(bazip.data() + 4),
+        &len, data, nbytes, compressionLevel);
 
-        switch (res) {
-        case Z_OK:
+    switch (res) {
+        case Z_OK: {
             bazip.resize(len + 4);
             bazip[0] = (nbytes & 0xff000000) >> 24;
             bazip[1] = (nbytes & 0x00ff0000) >> 16;
             bazip[2] = (nbytes & 0x0000ff00) >> 8;
             bazip[3] = (nbytes & 0x000000ff);
             break;
-        case Z_MEM_ERROR:
-            qWarning("qCompress: Z_MEM_ERROR: Not enough memory");
-            bazip.resize(0);
-            break;
+        }
         case Z_BUF_ERROR:
-            len *= 2;
+        case Z_MEM_ERROR: {
+            qWarning("qCompress: Not enough memory");
+            bazip.clear();
             break;
         }
-    } while (res == Z_BUF_ERROR);
+        default: {
+            qWarning("qCompress: Unknown error (%d)", res);
+            bazip.clear();
+            break;
+        }
+    };
 
     return bazip;
 #endif // QT_FAST_COMPRESS
@@ -499,73 +486,40 @@ QByteArray qUncompress(const uchar* data, int nbytes)
     if (Q_UNLIKELY(!data)) {
         qWarning("qUncompress: Data is null");
         return QByteArray();
-    }
-    if (Q_UNLIKELY(nbytes <= 4)) {
-        if (nbytes < 4 || (data[0]!=0 || data[1]!=0 || data[2]!=0 || data[3]!=0))
-            qWarning("qUncompress: Input data is corrupted");
+    } else if (Q_UNLIKELY(nbytes <= 4)) {
+        qWarning("qUncompress: Input data is corrupted");
         return QByteArray();
     }
-    ulong expectedSize = (data[0] << 24) | (data[1] << 16) |
-                       (data[2] <<  8) | (data[3]      );
-    ulong len = qMax(expectedSize, 1ul);
-    QScopedPointer<QByteArray::Data, QScopedPointerPodDeleter> d;
 
-    forever {
-        ulong alloc = len;
-        if (Q_UNLIKELY(len  >= ulong(1 << 31) - sizeof(QByteArray::Data))) {
-            //QByteArray does not support that huge size anyway.
-            qWarning("qUncompress: Input data is corrupted");
-            return QByteArray();
+    ulong len = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | (data[3]);
+    QByteArray baunzip(len, Qt::Uninitialized);
+    const int res = ::uncompress(reinterpret_cast<uchar*>(baunzip.data()),
+        &len, data + 4, nbytes - 4);
+
+    switch (res) {
+        case Z_OK: {
+            baunzip.resize(len);
+            break;
         }
-        QByteArray::Data *p = static_cast<QByteArray::Data *>(realloc(d.data(), sizeof(QByteArray::Data) + alloc));
-        if (!Q_UNLIKELY(p)) {
-            // we are not allowed to crash here when compiling with QT_NO_EXCEPTIONS
-            qWarning("qUncompress: could not allocate enough memory to uncompress data");
-            return QByteArray();
-        }
-        d.take(); // realloc was successful
-        d.reset(p);
-
-        int res = ::uncompress((uchar*)d->array, &len,
-                               (uchar*)data+4, nbytes-4);
-
-        switch (res) {
-        case Z_OK:
-            if (len != alloc) {
-                if (Q_UNLIKELY(len  >= ulong(1 << 31) - sizeof(QByteArray::Data))) {
-                    //QByteArray does not support that huge size anyway.
-                    qWarning("qUncompress: Input data is corrupted");
-                    return QByteArray();
-                }
-                QByteArray::Data *p = static_cast<QByteArray::Data *>(realloc(d.data(), sizeof(QByteArray::Data) + len));
-                if (Q_UNLIKELY(!p)) {
-                    // we are not allowed to crash here when compiling with QT_NO_EXCEPTIONS
-                    qWarning("qUncompress: could not allocate enough memory to uncompress data");
-                    return QByteArray();
-                }
-                d.take(); // realloc was successful
-                d.reset(p);
-            }
-            d->ref = 1;
-            d->alloc = d->size = len;
-            d->data = d->array;
-            d->array[len] = 0;
-
-            return QByteArray(d.take(), 0, 0);
-
-        case Z_MEM_ERROR:
-            qWarning("qUncompress: Z_MEM_ERROR: Not enough memory");
-            return QByteArray();
-
         case Z_BUF_ERROR:
-            len *= 2;
-            continue;
-
-        case Z_DATA_ERROR:
-            qWarning("qUncompress: Z_DATA_ERROR: Input data is corrupted");
-            return QByteArray();
+        case Z_MEM_ERROR: {
+            qWarning("qUncompress: Not enough memory");
+            baunzip.clear();
+            break;
         }
-    }
+        case Z_DATA_ERROR: {
+             qWarning("qUncompress: Z_DATA_ERROR: Input data is corrupted");
+            baunzip.clear();
+            break;
+         }
+        default: {
+            qWarning("qUncompress: Unknown error (%d)", res);
+            baunzip.clear();
+            break;
+        }
+     }
+
+    return baunzip;
 #endif // QT_FAST_COMPRESS
 }
 
@@ -3215,8 +3169,7 @@ QByteArray QByteArray::trimmed() const
     }
     int l = end - start + 1;
     if (l <= 0) {
-        shared_empty.ref.ref();
-        return QByteArray(&shared_empty, 0, 0);
+        return QByteArray();
     }
     return QByteArray(s+start, l);
 }
@@ -3389,10 +3342,10 @@ qulonglong QByteArray::toULongLong(bool *ok, int base) const
 int QByteArray::toInt(bool *ok, int base) const
 {
     qlonglong v = toLongLong(ok, base);
-    if (v < INT_MIN || v > INT_MAX) {
+    if (Q_UNLIKELY(v < INT_MIN || v > INT_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return int(v);
 }
@@ -3420,10 +3373,10 @@ int QByteArray::toInt(bool *ok, int base) const
 uint QByteArray::toUInt(bool *ok, int base) const
 {
     qulonglong v = toULongLong(ok, base);
-    if (v > UINT_MAX) {
+    if (Q_UNLIKELY(v > UINT_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return uint(v);
 }
@@ -3454,10 +3407,10 @@ uint QByteArray::toUInt(bool *ok, int base) const
 long QByteArray::toLong(bool *ok, int base) const
 {
     qlonglong v = toLongLong(ok, base);
-    if (v < LONG_MIN || v > LONG_MAX) {
+    if (Q_UNLIKELY(v < LONG_MIN || v > LONG_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return long(v);
 }
@@ -3486,10 +3439,10 @@ long QByteArray::toLong(bool *ok, int base) const
 ulong QByteArray::toULong(bool *ok, int base) const
 {
     qulonglong v = toULongLong(ok, base);
-    if (v > ULONG_MAX) {
+    if (Q_UNLIKELY(v > ULONG_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return ulong(v);
 }
@@ -3517,10 +3470,10 @@ ulong QByteArray::toULong(bool *ok, int base) const
 short QByteArray::toShort(bool *ok, int base) const
 {
     qlonglong v = toLongLong(ok, base);
-    if (v < SHRT_MIN || v > SHRT_MAX) {
+    if (Q_UNLIKELY(v < SHRT_MIN || v > SHRT_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return short(v);
 }
@@ -3548,10 +3501,10 @@ short QByteArray::toShort(bool *ok, int base) const
 ushort QByteArray::toUShort(bool *ok, int base) const
 {
     qulonglong v = toULongLong(ok, base);
-    if (v > USHRT_MAX) {
+    if (Q_UNLIKELY(v > USHRT_MAX)) {
         if (ok)
             *ok = false;
-        v = 0;
+        return 0;
     }
     return ushort(v);
 }
@@ -3606,11 +3559,12 @@ float QByteArray::toFloat(bool *ok) const
 
     \sa fromBase64()
 */
+
+static const char base64chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+static const char base64padchar = '=';
+
 QByteArray QByteArray::toBase64() const
 {
-    const char alphabet[] = "ABCDEFGH" "IJKLMNOP" "QRSTUVWX" "YZabcdef"
-		            "ghijklmn" "opqrstuv" "wxyz0123" "456789+/";
-    const char padchar = '=';
     int padlen = 0;
 
     QByteArray tmp((d->size * 4) / 3 + 3, Qt::Uninitialized);
@@ -3618,26 +3572,27 @@ QByteArray QByteArray::toBase64() const
     int i = 0;
     char *out = tmp.data();
     while (i < d->size) {
-	int chunk = 0;
-	chunk |= int(uchar(d->data[i++])) << 16;
-	if (i == d->size) {
-	    padlen = 2;
-	} else {
-	    chunk |= int(uchar(d->data[i++])) << 8;
-	    if (i == d->size) padlen = 1;
-	    else chunk |= int(uchar(d->data[i++]));
-	}
+        int chunk = int(uchar(d->data[i++])) << 16;
+        if (i == d->size) {
+            padlen = 2;
+        } else {
+            chunk |= int(uchar(d->data[i++])) << 8;
+            if (i == d->size)
+                padlen = 1;
+            else
+                chunk |= int(uchar(d->data[i++]));
+        }
 
-	int j = (chunk & 0x00fc0000) >> 18;
-	int k = (chunk & 0x0003f000) >> 12;
-	int l = (chunk & 0x00000fc0) >> 6;
-	int m = (chunk & 0x0000003f);
-	*out++ = alphabet[j];
-	*out++ = alphabet[k];
-	if (padlen > 1) *out++ = padchar;
-	else *out++ = alphabet[l];
-	if (padlen > 0) *out++ = padchar;
-	else *out++ = alphabet[m];
+        int j = (chunk & 0x00fc0000) >> 18;
+        int k = (chunk & 0x0003f000) >> 12;
+        int l = (chunk & 0x00000fc0) >> 6;
+        int m = (chunk & 0x0000003f);
+        *out++ = base64chars[j];
+        *out++ = base64chars[k];
+        if (padlen > 1) *out++ = base64padchar;
+        else *out++ = base64chars[l];
+        if (padlen > 0) *out++ = base64padchar;
+        else *out++ = base64chars[m];
     }
 
     tmp.truncate(out - tmp.data());
@@ -3997,31 +3952,31 @@ QByteArray QByteArray::fromBase64(const QByteArray &base64)
 
     int offset = 0;
     for (int i = 0; i < base64.size(); ++i) {
-	int ch = base64.at(i);
-	int d;
+        int ch = base64.at(i);
+        int d;
 
-	if (ch >= 'A' && ch <= 'Z')
-	    d = ch - 'A';
-	else if (ch >= 'a' && ch <= 'z')
-	    d = ch - 'a' + 26;
-	else if (ch >= '0' && ch <= '9')
-	    d = ch - '0' + 52;
-	else if (ch == '+')
-	    d = 62;
-	else if (ch == '/')
-	    d = 63;
-	else
-	    d = -1;
+        if (ch >= 'A' && ch <= 'Z')
+            d = ch - 'A';
+        else if (ch >= 'a' && ch <= 'z')
+            d = ch - 'a' + 26;
+        else if (ch >= '0' && ch <= '9')
+            d = ch - '0' + 52;
+        else if (ch == '+')
+            d = 62;
+        else if (ch == '/')
+            d = 63;
+        else
+            d = -1;
 
-	if (d != -1) {
-	    buf = (buf << 6) | d;
-	    nbits += 6;
-	    if (nbits >= 8) {
-		nbits -= 8;
-		tmp[offset++] = buf >> nbits;
-		buf &= (1 << nbits) - 1;
-	    }
-	}
+        if (d != -1) {
+            buf = (buf << 6) | d;
+            nbits += 6;
+            if (nbits >= 8) {
+                nbits -= 8;
+                tmp[offset++] = buf >> nbits;
+                buf &= (1 << nbits) - 1;
+            }
+        }
     }
 
     tmp.truncate(offset);

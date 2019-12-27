@@ -50,20 +50,18 @@
 #include "qstringlist.h"
 #include "qvariant.h"
 #include "qcolormap.h"
+#include "qdrawhelper_p.h"
+#include "qmemrotate_p.h"
+#include "qpixmapdata_p.h"
+#include "qhash.h"
+#include "qpaintengine_raster_p.h"
+#include "qimage_p.h"
+#include "qx11info_x11.h"
+
 #include <ctype.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <math.h>
-#include "qdrawhelper_p.h"
-#include "qmemrotate_p.h"
-#include "qpixmapdata_p.h"
-
-#include "qhash.h"
-
-#include "qpaintengine_raster_p.h"
-
-#include "qimage_p.h"
-#include "qfont_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -134,8 +132,8 @@ QImageData::QImageData()
       format(QImage::Format_ARGB32), bytes_per_line(0),
       ser_no(qimage_serial_number.fetchAndAddRelaxed(1)),
       detach_no(0),
-      dpmx(qt_defaultDpiX() * 100 / qreal(2.54)),
-      dpmy(qt_defaultDpiY() * 100 / qreal(2.54)),
+      dpmx(QX11Info::appDpiX() * 100 / qreal(2.54)),
+      dpmy(QX11Info::appDpiY() * 100 / qreal(2.54)),
       offset(0, 0), own_data(true), ro_data(false), has_alpha_clut(false),
       paintEngine(0)
 {

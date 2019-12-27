@@ -43,7 +43,7 @@ find_library(ODBC_LIBRARIES
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ODBC
     VERSION_VAR PC_ODBC_VERSION
-    REQUIRED_VARS ODBC_INCLUDES ODBC_LIBRARIES
+    REQUIRED_VARS ODBC_LIBRARIES ODBC_INCLUDES
 )
 
 mark_as_advanced(ODBC_INCLUDES ODBC_LIBRARIES)

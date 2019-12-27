@@ -1,5 +1,7 @@
 # add_definitions()
-set(EXTRA_QTCONFIG_LIBS KtCore KtGui)
+set(EXTRA_QTCONFIG_LIBS
+    KtCore KtGui
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include

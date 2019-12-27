@@ -334,31 +334,40 @@ QJsonValue &QJsonValue::operator =(const QJsonValue &other)
  */
 QJsonValue QJsonValue::fromVariant(const QVariant &variant)
 {
-   switch (variant.type()) {
-      case QVariant::Bool:
-         return QJsonValue(variant.toBool());
-      case QVariant::Int:
-      case QVariant::Double:
-      case QVariant::LongLong:
-      case QVariant::ULongLong:
-      case QVariant::UInt:
-         return QJsonValue(variant.toDouble());
-      case QVariant::String:
-         return QJsonValue(variant.toString());
-      case QVariant::StringList:
-         return QJsonValue(QJsonArray::fromStringList(variant.toStringList()));
-      case QVariant::List:
-         return QJsonValue(QJsonArray::fromVariantList(variant.toList()));
-      case QVariant::Map:
-         return QJsonValue(QJsonObject::fromVariantMap(variant.toMap()));
-      default:
-         break;
-   }
-   QString string = variant.toString();
-   if (string.isEmpty()) {
-      return QJsonValue();
-   }
-   return QJsonValue(string);
+    switch (variant.type()) {
+        case QVariant::Bool:
+            return QJsonValue(variant.toBool());
+        case QVariant::Int:
+        case QVariant::Double:
+        case QVariant::LongLong:
+        case QVariant::ULongLong:
+        case QVariant::UInt:
+            return QJsonValue(variant.toDouble());
+        case QVariant::String:
+            return QJsonValue(variant.toString());
+        case QVariant::StringList:
+            return QJsonValue(QJsonArray::fromStringList(variant.toStringList()));
+        case QVariant::List:
+            return QJsonValue(QJsonArray::fromVariantList(variant.toList()));
+        case QVariant::Map:
+            return QJsonValue(QJsonObject::fromVariantMap(variant.toMap()));
+        default:
+            break;
+    }
+
+    QByteArray a;
+    {
+        QDataStream s(&a, QIODevice::WriteOnly);
+        s << variant;
+    }
+    if (a.isEmpty()) {
+        return QJsonValue();
+    }
+
+    QString result = QLatin1String("@(");
+    result += QString::fromLatin1(a.constData(), a.size());
+    result += QLatin1String(")@");
+    return QJsonValue(result);
 }
 
 /*!
@@ -378,25 +387,38 @@ QJsonValue QJsonValue::fromVariant(const QVariant &variant)
  */
 QVariant QJsonValue::toVariant() const
 {
-   switch (t) {
-      case Bool:
-         return b;
-      case Double:
-         return dbl;
-      case String:
-         return toString();
-      case Array:
-         return d ?
-                QJsonArray(d, static_cast<QJsonPrivate::Array *>(base)).toVariantList() :
-                QVariantList();
-      case Object:
-         return d ?
-                QJsonObject(d, static_cast<QJsonPrivate::Object *>(base)).toVariantMap() :
-                QVariantMap();
-      case Null:
-      case Undefined:
-         break;
-   }
+    switch (t) {
+        case Bool:
+            return b;
+        case Double:
+            return dbl;
+        case String: {
+            QVariant variant = toString();
+            QString string = variant.toString();
+            if (string.startsWith(QLatin1String("@(")) && string.endsWith(")@")) {
+                QByteArray a(string.toLatin1());
+                a.remove(0, 2);
+                a.chop(2);
+                QDataStream stream(&a, QIODevice::ReadOnly);
+                QVariant result;
+                stream >> result;
+                return result;
+            }
+            return variant;
+        }
+        case Array:
+            return d ?
+                    QJsonArray(d, static_cast<QJsonPrivate::Array *>(base)).toVariantList() :
+                    QVariantList();
+        case Object:
+            return d ?
+                    QJsonObject(d, static_cast<QJsonPrivate::Object *>(base)).toVariantMap() :
+                    QVariantMap();
+        case Null:
+        case Undefined:
+            return QVariant();
+    }
+
    return QVariant();
 }
 

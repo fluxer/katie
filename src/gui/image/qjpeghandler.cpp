@@ -82,10 +82,6 @@ void QT_FASTCALL convert_rgb888_to_rgb32_C(quint32 *dst, const uchar *src, int l
     }
 }
 
-typedef void (QT_FASTCALL *Rgb888ToRgb32Converter)(quint32 *dst, const uchar *src, int len);
-
-static Rgb888ToRgb32Converter rgb888ToRgb32ConverterPtr = convert_rgb888_to_rgb32_C;
-
 struct my_error_mgr : public jpeg_error_mgr {
     jmp_buf setjmp_buffer;
 };
@@ -399,7 +395,7 @@ static bool read_jpeg_image(QImage *outImage,
                 if (info->output_components == 3) {
                     uchar *in = rows[0] + clip.x() * 3;
                     QRgb *out = (QRgb*)outImage->scanLine(y);
-                    rgb888ToRgb32ConverterPtr(out, in, clip.width());
+                    convert_rgb888_to_rgb32_C(out, in, clip.width());
                 } else if (info->out_color_space == JCS_CMYK) {
                     // Convert CMYK->RGB.
                     uchar *in = rows[0] + clip.x() * 4;

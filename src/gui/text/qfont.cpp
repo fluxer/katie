@@ -119,9 +119,6 @@ bool QFontDef::exactMatch(const QFontDef &other) const
     QFontDatabase::parseFontName(family, this_foundry, this_family);
     QFontDatabase::parseFontName(other.family, other_foundry, other_family);
 
-    this_family = QFontDatabase::resolveFontFamilyAlias(this_family);
-    other_family = QFontDatabase::resolveFontFamilyAlias(other_family);
-
     return (styleHint     == other.styleHint
             && styleStrategy == other.styleStrategy
             && weight        == other.weight
@@ -134,35 +131,8 @@ bool QFontDef::exactMatch(const QFontDef &other) const
        );
 }
 
-extern bool qt_is_gui_used;
-
-Q_GUI_EXPORT int qt_defaultDpiX()
-{
-    if (!qt_is_gui_used)
-        return 75;
-
-#ifdef Q_WS_X11
-    return QX11Info::appDpiX();
-#endif // Q_WS_X11
-}
-
-Q_GUI_EXPORT int qt_defaultDpiY()
-{
-    if (!qt_is_gui_used)
-        return 75;
-
-#ifdef Q_WS_X11
-    return QX11Info::appDpiY();
-#endif // Q_WS_X11
-}
-
-Q_GUI_EXPORT int qt_defaultDpi()
-{
-    return qt_defaultDpiY();
-}
-
 QFontPrivate::QFontPrivate()
-    : engineData(0), dpi(qt_defaultDpi()), screen(0),
+    : engineData(0), dpi(QX11Info::appDpiY()), screen(0),
       underline(false), overline(false), strikeOut(false), kerning(true),
       capital(QFont::MixedCase), letterSpacingIsAbsolute(false), scFont(0)
 {
@@ -1680,22 +1650,20 @@ QFont QFont::resolve(const QFont &other) const
 typedef QHash<QString, QStringList> QFontSubst;
 Q_GLOBAL_STATIC(QFontSubst, globalFontSubst)
 
+static const struct FontSubstitutesTblData {
+    const QLatin1String original;
+    const QLatin1String substitute;
+} FontSubstitutesTbl[] = {
+    { QLatin1String("arial"), QLatin1String("helvetica") },
+    { QLatin1String("times new roman"), QLatin1String("times") },
+    { QLatin1String("courier new"), QLatin1String("courier") },
+    { QLatin1String("sans serif"), QLatin1String("helvetica") },
+};
+static const qint16 FontSubstitutesTblSize = sizeof(FontSubstitutesTbl) / sizeof(FontSubstitutesTblData);
+
 // create substitution dict
 static void initFontSubst()
 {
-    // default substitutions
-    static const char * const initTbl[] = {
-
-#if defined(Q_WS_X11)
-        "arial",        "helvetica",
-        "times new roman", "times",
-        "courier new",  "courier",
-        "sans serif",   "helvetica",
-#endif
-
-        0,              0
-    };
-
     QFontSubst *fontSubst = globalFontSubst();
     Q_ASSERT(fontSubst != 0);
     if (!fontSubst->isEmpty())
@@ -1705,9 +1673,9 @@ static void initFontSubst()
         return;
 #endif
 
-    for (int i=0; initTbl[i] != 0; i += 2) {
-        QStringList &list = (*fontSubst)[QString::fromLatin1(initTbl[i])];
-        list.append(QString::fromLatin1(initTbl[i+1]));
+    for (qint16 i = 0; i < FontSubstitutesTblSize; i++) {
+        QStringList &list = (*fontSubst)[FontSubstitutesTbl[i].original];
+        list.append(FontSubstitutesTbl[i].substitute);
     }
 }
 

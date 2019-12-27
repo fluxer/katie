@@ -1678,10 +1678,7 @@ void WriteInitialization::writeColorGroup(DomColorGroup *colorGroup, const QStri
     }
 
     // new format
-    const QList<DomColorRole *> colorRoles = colorGroup->elementColorRole();
-    QListIterator<DomColorRole *> itRole(colorRoles);
-    while (itRole.hasNext()) {
-        const DomColorRole *colorRole = itRole.next();
+    foreach (const DomColorRole *colorRole, colorGroup->elementColorRole()) {
         if (colorRole->hasAttributeRole()) {
             const QString brushName = writeBrushInitialization(colorRole->elementBrush());
             m_output << m_indent << paletteName << ".setBrush(" << group
@@ -1757,10 +1754,7 @@ void WriteInitialization::writeBrush(const DomBrush *brush, const QString &brush
                 << gradient->attributeCoordinateMode() << ");\n";
         }
 
-       const  QList<DomGradientStop *> stops = gradient->elementGradientStop();
-        QListIterator<DomGradientStop *> it(stops);
-        while (it.hasNext()) {
-            const DomGradientStop *stop = it.next();
+        foreach (const DomGradientStop *stop, gradient->elementGradientStop()) {
             const DomColor *color = stop->elementColor();
             m_output << m_indent << gradientName << ".setColorAt("
                 << stop->attributePosition() << ", "
