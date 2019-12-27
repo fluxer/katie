@@ -192,8 +192,7 @@ void QDirIteratorPrivate::pushDirectory(const QFileInfo &fileInfo)
         }
     } else {
 #ifndef QT_NO_FILESYSTEMITERATOR
-        QFileSystemIterator *it = new QFileSystemIterator(fileInfo.d_ptr->fileEntry);
-        nativeIterators << it;
+        nativeIterators << new QFileSystemIterator(fileInfo.d_ptr->fileEntry);
 #endif
     }
 }
