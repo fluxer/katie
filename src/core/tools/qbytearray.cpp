@@ -3997,31 +3997,31 @@ QByteArray QByteArray::fromBase64(const QByteArray &base64)
 
     int offset = 0;
     for (int i = 0; i < base64.size(); ++i) {
-	int ch = base64.at(i);
-	int d;
+        int ch = base64.at(i);
+        int d;
 
-	if (ch >= 'A' && ch <= 'Z')
-	    d = ch - 'A';
-	else if (ch >= 'a' && ch <= 'z')
-	    d = ch - 'a' + 26;
-	else if (ch >= '0' && ch <= '9')
-	    d = ch - '0' + 52;
-	else if (ch == '+')
-	    d = 62;
-	else if (ch == '/')
-	    d = 63;
-	else
-	    d = -1;
+        if (ch >= 'A' && ch <= 'Z')
+            d = ch - 'A';
+        else if (ch >= 'a' && ch <= 'z')
+            d = ch - 'a' + 26;
+        else if (ch >= '0' && ch <= '9')
+            d = ch - '0' + 52;
+        else if (ch == '+')
+            d = 62;
+        else if (ch == '/')
+            d = 63;
+        else
+            d = -1;
 
-	if (d != -1) {
-	    buf = (buf << 6) | d;
-	    nbits += 6;
-	    if (nbits >= 8) {
-		nbits -= 8;
-		tmp[offset++] = buf >> nbits;
-		buf &= (1 << nbits) - 1;
-	    }
-	}
+        if (d != -1) {
+            buf = (buf << 6) | d;
+            nbits += 6;
+            if (nbits >= 8) {
+                nbits -= 8;
+                tmp[offset++] = buf >> nbits;
+                buf &= (1 << nbits) - 1;
+            }
+        }
     }
 
     tmp.truncate(offset);
