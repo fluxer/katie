@@ -70,12 +70,7 @@ inline uint qstrnlen(const char *str, uint maxlen)
 
 Q_CORE_EXPORT char *qstrcpy(char *dst, const char *src);
 Q_CORE_EXPORT char *qstrncpy(char *dst, const char *src, uint len);
-
 Q_CORE_EXPORT int qstrcmp(const char *str1, const char *str2);
-Q_CORE_EXPORT int qstrcmp(const QByteArray &str1, const QByteArray &str2);
-Q_CORE_EXPORT int qstrcmp(const QByteArray &str1, const char *str2);
-static inline int qstrcmp(const char *str1, const QByteArray &str2)
-{ return -qstrcmp(str2, str1); }
 
 inline int qstrncmp(const char *str1, const char *str2, uint len)
 {
@@ -441,39 +436,39 @@ inline bool QByteArray::contains(char c) const
 inline bool operator==(const QByteArray &a1, const QByteArray &a2)
 { return (a1.size() == a2.size()) && (memcmp(a1.constData(), a2.constData(), a1.size())==0); }
 inline bool operator==(const QByteArray &a1, const char *a2)
-{ return a2 ? qstrcmp(a1,a2) == 0 : a1.isEmpty(); }
+{ return a2 ? qstrcmp(a1.constData(), a2) == 0 : a1.isEmpty(); }
 inline bool operator==(const char *a1, const QByteArray &a2)
-{ return a1 ? qstrcmp(a1,a2) == 0 : a2.isEmpty(); }
+{ return a1 ? qstrcmp(a1, a2.constData()) == 0 : a2.isEmpty(); }
 inline bool operator!=(const QByteArray &a1, const QByteArray &a2)
 { return !(a1==a2); }
 inline bool operator!=(const QByteArray &a1, const char *a2)
-{ return a2 ? qstrcmp(a1,a2) != 0 : !a1.isEmpty(); }
+{ return a2 ? qstrcmp(a1.constData(), a2) != 0 : !a1.isEmpty(); }
 inline bool operator!=(const char *a1, const QByteArray &a2)
-{ return a1 ? qstrcmp(a1,a2) != 0 : !a2.isEmpty(); }
+{ return a1 ? qstrcmp(a1, a2.constData()) != 0 : !a2.isEmpty(); }
 inline bool operator<(const QByteArray &a1, const QByteArray &a2)
-{ return qstrcmp(a1, a2) < 0; }
+{ return qstrcmp(a1.constData(), a2.constData()) < 0; }
  inline bool operator<(const QByteArray &a1, const char *a2)
-{ return qstrcmp(a1, a2) < 0; }
+{ return qstrcmp(a1.constData(), a2) < 0; }
 inline bool operator<(const char *a1, const QByteArray &a2)
-{ return qstrcmp(a1, a2) < 0; }
+{ return qstrcmp(a1, a2.constData()) < 0; }
 inline bool operator<=(const QByteArray &a1, const QByteArray &a2)
-{ return qstrcmp(a1, a2) <= 0; }
+{ return qstrcmp(a1.constData(), a2.constData()) <= 0; }
 inline bool operator<=(const QByteArray &a1, const char *a2)
-{ return qstrcmp(a1, a2) <= 0; }
+{ return qstrcmp(a1.constData(), a2) <= 0; }
 inline bool operator<=(const char *a1, const QByteArray &a2)
-{ return qstrcmp(a1, a2) <= 0; }
+{ return qstrcmp(a1, a2.constData()) <= 0; }
 inline bool operator>(const QByteArray &a1, const QByteArray &a2)
-{ return qstrcmp(a1, a2) > 0; }
+{ return qstrcmp(a1.constData(), a2.constData()) > 0; }
 inline bool operator>(const QByteArray &a1, const char *a2)
-{ return qstrcmp(a1, a2) > 0; }
+{ return qstrcmp(a1.constData(), a2) > 0; }
 inline bool operator>(const char *a1, const QByteArray &a2)
-{ return qstrcmp(a1, a2) > 0; }
+{ return qstrcmp(a1, a2.constData()) > 0; }
 inline bool operator>=(const QByteArray &a1, const QByteArray &a2)
-{ return qstrcmp(a1, a2) >= 0; }
+{ return qstrcmp(a1.constData(), a2.constData()) >= 0; }
 inline bool operator>=(const QByteArray &a1, const char *a2)
-{ return qstrcmp(a1, a2) >= 0; }
+{ return qstrcmp(a1.constData(), a2) >= 0; }
 inline bool operator>=(const char *a1, const QByteArray &a2)
-{ return qstrcmp(a1, a2) >= 0; }
+{ return qstrcmp(a1, a2.constData()) >= 0; }
 inline const QByteArray operator+(const QByteArray &a1, const QByteArray &a2)
 { return QByteArray(a1) += a2; }
 inline const QByteArray operator+(const QByteArray &a1, const char *a2)
@@ -533,6 +528,13 @@ inline QByteArray qFastUncompress(const QByteArray& data)
 
 Q_DECLARE_TYPEINFO(QByteArray, Q_MOVABLE_TYPE);
 Q_DECLARE_SHARED(QByteArray)
+
+static inline int qstrcmp(const char *str1, const QByteArray &str2)
+{ return qstrcmp(str1, str2.constData()); }
+static inline int qstrcmp(const QByteArray &str1, const char *str2)
+{ return qstrcmp(str1.constData(), str2); }
+static inline int qstrcmp(const QByteArray &str1, const QByteArray &str2)
+{ return qstrcmp(str1.constData(), str2.constData()); }
 
 QT_END_NAMESPACE
 
