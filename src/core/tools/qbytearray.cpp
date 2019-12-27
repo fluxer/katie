@@ -3606,11 +3606,12 @@ float QByteArray::toFloat(bool *ok) const
 
     \sa fromBase64()
 */
+
+static const char base64chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+static const char base64padchar = '=';
+
 QByteArray QByteArray::toBase64() const
 {
-    const char alphabet[] = "ABCDEFGH" "IJKLMNOP" "QRSTUVWX" "YZabcdef"
-		            "ghijklmn" "opqrstuv" "wxyz0123" "456789+/";
-    const char padchar = '=';
     int padlen = 0;
 
     QByteArray tmp((d->size * 4) / 3 + 3, Qt::Uninitialized);
@@ -3618,26 +3619,27 @@ QByteArray QByteArray::toBase64() const
     int i = 0;
     char *out = tmp.data();
     while (i < d->size) {
-	int chunk = 0;
-	chunk |= int(uchar(d->data[i++])) << 16;
-	if (i == d->size) {
-	    padlen = 2;
-	} else {
-	    chunk |= int(uchar(d->data[i++])) << 8;
-	    if (i == d->size) padlen = 1;
-	    else chunk |= int(uchar(d->data[i++]));
-	}
+        int chunk = int(uchar(d->data[i++])) << 16;
+        if (i == d->size) {
+            padlen = 2;
+        } else {
+            chunk |= int(uchar(d->data[i++])) << 8;
+            if (i == d->size)
+                padlen = 1;
+            else
+                chunk |= int(uchar(d->data[i++]));
+        }
 
-	int j = (chunk & 0x00fc0000) >> 18;
-	int k = (chunk & 0x0003f000) >> 12;
-	int l = (chunk & 0x00000fc0) >> 6;
-	int m = (chunk & 0x0000003f);
-	*out++ = alphabet[j];
-	*out++ = alphabet[k];
-	if (padlen > 1) *out++ = padchar;
-	else *out++ = alphabet[l];
-	if (padlen > 0) *out++ = padchar;
-	else *out++ = alphabet[m];
+        int j = (chunk & 0x00fc0000) >> 18;
+        int k = (chunk & 0x0003f000) >> 12;
+        int l = (chunk & 0x00000fc0) >> 6;
+        int m = (chunk & 0x0000003f);
+        *out++ = base64chars[j];
+        *out++ = base64chars[k];
+        if (padlen > 1) *out++ = base64padchar;
+        else *out++ = base64chars[l];
+        if (padlen > 0) *out++ = base64padchar;
+        else *out++ = base64chars[m];
     }
 
     tmp.truncate(out - tmp.data());
