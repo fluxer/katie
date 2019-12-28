@@ -65,7 +65,6 @@ Q_SIGNALS:
 
 protected:
     QSequentialAnimationGroup(QSequentialAnimationGroupPrivate &dd, QObject *parent);
-    bool event(QEvent *event);
 
     void updateCurrentTime(int);
     void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);

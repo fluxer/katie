@@ -424,14 +424,6 @@ void QSequentialAnimationGroup::updateDirection(QAbstractAnimation::Direction di
         d->currentAnimation->setDirection(direction);
 }
 
-/*!
-    \reimp
-*/
-bool QSequentialAnimationGroup::event(QEvent *event)
-{
-    return QAnimationGroup::event(event);
-}
-
 void QSequentialAnimationGroupPrivate::setCurrentAnimation(int index, bool intermediate)
 {
     Q_Q(QSequentialAnimationGroup);
