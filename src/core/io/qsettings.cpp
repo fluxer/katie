@@ -218,7 +218,7 @@ static QSettingsCustomFormat getSettingsFormat(QSettings::Format format)
     return result;
 }
 
-QString getSettingsPath(QSettings::Scope scope, const QString &filename, const QString &extension)
+static QString getSettingsPath(QSettings::Scope scope, const QString &filename, const QString &extension)
 {
     QFileInfo info(filename);
     if (info.isAbsolute()) {
