@@ -114,8 +114,7 @@ public:
     inline QByteArray read(qint64 amount)
     {
         amount = qMin(bufferCompleteSize, amount);
-        QByteArray byteData;
-        byteData.resize(amount);
+        QByteArray byteData(amount, Qt::Uninitialized);
         read(byteData.data(), byteData.size());
         return byteData;
     }
@@ -143,8 +142,7 @@ public:
                 memcpy(writeDst, first.constData(), amount);
 
                 qint64 newFirstSize = first.size() - amount;
-                QByteArray newFirstData;
-                newFirstData.resize(newFirstSize);
+                QByteArray newFirstData(newFirstSize, Qt::Uninitialized);
                 memcpy(newFirstData.data(), first.constData() + amount, newFirstSize);
                 buffers.prepend(newFirstData);
 
