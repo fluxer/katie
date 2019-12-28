@@ -1004,8 +1004,8 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length,
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
     QByteArray result(maxbytes, Qt::Uninitialized);
     UErrorCode error = U_ZERO_ERROR;
-    const int convresult = ucnv_fromUChars(conv, reinterpret_cast<char *>(result.data()),
-        result.length(), reinterpret_cast<const UChar *>(unicode), length, &error);
+    const int convresult = ucnv_fromUChars(conv, result.data(), result.length(),
+        reinterpret_cast<const UChar *>(unicode), length, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QIcuCodec::convertFromUnicode: ucnv_fromUChars(%s) failed %s",
             m_name.constData(), u_errorName(error));
