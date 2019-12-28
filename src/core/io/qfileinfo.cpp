@@ -163,7 +163,7 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
     return fileFlags & request;
 }
 
-QDateTime &QFileInfoPrivate::getFileTime(QAbstractFileEngine::FileTime request) const
+QDateTime QFileInfoPrivate::getFileTime(QAbstractFileEngine::FileTime request) const
 {
     Q_ASSERT(fileEngine); // should never be called when using the native FS
     if (!cache_enabled)
