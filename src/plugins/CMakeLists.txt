@@ -104,7 +104,7 @@ endif()
 if(WITH_PSQL AND PostgreSQL_FOUND)
     add_subdirectory(sqldrivers/psql)
 endif()
-if(WITH_SQLITE AND SQLITE_FOUND)
+if(WITH_SQLITE)
     add_subdirectory(sqldrivers/sqlite)
 endif()
 

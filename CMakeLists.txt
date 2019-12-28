@@ -462,6 +462,17 @@ file(
     FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 )
 
+# optional packages which if not found are build internally
+if(NOT WITH_PNG)
+    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
+elseif(NOT PNG_FOUND)
+    message(WARNING "Using internal copy of libpng")
+endif()
+
+if(WITH_SQLITE AND NOT SQLITE_FOUND)
+    message(WARNING "Using internal copy of sqlite")
+endif()
+
 # optional packages
 if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)
     katie_definition(-DQT_NO_FONTCONFIG)
@@ -488,10 +499,6 @@ endif()
 
 if(NOT WITH_NIS OR NOT NIS_FOUND)
     katie_definition(-DQT_NO_NIS)
-endif()
-
-if(NOT WITH_PNG OR NOT PNG_FOUND)
-    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
 endif()
 
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)

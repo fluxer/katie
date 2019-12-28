@@ -65,6 +65,33 @@ if(WITH_PNG AND PNG_FOUND)
     )
     include_directories(${PNG_INCLUDE_DIRS})
     add_definitions(${PNG_DEFINITIONS})
+elseif(WITH_PNG)
+    set(GUI_HEADERS
+        ${GUI_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler_p.h
+    )
+
+    set(GUI_SOURCES
+        ${GUI_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler.cpp
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/png.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngerror.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngget.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngmem.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngpread.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngread.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngrio.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngrtran.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngrutil.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngset.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngtest.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngtrans.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwio.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwrite.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwtran.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwutil.c
+    )
+    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/libpng)
 endif()
 
 if(WITH_JPEG AND JPEG_FOUND)
