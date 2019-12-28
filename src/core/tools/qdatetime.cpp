@@ -1662,9 +1662,7 @@ int QTime::msecsTo(const QTime &t) const
 QTime QTime::fromString(const QString& s, Qt::DateFormat f)
 {
     if (s.isEmpty()) {
-        QTime t;
-        t.mds = NullTime;
-        return t;
+        return QTime();
     }
 
     switch (f) {
