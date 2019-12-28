@@ -769,7 +769,7 @@ QString QDate::toString(const QString& format) const
 
 bool QDate::setYMD(int y, int m, int d)
 {
-    if (uint(y) <= 99)
+    if (y <= 99)
         y += 1900;
     return setDate(y, m, d);
 }
