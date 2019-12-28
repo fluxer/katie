@@ -1990,7 +1990,7 @@ int QTime::elapsed() const
     \sa isValid()
 */
 QDateTime::QDateTime()
-    : d(new QDateTimePrivate)
+    : d(new QDateTimePrivate())
 {
 }
 
@@ -2001,7 +2001,7 @@ QDateTime::QDateTime()
 */
 
 QDateTime::QDateTime(const QDate &date)
-    : d(new QDateTimePrivate)
+    : d(new QDateTimePrivate())
 {
     d->date = date;
     d->time = QTime(0, 0, 0);
@@ -2015,7 +2015,7 @@ QDateTime::QDateTime(const QDate &date)
 */
 
 QDateTime::QDateTime(const QDate &date, const QTime &time, Qt::TimeSpec spec)
-    : d(new QDateTimePrivate)
+    : d(new QDateTimePrivate())
 {
     d->date = date;
     d->time = date.isValid() && !time.isValid() ? QTime(0, 0, 0) : time;
@@ -2890,9 +2890,9 @@ qint64 QDateTime::currentMSecsSinceEpoch()
 */
 QDateTime QDateTime::fromTime_t(uint seconds)
 {
-    QDateTime d;
-    d.setTime_t(seconds);
-    return d;
+    QDateTime dt;
+    dt.setTime_t(seconds);
+    return dt;
 }
 
 /*!
@@ -2911,9 +2911,9 @@ QDateTime QDateTime::fromTime_t(uint seconds)
 */
 QDateTime QDateTime::fromMSecsSinceEpoch(qint64 msecs)
 {
-    QDateTime d;
-    d.setMSecsSinceEpoch(msecs);
-    return d;
+    QDateTime dt;
+    dt.setMSecsSinceEpoch(msecs);
+    return dt;
 }
 
 /*!
