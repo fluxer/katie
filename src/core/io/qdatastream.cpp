@@ -367,21 +367,21 @@ QDataStream::~QDataStream()
 */
 
 /*!
-    void QDataStream::setDevice(QIODevice *d)
+    void QDataStream::setDevice(QIODevice *device)
 
-    Sets the I/O device to \a d, which can be 0
+    Sets the I/O device to \a device, which can be 0
     to unset to current I/O device.
 
     \sa device()
 */
 
-void QDataStream::setDevice(QIODevice *d)
+void QDataStream::setDevice(QIODevice *device)
 {
     if (owndev) {
         delete dev;
         owndev = false;
     }
-    dev = d;
+    dev = device;
 }
 
 /*!
@@ -710,9 +710,9 @@ QDataStream &QDataStream::operator>>(bool &i)
 QDataStream &QDataStream::operator>>(float &f)
 {
     if (floatingPointPrecision() == QDataStream::DoublePrecision) {
-        double d;
-        *this >> d;
-        f = d;
+        double dbl;
+        *this >> dbl;
+        f = dbl;
         return *this;
     }
 
@@ -751,9 +751,9 @@ QDataStream &QDataStream::operator>>(float &f)
 QDataStream &QDataStream::operator>>(double &f)
 {
     if (floatingPointPrecision() == QDataStream::SinglePrecision) {
-        float d;
-        *this >> d;
-        f = d;
+        float flt;
+        *this >> flt;
+        f = flt;
         return *this;
     }
 

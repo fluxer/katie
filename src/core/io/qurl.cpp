@@ -1917,10 +1917,10 @@ void QUrl::setUrl(const QString &url, ParsingMode parsingMode)
         // Has host part, find delimiter
         start += 2; // skip "//"
         const char delims[] = "/#?";
-        const char *d = delims;
+        const char *delimster = delims;
         int hostEnd = -1;
-        while (*d && (hostEnd = tmp.indexOf(QLatin1Char(*d), start)) == -1)
-            ++d;
+        while (*delimster && (hostEnd = tmp.indexOf(QLatin1Char(*delimster), start)) == -1)
+            ++delimster;
         start = (hostEnd == -1) ? -1 : hostEnd + 1;
     } else {
         start = 0; // Has no host part
@@ -1968,11 +1968,11 @@ void QUrl::setEncodedUrl(const QByteArray &encodedUrl, ParsingMode parsingMode)
     d->setEncodedUrl(encodedUrl, parsingMode);
 }
 
-void QUrlPrivate::setEncodedUrl(const QByteArray &encodedUrl, QUrl::ParsingMode parsingMode)
+void QUrlPrivate::setEncodedUrl(const QByteArray &encodedUrl, QUrl::ParsingMode parsing)
 {
     // Caller must lock mutex first
     QByteArray tmp = encodedUrl;
-    if ((this->parsingMode = parsingMode) == QUrl::TolerantMode) {
+    if ((parsingMode = parsing) == QUrl::TolerantMode) {
         // Replace stray % with %25
         QByteArray copy = tmp;
         for (int i = 0, j = 0; i < copy.size(); ++i, ++j) {

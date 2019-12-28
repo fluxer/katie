@@ -258,10 +258,10 @@ bool Translator::load(const QString &filename, ConversionData &cd, const QString
 
     QString fmt = guessFormat(filename, format);
 
-    foreach (const FileFormat &format, registeredFileFormats()) {
-        if (fmt == format.extension) {
-            if (format.loader)
-                return (*format.loader)(*this, file, cd);
+    foreach (const FileFormat &regformat, registeredFileFormats()) {
+        if (fmt == regformat.extension) {
+            if (regformat.loader)
+                return (*regformat.loader)(*this, file, cd);
             cd.appendError(QString(QLatin1String("No loader for format %1 found"))
                 .arg(fmt));
             return false;
@@ -295,10 +295,10 @@ bool Translator::save(const QString &filename, ConversionData &cd, const QString
     QString fmt = guessFormat(filename, format);
     cd.m_targetDir = QFileInfo(filename).absoluteDir();
 
-    foreach (const FileFormat &format, registeredFileFormats()) {
-        if (fmt == format.extension) {
-            if (format.saver)
-                return (*format.saver)(*this, file, cd);
+    foreach (const FileFormat &regformat, registeredFileFormats()) {
+        if (fmt == regformat.extension) {
+            if (regformat.saver)
+                return (*regformat.saver)(*this, file, cd);
             cd.appendError(QString(QLatin1String("Cannot save %1 files")).arg(fmt));
             return false;
         }

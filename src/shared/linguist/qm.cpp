@@ -489,8 +489,8 @@ bool loadQM(Translator &translator, QIODevice &dev, ConversionData &cd)
 {
     QByteArray ba = dev.readAll();
     const uchar *data = reinterpret_cast<const uchar*>(ba.constData());
-    int len = ba.size();
-    if (len < MagicLength || memcmp(data, magic, MagicLength) != 0) {
+    int datalen = ba.size();
+    if (datalen < MagicLength || memcmp(data, magic, MagicLength) != 0) {
         cd.appendError(QLatin1String("QM-Format error: magic marker missing"));
         return false;
     }
@@ -503,7 +503,7 @@ bool loadQM(Translator &translator, QIODevice &dev, ConversionData &cd)
     uint offsetLength = 0;
 
     bool ok = true;
-    const uchar *end = data + len;
+    const uchar *end = data + datalen;
 
     data += MagicLength;
 

@@ -134,12 +134,12 @@ static inline bool setCloseOnExec(int fd)
 /*!
     \internal
 */
-bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode openMode)
+bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
 {
     Q_Q(QFSFileEngine);
 
-    if (openMode & QIODevice::Unbuffered) {
-        int flags = openModeToOpenFlags(openMode);
+    if (mode & QIODevice::Unbuffered) {
+        int flags = openModeToOpenFlags(mode);
 
         // Try to open the file in unbuffered mode.
         do {
@@ -153,7 +153,7 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode openMode)
             return false;
         }
 
-        if (!(openMode & QIODevice::WriteOnly)) {
+        if (!(mode & QIODevice::WriteOnly)) {
             // we don't need this check if we tried to open for writing because then
             // we had received EISDIR anyway.
             if (QFileSystemEngine::fillMetaData(fd, metaData)
@@ -180,7 +180,7 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode openMode)
 
         fh = 0;
     } else {
-        QByteArray fopenMode = openModeToFopenMode(openMode, fileEntry, metaData);
+        QByteArray fopenMode = openModeToFopenMode(mode, fileEntry, metaData);
 
         // Try to open the file in buffered mode.
         do {
@@ -194,7 +194,7 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode openMode)
             return false;
         }
 
-        if (!(openMode & QIODevice::WriteOnly)) {
+        if (!(mode & QIODevice::WriteOnly)) {
             // we don't need this check if we tried to open for writing because then
             // we had received EISDIR anyway.
             if (QFileSystemEngine::fillMetaData(QT_FILENO(fh), metaData)
@@ -208,7 +208,7 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode openMode)
         setCloseOnExec(fileno(fh)); // ignore failure
 
         // Seek to the end when in Append mode.
-        if (openMode & QIODevice::Append) {
+        if (mode & QIODevice::Append) {
             int ret;
             do {
                 ret = QT_FSEEK(fh, 0, SEEK_END);

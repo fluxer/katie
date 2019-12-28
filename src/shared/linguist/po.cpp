@@ -835,9 +835,9 @@ bool savePO(const Translator &translator, QIODevice &dev, ConversionData &cd)
                                    escapeComment(msg.oldComment(), qtContexts));
         if (!msg.oldSourceText().isEmpty())
             out << poEscapedString(prefix, QLatin1String("msgid"), noWrap, msg.oldSourceText());
-        QString plural = msg.extra(QLatin1String("po-old_msgid_plural"));
-        if (!plural.isEmpty())
-            out << poEscapedString(prefix, QLatin1String("msgid_plural"), noWrap, plural);
+        QString oldplural = msg.extra(QLatin1String("po-old_msgid_plural"));
+        if (!oldplural.isEmpty())
+            out << poEscapedString(prefix, QLatin1String("msgid_plural"), noWrap, oldplural);
         prefix = QLatin1String((msg.type() == TranslatorMessage::Obsolete) ? "#~ " : "");
         if (!msg.context().isEmpty())
             out << poEscapedString(prefix, QLatin1String("msgctxt"), noWrap,

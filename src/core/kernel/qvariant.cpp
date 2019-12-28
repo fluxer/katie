@@ -856,15 +856,15 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         }
     }
     case QVariant::Time: {
-        QTime *t = static_cast<QTime *>(result);
+        QTime *tt = static_cast<QTime *>(result);
         switch (d->type) {
         case QVariant::DateTime:
-            *t = v_cast<QDateTime>(d)->time();
-            return t->isValid();
+            *tt = v_cast<QDateTime>(d)->time();
+            return tt->isValid();
 #ifndef QT_NO_DATESTRING
         case QVariant::String:
-            *t = QTime::fromString(*v_cast<QString>(d), Qt::ISODate);
-            return t->isValid();
+            *tt = QTime::fromString(*v_cast<QString>(d), Qt::ISODate);
+            return tt->isValid();
 #endif
         default:
             return false;

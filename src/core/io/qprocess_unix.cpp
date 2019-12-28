@@ -1090,11 +1090,11 @@ bool QProcessPrivate::waitForDeadChild()
     qt_safe_read(deathPipe[0], &c, 1);
 
     // check if our process is dead
-    int exitStatus;
-    if (qt_safe_waitpid(pid_t(pid), &exitStatus, WNOHANG) > 0) {
+    int status;
+    if (qt_safe_waitpid(pid_t(pid), &status, WNOHANG) > 0) {
         processManager()->remove(q);
-        crashed = !WIFEXITED(exitStatus);
-        exitCode = WEXITSTATUS(exitStatus);
+        crashed = !WIFEXITED(status);
+        exitCode = WEXITSTATUS(status);
 #if defined QPROCESS_DEBUG
         qDebug() << "QProcessPrivate::waitForDeadChild() dead with exitCode"
                  << exitCode << ", crashed?" << crashed;

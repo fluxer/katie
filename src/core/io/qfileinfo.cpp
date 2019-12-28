@@ -123,7 +123,7 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
     // paths, so we separate out that as well.
 
     QAbstractFileEngine::FileFlags req = 0;
-    uint cachedFlags = 0;
+    uint cachedflags = 0;
 
     if (request & (QAbstractFileEngine::FlagsMask | QAbstractFileEngine::TypesMask)) {
         if (!getCachedFlag(CachedFileFlags)) {
@@ -131,13 +131,13 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
             req |= QAbstractFileEngine::TypesMask;
             req &= (~QAbstractFileEngine::LinkType);
 
-            cachedFlags |= CachedFileFlags;
+            cachedflags |= CachedFileFlags;
         }
 
         if (request & QAbstractFileEngine::LinkType) {
             if (!getCachedFlag(CachedLinkTypeFlag)) {
                 req |= QAbstractFileEngine::LinkType;
-                cachedFlags |= CachedLinkTypeFlag;
+                cachedflags |= CachedLinkTypeFlag;
             }
         }
     }
@@ -145,7 +145,7 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
     if (request & QAbstractFileEngine::PermsMask) {
         if (!getCachedFlag(CachedPerms)) {
             req |= QAbstractFileEngine::PermsMask;
-            cachedFlags |= CachedPerms;
+            cachedflags |= CachedPerms;
         }
     }
 
@@ -157,7 +157,7 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
 
         QAbstractFileEngine::FileFlags flags = fileEngine->fileFlags(req);
         fileFlags |= uint(flags);
-        setCachedFlag(cachedFlags);
+        setCachedFlag(cachedflags);
     }
 
     return fileFlags & request;
