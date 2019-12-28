@@ -841,7 +841,7 @@ QString::QString(const QChar *unicode, int size)
         d = &shared_empty;
         d->ref.ref();
     } else {
-        d = (Data*) malloc(sizeof(Data)+size*sizeof(QChar));
+        d = static_cast<Data*>(::malloc(sizeof(Data)+size*sizeof(QChar)));
         Q_CHECK_PTR(d);
         d->ref = 1;
         d->alloc = d->size = size;
@@ -864,7 +864,7 @@ QString::QString(const int size, const QChar ch)
         d = &shared_empty;
         d->ref.ref();
     } else {
-        d = (Data*) malloc(sizeof(Data)+size*sizeof(QChar));
+        d = static_cast<Data*>(::malloc(sizeof(Data)+size*sizeof(QChar)));
         Q_CHECK_PTR(d);
         d->ref = 1;
         d->alloc = d->size = size;
@@ -887,7 +887,7 @@ QString::QString(const int size, const QChar ch)
 */
 QString::QString(int size, Qt::Initialization)
 {
-    d = (Data*) ::malloc(sizeof(Data)+size*sizeof(QChar));
+    d = static_cast<Data*>(::malloc(sizeof(Data)+size*sizeof(QChar)));
     Q_CHECK_PTR(d);
     d->ref = 1;
     d->alloc = d->size = size;
@@ -908,9 +908,8 @@ QString::QString(int size, Qt::Initialization)
 */
 QString::QString(const QChar ch)
 {
-    void *buf = ::malloc(sizeof(Data) + sizeof(QChar));
-    Q_CHECK_PTR(buf);
-    d = reinterpret_cast<Data *>(buf);
+    d = static_cast<Data*>(::malloc(sizeof(Data) + sizeof(QChar)));
+    Q_CHECK_PTR(d);
     d->ref = 1;
     d->alloc = d->size = 1;
     d->capacity = 0;
@@ -3441,7 +3440,7 @@ QString::Data *QString::fromLatin1_helper(const char *str, int size)
     } else {
         if (size < 0)
             size = qstrlen(str);
-        d = static_cast<Data *>(malloc(sizeof(Data) + size * sizeof(QChar)));
+        d = static_cast<Data *>(::malloc(sizeof(Data) + size * sizeof(QChar)));
         Q_CHECK_PTR(d);
         d->ref = 1;
         d->alloc = d->size = size;
