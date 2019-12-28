@@ -57,11 +57,6 @@
 
 QT_BEGIN_NAMESPACE
 
-// Almost always the same. If not, specify in qplatformdefs.h.
-#if !defined(QT_SOCKOPTLEN_T)
-# define QT_SOCKOPTLEN_T QT_SOCKLEN_T
-#endif
-
 // UnixWare 7 redefines socket -> _socket
 static inline int qt_safe_socket(int domain, int type, int protocol, int flags = 0)
 {

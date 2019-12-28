@@ -245,7 +245,7 @@ int QNativeSocketEnginePrivate::option(QNativeSocketEngine::SocketOption opt) co
     }
 
     int v = -1;
-    QT_SOCKOPTLEN_T len = sizeof(v);
+    QT_SOCKLEN_T len = sizeof(v);
     if (::getsockopt(socketDescriptor, level, n, (char *) &v, &len) != -1)
         return v;
 
@@ -676,7 +676,7 @@ QNetworkInterface QNativeSocketEnginePrivate::nativeMulticastInterface() const
 #ifndef QT_NO_IPV6
     if (socketProtocol == QAbstractSocket::IPv6Protocol) {
         uint v;
-        QT_SOCKOPTLEN_T sizeofv = sizeof(v);
+        QT_SOCKLEN_T sizeofv = sizeof(v);
         if (::getsockopt(socketDescriptor, IPPROTO_IPV6, IPV6_MULTICAST_IF, &v, &sizeofv) == -1)
             return QNetworkInterface();
         return QNetworkInterface::interfaceFromIndex(v);
@@ -684,7 +684,7 @@ QNetworkInterface QNativeSocketEnginePrivate::nativeMulticastInterface() const
 #endif
 
     struct in_addr v = { 0 };
-    QT_SOCKOPTLEN_T sizeofv = sizeof(v);
+    QT_SOCKLEN_T sizeofv = sizeof(v);
     if (::getsockopt(socketDescriptor, IPPROTO_IP, IP_MULTICAST_IF, &v, &sizeofv) == -1)
         return QNetworkInterface();
     if (v.s_addr != 0 && sizeofv >= sizeof(v)) {
@@ -934,7 +934,7 @@ bool QNativeSocketEnginePrivate::fetchConnectionParameters()
 
     // Determine the socket type (UDP/TCP)
     int value = 0;
-    QT_SOCKOPTLEN_T valueSize = sizeof(int);
+    QT_SOCKLEN_T valueSize = sizeof(int);
     if (::getsockopt(socketDescriptor, SOL_SOCKET, SO_TYPE, &value, &valueSize) == 0) {
         if (value == SOCK_STREAM)
             socketType = QAbstractSocket::TcpSocket;
