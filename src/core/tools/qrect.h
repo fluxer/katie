@@ -37,10 +37,6 @@
 #include <QtCore/qsize.h>
 #include <QtCore/qpoint.h>
 
-#ifdef topLeft
-#error qrect.h must be included before any header file that defines topLeft
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
