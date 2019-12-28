@@ -1501,7 +1501,8 @@ QByteArray &QByteArray::fill(char ch, int size)
 
 void QByteArray::freeData(Data *d)
 {
-    free(d);
+    if (d != &shared_empty && d != &shared_null)
+        ::free(d);
 }
 
 void QByteArray::reallocData(int alloc)
