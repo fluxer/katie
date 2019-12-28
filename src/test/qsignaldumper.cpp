@@ -46,6 +46,7 @@
 #include <QtCore/qmetatype.h>
 #include <QtCore/qobject.h>
 #include <QtCore/qvariant.h>
+#include <QtCore/qobject_p.h>
 
 #include "QtTest/qtestlog_p.h"
 
@@ -171,23 +172,14 @@ static void qSignalDumperCallbackEndSignal(QObject *caller, int /*method_index*/
 
 }
 
-// this struct is copied from qobject_p.h to prevent us
-// from including private Qt headers.
-struct QSignalSpyCallbackSet
-{
-    typedef void (*BeginCallback)(QObject *caller, int method_index, void **argv);
-    typedef void (*EndCallback)(QObject *caller, int method_index);
-    BeginCallback signal_begin_callback,
-                  slot_begin_callback;
-    EndCallback signal_end_callback,
-                slot_end_callback;
-};
-extern void Q_CORE_EXPORT qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet &);
-
 void QSignalDumper::startDump()
 {
-    static QSignalSpyCallbackSet set = { QTest::qSignalDumperCallback,
-        QTest::qSignalDumperCallbackSlot, QTest::qSignalDumperCallbackEndSignal, 0 };
+    static QSignalSpyCallbackSet set = {
+        QTest::qSignalDumperCallback,
+        QTest::qSignalDumperCallbackSlot,
+        QTest::qSignalDumperCallbackEndSignal,
+        0
+    };
     qt_register_signal_spy_callbacks(set);
 }
 
