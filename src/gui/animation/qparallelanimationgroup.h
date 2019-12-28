@@ -55,7 +55,6 @@ public:
 
 protected:
     QParallelAnimationGroup(QParallelAnimationGroupPrivate &dd, QObject *parent);
-    bool event(QEvent *event);
 
     void updateCurrentTime(int currentTime);
     void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);

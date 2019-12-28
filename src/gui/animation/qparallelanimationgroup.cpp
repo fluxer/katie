@@ -332,14 +332,6 @@ void QParallelAnimationGroup::updateDirection(QAbstractAnimation::Direction dire
     }
 }
 
-/*!
-    \reimp
-*/
-bool QParallelAnimationGroup::event(QEvent *event)
-{
-    return QAnimationGroup::event(event);
-}
-
 QT_END_NAMESPACE
 
 #include "moc_qparallelanimationgroup.h"
