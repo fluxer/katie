@@ -77,7 +77,7 @@ set(KATIE_GIT "unstable-${KATIE_VERSION}")
 
 # components and tools that will be build, changed depending on the requirements availability
 # NOTE: excluding DesignerComponents as it was never used as public component, currently only
-# used by the the disigner tool. if it is ever needed for something it can just be added here
+# used by the the designer tool. if it is ever needed for something it can just be added here
 # and that's it - the rest of the build system has everything in place.
 set(KATIE_COMPONENTS "Core Gui Declarative Designer Network Sql Svg Xml Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc lupdate lrelease lconvert designer qscript qtconfig")
@@ -175,8 +175,8 @@ add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
 
 include(mkspecs/mkspecs.cmake)
 
-# these conditionals are probably going to become default in the future
 add_definitions(
+    # these conditionals are probably going to become default in the future
     -DQT_POSIX_IPC
     -DQT_USE_SYSTEM_PROXIES
     # -DQT_STRICT_ITERATORS
@@ -229,7 +229,7 @@ configure_file(
     ${CMAKE_BINARY_DIR}/include/QtCore/qglobal.h
 )
 
-# v1.2.0+ for compressBound()
+# v1.2.0+ required for compressBound()
 find_package(ZLIB 1.2.0)
 set_package_properties(ZLIB PROPERTIES
     PURPOSE "Required for compression support"
@@ -331,7 +331,7 @@ set_package_properties(NSL PROPERTIES
     TYPE RECOMMENDED
 )
 
-# v1.5.4+ for png_longjmp_ptr() without noreturn attribute
+# v1.5.4+ required for png_longjmp_ptr() without noreturn attribute
 find_package(PNG 1.5.4)
 set_package_properties(PNG PROPERTIES
     PURPOSE "PNG format handler"
@@ -348,7 +348,7 @@ set_package_properties(JPEG PROPERTIES
     TYPE RECOMMENDED
 )
 
-# v3.6.0+ for TIFFReadRGBAImageOriented()
+# v3.6.0+ required for TIFFReadRGBAImageOriented()
 find_package(TIFF 3.6.0)
 set_package_properties(TIFF PROPERTIES
     PURPOSE "TIFF format handler"
