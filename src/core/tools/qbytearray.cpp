@@ -1507,7 +1507,7 @@ void QByteArray::freeData(Data *d)
 
 void QByteArray::reallocData(int alloc)
 {
-    if (d->ref != 1 || d->data != d->array) {
+    if (d->ref != 1 || d->data != d->array || d == &shared_empty || d == &shared_null) {
         Data *x = static_cast<Data *>(malloc(sizeof(Data) + alloc));
         Q_CHECK_PTR(x);
         x->size = qMin(alloc, d->size);
