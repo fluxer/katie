@@ -373,19 +373,16 @@ QUuid QUuid::fromRfc4122(const QByteArray &bytes)
     if (bytes.isEmpty() || bytes.length() != 16)
         return QUuid();
 
-    uint d1;
-    ushort d2, d3;
-    uchar d4[8];
-
     const uchar *data = reinterpret_cast<const uchar *>(bytes.constData());
 
-    d1 = qFromBigEndian<quint32>(data);
+    uint d1 = qFromBigEndian<quint32>(data);
     data += sizeof(quint32);
-    d2 = qFromBigEndian<quint16>(data);
+    ushort d2 = qFromBigEndian<quint16>(data);
     data += sizeof(quint16);
-    d3 = qFromBigEndian<quint16>(data);
+    ushort d3 = qFromBigEndian<quint16>(data);
     data += sizeof(quint16);
 
+    uchar d4[8];
     for (int i = 0; i < 8; ++i) {
         d4[i] = *(data);
         data++;
