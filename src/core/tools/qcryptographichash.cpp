@@ -314,7 +314,7 @@ QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::
         }
     }
 
-    // unreachable
+    Q_UNREACHABLE();
     return QByteArray();
 }
 
