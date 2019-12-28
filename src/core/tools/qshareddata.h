@@ -46,7 +46,7 @@ template <class T> class QSharedDataPointer;
 class Q_CORE_EXPORT QSharedData
 {
 public:
-    mutable QAtomicInt ref;
+    QAtomicInt ref;
 
     inline QSharedData() : ref(0) { }
     inline QSharedData(const QSharedData &) : ref(0) { }
