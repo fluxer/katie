@@ -58,7 +58,6 @@ public:
     void setDuration(int msecs);
 
 protected:
-    bool event(QEvent *e);
     void updateCurrentTime(int);
 
 private:

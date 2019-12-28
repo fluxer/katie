@@ -135,14 +135,6 @@ void QPauseAnimation::setDuration(int msecs)
 /*!
     \reimp
  */
-bool QPauseAnimation::event(QEvent *e)
-{
-    return QAbstractAnimation::event(e);
-}
-
-/*!
-    \reimp
- */
 void QPauseAnimation::updateCurrentTime(int)
 {
 }
