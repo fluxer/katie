@@ -194,21 +194,22 @@ void QSize::scale(const QSize &s, Qt::AspectRatioMode mode)
     if (mode == Qt::IgnoreAspectRatio || wd == 0 || ht == 0) {
         wd = s.wd;
         ht = s.ht;
-    } else {
-        bool useHeight;
-        qint64 rw = qint64(s.ht) * qint64(wd) / qint64(ht);
-
-        if (mode == Qt::KeepAspectRatio) {
-            useHeight = (rw <= s.wd);
-        } else { // mode == Qt::KeepAspectRatioByExpanding
-            useHeight = (rw >= s.wd);
-        }
-
-        if (useHeight) {
+    } else if (mode == Qt::KeepAspectRatio) {
+        int rw = s.ht * wd / ht;
+        if (rw <= s.wd) {
             wd = rw;
             ht = s.ht;
         } else {
-            ht = qint32(qint64(s.wd) * qint64(ht) / qint64(wd));
+            ht = s.wd * ht / wd;
+            wd = s.wd;
+        }
+    } else { // mode == Qt::KeepAspectRatioByExpanding
+        int rw = s.ht * wd / ht;
+        if (rw >= s.wd) {
+            wd = rw;
+            ht = s.ht;
+        } else {
+            ht = s.wd * ht / wd;
             wd = s.wd;
         }
     }
