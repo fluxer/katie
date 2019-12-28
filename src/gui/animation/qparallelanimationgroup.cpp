@@ -281,17 +281,15 @@ bool QParallelAnimationGroupPrivate::shouldAnimationStart(QAbstractAnimation *an
 
 void QParallelAnimationGroupPrivate::applyGroupState(QAbstractAnimation *animation)
 {
-    switch (state)
-    {
-    case QAbstractAnimation::Running:
-        animation->start();
-        break;
-    case QAbstractAnimation::Paused:
-        animation->pause();
-        break;
-    case QAbstractAnimation::Stopped:
-    default:
-        break;
+    switch (state) {
+        case QAbstractAnimation::Running:
+            animation->start();
+            break;
+        case QAbstractAnimation::Paused:
+            animation->pause();
+            break;
+        case QAbstractAnimation::Stopped:
+            break;
     }
 }
 
