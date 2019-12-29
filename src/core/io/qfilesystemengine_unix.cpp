@@ -226,9 +226,6 @@ QString QFileSystemEngine::resolveGroupName(uint groupId)
 bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemMetaData &data,
         QFileSystemMetaData::MetaDataFlags what)
 {
-    if (what & QFileSystemMetaData::PosixStatFlags)
-        what |= QFileSystemMetaData::PosixStatFlags;
-
     if (what & QFileSystemMetaData::ExistsAttribute) {
         //  FIXME:  Would other queries being performed provide this bit?
         what |= QFileSystemMetaData::PosixStatFlags;
