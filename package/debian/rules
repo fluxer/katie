@@ -31,6 +31,7 @@ override_dh_auto_install:
 	$(MAKE) -C $(KATIE_BUILD_DIR) install-tools DESTDIR=../debian/katie-tools
 	$(MAKE) -C $(KATIE_BUILD_DIR) install-devel DESTDIR=../debian/katie-dev
 	$(MAKE) -C $(KATIE_BUILD_DIR) install-doc DESTDIR=../debian/katie-doc
+	dpkg-gensymbols -Odebian/katie-runtime.symbols -Pdebian/katie-runtime -pkatie-runtime
 
 override_dh_auto_clean:
 	dh_auto_clean
