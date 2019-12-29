@@ -1048,7 +1048,7 @@ QList<QByteArray> QIcuCodec::aliases() const
         return aliases;
     }
 
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < count; i++) {
         error = U_ZERO_ERROR;
         const char *alias = ucnv_getAlias(m_name.constData(), i, &error);
         if (Q_UNLIKELY(U_FAILURE(error))) {
@@ -1058,7 +1058,7 @@ QList<QByteArray> QIcuCodec::aliases() const
         }
         // aliases contain original
         if (Q_LIKELY(qstrcmp(m_name.constData(), alias) != 0)) {
-            aliases += alias;
+            aliases += QByteArray::fromRawData(alias, qstrlen(alias));
         }
     }
 
@@ -1087,9 +1087,9 @@ QList<QByteArray> QIcuCodec::allCodecs()
 
     QMutexLocker locker(qICUCodecMutex());
     const int count = ucnv_countAvailable();
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < count; i++) {
         const char *name = ucnv_getAvailableName(i);
-        allcodecs += name;
+        allcodecs += QByteArray::fromRawData(name, qstrlen(name));
 
         UErrorCode error = U_ZERO_ERROR;
         const int aliascount = ucnv_countAliases(name, &error);
@@ -1099,7 +1099,7 @@ QList<QByteArray> QIcuCodec::allCodecs()
             continue;
         }
 
-        for (int j = 0; j < aliascount; ++j) {
+        for (int j = 0; j < aliascount; j++) {
             error = U_ZERO_ERROR;
             const char *alias = ucnv_getAlias(name, j, &error);
             if (Q_UNLIKELY(U_FAILURE(error))) {
@@ -1109,7 +1109,7 @@ QList<QByteArray> QIcuCodec::allCodecs()
             }
             // aliases contain original
             if (Q_LIKELY(qstrcmp(name, alias) != 0)) {
-                allcodecs += alias;
+                allcodecs += QByteArray::fromRawData(alias, qstrlen(alias));
             }
         }
     }
