@@ -934,12 +934,6 @@ static const qint16 MIBTblSize = sizeof(MIBTbl) / sizeof(MIBTblData);
 static const UChar nullchar[2] = { 0x5c, 0x30 };
 static const UChar questionmarkchar[1] = { 0x3f };
 
-#ifndef QT_NO_TEXTCODEC
-static QList<QByteArray> allcodecs;
-static QList<int> allmibs;
-Q_GLOBAL_STATIC(QMutex, qICUCodecMutex);
-#endif
-
 QIcuCodec::QIcuCodec(const QByteArray &name)
     : m_name(name)
 {
@@ -1081,37 +1075,12 @@ int QIcuCodec::mibEnum() const
 #ifndef QT_NO_TEXTCODEC
 QList<QByteArray> QIcuCodec::allCodecs()
 {
-    if (!allcodecs.isEmpty()) {
-        return allcodecs;
-    }
+    QList<QByteArray> allcodecs;
 
-    QMutexLocker locker(qICUCodecMutex());
     const int count = ucnv_countAvailable();
     for (int i = 0; i < count; i++) {
         const char *name = ucnv_getAvailableName(i);
         allcodecs += QByteArray::fromRawData(name, qstrlen(name));
-
-        UErrorCode error = U_ZERO_ERROR;
-        const int aliascount = ucnv_countAliases(name, &error);
-        if (Q_UNLIKELY(U_FAILURE(error))) {
-            qWarning("QIcuCodec::allCodecs: ucnv_countAliases(%s) failed %s",
-                name, u_errorName(error));
-            continue;
-        }
-
-        for (int j = 0; j < aliascount; j++) {
-            error = U_ZERO_ERROR;
-            const char *alias = ucnv_getAlias(name, j, &error);
-            if (Q_UNLIKELY(U_FAILURE(error))) {
-                qWarning("QIcuCodec::allCodecs: ucnv_getAlias(%s) failed %s",
-                    name, u_errorName(error));
-                continue;
-            }
-            // aliases contain original
-            if (Q_LIKELY(qstrcmp(name, alias) != 0)) {
-                allcodecs += QByteArray::fromRawData(alias, qstrlen(alias));
-            }
-        }
     }
 
     return allcodecs;
@@ -1119,11 +1088,8 @@ QList<QByteArray> QIcuCodec::allCodecs()
 
 QList<int> QIcuCodec::allMibs()
 {
-    if (!allmibs.isEmpty()) {
-        return allmibs;
-    }
+    QList<int> allmibs;
 
-    QMutexLocker locker(qICUCodecMutex());
     foreach(const QByteArray &name, QIcuCodec::allCodecs()) {
         for (qint16 i = 0; i < MIBTblSize; i++) {
             if (ucnv_compareNames(name.constData(), MIBTbl[i].name) == 0) {
