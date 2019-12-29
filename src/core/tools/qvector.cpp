@@ -33,7 +33,6 @@
 
 #include "qvector.h"
 #include "qtools_p.h"
-#include <string.h>
 
 QT_BEGIN_NAMESPACE
 
