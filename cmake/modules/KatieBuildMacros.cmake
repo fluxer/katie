@@ -16,8 +16,14 @@ endmacro()
 # a macro to write data to file, does nothing if the file exists and its
 # content is the same as the data
 macro(KATIE_WRITE_FILE OUTFILE DATA)
-    file(WRITE "${CMAKE_BINARY_DIR}/katie_write_file.tmp" "${DATA}")
-    configure_file("${CMAKE_BINARY_DIR}/katie_write_file.tmp" "${OUTFILE}" COPYONLY)
+    if(NOT EXISTS "${OUTFILE}")
+        file(WRITE "${OUTFILE}" "${DATA}")
+    else()
+        file(READ "${OUTFILE}" OUTDATA)
+        if(NOT "${OUTDATA}" STREQUAL "${DATA}")
+            file(WRITE "${OUTFILE}" "${DATA}")
+        endif()
+    endif()
 endmacro()
 
 # a macro to create camel-case headers pointing to their lower-case alternative

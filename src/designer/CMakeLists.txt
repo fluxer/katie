@@ -9,40 +9,6 @@ set(EXTRA_DESIGNER_LIBS
 set(DESIGNER_PUBLIC_HEADERS
     QAbstractExtensionFactory
     QAbstractExtensionManager
-    QAbstractFormBuilder
-    QDesignerActionEditorInterface
-    QDesignerBrushManagerInterface
-    QDesignerComponents
-    QDesignerContainerExtension
-    QDesignerCustomWidgetCollectionInterface
-    QDesignerCustomWidgetInterface
-    QDesignerDnDItemInterface
-    QDesignerDynamicPropertySheetExtension
-    QDesignerExtraInfoExtension
-    QDesignerFormEditorInterface
-    QDesignerFormEditorPluginInterface
-    QDesignerFormWindowCursorInterface
-    QDesignerFormWindowInterface
-    QDesignerFormWindowManagerInterface
-    QDesignerFormWindowToolInterface
-    QDesignerIconCacheInterface
-    QDesignerIntegrationInterface
-    QDesignerLanguageExtension
-    QDesignerLayoutDecorationExtension
-    QDesignerMemberSheetExtension
-    QDesignerMetaDataBaseInterface
-    QDesignerMetaDataBaseItemInterface
-    QDesignerObjectInspectorInterface
-    QDesignerPromotionInterface
-    QDesignerPropertyEditorInterface
-    QDesignerPropertySheetExtension
-    QDesignerResourceBrowserInterface
-    QDesignerTaskMenuExtension
-    QDesignerWidgetBoxInterface
-    QDesignerWidgetDataBaseInterface
-    QDesignerWidgetDataBaseItemInterface
-    QDesignerWidgetFactoryInterface
-    QExtensionFactory
     QExtensionManager
     QFormBuilder
 )

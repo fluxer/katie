@@ -10,20 +10,14 @@ set(EXTRA_CORE_LIBS
 set(CORE_PUBLIC_HEADERS
     QVarLengthArray
     QList
-    QMutableStringListIterator
     QSystemSemaphore
     QProcess
-    QTextDecoder
     QBuffer
     QStringMatcher
-    QFutureIterator
     QScopedPointer
     QSet
-    QDynamicPropertyChangeEvent
     QHash
-    QMutableMapIterator
     QLibrary
-    QMultiHash
     QObjectCleanupHandler
     QAbstractFileEngine
     QTranslator
@@ -41,15 +35,12 @@ set(CORE_PUBLIC_HEADERS
     QContiguousCache
     QFileInfo
     QFutureInterface
-    QSharedDataPointer
-    QMultiMap
     QDateTime
     QThreadPool
     QSettings
     QStandardPaths
     QPlugin
     QPluginLoader
-    QAtomicPointer
     QFSFileEngine
     QLine
     QIODevice
@@ -57,10 +48,8 @@ set(CORE_PUBLIC_HEADERS
     QFutureWatcherBase
     QPoint
     QByteArray
-    QWriteLocker
     QHashData
     QSharedData
-    QReadLocker
     QPointer
     QSetIterator
     QtConcurrentRun
@@ -68,16 +57,12 @@ set(CORE_PUBLIC_HEADERS
     QEventLoop
     QHashNode
     QDataStream
-    QPointF
     QAbstractFileEngineIterator
     QScopedValueRollback
     QUuid
     QStdWString
-    QtAlgorithms
     QAbstractItemModel
     QTextBoundaryFinder
-    QExplicitlySharedDataPointer
-    QTimerEvent
     QTimer
     QElapsedTimer
     QUrl
@@ -88,7 +73,6 @@ set(CORE_PUBLIC_HEADERS
     QLinkedList
     QEvent
     QVectorIterator
-    QGenericArgument
     QObjectData
     QTextEncoder
     QSemaphore
@@ -97,48 +81,37 @@ set(CORE_PUBLIC_HEADERS
     QListData
     QTextCodecFactoryInterface
     QStack
-    QMutableListIterator
     QScopedPointerPodDeleter
     QTemporaryFile
     QQueue
     QMutex
     QMargins
-    QtGlobal
     QByteArrayMatcher
     QDirIterator
     QtMsgHandler
     QSharedMemory
     QReadWriteLock
     QFileSystemWatcher
-    QObjectList
     QContiguousCacheTypedData
     QtCleanUpFunction
     QSharedPointer
     QInternal
     QSize
     QRect
-    QFileInfoList
     QCoreApplication
     QRegExp
     QMetaObject
     QMapData
-    QByteRef
     QStringRef
-    QChildEvent
     QGlobalStaticDeleter
-    QFlag
     QMetaTypeId
     QMapNode
     QLinkedListData
-    QLatin1Char
     QDir
     QObject
     QFactoryInterface
-    QMutableSetIterator
     QString
-    QMetaProperty
     QScopedPointerArrayDeleter
-    QCharRef
     QReturnArgument
     QMetaObjectAccessor
     QLocale
@@ -147,21 +120,15 @@ set(CORE_PUBLIC_HEADERS
     QFile
     QtConcurrentFilter
     QCache
-    QLatin1String
     QAbstractEventDispatcher
     QResource
     QRunnable
-    QtEndian
-    QArgument
     QGenericReturnArgument
-    QAtomicInt
-    QtContainerFwd
     QTimeLine
     QMutableFutureIterator
     QtPluginInstanceFunction
     QTextCodec
     QStringList
-    QGlobalStatic
     QEasingCurve
     QSystemLocale
     QVectorTypedData

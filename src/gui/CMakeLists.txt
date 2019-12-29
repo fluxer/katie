@@ -30,7 +30,6 @@ set(GUI_PUBLIC_HEADERS
     QAccessibleBridge
     QAccessibleObject
     QAccessiblePlugin
-    QAccessibleTextInterface
     QAccessibleWidget
     QAccessibleWidgetEx
     QAction
@@ -54,7 +53,6 @@ set(GUI_PUBLIC_HEADERS
     QCommandLinkButton
     QCommonStyle
     QCompleter
-    QConicalGradient
     QCursor
     QDataWidgetMapper
     QDateTimeEdit
@@ -89,28 +87,16 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsAnchorLayout
     QGraphicsBlurEffect
     QGraphicsColorizeEffect
-    QGraphicsDropShadowEffect
     QGraphicsEffect
-    QGraphicsEllipseItem
     QGraphicsGridLayout
     QGraphicsItem
     QGraphicsItemAnimation
-    QGraphicsItemGroup
     QGraphicsLayout
     QGraphicsLayoutItem
     QGraphicsLinearLayout
-    QGraphicsLineItem
-    QGraphicsOpacityEffect
-    QGraphicsPathItem
-    QGraphicsPixmapItem
-    QGraphicsPolygonItem
     QGraphicsProxyWidget
-    QGraphicsRectItem
-    QGraphicsRotation
-    QGraphicsScale
     QGraphicsScene
     QGraphicsSceneEvent
-    QGraphicsSimpleTextItem
     QGraphicsView
     QGraphicsWidget
     QGridLayout
@@ -118,20 +104,14 @@ set(GUI_PUBLIC_HEADERS
     QHeaderView
     QIcon
     QIconEngine
-    QIconEngineFactoryInterface
-    QIconEngineFactoryInterfaceV2
     QIconEnginePlugin
-    QIconEnginePluginV2
     QIdentityProxyModel
     QImage
     QImageIOHandler
-    QImageIOHandlerFactoryInterface
     QImageReader
     QImageWriter
     QInputDialog
     QItemDelegate
-    QItemEditorCreator
-    QItemEditorCreatorBase
     QItemEditorFactory
     QItemSelectionModel
     QKeySequence
@@ -166,13 +146,11 @@ set(GUI_PUBLIC_HEADERS
     QPainter
     QPainterPath
     QPainterPathPrivate
-    QPainterPathStroker
     QPalette
     QPanGesture
     QPen
     QPixmap
     QPixmapCache
-    QPlainTextDocumentLayout
     QPlainTextEdit
     QPlastiqueStyle
     QPolygon
@@ -188,7 +166,6 @@ set(GUI_PUBLIC_HEADERS
     QProxyStyle
     QPushButton
     QQuaternion
-    QRadialGradient
     QRadioButton
     QRegion
     QRgb
@@ -204,7 +181,6 @@ set(GUI_PUBLIC_HEADERS
     QSpinBox
     QSplashScreen
     QSplitter
-    QSplitterHandle
     QStackedLayout
     QStackedWidget
     QStandardItemEditorCreator
@@ -218,18 +194,9 @@ set(GUI_PUBLIC_HEADERS
     QStyleFactory
     QStyleFactoryInterface
     QStyleHintReturn
-    QStyleHintReturnMask
     QStyleHintReturnVariant
     QStyleOption
-    QStyleOptionComboBox
-    QStyleOptionGroupBox
     QStyleOptionSizeGrip
-    QStyleOptionTabBarBase
-    QStyleOptionTabBarBaseV2
-    QStyleOptionTab
-    QStyleOptionTabV2
-    QStyleOptionTabV3
-    QStyleOptionToolBar
     QStyleOptionToolBox
     QStyleOptionToolBoxV2
     QStylePainter
@@ -240,14 +207,11 @@ set(GUI_PUBLIC_HEADERS
     QTabBar
     QTableView
     QTableWidget
-    QTableWidgetItem
     QTableWidgetSelectionRange
     QTabWidget
     QTapAndHoldGesture
     QTapGesture
-    QtEvents
     QTextBlockGroup
-    QTextBlockUserData
     QTextBrowser
     QTextCursor
     QTextDocument
@@ -262,14 +226,11 @@ set(GUI_PUBLIC_HEADERS
     QTextInlineObject
     QTextItem
     QTextLayout
-    QTextLength
     QTextList
     QTextObject
     QTextObjectInterface
     QTextOption
     QTextTable
-    QTextTableCell
-    QTextTableCellFormat
     QTileRules
     QToolBar
     QToolBox
@@ -298,9 +259,7 @@ set(GUI_PUBLIC_HEADERS
     QWidgetMapper
     QWidgetSet
     QWindowsStyle
-    QWindowStateChangeEvent
     QWizard
-    QWizardPage
     QWorkspace
     QGuiPlatformPlugin
 )

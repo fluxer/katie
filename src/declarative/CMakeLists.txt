@@ -17,7 +17,6 @@ set(DECLARATIVE_PUBLIC_HEADERS
     QDeclarativeImageProvider
     QDeclarativeInfo
     QDeclarativeItem
-    QDeclarativeListProperty
     QDeclarativeListReference
     QDeclarativeNetworkAccessManagerFactory
     QDeclarativeParserStatus
