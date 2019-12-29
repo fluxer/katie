@@ -345,14 +345,14 @@ QTextBoundaryFinder::BoundaryReasons QTextBoundaryFinder::boundaryReasons() cons
         return QTextBoundaryFinder::EndWord;
     }
 
-    uint reasons;
+    QTextBoundaryFinder::BoundaryReasons reasons;
     if (ubrk_isBoundary(d->breakiter, d->pos - 1)) {
         reasons |= QTextBoundaryFinder::StartWord;
     }
     if (ubrk_isBoundary(d->breakiter, d->pos + 1)) {
         reasons |= QTextBoundaryFinder::EndWord;
     }
-    return QTextBoundaryFinder::BoundaryReason(reasons);
+    return reasons;
 }
 
 QT_END_NAMESPACE
