@@ -93,7 +93,6 @@ protected slots:
     void resultsReady(const QHostInfo &);
 
 private:
-    bool ipv6LookupsAvailable;
     bool ipv6Available;
     bool lookupDone;
     int lookupsDoneCounter;
@@ -161,7 +160,6 @@ void tst_QHostInfo::initTestCase()
 #endif
 
     ipv6Available = QtNetworkSettings::supportsIPv6();
-    ipv6LookupsAvailable = QtNetworkSettings::systemSupportsIPv6();
 
     // run each testcase with and without test enabled
     QTest::addColumn<bool>("cache");
@@ -253,7 +251,7 @@ void tst_QHostInfo::lookupIPv6()
     QFETCH(int, err);
     QFETCH(QString, addresses);
 
-    if (!ipv6LookupsAvailable)
+    if (!ipv6Available)
         QSKIP("This platform does not support IPv6 lookups", SkipAll);
 
     lookupDone = false;
@@ -296,7 +294,7 @@ void tst_QHostInfo::reverseLookup()
     QFETCH(QStringList, hostNames);
     QFETCH(int, err);
 
-    if (!ipv6LookupsAvailable && hostNames.contains("classical.hexago.com")) {
+    if (!ipv6Available && hostNames.contains("classical.hexago.com")) {
         QSKIP("IPv6 lookups are not supported on this platform", SkipSingle);
     }
 #if defined(Q_OS_HPUX) && defined(QT_ARCH_IA64)
@@ -319,7 +317,7 @@ void tst_QHostInfo::reverseLookup()
 void tst_QHostInfo::blockingLookup_data()
 {
     lookupIPv4_data();
-    if (ipv6LookupsAvailable)
+    if (ipv6Available)
         lookupIPv6_data();
 }
 
