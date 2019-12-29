@@ -15,8 +15,5 @@ export CXXFLAGS="$CXXFLAGS -Wall -fsanitize=$sanitizers -fno-omit-frame-pointer 
 export LDFLAGS="$LDFLAGS -Wall -fsanitize=$sanitizers"
 
 cmake ../ -DCMAKE_BUILD_TYPE=Debug \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DKATIE_SETTINGS_FULL=/etc/xdg \
-    -DKATIE_LDCONF_FULL=/etc/ld.so.conf.d \
-    -DKATIE_PROFILE_FULL=/etc/profile.d $@
+    -DCMAKE_INSTALL_PREFIX=/usr $@
 make -j$(nproc || echo 1)

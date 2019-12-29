@@ -15,9 +15,6 @@ override_dh_shlibdeps:
 
 override_dh_auto_configure:
 	dh_auto_configure -- -Wno-dev \
-		-DKATIE_LDCONF_FULL=/etc/ld.so.conf.d \
-		-DKATIE_SETTINGS_FULL=/etc/xdg \
-		-DKATIE_PROFILE_FULL=/etc/profile.d \
 		-DKATIE_TOOLS_SUFFIX="-katie" \
 		-DKATIE_ALLINONE=OFF \
 		-DKATIE_CROSS_EXEC=$(KATIE_CROSS_EXEC)
