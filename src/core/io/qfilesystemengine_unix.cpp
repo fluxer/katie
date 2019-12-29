@@ -321,7 +321,7 @@ bool QFileSystemEngine::createDirectory(const QFileSystemEntry &entry, bool crea
             if (slash) {
                 const char* chunk = QFile::encodeName(dirName.left(slash)).constData();
                 QT_STATBUF st;
-                if (QT_STAT(chunk, &st) != -1) {
+                if (QT_STAT(chunk, &st) == 0) {
                     if ((st.st_mode & S_IFMT) != S_IFDIR)
                         return false;
                 } else if (QT_MKDIR(chunk, 0777) != 0) {
@@ -343,7 +343,7 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
         for (int oldslash = 0, slash=dirName.length(); slash > 0; oldslash = slash) {
             const char* chunk = QFile::encodeName(dirName.left(slash)).constData();
             QT_STATBUF st;
-            if (QT_STAT(chunk, &st) != -1) {
+            if (QT_STAT(chunk, &st) == 0) {
                 if ((st.st_mode & S_IFMT) != S_IFDIR)
                     return false;
                 if (::rmdir(chunk) != 0)
@@ -381,7 +381,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 #endif
 
     QT_STATBUF st;
-    if (QT_STAT(source.nativeFilePath().constData(), &st) != -1) {
+    if (QT_STAT(source.nativeFilePath().constData(), &st) == 0) {
         if (!S_ISREG(st.st_mode))
             return false;
     }
