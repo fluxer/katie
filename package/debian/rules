@@ -5,7 +5,7 @@ ifneq ($(DEB_HOST_ARCH_CPU),$(DEB_BUILD_ARCH_CPU))
 	KATIE_CROSS_EXEC="qemu-$(DEB_HOST_ARCH_CPU)-static"
 endif
 
-KATIE_BUILD_DIR="$(shell pwd)/obj-$(DEB_BUILD_GNU_TYPE)"
+KATIE_BUILD_DIR="$(shell pwd)/obj-$(DEB_HOST_GNU_TYPE)"
 
 %:
 	dh $@ --parallel
