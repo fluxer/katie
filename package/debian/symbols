@@ -1277,6 +1277,7 @@ libKtCore.so.4.9.0 katie-git #MINVER#
  _ZN5Katie4QMapINS_7QStringENS_11QStringListEED2Ev@Base 4.9.0
  _ZN5Katie4QMapINS_7QStringENS_8QVariantEE11node_createEPNS_8QMapDataEPPNS4_4NodeERKS1_RKS2_@Base 4.9.0
  _ZN5Katie4QMapINS_7QStringENS_8QVariantEE13detach_helperEv@Base 4.9.0
+ _ZN5Katie4QMapINS_7QStringENS_8QVariantEE6removeERKS1_@Base 4.9.0
  _ZN5Katie4QMapINS_7QStringENS_8QVariantEED1Ev@Base 4.9.0
  _ZN5Katie4QMapINS_7QStringENS_8QVariantEED2Ev@Base 4.9.0
  _ZN5Katie4QMapINS_7QStringES1_E13detach_helperEv@Base 4.9.0
@@ -1427,6 +1428,10 @@ libKtCore.so.4.9.0 katie-git #MINVER#
  _ZN5Katie5QFileD0Ev@Base 4.9.0
  _ZN5Katie5QFileD1Ev@Base 4.9.0
  _ZN5Katie5QFileD2Ev@Base 4.9.0
+ _ZN5Katie5QHashINS_7QStringENS_10QByteArrayEE11deleteNode2EPNS_9QHashData4NodeE@Base 4.9.0
+ _ZN5Katie5QHashINS_7QStringENS_10QByteArrayEE13duplicateNodeEPNS_9QHashData4NodeEPv@Base 4.9.0
+ _ZN5Katie5QHashINS_7QStringENS_10QByteArrayEED1Ev@Base 4.9.0
+ _ZN5Katie5QHashINS_7QStringENS_10QByteArrayEED2Ev@Base 4.9.0
  _ZN5Katie5QHashINS_7QStringENS_8QVariantEE11deleteNode2EPNS_9QHashData4NodeE@Base 4.9.0
  _ZN5Katie5QHashINS_7QStringENS_8QVariantEE13duplicateNodeEPNS_9QHashData4NodeEPv@Base 4.9.0
  _ZN5Katie5QHashINS_7QStringENS_8QVariantEED1Ev@Base 4.9.0
@@ -1874,6 +1879,8 @@ libKtCore.so.4.9.0 katie-git #MINVER#
  _ZN5Katie7QVectorIPKcED2Ev@Base 4.9.0
  _ZN5Katie7QVectorIPNS_10QEventLoopEE7reallocEii@Base 4.9.0
  _ZN5Katie7QVectorIPNS_27QAbstractFileEngineIteratorEE7reallocEii@Base 4.9.0
+ _ZN5Katie7QVectorIPNS_9QSettingsEE6appendERKS2_@Base 4.9.0
+ _ZN5Katie7QVectorIPNS_9QSettingsEE7reallocEii@Base 4.9.0
  _ZN5Katie7QVectorIdE4fillERKdi@Base 4.9.0
  _ZN5Katie7QVectorIdE6resizeEi@Base 4.9.0
  _ZN5Katie7QVectorIdE7reallocEii@Base 4.9.0
@@ -2246,6 +2253,7 @@ libKtCore.so.4.9.0 katie-git #MINVER#
  _ZN5Katie9QSettings13defaultFormatEv@Base 4.9.0
  _ZN5Katie9QSettings13setArrayIndexEi@Base 4.9.0
  _ZN5Katie9QSettings14beginReadArrayERKNS_7QStringE@Base 4.9.0
+ _ZN5Katie9QSettings14registerFormatERKNS_7QStringEPFbRNS_9QIODeviceERNS_4QMapIS1_NS_8QVariantEEEEPFbS5_RKS8_E@Base 4.9.0
  _ZN5Katie9QSettings14registerFormatERKNS_7QStringEPFbRNS_9QIODeviceERNS_4QMapIS1_NS_8QVariantEEEEPFbS5_RKS8_ENS_2Qt15CaseSensitivityE@Base 4.9.0
  _ZN5Katie9QSettings14setUserIniPathERKNS_7QStringE@Base 4.9.0
  _ZN5Katie9QSettings15beginWriteArrayERKNS_7QStringEi@Base 4.9.0
@@ -2262,12 +2270,16 @@ libKtCore.so.4.9.0 katie-git #MINVER#
  _ZN5Katie9QSettings8endArrayEv@Base 4.9.0
  _ZN5Katie9QSettings8endGroupEv@Base 4.9.0
  _ZN5Katie9QSettings8setValueERKNS_7QStringERKNS_8QVariantE@Base 4.9.0
+ _ZN5Katie9QSettingsC1ENS0_5ScopeEPNS_7QObjectE@Base 4.9.0
  _ZN5Katie9QSettingsC1ENS0_5ScopeERKNS_7QStringES4_PNS_7QObjectE@Base 4.9.0
+ _ZN5Katie9QSettingsC1ENS0_6FormatENS0_5ScopeEPNS_7QObjectE@Base 4.9.0
  _ZN5Katie9QSettingsC1ENS0_6FormatENS0_5ScopeERKNS_7QStringES5_PNS_7QObjectE@Base 4.9.0
  _ZN5Katie9QSettingsC1EPNS_7QObjectE@Base 4.9.0
  _ZN5Katie9QSettingsC1ERKNS_7QStringENS0_6FormatEPNS_7QObjectE@Base 4.9.0
  _ZN5Katie9QSettingsC1ERKNS_7QStringES3_PNS_7QObjectE@Base 4.9.0
+ _ZN5Katie9QSettingsC2ENS0_5ScopeEPNS_7QObjectE@Base 4.9.0
  _ZN5Katie9QSettingsC2ENS0_5ScopeERKNS_7QStringES4_PNS_7QObjectE@Base 4.9.0
+ _ZN5Katie9QSettingsC2ENS0_6FormatENS0_5ScopeEPNS_7QObjectE@Base 4.9.0
  _ZN5Katie9QSettingsC2ENS0_6FormatENS0_5ScopeERKNS_7QStringES5_PNS_7QObjectE@Base 4.9.0
  _ZN5Katie9QSettingsC2EPNS_7QObjectE@Base 4.9.0
  _ZN5Katie9QSettingsC2ERKNS_7QStringENS0_6FormatEPNS_7QObjectE@Base 4.9.0
@@ -2915,6 +2927,8 @@ libKtCore.so.4.9.0 katie-git #MINVER#
  _ZNK5Katie4QDireqERKS0_@Base 4.9.0
  _ZNK5Katie4QDirixEi@Base 4.9.0
  _ZNK5Katie4QMapINS_7QStringENS_11QStringListEE15mutableFindNodeEPPNS_8QMapData4NodeERKS1_@Base 4.9.0
+ _ZNK5Katie4QMapINS_7QStringENS_8QVariantEE15mutableFindNodeEPPNS_8QMapData4NodeERKS1_@Base 4.9.0
+ _ZNK5Katie4QMapINS_7QStringENS_8QVariantEE4keysEv@Base 4.9.0
  _ZNK5Katie4QMapIiNS_8QVariantEE15mutableFindNodeEPPNS_8QMapData4NodeERKi@Base 4.9.0
  _ZNK5Katie4QMapIiiE15mutableFindNodeEPPNS_8QMapData4NodeERKi@Base 4.9.0
  _ZNK5Katie4QUrl10isDetachedEv@Base 4.9.0
@@ -3012,6 +3026,7 @@ libKtCore.so.4.9.0 katie-git #MINVER#
  _ZNK5Katie5QFile6handleEv@Base 4.9.0
  _ZNK5Katie5QFile8fileNameEv@Base 4.9.0
  _ZNK5Katie5QFile8readLinkEv@Base 4.9.0
+ _ZNK5Katie5QHashINS_7QStringENS_10QByteArrayEE8findNodeERKS1_Pj@Base 4.9.0
  _ZNK5Katie5QHashINS_7QStringENS_8QVariantEE8findNodeERKS1_Pj@Base 4.9.0
  _ZNK5Katie5QHashINS_7QStringENS_8QVariantEEeqERKS3_@Base 4.9.0
  _ZNK5Katie5QHashINS_7QStringES1_E8findNodeERKS1_Pj@Base 4.9.0
@@ -3415,6 +3430,8 @@ libKtCore.so.4.9.0 katie-git #MINVER#
  _ZNK5Katie9QSettings15applicationNameEv@Base 4.9.0
  _ZNK5Katie9QSettings16fallbacksEnabledEv@Base 4.9.0
  _ZNK5Katie9QSettings16organizationNameEv@Base 4.9.0
+ _ZNK5Katie9QSettings3mapEv@Base 4.9.0
+ _ZNK5Katie9QSettings4keysEv@Base 4.9.0
  _ZNK5Katie9QSettings5groupEv@Base 4.9.0
  _ZNK5Katie9QSettings5scopeEv@Base 4.9.0
  _ZNK5Katie9QSettings5valueERKNS_7QStringERKNS_8QVariantE@Base 4.9.0
@@ -8878,6 +8895,7 @@ libKtDesigner.so.4.9.0 katie-git #MINVER#
  _ZNK5Katie17QExtensionManager10metaObjectEv@Base 4.9.0
  _ZNK5Katie17QExtensionManager9extensionEPNS_7QObjectERKNS_7QStringE@Base 4.9.0
  _ZNK5Katie18QDesignerQSettings5valueERKNS_7QStringERKNS_8QVariantE@Base 4.9.0
+ _ZNK5Katie18QDesignerQSettings6statusEv@Base 4.9.0
  _ZNK5Katie18QDesignerQSettings8containsERKNS_7QStringE@Base 4.9.0
  _ZNK5Katie18qdesigner_internal10CodeDialog10metaObjectEv@Base 4.9.0
  _ZNK5Katie18qdesigner_internal10CodeDialog12formFileNameEv@Base 4.9.0
