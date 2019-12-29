@@ -77,7 +77,7 @@ public:
 
     inline void removeLast() {
         Q_ASSERT(s > 0);
-        realloc(s - 1, a);
+        reallocData(s - 1, a);
     }
     inline int size() const { return s; }
     inline int count() const { return s; }
@@ -103,7 +103,7 @@ public:
 
     inline void append(const T &t) {
         if (s == a)   // i.e. s != 0
-            realloc(s, s<<1);
+            reallocData(s, s<<1);
         const int idx = s++;
         if (QTypeInfo<T>::isComplex) {
             new (ptr + idx) T(t);
@@ -152,7 +152,7 @@ public:
     inline iterator erase(iterator pos) { return erase(pos, pos+1); }
 
 private:
-    void realloc(int size, int alloc);
+    void reallocData(int size, int alloc);
 
     int a;      // capacity
     int s;      // size
@@ -180,11 +180,11 @@ Q_INLINE_TEMPLATE QVarLengthArray<T, Prealloc>::QVarLengthArray(int asize)
 
 template <class T, int Prealloc>
 Q_INLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::resize(int asize)
-{ realloc(asize, qMax(asize, a)); }
+{ reallocData(asize, qMax(asize, a)); }
 
 template <class T, int Prealloc>
 Q_INLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::reserve(int asize)
-{ if (asize > a) realloc(s, asize); }
+{ if (asize > a) reallocData(s, asize); }
 
 template <class T, int Prealloc>
 Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::append(const T *abuf, int increment)
@@ -196,7 +196,7 @@ Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::append(const T *abuf, in
     const int asize = s + increment;
 
     if (asize >= a)
-        realloc(s, qMax(s*2, asize));
+        reallocData(s, qMax(s*2, asize));
 
     if (QTypeInfo<T>::isComplex) {
         // call constructor for new objects (which can throw)
@@ -209,7 +209,7 @@ Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::append(const T *abuf, in
 }
 
 template <class T, int Prealloc>
-Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::realloc(int asize, int aalloc)
+Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::reallocData(int asize, int aalloc)
 {
     Q_ASSERT(aalloc >= asize);
     T *oldPtr = ptr;
