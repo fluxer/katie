@@ -5,11 +5,13 @@ ifneq ($(DEB_HOST_ARCH_CPU),$(DEB_BUILD_ARCH_CPU))
 	KATIE_CROSS_EXEC="qemu-$(DEB_HOST_ARCH_CPU)-static"
 endif
 
+KATIE_BUILD_DIR="$(shell pwd)/obj-$(DEB_BUILD_GNU_TYPE)"
+
 %:
 	dh $@ --parallel
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l$(shell pwd)/obj-$(DEB_BUILD_GNU_TYPE)/lib
+	dh_shlibdeps -l$(KATIE_BUILD_DIR)/lib
 
 override_dh_auto_configure:
 	dh_auto_configure -- -Wno-dev \
@@ -24,8 +26,11 @@ override_dh_auto_build:
 	dh_auto_build
 
 override_dh_auto_install:
-	dh_auto_install
-	rm -vrf debian/katie-git/etc/
+	$(MAKE) -C $(KATIE_BUILD_DIR) install-runtime DESTDIR=../debian/katie-runtime
+	rm -vrf debian/katie-runtime/etc/
+	$(MAKE) -C $(KATIE_BUILD_DIR) install-tools DESTDIR=../debian/katie-tools
+	$(MAKE) -C $(KATIE_BUILD_DIR) install-devel DESTDIR=../debian/katie-dev
+	$(MAKE) -C $(KATIE_BUILD_DIR) install-doc DESTDIR=../debian/katie-doc
 
 override_dh_auto_clean:
 	dh_auto_clean
