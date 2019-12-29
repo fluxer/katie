@@ -306,7 +306,7 @@ template <class T, int Prealloc>
 inline void QVarLengthArray<T, Prealloc>::replace(int i, const T &t)
 {
     Q_ASSERT_X(i >= 0 && i < s, "QVarLengthArray::replace", "index out of range");
-    data()[i] = t;
+    ptr[i] = t;
 }
 
 
