@@ -695,11 +695,13 @@ libKtCore.so.4.9.0 katie-runtime #MINVER#
  _ZN5Katie15QSocketNotifierD2Ev@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIPNS_6QEventELi256EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIPNS_6QEventELi256EEC2Ei@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIcLi256EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi256EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi256EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi256EEC2Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi4096EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi4096EEC2Ei@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIcLi512EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi512EE6appendEPKci@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi512EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi512EEC1Ei@Base 4.9.0
@@ -3725,12 +3727,15 @@ libKtDBus.so.4.9.0 katie-runtime #MINVER#
  _ZN5Katie15QDBusObjectPath5checkEv@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIPFvRKNS_12QDBusMessageEELi4EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIPFvRKNS_12QDBusMessageEELi4EEC2Ei@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIPvLi10EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIPvLi10EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIPvLi10EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIPvLi10EEC2Ei@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIiLi256EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi256EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi256EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi256EEC2Ei@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIiLi4EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi4EE6appendEPKii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi4EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi4EEC1Ei@Base 4.9.0
@@ -4128,6 +4133,7 @@ libKtDeclarative.so.4.9.0 katie-runtime #MINVER#
  _ZN5Katie15QVarLengthArrayIPNS_7QObjectELi128EEC2Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIPvLi9EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIPvLi9EEC2Ei@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIcLi256EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi256EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi256EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi256EEC2Ei@Base 4.9.0
@@ -14344,10 +14350,15 @@ libKtGui.so.4.9.0 katie-runtime #MINVER#
  _ZN5Katie15QVarLengthArrayINS_11QHeaderView10ResizeModeELi256EEC2Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_12QPainterPath11ElementTypeELi256EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_12QPainterPath11ElementTypeELi256EEC2Ei@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayINS_5QLineELi3EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_5QLineELi3EE7reallocEii@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayINS_5QLineELi4EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_5QLineELi4EE7reallocEii@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayINS_6QPointELi4EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_6QPointELi4EE7reallocEii@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayINS_6QPointELi7EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_6QPointELi7EE7reallocEii@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayINS_6QPointELi8EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_6QPointELi8EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_7QWizard12WizardButtonELi256EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_7QWizard12WizardButtonELi256EEC2Ei@Base 4.9.0
@@ -14357,6 +14368,7 @@ libKtGui.so.4.9.0 katie-runtime #MINVER#
  _ZN5Katie15QVarLengthArrayIPvLi256EEC2Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIbLi256EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIbLi256EEC2Ei@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIdLi16EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIdLi16EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIdLi16EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIdLi16EEC2Ei@Base 4.9.0
@@ -14368,6 +14380,7 @@ libKtGui.so.4.9.0 katie-runtime #MINVER#
  _ZN5Katie15QVarLengthArrayIiLi256EEC2Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi32EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi32EEC2Ei@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIjLi256EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIjLi256EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIjLi256EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIjLi256EEC2Ei@Base 4.9.0
@@ -24539,6 +24552,7 @@ libKtNetwork.so.4.9.0 katie-runtime #MINVER#
  _ZN5Katie15QSslCertificateD1Ev@Base 4.9.0
  _ZN5Katie15QSslCertificateD2Ev@Base 4.9.0
  _ZN5Katie15QSslCertificateaSERKS0_@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIcLi4096EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi4096EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi4096EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIcLi4096EEC2Ei@Base 4.9.0
@@ -25699,6 +25713,7 @@ libKtScript.so.4.9.0 katie-runtime #MINVER#
  _ZN5Katie14QScriptProgramD2Ev@Base 4.9.0
  _ZN5Katie14QScriptProgramaSERKS0_@Base 4.9.0
  _ZN5Katie14qScriptConnectEPNS_7QObjectEPKcRKNS_12QScriptValueES6_@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayINS_8QVariantELi9EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_8QVariantELi9EE6appendEPKS1_i@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_8QVariantELi9EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayINS_8QVariantELi9EED1Ev@Base 4.9.0
@@ -26354,6 +26369,7 @@ libKtSql.so.4.9.0 katie-runtime #MINVER#
  _ZN5Katie14QSqlTableModelD0Ev@Base 4.9.0
  _ZN5Katie14QSqlTableModelD1Ev@Base 4.9.0
  _ZN5Katie14QSqlTableModelD2Ev@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIiLi56EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi56EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi56EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIiLi56EEC2Ei@Base 4.9.0
@@ -26746,6 +26762,7 @@ libKtSvg.so.4.9.0 katie-runtime #MINVER#
  _ZN5Katie13QSvgGeneratorD0Ev@Base 4.9.0
  _ZN5Katie13QSvgGeneratorD1Ev@Base 4.9.0
  _ZN5Katie13QSvgGeneratorD2Ev@Base 4.9.0
+ _ZN5Katie15QVarLengthArrayIdLi8EE11reallocDataEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIdLi8EE7reallocEii@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIdLi8EEC1Ei@Base 4.9.0
  _ZN5Katie15QVarLengthArrayIdLi8EEC2Ei@Base 4.9.0
