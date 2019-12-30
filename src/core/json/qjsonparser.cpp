@@ -310,8 +310,7 @@ QJsonDocument Parser::parse(QJsonParseError *error)
          error->offset = 0;
          error->error = QJsonParseError::NoError;
       }
-      QJsonPrivate::Data *d = new QJsonPrivate::Data(data, current);
-      return QJsonDocument(d);
+      return QJsonDocument(new QJsonPrivate::Data(data, current));
    }
 
 error:
