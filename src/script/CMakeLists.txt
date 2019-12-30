@@ -9,6 +9,7 @@ add_definitions(
 set(EXTRA_SCRIPT_LIBS
     KtCore
     ${PCRE_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
 )
 
 set(SCRIPT_PUBLIC_HEADERS

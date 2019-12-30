@@ -1,6 +1,6 @@
 # add_definitions()
 set(EXTRA_SCRIPTTOOLS_LIBS
-    KtCore KtGui KtScript
+    KtCore KtXml KtGui KtScript
 )
 
 set(SCRIPTTOOLS_PUBLIC_HEADERS
@@ -29,7 +29,7 @@ set(SCRIPTTOOLS_HEADERS
 
 katie_generate_misc("${SCRIPTTOOLS_HEADERS}" QtScriptTools)
 katie_generate_public("${SCRIPTTOOLS_PUBLIC_HEADERS}" QtScriptTools)
-katie_generate_package(KtScriptTools "KtCore KtGui KtScript")
+katie_generate_package(KtScriptTools "KtCore KtXml KtGui KtScript")
 katie_setup_target(KtScriptTools ${SCRIPTTOOLS_SOURCES} ${SCRIPTTOOLS_HEADERS})
 
 add_library(KtScriptTools ${KATIE_TYPE} ${KtScriptTools_SOURCES})

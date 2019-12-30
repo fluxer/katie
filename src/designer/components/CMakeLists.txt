@@ -1,6 +1,6 @@
 add_definitions(-DQT_STATICPLUGIN)
 set(EXTRA_DESIGNERCOMPONENTS_LIBS
-    KtCore KtGui KtXml KtDesigner KtScript
+    KtCore KtGui KtXml KtDesigner KtScript KtUiTools
 )
 
 include_directories(
@@ -54,7 +54,7 @@ set(DESIGNERCOMPONENTS_HEADERS
 
 katie_generate_misc("${DESIGNERCOMPONENTS_HEADERS}" QtDesignerComponents)
 katie_generate_public("${DESIGNERCOMPONENTS_PUBLIC_HEADERS}" QtDesignerComponents)
-katie_generate_package(KtDesignerComponents "KtCore KtGui KtXml KtDesigner KtScript")
+katie_generate_package(KtDesignerComponents "KtCore KtGui KtXml KtDesigner KtScript KtUiTools")
 katie_setup_target(KtDesignerComponents ${DESIGNERCOMPONENTS_SOURCES} ${DESIGNERCOMPONENTS_HEADERS})
 
 add_library(KtDesignerComponents ${KATIE_TYPE} ${KtDesignerComponents_SOURCES}
