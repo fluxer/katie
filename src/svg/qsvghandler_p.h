@@ -132,8 +132,6 @@ private:
     QSvgTinyDocument *m_doc;
     QStack<QSvgNode*> m_nodes;
 
-    QList<QSvgNode*>  m_resolveNodes;
-
     enum CurrentNode
     {
         Unknown,
