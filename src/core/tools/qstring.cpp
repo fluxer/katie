@@ -2270,7 +2270,7 @@ int qFindString(
     const int sl = needleLen;
     if (from < 0)
         from += l;
-    if (uint(sl + from) > (uint)l)
+    if ((sl + from) > l)
         return -1;
     if (!sl)
         return from;
