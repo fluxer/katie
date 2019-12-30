@@ -62,7 +62,9 @@ QNetworkManagerEnginePlugin::~QNetworkManagerEnginePlugin()
 
 QStringList QNetworkManagerEnginePlugin::keys() const
 {
-    return QStringList() << QLatin1String("networkmanager");
+    static const QStringList list = QStringList()
+        << QLatin1String("networkmanager");
+    return list;
 }
 
 QBearerEngine *QNetworkManagerEnginePlugin::create(const QString &key) const

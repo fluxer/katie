@@ -62,9 +62,9 @@ QSqlDriver* QODBCDriverPlugin::create(const QString &name)
 
 QStringList QODBCDriverPlugin::keys() const
 {
-    QStringList list;
-    list.append(QLatin1String("QODBC3"));
-    list.append(QLatin1String("QODBC"));
+    static const QStringList list = QStringList()
+        << QLatin1String("QODBC3")
+        << QLatin1String("QODBC");
     return list;
 }
 

@@ -61,7 +61,9 @@ QConnmanEnginePlugin::~QConnmanEnginePlugin()
 
 QStringList QConnmanEnginePlugin::keys() const
 {
-    return QStringList() << QLatin1String("connman");
+    static const QStringList list = QStringList()
+        << QLatin1String("connman");
+    return list;
 }
 
 QBearerEngine *QConnmanEnginePlugin::create(const QString &key) const

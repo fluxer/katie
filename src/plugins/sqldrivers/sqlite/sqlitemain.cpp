@@ -62,7 +62,8 @@ QSqlDriver* QSQLiteDriverPlugin::create(const QString &name)
 
 QStringList QSQLiteDriverPlugin::keys() const
 {
-    const QStringList list(QLatin1String("QSQLITE"));
+    static const QStringList list = QStringList()
+        << QLatin1String("QSQLITE");
     return list;
 }
 

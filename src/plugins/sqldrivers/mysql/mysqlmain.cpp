@@ -62,9 +62,9 @@ QSqlDriver* QMYSQLDriverPlugin::create(const QString &name)
 
 QStringList QMYSQLDriverPlugin::keys() const
 {
-    QStringList list;
-    list << QLatin1String("QMYSQL3");
-    list << QLatin1String("QMYSQL");
+    static const QStringList list = QStringList()
+        << QLatin1String("QMYSQL3")
+        << QLatin1String("QMYSQL");
     return list;
 }
 

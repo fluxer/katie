@@ -77,7 +77,9 @@ QImageIOHandler* QTgaPlugin::create(QIODevice *device, const QByteArray &format)
 
 QStringList QTgaPlugin::keys() const
 {
-    return QStringList() << QLatin1String("tga");
+    static const QStringList list = QStringList()
+        << QLatin1String("tga");
+    return list;
 }
 
 Q_EXPORT_PLUGIN2(qtga, QTgaPlugin)

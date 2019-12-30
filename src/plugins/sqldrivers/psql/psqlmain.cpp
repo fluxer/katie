@@ -62,9 +62,9 @@ QSqlDriver* QPSQLDriverPlugin::create(const QString &name)
 
 QStringList QPSQLDriverPlugin::keys() const
 {
-    QStringList list;
-    list.append(QLatin1String("QPSQL7"));
-    list.append(QLatin1String("QPSQL"));
+    static const QStringList list = QStringList()
+        << QLatin1String("QPSQL7")
+        << QLatin1String("QPSQL");
     return list;
 }
 

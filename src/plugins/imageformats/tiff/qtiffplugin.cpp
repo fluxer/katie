@@ -78,7 +78,10 @@ QImageIOHandler* QTiffPlugin::create(QIODevice *device, const QByteArray &format
 
 QStringList QTiffPlugin::keys() const
 {
-    return QStringList() << QLatin1String("tiff") << QLatin1String("tif");
+    static const QStringList list = QStringList()
+        << QLatin1String("tiff")
+        << QLatin1String("tif");
+    return list;
 }
 
 Q_EXPORT_STATIC_PLUGIN(QTiffPlugin)

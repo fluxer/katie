@@ -66,85 +66,85 @@ AccessibleFactory::AccessibleFactory()
 
 QStringList AccessibleFactory::keys() const
 {
-    QStringList list;
+    static const QStringList list = QStringList()
 #ifndef QT_NO_LINEEDIT
-    list << QLatin1String("QLineEdit");
+        << QLatin1String("QLineEdit")
 #endif
 #ifndef QT_NO_COMBOBOX
-    list << QLatin1String("QComboBox");
+        << QLatin1String("QComboBox")
 #endif
 #ifndef QT_NO_SPINBOX
-    list << QLatin1String("QAbstractSpinBox");
-    list << QLatin1String("QSpinBox");
-    list << QLatin1String("QDoubleSpinBox");
+        << QLatin1String("QAbstractSpinBox")
+        << QLatin1String("QSpinBox")
+        << QLatin1String("QDoubleSpinBox")
 #endif
 #ifndef QT_NO_SCROLLBAR
-    list << QLatin1String("QScrollBar");
+        << QLatin1String("QScrollBar")
 #endif
 #ifndef QT_NO_SLIDER
-    list << QLatin1String("QSlider");
+        << QLatin1String("QSlider")
 #endif
-    list << QLatin1String("QAbstractSlider");
+        << QLatin1String("QAbstractSlider")
 #ifndef QT_NO_TOOLBUTTON
-    list << QLatin1String("QToolButton");
+        << QLatin1String("QToolButton")
 #endif
-    list << QLatin1String("QCheckBox");
-    list << QLatin1String("QRadioButton");
-    list << QLatin1String("QPushButton");
-    list << QLatin1String("QAbstractButton");
-    list << QLatin1String("QDialog");
-    list << QLatin1String("QMessageBox");
-    list << QLatin1String("QMainWindow");
-    list << QLatin1String("QLabel");
-    list << QLatin1String("QLCDNumber");
-    list << QLatin1String("QGroupBox");
-    list << QLatin1String("QStatusBar");
-    list << QLatin1String("QProgressBar");
-    list << QLatin1String("QMenuBar");
-    list << QLatin1String("QMenu");
-    list << QLatin1String("QHeaderView");
-    list << QLatin1String("QTabBar");
-    list << QLatin1String("QToolBar");
-    list << QLatin1String("QWorkspaceChild");
-    list << QLatin1String("QSizeGrip");
-    list << QLatin1String("QAbstractItemView");
-    list << QLatin1String("QWidget");
 #ifndef QT_NO_SPLITTER
-    list << QLatin1String("QSplitter");
-    list << QLatin1String("QSplitterHandle");
+        << QLatin1String("QSplitter")
+        << QLatin1String("QSplitterHandle")
 #endif
 #ifndef QT_NO_TEXTEDIT
-    list << QLatin1String("QTextEdit");
+        << QLatin1String("QTextEdit")
 #endif
-    list << QLatin1String("QPlainTextEdit");
-    list << QLatin1String("QTipLabel");
-    list << QLatin1String("QFrame");
-    list << QLatin1String("QStackedWidget");
-    list << QLatin1String("QToolBox");
-    list << QLatin1String("QMdiArea");
-    list << QLatin1String("QMdiSubWindow");
-    list << QLatin1String("QWorkspace");
-    list << QLatin1String("QDialogButtonBox");
 #ifndef QT_NO_DIAL
-    list << QLatin1String("QDial");
+        << QLatin1String("QDial")
 #endif
 #ifndef QT_NO_RUBBERBAND
-    list << QLatin1String("QRubberBand");
+        << QLatin1String("QRubberBand")
 #endif
 #ifndef QT_NO_TEXTBROWSER
-    list << QLatin1String("QTextBrowser");
+        << QLatin1String("QTextBrowser")
 #endif
 #ifndef QT_NO_SCROLLAREA
-    list << QLatin1String("QAbstractScrollArea");
-    list << QLatin1String("QScrollArea");
+        << QLatin1String("QAbstractScrollArea")
+        << QLatin1String("QScrollArea")
 #endif
 #ifndef QT_NO_CALENDARWIDGET
-    list << QLatin1String("QCalendarWidget");
+        << QLatin1String("QCalendarWidget")
 #endif
 
 #ifndef QT_NO_DOCKWIDGET
-    list << QLatin1String("QDockWidget");
+        << QLatin1String("QDockWidget")
 #endif
+        << QLatin1String("QPlainTextEdit")
+        << QLatin1String("QTipLabel")
+        << QLatin1String("QFrame")
+        << QLatin1String("QStackedWidget")
+        << QLatin1String("QToolBox")
+        << QLatin1String("QMdiArea")
+        << QLatin1String("QMdiSubWindow")
+        << QLatin1String("QWorkspace")
+        << QLatin1String("QDialogButtonBox")
+        << QLatin1String("QCheckBox")
+        << QLatin1String("QRadioButton")
+        << QLatin1String("QPushButton")
+        << QLatin1String("QAbstractButton")
+        << QLatin1String("QDialog")
+        << QLatin1String("QMessageBox")
+        << QLatin1String("QMainWindow")
+        << QLatin1String("QLabel")
+        << QLatin1String("QLCDNumber")
+        << QLatin1String("QGroupBox")
+        << QLatin1String("QStatusBar")
+        << QLatin1String("QProgressBar")
+        << QLatin1String("QMenuBar")
+        << QLatin1String("QMenu")
+        << QLatin1String("QHeaderView")
+        << QLatin1String("QTabBar")
+        << QLatin1String("QToolBar")
+        << QLatin1String("QWorkspaceChild")
+        << QLatin1String("QSizeGrip")
+        << QLatin1String("QAbstractItemView")
+        << QLatin1String("QWidget");
     return list;
 }
 

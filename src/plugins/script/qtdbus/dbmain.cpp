@@ -351,7 +351,9 @@ public:
 
 QStringList QtDBusScriptPlugin::keys() const
 {
-    return QStringList(QLatin1String("qt.dbus"));
+    static const QStringList list = QStringList()
+        << QLatin1String("qt.dbus");
+    return list;
 }
 
 void QtDBusScriptPlugin::initialize(const QString &key, QScriptEngine *engine)

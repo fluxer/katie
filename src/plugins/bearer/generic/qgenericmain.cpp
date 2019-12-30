@@ -61,7 +61,9 @@ QGenericEnginePlugin::~QGenericEnginePlugin()
 
 QStringList QGenericEnginePlugin::keys() const
 {
-    return QStringList() << QLatin1String("generic");
+    static const QStringList list = QStringList()
+        << QLatin1String("generic");
+    return list;
 }
 
 QBearerEngine *QGenericEnginePlugin::create(const QString &key) const
