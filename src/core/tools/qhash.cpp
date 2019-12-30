@@ -213,6 +213,10 @@ QHashData *QHashData::detach_helper(void (*node_duplicate)(Node *, void *),
 
 void QHashData::free_helper(void (*node_delete)(Node *))
 {
+    if (this == &shared_null) {
+        return;
+    }
+
     Node *this_e = reinterpret_cast<Node *>(this);
     Node **bucket = reinterpret_cast<Node **>(this->buckets);
 
