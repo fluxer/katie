@@ -8253,16 +8253,15 @@ static inline int qt_string_count(const QChar *haystack, int haystackLen,
 static inline int qt_string_count(const QChar *unicode, int size, const QChar &ch,
                                   Qt::CaseSensitivity cs)
 {
-    ushort c = ch.unicode();
     int num = 0;
     const ushort *b = reinterpret_cast<const ushort*>(unicode);
     const ushort *i = b + size;
     if (cs == Qt::CaseSensitive) {
         while (i != b)
-            if (*--i == c)
+            if (*--i == ch.unicode())
                 ++num;
     } else {
-        c = QChar::toCaseFolded(c);
+        ushort c = QChar::toCaseFolded(ch.unicode());
         while (i != b)
             if (QChar::toCaseFolded(*(--i)) == c)
                 ++num;
