@@ -1,6 +1,6 @@
 # add_definitions()
 set(EXTRA_DESIGNERBIN_LIBS
-    KtCore KtGui KtXml KtDesigner KtDesignerComponents KtUiTools
+    KtCore KtGui KtXml KtDesigner KtDesignerComponents
 )
 
 include_directories(
