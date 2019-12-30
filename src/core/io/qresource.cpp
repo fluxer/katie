@@ -57,28 +57,26 @@ class QStringSplitter
 {
 public:
     QStringSplitter(const QString &s)
-        : m_string(s), m_data(m_string.constData()), m_len(s.length()), m_pos(0)
+        : m_string(s), m_pos(0)
     {
         m_splitChar = QLatin1Char('/');
     }
 
     inline bool hasNext() {
-        while (m_pos < m_len && m_data[m_pos] == m_splitChar)
+        while (m_pos < m_string.length() && m_string[m_pos] == m_splitChar)
             ++m_pos;
-        return m_pos < m_len;
+        return m_pos < m_string.length();
     }
 
     inline QStringRef next() {
         int start = m_pos;
-        while (m_pos < m_len && m_data[m_pos] != m_splitChar)
+        while (m_pos < m_string.length() && m_string[m_pos] != m_splitChar)
             ++m_pos;
         return QStringRef(&m_string, start, m_pos - start);
     }
 
     QString m_string;
-    const QChar *m_data;
     QChar m_splitChar;
-    int m_len;
     int m_pos;
 };
 
