@@ -279,12 +279,18 @@ double qstrtod(const char *s00, const char **se, bool *ok)
 */
 static UCollator *icuCollator = Q_NULLPTR;
 
-bool qt_initLocale(const QString &locale)
+static void qt_deinitLocale()
 {
     if (icuCollator) {
         ucol_close(icuCollator);
         icuCollator = Q_NULLPTR;
     }
+}
+Q_DESTRUCTOR_FUNCTION(qt_deinitLocale);
+
+bool qt_initLocale(const QString &locale)
+{
+    qt_deinitLocale();
 
     UErrorCode error = U_ZERO_ERROR;
     icuCollator = ucol_open(locale.toLatin1().constData(), &error);
