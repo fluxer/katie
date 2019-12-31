@@ -205,14 +205,14 @@ public:
       avoidPropertyValueSourceStart(false), disableUserControl(false),
       registered(false), loopCount(1), group(Q_NULLPTR) {}
 
-    bool running:1;
-    bool paused:1;
-    bool alwaysRunToEnd:1;
-    bool connectedTimeLine:1;
-    bool componentComplete:1;
-    bool avoidPropertyValueSourceStart:1;
-    bool disableUserControl:1;
-    bool registered:1;
+    bool running;
+    bool paused;
+    bool alwaysRunToEnd;
+    bool connectedTimeLine;
+    bool componentComplete;
+    bool avoidPropertyValueSourceStart;
+    bool disableUserControl;
+    bool registered;
 
     int loopCount;
 
