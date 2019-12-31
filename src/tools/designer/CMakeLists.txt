@@ -24,11 +24,9 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/qttoolbardialog
 )
 
-include(fontpanel/fontpanel.cmake)
-include(qttoolbardialog/qttoolbardialog.cmake)
-
 set(DESIGNERBIN_HEADERS
-    ${DESIGNERBIN_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/fontpanel/fontpanel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qttoolbardialog/qttoolbardialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_toolwindow.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_formwindow.h
@@ -46,7 +44,10 @@ set(DESIGNERBIN_HEADERS
 )
 
 set(DESIGNERBIN_SOURCES
-    ${DESIGNERBIN_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/fontpanel/fontpanel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qttoolbardialog/qttoolbardialog.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qttoolbardialog/qttoolbardialog.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/qttoolbardialog/qttoolbardialog.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_toolwindow.cpp

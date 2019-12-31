@@ -1,9 +1,0 @@
-set(XML_HEADERS
-    ${XML_HEADERS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/sax/qxml.h
-)
-
-set(XML_SOURCES
-    ${XML_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/sax/qxml.cpp
-)

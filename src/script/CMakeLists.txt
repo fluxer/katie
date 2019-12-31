@@ -52,12 +52,75 @@ include_directories(
     ${PCRE_INCLUDES}
 )
 
-include(api/api.cmake)
-include(bridge/bridge.cmake)
-include(parser/parser.cmake)
+set(SCRIPT_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptclass.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptclasspropertyiterator.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptcontext.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptcontext_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptcontextinfo.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptengine.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptengine_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptengineagent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptengineagent_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptextensioninterface.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptextensionplugin.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptprogram.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptprogram_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptstring.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptstring_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptvalue.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptvalue_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptvalueiterator.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptable.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptable_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptfunction_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptobject_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptclassobject_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptvariant_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptqobject_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptglobalobject_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptactivationobject_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptstaticscopeobject_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptdeclarativeobject_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptdeclarativeclass_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptastfwd_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptast_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptastvisitor_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptgrammar_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptsyntaxchecker_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptlexer_p.h
+    # ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptparser_p.h
+)
 
 set(SCRIPT_SOURCES
-    ${SCRIPT_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptclass.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptclasspropertyiterator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptcontext.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptcontextinfo.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptengineagent.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptextensionplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptprogram.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptstring.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptvalue.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptvalueiterator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptable.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptfunction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptobject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptclassobject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptvariant.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptqobject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptglobalobject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptactivationobject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptstaticscopeobject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptdeclarativeobject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptdeclarativeclass.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptast.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptastvisitor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptgrammar.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptsyntaxchecker.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptlexer.cpp
+    # ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptparser.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/generated/Grammar.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API/JSCallbackConstructor.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API/JSCallbackFunction.cpp
