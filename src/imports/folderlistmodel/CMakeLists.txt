@@ -1,6 +1,6 @@
 # add_definitions()
 set(EXTRA_FOLDERLISTMODEL_LIBS
-    KtDeclarative
+    KtCore KtDeclarative
 )
 
 set(FOLDERLISTMODEL_SOURCES
@@ -14,7 +14,7 @@ set(FOLDERLISTMODEL_HEADERS
 
 katie_setup_target(qmlfolderlistmodelplugin ${FOLDERLISTMODEL_SOURCES} ${FOLDERLISTMODEL_HEADERS})
 
-add_library(qmlfolderlistmodelplugin ${KATIE_TYPE} ${qmlfolderlistmodelplugin_SOURCES})
+add_library(qmlfolderlistmodelplugin MODULE ${qmlfolderlistmodelplugin_SOURCES})
 target_link_libraries(qmlfolderlistmodelplugin ${EXTRA_FOLDERLISTMODEL_LIBS})
 
 install(

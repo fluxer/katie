@@ -1,6 +1,6 @@
 # add_definitions()
 set(EXTRA_GESTURES_LIBS
-    KtDeclarative
+    KtCore KtDeclarative
 )
 
 set(GESTURES_SOURCES
@@ -14,7 +14,7 @@ set(GESTURES_HEADERS
 
 katie_setup_target(qmlgesturesplugin ${GESTURES_SOURCES} ${GESTURES_HEADERS})
 
-add_library(qmlgesturesplugin ${KATIE_TYPE} ${qmlgesturesplugin_SOURCES})
+add_library(qmlgesturesplugin MODULE ${qmlgesturesplugin_SOURCES})
 target_link_libraries(qmlgesturesplugin ${EXTRA_GESTURES_LIBS})
 
 install(
