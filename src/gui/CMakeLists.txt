@@ -6,6 +6,7 @@ set(EXTRA_GUI_LIBS
     ${X11_X11_LIB}
     ${X11_Xt_LIB}
     ${X11_Xi_LIB}
+    ${ICU_LIBRARIES}
 )
 
 set(GUI_PUBLIC_HEADERS
