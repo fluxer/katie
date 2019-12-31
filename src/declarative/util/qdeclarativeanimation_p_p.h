@@ -92,10 +92,11 @@ class Q_AUTOTEST_EXPORT QActionAnimation : public QAbstractAnimation
 {
     Q_OBJECT
 public:
-    QActionAnimation(QObject *parent = Q_NULLPTR) : QAbstractAnimation(parent), animAction(0), policy(KeepWhenStopped) {}
+    QActionAnimation(QObject *parent = Q_NULLPTR) : QAbstractAnimation(parent), animAction(Q_NULLPTR),
+        policy(KeepWhenStopped) {}
     QActionAnimation(QAbstractAnimationAction *action, QObject *parent = Q_NULLPTR)
         : QAbstractAnimation(parent), animAction(action), policy(KeepWhenStopped) {}
-    ~QActionAnimation() { if (policy == DeleteWhenStopped) { delete animAction; animAction = 0; } }
+    ~QActionAnimation() { if (policy == DeleteWhenStopped) { delete animAction; animAction = Q_NULLPTR; } }
     virtual int duration() const { return 0; }
     void setAnimAction(QAbstractAnimationAction *action, DeletionPolicy p)
     {
@@ -116,7 +117,7 @@ protected:
                 animAction->doAction();
                 if (state() == Stopped && policy == DeleteWhenStopped) {
                     delete animAction;
-                    animAction = 0;
+                    animAction = Q_NULLPTR;
                 }
             }
         }
@@ -202,7 +203,7 @@ public:
     : running(false), paused(false), alwaysRunToEnd(false),
       connectedTimeLine(false), componentComplete(true),
       avoidPropertyValueSourceStart(false), disableUserControl(false),
-      registered(false), loopCount(1), group(0) {}
+      registered(false), loopCount(1), group(Q_NULLPTR) {}
 
     bool running:1;
     bool paused:1;
@@ -229,7 +230,7 @@ class QDeclarativePauseAnimationPrivate : public QDeclarativeAbstractAnimationPr
     Q_DECLARE_PUBLIC(QDeclarativePauseAnimation)
 public:
     QDeclarativePauseAnimationPrivate()
-    : QDeclarativeAbstractAnimationPrivate(), pa(0) {}
+    : QDeclarativeAbstractAnimationPrivate(), pa(Q_NULLPTR) {}
 
     void init();
 
@@ -262,7 +263,7 @@ class QDeclarativePropertyActionPrivate : public QDeclarativeAbstractAnimationPr
     Q_DECLARE_PUBLIC(QDeclarativePropertyAction)
 public:
     QDeclarativePropertyActionPrivate()
-    : QDeclarativeAbstractAnimationPrivate(), target(0), spa(0) {}
+    : QDeclarativeAbstractAnimationPrivate(), target(Q_NULLPTR), spa(Q_NULLPTR) {}
 
     void init();
 
@@ -282,7 +283,7 @@ class QDeclarativeAnimationGroupPrivate : public QDeclarativeAbstractAnimationPr
     Q_DECLARE_PUBLIC(QDeclarativeAnimationGroup)
 public:
     QDeclarativeAnimationGroupPrivate()
-    : QDeclarativeAbstractAnimationPrivate(), ag(0) {}
+    : QDeclarativeAbstractAnimationPrivate(), ag(Q_NULLPTR) {}
 
     static void append_animation(QDeclarativeListProperty<QDeclarativeAbstractAnimation> *list, QDeclarativeAbstractAnimation *role);
     static void clear_animation(QDeclarativeListProperty<QDeclarativeAbstractAnimation> *list);
@@ -295,9 +296,9 @@ class QDeclarativePropertyAnimationPrivate : public QDeclarativeAbstractAnimatio
     Q_DECLARE_PUBLIC(QDeclarativePropertyAnimation)
 public:
     QDeclarativePropertyAnimationPrivate()
-    : QDeclarativeAbstractAnimationPrivate(), target(0), fromSourced(false), fromIsDefined(false),
-    toIsDefined(false), rangeIsSet(false), defaultToInterpolatorType(false), interpolatorType(0),
-    interpolator(0), va(0), actions(0) {}
+    : QDeclarativeAbstractAnimationPrivate(), target(Q_NULLPTR), fromSourced(false),
+    fromIsDefined(false), toIsDefined(false), rangeIsSet(false), defaultToInterpolatorType(false),
+    interpolatorType(0), interpolator(0), va(Q_NULLPTR), actions(Q_NULLPTR) {}
 
     void init();
 
@@ -342,8 +343,8 @@ class QDeclarativeParentAnimationPrivate : public QDeclarativeAnimationGroupPriv
     Q_DECLARE_PUBLIC(QDeclarativeParentAnimation)
 public:
     QDeclarativeParentAnimationPrivate()
-    : QDeclarativeAnimationGroupPrivate(), target(0), newParent(0),
-       via(0), topLevelGroup(0), startAction(0), endAction(0) {}
+    : QDeclarativeAnimationGroupPrivate(), target(Q_NULLPTR), newParent(Q_NULLPTR),
+       via(Q_NULLPTR), topLevelGroup(Q_NULLPTR), startAction(Q_NULLPTR), endAction(Q_NULLPTR) {}
 
     QDeclarativeItem *target;
     QDeclarativeItem *newParent;
@@ -360,7 +361,7 @@ class QDeclarativeAnchorAnimationPrivate : public QDeclarativeAbstractAnimationP
 {
     Q_DECLARE_PUBLIC(QDeclarativeAnchorAnimation)
 public:
-    QDeclarativeAnchorAnimationPrivate() : rangeIsSet(false), va(0),
+    QDeclarativeAnchorAnimationPrivate() : rangeIsSet(false), va(Q_NULLPTR),
         interpolator(QVariantAnimationPrivate::getInterpolator(QMetaType::QReal)) {}
 
     bool rangeIsSet;
@@ -380,7 +381,7 @@ public:
     bool fromSourced;
     bool fromDefined;
     bool *wasDeleted;
-    QDeclarativeAnimationPropertyUpdater() : prevInterpolatorType(0), wasDeleted(0) {}
+    QDeclarativeAnimationPropertyUpdater() : prevInterpolatorType(0), wasDeleted(Q_NULLPTR) {}
     ~QDeclarativeAnimationPropertyUpdater() { if (wasDeleted) *wasDeleted = true; }
     void setValue(qreal v);
 };
