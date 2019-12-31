@@ -197,4 +197,4 @@ void DPI_Chooser::syncSpinBoxes()
 }
 
 QT_END_NAMESPACE
-#include <moc_dpi_chooser.h>
+#include "moc_dpi_chooser.h"

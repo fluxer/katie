@@ -1274,4 +1274,4 @@ Layout* Layout::createLayout(const QWidgetList &widgets,  QWidget *parentWidget,
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_layout_p.h>
+#include "moc_layout_p.h"

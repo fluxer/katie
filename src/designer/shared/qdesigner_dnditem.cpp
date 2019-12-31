@@ -287,4 +287,4 @@ void QDesignerMimeData::setImageTransparency(QImage &image, int alpha)
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_dnditem_p.h>
+#include "moc_qdesigner_dnditem_p.h"

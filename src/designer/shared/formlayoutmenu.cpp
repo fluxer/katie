@@ -524,4 +524,4 @@ QT_END_NAMESPACE
 
 #include "moc_formlayoutmenu.cpp"
 
-#include <moc_formlayoutmenu_p.h>
+#include "moc_formlayoutmenu_p.h"

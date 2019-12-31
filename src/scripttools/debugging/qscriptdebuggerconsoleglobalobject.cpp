@@ -453,4 +453,4 @@ void QScriptDebuggerConsoleGlobalObject::setEvaluateAction(int action)
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptdebuggerconsoleglobalobject_p.h>
+#include "moc_qscriptdebuggerconsoleglobalobject_p.h"

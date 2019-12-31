@@ -274,4 +274,4 @@ void QDeclarativeImageBase::pixmapChange()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativeimagebase_p.h>
+#include "moc_qdeclarativeimagebase_p.h"

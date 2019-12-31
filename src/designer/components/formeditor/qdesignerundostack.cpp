@@ -102,4 +102,4 @@ void QDesignerUndoStack::setDirty(bool v)
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_qdesignerundostack.h>
+#include "moc_qdesignerundostack.h"

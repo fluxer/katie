@@ -487,4 +487,4 @@ void QDeclarativeStateGroup::removeState(QDeclarativeState *state)
 QT_END_NAMESPACE
 
 
-#include <moc_qdeclarativestategroup_p.h>
+#include "moc_qdeclarativestategroup_p.h"

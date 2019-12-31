@@ -483,4 +483,4 @@ void QDeclarativeSmoothedAnimation::setMaximumEasingTime(int v)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativesmoothedanimation_p.h>
+#include "moc_qdeclarativesmoothedanimation_p.h"

@@ -427,4 +427,4 @@ bool QToolBoxWidgetPropertySheet::checkProperty(const QString &propertyName)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_toolbox_p.h>
+#include "moc_qdesigner_toolbox_p.h"

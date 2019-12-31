@@ -853,4 +853,4 @@ bool WidgetFactory::isFormEditorObject(const QObject *object)
 QT_END_NAMESPACE
 
 #include "moc_widgetfactory.cpp"
-#include <moc_widgetfactory_p.h>
+#include "moc_widgetfactory_p.h"

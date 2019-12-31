@@ -1600,4 +1600,4 @@ void ConnectionEdit::contextMenuEvent(QContextMenuEvent * event)
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_connectionedit_p.h>
+#include "moc_connectionedit_p.h"

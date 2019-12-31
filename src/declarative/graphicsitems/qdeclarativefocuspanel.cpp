@@ -79,4 +79,4 @@ bool QDeclarativeFocusPanel::sceneEvent(QEvent *event)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativefocuspanel_p.h>
+#include "moc_qdeclarativefocuspanel_p.h"

@@ -202,4 +202,4 @@ void StringListEditor::editString(int index)
 }
 
 QT_END_NAMESPACE
-#include <moc_stringlisteditor.h>
+#include "moc_stringlisteditor.h"

@@ -83,4 +83,4 @@ QList<QAction*> SpacerTaskMenu::taskActions() const
 
 QT_END_NAMESPACE
 
-#include <moc_layouttaskmenu.h>
+#include "moc_layouttaskmenu.h"

@@ -556,4 +556,4 @@ QRectF QDeclarativeRectangle::boundingRect() const
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativerectangle_p.h>
+#include "moc_qdeclarativerectangle_p.h"

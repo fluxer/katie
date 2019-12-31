@@ -183,4 +183,4 @@ QDesignerFormEditorInterface *QDesignerPropertyEditorInterface::core() const
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractpropertyeditor.h>
+#include "moc_abstractpropertyeditor.h"

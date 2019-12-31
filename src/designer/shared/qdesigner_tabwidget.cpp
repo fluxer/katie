@@ -562,4 +562,4 @@ bool QTabWidgetPropertySheet::checkProperty(const QString &propertyName)
 QT_END_NAMESPACE
 
 #include "moc_qdesigner_tabwidget.cpp" // required for MyMimeData
-#include <moc_qdesigner_tabwidget_p.h>
+#include "moc_qdesigner_tabwidget_p.h"

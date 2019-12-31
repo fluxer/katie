@@ -126,4 +126,4 @@ void TaskMenuInlineEditor::updateSelection()
 }
 
 QT_END_NAMESPACE
-#include <moc_inplace_editor.h>
+#include "moc_inplace_editor.h"

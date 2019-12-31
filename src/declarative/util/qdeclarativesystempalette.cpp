@@ -302,4 +302,4 @@ bool QDeclarativeSystemPalette::event(QEvent *event)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativesystempalette_p.h>
+#include "moc_qdeclarativesystempalette_p.h"

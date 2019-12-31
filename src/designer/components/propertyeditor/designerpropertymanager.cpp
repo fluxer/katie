@@ -2821,4 +2821,4 @@ void ResetDecorator::slotEditorDestroyed(QObject *object)
 QT_END_NAMESPACE
 
 #include "moc_designerpropertymanager.cpp"
-#include <moc_designerpropertymanager.h>
+#include "moc_designerpropertymanager.h"

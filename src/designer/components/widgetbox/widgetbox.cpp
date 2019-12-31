@@ -226,5 +226,5 @@ QIcon WidgetBox::iconForWidget(const QString &className, const QString &category
 
 QT_END_NAMESPACE
 
-#include <moc_widgetbox.h>
+#include "moc_widgetbox.h"
 #include <qrc_widgetbox.cpp>

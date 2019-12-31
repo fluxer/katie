@@ -121,4 +121,4 @@ variables <i>widget</i> and <i>childWidgets</i>, respectively.");
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_scriptdialog_p.h>
+#include "moc_scriptdialog_p.h"

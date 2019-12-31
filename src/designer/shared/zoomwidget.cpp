@@ -555,4 +555,4 @@ void ZoomWidget::dump() const
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_zoomwidget_p.h>
+#include "moc_zoomwidget_p.h"

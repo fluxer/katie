@@ -809,4 +809,4 @@ void ActionEditor::slotContextMenuRequested(QContextMenuEvent *e, QAction *item)
 
 QT_END_NAMESPACE
 
-#include <moc_actioneditor_p.h>
+#include "moc_actioneditor_p.h"

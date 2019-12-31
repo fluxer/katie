@@ -93,4 +93,4 @@ QList<QAction*> LineEditTaskMenu::taskActions() const
 }
 
 QT_END_NAMESPACE
-#include <moc_lineedit_taskmenu.h>
+#include "moc_lineedit_taskmenu.h"

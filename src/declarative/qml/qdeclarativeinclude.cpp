@@ -300,4 +300,4 @@ QScriptValue QDeclarativeInclude::worker_include(QScriptContext *ctxt, QScriptEn
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativeinclude_p.h>
+#include "moc_qdeclarativeinclude_p.h"

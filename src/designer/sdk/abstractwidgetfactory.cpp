@@ -102,4 +102,4 @@ QDesignerWidgetFactoryInterface::~QDesignerWidgetFactoryInterface()
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractwidgetfactory.h>
+#include "moc_abstractwidgetfactory.h"

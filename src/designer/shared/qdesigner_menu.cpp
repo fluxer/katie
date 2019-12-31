@@ -1377,4 +1377,4 @@ void QDesignerMenu::keyReleaseEvent(QKeyEvent *event)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_menu_p.h>
+#include "moc_qdesigner_menu_p.h"

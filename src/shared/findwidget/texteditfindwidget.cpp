@@ -159,4 +159,4 @@ void TextEditFindWidget::find(const QString &ttf, bool skipCurrent, bool backwar
 }
 
 QT_END_NAMESPACE
-#include <moc_texteditfindwidget.h>
+#include "moc_texteditfindwidget.h"

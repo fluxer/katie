@@ -161,4 +161,4 @@ void QDeclarativeExtensionPlugin::initializeEngine(QDeclarativeEngine *engine, c
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativeextensionplugin.h>
+#include "moc_qdeclarativeextensionplugin.h"

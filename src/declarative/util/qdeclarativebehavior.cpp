@@ -220,4 +220,4 @@ void QDeclarativeBehavior::componentFinalized()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativebehavior_p.h>
+#include "moc_qdeclarativebehavior_p.h"

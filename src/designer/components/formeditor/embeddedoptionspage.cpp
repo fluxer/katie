@@ -442,4 +442,4 @@ void EmbeddedOptionsPage::finish()
 }
 
 QT_END_NAMESPACE
-#include <moc_embeddedoptionspage.h>
+#include "moc_embeddedoptionspage.h"

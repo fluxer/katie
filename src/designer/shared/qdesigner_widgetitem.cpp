@@ -335,4 +335,4 @@ QDesignerWidgetItemInstaller::~QDesignerWidgetItemInstaller()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_widgetitem_p.h>
+#include "moc_qdesigner_widgetitem_p.h"

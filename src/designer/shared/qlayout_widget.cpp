@@ -2089,4 +2089,4 @@ void QLayoutWidget::setLayoutBottomMargin(int layoutMargin)
 }
 
 QT_END_NAMESPACE
-#include <moc_qlayout_widget_p.h>
+#include "moc_qlayout_widget_p.h"

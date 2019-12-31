@@ -160,4 +160,4 @@ void NewDynamicPropertyDialog::on_m_buttonBox_clicked(QAbstractButton *btn)
 }
 
 QT_END_NAMESPACE
-#include <moc_newdynamicpropertydialog.h>
+#include "moc_newdynamicpropertydialog.h"

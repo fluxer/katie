@@ -204,4 +204,4 @@ void QDeclarativeBind::eval()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativebind_p.h>
+#include "moc_qdeclarativebind_p.h"

@@ -115,4 +115,4 @@ void QDeclarativeTranslate::applyTo(QMatrix4x4 *matrix) const
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativetranslate_p.h>
+#include "moc_qdeclarativetranslate_p.h"

@@ -96,4 +96,4 @@ QDesignerFormWindowToolInterface::~QDesignerFormWindowToolInterface()
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractformwindowtool.h>
+#include "moc_abstractformwindowtool.h"

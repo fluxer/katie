@@ -776,4 +776,4 @@ void QDeclarativePropertyChanges::attachToState()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativepropertychanges_p.h>
+#include "moc_qdeclarativepropertychanges_p.h"

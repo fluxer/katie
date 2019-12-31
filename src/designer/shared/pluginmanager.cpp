@@ -770,4 +770,4 @@ QObjectList QDesignerPluginManager::instances() const
 }
 
 QT_END_NAMESPACE
-#include <moc_pluginmanager_p.h>
+#include "moc_pluginmanager_p.h"

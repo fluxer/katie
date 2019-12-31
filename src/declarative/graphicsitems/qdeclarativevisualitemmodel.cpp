@@ -1414,5 +1414,5 @@ void QDeclarativeVisualDataModel::_q_destroyingPackage(QDeclarativePackage *pack
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativevisualitemmodel.cpp>
-#include <moc_qdeclarativevisualitemmodel_p.h>
+#include "moc_qdeclarativevisualitemmodel.cpp"
+#include "moc_qdeclarativevisualitemmodel_p.h"

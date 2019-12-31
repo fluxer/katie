@@ -269,4 +269,4 @@ void Spacer::updateToolTip()
 }
 
 QT_END_NAMESPACE
-#include <moc_spacer_widget_p.h>
+#include "moc_spacer_widget_p.h"

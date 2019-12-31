@@ -56,4 +56,4 @@ QScriptErrorLogWidgetInterface::QScriptErrorLogWidgetInterface(
 }
 
 QT_END_NAMESPACE
-#include <moc_qscripterrorlogwidgetinterface_p.h>
+#include "moc_qscripterrorlogwidgetinterface_p.h"

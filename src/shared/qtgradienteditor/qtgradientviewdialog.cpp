@@ -79,4 +79,4 @@ void QtGradientViewDialog::slotGradientActivated(const QString &id)
 }
 
 QT_END_NAMESPACE
-#include <moc_qtgradientviewdialog.h>
+#include "moc_qtgradientviewdialog.h"

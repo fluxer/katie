@@ -1749,4 +1749,4 @@ QDeclarativePathViewAttached *QDeclarativePathView::qmlAttachedProperties(QObjec
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativepathview_p.h>
+#include "moc_qdeclarativepathview_p.h"

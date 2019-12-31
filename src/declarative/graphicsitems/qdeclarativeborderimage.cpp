@@ -605,4 +605,4 @@ void QDeclarativeBorderImage::paint(QPainter *p, const QStyleOptionGraphicsItem 
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativeborderimage_p.h>
+#include "moc_qdeclarativeborderimage_p.h"

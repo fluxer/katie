@@ -105,4 +105,4 @@ void TableWidgetTaskMenu::updateSelection()
 }
 
 QT_END_NAMESPACE
-#include <moc_tablewidget_taskmenu.h>
+#include "moc_tablewidget_taskmenu.h"

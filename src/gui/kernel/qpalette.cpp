@@ -1017,4 +1017,4 @@ void QPalette::setColorGroup(ColorGroup cg, const QBrush &foreground, const QBru
 QT_END_NAMESPACE
 
 
-#include <moc_qpalette.h>
+#include "moc_qpalette.h"

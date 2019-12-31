@@ -989,4 +989,4 @@ void WidgetBoxTreeWidget::filter(const QString &f)
 }  // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_widgetboxtreewidget.h>
+#include "moc_widgetboxtreewidget.h"

@@ -584,6 +584,6 @@ bool QDeclarativeLoader::eventFilter(QObject *watched, QEvent *e)
     return QDeclarativeItem::eventFilter(watched, e);
 }
 
-#include <moc_qdeclarativeloader_p.h>
+#include "moc_qdeclarativeloader_p.h"
 
 QT_END_NAMESPACE

@@ -279,4 +279,4 @@ void QDeclarativeConnections::componentComplete()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativeconnections_p.h>
+#include "moc_qdeclarativeconnections_p.h"

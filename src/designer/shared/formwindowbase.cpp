@@ -480,4 +480,4 @@ QString FormWindowBase::fileContents() const
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_formwindowbase_p.h>
+#include "moc_formwindowbase_p.h"

@@ -960,4 +960,4 @@ QDeclarativeDrag *QDeclarativeMouseArea::drag()
 */
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativemousearea_p.h>
+#include "moc_qdeclarativemousearea_p.h"

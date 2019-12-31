@@ -560,4 +560,4 @@ void QDeclarativeValueTypeProxyBinding::removeBindings(quint32 mask)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativebinding_p.h>
+#include "moc_qdeclarativebinding_p.h"

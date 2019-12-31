@@ -69,4 +69,4 @@ QObject *QDesignerLayoutDecorationFactory::createExtension(QObject *object, cons
 }
 
 QT_END_NAMESPACE
-#include <moc_default_layoutdecoration.h>
+#include "moc_default_layoutdecoration.h"

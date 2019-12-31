@@ -2968,4 +2968,4 @@ QUndoStack *FormWindow::commandHistory() const
 
 QT_END_NAMESPACE
 
-#include <moc_formwindow.h>
+#include "moc_formwindow.h"

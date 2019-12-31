@@ -446,4 +446,4 @@ namespace qdesigner_internal {
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_promotiondialog_p.h>
+#include "moc_qdesigner_promotiondialog_p.h"

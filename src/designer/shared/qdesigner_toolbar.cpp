@@ -476,4 +476,4 @@ QRect ToolBarEventFilter::freeArea(const QToolBar *tb)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_toolbar_p.h>
+#include "moc_qdesigner_toolbar_p.h"

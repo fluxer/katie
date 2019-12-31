@@ -1110,4 +1110,4 @@ void QDeclarativePixmap::flushCache()
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativepixmapcache.cpp>
+#include "moc_qdeclarativepixmapcache.cpp"

@@ -421,4 +421,4 @@ void TabOrderEditor::showTabOrderDialog()
 }
 
 QT_END_NAMESPACE
-#include <moc_tabordereditor.h>
+#include "moc_tabordereditor.h"

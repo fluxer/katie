@@ -111,4 +111,4 @@ void GridPanel::setResetButtonVisible(bool v)
 }
 
 QT_END_NAMESPACE
-#include <moc_gridpanel_p.h>
+#include "moc_gridpanel_p.h"

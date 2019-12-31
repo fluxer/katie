@@ -737,6 +737,6 @@ bool QDeclarativeWorkerScript::event(QEvent *event)
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativeworkerscript.cpp>
+#include "moc_qdeclarativeworkerscript.cpp"
 
-#include <moc_qdeclarativeworkerscript_p.h>
+#include "moc_qdeclarativeworkerscript_p.h"

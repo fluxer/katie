@@ -515,4 +515,4 @@ void QtGroupBoxPropertyBrowser::itemChanged(QtBrowserItem *item)
 
 QT_END_NAMESPACE
 
-#include <moc_qtgroupboxpropertybrowser.h>
+#include "moc_qtgroupboxpropertybrowser.h"

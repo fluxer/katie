@@ -1355,4 +1355,4 @@ void QDesignerActions::printPreviewImage()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_actions.h>
+#include "moc_qdesigner_actions.h"

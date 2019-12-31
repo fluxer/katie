@@ -470,4 +470,4 @@ void QDeclarativeFolderListModel::setShowOnlyReadable(bool on)
 QT_END_NAMESPACE
 
 #endif // QT_NO_DIRMODEL
-#include <moc_qdeclarativefolderlistmodel.h>
+#include "moc_qdeclarativefolderlistmodel.h"

@@ -248,4 +248,4 @@ QObject *QDesignerMemberSheetFactory::createExtension(QObject *object, const QSt
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_membersheet_p.h>
+#include "moc_qdesigner_membersheet_p.h"

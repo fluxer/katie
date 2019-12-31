@@ -334,5 +334,5 @@ QDeclarativeListProperty<QDeclarativeAbstractAnimation> QDeclarativeTransition::
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativetransition.cpp>
-#include <moc_qdeclarativetransition_p.h>
+#include "moc_qdeclarativetransition.cpp"
+#include "moc_qdeclarativetransition_p.h"

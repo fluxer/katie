@@ -155,4 +155,4 @@ void QDesignerAppearanceOptionsPage::finish()
 
 QT_END_NAMESPACE
 
-#include <moc_qdesigner_appearanceoptions.h>
+#include "moc_qdesigner_appearanceoptions.h"

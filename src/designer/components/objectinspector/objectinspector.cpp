@@ -825,4 +825,4 @@ void  ObjectInspector::dropEvent (QDropEvent * event)
 QT_END_NAMESPACE
 }
 }
-#include <moc_objectinspector.h>
+#include "moc_objectinspector.h"

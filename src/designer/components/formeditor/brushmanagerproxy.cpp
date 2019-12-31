@@ -292,4 +292,4 @@ void BrushManagerProxy::setBrushManager(QtBrushManager *manager)
 
 QT_END_NAMESPACE
 
-#include <moc_brushmanagerproxy.h>
+#include "moc_brushmanagerproxy.h"

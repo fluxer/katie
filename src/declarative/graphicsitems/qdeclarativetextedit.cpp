@@ -1855,4 +1855,4 @@ void QDeclarativeTextEdit::q_canPasteChanged()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativetextedit_p.h>
+#include "moc_qdeclarativetextedit_p.h"

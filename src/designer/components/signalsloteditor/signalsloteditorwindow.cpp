@@ -826,4 +826,4 @@ void SignalSlotEditorWindow::updateUi()
 QT_END_NAMESPACE
 
 #include "moc_signalsloteditorwindow.cpp"
-#include <moc_signalsloteditorwindow.h>
+#include "moc_signalsloteditorwindow.h"

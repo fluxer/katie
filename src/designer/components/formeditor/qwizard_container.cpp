@@ -216,4 +216,4 @@ bool QWizardPropertySheet::isVisible(int index) const
 }
 
 QT_END_NAMESPACE
-#include <moc_qwizard_container.h>
+#include "moc_qwizard_container.h"

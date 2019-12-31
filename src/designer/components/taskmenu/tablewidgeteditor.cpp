@@ -440,4 +440,4 @@ TableWidgetContents TableWidgetEditorDialog::contents() const
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_tablewidgeteditor.h>
+#include "moc_tablewidgeteditor.h"

@@ -125,4 +125,4 @@ void QtGradientManager::clear()
 }
 
 QT_END_NAMESPACE
-#include <moc_qtgradientmanager.h>
+#include "moc_qtgradientmanager.h"

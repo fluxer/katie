@@ -123,4 +123,4 @@ void BuddyEditorPlugin::activeFormWindowChanged(QDesignerFormWindowInterface *fo
 }
 
 QT_END_NAMESPACE
-#include <moc_buddyeditor_plugin.h>
+#include "moc_buddyeditor_plugin.h"

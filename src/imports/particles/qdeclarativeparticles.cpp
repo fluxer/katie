@@ -1285,4 +1285,4 @@ void QDeclarativeParticles::componentComplete()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativeparticles_p.h>
+#include "moc_qdeclarativeparticles_p.h"

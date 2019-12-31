@@ -163,4 +163,4 @@ void SaveFormAsTemplate::checkToAddPath(int itemIndex)
 }
 
 QT_END_NAMESPACE
-#include <moc_saveformastemplate.h>
+#include "moc_saveformastemplate.h"

@@ -95,4 +95,4 @@ void TextEditTaskMenu::editText()
 
 }
 QT_END_NAMESPACE
-#include <moc_textedit_taskmenu.h>
+#include "moc_textedit_taskmenu.h"

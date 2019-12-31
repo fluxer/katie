@@ -1207,4 +1207,4 @@ void QDeclarativeQmldirData::dataReceived(const QByteArray &data)
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativetypeloader_p.h>
+#include "moc_qdeclarativetypeloader_p.h"

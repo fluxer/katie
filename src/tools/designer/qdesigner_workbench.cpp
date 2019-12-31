@@ -1071,4 +1071,4 @@ QDesignerToolWindow *QDesignerWorkbench::widgetBoxToolWindow() const
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_workbench.h>
+#include "moc_qdesigner_workbench.h"

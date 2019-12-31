@@ -351,4 +351,4 @@ void PromotionTaskMenu::slotEditSignalsSlots()
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_promotiontaskmenu_p.h>
+#include "moc_promotiontaskmenu_p.h"

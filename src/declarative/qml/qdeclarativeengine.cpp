@@ -2408,4 +2408,4 @@ bool QDeclarative_isFileCaseCorrect(const QString &fileName)
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativeengine.h>
+#include "moc_qdeclarativeengine.h"

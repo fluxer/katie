@@ -499,4 +499,4 @@ bool WidgetBoxCategoryListView::removeCustomWidgets()
 }  // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_widgetboxcategorylistview.h>
+#include "moc_widgetboxcategorylistview.h"

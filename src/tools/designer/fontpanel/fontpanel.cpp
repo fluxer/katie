@@ -243,4 +243,4 @@ void FontPanel::delayedPreviewFontUpdate()
 }
 
 QT_END_NAMESPACE
-#include <moc_fontpanel.h>
+#include "moc_fontpanel.h"

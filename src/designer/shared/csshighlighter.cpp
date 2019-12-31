@@ -178,4 +178,4 @@ void CssHighlighter::highlight(const QString &text, int start, int length, int s
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_csshighlighter_p.h>
+#include "moc_csshighlighter_p.h"

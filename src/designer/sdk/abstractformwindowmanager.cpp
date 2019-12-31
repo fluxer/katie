@@ -492,4 +492,4 @@ QAction *QDesignerFormWindowManagerInterface::actionRedo() const
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractformwindowmanager.h>
+#include "moc_abstractformwindowmanager.h"

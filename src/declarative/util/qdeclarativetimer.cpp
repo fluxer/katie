@@ -314,4 +314,4 @@ void QDeclarativeTimer::finished()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativetimer_p.h>
+#include "moc_qdeclarativetimer_p.h"

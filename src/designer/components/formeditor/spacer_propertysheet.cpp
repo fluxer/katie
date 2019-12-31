@@ -72,4 +72,4 @@ bool SpacerPropertySheet::dynamicPropertiesAllowed() const
 }
 
 QT_END_NAMESPACE
-#include <moc_spacer_propertysheet.h>
+#include "moc_spacer_propertysheet.h"

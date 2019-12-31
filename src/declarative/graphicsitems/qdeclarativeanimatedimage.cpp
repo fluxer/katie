@@ -394,4 +394,4 @@ void QDeclarativeAnimatedImage::componentComplete()
 QT_END_NAMESPACE
 
 #endif // QT_NO_MOVIE
-#include <moc_qdeclarativeanimatedimage_p.h>
+#include "moc_qdeclarativeanimatedimage_p.h"

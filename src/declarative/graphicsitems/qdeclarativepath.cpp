@@ -912,4 +912,4 @@ void QDeclarativePathPercent::setValue(qreal value)
     }
 }
 QT_END_NAMESPACE
-#include <moc_qdeclarativepath_p.h>
+#include "moc_qdeclarativepath_p.h"

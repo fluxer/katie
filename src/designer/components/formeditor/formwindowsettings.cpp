@@ -272,4 +272,4 @@ void FormWindowSettings::accept()
 }
 }
 QT_END_NAMESPACE
-#include <moc_formwindowsettings.h>
+#include "moc_formwindowsettings.h"

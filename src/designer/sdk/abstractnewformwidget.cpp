@@ -107,8 +107,8 @@ QDesignerNewFormWidgetInterface *QDesignerNewFormWidgetInterface::createNewFormW
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractnewformwidget_p.h>
+#include "moc_abstractnewformwidget_p.h"
 
 // those are external
-#include <moc_abstractbrushmanager.h>
-#include <moc_abstracticoncache.h>
+#include "moc_abstractbrushmanager.h"
+#include "moc_abstracticoncache.h"

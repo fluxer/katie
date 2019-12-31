@@ -574,4 +574,4 @@ void PreviewManager::slotZoomChanged(int z)
 
 QT_END_NAMESPACE
 
-#include <moc_previewmanager_p.h>
+#include "moc_previewmanager_p.h"

@@ -100,4 +100,4 @@ QDesignerFormEditorInterface *QDesignerObjectInspectorInterface::core() const
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractobjectinspector.h>
+#include "moc_abstractobjectinspector.h"

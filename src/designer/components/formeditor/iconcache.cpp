@@ -111,4 +111,4 @@ QString IconCache::resolveQrcPath(const QString &filePath, const QString &qrcPat
 }
 
 QT_END_NAMESPACE
-#include <moc_iconcache.h>
+#include "moc_iconcache.h"

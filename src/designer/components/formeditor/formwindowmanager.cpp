@@ -1023,4 +1023,4 @@ void FormWindowManager::slotActionShowFormWindowSettingsDialog()
 }
 
 QT_END_NAMESPACE
-#include <moc_formwindowmanager.h>
+#include "moc_formwindowmanager.h"

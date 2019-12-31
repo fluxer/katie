@@ -96,4 +96,4 @@ void QDesignerIntegrationInterface::setHeaderLowercase(bool headerLowercase)
 
 QT_END_NAMESPACE
 
-#include <moc_abstractintegration.h>
+#include "moc_abstractintegration.h"

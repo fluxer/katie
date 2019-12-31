@@ -168,4 +168,4 @@ QExtensionManager *QExtensionFactory::extensionManager() const
 }
 
 QT_END_NAMESPACE
-#include <moc_default_extensionfactory.h>
+#include "moc_default_extensionfactory.h"

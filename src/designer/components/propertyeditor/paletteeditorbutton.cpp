@@ -77,4 +77,4 @@ void PaletteEditorButton::showPaletteEditor()
 }
 
 QT_END_NAMESPACE
-#include <moc_paletteeditorbutton.h>
+#include "moc_paletteeditorbutton.h"

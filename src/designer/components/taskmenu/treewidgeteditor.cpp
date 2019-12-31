@@ -633,4 +633,4 @@ TreeWidgetContents TreeWidgetEditorDialog::contents() const
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_treewidgeteditor.h>
+#include "moc_treewidgeteditor.h"

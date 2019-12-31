@@ -160,4 +160,4 @@ QDesignerMetaDataBaseInterface::~QDesignerMetaDataBaseInterface()
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractmetadatabase.h>
+#include "moc_abstractmetadatabase.h"

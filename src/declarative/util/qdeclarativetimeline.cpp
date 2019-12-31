@@ -937,4 +937,4 @@ QDeclarativeTimeLineObject *QDeclarativeTimeLineCallback::callbackObject() const
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativetimeline_p_p.h>
+#include "moc_qdeclarativetimeline_p_p.h"

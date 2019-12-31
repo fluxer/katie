@@ -102,4 +102,4 @@ bool QDeclarativeApplication::eventFilter(QObject *obj, QEvent *event)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativeapplication_p.h>
+#include "moc_qdeclarativeapplication_p.h"

@@ -444,4 +444,4 @@ void QDeclarativeRepeater::modelReset()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativerepeater_p.h>
+#include "moc_qdeclarativerepeater_p.h"

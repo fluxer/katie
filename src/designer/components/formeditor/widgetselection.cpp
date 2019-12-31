@@ -734,4 +734,4 @@ bool WidgetSelection::eventFilter(QObject *object, QEvent *event)
 }
 
 QT_END_NAMESPACE
-#include <moc_widgetselection.h>
+#include "moc_widgetselection.h"

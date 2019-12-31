@@ -82,4 +82,4 @@ QDeclarativeImplicitSizePaintedItem::QDeclarativeImplicitSizePaintedItem(QDeclar
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativeimplicitsizeitem_p.h>
+#include "moc_qdeclarativeimplicitsizeitem_p.h"

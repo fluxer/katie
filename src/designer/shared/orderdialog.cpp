@@ -178,4 +178,4 @@ QWidgetList OrderDialog::pagesOfContainer(const QDesignerFormEditorInterface *co
 }
 
 QT_END_NAMESPACE
-#include <moc_orderdialog_p.h>
+#include "moc_orderdialog_p.h"

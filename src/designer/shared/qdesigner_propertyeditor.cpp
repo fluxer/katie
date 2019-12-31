@@ -174,4 +174,4 @@ void QDesignerPropertyEditor::slotPropertyChanged(const QString &name, const QVa
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_propertyeditor_p.h>
+#include "moc_qdesigner_propertyeditor_p.h"

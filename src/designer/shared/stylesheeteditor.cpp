@@ -399,4 +399,4 @@ void StyleSheetPropertyEditorDialog::applyStyleSheet()
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_stylesheeteditor_p.h>
+#include "moc_stylesheeteditor_p.h"

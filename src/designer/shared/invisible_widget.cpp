@@ -47,4 +47,4 @@ InvisibleWidget::InvisibleWidget(QWidget *parent)
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_invisible_widget_p.h>
+#include "moc_invisible_widget_p.h"

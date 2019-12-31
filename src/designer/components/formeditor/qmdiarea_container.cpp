@@ -271,4 +271,4 @@ bool QMdiAreaPropertySheet::checkProperty(const QString &propertyName)
 }
 }
 QT_END_NAMESPACE
-#include <moc_qmdiarea_container.h>
+#include "moc_qmdiarea_container.h"

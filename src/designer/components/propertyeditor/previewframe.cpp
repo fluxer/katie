@@ -109,4 +109,4 @@ QMdiSubWindow *PreviewFrame::ensureMdiSubWindow()
 }
 
 QT_END_NAMESPACE
-#include <moc_previewframe.h>
+#include "moc_previewframe.h"

@@ -419,4 +419,4 @@ AppFontDialog::AppFontDialog(QWidget *parent) :
 }
 
 QT_END_NAMESPACE
-#include <moc_appfontdialog.h>
+#include "moc_appfontdialog.h"

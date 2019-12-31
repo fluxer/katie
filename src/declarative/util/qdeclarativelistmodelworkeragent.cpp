@@ -268,4 +268,4 @@ bool QDeclarativeListModelWorkerAgent::event(QEvent *e)
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativelistmodelworkeragent_p.h>
+#include "moc_qdeclarativelistmodelworkeragent_p.h"

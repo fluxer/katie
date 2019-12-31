@@ -84,4 +84,4 @@ void QScriptDebuggerConsoleWidgetInterface::setCompletionProvider(
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptdebuggerconsolewidgetinterface_p.h>
+#include "moc_qscriptdebuggerconsolewidgetinterface_p.h"

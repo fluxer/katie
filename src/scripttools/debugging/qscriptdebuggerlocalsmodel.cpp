@@ -948,4 +948,4 @@ void QScriptDebuggerLocalsModel::fetchMore(const QModelIndex &parent)
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptdebuggerlocalsmodel_p.h>
+#include "moc_qscriptdebuggerlocalsmodel_p.h"

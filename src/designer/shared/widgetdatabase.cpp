@@ -850,4 +850,4 @@ QDESIGNER_SHARED_EXPORT WidgetDataBaseItemList
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_widgetdatabase_p.h>
+#include "moc_widgetdatabase_p.h"

@@ -487,4 +487,4 @@ QString QDesignerIntegration::contextHelpId() const
 
 QT_END_NAMESPACE
 
-#include <moc_qdesigner_integration_p.h>
+#include "moc_qdesigner_integration_p.h"

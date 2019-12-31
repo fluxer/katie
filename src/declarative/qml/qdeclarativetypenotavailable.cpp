@@ -43,4 +43,4 @@ int qmlRegisterTypeNotAvailable(const char *uri, int versionMajor, int versionMi
 QDeclarativeTypeNotAvailable::QDeclarativeTypeNotAvailable() { }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativetypenotavailable_p.h>
+#include "moc_qdeclarativetypenotavailable_p.h"

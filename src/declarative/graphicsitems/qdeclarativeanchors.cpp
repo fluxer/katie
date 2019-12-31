@@ -1152,5 +1152,5 @@ bool QDeclarativeAnchorsPrivate::checkVAnchorValid(QDeclarativeAnchorLine anchor
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativeanchors_p.h>
+#include "moc_qdeclarativeanchors_p.h"
 

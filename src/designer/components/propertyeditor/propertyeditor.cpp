@@ -1274,5 +1274,5 @@ void PropertyEditor::setFilter(const QString &pattern)
 
 QT_END_NAMESPACE
 
-#include <moc_propertyeditor.h>
+#include "moc_propertyeditor.h"
 #include <qrc_propertyeditor.cpp>

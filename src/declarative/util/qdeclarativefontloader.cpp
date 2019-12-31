@@ -327,5 +327,5 @@ QDeclarativeFontLoader::Status QDeclarativeFontLoader::status() const
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativefontloader.cpp>
-#include <moc_qdeclarativefontloader_p.h>
+#include "moc_qdeclarativefontloader.cpp"
+#include "moc_qdeclarativefontloader_p.h"

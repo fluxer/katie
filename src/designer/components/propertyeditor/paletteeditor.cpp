@@ -604,4 +604,4 @@ QSize ColorDelegate::sizeHint(const QStyleOptionViewItem &opt, const QModelIndex
 }
 
 QT_END_NAMESPACE
-#include <moc_paletteeditor.h>
+#include "moc_paletteeditor.h"

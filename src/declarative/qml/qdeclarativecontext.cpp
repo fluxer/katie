@@ -762,4 +762,4 @@ QDeclarativeContextPrivate *QDeclarativeContextData::asQDeclarativeContextPrivat
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativecontext.h>
+#include "moc_qdeclarativecontext.h"

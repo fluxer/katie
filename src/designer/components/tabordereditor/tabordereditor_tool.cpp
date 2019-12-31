@@ -104,4 +104,4 @@ QAction *TabOrderEditorTool::action() const
 }
 
 QT_END_NAMESPACE
-#include <moc_tabordereditor_tool.h>
+#include "moc_tabordereditor_tool.h"

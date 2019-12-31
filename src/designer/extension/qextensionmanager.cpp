@@ -164,4 +164,4 @@ QObject *QExtensionManager::extension(QObject *object, const QString &iid) const
 }
 
 QT_END_NAMESPACE
-#include <moc_qextensionmanager.h>
+#include "moc_qextensionmanager.h"

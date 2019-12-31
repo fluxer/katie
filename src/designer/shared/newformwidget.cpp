@@ -573,4 +573,4 @@ QString NewFormWidget::currentTemplate(QString *ptrToErrorMessage)
 }
 
 QT_END_NAMESPACE
-#include <moc_newformwidget_p.h>
+#include "moc_newformwidget_p.h"

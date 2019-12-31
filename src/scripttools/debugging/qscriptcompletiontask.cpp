@@ -282,4 +282,4 @@ void QScriptCompletionTask::start()
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptcompletiontask_p.h>
+#include "moc_qscriptcompletiontask_p.h"

@@ -71,4 +71,4 @@ void StringListEditorButton::showStringListEditor()
 }
 
 QT_END_NAMESPACE
-#include <moc_stringlisteditorbutton.h>
+#include "moc_stringlisteditorbutton.h"

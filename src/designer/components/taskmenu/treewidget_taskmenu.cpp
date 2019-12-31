@@ -104,4 +104,4 @@ void TreeWidgetTaskMenu::updateSelection()
 }
 
 QT_END_NAMESPACE
-#include <moc_treewidget_taskmenu.h>
+#include "moc_treewidget_taskmenu.h"

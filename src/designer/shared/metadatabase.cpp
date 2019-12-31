@@ -285,4 +285,4 @@ QDESIGNER_SHARED_EXPORT QString promotedExtends(QDesignerFormEditorInterface *co
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_metadatabase_p.h>
+#include "moc_metadatabase_p.h"

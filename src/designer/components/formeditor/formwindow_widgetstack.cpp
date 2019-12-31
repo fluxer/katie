@@ -207,4 +207,4 @@ QLayout *FormWindowWidgetStack::layout() const
 }
 
 QT_END_NAMESPACE
-#include <moc_formwindow_widgetstack.h>
+#include "moc_formwindow_widgetstack.h"

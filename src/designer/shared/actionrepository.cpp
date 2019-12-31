@@ -650,4 +650,4 @@ void ActionRepositoryMimeData::accept(QDragMoveEvent *event) const
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_actionrepository_p.h>
+#include "moc_actionrepository_p.h"

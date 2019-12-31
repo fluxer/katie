@@ -469,4 +469,4 @@ void QtGradientStopsModel::deleteStops()
 }
 
 QT_END_NAMESPACE
-#include <moc_qtgradientstopsmodel.h>
+#include "moc_qtgradientstopsmodel.h"

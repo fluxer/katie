@@ -1108,4 +1108,4 @@ void QtColorLine::mouseDoubleClickEvent(QMouseEvent *event)
 }
 
 QT_END_NAMESPACE
-#include <moc_qtcolorline.h>
+#include "moc_qtcolorline.h"

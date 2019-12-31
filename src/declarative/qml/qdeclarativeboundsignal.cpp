@@ -309,5 +309,5 @@ int QDeclarativeBoundSignalParameters::metaCall(QMetaObject::Call c, int id, voi
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativeboundsignal.cpp>
-#include <moc_qdeclarativeboundsignal_p.h>
+#include "moc_qdeclarativeboundsignal.cpp"
+#include "moc_qdeclarativeboundsignal_p.h"

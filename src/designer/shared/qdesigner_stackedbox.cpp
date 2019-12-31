@@ -386,4 +386,4 @@ bool QStackedWidgetPropertySheet::checkProperty(const QString &propertyName)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_stackedbox_p.h>
+#include "moc_qdesigner_stackedbox_p.h"

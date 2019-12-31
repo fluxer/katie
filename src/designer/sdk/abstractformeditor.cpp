@@ -609,4 +609,4 @@ void QDesignerFormEditorInterface::setDialogGui(QDesignerDialogGuiInterface *dia
 
 QT_END_NAMESPACE
 
-#include <moc_abstractformeditor.h>
+#include "moc_abstractformeditor.h"

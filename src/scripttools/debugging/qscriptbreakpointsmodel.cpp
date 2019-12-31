@@ -488,4 +488,4 @@ Qt::ItemFlags QScriptBreakpointsModel::flags(const QModelIndex &index) const
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptbreakpointsmodel_p.h>
+#include "moc_qscriptbreakpointsmodel_p.h"

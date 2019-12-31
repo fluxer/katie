@@ -902,4 +902,4 @@ void QDesignerTaskMenu::slotLayoutAlignment()
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_taskmenu_p.h>
+#include "moc_qdesigner_taskmenu_p.h"

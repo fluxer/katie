@@ -212,4 +212,4 @@ QImage NewForm::grabForm(QDesignerFormEditorInterface *core,
 }
 
 QT_END_NAMESPACE
-#include <moc_newform.h>
+#include "moc_newform.h"

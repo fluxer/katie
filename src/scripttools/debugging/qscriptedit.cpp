@@ -443,4 +443,4 @@ bool QScriptEdit::extraAreaEvent(QEvent *e)
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptedit_p.h>
+#include "moc_qscriptedit_p.h"

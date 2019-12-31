@@ -807,4 +807,4 @@ qreal QtGradientWidget::angleConical() const
 }
 
 QT_END_NAMESPACE
-#include <moc_qtgradientwidget.h>
+#include "moc_qtgradientwidget.h"

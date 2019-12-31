@@ -1621,4 +1621,4 @@ QT_END_NAMESPACE
 
 #include "moc_qdeclarativelistmodel_p.h"
 
-#include <moc_qdeclarativelistmodel_p_p.h>
+#include "moc_qdeclarativelistmodel_p_p.h"

@@ -282,4 +282,4 @@ QString QtGradientView::currentGradient() const
 }
 
 QT_END_NAMESPACE
-#include <moc_qtgradientview.h>
+#include "moc_qtgradientview.h"

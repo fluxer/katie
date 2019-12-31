@@ -307,4 +307,4 @@ QModelIndex ItemViewFindWidget::findHelper(const QString &textToFind, bool skipC
 }
 
 QT_END_NAMESPACE
-#include <moc_itemviewfindwidget.h>
+#include "moc_itemviewfindwidget.h"

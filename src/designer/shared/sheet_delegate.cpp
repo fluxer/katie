@@ -97,4 +97,4 @@ QSize SheetDelegate::sizeHint(const QStyleOptionViewItem &opt, const QModelIndex
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_sheet_delegate_p.h>
+#include "moc_sheet_delegate_p.h"

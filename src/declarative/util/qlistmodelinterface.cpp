@@ -95,4 +95,4 @@ QT_BEGIN_NAMESPACE
  */
 
 QT_END_NAMESPACE
-#include <moc_qlistmodelinterface_p.h>
+#include "moc_qlistmodelinterface_p.h"

@@ -996,4 +996,4 @@ void QDeclarativeFontValueType::setWordSpacing(qreal size)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativevaluetype_p.h>
+#include "moc_qdeclarativevaluetype_p.h"

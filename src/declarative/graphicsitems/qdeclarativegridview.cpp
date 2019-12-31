@@ -3156,4 +3156,4 @@ QDeclarativeGridViewAttached *QDeclarativeGridView::qmlAttachedProperties(QObjec
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativegridview_p.h>
+#include "moc_qdeclarativegridview_p.h"

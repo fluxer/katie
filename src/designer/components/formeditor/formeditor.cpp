@@ -194,5 +194,5 @@ void FormEditor::slotQrcFileChangedExternally(const QString &path)
 
 QT_END_NAMESPACE
 
-#include <moc_formeditor.h>
+#include "moc_formeditor.h"
 #include <qrc_formeditor.cpp>

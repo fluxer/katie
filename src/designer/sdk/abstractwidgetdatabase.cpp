@@ -347,4 +347,4 @@ bool QDesignerWidgetDataBaseInterface::isCustom(QObject *object, bool resolveNam
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractwidgetdatabase.h>
+#include "moc_abstractwidgetdatabase.h"

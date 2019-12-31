@@ -123,4 +123,4 @@ void ComboBoxTaskMenu::updateSelection()
 }
 
 QT_END_NAMESPACE
-#include <moc_combobox_taskmenu.h>
+#include "moc_combobox_taskmenu.h"

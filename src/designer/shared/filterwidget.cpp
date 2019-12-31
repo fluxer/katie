@@ -242,4 +242,4 @@ void FilterWidget::setRefuseFocus(bool v)
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_filterwidget_p.h>
+#include "moc_filterwidget_p.h"

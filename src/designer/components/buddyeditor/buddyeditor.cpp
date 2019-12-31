@@ -436,4 +436,4 @@ void BuddyEditor::createContextMenu(QMenu &menu)
 }
 
 QT_END_NAMESPACE
-#include <moc_buddyeditor.h>
+#include "moc_buddyeditor.h"

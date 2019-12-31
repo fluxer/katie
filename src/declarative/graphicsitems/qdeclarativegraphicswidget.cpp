@@ -114,4 +114,4 @@ QDeclarativeAnchorLine QDeclarativeGraphicsWidget::verticalCenter() const
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativegraphicswidget_p.h>
+#include "moc_qdeclarativegraphicswidget_p.h"

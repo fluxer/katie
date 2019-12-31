@@ -279,4 +279,4 @@ bool AbstractFindWidget::eventFilter(QObject *object, QEvent *e)
 }
 
 QT_END_NAMESPACE
-#include <moc_abstractfindwidget.h>
+#include "moc_abstractfindwidget.h"

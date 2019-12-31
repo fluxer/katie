@@ -1143,4 +1143,4 @@ double QtGradientStopsWidget::zoom() const
 
 QT_END_NAMESPACE
 
-#include <moc_qtgradientstopswidget.h>
+#include "moc_qtgradientstopswidget.h"

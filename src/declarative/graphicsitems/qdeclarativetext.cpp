@@ -1597,4 +1597,4 @@ void QDeclarativeText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 QT_END_NAMESPACE
 
 #include "moc_qdeclarativetext.cpp"
-#include <moc_qdeclarativetext_p.h>
+#include "moc_qdeclarativetext_p.h"

@@ -865,4 +865,4 @@ bool QDeclarativeAbstractExpression::isValid() const
 QT_END_NAMESPACE
 
 
-#include <moc_qdeclarativeexpression.h>
+#include "moc_qdeclarativeexpression.h"

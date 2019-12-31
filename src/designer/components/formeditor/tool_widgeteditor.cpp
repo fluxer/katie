@@ -353,4 +353,4 @@ void WidgetEditorTool::deactivated()
 }
 
 QT_END_NAMESPACE
-#include <moc_tool_widgeteditor.h>
+#include "moc_tool_widgeteditor.h"

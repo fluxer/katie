@@ -76,4 +76,4 @@ QString LinePropertySheet::propertyGroup(int index) const
 }
 
 QT_END_NAMESPACE
-#include <moc_line_propertysheet.h>
+#include "moc_line_propertysheet.h"

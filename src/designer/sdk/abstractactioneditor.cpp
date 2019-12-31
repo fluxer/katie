@@ -113,4 +113,4 @@ QDesignerFormEditorInterface *QDesignerActionEditorInterface::core() const
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractactioneditor.h>
+#include "moc_abstractactioneditor.h"

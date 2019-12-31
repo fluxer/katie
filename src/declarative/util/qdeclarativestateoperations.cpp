@@ -1572,8 +1572,8 @@ void QDeclarativeAnchorChanges::saveTargetValues()
     d->toHeight = d->target->height();
 }
 
-#include <moc_qdeclarativestateoperations.cpp>
-#include <moc_qdeclarativestateoperations_p.h>
+#include "moc_qdeclarativestateoperations.cpp"
+#include "moc_qdeclarativestateoperations_p.h"
 
 QT_END_NAMESPACE
 

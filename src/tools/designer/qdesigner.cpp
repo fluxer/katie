@@ -258,4 +258,4 @@ void QDesigner::callCreateForm()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner.h>
+#include "moc_qdesigner.h"

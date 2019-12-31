@@ -56,4 +56,4 @@ QScriptDebuggerCodeFinderWidgetInterface::QScriptDebuggerCodeFinderWidgetInterfa
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptdebuggercodefinderwidgetinterface_p.h>
+#include "moc_qscriptdebuggercodefinderwidgetinterface_p.h"

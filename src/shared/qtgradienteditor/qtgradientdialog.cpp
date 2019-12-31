@@ -342,4 +342,4 @@ QGradient QtGradientDialog::getGradient(bool *ok, QWidget *parent, const QString
 
 QT_END_NAMESPACE
 
-#include <moc_qtgradientdialog.h>
+#include "moc_qtgradientdialog.h"

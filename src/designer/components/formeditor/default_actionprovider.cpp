@@ -197,4 +197,4 @@ Qt::Orientation QMenuActionProvider::orientation() const
 }
 
 QT_END_NAMESPACE
-#include <moc_default_actionprovider.h>
+#include "moc_default_actionprovider.h"

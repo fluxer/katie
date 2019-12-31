@@ -56,4 +56,4 @@ QScriptDebugOutputWidgetInterface::QScriptDebugOutputWidgetInterface(
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptdebugoutputwidgetinterface_p.h>
+#include "moc_qscriptdebugoutputwidgetinterface_p.h"

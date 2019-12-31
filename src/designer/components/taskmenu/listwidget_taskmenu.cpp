@@ -107,4 +107,4 @@ void ListWidgetTaskMenu::updateSelection()
 }
 
 QT_END_NAMESPACE
-#include <moc_listwidget_taskmenu.h>
+#include "moc_listwidget_taskmenu.h"

@@ -98,4 +98,4 @@ void QDesignerWidget::paintEvent(QPaintEvent *e)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_widget_p.h>
+#include "moc_qdesigner_widget_p.h"

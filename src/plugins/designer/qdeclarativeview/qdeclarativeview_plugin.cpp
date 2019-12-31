@@ -123,4 +123,4 @@ Q_EXPORT_PLUGIN2(customwidgetplugin, QDeclarativeViewPlugin)
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativeview_plugin.h>
+#include "moc_qdeclarativeview_plugin.h"

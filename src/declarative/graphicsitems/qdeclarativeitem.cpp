@@ -3675,5 +3675,5 @@ qint64 QDeclarativeItemPrivate::restart(QElapsedTimer &t)
 QT_END_NAMESPACE
 
 
-#include <moc_qdeclarativeitem_p.h>
-#include <moc_qdeclarativeitem.h>
+#include "moc_qdeclarativeitem_p.h"
+#include "moc_qdeclarativeitem.h"

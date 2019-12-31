@@ -47,4 +47,4 @@ QDesignerResourceBrowserInterface::~QDesignerResourceBrowserInterface()
 }
 
 QT_END_NAMESPACE
-#include <moc_abstractresourcebrowser.h>
+#include "moc_abstractresourcebrowser.h"

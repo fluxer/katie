@@ -73,4 +73,4 @@ bool QLayoutWidgetPropertySheet::dynamicPropertiesAllowed() const
 }
 
 QT_END_NAMESPACE
-#include <moc_qlayoutwidget_propertysheet.h>
+#include "moc_qlayoutwidget_propertysheet.h"

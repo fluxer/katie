@@ -188,4 +188,4 @@ void HtmlHighlighter::highlightBlock(const QString &text)
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_htmlhighlighter_p.h>
+#include "moc_htmlhighlighter_p.h"

@@ -139,4 +139,4 @@ void PreviewActionGroup::slotTriggered(QAction *a)
 }
 
 QT_END_NAMESPACE
-#include <moc_previewactiongroup.h>
+#include "moc_previewactiongroup.h"

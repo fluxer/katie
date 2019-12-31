@@ -468,4 +468,4 @@ void ItemListEditor::updateEditor()
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_itemlisteditor.h>
+#include "moc_itemlisteditor.h"

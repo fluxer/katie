@@ -2942,5 +2942,5 @@ QDeclarativeScriptActionPrivate::QDeclarativeScriptActionPrivate()
 
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativeanimation_p.h>
-#include <moc_qdeclarativeanimation_p_p.h>
+#include "moc_qdeclarativeanimation_p.h"
+#include "moc_qdeclarativeanimation_p_p.h"

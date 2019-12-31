@@ -63,4 +63,4 @@ QDeclarativeFocusScope::~QDeclarativeFocusScope()
 {
 }
 QT_END_NAMESPACE
-#include <moc_qdeclarativefocusscope_p.h>
+#include "moc_qdeclarativefocusscope_p.h"

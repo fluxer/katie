@@ -189,4 +189,4 @@ void QMainWindowContainer::remove(int index)
 }
 
 QT_END_NAMESPACE
-#include <moc_qmainwindow_container.h>
+#include "moc_qmainwindow_container.h"

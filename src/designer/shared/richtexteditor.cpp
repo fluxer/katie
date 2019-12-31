@@ -892,4 +892,4 @@ void RichTextEditorDialog::sourceChanged()
 QT_END_NAMESPACE
 
 #include "moc_richtexteditor.cpp"
-#include <moc_richtexteditor_p.h>
+#include "moc_richtexteditor_p.h"

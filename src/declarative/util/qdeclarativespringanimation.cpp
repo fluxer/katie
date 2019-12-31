@@ -452,4 +452,4 @@ QAbstractAnimation *QDeclarativeSpringAnimation::qtAnimation()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativespringanimation_p.h>
+#include "moc_qdeclarativespringanimation_p.h"

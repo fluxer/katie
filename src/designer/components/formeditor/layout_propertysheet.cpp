@@ -536,4 +536,4 @@ void LayoutPropertySheet::markChangedStretchProperties(QDesignerFormEditorInterf
 }
 
 QT_END_NAMESPACE
-#include <moc_layout_propertysheet.h>
+#include "moc_layout_propertysheet.h"

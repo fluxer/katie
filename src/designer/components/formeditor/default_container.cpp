@@ -163,4 +163,4 @@ QDockWidgetContainer::QDockWidgetContainer(QDockWidget *widget, QObject *parent)
 }
 
 QT_END_NAMESPACE
-#include <moc_default_container.h>
+#include "moc_default_container.h"

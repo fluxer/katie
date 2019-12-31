@@ -1361,4 +1361,4 @@ void QDeclarativeFlow::reportConflictingAnchors()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativepositioners_p.h>
+#include "moc_qdeclarativepositioners_p.h"

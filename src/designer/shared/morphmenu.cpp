@@ -632,4 +632,4 @@ bool MorphMenu::populateMenu(QWidget *w, QDesignerFormWindowInterface *fw)
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_morphmenu_p.h>
+#include "moc_morphmenu_p.h"

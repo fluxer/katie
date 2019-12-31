@@ -107,4 +107,4 @@ void PreferencesDialog::closeOptionPages()
 }
 
 QT_END_NAMESPACE
-#include <moc_preferencesdialog.h>
+#include "moc_preferencesdialog.h"

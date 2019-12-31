@@ -102,4 +102,4 @@ QSizeF QDeclarativeLayoutItem::sizeHint(Qt::SizeHint w, const QSizeF &constraint
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativelayoutitem_p.h>
+#include "moc_qdeclarativelayoutitem_p.h"

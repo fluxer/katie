@@ -193,4 +193,4 @@ void  PluginDialog::updateCustomWidgetPlugins()
 }
 
 QT_END_NAMESPACE
-#include <moc_plugindialog_p.h>
+#include "moc_plugindialog_p.h"

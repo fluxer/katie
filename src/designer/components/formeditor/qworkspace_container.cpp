@@ -90,4 +90,4 @@ void QWorkspaceContainer::remove(int /* index */)
 }
 
 QT_END_NAMESPACE
-#include <moc_qworkspace_container.h>
+#include "moc_qworkspace_container.h"

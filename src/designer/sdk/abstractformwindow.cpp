@@ -804,4 +804,4 @@ QDesignerFormWindowInterface *QDesignerFormWindowInterface::findFormWindow(QObje
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractformwindow.h>
+#include "moc_abstractformwindow.h"

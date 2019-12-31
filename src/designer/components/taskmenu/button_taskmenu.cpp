@@ -699,4 +699,4 @@ CommandLinkButtonTaskMenu::CommandLinkButtonTaskMenu(QCommandLinkButton *button,
 }
 
 QT_END_NAMESPACE
-#include <moc_button_taskmenu.h>
+#include "moc_button_taskmenu.h"

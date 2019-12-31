@@ -95,4 +95,4 @@ QAction *GroupBoxTaskMenu::preferredEditAction() const
 
 }
 QT_END_NAMESPACE
-#include <moc_groupbox_taskmenu.h>
+#include "moc_groupbox_taskmenu.h"

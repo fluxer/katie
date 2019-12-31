@@ -3638,4 +3638,4 @@ QDeclarativeListViewAttached *QDeclarativeListView::qmlAttachedProperties(QObjec
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativelistview_p.h>
+#include "moc_qdeclarativelistview_p.h"

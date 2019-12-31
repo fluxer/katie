@@ -107,4 +107,4 @@ void LabelTaskMenu::editRichText()
 
 }
 QT_END_NAMESPACE
-#include <moc_label_taskmenu.h>
+#include "moc_label_taskmenu.h"

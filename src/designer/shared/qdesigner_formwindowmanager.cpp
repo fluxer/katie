@@ -157,4 +157,4 @@ void QDesignerFormWindowManager::aboutPlugins()
 
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_formwindowmanager_p.h>
+#include "moc_qdesigner_formwindowmanager_p.h"

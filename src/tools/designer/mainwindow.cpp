@@ -407,4 +407,4 @@ void DockedMainWindow::saveSettings(QDesignerSettings &s) const
 }
 
 QT_END_NAMESPACE
-#include <moc_mainwindow.h>
+#include "moc_mainwindow.h"

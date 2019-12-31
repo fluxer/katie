@@ -97,4 +97,4 @@ namespace qdesigner_internal {
 
 QT_END_NAMESPACE
 
-#include <moc_menutaskmenu.h>
+#include "moc_menutaskmenu.h"

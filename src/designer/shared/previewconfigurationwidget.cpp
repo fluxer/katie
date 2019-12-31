@@ -167,4 +167,4 @@ void PreviewConfigurationWidget::slotEditAppStyleSheet()
 }
 
 QT_END_NAMESPACE
-#include <moc_previewconfigurationwidget_p.h>
+#include "moc_previewconfigurationwidget_p.h"

@@ -286,4 +286,4 @@ QVariant QDeclarativePropertyMap::operator[](const QString &key) const
 */
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativepropertymap.h>
+#include "moc_qdeclarativepropertymap.h"

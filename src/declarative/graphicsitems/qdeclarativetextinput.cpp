@@ -1858,4 +1858,4 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_LINEEDIT
 
-#include <moc_qdeclarativetextinput_p.h>
+#include "moc_qdeclarativetextinput_p.h"

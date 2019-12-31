@@ -518,5 +518,5 @@ void SignalSlotEditor::addEmptyConnection()
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_signalsloteditor_p.h>
-#include <moc_signalsloteditor.h>
+#include "moc_signalsloteditor_p.h"
+#include "moc_signalsloteditor.h"

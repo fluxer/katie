@@ -722,4 +722,4 @@ void QDeclarativeStateOperation::setState(QDeclarativeState *state)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativestate_p.h>
+#include "moc_qdeclarativestate_p.h"

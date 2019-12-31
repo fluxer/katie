@@ -659,4 +659,4 @@ void QDeclarativeView::paintEvent(QPaintEvent *event)
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativeview.h>
+#include "moc_qdeclarativeview.h"

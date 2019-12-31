@@ -962,4 +962,4 @@ void QDesignerMenuBar::updateCurrentAction(bool selectAction)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_menubar_p.h>
+#include "moc_qdesigner_menubar_p.h"

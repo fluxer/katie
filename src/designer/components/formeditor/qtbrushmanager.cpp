@@ -125,4 +125,4 @@ QPixmap QtBrushManager::brushPixmap(const QBrush &brush) const
 }  // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_qtbrushmanager.h>
+#include "moc_qtbrushmanager.h"

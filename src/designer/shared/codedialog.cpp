@@ -252,4 +252,4 @@ void CodeDialog::copyAll()
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_codedialog_p.h>
+#include "moc_codedialog_p.h"

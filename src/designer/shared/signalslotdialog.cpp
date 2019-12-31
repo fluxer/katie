@@ -516,4 +516,4 @@ bool SignalSlotDialog::editPromotedClass(QDesignerFormEditorInterface *core, con
 }
 
 QT_END_NAMESPACE
-#include <moc_signalslotdialog_p.h>
+#include "moc_signalslotdialog_p.h"

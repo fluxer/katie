@@ -70,4 +70,4 @@ QObjectList Selection::selection() const
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_objectinspector_p.h>
+#include "moc_qdesigner_objectinspector_p.h"

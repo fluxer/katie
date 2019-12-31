@@ -111,4 +111,4 @@ namespace qdesigner_internal {
 }
 
 QT_END_NAMESPACE
-#include <moc_inplace_widget_helper.h>
+#include "moc_inplace_widget_helper.h"

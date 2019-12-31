@@ -604,4 +604,4 @@ QDeclarativePinch *QDeclarativePinchArea::pinch()
 
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativepincharea_p.h>
+#include "moc_qdeclarativepincharea_p.h"

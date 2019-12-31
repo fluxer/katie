@@ -279,4 +279,4 @@ void QDesignerFormWindow::geometryChanged()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_formwindow.h>
+#include "moc_qdesigner_formwindow.h"

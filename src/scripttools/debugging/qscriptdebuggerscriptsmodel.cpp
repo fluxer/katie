@@ -325,4 +325,4 @@ QVariant QScriptDebuggerScriptsModel::data(const QModelIndex &index, int role) c
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptdebuggerscriptsmodel_p.h>
+#include "moc_qscriptdebuggerscriptsmodel_p.h"

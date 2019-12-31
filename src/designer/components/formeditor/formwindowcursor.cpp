@@ -201,4 +201,4 @@ void FormWindowCursor::resetWidgetProperty(QWidget *widget, const QString &name)
 }
 
 QT_END_NAMESPACE
-#include <moc_formwindowcursor.h>
+#include "moc_formwindowcursor.h"

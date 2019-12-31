@@ -49,4 +49,4 @@ PreviewWidget::~PreviewWidget()
 
 
 QT_END_NAMESPACE
-#include <moc_previewwidget.h>
+#include "moc_previewwidget.h"

@@ -1601,4 +1601,4 @@ void QDesignerAbstractPropertySheetFactory::objectDestroyed(QObject *object)
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_propertysheet_p.h>
+#include "moc_qdesigner_propertysheet_p.h"

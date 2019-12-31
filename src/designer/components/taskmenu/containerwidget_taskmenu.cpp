@@ -338,4 +338,4 @@ QObject *ContainerWidgetTaskMenuFactory::createExtension(QObject *object, const 
 
 }
 QT_END_NAMESPACE
-#include <moc_containerwidget_taskmenu.h>
+#include "moc_containerwidget_taskmenu.h"

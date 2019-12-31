@@ -171,4 +171,4 @@ DomUI *QDesignerWidgetBox::xmlToUi(const QString &name, const QString &xml, bool
 }  // namespace qdesigner_internal
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_widgetbox_p.h>
+#include "moc_qdesigner_widgetbox_p.h"

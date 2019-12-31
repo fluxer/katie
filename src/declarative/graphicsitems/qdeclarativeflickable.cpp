@@ -1791,6 +1791,6 @@ void QDeclarativeFlickablePrivate::updateVelocity()
 
 QT_END_NAMESPACE
 
-#include <moc_qdeclarativeflickable_p.h>
-#include <moc_qdeclarativeflickable_p_p.h>
+#include "moc_qdeclarativeflickable_p.h"
+#include "moc_qdeclarativeflickable_p_p.h"
 

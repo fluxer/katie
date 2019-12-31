@@ -244,4 +244,4 @@ void QDeclarativeFlipablePrivate::setBackTransform()
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativeflipable_p.h>
+#include "moc_qdeclarativeflipable_p.h"

@@ -56,4 +56,4 @@ QScriptBreakpointsWidgetInterface::QScriptBreakpointsWidgetInterface(
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptbreakpointswidgetinterface_p.h>
+#include "moc_qscriptbreakpointswidgetinterface_p.h"

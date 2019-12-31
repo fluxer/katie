@@ -1027,5 +1027,5 @@ QDeclarativeComponentAttached *QDeclarativeComponent::qmlAttachedProperties(QObj
 }
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativecomponent.h>
-#include <moc_qdeclarativecomponent_p.h>
+#include "moc_qdeclarativecomponent.h"
+#include "moc_qdeclarativecomponent_p.h"

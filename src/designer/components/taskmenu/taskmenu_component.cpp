@@ -96,4 +96,4 @@ QDesignerFormEditorInterface *TaskMenuComponent::core() const
 }
 QT_END_NAMESPACE
 
-#include <moc_taskmenu_component.h>
+#include "moc_taskmenu_component.h"

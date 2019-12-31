@@ -425,4 +425,4 @@ QDesignerToolWindow *QDesignerToolWindow::createStandardToolWindow(StandardToolW
 
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_toolwindow.h>
+#include "moc_qdesigner_toolwindow.h"

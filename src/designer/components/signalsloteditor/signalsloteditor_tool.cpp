@@ -113,4 +113,4 @@ void SignalSlotEditorTool::loadFromDom(DomUI *ui, QWidget *mainContainer)
 }
 
 QT_END_NAMESPACE
-#include <moc_signalsloteditor_tool.h>
+#include "moc_signalsloteditor_tool.h"

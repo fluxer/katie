@@ -128,4 +128,4 @@ ListContents ListWidgetEditor::contents() const
 }
 
 QT_END_NAMESPACE
-#include <moc_listwidgeteditor.h>
+#include "moc_listwidgeteditor.h"

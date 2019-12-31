@@ -330,4 +330,4 @@ int QDesignerWidgetBoxInterface::findOrInsertCategory(const QString &categoryNam
 */
 
 QT_END_NAMESPACE
-#include <moc_abstractwidgetbox.h>
+#include "moc_abstractwidgetbox.h"

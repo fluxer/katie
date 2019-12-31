@@ -191,4 +191,4 @@ QDeclarativePackageAttached *QDeclarativePackage::qmlAttachedProperties(QObject 
 
 
 QT_END_NAMESPACE
-#include <moc_qdeclarativepackage_p.h>
+#include "moc_qdeclarativepackage_p.h"

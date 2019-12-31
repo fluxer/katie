@@ -100,4 +100,4 @@ QString QScriptCompletionTaskInterface::appendix() const
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptcompletiontaskinterface_p.h>
+#include "moc_qscriptcompletiontaskinterface_p.h"

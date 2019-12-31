@@ -260,4 +260,4 @@ bool ItemViewPropertySheet::reset(int index)
 }
 
 QT_END_NAMESPACE
-#include <moc_itemview_propertysheet.h>
+#include "moc_itemview_propertysheet.h"

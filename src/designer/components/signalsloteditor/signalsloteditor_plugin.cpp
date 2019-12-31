@@ -123,4 +123,4 @@ void SignalSlotEditorPlugin::activeFormWindowChanged(QDesignerFormWindowInterfac
 }
 
 QT_END_NAMESPACE
-#include <moc_signalsloteditor_plugin.h>
+#include "moc_signalsloteditor_plugin.h"

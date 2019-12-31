@@ -130,4 +130,4 @@ QMainWindow *QDesignerDockWidget::findMainWindow() const
 }
 
 QT_END_NAMESPACE
-#include <moc_qdesigner_dockwidget_p.h>
+#include "moc_qdesigner_dockwidget_p.h"
