@@ -75,6 +75,13 @@ set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 # this one is set via macro later, if possible. also used in config.cpp.cmake
 set(KATIE_GIT "unstable-${KATIE_VERSION}")
 
+# only for the build process
+if(CMAKE_SYSTEM_PROCESSOR)
+    string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" KATIE_PROCESSOR)
+elseif(CMAKE_HOST_SYSTEM_PROCESSOR)
+    string(TOLOWER "${CMAKE_HOST_SYSTEM_PROCESSOR}" KATIE_PROCESSOR)
+endif()
+
 # components and tools that will be build, changed depending on the requirements availability
 # NOTE: excluding DesignerComponents as it was never used as public component, currently only
 # used by the the designer tool. if it is ever needed for something it can just be added here
@@ -931,13 +938,13 @@ configure_file(
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
-    ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+    ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.conf
     @ONLY
 )
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/profile.sh.cmake
-    ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
+    ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.sh
     @ONLY
 )
 
@@ -974,13 +981,13 @@ install(
 )
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.conf
     DESTINATION ${KATIE_LDCONF_RELATIVE}
     COMPONENT Runtime
 )
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
+    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.sh
     DESTINATION ${KATIE_PROFILE_RELATIVE}
     COMPONENT Runtime
 )
