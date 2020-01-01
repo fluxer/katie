@@ -73,7 +73,8 @@ void QMapData::continueFreeData(int offset)
         cur = cur->forward[0];
         ::free(reinterpret_cast<char *>(prev) - offset);
     }
-    delete this;
+    if (this != &shared_null)
+        delete this;
 }
 
 /*!
