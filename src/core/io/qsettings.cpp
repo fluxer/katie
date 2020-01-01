@@ -78,8 +78,10 @@ static bool json_settings_read(QIODevice &device, QSettings::SettingsMap &map)
         return false;
     }
 
-    QJsonDocument jsondoc = QJsonDocument::fromJson(data);
+    QJsonParseError error;
+    QJsonDocument jsondoc = QJsonDocument::fromJson(data, &error);
     if (Q_UNLIKELY(jsondoc.isNull())) {
+        qWarning("json_settings_read: %s", error.errorString().toUtf8().constData());
         return false;
     }
 
