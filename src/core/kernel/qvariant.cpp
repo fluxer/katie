@@ -72,6 +72,8 @@ QT_BEGIN_NAMESPACE
 #  define FLT_DIG 6
 #endif
 
+static const QLatin1String qStringListDelim = QLatin1String(",");
+
 static void construct(QVariant::Private *x, const void *copy)
 {
     x->is_shared = false;
@@ -741,11 +743,8 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
             *str = QString::fromAscii(v_cast<QByteArray>(d)->constData());
             return true;
         case QVariant::StringList:
-            if (v_cast<QStringList>(d)->count() == 1) {
-                *str = v_cast<QStringList>(d)->at(0);
-                return true;
-            }
-            return false;
+            *str = v_cast<QStringList>(d)->join(qStringListDelim);
+            return true;
 #ifndef QT_BOOTSTRAPPED
         case QVariant::Url:
             *str = v_cast<QUrl>(d)->toString();
@@ -834,7 +833,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         }
         case QVariant::String: {
             QStringList *slst = static_cast<QStringList *>(result);
-            *slst = QStringList(*v_cast<QString>(d));
+            *slst = v_cast<QString>(d)->split(qStringListDelim);
             return true;
         }
         default:
@@ -2899,7 +2898,7 @@ bool QVariant::canConvert(Type t) const
         case QVariant::Color:
             return true;
         case QVariant::StringList:
-            return v_cast<QStringList>(&d)->count() == 1;
+            return v_cast<QStringList>(&d)->size() >= 1;
         default:
             return false;
         }

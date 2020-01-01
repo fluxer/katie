@@ -2739,10 +2739,10 @@ void tst_QVariant::canConvertQStringList_data() const
     QStringList l;
     l << "a" << "b";
 
-    QTest::newRow("Two items") << false << l << QString();
+    QTest::newRow("Two items") << true << l << QString("a,b");
 
-    l << "c";
-    QTest::newRow("Three items") << false << l << QString();
+    l << " c";
+    QTest::newRow("Three items") << true << l << QString("a,b, c");
 }
 
 template<typename T> void convertMetaType()

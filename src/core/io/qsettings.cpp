@@ -463,8 +463,6 @@ QVariant QSettingsPrivate::stringToVariant(const QString &s)
         }
         if (s.startsWith(QLatin1String("@@")))
             return QVariant(s.mid(1));
-    } else if (s.contains(QLatin1Char(','))) {
-        return QVariant(s.split(QLatin1Char(',')));
     }
 
     return QVariant(s);
