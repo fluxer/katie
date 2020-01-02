@@ -6,7 +6,6 @@ set(EXTRA_DECLARATIVE_LIBS
 )
 
 set(DECLARATIVE_PUBLIC_HEADERS
-    QDeclarativeAttachedPropertiesFunc
     QDeclarativeComponent
     QDeclarativeContext
     QDeclarativeEngine
@@ -17,16 +16,13 @@ set(DECLARATIVE_PUBLIC_HEADERS
     QDeclarativeImageProvider
     QDeclarativeInfo
     QDeclarativeItem
-    QDeclarativeListReference
     QDeclarativeNetworkAccessManagerFactory
     QDeclarativeParserStatus
-    QDeclarativeProperties
     QDeclarativeProperty
     QDeclarativePropertyMap
     QDeclarativePropertyValueInterceptor
     QDeclarativePropertyValueSource
     QDeclarativeScriptString
-    QDeclarativeTypeInfo
     QDeclarativeView
 )
 

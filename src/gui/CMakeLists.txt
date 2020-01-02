@@ -32,20 +32,17 @@ set(GUI_PUBLIC_HEADERS
     QAccessibleObject
     QAccessiblePlugin
     QAccessibleWidget
-    QAccessibleWidgetEx
     QAction
     QActionGroup
     QApplication
     QBitmap
     QBoxLayout
     QBrush
-    QBrushData
     QButtonGroup
     QCalendarWidget
     QCheckBox
     QCleanlooksStyle
     QClipboard
-    QClipboardEvent
     QColor
     QColorDialog
     QColormap
@@ -65,7 +62,6 @@ set(GUI_PUBLIC_HEADERS
     QDirModel
     QDockWidget
     QDrag
-    QDragResponseEvent
     QErrorMessage
     QFileDialog
     QFileIconProvider
@@ -82,12 +78,7 @@ set(GUI_PUBLIC_HEADERS
     QGenericMatrix
     QGesture
     QGestureRecognizer
-    QGradientStop
-    QGradientStops
-    QGraphicsAnchor
     QGraphicsAnchorLayout
-    QGraphicsBlurEffect
-    QGraphicsColorizeEffect
     QGraphicsEffect
     QGraphicsGridLayout
     QGraphicsItem
@@ -125,15 +116,6 @@ set(GUI_PUBLIC_HEADERS
     QListWidget
     QMainWindow
     QMatrix
-    QMatrix2x2
-    QMatrix2x3
-    QMatrix2x4
-    QMatrix3x2
-    QMatrix3x3
-    QMatrix3x4
-    QMatrix4x2
-    QMatrix4x3
-    QMatrix4x4
     QMdiArea
     QMdiSubWindow
     QMenu
@@ -143,12 +125,9 @@ set(GUI_PUBLIC_HEADERS
     QPageSetupDialog
     QPaintDevice
     QPaintEngine
-    QPaintEngineState
     QPainter
     QPainterPath
-    QPainterPathPrivate
     QPalette
-    QPanGesture
     QPen
     QPixmap
     QPixmapCache
@@ -184,35 +163,22 @@ set(GUI_PUBLIC_HEADERS
     QSplitter
     QStackedLayout
     QStackedWidget
-    QStandardItemEditorCreator
     QStandardItemModel
     QStaticText
     QStatusBar
-    QStatusTipEvent
     QStringListModel
     QStyle
     QStyledItemDelegate
     QStyleFactory
-    QStyleFactoryInterface
-    QStyleHintReturn
-    QStyleHintReturnVariant
     QStyleOption
-    QStyleOptionSizeGrip
-    QStyleOptionToolBox
-    QStyleOptionToolBoxV2
     QStylePainter
     QStylePlugin
-    QSwipeGesture
     QSyntaxHighlighter
     QSystemTrayIcon
     QTabBar
     QTableView
     QTableWidget
-    QTableWidgetSelectionRange
     QTabWidget
-    QTapAndHoldGesture
-    QTapGesture
-    QTextBlockGroup
     QTextBrowser
     QTextCursor
     QTextDocument
@@ -220,19 +186,11 @@ set(GUI_PUBLIC_HEADERS
     QTextDocumentWriter
     QTextEdit
     QTextFormat
-    QTextFragment
-    QTextFrameFormat
-    QTextFrameLayoutData
-    QTextImageFormat
-    QTextInlineObject
-    QTextItem
     QTextLayout
     QTextList
     QTextObject
-    QTextObjectInterface
     QTextOption
     QTextTable
-    QTileRules
     QToolBar
     QToolBox
     QToolButton
@@ -244,21 +202,14 @@ set(GUI_PUBLIC_HEADERS
     QUndoGroup
     QUndoStack
     QUndoView
-    QUnixPrintWidget
-    QUpdateLaterEvent
     QValidator
     QVector2D
     QVector3D
     QVector4D
     QWhatsThis
-    QWhatsThisClickedEvent
     QWidget
     QMessageBox
     QWidgetAction
-    QWidgetData
-    QWidgetItemV2
-    QWidgetMapper
-    QWidgetSet
     QWindowsStyle
     QWizard
     QWorkspace

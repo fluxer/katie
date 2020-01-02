@@ -13,8 +13,6 @@ set(NETWORK_PUBLIC_HEADERS
     QHostAddress
     QHostInfo
     QHttp
-    Q_IPV6ADDR
-    QIPv6Address
     QLocalServer
     QLocalSocket
     QNetworkAccessManager
