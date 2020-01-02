@@ -421,10 +421,6 @@ QT_USE_NAMESPACE
 # define Q_NULLPTR NULL
 #endif
 
-#ifndef Q_PACKED
-#  define Q_PACKED
-#endif
-
 #ifndef Q_CONSTRUCTOR_FUNCTION
 # define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
    static const int AFUNC ## __init_variable__ = AFUNC();
