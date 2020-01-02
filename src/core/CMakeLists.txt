@@ -47,22 +47,16 @@ set(CORE_PUBLIC_HEADERS
     QLine
     QIODevice
     QPair
-    QFutureWatcherBase
     QPoint
     QByteArray
-    QHashData
     QSharedData
     QPointer
-    QSetIterator
     QtConcurrentRun
     QSignalMapper
     QEventLoop
-    QHashNode
     QDataStream
-    QAbstractFileEngineIterator
     QScopedValueRollback
     QUuid
-    QStdWString
     QAbstractItemModel
     QTextBoundaryFinder
     QTimer
@@ -71,51 +65,29 @@ set(CORE_PUBLIC_HEADERS
     QFutureWatcher
     QVector
     QLibraryInfo
-    QTextStreamFunction
     QLinkedList
-    QEvent
-    QVectorIterator
-    QObjectData
-    QTextEncoder
     QSemaphore
     QFutureSynchronizer
-    QNoDebug
-    QListData
-    QTextCodecFactoryInterface
     QStack
-    QScopedPointerPodDeleter
     QTemporaryFile
     QQueue
     QMutex
     QMargins
     QByteArrayMatcher
     QDirIterator
-    QtMsgHandler
     QSharedMemory
     QReadWriteLock
     QFileSystemWatcher
-    QContiguousCacheTypedData
-    QtCleanUpFunction
     QSharedPointer
-    QInternal
     QSize
     QRect
     QCoreApplication
     QRegExp
     QMetaObject
-    QMapData
-    QStringRef
-    QGlobalStaticDeleter
-    QMetaTypeId
-    QMapNode
-    QLinkedListData
     QDir
     QObject
     QFactoryInterface
     QString
-    QScopedPointerArrayDeleter
-    QReturnArgument
-    QMetaObjectAccessor
     QLocale
     QMetaType
     QVariant
@@ -125,16 +97,10 @@ set(CORE_PUBLIC_HEADERS
     QAbstractEventDispatcher
     QResource
     QRunnable
-    QGenericReturnArgument
     QTimeLine
-    QMutableFutureIterator
-    QtPluginInstanceFunction
     QTextCodec
     QStringList
     QEasingCurve
-    QSystemLocale
-    QVectorTypedData
-    QMapPayloadNode
     QBasicTimer
     QThread
     QSocketNotifier

@@ -7,10 +7,7 @@ set(EXTRA_DESIGNER_LIBS
 )
 
 set(DESIGNER_PUBLIC_HEADERS
-    QAbstractExtensionFactory
-    QAbstractExtensionManager
     QExtensionManager
-    QFormBuilder
 )
 
 include_directories(
