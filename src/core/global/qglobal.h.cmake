@@ -317,20 +317,9 @@ QT_USE_NAMESPACE
 /*
  * C++11 support
  *
- *  Paper           Macro                               SD-6 macro
- *  N2541           Q_COMPILER_AUTO_FUNCTION
- *  N1984 N2546     Q_COMPILER_AUTO_TYPE
- *  N2437           Q_COMPILER_CLASS_ENUM
- *  N2235           Q_COMPILER_CONSTEXPR                __cpp_constexpr = 200704
- *  N2343 N3276     Q_COMPILER_DECLTYPE                 __cpp_decltype = 200707
- *  N2346           Q_COMPILER_DEFAULT_DELETE_MEMBERS
- *  N1987           Q_COMPILER_EXTERN_TEMPLATES
- *  N2672           Q_COMPILER_INITIALIZER_LISTS
- *  N2658 N2927     Q_COMPILER_LAMBDA                   __cpp_lambdas = 200907
+ *  Paper             Macro                             SD-6 macro
+ *  N2672             Q_COMPILER_INITIALIZER_LISTS
  *  N2118 N2844 N3053 Q_COMPILER_RVALUE_REFS            __cpp_rvalue_references = 200610
- *  N2442           Q_COMPILER_UNICODE_STRINGS          __cpp_unicode_literals = 200710
- *  N2242 N2555     Q_COMPILER_VARIADIC_TEMPLATES       __cpp_variadic_templates = 200704
- *  N2431           Q_COMPILER_NULLPTR
  *
  * For any future version of the C++ standard, we use only the SD-6 macro.
  * For full listing, see
@@ -342,21 +331,9 @@ QT_USE_NAMESPACE
 #  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
      /* C++0x features supported in GCC 4.3: */
 #    define Q_COMPILER_RVALUE_REFS
-#    define Q_COMPILER_DECLTYPE
      /* C++0x features supported in GCC 4.4: */
-#    define Q_COMPILER_VARIADIC_TEMPLATES
-#    define Q_COMPILER_AUTO_FUNCTION
-#    define Q_COMPILER_AUTO_TYPE
-#    define Q_COMPILER_EXTERN_TEMPLATES
-#    define Q_COMPILER_DEFAULT_DELETE_MEMBERS
-#    define Q_COMPILER_CLASS_ENUM
 #    define Q_COMPILER_INITIALIZER_LISTS
-#    /* C++0x features supported in GCC 4.5: */
-#    define Q_COMPILER_LAMBDA
-#    define Q_COMPILER_UNICODE_STRINGS
 #    /* C++0x features supported in GCC 4.6: */
-#    define Q_COMPILER_CONSTEXPR
-#    define Q_COMPILER_NULLPTR
 #    ifdef __EXCEPTIONS
 #      define Q_COMPILER_EXCEPTIONS
 #    endif
@@ -365,46 +342,14 @@ QT_USE_NAMESPACE
 #elif defined(Q_CC_CLANG)
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
     /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
-#    if __has_feature(cxx_auto_type)
-#      define Q_COMPILER_AUTO_FUNCTION
-#      define Q_COMPILER_AUTO_TYPE
-#    endif
-#    if __has_feature(cxx_constexpr)
-#      define Q_COMPILER_CONSTEXPR
-#    endif
-#    if __has_feature(cxx_decltype) /* && __has_feature(cxx_decltype_incomplete_return_types) */
-#      define Q_COMPILER_DECLTYPE
-#    endif
-#    if __has_feature(cxx_defaulted_functions) && __has_feature(cxx_deleted_functions)
-#      define Q_COMPILER_DEFAULT_DELETE_MEMBERS
-#    endif
 #    if __has_feature(cxx_generalized_initializers)
 #      define Q_COMPILER_INITIALIZER_LISTS
-#    endif
-#    if __has_feature(cxx_lambdas)
-#      define Q_COMPILER_LAMBDA
 #    endif
 #    if __has_feature(cxx_rvalue_references)
 #      define Q_COMPILER_RVALUE_REFS
 #    endif
-#    if __has_feature(cxx_strong_enums)
-#      define Q_COMPILER_CLASS_ENUM
-#    endif
-#    if __has_feature(cxx_unicode_literals)
-#      define Q_COMPILER_UNICODE_STRINGS
-#    endif
-#    if __has_feature(cxx_variadic_templates)
-#      define Q_COMPILER_VARIADIC_TEMPLATES
-#    endif
-#    if __has_feature(cxx_nullptr)
-#      define Q_COMPILER_NULLPTR
-#    endif
 #    if __has_feature(cxx_exceptions)
 #      define Q_COMPILER_EXCEPTIONS
-#    endif
-    /* Features that have no __has_feature() check */
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 209 /* since clang 2.9 */
-#      define Q_COMPILER_EXTERN_TEMPLATES
 #    endif
 #  endif
 #endif
@@ -412,18 +357,8 @@ QT_USE_NAMESPACE
 #define Q_OUTOFLINE_TEMPLATE
 #define Q_INLINE_TEMPLATE inline
 #define Q_TYPENAME typename
-
-#ifdef Q_COMPILER_CONSTEXPR
-# define Q_DECL_CONSTEXPR constexpr
-#else
-# define Q_DECL_CONSTEXPR
-#endif
-
-#ifdef Q_COMPILER_NULLPTR
-# define Q_NULLPTR nullptr
-#else
-# define Q_NULLPTR NULL
-#endif
+#define Q_NULLPTR nullptr
+#define Q_DECL_CONSTEXPR constexpr
 
 #ifndef Q_CONSTRUCTOR_FUNCTION
 # define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
