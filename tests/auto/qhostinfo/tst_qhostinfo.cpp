@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -93,7 +93,6 @@ protected slots:
     void resultsReady(const QHostInfo &);
 
 private:
-    bool ipv6LookupsAvailable;
     bool ipv6Available;
     bool lookupDone;
     int lookupsDoneCounter;
@@ -161,7 +160,6 @@ void tst_QHostInfo::initTestCase()
 #endif
 
     ipv6Available = QtNetworkSettings::supportsIPv6();
-    ipv6LookupsAvailable = QtNetworkSettings::systemSupportsIPv6();
 
     // run each testcase with and without test enabled
     QTest::addColumn<bool>("cache");
@@ -253,7 +251,7 @@ void tst_QHostInfo::lookupIPv6()
     QFETCH(int, err);
     QFETCH(QString, addresses);
 
-    if (!ipv6LookupsAvailable)
+    if (!ipv6Available)
         QSKIP("This platform does not support IPv6 lookups", SkipAll);
 
     lookupDone = false;
@@ -296,7 +294,7 @@ void tst_QHostInfo::reverseLookup()
     QFETCH(QStringList, hostNames);
     QFETCH(int, err);
 
-    if (!ipv6LookupsAvailable && hostNames.contains("classical.hexago.com")) {
+    if (!ipv6Available && hostNames.contains("classical.hexago.com")) {
         QSKIP("IPv6 lookups are not supported on this platform", SkipSingle);
     }
 #if defined(Q_OS_HPUX) && defined(QT_ARCH_IA64)
@@ -319,7 +317,7 @@ void tst_QHostInfo::reverseLookup()
 void tst_QHostInfo::blockingLookup_data()
 {
     lookupIPv4_data();
-    if (ipv6LookupsAvailable)
+    if (ipv6Available)
         lookupIPv6_data();
 }
 

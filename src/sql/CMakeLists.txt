@@ -26,8 +26,43 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtSql
 )
 
-include(kernel/kernel.cmake)
-include(models/models.cmake)
+set(SQL_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsql.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlquery.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqldatabase.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlfield.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlrecord.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqldriver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlnulldriver_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqldriverplugin.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlerror.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlresult.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlcachedresult_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlindex.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlquerymodel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlquerymodel_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqltablemodel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqltablemodel_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlrelationaldelegate.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlrelationaltablemodel.h
+)
+
+set(SQL_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlquery.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqldatabase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlfield.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlrecord.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqldriver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqldriverplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlerror.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlresult.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlindex.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsqlcachedresult.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlquerymodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqltablemodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlrelationaldelegate.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlrelationaltablemodel.cpp
+)
 
 katie_generate_misc("${SQL_HEADERS}" QtSql)
 katie_generate_public("${SQL_PUBLIC_HEADERS}" QtSql)

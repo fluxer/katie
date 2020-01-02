@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -841,7 +841,7 @@ QString::QString(const QChar *unicode, int size)
         d = &shared_empty;
         d->ref.ref();
     } else {
-        d = (Data*) malloc(sizeof(Data)+size*sizeof(QChar));
+        d = static_cast<Data*>(::malloc(sizeof(Data)+size*sizeof(QChar)));
         Q_CHECK_PTR(d);
         d->ref = 1;
         d->alloc = d->size = size;
@@ -864,7 +864,7 @@ QString::QString(const int size, const QChar ch)
         d = &shared_empty;
         d->ref.ref();
     } else {
-        d = (Data*) malloc(sizeof(Data)+size*sizeof(QChar));
+        d = static_cast<Data*>(::malloc(sizeof(Data)+size*sizeof(QChar)));
         Q_CHECK_PTR(d);
         d->ref = 1;
         d->alloc = d->size = size;
@@ -887,7 +887,7 @@ QString::QString(const int size, const QChar ch)
 */
 QString::QString(int size, Qt::Initialization)
 {
-    d = (Data*) ::malloc(sizeof(Data)+size*sizeof(QChar));
+    d = static_cast<Data*>(::malloc(sizeof(Data)+size*sizeof(QChar)));
     Q_CHECK_PTR(d);
     d->ref = 1;
     d->alloc = d->size = size;
@@ -908,9 +908,8 @@ QString::QString(int size, Qt::Initialization)
 */
 QString::QString(const QChar ch)
 {
-    void *buf = ::malloc(sizeof(Data) + sizeof(QChar));
-    Q_CHECK_PTR(buf);
-    d = reinterpret_cast<Data *>(buf);
+    d = static_cast<Data*>(::malloc(sizeof(Data) + sizeof(QChar)));
+    Q_CHECK_PTR(d);
     d->ref = 1;
     d->alloc = d->size = 1;
     d->capacity = 0;
@@ -2271,7 +2270,7 @@ int qFindString(
     const int sl = needleLen;
     if (from < 0)
         from += l;
-    if (uint(sl + from) > (uint)l)
+    if ((sl + from) > l)
         return -1;
     if (!sl)
         return from;
@@ -3441,7 +3440,7 @@ QString::Data *QString::fromLatin1_helper(const char *str, int size)
     } else {
         if (size < 0)
             size = qstrlen(str);
-        d = static_cast<Data *>(malloc(sizeof(Data) + size * sizeof(QChar)));
+        d = static_cast<Data *>(::malloc(sizeof(Data) + size * sizeof(QChar)));
         Q_CHECK_PTR(d);
         d->ref = 1;
         d->alloc = d->size = size;
@@ -8254,16 +8253,15 @@ static inline int qt_string_count(const QChar *haystack, int haystackLen,
 static inline int qt_string_count(const QChar *unicode, int size, const QChar &ch,
                                   Qt::CaseSensitivity cs)
 {
-    ushort c = ch.unicode();
     int num = 0;
     const ushort *b = reinterpret_cast<const ushort*>(unicode);
     const ushort *i = b + size;
     if (cs == Qt::CaseSensitive) {
         while (i != b)
-            if (*--i == c)
+            if (*--i == ch.unicode())
                 ++num;
     } else {
-        c = QChar::toCaseFolded(c);
+        ushort c = QChar::toCaseFolded(ch.unicode());
         while (i != b)
             if (QChar::toCaseFolded(*(--i)) == c)
                 ++num;

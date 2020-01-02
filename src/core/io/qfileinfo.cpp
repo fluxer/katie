@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -123,7 +123,7 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
     // paths, so we separate out that as well.
 
     QAbstractFileEngine::FileFlags req = 0;
-    uint cachedFlags = 0;
+    uint cachedflags = 0;
 
     if (request & (QAbstractFileEngine::FlagsMask | QAbstractFileEngine::TypesMask)) {
         if (!getCachedFlag(CachedFileFlags)) {
@@ -131,13 +131,13 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
             req |= QAbstractFileEngine::TypesMask;
             req &= (~QAbstractFileEngine::LinkType);
 
-            cachedFlags |= CachedFileFlags;
+            cachedflags |= CachedFileFlags;
         }
 
         if (request & QAbstractFileEngine::LinkType) {
             if (!getCachedFlag(CachedLinkTypeFlag)) {
                 req |= QAbstractFileEngine::LinkType;
-                cachedFlags |= CachedLinkTypeFlag;
+                cachedflags |= CachedLinkTypeFlag;
             }
         }
     }
@@ -145,7 +145,7 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
     if (request & QAbstractFileEngine::PermsMask) {
         if (!getCachedFlag(CachedPerms)) {
             req |= QAbstractFileEngine::PermsMask;
-            cachedFlags |= CachedPerms;
+            cachedflags |= CachedPerms;
         }
     }
 
@@ -157,13 +157,13 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
 
         QAbstractFileEngine::FileFlags flags = fileEngine->fileFlags(req);
         fileFlags |= uint(flags);
-        setCachedFlag(cachedFlags);
+        setCachedFlag(cachedflags);
     }
 
     return fileFlags & request;
 }
 
-QDateTime &QFileInfoPrivate::getFileTime(QAbstractFileEngine::FileTime request) const
+QDateTime QFileInfoPrivate::getFileTime(QAbstractFileEngine::FileTime request) const
 {
     Q_ASSERT(fileEngine); // should never be called when using the native FS
     if (!cache_enabled)

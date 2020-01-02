@@ -1,10 +1,10 @@
-katie-git (4.9.0) unstable; urgency=medium
+katie (4.9.0) unstable; urgency=medium
 
   * First package update
 
  -- Ivailo Monev <xakepa10@gmail.com>  Mon, 7 Mar 2016 16:26:26 +0200
 
-katie-git (4.8.7) unstable; urgency=medium
+katie (4.8.7) unstable; urgency=medium
 
   * Initial package
 

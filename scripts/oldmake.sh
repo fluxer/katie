@@ -22,4 +22,13 @@ rm -rf *
 
 tar -xaf "$cwd/$cmake.tar.gz"
 "$cmake/bin/cmake" ../ -DCMAKE_BUILD_TYPE=Release -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON $@
-# not making on purpose
+rm -rf *
+
+tar -xaf "$cwd/$cmake.tar.gz"
+"$cmake/bin/cmake" ../ -GNinja -DCMAKE_BUILD_TYPE=Release -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON $@
+ninja -n
+rm -rf *
+
+tar -xaf "$cwd/$cmake.tar.gz"
+"$cmake/bin/cmake" ../ -GNinja -DCMAKE_BUILD_TYPE=Release -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON $@
+ninja -n

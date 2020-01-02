@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtNetwork module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -57,11 +57,6 @@
 
 QT_BEGIN_NAMESPACE
 
-// Almost always the same. If not, specify in qplatformdefs.h.
-#if !defined(QT_SOCKOPTLEN_T)
-# define QT_SOCKOPTLEN_T QT_SOCKLEN_T
-#endif
-
 // UnixWare 7 redefines socket -> _socket
 static inline int qt_safe_socket(int domain, int type, int protocol, int flags = 0)
 {
@@ -95,18 +90,18 @@ static inline int qt_safe_accept(int s, struct sockaddr *addr, QT_SOCKLEN_T *add
 {
     Q_ASSERT((flags & ~O_NONBLOCK) == 0);
 
-    int fd;
-#if QT_UNIX_SUPPORTS_THREADSAFE_CLOEXEC && defined(SOCK_CLOEXEC) && defined(SOCK_NONBLOCK)
-    // use accept4
+#if defined(Q_OS_LINUX) && defined(SOCK_CLOEXEC) && defined(SOCK_NONBLOCK)
     int sockflags = SOCK_CLOEXEC;
     if (flags & O_NONBLOCK)
         sockflags |= SOCK_NONBLOCK;
-    fd = ::accept4(s, addr, static_cast<QT_SOCKLEN_T *>(addrlen), sockflags);
-    if (fd != -1 || !(errno == ENOSYS || errno == EINVAL))
-        return fd;
-#endif
-
-    fd = ::accept(s, addr, static_cast<QT_SOCKLEN_T *>(addrlen));
+    return ::accept4(s, addr, addrlen, sockflags);
+#elif defined(Q_OS_NETBSD) && defined(SOCK_CLOEXEC) && defined(SOCK_NONBLOCK)
+    int sockflags = SOCK_CLOEXEC;
+    if (flags & O_NONBLOCK)
+        sockflags |= SOCK_NONBLOCK;
+    return ::paccept(s, addr, addrlen, NULL, sockflags);
+#else
+    int fd = ::accept(s, addr, addrlen);
     if (fd == -1)
         return -1;
 
@@ -117,6 +112,7 @@ static inline int qt_safe_accept(int s, struct sockaddr *addr, QT_SOCKLEN_T *add
         ::fcntl(fd, F_SETFL, ::fcntl(fd, F_GETFL) | O_NONBLOCK);
 
     return fd;
+#endif
 }
 
 static inline int qt_safe_connect(int sockfd, const struct sockaddr *addr, QT_SOCKLEN_T addrlen)

@@ -75,9 +75,16 @@ set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 # this one is set via macro later, if possible. also used in config.cpp.cmake
 set(KATIE_GIT "unstable-${KATIE_VERSION}")
 
+# only for the build process
+if(CMAKE_SYSTEM_PROCESSOR)
+    string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" KATIE_PROCESSOR)
+elseif(CMAKE_HOST_SYSTEM_PROCESSOR)
+    string(TOLOWER "${CMAKE_HOST_SYSTEM_PROCESSOR}" KATIE_PROCESSOR)
+endif()
+
 # components and tools that will be build, changed depending on the requirements availability
 # NOTE: excluding DesignerComponents as it was never used as public component, currently only
-# used by the the disigner tool. if it is ever needed for something it can just be added here
+# used by the the designer tool. if it is ever needed for something it can just be added here
 # and that's it - the rest of the build system has everything in place.
 set(KATIE_COMPONENTS "Core Gui Declarative Designer Network Sql Svg Xml Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc lupdate lrelease lconvert designer qscript qtconfig")
@@ -95,11 +102,11 @@ set(KATIE_BINARIES_FULL "${CMAKE_INSTALL_FULL_BINDIR}" CACHE PATH "Binaries inst
 set(KATIE_PLUGINS_FULL "${KATIE_LIBRARIES_FULL}/katie/plugins" CACHE PATH "Plugins installation path")
 set(KATIE_IMPORTS_FULL "${KATIE_LIBRARIES_FULL}/katie/imports" CACHE PATH "Declerative imports installation path")
 set(KATIE_DATA_FULL "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
-set(KATIE_TRANSLATIONS_FULL "${KATIE_DATA_FULL}/translations" CACHE PATH "Translations instllation path")
+set(KATIE_TRANSLATIONS_FULL "${KATIE_DATA_FULL}/katie/translations" CACHE PATH "Translations instllation path")
 set(KATIE_SETTINGS_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg" CACHE PATH "Settings runtime path")
 set(KATIE_CMAKE_FULL "${KATIE_LIBRARIES_FULL}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
-set(KATIE_LDCONF_FULL "${KATIE_DATA_FULL}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
-set(KATIE_PROFILE_FULL "${KATIE_DATA_FULL}/profile.d" CACHE PATH "Shell profile scripts installation path")
+set(KATIE_LDCONF_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
+set(KATIE_PROFILE_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/profile.d" CACHE PATH "Shell profile scripts installation path")
 set(KATIE_MAN_FULL "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages installation path")
 set(KATIE_APPLICATIONS_FULL "${KATIE_DATA_FULL}/applications" CACHE PATH "Desktop applications register installation path")
 set(KATIE_PIXMAPS_FULL "${KATIE_DATA_FULL}/pixmaps" CACHE PATH "Desktop applications icon installation path")
@@ -175,8 +182,8 @@ add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
 
 include(mkspecs/mkspecs.cmake)
 
-# these conditionals are probably going to become default in the future
 add_definitions(
+    # these conditionals are probably going to become default in the future
     -DQT_POSIX_IPC
     -DQT_USE_SYSTEM_PROXIES
     # -DQT_STRICT_ITERATORS
@@ -229,7 +236,7 @@ configure_file(
     ${CMAKE_BINARY_DIR}/include/QtCore/qglobal.h
 )
 
-# v1.2.0+ for compressBound()
+# v1.2.0+ required for compressBound()
 find_package(ZLIB 1.2.0)
 set_package_properties(ZLIB PROPERTIES
     PURPOSE "Required for compression support"
@@ -331,7 +338,7 @@ set_package_properties(NSL PROPERTIES
     TYPE RECOMMENDED
 )
 
-# v1.5.4+ for png_longjmp_ptr() without noreturn attribute
+# v1.5.4+ required for png_longjmp_ptr() without noreturn attribute
 find_package(PNG 1.5.4)
 set_package_properties(PNG PROPERTIES
     PURPOSE "PNG format handler"
@@ -348,7 +355,7 @@ set_package_properties(JPEG PROPERTIES
     TYPE RECOMMENDED
 )
 
-# v3.6.0+ for TIFFReadRGBAImageOriented()
+# v3.6.0+ required for TIFFReadRGBAImageOriented()
 find_package(TIFF 3.6.0)
 set_package_properties(TIFF PROPERTIES
     PURPOSE "TIFF format handler"
@@ -462,6 +469,17 @@ file(
     FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 )
 
+# optional packages which if not found are build internally
+if(NOT WITH_PNG)
+    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
+elseif(NOT PNG_FOUND)
+    message(WARNING "Using internal copy of libpng")
+endif()
+
+if(WITH_SQLITE AND NOT SQLITE_FOUND)
+    message(WARNING "Using internal copy of sqlite")
+endif()
+
 # optional packages
 if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)
     katie_definition(-DQT_NO_FONTCONFIG)
@@ -488,10 +506,6 @@ endif()
 
 if(NOT WITH_NIS OR NOT NIS_FOUND)
     katie_definition(-DQT_NO_NIS)
-endif()
-
-if(NOT WITH_PNG OR NOT PNG_FOUND)
-    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
 endif()
 
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)
@@ -924,13 +938,13 @@ configure_file(
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
-    ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+    ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.conf
     @ONLY
 )
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/profile.sh.cmake
-    ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
+    ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.sh
     @ONLY
 )
 
@@ -967,13 +981,13 @@ install(
 )
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.conf
     DESTINATION ${KATIE_LDCONF_RELATIVE}
     COMPONENT Runtime
 )
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
+    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.sh
     DESTINATION ${KATIE_PROFILE_RELATIVE}
     COMPONENT Runtime
 )

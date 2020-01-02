@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -71,6 +71,8 @@ QT_BEGIN_NAMESPACE
 #ifndef FLT_DIG
 #  define FLT_DIG 6
 #endif
+
+static const QLatin1String qStringListDelim = QLatin1String(",");
 
 static void construct(QVariant::Private *x, const void *copy)
 {
@@ -741,11 +743,8 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
             *str = QString::fromAscii(v_cast<QByteArray>(d)->constData());
             return true;
         case QVariant::StringList:
-            if (v_cast<QStringList>(d)->count() == 1) {
-                *str = v_cast<QStringList>(d)->at(0);
-                return true;
-            }
-            return false;
+            *str = v_cast<QStringList>(d)->join(qStringListDelim);
+            return true;
 #ifndef QT_BOOTSTRAPPED
         case QVariant::Url:
             *str = v_cast<QUrl>(d)->toString();
@@ -834,7 +833,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         }
         case QVariant::String: {
             QStringList *slst = static_cast<QStringList *>(result);
-            *slst = QStringList(*v_cast<QString>(d));
+            *slst = v_cast<QString>(d)->split(qStringListDelim);
             return true;
         }
         default:
@@ -856,15 +855,15 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         }
     }
     case QVariant::Time: {
-        QTime *t = static_cast<QTime *>(result);
+        QTime *tt = static_cast<QTime *>(result);
         switch (d->type) {
         case QVariant::DateTime:
-            *t = v_cast<QDateTime>(d)->time();
-            return t->isValid();
+            *tt = v_cast<QDateTime>(d)->time();
+            return tt->isValid();
 #ifndef QT_NO_DATESTRING
         case QVariant::String:
-            *t = QTime::fromString(*v_cast<QString>(d), Qt::ISODate);
-            return t->isValid();
+            *tt = QTime::fromString(*v_cast<QString>(d), Qt::ISODate);
+            return tt->isValid();
 #endif
         default:
             return false;
@@ -2899,7 +2898,7 @@ bool QVariant::canConvert(Type t) const
         case QVariant::Color:
             return true;
         case QVariant::StringList:
-            return v_cast<QStringList>(&d)->count() == 1;
+            return v_cast<QStringList>(&d)->size() >= 1;
         default:
             return false;
         }

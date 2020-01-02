@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -769,7 +769,7 @@ QString QDate::toString(const QString& format) const
 
 bool QDate::setYMD(int y, int m, int d)
 {
-    if (uint(y) <= 99)
+    if (y <= 99)
         y += 1900;
     return setDate(y, m, d);
 }
@@ -1662,9 +1662,7 @@ int QTime::msecsTo(const QTime &t) const
 QTime QTime::fromString(const QString& s, Qt::DateFormat f)
 {
     if (s.isEmpty()) {
-        QTime t;
-        t.mds = NullTime;
-        return t;
+        return QTime();
     }
 
     switch (f) {
@@ -1990,7 +1988,7 @@ int QTime::elapsed() const
     \sa isValid()
 */
 QDateTime::QDateTime()
-    : d(new QDateTimePrivate)
+    : d(new QDateTimePrivate())
 {
 }
 
@@ -2001,7 +1999,7 @@ QDateTime::QDateTime()
 */
 
 QDateTime::QDateTime(const QDate &date)
-    : d(new QDateTimePrivate)
+    : d(new QDateTimePrivate())
 {
     d->date = date;
     d->time = QTime(0, 0, 0);
@@ -2015,7 +2013,7 @@ QDateTime::QDateTime(const QDate &date)
 */
 
 QDateTime::QDateTime(const QDate &date, const QTime &time, Qt::TimeSpec spec)
-    : d(new QDateTimePrivate)
+    : d(new QDateTimePrivate())
 {
     d->date = date;
     d->time = date.isValid() && !time.isValid() ? QTime(0, 0, 0) : time;
@@ -2890,9 +2888,9 @@ qint64 QDateTime::currentMSecsSinceEpoch()
 */
 QDateTime QDateTime::fromTime_t(uint seconds)
 {
-    QDateTime d;
-    d.setTime_t(seconds);
-    return d;
+    QDateTime dt;
+    dt.setTime_t(seconds);
+    return dt;
 }
 
 /*!
@@ -2911,9 +2909,9 @@ QDateTime QDateTime::fromTime_t(uint seconds)
 */
 QDateTime QDateTime::fromMSecsSinceEpoch(qint64 msecs)
 {
-    QDateTime d;
-    d.setMSecsSinceEpoch(msecs);
-    return d;
+    QDateTime dt;
+    dt.setMSecsSinceEpoch(msecs);
+    return dt;
 }
 
 /*!

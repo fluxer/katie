@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -134,12 +134,12 @@ static inline bool setCloseOnExec(int fd)
 /*!
     \internal
 */
-bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode openMode)
+bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
 {
     Q_Q(QFSFileEngine);
 
-    if (openMode & QIODevice::Unbuffered) {
-        int flags = openModeToOpenFlags(openMode);
+    if (mode & QIODevice::Unbuffered) {
+        int flags = openModeToOpenFlags(mode);
 
         // Try to open the file in unbuffered mode.
         do {
@@ -153,7 +153,7 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode openMode)
             return false;
         }
 
-        if (!(openMode & QIODevice::WriteOnly)) {
+        if (!(mode & QIODevice::WriteOnly)) {
             // we don't need this check if we tried to open for writing because then
             // we had received EISDIR anyway.
             if (QFileSystemEngine::fillMetaData(fd, metaData)
@@ -180,7 +180,7 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode openMode)
 
         fh = 0;
     } else {
-        QByteArray fopenMode = openModeToFopenMode(openMode, fileEntry, metaData);
+        QByteArray fopenMode = openModeToFopenMode(mode, fileEntry, metaData);
 
         // Try to open the file in buffered mode.
         do {
@@ -194,7 +194,7 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode openMode)
             return false;
         }
 
-        if (!(openMode & QIODevice::WriteOnly)) {
+        if (!(mode & QIODevice::WriteOnly)) {
             // we don't need this check if we tried to open for writing because then
             // we had received EISDIR anyway.
             if (QFileSystemEngine::fillMetaData(QT_FILENO(fh), metaData)
@@ -208,7 +208,7 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode openMode)
         setCloseOnExec(fileno(fh)); // ignore failure
 
         // Seek to the end when in Append mode.
-        if (openMode & QIODevice::Append) {
+        if (mode & QIODevice::Append) {
             int ret;
             do {
                 ret = QT_FSEEK(fh, 0, SEEK_END);

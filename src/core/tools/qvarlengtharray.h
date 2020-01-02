@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -77,7 +77,7 @@ public:
 
     inline void removeLast() {
         Q_ASSERT(s > 0);
-        realloc(s - 1, a);
+        reallocData(s - 1, a);
     }
     inline int size() const { return s; }
     inline int count() const { return s; }
@@ -103,7 +103,7 @@ public:
 
     inline void append(const T &t) {
         if (s == a)   // i.e. s != 0
-            realloc(s, s<<1);
+            reallocData(s, s<<1);
         const int idx = s++;
         if (QTypeInfo<T>::isComplex) {
             new (ptr + idx) T(t);
@@ -152,17 +152,12 @@ public:
     inline iterator erase(iterator pos) { return erase(pos, pos+1); }
 
 private:
-    void realloc(int size, int alloc);
+    void reallocData(int size, int alloc);
 
     int a;      // capacity
     int s;      // size
     T *ptr;     // data
-    union {
-        // ### Qt 5: Use 'Prealloc * sizeof(T)' as array size
-        char array[sizeof(qint64) * (((Prealloc * sizeof(T)) / sizeof(qint64)) + 1)];
-        qint64 q_for_alignment_1;
-        double q_for_alignment_2;
-    };
+    char array[Prealloc * sizeof(T)];
 };
 
 template <class T, int Prealloc>
@@ -185,11 +180,11 @@ Q_INLINE_TEMPLATE QVarLengthArray<T, Prealloc>::QVarLengthArray(int asize)
 
 template <class T, int Prealloc>
 Q_INLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::resize(int asize)
-{ realloc(asize, qMax(asize, a)); }
+{ reallocData(asize, qMax(asize, a)); }
 
 template <class T, int Prealloc>
 Q_INLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::reserve(int asize)
-{ if (asize > a) realloc(s, asize); }
+{ if (asize > a) reallocData(s, asize); }
 
 template <class T, int Prealloc>
 Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::append(const T *abuf, int increment)
@@ -201,7 +196,7 @@ Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::append(const T *abuf, in
     const int asize = s + increment;
 
     if (asize >= a)
-        realloc(s, qMax(s*2, asize));
+        reallocData(s, qMax(s*2, asize));
 
     if (QTypeInfo<T>::isComplex) {
         // call constructor for new objects (which can throw)
@@ -214,7 +209,7 @@ Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::append(const T *abuf, in
 }
 
 template <class T, int Prealloc>
-Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::realloc(int asize, int aalloc)
+Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::reallocData(int asize, int aalloc)
 {
     Q_ASSERT(aalloc >= asize);
     T *oldPtr = ptr;
@@ -311,7 +306,7 @@ template <class T, int Prealloc>
 inline void QVarLengthArray<T, Prealloc>::replace(int i, const T &t)
 {
     Q_ASSERT_X(i >= 0 && i < s, "QVarLengthArray::replace", "index out of range");
-    data()[i] = t;
+    ptr[i] = t;
 }
 
 

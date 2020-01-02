@@ -593,16 +593,11 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
 #  if defined(QT_VISIBILITY_AVAILABLE)
 #    define Q_DECL_EXPORT __attribute__((visibility("default")))
 #    define Q_DECL_HIDDEN __attribute__((visibility("hidden")))
-#  endif
-#  ifndef Q_DECL_EXPORT
+#  else
 #    define Q_DECL_EXPORT
+#    define Q_DECL_HIDDEN
 #  endif
-#endif
-#ifndef Q_DECL_IMPORT
 #  define Q_DECL_IMPORT
-#endif
-#ifndef Q_DECL_HIDDEN
-#  define Q_DECL_HIDDEN
 #endif
 
 #if !defined(Q_CORE_EXPORT)
@@ -1204,28 +1199,25 @@ typedef uint Flags;
 
 #endif /* Q_NO_TYPESAFE_FLAGS */
 
-#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && defined(QT_FOREACH_COMPAT)
-/* make use of typeof-extension */
+#ifdef QT_FOREACH_COMPAT
 template <typename T>
 class QForeachContainer {
 public:
-    inline QForeachContainer(const T& t) : c(t), brk(0), i(c.begin()), e(c.end()) { }
+    inline QForeachContainer(const T& t) : c(t) { }
+    inline typename T::const_iterator begin() { return c.begin(); }
+    inline typename T::const_iterator end() { return c.end(); }
+private:
     const T c;
-    int brk;
-    typename T::const_iterator i, e;
 };
 
-#define Q_FOREACH(variable, container)                                \
-for (QForeachContainer<__typeof__(container)> _container_(container); \
-     !_container_.brk && _container_.i != _container_.e;              \
-     __extension__  ({ ++_container_.brk; ++_container_.i; }))        \
-    for (variable = *_container_.i;; __extension__ ({--_container_.brk; break;}))
+#define Q_FOREACH(variable, container) \
+    for (variable: QForeachContainer<Q_TYPEOF(container)>(container))
 
 #else
 
 #define Q_FOREACH(variable, container) for (variable: container)
 
-#endif
+#endif // QT_FOREACH_COMPAT
 
 #define Q_FOREVER for(;;)
 #ifndef QT_NO_KEYWORDS

@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -78,8 +78,10 @@ static bool json_settings_read(QIODevice &device, QSettings::SettingsMap &map)
         return false;
     }
 
-    QJsonDocument jsondoc = QJsonDocument::fromJson(data);
+    QJsonParseError error;
+    QJsonDocument jsondoc = QJsonDocument::fromJson(data, &error);
     if (Q_UNLIKELY(jsondoc.isNull())) {
+        qWarning("json_settings_read: %s", error.errorString().toUtf8().constData());
         return false;
     }
 
@@ -218,7 +220,7 @@ static QSettingsCustomFormat getSettingsFormat(QSettings::Format format)
     return result;
 }
 
-QString getSettingsPath(QSettings::Scope scope, const QString &filename, const QString &extension)
+static QString getSettingsPath(QSettings::Scope scope, const QString &filename, const QString &extension)
 {
     QFileInfo info(filename);
     if (info.isAbsolute()) {
@@ -463,8 +465,6 @@ QVariant QSettingsPrivate::stringToVariant(const QString &s)
         }
         if (s.startsWith(QLatin1String("@@")))
             return QVariant(s.mid(1));
-    } else if (s.contains(QLatin1Char(','))) {
-        return QVariant(s.split(QLatin1Char(',')));
     }
 
     return QVariant(s);

@@ -1,29 +1,31 @@
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 3 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL3 included in the
-** packaging of this file. Please review the following information to
-** ensure the GNU Lesser General Public License version 3 requirements
-** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+**
+** As a special exception, The Qt Company gives you certain additional
+** rights. These rights are described in The Qt Company LGPL Exception
+** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
 **
 ** GNU General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 2.0 or (at your option) the GNU General
-** Public license version 3 or any later version approved by the KDE Free
-** Qt Foundation. The licenses are as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-2.0.html and
-** https://www.gnu.org/licenses/gpl-3.0.html.
+** General Public License version 3.0 as published by the Free Software
+** Foundation and appearing in the file LICENSE.GPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU General Public License version 3.0 requirements will be
+** met: http://www.gnu.org/copyleft/gpl.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -934,12 +936,6 @@ static const qint16 MIBTblSize = sizeof(MIBTbl) / sizeof(MIBTblData);
 static const UChar nullchar[2] = { 0x5c, 0x30 };
 static const UChar questionmarkchar[1] = { 0x3f };
 
-#ifndef QT_NO_TEXTCODEC
-static QList<QByteArray> allcodecs;
-static QList<int> allmibs;
-Q_GLOBAL_STATIC(QMutex, qICUCodecMutex);
-#endif
-
 QIcuCodec::QIcuCodec(const QByteArray &name)
     : m_name(name)
 {
@@ -1004,8 +1000,8 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length,
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
     QByteArray result(maxbytes, Qt::Uninitialized);
     UErrorCode error = U_ZERO_ERROR;
-    const int convresult = ucnv_fromUChars(conv, reinterpret_cast<char *>(result.data()),
-        result.length(), reinterpret_cast<const UChar *>(unicode), length, &error);
+    const int convresult = ucnv_fromUChars(conv, result.data(), result.length(),
+        reinterpret_cast<const UChar *>(unicode), length, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QIcuCodec::convertFromUnicode: ucnv_fromUChars(%s) failed %s",
             m_name.constData(), u_errorName(error));
@@ -1048,7 +1044,7 @@ QList<QByteArray> QIcuCodec::aliases() const
         return aliases;
     }
 
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < count; i++) {
         error = U_ZERO_ERROR;
         const char *alias = ucnv_getAlias(m_name.constData(), i, &error);
         if (Q_UNLIKELY(U_FAILURE(error))) {
@@ -1058,7 +1054,7 @@ QList<QByteArray> QIcuCodec::aliases() const
         }
         // aliases contain original
         if (Q_LIKELY(qstrcmp(m_name.constData(), alias) != 0)) {
-            aliases += alias;
+            aliases += QByteArray::fromRawData(alias, qstrlen(alias));
         }
     }
 
@@ -1081,37 +1077,12 @@ int QIcuCodec::mibEnum() const
 #ifndef QT_NO_TEXTCODEC
 QList<QByteArray> QIcuCodec::allCodecs()
 {
-    if (!allcodecs.isEmpty()) {
-        return allcodecs;
-    }
+    QList<QByteArray> allcodecs;
 
-    QMutexLocker locker(qICUCodecMutex());
     const int count = ucnv_countAvailable();
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < count; i++) {
         const char *name = ucnv_getAvailableName(i);
-        allcodecs += name;
-
-        UErrorCode error = U_ZERO_ERROR;
-        const int aliascount = ucnv_countAliases(name, &error);
-        if (Q_UNLIKELY(U_FAILURE(error))) {
-            qWarning("QIcuCodec::allCodecs: ucnv_countAliases(%s) failed %s",
-                name, u_errorName(error));
-            continue;
-        }
-
-        for (int j = 0; j < aliascount; ++j) {
-            error = U_ZERO_ERROR;
-            const char *alias = ucnv_getAlias(name, j, &error);
-            if (Q_UNLIKELY(U_FAILURE(error))) {
-                qWarning("QIcuCodec::allCodecs: ucnv_getAlias(%s) failed %s",
-                    name, u_errorName(error));
-                continue;
-            }
-            // aliases contain original
-            if (Q_LIKELY(qstrcmp(name, alias) != 0)) {
-                allcodecs += alias;
-            }
-        }
+        allcodecs += QByteArray::fromRawData(name, qstrlen(name));
     }
 
     return allcodecs;
@@ -1119,11 +1090,8 @@ QList<QByteArray> QIcuCodec::allCodecs()
 
 QList<int> QIcuCodec::allMibs()
 {
-    if (!allmibs.isEmpty()) {
-        return allmibs;
-    }
+    QList<int> allmibs;
 
-    QMutexLocker locker(qICUCodecMutex());
     foreach(const QByteArray &name, QIcuCodec::allCodecs()) {
         for (qint16 i = 0; i < MIBTblSize; i++) {
             if (ucnv_compareNames(name.constData(), MIBTbl[i].name) == 0) {

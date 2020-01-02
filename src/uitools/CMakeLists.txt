@@ -2,36 +2,7 @@
 set(EXTRA_UITOOLS_LIBS KtCore KtGui KtXml KtScript)
 
 set(UITOOLS_PUBLIC_HEADERS
-    ${UITOOLS_PUBLIC_HEADERS}
     QUiLoader
-)
-
-set(UITOOLS_HEADERS
-    ${UITOOLS_HEADERS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/abstractformbuilder.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/customwidget.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/formbuilderextra_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/formbuilder.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/formscriptrunner_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/properties_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/quiloader.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/quiloader_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/resourcebuilder_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/textbuilder_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ui4_p.h
-)
-
-set(UITOOLS_SOURCES
-    ${UITOOLS_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/quiloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/abstractformbuilder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/formbuilder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/formbuilderextra.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/formscriptrunner.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/textbuilder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ui4.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/resourcebuilder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/properties.cpp
 )
 
 include_directories(
@@ -49,6 +20,32 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
     # for widgets.table
     ${CMAKE_SOURCE_DIR}/src/shared
+)
+
+set(UITOOLS_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/abstractformbuilder.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/customwidget.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/formbuilderextra_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/formbuilder.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/formscriptrunner_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/properties_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/quiloader.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/quiloader_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/resourcebuilder_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/textbuilder_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/ui4_p.h
+)
+
+set(UITOOLS_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/quiloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/abstractformbuilder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/formbuilder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/formbuilderextra.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/formscriptrunner.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/textbuilder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ui4.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/resourcebuilder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/properties.cpp
 )
 
 katie_generate_misc("${UITOOLS_HEADERS}" QtUiTools)

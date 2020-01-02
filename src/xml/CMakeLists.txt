@@ -14,13 +14,20 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
 )
 
-include(dom/dom.cmake)
-include(kernel/kernel.cmake)
-include(sax/sax.cmake)
-
 set(XML_HEADERS
-    ${XML_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/dom/qdom.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qxmlstream.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qxmlstream_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qxmlutils_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/sax/qxml.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qxmlcommon_p.h
+)
+
+set(XML_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/dom/qdom.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qxmlstream.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qxmlutils.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sax/qxml.cpp
 )
 
 katie_generate_misc("${XML_HEADERS}" QtXml)
