@@ -409,6 +409,10 @@ QT_USE_NAMESPACE
 #  endif
 #endif
 
+#define Q_OUTOFLINE_TEMPLATE
+#define Q_INLINE_TEMPLATE inline
+#define Q_TYPENAME typename
+
 #ifdef Q_COMPILER_CONSTEXPR
 # define Q_DECL_CONSTEXPR constexpr
 #else
@@ -686,17 +690,6 @@ public:
 
 Q_CORE_EXPORT const char *qVersion();
 Q_CORE_EXPORT bool qSharedBuild();
-
-#ifndef Q_OUTOFLINE_TEMPLATE
-#  define Q_OUTOFLINE_TEMPLATE
-#endif
-#ifndef Q_INLINE_TEMPLATE
-#  define Q_INLINE_TEMPLATE inline
-#endif
-
-#ifndef Q_TYPENAME
-#  define Q_TYPENAME typename
-#endif
 
 /*
    Avoid "unused parameter" warnings
