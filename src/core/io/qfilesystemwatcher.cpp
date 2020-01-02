@@ -57,7 +57,7 @@ class QPollingFileSystemWatcherEngine : public QFileSystemWatcherEngine
 {
     Q_OBJECT
 
-    class DirInfo
+    class FileInfo
     {
         uint ownerId;
         uint groupId;
@@ -66,14 +66,7 @@ class QPollingFileSystemWatcherEngine : public QFileSystemWatcherEngine
         QStringList entries;
 
     public:
-        DirInfo()
-            : ownerId(-1),
-              groupId(-1),
-              permissions(0)
-        {
-        }
-
-        DirInfo(const QFileInfo &fileInfo)
+        FileInfo(const QFileInfo &fileInfo)
             : ownerId(fileInfo.ownerId()),
               groupId(fileInfo.groupId()),
               permissions(fileInfo.permissions()),
@@ -83,9 +76,9 @@ class QPollingFileSystemWatcherEngine : public QFileSystemWatcherEngine
                 entries = fileInfo.absoluteDir().entryList(QDir::AllEntries);
             }
         }
-        DirInfo &operator=(const QFileInfo &fileInfo)
+        FileInfo &operator=(const QFileInfo &fileInfo)
         {
-            *this = DirInfo(fileInfo);
+            *this = FileInfo(fileInfo);
             return *this;
         }
 
@@ -100,8 +93,7 @@ class QPollingFileSystemWatcherEngine : public QFileSystemWatcherEngine
         }
     };
 
-    QHash<QString, QFileInfo> files;
-    QHash<QString, DirInfo> directories;
+    QHash<QString, FileInfo> files, directories;
 
 public:
     QPollingFileSystemWatcherEngine();
@@ -122,29 +114,31 @@ QPollingFileSystemWatcherEngine::QPollingFileSystemWatcherEngine()
 }
 
 QStringList QPollingFileSystemWatcherEngine::addPaths(const QStringList &paths,
-                                                      QStringList *filepaths,
-                                                      QStringList *directorypaths)
+                                                      QStringList *files,
+                                                      QStringList *directories)
 {
     QStringList p = paths;
-    foreach (const QString &path, p) {
+    QMutableListIterator<QString> it(p);
+    while (it.hasNext()) {
+        QString path = it.next();
         QFileInfo fi(path);
         if (!fi.exists())
             continue;
         if (fi.isDir()) {
-            if (!directorypaths->contains(path))
-                directorypaths->append(path);
+            if (!directories->contains(path))
+                directories->append(path);
             if (!path.endsWith(QLatin1Char('/')))
                 fi = QFileInfo(path + QLatin1Char('/'));
-            directories.insert(path, fi);
+            this->directories.insert(path, fi);
         } else {
-            if (!filepaths->contains(path))
-                filepaths->append(path);
-            files.insert(path, fi);
+            if (!files->contains(path))
+                files->append(path);
+            this->files.insert(path, fi);
         }
-        p.removeAll(path);
+        it.remove();
     }
-    if ((!files.isEmpty() ||
-         !directories.isEmpty()) &&
+    if ((!this->files.isEmpty() ||
+         !this->directories.isEmpty()) &&
         !timer.isActive()) {
         timer.start(PollingInterval);
     }
@@ -152,21 +146,23 @@ QStringList QPollingFileSystemWatcherEngine::addPaths(const QStringList &paths,
 }
 
 QStringList QPollingFileSystemWatcherEngine::removePaths(const QStringList &paths,
-                                                         QStringList *filepaths,
-                                                         QStringList *directorypaths)
+                                                         QStringList *files,
+                                                         QStringList *directories)
 {
     QStringList p = paths;
-    foreach (const QString &path, p) {
-        if (directories.remove(path)) {
-            directorypaths->removeAll(path);
-            p.removeAll(path);
-        } else if (files.remove(path)) {
-            filepaths->removeAll(path);
-            p.removeAll(path);
+    QMutableListIterator<QString> it(p);
+    while (it.hasNext()) {
+        QString path = it.next();
+        if (this->directories.remove(path)) {
+            directories->removeAll(path);
+            it.remove();
+        } else if (this->files.remove(path)) {
+            files->removeAll(path);
+            it.remove();
         }
     }
-    if (files.isEmpty() &&
-        directories.isEmpty()) {
+    if (this->files.isEmpty() &&
+        this->directories.isEmpty()) {
         timer.stop();
     }
     return p;
@@ -174,33 +170,36 @@ QStringList QPollingFileSystemWatcherEngine::removePaths(const QStringList &path
 
 void QPollingFileSystemWatcherEngine::timeout()
 {
-    foreach (const QString &path, files.keys()) {
-        const QFileInfo value = files.value(path);
+    QMutableHashIterator<QString, FileInfo> fit(files);
+    while (fit.hasNext()) {
+        QHash<QString, FileInfo>::iterator x = fit.next();
+        QString path = x.key();
         QFileInfo fi(path);
         if (!fi.exists()) {
-            files.remove(path);
+            fit.remove();
             emit fileChanged(path, true);
-        } else if (value != fi) {
-            files.insert(path, fi);
+        } else if (x.value() != fi) {
+            x.value() = fi;
             emit fileChanged(path, false);
         }
     }
-
-    foreach (const QString &path, directories.keys()) {
-        const DirInfo value = files.value(path);
+    QMutableHashIterator<QString, FileInfo> dit(directories);
+    while (dit.hasNext()) {
+        QHash<QString, FileInfo>::iterator x = dit.next();
+        QString path = x.key();
         QFileInfo fi(path);
         if (!path.endsWith(QLatin1Char('/')))
             fi = QFileInfo(path + QLatin1Char('/'));
         if (!fi.exists()) {
-            directories.remove(path);
+            dit.remove();
             emit directoryChanged(path, true);
-        } else if (value != fi) {
+        } else if (x.value() != fi) {
             fi.refresh();
             if (!fi.exists()) {
-                directories.remove(path);
+                dit.remove();
                 emit directoryChanged(path, true);
             } else {
-                directories.insert(path, DirInfo(fi));
+                x.value() = fi;
                 emit directoryChanged(path, false);
             }
         }
