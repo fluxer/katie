@@ -1205,21 +1205,18 @@ typedef uint Flags;
 #endif /* Q_NO_TYPESAFE_FLAGS */
 
 #if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && defined(QT_FOREACH_COMPAT)
-/* make use of typeof-extension */
 template <typename T>
 class QForeachContainer {
 public:
-    inline QForeachContainer(const T& t) : c(t), brk(0), i(c.begin()), e(c.end()) { }
+    inline QForeachContainer(const T& t) : c(t) { }
+    inline typename T::const_iterator begin() { return c.begin(); }
+    inline typename T::const_iterator end() { return c.end(); }
+private:
     const T c;
-    int brk;
-    typename T::const_iterator i, e;
 };
 
-#define Q_FOREACH(variable, container)                                \
-for (QForeachContainer<__typeof__(container)> _container_(container); \
-     !_container_.brk && _container_.i != _container_.e;              \
-     __extension__  ({ ++_container_.brk; ++_container_.i; }))        \
-    for (variable = *_container_.i;; __extension__ ({--_container_.brk; break;}))
+#define Q_FOREACH(variable, container) \
+    for (variable: QForeachContainer<__typeof__(container)>(container))
 
 #else
 
