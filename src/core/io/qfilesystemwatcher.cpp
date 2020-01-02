@@ -111,6 +111,8 @@ private:
 QPollingFileSystemWatcherEngine::QPollingFileSystemWatcherEngine()
     : timer(this)
 {
+    connect(&timer, SIGNAL(timeout()), this, SLOT(timeout()));
+    timer.start(PollingInterval);
 }
 
 QStringList QPollingFileSystemWatcherEngine::addPaths(const QStringList &paths,
