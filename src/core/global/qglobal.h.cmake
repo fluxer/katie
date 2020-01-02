@@ -1199,7 +1199,7 @@ typedef uint Flags;
 
 #endif /* Q_NO_TYPESAFE_FLAGS */
 
-#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && defined(QT_FOREACH_COMPAT)
+#ifdef QT_FOREACH_COMPAT
 template <typename T>
 class QForeachContainer {
 public:
@@ -1211,13 +1211,13 @@ private:
 };
 
 #define Q_FOREACH(variable, container) \
-    for (variable: QForeachContainer<__typeof__(container)>(container))
+    for (variable: QForeachContainer<Q_TYPEOF(container)>(container))
 
 #else
 
 #define Q_FOREACH(variable, container) for (variable: container)
 
-#endif
+#endif // QT_FOREACH_COMPAT
 
 #define Q_FOREVER for(;;)
 #ifndef QT_NO_KEYWORDS
