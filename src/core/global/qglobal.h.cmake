@@ -593,16 +593,11 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
 #  if defined(QT_VISIBILITY_AVAILABLE)
 #    define Q_DECL_EXPORT __attribute__((visibility("default")))
 #    define Q_DECL_HIDDEN __attribute__((visibility("hidden")))
-#  endif
-#  ifndef Q_DECL_EXPORT
+#  else
 #    define Q_DECL_EXPORT
+#    define Q_DECL_HIDDEN
 #  endif
-#endif
-#ifndef Q_DECL_IMPORT
 #  define Q_DECL_IMPORT
-#endif
-#ifndef Q_DECL_HIDDEN
-#  define Q_DECL_HIDDEN
 #endif
 
 #if !defined(Q_CORE_EXPORT)
