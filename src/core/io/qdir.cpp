@@ -1505,14 +1505,10 @@ bool QDir::operator==(const QDir &dir) const
         if (d->dirEntry.filePath() == other->dirEntry.filePath())
             return true;
 
-        if (exists()) {
-            if (!dir.exists())
-                return false; //can't be equal if only one exists
+        if (exists() && dir.exists()) {
             // Both exist, fallback to expensive canonical path computation
             return canonicalPath().compare(dir.canonicalPath(), sensitive) == 0;
         } else {
-            if (dir.exists())
-                return false; //can't be equal if only one exists
             // Neither exists, compare absolute paths rather than canonical (which would be empty strings)
             d->resolveAbsoluteEntry();
             other->resolveAbsoluteEntry();
