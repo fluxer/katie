@@ -2085,9 +2085,10 @@ static QDebug operator<<(QDebug debug, QDir::SortFlags sorting)
         if (sorting & QDir::IgnoreCase) flags << QLatin1String("IgnoreCase");
         if (sorting & QDir::LocaleAware) flags << QLatin1String("LocaleAware");
         if (sorting & QDir::Type) flags << QLatin1String("Type");
-        debug << "QDir::SortFlags(" << qPrintable(type)
-              << '|'
-              << qPrintable(flags.join(QLatin1String("|"))) << ')';
+        debug << "QDir::SortFlags(" << qPrintable(type);
+        if (!flags.isEmpty())
+            debug << '|' << qPrintable(flags.join(QLatin1String("|")));
+        debug << ')';
     }
     return debug;
 }
