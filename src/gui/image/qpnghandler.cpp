@@ -48,7 +48,13 @@
 QT_BEGIN_NAMESPACE
 
 // avoid going through QImage::scanLine() which calls detach
-#define FAST_SCAN_LINE(data, bpl, y) (data + (y) * bpl)
+#define QFAST_SCAN_LINE(data, bpl, y) (data + (y) * bpl)
+
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+#  define QFILLER_ORDER PNG_FILLER_BEFORE
+#else
+#  define QFILLER_ORDER PNG_FILLER_AFTER
+#endif
 
 /*
   All PNG files load to the minimal QImage equivalent.
@@ -285,8 +291,7 @@ void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float scre
         // Only add filler if no alpha, or we can get 5 channel data.
         if (!(color_type & PNG_COLOR_MASK_ALPHA)
             && !png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
-            png_set_filler(png_ptr, 0xff, QSysInfo::ByteOrder == QSysInfo::BigEndian ?
-                           PNG_FILLER_BEFORE : PNG_FILLER_AFTER);
+            png_set_filler(png_ptr, 0xff, QFILLER_ORDER);
             // We want 4 bytes, but it isn't an alpha channel
             format = QImage::Format_RGB32;
         }
@@ -304,9 +309,9 @@ void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float scre
     }
 
     // Qt==ARGB==Big(ARGB)==Little(BGRA)
-    if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) {
-        png_set_bgr(png_ptr);
-    }
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+    png_set_bgr(png_ptr);
+#endif
 }
 
 
@@ -450,7 +455,7 @@ bool QPngHandlerPrivate::readPngImage(QImage *outImage)
         && outImage->format() == QImage::Format_Indexed8) {
         int color_table_size = outImage->colorCount();
         for (int y=0; y<(int)height; ++y) {
-            uchar *p = FAST_SCAN_LINE(data, bpl, y);
+            uchar *p = QFAST_SCAN_LINE(data, bpl, y);
             uchar *end = p + width;
             while (p < end) {
                 if (*p >= color_table_size)
@@ -624,10 +629,11 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
 #endif
 
     // Qt==ARGB==Big(ARGB)==Little(BGRA). But RGB888 is RGB regardless
-    if (QSysInfo::ByteOrder == QSysInfo::LittleEndian
-        && image.format() != QImage::Format_RGB888) {
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+    if (image.format() != QImage::Format_RGB888) {
         png_set_bgr(png_ptr);
     }
+#endif
 
     if (off_x || off_y) {
         png_set_oFFs(png_ptr, info_ptr, off_x, off_y, PNG_OFFSET_PIXEL);
@@ -648,9 +654,7 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
         png_set_packing(png_ptr);
 
     if (color_type == PNG_COLOR_TYPE_RGB && image.format() != QImage::Format_RGB888)
-        png_set_filler(png_ptr, 0,
-            QSysInfo::ByteOrder == QSysInfo::BigEndian ?
-                PNG_FILLER_BEFORE : PNG_FILLER_AFTER);
+        png_set_filler(png_ptr, 0, QFILLER_ORDER);
 
     int height = image.height();
     int width = image.width();
