@@ -43,7 +43,7 @@ QT_BEGIN_NAMESPACE
 class QSpontaneKeyEvent
 {
 public:
-    void setSpontaneous() { spont = 1; }
+    void setSpontaneous() { spont = true; }
     bool spontaneous() { return spont; }
     virtual ~QSpontaneKeyEvent() {}
 
