@@ -616,10 +616,8 @@ QDataStream &QDataStream::operator>>(qint16 &i)
     if (dev->read((char *)&i, 2) != 2) {
         i = 0;
         setStatus(ReadPastEnd);
-    } else {
-        if (!noswap) {
-            i = qbswap(i);
-        }
+    } else if (!noswap) {
+        i = qbswap(i);
     }
     return *this;
 }
@@ -647,10 +645,8 @@ QDataStream &QDataStream::operator>>(qint32 &i)
     if (dev->read((char *)&i, 4) != 4) {
         i = 0;
         setStatus(ReadPastEnd);
-    } else {
-        if (!noswap) {
-            i = qbswap(i);
-        }
+    } else if (!noswap) {
+        i = qbswap(i);
     }
     return *this;
 }
@@ -677,10 +673,8 @@ QDataStream &QDataStream::operator>>(qint64 &i)
     if (dev->read((char *)&i, 8) != 8) {
         i = qint64(0);
         setStatus(ReadPastEnd);
-    } else {
-        if (!noswap) {
-            i = qbswap(i);
-        }
+    } else if (!noswap) {
+        i = qbswap(i);
     }
     return *this;
 }
@@ -721,15 +715,13 @@ QDataStream &QDataStream::operator>>(float &f)
     if (dev->read((char *)&f, 4) != 4) {
         f = 0.0f;
         setStatus(ReadPastEnd);
-    } else {
-        if (!noswap) {
-            union {
-                float val1;
-                quint32 val2;
-            } x;
-            x.val2 = qbswap(*reinterpret_cast<quint32 *>(&f));
-            f = x.val1;
-        }
+    } else if (!noswap) {
+        union {
+            float val1;
+            quint32 val2;
+        } x;
+        x.val2 = qbswap(*reinterpret_cast<quint32 *>(&f));
+        f = x.val1;
     }
     return *this;
 }
@@ -758,15 +750,13 @@ QDataStream &QDataStream::operator>>(double &f)
     if (dev->read((char *)&f, 8) != 8) {
         f = 0.0;
         setStatus(ReadPastEnd);
-    } else {
-        if (!noswap) {
-            union {
-                double val1;
-                quint64 val2;
-            } x;
-            x.val2 = qbswap(*reinterpret_cast<quint64 *>(&f));
-            f = x.val1;
-        }
+    } else if (!noswap) {
+        union {
+            double val1;
+            quint64 val2;
+        } x;
+        x.val2 = qbswap(*reinterpret_cast<quint64 *>(&f));
+        f = x.val1;
     }
     return *this;
 }
