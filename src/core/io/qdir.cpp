@@ -2074,10 +2074,10 @@ static QDebug operator<<(QDebug debug, QDir::SortFlags sorting)
         debug << "QDir::SortFlags(NoSort)";
     } else {
         QString type;
-        if ((sorting & 3) == QDir::Name) type = QLatin1String("Name");
-        if ((sorting & 3) == QDir::Time) type = QLatin1String("Time");
-        if ((sorting & 3) == QDir::Size) type = QLatin1String("Size");
-        if ((sorting & 3) == QDir::Unsorted) type = QLatin1String("Unsorted");
+        if ((sorting & QDir::SortByMask) == QDir::Name) type = QLatin1String("Name");
+        if ((sorting & QDir::SortByMask) == QDir::Time) type = QLatin1String("Time");
+        if ((sorting & QDir::SortByMask) == QDir::Size) type = QLatin1String("Size");
+        if ((sorting & QDir::SortByMask) == QDir::Unsorted) type = QLatin1String("Unsorted");
 
         QStringList flags;
         if (sorting & QDir::DirsFirst) flags << QLatin1String("DirsFirst");
