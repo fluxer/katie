@@ -271,7 +271,6 @@ incmap = {
         'QMatrix3x4': 'qgenericmatrix.h',
         'QMatrix4x2': 'qgenericmatrix.h',
         'QMatrix4x3': 'qgenericmatrix.h',
-        'QMatrix4x4': 'qgenericmatrix.h',
         'QMouseEvent': 'qevent.h',
         'QMoveEvent': 'qevent.h',
         'QPaintEngineState': 'qpaintengine.h',
