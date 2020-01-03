@@ -37,7 +37,7 @@
 
 #include <QtCore/QString>
 
-#include "qscriptastvisitor_p.h"
+#include "qscriptastfwd_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -182,21 +182,18 @@ public:
     virtual BinaryExpression *binaryExpressionCast();
     virtual Statement *statementCast();
 
-    inline void accept(Visitor *visitor)
+    inline void accept()
     {
-        if (visitor->preVisit(this)) {
-            accept0(visitor);
-            visitor->postVisit(this);
-        }
+        accept0();
     }
 
-    static void acceptChild(Node *node, Visitor *visitor)
+    static void acceptChild(Node *node)
     {
         if (node)
-            node->accept(visitor);
+            node->accept();
     }
 
-    virtual void accept0(Visitor *visitor) = 0;
+    virtual void accept0() = 0;
 
     int startLine;
     int startColumn;
@@ -229,7 +226,7 @@ public:
     ThisExpression() { kind = Kind_ThisExpression; }
     virtual ~ThisExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 };
 
 class IdentifierExpression: public ExpressionNode
@@ -240,7 +237,7 @@ public:
 
     virtual ~IdentifierExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     QScriptNameIdImpl *name;
@@ -252,7 +249,7 @@ public:
     NullExpression() { kind = Kind_NullExpression; }
     virtual ~NullExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 };
 
 class TrueLiteral: public ExpressionNode
@@ -261,7 +258,7 @@ public:
     TrueLiteral() { kind = Kind_TrueLiteral; }
     virtual ~TrueLiteral() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 };
 
 class FalseLiteral: public ExpressionNode
@@ -270,7 +267,7 @@ public:
     FalseLiteral() { kind = Kind_FalseLiteral; }
     virtual ~FalseLiteral() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 };
 
 class NumericLiteral: public ExpressionNode
@@ -280,7 +277,7 @@ public:
         value (v) { kind = Kind_NumericLiteral; }
     virtual ~NumericLiteral() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes:
     double value;
@@ -294,7 +291,7 @@ public:
 
     virtual ~StringLiteral() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes:
     QScriptNameIdImpl *value;
@@ -308,7 +305,7 @@ public:
 
     virtual ~RegExpLiteral() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes:
     QScriptNameIdImpl *pattern;
@@ -332,7 +329,7 @@ public:
 
     virtual ~ArrayLiteral() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ElementList *elements;
@@ -350,7 +347,7 @@ public:
 
     virtual ~ObjectLiteral() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     PropertyNameAndValueList *properties;
@@ -380,7 +377,7 @@ public:
         return front;
     }
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     Elision *elision;
@@ -403,7 +400,7 @@ public:
 
     virtual ~Elision() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
     inline Elision *finish ()
     {
@@ -433,7 +430,7 @@ public:
 
     virtual ~PropertyNameAndValueList() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
     inline PropertyNameAndValueList *finish ()
     {
@@ -463,7 +460,7 @@ public:
 
     virtual ~IdentifierPropertyName() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     QScriptNameIdImpl *id;
@@ -476,7 +473,7 @@ public:
         id (n) { kind = Kind_StringLiteralPropertyName; }
     virtual ~StringLiteralPropertyName() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     QScriptNameIdImpl *id;
@@ -489,7 +486,7 @@ public:
         id (n) { kind = Kind_NumericLiteralPropertyName; }
     virtual ~NumericLiteralPropertyName() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     double id;
@@ -504,7 +501,7 @@ public:
 
     virtual ~ArrayMemberExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *base;
@@ -520,7 +517,7 @@ public:
 
     virtual ~FieldMemberExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *base;
@@ -536,7 +533,7 @@ public:
 
     virtual ~NewMemberExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *base;
@@ -551,7 +548,7 @@ public:
 
     virtual ~NewExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -566,7 +563,7 @@ public:
 
     virtual ~CallExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *base;
@@ -590,7 +587,7 @@ public:
 
     virtual ~ArgumentList() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
     inline ArgumentList *finish ()
     {
@@ -612,7 +609,7 @@ public:
 
     virtual ~PostIncrementExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *base;
@@ -626,7 +623,7 @@ public:
 
     virtual ~PostDecrementExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *base;
@@ -639,7 +636,7 @@ public:
         expression (e) { kind = Kind_DeleteExpression; }
     virtual ~DeleteExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -653,7 +650,7 @@ public:
 
     virtual ~VoidExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -667,7 +664,7 @@ public:
 
     virtual ~TypeOfExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -681,7 +678,7 @@ public:
 
     virtual ~PreIncrementExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -695,7 +692,7 @@ public:
 
     virtual ~PreDecrementExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -709,7 +706,7 @@ public:
 
     virtual ~UnaryPlusExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -723,7 +720,7 @@ public:
 
     virtual ~UnaryMinusExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -737,7 +734,7 @@ public:
 
     virtual ~TildeExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -751,7 +748,7 @@ public:
 
     virtual ~NotExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -768,7 +765,7 @@ public:
 
     virtual BinaryExpression *binaryExpressionCast();
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *left;
@@ -785,7 +782,7 @@ public:
 
     virtual ~ConditionalExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -801,7 +798,7 @@ public:
 
     virtual ~Expression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *left;
@@ -816,7 +813,7 @@ public:
 
     virtual ~Block() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     StatementList *statements;
@@ -839,7 +836,7 @@ public:
 
     virtual ~StatementList() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
     inline StatementList *finish ()
     {
@@ -862,7 +859,7 @@ public:
 
     virtual ~VariableStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     VariableDeclarationList *declarations;
@@ -877,7 +874,7 @@ public:
 
     virtual ~VariableDeclaration() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     QScriptNameIdImpl *name;
@@ -902,7 +899,7 @@ public:
 
     virtual ~VariableDeclarationList() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
     inline VariableDeclarationList *finish (bool readOnly)
     {
@@ -927,7 +924,7 @@ public:
     EmptyStatement() { kind = Kind_EmptyStatement; }
     virtual ~EmptyStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 };
 
 class ExpressionStatement: public Statement
@@ -938,7 +935,7 @@ public:
 
     virtual ~ExpressionStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -953,7 +950,7 @@ public:
 
     virtual ~IfStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -970,7 +967,7 @@ public:
 
     virtual ~DoWhileStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     Statement *statement;
@@ -986,7 +983,7 @@ public:
 
     virtual ~WhileStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -1002,7 +999,7 @@ public:
 
     virtual ~ForStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *initialiser;
@@ -1020,7 +1017,7 @@ public:
 
     virtual ~LocalForStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     VariableDeclarationList *declarations;
@@ -1038,7 +1035,7 @@ public:
 
     virtual ~ForEachStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *initialiser;
@@ -1055,7 +1052,7 @@ public:
 
     virtual ~LocalForEachStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     VariableDeclaration *declaration;
@@ -1071,7 +1068,7 @@ public:
 
     virtual ~ContinueStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     QScriptNameIdImpl *label;
@@ -1085,7 +1082,7 @@ public:
 
     virtual ~BreakStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     QScriptNameIdImpl *label;
@@ -1099,7 +1096,7 @@ public:
 
     virtual ~ReturnStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -1114,7 +1111,7 @@ public:
 
     virtual ~WithStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -1130,7 +1127,7 @@ public:
 
     virtual ~SwitchStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -1146,7 +1143,7 @@ public:
 
     virtual ~CaseBlock() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     CaseClauses *clauses;
@@ -1171,7 +1168,7 @@ public:
 
     virtual ~CaseClauses() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
     inline CaseClauses *finish ()
     {
@@ -1194,7 +1191,7 @@ public:
 
     virtual ~CaseClause() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -1210,7 +1207,7 @@ public:
 
     virtual ~DefaultClause() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     StatementList *statements;
@@ -1225,7 +1222,7 @@ public:
 
     virtual ~LabelledStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     QScriptNameIdImpl *label;
@@ -1240,7 +1237,7 @@ public:
 
     virtual ~ThrowStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     ExpressionNode *expression;
@@ -1263,7 +1260,7 @@ public:
 
     virtual ~TryStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     Statement *statement;
@@ -1280,7 +1277,7 @@ public:
 
     virtual ~Catch() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     QScriptNameIdImpl *name;
@@ -1296,7 +1293,7 @@ public:
 
     virtual ~Finally() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     Statement *statement;
@@ -1311,7 +1308,7 @@ public:
 
     virtual ~FunctionExpression() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     QScriptNameIdImpl *name;
@@ -1328,7 +1325,7 @@ public:
 
     virtual ~FunctionDeclaration() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 };
 
 class FormalParameterList: public Node
@@ -1348,7 +1345,7 @@ public:
 
     virtual ~FormalParameterList() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
     inline FormalParameterList *finish ()
     {
@@ -1371,7 +1368,7 @@ public:
 
     virtual ~FunctionBody() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     SourceElements *elements;
@@ -1386,7 +1383,7 @@ public:
 
     virtual ~Program() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     SourceElements *elements;
@@ -1409,7 +1406,7 @@ public:
 
     virtual ~SourceElements() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
     inline SourceElements *finish ()
     {
@@ -1441,7 +1438,7 @@ public:
 
     virtual ~FunctionSourceElement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     FunctionDeclaration *declaration;
@@ -1456,7 +1453,7 @@ public:
 
     virtual ~StatementSourceElement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 
 // attributes
     Statement *statement;
@@ -1470,7 +1467,7 @@ public:
 
     virtual ~DebuggerStatement() {}
 
-    virtual void accept0(Visitor *visitor);
+    virtual void accept0();
 };
 
 } } // namespace AST

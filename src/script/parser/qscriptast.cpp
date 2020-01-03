@@ -23,8 +23,6 @@
 
 #include "qscriptast_p.h"
 
-#include "qscriptastvisitor_p.h"
-
 QT_BEGIN_NAMESPACE
 
 namespace QScript { namespace AST {
@@ -59,707 +57,415 @@ Statement *Statement::statementCast()
     return this;
 }
 
-void ThisExpression::accept0(Visitor *visitor)
+void ThisExpression::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void IdentifierExpression::accept0(Visitor *visitor)
+void IdentifierExpression::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void NullExpression::accept0(Visitor *visitor)
+void NullExpression::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void TrueLiteral::accept0(Visitor *visitor)
+void TrueLiteral::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void FalseLiteral::accept0(Visitor *visitor)
+void FalseLiteral::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void StringLiteral::accept0(Visitor *visitor)
+void StringLiteral::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void NumericLiteral::accept0(Visitor *visitor)
+void NumericLiteral::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void RegExpLiteral::accept0(Visitor *visitor)
+void RegExpLiteral::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void ArrayLiteral::accept0(Visitor *visitor)
+void ArrayLiteral::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(elements, visitor);
-        acceptChild(elision, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(elements);
+    acceptChild(elision);
 }
 
-void ObjectLiteral::accept0(Visitor *visitor)
+void ObjectLiteral::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(properties, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(properties);
 }
 
-void ElementList::accept0(Visitor *visitor)
+void ElementList::accept0()
 {
-    if (visitor->visit(this)) {
-        ElementList *it = this;
-        do {
-            acceptChild(it->elision, visitor);
-            acceptChild(it->expression, visitor);
-            it = it->next;
-        } while (it);
-    }
-
-    visitor->endVisit(this);
+    ElementList *it = this;
+    do {
+        acceptChild(it->elision);
+        acceptChild(it->expression);
+        it = it->next;
+    } while (it);
 }
 
-void Elision::accept0(Visitor *visitor)
+void Elision::accept0()
 {
-    if (visitor->visit(this)) {
-        // ###
-    }
-
-    visitor->endVisit(this);
+    // ###
 }
 
-void PropertyNameAndValueList::accept0(Visitor *visitor)
+void PropertyNameAndValueList::accept0()
 {
-    if (visitor->visit(this)) {
-        PropertyNameAndValueList *it = this;
-        do {
-            acceptChild(it->name, visitor);
-            acceptChild(it->value, visitor);
-            it = it->next;
-        } while (it);
-    }
-
-    visitor->endVisit(this);
+    PropertyNameAndValueList *it = this;
+    do {
+        acceptChild(it->name);
+        acceptChild(it->value);
+        it = it->next;
+    } while (it);
 }
 
-void IdentifierPropertyName::accept0(Visitor *visitor)
+void IdentifierPropertyName::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void StringLiteralPropertyName::accept0(Visitor *visitor)
+void StringLiteralPropertyName::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void NumericLiteralPropertyName::accept0(Visitor *visitor)
+void NumericLiteralPropertyName::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void ArrayMemberExpression::accept0(Visitor *visitor)
+void ArrayMemberExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(base, visitor);
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(base);
+    acceptChild(expression);
 }
 
-void FieldMemberExpression::accept0(Visitor *visitor)
+void FieldMemberExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(base, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(base);
 }
 
-void NewMemberExpression::accept0(Visitor *visitor)
+void NewMemberExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(base, visitor);
-        acceptChild(arguments, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(base);
+    acceptChild(arguments);
 }
 
-void NewExpression::accept0(Visitor *visitor)
+void NewExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void CallExpression::accept0(Visitor *visitor)
+void CallExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(base, visitor);
-        acceptChild(arguments, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(base);
+    acceptChild(arguments);
 }
 
-void ArgumentList::accept0(Visitor *visitor)
+void ArgumentList::accept0()
 {
-    if (visitor->visit(this)) {
-        ArgumentList *it = this;
-        do {
-            acceptChild(it->expression, visitor);
-            it = it->next;
-        } while (it);
-    }
-
-    visitor->endVisit(this);
+    ArgumentList *it = this;
+    do {
+        acceptChild(it->expression);
+        it = it->next;
+    } while (it);
 }
 
-void PostIncrementExpression::accept0(Visitor *visitor)
+void PostIncrementExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(base, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(base);
 }
 
-void PostDecrementExpression::accept0(Visitor *visitor)
+void PostDecrementExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(base, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(base);
 }
 
-void DeleteExpression::accept0(Visitor *visitor)
+void DeleteExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void VoidExpression::accept0(Visitor *visitor)
+void VoidExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void TypeOfExpression::accept0(Visitor *visitor)
+void TypeOfExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void PreIncrementExpression::accept0(Visitor *visitor)
+void PreIncrementExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void PreDecrementExpression::accept0(Visitor *visitor)
+void PreDecrementExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void UnaryPlusExpression::accept0(Visitor *visitor)
+void UnaryPlusExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void UnaryMinusExpression::accept0(Visitor *visitor)
+void UnaryMinusExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void TildeExpression::accept0(Visitor *visitor)
+void TildeExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void NotExpression::accept0(Visitor *visitor)
+void NotExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void BinaryExpression::accept0(Visitor *visitor)
+void BinaryExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(left, visitor);
-        acceptChild(right, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(left);
+    acceptChild(right);
 }
 
-void ConditionalExpression::accept0(Visitor *visitor)
+void ConditionalExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-        acceptChild(ok, visitor);
-        acceptChild(ko, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
+    acceptChild(ok);
+    acceptChild(ko);
 }
 
-void Expression::accept0(Visitor *visitor)
+void Expression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(left, visitor);
-        acceptChild(right, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(left);
+    acceptChild(right);
 }
 
-void Block::accept0(Visitor *visitor)
+void Block::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(statements, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(statements);
 }
 
-void StatementList::accept0(Visitor *visitor)
+void StatementList::accept0()
 {
-    if (visitor->visit(this)) {
-        StatementList *it = this;
-        do {
-            acceptChild(it->statement, visitor);
-            it = it->next;
-        } while (it);
-    }
-
-    visitor->endVisit(this);
+    StatementList *it = this;
+    do {
+        acceptChild(it->statement);
+        it = it->next;
+    } while (it);
 }
 
-void VariableStatement::accept0(Visitor *visitor)
+void VariableStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(declarations, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(declarations);
 }
 
-void VariableDeclarationList::accept0(Visitor *visitor)
+void VariableDeclarationList::accept0()
 {
-    if (visitor->visit(this)) {
-        VariableDeclarationList *it = this;
-        do {
-            acceptChild(it->declaration, visitor);
-            it = it->next;
-        } while (it);
-    }
-
-    visitor->endVisit(this);
+    VariableDeclarationList *it = this;
+    do {
+        acceptChild(it->declaration);
+        it = it->next;
+    } while (it);
 }
 
-void VariableDeclaration::accept0(Visitor *visitor)
+void VariableDeclaration::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void EmptyStatement::accept0(Visitor *visitor)
+void EmptyStatement::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void ExpressionStatement::accept0(Visitor *visitor)
+void ExpressionStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void IfStatement::accept0(Visitor *visitor)
+void IfStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-        acceptChild(ok, visitor);
-        acceptChild(ko, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
+    acceptChild(ok);
+    acceptChild(ko);
 }
 
-void DoWhileStatement::accept0(Visitor *visitor)
+void DoWhileStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(statement, visitor);
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(statement);
+    acceptChild(expression);
 }
 
-void WhileStatement::accept0(Visitor *visitor)
+void WhileStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-        acceptChild(statement, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
+    acceptChild(statement);
 }
 
-void ForStatement::accept0(Visitor *visitor)
+void ForStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(initialiser, visitor);
-        acceptChild(condition, visitor);
-        acceptChild(expression, visitor);
-        acceptChild(statement, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(initialiser);
+    acceptChild(condition);
+    acceptChild(expression);
+    acceptChild(statement);
 }
 
-void LocalForStatement::accept0(Visitor *visitor)
+void LocalForStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(declarations, visitor);
-        acceptChild(condition, visitor);
-        acceptChild(expression, visitor);
-        acceptChild(statement, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(declarations);
+    acceptChild(condition);
+    acceptChild(expression);
+    acceptChild(statement);
 }
 
-void ForEachStatement::accept0(Visitor *visitor)
+void ForEachStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(initialiser, visitor);
-        acceptChild(expression, visitor);
-        acceptChild(statement, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(initialiser);
+    acceptChild(expression);
+    acceptChild(statement);
 }
 
-void LocalForEachStatement::accept0(Visitor *visitor)
+void LocalForEachStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(declaration, visitor);
-        acceptChild(expression, visitor);
-        acceptChild(statement, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(declaration);
+    acceptChild(expression);
+    acceptChild(statement);
 }
 
-void ContinueStatement::accept0(Visitor *visitor)
+void ContinueStatement::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void BreakStatement::accept0(Visitor *visitor)
+void BreakStatement::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
-void ReturnStatement::accept0(Visitor *visitor)
+void ReturnStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void WithStatement::accept0(Visitor *visitor)
+void WithStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-        acceptChild(statement, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
+    acceptChild(statement);
 }
 
-void SwitchStatement::accept0(Visitor *visitor)
+void SwitchStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-        acceptChild(block, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
+    acceptChild(block);
 }
 
-void CaseBlock::accept0(Visitor *visitor)
+void CaseBlock::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(clauses, visitor);
-        acceptChild(defaultClause, visitor);
-        acceptChild(moreClauses, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(clauses);
+    acceptChild(defaultClause);
+    acceptChild(moreClauses);
 }
 
-void CaseClauses::accept0(Visitor *visitor)
+void CaseClauses::accept0()
 {
-    if (visitor->visit(this)) {
-        CaseClauses *it = this;
-        do {
-            acceptChild(it->clause, visitor);
-            it = it->next;
-        } while (it);
-    }
-
-    visitor->endVisit(this);
+    CaseClauses *it = this;
+    do {
+        acceptChild(it->clause);
+        it = it->next;
+    } while (it);
 }
 
-void CaseClause::accept0(Visitor *visitor)
+void CaseClause::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-        acceptChild(statements, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
+    acceptChild(statements);
 }
 
-void DefaultClause::accept0(Visitor *visitor)
+void DefaultClause::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(statements, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(statements);
 }
 
-void LabelledStatement::accept0(Visitor *visitor)
+void LabelledStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(statement, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(statement);
 }
 
-void ThrowStatement::accept0(Visitor *visitor)
+void ThrowStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(expression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(expression);
 }
 
-void TryStatement::accept0(Visitor *visitor)
+void TryStatement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(statement, visitor);
-        acceptChild(catchExpression, visitor);
-        acceptChild(finallyExpression, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(statement);
+    acceptChild(catchExpression);
+    acceptChild(finallyExpression);
 }
 
-void Catch::accept0(Visitor *visitor)
+void Catch::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(statement, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(statement);
 }
 
-void Finally::accept0(Visitor *visitor)
+void Finally::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(statement, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(statement);
 }
 
-void FunctionDeclaration::accept0(Visitor *visitor)
+void FunctionDeclaration::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(formals, visitor);
-        acceptChild(body, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(formals);
+    acceptChild(body);
 }
 
-void FunctionExpression::accept0(Visitor *visitor)
+void FunctionExpression::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(formals, visitor);
-        acceptChild(body, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(formals);
+    acceptChild(body);
 }
 
-void FormalParameterList::accept0(Visitor *visitor)
+void FormalParameterList::accept0()
 {
-    if (visitor->visit(this)) {
-        // ###
-    }
-
-    visitor->endVisit(this);
+    // ###
 }
 
-void FunctionBody::accept0(Visitor *visitor)
+void FunctionBody::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(elements, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(elements);
 }
 
-void Program::accept0(Visitor *visitor)
+void Program::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(elements, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(elements);
 }
 
-void SourceElements::accept0(Visitor *visitor)
+void SourceElements::accept0()
 {
-    if (visitor->visit(this)) {
-        SourceElements *it = this;
-        do {
-            acceptChild(it->element, visitor);
-            it = it->next;
-        } while (it);
-    }
-
-    visitor->endVisit(this);
+    SourceElements *it = this;
+    do {
+        acceptChild(it->element);
+        it = it->next;
+    } while (it);
 }
 
-void FunctionSourceElement::accept0(Visitor *visitor)
+void FunctionSourceElement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(declaration, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(declaration);
 }
 
-void StatementSourceElement::accept0(Visitor *visitor)
+void StatementSourceElement::accept0()
 {
-    if (visitor->visit(this)) {
-        acceptChild(statement, visitor);
-    }
-
-    visitor->endVisit(this);
+    acceptChild(statement);
 }
 
-void DebuggerStatement::accept0(Visitor *visitor)
+void DebuggerStatement::accept0()
 {
-    if (visitor->visit(this)) {
-    }
-
-    visitor->endVisit(this);
 }
 
 } } // namespace QScript::AST
