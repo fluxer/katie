@@ -306,14 +306,6 @@ set_package_properties(Threads PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(Git)
-set_package_properties(Git PROPERTIES
-    PURPOSE "Git checkout stored for the sake of bug reports"
-    DESCRIPTION "Free and open source distributed version control system"
-    URL "https://git-scm.com/"
-    TYPE RECOMMENDED
-)
-
 find_package(NIS)
 set_package_properties(NIS PROPERTIES
     PURPOSE "Required for Network Information Service support"
@@ -794,7 +786,6 @@ katie_generate_obsolete(QMatrix3x3 QtGui qgenericmatrix.h)
 katie_generate_obsolete(QMatrix3x4 QtGui qgenericmatrix.h)
 katie_generate_obsolete(QMatrix4x2 QtGui qgenericmatrix.h)
 katie_generate_obsolete(QMatrix4x3 QtGui qgenericmatrix.h)
-katie_generate_obsolete(QMatrix4x4 QtGui qgenericmatrix.h)
 katie_generate_obsolete(QMetaClassInfo QtCore qmetaobject.h)
 katie_generate_obsolete(QMetaEnum QtCore qmetaobject.h)
 katie_generate_obsolete(QMetaMethod QtCore qmetaobject.h)
@@ -888,6 +879,7 @@ katie_generate_obsolete(QStyleOptionSizeGrip QtGui qstyleoption.h)
 katie_generate_obsolete(QStyleOptionSlider QtGui qstyleoption.h)
 katie_generate_obsolete(QStyleOptionSpinBox QtGui qstyleoption.h)
 katie_generate_obsolete(QStyleOptionTabBarBase QtGui qstyleoption.h)
+katie_generate_obsolete(QStyleOptionTabBarBaseV2 QtGui qstyleoption.h)
 katie_generate_obsolete(QStyleOptionTab QtGui qstyleoption.h)
 katie_generate_obsolete(QStyleOptionTabV2 QtGui qstyleoption.h)
 katie_generate_obsolete(QStyleOptionTabV3 QtGui qstyleoption.h)
@@ -944,6 +936,7 @@ katie_generate_obsolete(QTextListFormat QtGui qtextformat.h)
 katie_generate_obsolete(QTextObjectInterface QtGui qabstracttextdocumentlayout.h)
 katie_generate_obsolete(QTextStreamFunction QtCore qtextstream.h)
 katie_generate_obsolete(QTextStreamManipulator QtCore qtextstream.h)
+katie_generate_obsolete(QTextTableCellFormat QtGui qtextformat.h)
 katie_generate_obsolete(QTextTableCell QtGui qtexttable.h)
 katie_generate_obsolete(QTextTableFormat QtGui qtextformat.h)
 katie_generate_obsolete(QtGlobal QtCore qglobal.h)
@@ -1015,7 +1008,7 @@ katie_generate_obsolete(customwidget.h QtDesigner ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
 
 katie_string_wrap("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
-katie_git_checkout("${GIT_EXECUTABLE}" KATIE_GIT)
+katie_git_checkout(KATIE_GIT)
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/KatieConfig.cmake

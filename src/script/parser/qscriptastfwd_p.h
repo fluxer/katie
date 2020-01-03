@@ -41,7 +41,6 @@ QT_BEGIN_NAMESPACE
 
 namespace QScript { namespace AST {
 
-class Visitor;
 class Node;
 class ExpressionNode;
 class Statement;

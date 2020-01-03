@@ -32,11 +32,11 @@
 ****************************************************************************/
 
 #include "qtcolorbutton.h"
-#include <QtCore/QEvent>
 #include <QtCore/QMimeData>
 #include <QtGui/QColorDialog>
 #include <QtGui/QPainter>
 #include <QtGui/QApplication>
+#include <QtGui/QMouseEvent>
 
 QT_BEGIN_NAMESPACE
 

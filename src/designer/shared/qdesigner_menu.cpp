@@ -43,7 +43,6 @@
 #include "qdesigner_objectinspector_p.h"
 #include "qdesignercommon_p.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QTimer>
 
 #include <QtDesigner/abstractformeditor.h>
@@ -58,6 +57,7 @@
 #include <QtGui/QRubberBand>
 #include <QtGui/QToolTip>
 #include <QtGui/QToolBar>
+#include <QDropEvent>
 
 QT_BEGIN_NAMESPACE
 

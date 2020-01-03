@@ -116,6 +116,7 @@ set(GUI_PUBLIC_HEADERS
     QListWidget
     QMainWindow
     QMatrix
+    QMatrix4x4
     QMdiArea
     QMdiSubWindow
     QMenu

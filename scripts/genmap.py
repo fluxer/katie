@@ -24,7 +24,7 @@ def exportscan(sdir, pattern, component):
     regex = re.compile('(?:class|struct) (?:%s) (\w+)' % pattern)
     for sroot, sdir, lfiles in os.walk(sdir):
         for sfile in lfiles:
-            if not sfile.endswith(('.h', '_p.h')):
+            if not sfile.endswith('.h') or sfile.endswith('_p.h'):
                 continue
             sfull = '%s/%s' % (sroot, sfile)
             with open(sfull, 'rb') as f:

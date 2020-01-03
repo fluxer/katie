@@ -5392,13 +5392,12 @@ QGraphicsItemCache *QGraphicsItemPrivate::maybeExtraItemCache() const
 /*!
     \internal
 */
-QGraphicsItemCache *QGraphicsItemPrivate::extraItemCache() const
+QGraphicsItemCache *QGraphicsItemPrivate::extraItemCache()
 {
     QGraphicsItemCache *c = (QGraphicsItemCache *)qvariant_cast<void *>(extra(ExtraCacheData));
     if (!c) {
-        QGraphicsItemPrivate *that = const_cast<QGraphicsItemPrivate *>(this);
         c = new QGraphicsItemCache;
-        that->setExtra(ExtraCacheData, QVariant::fromValue<void *>(c));
+        setExtra(ExtraCacheData, QVariant::fromValue<void *>(c));
     }
     return c;
 }

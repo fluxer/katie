@@ -40,44 +40,17 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QTEST_NO_SIZEOF_CHECK
-template <int>
-class QEventSizeOfChecker
-{
-private:
-    QEventSizeOfChecker() {}
-};
-
-template <>
-class QEventSizeOfChecker<sizeof(QEvent)>
-{
-public:
-    QEventSizeOfChecker() {}
-};
-#endif
-
 class QSpontaneKeyEvent
 {
 public:
-    void setSpontaneous() { spont = 1; }
+    void setSpontaneous() { spont = true; }
     bool spontaneous() { return spont; }
-    virtual void dummyFunc() {}
     virtual ~QSpontaneKeyEvent() {}
-
-#ifndef QTEST_NO_SIZEOF_CHECK
-    inline void ifYouGetCompileErrorHereYouUseWrongQt()
-    {
-        // this is a static assert in case QEvent changed in Qt
-        QEventSizeOfChecker<sizeof(QSpontaneKeyEvent)> dummy;
-
-        // Fixing the warnings about unused variables
-        Q_UNUSED(posted);
-        Q_UNUSED(m_accept);
-    }
-#endif
 
     static inline void setSpontaneous(QEvent *ev)
     {
+        Q_ASSERT(sizeof(QSpontaneKeyEvent) == sizeof(QEvent));
+
         // use a union instead of a reinterpret_cast to prevent alignment warnings
         union
         {
@@ -90,13 +63,13 @@ public:
     }
 
 protected:
-    void *d;
     QEvent::Type t;
 
 private:
     bool posted;
     bool spont;
     bool m_accept;
+    int looplevel;
 };
 
 QT_END_NAMESPACE

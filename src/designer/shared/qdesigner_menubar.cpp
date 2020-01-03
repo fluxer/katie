@@ -48,12 +48,12 @@
 #include <QtDesigner/abstractwidgetfactory.h>
 #include <QtDesigner/QExtensionManager>
 
-#include <QtCore/QEvent>
 #include <QtCore/QMimeData>
 #include <QtGui/QApplication>
 #include <QtGui/QDrag>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPainter>
+#include <QtGui/QDropEvent>
 
 QT_BEGIN_NAMESPACE
 

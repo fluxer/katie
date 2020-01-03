@@ -33,7 +33,7 @@
 
 #include "previewwidget.h"
 #include "ui_previewwidget.h"
-#include <QEvent>
+#include <QCloseEvent>
 
 QT_BEGIN_NAMESPACE
 

@@ -52,7 +52,7 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QStyle>
-#include <QEvent>
+#include <QCloseEvent>
 #include <QDebug>
 #include <QPixmap>
 

@@ -34,7 +34,7 @@
 #include "colorbutton.h"
 
 #include <QApplication>
-#include <QEvent>
+#include <QDragMoveEvent>
 #include <QColorDialog>
 #include <QPainter>
 #include <QMimeData>

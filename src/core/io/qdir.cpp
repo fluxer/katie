@@ -1505,14 +1505,10 @@ bool QDir::operator==(const QDir &dir) const
         if (d->dirEntry.filePath() == other->dirEntry.filePath())
             return true;
 
-        if (exists()) {
-            if (!dir.exists())
-                return false; //can't be equal if only one exists
+        if (exists() && dir.exists()) {
             // Both exist, fallback to expensive canonical path computation
             return canonicalPath().compare(dir.canonicalPath(), sensitive) == 0;
         } else {
-            if (dir.exists())
-                return false; //can't be equal if only one exists
             // Neither exists, compare absolute paths rather than canonical (which would be empty strings)
             d->resolveAbsoluteEntry();
             other->resolveAbsoluteEntry();
@@ -2074,10 +2070,10 @@ static QDebug operator<<(QDebug debug, QDir::SortFlags sorting)
         debug << "QDir::SortFlags(NoSort)";
     } else {
         QString type;
-        if ((sorting & 3) == QDir::Name) type = QLatin1String("Name");
-        if ((sorting & 3) == QDir::Time) type = QLatin1String("Time");
-        if ((sorting & 3) == QDir::Size) type = QLatin1String("Size");
-        if ((sorting & 3) == QDir::Unsorted) type = QLatin1String("Unsorted");
+        if ((sorting & QDir::SortByMask) == QDir::Name) type = QLatin1String("Name");
+        if ((sorting & QDir::SortByMask) == QDir::Time) type = QLatin1String("Time");
+        if ((sorting & QDir::SortByMask) == QDir::Size) type = QLatin1String("Size");
+        if ((sorting & QDir::SortByMask) == QDir::Unsorted) type = QLatin1String("Unsorted");
 
         QStringList flags;
         if (sorting & QDir::DirsFirst) flags << QLatin1String("DirsFirst");
@@ -2085,9 +2081,10 @@ static QDebug operator<<(QDebug debug, QDir::SortFlags sorting)
         if (sorting & QDir::IgnoreCase) flags << QLatin1String("IgnoreCase");
         if (sorting & QDir::LocaleAware) flags << QLatin1String("LocaleAware");
         if (sorting & QDir::Type) flags << QLatin1String("Type");
-        debug << "QDir::SortFlags(" << qPrintable(type)
-              << '|'
-              << qPrintable(flags.join(QLatin1String("|"))) << ')';
+        debug << "QDir::SortFlags(" << qPrintable(type);
+        if (!flags.isEmpty())
+            debug << '|' << qPrintable(flags.join(QLatin1String("|")));
+        debug << ')';
     }
     return debug;
 }
