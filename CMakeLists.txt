@@ -1003,7 +1003,7 @@ katie_generate_obsolete(QXmlStreamNotationDeclarations QtXml qxmlstream.h)
 katie_generate_obsolete(QXmlStreamReader QtXml qxmlstream.h)
 katie_generate_obsolete(QXmlStreamWriter QtXml qxmlstream.h)
 # those have shuffled from QtDesigner to QtUiTools
-katie_generate_obsolete(formbuilder.h.h QtDesigner ../QtUiTools/formbuilder.h)
+katie_generate_obsolete(formbuilder.h QtDesigner ../QtUiTools/formbuilder.h)
 katie_generate_obsolete(customwidget.h QtDesigner ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
 
