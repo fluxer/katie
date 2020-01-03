@@ -1187,19 +1187,6 @@ static const struct scriptTblData {
 };
 static const qint16 scriptTblSize = sizeof(scriptTbl) / sizeof(scriptTblData);
 
-static const QLocale::Country imperialTbl[] = {
-    QLocale::Country::Bahamas,
-    QLocale::Country::Belize,
-    QLocale::Country::CaymanIslands,
-    QLocale::Country::Liberia,
-    QLocale::Country::MyanmarBurma,
-    QLocale::Country::Palau,
-    QLocale::Country::PuertoRico,
-    QLocale::Country::UnitedKingdom,
-    QLocale::Country::UnitedStates,
-};
-static const qint16 imperialTblSize = sizeof(imperialTbl);
-
 static const struct subtagAliasTblData {
     const QLocale::Language fromlanguage;
     const QLocale::Script fromscript;

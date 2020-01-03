@@ -162,8 +162,6 @@ likelysubtagsmap = {}
 languagealiasmap = {}
 countryaliasmap = {}
 scriptaliasmap = {}
-# main lists
-imperiallist = []
 # regular expressions
 localeregex = re.compile('([^_|-|\.|@]+)+')
 
@@ -238,24 +236,6 @@ if printenumsandexit:
     sys.exit(0)
 else:
     printtable(scriptmap, 'Script')
-
-# imperial parsing
-tree = ET.parse('common/supplemental/supplementalData.xml')
-root = tree.getroot()
-for measurementsystem in root.findall('./measurementData/measurementSystem'):
-    measurementsystemtype = measurementsystem.get('type')
-    if measurementsystemtype in ('UK', 'US'):
-        territories = measurementsystem.get('territories')
-        for territory in territories.split(' '):
-            imperiallist.append(tocountryenum(territory))
-
-print('''static const QLocale::Country imperialTbl[] = {''')
-
-for string in sorted(imperiallist):
-    print('    %s,' % string)
-
-print('};')
-print('static const qint16 imperialTblSize = sizeof(imperialTbl);\n')
 
 # likely subtags parsing
 # TODO: variant support

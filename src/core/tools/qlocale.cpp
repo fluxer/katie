@@ -1811,12 +1811,21 @@ QList<Qt::DayOfWeek> QLocale::weekdays() const
 */
 QLocale::MeasurementSystem QLocale::measurementSystem() const
 {
-    for (qint16 i = 0; i < imperialTblSize; ++i) {
-        if (imperialTbl[i] == d()->m_country) {
+    UErrorCode error = U_ZERO_ERROR;
+    UMeasurementSystem measurement = ulocdata_getMeasurementSystem(bcp47Name().toLatin1().constData(), &error);
+    switch (measurement) {
+        case UMS_SI:
+            return QLocale::MetricSystem;
+        case UMS_US:
             return QLocale::ImperialSystem;
-        }
+        case UMS_UK:
+            return QLocale::UKSystem;
+#ifndef U_HIDE_DEPRECATED_API
+        case UMS_LIMIT:
+            break;
+#endif
     }
-    return QLocale::MetricSystem;
+    Q_UNREACHABLE();
 }
 
 /*!
