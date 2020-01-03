@@ -47,10 +47,10 @@
 #include <QtDesigner/abstractwidgetfactory.h>
 #include <QtDesigner/propertysheet.h>
 
-#include <QtCore/QEvent>
 #include <QtGui/QPainter>
 #include <QtGui/QMenu>
 #include <QtGui/QApplication>
+#include <QtGui/QMouseEvent>
 
 QT_BEGIN_NAMESPACE
 
