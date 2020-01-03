@@ -307,7 +307,7 @@ macro(KATIE_OPTIMIZE_HEADERS DIR)
         )
     else()
         get_filename_component(basename "${DIR}" NAME)
-        katie_warning("unifdef not installed, cannot optimize headers for: ${basename}")
+        message(WARNING "unifdef not installed, cannot optimize headers for: ${basename}")
     endif()
 endmacro()
 
