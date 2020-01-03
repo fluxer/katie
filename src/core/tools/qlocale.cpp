@@ -1813,6 +1813,11 @@ QLocale::MeasurementSystem QLocale::measurementSystem() const
 {
     UErrorCode error = U_ZERO_ERROR;
     UMeasurementSystem measurement = ulocdata_getMeasurementSystem(bcp47Name().toLatin1().constData(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QLocale::measurementSystem: ulocdata_getMeasurementSystem(%s) failed %s",
+            bcp47Name().toLatin1().constData(), u_errorName(error));
+        return QLocale::MetricSystem;
+    }
     switch (measurement) {
         case UMS_SI:
             return QLocale::MetricSystem;
