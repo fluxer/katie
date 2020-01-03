@@ -361,7 +361,7 @@ public:
     QList<ExtraStruct> extras;
 
     QGraphicsItemCache *maybeExtraItemCache() const;
-    QGraphicsItemCache *extraItemCache() const;
+    QGraphicsItemCache *extraItemCache();
     void removeExtraItemCache();
 
     void updatePaintedViewBoundingRects(bool updateChildren);
