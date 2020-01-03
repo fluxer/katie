@@ -306,14 +306,6 @@ set_package_properties(Threads PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(Git)
-set_package_properties(Git PROPERTIES
-    PURPOSE "Git checkout stored for the sake of bug reports"
-    DESCRIPTION "Free and open source distributed version control system"
-    URL "https://git-scm.com/"
-    TYPE RECOMMENDED
-)
-
 find_package(NIS)
 set_package_properties(NIS PROPERTIES
     PURPOSE "Required for Network Information Service support"
@@ -1016,7 +1008,7 @@ katie_generate_obsolete(customwidget.h QtDesigner ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
 
 katie_string_wrap("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
-katie_git_checkout("${GIT_EXECUTABLE}" KATIE_GIT)
+katie_git_checkout(KATIE_GIT)
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/KatieConfig.cmake
