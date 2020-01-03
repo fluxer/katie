@@ -51,11 +51,6 @@ public:
     {
         Q_ASSERT(sizeof(QSpontaneKeyEvent) == sizeof(QEvent));
 
-        // Fixing the warnings about unused variables
-        Q_UNUSED(posted);
-        Q_UNUSED(m_accept);
-        Q_UNUSED(looplevel);
-
         // use a union instead of a reinterpret_cast to prevent alignment warnings
         union
         {
