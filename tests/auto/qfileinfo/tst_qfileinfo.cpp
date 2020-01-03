@@ -45,7 +45,6 @@
 #include <qplatformdefs.h>
 #include <qdebug.h>
 #include <qfileinfo_p.h>
-#include "../network-settings.h"
 #include "../../shared/filesystem.h"
 
 #ifdef Q_OS_UNIX
