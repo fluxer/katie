@@ -278,7 +278,7 @@ void QLocalePrivate::getLangAndCountry(const QString &name, QLocale::Language &l
     QString lang_code;
     QString script_code;
     QString cntry_code;
-    if (!qt_splitLocaleName(name, lang_code, script_code, cntry_code))
+    if (Q_UNLIKELY(!qt_splitLocaleName(name, lang_code, script_code, cntry_code)))
         return;
 
     lang = QLocalePrivate::codeToLanguage(lang_code);
