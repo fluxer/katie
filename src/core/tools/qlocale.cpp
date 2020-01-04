@@ -1960,14 +1960,8 @@ QLocale::MeasurementSystem QLocale::measurementSystem() const
 */
 Qt::LayoutDirection QLocale::textDirection() const
 {
-    Language lang = language();
-    if (lang == QLocale::Arabic ||
-        lang == QLocale::Hebrew ||
-        lang == QLocale::Persian ||
-        lang == QLocale::Urdu ||
-        lang == QLocale::Syriac)
+    if (uloc_isRightToLeft(bcp47Name().toLatin1().constData()))
         return Qt::RightToLeft;
-
     return Qt::LeftToRight;
 }
 
