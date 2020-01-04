@@ -354,7 +354,7 @@ void QDBusAdaptorConnector::qt_static_metacall(QObject *_o, QMetaObject::Call _c
         case 0: _t->relaySignal((*reinterpret_cast< QObject*(*)>(_a[1])),(*reinterpret_cast< const QMetaObject*(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< const QVariantList(*)>(_a[4]))); break;
         case 1: _t->relaySlot(_a); break; // HAND EDIT: add the _a parameter
         case 2: _t->polish(); break;
-        default: ;
+        default: break;
         }
     }
 }
