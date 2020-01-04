@@ -701,12 +701,13 @@ int QMetaObject::indexOfClassInfo(const char *name) const
     int i = -1;
     const QMetaObject *m = this;
     while (m && i < 0) {
-        for (i = priv(m->d.data)->classInfoCount-1; i >= 0; --i)
+        for (i = priv(m->d.data)->classInfoCount-1; i >= 0; --i) {
             if (strcmp(name, m->d.stringdata
                        + m->d.data[priv(m->d.data)->classInfoData + 2*i]) == 0) {
                 i += m->classInfoOffset();
                 break;
             }
+        }
         m = m->d.superdata;
     }
     return i;
