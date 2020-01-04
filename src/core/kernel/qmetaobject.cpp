@@ -573,9 +573,10 @@ int QMetaObjectPrivate::indexOfSignalRelative(const QMetaObject **baseObject,
     const QMetaObject *m = *baseObject;
     if (i >= 0 && m && m->d.superdata) {
         int conflict = m->d.superdata->indexOfMethod(signal);
-        if (conflict >= 0)
+        if (Q_UNLIKELY(conflict >= 0)) {
             qWarning("QMetaObject::indexOfSignal: signal %s from %s redefined in %s",
                      signal, m->d.superdata->d.stringdata, m->d.stringdata);
+        }
     }
 #endif
     return i;

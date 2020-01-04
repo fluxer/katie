@@ -100,7 +100,7 @@ QEventLoop::QEventLoop(QObject *parent)
     : QObject(*new QEventLoopPrivate, parent)
 {
     Q_D(QEventLoop);
-    if (!QCoreApplication::instance()) {
+    if (Q_UNLIKELY(!QCoreApplication::instance())) {
         qWarning("QEventLoop: Cannot be used without QApplication");
     } else if (!d->threadData->eventDispatcher) {
         QThreadPrivate::createEventDispatcher(d->threadData);
@@ -168,7 +168,7 @@ int QEventLoop::exec(ProcessEventsFlags flags)
     if (d->threadData->quitNow)
         return -1;
 
-    if (d->inExec) {
+    if (Q_UNLIKELY(d->inExec)) {
         qWarning("QEventLoop::exec: instance %p has already called exec()", this);
         return -1;
     }
