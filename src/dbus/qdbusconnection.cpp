@@ -67,7 +67,7 @@ void QDBusConnectionManager::setSender(const QDBusConnectionPrivate *s)
 
 QDBusConnectionPrivate *QDBusConnectionManager::connection(const QString &name) const
 {
-    return connectionHash.value(name, 0);
+    return connectionHash.value(name, Q_NULLPTR);
 }
 
 void QDBusConnectionManager::removeConnection(const QString &name)
