@@ -437,8 +437,7 @@ void QtMetaEnumProvider::initLocale()
     QListIterator<QLocale::Language> itLang(languages);
     while (itLang.hasNext()) {
         QLocale::Language language = itLang.next();
-        QList<QLocale::Country> countries;
-        countries = QLocale::countriesForLanguage(language);
+        QList<QLocale::Country> countries = QLocale::countriesForLanguage(language);
         if (countries.isEmpty() && language == system.language())
             countries << system.country();
 
