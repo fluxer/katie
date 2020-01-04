@@ -39,7 +39,6 @@
 #include <qnumeric.h>
 #include <qprocess.h>
 #include <qlocale_p.h>
-#include <qlocale_data_p.h>
 
 #include <math.h>
 #include <float.h>
@@ -1181,13 +1180,13 @@ void tst_QLocale::testNames_data()
     QTest::addColumn<int>("language");
     QTest::addColumn<int>("country");
 
-    for (int i = 0; i < localeTblSize; ++i) {
-        const QLocalePrivate &item = localeTbl[i];
-
+    int i = 0;
+    foreach (const QLocale &locale, QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry)) {
         const QString testName = QString::fromLatin1("data_%1 (%2/%3)").arg(i)
-                .arg(QLocale::languageToString(item.m_language))
-                .arg(QLocale::countryToString(item.m_country));
-        QTest::newRow(testName.toLatin1().constData()) << (int)item.m_language << (int)item.m_country;
+                .arg(QLocale::languageToString(locale.language()))
+                .arg(QLocale::countryToString(locale.country()));
+        QTest::newRow(testName.toLatin1().constData()) << (int)locale.language() << (int)locale.country();
+        i++;
     }
 }
 
