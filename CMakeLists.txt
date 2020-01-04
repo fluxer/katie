@@ -449,17 +449,18 @@ if(KATIE_TESTS OR KATIE_BENCHMARKS)
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
 
-
-configure_file(
-    ${CMAKE_SOURCE_DIR}/cmake/exec.sh.cmake
-    ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/exec.sh
-    @ONLY
-)
-file(
-    COPY ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/exec.sh
-    DESTINATION ${CMAKE_BINARY_DIR}
-    FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-)
+foreach(script exec dbg)
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/cmake/${script}.sh.cmake
+        ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/${script}.sh
+        @ONLY
+    )
+    file(
+        COPY ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/${script}.sh
+        DESTINATION ${CMAKE_BINARY_DIR}
+        FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+    )
+endforeach()
 
 # optional packages which if not found are build internally
 if(NOT WITH_PNG)
