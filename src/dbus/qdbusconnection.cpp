@@ -72,8 +72,7 @@ QDBusConnectionPrivate *QDBusConnectionManager::connection(const QString &name) 
 
 void QDBusConnectionManager::removeConnection(const QString &name)
 {
-    QDBusConnectionPrivate *d = 0;
-    d = connectionHash.take(name);
+    QDBusConnectionPrivate *d = connectionHash.take(name);
     if (d && !d->ref.deref())
         d->deleteLater();
 
