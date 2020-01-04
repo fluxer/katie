@@ -139,8 +139,8 @@ QString QLocalePrivate::bcp47Name() const
         return QLatin1String("C");
 
     const char *lang = languageTbl[m_language].code;
-    const char *script = (m_script != QLocale::AnyScript ? scriptTbl[m_script].code : Q_NULLPTR);
-    const char *country = (m_country != QLocale::AnyCountry ? countryTbl[m_country].code : Q_NULLPTR);
+    const char *script = scriptTbl[m_script].code;
+    const char *country = countryTbl[m_country].code;
     const int langlen = qstrlen(lang);
     const int scriptlen = qstrlen(script);
     const int countrylen = qstrlen(country);
