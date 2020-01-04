@@ -1302,6 +1302,8 @@
     \value ImperialSystem This value indicates imperial units, such as inches and
             miles. There are several distinct imperial systems in the world; this
             value stands for the official United States imperial units.
+    \value UKSystem This value indicates mix of metric and imperial units used in
+            Great Britain.
 
     \since 4.4
 */

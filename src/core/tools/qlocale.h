@@ -1291,7 +1291,7 @@ public:
     };
 // GENERATED PART ENDS HERE
 
-    enum MeasurementSystem { MetricSystem, ImperialSystem };
+    enum MeasurementSystem { MetricSystem, ImperialSystem, UKSystem };
 
     enum FormatType { LongFormat, ShortFormat, NarrowFormat };
     enum NumberOption {

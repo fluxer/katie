@@ -47,6 +47,8 @@
 #include "qdebug.h"
 #include "qcorecommon_p.h"
 
+#include <unicode/ulocdata.h>
+
 // #define QLOCALE_DEBUG
 #if defined (QLOCALE_DEBUG) && !defined(QT_NO_DEBUG_STREAM)
 #  define QLOCALEDEBUG qDebug()
@@ -1885,12 +1887,27 @@ Qt::DayOfWeek QLocale::firstDayOfWeek() const
 
 QLocale::MeasurementSystem QLocalePrivate::measurementSystem() const
 {
-    for (qint16 i = 0; i < imperialTblSize; ++i) {
-        if (imperialTbl[i] == m_country) {
-            return QLocale::ImperialSystem;
-        }
+    UErrorCode error = U_ZERO_ERROR;
+    UMeasurementSystem measurement = ulocdata_getMeasurementSystem(bcp47Name().toLatin1().constData(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QLocale::measurementSystem: ulocdata_getMeasurementSystem(%s) failed %s",
+            bcp47Name().toLatin1().constData(), u_errorName(error));
+        return QLocale::MetricSystem;
     }
-    return QLocale::MetricSystem;
+    switch (measurement) {
+        case UMS_SI:
+            return QLocale::MetricSystem;
+        case UMS_US:
+            return QLocale::ImperialSystem;
+        case UMS_UK:
+            return QLocale::UKSystem;
+        // just to silence compiler warning
+#ifndef U_HIDE_DEPRECATED_API
+        case UMS_LIMIT:
+            break;
+#endif
+    }
+    Q_UNREACHABLE();
 }
 
 /*!
