@@ -90,11 +90,11 @@ QStringList QGraphicsSystemFactory::keys()
 {
 #ifndef QT_NO_LIBRARY
     QStringList list = graphicsloader()->keys();
-#else
-    QStringList list;
-#endif
-    if (!list.contains(QLatin1String("Raster")))
+    if (!list.contains(QLatin1String("raster")))
         list << QLatin1String("raster");
+#else
+    static QStringList list = QStringList() << QLatin1String("raster");
+#endif
     return list;
 }
 
