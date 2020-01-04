@@ -272,9 +272,6 @@ public:
         uncaughtExceptionLineNumber = -1;
     }
 
-    static QScriptSyntaxCheckResult checkSyntax(const QString &program);
-    static bool canEvaluate(const QString &program);
-
     inline void registerScriptProgram(QScriptProgramPrivate *program);
     inline void unregisterScriptProgram(QScriptProgramPrivate *program);
     void detachAllRegisteredScriptPrograms();

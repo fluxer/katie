@@ -2493,12 +2493,6 @@ QScriptValue QScriptEngine::newQMetaObject(
 */
 bool QScriptEngine::canEvaluate(const QString &program) const
 {
-    return QScriptEnginePrivate::canEvaluate(program);
-}
-
-
-bool QScriptEnginePrivate::canEvaluate(const QString &program)
-{
     QScript::SyntaxChecker checker;
     QScript::SyntaxChecker::Result result = checker.checkSyntax(program);
     return (result.state != QScript::SyntaxChecker::Intermediate);
@@ -2512,32 +2506,28 @@ bool QScriptEnginePrivate::canEvaluate(const QString &program)
 */
 QScriptSyntaxCheckResult QScriptEngine::checkSyntax(const QString &program)
 {
-    return QScriptEnginePrivate::checkSyntax(program);
-}
-
-QScriptSyntaxCheckResult QScriptEnginePrivate::checkSyntax(const QString &program)
-{
     QScript::SyntaxChecker checker;
     QScript::SyntaxChecker::Result result = checker.checkSyntax(program);
     QScriptSyntaxCheckResultPrivate *p = new QScriptSyntaxCheckResultPrivate();
     switch (result.state) {
-    case QScript::SyntaxChecker::Error:
-        p->state = QScriptSyntaxCheckResult::Error;
-        break;
-    case QScript::SyntaxChecker::Intermediate:
-        p->state = QScriptSyntaxCheckResult::Intermediate;
-        break;
-    case QScript::SyntaxChecker::Valid:
-        p->state = QScriptSyntaxCheckResult::Valid;
-        break;
+        case QScript::SyntaxChecker::Error: {
+            p->state = QScriptSyntaxCheckResult::Error;
+            break;
+        }
+        case QScript::SyntaxChecker::Intermediate: {
+            p->state = QScriptSyntaxCheckResult::Intermediate;
+            break;
+        }
+        case QScript::SyntaxChecker::Valid: {
+            p->state = QScriptSyntaxCheckResult::Valid;
+            break;
+        }
     }
     p->errorLineNumber = result.errorLineNumber;
     p->errorColumnNumber = result.errorColumnNumber;
     p->errorMessage = result.errorMessage;
     return QScriptSyntaxCheckResult(p);
 }
-
-
 
 /*!
   Evaluates \a program, using \a lineNumber as the base line number,
