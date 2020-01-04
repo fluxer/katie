@@ -5,7 +5,7 @@
 #  UNWIND_INCLUDES - the Unwind include directory
 #  UNWIND_LIBRARIES - the libraries needed to use Unwind
 #
-# Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2015-2020, Ivailo Monev, <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
