@@ -232,81 +232,40 @@ const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLo
     return &localeTbl[0];
 }
 
-static const int bcp47max = 11;  // worst case according to BCP47
-
-static bool parse_locale_tag(const QString &input, int &i, QString *result, const QString &separators)
-{
-    *result = QString(bcp47max, Qt::Uninitialized);
-    QChar *pch = result->data();
-    const QChar *uc = input.data() + i;
-    const int l = input.length();
-    int size = 0;
-    for (; i < l && size < bcp47max; ++i, ++size) {
-        if (separators.contains(*uc))
-            break;
-        if (! ((uc->unicode() >= 'a' && uc->unicode() <= 'z') ||
-               (uc->unicode() >= 'A' && uc->unicode() <= 'Z') ||
-               (uc->unicode() >= '0' && uc->unicode() <= '9')) ) // latin only
-            return false;
-        *pch++ = *uc++;
-    }
-    result->truncate(size);
-    return true;
-}
-
 bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QString &cntry)
 {
-    const int length = name.length();
-
-    lang = script = cntry = QString();
-
-    const QString separators = QLatin1String("_-.@");
-    enum ParserState { NoState, LangState, ScriptState, CountryState };
-    ParserState state = LangState;
-    for (int i = 0; i < length && state != NoState; ) {
-        QString value;
-        if (!parse_locale_tag(name, i, &value, separators) ||value.isEmpty())
-            break;
-        QChar sep = i < length ? name.at(i) : QChar();
-        switch (state) {
-        case LangState:
-            if (!sep.isNull() && !separators.contains(sep)) {
-                state = NoState;
-                break;
-            }
-            lang = value;
-            if (i == length) {
-                // just language was specified
-                state = NoState;
-                break;
-            }
-            state = ScriptState;
-            break;
-        case ScriptState: {
-            // if it wasn't a script, maybe it is a country then?
-            cntry = value;
-            state = NoState;
-            for (qint16 ii = 0; ii < scriptTblSize; ii++) {
-                if (QString::fromLatin1(scriptTbl[ii].code) == value) {
-                    script = value;
-                    state = CountryState;
-                    break;
-                }
-            }
-            break;
-        }
-        case CountryState:
-            cntry = value;
-            state = NoState;
-            break;
-        case NoState:
-            // shouldn't happen
-            qWarning("QLocale: This should never happen");
-            break;
-        }
-        ++i;
+    const QByteArray latinname = name.toLatin1();
+    char getbuffer[20];
+    UErrorCode error = U_ZERO_ERROR;
+    const int langresult = uloc_getLanguage(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("qt_splitLocaleName: uloc_getLanguage(%s) failed %s",
+            latinname.constData(), u_errorName(error));
+        return false;
     }
-    return lang.length() == 2 || lang.length() == 3;
+    lang = QString::fromLatin1(getbuffer, langresult);
+
+    error = U_ZERO_ERROR;
+    memset(getbuffer, 0, sizeof(getbuffer));
+    const int scriptresult = uloc_getScript(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("qt_splitLocaleName: uloc_getScript(%s) failed %s",
+            latinname.constData(), u_errorName(error));
+        return false;
+    }
+    script = QString::fromLatin1(getbuffer, scriptresult);
+
+    error = U_ZERO_ERROR;
+    memset(getbuffer, 0, sizeof(getbuffer));
+    const int countryresult = uloc_getCountry(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("qt_splitLocaleName: uloc_getCountry(%s) failed %s",
+            latinname.constData(), u_errorName(error));
+        return false;
+    }
+    cntry = QString::fromLatin1(getbuffer, countryresult);
+
+    return true;
 }
 
 void QLocalePrivate::getLangAndCountry(const QString &name, QLocale::Language &lang,
