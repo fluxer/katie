@@ -878,7 +878,7 @@ void QDir::setNameFilters(const QStringList &nameFilters)
 */
 void QDir::setSearchPaths(const QString &prefix, const QStringList &searchPaths)
 {
-    if (prefix.length() < 2) {
+    if (Q_UNLIKELY(prefix.length() < 2)) {
         qWarning("QDir::setSearchPaths: Prefix must be longer than 1 character");
         return;
     }
@@ -1254,7 +1254,7 @@ QFileInfoList QDir::entryInfoList(const QStringList &nameFilters, Filters filter
 // ### Qt5: behaviour when directory already exists should be made consistent for mkdir and mkpath
 bool QDir::mkdir(const QString &dirName) const
 {
-    if (dirName.isEmpty()) {
+    if (Q_UNLIKELY(dirName.isEmpty())) {
         qWarning("QDir::mkdir: Empty or null file name(s)");
         return false;
     }
@@ -1278,7 +1278,7 @@ bool QDir::mkdir(const QString &dirName) const
 */
 bool QDir::rmdir(const QString &dirName) const
 {
-    if (dirName.isEmpty()) {
+    if (Q_UNLIKELY(dirName.isEmpty())) {
         qWarning("QDir::rmdir: Empty or null file name(s)");
         return false;
     }
@@ -1307,7 +1307,7 @@ bool QDir::rmdir(const QString &dirName) const
 // ### Qt5: behaviour when directory already exists should be made consistent for mkdir and mkpath
 bool QDir::mkpath(const QString &dirPath) const
 {
-    if (dirPath.isEmpty()) {
+    if (Q_UNLIKELY(dirPath.isEmpty())) {
         qWarning("QDir::mkpath: Empty or null file name(s)");
         return false;
     }
@@ -1333,7 +1333,7 @@ bool QDir::mkpath(const QString &dirPath) const
 */
 bool QDir::rmpath(const QString &dirPath) const
 {
-    if (dirPath.isEmpty()) {
+    if (Q_UNLIKELY(dirPath.isEmpty())) {
         qWarning("QDir::rmpath: Empty or null file name(s)");
         return false;
     }
@@ -1562,7 +1562,7 @@ QDir &QDir::operator=(const QString &path)
 */
 bool QDir::remove(const QString &fileName)
 {
-    if (fileName.isEmpty()) {
+    if (Q_UNLIKELY(fileName.isEmpty())) {
         qWarning("QDir::remove: Empty or null file name");
         return false;
     }
@@ -1582,7 +1582,7 @@ bool QDir::remove(const QString &fileName)
 */
 bool QDir::rename(const QString &oldName, const QString &newName)
 {
-    if (oldName.isEmpty() || newName.isEmpty()) {
+    if (Q_UNLIKELY(oldName.isEmpty() || newName.isEmpty())) {
         qWarning("QDir::rename: Empty or null file name(s)");
         return false;
     }
@@ -1605,7 +1605,7 @@ bool QDir::rename(const QString &oldName, const QString &newName)
 */
 bool QDir::exists(const QString &name) const
 {
-    if (name.isEmpty()) {
+    if (Q_UNLIKELY(name.isEmpty())) {
         qWarning("QDir::exists: Empty or null file name");
         return false;
     }
