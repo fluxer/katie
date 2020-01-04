@@ -1702,7 +1702,7 @@ QString QLocale::monthName(int month, FormatType type) const
     }
 #endif
 
-    const quint16 idx = month - 1;
+    const qint16 idx = month - 1;
     switch (type) {
         case QLocale::LongFormat:
             return getLocaleListData(d()->m_long_month_names, idx);
@@ -1740,7 +1740,7 @@ QString QLocale::standaloneMonthName(int month, FormatType type) const
     }
 #endif
 
-    const quint16 idx = month - 1;
+    const qint16 idx = month - 1;
     switch (type) {
         case QLocale::LongFormat:
             return getLocaleListData(d()->m_standalone_long_month_names, idx);
@@ -1776,7 +1776,7 @@ QString QLocale::dayName(int day, FormatType type) const
     }
 #endif
 
-    const quint16 idx = day - 1;
+    const qint16 idx = day - 1;
     switch (type) {
         case QLocale::LongFormat:
             return getLocaleListData(d()->m_long_day_names, idx);
@@ -1815,7 +1815,7 @@ QString QLocale::standaloneDayName(int day, FormatType type) const
     }
 #endif
 
-    quint16 idx = day - 1;
+    const qint16 idx = day - 1;
     switch (type) {
         case QLocale::LongFormat:
             return getLocaleListData(d()->m_standalone_long_day_names, idx);
