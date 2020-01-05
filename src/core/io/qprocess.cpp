@@ -154,7 +154,7 @@ QProcessEnvironment QProcessEnvironmentPrivate::fromList(const QStringList &list
                               end = list.constEnd();
     for ( ; it != end; ++it) {
         int pos = it->indexOf(QLatin1Char('='));
-        if (pos < 1)
+        if (Q_UNLIKELY(pos < 1))
             continue;
 
         QString value = it->mid(pos + 1);
