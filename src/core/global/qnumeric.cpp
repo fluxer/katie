@@ -38,8 +38,6 @@ QT_BEGIN_NAMESPACE
 /*!
     Returns the bit pattern for an infinite number as a double.
 */
-#ifdef QT_ARMFPA
-#endif
 Q_CORE_EXPORT double qInf()
 {
 #ifdef QT_ARMFPA
