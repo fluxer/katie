@@ -35,14 +35,8 @@
 #include "qstring.h"
 #include "qvector.h"
 #include "qlist.h"
-#include "qdir.h"
-#include "qstringlist.h"
 #include "qdatetime.h"
 #include "qcorecommon_p.h"
-
-#ifndef QT_NO_QOBJECT
-#include "qthread_p.h"
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
