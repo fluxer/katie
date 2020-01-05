@@ -277,8 +277,7 @@ bool QDBusMetaType::demarshall(const QDBusArgument &arg, int id, void *data)
             df = info.demarshall;
     }
 
-    QDBusArgument copy = arg;
-    df(copy, data);
+    df(arg, data);
     return true;
 }
 
