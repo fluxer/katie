@@ -891,11 +891,10 @@ void QDir::setSearchPaths(const QString &prefix, const QStringList &searchPaths)
     }
 
     QWriteLocker lock(&globalData()->dirSearchPathsLock);
-    QMap<QString, QStringList> &paths = globalData()->dirSearchPaths;
     if (searchPaths.isEmpty()) {
-        paths.remove(prefix);
+        globalData()->dirSearchPaths.remove(prefix);
     } else {
-        paths.insert(prefix, searchPaths);
+        globalData()->dirSearchPaths.insert(prefix, searchPaths);
     }
 }
 
