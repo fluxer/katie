@@ -45,8 +45,7 @@ class QLCDNumberPrivate : public QFramePrivate
 public:
     void init();
     void internalSetString(const QString& s);
-    void drawString(const QString& s, QPainter &, QBitArray * = 0, bool = true);
-    //void drawString(const QString &, QPainter &, QBitArray * = 0) const;
+    void drawString(const QString& s, QPainter &, QBitArray *);
     void drawDigit(const QPoint &, QPainter &, int, char, char = ' ');
     void drawSegment(const QPoint &, char, QPainter &, int, bool = false);
 
@@ -710,9 +709,9 @@ void QLCDNumber::paintEvent(QPaintEvent *)
         p.translate(0.5, 0.5);
 
     if (d->smallPoint)
-        d->drawString(d->digitStr, p, &d->points, false);
+        d->drawString(d->digitStr, p, &d->points);
     else
-        d->drawString(d->digitStr, p, 0, false);
+        d->drawString(d->digitStr, p, Q_NULLPTR);
 }
 
 
@@ -778,11 +777,9 @@ void QLCDNumberPrivate::internalSetString(const QString& s)
   \internal
 */
 
-void QLCDNumberPrivate::drawString(const QString &s, QPainter &p,
-                                   QBitArray *newPoints, bool newString)
+void QLCDNumberPrivate::drawString(const QString &s, QPainter &p, QBitArray *newPoints)
 {
     Q_Q(QLCDNumber);
-    QPoint  pos;
 
     int digitSpace = smallPoint ? 2 : 1;
     int xSegLen    = q->width()*5/(ndigits*(5 + digitSpace) + digitSpace);
@@ -793,26 +790,11 @@ void QLCDNumberPrivate::drawString(const QString &s, QPainter &p,
     int yOffset    = (q->height() - segLen*2)/2;
 
     for (int i=0;  i<ndigits; i++) {
-        pos = QPoint(xOffset + xAdvance*i, yOffset);
-        if (newString)
-            drawDigit(pos, p, segLen, s[i].toLatin1(), digitStr[i].toLatin1());
-        else
-            drawDigit(pos, p, segLen, s[i].toLatin1());
+        QPoint pos = QPoint(xOffset + xAdvance*i, yOffset);
+        drawDigit(pos, p, segLen, s[i].toLatin1());
         if (newPoints) {
-            char newPoint = newPoints->testBit(i) ? '.' : ' ';
-            if (newString) {
-                char oldPoint = points.testBit(i) ? '.' : ' ';
-                drawDigit(pos, p, segLen, newPoint, oldPoint);
-            } else {
-                drawDigit(pos, p, segLen, newPoint);
-            }
+            drawDigit(pos, p, segLen, newPoints->testBit(i) ? '.' : ' ');
         }
-    }
-    if (newString) {
-        digitStr = s;
-        digitStr.truncate(ndigits);
-        if (newPoints)
-            points = *newPoints;
     }
 }
 
