@@ -112,22 +112,22 @@ Q_CORE_EXPORT QBitArray operator|(const QBitArray &, const QBitArray &);
 Q_CORE_EXPORT QBitArray operator^(const QBitArray &, const QBitArray &);
 
 inline bool QBitArray::testBit(int i) const
-{ Q_ASSERT(uint(i) < uint(size()));
+{ Q_ASSERT(i < size());
  return (*(reinterpret_cast<const uchar*>(d.constData())+1+(i>>3)) & (1 << (i & 7))) != 0; }
 
 inline void QBitArray::setBit(int i)
-{ Q_ASSERT(uint(i) < uint(size()));
+{ Q_ASSERT(i < size());
  *(reinterpret_cast<uchar*>(d.data())+1+(i>>3)) |= uchar(1 << (i & 7)); }
 
 inline void QBitArray::clearBit(int i)
-{ Q_ASSERT(uint(i) < uint(size()));
+{ Q_ASSERT(i < size());
  *(reinterpret_cast<uchar*>(d.data())+1+(i>>3)) &= ~uchar(1 << (i & 7)); }
 
 inline void QBitArray::setBit(int i, bool val)
 { if (val) setBit(i); else clearBit(i); }
 
 inline bool QBitArray::toggleBit(int i)
-{ Q_ASSERT(uint(i) < uint(size()));
+{ Q_ASSERT(i < size());
  uchar b = uchar(1<<(i&7)); uchar* p = reinterpret_cast<uchar*>(d.data())+1+(i>>3);
  uchar c = uchar(*p&b); *p^=b; return c!=0; }
 
