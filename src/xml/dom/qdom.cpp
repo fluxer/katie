@@ -5172,8 +5172,7 @@ QDomTextPrivate* QDomTextPrivate::splitText(int offset)
 
 void QDomTextPrivate::save(QTextStream& s, int, int) const
 {
-    QDomTextPrivate *that = const_cast<QDomTextPrivate*>(this);
-    s << encodeText(value, s, !(that->parent() && that->parent()->isElement()), false, true);
+    s << encodeText(value, s, !(parent() && parent()->isElement()), false, true);
 }
 
 /**************************************************************
