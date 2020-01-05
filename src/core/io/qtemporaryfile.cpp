@@ -89,12 +89,12 @@ QT_BEGIN_NAMESPACE
     contain the generated path name.
 */
 static bool createFileFromTemplate(int &file,
-        QFileSystemEntry::NativePath &path, size_t pos, size_t length,
+        QFileSystemEntry::NativePath &path, int pos, int length,
         QSystemError &error)
 {
     Q_ASSERT(length != 0);
-    Q_ASSERT(pos < size_t(path.length()));
-    Q_ASSERT(length <= size_t(path.length()) - pos);
+    Q_ASSERT(pos < path.length());
+    Q_ASSERT(length <= path.length() - pos);
 
     char *data = path.data();
     for (int i = 0; i, i < length; i++) {
@@ -229,7 +229,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
             continue;
         }
 
-        if (phLength >= 10) {
+        if (phLength >= 6) {
             ++phPos;
             break;
         }
@@ -238,7 +238,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
         phLength = 0;
     }
 
-    Q_ASSERT(phLength >= 10);
+    Q_ASSERT(phLength >= 6);
 
     QSystemError error;
 
