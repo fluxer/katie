@@ -4867,14 +4867,7 @@ void QDomElement::setAttribute(const QString& name, double value)
 {
     if (!impl)
         return;
-    QString x;
-    char buf[256];
-    int count = qsnprintf(buf, sizeof(buf), "%.16g", value);
-    if (count > 0)
-        x = QString::fromLatin1(buf, count);
-    else
-        x.setNum(value); // Fallback
-    IMPL->setAttribute(name, x);
+    IMPL->setAttribute(name, QString::number(value));
 }
 
 /*!
