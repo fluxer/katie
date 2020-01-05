@@ -54,16 +54,17 @@ QT_BEGIN_NAMESPACE
 
 QInotifyFileSystemWatcherEngine *QInotifyFileSystemWatcherEngine::create()
 {
-    int fd = -1;
 #ifdef IN_CLOEXEC
-    fd = inotify_init1(IN_CLOEXEC);
+    int fd = inotify_init1(IN_CLOEXEC);
+#else
+    int fd = inotify_init();
 #endif
-    if (fd == -1) {
-        fd = inotify_init();
-        if (fd == -1)
-            return 0;
-        ::fcntl(fd, F_SETFD, FD_CLOEXEC);
+    if (Q_UNLIKELY(fd == -1)) {
+        return Q_NULLPTR;
     }
+#ifndef IN_CLOEXEC
+    ::fcntl(fd, F_SETFD, FD_CLOEXEC);
+#endif
     return new QInotifyFileSystemWatcherEngine(fd);
 }
 
