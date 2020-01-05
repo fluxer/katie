@@ -44,10 +44,6 @@
 
 #include <errno.h>
 
-#ifndef QT_BOOTSTRAPPED
-#  include "qcoreapplication.h"
-#endif
-
 QT_BEGIN_NAMESPACE
 
 
