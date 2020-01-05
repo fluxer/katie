@@ -149,6 +149,7 @@ QStringList QProcessEnvironmentPrivate::toList() const
 QProcessEnvironment QProcessEnvironmentPrivate::fromList(const QStringList &list)
 {
     QProcessEnvironment env;
+    env.d->hash.reserve(list.size());
     QStringList::ConstIterator it = list.constBegin(),
                               end = list.constEnd();
     for ( ; it != end; ++it) {
