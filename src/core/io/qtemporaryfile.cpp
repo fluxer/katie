@@ -100,78 +100,26 @@ static bool createFileFromTemplate(int &file,
     Q_ASSERT(pos < size_t(path.length()));
     Q_ASSERT(length <= size_t(path.length()) - pos);
 
-    char *const placeholderStart = path.data() + pos;
-    char *const placeholderEnd = placeholderStart + length;
-
-    // Initialize placeholder with random chars + PID.
-    {
-        char *rIter = placeholderEnd;
-
-#ifndef QT_BOOTSTRAPPED
-        quint64 pid = quint64(QCoreApplication::applicationPid());
-        do {
-            *--rIter = char((pid % 10) + '0');
-            pid /= 10;
-        } while (rIter != placeholderStart && pid != 0);
-#endif
-
-        while (rIter != placeholderStart) {
-            char ch = char((qrand() & 0xffff) % (26 + 26));
-            if (ch < 26)
-                *--rIter = char(ch + 'A');
-            else
-                *--rIter = char(ch - 26 + 'a');
-        }
+    char *data = path.data();
+    for (int i = 0; i, i < length; i++) {
+        char ch = char((qrand() & 0xffff) % (26 + 26));
+        if (ch < 26)
+            data[i + pos] = char(ch + 'A');
+        else
+            data[i + pos] = char(ch - 26 + 'a');
     }
 
     // Atomically create file and obtain handle
-    file = QT_OPEN(path.constData(),
+    file = QT_OPEN(data,
             QT_OPEN_CREAT | O_EXCL | QT_OPEN_RDWR | QT_OPEN_LARGEFILE,
             0600);
 
-    if (file != -1)
-        return true;
-
-    int err = errno;
-    if (err != EEXIST) {
-        error = QSystemError(err, QSystemError::NativeError);
+    if (file == -1) {
+        error = QSystemError(errno, QSystemError::NativeError);
         return false;
     }
 
-    /* tricky little algorithm for backward compatibility */
-    for (char *iter = placeholderStart;;) {
-        // Character progression: [0-9] => 'a' ... 'z' => 'A' .. 'Z'
-        // String progression: "ZZaiC" => "aabiC"
-        switch (*iter) {
-            case 'Z':
-                // Rollover, advance next character
-                *iter = 'a';
-                if (++iter == placeholderEnd) {
-                    // Out of alternatives. Return file exists error, previously set.
-                    error = QSystemError(err, QSystemError::NativeError);
-                    return false;
-                }
-
-                continue;
-
-            case '0': case '1': case '2': case '3': case '4':
-            case '5': case '6': case '7': case '8': case '9':
-                *iter = 'a';
-                break;
-
-            case 'z':
-                // increment 'z' to 'A'
-                *iter = 'A';
-                break;
-
-            default:
-                ++*iter;
-                break;
-        }
-        break;
-    }
-
-    Q_UNREACHABLE();
+    return true;
 }
 
 //************* QTemporaryFileEngine
@@ -257,8 +205,8 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
             continue;
         }
 
-        if (phLength >= 6
-                || qfilename[phPos] == QLatin1Char('/')) {
+        // require atleast 6 for compatibility
+        if (phLength >= 6 || qfilename[phPos] == QLatin1Char('/')) {
             ++phPos;
             break;
         }
@@ -268,7 +216,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
     }
 
     if (phLength < 6)
-        qfilename.append(QLatin1String(".XXXXXX"));
+        qfilename.append(QLatin1String(".XXXXXXXXXX"));
 
     // "Nativify" :-)
     QFileSystemEntry::NativePath filename =
@@ -285,7 +233,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
             continue;
         }
 
-        if (phLength >= 6) {
+        if (phLength >= 10) {
             ++phPos;
             break;
         }
@@ -294,7 +242,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
         phLength = 0;
     }
 
-    Q_ASSERT(phLength >= 6);
+    Q_ASSERT(phLength >= 10);
 
     QSystemError error;
 
@@ -403,7 +351,7 @@ QTemporaryFilePrivate::~QTemporaryFilePrivate()
     file path will not be placed in the temporary directory by
     default, but be relative to the current working directory.
 
-    Specified filenames can contain the following template \c XXXXXX
+    Specified filenames can contain the following template \c XXXXXXXXXX
     (six upper case "X" characters), which will be replaced by the
     auto-generated portion of the filename. Note that the template is
     case sensitive. If the template is not present in the filename,
@@ -417,7 +365,7 @@ QTemporaryFile::QTemporaryFile()
     : QFile(*new QTemporaryFilePrivate)
 {
     Q_D(QTemporaryFile);
-    d->templateName = QDir::tempPath() + QLatin1String("/qt_temp.XXXXXX");
+    d->templateName = QDir::tempPath() + QLatin1String("/qt_temp.XXXXXXXXXX");
 }
 
 QTemporaryFile::QTemporaryFile(const QString &templateName)
@@ -430,7 +378,7 @@ QTemporaryFile::QTemporaryFile(const QString &templateName)
 #else
 /*!
     Constructs a QTemporaryFile in QDir::tempPath(), using the file template
-    "qt_temp.XXXXXX". The file is stored in the system's temporary directory.
+    "qt_temp.XXXXXXXXXX". The file is stored in the system's temporary directory.
 
     \sa setFileTemplate(), QDir::tempPath()
 */
@@ -438,7 +386,7 @@ QTemporaryFile::QTemporaryFile()
     : QFile(*new QTemporaryFilePrivate, 0)
 {
     Q_D(QTemporaryFile);
-    d->templateName = QDir::tempPath() + QLatin1String("/qt_temp.XXXXXX");
+    d->templateName = QDir::tempPath() + QLatin1String("/qt_temp.XXXXXXXXXX");
 }
 
 /*!
@@ -446,7 +394,7 @@ QTemporaryFile::QTemporaryFile()
     templateName. Upon opening the temporary file this will be used to create
     a unique filename.
 
-    If the \a templateName does not contain XXXXXX it will automatically be
+    If the \a templateName does not contain XXXXXXXXXX it will automatically be
     appended and used as the dynamic portion of the filename.
 
     If \a templateName is a relative path, the path will be relative to the
@@ -464,7 +412,7 @@ QTemporaryFile::QTemporaryFile(const QString &templateName)
 
 /*!
     Constructs a QTemporaryFile (with the given \a parent) in
-    QDir::tempPath(), using the file template "qt_temp.XXXXXX".
+    QDir::tempPath(), using the file template "qt_temp.XXXXXXXXXX".
 
     \sa setFileTemplate()
 */
@@ -472,7 +420,7 @@ QTemporaryFile::QTemporaryFile(QObject *parent)
     : QFile(*new QTemporaryFilePrivate, parent)
 {
     Q_D(QTemporaryFile);
-    d->templateName = QDir::tempPath() + QLatin1String("/qt_temp.XXXXXX");
+    d->templateName = QDir::tempPath() + QLatin1String("/qt_temp.XXXXXXXXXX");
 }
 
 /*!
@@ -481,8 +429,8 @@ QTemporaryFile::QTemporaryFile(QObject *parent)
     Upon opening the temporary file this will be used to
     create a unique filename.
 
-    If the \a templateName does not contain XXXXXX it will automatically be
-    appended and used as the dynamic portion of the filename.
+    If the \a templateName does not contain XXXXXXXXXX it will automatically
+    be appended and used as the dynamic portion of the filename.
 
     If \a templateName is a relative path, the path will be relative to the
     current working directory. You can use QDir::tempPath() to construct \a
@@ -586,7 +534,7 @@ QString QTemporaryFile::fileTemplate() const
 
 /*!
    Sets the static portion of the file name to \a name. If the file
-   template ends in XXXXXX that will automatically be replaced with
+   template ends in XXXXXXXXXX that will automatically be replaced with
    the unique part of the filename, otherwise a filename will be
    determined automatically based on the static portion specified.
 
