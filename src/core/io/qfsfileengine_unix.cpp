@@ -230,14 +230,6 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
 
 /*!
     \internal
-*/
-bool QFSFileEnginePrivate::nativeClose()
-{
-    return closeFdFh();
-}
-
-/*!
-    \internal
 
 */
 bool QFSFileEnginePrivate::nativeFlush()
@@ -252,7 +244,7 @@ qint64 QFSFileEnginePrivate::nativeRead(char *data, qint64 len)
 {
     Q_Q(QFSFileEngine);
 
-    if (fh && nativeIsSequential()) {
+    if (fh && isSequentialFdFh()) {
         size_t readBytes = 0;
         int oldFlags = fcntl(QT_FILENO(fh), F_GETFL);
         for (int i = 0; i < 2; ++i) {
@@ -309,50 +301,9 @@ qint64 QFSFileEnginePrivate::nativeRead(char *data, qint64 len)
 /*!
     \internal
 */
-qint64 QFSFileEnginePrivate::nativeReadLine(char *data, qint64 maxlen)
-{
-    return readLineFdFh(data, maxlen);
-}
-
-/*!
-    \internal
-*/
-qint64 QFSFileEnginePrivate::nativeWrite(const char *data, qint64 len)
-{
-    return writeFdFh(data, len);
-}
-
-/*!
-    \internal
-*/
-qint64 QFSFileEnginePrivate::nativePos() const
-{
-    return posFdFh();
-}
-
-/*!
-    \internal
-*/
-bool QFSFileEnginePrivate::nativeSeek(qint64 pos)
-{
-    return seekFdFh(pos);
-}
-
-/*!
-    \internal
-*/
 int QFSFileEnginePrivate::nativeHandle() const
 {
     return fh ? fileno(fh) : fd;
-}
-
-
-/*!
-    \internal
-*/
-bool QFSFileEnginePrivate::nativeIsSequential() const
-{
-    return isSequentialFdFh();
 }
 
 bool QFSFileEngine::remove()
@@ -400,11 +351,6 @@ bool QFSFileEngine::link(const QString &newName)
         setError(QFile::RenameError, error.toString());
     }
     return ret;
-}
-
-qint64 QFSFileEnginePrivate::nativeSize() const
-{
-    return sizeFdFh();
 }
 
 bool QFSFileEngine::mkdir(const QString &name, bool createParentDirectories) const

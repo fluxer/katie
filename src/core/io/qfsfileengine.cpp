@@ -324,7 +324,7 @@ bool QFSFileEngine::close()
 {
     Q_D(QFSFileEngine);
     d->openMode = QIODevice::NotOpen;
-    return d->nativeClose();
+    return d->closeFdFh();
 }
 
 /*!
@@ -333,8 +333,7 @@ bool QFSFileEngine::close()
 bool QFSFileEnginePrivate::closeFdFh()
 {
     Q_Q(QFSFileEngine);
-    if (fd == -1 && !fh
-        )
+    if (fd == -1 && !fh)
         return false;
 
     // Flush the file if it's buffered, and if the last flush didn't fail.
@@ -420,7 +419,7 @@ bool QFSFileEnginePrivate::flushFh()
 qint64 QFSFileEngine::size() const
 {
     Q_D(const QFSFileEngine);
-    return d->nativeSize();
+    return d->sizeFdFh();
 }
 
 /*!
@@ -444,7 +443,7 @@ qint64 QFSFileEnginePrivate::sizeFdFh() const
 qint64 QFSFileEngine::pos() const
 {
     Q_D(const QFSFileEngine);
-    return d->nativePos();
+    return d->posFdFh();
 }
 
 /*!
@@ -463,7 +462,7 @@ qint64 QFSFileEnginePrivate::posFdFh() const
 bool QFSFileEngine::seek(qint64 pos)
 {
     Q_D(QFSFileEngine);
-    return d->nativeSeek(pos);
+    return d->seekFdFh(pos);
 }
 
 /*!
@@ -599,7 +598,7 @@ qint64 QFSFileEngine::readLine(char *data, qint64 maxlen)
         d->lastIOCommand = QFSFileEnginePrivate::IOReadCommand;
     }
 
-    return d->nativeReadLine(data, maxlen);
+    return d->readLineFdFh(data, maxlen);
 }
 
 /*!
@@ -642,7 +641,7 @@ qint64 QFSFileEngine::write(const char *data, qint64 len)
         d->lastIOCommand = QFSFileEnginePrivate::IOWriteCommand;
     }
 
-    return d->nativeWrite(data, len);
+    return d->writeFdFh(data, len);
 }
 
 /*!
@@ -719,7 +718,7 @@ bool QFSFileEngine::isSequential() const
 {
     Q_D(const QFSFileEngine);
     if (d->is_sequential == 0)
-        d->is_sequential = d->nativeIsSequential() ? 1 : 2;
+        d->is_sequential = d->isSequentialFdFh() ? 1 : 2;
     return d->is_sequential == 1;
 }
 

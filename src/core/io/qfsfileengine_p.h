@@ -67,24 +67,17 @@ public:
     bool nativeOpen(QIODevice::OpenMode openMode);
     bool openFh(QIODevice::OpenMode flags, FILE *fh);
     bool openFd(QIODevice::OpenMode flags, int fd);
-    bool nativeClose();
     bool closeFdFh();
     bool nativeFlush();
     bool flushFh();
-    qint64 nativeSize() const;
     qint64 sizeFdFh() const;
-    qint64 nativePos() const;
     qint64 posFdFh() const;
-    bool nativeSeek(qint64);
     bool seekFdFh(qint64);
     qint64 nativeRead(char *data, qint64 maxlen);
     qint64 readFdFh(char *data, qint64 maxlen);
-    qint64 nativeReadLine(char *data, qint64 maxlen);
     qint64 readLineFdFh(char *data, qint64 maxlen);
-    qint64 nativeWrite(const char *data, qint64 len);
     qint64 writeFdFh(const char *data, qint64 len);
     int nativeHandle() const;
-    bool nativeIsSequential() const;
     bool isSequentialFdFh() const;
 
     uchar *map(qint64 offset, qint64 size);
