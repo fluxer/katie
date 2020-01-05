@@ -51,10 +51,6 @@
 QT_BEGIN_NAMESPACE
 
 
-typedef char Char;
-typedef char Latin1Char;
-typedef int NativeFileHandle;
-
 /*
  * Copyright (c) 1987, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -96,7 +92,7 @@ typedef int NativeFileHandle;
     handle otherwise. In both cases, the string in \a path will be changed and
     contain the generated path name.
 */
-static bool createFileFromTemplate(NativeFileHandle &file,
+static bool createFileFromTemplate(int &file,
         QFileSystemEntry::NativePath &path, size_t pos, size_t length,
         QSystemError &error)
 {
@@ -104,17 +100,17 @@ static bool createFileFromTemplate(NativeFileHandle &file,
     Q_ASSERT(pos < size_t(path.length()));
     Q_ASSERT(length <= size_t(path.length()) - pos);
 
-    Char *const placeholderStart = (Char *)path.data() + pos;
-    Char *const placeholderEnd = placeholderStart + length;
+    char *const placeholderStart = path.data() + pos;
+    char *const placeholderEnd = placeholderStart + length;
 
     // Initialize placeholder with random chars + PID.
     {
-        Char *rIter = placeholderEnd;
+        char *rIter = placeholderEnd;
 
 #ifndef QT_BOOTSTRAPPED
         quint64 pid = quint64(QCoreApplication::applicationPid());
         do {
-            *--rIter = Latin1Char((pid % 10) + '0');
+            *--rIter = char((pid % 10) + '0');
             pid /= 10;
         } while (rIter != placeholderStart && pid != 0);
 #endif
@@ -122,9 +118,9 @@ static bool createFileFromTemplate(NativeFileHandle &file,
         while (rIter != placeholderStart) {
             char ch = char((qrand() & 0xffff) % (26 + 26));
             if (ch < 26)
-                *--rIter = Latin1Char(ch + 'A');
+                *--rIter = char(ch + 'A');
             else
-                *--rIter = Latin1Char(ch - 26 + 'a');
+                *--rIter = char(ch - 26 + 'a');
         }
     }
 
@@ -143,13 +139,13 @@ static bool createFileFromTemplate(NativeFileHandle &file,
     }
 
     /* tricky little algorithm for backward compatibility */
-    for (Char *iter = placeholderStart;;) {
+    for (char *iter = placeholderStart;;) {
         // Character progression: [0-9] => 'a' ... 'z' => 'A' .. 'Z'
         // String progression: "ZZaiC" => "aabiC"
-        switch (char(*iter)) {
+        switch (*iter) {
             case 'Z':
                 // Rollover, advance next character
-                *iter = Latin1Char('a');
+                *iter = 'a';
                 if (++iter == placeholderEnd) {
                     // Out of alternatives. Return file exists error, previously set.
                     error = QSystemError(err, QSystemError::NativeError);
@@ -160,12 +156,12 @@ static bool createFileFromTemplate(NativeFileHandle &file,
 
             case '0': case '1': case '2': case '3': case '4':
             case '5': case '6': case '7': case '8': case '9':
-                *iter = Latin1Char('a');
+                *iter = 'a';
                 break;
 
             case 'z':
                 // increment 'z' to 'A'
-                *iter = Latin1Char('A');
+                *iter = 'A';
                 break;
 
             default:
@@ -284,7 +280,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
     while (phPos != 0) {
         --phPos;
 
-        if (filename[phPos] == Latin1Char('X')) {
+        if (filename[phPos] == 'X') {
             ++phLength;
             continue;
         }
@@ -301,9 +297,8 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
     Q_ASSERT(phLength >= 6);
 
     QSystemError error;
-    NativeFileHandle &file = d->fd;
 
-    if (!createFileFromTemplate(file, filename, phPos, phLength, error)) {
+    if (!createFileFromTemplate(d->fd, filename, phPos, phLength, error)) {
         setError(QFile::OpenError, error.toString());
         return false;
     }
