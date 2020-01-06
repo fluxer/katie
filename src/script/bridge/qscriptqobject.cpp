@@ -924,7 +924,7 @@ struct QtMethodCaller
                 params[i] = const_cast<void*>(v.constData());
                 break;
             default:
-                Q_ASSERT(0);
+                Q_ASSERT(false);
             }
         }
 

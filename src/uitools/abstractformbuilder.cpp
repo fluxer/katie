@@ -103,7 +103,7 @@ using namespace QFormInternal;
 class QFriendlyLayout: public QLayout
 {
 public:
-    inline QFriendlyLayout() { Q_ASSERT(0); }
+    inline QFriendlyLayout() { Q_ASSERT(false); }
 
 #ifdef QFORMINTERNAL_NAMESPACE
     friend class QFormInternal::QAbstractFormBuilder;

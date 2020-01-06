@@ -128,7 +128,7 @@ void WidgetHandle::updateCursor()
         setCursor(Qt::SizeHorCursor);
         break;
     default:
-        Q_ASSERT(0);
+        Q_ASSERT(false);
     }
 #endif
 }

@@ -126,7 +126,7 @@ protected:
         case QAccessible::Tree:
             return QAccessible::TreeItem;
         default:
-            Q_ASSERT(0);
+            Q_ASSERT(false);
         }
         return QAccessible::NoRole;
     }

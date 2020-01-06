@@ -443,7 +443,7 @@ QLayout *WidgetFactory::createUnmanagedLayout(QWidget *parentWidget, int type)
     case LayoutInfo::Form:
         return new QFormLayout(parentWidget);
     default:
-        Q_ASSERT(0);
+        Q_ASSERT(false);
         break;
     }
     return 0;

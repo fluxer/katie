@@ -327,7 +327,7 @@ Qt::WindowFlags QDesignerWorkbench::magicalWindowFlags() const
         case DockedMode:
             return Qt::Window | Qt::WindowShadeButtonHint | Qt::WindowSystemMenuHint | Qt::WindowTitleHint;
         default:
-            Q_ASSERT(0);
+            Q_ASSERT(false);
             return 0;
     }
 }
@@ -346,7 +346,7 @@ QWidget *QDesignerWorkbench::magicalParent(const QWidget *w) const
         case NeutralMode:
             return 0;
         default:
-            Q_ASSERT(0);
+            Q_ASSERT(false);
             return 0;
     }
 }
@@ -1045,7 +1045,7 @@ void QDesignerWorkbench::restoreUISettings()
             switchToDockedMode();
             break;
 
-        default: Q_ASSERT(0);
+        default: Q_ASSERT(false);
     }
 
     ToolWindowFontSettings fontSettings = QDesignerSettings(m_core).toolWindowFont();

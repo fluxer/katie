@@ -1267,7 +1267,7 @@ Layout* Layout::createLayout(const QWidgetList &widgets,  QWidget *parentWidget,
     default:
         break;
     }
-    Q_ASSERT(0);
+    Q_ASSERT(false);
     return 0;
 }
 

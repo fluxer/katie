@@ -992,7 +992,7 @@ static inline void qdashstroker_lineTo(qfixed x, qfixed y, void *data) {
 }
 
 static inline void qdashstroker_cubicTo(qfixed, qfixed, qfixed, qfixed, qfixed, qfixed, void *) {
-    Q_ASSERT(0);
+    Q_ASSERT(false);
 //     ((QStroker *) data)->cubicTo(c1x, c1y, c2x, c2y, ex, ey);
 }
 
