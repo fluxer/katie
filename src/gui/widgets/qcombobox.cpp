@@ -1152,9 +1152,8 @@ void QComboBoxPrivate::emitActivated(const QModelIndex &index)
     Q_Q(QComboBox);
     if (!index.isValid())
         return;
-    QString text(itemText(index));
     emit q->activated(index.row());
-    emit q->activated(text);
+    emit q->activated(itemText(index));
 }
 
 void QComboBoxPrivate::_q_emitHighlighted(const QModelIndex &index)
@@ -1162,9 +1161,8 @@ void QComboBoxPrivate::_q_emitHighlighted(const QModelIndex &index)
     Q_Q(QComboBox);
     if (!index.isValid())
         return;
-    QString text(itemText(index));
     emit q->highlighted(index.row());
-    emit q->highlighted(text);
+    emit q->highlighted(itemText(index));
 }
 
 void QComboBoxPrivate::_q_emitCurrentIndexChanged(const QModelIndex &index)
