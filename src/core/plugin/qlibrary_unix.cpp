@@ -38,6 +38,7 @@
 #include "qlibrary_p.h"
 #include "qcoreapplication.h"
 #include "qfilesystementry_p.h"
+#include "qcorecommon_p.h"
 
 #ifndef QT_NO_LIBRARY
 
@@ -58,13 +59,12 @@ QT_BEGIN_NAMESPACE
 static QString qdlerror()
 {
 #if defined(QT_NO_DYNAMIC_LIBRARY)
-    const char *err = "This platform does not support dynamic libraries.";
+    return QLatin1String("This platform does not support dynamic libraries.");
 #elif !defined(QT_HPUX_LD)
-    const char *err = dlerror();
+    return QString::fromLatin1(dlerror());
 #else
-    const char *err = strerror(errno);
+    return fromstrerror_helper(errno);
 #endif
-    return err ? QLatin1Char('(') + QString::fromLocal8Bit(err) + QLatin1Char(')'): QString();
 }
 
 bool QLibraryPrivate::load_sys()
