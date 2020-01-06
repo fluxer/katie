@@ -42,55 +42,6 @@
 
 QT_BEGIN_NAMESPACE
 
-/*!
-    \internal
-
-    Returns the canonicalized form of \a path (i.e., with all symlinks
-    resolved, and all redundant path elements removed.
-*/
-QString QFileSystemEngine::slowCanonicalized(const QString &path)
-{
-    if (path.isEmpty())
-        return path;
-
-    QFileInfo fi;
-    const QChar slash(QLatin1Char('/'));
-    QString tmpPath = path;
-    int separatorPos = 0;
-    QSet<QString> nonSymlinks;
-    QSet<QString> known;
-
-    known.insert(path);
-    do {
-        separatorPos = tmpPath.indexOf(slash, separatorPos + 1);
-        QString prefix = separatorPos == -1 ? tmpPath : tmpPath.left(separatorPos);
-        if (
-            !nonSymlinks.contains(prefix)) {
-            fi.setFile(prefix);
-            if (fi.isSymLink()) {
-                QString target = fi.readLink();
-                if(QFileInfo(target).isRelative())
-                    target = fi.absolutePath() + slash + target;
-                if (separatorPos != -1) {
-                    if (fi.isDir() && !target.endsWith(slash))
-                        target.append(slash);
-                    target.append(tmpPath.mid(separatorPos));
-                }
-                tmpPath = QDir::cleanPath(target);
-                separatorPos = 0;
-
-                if (known.contains(tmpPath))
-                    return QString();
-                known.insert(tmpPath);
-            } else {
-                nonSymlinks.insert(prefix);
-            }
-        }
-    } while (separatorPos != -1);
-
-    return QDir::cleanPath(tmpPath);
-}
-
 static inline bool _q_checkEntry(QFileSystemEntry &entry, QFileSystemMetaData &data, bool resolvingEntry)
 {
     if (resolvingEntry) {

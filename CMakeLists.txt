@@ -219,6 +219,12 @@ check_include_file(sys/time.h HAVE_SYS_TIME_H)
 # used in qconfig.h
 check_type_size(size_t QT_POINTER_SIZE)
 
+# XSI POSIX.1-2001 functions
+katie_check_function(strerror_r "string.h")
+# POSIX.1-2008 functions
+katie_check_function(realpath "stdlib.h")
+katie_check_function(unsetenv "stdlib.h")
+
 if(KATIE_COMPILER MATCHES "(gcc|clang)")
     set(QT_VISIBILITY_AVAILABLE TRUE)
 endif()

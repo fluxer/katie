@@ -6,10 +6,23 @@ set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
 set(KATIE_LRELEASE "lrelease")
 
+include(CheckSymbolExists)
+include(CheckFunctionExists)
+
 # a macro to print a dev warning but only when the build type is Debug
 macro(KATIE_WARNING MESSAGESTR)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         message(AUTHOR_WARNING "${MESSAGESTR} ${ARGN}")
+    endif()
+endmacro()
+
+macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
+    check_symbol_exists("${FORFUNCTION}" "${FROMHEADER}" HAVE_${FORFUNCTION})
+    if(NOT HAVE_${FORFUNCTION})
+        check_function_exists("${FORFUNCTION}" HAVE_${FORFUNCTION})
+    endif()
+    if(NOT HAVE_${FORFUNCTION})
+        message(SEND_ERROR "check_function_exists(${FORFUNCTION}) failed")
     endif()
 endmacro()
 

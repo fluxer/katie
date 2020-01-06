@@ -120,27 +120,12 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
     if (entry.isEmpty() || entry.isRoot())
         return entry;
 
-#if _POSIX_VERSION < 200809L
-    // realpath(X,0) is not supported
-    Q_UNUSED(data);
-    return QFileSystemEntry(slowCanonicalized(absoluteName(entry).filePath()));
-#else
-#if _POSIX_VERSION >= 200801L
-    char *ret = realpath(entry.nativeFilePath().constData(), (char*)0);
-#else
-    char *ret = static_cast<char*>(malloc(PATH_MAX + 1));
-    if (realpath(entry.nativeFilePath().constData(), ret) == 0) {
-        const int savedErrno = errno; // errno is checked below, and free() might change it
-        free(ret);
-        errno = savedErrno;
-        ret = 0;
-    }
-#endif
+    char *ret = ::realpath(entry.nativeFilePath().constData(), (char*)0);
     if (ret) {
         data.knownFlagsMask |= QFileSystemMetaData::ExistsAttribute;
         data.entryFlags |= QFileSystemMetaData::ExistsAttribute;
         QString canonicalPath = QDir::cleanPath(QString::fromLocal8Bit(ret));
-        free(ret);
+        ::free(ret);
         return QFileSystemEntry(canonicalPath);
     } else if (errno == ENOENT) { // file doesn't exist
         data.knownFlagsMask |= QFileSystemMetaData::ExistsAttribute;
@@ -148,7 +133,6 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
         return QFileSystemEntry();
     }
     return entry;
-#endif
 }
 
 //static

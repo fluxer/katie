@@ -90,8 +90,6 @@ public:
 
     static QAbstractFileEngine *resolveEntryAndCreateLegacyEngine(QFileSystemEntry &entry,
                                                                   QFileSystemMetaData &data);
-private:
-    static QString slowCanonicalized(const QString &path);
 };
 
 QT_END_NAMESPACE

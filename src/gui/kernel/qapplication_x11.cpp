@@ -95,10 +95,6 @@
 #  include <errno.h>
 #endif
 
-#if _POSIX_VERSION+0 < 200112L && !defined(Q_OS_BSD4)
-# define QT_NO_UNSETENV
-#endif
-
 QT_BEGIN_NAMESPACE
 
 //#define X_NOT_BROKEN
@@ -1624,13 +1620,7 @@ void qt_init(QApplicationPrivate *priv, int,
 
         qt_x11Data->startupId = getenv("DESKTOP_STARTUP_ID");
         if (qt_x11Data->startupId) {
-#ifndef QT_NO_UNSETENV
-            unsetenv("DESKTOP_STARTUP_ID");
-#else
-            // it's a small memory leak, however we won't crash if Qt is
-            // unloaded and someones tries to use the envoriment.
-            putenv(strdup("DESKTOP_STARTUP_ID="));
-#endif
+            ::unsetenv("DESKTOP_STARTUP_ID");
         }
    } else {
         // read some non-GUI settings when not using the X server...

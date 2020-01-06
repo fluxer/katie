@@ -7,30 +7,31 @@
 #  include <zlib.h>
 #endif
 
+#include <string.h>
+
 QT_BEGIN_NAMESPACE
 
 // enough space to hold BOM, each char as surrogate pair and terminator
 #define QMAXUSTRLEN(X) 4 + (X * 2) + 2
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && _POSIX_VERSION >= 200112L
 // There are two incompatible versions of strerror_r:
 // a) the XSI/POSIX.1 version, which returns an int,
 //    indicating success or not
 // b) the GNU version, which returns a char*, which may or may not
 //    be the beginning of the buffer we used
 // The GNU libc manpage for strerror_r says you should use the the XSI
-// version in portable code. However, it's impossible to do that if
-// _GNU_SOURCE is defined so we use C++ overloading to decide what to do
-// depending on the return type
-static inline QString fromstrerror_helper(int, const QByteArray &buf)
+// version in portable code.
+static inline QString fromstrerror_helper(const int errorcode)
 {
-    return QString::fromLocal8Bit(buf.constData());
-}
-static inline QString fromstrerror_helper(const char *str, const QByteArray &)
-{
-    return QString::fromLocal8Bit(str);
-}
+#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+    char errbuf[1024];
+    ::memset(errbuf, '\0', sizeof(errbuf));
+    ::strerror_r(errorcode, errbuf, sizeof(errbuf));
+    return QString::fromLocal8Bit(errbuf, sizeof(errbuf));
+#else
+    return QString::fromLocal8Bit(::strerror(errorcode));
 #endif
+}
 
 static inline void report_error(int code, const char *where, const char *what)
 {

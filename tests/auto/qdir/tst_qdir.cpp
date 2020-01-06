@@ -1081,9 +1081,7 @@ void tst_QDir::homePath()
         QVERIFY(!strHome.endsWith('/'));
 
     QByteArray envHome = qgetenv("HOME");
-#if !defined(_WRS_KERNEL) // unsetenv is not available on VxWorks DKM mode
-    unsetenv("HOME");
-#endif
+    ::unsetenv("HOME");
     QCOMPARE(QDir::homePath(), QDir::rootPath());
     qputenv("HOME", envHome);
 #endif
