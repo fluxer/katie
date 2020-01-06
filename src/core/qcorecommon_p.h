@@ -26,8 +26,10 @@ static inline QString fromstrerror_helper(const int errorcode)
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
     char errbuf[1024];
     ::memset(errbuf, '\0', sizeof(errbuf));
-    ::strerror_r(errorcode, errbuf, sizeof(errbuf));
-    return QString::fromLocal8Bit(errbuf, sizeof(errbuf));
+    if (Q_LIKELY(::strerror_r(errorcode, errbuf, sizeof(errbuf)))) {
+        return QString::fromLocal8Bit(errbuf, sizeof(errbuf));
+    }
+    return QString();
 #else
     return QString::fromLocal8Bit(::strerror(errorcode));
 #endif
