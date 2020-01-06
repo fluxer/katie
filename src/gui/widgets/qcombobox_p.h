@@ -124,7 +124,6 @@ protected:
 
     inline void startTimer() {
         timer.start(100, this);
-        fast = false;
     }
 
     void enterEvent(QEvent *) {
@@ -137,26 +136,10 @@ protected:
     void timerEvent(QTimerEvent *e) {
         if (e->timerId() == timer.timerId()) {
             emit doScroll(sliderAction);
-            if (fast) {
-                emit doScroll(sliderAction);
-                emit doScroll(sliderAction);
-            }
         }
     }
     void hideEvent(QHideEvent *) {
         stopTimer();
-    }
-
-    void mouseMoveEvent(QMouseEvent *e)
-    {
-        // Enable fast scrolling if the cursor is directly above or below the popup.
-        const int mouseX = e->pos().x();
-        const int mouseY = e->pos().y();
-        const bool horizontallyInside = pos().x() < mouseX && mouseX < rect().right() + 1;
-        const bool verticallyOutside = (sliderAction == QAbstractSlider::SliderSingleStepAdd) ?
-                                        rect().bottom() + 1 < mouseY : mouseY < pos().y();
-
-        fast = horizontallyInside && verticallyOutside;
     }
 
     void paintEvent(QPaintEvent *) {
@@ -180,7 +163,6 @@ Q_SIGNALS:
 private:
     QAbstractSlider::SliderAction sliderAction;
     QBasicTimer timer;
-    bool fast;
 };
 
 class Q_AUTOTEST_EXPORT QComboBoxPrivateContainer : public QFrame
