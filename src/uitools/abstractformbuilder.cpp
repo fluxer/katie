@@ -958,7 +958,7 @@ bool QAbstractFormBuilder::applyPropertyInternally(QObject *o, const QString &pr
     \internal
 */
 
-QVariant QAbstractFormBuilder::toVariant(const QMetaObject *meta, DomProperty *p)
+QVariant QAbstractFormBuilder::toVariant(const QMetaObject *meta, const DomProperty *p)
 {
     return domPropertyToVariant(this, meta, p);
 }
