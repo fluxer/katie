@@ -924,18 +924,15 @@ QLayoutItem *QAbstractFormBuilder::create(DomLayoutItem *ui_layoutItem, QLayout 
 */
 void QAbstractFormBuilder::applyProperties(QObject *o, const QList<DomProperty*> &properties)
 {
-    typedef QList<DomProperty*> DomPropertyList;
-
     if (properties.empty())
         return;
 
     QFormBuilderExtra *fb = QFormBuilderExtra::instance(this);
 
-    const DomPropertyList::const_iterator cend = properties.constEnd();
-    for (DomPropertyList::const_iterator it = properties.constBegin(); it != cend; ++it) {
-        const QVariant v = toVariant(o->metaObject(), *it);
+    foreach (const DomProperty* it, properties) {
+        const QVariant v = toVariant(o->metaObject(), it);
         if (!v.isNull()) {
-            const  QString attributeName = (*it)->attributeName();
+            const  QString attributeName = it->attributeName();
             if (!fb->applyPropertyInternally(o, attributeName, v))
                 o->setProperty(attributeName.toUtf8(), v);
         }
