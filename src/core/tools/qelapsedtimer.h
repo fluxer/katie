@@ -69,6 +69,8 @@ public:
     bool operator!=(const QElapsedTimer &other) const
     { return !(*this == other); }
 
+    friend bool Q_CORE_EXPORT operator<(const QElapsedTimer &v1, const QElapsedTimer &v2);
+
 private:
     qint64 t1;
     qint64 t2;
