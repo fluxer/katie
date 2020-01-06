@@ -328,6 +328,7 @@ void QSettingsPrivate::write()
     if (Q_UNLIKELY(!writeFunc(file, map))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::write: could not write %s", filename.toLocal8Bit().constData());
+        return;
     }
 
     shouldwrite = false;
