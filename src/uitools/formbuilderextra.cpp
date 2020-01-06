@@ -124,13 +124,13 @@ void QFormBuilderExtra::applyInternalProperties() const
 bool QFormBuilderExtra::applyBuddy(const QString &buddyName, BuddyMode applyMode, QLabel *label)
 {
     if (buddyName.isEmpty()) {
-        label->setBuddy(0);
+        label->setBuddy(Q_NULLPTR);
         return false;
     }
 
     const QWidgetList widgets = label->window()->findChildren<QWidget*>(buddyName);
     if (widgets.empty()) {
-        label->setBuddy(0);
+        label->setBuddy(Q_NULLPTR);
         return false;
     }
 
@@ -142,7 +142,7 @@ bool QFormBuilderExtra::applyBuddy(const QString &buddyName, BuddyMode applyMode
         }
     }
 
-    label->setBuddy(0);
+    label->setBuddy(Q_NULLPTR);
     return false;
 }
 
