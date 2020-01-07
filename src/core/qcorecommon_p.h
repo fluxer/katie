@@ -7,8 +7,6 @@
 #  include <zlib.h>
 #endif
 
-#include <string.h>
-
 QT_BEGIN_NAMESPACE
 
 // enough space to hold BOM, each char as surrogate pair and terminator
@@ -34,13 +32,6 @@ static inline QString fromstrerror_helper(const int errorcode)
     return QString::fromLocal8Bit(::strerror(errorcode));
 #endif
 }
-
-static inline void report_error(int code, const char *where, const char *what)
-{
-    if (code != 0)
-        qWarning("%s: %s failure: %s", where, what, qPrintable(qt_error_string(code)));
-}
-
 
 #ifndef QT_NO_COMPRESS
 static inline quint32 qCRC32(const char *data, uint len)
