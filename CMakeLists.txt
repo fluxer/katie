@@ -223,7 +223,7 @@ check_type_size(size_t QT_POINTER_SIZE)
 katie_check_function(getpwnam_r "pwd.h")
 katie_check_function(getpwuid_r "pwd.h")
 katie_check_function(getgrgid_r "grp.h")
-# XSI POSIX.1-2001 functions
+# XSI/POSIX.1-2001
 katie_check_function(strerror_r "string.h")
 # SUSv2
 katie_check_function(localtime_r "time.h")
