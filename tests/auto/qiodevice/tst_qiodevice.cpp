@@ -113,7 +113,7 @@ void tst_QIODevice::constructing_QTcpSocket()
 
     QVERIFY(!device->isOpen());
 
-    socket.connectToHost(QtNetworkSettings::serverName(), 143);
+    socket.connectToHost(QtNetworkSettings::serverName(), 80);
     QVERIFY(socket.waitForConnected(30000));
     QVERIFY(device->isOpen());
 
@@ -127,7 +127,7 @@ void tst_QIODevice::constructing_QTcpSocket()
     QCOMPARE(socket.pos(), qlonglong(0));
 
     socket.close();
-    socket.connectToHost(QtNetworkSettings::serverName(), 143);
+    socket.connectToHost(QtNetworkSettings::serverName(), 80);
     QVERIFY(socket.waitForConnected(30000));
     QVERIFY(device->isOpen());
 
