@@ -97,7 +97,7 @@ static bool createFileFromTemplate(int &file,
     Q_ASSERT(length <= path.length() - pos);
 
     char *data = path.data();
-    for (int i = 0; i, i < length; i++) {
+    for (int i = 0; i < length; i++) {
         char ch = char((qrand() & 0xffff) % (26 + 26));
         if (ch < 26)
             data[i + pos] = char(ch + 'A');
