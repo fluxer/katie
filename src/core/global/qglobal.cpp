@@ -1735,13 +1735,13 @@ void qsrand(uint seed)
 
     \sa qsrand()
 */
-thread_local uint almostrandom = 0;
+thread_local int almostrandom = 0;
 int qrand()
 {
     // Seed the PRNG once per thread with a combination of current time and its address
     if (!almostrandom) {
-        almostrandom = QDateTime::currentDateTime().toTime_t();
-        std::srand(almostrandom + quintptr(&almostrandom));
+        almostrandom = QTime::currentTime().msec();
+        std::srand(almostrandom + std::intptr_t(&almostrandom));
     }
     return std::rand();
 }
