@@ -790,10 +790,11 @@ void Preprocessor::preprocess(const QByteArray &filename, Symbols &preprocessed)
             // #### stringery
             QFileInfo fi;
             if (local)
-                fi.setFile(QFileInfo(QString::fromLocal8Bit(filename.constData())).dir(), QString::fromLocal8Bit(include.constData()));
+                fi.setFile(QFileInfo(QString::fromLocal8Bit(filename.constData(), filename.size())).dir(),
+                    QString::fromLocal8Bit(include.constData(), include.size()));
             for (int j = 0; j < Preprocessor::includes.size() && !fi.exists(); ++j) {
                 const IncludePath &p = Preprocessor::includes.at(j);
-                fi.setFile(QString::fromLocal8Bit(p.constData()), QString::fromLocal8Bit(include.constData()));
+                fi.setFile(QString::fromLocal8Bit(p.constData(), p.size()), QString::fromLocal8Bit(include.constData(), include.size()));
                 // try again, maybe there's a file later in the include paths with the same name
                 // (186067)
                 if (fi.isDir()) {
@@ -810,7 +811,7 @@ void Preprocessor::preprocess(const QByteArray &filename, Symbols &preprocessed)
                 continue;
             Preprocessor::preprocessedIncludes.insert(include);
 
-            QFile file(QString::fromLocal8Bit(include.constData()));
+            QFile file(QString::fromLocal8Bit(include.constData(), include.size()));
             if (!file.open(QFile::ReadOnly))
                 continue;
 

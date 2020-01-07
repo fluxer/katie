@@ -1643,7 +1643,7 @@ QString QCoreApplication::applicationFilePath()
         */
         QByteArray pEnv = qgetenv("PATH");
         QDir currentDir = QDir::current();
-        QStringList paths = QString::fromLocal8Bit(pEnv.constData()).split(QLatin1Char(':'));
+        QStringList paths = QString::fromLocal8Bit(pEnv.constData(), pEnv.size()).split(QLatin1Char(':'));
         foreach (const QString &p, paths) {
             if (p.isEmpty())
                 continue;
