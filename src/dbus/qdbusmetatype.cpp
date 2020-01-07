@@ -448,17 +448,15 @@ const char *QDBusMetaType::typeToSignature(int type)
     }
 
     // call to user code to construct the signature type
-    QDBusCustomTypeInfo *info;
-    {
-        // createSignature will never return a null QByteArray
-        // if there was an error, it'll return ""
-        QByteArray signature = QDBusArgumentPrivate::createSignature(type);
+    // createSignature will never return a null QByteArray
+    // if there was an error, it'll return ""
+    QByteArray signature = QDBusArgumentPrivate::createSignature(type);
 
-        // re-acquire lock
-        QWriteLocker locker(customTypesLock());
-        info = &(*ct)[type];
-        info->signature = signature;
-    }
+    // re-acquire lock
+    QWriteLocker locker(customTypesLock());
+    QDBusCustomTypeInfo *info = &(*ct)[type];
+    info->signature = signature;
+
     return info->signature;
 }
 
