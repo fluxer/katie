@@ -436,7 +436,7 @@ const char *QDBusMetaType::typeToSignature(int type)
     {
         QReadLocker locker(customTypesLock());
         if (type >= ct->size())
-            return 0;           // type not registered with us
+            return Q_NULLPTR;           // type not registered with us
 
         const QDBusCustomTypeInfo &info = (*ct).at(type);
 
@@ -444,7 +444,7 @@ const char *QDBusMetaType::typeToSignature(int type)
             return info.signature;
 
         if (!info.marshall)
-            return 0;           // type not registered with us
+            return Q_NULLPTR;           // type not registered with us
     }
 
     // call to user code to construct the signature type
