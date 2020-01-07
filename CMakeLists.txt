@@ -220,13 +220,13 @@ check_include_file(sys/time.h HAVE_SYS_TIME_H)
 check_type_size(size_t QT_POINTER_SIZE)
 
 # POSIX.1-2001
-katie_optional_function(getpwuid_r "pwd.h")
-katie_optional_function(getgrgid_r "grp.h")
+katie_check_function(getpwuid_r "pwd.h")
+katie_check_function(getgrgid_r "grp.h")
 # XSI POSIX.1-2001 functions
-katie_optional_function(strerror_r "string.h")
-# POSIX.1-2008 functions
-katie_require_function(realpath "stdlib.h")
-katie_require_function(unsetenv "stdlib.h")
+katie_check_function(strerror_r "string.h")
+# SUSv2
+katie_check_function(localtime_r "time.h")
+katie_check_function(gmtime_r "time.h")
 
 if(KATIE_COMPILER MATCHES "(gcc|clang)")
     set(QT_VISIBILITY_AVAILABLE TRUE)

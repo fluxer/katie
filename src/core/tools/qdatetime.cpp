@@ -2781,14 +2781,14 @@ QDate QDate::currentDate()
     time_t ltime;
     time(&ltime);
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
     struct tm *t = localtime_r(&ltime, &res);
 #else
     struct tm *t = localtime(&ltime);
-#endif // !QT_NO_THREAD && _POSIX_THREAD_SAFE_FUNCTIONS
+#endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
 
     d.jd = julianDayFromDate(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday);
     return d;
@@ -2802,14 +2802,14 @@ QTime QTime::currentTime()
     gettimeofday(&tv, Q_NULLPTR);
     time_t ltime = tv.tv_sec;
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
     struct tm *t = localtime_r(&ltime, &res);
 #else
     struct tm *t = localtime(&ltime);
-#endif
+#endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
     Q_CHECK_PTR(t);
 
     ct.mds = msecsFromDecomposed(t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
@@ -2824,14 +2824,14 @@ QDateTime QDateTime::currentDateTime()
     gettimeofday(&tv, Q_NULLPTR);
     time_t ltime = tv.tv_sec;
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(localtime_r)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
     struct tm *t = localtime_r(&ltime, &res);
 #else
     struct tm *t = localtime(&ltime);
-#endif
+#endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
 
     QDateTime dt;
     dt.d->time.mds = msecsFromDecomposed(t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
@@ -2851,13 +2851,13 @@ QDateTime QDateTime::currentDateTimeUtc()
     gettimeofday(&tv, Q_NULLPTR);
     time_t ltime = tv.tv_sec;
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
-    // use the reentrant version of localtime() where available
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GMTIME_R)
+    // use the reentrant version of gmtime_r() where available
     struct tm res;
     struct tm *t = gmtime_r(&ltime, &res);
 #else
     struct tm *t = gmtime(&ltime);
-#endif
+#endif // !QT_NO_THREAD && QT_HAVE_GMTIME_R
 
     QDateTime dt;
     dt.d->time.mds = msecsFromDecomposed(t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
@@ -3484,14 +3484,14 @@ static QDateTimePrivate::Spec utcToLocal(QDate &date, QTime &time)
     // won't overflow because of fakeDate
     time_t secsSince1Jan1970UTC = toMSecsSinceEpoch_helper(fakeDate.toJulianDay(), QTime().msecsTo(time)) / 1000;
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     tm res;
     tm *brokenDown = localtime_r(&secsSince1Jan1970UTC, &res);
 #else
     tm *brokenDown = localtime(&secsSince1Jan1970UTC);
-#endif
+#endif  // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
     if (!brokenDown) {
         date = QDate(1970, 1, 1);
         time = QTime();
@@ -3526,13 +3526,13 @@ static void localToUtc(QDate &date, QTime &time, int isdst)
     localTM.tm_year = fakeDate.year() - 1900;
     localTM.tm_isdst = isdst;
     time_t secsSince1Jan1970UTC = mktime(&localTM);
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GMTIME_R)
     // use the reentrant version of gmtime() where available
     tm res;
     tm *brokenDown = gmtime_r(&secsSince1Jan1970UTC, &res);
 #else
     tm *brokenDown = gmtime(&secsSince1Jan1970UTC);
-#endif // !QT_NO_THREAD && _POSIX_THREAD_SAFE_FUNCTIONS
+#endif // !QT_NO_THREAD && QT_HAVE_GMTIME_R
     if (!brokenDown) {
         date = QDate(1970, 1, 1);
         time = QTime();
