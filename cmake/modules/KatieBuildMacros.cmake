@@ -33,7 +33,10 @@ endmacro()
 
 # same as katie_optional_function(), however if not found an error is send
 macro(KATIE_REQUIRE_FUNCTION FORFUNCTION FROMHEADER)
-    katie_optional_function("${FORFUNCTION}" "${FROMHEADER}" HAVE_${FORFUNCTION})
+    check_symbol_exists("${FORFUNCTION}" "${FROMHEADER}" HAVE_${FORFUNCTION})
+    if(NOT HAVE_${FORFUNCTION})
+        check_function_exists("${FORFUNCTION}" HAVE_${FORFUNCTION})
+    endif()
     if(NOT HAVE_${FORFUNCTION})
         message(SEND_ERROR "katie_require_function(${FORFUNCTION}, ${FROMHEADER}) failed")
     endif()
