@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
   Safe and portable C string functions; extensions to standard string.h
  *****************************************************************************/
 
-Q_CORE_EXPORT char *qstrdup(const char *);
+Q_CORE_EXPORT char* qstrdup(const char *);
 
 inline uint qstrlen(const char *str)
 { return str ? uint(strlen(str)) : 0; }
@@ -57,8 +57,8 @@ inline uint qstrlen(const char *str)
 inline uint qstrnlen(const char *str, uint maxlen)
 { return str ? uint(strnlen(str, maxlen)) : 0; }
 
-Q_CORE_EXPORT char *qstrcpy(char *dst, const char *src);
-Q_CORE_EXPORT char *qstrncpy(char *dst, const char *src, uint len);
+Q_CORE_EXPORT char* qstrcpy(char *dst, const char *src);
+Q_CORE_EXPORT char* qstrncpy(char *dst, const char *src, uint len);
 Q_CORE_EXPORT int qstrcmp(const char *str1, const char *str2);
 
 inline int qstrncmp(const char *str1, const char *str2, uint len)
@@ -66,8 +66,17 @@ inline int qstrncmp(const char *str1, const char *str2, uint len)
     return (str1 && str2) ? strncmp(str1, str2, len)
         : (str1 ? 1 : (str2 ? -1 : 0));
 }
-Q_CORE_EXPORT int qstricmp(const char *, const char *);
-Q_CORE_EXPORT int qstrnicmp(const char *, const char *, uint len);
+inline int qstricmp(const char *str1, const char *str2)
+{
+    return (str1 && str2) ? strcasecmp(str1, str2)
+        : (str1 ? 1 : (str2 ? -1 : 0));
+}
+
+inline int qstrnicmp(const char *str1, const char *str2, uint len)
+{
+    return (str1 && str2) ? strncasecmp(str1, str2, len)
+        : (str1 ? 1 : (str2 ? -1 : 0));
+}
 
 // implemented in qvsnprintf.cpp
 Q_CORE_EXPORT int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap);

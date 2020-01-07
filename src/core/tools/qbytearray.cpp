@@ -112,7 +112,7 @@ int qAllocMore(int alloc, int extra)
     deleted using \c delete[].
 */
 
-char *qstrdup(const char *src)
+char* qstrdup(const char *src)
 {
     if (!src)
         return Q_NULLPTR;
@@ -132,7 +132,7 @@ char *qstrdup(const char *src)
     \sa qstrncpy()
 */
 
-char *qstrcpy(char *dst, const char *src)
+char* qstrcpy(char *dst, const char *src)
 {
     if (!src)
         return Q_NULLPTR;
@@ -158,7 +158,7 @@ char *qstrcpy(char *dst, const char *src)
     \sa qstrcpy()
 */
 
-char *qstrncpy(char *dst, const char *src, uint len)
+char* qstrncpy(char *dst, const char *src, uint len)
 {
     if (!src || !dst)
         return Q_NULLPTR;
@@ -233,7 +233,9 @@ int qstrcmp(const char *str1, const char *str2)
     \sa qstrcmp(), qstricmp(), qstrnicmp(), {8-bit Character Comparisons}
 */
 
-/*! \relates QByteArray
+/*! \fn int qstricmp(const char *str1, const char *str2)
+
+   \relates QByteArray
 
     A safe \c stricmp() function.
 
@@ -252,21 +254,9 @@ int qstrcmp(const char *str1, const char *str2)
     \sa qstrcmp(), qstrncmp(), qstrnicmp(), {8-bit Character Comparisons}
 */
 
-int qstricmp(const char *str1, const char *str2)
-{
-    const uchar *s1 = reinterpret_cast<const uchar *>(str1);
-    const uchar *s2 = reinterpret_cast<const uchar *>(str2);
-    int res;
-    uchar c;
-    if (!s1 || !s2)
-        return s1 ? 1 : (s2 ? -1 : 0);
-    for (; !(res = (c = QChar::toLower((ushort)*s1)) - QChar::toLower((ushort)*s2)); s1++, s2++)
-        if (!c)                                // strings are equal
-            break;
-    return res;
-}
+/*! \fn int qstrnicmp(const char *str1, const char *str2, uint len)
 
-/*! \relates QByteArray
+   \relates QByteArray
 
     A safe \c strnicmp() function.
 
@@ -285,23 +275,6 @@ int qstricmp(const char *str1, const char *str2)
 
     \sa qstrcmp(), qstrncmp(), qstricmp(), {8-bit Character Comparisons}
 */
-
-int qstrnicmp(const char *str1, const char *str2, uint len)
-{
-    const uchar *s1 = reinterpret_cast<const uchar *>(str1);
-    const uchar *s2 = reinterpret_cast<const uchar *>(str2);
-    int res;
-    uchar c;
-    if (!s1 || !s2)
-        return s1 ? 1 : (s2 ? -1 : 0);
-    for (; len--; s1++, s2++) {
-        if ((res = (c = QChar::toLower((ushort)*s1)) - QChar::toLower((ushort)*s2)))
-            return res;
-        if (!c)                                // strings are equal
-            break;
-    }
-    return 0;
-}
 
 // the CRC table below is created by the following piece of code
 #if 0
