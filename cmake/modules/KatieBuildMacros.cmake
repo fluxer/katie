@@ -17,7 +17,9 @@ macro(KATIE_WARNING MESSAGESTR)
 endmacro()
 
 # a macro to check for function presence in header, if function is found a
-# definition is added
+# definition is added. noteee that check_symbol_exists() and
+# check_function_exists() cache the result variables so they can be used
+# anywhere
 macro(KATIE_OPTIONAL_FUNCTION FORFUNCTION FROMHEADER)
     check_symbol_exists("${FORFUNCTION}" "${FROMHEADER}" HAVE_${FORFUNCTION})
     if(NOT HAVE_${FORFUNCTION})
