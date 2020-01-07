@@ -829,15 +829,17 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
         QString userName = tokens.first();
         userName.remove(0, 1);
 #if defined(QT_HAVE_GETPWNAM_R)
+        int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
+        if (size_max == -1)
+            size_max = 1024;
+        char buf[size_max];
         passwd pw;
         passwd *tmpPw;
-        char buf[200];
-        const int bufSize = sizeof(buf);
         int err = 0;
 #if defined(Q_OS_SOLARIS) && (_POSIX_C_SOURCE - 0 < 199506L)
-        tmpPw = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, bufSize);
+        tmpPw = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max);
 #else
-        err = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, bufSize, &tmpPw);
+        err = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max, &tmpPw);
 #endif
         if (err || !tmpPw)
             return ret;
@@ -847,7 +849,7 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
         if (!pw)
             return ret;
         const QString homePath = QString::fromLocal8Bit(pw->pw_dir);
-#endif
+#endif // QT_HAVE_GETPWNAM_R
         ret.replace(0, tokens.first().length(), homePath);
     }
     if (expanded != 0)
