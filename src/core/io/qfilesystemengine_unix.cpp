@@ -303,20 +303,20 @@ bool QFileSystemEngine::createDirectory(const QFileSystemEntry &entry, bool crea
                 slash = dirName.length();
             }
             if (slash) {
-                const char* chunk = QFile::encodeName(dirName.left(slash)).constData();
+                const QByteArray chunk = QFile::encodeName(dirName.left(slash));
                 QT_STATBUF st;
-                if (QT_STAT(chunk, &st) == 0) {
+                if (QT_STAT(chunk.constData(), &st) == 0) {
                     if ((st.st_mode & S_IFMT) != S_IFDIR)
                         return false;
-                } else if (QT_MKDIR(chunk, 0777) != 0) {
+                } else if (QT_MKDIR(chunk.constData(), 0777) != 0) {
                     return false;
                 }
             }
         }
         return true;
     }
-    const char* cDirName = QFile::encodeName(dirName).constData();
-    return (QT_MKDIR(cDirName, 0777) == 0);
+    const QByteArray eDirName = QFile::encodeName(dirName);
+    return (QT_MKDIR(eDirName.constData(), 0777) == 0);
 }
 
 //static
@@ -325,12 +325,12 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
     if (removeEmptyParents) {
         QString dirName = QDir::cleanPath(entry.filePath());
         for (int oldslash = 0, slash=dirName.length(); slash > 0; oldslash = slash) {
-            const char* chunk = QFile::encodeName(dirName.left(slash)).constData();
+            const QByteArray chunk = QFile::encodeName(dirName.left(slash));
             QT_STATBUF st;
-            if (QT_STAT(chunk, &st) == 0) {
+            if (QT_STAT(chunk.constData(), &st) == 0) {
                 if ((st.st_mode & S_IFMT) != S_IFDIR)
                     return false;
-                if (::rmdir(chunk) != 0)
+                if (::rmdir(chunk.constData()) != 0)
                     return oldslash != 0;
             } else {
                 return false;
@@ -339,8 +339,8 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
         }
         return true;
     }
-    const char* cDirName = QFile::encodeName(entry.filePath()).constData();
-    return rmdir(cDirName) == 0;
+    const QByteArray eDirName = QFile::encodeName(entry.filePath());
+    return ::rmdir(eDirName.constData()) == 0;
 }
 
 //static
