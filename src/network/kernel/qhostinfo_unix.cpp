@@ -255,10 +255,11 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 QString QHostInfo::localHostName()
 {
     char hostName[HOST_NAME_MAX];
-    if (gethostname(hostName, sizeof(hostName)) == -1)
-        return QString();
-    hostName[sizeof(hostName) - 1] = '\0';
-    return QString::fromLocal8Bit(hostName);
+    if (Q_LIKELY(::gethostname(hostName, sizeof(hostName)) == 0)) {
+        hostName[sizeof(hostName) - 1] = '\0';
+        return QString::fromLocal8Bit(hostName);
+    }
+    return QString();
 }
 
 QString QHostInfo::localDomainName()
