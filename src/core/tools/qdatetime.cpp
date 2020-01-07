@@ -2824,7 +2824,7 @@ QDateTime QDateTime::currentDateTime()
     gettimeofday(&tv, Q_NULLPTR);
     time_t ltime = tv.tv_sec;
 
-#if !defined(QT_NO_THREAD) && defined(localtime_r)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
