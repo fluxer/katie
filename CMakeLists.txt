@@ -220,6 +220,7 @@ check_include_file(sys/time.h HAVE_SYS_TIME_H)
 check_type_size(size_t QT_POINTER_SIZE)
 
 # POSIX.1-2001
+katie_check_function(getpwnam_r "pwd.h")
 katie_check_function(getpwuid_r "pwd.h")
 katie_check_function(getgrgid_r "grp.h")
 # XSI POSIX.1-2001 functions

@@ -828,22 +828,22 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
     } else {
         QString userName = tokens.first();
         userName.remove(0, 1);
-#if defined(_POSIX_THREAD_SAFE_FUNCTIONS) && !defined(Q_OS_OPENBSD)
+#if defined(QT_HAVE_GETPWNAM_R)
         passwd pw;
         passwd *tmpPw;
         char buf[200];
         const int bufSize = sizeof(buf);
         int err = 0;
 #if defined(Q_OS_SOLARIS) && (_POSIX_C_SOURCE - 0 < 199506L)
-        tmpPw = getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, bufSize);
+        tmpPw = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, bufSize);
 #else
-        err = getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, bufSize, &tmpPw);
+        err = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, bufSize, &tmpPw);
 #endif
         if (err || !tmpPw)
             return ret;
         const QString homePath = QString::fromLocal8Bit(pw.pw_dir);
 #else
-        passwd *pw = getpwnam(userName.toLocal8Bit().constData());
+        passwd *pw = ::getpwnam(userName.toLocal8Bit().constData());
         if (!pw)
             return ret;
         const QString homePath = QString::fromLocal8Bit(pw->pw_dir);
