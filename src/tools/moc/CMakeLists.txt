@@ -1,8 +1,6 @@
 add_definitions(-DQT_MOC)
 set(EXTRA_MOC_LIBS
     KtCore
-    # for the inline crc32 reference from qCRC32()
-    ${ZLIB_LIBRARIES}
 )
 
 include_directories(

@@ -52,8 +52,7 @@
 #  include "qobject_p.h"
 #endif
 
-#ifndef QT_NO_COMPRESS
-#  define QT_CACHE_NORMALIZED_TYPE
+#ifndef QT_BOOTSTRAPPED
 #  include <qmutex.h>
 #endif
 
@@ -165,7 +164,7 @@ static inline bool is_space(char s)
 }
 #endif
 
-#ifdef QT_CACHE_NORMALIZED_TYPE
+#ifndef QT_BOOTSTRAPPED
 typedef QHash<quint32, QByteArray> QNormalizedTypeHash;
 Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
 Q_GLOBAL_STATIC(QMutex, qGlobalNormalizedTypeMutex)
@@ -194,8 +193,8 @@ static const qint16 TypeTblSize = sizeof(TypeTbl) / sizeof(TypeTblData);
 static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 {
     const int len = e - t;
-#ifdef QT_CACHE_NORMALIZED_TYPE
-    const quint32 cachekey = qCRC32(t, len);
+#ifndef QT_BOOTSTRAPPED
+    const quint32 cachekey = qChecksum32(t, len);
     QMutexLocker lock(qGlobalNormalizedTypeMutex());
     QByteArray cached = qGlobalNormalizedTypeHash()->value(cachekey);
     if (!cached.isEmpty()) {

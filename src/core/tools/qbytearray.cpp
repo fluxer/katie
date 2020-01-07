@@ -372,6 +372,25 @@ quint16 qChecksum(const char *data, uint len)
 }
 
 /*!
+    \relates QByteArray
+
+    Returns the CRC-32 checksum of the first \a len bytes of \a data.
+
+    The checksum is independent of the byte order (endianness).
+*/
+quint32 qChecksum32(const char *data, uint len)
+{
+#ifndef QT_NO_COMPRESS
+    quint32 crc_32 = ::crc32(0, 0, 0);
+    return ::crc32(crc_32, reinterpret_cast<const uchar *>(data), len);
+#else
+    Q_UNUSED(data)
+    Q_UNUSED(len)
+    return 0;
+#endif
+}
+
+/*!
     \fn QByteArray qCompress(const QByteArray& data, int compressionLevel)
 
     \relates QByteArray

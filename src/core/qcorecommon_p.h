@@ -3,10 +3,6 @@
 
 #include "qstring.h"
 
-#ifndef QT_NO_COMPRESS
-#  include <zlib.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 // enough space to hold BOM, each char as surrogate pair and terminator
@@ -32,15 +28,6 @@ static inline QString fromstrerror_helper(const int errorcode)
     return QString::fromLocal8Bit(::strerror(errorcode));
 #endif
 }
-
-#ifndef QT_NO_COMPRESS
-static inline quint32 qCRC32(const char *data, uint len)
-{
-    quint32 crc_32 = ::crc32(0, 0, 0);
-    return ::crc32(crc_32, reinterpret_cast<const uchar *>(data), len);
-}
-#endif
-
 
 static inline uint foldCase(const ushort *ch, const ushort *start)
 {
