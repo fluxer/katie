@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 // version in portable code.
 static inline QString fromstrerror_helper(const int errorcode)
 {
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_STRERROR_R)
     char errbuf[1024];
     ::memset(errbuf, '\0', sizeof(errbuf));
     if (Q_LIKELY(::strerror_r(errorcode, errbuf, sizeof(errbuf)))) {

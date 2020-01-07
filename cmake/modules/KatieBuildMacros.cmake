@@ -16,13 +16,24 @@ macro(KATIE_WARNING MESSAGESTR)
     endif()
 endmacro()
 
-macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
+# a macro to check for function presence in header, if function is found a
+# definition is added
+macro(KATIE_OPTIONAL_FUNCTION FORFUNCTION FROMHEADER)
     check_symbol_exists("${FORFUNCTION}" "${FROMHEADER}" HAVE_${FORFUNCTION})
     if(NOT HAVE_${FORFUNCTION})
         check_function_exists("${FORFUNCTION}" HAVE_${FORFUNCTION})
     endif()
+    if(HAVE_${FORFUNCTION})
+        string(TOUPPER "${FORFUNCTION}" upperfunction)
+        add_definitions(-DQT_HAVE_${upperfunction})
+    endif()
+endmacro()
+
+# same as katie_optional_function(), however if not found an error is send
+macro(KATIE_REQUIRE_FUNCTION FORFUNCTION FROMHEADER)
+    katie_optional_function("${FORFUNCTION}" "${FROMHEADER}" HAVE_${FORFUNCTION})
     if(NOT HAVE_${FORFUNCTION})
-        message(SEND_ERROR "check_function_exists(${FORFUNCTION}) failed")
+        message(SEND_ERROR "katie_require_function(${FORFUNCTION}, ${FROMHEADER}) failed")
     endif()
 endmacro()
 
