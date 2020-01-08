@@ -4,7 +4,7 @@
 <context>
     <name>AppFontDialog</name>
     <message>
-        <location filename="../src/tools/designer/appfontdialog.cpp" line="+418"/>
+        <location filename="../src/tools/designer/appfontdialog.cpp" line="+410"/>
         <source>Additional Fonts</source>
         <translation type="unfinished"></translation>
     </message>
@@ -124,7 +124,7 @@
 <context>
     <name>FontPanel</name>
     <message>
-        <location filename="../src/tools/designer/fontpanel/fontpanel.cpp" line="+62"/>
+        <location filename="../src/tools/designer/fontpanel/fontpanel.cpp" line="+54"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
@@ -147,7 +147,7 @@
 <context>
     <name>LConvert</name>
     <message>
-        <location filename="../src/tools/lconvert/lconvert.cpp" line="+68"/>
+        <location filename="../src/tools/lconvert/lconvert.cpp" line="+60"/>
         <source>
 Usage:
     lconvert [options] &lt;infile&gt; [&lt;infile&gt;] ...
@@ -236,7 +236,7 @@ Long options can be specified with only one leading dash, too.
 <context>
     <name>LRelease</name>
     <message>
-        <location filename="../src/tools/lrelease/lrelease.cpp" line="+76"/>
+        <location filename="../src/tools/lrelease/lrelease.cpp" line="+68"/>
         <source>Usage:
     lrelease [options] ts-files [-qm qm-file]
 
@@ -311,7 +311,7 @@ Options:
 <context>
     <name>LUpdate</name>
     <message>
-        <location filename="../src/tools/lupdate/cpp.cpp" line="+628"/>
+        <location filename="../src/tools/lupdate/cpp.cpp" line="+620"/>
         <source>Parenthesis/bracket/brace mismatch between #if and #else branches; using #if branch
 </source>
         <translation type="unfinished"></translation>
@@ -398,7 +398,7 @@ Options:
     </message>
     <message>
         <location line="+104"/>
-        <location filename="../src/tools/lupdate/qscript.cpp" line="+2504"/>
+        <location filename="../src/tools/lupdate/qscript.cpp" line="+2496"/>
         <source>Unexpected character in meta string
 </source>
         <translation type="unfinished"></translation>
@@ -443,7 +443,7 @@ Options:
     </message>
     <message>
         <location line="+62"/>
-        <location filename="../src/tools/lupdate/ui.cpp" line="+180"/>
+        <location filename="../src/tools/lupdate/ui.cpp" line="+172"/>
         <location filename="../src/tools/lupdate/qscript.cpp" line="+178"/>
         <source>Cannot open %1: %2</source>
         <translation type="unfinished"></translation>
@@ -459,7 +459,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/tools/lupdate/merge.cpp" line="+490"/>
+        <location filename="../src/tools/lupdate/merge.cpp" line="+482"/>
         <source>    Found %n source text(s) (%1 new and %2 already existing)
 </source>
         <translation type="unfinished">
@@ -507,7 +507,7 @@ Options:
         </translation>
     </message>
     <message>
-        <location filename="../src/tools/lupdate/lupdate.cpp" line="+88"/>
+        <location filename="../src/tools/lupdate/lupdate.cpp" line="+80"/>
         <source>Usage:
     lupdate [options] [source-file|path|@lst-file]... -ts ts-files|@lst-file
 
@@ -1128,7 +1128,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+75"/>
+        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+67"/>
         <source>&lt;p&gt;&lt;b&gt;&lt;font size+=2&gt;Appearance&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p&gt;Use this tab to customize the appearance of your Qt applications.&lt;/p&gt;&lt;p&gt;You can select the default GUI Style from the drop down list and customize the colors.&lt;/p&gt;&lt;p&gt;Any GUI Style plugins in your plugin path will automatically be added to the list of built-in Qt styles. (See the Library Paths tab for information on adding new plugin paths.)&lt;/p&gt;&lt;p&gt;When you choose 3-D Effects and Window Background colors, the Qt Configuration program will automatically generate a palette for you. To customize colors further, press the Tune Palette button to open the advanced palette editor.&lt;p&gt;The Preview Window shows what the selected Style and colors look like.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1158,12 +1158,12 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+15"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+148"/>
+        <location line="+146"/>
         <source>No changes to be saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1173,7 +1173,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+89"/>
+        <location line="+85"/>
         <source>Saved changes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1184,7 +1184,7 @@ Options:
     </message>
     <message>
         <location line="+15"/>
-        <source>&lt;h3&gt;%1&lt;/h3&gt;&lt;br/&gt;Version %2&lt;br/&gt;&lt;br/&gt;Copyright (C) 2015 The Qt Company Ltd.&lt;br/&gt;&lt;br/&gt;Copyright (C) 2016-2019 Ivailo Monev</source>
+        <source>&lt;h3&gt;%1&lt;/h3&gt;&lt;br/&gt;Version %2&lt;br/&gt;&lt;br/&gt;Copyright (C) 2015 The Qt Company Ltd.&lt;br/&gt;&lt;br/&gt;Copyright (C) 2016-2020 Ivailo Monev</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1219,7 +1219,7 @@ Options:
 <context>
     <name>MainWindowBase</name>
     <message>
-        <location filename="../src/tools/designer/mainwindow.cpp" line="+119"/>
+        <location filename="../src/tools/designer/mainwindow.cpp" line="+111"/>
         <source>Main</source>
         <extracomment>Not currently used (main tool bar)</extracomment>
         <translation type="unfinished"></translation>
@@ -1261,7 +1261,7 @@ Options:
 <context>
     <name>NewForm</name>
     <message>
-        <location filename="../src/tools/designer/newform.cpp" line="+74"/>
+        <location filename="../src/tools/designer/newform.cpp" line="+65"/>
         <source>Show this Dialog on Startup</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1504,7 +1504,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/qtconfig/paletteeditoradvanced.cpp" line="+54"/>
+        <location filename="../src/tools/qtconfig/paletteeditoradvanced.cpp" line="+46"/>
         <location line="+6"/>
         <source>Choose a color</source>
         <translation type="unfinished"></translation>
@@ -1539,7 +1539,7 @@ Options:
 <context>
     <name>PreviewFrame</name>
     <message>
-        <location filename="../src/tools/qtconfig/previewframe.cpp" line="+83"/>
+        <location filename="../src/tools/qtconfig/previewframe.cpp" line="+75"/>
         <source>Desktop settings will only take effect after an application restart.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1611,7 +1611,7 @@ Options:
 <context>
     <name>QDBusViewer</name>
     <message>
-        <location filename="../src/tools/qdbusviewer/qdbusviewer.cpp" line="+83"/>
+        <location filename="../src/tools/qdbusviewer/qdbusviewer.cpp" line="+75"/>
         <source>Search...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1690,7 +1690,7 @@ Options:
 <context>
     <name>QDesigner</name>
     <message>
-        <location filename="../src/tools/designer/qdesigner.cpp" line="+132"/>
+        <location filename="../src/tools/designer/qdesigner.cpp" line="+123"/>
         <source>%1 - warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1698,7 +1698,7 @@ Options:
 <context>
     <name>QDesignerActions</name>
     <message>
-        <location filename="../src/tools/designer/qdesigner_actions.cpp" line="+130"/>
+        <location filename="../src/tools/designer/qdesigner_actions.cpp" line="+122"/>
         <source>Saved %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1981,7 +1981,7 @@ Would you like to retry?</source>
 <context>
     <name>QDesignerAppearanceOptionsPage</name>
     <message>
-        <location filename="../src/tools/designer/qdesigner_appearanceoptions.cpp" line="+136"/>
+        <location filename="../src/tools/designer/qdesigner_appearanceoptions.cpp" line="+128"/>
         <source>Appearance</source>
         <extracomment>Tab in preferences dialog</extracomment>
         <translation type="unfinished"></translation>
@@ -2008,7 +2008,7 @@ Would you like to retry?</source>
 <context>
     <name>QDesignerFormWindow</name>
     <message>
-        <location filename="../src/tools/designer/qdesigner_formwindow.cpp" line="+218"/>
+        <location filename="../src/tools/designer/qdesigner_formwindow.cpp" line="+209"/>
         <source>%1 - %2[*]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2031,7 +2031,7 @@ Would you like to retry?</source>
 <context>
     <name>QDesignerToolWindow</name>
     <message>
-        <location filename="../src/tools/designer/qdesigner_toolwindow.cpp" line="+187"/>
+        <location filename="../src/tools/designer/qdesigner_toolwindow.cpp" line="+179"/>
         <source>Property Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2064,7 +2064,7 @@ Would you like to retry?</source>
 <context>
     <name>QDesignerWorkbench</name>
     <message>
-        <location filename="../src/tools/designer/qdesigner_workbench.cpp" line="+199"/>
+        <location filename="../src/tools/designer/qdesigner_workbench.cpp" line="+191"/>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2170,7 +2170,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/qdbusviewer/qdbusviewermain.cpp" line="+66"/>
+        <location filename="../src/tools/qdbusviewer/qdbusviewermain.cpp" line="+58"/>
         <source>Session Bus</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2311,12 +2311,12 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/designer/qttoolbardialog/qttoolbardialog.cpp" line="+1242"/>
+        <location filename="../src/tools/designer/qttoolbardialog/qttoolbardialog.cpp" line="+1234"/>
         <source>Custom Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+544"/>
+        <location line="+543"/>
         <source>&lt; S E P A R A T O R &gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2339,7 +2339,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/designer/saveformastemplate.cpp" line="+72"/>
+        <location filename="../src/tools/designer/saveformastemplate.cpp" line="+64"/>
         <source>Add path...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2441,7 +2441,7 @@ Do you want overwrite the template?</source>
 <context>
     <name>VersionDialog</name>
     <message>
-        <location filename="../src/tools/designer/versiondialog.cpp" line="+166"/>
+        <location filename="../src/tools/designer/versiondialog.cpp" line="+158"/>
         <source>&lt;h3&gt;%1&lt;/h3&gt;&lt;br/&gt;&lt;br/&gt;Version %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2457,7 +2457,7 @@ Do you want overwrite the template?</source>
     </message>
     <message>
         <location line="+2"/>
-        <source>%1&lt;br/&gt;Copyright (C) 2015 The Qt Company Ltd.&lt;br/&gt;Copyright (C) 2016-2019 Ivailo Monev</source>
+        <source>%1&lt;br/&gt;Copyright (C) 2015 The Qt Company Ltd.&lt;br/&gt;Copyright (C) 2016-2020 Ivailo Monev</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

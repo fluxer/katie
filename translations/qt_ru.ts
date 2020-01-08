@@ -4,7 +4,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2206"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2191"/>
         <source>Close Tab</source>
         <translation>Закрыть вкладку</translation>
     </message>
@@ -12,7 +12,7 @@
 <context>
     <name>FormBuilder</name>
     <message>
-        <location filename="../src/uitools/formbuilderextra.cpp" line="+375"/>
+        <location filename="../src/uitools/formbuilderextra.cpp" line="+361"/>
         <source>Invalid stretch value for &apos;%1&apos;: &apos;%2&apos;</source>
         <extracomment>Parsing layout stretch values</extracomment>
         <translation type="unfinished"></translation>
@@ -27,7 +27,7 @@
 <context>
     <name>QAbstractFormBuilder</name>
     <message>
-        <location filename="../src/uitools/abstractformbuilder.cpp" line="+206"/>
+        <location filename="../src/uitools/abstractformbuilder.cpp" line="+195"/>
         <source>Unexpected element &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -63,7 +63,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+764"/>
+        <location line="+746"/>
         <source>Flags property are not supported yet.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -86,9 +86,9 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+899"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+670"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+649"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+891"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+662"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+641"/>
         <location line="+26"/>
         <source>Host not found</source>
         <translation>Узел не найден</translation>
@@ -108,13 +108,13 @@ This indicates an inconsistency in the ui-file.</source>
     <message>
         <location line="-538"/>
         <location line="+810"/>
-        <location line="+223"/>
+        <location line="+213"/>
         <source>Operation on socket is not supported</source>
         <translation>Операция с сокетом не поддерживается</translation>
     </message>
     <message>
-        <location line="+199"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
+        <location line="+191"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+677"/>
         <source>Socket operation timed out</source>
         <translation>Время на операцию с сокетом истекло</translation>
     </message>
@@ -132,7 +132,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1228"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1170"/>
         <source>&amp;Step up</source>
         <translation>Шаг вв&amp;ерх</translation>
     </message>
@@ -150,7 +150,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAccessibleButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+265"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+257"/>
         <source>Uncheck</source>
         <translation>Выключить</translation>
     </message>
@@ -178,7 +178,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Ошибка совместимости библиотеки Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/accessible/qaccessibleobject.cpp" line="+373"/>
+        <location filename="../src/gui/accessible/qaccessibleobject.cpp" line="+365"/>
         <source>Activate</source>
         <translation>Активировать</translation>
     </message>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Активирует главное окно программы</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1890"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1872"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -215,7 +215,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1262"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1255"/>
         <source>Hu&amp;e:</source>
         <translation>&amp;Тон:</translation>
     </message>
@@ -255,7 +255,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Выбор цвета</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+127"/>
         <source>&amp;Basic colors</source>
         <translation>&amp;Основные цвета</translation>
     </message>
@@ -273,13 +273,13 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QComboBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="+1849"/>
+        <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="+1841"/>
         <location line="+66"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qitemeditorfactory.cpp" line="+556"/>
+        <location filename="../src/gui/itemviews/qitemeditorfactory.cpp" line="+548"/>
         <source>False</source>
         <translation>Нет</translation>
     </message>
@@ -369,7 +369,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>%1: ошибка ftok</translation>
     </message>
     <message>
-        <location filename="../src/uitools/formscriptrunner.cpp" line="+88"/>
+        <location filename="../src/uitools/formscriptrunner.cpp" line="+80"/>
         <source>Exception at line %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -388,7 +388,7 @@ Script: %3</source>
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2266"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2105"/>
         <source>AM</source>
         <translation>AM</translation>
     </message>
@@ -411,7 +411,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAbstractAnimation</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeanimation.cpp" line="+172"/>
+        <location filename="../src/declarative/util/qdeclarativeanimation.cpp" line="+164"/>
         <source>Cannot animate non-existent property &quot;%1&quot;</source>
         <translation>Невозможно анимировать несуществуещее свойство «%1»</translation>
     </message>
@@ -421,7 +421,7 @@ Script: %3</source>
         <translation>Невозможно анимировать свойство только для чтения «%1»</translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+107"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+99"/>
         <source>Animation is an abstract class</source>
         <translation>Animation - это абстрактный класс</translation>
     </message>
@@ -437,7 +437,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnchors</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+197"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+189"/>
         <source>Possible anchor loop detected on fill.</source>
         <translation>Обнаружена возможная цикличная привязка на fill.</translation>
     </message>
@@ -505,7 +505,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+103"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+95"/>
         <source>Qt was built without support for QMovie</source>
         <translation>Qt было собрано без поддержки QMovie</translation>
     </message>
@@ -521,7 +521,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBehavior</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativebehavior.cpp" line="+127"/>
+        <location filename="../src/declarative/util/qdeclarativebehavior.cpp" line="+119"/>
         <source>Cannot change the animation assigned to a Behavior.</source>
         <translation>Невозможно изменить анимацию, назначенную поведению.</translation>
     </message>
@@ -529,7 +529,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+444"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>Обнаружено зацикливание привязки для свойства «%1»</translation>
     </message>
@@ -537,7 +537,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeCompiledBindings</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+345"/>
+        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+337"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>Обнаружена цикличная привязка для свойства «%1»</translation>
     </message>
@@ -545,7 +545,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeCompiler</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecompiler.cpp" line="+185"/>
+        <location filename="../src/declarative/qml/qdeclarativecompiler.cpp" line="+176"/>
         <location line="+1672"/>
         <location line="+205"/>
         <location line="+81"/>
@@ -934,7 +934,7 @@ Script: %3</source>
         <location line="+31"/>
         <location line="+9"/>
         <source>No property alias location</source>
-        <translation>Отсутствует размещение псевдонима свойства</translation>
+        <translation>Отсутствует размещение псевдоним�� свойства</translation>
     </message>
     <message>
         <location line="-4"/>
@@ -964,7 +964,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeComponent</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+497"/>
+        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+489"/>
         <source>Invalid empty URL</source>
         <translation>Пустой адрес URL</translation>
     </message>
@@ -977,7 +977,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeConnections</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeconnections.cpp" line="+207"/>
+        <location filename="../src/declarative/util/qdeclarativeconnections.cpp" line="+199"/>
         <location line="+64"/>
         <source>Cannot assign to non-existent property &quot;%1&quot;</source>
         <translation>Невозможно назначить несуществующему свойству «%1»</translation>
@@ -1001,7 +1001,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeFlipable</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeflipable.cpp" line="+138"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeflipable.cpp" line="+130"/>
         <source>front is a write-once property</source>
         <translation>front - свойство для однократной записи</translation>
     </message>
@@ -1014,7 +1014,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeImportDatabase</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativeimport.cpp" line="+380"/>
+        <location filename="../src/declarative/qml/qdeclarativeimport.cpp" line="+372"/>
         <source>plugin cannot be loaded for module &quot;%1&quot;: %2</source>
         <translation>не удалось загрузить плагин для модуля «%1»: %2</translation>
     </message>
@@ -1082,7 +1082,7 @@ Script: %3</source>
         <translation>не является типом</translation>
     </message>
     <message>
-        <location line="+265"/>
+        <location line="+263"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation>Регистр имени файла не соответствует «%1»</translation>
     </message>
@@ -1106,7 +1106,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeLayoutMirroringAttached</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+803"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+795"/>
         <source>LayoutDirection attached property only works with Items</source>
         <translation>Подключённое свойство LayoutDirection работает только с элементами</translation>
     </message>
@@ -1119,7 +1119,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeListModel</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativelistmodel.cpp" line="+390"/>
+        <location filename="../src/declarative/util/qdeclarativelistmodel.cpp" line="+382"/>
         <source>remove: index %1 out of range</source>
         <translation>remove: индекс %1 вне диапазона</translation>
     </message>
@@ -1179,7 +1179,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeLoader</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeloader.cpp" line="+407"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeloader.cpp" line="+399"/>
         <source>Loader does not support loading non-visual elements.</source>
         <translation>Загрузчик не поддерживает загрузку невизуальных элементов.</translation>
     </message>
@@ -1206,7 +1206,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeParentChange</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+103"/>
+        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+95"/>
         <source>Unable to preserve appearance under complex transform</source>
         <translation>Невозможно сохранить внешний вид при сложном преобразовании</translation>
     </message>
@@ -1225,7 +1225,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeParser</name>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+540"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+532"/>
         <location line="+123"/>
         <location line="+54"/>
         <source>Illegal unicode escape sequence</source>
@@ -1283,7 +1283,7 @@ Script: %3</source>
         <translation>Регулярное выражение содержит незавершённый класс</translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1825"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1817"/>
         <location line="+68"/>
         <source>Syntax error</source>
         <translation>Синтаксическая ошибка</translation>
@@ -1300,7 +1300,7 @@ Script: %3</source>
         <translation>Ожидается символ «%1»</translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativescriptparser.cpp" line="+254"/>
+        <location filename="../src/declarative/qml/qdeclarativescriptparser.cpp" line="+246"/>
         <location line="+429"/>
         <location line="+59"/>
         <source>Property value set multiple times</source>
@@ -1378,19 +1378,19 @@ Script: %3</source>
 <context>
     <name>QDeclarativePixmap</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+318"/>
+        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+298"/>
         <source>Error decoding: %1: %2</source>
         <translation>Ошибка декодирования: %1: %2</translation>
     </message>
     <message>
-        <location line="+191"/>
-        <location line="+370"/>
+        <location line="+173"/>
+        <location line="+361"/>
         <source>Failed to get image from provider: %1</source>
         <translation>Не удалось получить изображение от постащика изображений: %1</translation>
     </message>
     <message>
-        <location line="-352"/>
-        <location line="+370"/>
+        <location line="-343"/>
+        <location line="+361"/>
         <source>Cannot open: %1</source>
         <translation>Не удалось открыть: %1</translation>
     </message>
@@ -1406,7 +1406,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativePropertyChanges</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativepropertychanges.cpp" line="+256"/>
+        <location filename="../src/declarative/util/qdeclarativepropertychanges.cpp" line="+248"/>
         <source>PropertyChanges does not support creating state-specific objects.</source>
         <translation>PropertyChanges не поддерживают создание объектов, зависимых от состояния.</translation>
     </message>
@@ -1424,7 +1424,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTextInput</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+929"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+921"/>
         <location line="+8"/>
         <source>Could not load cursor delegate</source>
         <translation>Не удалось загрузить делегат курсора</translation>
@@ -1438,7 +1438,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTypeLoader</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+929"/>
+        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+921"/>
         <source>Script %1 unavailable</source>
         <translation>Сценарий %1 недоступен</translation>
     </message>
@@ -1461,7 +1461,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeVME</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+220"/>
+        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+212"/>
         <source>Unable to create object of type %1</source>
         <translation>Невозможно создать объект типа «%1»</translation>
     </message>
@@ -1509,7 +1509,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeVisualDataModel</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativevisualitemmodel.cpp" line="+1101"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativevisualitemmodel.cpp" line="+1093"/>
         <source>Delegate component must be Item type.</source>
         <translation>Компонента делегата должен быть типа Item.</translation>
     </message>
@@ -1526,7 +1526,7 @@ Script: %3</source>
 <context>
     <name>QDial</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+933"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+925"/>
         <source>QDial</source>
         <translation>QDial</translation>
     </message>
@@ -1544,7 +1544,7 @@ Script: %3</source>
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+515"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+507"/>
         <source>What&apos;s This?</source>
         <translation>Что это?</translation>
     </message>
@@ -1552,7 +1552,7 @@ Script: %3</source>
 <context>
     <name>QDialogButtonBox</name>
     <message>
-        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+460"/>
+        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+452"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
@@ -1645,7 +1645,7 @@ Script: %3</source>
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+438"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+430"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
@@ -1669,7 +1669,7 @@ Script: %3</source>
 <context>
     <name>QDockWidget</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/qaccessiblewidgets.cpp" line="+1329"/>
+        <location filename="../src/plugins/accessible/widgets/qaccessiblewidgets.cpp" line="+1321"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -1700,7 +1700,7 @@ Script: %3</source>
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+362"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+354"/>
         <source>&amp;Show this message again</source>
         <translation>&amp;Показывать это сообщение в дальнейшем</translation>
     </message>
@@ -1772,13 +1772,13 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+533"/>
-        <location line="+512"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+523"/>
+        <location line="+513"/>
         <source>All Files (*)</source>
         <translation>Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+188"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+180"/>
         <location line="+1"/>
         <source>File</source>
         <translation>Файл</translation>
@@ -1796,7 +1796,7 @@ Script: %3</source>
         <translation>Ярлык</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-529"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-530"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
@@ -1806,32 +1806,32 @@ Script: %3</source>
         <translation>Сохранить как</translation>
     </message>
     <message>
-        <location line="+701"/>
+        <location line="+702"/>
         <location line="+55"/>
-        <location line="+1450"/>
+        <location line="+1447"/>
         <source>&amp;Open</source>
         <translation>&amp;Открыть</translation>
     </message>
     <message>
-        <location line="-1505"/>
+        <location line="-1502"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location line="+1299"/>
+        <location line="+1296"/>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translation>«%1» защищён от записи.
 Действительно желаете удалить?</translation>
     </message>
     <message>
-        <location line="+428"/>
+        <location line="+424"/>
         <source>Recent Places</source>
         <translation>Недавние документы</translation>
     </message>
     <message>
-        <location line="-2454"/>
+        <location line="-2448"/>
         <source>&amp;Rename</source>
         <translation>&amp;Переименовать</translation>
     </message>
@@ -1846,23 +1846,23 @@ Do you want to delete it anyway?</source>
         <translation>Показать ск&amp;рытые файлы</translation>
     </message>
     <message>
-        <location line="+1896"/>
+        <location line="+1894"/>
         <source>New Folder</source>
         <translation>Новая папка</translation>
     </message>
     <message>
-        <location line="-1931"/>
+        <location line="-1929"/>
         <source>Find Directory</source>
         <translation>Найти каталог</translation>
     </message>
     <message>
-        <location line="+708"/>
+        <location line="+709"/>
         <source>Directories</source>
         <translation>Каталоги</translation>
     </message>
     <message>
-        <location line="-667"/>
-        <location line="+671"/>
+        <location line="-668"/>
+        <location line="+672"/>
         <source>Directory:</source>
         <translation>Каталог:</translation>
     </message>
@@ -1889,7 +1889,7 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-54"/>
-        <location line="+856"/>
+        <location line="+853"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -1918,7 +1918,7 @@ Please verify the correct directory name was given.</source>
         <translation>Неизвестный</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2050"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2048"/>
         <source>Show </source>
         <translation>Показать </translation>
     </message>
@@ -1928,19 +1928,19 @@ Please verify the correct directory name was given.</source>
         <translation>&amp;Новая папка</translation>
     </message>
     <message>
-        <location line="+679"/>
+        <location line="+680"/>
         <location line="+43"/>
         <source>&amp;Choose</source>
         <translation>&amp;Выбрать</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+425"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+417"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-715"/>
-        <location line="+675"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-716"/>
+        <location line="+676"/>
         <source>File &amp;name:</source>
         <translation>&amp;Имя файла:</translation>
     </message>
@@ -2019,7 +2019,7 @@ Please verify the correct directory name was given.</source>
     <name>QFileSystemModel</name>
     <message>
         <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+662"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+655"/>
         <source>%1 TB</source>
         <translation>%1 Тб</translation>
     </message>
@@ -2091,51 +2091,51 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+852"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+86"/>
+        <location line="+848"/>
         <source>Normal</source>
         <translation>Обычный</translation>
     </message>
     <message>
-        <location line="-849"/>
+        <location line="-845"/>
         <location line="+12"/>
-        <location line="+825"/>
+        <location line="+821"/>
         <source>Bold</source>
         <translation>Жирный</translation>
     </message>
     <message>
-        <location line="-834"/>
-        <location line="+836"/>
+        <location line="-830"/>
+        <location line="+832"/>
         <source>Demi Bold</source>
         <translation>Полужирный</translation>
     </message>
     <message>
-        <location line="-833"/>
+        <location line="-829"/>
         <location line="+18"/>
-        <location line="+811"/>
+        <location line="+807"/>
         <source>Black</source>
         <translation>Чёрный</translation>
     </message>
     <message>
-        <location line="-821"/>
+        <location line="-817"/>
         <source>Demi</source>
         <translation>Средний</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+821"/>
+        <location line="+817"/>
         <source>Light</source>
         <translation>Светлый</translation>
     </message>
     <message>
-        <location line="-675"/>
-        <location line="+678"/>
+        <location line="-671"/>
+        <location line="+674"/>
         <source>Italic</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location line="-675"/>
-        <location line="+677"/>
+        <location line="-671"/>
+        <location line="+673"/>
         <source>Oblique</source>
         <translation>Наклонный</translation>
     </message>
@@ -2143,7 +2143,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+699"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+691"/>
         <source>&amp;Font</source>
         <translation>&amp;Шрифт</translation>
     </message>
@@ -2196,7 +2196,7 @@ Please verify the correct directory name was given.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/uitools/properties.cpp" line="+106"/>
+        <location filename="../src/uitools/properties.cpp" line="+98"/>
         <source>The set-type property %1 could not be read.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2216,13 +2216,13 @@ Please verify the correct directory name was given.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/uitools/formbuilder.cpp" line="+170"/>
+        <location filename="../src/uitools/formbuilder.cpp" line="+162"/>
         <source>An empty class name was passed on to %1 (object name: &apos;%2&apos;).</source>
         <extracomment>Empty class name passed to widget factory method</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+54"/>
         <source>QFormBuilder was unable to create a custom widget of the class &apos;%1&apos;; defaulting to base class &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2232,7 +2232,7 @@ Please verify the correct directory name was given.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+41"/>
         <source>The layout type `%1&apos; is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2240,7 +2240,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QFtp</name>
     <message>
-        <location filename="../src/network/access/qftp.cpp" line="+1066"/>
+        <location filename="../src/network/access/qftp.cpp" line="+1058"/>
         <source>Connected to host %1</source>
         <translation>Установлено соединение с узлом %1</translation>
     </message>
@@ -2354,12 +2354,12 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QHostInfo</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_p.h" line="+101"/>
+        <location filename="../src/network/kernel/qhostinfo_p.h" line="+92"/>
         <source>Unknown error</source>
         <translation>Неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo.cpp" line="+174"/>
+        <location filename="../src/network/kernel/qhostinfo.cpp" line="+146"/>
         <source>No host name given</source>
         <translation>Имя узла не задано</translation>
     </message>
@@ -2367,7 +2367,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+206"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+198"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>Узел не найден</translation>
@@ -2403,7 +2403,7 @@ Please verify the correct directory name was given.</source>
     </message>
     <message>
         <location line="-3"/>
-        <location filename="../src/network/access/qhttp.cpp" line="+2607"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+2599"/>
         <source>Host %1 not found</source>
         <translation>Узел %1 не найден</translation>
     </message>
@@ -2556,7 +2556,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1413"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1356"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
         <source>Permission denied</source>
         <translation>Доступ запрещён</translation>
@@ -2588,7 +2588,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QInputDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qinputdialog.cpp" line="+217"/>
+        <location filename="../src/gui/dialogs/qinputdialog.cpp" line="+209"/>
         <source>Enter a value:</source>
         <translation>Укажите значение:</translation>
     </message>
@@ -2696,7 +2696,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location line="-397"/>
         <location line="+43"/>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="+280"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>Динамическая библиотека не найдена.</translation>
     </message>
@@ -2719,7 +2719,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1903"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1809"/>
         <source>Select All</source>
         <translation>Выделить всё</translation>
     </message>
@@ -2757,8 +2757,8 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+221"/>
-        <location filename="../src/network/socket/qlocalserver.cpp" line="+222"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+213"/>
+        <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: Некорректное имя</translation>
     </message>
@@ -2781,8 +2781,8 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QLocalSocket</name>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+135"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+132"/>
+        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+127"/>
+        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+124"/>
         <source>%1: Connection refused</source>
         <translation>%1: Отказано в соединении</translation>
     </message>
@@ -2848,7 +2848,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1289"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1264"/>
         <source>Unable to open database &apos;</source>
         <translation>Невозможно открыть базу данных &apos;</translation>
     </message>
@@ -2858,7 +2858,7 @@ Please verify the correct directory name was given.</source>
         <translation>Невозможно соединиться</translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+149"/>
         <source>Unable to begin transaction</source>
         <translation>Невозможно начать транзакцию</translation>
     </message>
@@ -2876,13 +2876,13 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-986"/>
+        <location line="-975"/>
         <location line="+31"/>
         <source>Unable to fetch data</source>
         <translation>Невозможно получить данные</translation>
     </message>
     <message>
-        <location line="+161"/>
+        <location line="+160"/>
         <source>Unable to execute query</source>
         <translation>Невозможно выполнить запрос</translation>
     </message>
@@ -2892,13 +2892,13 @@ Please verify the correct directory name was given.</source>
         <translation>Невозможно сохранить результат</translation>
     </message>
     <message>
-        <location line="+191"/>
+        <location line="+188"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>Невозможно подготовить выражение</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+35"/>
         <source>Unable to reset statement</source>
         <translation>Невозможно сбросить выражение</translation>
     </message>
@@ -2924,7 +2924,7 @@ Please verify the correct directory name was given.</source>
         <translation>Невозможно сохранить результаты выполнения выражения</translation>
     </message>
     <message>
-        <location line="-258"/>
+        <location line="-254"/>
         <source>Unable to execute next query</source>
         <translation>Невозможно выполнить следующий запрос</translation>
     </message>
@@ -2937,7 +2937,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QMdiArea</name>
     <message>
-        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+271"/>
+        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+263"/>
         <source>(Untitled)</source>
         <translation>(Неозаглавлено)</translation>
     </message>
@@ -2945,7 +2945,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+270"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+262"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
@@ -3038,7 +3038,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QMenu</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/qaccessiblemenu.cpp" line="+157"/>
+        <location filename="../src/plugins/accessible/widgets/qaccessiblemenu.cpp" line="+149"/>
         <location line="+225"/>
         <source>Close</source>
         <translation>Закрыть</translation>
@@ -3061,7 +3061,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1619"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1611"/>
         <source>Corner Toolbar</source>
         <translation>Угловая панель</translation>
     </message>
@@ -3069,7 +3069,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+125"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+117"/>
         <source>Show Details...</source>
         <translation>Показать подробности...</translation>
     </message>
@@ -3097,7 +3097,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNativeSocketEngine</name>
     <message>
-        <location filename="../src/network/socket/qnativesocketengine.cpp" line="+210"/>
+        <location filename="../src/network/socket/qnativesocketengine.cpp" line="+202"/>
         <source>The remote host closed the connection</source>
         <translation>Удалённый узел закрыл соединение</translation>
     </message>
@@ -3230,7 +3230,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkAccessCacheBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesscachebackend.cpp" line="+66"/>
+        <location filename="../src/network/access/qnetworkaccesscachebackend.cpp" line="+58"/>
         <source>Error opening %1</source>
         <translation>Ошибка открытия %1</translation>
     </message>
@@ -3238,7 +3238,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkAccessDataBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+81"/>
+        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+73"/>
         <source>Invalid URI: %1</source>
         <translation>Некорректный URI: %1</translation>
     </message>
@@ -3246,7 +3246,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkAccessDebugPipeBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+195"/>
+        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+187"/>
         <source>Write error writing to %1: %2</source>
         <translation>Ошибка записи в %1: %2</translation>
     </message>
@@ -3264,8 +3264,8 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkAccessFileBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+107"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+74"/>
+        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+99"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+66"/>
         <source>Request for opening non-local file %1</source>
         <translation>Запрос на открытие файла вне файловой системы %1</translation>
     </message>
@@ -3295,7 +3295,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkAccessFtpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessftpbackend.cpp" line="+134"/>
+        <location filename="../src/network/access/qnetworkaccessftpbackend.cpp" line="+126"/>
         <source>No suitable proxy found</source>
         <translation>Подходящий прокси-сервер не найден</translation>
     </message>
@@ -3323,7 +3323,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+416"/>
         <source>No suitable proxy found</source>
         <translation>Подходящий прокси-сервер не найден</translation>
     </message>
@@ -3331,7 +3331,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1107"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1099"/>
         <source>Network access is disabled.</source>
         <translation>Доступ в сеть отключён.</translation>
     </message>
@@ -3339,7 +3339,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+426"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+418"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Ошибка загрузки %1 - ответ сервера: %2</translation>
@@ -3378,7 +3378,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkSession</name>
     <message>
-        <location filename="../src/network/bearer/qnetworksession.cpp" line="+452"/>
+        <location filename="../src/network/bearer/qnetworksession.cpp" line="+444"/>
         <source>Invalid configuration.</source>
         <translation>Некорректная конфигурация.</translation>
     </message>
@@ -3386,7 +3386,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+255"/>
+        <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+247"/>
         <source>Unknown session error.</source>
         <translation>Неизвестная ошибка сессии.</translation>
     </message>
@@ -3414,7 +3414,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1834"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1826"/>
         <source>Unable to connect</source>
         <translation>Невозможно соединиться</translation>
     </message>
@@ -3498,7 +3498,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+138"/>
+        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+130"/>
         <source>Could not read image data</source>
         <translation>Не удалось прочитать данные изображения</translation>
     </message>
@@ -3551,7 +3551,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1180"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
@@ -3564,7 +3564,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QPSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/psql/qsql_psql.cpp" line="+866"/>
+        <location filename="../src/plugins/sqldrivers/psql/qsql_psql.cpp" line="+858"/>
         <source>Unable to connect</source>
         <translation>Невозможно соединиться</translation>
     </message>
@@ -3610,7 +3610,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+281"/>
         <source>Centimeters (cm)</source>
         <translation>Сантиметры (cm)</translation>
     </message>
@@ -3726,7 +3726,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+129"/>
+        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+121"/>
         <source>locally connected</source>
         <translation>соединено локально</translation>
     </message>
@@ -3743,13 +3743,13 @@ Please verify the correct directory name was given.</source>
         <translation>неизвестно</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+104"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>Печать</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-392"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-388"/>
         <source>Print To File ...</source>
         <translation>Печать в файл ...</translation>
     </message>
@@ -3969,7 +3969,7 @@ Please choose a different file name.</source>
 <context>
     <name>QPrintPreviewDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+246"/>
+        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+238"/>
         <source>%1%</source>
         <translation>%1%</translation>
     </message>
@@ -4054,7 +4054,7 @@ Please choose a different file name.</source>
         <translation>Параметры страницы</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qabstractpagesetupdialog.cpp" line="+68"/>
+        <location filename="../src/gui/dialogs/qabstractpagesetupdialog.cpp" line="+60"/>
         <location line="+12"/>
         <source>Page Setup</source>
         <translation>Параметры страницы</translation>
@@ -4232,7 +4232,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+404"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+398"/>
         <source>Could not open input redirection for reading</source>
         <translation>Не удалось открыть перенаправление ввода для чтения</translation>
     </message>
@@ -4247,7 +4247,7 @@ Please choose a different file name.</source>
         <translation>Ошибка выделения ресурсов (сбой fork): %1</translation>
     </message>
     <message>
-        <location line="+236"/>
+        <location line="+237"/>
         <location line="+48"/>
         <location line="+70"/>
         <location line="+62"/>
@@ -4255,7 +4255,7 @@ Please choose a different file name.</source>
         <translation>Время на операцию с процессом истекло</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+814"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+815"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Ошибка получения данных от процесса</translation>
@@ -4279,7 +4279,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProgressDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+184"/>
+        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+176"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -4366,17 +4366,17 @@ Please choose a different file name.</source>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+570"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+589"/>
         <source>Error opening database</source>
         <translation>Ошибка открытия базы данных</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+22"/>
         <source>Error closing database</source>
         <translation>Ошибка закрытия базы данных</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+19"/>
         <source>Unable to begin transaction</source>
         <translation>Невозможно начать транзакцию</translation>
     </message>
@@ -4394,14 +4394,14 @@ Please choose a different file name.</source>
 <context>
     <name>QSQLiteResult</name>
     <message>
-        <location line="-410"/>
-        <location line="+63"/>
-        <location line="+8"/>
+        <location line="-437"/>
+        <location line="+75"/>
+        <location line="+9"/>
         <source>Unable to fetch row</source>
         <translation>Невозможно получить строку</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+63"/>
         <source>Unable to execute statement</source>
         <translation>Невозможно выполнить выражение</translation>
     </message>
@@ -4416,7 +4416,7 @@ Please choose a different file name.</source>
         <translation>Невозможно сбросить выражение</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+52"/>
         <source>Unable to bind parameters</source>
         <translation>Невозможно привязать параметр</translation>
     </message>
@@ -4426,7 +4426,7 @@ Please choose a different file name.</source>
         <translation>Количество параметров не совпадает</translation>
     </message>
     <message>
-        <location line="-212"/>
+        <location line="-230"/>
         <source>No query</source>
         <translation>Отсутствует запрос</translation>
     </message>
@@ -4434,7 +4434,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptBreakpointsModel</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptbreakpointsmodel.cpp" line="+455"/>
+        <location filename="../src/scripttools/debugging/qscriptbreakpointsmodel.cpp" line="+447"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -4467,7 +4467,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptBreakpointsWidget</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptbreakpointswidget.cpp" line="+293"/>
+        <location filename="../src/scripttools/debugging/qscriptbreakpointswidget.cpp" line="+285"/>
         <source>New</source>
         <translation>Новая</translation>
     </message>
@@ -4480,7 +4480,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+880"/>
+        <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+872"/>
         <location line="+1013"/>
         <source>Go to Line</source>
         <translation>Перейти к строке</translation>
@@ -4624,7 +4624,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptDebuggerCodeFinderWidget</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp" line="+136"/>
+        <location filename="../src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp" line="+128"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -4657,7 +4657,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptDebuggerLocalsModel</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp" line="+896"/>
+        <location filename="../src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp" line="+888"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
@@ -4670,7 +4670,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptDebuggerStackModel</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebuggerstackmodel.cpp" line="+161"/>
+        <location filename="../src/scripttools/debugging/qscriptdebuggerstackmodel.cpp" line="+153"/>
         <source>Level</source>
         <translation>Уровень</translation>
     </message>
@@ -4688,7 +4688,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptEdit</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptedit.cpp" line="+411"/>
+        <location filename="../src/scripttools/debugging/qscriptedit.cpp" line="+403"/>
         <source>Toggle Breakpoint</source>
         <translation>Установить/убрать точку останова</translation>
     </message>
@@ -4711,7 +4711,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+523"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
         <source>Loaded Scripts</source>
         <translation>Загруженные сценарии</translation>
     </message>
@@ -4772,7 +4772,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScrollBar</name>
     <message>
-        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+402"/>
+        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+394"/>
         <source>Scroll here</source>
         <translation>Прокрутить сюда</translation>
     </message>
@@ -4857,7 +4857,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+314"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+309"/>
         <source>%1: create size is less then 0</source>
         <translation>%1: размер меньше нуля</translation>
     </message>
@@ -4948,7 +4948,7 @@ Please choose a different file name.</source>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+309"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+299"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Пробел</translation>
@@ -6170,7 +6170,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+694"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+686"/>
         <source>Unable to write data: %1</source>
         <translation>Невозможно записать данные: %1</translation>
     </message>
@@ -6221,7 +6221,7 @@ Please choose a different file name.</source>
         <translation>Ошибка создания сессии SSL: %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+265"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+257"/>
         <source>The peer certificate is blacklisted</source>
         <translation>Сертификат узла в чёрном списке</translation>
     </message>
@@ -6359,7 +6359,7 @@ Please choose a different file name.</source>
 <context>
     <name>QStandardPaths</name>
     <message>
-        <location filename="../src/core/io/qstandardpaths.cpp" line="+373"/>
+        <location filename="../src/core/io/qstandardpaths.cpp" line="+300"/>
         <source>Desktop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6518,7 +6518,7 @@ Please choose a different file name.</source>
 <context>
     <name>QTcpServer</name>
     <message>
-        <location filename="../src/network/socket/qtcpserver.cpp" line="+286"/>
+        <location filename="../src/network/socket/qtcpserver.cpp" line="+278"/>
         <location line="+129"/>
         <source>Operation on socket is not supported</source>
         <translation>Операция с сокетом не поддерживается</translation>
@@ -6527,7 +6527,7 @@ Please choose a different file name.</source>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1936"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1873"/>
         <source>&amp;Undo</source>
         <translation>&amp;Отменить действие</translation>
     </message>
@@ -6585,7 +6585,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUdpSocket</name>
     <message>
-        <location filename="../src/network/socket/qudpsocket.cpp" line="+199"/>
+        <location filename="../src/network/socket/qudpsocket.cpp" line="+191"/>
         <source>This platform does not support IPv6</source>
         <translation>Данная платформа не поддерживает IPv6</translation>
     </message>
@@ -6593,7 +6593,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUndoGroup</name>
     <message>
-        <location filename="../src/gui/util/qundogroup.cpp" line="+388"/>
+        <location filename="../src/gui/util/qundogroup.cpp" line="+380"/>
         <source>Undo %1</source>
         <translation>Отменить %1</translation>
     </message>
@@ -6618,7 +6618,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUndoModel</name>
     <message>
-        <location filename="../src/gui/util/qundoview.cpp" line="+101"/>
+        <location filename="../src/gui/util/qundoview.cpp" line="+93"/>
         <source>&lt;empty&gt;</source>
         <translation>&lt;пусто&gt;</translation>
     </message>
@@ -6626,7 +6626,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUndoStack</name>
     <message>
-        <location filename="../src/gui/util/qundostack.cpp" line="+877"/>
+        <location filename="../src/gui/util/qundostack.cpp" line="+869"/>
         <source>Undo %1</source>
         <translation>Отменить %1</translation>
     </message>
@@ -6651,7 +6651,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUnicodeControlCharacterMenu</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+903"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+900"/>
         <source>LRM Left-to-right mark</source>
         <translation>LRM Признак написания слева направо</translation>
     </message>
@@ -6709,7 +6709,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
+        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+480"/>
         <source>What&apos;s This?</source>
         <translation>Что это?</translation>
     </message>
@@ -6717,7 +6717,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5267"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5178"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -6725,7 +6725,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+609"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+601"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -6778,7 +6778,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWorkspace</name>
     <message>
-        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1034"/>
+        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1026"/>
         <source>&amp;Restore</source>
         <translation>&amp;Восстановить</translation>
     </message>
@@ -6848,7 +6848,7 @@ Please choose a different file name.</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+55"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+47"/>
         <source>no error occurred</source>
         <translation>ошибки отсутствуют</translation>
     </message>
@@ -6966,13 +6966,13 @@ Please choose a different file name.</source>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+591"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1756"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+583"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1748"/>
         <source>Extra content at end of document.</source>
         <translation>Лишние данные в конце документа.</translation>
     </message>
     <message>
-        <location line="+273"/>
+        <location line="+237"/>
         <source>Invalid entity value.</source>
         <translation>Некорректное значение объекта.</translation>
     </message>
@@ -6987,7 +6987,7 @@ Please choose a different file name.</source>
         <translation>Последовательность «]]&gt;» недопустима в содержимом.</translation>
     </message>
     <message>
-        <location line="+258"/>
+        <location line="+242"/>
         <source>Namespace prefix &apos;%1&apos; not declared</source>
         <translation>Префикс пространства имён «%1» не объявлен</translation>
     </message>
