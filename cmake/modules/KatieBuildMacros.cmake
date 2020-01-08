@@ -140,12 +140,9 @@ endfunction()
 # a function to get the Git checkout hash and store it in a variable
 function(KATIE_GIT_CHECKOUT OUTSTR)
     find_program(git NAMES git)
-    if(NOT EXISTS "${CMAKE_SOURCE_DIR}/.git")
-       set(${OUTSTR} "unknown" PARENT_SCOPE)
-    elseif(NOT git)
+    if(EXISTS "${CMAKE_SOURCE_DIR}/.git" AND NOT git)
         message(WARNING "Git was not found, unable to obtain checkout.\n")
-        set(${OUTSTR} "unknown" PARENT_SCOPE)
-    else()
+    else(EXISTS "${CMAKE_SOURCE_DIR}/.git")
         execute_process(
             COMMAND "${git}" rev-parse HEAD
             WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
@@ -157,7 +154,6 @@ function(KATIE_GIT_CHECKOUT OUTSTR)
 
         if(NOT git_result STREQUAL 0)
             message(WARNING "Git command failed, unable to obtain checkout:\n${git_output}")
-            set(${OUTSTR} "unknown" PARENT_SCOPE)
         else()
             set(${OUTSTR} "${git_output}" PARENT_SCOPE)
         endif()
