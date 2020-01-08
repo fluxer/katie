@@ -46,11 +46,7 @@ struct Macro
     Symbols symbols;
 };
 
-#ifdef USE_LEXEM_STORE
-typedef QByteArray MacroName;
-#else
 typedef SubArray MacroName;
-#endif
 typedef QHash<MacroName, Macro> Macros;
 typedef QVector<MacroName> MacroSafeSet;
 
