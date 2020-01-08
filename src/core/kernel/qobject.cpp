@@ -71,7 +71,7 @@ static int *queuedConnectionTypes(const QList<QByteArray> &typeNames)
         else
             types[i] = QMetaType::type(cTypeName);
 
-        if (!types[i]) {
+        if (Q_UNLIKELY(!types[i])) {
             qWarning("QObject::connect: Cannot queue arguments of type '%s'\n"
                      "(Make sure '%s' is registered using qRegisterMetaType().)",
                      cTypeName, cTypeName);
@@ -522,7 +522,7 @@ static bool check_parent_thread(QObject *parent,
                                 QThreadData *parentThreadData,
                                 QThreadData *currentThreadData)
 {
-    if (parent && parentThreadData != currentThreadData) {
+    if (Q_UNLIKELY(parent && parentThreadData != currentThreadData)) {
         QThread *parentThread = parentThreadData->thread;
         QThread *currentThread = currentThreadData->thread;
         qWarning("QObject: Cannot create children for a parent that is in a different thread.\n"
@@ -635,7 +635,7 @@ QObject::~QObject()
     d->blockSig = false; // unblock signals so we always emit destroyed()
 
     if (d->sharedRefcount) {
-        if (d->sharedRefcount->strongref > 0) {
+        if (Q_UNLIKELY(d->sharedRefcount->strongref > 0)) {
             qWarning("QObject: shared QObject was deleted directly. The program is malformed and may crash.");
             // but continue deleting, it's too late to stop anyway
         }
@@ -1150,11 +1150,10 @@ void QObject::moveToThread(QThread *targetThread)
         return;
     }
 
-    if (d->parent != 0) {
+    if (Q_UNLIKELY(d->parent)) {
         qWarning("QObject::moveToThread: Cannot move objects with a parent");
         return;
-    }
-    if (d->isWidget) {
+    } else if (Q_UNLIKELY(d->isWidget)) {
         qWarning("QObject::moveToThread: Widgets cannot be moved to a new thread");
         return;
     }
@@ -1164,7 +1163,7 @@ void QObject::moveToThread(QThread *targetThread)
     if (d->threadData->thread == 0 && currentData == targetData) {
         // one exception to the rule: we allow moving objects with no thread affinity to the current thread
         currentData = d->threadData;
-    } else if (d->threadData != currentData) {
+    } else if (Q_UNLIKELY(d->threadData != currentData)) {
         qWarning("QObject::moveToThread: Current thread (%p) is not the object's thread (%p).\n"
                  "Cannot move to target thread (%p)\n",
                  currentData->thread, d->threadData->thread, targetData->thread);
@@ -1294,14 +1293,14 @@ int QObject::startTimer(int interval)
 {
     Q_D(QObject);
 
-    if (interval < 0) {
+    if (Q_UNLIKELY(interval < 0)) {
         qWarning("QObject::startTimer: QTimer cannot have a negative interval");
         return 0;
     }
 
     d->pendTimer = true;                                // set timer flag
 
-    if (!d->threadData->eventDispatcher) {
+    if (Q_UNLIKELY(!d->threadData->eventDispatcher)) {
         qWarning("QObject::startTimer: QTimer can only be used with threads started with QThread");
         return 0;
     }
@@ -1320,7 +1319,7 @@ int QObject::startTimer(int interval)
 void QObject::killTimer(int id)
 {
     Q_D(QObject);
-    if (d->threadData->eventDispatcher)
+    if (Q_LIKELY(d->threadData->eventDispatcher))
         d->threadData->eventDispatcher->unregisterTimer(id);
 }
 
@@ -1511,9 +1510,9 @@ void QObjectPrivate::setParent_helper(QObject *o)
     parent = o;
     if (parent) {
         // object hierarchies are constrained to a single thread
-        if (threadData != parent->d_func()->threadData) {
+        if (Q_UNLIKELY(threadData != parent->d_func()->threadData)) {
             qWarning("QObject::setParent: Cannot set parent, new parent is in a different thread");
-            parent = 0;
+            parent = Q_NULLPTR;
             return;
         }
         parent->d_func()->children.append(q);
@@ -1573,9 +1572,9 @@ void QObjectPrivate::setParent_helper(QObject *o)
 void QObject::installEventFilter(QObject *obj)
 {
     Q_D(QObject);
-    if (!obj)
+    if (Q_UNLIKELY(!obj))
         return;
-    if (d->threadData != obj->d_func()->threadData) {
+    if (Q_UNLIKELY(d->threadData != obj->d_func()->threadData)) {
         qWarning("QObject::installEventFilter(): Cannot filter events for objects in a different thread.");
         return;
     }
@@ -1749,13 +1748,14 @@ static bool check_signal_macro(const QObject *sender, const char *signal,
                                 const char *func, const char *op)
 {
     int sigcode = extract_code(signal);
-    if (sigcode != QSIGNAL_CODE) {
-        if (sigcode == QSLOT_CODE)
+    if (Q_UNLIKELY(sigcode != QSIGNAL_CODE)) {
+        if (sigcode == QSLOT_CODE) {
             qWarning("Object::%s: Attempt to %s non-signal %s::%s",
                      func, op, sender->metaObject()->className(), signal+1);
-        else
+        } else {
             qWarning("Object::%s: Use the SIGNAL macro to %s %s::%s",
                      func, op, sender->metaObject()->className(), signal);
+        }
         return false;
     }
     return true;
@@ -1764,7 +1764,7 @@ static bool check_signal_macro(const QObject *sender, const char *signal,
 static bool check_method_code(int code, const QObject *object,
                                const char *method, const char *func)
 {
-    if (code != QSLOT_CODE && code != QSIGNAL_CODE) {
+    if (Q_UNLIKELY(code != QSLOT_CODE && code != QSIGNAL_CODE)) {
         qWarning("Object::%s: Use the SLOT or SIGNAL macro to "
                  "%s %s::%s", func, func, object->metaObject()->className(), method);
         return false;
@@ -1781,15 +1781,15 @@ static void err_method_notfound(const QObject *object,
         case QSIGNAL_CODE: type = "signal"; break;
     }
     const char *loc = extract_location(method);
-    if (strchr(method,')') == 0)                // common typing mistake
+    if (strchr(method,')') == 0) {               // common typing mistake
         qWarning("Object::%s: Parentheses expected, %s %s::%s%s%s",
                  func, type, object->metaObject()->className(), method+1,
                  loc ? " in ": "", loc ? loc : "");
-    else
+    } else {
         qWarning("Object::%s: No such %s %s::%s%s%s",
                  func, type, object->metaObject()->className(), method+1,
                  loc ? " in ": "", loc ? loc : "");
-
+    }
 }
 
 
@@ -2062,7 +2062,7 @@ bool QObject::connect(const QObject *sender, const char *signal,
                       const QObject *receiver, const char *method,
                       Qt::ConnectionType type)
 {
-    if (sender == 0 || receiver == 0 || signal == 0 || method == 0) {
+    if (Q_UNLIKELY(!sender || !receiver || !signal || !method)) {
         qWarning("QObject::connect: Cannot connect %s::%s to %s::%s",
                  sender ? sender->metaObject()->className() : "(null)",
                  (signal && *signal) ? signal+1 : "(null)",
@@ -2071,7 +2071,7 @@ bool QObject::connect(const QObject *sender, const char *signal,
         return false;
     }
 
-    if (!check_signal_macro(sender, signal, "connect", "bind"))
+    if (Q_UNLIKELY(!check_signal_macro(sender, signal, "connect", "bind")))
         return false;
 
     QByteArray tmp_signal_name;
@@ -2140,7 +2140,7 @@ bool QObject::connect(const QObject *sender, const char *signal,
         return false;
     }
 
-    if (!QMetaObject::checkConnectArgs(signal, method)) {
+    if (Q_UNLIKELY(!QMetaObject::checkConnectArgs(signal, method))) {
         qWarning("QObject::connect: Incompatible sender/receiver arguments"
                  "\n        %s::%s --> %s::%s",
                  sender->metaObject()->className(), signal,
@@ -2180,10 +2180,8 @@ bool QObject::connect(const QObject *sender, const QMetaMethod &signal,
                       const QObject *receiver, const QMetaMethod &method,
                       Qt::ConnectionType type)
 {
-    if (sender == 0
-            || receiver == 0
-            || signal.methodType() != QMetaMethod::Signal
-            || method.methodType() == QMetaMethod::Constructor) {
+    if (Q_UNLIKELY(!sender || !receiver || signal.methodType() != QMetaMethod::Signal
+            || method.methodType() == QMetaMethod::Constructor)) {
         qWarning("QObject::connect: Cannot connect %s::%s to %s::%s",
                  sender ? sender->metaObject()->className() : "(null)",
                  signal.signature(),
@@ -2205,18 +2203,18 @@ bool QObject::connect(const QObject *sender, const QMetaMethod &signal,
 
     const QMetaObject *smeta = sender->metaObject();
     const QMetaObject *rmeta = receiver->metaObject();
-    if (signal_index == -1) {
+    if (Q_UNLIKELY(signal_index == -1)) {
         qWarning("QObject::connect: Can't find signal %s on instance of class %s",
                  signal.signature(), smeta->className());
         return false;
     }
-    if (method_index == -1) {
+    if (Q_UNLIKELY(method_index == -1)) {
         qWarning("QObject::connect: Can't find method %s on instance of class %s",
                  method.signature(), rmeta->className());
         return false;
     }
     
-    if (!QMetaObject::checkConnectArgs(signal.signature(), method.signature())) {
+    if (Q_UNLIKELY(!QMetaObject::checkConnectArgs(signal.signature(), method.signature()))) {
         qWarning("QObject::connect: Incompatible sender/receiver arguments"
                  "\n        %s::%s --> %s::%s",
                  smeta->className(), signal.signature(),
@@ -2225,11 +2223,10 @@ bool QObject::connect(const QObject *sender, const QMetaMethod &signal,
     }
 
     int *types = Q_NULLPTR;
-    if ((type == Qt::QueuedConnection)
-            && !(types = queuedConnectionTypes(signal.parameterTypes())))
+    if (type == Qt::QueuedConnection && !(types = queuedConnectionTypes(signal.parameterTypes())))
         return false;
 
-    if (!QMetaObjectPrivate::connect(sender, signal_index, receiver, method_index, 0, type, types))
+    if (Q_UNLIKELY(!QMetaObjectPrivate::connect(sender, signal_index, receiver, method_index, 0, type, types)))
         return false;
 
     const_cast<QObject*>(sender)->connectNotify(signalSignature.constData());
@@ -2315,7 +2312,7 @@ bool QObject::connect(const QObject *sender, const QMetaMethod &signal,
 bool QObject::disconnect(const QObject *sender, const char *signal,
                          const QObject *receiver, const char *method)
 {
-    if (sender == 0 || (receiver == 0 && method != 0)) {
+    if (Q_UNLIKELY(!sender || (!receiver && method))) {
         qWarning("Object::disconnect: Unexpected null parameter");
         return false;
     }
@@ -2333,7 +2330,7 @@ bool QObject::disconnect(const QObject *sender, const char *signal,
                 QT_RETHROW;
         }
 
-        if (!check_signal_macro(sender, signal, "disconnect", "unbind"))
+        if (Q_UNLIKELY(!check_signal_macro(sender, signal, "disconnect", "unbind")))
             return false;
         signal++; // skip code
     }
@@ -2438,12 +2435,12 @@ bool QObject::disconnect(const QObject *sender, const char *signal,
 bool QObject::disconnect(const QObject *sender, const QMetaMethod &signal,
                          const QObject *receiver, const QMetaMethod &method)
 {
-    if (sender == 0 || (receiver == 0 && method.mobj != 0)) {
+    if (Q_UNLIKELY(!sender || (!receiver && method.mobj))) {
         qWarning("Object::disconnect: Unexpected null parameter");
         return false;
     }
     if (signal.mobj) {
-        if(signal.methodType() != QMetaMethod::Signal) {
+        if(Q_UNLIKELY(signal.methodType() != QMetaMethod::Signal)) {
             qWarning("Object::%s: Attempt to %s non-signal %s::%s",
                      "disconnect","unbind",
                      sender->metaObject()->className(), signal.signature());
@@ -2451,7 +2448,7 @@ bool QObject::disconnect(const QObject *sender, const QMetaMethod &signal,
         }
     }
     if (method.mobj) {
-        if(method.methodType() == QMetaMethod::Constructor) {
+        if(Q_UNLIKELY(method.methodType() == QMetaMethod::Constructor)) {
             qWarning("QObject::disconect: cannot use constructor as argument %s::%s",
                      receiver->metaObject()->className(), method.signature());
             return false;
@@ -2471,19 +2468,19 @@ bool QObject::disconnect(const QObject *sender, const QMetaMethod &signal,
     }
     // If we are here sender is not null. If signal is not null while signal_index
     // is -1 then this signal is not a member of sender.
-    if (signal.mobj && signal_index == -1) {
+    if (Q_UNLIKELY(signal.mobj && signal_index == -1)) {
         qWarning("QObject::disconect: signal %s not found on class %s",
                  signal.signature(), sender->metaObject()->className());
         return false;
     }
     // If this condition is true then method is not a member of receeiver.
-    if (receiver && method.mobj && method_index == -1) {
+    if (Q_UNLIKELY(receiver && method.mobj && method_index == -1)) {
         qWarning("QObject::disconect: method %s not found on class %s",
                  method.signature(), receiver->metaObject()->className());
         return false;
     }
 
-    if (!QMetaObjectPrivate::disconnect(sender, signal_index, receiver, method_index))
+    if (Q_UNLIKELY(!QMetaObjectPrivate::disconnect(sender, signal_index, receiver, method_index)))
         return false;
 
     const_cast<QObject*>(sender)->disconnectNotify(method.mobj ? signalSignature.constData() : 0);
@@ -2847,7 +2844,7 @@ void QMetaObject::connectSlotsByName(QObject *o)
             // we found our slot, now skip all overloads
             while (mo->method(i + 1).attributes() & QMetaMethod::Cloned)
                   ++i;
-        } else if (!(mo->method(i).attributes() & QMetaMethod::Cloned)) {
+        } else if (Q_UNLIKELY(!(mo->method(i).attributes() & QMetaMethod::Cloned))) {
             qWarning("QMetaObject::connectSlotsByName: No matching signal for %s", slot);
         }
     }
@@ -2963,11 +2960,11 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
 #ifndef QT_NO_THREAD
             } else if (c->connectionType == Qt::BlockingQueuedConnection) {
                 locker.unlock();
-                if (receiverInSameThread) {
-                    qWarning("Qt: Dead lock detected while activating a BlockingQueuedConnection: "
-                    "Sender is %s(%p), receiver is %s(%p)",
-                    sender->metaObject()->className(), sender,
-                    receiver->metaObject()->className(), receiver);
+                if (Q_UNLIKELY(receiverInSameThread)) {
+                    qWarning("QMetaObject::activate: Dead lock detected while activating a BlockingQueuedConnection: "
+                        "Sender is %s(%p), receiver is %s(%p)",
+                        sender->metaObject()->className(), sender,
+                        receiver->metaObject()->className(), receiver);
                 }
                 QSemaphore semaphore;
                 QCoreApplication::postEvent(receiver, new QMetaCallEvent(c->method_offset, c->method_relative,
@@ -3155,9 +3152,10 @@ bool QObject::setProperty(const char *name, const QVariant &value)
     }
     QMetaProperty p = meta->property(id);
 #ifndef QT_NO_DEBUG
-    if (!p.isWritable())
+    if (Q_UNLIKELY(!p.isWritable())) {
         qWarning("%s::setProperty: Property \"%s\" invalid,"
                  " read-only or does not exist", metaObject()->className(), name);
+    }
 #endif
     return p.write(this, value);
 }
@@ -3188,9 +3186,10 @@ QVariant QObject::property(const char *name) const
     }
     QMetaProperty p = meta->property(id);
 #ifndef QT_NO_DEBUG
-    if (!p.isReadable())
+    if (Q_UNLIKELY(!p.isReadable())) {
         qWarning("%s::property: Property \"%s\" invalid or does not exist",
                  metaObject()->className(), name);
+    }
 #endif
     return p.read(this);
 }
