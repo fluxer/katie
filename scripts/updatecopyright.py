@@ -7,10 +7,10 @@ licenses = ['BSD', 'FDL', 'LGPL', 'LGPL3', 'LGPL21']
 lfiles = []
 for root, subdirs, files in os.walk(os.curdir):
     for sfile in files:
-        if sfile.endswith(('.cpp', '.h', '.js', '.qs', '.qml', '.ui', '.g')):
+        if sfile.endswith(('.cpp', '.h', '.js', '.qs', '.qml', '.ui', '.g', '.sh', '.cmake')):
             lfiles.append('%s/%s' % (root, sfile))
 
-def readlicense(sfile, replacestars):
+def readlicense(sfile, replacedashes, replacehashes):
     sheader = ''
     with open(sfile, 'r') as f:
         shouldappend = False
@@ -22,8 +22,10 @@ def readlicense(sfile, replacestars):
                 shouldappend = False
             if shouldappend:
                 sheader = '%s%s' % (sheader, sline)
-        if replacestars:
+        if replacedashes:
             sheader = sheader.replace('**', '--')
+        if replacehashes:
+            sheader = sheader.replace('**', '##')
     return sheader
 
 for sfile in lfiles:
@@ -31,8 +33,9 @@ for sfile in lfiles:
         scontent = f.read()
     for license in licenses:
         if ('$QT_BEGIN_LICENSE:%s$' % license) in scontent:
-            snewheader = readlicense('%s/header.%s' % (os.curdir, license), sfile.endswith('.g'))
-            soldheader = readlicense(sfile, False)
+            snewheader = readlicense('%s/header.%s' % (os.curdir, license),
+                sfile.endswith('.g'), sfile.endswith('.sh'))
+            soldheader = readlicense(sfile, False, False)
             snewcontent = scontent.replace(soldheader, snewheader)
             snewcontent = snewcontent.replace('2016-2019', '2016-2020')
             if not snewcontent == scontent:
