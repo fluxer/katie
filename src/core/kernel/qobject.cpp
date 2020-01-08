@@ -1421,16 +1421,13 @@ void qt_qFindChildren_helper(const QObject *parent, const QString &name, const Q
     if (!parent || !list)
         return;
     const QObjectList &children = parent->children();
-    QObject *obj;
     for (int i = 0; i < children.size(); ++i) {
-        obj = children.at(i);
+        QObject *obj = children.at(i);
         if (mo.cast(obj)) {
-            if (re) {
-                if (re->indexIn(obj->objectName()) != -1)
-                    list->append(obj);
-            } else {
-                if (name.isNull() || obj->objectName() == name)
-                    list->append(obj);
+            if (re && re->indexIn(obj->objectName()) != -1) {
+                list->append(obj);
+            } else if (name.isNull() || obj->objectName() == name) {
+                list->append(obj);
             }
         }
         qt_qFindChildren_helper(obj, name, re, mo, list);
@@ -1444,15 +1441,13 @@ QObject *qt_qFindChild_helper(const QObject *parent, const QString &name, const 
     if (!parent)
         return Q_NULLPTR;
     const QObjectList &children = parent->children();
-    QObject *obj;
-    int i;
-    for (i = 0; i < children.size(); ++i) {
-        obj = children.at(i);
+    for (int i = 0; i < children.size(); ++i) {
+        QObject *obj = children.at(i);
         if (mo.cast(obj) && (name.isNull() || obj->objectName() == name))
             return obj;
     }
-    for (i = 0; i < children.size(); ++i) {
-        obj = qt_qFindChild_helper(children.at(i), name, mo);
+    for (int i = 0; i < children.size(); ++i) {
+        QObject *obj = qt_qFindChild_helper(children.at(i), name, mo);
         if (obj)
             return obj;
     }
