@@ -1442,7 +1442,7 @@ void qt_qFindChildren_helper(const QObject *parent, const QString &name, const Q
 QObject *qt_qFindChild_helper(const QObject *parent, const QString &name, const QMetaObject &mo)
 {
     if (!parent)
-        return 0;
+        return Q_NULLPTR;
     const QObjectList &children = parent->children();
     QObject *obj;
     int i;
@@ -1456,7 +1456,7 @@ QObject *qt_qFindChild_helper(const QObject *parent, const QString &name, const 
         if (obj)
             return obj;
     }
-    return 0;
+    return Q_NULLPTR;
 }
 
 /*!
