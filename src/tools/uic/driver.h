@@ -35,7 +35,7 @@
 #define DRIVER_H
 
 #include "option.h"
-#include <QtCore/QHash>
+#include <QtCore/QSet>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QTextStream>
@@ -123,8 +123,8 @@ private:
     typedef QHash<const DomButtonGroup*, QString> ButtonGroupNameHash;
     ButtonGroupNameHash m_buttonGroups;
     QHash<DomAction*, QString> m_actions;
-    QHash<QString, bool> m_nameRepository;
-    QHash<QString, bool> m_pixmaps;
+    QSet<QString> m_nameRepository;
+    QSet<QString> m_pixmaps;
 };
 
 QT_END_NAMESPACE

@@ -176,7 +176,7 @@ QString Driver::unique(const QString &instanceName, const QString &className)
                 qPrintable(name));
     }
 
-    m_nameRepository.insert(name, true);
+    m_nameRepository.insert(name);
     return name;
 }
 
@@ -322,7 +322,7 @@ void Driver::reset()
 
 void Driver::insertPixmap(const QString &pixmap)
 {
-    m_pixmaps.insert(pixmap, true);
+    m_pixmaps.insert(pixmap);
 }
 
 bool Driver::containsPixmap(const QString &pixmap) const

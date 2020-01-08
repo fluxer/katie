@@ -284,7 +284,7 @@ public:
     bool readOnly;
     bool setRootPath;
     QDir::Filters filters;
-    QHash<const QFileSystemNode*, bool> bypassFilters;
+    QSet<const QFileSystemNode*> bypassFilters;
     bool nameFilterDisables;
     //This flag is an optimization for the QFileDialog
     //It enable a sort which is not recursive, it means
