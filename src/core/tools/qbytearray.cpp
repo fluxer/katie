@@ -359,6 +359,7 @@ quint32 qChecksum32(const char *data, uint len)
 #else
     Q_UNUSED(data)
     Q_UNUSED(len)
+    Q_ASSERT_X(false, "qChecksum32", "Function is a stub!");
     return 0;
 #endif
 }
