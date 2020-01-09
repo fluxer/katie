@@ -1434,43 +1434,14 @@ void qt_message_output(QtMsgType msgType, const char *buf)
         abort(); // trap; generates core dump
 }
 
-#if !defined(QT_NO_EXCEPTIONS)
-/*!
-    \internal
-    Uses a local buffer to output the message. Not locale safe + cuts off
-    everything after character 255, but will work in out of memory situations.
-*/
-static void qEmergencyOut(QtMsgType msgType, const char *msg, va_list ap)
-{
-    char emergency_buf[256] = { '\0' };
-    emergency_buf[255] = '\0';
-    if (Q_LIKELY(msg))
-        qvsnprintf(emergency_buf, 255, msg, ap);
-    qt_message_output(msgType, emergency_buf);
-}
-#endif
-
 /*!
     \internal
 */
 static void qt_message(QtMsgType msgType, const char *msg, va_list ap)
 {
-#if !defined(QT_NO_EXCEPTIONS)
-    if (std::uncaught_exception()) {
-        qEmergencyOut(msgType, msg, ap);
-        return;
-    }
-#endif
     if (Q_LIKELY(msg)) {
-        QT_TRY {
-            QByteArray buf = QString().vsprintf(msg, ap).toLocal8Bit();
-            qt_message_output(msgType, buf.constData());
-        } QT_CATCH(const std::bad_alloc &) {
-#if !defined(QT_NO_EXCEPTIONS)
-            qEmergencyOut(msgType, msg, ap);
-            // don't rethrow - we use qWarning and friends in destructors.
-#endif
-        }
+        QByteArray buf = QString().vsprintf(msg, ap).toLocal8Bit();
+        qt_message_output(msgType, buf.constData());
     }
 }
 

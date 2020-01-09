@@ -132,14 +132,7 @@ void qRemovePostRoutine(QtCleanUpFunction p)
 
 void Q_CORE_EXPORT qt_call_post_routines()
 {
-    QVFuncList *list = 0;
-    QT_TRY {
-        list = postRList();
-    } QT_CATCH(const std::bad_alloc &) {
-        // ignore - if we can't allocate a post routine list,
-        // there's a high probability that there's no post
-        // routine to be executed :)
-    }
+    QVFuncList *list = postRList();
     if (!list)
         return;
     while (!list->isEmpty())

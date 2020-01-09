@@ -1023,11 +1023,7 @@ void QWidget::destroy(bool destroyWindow, bool destroySubWindows)
             if (destroyWindow && data && data->winid)
                 XDestroyWindow(qt_x11Data->display, data->winid);
         }
-        QT_TRY {
-            d->setWinId(0);
-        } QT_CATCH (const std::bad_alloc &) {
-            // swallow - destructors must not throw
-        }
+        d->setWinId(0);
 
         extern void qPRCleanup(QWidget *widget); // from qapplication_x11.cpp
         if (testAttribute(Qt::WA_WState_Reparented))

@@ -354,12 +354,7 @@ void QTcpServer::close()
 
     if (d->socketEngine) {
         d->socketEngine->close();
-        QT_TRY {
-            d->socketEngine->deleteLater();
-        } QT_CATCH(const std::bad_alloc &) {
-            // in out of memory situations, the socketEngine
-            // will be deleted in ~QTcpServer (it's a child-object of this)
-        }
+        d->socketEngine->deleteLater();
         d->socketEngine = 0;
     }
 

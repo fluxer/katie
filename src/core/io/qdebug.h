@@ -66,9 +66,7 @@ public:
     inline ~QDebug() {
         if (!--stream->ref) {
             if(stream->message_output) {
-                QT_TRY {
-                    qt_message_output(stream->type, stream->buffer.toLocal8Bit().data());
-                } QT_CATCH(std::bad_alloc&) { /* We're out of memory - give up. */ }
+                qt_message_output(stream->type, stream->buffer.toLocal8Bit().data());
             }
             delete stream;
         }

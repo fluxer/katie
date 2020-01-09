@@ -2321,14 +2321,8 @@ bool QObject::disconnect(const QObject *sender, const char *signal,
     QByteArray signal_name;
     bool signal_found = false;
     if (signal) {
-        QT_TRY {
-            signal_name = QMetaObject::normalizedSignature(signal);
-            signal = signal_name.constData();
-        } QT_CATCH (const std::bad_alloc &) {
-            // if the signal is already normalized, we can continue.
-            if (sender->metaObject()->indexOfSignal(signal + 1) == -1)
-                QT_RETHROW;
-        }
+        signal_name = QMetaObject::normalizedSignature(signal);
+        signal = signal_name.constData();
 
         if (Q_UNLIKELY(!check_signal_macro(sender, signal, "disconnect", "unbind")))
             return false;
@@ -2340,14 +2334,8 @@ bool QObject::disconnect(const QObject *sender, const char *signal,
     int membcode = -1;
     bool method_found = false;
     if (method) {
-        QT_TRY {
-            method_name = QMetaObject::normalizedSignature(method);
-            method = method_name.constData();
-        } QT_CATCH(const std::bad_alloc &) {
-            // if the method is already normalized, we can continue.
-            if (receiver->metaObject()->indexOfMethod(method + 1) == -1)
-                QT_RETHROW;
-        }
+        method_name = QMetaObject::normalizedSignature(method);
+        method = method_name.constData();
 
         membcode = extract_code(method);
         if (!check_method_code(membcode, receiver, method, "disconnect"))

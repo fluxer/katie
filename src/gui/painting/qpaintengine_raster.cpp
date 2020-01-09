@@ -2978,8 +2978,6 @@ QImage QRasterBuffer::colorizeBitmap(const QImage &image, const QColor &color)
     for (int y=0; y<height; ++y) {
         const uchar *source = sourceImage.scanLine(y);
         QRgb *target = reinterpret_cast<QRgb *>(dest.scanLine(y));
-        if (!source || !target)
-            QT_THROW(std::bad_alloc()); // we must have run out of memory
         for (int x=0; x < width; ++x)
             target[x] = (source[x>>3] >> (x&7)) & 1 ? fg : bg;
     }
