@@ -1608,7 +1608,8 @@ bool QDir::exists(const QString &name) const
         qWarning("QDir::exists: Empty or null file name");
         return false;
     }
-    return QFile::exists(filePath(name));
+    QFileInfo info(filePath(name));
+    return (info.exists() && info.isDir());
 }
 
 /*!

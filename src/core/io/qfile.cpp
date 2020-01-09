@@ -478,8 +478,11 @@ bool
 QFile::exists() const
 {
     // 0x1000000 = QAbstractFileEngine::Refresh, forcing an update
-    return (fileEngine()->fileFlags(QAbstractFileEngine::FlagsMask
-                                    | QAbstractFileEngine::FileFlag(0x1000000)) & QAbstractFileEngine::ExistsFlag);
+    const uint flags = fileEngine()->fileFlags(QAbstractFileEngine::FileFlag(0x1000000)
+        | QAbstractFileEngine::FlagsMask);
+    const uint type = fileEngine()->fileFlags(QAbstractFileEngine::FileFlag(0x1000000)
+        | QAbstractFileEngine::TypesMask);
+    return ((flags & QAbstractFileEngine::ExistsFlag) && (type & QAbstractFileEngine::FileType));
 }
 
 /*!
@@ -490,7 +493,8 @@ QFile::exists() const
 bool
 QFile::exists(const QString &fileName)
 {
-    return QFileInfo(fileName).exists();
+    QFileInfo info(fileName);
+    return (info.exists() && info.isFile());
 }
 
 /*!

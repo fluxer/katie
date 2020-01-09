@@ -1003,10 +1003,10 @@ void tst_QDir::exists2_data()
     QTest::newRow("2") << "" << false;
     QTest::newRow("3") << "testData" << true;
     QTest::newRow("4") << "/testData" << false;
-    QTest::newRow("5") << "tst_qdir.cpp" << true;
+    QTest::newRow("5") << "tst_qdir.cpp" << false;
     QTest::newRow("6") << "/resources.cpp" << false;
     QTest::newRow("resource0") << ":/prefix/foo.bar" << false;
-    QTest::newRow("resource1") << ":/tst_qdir/resources/entryList/file1.data" << true;
+    QTest::newRow("resource1") << ":/tst_qdir/resources/entryList/file1.data" << false;
 }
 
 void tst_QDir::exists2()

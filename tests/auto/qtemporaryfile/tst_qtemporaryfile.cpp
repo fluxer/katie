@@ -283,25 +283,25 @@ void tst_QTemporaryFile::rename()
     // This test checks that the temporary file is deleted, even after a
     // rename.
 
-    QDir dir;
-    QVERIFY(!dir.exists("temporary-file.txt"));
+    QFile file;
+    QVERIFY(!file.exists("temporary-file.txt"));
 
     QString tempname;
     {
-        QTemporaryFile file(dir.filePath("temporary-file.XXXXXX"));
+        QTemporaryFile tempfile;
 
-        QVERIFY2(file.open(), qPrintable(file.errorString()));
-        tempname = file.fileName();
-        QVERIFY(dir.exists(tempname));
+        QVERIFY2(tempfile.open(), qPrintable(tempfile.errorString()));
+        tempname = tempfile.fileName();
+        QVERIFY(file.exists(tempname));
 
-        QVERIFY2(file.rename("temporary-file.txt"), qPrintable(file.errorString()));
-        QVERIFY(!dir.exists(tempname));
-        QVERIFY(dir.exists("temporary-file.txt"));
-        QCOMPARE(file.fileName(), QString("temporary-file.txt"));
+        QVERIFY2(tempfile.rename("temporary-file.txt"), qPrintable(tempfile.errorString()));
+        QVERIFY(!file.exists(tempname));
+        QVERIFY(file.exists("temporary-file.txt"));
+        QCOMPARE(tempfile.fileName(), QString("temporary-file.txt"));
     }
 
-    QVERIFY(!dir.exists(tempname));
-    QVERIFY(!dir.exists("temporary-file.txt"));
+    QVERIFY(!file.exists(tempname));
+    QVERIFY(!file.exists("temporary-file.txt"));
 }
 
 void tst_QTemporaryFile::renameFdLeak()
