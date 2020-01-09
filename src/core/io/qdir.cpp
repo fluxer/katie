@@ -1609,7 +1609,7 @@ bool QDir::exists(const QString &name) const
         return false;
     }
     QFileInfo info(filePath(name));
-    return (info.exists() && info.isDir());
+    return info.exists();
 }
 
 /*!
