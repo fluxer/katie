@@ -478,9 +478,9 @@ bool
 QFile::exists() const
 {
     // 0x1000000 = QAbstractFileEngine::Refresh, forcing an update
-    const QAbstractFileEngine::FileFlags flags = fileEngine()->fileFlags(QAbstractFileEngine::FileFlag(0x1000000)
+    const QAbstractFileEngine::FileFlags flags = fileEngine()->fileFlags(QAbstractFileEngine::Refresh
         | QAbstractFileEngine::FlagsMask);
-    const QAbstractFileEngine::FileFlags type = fileEngine()->fileFlags(QAbstractFileEngine::FileFlag(0x1000000)
+    const QAbstractFileEngine::FileFlags type = fileEngine()->fileFlags(QAbstractFileEngine::Refresh
         | QAbstractFileEngine::TypesMask);
     return ((flags & QAbstractFileEngine::ExistsFlag) && (type & QAbstractFileEngine::FileType));
 }
