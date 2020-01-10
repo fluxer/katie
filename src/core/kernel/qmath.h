@@ -46,11 +46,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#define QT_SINE_TABLE_SIZE 256
-
-extern Q_CORE_EXPORT const qreal qt_sine_table[QT_SINE_TABLE_SIZE];
-
 inline int qRound(qreal d)
 {
     return int(std::round(d));
@@ -183,26 +178,6 @@ inline qreal qPow(qreal x, qreal y)
         return powf(float(x), float(y));
 #endif
     return pow(x, y);
-}
-
-inline qreal qFastSin(qreal x)
-{
-    int si = int(x * (0.5 * QT_SINE_TABLE_SIZE / M_PI)); // Would be more accurate with qRound, but slower.
-    qreal d = x - si * (2.0 * M_PI / QT_SINE_TABLE_SIZE);
-    int ci = si + QT_SINE_TABLE_SIZE / 4;
-    si &= QT_SINE_TABLE_SIZE - 1;
-    ci &= QT_SINE_TABLE_SIZE - 1;
-    return qt_sine_table[si] + (qt_sine_table[ci] - 0.5 * qt_sine_table[si] * d) * d;
-}
-
-inline qreal qFastCos(qreal x)
-{
-    int ci = int(x * (0.5 * QT_SINE_TABLE_SIZE / M_PI)); // Would be more accurate with qRound, but slower.
-    qreal d = x - ci * (2.0 * M_PI / QT_SINE_TABLE_SIZE);
-    int si = ci + QT_SINE_TABLE_SIZE / 4;
-    si &= QT_SINE_TABLE_SIZE - 1;
-    ci &= QT_SINE_TABLE_SIZE - 1;
-    return qt_sine_table[si] - (qt_sine_table[ci] + 0.5 * qt_sine_table[si] * d) * d;
 }
 
 QT_END_NAMESPACE
