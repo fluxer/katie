@@ -34,10 +34,13 @@
 #ifndef QMATH_H
 #define QMATH_H
 
-#include <cmath>
-
 #include <QtCore/qglobal.h>
 
+#ifndef _USE_MATH_DEFINES
+#  define _USE_MATH_DEFINES
+#endif
+
+#include <cmath>
 
 QT_BEGIN_HEADER
 
@@ -181,10 +184,6 @@ inline qreal qPow(qreal x, qreal y)
 #endif
     return pow(x, y);
 }
-
-#ifndef M_PI
-#define M_PI (3.14159265358979323846)
-#endif
 
 inline qreal qFastSin(qreal x)
 {
