@@ -179,4 +179,5 @@
     Returns remainder of the \a x and \a y division operation.
 
     \relates <QtCore/qmath.h>
+    \since 4.9
 */
