@@ -166,8 +166,10 @@ inline qreal qLn(qreal v)
 
 inline qreal qExp(qreal v)
 {
-    // only one signature
-    // exists, exp(double)
+#ifdef QT_USE_MATH_H_FLOATS
+    if (sizeof(qreal) == sizeof(float))
+        return expf(float(v));
+#endif
     return exp(v);
 }
 
