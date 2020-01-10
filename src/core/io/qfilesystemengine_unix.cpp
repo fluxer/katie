@@ -36,6 +36,7 @@
 #include "qfsfileengine.h"
 #include "qfile.h"
 #include "qfileinfo.h"
+#include "qcore_unix_p.h"
 
 #include <stdlib.h> // for realpath()
 #include <unistd.h>
@@ -355,15 +356,6 @@ bool QFileSystemEngine::createLink(const QFileSystemEntry &source, const QFileSy
 //static
 bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSystemEntry &target, QSystemError &error)
 {
-#ifdef Q_OS_LINUX
-
-// not in qplatformdefs.h since it is Linux specific
-#if defined(QT_USE_XOPEN_LFS_EXTENSIONS) && defined(QT_LARGEFILE_SUPPORT)
-#  define QT_SENDFILE ::sendfile64
-#else
-#  define QT_SENDFILE ::sendfile
-#endif
-
     QT_STATBUF st;
     if (QT_STAT(source.nativeFilePath().constData(), &st) == 0) {
         if (!S_ISREG(st.st_mode))
@@ -383,31 +375,56 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
         return false;
     }
 
-    QT_OFF_T tosend = st.st_size;
-    ssize_t sendresult = QT_SENDFILE(targetfd, sourcefd, Q_NULLPTR, tosend);
-    while (sendresult != tosend) {
+    QT_OFF_T tocopy = st.st_size;
+
+#ifdef Q_OS_LINUX
+// not in qplatformdefs.h since it is platform specific
+#if defined(QT_USE_XOPEN_LFS_EXTENSIONS) && defined(QT_LARGEFILE_SUPPORT)
+#  define QT_SENDFILE ::sendfile64
+#else
+#  define QT_SENDFILE ::sendfile
+#endif
+
+    ssize_t sendresult = QT_SENDFILE(targetfd, sourcefd, Q_NULLPTR, tocopy);
+    while (sendresult != tocopy) {
         if (sendresult == -1) {
             error = QSystemError(errno, QSystemError::StandardLibraryError);
             ::close(sourcefd);
             ::close(targetfd);
             return false;
         }
-        tosend -= sendresult;
-        sendresult = QT_SENDFILE(targetfd, sourcefd, &tosend, tosend);
+        tocopy -= sendresult;
+        sendresult = QT_SENDFILE(targetfd, sourcefd, &tocopy, tocopy);
     }
+#undef QT_SENDFILE
+// TODO: FreeBSD sendfile() support, signature is different
+#else
+    size_t totalwrite = 0;
+    char copybuffer[BUFSIZ]; // BUFSIZ is defined in stdio.h
+    while (QT_OFF_T(totalwrite) != tocopy) {
+        const size_t readresult = QT_READ(sourcefd, copybuffer, sizeof(copybuffer));
+        if (readresult == -1) {
+            error = QSystemError(errno, QSystemError::StandardLibraryError);
+            ::close(sourcefd);
+            ::close(targetfd);
+            return false;
+        }
+
+        const size_t writeresult = QT_WRITE(targetfd, copybuffer, readresult);
+        if (writeresult != readresult) {
+            error = QSystemError(errno, QSystemError::StandardLibraryError);
+            ::close(sourcefd);
+            ::close(targetfd);
+            return false;
+        }
+
+        totalwrite += readresult;
+    }
+#endif
 
     ::close(sourcefd);
     ::close(targetfd);
     return true;
-
-#undef QT_SENDFILE
-
-#else
-    Q_UNUSED(source);
-    Q_UNUSED(target);
-    error = QSystemError(ENOSYS, QSystemError::StandardLibraryError); //Function not implemented
-    return false;
-#endif // Q_OS_LINUX
 }
 
 //static

@@ -755,84 +755,12 @@ QFile::copy(const QString &newName)
         qWarning("QFile::copy: Empty or null file name");
         return false;
     }
-    if (QFile(newName).exists()) {
-        // ### Race condition. If a file is moved in after this, it /will/ be
-        // overwritten. On Unix, the proper solution is to use hardlinks:
-        // return ::link(old, new) && ::remove(old); See also rename().
-        d->setError(QFile::CopyError, tr("Destination file exists"));
-        return false;
-    }
+
     unsetError();
     close();
-    if(error() == QFile::NoError) {
-        if(fileEngine()->copy(newName)) {
-            unsetError();
-            return true;
-        } else {
-            bool error = false;
-            if(!open(QFile::ReadOnly)) {
-                error = true;
-                d->setError(QFile::CopyError, tr("Cannot open %1 for input").arg(d->fileName));
-            } else {
-                QString fileTemplate = QLatin1String("%1/qt_temp.XXXXXX");
-#ifdef QT_NO_TEMPORARYFILE
-                QFile out(fileTemplate.arg(QFileInfo(newName).path()));
-                if (!out.open(QIODevice::ReadWrite))
-                    error = true;
-#else
-                QTemporaryFile out(fileTemplate.arg(QFileInfo(newName).path()));
-                if (!out.open()) {
-                    out.setFileTemplate(fileTemplate.arg(QDir::tempPath()));
-                    if (!out.open())
-                        error = true;
-                }
-#endif
-                if (error) {
-                    out.close();
-                    close();
-                    d->setError(QFile::CopyError, tr("Cannot open for output"));
-                } else {
-                    char block[4096];
-                    qint64 totalRead = 0;
-                    while(!atEnd()) {
-                        qint64 in = read(block, sizeof(block));
-                        if (in <= 0)
-                            break;
-                        totalRead += in;
-                        if(in != out.write(block, in)) {
-                            close();
-                            d->setError(QFile::CopyError, tr("Failure to write block"));
-                            error = true;
-                            break;
-                        }
-                    }
-
-                    if (totalRead != size()) {
-                        // Unable to read from the source. The error string is
-                        // already set from read().
-                        error = true;
-                    }
-                    if (!error && !out.rename(newName)) {
-                        error = true;
-                        close();
-                        d->setError(QFile::CopyError, tr("Cannot create %1 for output").arg(newName));
-                    }
-#ifdef QT_NO_TEMPORARYFILE
-                    if (error)
-                        out.remove();
-#else
-                    if (!error)
-                        out.setAutoRemove(false);
-#endif
-                }
-            }
-            if(!error) {
-                QFile::setPermissions(newName, permissions());
-                close();
-                unsetError();
-                return true;
-            }
-        }
+    if(error() == QFile::NoError && fileEngine()->copy(newName)) {
+        unsetError();
+        return true;
     }
     return false;
 }
