@@ -47,11 +47,11 @@
 #include "qstyleoption.h"
 #include "qslider.h"
 #include "qabstractslider_p.h"
-#include "qmath_p.h"
+#include "qmath.h"
+
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif
-#include "qmath.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -140,8 +140,8 @@ int QDialPrivate::valueFromPoint(const QPoint &p) const
     double xx = (double)p.x() - q->width()/2.0;
     double a = (xx || yy) ? qAtan2(yy, xx) : 0;
 
-    if (a < Q_PI / -2)
-        a = a + Q_PI * 2;
+    if (a < M_PI / -2)
+        a = a + M_PI * 2;
 
     int dist = 0;
     int minv = minimum, maxv = maximum;
@@ -155,9 +155,9 @@ int QDialPrivate::valueFromPoint(const QPoint &p) const
     int r = maxv - minv;
     int v;
     if (wrapping)
-        v =  (int)(0.5 + minv + r * (Q_PI * 3 / 2 - a) / (2 * Q_PI));
+        v =  (int)(0.5 + minv + r * (M_PI * 3 / 2 - a) / (2 * M_PI));
     else
-        v =  (int)(0.5 + minv + r* (Q_PI * 4 / 3 - a) / (Q_PI * 10 / 6));
+        v =  (int)(0.5 + minv + r* (M_PI * 4 / 3 - a) / (M_PI * 10 / 6));
 
     if (dist > 0)
         v -= dist;
@@ -390,7 +390,7 @@ int QDial::notchSize() const
     // radius of the arc
     int r = qMin(width(), height())/2;
     // length of the whole arc
-    int l = (int)(r * (d->wrapping ? 6 : 5) * Q_PI / 6);
+    int l = (int)(r * (d->wrapping ? 6 : 5) * M_PI / 6);
     // length of the arc from minValue() to minValue()+pageStep()
     if (d->maximum > d->minimum + d->pageStep)
         l = (int)(0.5 + l * d->pageStep / (d->maximum - d->minimum));

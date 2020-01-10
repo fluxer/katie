@@ -1166,7 +1166,7 @@ static double computeAngle(const QPointF &v)
     }
 #else
     // doesn't seem to be robust enough
-    return qAtan2(v.x(), v.y()) + Q_PI;
+    return qAtan2(v.x(), v.y()) + M_PI;
 #endif
 }
 

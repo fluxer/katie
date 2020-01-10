@@ -42,7 +42,6 @@
 #include "qsvggraphics_p.h"
 #include "qsvgnode_p.h"
 #include "qsvgfont_p.h"
-
 #include "qapplication.h"
 #include "qwidget.h"
 #include "qpen.h"
@@ -54,12 +53,11 @@
 #include "qfileinfo.h"
 #include "qfile.h"
 #include "qdebug.h"
-#include "qmath.h"
 #include "qnumeric.h"
 #include "qvarlengtharray.h"
-#include "qmath_p.h"
+#include "qmath.h"
 
-#include "float.h"
+#include <float.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -1385,8 +1383,8 @@ static void pathArcSegment(QPainterPath &path,
     qreal t;
     qreal thHalf;
 
-    sinTh = qSin(xAxisRotation * (Q_PI / 180.0));
-    cosTh = qCos(xAxisRotation * (Q_PI / 180.0));
+    sinTh = qSin(xAxisRotation * (M_PI / 180.0));
+    cosTh = qCos(xAxisRotation * (M_PI / 180.0));
 
     a00 =  cosTh * rx;
     a01 = -sinTh * ry;
@@ -1454,8 +1452,8 @@ static void pathArc(QPainterPath &path,
     rx = qAbs(rx);
     ry = qAbs(ry);
 
-    sin_th = qSin(x_axis_rotation * (Q_PI / 180.0));
-    cos_th = qCos(x_axis_rotation * (Q_PI / 180.0));
+    sin_th = qSin(x_axis_rotation * (M_PI / 180.0));
+    cos_th = qCos(x_axis_rotation * (M_PI / 180.0));
 
     dx = (curx - x) / 2.0;
     dy = (cury - y) / 2.0;
@@ -1499,11 +1497,11 @@ static void pathArc(QPainterPath &path,
 
     th_arc = th1 - th0;
     if (th_arc < 0 && sweep_flag)
-        th_arc += 2 * Q_PI;
+        th_arc += 2 * M_PI;
     else if (th_arc > 0 && !sweep_flag)
-        th_arc -= 2 * Q_PI;
+        th_arc -= 2 * M_PI;
 
-    n_segs = qCeil(qAbs(th_arc / (Q_PI * 0.5 + 0.001)));
+    n_segs = qCeil(qAbs(th_arc / (M_PI * 0.5 + 0.001)));
 
     for (i = 0; i < n_segs; i++) {
         pathArcSegment(path, xc, yc,

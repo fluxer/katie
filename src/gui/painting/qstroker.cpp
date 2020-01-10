@@ -33,7 +33,6 @@
 
 #include "qstroker_p.h"
 #include "qbezier_p.h"
-#include "qmath_p.h"
 #include "qline.h"
 #include "qtransform.h"
 #include "qmath.h"
@@ -783,7 +782,7 @@ qreal qt_t_for_arc_angle(qreal angle)
     if (qFuzzyCompare(angle, qreal(90)))
         return 1;
 
-    qreal radians = Q_PI * angle / 180;
+    qreal radians = M_PI * angle / 180;
     qreal cosAngle = qCos(radians);
     qreal sinAngle = qSin(radians);
 

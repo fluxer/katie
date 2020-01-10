@@ -56,7 +56,6 @@
 #include "qtextengine_p.h"
 #include "qwidget_p.h"
 #include "qpaintengine_raster_p.h"
-#include "qmath_p.h"
 #include "qstatictext_p.h"
 #include "qstylehelper_p.h"
 

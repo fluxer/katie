@@ -36,7 +36,6 @@
 #include <QPoint>
 #include <QRect>
 
-#include "qmath_p.h"
 #include "qdatabuffer_p.h"
 #include "qdrawhelper_p.h"
 

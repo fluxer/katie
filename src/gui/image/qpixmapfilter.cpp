@@ -39,7 +39,6 @@
 #include "qpaintengineex_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qmath.h"
-#include "qmath_p.h"
 #include "qmemrotate_p.h"
 #include "qdrawhelper_p.h"
 #include "qdebug.h"

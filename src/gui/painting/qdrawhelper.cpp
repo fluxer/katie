@@ -34,7 +34,6 @@
 #include "qdrawhelper_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qpainter_p.h"
-#include "qmath_p.h"
 #include "qmath.h"
 
 QT_BEGIN_NAMESPACE
@@ -909,7 +908,7 @@ static const uint * QT_FASTCALL qt_fetch_conical_gradient(uint *buffer, const Op
         while (buffer < end) {
             qreal angle = qAtan2(ry, rx) + data->gradient.conical.angle;
 
-            *buffer = qt_gradient_pixel(&data->gradient, 1 - angle / (2*Q_PI));
+            *buffer = qt_gradient_pixel(&data->gradient, 1 - angle / (2*M_PI));
 
             rx += data->m11;
             ry += data->m12;
@@ -925,7 +924,7 @@ static const uint * QT_FASTCALL qt_fetch_conical_gradient(uint *buffer, const Op
                                 rx/rw - data->gradient.conical.center.y)
                           + data->gradient.conical.angle;
 
-            *buffer = qt_gradient_pixel(&data->gradient, 1. - angle / (2*Q_PI));
+            *buffer = qt_gradient_pixel(&data->gradient, 1. - angle / (2*M_PI));
 
             rx += data->m11;
             ry += data->m12;

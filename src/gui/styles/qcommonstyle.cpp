@@ -33,7 +33,6 @@
 
 #include "qcommonstyle.h"
 #include "qcommonstyle_p.h"
-
 #include "qfile.h"
 #include "qapplication.h"
 #include "qbitmap.h"
@@ -56,7 +55,6 @@
 #include "qtoolbutton.h"
 #include "qrubberband.h"
 #include "qcommonstylepixmaps_p.h"
-#include "qmath_p.h"
 #include "qdebug.h"
 #include "qtextformat.h"
 #include "qwizard.h"
@@ -65,14 +63,13 @@
 #include "qsettings.h"
 #include "qpixmapcache.h"
 #include "qguiplatformplugin.h"
-
-#include <limits.h>
+#include "qstylehelper_p.h"
 
 #ifndef QT_NO_ITEMVIEWS
 #   include "qtextengine_p.h"
 #endif
 
-#include "qstylehelper_p.h"
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -2895,12 +2892,12 @@ static QPolygonF calcArrow(const QStyleOptionSlider *dial, qreal &a)
     int currentSliderPosition = dial->upsideDown ? dial->sliderPosition : (dial->maximum - dial->sliderPosition);
 
     if (dial->maximum == dial->minimum)
-        a = Q_PI / 2;
+        a = M_PI / 2;
     else if (dial->dialWrapping)
-        a = Q_PI * 3 / 2 - (currentSliderPosition - dial->minimum) * 2 * Q_PI
+        a = M_PI * 3 / 2 - (currentSliderPosition - dial->minimum) * 2 * M_PI
             / (dial->maximum - dial->minimum);
     else
-        a = (Q_PI * 8 - (currentSliderPosition - dial->minimum) * 10 * Q_PI
+        a = (M_PI * 8 - (currentSliderPosition - dial->minimum) * 10 * M_PI
             / (dial->maximum - dial->minimum)) / 6;
 
     int xc = width / 2;
@@ -2914,10 +2911,10 @@ static QPolygonF calcArrow(const QStyleOptionSlider *dial, qreal &a)
     QPolygonF arrow(3);
     arrow[0] = QPointF(0.5 + xc + len * qCos(a),
                        0.5 + yc - len * qSin(a));
-    arrow[1] = QPointF(0.5 + xc + back * qCos(a + Q_PI * 5 / 6),
-                       0.5 + yc - back * qSin(a + Q_PI * 5 / 6));
-    arrow[2] = QPointF(0.5 + xc + back * qCos(a - Q_PI * 5 / 6),
-                       0.5 + yc - back * qSin(a - Q_PI * 5 / 6));
+    arrow[1] = QPointF(0.5 + xc + back * qCos(a + M_PI * 5 / 6),
+                       0.5 + yc - back * qSin(a + M_PI * 5 / 6));
+    arrow[2] = QPointF(0.5 + xc + back * qCos(a - M_PI * 5 / 6),
+                       0.5 + yc - back * qSin(a - M_PI * 5 / 6));
     return arrow;
 }
 

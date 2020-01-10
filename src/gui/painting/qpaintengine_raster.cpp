@@ -45,7 +45,6 @@
 #include "qbitmap.h"
 #include "qmath.h"
 #include "qfontengine_ft_p.h"
-#include "qmath_p.h"
 #include "qtextengine_p.h"
 #include "qfontengine_p.h"
 #include "qpixmap_raster_p.h"
@@ -3793,7 +3792,7 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
             QPointF center = g->center();
             conicalData.center.x = center.x();
             conicalData.center.y = center.y();
-            conicalData.angle = g->angle() * 2 * Q_PI / 360.0;
+            conicalData.angle = g->angle() * 2 * M_PI / 360.0;
         }
         break;
 
