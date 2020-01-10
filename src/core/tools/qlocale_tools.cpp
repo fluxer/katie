@@ -39,10 +39,10 @@
 #include <ctype.h>
 #include <float.h>
 #include <limits.h>
-#include <math.h>
 #include <stdlib.h>
 #include <time.h>
 #include <errno.h>
+#include <cmath>
 
 #if defined(Q_OS_LINUX) && !defined(__UCLIBC__)
 #    include <fenv.h>
