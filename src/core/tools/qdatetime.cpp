@@ -2169,11 +2169,9 @@ void QDateTime::setTimeSpec(Qt::TimeSpec spec)
     }
 }
 
-qint64 toMSecsSinceEpoch_helper(qint64 jd, int msecs)
+static inline qint64 toMSecsSinceEpoch_helper(qint64 jd, int msecs)
 {
-    qint64 days = jd - JULIAN_DAY_FOR_EPOCH;
-    qint64 retval = (days * MSECS_PER_DAY) + msecs;
-    return retval;
+    return (((jd - JULIAN_DAY_FOR_EPOCH) * MSECS_PER_DAY) + msecs);
 }
 
 /*!
