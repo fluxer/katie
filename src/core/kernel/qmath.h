@@ -182,6 +182,16 @@ inline qreal qPow(qreal x, qreal y)
     return pow(x, y);
 }
 
+
+inline qreal qFmod(qreal x, qreal y)
+{
+#ifdef QT_USE_MATH_H_FLOATS
+    if(sizeof(qreal) == sizeof(float))
+        return fmodf(float(x), float(y));
+#endif
+    return fmod(x, y);
+}
+
 QT_END_NAMESPACE
 
 QT_END_HEADER

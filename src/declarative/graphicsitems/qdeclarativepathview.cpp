@@ -33,28 +33,15 @@
 
 #include "qdeclarativepathview_p.h"
 #include "qdeclarativepathview_p_p.h"
-
 #include "qdeclarativestate_p.h"
 #include "qdeclarativeopenmetaobject_p.h"
 #include <QDebug>
 #include <QEvent>
 #include "qlistmodelinterface_p.h"
 #include <QGraphicsSceneEvent>
-
 #include "qmath.h"
-#include <math.h>
 
 QT_BEGIN_NAMESPACE
-
-inline qreal qmlMod(qreal x, qreal y)
-{
-#ifdef QT_USE_MATH_H_FLOATS
-    if(sizeof(qreal) == sizeof(float))
-        return fmodf(float(x), float(y));
-    else
-#endif
-        return fmod(x, y);
-}
 
 static QDeclarativeOpenMetaObjectType *qPathViewAttachedType = 0;
 
@@ -174,14 +161,14 @@ qreal QDeclarativePathViewPrivate::positionOfIndex(qreal index) const
         if (haveHighlightRange && highlightRangeMode != QDeclarativePathView::NoHighlightRange)
             start = highlightRangeStart;
         qreal globalPos = index + offset;
-        globalPos = qmlMod(globalPos, qreal(modelCount)) / modelCount;
+        globalPos = qFmod(globalPos, qreal(modelCount)) / modelCount;
         if (pathItems != -1 && pathItems < modelCount) {
             globalPos += start * mappedRange;
-            globalPos = qmlMod(globalPos, 1.0);
+            globalPos = qFmod(globalPos, 1.0);
             if (globalPos < mappedRange)
                 pos = globalPos / mappedRange;
         } else {
-            pos = qmlMod(globalPos + start, 1.0);
+            pos = qFmod(globalPos + start, 1.0);
         }
     }
 
@@ -277,7 +264,7 @@ void QDeclarativePathViewPrivate::setHighlightPosition(qreal pos)
 
         qreal range = qreal(modelCount);
         // calc normalized position of highlight relative to offset
-        qreal relativeHighlight = qmlMod(pos + offset, range) / range;
+        qreal relativeHighlight = qFmod(pos + offset, range) / range;
 
         if (!highlightUp && relativeHighlight > end * mappedRange) {
             qreal diff = qreal(1.0) - relativeHighlight;
@@ -681,7 +668,7 @@ void QDeclarativePathViewPrivate::setOffset(qreal o)
     Q_Q(QDeclarativePathView);
     if (offset != o) {
         if (isValid() && q->isComponentComplete()) {
-            offset = qmlMod(o, qreal(modelCount));
+            offset = qFmod(o, qreal(modelCount));
             if (offset < 0)
                 offset += qreal(modelCount);
             q->refill();
@@ -1326,7 +1313,7 @@ void QDeclarativePathView::componentComplete()
     if (d->model) {
         d->modelCount = d->model->count();
         if (d->modelCount && d->currentIndex != 0) // an initial value has been provided for currentIndex
-            d->offset = qmlMod(d->modelCount - d->currentIndex, d->modelCount);
+            d->offset = qFmod(d->modelCount - d->currentIndex, d->modelCount);
     }
 
     d->createHighlight();
@@ -1643,10 +1630,10 @@ int QDeclarativePathViewPrivate::calcCurrentIndex()
 {
     int current = 0;
     if (modelCount && model && items.count()) {
-        offset = qmlMod(offset, modelCount);
+        offset = qFmod(offset, modelCount);
         if (offset < 0)
             offset += modelCount;
-        current = qRound(qAbs(qmlMod(modelCount - offset, modelCount)));
+        current = qRound(qAbs(qFmod(modelCount - offset, modelCount)));
         current = current % modelCount;
     }
 
@@ -1709,7 +1696,7 @@ void QDeclarativePathViewPrivate::snapToCurrent()
     if (!model || modelCount <= 0)
         return;
 
-    qreal targetOffset = qmlMod(modelCount - currentIndex, modelCount);
+    qreal targetOffset = qFmod(modelCount - currentIndex, modelCount);
 
     moveReason = Other;
     offsetAdj = 0.0;

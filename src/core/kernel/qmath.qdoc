@@ -173,3 +173,10 @@
     \relates <QtCore/qmath.h>
     \sa qSqrt()
 */
+
+/*!
+    \fn qreal qFmod(qreal x, qreal y)
+    Returns remainder of the \a x and \a y division operation.
+
+    \relates <QtCore/qmath.h>
+*/
