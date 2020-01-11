@@ -55,9 +55,8 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QIODEVICE_BUFFERSIZE
-#define QIODEVICE_BUFFERSIZE Q_INT64_C(16384)
-#endif
+// BUFSIZ is defined in stdio.h
+#define QIODEVICE_BUFFERSIZE qint64(BUFSIZ)
 
 // This is QIODevice's read buffer, optimized for read(), isEmpty() and getChar()
 class QIODevicePrivateLinearBuffer
@@ -159,8 +158,8 @@ public:
 
 private:
     enum FreeSpacePos {freeSpaceAtStart, freeSpaceAtEnd};
-    void makeSpace(size_t required, FreeSpacePos where) {
-        size_t newCapacity = qMax(capacity, size_t(QIODEVICE_BUFFERSIZE));
+    void makeSpace(qint64 required, FreeSpacePos where) {
+        qint64 newCapacity = qMax(capacity, QIODEVICE_BUFFERSIZE);
         while (newCapacity < required)
             newCapacity *= 2;
         const int moveOffset = (where == freeSpaceAtEnd) ? 0 : newCapacity - len;
@@ -185,7 +184,7 @@ private:
     // the allocated buffer
     char* buf;
     // allocated buffer size
-    size_t capacity;
+    qint64 capacity;
 };
 
 class Q_CORE_EXPORT QIODevicePrivate
