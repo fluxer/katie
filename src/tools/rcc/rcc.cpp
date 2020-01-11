@@ -145,7 +145,7 @@ RCCFileInfo::~RCCFileInfo()
 
 QString RCCFileInfo::resourceName() const
 {
-    QString resource = m_name;
+    QString resource = (m_name.isEmpty() ? QLatin1String("/") : m_name);
     for (RCCFileInfo *p = m_parent; p; p = p->m_parent)
         resource = resource.prepend(p->m_name + QLatin1Char('/'));
     return QLatin1Char(':') + resource;
@@ -735,7 +735,7 @@ bool RCCResourceLibrary::writeHeader()
         writeString("\n**\n");
         writeString("** WARNING! All changes made in this file will be lost!\n");
         writeString( "*****************************************************************************/\n\n");
-        writeString("#include <QtCore/qglobal.h>\n\n");
+        writeString("#include <QtCore/qresource.h>\n\n");
     } else if (m_format == Binary) {
         writeString("qres");
         writeNumber4(0);
@@ -907,7 +907,7 @@ bool RCCResourceLibrary::writeInitializer()
 {
     if (m_format == C_Code) {
         QByteArray initLatin = m_initName.toLatin1();
-        QByteArray resourceDataString = "\n       (0x01, qt_resource_struct_" + initLatin +
+        QByteArray resourceDataString = "\n       (Q_RCC_OUTPUT_REVISION, qt_resource_struct_" + initLatin +
                                         ", qt_resource_name_" + initLatin +
                                         ", qt_resource_data_" + initLatin + ");\n";
         //write("\nQT_BEGIN_NAMESPACE\n");
@@ -958,10 +958,10 @@ bool RCCResourceLibrary::writeInitializer()
     } else if (m_format == Binary) {
         int i = 4;
         char *p = m_out.data();
-        p[i++] = 0; // 0x01
+        p[i++] = 0; // Q_RCC_OUTPUT_REVISION
         p[i++] = 0;
         p[i++] = 0;
-        p[i++] = 1;
+        p[i++] = 2;
 
         p[i++] = (m_treeOffset >> 24) & 0xff;
         p[i++] = (m_treeOffset >> 16) & 0xff;

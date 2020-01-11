@@ -693,23 +693,7 @@ QAbstractFileEngine::Iterator *QFSFileEngine::beginEntryList(QDir::Filters filte
 {
     return new QFSFileEngineIterator(filters, filterNames);
 }
-
-/*!
-    \internal
-*/
-QAbstractFileEngine::Iterator *QFSFileEngine::endEntryList()
-{
-    return 0;
-}
 #endif
-
-/*!
-    \internal
-*/
-QStringList QFSFileEngine::entryList(QDir::Filters filters, const QStringList &filterNames) const
-{
-    return QAbstractFileEngine::entryList(filters, filterNames);
-}
 
 /*!
     \reimp
