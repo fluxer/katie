@@ -45,9 +45,42 @@
 #define tr(X) QString::fromLatin1(X)
 #endif
 
+#ifdef QT_HAVE_FLOCK
+#  include <sys/file.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 static const int QFILE_WRITEBUFFER_SIZE = 16384;
+
+static bool unixLockHandle(int handle, QFile::FileHandleFlags flags)
+{
+    if (!(flags & QFile::ReadLockHandle) && !(flags & QFile::WriteLockHandle)) {
+        return true;
+    }
+#ifdef QT_HAVE_FLOCK
+    if (flags & QFile::ReadLockHandle && ::flock(handle, LOCK_SH) == 0) {
+        return true;
+    } else if (::flock(handle, LOCK_EX) == 0) {
+        return true;
+    }
+#else
+    struct flock fl;
+    fl.l_whence = SEEK_SET;
+    fl.l_start = 0;
+    fl.l_len = 0;
+    if (flags & QFile::ReadLockHandle) {
+        fl.l_type = F_RDLCK;
+    } else {
+        fl.l_type = F_RDLCK;
+    }
+    if (::fcntl(handle, F_SETLKW, &fl) == 0) {
+        return true;
+    }
+#endif // QT_HAVE_FLOCK
+    qWarning("QFile: could not lock handle");
+    return false;
+}
 
 //************* QFilePrivate
 QFilePrivate::QFilePrivate()
@@ -75,6 +108,7 @@ QFilePrivate::openExternalFile(int flags, int fd, QFile::FileHandleFlags handleF
     fileEngine = 0;
     QFSFileEngine *fe = new QFSFileEngine;
     fileEngine = fe;
+    unixLockHandle(fd, handleFlags);
     return fe->open(QIODevice::OpenMode(flags), fd, handleFlags);
 #endif
 }
@@ -91,6 +125,7 @@ QFilePrivate::openExternalFile(int flags, FILE *fh, QFile::FileHandleFlags handl
     fileEngine = 0;
     QFSFileEngine *fe = new QFSFileEngine;
     fileEngine = fe;
+    unixLockHandle(::fileno(fh), handleFlags);
     return fe->open(QIODevice::OpenMode(flags), fh, handleFlags);
 #endif
 }
@@ -316,6 +351,12 @@ QFilePrivate::setError(QFile::FileError err, int errNum)
     file handle and must close it.
     \value DontCloseHandle The file handle passed into open() will not be
     closed by Qt. The application must ensure that close() is called.
+    \value ReadLockHandle The file handle passed into open() will be locked
+    for reading
+    \value WriteLockHandle The file handle passed into open() will be locked
+    for writing
+
+    \warning Locking is done via advisory lock.
  */
 
 

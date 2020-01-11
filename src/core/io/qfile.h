@@ -86,8 +86,10 @@ public:
     Q_DECLARE_FLAGS(Permissions, Permission)
 
     enum FileHandleFlag {
+        DontCloseHandle = 0,
         AutoCloseHandle = 0x0001,
-        DontCloseHandle = 0
+        ReadLockHandle = 0x0002,
+        WriteLockHandle = 0x0003
     };
     Q_DECLARE_FLAGS(FileHandleFlags, FileHandleFlag)
 

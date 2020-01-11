@@ -228,6 +228,8 @@ katie_check_function(strerror_r "string.h")
 # SUSv2
 katie_check_function(localtime_r "time.h")
 katie_check_function(gmtime_r "time.h")
+# non-standard
+katie_check_function(flock "sys/file.h")
 
 if(KATIE_COMPILER MATCHES "(gcc|clang)")
     set(QT_VISIBILITY_AVAILABLE TRUE)

@@ -284,8 +284,9 @@ void QSettingsPrivate::read()
         return;
     }
 
+    int fd = QT_OPEN(filename.toLocal8Bit().constData(), QT_OPEN_RDONLY);
     QFile file(filename);
-    if (Q_UNLIKELY(!file.open(QFile::ReadOnly))) {
+    if (Q_UNLIKELY(!file.open(fd, QFile::ReadOnly, QFile::ReadLockHandle))) {
         status = QSettings::AccessError;
         qWarning("QSettingsPrivate::read: failed to open %s", filename.toLocal8Bit().constData());
         return;
@@ -317,9 +318,9 @@ void QSettingsPrivate::write()
         QSettingsPrivate::read();
     }
 
-    QMutexLocker locker(qSettingsMutex());
+    int fd = QT_OPEN(filename.toLocal8Bit().constData(), QT_OPEN_WRONLY | QT_OPEN_CREAT, 0666);
     QFile file(filename);
-    if (Q_UNLIKELY(!file.open(QFile::WriteOnly))) {
+    if (Q_UNLIKELY(!file.open(fd, QFile::WriteOnly, QFile::WriteLockHandle))) {
         status = QSettings::AccessError;
         qWarning("QSettingsPrivate::write: failed to open %s", filename.toLocal8Bit().constData());
         return;
@@ -654,12 +655,6 @@ QStringList QSettingsPrivate::splitArgs(const QString &s, int idx)
     constructor that takes a file name as first argument and pass
     QSettings::IniFormat as second argument. You can then use the
     QSettings object to read and write settingsin the file.
-
-    \warning No attempt is made to lock the file thus if you want to use
-    QSettings to access settings file used by applications that do not use
-    QSettings you will have to do file locking yourself. As is with QFile
-    or any other disk I/O related class, QSettings guarantees only internal
-    state integrity.
 
     \sa QVariant, QSessionManager
 */
