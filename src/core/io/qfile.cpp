@@ -758,9 +758,12 @@ QFile::copy(const QString &newName)
 
     unsetError();
     close();
-    if(error() == QFile::NoError && fileEngine()->copy(newName)) {
-        unsetError();
-        return true;
+    if(error() == QFile::NoError) {
+        if(fileEngine()->copy(newName)) {
+            unsetError();
+            return true;
+        }
+        d->setError(QFile::CopyError, d->fileEngine->errorString());
     }
     return false;
 }
