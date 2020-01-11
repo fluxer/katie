@@ -31,12 +31,7 @@
 **
 ****************************************************************************/
 
-// Just to get Q_OS_SYMBIAN
-#include <qglobal.h>
-
 #include <QtTest/QtTest>
-
-
 #include <qcoreapplication.h>
 #include <qtcpsocket.h>
 #include <qtcpserver.h>
@@ -45,12 +40,11 @@
 #include <qstringlist.h>
 #include <qplatformdefs.h>
 #include <qhostinfo.h>
-
 #include <QNetworkConfiguration>
 #include <QNetworkConfigurationManager>
 #include <QNetworkSession>
-
 #include <QNetworkProxy>
+
 Q_DECLARE_METATYPE(QNetworkProxy)
 Q_DECLARE_METATYPE(QList<QNetworkProxy>)
 
@@ -157,7 +151,7 @@ void tst_QTcpServer::ipv4LoopbackPerformanceTest()
     QTcpSocket *clientB = server.nextPendingConnection();
     QVERIFY(clientB);
 
-    QByteArray buffer(16384, '@');
+    QByteArray buffer(QT_BUFFSIZE, '@');
     QTime stopWatch;
     stopWatch.start();
     qlonglong totalWritten = 0;
@@ -166,7 +160,7 @@ void tst_QTcpServer::ipv4LoopbackPerformanceTest()
         clientA.flush();
         totalWritten += buffer.size();
         while (clientB->waitForReadyRead(100)) {
-            if (clientB->bytesAvailable() == 16384)
+            if (clientB->bytesAvailable() == QT_BUFFSIZE)
                 break;
         }
         clientB->read(buffer.data(), buffer.size());
@@ -174,7 +168,7 @@ void tst_QTcpServer::ipv4LoopbackPerformanceTest()
         clientB->flush();
         totalWritten += buffer.size();
         while (clientA.waitForReadyRead(100)) {
-            if (clientA.bytesAvailable() == 16384)
+            if (clientA.bytesAvailable() == QT_BUFFSIZE)
                 break;
         }
         clientA.read(buffer.data(), buffer.size());
@@ -211,7 +205,7 @@ void tst_QTcpServer::ipv6LoopbackPerformanceTest()
         QTcpSocket *clientB = server.nextPendingConnection();
         QVERIFY(clientB);
 
-        QByteArray buffer(16384, '@');
+        QByteArray buffer(QT_BUFFSIZE, '@');
         QTime stopWatch;
         stopWatch.start();
         qlonglong totalWritten = 0;
@@ -220,7 +214,7 @@ void tst_QTcpServer::ipv6LoopbackPerformanceTest()
             clientA.flush();
             totalWritten += buffer.size();
             while (clientB->waitForReadyRead(100)) {
-                if (clientB->bytesAvailable() == 16384)
+                if (clientB->bytesAvailable() == QT_BUFFSIZE)
                     break;
             }
             clientB->read(buffer.data(), buffer.size());
@@ -228,7 +222,7 @@ void tst_QTcpServer::ipv6LoopbackPerformanceTest()
             clientB->flush();
             totalWritten += buffer.size();
             while (clientA.waitForReadyRead(100)) {
-                if (clientA.bytesAvailable() == 16384)
+                if (clientA.bytesAvailable() == QT_BUFFSIZE)
                    break;
             }
             clientA.read(buffer.data(), buffer.size());
@@ -266,7 +260,7 @@ void tst_QTcpServer::ipv4PerformanceTest()
     QTcpSocket *clientB = server.nextPendingConnection();
     QVERIFY(clientB);
 
-    QByteArray buffer(16384, '@');
+    QByteArray buffer(QT_BUFFSIZE, '@');
     QTime stopWatch;
     stopWatch.start();
     qlonglong totalWritten = 0;

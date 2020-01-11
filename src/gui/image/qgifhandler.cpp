@@ -36,6 +36,7 @@
 #include "qimage.h"
 #include "qiodevice.h"
 #include "qvariant.h"
+#include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -678,8 +679,7 @@ void QGIFFormat::scan(QIODevice *device, QVector<QSize> *imageSizes, int *loopCo
     uchar hold[16];
     State state = Header;
 
-    const int readBufferSize = 40960; // 40k read buffer
-    QByteArray readBuffer(device->read(readBufferSize));
+    QByteArray readBuffer(device->read(QT_BUFFSIZE));
 
     if (readBuffer.isEmpty()) {
         device->seek(oldPos);
@@ -912,7 +912,7 @@ void QGIFFormat::scan(QIODevice *device, QVector<QSize> *imageSizes, int *loopCo
                 return;
             }
         }
-        readBuffer = device->read(readBufferSize);
+        readBuffer = device->read(QT_BUFFSIZE);
     }
     device->seek(oldPos);
     return;
@@ -1053,11 +1053,9 @@ QGifHandler::~QGifHandler()
 
 bool QGifHandler::imageIsComing() const
 {
-    const int GifChunkSize = 4096;
-
     while (!gifFormat->partialNewFrame) {
         if (buffer.isEmpty()) {
-            buffer += device()->read(GifChunkSize);
+            buffer += device()->read(QT_BUFFSIZE);
             if (buffer.isEmpty())
                 break;
         }
@@ -1097,11 +1095,9 @@ bool QGifHandler::canRead(QIODevice *device)
 
 bool QGifHandler::read(QImage *image)
 {
-    const int GifChunkSize = 4096;
-
     while (!gifFormat->newFrame) {
         if (buffer.isEmpty()) {
-            buffer += device()->read(GifChunkSize);
+            buffer += device()->read(QT_BUFFSIZE);
             if (buffer.isEmpty())
                 break;
         }

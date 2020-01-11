@@ -55,7 +55,6 @@ static const unsigned char gz_magic[2] = {0x1f, 0x8b}; // gzip magic header
 #define ORIG_NAME    0x08 // bit 3 set: original file name present
 #define COMMENT      0x10 // bit 4 set: file comment present
 #define RESERVED     0xE0 // bits 5..7: reserved
-#define CHUNK 16384
 
 #include <QtNetwork/qtcpsocket.h>
 // it's safe to include these even if SSL support is not enabled

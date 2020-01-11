@@ -45,14 +45,15 @@
 // We mean it.
 //
 
-#include <QtCore/qbytearray.h>
+#include "qbytearray.h"
+#include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE
 
 class QRingBuffer
 {
 public:
-    inline QRingBuffer(int growth = 4096) : basicBlockSize(growth) {
+    inline QRingBuffer(int growth = QT_BUFFSIZE) : basicBlockSize(growth) {
         buffers << QByteArray();
         clear();
     }
