@@ -87,9 +87,6 @@ public:
 
     static bool setCurrentPath(const QFileSystemEntry &entry);
     static QFileSystemEntry currentPath();
-
-    static QAbstractFileEngine *resolveEntryAndCreateLegacyEngine(QFileSystemEntry &entry,
-                                                                  QFileSystemMetaData &data);
 };
 
 QT_END_NAMESPACE

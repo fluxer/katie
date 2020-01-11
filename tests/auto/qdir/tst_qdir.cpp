@@ -139,11 +139,6 @@ private slots:
 
     void nativeSeparators();
 
-    void searchPaths();
-    void searchPaths_data();
-
-    void entryListWithSearchPaths();
-
     void longFileName_data();
     void longFileName();
 
@@ -1128,107 +1123,6 @@ void tst_QDir::nativeSeparators()
     QCOMPARE(QDir::toNativeSeparators(QLatin1String("\\")), QString("\\"));
     QCOMPARE(QDir::fromNativeSeparators(QLatin1String("/")), QString("/"));
     QCOMPARE(QDir::fromNativeSeparators(QLatin1String("\\")), QString("\\"));
-}
-
-void tst_QDir::searchPaths_data()
-{
-    QTest::addColumn<QString>("filename");
-    QTest::addColumn<QString>("searchPathPrefixes");
-    QTest::addColumn<QString>("searchPaths");
-    QTest::addColumn<QString>("expectedAbsolutePath");
-
-    QString srcdir = SRCDIR;
-    if (srcdir.isEmpty())
-        srcdir = QDir::currentPath();
-    else
-        srcdir.chop(1);         // remove ending slash
-    QString searchDir = srcdir + "/searchdir";
-
-    // sanity
-    QTest::newRow("nopath") << "picker.png" << QString() << QString() << QString();
-    QTest::newRow("emptysearchpath") << "subdir1/picker.png" << QString() << QString() << QString();
-    QTest::newRow("searchpathwithoutprefix") << SRCDIR "searchdir/subdir1/picker.png" << QString("searchpath") << QString("searchdir") << (searchDir+"/subdir1/picker.png");
-
-    // new
-    QTest::newRow("novalidsearchpath") << "searchpath:subdir1/picker.png" << QString() << QString() << QString();
-    QTest::newRow("invalidsearchpath") << "searchpath:subdir1/picker.png" << QString("invalid") << QString("invalid") << QString();
-    QTest::newRow("onlyvalidsearchpath") << "searchpath:subdir1/picker.png" << QString("searchpath") << QString(SRCDIR "searchdir") << (searchDir+"/subdir1/picker.png");
-    QTest::newRow("validandinvalidsearchpath") << "searchpath:subdir1/picker.png" << QString("invalid;searchpath") << QString("invalid;" SRCDIR "searchdir") << (searchDir+"/subdir1/picker.png");
-    QTest::newRow("precedence1") << "searchpath:picker.png" << QString("invalid;searchpath") << QString("invalid;" SRCDIR "searchdir/subdir1," SRCDIR "searchdir/subdir2") << (searchDir+"/subdir1/picker.png");
-    QTest::newRow("precedence2") << "searchpath:picker.png" << QString("invalid;searchpath") << QString("invalid;" SRCDIR "searchdir/subdir2," SRCDIR "searchdir/subdir1") << (searchDir+"/subdir2/picker.png");
-    QTest::newRow("precedence3") << "searchpath2:picker.png" << QString("searchpath1;searchpath2") << QString(SRCDIR "searchdir/subdir1;" SRCDIR "searchdir/subdir2") << (searchDir+"/subdir2/picker.png");
-
-    // re
-}
-
-void tst_QDir::searchPaths()
-{
-    QFETCH(QString, filename);
-    QFETCH(QString, searchPathPrefixes);
-    QStringList searchPathPrefixList = searchPathPrefixes.split(";", QString::SkipEmptyParts);
-    QFETCH(QString, searchPaths);
-    QStringList searchPathsList = searchPaths.split(";", QString::SkipEmptyParts);
-    QFETCH(QString, expectedAbsolutePath);
-    bool exists = !expectedAbsolutePath.isEmpty();
-
-    for (int i = 0; i < searchPathPrefixList.count(); ++i) {
-        QDir::setSearchPaths(searchPathPrefixList.at(i), searchPathsList.at(i).split(","));
-    }
-    for (int i = 0; i < searchPathPrefixList.count(); ++i) {
-        QVERIFY(QDir::searchPaths(searchPathPrefixList.at(i)) == searchPathsList.at(i).split(","));
-    }
-
-    QCOMPARE(QFile(filename).exists(), exists);
-    QCOMPARE(QFileInfo(filename).exists(), exists);
-
-    if (exists) {
-        QCOMPARE(QFileInfo(filename).absoluteFilePath(), expectedAbsolutePath);
-    }
-
-    for (int i = 0; i < searchPathPrefixList.count(); ++i) {
-        QDir::setSearchPaths(searchPathPrefixList.at(i), QStringList());
-    }
-    for (int i = 0; i < searchPathPrefixList.count(); ++i) {
-        QVERIFY(QDir::searchPaths(searchPathPrefixList.at(i)).isEmpty());
-    }
-
-    for (int i = 0; i < searchPathPrefixList.count(); ++i) {
-        foreach (QString path, searchPathsList.at(i).split(",")) {
-            QDir::addSearchPath(searchPathPrefixList.at(i), path);
-        }
-    }
-    for (int i = 0; i < searchPathPrefixList.count(); ++i) {
-        QVERIFY(QDir::searchPaths(searchPathPrefixList.at(i)) == searchPathsList.at(i).split(","));
-    }
-
-    QCOMPARE(QFile(filename).exists(), exists);
-    QCOMPARE(QFileInfo(filename).exists(), exists);
-
-    if (exists) {
-        QCOMPARE(QFileInfo(filename).absoluteFilePath(), expectedAbsolutePath);
-    }
-
-    for (int i = 0; i < searchPathPrefixList.count(); ++i) {
-        QDir::setSearchPaths(searchPathPrefixList.at(i), QStringList());
-    }
-    for (int i = 0; i < searchPathPrefixList.count(); ++i) {
-        QVERIFY(QDir::searchPaths(searchPathPrefixList.at(i)).isEmpty());
-    }
-}
-
-void tst_QDir::entryListWithSearchPaths()
-{
-    QDir realDir(":/tst_qdir/resources/entryList");
-    QVERIFY(realDir.exists());
-    QVERIFY(!realDir.entryList().isEmpty());
-    QVERIFY(realDir.entryList().contains("file3.data"));
-
-    QDir::setSearchPaths("searchpath", QStringList(":/tst_qdir/resources"));
-    QDir dir("searchpath:entryList/");
-    QCOMPARE(dir.path(), QString(":/tst_qdir/resources/entryList"));
-    QVERIFY(dir.exists());
-    QStringList entryList = dir.entryList();
-    QVERIFY(entryList.contains("file3.data"));
 }
 
 void tst_QDir::longFileName_data()

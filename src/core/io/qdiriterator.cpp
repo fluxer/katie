@@ -163,7 +163,7 @@ QDirIteratorPrivate::QDirIteratorPrivate(const QFileSystemEntry &entry, const QS
 #endif
     QFileSystemMetaData metaData;
     if (resolveEngine)
-        engine.reset(QFileSystemEngine::resolveEntryAndCreateLegacyEngine(dirEntry, metaData));
+        engine.reset(QAbstractFileEngine::create(dirEntry.filePath()));
     QFileInfo fileInfo(new QFileInfoPrivate(dirEntry, metaData));
 
     // Populate fields for hasNext() and next()

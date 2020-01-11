@@ -60,15 +60,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_BOOTSTRAPPED
-struct QCoreGlobalData {
-    QMap<QString, QStringList> dirSearchPaths;
-    QReadWriteLock dirSearchPathsLock;
-};
-
-Q_GLOBAL_STATIC(QCoreGlobalData, globalData)
-#endif
-
 //************* QDirPrivate
 QDirPrivate::QDirPrivate(const QString &path, const QStringList &nameFilters_, QDir::SortFlags sort_, QDir::Filters filters_)
     : QSharedData()
@@ -99,7 +90,7 @@ QDirPrivate::QDirPrivate(const QDirPrivate &copy)
     , nameFilters(copy.nameFilters)
     , sort(copy.sort)
     , filters(copy.filters)
-    , fileEngine(0)
+    , fileEngine(Q_NULLPTR)
     , fileListsInitialized(false)
     , dirEntry(copy.dirEntry)
     , metaData(copy.metaData)
@@ -155,7 +146,7 @@ inline void QDirPrivate::setPath(const QString &path)
         p.truncate(p.length() - 1);
     }
 
-    dirEntry = QFileSystemEntry(p);
+    dirEntry = QFileSystemEntry(QDir::fromNativeSeparators(path));
     metaData.clear();
     initFileEngine();
     clearFileLists();
@@ -316,7 +307,7 @@ inline void QDirPrivate::initFileLists(const QDir &dir) const
 inline void QDirPrivate::initFileEngine()
 {
     delete fileEngine;
-    fileEngine = QFileSystemEngine::resolveEntryAndCreateLegacyEngine(dirEntry, metaData);
+    fileEngine = QAbstractFileEngine::create(dirEntry.filePath());
 }
 
 /*!
@@ -854,80 +845,6 @@ void QDir::setNameFilters(const QStringList &nameFilters)
 
     d->nameFilters = nameFilters;
 }
-
-#ifndef QT_BOOTSTRAPPED
-/*!
-    \since 4.3
-
-    Sets or replaces Qt's search paths for file names with the prefix \a prefix
-    to \a searchPaths.
-
-    To specify a prefix for a file name, prepend the prefix followed by a single
-    colon (e.g., "images:undo.png", "xmldocs:books.xml"). \a prefix can only
-    contain letters or numbers (e.g., it cannot contain a colon, nor a slash).
-
-    Qt uses this search path to locate files with a known prefix. The search
-    path entries are tested in order, starting with the first entry.
-
-    \snippet doc/src/snippets/code/src_corelib_io_qdir.cpp 8
-
-    File name prefix must be at least 2 characters long to avoid conflicts with
-    Windows drive letters.
-
-    Search paths may contain paths to \l{The Qt Resource System}.
-*/
-void QDir::setSearchPaths(const QString &prefix, const QStringList &searchPaths)
-{
-    if (Q_UNLIKELY(prefix.length() < 2)) {
-        qWarning("QDir::setSearchPaths: Prefix must be longer than 1 character");
-        return;
-    }
-
-    for (int i = 0; i < prefix.count(); ++i) {
-        if (!prefix.at(i).isLetterOrNumber()) {
-            qWarning("QDir::setSearchPaths: Prefix can only contain letters or numbers");
-            return;
-        }
-    }
-
-    QWriteLocker lock(&globalData()->dirSearchPathsLock);
-    if (searchPaths.isEmpty()) {
-        globalData()->dirSearchPaths.remove(prefix);
-    } else {
-        globalData()->dirSearchPaths.insert(prefix, searchPaths);
-    }
-}
-
-/*!
-    \since 4.3
-
-    Adds \a path to the search path for \a prefix.
-
-    \sa setSearchPaths()
-*/
-void QDir::addSearchPath(const QString &prefix, const QString &path)
-{
-    if (path.isEmpty())
-        return;
-
-    QWriteLocker lock(&globalData()->dirSearchPathsLock);
-    globalData()->dirSearchPaths[prefix] += path;
-}
-
-/*!
-    \since 4.3
-
-    Returns the search paths for \a prefix.
-
-    \sa setSearchPaths(), addSearchPath()
-*/
-QStringList QDir::searchPaths(const QString &prefix)
-{
-    QReadLocker lock(&globalData()->dirSearchPathsLock);
-    return globalData()->dirSearchPaths.value(prefix);
-}
-
-#endif // QT_BOOTSTRAPPED
 
 /*!
     Returns the value set by setFilter()

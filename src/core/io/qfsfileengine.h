@@ -70,7 +70,6 @@ public:
     bool setSize(qint64 size);
     bool caseSensitive() const;
     bool isRelativePath() const;
-    QStringList entryList(QDir::Filters filters, const QStringList &filterNames) const;
     FileFlags fileFlags(FileFlags type) const;
     bool setPermissions(uint perms);
     QString fileName(FileName file) const;
@@ -82,7 +81,6 @@ public:
 
 #ifndef QT_NO_FILESYSTEMITERATOR
     Iterator *beginEntryList(QDir::Filters filters, const QStringList &filterNames);
-    Iterator *endEntryList();
 #endif
 
     qint64 read(char *data, qint64 maxlen);

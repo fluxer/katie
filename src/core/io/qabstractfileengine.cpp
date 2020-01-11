@@ -39,6 +39,9 @@
 // built-in handlers
 #include "qfsfileengine.h"
 #include "qdiriterator.h"
+#ifndef QT_BOOTSTRAPPED
+#  include "qresource_p.h"
+#endif
 
 #include "qfilesystementry_p.h"
 #include "qfilesystemmetadata_p.h"
@@ -90,25 +93,6 @@ QT_BEGIN_NAMESPACE
     \sa QAbstractFileEngine, QAbstractFileEngine::create()
 */
 
-static bool qt_file_engine_handlers_in_use = false;
-
-/*
-    All application-wide handlers are stored in this list. The mutex must be
-    acquired to ensure thread safety.
- */
-Q_GLOBAL_STATIC_WITH_ARGS(QReadWriteLock, fileEngineHandlerMutex, (QReadWriteLock::Recursive))
-static bool qt_abstractfileenginehandlerlist_shutDown = false;
-class QAbstractFileEngineHandlerList : public QList<QAbstractFileEngineHandler *>
-{
-public:
-    ~QAbstractFileEngineHandlerList()
-    {
-        QWriteLocker locker(fileEngineHandlerMutex());
-        qt_abstractfileenginehandlerlist_shutDown = true;
-    }
-};
-Q_GLOBAL_STATIC(QAbstractFileEngineHandlerList, fileEngineHandlers)
-
 /*!
     Constructs a file handler and registers it with Qt. Once created this
     handler's create() function will be called (along with all the other
@@ -120,9 +104,6 @@ Q_GLOBAL_STATIC(QAbstractFileEngineHandlerList, fileEngineHandlers)
  */
 QAbstractFileEngineHandler::QAbstractFileEngineHandler()
 {
-    QWriteLocker locker(fileEngineHandlerMutex());
-    qt_file_engine_handlers_in_use = true;
-    fileEngineHandlers()->prepend(this);
 }
 
 /*!
@@ -131,36 +112,6 @@ QAbstractFileEngineHandler::QAbstractFileEngineHandler()
  */
 QAbstractFileEngineHandler::~QAbstractFileEngineHandler()
 {
-    QWriteLocker locker(fileEngineHandlerMutex());
-    // Remove this handler from the handler list only if the list is valid.
-    if (!qt_abstractfileenginehandlerlist_shutDown) {
-        QAbstractFileEngineHandlerList *handlers = fileEngineHandlers();
-        handlers->removeOne(this);
-        if (handlers->isEmpty())
-            qt_file_engine_handlers_in_use = false;
-    }
-}
-
-/*
-   \ìnternal
-
-   Handles calls to custom file engine handlers.
-*/
-QAbstractFileEngine *qt_custom_file_engine_handler_create(const QString &path)
-{
-    if (qt_file_engine_handlers_in_use) {
-        QReadLocker locker(fileEngineHandlerMutex());
-
-        // check for registered handlers that can load the file
-        QAbstractFileEngineHandlerList *handlers = fileEngineHandlers();
-        for (int i = 0; i < handlers->size(); i++) {
-            QAbstractFileEngine *engine = handlers->at(i)->create(path);
-            if (engine)
-                return engine;
-        }
-    }
-
-    return 0;
 }
 
 /*!
@@ -191,17 +142,17 @@ QAbstractFileEngine *qt_custom_file_engine_handler_create(const QString &path)
 */
 QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
 {
-    QFileSystemEntry entry(fileName);
-    QFileSystemMetaData metaData;
-    QAbstractFileEngine *engine = QFileSystemEngine::resolveEntryAndCreateLegacyEngine(entry, metaData);
-
-#ifndef QT_NO_FSFILEENGINE
-    if (!engine)
-        // fall back to regular file engine
-        return new QFSFileEngine(entry.filePath());
+#ifndef QT_BOOTSTRAPPED
+    // check if a resource file is being handled
+    if(fileName.startsWith(":/"))
+        return new QResourceFileEngine(fileName);
 #endif
-
-    return engine;
+#ifndef QT_NO_FSFILEENGINE
+    // fall back to regular file engine
+    return new QFSFileEngine(fileName);
+#else
+    return Q_NULLPTR;
+#endif
 }
 
 /*!
