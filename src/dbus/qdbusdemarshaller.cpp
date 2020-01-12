@@ -37,33 +37,6 @@
 
 QT_BEGIN_NAMESPACE
 
-template <typename T>
-static inline T qIterGet(DBusMessageIter *it)
-{
-    // Use a union of expected and largest type dbus_message_iter_get_basic
-    // will return to ensure reading the wrong basic type does not result in
-    // stack overwrite
-    union {
-        // The value to be extracted
-        T t;
-        // Largest type that dbus_message_iter_get_basic will return
-        // according to dbus_message_iter_get_basic API documentation
-        dbus_uint64_t maxValue;
-        // A pointer to ensure no stack overwrite in case there is a platform
-        // where sizeof(void*) > sizeof(dbus_uint64_t)
-        void* ptr;
-    } value;
-
-    // Initialize the value in case a narrower type is extracted to it.
-    // Note that the result of extracting a narrower type in place of a wider
-    // one and vice-versa will be platform-dependent.
-    value.t = T();
-
-    dbus_message_iter_get_basic(it, &value);
-    dbus_message_iter_next(it);
-    return value.t;
-}
-
 QDBusDemarshaller::~QDBusDemarshaller()
 {
 }
@@ -79,93 +52,121 @@ inline QString QDBusDemarshaller::currentSignature()
 
 inline uchar QDBusDemarshaller::toByte()
 {
-    return qIterGet<uchar>(&iterator);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return value.byt;
 }
 
 inline bool QDBusDemarshaller::toBool()
 {
-    return bool(qIterGet<dbus_bool_t>(&iterator));
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return value.bool_val;
 }
 
 inline ushort QDBusDemarshaller::toUShort()
 {
-    return qIterGet<dbus_uint16_t>(&iterator);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return value.u16;
 }
 
 inline short QDBusDemarshaller::toShort()
 {
-    return qIterGet<dbus_int16_t>(&iterator);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return value.i16;
 }
 
 inline int QDBusDemarshaller::toInt()
 {
-    return qIterGet<dbus_int32_t>(&iterator);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return value.i32;
 }
 
 inline uint QDBusDemarshaller::toUInt()
 {
-    return qIterGet<dbus_uint32_t>(&iterator);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return value.u32;
 }
 
 inline qlonglong QDBusDemarshaller::toLongLong()
 {
-    return qIterGet<qlonglong>(&iterator);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return value.i64;
 }
 
 inline qulonglong QDBusDemarshaller::toULongLong()
 {
-    return qIterGet<qulonglong>(&iterator);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return value.u64;
 }
 
 inline double QDBusDemarshaller::toDouble()
 {
-    return qIterGet<double>(&iterator);
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return value.dbl;
 }
 
 inline QString QDBusDemarshaller::toStringUnchecked()
 {
-    return QString::fromUtf8(qIterGet<char *>(&iterator));
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return QString::fromUtf8(value.str);
 }
 
 inline QString QDBusDemarshaller::toString()
 {
     if (isCurrentTypeStringLike())
         return toStringUnchecked();
-    else
-        return QString();
+    return QString();
 }
 
 inline QDBusObjectPath QDBusDemarshaller::toObjectPathUnchecked()
  {
-     return QDBusObjectPath(QString::fromUtf8(qIterGet<char *>(&iterator)));
+     return QDBusObjectPath(toStringUnchecked());
  }
 
 inline QDBusObjectPath QDBusDemarshaller::toObjectPath()
 {
     if (isCurrentTypeStringLike())
         return toObjectPathUnchecked();
-    else
-        return QDBusObjectPath();
+    return QDBusObjectPath();
 }
 
 inline QDBusSignature QDBusDemarshaller::toSignatureUnchecked()
  {
-     return QDBusSignature(QString::fromUtf8(qIterGet<char *>(&iterator)));
+     return QDBusSignature(toStringUnchecked());
  }
 
 inline QDBusSignature QDBusDemarshaller::toSignature()
 {
     if (isCurrentTypeStringLike())
         return toSignatureUnchecked();
-    else
-        return QDBusSignature();
+    return QDBusSignature();
 }
 
 inline QDBusUnixFileDescriptor QDBusDemarshaller::toUnixFileDescriptor()
 {
-    QDBusUnixFileDescriptor fd;
-    fd.giveFileDescriptor(qIterGet<dbus_int32_t>(&iterator));
-    return fd;
+    DBusBasicValue value;
+    dbus_message_iter_get_basic(&iterator, &value);
+    dbus_message_iter_next(&iterator);
+    return QDBusUnixFileDescriptor(value.fd);
 }
 
 inline QDBusVariant QDBusDemarshaller::toVariant()
