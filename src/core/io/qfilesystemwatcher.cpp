@@ -219,12 +219,12 @@ QFileSystemWatcherEngine *QFileSystemWatcherPrivate::createNativeEngine()
 #elif defined(Q_OS_FREEBSD)
     return QKqueueFileSystemWatcherEngine::create();
 #else
-    return 0;
+    return Q_NULLPTR;
 #endif
 }
 
 QFileSystemWatcherPrivate::QFileSystemWatcherPrivate()
-    : native(0), poller(0), forced(0)
+    : native(Q_NULLPTR), poller(Q_NULLPTR), forced(Q_NULLPTR)
 {
 }
 
@@ -392,15 +392,15 @@ QFileSystemWatcher::~QFileSystemWatcher()
     Q_D(QFileSystemWatcher);
     if (d->native) {
         delete d->native;
-        d->native = 0;
+        d->native = Q_NULLPTR;
     }
     if (d->poller) {
         delete d->poller;
-        d->poller = 0;
+        d->poller = Q_NULLPTR;
     }
     if (d->forced) {
         delete d->forced;
-        d->forced = 0;
+        d->forced = Q_NULLPTR;
     }
 }
 
@@ -457,7 +457,7 @@ void QFileSystemWatcher::addPaths(const QStringList &paths)
     }
 
     QStringList p = paths;
-    QFileSystemWatcherEngine *engine = 0;
+    QFileSystemWatcherEngine *engine = Q_NULLPTR;
 
 #ifdef QT_BUILD_INTERNAL
     if(!objectName().startsWith(QLatin1String("_qt_autotest_force_engine_"))) {
