@@ -703,20 +703,10 @@ Q_CORE_EXPORT void qBadAlloc();
 template <typename T>
 inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 
-#if defined(Q_CC_GNU) && !defined(Q_OS_SOLARIS)
+#if defined(Q_CC_GNU) || defined(Q_CC_CLANG)
 #  define Q_FUNC_INFO __PRETTY_FUNCTION__
 #else
-#   if defined(Q_OS_SOLARIS)
-#      define Q_FUNC_INFO __FILE__ "(line number unavailable)"
-#   else
-        /* These two macros makes it possible to turn the builtin line expander into a
-         * string literal. */
-#       define QT_STRINGIFY2(x) #x
-#       define QT_STRINGIFY(x) QT_STRINGIFY2(x)
-#       define Q_FUNC_INFO __FILE__ ":" QT_STRINGIFY(__LINE__)
-#   endif
-#   undef QT_STRINGIFY2
-#   undef QT_STRINGIFY
+#   define Q_FUNC_INFO __func__
 #endif
 
 enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg, QtSystemMsg = QtCriticalMsg };
