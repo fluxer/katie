@@ -451,7 +451,7 @@ void QThread::terminate()
     int code = pthread_cancel(d->thread_id);
     if (Q_UNLIKELY(code)) {
         qWarning("QThread::start: Thread termination error: %s",
-                 qPrintable(qt_error_string((code))));
+                 qPrintable(qt_error_string(code)));
     } else {
         d->terminated = true;
     }

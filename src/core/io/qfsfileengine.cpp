@@ -233,7 +233,7 @@ bool QFSFileEnginePrivate::openFh(QIODevice::OpenMode openMode, FILE *fh)
 
         if (ret != 0) {
             q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                        qt_error_string(int(errno)));
+                        qt_error_string(errno));
 
             this->openMode = QIODevice::NotOpen;
             this->fh = 0;
@@ -305,7 +305,7 @@ bool QFSFileEnginePrivate::openFd(QIODevice::OpenMode openMode, int fd)
 
         if (ret == -1) {
             q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                        qt_error_string(int(errno)));
+                        qt_error_string(errno));
 
             this->openMode = QIODevice::NotOpen;
             this->fd = -1;
@@ -489,7 +489,7 @@ bool QFSFileEnginePrivate::seekFdFh(qint64 pos)
         } while (ret != 0 && errno == EINTR);
 
         if (ret != 0) {
-            q->setError(QFile::ReadError, qt_error_string(int(errno)));
+            q->setError(QFile::ReadError, qt_error_string(errno));
             return false;
         }
     } else {
@@ -618,7 +618,7 @@ qint64 QFSFileEnginePrivate::readLineFdFh(char *data, qint64 maxlen)
     // solves this.
     if (!fgets(data, int(maxlen + 1), fh)) {
         if (!feof(fh))
-            q->setError(QFile::ReadError, qt_error_string(int(errno)));
+            q->setError(QFile::ReadError, qt_error_string(errno));
         return -1;              // error
     }
 
