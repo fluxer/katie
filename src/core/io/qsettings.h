@@ -90,7 +90,7 @@ public:
     explicit QSettings(QObject *parent = Q_NULLPTR);
     QSettings(Scope scope, QObject *parent = Q_NULLPTR);
     QSettings(Format format, Scope scope, QObject *parent = Q_NULLPTR);
-    QSettings(const QString &fileName, Format format, QObject *parent = Q_NULLPTR);
+    QSettings(const QString &fileName, Format format = NativeFormat, QObject *parent = Q_NULLPTR);
     ~QSettings();
 
     void clear();
