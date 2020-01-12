@@ -94,7 +94,7 @@ public:
     void initPollerEngine();
     void initForcedEngine(const QString &);
 
-    QFileSystemWatcherEngine *native, *poller, *forced;
+    QFileSystemWatcherEngine *watcher;
     QStringList files, directories;
 
     // private slots
