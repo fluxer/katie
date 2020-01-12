@@ -212,26 +212,17 @@ void QPollingFileSystemWatcherEngine::timeout()
 
 
 
-QFileSystemWatcherEngine *QFileSystemWatcherPrivate::createNativeEngine()
+void QFileSystemWatcherPrivate::initNativeEngine()
 {
-#if defined(Q_OS_LINUX)
-    return QInotifyFileSystemWatcherEngine::create();
-#elif defined(Q_OS_FREEBSD)
-    return QKqueueFileSystemWatcherEngine::create();
-#else
-    return Q_NULLPTR;
-#endif
-}
-
-QFileSystemWatcherPrivate::QFileSystemWatcherPrivate()
-    : watcher(Q_NULLPTR)
-{
-}
-
-void QFileSystemWatcherPrivate::init()
-{
+    Q_ASSERT(!watcher);
     Q_Q(QFileSystemWatcher);
-    watcher = createNativeEngine();
+
+#if defined(Q_OS_LINUX)
+    watcher = QInotifyFileSystemWatcherEngine::create();
+#elif defined(Q_OS_FREEBSD)
+    watcher = QKqueueFileSystemWatcherEngine::create();
+#endif
+
     if (watcher) {
         QObject::connect(watcher,
                          SIGNAL(fileChanged(QString,bool)),
@@ -244,11 +235,45 @@ void QFileSystemWatcherPrivate::init()
     }
 }
 
+QFileSystemWatcherPrivate::QFileSystemWatcherPrivate()
+    : watcher(Q_NULLPTR)
+{
+}
+
+void QFileSystemWatcherPrivate::init()
+{
+    Q_Q(QFileSystemWatcher);
+
+#ifdef QT_BUILD_INTERNAL
+    const QObject *parent = q->parent();
+    if (parent && parent->objectName().startsWith(QLatin1String("_qt_autotest_force_engine_"))) {
+        // Autotest override case - use the explicitly selected engine only
+        QString forceName = parent->objectName().mid(26);
+        if (forceName == QLatin1String("poller")) {
+            qDebug() << "QFileSystemWatcher: skipping native engine, using only polling engine";
+            initPollerEngine();
+        } else if (forceName == QLatin1String("native")) {
+            qDebug() << "QFileSystemWatcher: skipping polling engine, using only native engine";
+            initNativeEngine();
+        } else {
+            qDebug() << "QFileSystemWatcher: skipping polling and native engine, using only explicit" << forceName << "engine";
+            initForcedEngine(forceName);
+        }
+    } else {
+#endif // QT_BUILD_INTERNAL
+        // Normal runtime case - search intelligently for best engine
+        initNativeEngine();
+        if (!watcher) {
+            initPollerEngine();
+        }
+#ifdef QT_BUILD_INTERNAL
+    }
+#endif // QT_BUILD_INTERNAL
+}
+
 void QFileSystemWatcherPrivate::initForcedEngine(const QString &forceName)
 {
-    if (watcher)
-        return;
-
+    Q_ASSERT(!watcher);
     Q_Q(QFileSystemWatcher);
 
 #if defined(Q_OS_LINUX)
@@ -273,9 +298,7 @@ void QFileSystemWatcherPrivate::initForcedEngine(const QString &forceName)
 
 void QFileSystemWatcherPrivate::initPollerEngine()
 {
-    if (watcher)
-        return;
-
+    Q_ASSERT(!watcher);
     Q_Q(QFileSystemWatcher);
     watcher = new QPollingFileSystemWatcherEngine; // that was a mouthful
     QObject::connect(watcher,
@@ -447,29 +470,6 @@ void QFileSystemWatcher::addPaths(const QStringList &paths)
         qWarning("QFileSystemWatcher::addPaths: list is empty");
         return;
     }
-
-#ifdef QT_BUILD_INTERNAL
-    if (!objectName().startsWith(QLatin1String("_qt_autotest_force_engine_"))) {
-#endif // QT_BUILD_INTERNAL
-        // Normal runtime case - search intelligently for best engine
-        if (!d->watcher) {
-            d_func()->initPollerEngine();
-        }
-#ifdef QT_BUILD_INTERNAL
-    } else {
-        // Autotest override case - use the explicitly selected engine only
-        QString forceName = objectName().mid(26);
-        if (forceName == QLatin1String("poller")) {
-            qDebug() << "QFileSystemWatcher: skipping native engine, using only polling engine";
-            d_func()->initPollerEngine();
-        } else if (forceName == QLatin1String("native")) {
-            qDebug() << "QFileSystemWatcher: skipping polling engine, using only native engine";
-        } else {
-            qDebug() << "QFileSystemWatcher: skipping polling and native engine, using only explicit" << forceName << "engine";
-            d_func()->initForcedEngine(forceName);
-        }
-    }
-#endif // QT_BUILD_INTERNAL
 
     QStringList p = paths;
     if (Q_LIKELY(d->watcher))
