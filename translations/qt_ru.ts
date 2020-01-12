@@ -1468,7 +1468,7 @@ Script: %3</source>
     <message>
         <location line="+441"/>
         <source>Cannot assign value %1 to property %2</source>
-        <translation>Невозможно присвоить значение «%1» свойству «%2»</translation>
+        <translation>Невозможно присвоить значение «%1» свой��тву «%2»</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -1526,7 +1526,7 @@ Script: %3</source>
 <context>
     <name>QDial</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+925"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+924"/>
         <source>QDial</source>
         <translation>QDial</translation>
     </message>
@@ -1728,13 +1728,12 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+604"/>
-        <location line="+154"/>
+        <location filename="../src/core/io/qfile.cpp" line="+606"/>
         <source>Destination file exists</source>
         <translation>Файл существует</translation>
     </message>
     <message>
-        <location line="-139"/>
+        <location line="+15"/>
         <source>Will not rename sequential file using block copy</source>
         <translation>Последовательный файл не будет переименован с использованием поблочного копирования</translation>
     </message>
@@ -1744,27 +1743,7 @@ Script: %3</source>
         <translation>Невозможно удалить исходный файл</translation>
     </message>
     <message>
-        <location line="+129"/>
-        <source>Cannot open %1 for input</source>
-        <translation>Невозможно открыть %1 для ввода</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Cannot open for output</source>
-        <translation>Невозможно открыть для вывода</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Failure to write block</source>
-        <translation>Сбой записи блока</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Cannot create %1 for output</source>
-        <translation>Невозможно создать %1 для вывода</translation>
-    </message>
-    <message>
-        <location line="+296"/>
+        <location line="+399"/>
         <source>No file engine available or engine does not support UnMapExtension</source>
         <translation>Нет файлового движка или он не поддерживает UnMapExtension</translation>
     </message>
@@ -2367,24 +2346,27 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+198"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+119"/>
+        <location line="+12"/>
+        <location line="+86"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>Узел не найден</translation>
     </message>
     <message>
-        <location line="-44"/>
-        <location line="+39"/>
+        <location line="-43"/>
+        <location line="+38"/>
         <source>Unknown address type</source>
         <translation>Неизвестный тип адреса</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-109"/>
+        <location line="+117"/>
         <source>Unknown error</source>
         <translation>Неизвестная ошибка</translation>
     </message>
     <message>
-        <location line="-102"/>
+        <location line="-101"/>
         <source>No host name given</source>
         <translation>Имя узла не задано</translation>
     </message>
@@ -3246,7 +3228,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QNetworkAccessDebugPipeBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+187"/>
+        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+182"/>
         <source>Write error writing to %1: %2</source>
         <translation>Ошибка записи в %1: %2</translation>
     </message>
@@ -4894,32 +4876,22 @@ Please choose a different file name.</source>
     </message>
     <message>
         <location line="+23"/>
-        <location line="+26"/>
+        <location line="+18"/>
         <source>%1: key is empty</source>
         <translation>%1: пустой ключ</translation>
     </message>
     <message>
-        <location line="-12"/>
-        <source>%1: ftok failed</source>
-        <translation>%1: ошибка ftok</translation>
-    </message>
-    <message>
-        <location line="+75"/>
+        <location line="+63"/>
         <source>%1: unable to make key</source>
         <translation>%1: невозможно создать ключ</translation>
     </message>
     <message>
-        <location line="-128"/>
+        <location line="-120"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: не существует</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <source>%1: UNIX key file doesn&apos;t exist</source>
-        <translation>%1: специфический ключ UNIX не существует</translation>
-    </message>
-    <message>
-        <location line="+100"/>
+        <location line="+138"/>
         <source>%1: system-imposed size restrictions</source>
         <translation>%1: системой наложены ограничения на размер</translation>
     </message>
@@ -4935,7 +4907,7 @@ Please choose a different file name.</source>
         <translation>%1: не приложенный</translation>
     </message>
     <message>
-        <location line="-261"/>
+        <location line="-253"/>
         <source>%1: invalid size</source>
         <translation>%1: неверный размер</translation>
     </message>
@@ -6519,7 +6491,7 @@ Please choose a different file name.</source>
     <name>QTcpServer</name>
     <message>
         <location filename="../src/network/socket/qtcpserver.cpp" line="+278"/>
-        <location line="+129"/>
+        <location line="+124"/>
         <source>Operation on socket is not supported</source>
         <translation>Операция с сокетом не поддерживается</translation>
     </message>
@@ -6727,7 +6699,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/dialogs/qwizard.cpp" line="+601"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>О��мена</translation>
     </message>
     <message>
         <location line="+2"/>

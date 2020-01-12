@@ -1525,7 +1525,7 @@ Script: %3</source>
 <context>
     <name>QDial</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+925"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+924"/>
         <source>QDial</source>
         <translation>QDial</translation>
     </message>
@@ -1727,13 +1727,12 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+604"/>
-        <location line="+154"/>
+        <location filename="../src/core/io/qfile.cpp" line="+606"/>
         <source>Destination file exists</source>
         <translation>目标文件已存在</translation>
     </message>
     <message>
-        <location line="-139"/>
+        <location line="+15"/>
         <source>Will not rename sequential file using block copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1743,27 +1742,7 @@ Script: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+129"/>
-        <source>Cannot open %1 for input</source>
-        <translation>无法输入 %1 </translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Cannot open for output</source>
-        <translation>无法输出</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Failure to write block</source>
-        <translation>写块失败</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Cannot create %1 for output</source>
-        <translation>无法创建 %1 </translation>
-    </message>
-    <message>
-        <location line="+296"/>
+        <location line="+399"/>
         <source>No file engine available or engine does not support UnMapExtension</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2366,13 +2345,15 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+198"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+119"/>
+        <location line="+12"/>
+        <location line="+86"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>主机未找到</translation>
     </message>
     <message>
-        <location line="-99"/>
+        <location line="-98"/>
         <source>No host name given</source>
         <translation type="unfinished">未指定主机名</translation>
     </message>
@@ -2383,12 +2364,13 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+54"/>
-        <location line="+39"/>
+        <location line="+38"/>
         <source>Unknown address type</source>
         <translation>未知的地址类型</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-109"/>
+        <location line="+117"/>
         <source>Unknown error</source>
         <translation>未���的错误</translation>
     </message>
@@ -3245,7 +3227,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessDebugPipeBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+187"/>
+        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+182"/>
         <source>Write error writing to %1: %2</source>
         <translation type="unfinished">写入 %1 错误：%2</translation>
     </message>
@@ -4367,7 +4349,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+589"/>
         <source>Error opening database</source>
-        <translation>打开数据库��误</translation>
+        <translation>打开数据库���误</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -4903,22 +4885,12 @@ Please choose a different file name.</source>
     </message>
     <message>
         <location line="+23"/>
-        <location line="+26"/>
+        <location line="+18"/>
         <source>%1: key is empty</source>
         <translation>%1：键是空的</translation>
     </message>
     <message>
-        <location line="-19"/>
-        <source>%1: UNIX key file doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1: ftok failed</source>
-        <translation>%1：ftok 失败</translation>
-    </message>
-    <message>
-        <location line="+75"/>
+        <location line="+63"/>
         <source>%1: unable to make key</source>
         <translation>%1：不能制造键</translation>
     </message>
@@ -4939,7 +4911,7 @@ Please choose a different file name.</source>
         <translation>%1：没有附加</translation>
     </message>
     <message>
-        <location line="-261"/>
+        <location line="-253"/>
         <source>%1: invalid size</source>
         <translation>%1：无效大小</translation>
     </message>
@@ -6518,7 +6490,7 @@ Please choose a different file name.</source>
     <name>QTcpServer</name>
     <message>
         <location filename="../src/network/socket/qtcpserver.cpp" line="+278"/>
-        <location line="+129"/>
+        <location line="+124"/>
         <source>Operation on socket is not supported</source>
         <translation>socket操作不被支持</translation>
     </message>

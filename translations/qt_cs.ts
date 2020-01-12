@@ -1525,7 +1525,7 @@ Script: %3</source>
 <context>
     <name>QDial</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+925"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+924"/>
         <source>QDial</source>
         <translation>QDial</translation>
     </message>
@@ -1727,17 +1727,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+814"/>
-        <source>Cannot create %1 for output</source>
-        <translation>%1 se nepodařilo zřídit pro výstup</translation>
-    </message>
-    <message>
-        <location line="-14"/>
-        <source>Failure to write block</source>
-        <translation>Datový blok se nepodařilo zapsat</translation>
-    </message>
-    <message>
-        <location line="-181"/>
+        <location filename="../src/core/io/qfile.cpp" line="+621"/>
         <source>Will not rename sequential file using block copy</source>
         <translation>Nepřejmenuje posloupný soubor pomocí kopie bloku</translation>
     </message>
@@ -1747,25 +1737,14 @@ Script: %3</source>
         <translation>Nelze odstranit zdrojový soubor</translation>
     </message>
     <message>
-        <location line="+129"/>
-        <source>Cannot open %1 for input</source>
-        <translation>%1 se nepodařilo otevřít pro čtení</translation>
-    </message>
-    <message>
-        <location line="+339"/>
+        <location line="+399"/>
         <source>No file engine available or engine does not support UnMapExtension</source>
         <translation>Není dostupný žádný souborový stroj nebo stroj nepodporuje UnMapExtension</translation>
     </message>
     <message>
-        <location line="-506"/>
-        <location line="+154"/>
+        <location line="-437"/>
         <source>Destination file exists</source>
         <translation>Cílový soubor již existuje</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Cannot open for output</source>
-        <translation>Nepodařilo se otevřít pro zápis</translation>
     </message>
 </context>
 <context>
@@ -2366,24 +2345,27 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+198"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+119"/>
+        <location line="+12"/>
+        <location line="+86"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>Nepodařilo se najít počítač</translation>
     </message>
     <message>
-        <location line="-44"/>
-        <location line="+39"/>
+        <location line="-43"/>
+        <location line="+38"/>
         <source>Unknown address type</source>
         <translation>Neznámý typ adresy</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-109"/>
+        <location line="+117"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
     <message>
-        <location line="-102"/>
+        <location line="-101"/>
         <source>No host name given</source>
         <translation>Nebyl zadán název pro hostitelský počítač</translation>
     </message>
@@ -3245,7 +3227,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkAccessDebugPipeBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+187"/>
+        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+182"/>
         <source>Write error writing to %1: %2</source>
         <translation>Při zápisu do souboru %1: %2 nastala chyba</translation>
     </message>
@@ -4861,12 +4843,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Neexistuje</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <source>%1: UNIX key file doesn&apos;t exist</source>
-        <translation>%1: Soubor s unixovým klíčem neexistuje</translation>
-    </message>
-    <message>
-        <location line="+100"/>
+        <location line="+138"/>
         <source>%1: system-imposed size restrictions</source>
         <translation>%1: Bylo dosaženo systémem podmíněné meze velikosti</translation>
     </message>
@@ -4877,8 +4854,8 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Špatný název</translation>
     </message>
     <message>
-        <location line="-192"/>
-        <location line="+26"/>
+        <location line="-184"/>
+        <location line="+18"/>
         <source>%1: key is empty</source>
         <translation>%1: Neplatný údaj u klíče (prázdný)</translation>
     </message>
@@ -4888,7 +4865,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Údaj o velikosti vytvoření je menší než nula</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-69"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-61"/>
         <source>%1: already exists</source>
         <translation>%1: Již existuje</translation>
     </message>
@@ -4903,7 +4880,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Neplatná velikost</translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+108"/>
         <source>%1: unable to make key</source>
         <translation>%1: Nepodařilo se vytvořit klíč</translation>
     </message>
@@ -4918,22 +4895,17 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Uzavření se nepodařilo zrušit</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-136"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-128"/>
         <source>%1: permission denied</source>
         <translation>%1: Přístup odepřen</translation>
     </message>
     <message>
-        <location line="+61"/>
-        <source>%1: ftok failed</source>
-        <translation>%1: Vyvolání ftok se nezdařilo</translation>
-    </message>
-    <message>
-        <location line="-45"/>
+        <location line="+16"/>
         <source>%1: out of resources</source>
         <translation>%1: Nejsou již použitelné zdroje</translation>
     </message>
     <message>
-        <location line="+265"/>
+        <location line="+257"/>
         <source>%1: not attached</source>
         <translation>%1: Nepřipojen</translation>
     </message>
@@ -6518,7 +6490,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
     <name>QTcpServer</name>
     <message>
         <location filename="../src/network/socket/qtcpserver.cpp" line="+278"/>
-        <location line="+129"/>
+        <location line="+124"/>
         <source>Operation on socket is not supported</source>
         <translation>Tato socket operace není podporována</translation>
     </message>

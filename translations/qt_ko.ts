@@ -1525,7 +1525,7 @@ Script: %3</source>
 <context>
     <name>QDial</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+925"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+924"/>
         <source>QDial</source>
         <translation>QDial</translation>
     </message>
@@ -1727,13 +1727,12 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+604"/>
-        <location line="+154"/>
+        <location filename="../src/core/io/qfile.cpp" line="+606"/>
         <source>Destination file exists</source>
         <translation>대상 파일이 존재함</translation>
     </message>
     <message>
-        <location line="-139"/>
+        <location line="+15"/>
         <source>Will not rename sequential file using block copy</source>
         <translation>블록 복사를 사용하여 연속적인 파일 이름을 바꾸지 않음</translation>
     </message>
@@ -1743,27 +1742,7 @@ Script: %3</source>
         <translation>원본 파일을 삭제할 수 없음</translation>
     </message>
     <message>
-        <location line="+129"/>
-        <source>Cannot open %1 for input</source>
-        <translation>%1에서 입력을 받기 위하여 열 수 없음</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Cannot open for output</source>
-        <translation>출력을 위하여 열 수 없음</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Failure to write block</source>
-        <translation>블록을 쓸 수 없음</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Cannot create %1 for output</source>
-        <translation>%1에 쓰기 위하여 열 수 없음</translation>
-    </message>
-    <message>
-        <location line="+296"/>
+        <location line="+399"/>
         <source>No file engine available or engine does not support UnMapExtension</source>
         <translation>파일 엔진을 사용할 수 없거나 파일 엔진이 UnMapExtension을 지원하지 않음</translation>
     </message>
@@ -2366,7 +2345,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+130"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+150"/>
         <source>No host name given</source>
         <translation>호스트 이름이 지정되지 않았음</translation>
     </message>
@@ -2377,18 +2356,21 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+54"/>
-        <location line="+39"/>
+        <location line="+38"/>
         <source>Unknown address type</source>
         <translation>알 수 없는 주소 형식</translation>
     </message>
     <message>
-        <location line="-26"/>
+        <location line="-124"/>
+        <location line="+12"/>
+        <location line="+86"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>호스트를 찾을 수 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-114"/>
+        <location line="+117"/>
         <source>Unknown error</source>
         <translation>알 수 없는 오류</translation>
     </message>
@@ -3245,7 +3227,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessDebugPipeBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+187"/>
+        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+182"/>
         <source>Write error writing to %1: %2</source>
         <translation>%1에 쓰는 중 오류 발생: %2</translation>
     </message>
@@ -4359,7 +4341,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+1"/>
         <source>invalid category</source>
-        <translation>잘못된 분류</translation>
+        <translation>���못된 분류</translation>
     </message>
 </context>
 <context>
@@ -4902,33 +4884,23 @@ Do you want to overwrite it?</source>
         <translation>%1: 알 수 없는 오류 %2</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+104"/>
         <source>%1: unable to make key</source>
         <translation>%1: 키를 만들 수 없음</translation>
     </message>
     <message>
-        <location line="-82"/>
-        <source>%1: UNIX key file doesn&apos;t exist</source>
-        <translation>%1: 유닉스 키 파일이 없음</translation>
-    </message>
-    <message>
-        <location line="-46"/>
+        <location line="-120"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: 존재하지 않음</translation>
     </message>
     <message>
         <location line="+39"/>
-        <location line="+26"/>
+        <location line="+18"/>
         <source>%1: key is empty</source>
         <translation>%1: 키가 비어 있음</translation>
     </message>
     <message>
-        <location line="-12"/>
-        <source>%1: ftok failed</source>
-        <translation>%1: ftok 실패</translation>
-    </message>
-    <message>
-        <location line="+93"/>
+        <location line="+81"/>
         <source>%1: system-imposed size restrictions</source>
         <translation>%1: 시스템에서 크게를 제한함</translation>
     </message>
@@ -5155,7 +5127,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+1"/>
         <source>Media Record</source>
-        <translation>미��어 녹음</translation>
+        <translation>미���� 녹음</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6518,7 +6490,7 @@ Do you want to overwrite it?</source>
     <name>QTcpServer</name>
     <message>
         <location filename="../src/network/socket/qtcpserver.cpp" line="+278"/>
-        <location line="+129"/>
+        <location line="+124"/>
         <source>Operation on socket is not supported</source>
         <translation>소켓 작업을 지원하지 않음</translation>
     </message>
@@ -6939,7 +6911,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+1"/>
         <source>external parsed general entity reference not allowed in attribute value</source>
-        <translation>속성 값에는 외부에서 처리한 일반 ���티티 참조를 사용할 수 없음</translation>
+        <translation>속성 값에는 외부에서 처리한 일반 ����티티 참조를 사용할 수 없음</translation>
     </message>
     <message>
         <location line="+1"/>

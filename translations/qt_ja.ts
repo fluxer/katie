@@ -804,7 +804,7 @@ Script: %3</source>
     <message>
         <location line="+6"/>
         <source>Can only assign one binding to lists</source>
-        <translation>リストへは一つのバインディングのみ割り当てることができます</translation>
+        <translation>リストへは一つのバインディングのみ割り当��ることができます</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -991,7 +991,7 @@ Script: %3</source>
     <message>
         <location line="+3"/>
         <source>Connections: syntax error</source>
-        <translation>接続: 構文エラー</translation>
+        <translation>接��: 構文エラー</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -1527,7 +1527,7 @@ Script: %3</source>
 <context>
     <name>QDial</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+925"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+924"/>
         <source>QDial</source>
         <translation>ダイヤル</translation>
     </message>
@@ -1729,13 +1729,12 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+604"/>
-        <location line="+154"/>
+        <location filename="../src/core/io/qfile.cpp" line="+606"/>
         <source>Destination file exists</source>
         <translation>新しい名前のファイルは既に存在します</translation>
     </message>
     <message>
-        <location line="-139"/>
+        <location line="+15"/>
         <source>Will not rename sequential file using block copy</source>
         <translation>ブロックコピーを用いてシーケンシャルファイルの名前を変更することはできません</translation>
     </message>
@@ -1745,27 +1744,7 @@ Script: %3</source>
         <translation>元のファイルを削除できません</translation>
     </message>
     <message>
-        <location line="+129"/>
-        <source>Cannot open %1 for input</source>
-        <translation>コピー元ファイル %1 を読めません</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Cannot open for output</source>
-        <translation>コピー先のファイルを開けません</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Failure to write block</source>
-        <translation>書き込みに失敗しました</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Cannot create %1 for output</source>
-        <translation>コピー先として %1 を作成できません</translation>
-    </message>
-    <message>
-        <location line="+296"/>
+        <location line="+399"/>
         <source>No file engine available or engine does not support UnMapExtension</source>
         <translation>ファイルエンジンが見つからないか、UnMapExtension をサポートしていません</translation>
     </message>
@@ -2071,7 +2050,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+70"/>
         <source>Invalid filename</source>
-        <translation>無効���ファイル名</translation>
+        <translation>無効�����ファイル名</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2368,19 +2347,21 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+198"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+119"/>
+        <location line="+12"/>
+        <location line="+86"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>ホストが見つかりません</translation>
     </message>
     <message>
-        <location line="-44"/>
-        <location line="+39"/>
+        <location line="-43"/>
+        <location line="+38"/>
         <source>Unknown address type</source>
         <translation>未知のアドレス型です</translation>
     </message>
     <message>
-        <location line="-94"/>
+        <location line="-93"/>
         <source>No host name given</source>
         <translation>ホストネームが与えられていません</translation>
     </message>
@@ -2390,7 +2371,8 @@ Do you want to delete it anyway?</source>
         <translation>無効なホスト名</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="-17"/>
+        <location line="+117"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
     </message>
@@ -2963,7 +2945,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+13"/>
         <source>Restore Down</source>
-        <translation>��に戻す</translation>
+        <translation>����に戻す</translation>
     </message>
     <message>
         <location line="+707"/>
@@ -3248,7 +3230,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessDebugPipeBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+187"/>
+        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+182"/>
         <source>Write error writing to %1: %2</source>
         <translation>%1 への書き込み時にエラーが発生しました: %2</translation>
     </message>
@@ -3583,7 +3565,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+17"/>
         <source>Could not rollback transaction</source>
-        <translation>トランザクションをロールバックできませんでした</translation>
+        <translation>トランザクションをロールバックできませんでし���</translation>
     </message>
     <message>
         <location line="+385"/>
@@ -4883,7 +4865,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+83"/>
         <source>%1: permission denied</source>
-        <translation>%1: 許可されていませ���</translation>
+        <translation>%1: 許可されていま������</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -4902,32 +4884,22 @@ Please choose a different file name.</source>
     </message>
     <message>
         <location line="+23"/>
-        <location line="+26"/>
+        <location line="+18"/>
         <source>%1: key is empty</source>
         <translation>%1: キーが空です</translation>
     </message>
     <message>
-        <location line="-12"/>
-        <source>%1: ftok failed</source>
-        <translation>%1: fork に失敗しました</translation>
-    </message>
-    <message>
-        <location line="+75"/>
+        <location line="+63"/>
         <source>%1: unable to make key</source>
         <translation>%1: キーを作成できません</translation>
     </message>
     <message>
-        <location line="-128"/>
+        <location line="-120"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: 存在しません</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <source>%1: UNIX key file doesn&apos;t exist</source>
-        <translation>%1: UNIX key file が存在しません</translation>
-    </message>
-    <message>
-        <location line="+100"/>
+        <location line="+138"/>
         <source>%1: system-imposed size restrictions</source>
         <translatorcomment>EINVAL</translatorcomment>
         <translation>%1: 指定されたサイズはシステムにより拒否されました</translation>
@@ -4944,7 +4916,7 @@ Please choose a different file name.</source>
         <translation>%1: アタッチしていません</translation>
     </message>
     <message>
-        <location line="-261"/>
+        <location line="-253"/>
         <source>%1: invalid size</source>
         <translation>%1: 無効なサイズです</translation>
     </message>
@@ -6524,7 +6496,7 @@ Please choose a different file name.</source>
     <name>QTcpServer</name>
     <message>
         <location filename="../src/network/socket/qtcpserver.cpp" line="+278"/>
-        <location line="+129"/>
+        <location line="+124"/>
         <source>Operation on socket is not supported</source>
         <translation>このソケットへの操作はサポートされていません</translation>
     </message>
