@@ -537,7 +537,7 @@ qint64 QFSFileEnginePrivate::readFdFh(char *data, qint64 len)
 {
     Q_Q(QFSFileEngine);
 
-    if (len < 0 || len != qint64(size_t(len))) {
+    if (len < 0) {
         q->setError(QFile::ReadError, qt_error_string(EINVAL));
         return -1;
     }
