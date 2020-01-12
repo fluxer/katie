@@ -196,4 +196,6 @@
 #define QT_VSNPRINTF            ::vsnprintf
 #endif
 
+#define QT_BUFFSIZE BUFSIZ
+
 #endif // include guard

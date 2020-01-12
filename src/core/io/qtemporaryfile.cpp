@@ -255,7 +255,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
 
     d->openMode = openMode;
     d->lastFlushFailed = false;
-    d->tried_stat = 0;
+    d->tried_stat = false;
 
     return true;
 }

@@ -32,7 +32,6 @@
 ****************************************************************************/
 
 //#define QTEXTSTREAM_DEBUG
-static const int QTEXTSTREAM_BUFFERSIZE = 16384;
 
 /*!
     \class QTextStream
@@ -220,6 +219,7 @@ static const int QTEXTSTREAM_BUFFERSIZE = 16384;
 #include "qbuffer.h"
 #include "qfile.h"
 #include "qnumeric.h"
+#include "qplatformdefs.h"
 #include "qlocale_p.h"
 #ifndef QT_NO_TEXTCODEC
 #include "qtextcodec.h"
@@ -503,8 +503,8 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
         device->setTextModeEnabled(false);
 
     // read raw data into a temporary buffer
-    if (maxBytes < 1 || maxBytes > QTEXTSTREAM_BUFFERSIZE)
-        maxBytes = QTEXTSTREAM_BUFFERSIZE;
+    if (maxBytes < 1 || maxBytes > QT_BUFFSIZE)
+        maxBytes = QT_BUFFSIZE;
     const QByteArray buffer = device->read(maxBytes);
     int bytesRead = buffer.size();
 
@@ -808,7 +808,7 @@ inline void QTextStreamPrivate::consume(int size)
             readBufferOffset = 0;
             readBuffer.clear();
             saveConverterState(device->pos());
-        } else if (readBufferOffset > QTEXTSTREAM_BUFFERSIZE) {
+        } else if (readBufferOffset > QT_BUFFSIZE) {
             readBuffer = readBuffer.remove(0,readBufferOffset);
             readConverterSavedStateOffset += readBufferOffset;
             readBufferOffset = 0;
@@ -856,7 +856,7 @@ inline void QTextStreamPrivate::write(const QString &data)
         string->append(data);
     } else {
         writeBuffer += data;
-        if (writeBuffer.size() > QTEXTSTREAM_BUFFERSIZE)
+        if (writeBuffer.size() > QT_BUFFSIZE)
             flushWriteBuffer();
     }
 }

@@ -51,8 +51,6 @@
 
 QT_BEGIN_NAMESPACE
 
-static const int QFILE_WRITEBUFFER_SIZE = 16384;
-
 static bool unixLockHandle(int handle, QFile::FileHandleFlags flags)
 {
     if (!(flags & QFile::ReadLockHandle) && !(flags & QFile::WriteLockHandle)) {
@@ -85,7 +83,7 @@ static bool unixLockHandle(int handle, QFile::FileHandleFlags flags)
 //************* QFilePrivate
 QFilePrivate::QFilePrivate()
     : fileEngine(0), lastWasWrite(false),
-      writeBuffer(QFILE_WRITEBUFFER_SIZE), error(QFile::NoError),
+      writeBuffer(QT_BUFFSIZE), error(QFile::NoError),
       cachedSize(0)
 {
 }
@@ -669,7 +667,7 @@ QFile::rename(const QString &newName)
         if (open(QIODevice::ReadOnly)) {
             if (out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
                 bool error = false;
-                char block[4096];
+                char block[QT_BUFFSIZE];
                 qint64 bytes;
                 while ((bytes = read(block, sizeof(block))) > 0) {
                     if (bytes != out.write(block, bytes)) {
@@ -1424,7 +1422,7 @@ bool QFilePrivate::putCharHelper(char c)
 
     // Cutoff for code that doesn't only touch the buffer.
     int writeBufferSize = writeBuffer.size();
-    if ((openMode & QIODevice::Unbuffered) || writeBufferSize + 1 >= QFILE_WRITEBUFFER_SIZE) {
+    if ((openMode & QIODevice::Unbuffered) || writeBufferSize + 1 >= QT_BUFFSIZE) {
         return QIODevicePrivate::putCharHelper(c);
     }
 
@@ -1469,14 +1467,14 @@ QFile::writeData(const char *data, qint64 len)
     bool buffered = !(d->openMode & Unbuffered);
 
     // Flush buffered data if this read will overflow.
-    if (buffered && (d->writeBuffer.size() + len) > QFILE_WRITEBUFFER_SIZE) {
+    if (buffered && (d->writeBuffer.size() + len) > QT_BUFFSIZE) {
         if (!flush())
             return -1;
     }
 
     // Write directly to the engine if the block size is larger than
     // the write buffer size.
-    if (!buffered || len > QFILE_WRITEBUFFER_SIZE) {
+    if (!buffered || len > QT_BUFFSIZE) {
         qint64 ret = d->fileEngine->write(data, len);
         if(ret < 0) {
             QFile::FileError err = d->fileEngine->error();

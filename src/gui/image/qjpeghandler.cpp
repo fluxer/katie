@@ -37,6 +37,7 @@
 #include "qvariant.h"
 #include "qvector.h"
 #include "qbuffer.h"
+#include "qplatformdefs.h"
 
 #include <stdio.h>      // jpeglib needs this to be pre-included
 #include <setjmp.h>
@@ -96,12 +97,10 @@ static void my_error_exit (j_common_ptr cinfo)
 #endif
 
 
-static const int max_buf = 4096;
-
 struct my_jpeg_source_mgr : public jpeg_source_mgr {
     // Nothing dynamic - cannot rely on destruction over longjump
     QIODevice *device;
-    JOCTET buffer[max_buf];
+    JOCTET buffer[QT_BUFFSIZE];
     const QBuffer *memDevice;
 
 public:
@@ -126,7 +125,7 @@ static boolean qt_fill_input_buffer(j_decompress_ptr cinfo)
         src->device->seek(src->memDevice->data().size());
     } else {
         src->next_input_byte = src->buffer;
-        num_read = src->device->read((char*)src->buffer, max_buf);
+        num_read = src->device->read((char*)src->buffer, QT_BUFFSIZE);
     }
     if (num_read <= 0) {
         // Insert a fake EOI marker - as per jpeglib recommendation
@@ -439,7 +438,7 @@ static bool read_jpeg_image(QImage *outImage,
 struct my_jpeg_destination_mgr : public jpeg_destination_mgr {
     // Nothing dynamic - cannot rely on destruction over longjump
     QIODevice *device;
-    JOCTET buffer[max_buf];
+    JOCTET buffer[QT_BUFFSIZE];
 
 public:
     my_jpeg_destination_mgr(QIODevice *);
@@ -458,12 +457,12 @@ static boolean qt_empty_output_buffer(j_compress_ptr cinfo)
 {
     my_jpeg_destination_mgr* dest = (my_jpeg_destination_mgr*)cinfo->dest;
 
-    int written = dest->device->write((char*)dest->buffer, max_buf);
+    int written = dest->device->write((char*)dest->buffer, QT_BUFFSIZE);
     if (written == -1)
         (*cinfo->err->error_exit)((j_common_ptr)cinfo);
 
     dest->next_output_byte = dest->buffer;
-    dest->free_in_buffer = max_buf;
+    dest->free_in_buffer = QT_BUFFSIZE;
 
     return TRUE;
 }
@@ -471,7 +470,7 @@ static boolean qt_empty_output_buffer(j_compress_ptr cinfo)
 static void qt_term_destination(j_compress_ptr cinfo)
 {
     my_jpeg_destination_mgr* dest = (my_jpeg_destination_mgr*)cinfo->dest;
-    qint64 n = max_buf - dest->free_in_buffer;
+    qint64 n = QT_BUFFSIZE - dest->free_in_buffer;
 
     qint64 written = dest->device->write((char*)dest->buffer, n);
     if (written == -1)
@@ -489,7 +488,7 @@ inline my_jpeg_destination_mgr::my_jpeg_destination_mgr(QIODevice *device)
     jpeg_destination_mgr::term_destination = qt_term_destination;
     this->device = device;
     next_output_byte = buffer;
-    free_in_buffer = max_buf;
+    free_in_buffer = QT_BUFFSIZE;
 }
 
 

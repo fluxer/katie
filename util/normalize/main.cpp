@@ -37,6 +37,7 @@
 #include <qstring.h>
 #include <qtextstream.h>
 #include <qdebug.h>
+#include <qplatformdefs.h>
 
 #include <limits.h>
 #include <stdio.h>
@@ -113,7 +114,7 @@ void check(const QString &fileName)
     QStringList lines;
     bool found = false;
     while (true) {
-        QByteArray bline = file.readLine(16384);
+        QByteArray bline = file.readLine(QT_BUFFSIZE);
         if (bline.isEmpty())
             break;
         QString line = QString::fromLocal8Bit(bline);

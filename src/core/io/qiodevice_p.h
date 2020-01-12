@@ -49,14 +49,14 @@
 #include "QtCore/qbytearray.h"
 #include "QtCore/qobjectdefs.h"
 #include "QtCore/qstring.h"
+#include "QtCore/qplatformdefs.h"
 #ifndef QT_NO_QOBJECT
 #include "qobject_p.h"
 #endif
 
 QT_BEGIN_NAMESPACE
 
-// BUFSIZ is defined in stdio.h
-#define QIODEVICE_BUFFERSIZE qint64(BUFSIZ)
+#define QIODEVICE_BUFFERSIZE qint64(QT_BUFFSIZE)
 
 // This is QIODevice's read buffer, optimized for read(), isEmpty() and getChar()
 class QIODevicePrivateLinearBuffer

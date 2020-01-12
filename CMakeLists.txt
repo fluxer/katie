@@ -402,8 +402,8 @@ set_package_properties(HarfBuzz PROPERTIES
     TYPE RECOMMENDED
 )
 
-# v1.2+ required for dbus_watch_get_unix_fd()
-find_package(DBus 1.2)
+# v1.5.12+ required for DBusBasicValue type
+find_package(DBus 1.5.12)
 set_package_properties(DBus PROPERTIES
     PURPOSE "Required for D-Bus support"
     DESCRIPTION "Message bus system, a simple way for applications to talk to one another"

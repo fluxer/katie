@@ -37,7 +37,7 @@
 
 #include "qsvghandler_p.h"
 #include "qsvgfont_p.h"
-
+#include "qplatformdefs.h"
 #include "qpainter.h"
 #include "qfile.h"
 #include "qbuffer.h"
@@ -74,7 +74,6 @@ static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
 
     Q_ASSERT(device->isOpen() && device->isReadable());
 
-    static const int CHUNK_SIZE = 4096;
     int zlibResult = Z_OK;
 
     QByteArray source;
@@ -100,7 +99,7 @@ static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
     while (stillMoreWorkToDo) {
 
         if (!zlibStream.avail_in) {
-            source = device->read(CHUNK_SIZE);
+            source = device->read(QT_BUFFSIZE);
 
             if (source.isEmpty())
                 break;
@@ -112,10 +111,10 @@ static QByteArray qt_inflateGZipDataFrom(QIODevice *device)
         do {
             // Prepare the destination buffer
             int oldSize = destination.size();
-            destination.resize(oldSize + CHUNK_SIZE);
+            destination.resize(oldSize + QT_BUFFSIZE);
             zlibStream.next_out = reinterpret_cast<Bytef*>(
                     destination.data() + oldSize - zlibStream.avail_out);
-            zlibStream.avail_out += CHUNK_SIZE;
+            zlibStream.avail_out += QT_BUFFSIZE;
 
             zlibResult = inflate(&zlibStream, Z_NO_FLUSH);
             switch (zlibResult) {
