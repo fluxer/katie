@@ -33,43 +33,8 @@
 
 #include "qglobal.h"
 #include "qsystemerror_p.h"
-#include "qcorecommon_p.h"
-
-#include <errno.h>
 
 QT_BEGIN_NAMESPACE
-
-static QString standardLibraryErrorString(int errorCode)
-{
-    const char *s = 0;
-    QString ret;
-    switch (errorCode) {
-    case 0:
-        break;
-    case EACCES:
-        s = QT_TRANSLATE_NOOP("QIODevice", "Permission denied");
-        break;
-    case EMFILE:
-        s = QT_TRANSLATE_NOOP("QIODevice", "Too many open files");
-        break;
-    case ENOENT:
-        s = QT_TRANSLATE_NOOP("QIODevice", "No such file or directory");
-        break;
-    case ENOSPC:
-        s = QT_TRANSLATE_NOOP("QIODevice", "No space left on device");
-        break;
-    default: {
-        ret = fromstrerror_helper(errorCode);
-    break; }
-    }
-    if (s) {
-        // ######## this breaks moc build currently
-        // ret = QCoreApplication::translate("QIODevice", s);
-        ret = QString::fromLatin1(s);
-    }
-    return ret.trimmed();
-}
-
 
 QString QSystemError::toString()
 {
@@ -77,7 +42,7 @@ QString QSystemError::toString()
     // native and standard library are the same
     case NativeError:
     case StandardLibraryError:
-        return standardLibraryErrorString(errorCode);
+        return qt_error_string(errorCode);
     default:
         qWarning("invalid error scope");
         //fall through
