@@ -120,9 +120,7 @@ QStringList QPollingFileSystemWatcherEngine::addPaths(const QStringList &paths,
                                                       QStringList *directories)
 {
     QStringList p = paths;
-    QMutableListIterator<QString> it(p);
-    while (it.hasNext()) {
-        QString path = it.next();
+    foreach (const QString &path, p) {
         QFileInfo fi(path);
         if (!fi.exists())
             continue;
@@ -137,7 +135,7 @@ QStringList QPollingFileSystemWatcherEngine::addPaths(const QStringList &paths,
                 files->append(path);
             this->files.insert(path, fi);
         }
-        it.remove();
+        p.removeAll(path);
     }
     if ((!this->files.isEmpty() ||
          !this->directories.isEmpty()) &&
@@ -152,15 +150,13 @@ QStringList QPollingFileSystemWatcherEngine::removePaths(const QStringList &path
                                                          QStringList *directories)
 {
     QStringList p = paths;
-    QMutableListIterator<QString> it(p);
-    while (it.hasNext()) {
-        QString path = it.next();
+    foreach (const QString &path, p) {
         if (this->directories.remove(path)) {
             directories->removeAll(path);
-            it.remove();
+            p.removeAll(path);
         } else if (this->files.remove(path)) {
             files->removeAll(path);
-            it.remove();
+            p.removeAll(path);
         }
     }
     if (this->files.isEmpty() &&
