@@ -153,7 +153,7 @@ void QFSFileEngine::setFileName(const QString &file)
 bool QFSFileEngine::open(QIODevice::OpenMode openMode)
 {
     Q_D(QFSFileEngine);
-    if (d->fileEntry.isEmpty()) {
+    if (Q_UNLIKELY(d->fileEntry.isEmpty())) {
         qWarning("QFSFileEngine::open: No file name specified");
         setError(QFile::OpenError, QLatin1String("No file name specified"));
         return false;
@@ -494,7 +494,7 @@ bool QFSFileEnginePrivate::seekFdFh(qint64 pos)
         }
     } else {
         // Unbuffered stdio mode.
-        if (QT_LSEEK(fd, QT_OFF_T(pos), SEEK_SET) == -1) {
+        if (Q_UNLIKELY(QT_LSEEK(fd, QT_OFF_T(pos), SEEK_SET) == -1)) {
             qWarning() << "QFile::at: Cannot set file position" << pos;
             q->setError(QFile::PositionError, qt_error_string(errno));
             return false;
