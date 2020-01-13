@@ -983,6 +983,14 @@ QString QIcuCodec::convertToUnicode(const char *src, int length,
         }
     } else {
         result.resize(convresult);
+        if (state && state->flags & QTextCodec::IgnoreHeader) {
+            // ICU always generates BOMs so no checks
+            if (ucnv_compareNames(m_name.constData(), "UTF-32")) {
+                result.remove(0, 4);
+            } else if (ucnv_compareNames(m_name.constData(), "UTF-16")) {
+                result.remove(0, 2);
+            }
+        }
     }
 
     if (!state)
