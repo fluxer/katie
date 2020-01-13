@@ -39,6 +39,7 @@
 #include "qhash.h"
 #include "qstack.h"
 #include "qdebug.h"
+#include "qplatformdefs.h"
 #include "qxmlcommon_p.h"
 
 //#define QT_QXML_DEBUG
@@ -1453,24 +1454,17 @@ void QXmlInputSource::setData(const QByteArray& dat)
 
 void QXmlInputSource::fetchData()
 {
-    enum
-    {
-        BufferSize = 1024
-    };
-
-    QByteArray rawData;
-
     if (d->inputDevice) {
+        QByteArray rawData(QT_BUFFSIZE, Qt::Uninitialized);
         if (d->inputDevice->isOpen() || d->inputDevice->open(QIODevice::ReadOnly)) {
-            rawData.resize(BufferSize);
-            qint64 size = d->inputDevice->read(rawData.data(), BufferSize);
+            qint64 size = d->inputDevice->read(rawData.data(), rawData.size());
 
             if (size != -1) {
                 // We don't want to give fromRawData() less than four bytes if we can avoid it.
                 while (size < 4) {
                     if (!d->inputDevice->waitForReadyRead(-1))
                         break;
-                    int ret = d->inputDevice->read(rawData.data() + size, BufferSize - size);
+                    int ret = d->inputDevice->read(rawData.data() + size, rawData.size() - size);
                     if (ret <= 0)
                         break;
                     size += ret;
@@ -1478,13 +1472,12 @@ void QXmlInputSource::fetchData()
             }
 
             rawData.resize(qMax(qint64(0), size));
-        }
 
-        /* We do this inside the "if (d->inputDevice ..." scope
-         * because if we're not using a stream or device, that is,
-         * the user set a QString manually, we don't want to set
-         * d->str. */
-        setData(fromRawData(rawData));
+            /* We do this inside the "if (d->inputDevice ..." scope
+            * because if we're not using a device, that is, the user
+            * set a QString manually, we don't want to set d->str. */
+            setData(fromRawData(rawData));
+        }
     }
 }
 
