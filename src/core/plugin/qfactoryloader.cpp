@@ -96,12 +96,12 @@ void QFactoryLoader::updateDir(const QString &pluginDir)
 {
     Q_D(QFactoryLoader);
     QString path = pluginDir + d->suffix;
-    if (!QDir(path).exists(QLatin1String(".")))
+    QDir pathdir(path);
+    if (!pathdir.exists())
         return;
 
     QSettings *settings = QCoreApplicationPrivate::staticConf();
-    QStringList plugins = QDir(path).entryList(QDir::Files);
-    foreach (const QString &plugin, plugins) {
+    foreach (const QString &plugin, pathdir.entryList(QDir::Files)) {
         QString fileName = QDir::cleanPath(path + QLatin1Char('/') + plugin);
 
         if (qt_debug_component()) {
