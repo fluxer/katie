@@ -1859,9 +1859,9 @@ bool QDir::isRelativePath(const QString &path)
 /*!
     Refreshes the directory information.
 */
-void QDir::refresh() const
+void QDir::refresh()
 {
-    QDirPrivate *d = const_cast<QDir*>(this)->d_ptr.data();
+    QDirPrivate *d = d_ptr.data();
     d->metaData.clear();
     d->initFileEngine();
     d->clearFileLists();
