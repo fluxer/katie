@@ -1274,11 +1274,11 @@ void QXmlInputSource::init()
     d = new QXmlInputSourcePrivate;
 
     QT_TRY {
-        d->inputDevice = 0;
+        d->inputDevice = Q_NULLPTR;
 
         setData(QString());
 #ifndef QT_NO_TEXTCODEC
-        d->encMapper = 0;
+        d->encMapper = Q_NULLPTR;
 #endif
         d->nextReturnedEndOfData = true; // first call to next() will call fetchData()
 
@@ -1546,13 +1546,13 @@ QString QXmlInputSource::fromRawData(const QByteArray &data, bool beginning)
         return QString();
     if (beginning) {
         delete d->encMapper;
-        d->encMapper = 0;
+        d->encMapper = Q_NULLPTR;
     }
 
     int mib = 106; // UTF-8
 
     // This is the initial UTF codec we will read the encoding declaration with
-    if (d->encMapper == 0) {
+    if (!d->encMapper) {
         d->encodingDeclBytes.clear();
         d->encodingDeclChars.clear();
         d->lookingForEncodingDecl = true;
@@ -2534,7 +2534,7 @@ bool QXmlDefaultHandler::unparsedEntityDecl(const QString&, const QString&,
 bool QXmlDefaultHandler::resolveEntity(const QString&, const QString&,
         QXmlInputSource*& ret)
 {
-    ret = 0;
+    ret = Q_NULLPTR;
     return true;
 }
 
@@ -2677,7 +2677,7 @@ inline void QXmlSimpleReaderPrivate::refClear()
 QXmlSimpleReaderPrivate::QXmlSimpleReaderPrivate(QXmlSimpleReader *reader)
 {
     q_ptr = reader;
-    parseStack = 0;
+    parseStack = Q_NULLPTR;
 
     locator = new QXmlSimpleReaderLocator(reader);
     entityRes  = 0;
@@ -3030,7 +3030,7 @@ bool QXmlSimpleReader::feature(const QString& name, bool *ok) const
     const QXmlSimpleReaderPrivate *d = d_func();
 
     // Qt5 ###: Change these strings to qt.nokia.com
-    if (ok != 0)
+    if (ok)
         *ok = true;
     if (name == QLatin1String("http://xml.org/sax/features/namespaces")) {
         return d->useNamespaces;
@@ -3042,7 +3042,7 @@ bool QXmlSimpleReader::feature(const QString& name, bool *ok) const
         return d->reportEntities;
     } else {
         qWarning("Unknown feature %s", name.toLatin1().data());
-        if (ok != 0)
+        if (ok)
             *ok = false;
     }
     return false;
@@ -3117,9 +3117,9 @@ bool QXmlSimpleReader::hasFeature(const QString& name) const
 */
 void* QXmlSimpleReader::property(const QString&, bool *ok) const
 {
-    if (ok != 0)
+    if (ok)
         *ok = false;
-    return 0;
+    return Q_NULLPTR;
 }
 
 /*! \reimp
@@ -3300,7 +3300,7 @@ bool QXmlSimpleReader::parse(const QXmlInputSource *input, bool incremental)
         d->initIncrementalParsing();
     } else {
         delete d->parseStack;
-        d->parseStack = 0;
+        d->parseStack = Q_NULLPTR;
     }
     d->init(input);
 
@@ -3345,7 +3345,7 @@ bool QXmlSimpleReader::parse(const QXmlInputSource *input, bool incremental)
 bool QXmlSimpleReader::parseContinue()
 {
     Q_D(QXmlSimpleReader);
-    if (d->parseStack == 0 || d->parseStack->isEmpty())
+    if (!d->parseStack || d->parseStack->isEmpty())
         return false;
     d->initData();
     int state = d->parseStack->pop().state;
@@ -3409,7 +3409,7 @@ bool QXmlSimpleReaderPrivate::parseBeginOrContinue(int state, bool incremental)
     // call the handler
     if (contentHnd) {
         delete parseStack;
-        parseStack = 0;
+        parseStack = Q_NULLPTR;
         if (!contentHnd->endDocument()) {
             reportParseError(contentHnd->errorString());
             return false;
@@ -3444,7 +3444,7 @@ bool QXmlSimpleReaderPrivate::parseBeginOrContinue(int state, bool incremental)
         signed char state;
         signed char input;
 
-(4)        if (d->parseStack == 0 || d->parseStack->isEmpty()) {
+(4)        if (!d->parseStack || d->parseStack->isEmpty()) {
 (4a)        ...
         } else {
 (4b)        ...
@@ -3534,7 +3534,7 @@ bool QXmlSimpleReaderPrivate::parseProlog()
     signed char state;
     signed char input;
 
-    if (parseStack == 0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         xmldecl_possible = true;
         doctype_read = false;
         state = Init;
@@ -3725,7 +3725,7 @@ bool QXmlSimpleReaderPrivate::parseElement()
     int state;
     int input;
 
-    if (parseStack == 0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -4089,7 +4089,7 @@ bool QXmlSimpleReaderPrivate::parseContent()
     signed char state;
     signed char input;
 
-    if (parseStack == 0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         contentCharDataRead = false;
         state = Init;
     } else {
@@ -4392,7 +4392,7 @@ bool QXmlSimpleReaderPrivate::parseMisc()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -4547,7 +4547,7 @@ bool QXmlSimpleReaderPrivate::parsePI()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -4774,7 +4774,7 @@ bool QXmlSimpleReaderPrivate::parseDoctype()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         startDTDwasReported = false;
         systemId.clear();
         publicId.clear();
@@ -4985,7 +4985,7 @@ bool QXmlSimpleReaderPrivate::parseExternalID()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         systemId.clear();
         publicId.clear();
         state = Init;
@@ -5149,7 +5149,7 @@ bool QXmlSimpleReaderPrivate::parseMarkupdecl()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -5307,7 +5307,7 @@ bool QXmlSimpleReaderPrivate::parsePEReference()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -5344,7 +5344,7 @@ bool QXmlSimpleReaderPrivate::parsePEReference()
                     } else if (entityRes) {
                         QMap<QString,QXmlSimpleReaderPrivate::ExternParameterEntity>::Iterator it2;
                         it2 = externParameterEntities.find(ref());
-                        QXmlInputSource *ret = 0;
+                        QXmlInputSource *ret = Q_NULLPTR;
                         if (it2 != externParameterEntities.end()) {
                             if (!entityRes->resolveEntity((*it2).publicId, (*it2).systemId, ret)) {
                                 delete ret;
@@ -5480,7 +5480,7 @@ bool QXmlSimpleReaderPrivate::parseAttlistDecl()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -5696,7 +5696,7 @@ bool QXmlSimpleReaderPrivate::parseAttType()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -5917,7 +5917,7 @@ bool QXmlSimpleReaderPrivate::parseAttValue()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -6059,7 +6059,7 @@ bool QXmlSimpleReaderPrivate::parseElementDecl()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -6268,7 +6268,7 @@ bool QXmlSimpleReaderPrivate::parseNotationDecl()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -6412,7 +6412,7 @@ bool QXmlSimpleReaderPrivate::parseChoiceSeq()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -6641,7 +6641,7 @@ bool QXmlSimpleReaderPrivate::parseEntityDecl()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -6916,7 +6916,7 @@ bool QXmlSimpleReaderPrivate::parseEntityValue()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -7035,7 +7035,7 @@ bool QXmlSimpleReaderPrivate::parseComment()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -7147,7 +7147,7 @@ bool QXmlSimpleReaderPrivate::parseAttribute()
     int state;
     int input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -7246,7 +7246,7 @@ bool QXmlSimpleReaderPrivate::parseName()
     };
     int state;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -7332,7 +7332,7 @@ bool QXmlSimpleReaderPrivate::parseNmtoken()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         state = Init;
     } else {
         state = parseStack->pop().state;
@@ -7440,7 +7440,7 @@ bool QXmlSimpleReaderPrivate::parseReference()
     signed char state;
     signed char input;
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         parseReference_charDataRead = false;
         state = Init;
     } else {
@@ -7694,7 +7694,7 @@ bool QXmlSimpleReaderPrivate::processReference()
                             // Included if validating
                             bool skipIt = true;
                             if (entityRes) {
-                                QXmlInputSource *ret = 0;
+                                QXmlInputSource *ret = Q_NULLPTR;
                                 if (!entityRes->resolveEntity((*itExtern).publicId, (*itExtern).systemId, ret)) {
                                     delete ret;
                                     reportParseError(entityRes->errorString());
@@ -7775,7 +7775,7 @@ bool QXmlSimpleReaderPrivate::parseString()
 {
     signed char state; // state in this function is the position in the string s
 
-    if (parseStack==0 || parseStack->isEmpty()) {
+    if (!parseStack || parseStack->isEmpty()) {
         Done = parseString_s.length();
         state = 0;
     } else {
@@ -7874,7 +7874,7 @@ void QXmlSimpleReaderPrivate::next()
     c = inputSource->next();
     // If we are not incremental parsing, we just skip over EndOfData chars to give the
     // parser an uninterrupted stream of document chars.
-    if (c == QXmlInputSource::EndOfData && parseStack == 0)
+    if (c == QXmlInputSource::EndOfData && !parseStack)
         c = inputSource->next();
     if (uc == '\n') {
         lineNr++;
@@ -7906,7 +7906,7 @@ bool QXmlSimpleReaderPrivate::eat_ws()
         }
         next();
     }
-    if (parseStack != 0) {
+    if (parseStack) {
         unexpectedEof(&QXmlSimpleReaderPrivate::eat_ws, 0);
         return false;
     }
@@ -7996,7 +7996,7 @@ void QXmlSimpleReaderPrivate::reportParseError(const QString& error)
 */
 void QXmlSimpleReaderPrivate::unexpectedEof(ParseFunction where, int state)
 {
-    if (parseStack == 0) {
+    if (!parseStack) {
         reportParseError(QLatin1String(XMLERR_UNEXPECTEDEOF));
     } else {
         if (c == QXmlInputSource::EndOfDocument) {
@@ -8016,7 +8016,7 @@ void QXmlSimpleReaderPrivate::unexpectedEof(ParseFunction where, int state)
 */
 void QXmlSimpleReaderPrivate::parseFailed(ParseFunction where, int state)
 {
-    if (parseStack!=0 && error.isNull()) {
+    if (parseStack && error.isNull()) {
         pushParseState(where, state);
     }
 }
@@ -8026,7 +8026,7 @@ void QXmlSimpleReaderPrivate::parseFailed(ParseFunction where, int state)
   state to the parse stack. This is used when you are doing an incremental
   parsing and reach the end of file too early.
 
-  Only call this function when d->parseStack!=0.
+  Only call this function when d->parseStack!=Q_NULLPTR.
 */
 void QXmlSimpleReaderPrivate::pushParseState(ParseFunction function, int state)
 {
