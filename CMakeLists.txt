@@ -82,6 +82,12 @@ elseif(CMAKE_HOST_SYSTEM_PROCESSOR)
     string(TOLOWER "${CMAKE_HOST_SYSTEM_PROCESSOR}" KATIE_PROCESSOR)
 endif()
 
+# used as shebang for profile, exec and dbg scripts
+find_program(KATIE_SHELL NAMES sh dash mksh ksh ash)
+if(NOT KATIE_SHELL)
+    message(FATAL_ERROR "Could not detect shell, supported are: sh, dash, mksh, ksh and ash")
+endif()
+
 # components and tools that will be build, changed depending on the requirements availability
 # NOTE: excluding DesignerComponents as it was never used as public component, currently only
 # used by the the designer tool. if it is ever needed for something it can just be added here
