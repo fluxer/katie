@@ -798,7 +798,7 @@ inline void QTextStreamPrivate::consume(int size)
 inline void QTextStreamPrivate::saveConverterState(qint64 newPos)
 {
 #ifndef QT_NO_TEXTCODEC
-    readConverterSavedState = QTextCodec::ConverterState(readConverterState);
+    readConverterSavedState = readConverterState;
 #endif
 
     readBufferStartDevicePos = newPos;
@@ -810,7 +810,7 @@ inline void QTextStreamPrivate::saveConverterState(qint64 newPos)
 inline void QTextStreamPrivate::restoreToSavedConverterState()
 {
 #ifndef QT_NO_TEXTCODEC
-    readConverterState = QTextCodec::ConverterState(readConverterSavedState);
+    readConverterState = readConverterSavedState;
 #endif
 }
 
