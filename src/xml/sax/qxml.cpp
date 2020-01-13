@@ -215,7 +215,6 @@ class QXmlInputSourcePrivate
 {
 public:
     QIODevice *inputDevice;
-    QTextStream *inputStream;
 
     QString str;
     const QChar *unicode;
@@ -1275,7 +1274,6 @@ void QXmlInputSource::init()
 
     QT_TRY {
         d->inputDevice = 0;
-        d->inputStream = 0;
 
         setData(QString());
 #ifndef QT_NO_TEXTCODEC
@@ -1462,24 +1460,17 @@ void QXmlInputSource::fetchData()
 
     QByteArray rawData;
 
-    if (d->inputDevice || d->inputStream) {
-        QIODevice *device = d->inputDevice ? d->inputDevice : d->inputStream->device();
-
-        if (!device) {
-            if (d->inputStream && d->inputStream->string()) {
-                QString *s = d->inputStream->string();
-                rawData = QByteArray((const char *) s->constData(), s->size() * sizeof(QChar));
-            }
-        } else if (device->isOpen() || device->open(QIODevice::ReadOnly)) {
+    if (d->inputDevice) {
+        if (d->inputDevice->isOpen() || d->inputDevice->open(QIODevice::ReadOnly)) {
             rawData.resize(BufferSize);
-            qint64 size = device->read(rawData.data(), BufferSize);
+            qint64 size = d->inputDevice->read(rawData.data(), BufferSize);
 
             if (size != -1) {
                 // We don't want to give fromRawData() less than four bytes if we can avoid it.
                 while (size < 4) {
-                    if (!device->waitForReadyRead(-1))
+                    if (!d->inputDevice->waitForReadyRead(-1))
                         break;
-                    int ret = device->read(rawData.data() + size, BufferSize - size);
+                    int ret = d->inputDevice->read(rawData.data() + size, BufferSize - size);
                     if (ret <= 0)
                         break;
                     size += ret;
