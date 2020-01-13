@@ -118,27 +118,6 @@ bool QDirPrivate::exists() const
     return info & QAbstractFileEngine::ExistsFlag;
 }
 
-// static
-inline QChar QDirPrivate::getFilterSepChar(const QString &nameFilter)
-{
-    QChar sep(QLatin1Char(';'));
-    int i = nameFilter.indexOf(sep, 0);
-    if (i == -1 && nameFilter.indexOf(QLatin1Char(' '), 0) != -1)
-        sep = QChar(QLatin1Char(' '));
-    return sep;
-}
-
-// static
-inline QStringList QDirPrivate::splitFilters(const QString &nameFilter, QChar sep)
-{
-    if (sep == 0)
-        sep = getFilterSepChar(nameFilter);
-    QStringList ret = nameFilter.split(sep);
-    for (int i = 0; i < ret.count(); ++i)
-        ret[i] = ret[i].trimmed();
-    return ret;
-}
-
 inline void QDirPrivate::setPath(const QString &path)
 {
     QString p = QDir::fromNativeSeparators(path);
@@ -1897,7 +1876,14 @@ void QDir::refresh() const
 */
 QStringList QDir::nameFiltersFromString(const QString &nameFilter)
 {
-    return QDirPrivate::splitFilters(nameFilter);
+    QChar sep(QLatin1Char(';'));
+    int i = nameFilter.indexOf(sep, 0);
+    if (i == -1 && nameFilter.indexOf(QLatin1Char(' '), 0) != -1)
+        sep = QChar(QLatin1Char(' '));
+    QStringList ret = nameFilter.split(sep);
+    for (int i = 0; i < ret.count(); ++i)
+        ret[i] = ret[i].trimmed();
+    return ret;
 }
 
 /*!
