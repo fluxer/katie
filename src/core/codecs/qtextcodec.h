@@ -104,9 +104,12 @@ public:
         int invalidChars;
     private:
         friend class QIcuCodec;
+        friend class QTextStreamPrivate;
+        friend class QTextStream;
         void *d;
 
-        Q_DISABLE_COPY(ConverterState)
+        ConverterState(const ConverterState &other);
+        ConverterState& operator=(const ConverterState &other);
     };
 
     QString toUnicode(const char *in, int length, ConverterState *state = Q_NULLPTR) const

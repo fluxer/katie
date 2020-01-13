@@ -221,8 +221,9 @@
 #include "qnumeric.h"
 #include "qplatformdefs.h"
 #include "qlocale_p.h"
+
 #ifndef QT_NO_TEXTCODEC
-#include "qtextcodec.h"
+#  include "qtextcodec.h"
 #endif
 
 #if defined QTEXTSTREAM_DEBUG
@@ -348,7 +349,7 @@ public:
     QTextCodec *codec;
     QTextCodec::ConverterState readConverterState;
     QTextCodec::ConverterState writeConverterState;
-    QTextCodec::ConverterState *readConverterSavedState;
+    QTextCodec::ConverterState readConverterSavedState;
     bool autoDetectUnicode;
 #endif
 
@@ -414,9 +415,6 @@ public:
 */
 QTextStreamPrivate::QTextStreamPrivate()
     :
-#ifndef QT_NO_TEXTCODEC
-    readConverterSavedState(0),
-#endif
     readConverterSavedStateOffset(0),
     locale(QLocale::c())
 {
@@ -433,27 +431,7 @@ QTextStreamPrivate::~QTextStreamPrivate()
 #endif
         delete device;
     }
-#ifndef QT_NO_TEXTCODEC
-    delete readConverterSavedState;
-#endif
 }
-
-#ifndef QT_NO_TEXTCODEC
-static void resetCodecConverterStateHelper(QTextCodec::ConverterState *state)
-{
-    state->~ConverterState();
-    new (state) QTextCodec::ConverterState;
-}
-
-static void copyConverterStateHelper(QTextCodec::ConverterState *dest,
-    const QTextCodec::ConverterState *src)
-{
-    // ### QTextCodec::ConverterState's copy constructors and assignments are
-    // private. This function copies the structure manually.
-    dest->flags = src->flags;
-    dest->invalidChars = src->invalidChars;
-}
-#endif
 
 /*! \internal
 */
@@ -479,10 +457,9 @@ void QTextStreamPrivate::reset()
 
 #ifndef QT_NO_TEXTCODEC
     codec = QTextCodec::codecForLocale();
-    resetCodecConverterStateHelper(&readConverterState);
-    resetCodecConverterStateHelper(&writeConverterState);
-    delete readConverterSavedState;
-    readConverterSavedState = Q_NULLPTR;
+    readConverterState = QTextCodec::ConverterState();
+    writeConverterState = QTextCodec::ConverterState();
+    readConverterSavedState = QTextCodec::ConverterState();
     writeConverterState.flags |= QTextCodec::IgnoreHeader;
     autoDetectUnicode = true;
 #endif
@@ -821,9 +798,7 @@ inline void QTextStreamPrivate::consume(int size)
 inline void QTextStreamPrivate::saveConverterState(qint64 newPos)
 {
 #ifndef QT_NO_TEXTCODEC
-    if (!readConverterSavedState)
-        readConverterSavedState = new QTextCodec::ConverterState;
-    copyConverterStateHelper(readConverterSavedState, &readConverterState);
+    readConverterSavedState = QTextCodec::ConverterState(readConverterState);
 #endif
 
     readBufferStartDevicePos = newPos;
@@ -835,15 +810,7 @@ inline void QTextStreamPrivate::saveConverterState(qint64 newPos)
 inline void QTextStreamPrivate::restoreToSavedConverterState()
 {
 #ifndef QT_NO_TEXTCODEC
-    if (readConverterSavedState) {
-        // we have a saved state
-        // that means the converter can be copied
-        copyConverterStateHelper(&readConverterState, readConverterSavedState);
-    } else {
-        // the only state we could save was the initial
-        // so reset to that
-        resetCodecConverterStateHelper(&readConverterState);
-    }
+    readConverterState = QTextCodec::ConverterState(readConverterSavedState);
 #endif
 }
 
@@ -1133,10 +1100,9 @@ bool QTextStream::seek(qint64 pos)
 
 #ifndef QT_NO_TEXTCODEC
         // Reset the codec converter states.
-        resetCodecConverterStateHelper(&d->readConverterState);
-        resetCodecConverterStateHelper(&d->writeConverterState);
-        delete d->readConverterSavedState;
-        d->readConverterSavedState = 0;
+        d->readConverterState = QTextCodec::ConverterState();
+        d->writeConverterState = QTextCodec::ConverterState();
+        d->readConverterSavedState = QTextCodec::ConverterState();
         d->writeConverterState.flags |= QTextCodec::IgnoreHeader;
 #endif
         return true;

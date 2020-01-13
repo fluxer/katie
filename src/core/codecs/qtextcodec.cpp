@@ -290,6 +290,26 @@ QTextCodec::ConverterState::~ConverterState()
         ucnv_close(static_cast<UConverter *>(d));
 }
 
+QTextCodec::ConverterState::ConverterState(const QTextCodec::ConverterState &other)
+{
+    QTextCodec::ConverterState::operator=(other);
+}
+
+QTextCodec::ConverterState& QTextCodec::ConverterState::operator=(const QTextCodec::ConverterState &other)
+{
+    flags = other.flags;
+    invalidChars = other.invalidChars;
+    if (other.d) {
+        UErrorCode error = U_ZERO_ERROR;
+        d = ucnv_safeClone(static_cast<UConverter*>(other.d), Q_NULLPTR, Q_NULLPTR, &error);
+        if (Q_UNLIKELY(U_FAILURE(error))) {
+            qWarning("ConverterState: ucnv_safeClone() failed %s", u_errorName(error));
+            d = Q_NULLPTR;
+        }
+    }
+    return *this;
+}
+
 /*!
     \class QTextCodec
     \brief The QTextCodec class provides conversions between text encodings.
