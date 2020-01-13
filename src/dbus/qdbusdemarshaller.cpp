@@ -325,10 +325,10 @@ QStringList QDBusDemarshaller::toStringListUnchecked()
 QStringList QDBusDemarshaller::toStringList()
 {
     if (dbus_message_iter_get_arg_type(&iterator) == DBUS_TYPE_ARRAY
-            && dbus_message_iter_get_element_type(&iterator) == DBUS_TYPE_STRING)
+            && dbus_message_iter_get_element_type(&iterator) == DBUS_TYPE_STRING) {
         return toStringListUnchecked();
-    else
-        return QStringList();
+    }
+    return QStringList();
 }
 
 QByteArray QDBusDemarshaller::toByteArrayUnchecked()
