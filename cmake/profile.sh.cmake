@@ -1,4 +1,4 @@
-#!/bin/sh
+#!@KATIE_SHELL@
 
 # NOTE: safe as in does not append if already in the variable
 safe_path_append() {

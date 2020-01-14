@@ -82,8 +82,7 @@ public:
     static bool renameFile(const QFileSystemEntry &source, const QFileSystemEntry &target, QSystemError &error);
     static bool removeFile(const QFileSystemEntry &entry, QSystemError &error);
 
-    static bool setPermissions(const QFileSystemEntry &entry, QFile::Permissions permissions, QSystemError &error,
-                               QFileSystemMetaData *data = Q_NULLPTR);
+    static bool setPermissions(const QFileSystemEntry &entry, QFile::Permissions permissions, QSystemError &error);
 
     static bool setCurrentPath(const QFileSystemEntry &entry);
     static QFileSystemEntry currentPath();

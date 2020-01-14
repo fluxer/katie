@@ -70,7 +70,7 @@ public:
     QObject *instance(const QString &key) const;
 
     void update();
-    void updateDir(const QString &pluginDir, QSettings *settings);
+    void updateDir(const QString &pluginDir);
 
     static void refreshAll();
 };

@@ -1525,7 +1525,7 @@ Script: %3</source>
 <context>
     <name>QDial</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+925"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+924"/>
         <source>QDial</source>
         <translation>QDial</translation>
     </message>
@@ -1727,13 +1727,12 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+604"/>
-        <location line="+154"/>
+        <location filename="../src/core/io/qfile.cpp" line="+606"/>
         <source>Destination file exists</source>
         <translation>Die Zieldatei existiert bereits</translation>
     </message>
     <message>
-        <location line="-139"/>
+        <location line="+15"/>
         <source>Will not rename sequential file using block copy</source>
         <translation>Eine sequentielle Datei kann nicht durch blockweises Kopieren umbenannt werden</translation>
     </message>
@@ -1743,27 +1742,7 @@ Script: %3</source>
         <translation>Die Quelldatei kann nicht entfernt werden</translation>
     </message>
     <message>
-        <location line="+129"/>
-        <source>Cannot open %1 for input</source>
-        <translation>%1 kann nicht zum Lesen geöffnet werden</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Cannot open for output</source>
-        <translation>Das Öffnen zum Schreiben ist fehlgeschlagen</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Failure to write block</source>
-        <translation>Der Datenblock konnte nicht geschrieben werden</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Cannot create %1 for output</source>
-        <translation>%1 kann nicht erstellt werden</translation>
-    </message>
-    <message>
-        <location line="+296"/>
+        <location line="+399"/>
         <source>No file engine available or engine does not support UnMapExtension</source>
         <translation>Es ist kein Datei-Engine verfügbar oder der gegenwärtig aktive Engine unterstützt die UnMap-Erweiterung nicht</translation>
     </message>
@@ -2366,24 +2345,27 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+198"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+119"/>
+        <location line="+12"/>
+        <location line="+86"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>Rechner konnte nicht gefunden werden</translation>
     </message>
     <message>
-        <location line="-44"/>
-        <location line="+39"/>
+        <location line="-43"/>
+        <location line="+38"/>
         <source>Unknown address type</source>
         <translation>Unbekannter Adresstyp</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-109"/>
+        <location line="+117"/>
         <source>Unknown error</source>
         <translation>Unbekannter Fehler</translation>
     </message>
     <message>
-        <location line="-102"/>
+        <location line="-101"/>
         <source>No host name given</source>
         <translation>Es wurde kein Hostname angegeben</translation>
     </message>
@@ -3245,7 +3227,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QNetworkAccessDebugPipeBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+187"/>
+        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+182"/>
         <source>Write error writing to %1: %2</source>
         <translation>Fehler beim Schreiben zu %1: %2</translation>
     </message>
@@ -4893,32 +4875,22 @@ Bitte wählen Sie einen anderen Dateinamen.</translation>
     </message>
     <message>
         <location line="+23"/>
-        <location line="+26"/>
+        <location line="+18"/>
         <source>%1: key is empty</source>
         <translation>%1: Ungültige Schlüsselangabe (leer)</translation>
     </message>
     <message>
-        <location line="-12"/>
-        <source>%1: ftok failed</source>
-        <translation>%1: ftok-Aufruf ist fehlgeschlagen</translation>
-    </message>
-    <message>
-        <location line="+75"/>
+        <location line="+63"/>
         <source>%1: unable to make key</source>
         <translation>%1: Es kann kein Schlüssel erzeugt werden</translation>
     </message>
     <message>
-        <location line="-128"/>
+        <location line="-120"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: existiert nicht</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <source>%1: UNIX key file doesn&apos;t exist</source>
-        <translation>%1: Die Unix-Schlüsseldatei existiert nicht</translation>
-    </message>
-    <message>
-        <location line="+100"/>
+        <location line="+138"/>
         <source>%1: system-imposed size restrictions</source>
         <translation>%1: Ein systembedingtes Limit der Größe wurde erreicht</translation>
     </message>
@@ -4934,7 +4906,7 @@ Bitte wählen Sie einen anderen Dateinamen.</translation>
         <translation>%1: nicht verbunden</translation>
     </message>
     <message>
-        <location line="-261"/>
+        <location line="-253"/>
         <source>%1: invalid size</source>
         <translation>%1: Ungültige Größe</translation>
     </message>
@@ -6518,7 +6490,7 @@ Bitte wählen Sie einen anderen Dateinamen.</translation>
     <name>QTcpServer</name>
     <message>
         <location filename="../src/network/socket/qtcpserver.cpp" line="+278"/>
-        <location line="+129"/>
+        <location line="+124"/>
         <source>Operation on socket is not supported</source>
         <translation>Diese Socket-Operation wird nicht unterstützt</translation>
     </message>

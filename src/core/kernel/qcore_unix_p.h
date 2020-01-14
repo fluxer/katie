@@ -292,10 +292,6 @@ static inline pid_t qt_safe_waitpid(pid_t pid, int *status, int options)
     return ret;
 }
 
-#if !defined(_POSIX_MONOTONIC_CLOCK)
-#  define _POSIX_MONOTONIC_CLOCK -1
-#endif
-
 timeval qt_gettime(); // in qelapsedtimer_unix.cpp
 
 Q_CORE_EXPORT int qt_safe_select(int nfds, fd_set *fdread, fd_set *fdwrite, fd_set *fdexcept,

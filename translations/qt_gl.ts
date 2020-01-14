@@ -1526,7 +1526,7 @@ superior, inferior nin vcenter.</translation>
 <context>
     <name>QDial</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+925"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+924"/>
         <source>QDial</source>
         <translation>QDial</translation>
     </message>
@@ -1728,13 +1728,12 @@ superior, inferior nin vcenter.</translation>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+604"/>
-        <location line="+154"/>
+        <location filename="../src/core/io/qfile.cpp" line="+606"/>
         <source>Destination file exists</source>
         <translation>O ficheiro de destino xa existe</translation>
     </message>
     <message>
-        <location line="-139"/>
+        <location line="+15"/>
         <source>Will not rename sequential file using block copy</source>
         <translation>Non se mudará o nome do ficheiro secuencial empregando a copia de bloques</translation>
     </message>
@@ -1744,27 +1743,7 @@ superior, inferior nin vcenter.</translation>
         <translation>Non é posíbel eliminar o ficheiro de orixe</translation>
     </message>
     <message>
-        <location line="+129"/>
-        <source>Cannot open %1 for input</source>
-        <translation>Non é posíbel abrir %1 como entrada</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Cannot open for output</source>
-        <translation>Non foi posíbel abrir para saída</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Failure to write block</source>
-        <translation>Fallou a escrita do bloque</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Cannot create %1 for output</source>
-        <translation>Non foi posíbel crear %1 para a saída</translation>
-    </message>
-    <message>
-        <location line="+296"/>
+        <location line="+399"/>
         <source>No file engine available or engine does not support UnMapExtension</source>
         <translation>Ou non hai dispoñíbel ningún motor de ficheiros ou o motor non admite UnMapExtension</translation>
     </message>
@@ -2367,7 +2346,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+130"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+150"/>
         <source>No host name given</source>
         <translation>Non se indicou o nome do servidor</translation>
     </message>
@@ -2378,18 +2357,21 @@ Desexa aínda así borralo?</translation>
     </message>
     <message>
         <location line="+54"/>
-        <location line="+39"/>
+        <location line="+38"/>
         <source>Unknown address type</source>
         <translation>Tipo de enderezo descoñecido</translation>
     </message>
     <message>
-        <location line="-26"/>
+        <location line="-124"/>
+        <location line="+12"/>
+        <location line="+86"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>Non se atopou o servidor</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-114"/>
+        <location line="+117"/>
         <source>Unknown error</source>
         <translation>Erro descoñecido</translation>
     </message>
@@ -3246,7 +3228,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QNetworkAccessDebugPipeBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+187"/>
+        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+182"/>
         <source>Write error writing to %1: %2</source>
         <translation>Aconteceu un erro de escrita ao escribir en %1: %2</translation>
     </message>
@@ -3325,7 +3307,7 @@ Desexa aínda así borralo?</translation>
     <message>
         <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+416"/>
         <source>No suitable proxy found</source>
-        <translation>Non se atopou ningún proxy axeitado</translation>
+        <translation>Non se atopou ning��n proxy axeitado</translation>
     </message>
 </context>
 <context>
@@ -4904,33 +4886,23 @@ Desexa sobrescribilo?</translation>
         <translation>%1: erro descoñecido %2</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+104"/>
         <source>%1: unable to make key</source>
         <translation>%1: non foi posíbel crear a chave</translation>
     </message>
     <message>
-        <location line="-128"/>
+        <location line="-120"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: non existe</translation>
     </message>
     <message>
         <location line="+39"/>
-        <location line="+26"/>
+        <location line="+18"/>
         <source>%1: key is empty</source>
         <translation>%1: a chave está baleira</translation>
     </message>
     <message>
-        <location line="-19"/>
-        <source>%1: UNIX key file doesn&apos;t exist</source>
-        <translation>%1: non existe o ficheiro de chave de UNIX</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1: ftok failed</source>
-        <translation>%1: fallou ftok</translation>
-    </message>
-    <message>
-        <location line="+93"/>
+        <location line="+81"/>
         <source>%1: system-imposed size restrictions</source>
         <translation>%1: restricións de tamaño impostas polo sistema</translation>
     </message>
@@ -6520,7 +6492,7 @@ Desexa sobrescribilo?</translation>
     <name>QTcpServer</name>
     <message>
         <location filename="../src/network/socket/qtcpserver.cpp" line="+278"/>
-        <location line="+129"/>
+        <location line="+124"/>
         <source>Operation on socket is not supported</source>
         <translation>Non se permite a operación no socket</translation>
     </message>

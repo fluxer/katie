@@ -541,7 +541,7 @@ bool QFSFileEngine::setPermissions(uint perms)
 {
     Q_D(QFSFileEngine);
     QSystemError error;
-    if (!QFileSystemEngine::setPermissions(d->fileEntry, QFile::Permissions(perms), error, 0)) {
+    if (!QFileSystemEngine::setPermissions(d->fileEntry, QFile::Permissions(perms), error)) {
         setError(QFile::PermissionsError, error.toString());
         return false;
     }

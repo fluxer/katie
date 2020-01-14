@@ -1,4 +1,4 @@
-#!/bin/sh
+#!@KATIE_SHELL@
 
 set -e
 

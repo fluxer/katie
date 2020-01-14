@@ -56,10 +56,6 @@ public:
 
     static void sortFileList(QDir::SortFlags, QFileInfoList &, QStringList *, QFileInfoList *);
 
-    static inline QChar getFilterSepChar(const QString &nameFilter);
-
-    static inline QStringList splitFilters(const QString &nameFilter, QChar sep = 0);
-
     inline void setPath(const QString &path);
 
     inline void clearFileLists();

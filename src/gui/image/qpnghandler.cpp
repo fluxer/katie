@@ -536,21 +536,14 @@ bool QPNGImageWriter::writeImage(const QImage& image, int off_x, int off_y)
 bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
                                  int off_x_in, int off_y_in)
 {
-    QPoint offset = image.offset();
-    int off_x = off_x_in + offset.x();
-    int off_y = off_y_in + offset.y();
-
-    png_structp png_ptr;
-    png_infop info_ptr;
-
-    png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,0,0,0);
+    png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,0,0,0);
     if (!png_ptr) {
         return false;
     }
 
     png_set_error_fn(png_ptr, 0, 0, qt_png_warning);
 
-    info_ptr = png_create_info_struct(png_ptr);
+    png_infop info_ptr = png_create_info_struct(png_ptr);
     if (!info_ptr) {
         png_destroy_write_struct(&png_ptr, 0);
         return false;
@@ -561,13 +554,13 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
         return false;
     }
 
-    int quality = quality_in;
-    if (quality >= 0) {
-        if (quality > 9) {
-            qWarning("PNG: Quality %d out of range", quality);
-            quality = 9;
+    if (quality_in >= 0) {
+        if (Q_UNLIKELY(quality_in > 9)) {
+            qWarning("PNG: Quality %d out of range", quality_in);
+            png_set_compression_level(png_ptr, 9);
+        } else {
+            png_set_compression_level(png_ptr, quality_in);
         }
-        png_set_compression_level(png_ptr, quality);
     }
 
     png_set_write_fn(png_ptr, (void*)this, qpiw_write_fn, qpiw_flush_fn);
@@ -635,6 +628,9 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
     }
 #endif
 
+    QPoint offset = image.offset();
+    int off_x = off_x_in + offset.x();
+    int off_y = off_y_in + offset.y();
     if (off_x || off_y) {
         png_set_oFFs(png_ptr, info_ptr, off_x, off_y, PNG_OFFSET_PIXEL);
     }

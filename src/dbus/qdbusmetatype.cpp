@@ -44,11 +44,6 @@
 #include <dbus/dbus.h>
 #include <string.h>
 
-#ifndef DBUS_TYPE_UNIX_FD
-# define DBUS_TYPE_UNIX_FD int('h')
-# define DBUS_TYPE_UNIX_FD_AS_STRING "h"
-#endif
-
 Q_DECLARE_METATYPE(QList<bool>)
 Q_DECLARE_METATYPE(QList<short>)
 Q_DECLARE_METATYPE(QList<ushort>)

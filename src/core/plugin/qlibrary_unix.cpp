@@ -38,7 +38,6 @@
 #include "qlibrary_p.h"
 #include "qcoreapplication.h"
 #include "qfilesystementry_p.h"
-#include "qcorecommon_p.h"
 
 #ifndef QT_NO_LIBRARY
 
@@ -63,7 +62,7 @@ static QString qdlerror()
 #elif !defined(QT_HPUX_LD)
     return QString::fromLatin1(dlerror());
 #else
-    return fromstrerror_helper(errno);
+    return qt_error_string(errno);
 #endif
 }
 

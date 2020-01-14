@@ -251,7 +251,7 @@ template <class T>
 inline T qobject_cast(const QObject *object)
 {
 #if !defined(QT_NO_QOBJECT_CHECK)
-    reinterpret_cast<T>(object)->qt_check_for_QOBJECT_macro(*reinterpret_cast<T>(const_cast<QObject *>(object)));
+    reinterpret_cast<T>(object)->qt_check_for_QOBJECT_macro(*reinterpret_cast<T>(object));
 #endif
     return static_cast<T>(reinterpret_cast<T>(object)->staticMetaObject.cast(object));
 }

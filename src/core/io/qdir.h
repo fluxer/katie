@@ -187,7 +187,7 @@ public:
 #endif
 
     static QString cleanPath(const QString &path);
-    void refresh() const;
+    void refresh();
 
 };
 

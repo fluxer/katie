@@ -528,7 +528,7 @@ bool QLibrary::isLibrary(const QString &fileName)
     return valid;
 }
 
-bool QLibraryPrivate::isPlugin(QSettings *settings)
+bool QLibraryPrivate::isPlugin()
 {
     errorString.clear();
     if (pluginState != MightBeAPlugin)
@@ -562,18 +562,15 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
                      .arg(QLIBRARY_AS_DEBUG ? QLatin1String("debug") : QLatin1String("false"))
                      .arg(fileName);
 
-    QStringList reg;
 #ifndef QT_NO_SETTINGS
-    if (!settings) {
-        settings = QCoreApplicationPrivate::staticConf();
-    }
-    reg = settings->value(regkey).toStringList();
-#endif
+    QSettings *settings = QCoreApplicationPrivate::staticConf();
+    QStringList reg = settings->value(regkey).toStringList();
     if (reg.count() == 3 && lastModified == reg.at(2)) {
         qt_version = reg.at(0).toUInt();
         debug = bool(reg.at(1).toInt());
         success = qt_version != 0;
     } else {
+#endif
         // use unix shortcut to avoid loading the library
         success = qt_unix_query(fileName, &qt_version, &debug, this);
 
@@ -583,8 +580,8 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
                 << QString::number((int)debug)
                 << lastModified;
         settings->setValue(regkey, queried);
-#endif
     }
+#endif
 
     if (!success) {
         if (errorString.isEmpty()){
