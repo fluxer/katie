@@ -68,14 +68,12 @@ struct QTimerInfo {
 
 class QTimerInfoList : public QList<QTimerInfo*>
 {
-#if (_POSIX_MONOTONIC_CLOCK-0 <= 0) || defined(QT_BOOTSTRAPPED)
     timeval previousTime;
     clock_t previousTicks;
     int ticksPerSecond;
     int msPerTick;
 
     bool timeChanged(timeval *delta);
-#endif
 
     // state variables used by activateTimers()
     QTimerInfo *firstTimerInfo;
