@@ -3,6 +3,8 @@
 
 #include "qstring.h"
 
+#include <time.h>
+
 QT_BEGIN_NAMESPACE
 
 // enough space to hold BOM, each char as surrogate pair and terminator
