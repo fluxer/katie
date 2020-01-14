@@ -82,7 +82,7 @@ public:
     QString string() const
     {
         if (stringValue.isEmpty() && !byteValue.isEmpty())
-            stringValue = QString::fromLocal8Bit(byteValue.constData(), byteValue.size());
+            stringValue = QString::fromLocal8Bit(byteValue.constData());
         return stringValue;
     }
 
@@ -105,7 +105,7 @@ public:
     }
     inline QString nameToString(const Key &name) const
     {
-        const QString sname = QString::fromLocal8Bit(name.constData(), name.size());
+        const QString sname = QString::fromLocal8Bit(name.constData());
         nameMap[sname] = name;
         return sname;
     }
