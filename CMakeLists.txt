@@ -234,6 +234,9 @@ katie_check_function(strerror_r "string.h")
 # SUSv2
 katie_check_function(localtime_r "time.h")
 katie_check_function(gmtime_r "time.h")
+# SVr2, removed in POSIX.1-2008
+katie_check_function(fcvt "stdlib.h")
+katie_check_function(ecvt "stdlib.h")
 
 if(KATIE_COMPILER MATCHES "(gcc|clang)")
     set(QT_VISIBILITY_AVAILABLE TRUE)

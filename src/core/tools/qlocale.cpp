@@ -2254,14 +2254,22 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 
         // NOT thread safe!
         if (form == DFDecimal) {
-            digits = QLatin1String(fcvt(d, precision, &decpt, &sign));
+#ifdef QT_HAVE_FCVT
+            digits = QLatin1String(::fcvt(d, precision, &decpt, &sign));
+#else
+            digits = QLatin1String(qfcvt(d, precision, &decpt, &sign));
+#endif
         } else {
             int pr = precision;
             if (form == DFExponent)
                 ++pr;
             else if (form == DFSignificantDigits && pr == 0)
                 pr = 1;
-            digits = QLatin1String(ecvt(d, pr, &decpt, &sign));
+#ifdef QT_HAVE_ECVT
+            digits = QLatin1String(::ecvt(d, pr, &decpt, &sign));
+#else
+            digits = QLatin1String(qecvt(d, pr, &decpt, &sign));
+#endif
 
             // Chop trailing zeros
             if (digits.length() > 0) {
