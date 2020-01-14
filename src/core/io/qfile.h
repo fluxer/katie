@@ -47,7 +47,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 
-class QAbstractFileEngine;
+class QFSFileEngine;
 class QFilePrivate;
 
 class Q_CORE_EXPORT QFile : public QIODevice
@@ -153,7 +153,7 @@ public:
     uchar *map(qint64 offset, qint64 size);
     bool unmap(uchar *address);
 
-    virtual QAbstractFileEngine *fileEngine() const;
+    virtual QFSFileEngine *fileEngine() const;
 
 
 protected:

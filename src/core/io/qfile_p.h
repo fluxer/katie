@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include "QtCore/qabstractfileengine.h"
+#include "QtCore/qfsfileengine.h"
 #include "QtCore/qiodevice_p.h"
 #include "QtCore/qringbuffer_p.h"
 
@@ -63,7 +63,7 @@ protected:
     bool openExternalFile(int flags, FILE *fh, QFile::FileHandleFlags handleFlags);
 
     QString fileName;
-    mutable QAbstractFileEngine *fileEngine;
+    mutable QFSFileEngine *fileEngine;
 
     bool lastWasWrite;
     QRingBuffer writeBuffer;

@@ -70,10 +70,8 @@ QFilePrivate::openExternalFile(int flags, int fd, QFile::FileHandleFlags handleF
     return false;
 #else
     delete fileEngine;
-    fileEngine = 0;
-    QFSFileEngine *fe = new QFSFileEngine;
-    fileEngine = fe;
-    return fe->open(QIODevice::OpenMode(flags), fd, handleFlags);
+    fileEngine = new QFSFileEngine;
+    return fileEngine->open(QIODevice::OpenMode(flags), fd, handleFlags);
 #endif
 }
 
@@ -86,10 +84,8 @@ QFilePrivate::openExternalFile(int flags, FILE *fh, QFile::FileHandleFlags handl
     return false;
 #else
     delete fileEngine;
-    fileEngine = 0;
-    QFSFileEngine *fe = new QFSFileEngine;
-    fileEngine = fe;
-    return fe->open(QIODevice::OpenMode(flags), fh, handleFlags);
+    fileEngine = new QFSFileEngine;
+    return fileEngine->open(QIODevice::OpenMode(flags), fh, handleFlags);
 #endif
 }
 
@@ -1453,11 +1449,11 @@ QFile::writeData(const char *data, qint64 len)
     \internal
     Returns the QIOEngine for this QFile object.
 */
-QAbstractFileEngine *QFile::fileEngine() const
+QFSFileEngine *QFile::fileEngine() const
 {
     Q_D(const QFile);
     if(!d->fileEngine)
-        d->fileEngine = QAbstractFileEngine::create(d->fileName);
+        d->fileEngine = new QFSFileEngine(d->fileName);
     return d->fileEngine;
 }
 

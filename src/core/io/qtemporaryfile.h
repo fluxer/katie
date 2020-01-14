@@ -79,7 +79,7 @@ public:
         { QFile file(fileName); return createLocalFile(file); }
     static QTemporaryFile *createLocalFile(QFile &file);
 
-    virtual QAbstractFileEngine *fileEngine() const;
+    virtual QFSFileEngine *fileEngine() const;
 
 protected:
     bool open(OpenMode flags);
