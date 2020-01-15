@@ -22,6 +22,7 @@ USE_XORG = xi xt xinerama xrandr xrender xcursor
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 
 OPTIONS_DEFINE = MYSQL PGSQL
+OPTIONS_SUB = yes
 MYSQL_DESC = Build MySQL database plugin
 MYSQL_USES = mysql
 MYSQL_CMAKE_ON = -DWITH_MYSQL=TRUE
