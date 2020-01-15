@@ -408,9 +408,8 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
             }
         }
 
-        int numFormats = _qt_NumFormats;
-        while (device && numFormats >= 0) {
-            const _qt_BuiltInFormatStruct *formatStruct = &_qt_BuiltInFormats[currentFormat];
+        for (int i = currentFormat; device && i < _qt_NumFormats; i++) {
+            const _qt_BuiltInFormatStruct *formatStruct = &_qt_BuiltInFormats[i];
 
             const qint64 pos = device->pos();
             switch (formatStruct->type) {
@@ -496,10 +495,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 #endif
                 break;
             }
-
-            --numFormats;
-            ++currentFormat;
-            currentFormat %= _qt_NumFormats;
         }
     }
 
