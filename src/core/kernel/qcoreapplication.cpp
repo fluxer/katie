@@ -144,9 +144,6 @@ void Q_CORE_EXPORT qt_call_post_routines()
 bool QCoreApplicationPrivate::is_app_running = false;
  // app closing down if true
 bool QCoreApplicationPrivate::is_app_closing = false;
-// initialized in qcoreapplication and in qtextstream autotest when setlocale is called.
-Q_CORE_EXPORT bool qt_locale_initialized = false;
-
 
 /*
   Create an instance of Katie.conf. This ensures that the settings will not
@@ -428,7 +425,6 @@ void QCoreApplication::init()
 
 #ifdef Q_OS_UNIX
     setlocale(LC_ALL, "");                // use correct char set mapping
-    qt_locale_initialized = true;
 #endif
 
     Q_ASSERT_X(!self, "QCoreApplication", "there should be only one application object");
