@@ -139,8 +139,8 @@ add_feature_info(tiff WITH_TIFF "build TIFF support")
 option(WITH_MNG "Build MNG support" ON)
 add_feature_info(mng WITH_MNG "build MNG support")
 
-option(WITH_DBUS "Build DBus support" ON)
-add_feature_info(dbus WITH_DBUS "build DBus support")
+option(WITH_DBUS "Build D-Bus support" ON)
+add_feature_info(dbus WITH_DBUS "build D-Bus support")
 
 option(WITH_FONTCONFIG "Build Fontconfig support" ON)
 add_feature_info(fontconfig WITH_FONTCONFIG "build Fontconfig support")
