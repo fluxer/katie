@@ -8,7 +8,7 @@ COMMENT = C++ toolkit derived from the Qt 4.8 framework
 LICENSE = KATIE BSD3CLAUSE LGPL21+ GFDL
 LICENSE_COMB = multi
 LICENSE_NAME_KATIE = The Qt Company Qt LGPL Exception version 1.1
-LICENSE_FILE_KATIE = ${WRKSRC}/LGPL_EXCEPTION.txt
+LICENSE_FILE_KATIE = ${WRKDIR}/katie-master/LGPL_EXCEPTION.txt
 LICENSE_PERMS_KATIE = dist-mirror pkg-mirror auto-accept
 
 MASTER_SITES = https://github.com/fluxer/katie/archive/
