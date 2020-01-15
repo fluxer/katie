@@ -273,10 +273,13 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 
 QString QHostInfo::localHostName()
 {
-    char hostName[HOST_NAME_MAX];
-    if (Q_LIKELY(::gethostname(hostName, sizeof(hostName)) == 0)) {
-        hostName[sizeof(hostName) - 1] = '\0';
-        return QString::fromLocal8Bit(hostName);
+    int size_max = sysconf(_SC_HOST_NAME_MAX);
+    if (size_max == -1)
+        size_max = _POSIX_HOST_NAME_MAX;
+    char gethostbuffer[size_max];
+    if (Q_LIKELY(::gethostname(gethostbuffer, size_max) == 0)) {
+        gethostbuffer[size_max - 1] = '\0';
+        return QString::fromLocal8Bit(gethostbuffer);
     }
     return QString();
 }
