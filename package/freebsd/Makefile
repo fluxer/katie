@@ -14,9 +14,10 @@ DISTFILES = master.tar.gz
 DIST_SUBDIR = ${PORTNAME}
 WRKSRC = ${WRKDIR}/katie-master
 
-USES = cmake xorg sqlite:3
+USES = pkgconfig cmake ssl xorg sqlite:3 mysql pgsql desktop-file-utils
 USE_XORG = xi xt xinerama xrandr xrender xcursor
-# BUILD_DEPENDS = pkgconf zstd icu pcre png jpeg-turbo tiff libmng freetype2 fontconfig dbus cups mysql pgsql libiodbc
+WANT_PGSQL = client
+# BUILD_DEPENDS = zstd icu pcre png jpeg-turbo tiff libmng freetype2 fontconfig dbus cups libiodbc
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 
 .include <bsd.port.mk> 
