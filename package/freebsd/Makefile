@@ -16,10 +16,20 @@ DISTFILES = master.tar.gz
 DIST_SUBDIR = ${PORTNAME}
 WRKSRC = ${WRKDIR}/katie-master
 
-USES = pkgconfig cmake ssl xorg sqlite:3 mysql pgsql desktop-file-utils
+USES = pkgconfig cmake ssl xorg sqlite:3 desktop-file-utils
 USE_XORG = xi xt xinerama xrandr xrender xcursor
-WANT_PGSQL = client
 # BUILD_DEPENDS = zstd icu pcre png jpeg-turbo tiff libmng freetype2 fontconfig dbus cups libiodbc
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
+
+OPTIONS_DEFINE = MYSQL PGSQL
+MYSQL_DESC = Build MySQL database plugin
+MYSQL_USES = mysql
+MYSQL_CMAKE_ON = -DWITH_MYSQL=TRUE
+MYSQL_CMAKE_OFF = -DWITH_MYSQL=FALSE
+PGSQL_DESC = Build PostgreSQL database plugin
+PGSQL_USES = mysql
+WANT_PGSQL = client
+PGSQL_CMAKE_ON = -DWITH_PSQL=TRUE
+PGSQL_CMAKE_OFF = -DWITH_PSQL=FALSE
 
 .include <bsd.port.mk> 
