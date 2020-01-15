@@ -16,7 +16,7 @@ DISTFILES = master.tar.gz
 DIST_SUBDIR = ${PORTNAME}
 WRKSRC = ${WRKDIR}/katie-master
 
-USES = pkgconfig cmake ssl xorg sqlite:3 desktop-file-utils
+USES = compiler:c++11-lang pkgconfig cmake ssl xorg sqlite:3 desktop-file-utils
 USE_XORG = xi xt xinerama xrandr xrender xcursor
 # BUILD_DEPENDS = zstd icu pcre png jpeg-turbo tiff libmng freetype2 fontconfig dbus cups libiodbc
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
