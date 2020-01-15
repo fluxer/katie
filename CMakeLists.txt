@@ -204,13 +204,6 @@ add_definitions(
     -DQT_NO_OPENTYPE
 )
 
-# used in qconfig.h
-set(QT_LARGEFILE_SUPPORT 64)
-add_definitions(
-    -D_LARGEFILE64_SOURCE
-    -D_LARGEFILE_SOURCE
-)
-
 # some things just cannot be done right, yet
 if(KATIE_ALLINONE)
     add_definitions(-DQT_ALLINONE)

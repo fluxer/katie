@@ -34,11 +34,17 @@
 #ifndef QPLATFORMDEFS_H
 #define QPLATFORMDEFS_H
 
-// Get Qt defines/settings
+// Get defines/settings
 #include "qconfig.h"
 
+// use LFS extension if required macros are defined, unless interface
+// offset is set to 64 in which case both interfaces are the same
+#if defined(_LARGEFILE64_SOURCE) && defined(_LARGEFILE_SOURCE) \
+    && (_FILE_OFFSET_BITS-0) != 64
+#  define QT_LARGEFILE_SUPPORT
+#endif
+
 #if defined(__linux__)
-#  define QT_USE_XOPEN_LFS_EXTENSIONS
 // 1) need to reset default environment if _BSD_SOURCE is defined
 // 2) need to specify POSIX thread interfaces explicitly in glibc 2.0
 // 3) it seems older glibc need this to include the X/Open stuff
@@ -63,7 +69,7 @@
 #include <sys/socket.h>
 #include <sys/stat.h>
 
-#if defined(QT_USE_XOPEN_LFS_EXTENSIONS) && defined(QT_LARGEFILE_SUPPORT)
+#if defined(QT_LARGEFILE_SUPPORT)
 
 #define QT_STATBUF              struct stat64
 #define QT_FPOS_T               fpos64_t
@@ -89,7 +95,7 @@
 
 #define QT_MMAP                 ::mmap64
 
-#else // !defined(QT_USE_XOPEN_LFS_EXTENSIONS) || !defined(QT_LARGEFILE_SUPPORT)
+#else // defined(QT_LARGEFILE_SUPPORT)
 
 #define QT_FPOS_T               fpos_t
 #define QT_OFF_T                long
@@ -127,7 +133,7 @@
 
 #define QT_MMAP                 ::mmap
 
-#endif // !defined (QT_USE_XOPEN_LFS_EXTENSIONS) || !defined(QT_LARGEFILE_SUPPORT)
+#endif // defined(QT_LARGEFILE_SUPPORT)
 
 #define QT_STAT_MASK            S_IFMT
 #define QT_STAT_REG             S_IFREG
@@ -167,7 +173,6 @@
 #define QT_CLOSEDIR             ::closedir
 
 #if defined(QT_LARGEFILE_SUPPORT) \
-        && defined(QT_USE_XOPEN_LFS_EXTENSIONS) \
         && !defined(QT_NO_READDIR64)
 #define QT_DIRENT               struct dirent64
 #define QT_READDIR              ::readdir64

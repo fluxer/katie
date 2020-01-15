@@ -379,7 +379,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 
 #ifdef Q_OS_LINUX
 // not in qplatformdefs.h since it is platform specific
-#if defined(QT_USE_XOPEN_LFS_EXTENSIONS) && defined(QT_LARGEFILE_SUPPORT)
+#if defined(QT_LARGEFILE_SUPPORT)
 #  define QT_SENDFILE ::sendfile64
 #else
 #  define QT_SENDFILE ::sendfile
