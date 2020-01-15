@@ -2,7 +2,7 @@
 
 PORTNAME = katie
 DISTVERSION = 4.9.0.20200114
-CATEGORIES = devel x11 ftp net ipv6 www
+CATEGORIES = devel x11 ftp net www
 MAINTAINER = xakepa10@gmail.com
 COMMENT = C++ toolkit derived from the Qt 4.8 framework
 LICENSE = KATIE BSD3CLAUSE LGPL21+ GFDL
