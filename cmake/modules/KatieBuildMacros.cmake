@@ -25,10 +25,27 @@ macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
     if(NOT HAVE_${FORFUNCTION})
         check_function_exists("${FORFUNCTION}" HAVE_${FORFUNCTION})
     endif()
+
     if(HAVE_${FORFUNCTION})
         string(TOUPPER "${FORFUNCTION}" upperfunction)
         add_definitions(-DQT_HAVE_${upperfunction})
     endif()
+endmacro()
+
+# a macro to check for function with 64-bit offset alternative, sets the result
+# of the check to regular function name if not available
+macro(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
+    set(savedefinitions ${CMAKE_REQUIRED_DEFINITIONS})
+    set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
+    check_symbol_exists("${FORFUNCTION}" "${FROMHEADER}" HAVE_${FORFUNCTION})
+    if(NOT HAVE_${FORFUNCTION})
+        check_function_exists("${FORFUNCTION}" HAVE_${FORFUNCTION})
+    endif()
+
+    if(NOT HAVE_${FORFUNCTION})
+        set(QT_LARGEFILE_SUPPORT FALSE)
+    endif()
+    set(CMAKE_REQUIRED_DEFINITIONS ${savedefinitions})
 endmacro()
 
 # a macro to write data to file, does nothing if the file exists and its

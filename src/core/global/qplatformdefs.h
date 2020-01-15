@@ -37,13 +37,6 @@
 // Get defines/settings
 #include "qconfig.h"
 
-// use LFS extension if required macros are defined, unless interface
-// offset is set to 64 in which case both interfaces are the same
-#if defined(_LARGEFILE64_SOURCE) && defined(_LARGEFILE_SOURCE) \
-    && (_FILE_OFFSET_BITS-0) != 64
-#  define QT_LARGEFILE_SUPPORT
-#endif
-
 #if defined(__linux__)
 // 1) need to reset default environment if _BSD_SOURCE is defined
 // 2) need to specify POSIX thread interfaces explicitly in glibc 2.0
@@ -69,7 +62,12 @@
 #include <sys/socket.h>
 #include <sys/stat.h>
 
-#if defined(QT_LARGEFILE_SUPPORT)
+// use LFS extension if required macros are defined, unless interface
+// offset is set to 64 in which case both interfaces are the same.
+// the host must support all of the functions, if that is the case
+// QT_LARGEFILE_SUPPORT is defined
+#if defined(_LARGEFILE64_SOURCE) && defined(_LARGEFILE_SOURCE) \
+    && (_FILE_OFFSET_BITS-0) != 64 && defined(QT_LARGEFILE_SUPPORT)
 
 #define QT_STATBUF              struct stat64
 #define QT_FPOS_T               fpos64_t
@@ -77,47 +75,50 @@
 
 #define QT_STAT                 ::stat64
 #define QT_LSTAT                ::lstat64
-#define QT_TRUNCATE             ::truncate64
-
-// File I/O
-#define QT_OPEN                 ::open64
-#define QT_LSEEK                ::lseek64
 #define QT_FSTAT                ::fstat64
-#define QT_FTRUNCATE            ::ftruncate64
-#define QT_CREAT                ::creat64
 
-// Standard C89
+#define QT_OPEN                 ::open64
+#define QT_CREAT                ::creat64
+#define QT_LSEEK                ::lseek64
+#define QT_TRUNCATE             ::truncate64
 #define QT_FOPEN                ::fopen64
 #define QT_FSEEK                ::fseeko64
 #define QT_FTELL                ::ftello64
 #define QT_FGETPOS              ::fgetpos64
 #define QT_FSETPOS              ::fsetpos64
-
+#define QT_FTRUNCATE            ::ftruncate64
 #define QT_MMAP                 ::mmap64
 
-#else // defined(QT_LARGEFILE_SUPPORT)
+#define QT_DIRENT               struct dirent64
+#define QT_READDIR              ::readdir64
+#define QT_READDIR_R            ::readdir64_r
 
+#define QT_OPEN_LARGEFILE       O_LARGEFILE
+
+#else // QT_LARGEFILE_SUPPORT
+
+#define QT_STATBUF              struct stat
 #define QT_FPOS_T               fpos_t
 #define QT_OFF_T                long
 
+#define QT_STAT                 ::stat
+#define QT_LSTAT                ::lstat
+#define QT_FSTAT                ::fstat
+#define QT_OPEN                 ::open
+#define QT_CREAT                ::creat
+#define QT_LSEEK                ::lseek
+#define QT_TRUNCATE             ::truncate
 #define QT_FOPEN                ::fopen
 #define QT_FSEEK                ::fseek
 #define QT_FTELL                ::ftell
 #define QT_FGETPOS              ::fgetpos
 #define QT_FSETPOS              ::fsetpos
-
-#define QT_STATBUF              struct stat
-
-#define QT_STAT                 ::stat
-#define QT_LSTAT                ::lstat
-#define QT_TRUNCATE             ::truncate
-
-// File I/O
-#define QT_OPEN                 ::open
-#define QT_LSEEK                ::lseek
-#define QT_FSTAT                ::fstat
 #define QT_FTRUNCATE            ::ftruncate
-#define QT_CREAT                ::creat
+#define QT_MMAP                 ::mmap
+
+#define QT_DIRENT               struct dirent
+#define QT_READDIR              ::readdir
+#define QT_READDIR_R            ::readdir_r
 
 // Posix extensions to C89
 #if !defined(QT_NO_USE_FSEEKO)
@@ -131,9 +132,9 @@
 #define QT_FTELL                ::ftello
 #endif
 
-#define QT_MMAP                 ::mmap
+#define QT_OPEN_LARGEFILE       0
 
-#endif // defined(QT_LARGEFILE_SUPPORT)
+#endif // QT_LARGEFILE_SUPPORT
 
 #define QT_STAT_MASK            S_IFMT
 #define QT_STAT_REG             S_IFREG
@@ -145,17 +146,10 @@
 #define QT_CHDIR                ::chdir
 #define QT_MKDIR                ::mkdir
 #define QT_RMDIR                ::rmdir
-
-// File I/O
 #define QT_CLOSE                ::close
 #define QT_READ                 ::read
 #define QT_WRITE                ::write
 
-#if defined(__FreeBSD__) || defined(__OpenBSD__)
-#  define QT_OPEN_LARGEFILE     0
-#else
-#  define QT_OPEN_LARGEFILE     O_LARGEFILE
-#endif
 #define QT_OPEN_RDONLY          O_RDONLY
 #define QT_OPEN_WRONLY          O_WRONLY
 #define QT_OPEN_RDWR            O_RDWR
@@ -164,24 +158,12 @@
 #define QT_OPEN_APPEND          O_APPEND
 
 // Posix extensions to C89
-#define QT_FILENO               fileno
+#define QT_FILENO               ::fileno
 
-// Directory iteration
 #define QT_DIR                  DIR
 
 #define QT_OPENDIR              ::opendir
 #define QT_CLOSEDIR             ::closedir
-
-#if defined(QT_LARGEFILE_SUPPORT) \
-        && !defined(QT_NO_READDIR64)
-#define QT_DIRENT               struct dirent64
-#define QT_READDIR              ::readdir64
-#define QT_READDIR_R            ::readdir64_r
-#else
-#define QT_DIRENT               struct dirent
-#define QT_READDIR              ::readdir
-#define QT_READDIR_R            ::readdir_r
-#endif
 
 #if defined(__GLIBC__) && (__GLIBC__ < 2)
 #define QT_SOCKLEN_T            int
