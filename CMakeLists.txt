@@ -231,7 +231,7 @@ katie_check_function(gmtime_r "time.h")
 katie_check_function(fcvt "stdlib.h")
 katie_check_function(ecvt "stdlib.h")
 
-# 64-bit offset alternatives, if any of the function is not found it will set
+# 64-bit offset alternatives, if any of the functions is not found it will set
 # QT_LARGEFILE_SUPPORT to FALSE. QT_LARGEFILE_SUPPORT is used in qconfig.h
 set(QT_LARGEFILE_SUPPORT TRUE)
 katie_check_function64(stat64 "sys/stat.h")

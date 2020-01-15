@@ -32,9 +32,9 @@ macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
     endif()
 endmacro()
 
-# a macro to check for function with 64-bit offset alternative, sets the result
-# of the check to regular function name if not available
-macro(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
+# a function to check for function with 64-bit offset alternative, sets
+# QT_LARGEFILE_SUPPORT to FALSE if not available
+function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
     set(savedefinitions ${CMAKE_REQUIRED_DEFINITIONS})
     set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
     check_symbol_exists("${FORFUNCTION}" "${FROMHEADER}" HAVE_${FORFUNCTION})
@@ -46,10 +46,10 @@ macro(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
         set(QT_LARGEFILE_SUPPORT FALSE)
     endif()
     set(CMAKE_REQUIRED_DEFINITIONS ${savedefinitions})
-endmacro()
+endfunction()
 
 # a macro to write data to file, does nothing if the file exists and its
-# content is the same as the data
+# content is the same as the data to be written
 macro(KATIE_WRITE_FILE OUTFILE DATA)
     if(NOT EXISTS "${OUTFILE}")
         file(WRITE "${OUTFILE}" "${DATA}")
@@ -62,7 +62,7 @@ macro(KATIE_WRITE_FILE OUTFILE DATA)
 endmacro()
 
 # a macro to create camel-case headers pointing to their lower-case alternative
-# as well as meta header that includes component headers
+# as well as meta header that includes all component headers
 macro(KATIE_GENERATE_PUBLIC PUBLIC_INCLUDES SUBDIR)
     foreach(pubheader ${PUBLIC_INCLUDES})
         string(TOLOWER ${pubheader} pubname)
