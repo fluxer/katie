@@ -606,7 +606,7 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
 */
 QList<QByteArray> QImageWriter::supportedImageFormats()
 {
-    QSet<QByteArray> formats;
+    QList<QByteArray> formats;
     formats << "bmp";
 #ifndef QT_NO_IMAGEFORMAT_PPM
     formats << "ppm";
@@ -643,12 +643,8 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
     }
 #endif // QT_NO_LIBRARY
 
-    QList<QByteArray> sortedFormats;
-    for (QSet<QByteArray>::ConstIterator it = formats.constBegin(); it != formats.constEnd(); ++it)
-        sortedFormats << *it;
-
-    qSort(sortedFormats);
-    return sortedFormats;
+    qSort(formats);
+    return formats;
 }
 
 QT_END_NAMESPACE
