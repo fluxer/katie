@@ -50,6 +50,7 @@
 #include "QtCore/qsettings.h"
 #include "qobject_p.h"
 
+#include <bitset>
 
 QT_BEGIN_NAMESPACE
 
@@ -108,9 +109,7 @@ public:
     static bool is_app_running;
     static bool is_app_closing;
 
-    static uint attribs;
-    static inline bool testAttribute(uint flag)
-        { return attribs & (1 << flag); }
+    static std::bitset<Qt::AA_AttributeCount> attribs;
 #ifndef QT_NO_SETTINGS
     static QSettings *staticConf();
 #endif

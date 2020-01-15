@@ -1021,7 +1021,7 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
     if (++QWidgetPrivate::instanceCounter > QWidgetPrivate::maxInstances)
         QWidgetPrivate::maxInstances = QWidgetPrivate::instanceCounter;
 
-    if (QApplicationPrivate::testAttribute(Qt::AA_ImmediateWidgetCreation))
+    if (QApplication::testAttribute(Qt::AA_ImmediateWidgetCreation))
         q->create();
 
 
@@ -1105,7 +1105,7 @@ void QWidget::create(WId window, bool initializeWindow, bool destroyOldWindow)
     if (paintOnScreenEnv == 1)
         setAttribute(Qt::WA_PaintOnScreen);
 
-    if (QApplicationPrivate::testAttribute(Qt::AA_NativeWindows))
+    if (QApplication::testAttribute(Qt::AA_NativeWindows))
         setAttribute(Qt::WA_NativeWindow);
 
 #ifdef ALIEN_DEBUG
@@ -8805,7 +8805,7 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
         oldBs->moveStaticWidgets(this);
     }
 
-    if (QApplicationPrivate::testAttribute(Qt::AA_ImmediateWidgetCreation)
+    if (QApplication::testAttribute(Qt::AA_ImmediateWidgetCreation)
         && !testAttribute(Qt::WA_WState_Created))
         create();
 

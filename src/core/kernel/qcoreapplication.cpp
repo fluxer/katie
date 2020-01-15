@@ -178,7 +178,7 @@ void qt_set_current_thread_to_main_thread()
 
 QCoreApplication *QCoreApplication::self = 0;
 QAbstractEventDispatcher *QCoreApplicationPrivate::eventDispatcher = 0;
-uint QCoreApplicationPrivate::attribs;
+std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 
 #ifdef Q_OS_UNIX
 Qt::HANDLE qt_application_thread_id = 0;
@@ -521,10 +521,7 @@ QCoreApplication::~QCoreApplication()
 */
 void QCoreApplication::setAttribute(Qt::ApplicationAttribute attribute, bool on)
 {
-    if (on)
-        QCoreApplicationPrivate::attribs |= 1 << attribute;
-    else
-        QCoreApplicationPrivate::attribs &= ~(1 << attribute);
+    QCoreApplicationPrivate::attribs.set(attribute, on);
 }
 
 /*!
@@ -535,7 +532,7 @@ void QCoreApplication::setAttribute(Qt::ApplicationAttribute attribute, bool on)
  */
 bool QCoreApplication::testAttribute(Qt::ApplicationAttribute attribute)
 {
-    return QCoreApplicationPrivate::testAttribute(attribute);
+    return QCoreApplicationPrivate::attribs.test(attribute);
 }
 
 
