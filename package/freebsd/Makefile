@@ -5,9 +5,11 @@ DISTVERSION = 4.9.0.20200114
 CATEGORIES = devel x11
 MAINTAINER = xakepa10@gmail.com
 COMMENT = C++ toolkit derived from the Qt 4.8 framework
-LICENSE = BSD3CLAUSE LGPL21+ GFDL
+LICENSE = KATIE BSD3CLAUSE LGPL21+ GFDL
 LICENSE_COMB = multi
-LICENSE_FILE = ${WRKSRC}/LGPL_EXCEPTION.txt
+LICENSE_NAME_KATIE = The Qt Company Qt LGPL Exception version 1.1
+LICENSE_FILE_KATIE = ${WRKSRC}/LGPL_EXCEPTION.txt
+LICENSE_PERMS_KATIE = dist-mirror pkg-mirror auto-accept
 
 MASTER_SITES = https://github.com/fluxer/katie/archive/
 DISTFILES = master.tar.gz
