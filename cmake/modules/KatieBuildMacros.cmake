@@ -43,7 +43,7 @@ function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
     endif()
 
     if(NOT HAVE_${FORFUNCTION})
-        set(QT_LARGEFILE_SUPPORT FALSE)
+        set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
     endif()
     set(CMAKE_REQUIRED_DEFINITIONS ${savedefinitions})
 endfunction()
