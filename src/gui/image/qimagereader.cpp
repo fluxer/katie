@@ -149,74 +149,69 @@
 
 QT_BEGIN_NAMESPACE
 
-enum _qt_BuiltInFormatType {
+enum qBuiltInFormatType {
 #ifndef QT_NO_IMAGEFORMAT_PNG
-    _qt_PngFormat,
+    qPngFormat = 0,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_JPEG
-    _qt_JpgFormat,
+    qJpgFormat = 1,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_MNG
-    _qt_MngFormat,
+    qMngFormat = 2,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_TIFF
-    _qt_TifFormat,
+    qTifFormat = 3,
 #endif
 #ifdef QT_BUILTIN_GIF_READER
-    _qt_GifFormat,
+    qGifFormat = 4,
 #endif
-    _qt_BmpFormat,
+    qBmpFormat = 5,
 #ifndef QT_NO_IMAGEFORMAT_PPM
-    _qt_PpmFormat,
-    _qt_PgmFormat,
-    _qt_PbmFormat,
+    qPpmFormat = 6,
+    qPgmFormat = 7,
+    qPbmFormat = 8,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XBM
-    _qt_XbmFormat,
+    qXbmFormat = 9,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
-    _qt_XpmFormat,
+    qXpmFormat = 10,
 #endif
-    _qt_NumFormats,
-    _qt_NoFormat = -1
 };
 
-struct _qt_BuiltInFormatStruct
-{
-    _qt_BuiltInFormatType type;
+static const struct ImageFormatTblData {
+    const qBuiltInFormatType format;
     const char *extension;
-};
-
-static const _qt_BuiltInFormatStruct _qt_BuiltInFormats[] = {
+} ImageFormatTbl[] = {
 #ifndef QT_NO_IMAGEFORMAT_PNG
-    {_qt_PngFormat, "png"},
+    { qPngFormat, "png" },
 #endif
 #ifndef QT_NO_IMAGEFORMAT_JPEG
-    {_qt_JpgFormat, "jpg"},
+    { qJpgFormat, "jpg" },
 #endif
 #ifndef QT_NO_IMAGEFORMAT_MNG
-    {_qt_MngFormat, "mng"},
+    { qMngFormat, "mng" },
 #endif
 #ifndef QT_NO_IMAGEFORMAT_TIFF
-    {_qt_TifFormat, "tif"},
+    { qTifFormat, "tif" },
 #endif
 #ifdef QT_BUILTIN_GIF_READER
-    {_qt_GifFormat, "gif"},
+    { qGifFormat, "gif" },
 #endif
-    {_qt_BmpFormat, "bmp"},
+    { qBmpFormat, "bmp" },
 #ifndef QT_NO_IMAGEFORMAT_PPM
-    {_qt_PpmFormat, "ppm"},
-    {_qt_PgmFormat, "pgm"},
-    {_qt_PbmFormat, "pbm"},
+    { qPpmFormat, "ppm" },
+    { qPgmFormat, "pgm" },
+    { qPbmFormat, "pbm" },
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XBM
-    {_qt_XbmFormat, "xbm"},
+    { qXbmFormat, "xbm" },
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
-    {_qt_XpmFormat, "xpm"},
+    { qXpmFormat, "xpm" },
 #endif
-    {_qt_NoFormat, ""}
 };
+static const qint16 ImageFormatTblSize = sizeof(ImageFormatTbl) / sizeof(ImageFormatTblData);
 
 static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
                                                 const QByteArray &format,
@@ -294,7 +289,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         const qint64 pos = device ? device->pos() : 0;
 
         if (autoDetectImageFormat) {
-            for (int i = 0; i < keys.size(); ++i) {
+            for (int i = 0; i < keys.size(); i++) {
                 if (i != suffixPluginIndex) {
                     QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
                     if (plugin && plugin->capabilities(device, testFormat) & QImageIOPlugin::CanRead) {
@@ -376,7 +371,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     if (!handler && (autoDetectImageFormat || ignoresFormatAndExtension)) {
         // check if any of our plugins recognize the file from its contents.
         const qint64 pos = device ? device->pos() : 0;
-        for (int i = 0; i < keys.size(); ++i) {
+        for (int i = 0; i < keys.size(); i++) {
             if (i != suffixPluginIndex) {
                 QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
                 if (plugin && plugin->capabilities(device, QByteArray()) & QImageIOPlugin::CanRead) {
@@ -396,76 +391,74 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     if (!handler && (autoDetectImageFormat || ignoresFormatAndExtension)) {
         // check if any of our built-in handlers recognize the file from its
         // contents.
-        int currentFormat = 0;
+        qint16 currentFormat = 0;
         if (!suffix.isEmpty()) {
             // If reading from a file with a suffix, start testing our
             // built-in handler for that suffix first.
-            for (int i = 0; i < _qt_NumFormats; ++i) {
-                if (_qt_BuiltInFormats[i].extension == suffix) {
+            for (qint16 i = 0; i < ImageFormatTblSize; i++) {
+                if (ImageFormatTbl[i].extension == suffix) {
                     currentFormat = i;
                     break;
                 }
             }
         }
 
-        for (int i = currentFormat; device && i < _qt_NumFormats; i++) {
-            const _qt_BuiltInFormatStruct *formatStruct = &_qt_BuiltInFormats[i];
-
+        for (qint16 i = currentFormat; device && i < ImageFormatTblSize; i++) {
             const qint64 pos = device->pos();
-            switch (formatStruct->type) {
+            switch (ImageFormatTbl[i].format) {
 #ifndef QT_NO_IMAGEFORMAT_PNG
-                case _qt_PngFormat: {
+                case qPngFormat: {
                     if (QPngHandler::canRead(device))
                         handler = new QPngHandler;
                     break;
                 }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_JPEG
-                case _qt_JpgFormat: {
+                case qJpgFormat: {
                     if (QJpegHandler::canRead(device))
                         handler = new QJpegHandler;
                     break;
                 }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_MNG
-                case _qt_MngFormat: {
+                case qMngFormat: {
                     if (QMngHandler::canRead(device))
                         handler = new QMngHandler;
                     break;
                 }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_TIFF
-                case _qt_TifFormat: {
+                case qTifFormat: {
                     if (QTiffHandler::canRead(device))
                         handler = new QTiffHandler;
                     break;
                 }
 #endif
 #ifdef QT_BUILTIN_GIF_READER
-                case _qt_GifFormat: {
+                case qGifFormat: {
                     if (QGifHandler::canRead(device))
                         handler = new QGifHandler;
                     break;
                 }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_BMP
-                case _qt_BmpFormat: {
+                case qBmpFormat: {
                     if (QBmpHandler::canRead(device))
                         handler = new QBmpHandler;
                     break;
                 }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
-                case _qt_XpmFormat: {
+                case qXpmFormat: {
                     if (QXpmHandler::canRead(device))
                         handler = new QXpmHandler;
                     break;
                 }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
-                case _qt_PbmFormat:
-                case _qt_PgmFormat:
-                case _qt_PpmFormat: {
+                case qPbmFormat:
+                case qPgmFormat:
+                case qPpmFormat: {
                     QByteArray subType;
                     if (QPpmHandler::canRead(device, &subType)) {
                         handler = new QPpmHandler;
@@ -475,22 +468,19 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
                 }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XBM
-                case _qt_XbmFormat: {
+                case qXbmFormat: {
                     if (QXbmHandler::canRead(device))
                         handler = new QXbmHandler;
                     break;
                 }
 #endif
-                default: {
-                    break;
-                }
             }
             if (!device->isSequential())
                 device->seek(pos);
 
             if (handler) {
 #ifdef QIMAGEREADER_DEBUG
-                qDebug() << "QImageReader::createReadHandler: the" << formatStruct->extension
+                qDebug() << "QImageReader::createReadHandler: the" << ImageFormatTbl[i].extension
                          << "built-in handler can read this data";
 #endif
                 break;
@@ -1428,14 +1418,14 @@ QByteArray QImageReader::imageFormat(QIODevice *device)
 QList<QByteArray> QImageReader::supportedImageFormats()
 {
     QList<QByteArray> formats;
-    for (int i = 0; i < _qt_NumFormats; ++i)
-        formats << _qt_BuiltInFormats[i].extension;
+    for (qint16 i = 0; i < ImageFormatTblSize; i++)
+        formats << ImageFormatTbl[i].extension;
 
 #ifndef QT_NO_LIBRARY
     QFactoryLoader *l = imageloader();
     QStringList keys = l->keys();
 
-    for (int i = 0; i < keys.count(); ++i) {
+    for (int i = 0; i < keys.count(); i++) {
         QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
         if (plugin && plugin->capabilities(0, keys.at(i).toLatin1()) & QImageIOPlugin::CanRead)
             formats << keys.at(i).toLatin1();
