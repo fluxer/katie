@@ -37,14 +37,11 @@
 #include <QString>
 #include <QDirIterator>
 #include <qtest.h>
-
-#include <stdio.h>
+#include "qplatformdefs.h"
 
 QT_USE_NAMESPACE
 
-#define BUFSIZE 1024*512
-#define FACTOR 1024*512
-#define TF_SIZE FACTOR*81
+#define TF_SIZE QT_BUFFSIZE*81
 
 // 10 predefined (but random() seek positions
 // hardcoded to be comparable over several runs
@@ -110,7 +107,7 @@ private:
     void readSmallFiles_data(BenchmarkType type, QIODevice::OpenModeFlag t, QIODevice::OpenModeFlag b);
     void readSmallFiles();
     void createFile();
-    void fillFile(int factor=FACTOR);
+    void fillFile(int factor=QT_BUFFSIZE);
     void removeFile();
     void createSmallFiles();
     void removeSmallFiles();
@@ -218,7 +215,7 @@ void tst_qfile::readBigFile()
     QFETCH(QFile::OpenModeFlag, textMode);
     QFETCH(QFile::OpenModeFlag, bufferedMode);
 
-    char *buffer = new char[BUFSIZE];
+    char *buffer = new char[QT_BUFFSIZE];
     createFile();
     fillFile();
 
@@ -478,7 +475,7 @@ void tst_qfile::readSmallFiles()
 
     QDir dir(tmpDirName);
     const QStringList files = dir.entryList(QDir::NoDotAndDotDot|QDir::NoSymLinks|QDir::Files);
-    char *buffer = new char[BUFSIZE];
+    char *buffer = new char[QT_BUFFSIZE];
 
     switch (testType) {
         case(QFileBenchmark): {

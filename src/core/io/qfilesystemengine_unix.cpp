@@ -400,7 +400,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 // TODO: FreeBSD sendfile() support, signature is different
 #else
     size_t totalwrite = 0;
-    char copybuffer[BUFSIZ]; // BUFSIZ is defined in stdio.h
+    char copybuffer[QT_BUFFSIZE];
     while (QT_OFF_T(totalwrite) != tocopy) {
         const size_t readresult = QT_READ(sourcefd, copybuffer, sizeof(copybuffer));
         if (readresult == -1) {
