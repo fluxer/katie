@@ -41,10 +41,6 @@
 
 #ifndef QT_NO_LIBRARY
 
-#if defined(QT_AOUT_UNDERSCORE)
-#include <string.h>
-#endif
-
 #if defined (Q_OS_NACL)
 #define QT_NO_DYNAMIC_LIBRARY
 #endif
@@ -203,14 +199,7 @@ bool QLibraryPrivate::unload_sys()
 
 void* QLibraryPrivate::resolve_sys(const char* symbol)
 {
-#if defined(QT_AOUT_UNDERSCORE)
-    // older a.out systems add an underscore in front of symbols
-    char* undrscr_symbol = new char[strlen(symbol)+2];
-    undrscr_symbol[0] = '_';
-    strcpy(undrscr_symbol+1, symbol);
-    void* address = ::dlsym(pHnd, undrscr_symbol);
-    delete [] undrscr_symbol;
-#elif defined (QT_NO_DYNAMIC_LIBRARY)
+#if defined (QT_NO_DYNAMIC_LIBRARY)
     void *address = Q_NULLPTR;
 #else
     void* address = ::dlsym(pHnd, symbol);

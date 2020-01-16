@@ -44,13 +44,6 @@
 #  ifndef _GNU_SOURCE
 #    define _GNU_SOURCE
 #  endif
-
-#elif defined(__OpenBSD__)
-// Older OpenBSD versions may still use the a.out format instead of ELF.
-#  ifndef __ELF__
-#  define QT_AOUT_UNDERSCORE
-#  endif
-
 #endif
 
 #include <unistd.h>
