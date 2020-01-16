@@ -234,6 +234,7 @@ katie_check_function(ecvt "stdlib.h")
 katie_check_function(getprogname "stdlib.h")
 # GNU
 katie_check_function(get_current_dir_name "unistd.h")
+# ISO/IEC 9899:1999
 katie_check_function(fegetenv "fenv.h")
 katie_check_function(fesetenv "fenv.h")
 katie_check_function(feclearexcept "fenv.h")
