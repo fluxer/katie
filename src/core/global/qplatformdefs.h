@@ -37,15 +37,6 @@
 // Get defines/settings
 #include "qconfig.h"
 
-#if defined(__linux__)
-// 1) need to reset default environment if _BSD_SOURCE is defined
-// 2) need to specify POSIX thread interfaces explicitly in glibc 2.0
-// 3) it seems older glibc need this to include the X/Open stuff
-#  ifndef _GNU_SOURCE
-#    define _GNU_SOURCE
-#  endif
-#endif
-
 #include <unistd.h>
 #include <stdio.h>
 #include <dirent.h>
