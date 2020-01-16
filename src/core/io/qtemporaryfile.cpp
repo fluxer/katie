@@ -111,7 +111,7 @@ static bool createFileFromTemplate(int &file,
             0600);
 
     if (file == -1) {
-        error = QSystemError(errno, QSystemError::NativeError);
+        error = QSystemError(errno, QSystemError::StandardLibraryError);
         return false;
     }
 

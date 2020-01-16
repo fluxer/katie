@@ -52,45 +52,34 @@ QT_BEGIN_NAMESPACE
 class Q_CORE_EXPORT QSystemError
 {
 public:
-    enum ErrorScope
-    {
+    enum ErrorScope {
         NoError,
-        StandardLibraryError,
-        NativeError
+        StandardLibraryError
     };
-    
+
     inline QSystemError(int error, ErrorScope scope);
     inline QSystemError();
-    
+
     QString toString();
-    inline ErrorScope scope();
-    inline int error();
-    
+    inline ErrorScope scope() { return errorScope; }
+    inline int error() { return errorCode; }
+
+private:
     //data members
     int errorCode;
     ErrorScope errorScope;
 };
 
 QSystemError::QSystemError(int error, QSystemError::ErrorScope scope)
-: errorCode(error), errorScope(scope)
+    : errorCode(error), errorScope(scope)
 {
 
 }
 
 QSystemError::QSystemError()
-: errorCode(0), errorScope(NoError)
+    : errorCode(0), errorScope(NoError)
 {
 
-}
-
-QSystemError::ErrorScope QSystemError::scope()
-{
-    return errorScope;
-}
-
-int QSystemError::error()
-{
-    return errorCode;
 }
 
 

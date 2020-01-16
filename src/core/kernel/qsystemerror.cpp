@@ -31,24 +31,18 @@
 **
 ****************************************************************************/
 
-#include "qglobal.h"
 #include "qsystemerror_p.h"
 
 QT_BEGIN_NAMESPACE
 
 QString QSystemError::toString()
 {
-    switch(errorScope) {
-    // native and standard library are the same
-    case NativeError:
-    case StandardLibraryError:
+    if (Q_LIKELY(errorScope == QSystemError::StandardLibraryError)) {
         return qt_error_string(errorCode);
-    default:
-        qWarning("invalid error scope");
-        //fall through
-    case NoError:
-        return QLatin1String("No error");
     }
+
+    qWarning("invalid error scope");
+    return QLatin1String("No error");
 }
 
 QT_END_NAMESPACE
