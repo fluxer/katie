@@ -232,6 +232,12 @@ katie_check_function(fcvt "stdlib.h")
 katie_check_function(ecvt "stdlib.h")
 # NetBSD 1.6 and FreeBSD 4.4
 katie_check_function(getprogname "stdlib.h")
+# GNU
+katie_check_function(get_current_dir_name "unistd.h")
+katie_check_function(fegetenv "fenv.h")
+katie_check_function(fesetenv "fenv.h")
+katie_check_function(feclearexcept "fenv.h")
+katie_check_function(feenableexcept "fenv.h")
 
 # 64-bit offset alternatives, if any of the functions is not found it will set
 # QT_LARGEFILE_SUPPORT to FALSE. QT_LARGEFILE_SUPPORT is used in qconfig.h
