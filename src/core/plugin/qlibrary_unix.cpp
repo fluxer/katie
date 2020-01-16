@@ -177,8 +177,7 @@ bool QLibraryPrivate::load_sys()
 #endif // QT_NO_DYNAMIC_LIBRARY
     if (!pHnd) {
         errorString = QLibrary::tr("Cannot load library %1: %2").arg(fileName).arg(qdlerror());
-    }
-    if (pHnd) {
+    } else {
         qualifiedFileName = attempt;
         errorString.clear();
     }
