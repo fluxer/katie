@@ -6,6 +6,7 @@ set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
 set(KATIE_LRELEASE "lrelease")
 
+include(CMakePushCheckState)
 include(CheckSymbolExists)
 include(CheckFunctionExists)
 
@@ -35,7 +36,7 @@ endmacro()
 # a function to check for function with 64-bit offset alternative, sets
 # QT_LARGEFILE_SUPPORT to FALSE if not available
 function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
-    set(savedefinitions ${CMAKE_REQUIRED_DEFINITIONS})
+    cmake_reset_check_state()
     set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
     check_symbol_exists("${FORFUNCTION}" "${FROMHEADER}" HAVE_${FORFUNCTION})
     if(NOT HAVE_${FORFUNCTION})
@@ -45,7 +46,7 @@ function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
     if(NOT HAVE_${FORFUNCTION})
         set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
     endif()
-    set(CMAKE_REQUIRED_DEFINITIONS ${savedefinitions})
+    cmake_pop_check_state()
 endfunction()
 
 # a macro to write data to file, does nothing if the file exists and its
