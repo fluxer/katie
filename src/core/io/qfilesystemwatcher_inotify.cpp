@@ -177,26 +177,13 @@ void QInotifyFileSystemWatcherEngine::readFromInotify()
     char *at = buffer.data();
     char * const end = at + buffSize;
 
-    QHash<int, inotify_event *> eventForId;
     while (at < end) {
         inotify_event *event = reinterpret_cast<inotify_event *>(at);
-
-        if (eventForId.contains(event->wd))
-            eventForId[event->wd]->mask |= event->mask;
-        else
-            eventForId.insert(event->wd, event);
-
         at += sizeof(inotify_event) + event->len;
-    }
 
-    QHash<int, inotify_event *>::const_iterator it = eventForId.constBegin();
-    while (it != eventForId.constEnd()) {
-        const inotify_event &event = **it;
-        ++it;
+        // qDebug() << "inotify event, wd" << event->wd << "mask" << hex << event->mask;
 
-        // qDebug() << "inotify event, wd" << event.wd << "mask" << hex << event.mask;
-
-        int id = event.wd;
+        int id = event->wd;
         QString path = idToPath.value(id);
         if (path.isEmpty()) {
             // perhaps a directory?
@@ -208,10 +195,10 @@ void QInotifyFileSystemWatcherEngine::readFromInotify()
 
         // qDebug() << "event for path" << path;
 
-        if ((event.mask & (IN_DELETE_SELF | IN_MOVE_SELF | IN_UNMOUNT)) != 0) {
+        if ((event->mask & (IN_DELETE_SELF | IN_MOVE_SELF | IN_UNMOUNT)) != 0) {
             pathToID.remove(path);
             idToPath.remove(id);
-            ::inotify_rm_watch(inotifyFd, event.wd);
+            ::inotify_rm_watch(inotifyFd, event->wd);
 
             if (id < 0)
                 emit directoryChanged(path, true);
