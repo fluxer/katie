@@ -55,7 +55,7 @@
 #include <zstd_errors.h>
 
 // ZSTD_getErrorString and ZSTD_getErrorCode are not exported in versions prior to v1.1.3
-#if !defined(QT_VISIBILITY_AVAILABLE) || (ZSTD_VERSION_MAJOR + ZSTD_VERSION_MINOR + ZSTD_VERSION_RELEASE) >= 5
+#if !defined(QT_VISIBILITY_AVAILABLE) || (ZSTD_VERSION_NUMBER >= 10103)
 #  define QT_USE_ZSTD_ERROR
 #endif
 
