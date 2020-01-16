@@ -36,7 +36,7 @@
 #include "qtextstream.h"
 #include "qvariant.h"
 #include "qfile.h"
-#include "qfsfileengine.h"
+#include "qabstractfileengine.h"
 #include "qmath.h"
 #include "qharfbuzz_p.h"
 #include "qfontengine_ft_p.h"

@@ -602,7 +602,7 @@ QTemporaryFile *QTemporaryFile::createLocalFile(QFile &file)
    \internal
 */
 
-QFSFileEngine *QTemporaryFile::fileEngine() const
+QAbstractFileEngine *QTemporaryFile::fileEngine() const
 {
     Q_D(const QTemporaryFile);
     if(!d->fileEngine) {
