@@ -187,13 +187,51 @@ void QCursor::setPos(int x, int y)
     XWarpPointer(qt_x11Data->display, XNone, QX11Info::appRootWindow(screen), 0, 0, 0, 0, x, y);
 }
 
+// values are from:
+// https://www.freedesktop.org/wiki/Specifications/cursor-spec/
+// https://tronche.com/gui/x/xlib/appendix/b/
+static const struct CursorTblData {
+    const int font;
+    const char* name;
+    const char* alternative;
+} CursorTbl[] = {
+    { XC_left_ptr, "left_ptr", "default" }, // Qt::ArrowCursor
+    { XC_center_ptr, "up_arrow", Q_NULLPTR }, // Qt::UpArrowCursor
+    { XC_crosshair, "cross", "crosshair" }, // Qt::CrossCursor
+    { XC_watch, "wait", "watch" }, // Qt::WaitCursor
+    { XC_xterm, "ibeam", "text" }, // Qt::IBeamCursor
+    { XC_sb_v_double_arrow, "size_ver", "ns-resize" }, // Qt::SizeVerCursor
+    { XC_sb_h_double_arrow, "size_hor", "ew-resize" }, // Qt::SizeHorCursor
+    { XC_top_right_corner, "size_bdiag", "nwse-resize" }, // Qt::SizeBDiagCursor
+    { XC_bottom_right_corner, "size_fdiag", "nesw-resize" }, // Qt::SizeFDiagCursor
+    { XC_fleur, "size_all", Q_NULLPTR }, // Qt::SizeAllCursor
+    { -1, "blank", Q_NULLPTR }, // Qt::BlankCursor
+    { XC_sb_v_double_arrow, "split_v", "col-resize" }, // Qt::SplitVCursor
+    { XC_sb_h_double_arrow, "split_h", "row-resize" }, // Qt::SplitHCursor
+    { XC_hand2, "pointing_hand", "pointer" }, // Qt::PointingHandCursor
+    { XC_circle, "forbidden", "not-allowed" }, // Qt::ForbiddenCursor
+    { XC_question_arrow, "whats_this", "help" }, // Qt::WhatsThisCursor
+    { XC_watch, "left_ptr_watch", "half-busy" }, // Qt::BusyCursor
+    { -1, "openhand", "grab" }, // Qt::OpenHandCursor
+    { -1, "closedhand", "grabbing" }, // Qt::ClosedHandCursor
+    { XC_tcross, "copy", "dnd-copy" }, // Qt::DragCopyCursor
+    { XC_top_left_arrow, "move", "dnd-move" }, // Qt::DragMoveCursor
+    { XC_center_ptr, "link", "dnd-link" }, // Qt::DragLinkCursor
+};
+static const qint16 CursorTblSize = sizeof(CursorTbl) / sizeof(CursorTblData);
+
+static const char x11_blank_cursor_bits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
 
 /*!
     \internal
 
     Creates the cursor.
 */
-
 void QCursorData::update()
 {
     if (!QCursorData::initialized)
@@ -217,152 +255,38 @@ void QCursorData::update()
         return;
     }
 
-    static const char *cursorNames[] = {
-        "left_ptr",
-        "up_arrow",
-        "cross",
-        "wait",
-        "ibeam",
-        "size_ver",
-        "size_hor",
-        "size_bdiag",
-        "size_fdiag",
-        "size_all",
-        "blank",
-        "split_v",
-        "split_h",
-        "pointing_hand",
-        "forbidden",
-        "whats_this",
-        "left_ptr_watch",
-        "openhand",
-        "closedhand",
-        "copy",
-        "move",
-        "link"
-    };
-
 #ifndef QT_NO_XCURSOR
-    // special case for non-standard dnd-* cursors
-    switch (cshape) {
-        case Qt::DragCopyCursor: {
-            hcurs = XcursorLibraryLoadCursor(dpy, "dnd-copy");
-            break;
-        }
-        case Qt::DragMoveCursor: {
-            hcurs = XcursorLibraryLoadCursor(dpy, "dnd-move");
-            break;
-        }
-        case Qt::DragLinkCursor: {
-            hcurs = XcursorLibraryLoadCursor(dpy, "dnd-link");
-            break;
-        }
-        default: {
-            break;
-        }
-    }
+    if (!hcurs && CursorTbl[cshape].alternative)
+        hcurs = XcursorLibraryLoadCursor(dpy, CursorTbl[cshape].alternative);
     if (!hcurs)
-        hcurs = XcursorLibraryLoadCursor(dpy, cursorNames[cshape]);
+        hcurs = XcursorLibraryLoadCursor(dpy, CursorTbl[cshape].name);
     if (hcurs)
         return;
 #endif // QT_NO_XCURSOR
 
-    static const char cur_blank_bits[] = {
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    };
-
     // Q cursor to X cursor
-    switch (cshape) {
-        case Qt::BlankCursor: {
-            XColor bg, fg;
-            bg.red   = 255 << 8;
-            bg.green = 255 << 8;
-            bg.blue  = 255 << 8;
-            fg.red   = 0;
-            fg.green = 0;
-            fg.blue  = 0;
-            pm  = XCreateBitmapFromData(dpy, QX11Info::appRootWindow(), cur_blank_bits, 16, 16);
-            // reusing the pixmap as mask to create invisible cursor
-            hcurs = XCreatePixmapCursor(dpy, pm, pm, &fg, &bg, 8, 8);
-            return;
-        }
-        case Qt::ArrowCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_left_ptr);
-            break;
-        }
-        case Qt::CrossCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_crosshair);
-            break;
-        }
-        case Qt::BusyCursor:
-        case Qt::WaitCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_watch);
-            break;
-        }
-        case Qt::IBeamCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_xterm);
-            break;
-        }
-        case Qt::SizeAllCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_fleur);
-            break;
-        }
-        case Qt::PointingHandCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_hand2);
-            break;
-        }
-        case Qt::SizeBDiagCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_top_right_corner);
-            break;
-        }
-        case Qt::SizeFDiagCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_bottom_right_corner);
-            break;
-        }
-        case Qt::SizeVerCursor:
-        case Qt::SplitVCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_sb_v_double_arrow);
-            break;
-        }
-        case Qt::SizeHorCursor:
-        case Qt::SplitHCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_sb_h_double_arrow);
-            break;
-        }
-        case Qt::WhatsThisCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_question_arrow);
-            break;
-        }
-        case Qt::ForbiddenCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_circle);
-            break;
-        }
-        case Qt::DragCopyCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_tcross);
-            break;
-        }
-        case Qt::UpArrowCursor:
-        case Qt::DragLinkCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_center_ptr);
-            break;
-        }
-        case Qt::DragMoveCursor: {
-            hcurs = XCreateFontCursor(dpy, XC_top_left_arrow);
-            break;
-        }
-        default: {
+    if (cshape == Qt::BlankCursor) {
+        XColor bg, fg;
+        bg.red   = 255 << 8;
+        bg.green = 255 << 8;
+        bg.blue  = 255 << 8;
+        fg.red   = 0;
+        fg.green = 0;
+        fg.blue  = 0;
+        pm  = XCreateBitmapFromData(dpy, QX11Info::appRootWindow(), x11_blank_cursor_bits, 16, 16);
+        // reusing the pixmap as mask to create invisible cursor
+        hcurs = XCreatePixmapCursor(dpy, pm, pm, &fg, &bg, 8, 8);
+        return;
+    } else {
+        hcurs = XCreateFontCursor(dpy, CursorTbl[cshape].font);
+        if (Q_UNLIKELY(!hcurs)) {
             qWarning("QCursor::update: Invalid cursor shape %d", cshape);
-            return;
+#ifndef QT_NO_XFIXES
+        } else if (qt_x11Data->use_xfixes) {
+            XFixesSetCursorName(dpy, hcurs, CursorTbl[cshape].name);
+#endif
         }
     }
-
-#ifndef QT_NO_XFIXES
-    if (qt_x11Data->use_xfixes)
-        XFixesSetCursorName(dpy, hcurs, cursorNames[cshape]);
-#endif /* ! QT_NO_XFIXES */
 }
 
 QT_END_NAMESPACE
