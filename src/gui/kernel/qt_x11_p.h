@@ -191,13 +191,6 @@ struct QX11Data
 
     QList<QXdndDropTransaction> dndDropTransactions;
 
-    // from qmotifdnd_x11.cpp
-    void motifdndHandle(QWidget *, const XEvent *, bool);
-    void motifdndEnable(QWidget *, bool);
-    QVariant motifdndObtainData(const char *format);
-    QByteArray motifdndFormat(int n);
-    bool motifdnd_active;
-
     Display *display;
     char *displayName;
     bool foreignDisplay;
@@ -436,13 +429,6 @@ struct QX11Data
         XdndActionLink,
         XdndActionMove,
         XdndActionPrivate,
-
-        // Motif DND
-        _MOTIF_DRAG_AND_DROP_MESSAGE,
-        _MOTIF_DRAG_INITIATOR_INFO,
-        _MOTIF_DRAG_RECEIVER_INFO,
-        _MOTIF_DRAG_WINDOW,
-        _MOTIF_DRAG_TARGETS,
 
         XmTRANSFER_SUCCESS,
         XmTRANSFER_FAILURE,

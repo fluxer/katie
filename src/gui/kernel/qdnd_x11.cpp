@@ -788,8 +788,6 @@ static bool checkEmbedded(QWidget* w, const XEvent* xe)
 
 void QX11Data::xdndHandleEnter(QWidget *, const XEvent * xe, bool /*passive*/)
 {
-    motifdnd_active = false;
-
     last_enter_event.xclient = xe->xclient;
 
     const long *l = xe->xclient.data.l;
@@ -1548,16 +1546,16 @@ void QDragManager::move(const QPoint & globalPos)
             ly = ly2;
             src = target;
 
-	    // check if it has XdndAware
-	    Atom type = 0;
-	    int f;
-	    unsigned long n, a;
-	    unsigned char *data = 0;
-	    XGetWindowProperty(qt_x11Data->display, target, ATOM(XdndAware), 0, 0, False,
+            // check if it has XdndAware
+            Atom type = 0;
+            int f;
+            unsigned long n, a;
+            unsigned char *data = 0;
+            XGetWindowProperty(qt_x11Data->display, target, ATOM(XdndAware), 0, 0, False,
                                AnyPropertyType, &type, &f,&n,&a,&data);
-	    if (data)
+            if (data)
                 XFree(data);
-	    if (type) {
+            if (type) {
                 DNDDEBUG << "Found XdndAware on " << QWidget::find(target) << target;
                 break;
             }
@@ -1942,7 +1940,6 @@ bool QX11Data::dndEnable(QWidget* w, bool on)
         return true; // been there, done that
     ((QExtraWidget*)w)->topData()->dnd = on ? 1 : 0;
 
-    motifdndEnable(w, on);
     return xdndEnable(w, on);
 }
 
@@ -2062,11 +2059,7 @@ void QDragManager::updatePixmap()
 
 QVariant QDropData::retrieveData_sys(const QString &mimetype, QVariant::Type requestedType) const
 {
-    QByteArray mime = mimetype.toLatin1();
-    QVariant data = qt_x11Data->motifdnd_active
-                      ? qt_x11Data->motifdndObtainData(mime)
-                      : xdndObtainData(mime, requestedType);
-    return data;
+    return xdndObtainData(mimetype.toLatin1(), requestedType);
 }
 
 bool QDropData::hasFormat_sys(const QString &format) const
@@ -2077,23 +2070,14 @@ bool QDropData::hasFormat_sys(const QString &format) const
 QStringList QDropData::formats_sys() const
 {
     QStringList formats;
-    if (qt_x11Data->motifdnd_active) {
-        int i = 0;
-        QByteArray fmt;
-        while (!(fmt = qt_x11Data->motifdndFormat(i)).isEmpty()) {
-            formats.append(QLatin1String(fmt));
-            ++i;
+    int i = 0;
+    while ((qt_xdnd_types[i])) {
+        QStringList formatsForAtom = qt_x11Data->xdndMimeFormatsForAtom(qt_xdnd_types[i]);
+        for (int j = 0; j < formatsForAtom.size(); ++j) {
+            if (!formats.contains(formatsForAtom.at(j)))
+                formats.append(formatsForAtom.at(j));
         }
-    } else {
-        int i = 0;
-        while ((qt_xdnd_types[i])) {
-            QStringList formatsForAtom = qt_x11Data->xdndMimeFormatsForAtom(qt_xdnd_types[i]);
-            for (int j = 0; j < formatsForAtom.size(); ++j) {
-                if (!formats.contains(formatsForAtom.at(j)))
-                    formats.append(formatsForAtom.at(j));
-            }
-            ++i;
-        }
+        ++i;
     }
     return formats;
 }

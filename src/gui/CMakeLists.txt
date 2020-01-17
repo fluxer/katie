@@ -767,7 +767,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcursor_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmotifdnd_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
@@ -1173,7 +1172,6 @@ katie_allinone_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmotifdnd_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp

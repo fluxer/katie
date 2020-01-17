@@ -238,13 +238,6 @@ static const char * x11_atomnames = {
     "XdndActionMove\0"
     "XdndActionPrivate\0"
 
-    // Motif DND
-    "_MOTIF_DRAG_AND_DROP_MESSAGE\0"
-    "_MOTIF_DRAG_INITIATOR_INFO\0"
-    "_MOTIF_DRAG_RECEIVER_INFO\0"
-    "_MOTIF_DRAG_WINDOW\0"
-    "_MOTIF_DRAG_TARGETS\0"
-
     "XmTRANSFER_SUCCESS\0"
     "XmTRANSFER_FAILURE\0"
 
@@ -1170,8 +1163,6 @@ void qt_init(QApplicationPrivate *priv, int,
     qt_x11Data->userTime = CurrentTime;
     qt_x11Data->ignore_badwindow = false;
     qt_x11Data->seen_badwindow = false;
-
-    qt_x11Data->motifdnd_active = false;
 
     // colormap control
     qt_x11Data->visual_class = -1;
@@ -2102,8 +2093,6 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
             if (passive_only) return 0;
             // All other are interactions
         }
-    } else {
-        qt_x11Data->motifdndHandle(widget, event, passive_only);
     }
 
     return 0;
