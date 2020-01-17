@@ -884,9 +884,6 @@ public:
         DashDotLine,
         DashDotDotLine,
         CustomDashLine
-#ifndef Q_MOC_RUN
-        , MPenStyle = 0x0f
-#endif
     };
 
     // line endcap style
@@ -894,7 +891,6 @@ public:
         FlatCap = 0x00,
         SquareCap = 0x10,
         RoundCap = 0x20,
-        MPenCapStyle = 0x30
     };
 
     // line join style
@@ -903,7 +899,6 @@ public:
         BevelJoin = 0x40,
         RoundJoin = 0x80,
         SvgMiterJoin = 0x100,
-        MPenJoinStyle = 0x1c0
     };
 
     enum BrushStyle {

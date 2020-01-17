@@ -263,8 +263,6 @@
     \value CustomDashLine  A custom pattern defined using
                            QPainterPathStroker::setDashPattern().
 
-    \omitvalue MPenStyle
-
     \sa QPen
 */
 
@@ -290,7 +288,6 @@
     \value SquareCap  a square line end that covers the end point and
         extends beyond it by half the line width.
     \value RoundCap  a rounded line end.
-    \omitvalue MPenCapStyle
 
     \sa QPen
 */
@@ -319,7 +316,6 @@
     \value RoundJoin  A circular arc between the two lines is filled.
     \value SvgMiterJoin A miter join corresponding to the definition of
            a miter join in the \l{SVG 1.2 Tiny} specification.
-    \omitvalue MPenJoinStyle
 
     \sa QPen
 */
