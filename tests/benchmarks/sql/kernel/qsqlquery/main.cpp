@@ -176,7 +176,7 @@ void tst_QSqlQuery::dropTestTables( QSqlDatabase db )
     if ( db.driverName().startsWith( QLatin1String("QSQLITE") ) )
         tablenames << qTableName( QLatin1String("record_sqlite"), __FILE__ );
 
-    if ( tst_Databases::isSqlServer( db ) ) )
+    if ( tst_Databases::isSqlServer( db ) )
         tablenames << qTableName( QLatin1String("qtest_longstr"), __FILE__ );
 
     if (tst_Databases::isSqlServer( db ))
