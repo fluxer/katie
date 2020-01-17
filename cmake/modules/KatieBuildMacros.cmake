@@ -17,7 +17,9 @@ macro(KATIE_WARNING MESSAGESTR)
     endif()
 endmacro()
 
-# a function to check for C function/definition, works for external functions too
+# a function to check for C function/definition, works for external functions
+# too. note that check_symbol_exists() and check_function_exists() cache the
+# result variables so they can be used anywhere
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     cmake_reset_check_state()
     set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} ${ARGN})
@@ -50,10 +52,8 @@ function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     endif()
 endfunction()
 
-# a macro to check for function presence in header, if function is found a
-# definition is added. note that check_symbol_exists() and
-# check_function_exists() cache the result variables so they can be used
-# anywhere
+# a macro to check for C function presence in header, if function is found a
+# definition is added.
 macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
     katie_check_defined("${FORFUNCTION}" "${FROMHEADER}")
 
@@ -63,7 +63,7 @@ macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
     endif()
 endmacro()
 
-# a function to check for function with 64-bit offset alternative, sets
+# a function to check for C function with 64-bit offset alternative, sets
 # QT_LARGEFILE_SUPPORT to FALSE if not available
 function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
     katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
