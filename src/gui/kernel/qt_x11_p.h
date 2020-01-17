@@ -434,12 +434,10 @@ struct QX11Data
         _XEMBED,
         _XEMBED_INFO,
 
-        NPredefinedAtoms,
-
-        _QT_SETTINGS_TIMESTAMP = NPredefinedAtoms,
-        NAtoms
+        _QT_SETTINGS_TIMESTAMP,
+        NPredefinedAtoms
     };
-    Atom atoms[NAtoms];
+    Atom atoms[NPredefinedAtoms];
 
     bool isSupportedByWM(Atom atom);
 

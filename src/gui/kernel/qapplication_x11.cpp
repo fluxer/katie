@@ -117,130 +117,132 @@ char *_Xsetlocale(int category, const char *locale)
 #endif // X_NOT_BROKEN
 
 /* Warning: if you modify this string, modify the list of atoms in qt_x11_p.h as well! */
-static const char * x11_atomnames = {
+static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     // window-manager <-> client protocols
-    "WM_PROTOCOLS\0"
-    "WM_DELETE_WINDOW\0"
-    "WM_TAKE_FOCUS\0"
-    "_NET_WM_PING\0"
-    "_NET_WM_CONTEXT_HELP\0"
-    "_NET_WM_SYNC_REQUEST\0"
-    "_NET_WM_SYNC_REQUEST_COUNTER\0"
+    "WM_PROTOCOLS\0",
+    "WM_DELETE_WINDOW\0",
+    "WM_TAKE_FOCUS\0",
+    "_NET_WM_PING\0",
+    "_NET_WM_CONTEXT_HELP\0",
+    "_NET_WM_SYNC_REQUEST\0",
+    "_NET_WM_SYNC_REQUEST_COUNTER\0",
 
     // ICCCM window state
-    "WM_STATE\0"
-    "WM_CHANGE_STATE\0"
+    "WM_STATE\0",
+    "WM_CHANGE_STATE\0",
 
     // Session management
-    "WM_CLIENT_LEADER\0"
-    "WM_WINDOW_ROLE\0"
-    "SM_CLIENT_ID\0"
+    "WM_CLIENT_LEADER\0",
+    "WM_WINDOW_ROLE\0",
+    "SM_CLIENT_ID\0",
 
     // Clipboard
-    "CLIPBOARD\0"
-    "INCR\0"
-    "TARGETS\0"
-    "MULTIPLE\0"
-    "TIMESTAMP\0"
-    "SAVE_TARGETS\0"
-    "CLIP_TEMPORARY\0"
-    "_QT_SELECTION\0"
-    "_QT_CLIPBOARD_SENTINEL\0"
-    "_QT_SELECTION_SENTINEL\0"
-    "CLIPBOARD_MANAGER\0"
+    "CLIPBOARD\0",
+    "INCR\0",
+    "TARGETS\0",
+    "MULTIPLE\0",
+    "TIMESTAMP\0",
+    "SAVE_TARGETS\0",
+    "CLIP_TEMPORARY\0",
+    "_QT_SELECTION\0",
+    "_QT_CLIPBOARD_SENTINEL\0",
+    "_QT_SELECTION_SENTINEL\0",
+    "CLIPBOARD_MANAGER\0",
 
-    "_XSETROOT_ID\0"
+    "_XSETROOT_ID\0",
 
-    "_QT_SCROLL_DONE\0"
-    "_QT_INPUT_ENCODING\0"
+    "_QT_SCROLL_DONE\0",
+    "_QT_INPUT_ENCODING\0",
 
-    "_MOTIF_WM_HINTS\0"
+    "_MOTIF_WM_HINTS\0",
 
     // EWMH (aka NETWM)
-    "_NET_SUPPORTED\0"
-    "_NET_VIRTUAL_ROOTS\0"
-    "_NET_WORKAREA\0"
+    "_NET_SUPPORTED\0",
+    "_NET_VIRTUAL_ROOTS\0",
+    "_NET_WORKAREA\0",
 
-    "_NET_MOVERESIZE_WINDOW\0"
-    "_NET_WM_MOVERESIZE\0"
+    "_NET_MOVERESIZE_WINDOW\0",
+    "_NET_WM_MOVERESIZE\0",
 
-    "_NET_WM_NAME\0"
-    "_NET_WM_ICON_NAME\0"
-    "_NET_WM_ICON\0"
+    "_NET_WM_NAME\0",
+    "_NET_WM_ICON_NAME\0",
+    "_NET_WM_ICON\0",
 
-    "_NET_WM_PID\0"
+    "_NET_WM_PID\0",
 
-    "_NET_WM_WINDOW_OPACITY\0"
+    "_NET_WM_WINDOW_OPACITY\0",
 
-    "_NET_WM_STATE\0"
-    "_NET_WM_STATE_ABOVE\0"
-    "_NET_WM_STATE_BELOW\0"
-    "_NET_WM_STATE_FULLSCREEN\0"
-    "_NET_WM_STATE_MAXIMIZED_HORZ\0"
-    "_NET_WM_STATE_MAXIMIZED_VERT\0"
-    "_NET_WM_STATE_MODAL\0"
-    "_NET_WM_STATE_STAYS_ON_TOP\0"
-    "_NET_WM_STATE_DEMANDS_ATTENTION\0"
+    "_NET_WM_STATE\0",
+    "_NET_WM_STATE_ABOVE\0",
+    "_NET_WM_STATE_BELOW\0",
+    "_NET_WM_STATE_FULLSCREEN\0",
+    "_NET_WM_STATE_MAXIMIZED_HORZ\0",
+    "_NET_WM_STATE_MAXIMIZED_VERT\0",
+    "_NET_WM_STATE_MODAL\0",
+    "_NET_WM_STATE_STAYS_ON_TOP\0",
+    "_NET_WM_STATE_DEMANDS_ATTENTION\0",
 
-    "_NET_WM_USER_TIME\0"
-    "_NET_WM_USER_TIME_WINDOW\0"
-    "_NET_WM_FULL_PLACEMENT\0"
+    "_NET_WM_USER_TIME\0",
+    "_NET_WM_USER_TIME_WINDOW\0",
+    "_NET_WM_FULL_PLACEMENT\0",
 
-    "_NET_WM_WINDOW_TYPE\0"
-    "_NET_WM_WINDOW_TYPE_DESKTOP\0"
-    "_NET_WM_WINDOW_TYPE_DOCK\0"
-    "_NET_WM_WINDOW_TYPE_TOOLBAR\0"
-    "_NET_WM_WINDOW_TYPE_MENU\0"
-    "_NET_WM_WINDOW_TYPE_UTILITY\0"
-    "_NET_WM_WINDOW_TYPE_SPLASH\0"
-    "_NET_WM_WINDOW_TYPE_DIALOG\0"
-    "_NET_WM_WINDOW_TYPE_DROPDOWN_MENU\0"
-    "_NET_WM_WINDOW_TYPE_POPUP_MENU\0"
-    "_NET_WM_WINDOW_TYPE_TOOLTIP\0"
-    "_NET_WM_WINDOW_TYPE_NOTIFICATION\0"
-    "_NET_WM_WINDOW_TYPE_COMBO\0"
-    "_NET_WM_WINDOW_TYPE_DND\0"
-    "_NET_WM_WINDOW_TYPE_NORMAL\0"
+    "_NET_WM_WINDOW_TYPE\0",
+    "_NET_WM_WINDOW_TYPE_DESKTOP\0",
+    "_NET_WM_WINDOW_TYPE_DOCK\0",
+    "_NET_WM_WINDOW_TYPE_TOOLBAR\0",
+    "_NET_WM_WINDOW_TYPE_MENU\0",
+    "_NET_WM_WINDOW_TYPE_UTILITY\0",
+    "_NET_WM_WINDOW_TYPE_SPLASH\0",
+    "_NET_WM_WINDOW_TYPE_DIALOG\0",
+    "_NET_WM_WINDOW_TYPE_DROPDOWN_MENU\0",
+    "_NET_WM_WINDOW_TYPE_POPUP_MENU\0",
+    "_NET_WM_WINDOW_TYPE_TOOLTIP\0",
+    "_NET_WM_WINDOW_TYPE_NOTIFICATION\0",
+    "_NET_WM_WINDOW_TYPE_COMBO\0",
+    "_NET_WM_WINDOW_TYPE_DND\0",
+    "_NET_WM_WINDOW_TYPE_NORMAL\0",
 
-    "_NET_STARTUP_INFO\0"
-    "_NET_STARTUP_INFO_BEGIN\0"
+    "_NET_STARTUP_INFO\0",
+    "_NET_STARTUP_INFO_BEGIN\0",
 
-    "_NET_SUPPORTING_WM_CHECK\0"
+    "_NET_SUPPORTING_WM_CHECK\0",
 
-    "_NET_WM_CM_S0\0"
+    "_NET_WM_CM_S0\0",
 
-    "_NET_SYSTEM_TRAY_VISUAL\0"
+    "_NET_SYSTEM_TRAY_VISUAL\0",
 
-    "_NET_ACTIVE_WINDOW\0"
+    "_NET_ACTIVE_WINDOW\0",
 
     // Property formats
-    "COMPOUND_TEXT\0"
-    "TEXT\0"
-    "UTF8_STRING\0"
+    "COMPOUND_TEXT\0",
+    "TEXT\0",
+    "UTF8_STRING\0",
 
     // xdnd
-    "XdndEnter\0"
-    "XdndPosition\0"
-    "XdndStatus\0"
-    "XdndLeave\0"
-    "XdndDrop\0"
-    "XdndFinished\0"
-    "XdndTypeList\0"
-    "XdndActionList\0"
+    "XdndEnter\0",
+    "XdndPosition\0",
+    "XdndStatus\0",
+    "XdndLeave\0",
+    "XdndDrop\0",
+    "XdndFinished\0",
+    "XdndTypeList\0",
+    "XdndActionList\0",
 
-    "XdndSelection\0"
+    "XdndSelection\0",
 
-    "XdndAware\0"
-    "XdndProxy\0"
+    "XdndAware\0",
+    "XdndProxy\0",
 
-    "XdndActionCopy\0"
-    "XdndActionLink\0"
-    "XdndActionMove\0"
-    "XdndActionPrivate\0"
+    "XdndActionCopy\0",
+    "XdndActionLink\0",
+    "XdndActionMove\0",
+    "XdndActionPrivate\0",
 
     // XEMBED
-    "_XEMBED\0"
-    "_XEMBED_INFO\0"
+    "_XEMBED\0",
+    "_XEMBED_INFO\0",
+
+    "_QT_SETTINGS_TIMESTAMP\0"
 };
 
 Q_GUI_EXPORT QX11Data *qt_x11Data = 0;
@@ -629,29 +631,13 @@ static Bool qt_sync_request_scanner(Display*, XEvent *event, XPointer arg)
 
 static void qt_x11_create_intern_atoms()
 {
-    const char *names[QX11Data::NAtoms];
-    const char *ptr = x11_atomnames;
-
-    int i = 0;
-    while (*ptr) {
-        names[i++] = ptr;
-        while (*ptr)
-            ++ptr;
-        ++ptr;
-    }
-
-    Q_ASSERT(i == QX11Data::NPredefinedAtoms);
-
-    QByteArray settings_atom_name("_QT_SETTINGS_TIMESTAMP_");
-    settings_atom_name += XDisplayName(qt_x11Data->displayName);
-    names[i++] = settings_atom_name;
-
-    Q_ASSERT(i == QX11Data::NAtoms);
 #if defined(XlibSpecificationRelease) && (XlibSpecificationRelease >= 6)
-    XInternAtoms(qt_x11Data->display, (char **)names, i, False, qt_x11Data->atoms);
+    XInternAtoms(qt_x11Data->display, const_cast<char**>(X11AtomsTbl),
+        QX11Data::NPredefinedAtoms, False, qt_x11Data->atoms);
 #else
-    for (i = 0; i < QX11Data::NAtoms; ++i)
-        qt_x11Data->atoms[i] = XInternAtom(qt_x11Data->display, (char *)names[i], False);
+    for (qint16 i = 0; i < QX11Data::NPredefinedAtoms; i++) {
+        qt_x11Data->atoms[i] = XInternAtom(qt_x11Data->display, const_cast<char*>(X11AtomsTbl[i]), False);
+    }
 #endif
 }
 
