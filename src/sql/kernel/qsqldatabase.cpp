@@ -678,10 +678,6 @@ void QSqlDatabasePrivate::init(const QString &type)
         if (type == QLatin1String("QSQLITE"))
             driver = new QSQLiteDriver();
 #endif
-#ifdef QT_SQL_IBASE
-        if (type == QLatin1String("QIBASE"))
-            driver = new QIBaseDriver();
-#endif
     }
 
     if (!driver) {
@@ -880,9 +876,6 @@ bool QSqlDatabase::rollback()
     The \e{database name} is not the \e{connection name}. The
     connection name must be passed to addDatabase() at connection
     object create time.
-
-    For the QOCI (Oracle) driver, the database name is the TNS
-    Service Name.
 
     For the QODBC driver, the \a name can either be a DSN, a DSN
     filename (in which case the file must have a \c .dsn extension),
@@ -1284,35 +1277,16 @@ bool QSqlDatabase::isDriverAvailable(const QString& name)
     \i MYSQL *connection
     \i \c qsql_mysql.cpp
     \row
-    \i QOCI
-    \i QOCIDriver
-    \i OCIEnv *environment, OCISvcCtx *serviceContext
-    \i \c qsql_oci.cpp
-    \row
     \i QODBC
     \i QODBCDriver
     \i SQLHANDLE environment, SQLHANDLE connection
     \i \c qsql_odbc.cpp
-    \row
-    \i QDB2
-    \i QDB2
-    \i SQLHANDLE environment, SQLHANDLE connection
-    \i \c qsql_db2.cpp
-    \row
-    \i QTDS
-    \i QTDSDriver
-    \i LOGINREC *loginRecord, DBPROCESS *dbProcess, const QString &hostName
-    \i \c qsql_tds.cpp
     \row
     \i QSQLITE
     \i QSQLiteDriver
     \i sqlite *connection
     \i \c qsql_sqlite.cpp
     \row
-    \i QIBASE
-    \i QIBaseDriver
-    \i isc_db_handle connection
-    \i \c qsql_ibase.cpp
     \endtable
 
     The host name (or service name) is needed when constructing the
