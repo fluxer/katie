@@ -238,9 +238,6 @@ static const char * x11_atomnames = {
     "XdndActionMove\0"
     "XdndActionPrivate\0"
 
-    "XmTRANSFER_SUCCESS\0"
-    "XmTRANSFER_FAILURE\0"
-
     // XEMBED
     "_XEMBED\0"
     "_XEMBED_INFO\0"

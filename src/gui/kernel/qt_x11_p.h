@@ -430,9 +430,6 @@ struct QX11Data
         XdndActionMove,
         XdndActionPrivate,
 
-        XmTRANSFER_SUCCESS,
-        XmTRANSFER_FAILURE,
-
         // XEMBED
         _XEMBED,
         _XEMBED_INFO,
