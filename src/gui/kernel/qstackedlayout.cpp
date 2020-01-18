@@ -423,7 +423,7 @@ QSize QStackedLayout::sizeHint() const
     QSize s(0, 0);
     int n = d->list.count();
 
-    for (int i = 0; i < n; ++i)
+    for (int i = 0; i < n; ++i) {
         if (QWidget *widget = d->list.at(i)->widget()) {
             QSize ws(widget->sizeHint());
             if (widget->sizePolicy().horizontalPolicy() == QSizePolicy::Ignored)
@@ -432,6 +432,7 @@ QSize QStackedLayout::sizeHint() const
                 ws.setHeight(0);
             s = s.expandedTo(ws);
         }
+    }
     return s;
 }
 
@@ -444,9 +445,10 @@ QSize QStackedLayout::minimumSize() const
     QSize s(0, 0);
     int n = d->list.count();
 
-    for (int i = 0; i < n; ++i)
+    for (int i = 0; i < n; ++i) {
         if (QWidget *widget = d->list.at(i)->widget())
             s = s.expandedTo(qSmartMinSize(widget));
+    }
     return s;
 }
 
