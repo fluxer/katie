@@ -334,7 +334,6 @@ struct QX11Data
         _XSETROOT_ID,
 
         _QT_SCROLL_DONE,
-        _QT_INPUT_ENCODING,
 
         _MOTIF_WM_HINTS,
 

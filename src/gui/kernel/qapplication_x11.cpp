@@ -152,7 +152,6 @@ static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     "_XSETROOT_ID\0",
 
     "_QT_SCROLL_DONE\0",
-    "_QT_INPUT_ENCODING\0",
 
     "_MOTIF_WM_HINTS\0",
 
@@ -804,40 +803,6 @@ bool QApplicationPrivate::x11_apply_settings()
 void QApplicationPrivate::reset_instance_pointer()
 { QApplication::self = 0; }
 
-
-// read the _QT_INPUT_ENCODING property and apply the settings to
-// the application
-static void qt_set_input_encoding()
-{
-    Atom type;
-    int format;
-    ulong  nitems, after = 1;
-    unsigned char *data = 0;
-
-    int e = XGetWindowProperty(qt_x11Data->display, QX11Info::appRootWindow(),
-                                ATOM(_QT_INPUT_ENCODING), 0, 1024,
-                                False, XA_STRING, &type, &format, &nitems,
-                                &after, &data);
-    if (e != Success || !nitems || type == XNone) {
-        // Always use the locale codec, since we have no examples of non-local
-        // XIMs, and since we cannot get a sensible answer about the encoding
-        // from the XIM.
-        qt_input_mapper = QTextCodec::codecForLocale();
-
-    } else {
-        if (!qstricmp((char *)data, "locale"))
-            qt_input_mapper = QTextCodec::codecForLocale();
-        else
-            qt_input_mapper = QTextCodec::codecForName((char *)data);
-        // make sure we have an input codec
-        if(!qt_input_mapper)
-            qt_input_mapper = QTextCodec::codecForName("ISO-8859-1");
-    }
-    if (qt_input_mapper && qt_input_mapper->mibEnum() == 11) // 8859-8
-        qt_input_mapper = QTextCodec::codecForName("ISO-8859-8-I");
-    if(data)
-        XFree((char *)data);
-}
 
 // update the supported array
 static void qt_get_net_supported()
@@ -1550,7 +1515,10 @@ void qt_init(QApplicationPrivate *priv, int,
         qt_x11Data->compositingManagerRunning = XGetSelectionOwner(qt_x11Data->display,
                                                             ATOM(_NET_WM_CM_S0));
 
-        qt_set_input_encoding();
+        // Always use the locale codec, since we have no examples of non-local
+        // XIMs, and since we cannot get a sensible answer about the encoding
+        // from the XIM.
+        qt_input_mapper = QTextCodec::codecForLocale();
 
         QApplicationPrivate::x11_apply_settings();
 
@@ -2638,9 +2606,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
         }
         if (event->xproperty.window == QX11Info::appRootWindow()) {
             // root properties for the default screen
-            if (event->xproperty.atom == ATOM(_QT_INPUT_ENCODING)) {
-                qt_set_input_encoding();
-            } else if (event->xproperty.atom == ATOM(_NET_SUPPORTED)) {
+            if (event->xproperty.atom == ATOM(_NET_SUPPORTED)) {
                 qt_get_net_supported();
             } else if (event->xproperty.atom == ATOM(_NET_VIRTUAL_ROOTS)) {
                 qt_get_net_virtual_roots();
