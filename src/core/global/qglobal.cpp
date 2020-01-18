@@ -1311,35 +1311,6 @@ void qt_assert_x(const char *where, const char *what, const char *file, int line
     qFatal("ASSERT failure in %s: \"%s\", file %s, line %d", where, what, file, line);
 }
 
-
-/*
-    Dijkstra's bisection algorithm to find the square root of an integer.
-    Deliberately not exported as part of the Qt API, but used in both
-    qsimplerichtext.cpp and qgfxraster_qws.cpp
-*/
-Q_CORE_EXPORT unsigned int qt_int_sqrt(unsigned int n)
-{
-    // n must be in the range 0...UINT_MAX/2-1
-    if (n >= (UINT_MAX>>2)) {
-        unsigned int r = 2 * qt_int_sqrt(n / 4);
-        unsigned int r2 = r + 1;
-        return (n >= r2 * r2) ? r2 : r;
-    }
-    uint h, p= 0, q= 1, r= n;
-    while (q <= n)
-        q <<= 2;
-    while (q != 1) {
-        q >>= 2;
-        h= p + q;
-        p >>= 1;
-        if (r >= h) {
-            p += q;
-            r -= h;
-        }
-    }
-    return p;
-}
-
 static QtMsgHandler handler = 0;                // pointer to debug handler
 
 QString qt_error_string(int errorCode)
