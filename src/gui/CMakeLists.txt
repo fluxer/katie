@@ -4,7 +4,6 @@ set(EXTRA_GUI_LIBS
     ${FREETYPE_LIBRARIES}
     ${X11_LIBRARIES}
     ${X11_X11_LIB}
-    ${X11_Xt_LIB}
     ${ICU_LIBRARIES}
 )
 
