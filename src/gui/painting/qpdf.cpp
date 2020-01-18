@@ -258,8 +258,6 @@ namespace QPdf {
     }
 }
 
-#define QT_PATH_ELEMENT(elm)
-
 QByteArray QPdf::generatePath(const QPainterPath &path, const QTransform &matrix, PathFlags flags)
 {
     QByteArray result;
