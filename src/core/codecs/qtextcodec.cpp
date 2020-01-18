@@ -286,8 +286,9 @@ static void setup()
 */
 QTextCodec::ConverterState::~ConverterState()
 {
-    if (d)
+    if (d) {
         ucnv_close(static_cast<UConverter *>(d));
+    }
 }
 
 QTextCodec::ConverterState::ConverterState(const QTextCodec::ConverterState &other)
@@ -300,6 +301,9 @@ QTextCodec::ConverterState& QTextCodec::ConverterState::operator=(const QTextCod
     flags = other.flags;
     invalidChars = other.invalidChars;
     if (other.d) {
+        if (d) {
+            ucnv_close(static_cast<UConverter *>(d));
+        }
         UErrorCode error = U_ZERO_ERROR;
         d = ucnv_safeClone(static_cast<UConverter*>(other.d), Q_NULLPTR, Q_NULLPTR, &error);
         if (Q_UNLIKELY(U_FAILURE(error))) {
