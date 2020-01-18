@@ -211,7 +211,7 @@ void QPollingFileSystemWatcherEngine::timeout()
 void QFileSystemWatcherPrivate::initNativeEngine()
 {
     Q_ASSERT(!watcher);
-    Q_Q(QFileSystemWatcher);
+    Q_Q(const QFileSystemWatcher);
 
 #if defined(Q_OS_LINUX)
     watcher = QInotifyFileSystemWatcherEngine::create();
@@ -270,7 +270,7 @@ void QFileSystemWatcherPrivate::init()
 void QFileSystemWatcherPrivate::initForcedEngine(const QString &forceName)
 {
     Q_ASSERT(!watcher);
-    Q_Q(QFileSystemWatcher);
+    Q_Q(const QFileSystemWatcher);
 
 #if defined(Q_OS_LINUX)
     if (forceName == QLatin1String("inotify")) {
@@ -295,7 +295,7 @@ void QFileSystemWatcherPrivate::initForcedEngine(const QString &forceName)
 void QFileSystemWatcherPrivate::initPollerEngine()
 {
     Q_ASSERT(!watcher);
-    Q_Q(QFileSystemWatcher);
+    Q_Q(const QFileSystemWatcher);
     watcher = new QPollingFileSystemWatcherEngine; // that was a mouthful
     QObject::connect(watcher,
                      SIGNAL(fileChanged(QString,bool)),
