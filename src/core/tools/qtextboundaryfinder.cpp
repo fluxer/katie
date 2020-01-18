@@ -82,6 +82,10 @@ QTextBoundaryFinderPrivate& QTextBoundaryFinderPrivate::operator=(const QTextBou
     pos = other.pos;
     string = other.string;
 
+    if (breakiter) {
+        ubrk_close(breakiter);
+    }
+
     UErrorCode error = U_ZERO_ERROR;
     breakiter = ubrk_safeClone(other.breakiter, Q_NULLPTR, Q_NULLPTR, &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
