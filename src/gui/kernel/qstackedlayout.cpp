@@ -501,8 +501,7 @@ int QStackedLayout::heightForWidth(int width) const
         }
     }
 
-    hfw = qMax(hfw, minimumSize().height());
-    return hfw;
+    return qMax(hfw, minimumSize().height());
 }
 
 /*!
