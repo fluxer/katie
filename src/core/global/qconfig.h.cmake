@@ -325,7 +325,6 @@
 #cmakedefine QT_NO_XCURSOR
 #cmakedefine QT_NO_XFIXES
 #cmakedefine QT_NO_XINERAMA
-#cmakedefine QT_NO_XINPUT
 #cmakedefine QT_NO_XMLSTREAM
 #cmakedefine QT_NO_XMLSTREAMREADER
 #cmakedefine QT_NO_XMLSTREAMWRITER

@@ -9,8 +9,8 @@ arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
 url='https://github.com/fluxer/katie'
 license=('LGPL' 'FDL' 'custom')
 depends=('openssl' 'zlib' 'cups' 'libice' 'libsm' 'pcre' 'libxcursor' 'icu'
-        'libxext' 'libxfixes' 'libxi' 'libxinerama' 'libxrandr' 'libxrender'
-        'libx11' 'libxt' 'fontconfig' 'freetype2' 'libmng' 'zstd')
+        'libxext' 'libxfixes' 'libxinerama' 'libxrandr' 'libxrender' 'libx11'
+        'libxt' 'fontconfig' 'freetype2' 'libmng' 'zstd')
 makedepends=('cmake' 'git' 'postgresql' 'libmariadbclient' 'unixodbc' 'unifdef')
 optdepends=('postgresql-libs: PostgreSQL driver'
         'libmariadbclient: MariaDB driver'

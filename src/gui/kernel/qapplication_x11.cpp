@@ -511,13 +511,6 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
         break;
 
     default:
-#if !defined(QT_NO_XINPUT)
-        if (err->request_code == qt_x11Data->xinput_major
-            && err->error_code == (qt_x11Data->xinput_errorbase + XI_BadDevice)
-            && err->minor_code == 3 /* X_OpenDevice */) {
-            return 0;
-        }
-#endif
         break;
     }
 
@@ -543,8 +536,6 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
             extensionName = "RENDER";
         else if (err->request_code == qt_x11Data->xrandr_major)
             extensionName = "RANDR";
-        else if (err->request_code == qt_x11Data->xinput_major)
-            extensionName = "XInputExtension";
         else if (err->request_code == qt_x11Data->mitshm_major)
             extensionName = "MIT-SHM";
 
@@ -1123,12 +1114,6 @@ void qt_init(QApplicationPrivate *priv, int,
     qt_x11Data->xfixes_eventbase = 0;
     qt_x11Data->xfixes_errorbase = 0;
 
-    // XInputExtension
-    qt_x11Data->use_xinput = false;
-    qt_x11Data->xinput_major = 0;
-    qt_x11Data->xinput_eventbase = 0;
-    qt_x11Data->xinput_errorbase = 0;
-
     // MIT-SHM
     qt_x11Data->use_mitshm = false;
     qt_x11Data->use_mitshm_pixmaps = false;
@@ -1457,12 +1442,6 @@ void qt_init(QApplicationPrivate *priv, int,
         if (XSyncQueryExtension(qt_x11Data->display, &xsync_evbase, &xsync_errbase))
             XSyncInitialize(qt_x11Data->display, &major, &minor);
 #endif // QT_NO_XSYNC
-
-#ifndef QT_NO_XINPUT
-        // See if Xinput is supported on the connected display
-        qt_x11Data->use_xinput = XQueryExtension(qt_x11Data->display, "XInputExtension", &qt_x11Data->xinput_major,
-                                          &qt_x11Data->xinput_eventbase, &qt_x11Data->xinput_errorbase);
-#endif // QT_NO_XINPUT
 
 #if !defined(QT_NO_FONTCONFIG)
         int dpi = 0;
@@ -3317,7 +3296,7 @@ bool QETWidget::translateWheelEvent(int global_x, int global_y, int delta,
 
 
 //
-// XInput Translation Event
+// XEvent Translation Event
 //
 bool QETWidget::translatePropertyEvent(const XEvent *event)
 {

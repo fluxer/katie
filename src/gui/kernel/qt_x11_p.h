@@ -109,10 +109,6 @@
 #  include <X11/extensions/XShm.h>
 #endif // QT_NO_XSHM
 
-#ifndef QT_NO_XINPUT
-#  include <X11/extensions/XInput.h>
-#endif // QT_NO_XINPUT
-
 #ifndef QT_NO_XFIXES
 #  include <X11/extensions/Xfixes.h>
 #endif // QT_NO_XFIXES
@@ -223,12 +219,6 @@ struct QX11Data
     bool use_mitshm;
     bool use_mitshm_pixmaps;
     int mitshm_major;
-
-    // true if Qt is compiled w/ INPUT support and INPUT is supported on the connected Display
-    bool use_xinput;
-    int xinput_major;
-    int xinput_eventbase;
-    int xinput_errorbase;
 
     QList<QWidget *> deferred_map;
     struct ScrollInProgress {

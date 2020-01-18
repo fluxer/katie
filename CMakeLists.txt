@@ -564,7 +564,7 @@ if(NOT WITH_ACCESSIBILITY)
 endif()
 
 # keep in sync with the gui component CMake file, only definitions setup is needed here
-foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xinput)
+foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor)
     if(NOT X11_${x11ext}_FOUND)
         message(WARNING "The X11 ${x11ext} extension was not found")
         string(TOUPPER "${x11ext}" upperext)

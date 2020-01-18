@@ -17,7 +17,7 @@ DIST_SUBDIR = ${PORTNAME}
 WRKSRC = ${WRKDIR}/katie-master
 
 USES = compiler:c++11-lang pkgconfig cmake ssl xorg sqlite:3 desktop-file-utils
-USE_XORG = xi xt xinerama xrandr xrender xcursor
+USE_XORG = xt xinerama xrandr xrender xcursor
 USE_LDCONFIG = yes
 LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu libicui18n.so:devel/icu \
 	libpcre.so:devel/pcre libpng.so:graphics/png libjpeg.so:graphics/jpeg-turbo \
