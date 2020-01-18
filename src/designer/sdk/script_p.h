@@ -69,7 +69,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerScriptExtension, "com.trolltech.Qt.Designer.Script")
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerScriptExtension, "Katie.Designer.Script")
 
 QT_END_HEADER
 

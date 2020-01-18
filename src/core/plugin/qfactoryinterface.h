@@ -50,7 +50,7 @@ struct Q_CORE_EXPORT QFactoryInterface
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QFactoryInterface, "com.trolltech.Qt.QFactoryInterface")
+Q_DECLARE_INTERFACE(QFactoryInterface, "Katie.QFactoryInterface")
 
 QT_END_HEADER
 

@@ -75,7 +75,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QDesignerCustomWidgetInterface, "com.trolltech.Qt.Designer.CustomWidget")
+Q_DECLARE_INTERFACE(QDesignerCustomWidgetInterface, "Katie.Designer.CustomWidget")
 
 QT_BEGIN_NAMESPACE
 
@@ -90,7 +90,7 @@ public:
 QT_END_NAMESPACE
 
 Q_DECLARE_INTERFACE(QDesignerCustomWidgetCollectionInterface,
-    "com.trolltech.Qt.Designer.CustomWidgetCollection")
+    "Katie.Designer.CustomWidgetCollection")
 
 QT_END_HEADER
 

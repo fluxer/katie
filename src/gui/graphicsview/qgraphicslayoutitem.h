@@ -136,7 +136,7 @@ inline qreal QGraphicsLayoutItem::maximumHeight() const
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QGraphicsLayoutItem, "com.trolltech.Qt.QGraphicsLayoutItem")
+Q_DECLARE_INTERFACE(QGraphicsLayoutItem, "Katie.QGraphicsLayoutItem")
 
 #endif
 

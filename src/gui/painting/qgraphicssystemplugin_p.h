@@ -61,7 +61,7 @@ struct QGraphicsSystemFactoryInterface : public QFactoryInterface
 
 QT_END_NAMESPACE
 
-#define QGraphicsSystemFactoryInterface_iid "com.trolltech.Qt.QGraphicsSystemFactoryInterface"
+#define QGraphicsSystemFactoryInterface_iid "Katie.QGraphicsSystemFactoryInterface"
 Q_DECLARE_INTERFACE(QGraphicsSystemFactoryInterface, QGraphicsSystemFactoryInterface_iid)
 
 QT_BEGIN_NAMESPACE
