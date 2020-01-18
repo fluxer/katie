@@ -54,8 +54,8 @@ public:
     QByteArray defaultBuf;
     qint64 ioIndex;
 
-    virtual qint64 peek(char *data, qint64 maxSize);
-    virtual QByteArray peek(qint64 maxSize);
+    qint64 peek(char *data, qint64 maxSize) final;
+    QByteArray peek(qint64 maxSize) final;
 
 #ifndef QT_NO_QOBJECT
     // private slots
