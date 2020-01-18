@@ -238,9 +238,9 @@ QFileSystemWatcherPrivate::QFileSystemWatcherPrivate()
 
 void QFileSystemWatcherPrivate::init()
 {
-    Q_Q(QFileSystemWatcher);
-
 #ifdef QT_BUILD_INTERNAL
+    Q_Q(const QFileSystemWatcher);
+
     const QObject *parent = q->parent();
     if (parent && parent->objectName().startsWith(QLatin1String("_qt_autotest_force_engine_"))) {
         // Autotest override case - use the explicitly selected engine only
