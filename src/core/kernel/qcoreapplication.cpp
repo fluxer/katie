@@ -113,10 +113,6 @@ void qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet &callback_set)
     qt_signal_spy_callback_set = callback_set;
 }
 
-extern "C" void Q_CORE_EXPORT qt_startup_hook()
-{
-}
-
 typedef QList<QtCleanUpFunction> QVFuncList;
 Q_GLOBAL_STATIC(QVFuncList, postRList)
 
@@ -466,8 +462,6 @@ void QCoreApplication::init()
 
 
     d->processCommandLineArguments();
-
-    qt_startup_hook();
 }
 
 
