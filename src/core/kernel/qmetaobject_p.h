@@ -247,7 +247,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
             TypeTbl[i].substitute, TypeTbl[i].substitutesize);
      }
 
-#ifdef QT_CACHE_NORMALIZED_TYPE
+#ifndef QT_BOOTSTRAPPED
     lock.relock();
     qGlobalNormalizedTypeHash()->insert(cachekey, result);
 #endif
