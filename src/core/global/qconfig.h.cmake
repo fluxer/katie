@@ -90,6 +90,7 @@
 #define QT_NO_IMAGE_TEXT
 #define QT_NO_GLIB
 #define QT_NO_ICONV
+#define QT_NO_LPR
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -213,7 +214,6 @@
 #cmakedefine QT_NO_LOCALFILE_OPTIMIZED_QML
 #cmakedefine QT_NO_LOCALSERVER
 #cmakedefine QT_NO_LOCALSOCKET
-#cmakedefine QT_NO_LPR
 #cmakedefine QT_NO_MAINWINDOW
 #cmakedefine QT_NO_MATRIX4X4
 #cmakedefine QT_NO_MDIAREA

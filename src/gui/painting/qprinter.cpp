@@ -217,10 +217,7 @@ void QPrinterPrivate::addToManualSetList(QPrintEngine::PrintEnginePropertyKey ke
 
   When printing directly to a printer on Windows or Mac OS X, QPrinter uses
   the built-in printer drivers. On X11, QPrinter uses the
-  \l{Common Unix Printing System (CUPS)} or the standard Unix \l lpr utility
-  to send PostScript or PDF output to the printer. As an alternative,
-  the printProgram() function can be used to specify the command or utility
-  to use instead of the system default.
+  \l{Common Unix Printing System (CUPS)}.
 
   Note that setting parameters like paper size and resolution on an
   invalid printer is undefined. You can use QPrinter::isValid() to
@@ -451,8 +448,8 @@ void QPrinterPrivate::addToManualSetList(QPrintEngine::PrintEnginePropertyKey ke
 /*!
   \enum QPrinter::PageOrder
 
-  This enum type is used by QPrinter to tell the application program
-  how to print.
+  This enum type is used by QPrinter to tell the printer which page
+  it should print first.
 
   \value FirstPageFirst  the lowest-numbered page should be printed
   first.
@@ -887,42 +884,6 @@ void QPrinter::setOutputFileName(const QString &fileName)
 
     d->printEngine->setProperty(QPrintEngine::PPK_OutputFileName, fileName);
     d->addToManualSetList(QPrintEngine::PPK_OutputFileName);
-}
-
-
-/*!
-  Returns the name of the program that sends the print output to the
-  printer.
-
-  The default is to return an empty string; meaning that QPrinter will try to
-  be smart in a system-dependent way. On X11 only, you can set it to something
-  different to use a specific print program. On the other platforms, this
-  returns an empty string.
-
-  \sa setPrintProgram(), setPrinterSelectionOption()
-*/
-QString QPrinter::printProgram() const
-{
-    Q_D(const QPrinter);
-    return d->printEngine->property(QPrintEngine::PPK_PrinterProgram).toString();
-}
-
-
-/*!
-  Sets the name of the program that should do the print job to \a
-  printProg.
-
-  On X11, this function sets the program to call with the PostScript
-  output. On other platforms, it has no effect.
-
-  \sa printProgram()
-*/
-void QPrinter::setPrintProgram(const QString &printProg)
-{
-    Q_D(QPrinter);
-    ABORT_IF_ACTIVE("QPrinter::setPrintProgram");
-    d->printEngine->setProperty(QPrintEngine::PPK_PrinterProgram, printProg);
-    d->addToManualSetList(QPrintEngine::PPK_PrinterProgram);
 }
 
 
@@ -2048,9 +2009,6 @@ QPrinter::PrintRange QPrinter::printRange() const
 
     \value PPK_PrinterName A string specifying the name of the printer.
 
-    \value PPK_PrinterProgram A string specifying the name of the
-    printer program used for printing,
-
     \value PPK_Resolution An integer describing the dots per inch for
     this printer.
 
@@ -2062,9 +2020,6 @@ QPrinter::PrintRange QPrinter::printRange() const
     \value PPK_SuppressSystemPrintStatus Suppress the built-in dialog for showing
     printing progress. As of 4.1 this only has effect on Mac OS X where, by default,
     a status dialog is shown.
-
-    \value PPK_WindowsPageSize An integer specifying a DM_PAPER entry
-    on Windows.
 
     \value PPK_CustomPaperSize A QSizeF specifying a custom paper size
     in the QPrinter::Point unit.

@@ -527,7 +527,7 @@ else()
 endif()
 
 if(NOT WITH_CUPS OR NOT CUPS_FOUND)
-    katie_definition(-DQT_NO_CUPS -DQT_NO_LPR)
+    katie_definition(-DQT_NO_CUPS)
 endif()
 
 if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)

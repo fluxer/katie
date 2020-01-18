@@ -63,12 +63,10 @@ public:
         PPK_PaperRect,
         PPK_PaperSource,
         PPK_PrinterName,
-        PPK_PrinterProgram,
         PPK_Resolution,
         PPK_SelectionOption,
         PPK_SupportedResolutions,
 
-        PPK_WindowsPageSize,
         PPK_FontEmbedding,
         PPK_SuppressSystemPrintStatus,
 
