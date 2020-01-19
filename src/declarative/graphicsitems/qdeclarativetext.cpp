@@ -1217,7 +1217,7 @@ void QDeclarativeText::setMaximumLineCount(int lines)
 {
     Q_D(QDeclarativeText);
 
-    d->maximumLineCountValid = lines==INT_MAX ? false : true;
+    d->maximumLineCountValid = (lines !=INT_MAX);
     if (d->maximumLineCount != lines) {
         d->maximumLineCount = lines;
         d->updateLayout();

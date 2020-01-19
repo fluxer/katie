@@ -370,7 +370,7 @@ void QtGradientStopsModel::moveStops(double newPosition)
     if (offset == 0)
         return;
 
-    bool forward = (offset > 0) ? false : true;
+    bool forward = (offset < 0);
 
     PositionStopMap stopList;
 

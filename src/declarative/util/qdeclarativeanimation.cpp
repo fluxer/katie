@@ -2326,7 +2326,7 @@ void QDeclarativePropertyAnimation::transition(QDeclarativeStateActions &actions
         targets.append(d->target);
 
     bool hasSelectors = !props.isEmpty() || !targets.isEmpty() || !d->exclude.isEmpty();
-    bool useType = (props.isEmpty() && d->defaultToInterpolatorType) ? true : false;
+    bool useType = (props.isEmpty() && d->defaultToInterpolatorType);
 
     if (d->defaultProperty.isValid() && !hasSelectors) {
         props << d->defaultProperty.name();
@@ -2340,7 +2340,7 @@ void QDeclarativePropertyAnimation::transition(QDeclarativeStateActions &actions
     QDeclarativeAnimationPropertyUpdater *data = new QDeclarativeAnimationPropertyUpdater;
     data->interpolatorType = d->interpolatorType;
     data->interpolator = d->interpolator;
-    data->reverse = direction == Backward ? true : false;
+    data->reverse = (direction == Backward);
     data->fromSourced = false;
     data->fromDefined = d->fromIsDefined;
 
@@ -2912,7 +2912,7 @@ void QDeclarativeAnchorAnimation::transition(QDeclarativeStateActions &actions,
     data->interpolatorType = QMetaType::QReal;
     data->interpolator = d->interpolator;
 
-    data->reverse = direction == Backward ? true : false;
+    data->reverse = (direction == Backward);
     data->fromSourced = false;
     data->fromDefined = false;
 

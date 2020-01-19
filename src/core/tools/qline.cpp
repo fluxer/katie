@@ -415,7 +415,7 @@ inline static qreal q_rad2deg(qreal x)
 
 bool QLineF::isNull() const
 {
-    return (qFuzzyCompare(pt1.x(), pt2.x()) && qFuzzyCompare(pt1.y(), pt2.y())) ? true : false;
+    return (qFuzzyCompare(pt1.x(), pt2.x()) && qFuzzyCompare(pt1.y(), pt2.y()));
 }
 
 

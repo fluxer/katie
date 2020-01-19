@@ -6535,7 +6535,7 @@ void QWidgetPrivate::show_helper()
     bool isEmbedded = false;
 #ifndef QT_NO_GRAPHICSVIEW
     if (q->isWindow()) {
-        isEmbedded = q->graphicsProxyWidget() ? true : false;
+        isEmbedded = (q->graphicsProxyWidget() != Q_NULLPTR);
         if (!isEmbedded && !bypassGraphicsProxyWidget(q)) {
             QGraphicsProxyWidget *ancestorProxy = nearestGraphicsProxyWidget(q->parentWidget());
             if (ancestorProxy) {
