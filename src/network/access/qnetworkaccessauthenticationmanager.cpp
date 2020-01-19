@@ -81,7 +81,8 @@ public:
             newCredential.password = password;
 
             if (closestMatch)
-                QVector<QNetworkAuthenticationCredential>::insert(++closestMatch, newCredential);
+                QVector<QNetworkAuthenticationCredential>::insert(
+                    QVector<QNetworkAuthenticationCredential>::const_iterator(++closestMatch), newCredential);
             else
                 QVector<QNetworkAuthenticationCredential>::insert(end(), newCredential);
         }

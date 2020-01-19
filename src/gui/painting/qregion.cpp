@@ -4185,8 +4185,7 @@ QVector<QRect> QRegion::rects() const
 {
     if (d->qt_rgn) {
         d->qt_rgn->vectorize();
-        // hw: modify the vector size directly to avoid reallocation
-        d->qt_rgn->rects.d->size = d->qt_rgn->numRects;
+        d->qt_rgn->rects.resize(d->qt_rgn->numRects);
         return d->qt_rgn->rects;
     } else {
         return QVector<QRect>();

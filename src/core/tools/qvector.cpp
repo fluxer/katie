@@ -36,31 +36,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QVectorData QVectorData::shared_null = { QAtomicInt(1), 0, 0, false };
-
-QVectorData *QVectorData::allocate(int size)
-{
-    return static_cast<QVectorData *>(malloc(size));
-}
-
-QVectorData *QVectorData::reallocate(QVectorData *x, int newsize)
-{
-    return static_cast<QVectorData *>(realloc(x, newsize));
-}
-
-void QVectorData::freeData(QVectorData *x)
-{
-    if(x != &shared_null)
-        free(x);
-}
-
-int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive)
-{
-    if (excessive)
-        return size + size / 2;
-    return qAllocMore(size * sizeofT, sizeofTypedData - sizeofT) / sizeofT;
-}
-
 /*!
     \class QVector
     \brief The QVector class is a template class that provides a dynamic array.
