@@ -96,27 +96,23 @@ public:
 
     // comfort
     QVector<T> &operator+=(const QVector<T> &l);
-    inline QVector<T> operator+(const QVector<T> &l) const
-    { QVector n = *this; n += l; return n; }
-    inline QVector<T> &operator+=(const T &t)
-    { append(t); return *this; }
-    inline QVector<T> &operator<< (const T &t)
-    { append(t); return *this; }
-    inline QVector<T> &operator<<(const QVector<T> &l)
-    { *this += l; return *this; }
+    inline QVector<T> operator+(const QVector<T> &l) const { QVector n = *this; n += l; return n; }
+    inline QVector<T> &operator+=(const T &t) { append(t); return *this; }
+    inline QVector<T> &operator<< (const T &t) { append(t); return *this; }
+    inline QVector<T> &operator<<(const QVector<T> &l) { *this += l; return *this; }
 
     QList<T> toList() const;
 
     static QVector<T> fromList(const QList<T> &list);
 
     static inline QVector<T> fromStdVector(const std::vector<T> &vector)
-    { QVector<T> tmp; tmp.reserve(vector.size()); qCopy(vector.begin(), vector.end(), std::back_inserter(tmp)); return tmp; }
-    inline std::vector<T> toStdVector() const
-    { std::vector<T> tmp; tmp.reserve(Data::size()); qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
+    { QVector<T> tmp; tmp.reserve(vector.size()); qCopy(vector.cbegin(), vector.cend(), std::back_inserter(tmp)); return tmp; }
+    inline std::vector<T> toStdVector() const { return std::vector<T>(*this); }
 
     typedef typename Data::iterator Iterator;
     typedef typename Data::const_iterator ConstIterator;
     inline int size() const { return Data::size(); } // type deduction for e.g. qMin()/qMax()
+    inline void clear() { Data::clear(); Data::shrink_to_fit(); } // release memory and set capacity to 0
 #if !defined(Q_NO_USING_KEYWORD)
     using Data::insert;
 #endif
@@ -160,12 +156,13 @@ Q_OUTOFLINE_TEMPLATE T QVector<T>::value(int i, const T &defaultValue) const
 template <typename T>
 QVector<T> &QVector<T>::fill(const T &from, int asize)
 {
+    if (asize < 0)
+        asize = Data::size();
+    Data::clear();
     if (asize > 0) {
-        Data::resize(asize);
-        Data::insert(Data::begin(), Data::size(), from);
-    } else {
-        Data::clear();
+        Data::insert(Data::begin(), asize, from);
     }
+    Data::shrink_to_fit();
     return *this;
 }
 
