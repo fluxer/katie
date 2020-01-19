@@ -111,8 +111,12 @@ public:
 
     typedef typename Data::iterator Iterator;
     typedef typename Data::const_iterator ConstIterator;
-    inline int size() const { return Data::size(); } // type deduction for e.g. qMin()/qMax()
-    inline void clear() { Data::clear(); Data::shrink_to_fit(); } // release memory and set capacity to 0
+     // type deduction for e.g. qMin()/qMax()
+    inline int size() const { return Data::size(); }
+    inline int capacity() const { return Data::capacity(); }
+     // release memory and set capacity to 0
+    inline void clear() { Data::clear(); Data::shrink_to_fit(); }
+
 #if !defined(Q_NO_USING_KEYWORD)
     using Data::insert;
 #endif
