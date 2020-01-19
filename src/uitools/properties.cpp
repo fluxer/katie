@@ -32,7 +32,7 @@
 ****************************************************************************/
 
 #include "properties_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 #include "abstractformbuilder.h"
 #include "formbuilderextra_p.h"
 #include "resourcebuilder_p.h"

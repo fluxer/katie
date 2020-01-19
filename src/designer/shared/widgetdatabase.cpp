@@ -38,7 +38,7 @@
 #include "pluginmanager_p.h"
 #include "qdesigner_widgetbox_p.h"
 #include "qdesigner_utils_p.h"
-#include <ui4_p.h>
+#include <ui4.h>
 
 #include <QtUiTools/customwidget.h>
 #include <QtDesigner/propertysheet.h>

@@ -38,7 +38,7 @@
 #include <QtDesigner/abstractformeditor.h>
 
 // shared
-#include <ui4_p.h>
+#include <ui4.h>
 #include "qlayout_widget_p.h"
 #include <formbuilderextra_p.h>
 
