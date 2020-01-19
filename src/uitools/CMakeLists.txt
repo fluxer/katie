@@ -1,4 +1,4 @@
-# add_definitions()
+add_definitions(-DQT_UITOOLS_LIB)
 set(EXTRA_UITOOLS_LIBS KtCore KtGui KtXml KtScript)
 
 set(UITOOLS_PUBLIC_HEADERS
@@ -20,6 +20,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
     # for widgets.table
     ${CMAKE_SOURCE_DIR}/src/shared
+    # for ui4.h
+    ${CMAKE_SOURCE_DIR}/src/tools/uic
 )
 
 set(UITOOLS_HEADERS
@@ -33,7 +35,6 @@ set(UITOOLS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/quiloader_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/resourcebuilder_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/textbuilder_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ui4_p.h
 )
 
 set(UITOOLS_SOURCES
@@ -43,9 +44,9 @@ set(UITOOLS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilderextra.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formscriptrunner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/textbuilder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ui4.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/resourcebuilder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/properties.cpp
+    ${CMAKE_SOURCE_DIR}/src/tools/uic/ui4.cpp
 )
 
 katie_generate_misc("${UITOOLS_HEADERS}" QtUiTools)

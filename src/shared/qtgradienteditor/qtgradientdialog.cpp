@@ -325,7 +325,7 @@ QGradient QtGradientDialog::getGradient(bool *ok, const QGradient &initial, QWid
     dlg.setGradient(initial);
     const int res = dlg.exec();
     if (ok) {
-        *ok = (res == QDialog::Accepted) ? true : false;
+        *ok = (res == QDialog::Accepted);
     }
     if (res == QDialog::Accepted)
         return dlg.gradient();

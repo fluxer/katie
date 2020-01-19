@@ -40,9 +40,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-template <class T> class QSharedDataPointer;
-
 class Q_CORE_EXPORT QSharedData
 {
 public:

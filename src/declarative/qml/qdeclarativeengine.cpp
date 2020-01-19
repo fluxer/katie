@@ -922,7 +922,7 @@ void QDeclarativeEngine::setObjectOwnership(QObject *object, ObjectOwnership own
     if (!ddata)
         return;
 
-    ddata->indestructible = (ownership == CppOwnership)?true:false;
+    ddata->indestructible = (ownership == CppOwnership);
     ddata->explicitIndestructibleSet = true;
 }
 

@@ -61,7 +61,7 @@ QT_BEGIN_NAMESPACE
 void QDeclarativePen::setColor(const QColor &c)
 {
     _color = c;
-    _valid = (_color.alpha() && _width >= 1) ? true : false;
+    _valid = (_color.alpha() && _width >= 1);
     emit penChanged();
 }
 
@@ -71,7 +71,7 @@ void QDeclarativePen::setWidth(int w)
         return;
 
     _width = w;
-    _valid = (_color.alpha() && _width >= 1) ? true : false;
+    _valid = (_color.alpha() && _width >= 1);
     emit penChanged();
 }
 
