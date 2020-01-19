@@ -37,7 +37,7 @@
 #include "widgetfactory_p.h"
 #include "qdesigner_introspection_p.h"
 
-#include <ui4_p.h>
+#include <ui4.h>
 #include <formbuilderextra_p.h>
 // sdk
 #include <QtDesigner/container.h>

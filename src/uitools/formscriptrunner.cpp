@@ -33,7 +33,7 @@
 
 #include "formscriptrunner_p.h"
 #include "formbuilderextra_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 
 #include <QtScript/QScriptEngine>
 #include <QtGui/QWidget>

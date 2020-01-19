@@ -66,7 +66,7 @@
 
 #include "qlayout_widget_p.h"
 #include "qdesigner_utils_p.h"
-#include <ui4_p.h>
+#include <ui4.h>
 
 // sdk
 #include <QtDesigner/propertysheet.h>

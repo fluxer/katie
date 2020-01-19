@@ -32,7 +32,7 @@
 ****************************************************************************/
 
 #include "textbuilder_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 #include <QtCore/QVariant>
 
 QT_BEGIN_NAMESPACE

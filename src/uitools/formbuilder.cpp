@@ -34,7 +34,7 @@
 #include "customwidget.h"
 #include "formbuilder.h"
 #include "formbuilderextra_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 
 #include <QtGui/QtGui>
 #include <QtCore/QCoreApplication>

@@ -35,7 +35,7 @@
 #include "abstractformbuilder.h"
 #include "resourcebuilder_p.h"
 #include "textbuilder_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 
 #include <QtGui/QLabel>
 #include <QtGui/QBoxLayout>
