@@ -261,96 +261,7 @@ void QRegion::detach()
 #endif
 }
 
-// duplicates in qregion_win.cpp and qregion_wce.cpp
-#define QRGN_SETRECT          1                // region stream commands
-#define QRGN_SETELLIPSE       2                //  (these are internal)
-#define QRGN_SETPTARRAY_ALT   3
-#define QRGN_SETPTARRAY_WIND  4
-#define QRGN_TRANSLATE        5
-#define QRGN_OR               6
-#define QRGN_AND              7
-#define QRGN_SUB              8
-#define QRGN_XOR              9
-#define QRGN_RECTS            10
-
-
 #ifndef QT_NO_DATASTREAM
-
-/*
-    Executes region commands in the internal buffer and rebuilds the
-    original region.
-
-    We do this when we read a region from the data stream.
-
-    If \a ver is non-0, uses the format version \a ver on reading the
-    byte array.
-*/
-void QRegion::exec(const QByteArray &buffer, QDataStream::Version ver, QDataStream::ByteOrder byteOrder)
-{
-    QByteArray copy = buffer;
-    QDataStream s(&copy, QIODevice::ReadOnly);
-    s.setVersion(ver);
-    s.setByteOrder(byteOrder);
-    QRegion rgn;
-#ifndef QT_NO_DEBUG
-    int test_cnt = 0;
-#endif
-    while (!s.atEnd()) {
-        qint32 id;
-        s >> id;
-#ifndef QT_NO_DEBUG
-        if (test_cnt > 0 && id != QRGN_TRANSLATE)
-            qWarning("QRegion::exec: Internal error");
-        test_cnt++;
-#endif
-        if (id == QRGN_SETRECT || id == QRGN_SETELLIPSE) {
-            QRect r;
-            s >> r;
-            rgn = QRegion(r, id == QRGN_SETRECT ? Rectangle : Ellipse);
-        } else if (id == QRGN_SETPTARRAY_ALT || id == QRGN_SETPTARRAY_WIND) {
-            QPolygon a;
-            s >> a;
-            rgn = QRegion(a, id == QRGN_SETPTARRAY_WIND ? Qt::WindingFill : Qt::OddEvenFill);
-        } else if (id == QRGN_TRANSLATE) {
-            QPoint p;
-            s >> p;
-            rgn.translate(p.x(), p.y());
-        } else if (id >= QRGN_OR && id <= QRGN_XOR) {
-            QByteArray bop1, bop2;
-            QRegion r1, r2;
-            s >> bop1;
-            r1.exec(bop1);
-            s >> bop2;
-            r2.exec(bop2);
-
-            switch (id) {
-                case QRGN_OR:
-                    rgn = r1.united(r2);
-                    break;
-                case QRGN_AND:
-                    rgn = r1.intersected(r2);
-                    break;
-                case QRGN_SUB:
-                    rgn = r1.subtracted(r2);
-                    break;
-                case QRGN_XOR:
-                    rgn = r1.xored(r2);
-                    break;
-            }
-        } else if (id == QRGN_RECTS) {
-            // (This is the only form used in Qt 2.0)
-            quint32 n;
-            s >> n;
-            QRect r;
-            for (int i=0; i<(int)n; i++) {
-                s >> r;
-                rgn = rgn.united(QRegion(r));
-            }
-        }
-    }
-    *this = rgn;
-}
-
 
 /*****************************************************************************
   QRegion stream functions
@@ -385,8 +296,7 @@ QDataStream &operator<<(QDataStream &s, const QRegion &r)
     if (a.isEmpty()) {
         s << (quint32)0;
     } else {
-        s << (quint32)(4 + 4 + 16 * a.size()); // 16: storage size of QRect
-        s << (qint32)QRGN_RECTS;
+        s << (quint32)(a.size());
         s << a;
     }
     return s;
@@ -403,9 +313,15 @@ QDataStream &operator<<(QDataStream &s, const QRegion &r)
 
 QDataStream &operator>>(QDataStream &s, QRegion &r)
 {
-    QByteArray b;
-    s >> b;
-    r.exec(b, s.version(), s.byteOrder());
+    while (!s.atEnd()) {
+        quint32 n;
+        s >> n;
+        QRect rect;
+        for (int i = 0; i < (int)n; i++) {
+            s >> rect;
+            r = r.united(QRegion(rect));
+        }
+    }
     return s;
 }
 #endif //QT_NO_DATASTREAM
