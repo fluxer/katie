@@ -1,0 +1,2 @@
+leak:libicuuc.so
+leak:libfontconfig.so
