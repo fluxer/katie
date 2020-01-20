@@ -2,7 +2,7 @@
 
 set -e
 
-cwd="$(dirname $0)"
+cwd="$(realpath $(dirname $0))"
 
 rm -rf "$cwd/../minsize"
 mkdir -p "$cwd/../minsize"
