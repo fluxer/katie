@@ -144,9 +144,6 @@ private:
     friend bool qt_region_strictContains(const QRegion &region,
                                          const QRect &rect);
 
-#ifndef QT_NO_DATASTREAM
-    void exec(const QByteArray &ba, QDataStream::Version ver = QDataStream::Qt_Default, QDataStream::ByteOrder byteOrder = QDataStream::BigEndian);
-#endif
     struct QRegionData {
         QAtomicInt ref;
 #if defined(Q_WS_X11)
