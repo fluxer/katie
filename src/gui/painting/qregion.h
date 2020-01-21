@@ -51,10 +51,6 @@ class QVariant;
 class QPolygon;
 class QBitmap;
 
-#if defined(Q_WS_X11)
-struct QRegionPrivate;
-#endif
-
 class Q_GUI_EXPORT QRegion
 {
 public:
@@ -126,7 +122,7 @@ public:
     operator QVariant() const;
 
 #if defined(Q_WS_X11)
-    inline Region handle() const { if(!d->rgn) updateX11Region(); return d->rgn; }
+    inline Region handle() const { return d->rgn; }
 #endif
 
 #ifndef QT_NO_DATASTREAM
@@ -137,7 +133,6 @@ private:
     QRegion copy() const;   // helper of detach.
     void detach();
 #if defined(Q_WS_X11)
-    void updateX11Region() const;
     void *clipRectangles(int &num) const;
     friend void *qt_getClipRects(const QRegion &r, int &num);
 #endif
@@ -149,7 +144,6 @@ private:
 #if defined(Q_WS_X11)
         Region rgn;
         void *xrectangles;
-        QRegionPrivate *qt_rgn;
 #endif
     };
     QRegionData *d;
