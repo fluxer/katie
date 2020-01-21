@@ -92,7 +92,7 @@ public:
     T value(int i) const;
     T value(int i, const T &defaultValue) const;
 
-    void pop_front() { Q_ASSERT(!isEmpty()); Data::erase(Data::begin()); }
+    inline void pop_front() { Q_ASSERT(!isEmpty()); Data::erase(Data::begin()); }
 
     // comfort
     QVector<T> &operator+=(const QVector<T> &l);
