@@ -1232,7 +1232,7 @@ void QCoreApplication::removePostedEvents(QObject *receiver, int eventType)
             const_cast<QPostEvent &>(pe).event = 0;
         } else if (!data->postEventList.recursion) {
             if (i != j)
-                data->postEventList.swap(i, j);
+                data->postEventList.move(i, j);
             ++j;
         }
     }

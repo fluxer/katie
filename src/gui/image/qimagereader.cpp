@@ -570,7 +570,7 @@ bool QImageReaderPrivate::initHandler()
             // Try the most probable extension first
             int currentFormatIndex = extensions.indexOf(format.toLower());
             if (currentFormatIndex > 0)
-                extensions.swap(0, currentFormatIndex);
+                extensions.move(0, currentFormatIndex);
         }
 
         int currentExtension = 0;

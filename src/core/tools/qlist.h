@@ -49,7 +49,7 @@ template <typename T> class QSet;
 template <typename T> class QVector;
 
 template <typename T>
-class Q_CORE_EXPORT QList :  public std::vector<T>
+class Q_CORE_EXPORT QList : public std::vector<T>
 {
     typedef std::vector<T> Data;
 
@@ -77,7 +77,6 @@ public:
     T takeFirst();
     T takeLast();
     void move(int from, int to);
-    inline void swap(int from, int to) { move(from, to); }
 
     QVector<T> toVector() const;
     QSet<T> toSet() const;
@@ -178,7 +177,7 @@ inline void QList<T>::move(int from, int to)
 {
     Q_ASSERT_X(from >= 0 && from < Data::size() && to >= 0 && to < Data::size(),
                "QList<T>::move", "index out of range");
-    T t = takeAt(from); Data::insert(Data::begin() + to, t);
+    Data::insert(Data::begin() + to, takeAt(from));
 }
 
 template <typename T>

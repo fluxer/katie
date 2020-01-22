@@ -150,7 +150,7 @@ inline void QGraphicsSceneIndexPrivate::items_helper(const QRectF &rect, QGraphi
     if (order == Qt::DescendingOrder) {
         const int n = items->size();
         for (int i = 0; i < n / 2; ++i)
-            items->swap(i, n - i - 1);
+            items->move(i, n - i - 1);
     }
 }
 

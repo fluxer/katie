@@ -54,7 +54,7 @@ class Q_CORE_EXPORT QVector : public std::vector<T>
 public:
     QVector() : Data() { }
     explicit QVector(int size) : Data(size) { }
-    QVector(int size, const T &t) : Data() { Data::reserve(size);  Data::insert(Data::begin(), size, t);}
+    QVector(int size, const T &t) : Data() { Data::reserve(size); Data::insert(Data::begin(), size, t);}
 #ifdef Q_COMPILER_INITIALIZER_LISTS
     inline QVector(std::initializer_list<T> args) : Data(args) { }
 #endif

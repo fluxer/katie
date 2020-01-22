@@ -102,7 +102,7 @@ QT_BEGIN_NAMESPACE
     \snippet doc/src/snippets/code/src_corelib_tools_qlistdata.cpp 1
 
     QList provides these basic functions to add, move, and remove
-    items: insert(), replace(), removeAt(), move(), and swap(). In
+    items: insert(), replace(), removeAt(), and move(). In
     addition, it provides the following convenience functions:
     append(), prepend(), removeFirst(), and removeLast().
 
@@ -230,13 +230,6 @@ QT_BEGIN_NAMESPACE
 
     Assigns \a other to this list and returns a reference to this
     list.
-*/
-
-/*! \fn void QList::swap(QList<T> &other)
-    \since 4.8
-
-    Swaps list \a other with this list. This operation is very
-    fast and never fails.
 */
 
 /*! \fn bool QList::operator==(const QList<T> &other) const
@@ -506,20 +499,7 @@ QT_BEGIN_NAMESPACE
     size(). To avoid failure, test that both \a from and \a to are at
     least 0 and less than size().
 
-    \sa swap(), insert(), takeAt()
-*/
-
-/*! \fn void QList::swap(int i, int j)
-
-    Exchange the item at index position \a i with the item at index
-    position \a j. This function assumes that both \a i and \a j are
-    at least 0 but less than size(). To avoid failure, test that both
-    \a i and \a j are at least 0 and less than size().
-
-    Example:
-    \snippet doc/src/snippets/code/src_corelib_tools_qlistdata.cpp 12
-
-    \sa move()
+    \sa insert(), takeAt()
 */
 
 /*! \fn int QList::indexOf(const T &value, int from = 0) const
