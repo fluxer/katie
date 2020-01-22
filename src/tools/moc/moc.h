@@ -141,6 +141,7 @@ struct ClassDef {
 
     struct Interface
     {
+        Interface() {};
         inline explicit Interface(const QByteArray &_className)
             : className(_className) {}
         QByteArray className;

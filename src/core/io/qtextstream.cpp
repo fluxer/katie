@@ -226,6 +226,8 @@
 #  include "qtextcodec.h"
 #endif
 
+#include <limits.h>
+
 #if defined QTEXTSTREAM_DEBUG
 #include <ctype.h>
 

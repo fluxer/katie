@@ -34,13 +34,17 @@
 #ifndef QVECTOR_H
 #define QVECTOR_H
 
-#include <QtCore/qlist.h>
+#include <QtCore/qiterator.h>
+#include <QtCore/qatomic.h>
+#include <QtCore/qalgorithms.h>
 
 #include <vector>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
+
+template <typename T> class QList;
 
 template <typename T>
 class Q_CORE_EXPORT QVector : public std::vector<T>
@@ -55,12 +59,9 @@ public:
     inline QVector(std::initializer_list<T> args) : Data(args) { }
 #endif
 
-    inline bool isEmpty() const { return Data::size() == 0; }
-
+    inline bool isEmpty() const { return Data::empty(); }
     inline void squeeze() { Data::shrink_to_fit(); }
-
     inline const T *constData() const { return Data::data(); }
-
     inline void append(const T &t) { Data::push_back(t); }
     inline void prepend(const T &t) { Data::insert(Data::begin(), t); }
     inline void insert(int i, const T &t) { Data::insert(Data::begin() + i, t); }
@@ -69,16 +70,14 @@ public:
     void replace(int i, const T &t);
     void remove(int i);
     void remove(int i, int n);
-
     QVector<T> &fill(const T &t, int size = -1);
-
     int indexOf(const T &t, int from = 0) const;
     int lastIndexOf(const T &t, int from = -1) const;
     bool contains(const T &t) const;
     int count(const T &t) const;
-
-    inline typename Data::const_iterator constBegin() const { return Data::cbegin(); }
-    inline typename Data::const_iterator constEnd() const { return Data::cend(); }
+    T value(int i) const;
+    T value(int i, const T &defaultValue) const;
+    QVector<T> mid(int pos, int length = -1) const;
 
     inline int count() const { return Data::size(); }
     inline T& first() { Q_ASSERT(!isEmpty()); return Data::front(); }
@@ -87,22 +86,18 @@ public:
     inline const T &last() const { Q_ASSERT(!isEmpty()); return Data::back(); }
     inline bool startsWith(const T &t) const { return !isEmpty() && first() == t; }
     inline bool endsWith(const T &t) const { return !isEmpty() && last() == t; }
-    QVector<T> mid(int pos, int length = -1) const;
-
-    T value(int i) const;
-    T value(int i, const T &defaultValue) const;
-
     inline void pop_front() { Q_ASSERT(!isEmpty()); Data::erase(Data::begin()); }
+    inline typename Data::const_iterator constBegin() const { return Data::cbegin(); }
+    inline typename Data::const_iterator constEnd() const { return Data::cend(); }
 
     // comfort
     QVector<T> &operator+=(const QVector<T> &l);
     inline QVector<T> operator+(const QVector<T> &l) const { QVector n = *this; n += l; return n; }
     inline QVector<T> &operator+=(const T &t) { append(t); return *this; }
-    inline QVector<T> &operator<< (const T &t) { append(t); return *this; }
+    inline QVector<T> &operator<<(const T &t) { append(t); return *this; }
     inline QVector<T> &operator<<(const QVector<T> &l) { *this += l; return *this; }
 
     QList<T> toList() const;
-
     static QVector<T> fromList(const QList<T> &list);
 
     static inline QVector<T> fromStdVector(const std::vector<T> &vector)
@@ -144,7 +139,7 @@ inline void QVector<T>::replace(int i, const T &t)
 }
 
 template<typename T>
-Q_OUTOFLINE_TEMPLATE T QVector<T>::value(int i) const
+inline T QVector<T>::value(int i) const
 {
     if (i < 0 || i >= Data::size()) {
         return T();
@@ -152,7 +147,7 @@ Q_OUTOFLINE_TEMPLATE T QVector<T>::value(int i) const
     return Data::at(i);
 }
 template<typename T>
-Q_OUTOFLINE_TEMPLATE T QVector<T>::value(int i, const T &defaultValue) const
+inline T QVector<T>::value(int i, const T &defaultValue) const
 {
     return ((i < 0 || i >= Data::size()) ? defaultValue :  Data::at(i));
 }
@@ -171,7 +166,7 @@ QVector<T> &QVector<T>::fill(const T &from, int asize)
 }
 
 template <typename T>
-QVector<T> &QVector<T>::operator+=(const QVector &l)
+inline QVector<T> &QVector<T>::operator+=(const QVector &l)
 {
     for (size_t i = 0; i < l.size(); i++) {
         Data::push_back(l.at(i));
@@ -230,7 +225,7 @@ int QVector<T>::count(const T &t) const
 }
 
 template <typename T>
-Q_OUTOFLINE_TEMPLATE QVector<T> QVector<T>::mid(int pos, int length) const
+QVector<T> QVector<T>::mid(int pos, int length) const
 {
     if (length < 0)
         length = Data::size() - pos;
@@ -246,7 +241,7 @@ Q_OUTOFLINE_TEMPLATE QVector<T> QVector<T>::mid(int pos, int length) const
 }
 
 template <typename T>
-Q_OUTOFLINE_TEMPLATE QList<T> QVector<T>::toList() const
+QList<T> QVector<T>::toList() const
 {
     QList<T> result;
     result.reserve(Data::size());
@@ -256,24 +251,9 @@ Q_OUTOFLINE_TEMPLATE QList<T> QVector<T>::toList() const
 }
 
 template <typename T>
-Q_OUTOFLINE_TEMPLATE QVector<T> QList<T>::toVector() const
-{
-    QVector<T> result(size());
-    for (size_t i = 0; i < size(); i++)
-        result[i] = at(i);
-    return result;
-}
-
-template <typename T>
-QVector<T> QVector<T>::fromList(const QList<T> &list)
+inline QVector<T> QVector<T>::fromList(const QList<T> &list)
 {
     return list.toVector();
-}
-
-template <typename T>
-QList<T> QList<T>::fromVector(const QVector<T> &vector)
-{
-    return vector.toList();
 }
 
 Q_DECLARE_SEQUENTIAL_ITERATOR(Vector)
