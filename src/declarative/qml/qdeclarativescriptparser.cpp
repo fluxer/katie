@@ -278,7 +278,7 @@ ProcessAST::defineObjectBinding(AST::UiQualifiedId *propertyName,
         if (lastTypeDot >= 0)
             resolvableObjectType.replace(QLatin1Char('.'),QLatin1Char('/'));
 
-	QDeclarativeParser::Object *obj = new QDeclarativeParser::Object;
+        QDeclarativeParser::Object *obj = new QDeclarativeParser::Object;
 
         QDeclarativeScriptParser::TypeReference *typeRef = _parser->findOrCreateType(resolvableObjectType);
         obj->type = typeRef->id;

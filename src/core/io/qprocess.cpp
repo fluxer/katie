@@ -2011,14 +2011,12 @@ int QProcess::execute(const QString &program)
     identifier of the started process.
 */
 bool QProcess::startDetached(const QString &program,
-			     const QStringList &arguments,
-			     const QString &workingDirectory,
+                             const QStringList &arguments,
+                             const QString &workingDirectory,
                              qint64 *pid)
 {
-    return QProcessPrivate::startDetached(program,
-					  arguments,
-					  workingDirectory,
-					  pid);
+    return QProcessPrivate::startDetached(program,  arguments,
+                                          workingDirectory, pid);
 }
 
 /*!
@@ -2037,7 +2035,7 @@ bool QProcess::startDetached(const QString &program,
     The started process will run as a regular standalone process.
 */
 bool QProcess::startDetached(const QString &program,
-			     const QStringList &arguments)
+                             const QStringList &arguments)
 {
     return QProcessPrivate::startDetached(program, arguments);
 }

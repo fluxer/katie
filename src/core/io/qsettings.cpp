@@ -1051,7 +1051,7 @@ QVariant QSettings::value(const QString &key, const QVariant &defaultValue) cons
     \typedef QSettings::SettingsMap
 
     Typedef for QMap<QString, QVariant>.
-	
+
     \sa registerFormat()
 */
 
