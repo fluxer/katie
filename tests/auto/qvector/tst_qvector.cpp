@@ -454,6 +454,8 @@ void tst_QVector::lastIndexOf() const
     QVector<QString> myvec;
     myvec << "A" << "B" << "C" << "B" << "A";
 
+    QVERIFY(myvec.lastIndexOf("A") == 4);
+    QVERIFY(myvec.lastIndexOf("A", 3) == 0);
     QVERIFY(myvec.lastIndexOf("B") == 3);
     QVERIFY(myvec.lastIndexOf("B", 2) == 1);
     QVERIFY(myvec.lastIndexOf("X") == -1);

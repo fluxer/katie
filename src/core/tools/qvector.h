@@ -199,12 +199,11 @@ int QVector<T>::lastIndexOf(const T &t, int from) const
     if (from < 0)
         from += Data::size();
     else if (from >= Data::size())
-        from = Data::size()-1;
-    if (from >= 0) {
-        for (size_t i = from; i < Data::size(); i--) {
-            if (Data::at(i) == t)
-                return i;
-        }
+        from = Data::size() - 1;
+    while(from >= 0) {
+        if (Data::at(from) == t)
+            return from;
+        from--;
     }
     return -1;
 }
