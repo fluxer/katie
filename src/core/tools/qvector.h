@@ -66,6 +66,7 @@ public:
     inline void prepend(const T &t) { Data::insert(Data::begin(), t); }
     inline void insert(int i, const T &t) { Data::insert(Data::begin() + i, t); }
     inline void insert(int i, int n, const T &t) { Data::insert(Data::begin() + i, n, t); }
+    inline void push_front(const T &t) { prepend(t); }
 
     void replace(int i, const T &t);
     void remove(int i);
