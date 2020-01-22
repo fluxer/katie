@@ -54,7 +54,7 @@ class Q_CORE_EXPORT QVector : public std::vector<T>
 public:
     QVector() : Data() { }
     explicit QVector(int size) : Data(size) { }
-    QVector(int size, const T &t) : Data(size) { fill(t, size); }
+    QVector(int size, const T &t) : Data() { Data::reserve(size);  Data::insert(Data::begin(), size, t);}
 #ifdef Q_COMPILER_INITIALIZER_LISTS
     inline QVector(std::initializer_list<T> args) : Data(args) { }
 #endif
@@ -160,6 +160,7 @@ QVector<T> &QVector<T>::fill(const T &from, int asize)
         asize = Data::size();
     Data::clear();
     if (asize > 0) {
+        Data::reserve(asize);
         Data::insert(Data::begin(), asize, from);
     }
     Data::shrink_to_fit();
@@ -169,6 +170,7 @@ QVector<T> &QVector<T>::fill(const T &from, int asize)
 template <typename T>
 inline QVector<T> &QVector<T>::operator+=(const QVector &l)
 {
+    Data::reserve(Data::size() + l.size());
     for (size_t i = 0; i < l.size(); i++) {
         Data::push_back(l.at(i));
     }

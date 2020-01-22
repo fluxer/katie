@@ -142,6 +142,7 @@ public:
 template <typename T>
 inline void QList<T>::append(const QList<T> &l)
 {
+    Data::reserve(Data::size() + l.size());
     for (size_t i = 0; i < l.size(); i++) {
         Data::push_back(l.at(i));
     }
