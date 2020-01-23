@@ -1258,8 +1258,15 @@ static void qt_print_backtrace()
     unw_cursor_t cursor;
     unw_context_t context;
 
-    unw_getcontext(&context);
-    unw_init_local(&cursor, &context);
+    if (unw_getcontext(&context) != 0) {
+        ::fprintf(stderr, "qt_print_backtrace: unable to get context\n");
+        return;
+    }
+
+    if (unw_init_local(&cursor, &context) != 0) {
+        ::fprintf(stderr, "qt_print_backtrace: unable to initialize\n");
+        return;
+    }
 
     while (unw_step(&cursor) > 0) {
         unw_word_t offset;
@@ -1274,7 +1281,7 @@ static void qt_print_backtrace()
                 printf(" %s\n", sym);
             }
         } else {
-            printf("qt_print_backtrace: unable to obtain symbol name for this frame\n");
+            ::fprintf(stderr, "qt_print_backtrace: unable to obtain symbol name for this frame\n");
         }
     }
 }
