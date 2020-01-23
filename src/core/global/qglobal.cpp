@@ -1021,13 +1021,6 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_OS_ULTRIX
-    \relates <QtGlobal>
-
-    Defined on DEC Ultrix.
-*/
-
-/*!
     \macro Q_OS_LINUX
     \relates <QtGlobal>
 
@@ -1102,13 +1095,6 @@ bool qSharedBuild()
     \relates <QtGlobal>
 
     Defined on DG/UX.
-*/
-
-/*!
-    \macro Q_OS_RELIANT
-    \relates <QtGlobal>
-
-    Defined on Reliant UNIX.
 */
 
 /*!

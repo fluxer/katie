@@ -68,7 +68,6 @@ classlist = [
     "QBitArray",
     "QBitmap",
     "QBitRef",
-    "QBool",
     "QBoxLayout",
     "QBrush",
     "QBrushData",
