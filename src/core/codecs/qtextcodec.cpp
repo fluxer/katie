@@ -89,7 +89,7 @@ static QTextCodec *createForName(const QByteArray &name)
     }
 #endif
 
-    foreach(const QByteArray codec, QIcuCodec::allCodecs()) {
+    foreach(const QByteArray &codec, QIcuCodec::allCodecs()) {
         if (nameMatch(name, codec)) {
             return new QIcuCodec(name);
         }

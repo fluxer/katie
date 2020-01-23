@@ -85,7 +85,7 @@ static int *queuedConnectionTypes(const QList<QByteArray> &typeNames)
 }
 
 #ifndef QT_NO_THREAD
-static QAtomicPointer<QMutexPool> signalSlotMutexes = QAtomicPointer<QMutexPool>(0);
+static QAtomicPointer<QMutexPool> signalSlotMutexes = QAtomicPointer<QMutexPool>(Q_NULLPTR);
 #endif
 static QAtomicInt objectCount = QAtomicInt(0);
 
@@ -97,7 +97,7 @@ static inline QMutex *signalSlotLock(const QObject *o)
 #ifndef QT_NO_THREAD
     if (!signalSlotMutexes) {
         QMutexPool *mp = new QMutexPool;
-        if (!signalSlotMutexes.testAndSetOrdered(0, mp)) {
+        if (!signalSlotMutexes.testAndSetOrdered(Q_NULLPTR, mp)) {
             delete mp;
         }
     }
@@ -728,7 +728,7 @@ QObject::~QObject()
 
     if(!objectCount.deref()) {
 #ifndef QT_NO_THREAD
-        QMutexPool *old = signalSlotMutexes.fetchAndStoreAcquire(0);
+        QMutexPool *old = signalSlotMutexes.fetchAndStoreAcquire(Q_NULLPTR);
         delete old;
 #endif
     }
