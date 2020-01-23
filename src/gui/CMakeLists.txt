@@ -323,7 +323,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxbmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qgifhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qheaderview.h
@@ -1005,54 +1004,6 @@ elseif(WITH_PNG)
         ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwutil.c
     )
     include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/libpng)
-endif()
-
-if(WITH_JPEG AND JPEG_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qjpeghandler_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qjpeghandler.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${JPEG_LIBRARIES}
-    )
-    include_directories(${JPEG_INCLUDE_DIR})
-endif()
-
-if(WITH_MNG AND MNG_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qmnghandler_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qmnghandler.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${MNG_LIBRARIES}
-    )
-    include_directories(${MNG_INCLUDES})
-endif()
-
-if(WITH_TIFF AND TIFF_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qtiffhandler_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qtiffhandler.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${TIFF_LIBRARIES}
-    )
-    include_directories(${TIFF_INCLUDE_DIR})
 endif()
 
 if(WITH_CUPS AND CUPS_FOUND)

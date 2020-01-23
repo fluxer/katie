@@ -1292,7 +1292,8 @@ void qt_init(QApplicationPrivate *priv, int,
 #ifndef QT_NO_XRENDER
         int xrender_eventbase,  xrender_errorbase;
         // See if XRender is supported on the connected display
-        if (XQueryExtension(qt_x11Data->display, "RENDER", &qt_x11Data->xrender_major,
+        if (qgetenv("QT_X11_NO_XRENDER").isNull()
+            && XQueryExtension(qt_x11Data->display, "RENDER", &qt_x11Data->xrender_major,
                             &xrender_eventbase, &xrender_errorbase)
             && XRenderQueryExtension(qt_x11Data->display, &xrender_eventbase,
                                      &xrender_errorbase)) {
@@ -1300,10 +1301,8 @@ void qt_init(QApplicationPrivate *priv, int,
             int major = 0;
             int minor = 0;
             XRenderQueryVersion(qt_x11Data->display, &major, &minor);
-            if (qgetenv("QT_X11_NO_XRENDER").isNull()) {
-                qt_x11Data->use_xrender = (major >= 0 && minor >= 5);
-                qt_x11Data->xrender_minor = minor;
-            }
+            qt_x11Data->use_xrender = (major >= 0 && minor >= 5);
+            qt_x11Data->xrender_minor = minor;
         }
 #endif // QT_NO_XRENDER
 
@@ -1313,7 +1312,8 @@ void qt_init(QApplicationPrivate *priv, int,
         int mitshm_eventbase;
         int mitshm_errorbase;
         int mitshm_pixmaps;
-        if (XQueryExtension(qt_x11Data->display, "MIT-SHM", &qt_x11Data->mitshm_major,
+        if (qgetenv("QT_X11_NO_MITSHM").isNull()
+            && XQueryExtension(qt_x11Data->display, "MIT-SHM", &qt_x11Data->mitshm_major,
                             &mitshm_eventbase, &mitshm_errorbase)
             && XShmQueryVersion(qt_x11Data->display, &mitshm_major, &mitshm_minor,
                                 &mitshm_pixmaps))
@@ -1324,8 +1324,7 @@ void qt_init(QApplicationPrivate *priv, int,
             // to determine whether the display is local or not (not 100 % accurate).
             // BGR server layouts are not supported either, since it requires the raster
             // engine to work on a QImage with BGR layout.
-            bool local = displayName.isEmpty() || displayName.lastIndexOf(QLatin1Char(':')) == 0;
-            if (local && (qgetenv("QT_X11_NO_MITSHM").toInt() == 0)) {
+            if (displayName.isEmpty() || displayName.lastIndexOf(QLatin1Char(':')) == 0) {
                 Visual *defaultVisual = DefaultVisual(qt_x11Data->display, DefaultScreen(qt_x11Data->display));
                 qt_x11Data->use_mitshm = ((defaultVisual->red_mask == 0xff0000
                                     || defaultVisual->red_mask == 0xf800)
@@ -1355,7 +1354,8 @@ void qt_init(QApplicationPrivate *priv, int,
 
 #ifndef QT_NO_XRANDR
         // See if XRandR is supported on the connected display
-        if (XQueryExtension(qt_x11Data->display, "RANDR", &qt_x11Data->xrandr_major,
+        if (qgetenv("QT_X11_NO_XRANDR").isNull()
+            && XQueryExtension(qt_x11Data->display, "RANDR", &qt_x11Data->xrandr_major,
                             &qt_x11Data->xrandr_eventbase, &qt_x11Data->xrandr_errorbase)) {
 
             if (XRRQueryExtension(qt_x11Data->display, &qt_x11Data->xrandr_eventbase, &qt_x11Data->xrandr_errorbase)) {
@@ -1381,7 +1381,8 @@ void qt_init(QApplicationPrivate *priv, int,
 
 #ifndef QT_NO_XFIXES
         // See if Xfixes is supported on the connected display
-        if (XQueryExtension(qt_x11Data->display, "XFIXES", &qt_x11Data->xfixes_major,
+        if (qgetenv("QT_X11_NO_XFIXES").isNull()
+            && XQueryExtension(qt_x11Data->display, "XFIXES", &qt_x11Data->xfixes_major,
                             &qt_x11Data->xfixes_eventbase, &qt_x11Data->xfixes_errorbase)) {
             if(XFixesQueryExtension(qt_x11Data->display, &qt_x11Data->xfixes_eventbase,
                                                   &qt_x11Data->xfixes_errorbase)) {
