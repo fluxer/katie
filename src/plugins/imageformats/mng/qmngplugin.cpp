@@ -36,57 +36,63 @@
 
 #ifndef QT_NO_IMAGEFORMATPLUGIN
 
-#ifdef QT_NO_IMAGEFORMAT_GIF
-#undef QT_NO_IMAGEFORMAT_GIF
-#endif
-
-#include "qgifhandler_p.h"
+#include "qmnghandler_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class QGifPlugin : public QImageIOPlugin
+class QMngPlugin : public QImageIOPlugin
 {
 public:
-    QGifPlugin();
-    ~QGifPlugin();
+    QMngPlugin();
+    ~QMngPlugin();
 
     QStringList keys() const;
     Capabilities capabilities(QIODevice *device, const QByteArray &format) const;
     QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const;
 };
 
-QGifPlugin::QGifPlugin()
+QMngPlugin::QMngPlugin()
 {
 }
 
-QGifPlugin::~QGifPlugin()
+QMngPlugin::~QMngPlugin()
 {
 }
 
-QStringList QGifPlugin::keys() const
+QStringList QMngPlugin::keys() const
 {
     static const QStringList list = QStringList()
-        << QLatin1String("gif");
+        << QLatin1String("mng");
     return list;
 }
 
-QImageIOPlugin::Capabilities QGifPlugin::capabilities(QIODevice *device, const QByteArray &format) const
+QImageIOPlugin::Capabilities QMngPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
-    if (format == "gif" || (device && device->isReadable() && QGifHandler::canRead(device)))
-        return Capabilities(CanRead);
-    return 0;
+    if (format == "mng")
+        return Capabilities(CanRead | CanWrite);
+    if (!format.isEmpty())
+        return 0;
+    if (!device->isOpen())
+        return 0;
+
+    Capabilities cap;
+    if (device->isReadable() && QMngHandler::canRead(device))
+        cap |= CanRead;
+    if (device->isWritable())
+        cap |= CanWrite;
+    return cap;
 }
 
-QImageIOHandler *QGifPlugin::create(QIODevice *device, const QByteArray &format) const
+QImageIOHandler *QMngPlugin::create(QIODevice *device, const QByteArray &format) const
 {
-    QImageIOHandler *handler = new QGifHandler;
+    QImageIOHandler *handler = new QMngHandler;
     handler->setDevice(device);
     handler->setFormat(format);
     return handler;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QGifPlugin)
-Q_EXPORT_PLUGIN2(qgif, QGifPlugin)
+Q_EXPORT_STATIC_PLUGIN(QMngPlugin)
+Q_EXPORT_PLUGIN2(qmng, QMngPlugin)
 
 #endif // QT_NO_IMAGEFORMATPLUGIN
 

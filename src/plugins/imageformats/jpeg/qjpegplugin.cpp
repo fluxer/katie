@@ -36,57 +36,64 @@
 
 #ifndef QT_NO_IMAGEFORMATPLUGIN
 
-#ifdef QT_NO_IMAGEFORMAT_GIF
-#undef QT_NO_IMAGEFORMAT_GIF
-#endif
-
-#include "qgifhandler_p.h"
+#include "qjpeghandler_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class QGifPlugin : public QImageIOPlugin
+class QJpegPlugin : public QImageIOPlugin
 {
 public:
-    QGifPlugin();
-    ~QGifPlugin();
+    QJpegPlugin();
+    ~QJpegPlugin();
 
     QStringList keys() const;
     Capabilities capabilities(QIODevice *device, const QByteArray &format) const;
     QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const;
 };
 
-QGifPlugin::QGifPlugin()
+QJpegPlugin::QJpegPlugin()
 {
 }
 
-QGifPlugin::~QGifPlugin()
+QJpegPlugin::~QJpegPlugin()
 {
 }
 
-QStringList QGifPlugin::keys() const
+QStringList QJpegPlugin::keys() const
 {
     static const QStringList list = QStringList()
-        << QLatin1String("gif");
+        << QLatin1String("jpg")
+        << QLatin1String("jpeg");
     return list;
 }
 
-QImageIOPlugin::Capabilities QGifPlugin::capabilities(QIODevice *device, const QByteArray &format) const
+QImageIOPlugin::Capabilities QJpegPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
-    if (format == "gif" || (device && device->isReadable() && QGifHandler::canRead(device)))
-        return Capabilities(CanRead);
-    return 0;
+    if (format == "jpg" || format == "jpeg")
+        return Capabilities(CanRead | CanWrite);
+    if (!format.isEmpty())
+        return 0;
+    if (!device->isOpen())
+        return 0;
+
+    Capabilities cap;
+    if (device->isReadable() && QJpegHandler::canRead(device))
+        cap |= CanRead;
+    if (device->isWritable())
+        cap |= CanWrite;
+    return cap;
 }
 
-QImageIOHandler *QGifPlugin::create(QIODevice *device, const QByteArray &format) const
+QImageIOHandler *QJpegPlugin::create(QIODevice *device, const QByteArray &format) const
 {
-    QImageIOHandler *handler = new QGifHandler;
+    QImageIOHandler *handler = new QJpegHandler;
     handler->setDevice(device);
     handler->setFormat(format);
     return handler;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QGifPlugin)
-Q_EXPORT_PLUGIN2(qgif, QGifPlugin)
+Q_EXPORT_STATIC_PLUGIN(QJpegPlugin)
+Q_EXPORT_PLUGIN2(qjpeg, QJpegPlugin)
 
 #endif // QT_NO_IMAGEFORMATPLUGIN
 

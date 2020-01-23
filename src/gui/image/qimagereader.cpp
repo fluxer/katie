@@ -134,18 +134,6 @@
 #ifndef QT_NO_IMAGEFORMAT_PNG
 #include "qpnghandler_p.h"
 #endif
-#ifndef QT_NO_IMAGEFORMAT_JPEG
-#include "qjpeghandler_p.h"
-#endif
-#ifndef QT_NO_IMAGEFORMAT_MNG
-#include "qmnghandler_p.h"
-#endif
-#ifndef QT_NO_IMAGEFORMAT_TIFF
-#include "qtiffhandler_p.h"
-#endif
-#ifdef QT_BUILTIN_GIF_READER
-#include "qgifhandler_p.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -153,29 +141,17 @@ enum qBuiltInFormatType {
 #ifndef QT_NO_IMAGEFORMAT_PNG
     qPngFormat = 0,
 #endif
-#ifndef QT_NO_IMAGEFORMAT_JPEG
-    qJpgFormat = 1,
-#endif
-#ifndef QT_NO_IMAGEFORMAT_MNG
-    qMngFormat = 2,
-#endif
-#ifndef QT_NO_IMAGEFORMAT_TIFF
-    qTifFormat = 3,
-#endif
-#ifdef QT_BUILTIN_GIF_READER
-    qGifFormat = 4,
-#endif
-    qBmpFormat = 5,
+    qBmpFormat = 1,
 #ifndef QT_NO_IMAGEFORMAT_PPM
-    qPpmFormat = 6,
-    qPgmFormat = 7,
-    qPbmFormat = 8,
+    qPpmFormat = 2,
+    qPgmFormat = 3,
+    qPbmFormat = 4,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XBM
-    qXbmFormat = 9,
+    qXbmFormat = 5,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
-    qXpmFormat = 10,
+    qXpmFormat = 6,
 #endif
 };
 
@@ -185,18 +161,6 @@ static const struct ImageFormatTblData {
 } ImageFormatTbl[] = {
 #ifndef QT_NO_IMAGEFORMAT_PNG
     { qPngFormat, "png" },
-#endif
-#ifndef QT_NO_IMAGEFORMAT_JPEG
-    { qJpgFormat, "jpg" },
-#endif
-#ifndef QT_NO_IMAGEFORMAT_MNG
-    { qMngFormat, "mng" },
-#endif
-#ifndef QT_NO_IMAGEFORMAT_TIFF
-    { qTifFormat, "tif" },
-#endif
-#ifdef QT_BUILTIN_GIF_READER
-    { qGifFormat, "gif" },
 #endif
     { qBmpFormat, "bmp" },
 #ifndef QT_NO_IMAGEFORMAT_PPM
@@ -324,22 +288,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         } else if (testFormat == "png") {
             handler = new QPngHandler;
 #endif
-#ifndef QT_NO_IMAGEFORMAT_JPEG
-        } else if (testFormat == "jpg" || testFormat == "jpeg") {
-            handler = new QJpegHandler;
-#endif
-#ifndef QT_NO_IMAGEFORMAT_MNG
-        } else if (testFormat == "mng") {
-            handler = new QMngHandler;
-#endif
-#ifndef QT_NO_IMAGEFORMAT_TIFF
-        } else if (testFormat == "tif" || testFormat == "tiff") {
-            handler = new QTiffHandler;
-#endif
-#ifdef QT_BUILTIN_GIF_READER
-        } else if (testFormat == "gif") {
-            handler = new QGifHandler;
-#endif
 #ifndef QT_NO_IMAGEFORMAT_BMP
         } else if (testFormat == "bmp") {
             handler = new QBmpHandler;
@@ -410,34 +358,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
                 case qPngFormat: {
                     if (QPngHandler::canRead(device))
                         handler = new QPngHandler;
-                    break;
-                }
-#endif
-#ifndef QT_NO_IMAGEFORMAT_JPEG
-                case qJpgFormat: {
-                    if (QJpegHandler::canRead(device))
-                        handler = new QJpegHandler;
-                    break;
-                }
-#endif
-#ifndef QT_NO_IMAGEFORMAT_MNG
-                case qMngFormat: {
-                    if (QMngHandler::canRead(device))
-                        handler = new QMngHandler;
-                    break;
-                }
-#endif
-#ifndef QT_NO_IMAGEFORMAT_TIFF
-                case qTifFormat: {
-                    if (QTiffHandler::canRead(device))
-                        handler = new QTiffHandler;
-                    break;
-                }
-#endif
-#ifdef QT_BUILTIN_GIF_READER
-                case qGifFormat: {
-                    if (QGifHandler::canRead(device))
-                        handler = new QGifHandler;
                     break;
                 }
 #endif
@@ -1379,7 +1299,7 @@ QByteArray QImageReader::imageFormat(QIODevice *device)
 /*!
     Returns the list of image formats supported by QImageReader.
 
-    By default, Qt can read the following formats:
+    By default, Katie can read the following formats:
 
     \table
     \header \o Format \o Description
