@@ -13,7 +13,6 @@ incmap = {
         'QAtomicPointer': 'qatomic.h',
         'QBasicAtomicInt': 'qbasicatomic.h',
         'QBitRef': 'qbitarray.h',
-        'QBool': 'qglobal.h',
         'QByteRef': 'qbytearray.h',
         'QCharRef': 'qstring.h',
         'QChildEvent': 'qcoreevent.h',
