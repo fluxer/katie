@@ -143,7 +143,7 @@ bool QNativeSocketEnginePrivate::createNewSocket(QAbstractSocket::SocketType soc
 #endif
     int type = (socketType == QAbstractSocket::UdpSocket) ? SOCK_DGRAM : SOCK_STREAM;
 
-	int socket = qt_safe_socket(protocol, type, 0);
+    int socket = qt_safe_socket(protocol, type, 0);
 
     if (socket <= 0) {
         switch (errno) {

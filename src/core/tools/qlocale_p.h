@@ -146,8 +146,8 @@ public:
 
     typedef QVarLengthArray<char, 256> CharBuff;
     bool numberToCLocale(const QString &num,
-    	    	    	  GroupSeparatorMode group_sep_mode,
-                          CharBuff *result) const;
+                         GroupSeparatorMode group_sep_mode,
+                         CharBuff *result) const;
     inline char digitToCLocale(const QChar &c) const;
 
     static void updateSystemPrivate();

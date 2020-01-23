@@ -155,7 +155,7 @@ static int numerusHelper(int n, const uchar *rules, int rulesSize)
                 case Q_LEQ:
                     truthValue = (leftOperand <= rightOperand);
                     break;
-		case Q_BETWEEN:
+                case Q_BETWEEN:
                     int bottom = rightOperand;
                     CHECK_RANGE;
                     int top = rules[i++];

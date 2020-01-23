@@ -101,7 +101,7 @@ class Q_CORE_EXPORT QJsonObject
          return QJsonValueRef(o, i);
       }
       inline QJsonValueRefPtr operator->() const { 
-	  return QJsonValueRefPtr(o, i); 
+         return QJsonValueRefPtr(o, i);
       }
       inline bool operator==(const iterator &other) const {
          return i == other.i;
@@ -184,7 +184,7 @@ class Q_CORE_EXPORT QJsonObject
          return o->valueAt(i);
       }
       inline QJsonValuePtr operator->() const { 
-	  return  QJsonValuePtr(o->valueAt(i));
+         return  QJsonValuePtr(o->valueAt(i));
       }
       inline bool operator==(const const_iterator &other) const {
          return i == other.i;

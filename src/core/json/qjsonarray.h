@@ -101,7 +101,7 @@ class Q_CORE_EXPORT QJsonArray
          return QJsonValueRef(a, i);
       }
       inline QJsonValueRefPtr operator->() const { 
-	  return QJsonValueRefPtr(a, i); 
+         return QJsonValueRefPtr(a, i);
       }
       inline QJsonValueRef operator[](int j) const {
          return QJsonValueRef(a, i + j);
@@ -201,7 +201,7 @@ class Q_CORE_EXPORT QJsonArray
          return a->at(i);
       }
       inline QJsonValuePtr operator->() const { 
-	  return QJsonValuePtr(a->at(i));
+         return QJsonValuePtr(a->at(i));
       }
       inline QJsonValue operator[](int j) const {
          return a->at(i + j);

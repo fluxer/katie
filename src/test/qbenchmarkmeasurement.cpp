@@ -53,7 +53,7 @@ qint64 QBenchmarkTimeMeasurer::checkpoint()
 }
 
 qint64 QBenchmarkTimeMeasurer::stop()
-{	
+{
     return time.elapsed();
 }
 

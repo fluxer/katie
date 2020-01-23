@@ -224,7 +224,7 @@ qint64 QBenchmarkCallgrindMeasurer::checkpoint()
 }
 
 qint64 QBenchmarkCallgrindMeasurer::stop()
-{	
+{
     return checkpoint();
 }
 
