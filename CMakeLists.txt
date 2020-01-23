@@ -476,7 +476,7 @@ set_package_properties(MySQL PROPERTIES
 
 find_package(Unwind)
 set_package_properties(Unwind PROPERTIES
-    PURPOSE "Required for stack traces on assert"
+    PURPOSE "Required for stack traces on assert and crash"
     DESCRIPTION "A (mostly) platform-independent unwind API"
     URL "https://www.nongnu.org/libunwind/index.html"
     TYPE OPTIONAL
