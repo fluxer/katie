@@ -465,7 +465,8 @@ set_package_properties(PostgreSQL PROPERTIES
     TYPE OPTIONAL
 )
 
-find_package(MySQL)
+# v4.1.13+ required for multiple statements query and UTF-8 support
+find_package(MySQL 4.1.13)
 set_package_properties(MySQL PROPERTIES
     PURPOSE "Required for MySQL database support"
     DESCRIPTION "The world's most popular open source database"
@@ -475,7 +476,7 @@ set_package_properties(MySQL PROPERTIES
 
 find_package(Unwind)
 set_package_properties(Unwind PROPERTIES
-    PURPOSE "Required for stack traces on assert"
+    PURPOSE "Required for stack traces on assert and crash"
     DESCRIPTION "A (mostly) platform-independent unwind API"
     URL "https://www.nongnu.org/libunwind/index.html"
     TYPE OPTIONAL

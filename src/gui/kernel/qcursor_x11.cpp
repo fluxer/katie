@@ -218,7 +218,6 @@ static const struct CursorTblData {
     { XC_top_left_arrow, "move", "dnd-move" }, // Qt::DragMoveCursor
     { XC_center_ptr, "link", "dnd-link" }, // Qt::DragLinkCursor
 };
-static const qint16 CursorTblSize = sizeof(CursorTbl) / sizeof(CursorTblData);
 
 static const char x11_blank_cursor_bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,

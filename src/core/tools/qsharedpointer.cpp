@@ -1215,7 +1215,7 @@ QtSharedPointer::ExternalRefCountData *QtSharedPointer::ExternalRefCountData::ge
     ExternalRefCountData *x = new ExternalRefCountData(Qt::Uninitialized);
     x->strongref = -1;
     x->weakref = 2;  // the QWeakPointer that called us plus the QObject itself
-    if (!d->sharedRefcount.testAndSetRelease(0, x)) {
+    if (!d->sharedRefcount.testAndSetRelease(Q_NULLPTR, x)) {
         delete x;
         d->sharedRefcount->weakref.ref();
     }
