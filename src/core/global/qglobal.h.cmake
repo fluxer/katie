@@ -360,21 +360,15 @@ QT_USE_NAMESPACE
 #define Q_NULLPTR nullptr
 #define Q_DECL_CONSTEXPR constexpr
 
-#ifndef Q_CONSTRUCTOR_FUNCTION
-# define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
+#define Q_CONSTRUCTOR_FUNCTION(AFUNC) \
    static const int AFUNC ## __init_variable__ = AFUNC();
-# define Q_CONSTRUCTOR_FUNCTION(AFUNC) Q_CONSTRUCTOR_FUNCTION0(AFUNC)
-#endif
 
-#ifndef Q_DESTRUCTOR_FUNCTION
-# define Q_DESTRUCTOR_FUNCTION0(AFUNC) \
+#define Q_DESTRUCTOR_FUNCTION(AFUNC) \
     class AFUNC ## __dest_class__ { \
     public: \
        inline AFUNC ## __dest_class__() { } \
        inline ~ AFUNC ## __dest_class__() { AFUNC(); } \
     } AFUNC ## __dest_instance__;
-# define Q_DESTRUCTOR_FUNCTION(AFUNC) Q_DESTRUCTOR_FUNCTION0(AFUNC)
-#endif
 
 /*
    The window system, must be one of: (Q_WS_x)
