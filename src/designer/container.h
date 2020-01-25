@@ -61,7 +61,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerContainerExtension, "com.trolltech.Qt.Designer.Container")
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerContainerExtension, "Katie.Designer.Container")
 
 QT_END_HEADER
 

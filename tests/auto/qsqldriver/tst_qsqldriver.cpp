@@ -169,33 +169,23 @@ void tst_QSqlDriver::primaryIndex()
     QSqlIndex index = db.driver()->primaryIndex(tablename);
     QCOMPARE(index.count(), 1);
 
-    if( db.driverName().startsWith("QIBASE") || db.driverName().startsWith("QOCI") || db.driverName().startsWith("QDB2"))
-        QCOMPARE(index.fieldName(0), QString::fromLatin1("ID"));
-    else
-        QCOMPARE(index.fieldName(0), QString::fromLatin1("id"));
+    QCOMPARE(index.fieldName(0), QString::fromLatin1("id"));
 
 
     //check that we can get the primary index using a quoted tablename
-    if( db.driverName().startsWith("QIBASE") || db.driverName().startsWith("QOCI") || db.driverName().startsWith("QDB2"))
-        tablename = tablename.toUpper();
-    else if (db.driverName().startsWith("QPSQL"))
+    if (db.driverName().startsWith("QPSQL"))
         tablename = tablename.toLower();
 
     if(!db.driverName().startsWith("QODBC") && !db.databaseName().contains("PostgreSql")) {
         index = db.driver()->primaryIndex(db.driver()->escapeIdentifier(tablename, QSqlDriver::TableName));
         QCOMPARE(index.count(), 1);
     }
-    if( db.driverName().startsWith("QIBASE") || db.driverName().startsWith("QOCI") || db.driverName().startsWith("QDB2"))
-        QCOMPARE(index.fieldName(0), QString::fromLatin1("ID"));
-    else
-        QCOMPARE(index.fieldName(0), QString::fromLatin1("id"));
+    QCOMPARE(index.fieldName(0), QString::fromLatin1("id"));
 
 
 
     //check that we can not get the primary index using a quoted but incorrect table name casing
-    if( db.driverName().startsWith("QIBASE") || db.driverName().startsWith("QOCI") || db.driverName().startsWith("QDB2"))
-        tablename = tablename.toLower();
-    else if (db.driverName().startsWith("QPSQL"))
+    if (db.driverName().startsWith("QPSQL"))
         tablename = tablename.toUpper();
 
     index = db.driver()->primaryIndex(db.driver()->escapeIdentifier(tablename, QSqlDriver::TableName));

@@ -415,7 +415,7 @@ inline static qreal q_rad2deg(qreal x)
 
 bool QLineF::isNull() const
 {
-    return (qFuzzyCompare(pt1.x(), pt2.x()) && qFuzzyCompare(pt1.y(), pt2.y())) ? true : false;
+    return (qFuzzyCompare(pt1.x(), pt2.x()) && qFuzzyCompare(pt1.y(), pt2.y()));
 }
 
 
@@ -481,7 +481,7 @@ bool QLineF::isNull() const
     \fn qreal QLineF::dx() const
 
     Returns the horizontal component of the line's vector. 
-	Return value is positive if x2() >= x1() and negative if x2() < x1().
+    Return value is positive if x2() >= x1() and negative if x2() < x1().
 
     \sa dy(), pointAt()
 */
@@ -490,7 +490,7 @@ bool QLineF::isNull() const
     \fn qreal QLineF::dy() const
 
     Returns the vertical component of the line's vector.
-	Return value is positive if y2() >= y1() and negative if y2() < y1().
+    Return value is positive if y2() >= y1() and negative if y2() < y1().
 
     \sa dx(), pointAt()
 */
@@ -501,7 +501,7 @@ bool QLineF::isNull() const
     Sets the length of the line to the given \a length. QLineF will
     move the end point - p2() - of the line to give the line its new length.
     If the given \a length is negative the angle() is also changed.
-	
+
     If the line is a null line, the length will remain zero regardless
     of the length specified. 
 

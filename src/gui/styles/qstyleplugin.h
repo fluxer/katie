@@ -50,7 +50,7 @@ struct Q_GUI_EXPORT QStyleFactoryInterface : public QFactoryInterface
 
 QT_END_NAMESPACE
 
-#define QStyleFactoryInterface_iid "com.trolltech.Qt.QStyleFactoryInterface"
+#define QStyleFactoryInterface_iid "Katie.QStyleFactoryInterface"
 Q_DECLARE_INTERFACE(QStyleFactoryInterface, QStyleFactoryInterface_iid)
 
 QT_BEGIN_NAMESPACE

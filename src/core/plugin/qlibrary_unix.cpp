@@ -41,15 +41,11 @@
 
 #ifndef QT_NO_LIBRARY
 
-#if defined(QT_AOUT_UNDERSCORE)
-#include <string.h>
-#endif
-
 #if defined (Q_OS_NACL)
 #define QT_NO_DYNAMIC_LIBRARY
 #endif
 
-#if !defined(QT_HPUX_LD) && !defined(QT_NO_DYNAMIC_LIBRARY)
+#if !defined(QT_NO_DYNAMIC_LIBRARY)
 #include <dlfcn.h>
 #endif
 
@@ -59,10 +55,8 @@ static QString qdlerror()
 {
 #if defined(QT_NO_DYNAMIC_LIBRARY)
     return QLatin1String("This platform does not support dynamic libraries.");
-#elif !defined(QT_HPUX_LD)
-    return QString::fromLatin1(dlerror());
 #else
-    return qt_error_string(errno);
+    return QString::fromLatin1(::dlerror());
 #endif
 }
 
@@ -120,14 +114,6 @@ bool QLibraryPrivate::load_sys()
 #endif
     }
     int dlFlags = 0;
-#if defined(QT_HPUX_LD)
-    dlFlags = DYNAMIC_PATH | BIND_NONFATAL;
-    if (loadHints & QLibrary::ResolveAllSymbolsHint) {
-        dlFlags |= BIND_IMMEDIATE;
-    } else {
-        dlFlags |= BIND_DEFERRED;
-    }
-#else
     if (loadHints & QLibrary::ResolveAllSymbolsHint) {
         dlFlags |= RTLD_NOW;
     } else {
@@ -138,12 +124,11 @@ bool QLibraryPrivate::load_sys()
     } else {
         dlFlags |= RTLD_LOCAL;
     }
-#if defined(Q_OS_AIX)	// Not sure if any other platform actually support this thing.
+#if defined(Q_OS_AIX) // Not sure if any other platform actually support this thing.
     if (loadHints & QLibrary::LoadArchiveMemberHint) {
         dlFlags |= RTLD_MEMBER;
     }
 #endif
-#endif // QT_HPUX_LD
     // If using the new search heuristics we do:
     //
     //   If the filename is an absolute path then we want to try that first as it is most likely
@@ -177,11 +162,7 @@ bool QLibraryPrivate::load_sys()
             } else {
                 attempt = path + prefixes.at(prefix) + name + suffixes.at(suffix);
             }
-#if defined(QT_HPUX_LD)
-            pHnd = (void*)shl_load(QFile::encodeName(attempt).constData(), dlFlags, 0);
-#else
-            pHnd = dlopen(QFile::encodeName(attempt).constData(), dlFlags);
-#endif
+            pHnd = ::dlopen(QFile::encodeName(attempt).constData(), dlFlags);
 
             if (!pHnd && fileName.startsWith(QLatin1Char('/')) && QFile::exists(attempt)) {
                 // We only want to continue if dlopen failed due to that the shared library did not exist.
@@ -196,8 +177,7 @@ bool QLibraryPrivate::load_sys()
 #endif // QT_NO_DYNAMIC_LIBRARY
     if (!pHnd) {
         errorString = QLibrary::tr("Cannot load library %1: %2").arg(fileName).arg(qdlerror());
-    }
-    if (pHnd) {
+    } else {
         qualifiedFileName = attempt;
         errorString.clear();
     }
@@ -207,11 +187,7 @@ bool QLibraryPrivate::load_sys()
 bool QLibraryPrivate::unload_sys()
 {
 #if !defined(QT_NO_DYNAMIC_LIBRARY)
-#  if defined(QT_HPUX_LD)
-    if (shl_unload((shl_t)pHnd)) {
-#  else
-    if (dlclose(pHnd)) {
-#  endif
+    if (::dlclose(pHnd)) {
         errorString = QLibrary::tr("Cannot unload library %1: %2").arg(fileName).arg(qdlerror());
         return false;
     }
@@ -222,21 +198,10 @@ bool QLibraryPrivate::unload_sys()
 
 void* QLibraryPrivate::resolve_sys(const char* symbol)
 {
-#if defined(QT_AOUT_UNDERSCORE)
-    // older a.out systems add an underscore in front of symbols
-    char* undrscr_symbol = new char[strlen(symbol)+2];
-    undrscr_symbol[0] = '_';
-    strcpy(undrscr_symbol+1, symbol);
-    void* address = dlsym(pHnd, undrscr_symbol);
-    delete [] undrscr_symbol;
-#elif defined(QT_HPUX_LD)
-    void* address = Q_NULLPTR;
-    if (shl_findsym((shl_t*)&pHnd, symbol, TYPE_UNDEFINED, &address) < 0)
-        address = Q_NULLPTR;
-#elif defined (QT_NO_DYNAMIC_LIBRARY)
+#if defined (QT_NO_DYNAMIC_LIBRARY)
     void *address = Q_NULLPTR;
 #else
-    void* address = dlsym(pHnd, symbol);
+    void* address = ::dlsym(pHnd, symbol);
 #endif
     if (!address) {
         errorString = QLibrary::tr("Cannot resolve symbol \"%1\" in %2: %3").arg(

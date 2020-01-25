@@ -282,7 +282,7 @@ void QTipLabel::placeTip(const QPoint &pos, QWidget *w)
 {
 #ifndef QT_NO_STYLE_STYLESHEET
     if (w) {
-        QTipLabel::instance->setStyleSheet(w->styleSheet());
+        setStyleSheet(w->styleSheet());
     }
 #endif //QT_NO_STYLE_STYLESHEET
 
@@ -305,16 +305,12 @@ void QTipLabel::placeTip(const QPoint &pos, QWidget *w)
 
 bool QTipLabel::tipChanged(const QPoint &pos, const QString &text, QObject *o)
 {
-    if (QTipLabel::instance->text() != text)
-        return true;
-
-    if (o != widget)
+    if (this->text() != text || o != widget)
         return true;
 
     if (!rect.isNull())
         return !rect.contains(pos);
-    else
-       return false;
+    return false;
 }
 
 /*!

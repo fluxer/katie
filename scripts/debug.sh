@@ -2,13 +2,16 @@
 
 set -e
 
-cwd="$(dirname $0)"
+cwd="$(realpath $(dirname $0))"
+
+echo "$cwd"
 
 rm -rf "$cwd/../debug"
 mkdir -p "$cwd/../debug"
 cd "$cwd/../debug"
 
 export CC=clang CXX=clang++
+export LSAN_OPTIONS=suppressions="$cwd/../scripts/lsan.supp"
 # undefined,float-cast-overflow,thread,memory,address
 sanitizers="address"
 export CXXFLAGS="$CXXFLAGS -Wall -fsanitize=$sanitizers -fno-omit-frame-pointer -fno-optimize-sibling-calls"

@@ -254,7 +254,6 @@ public:
     // printer options
     QString outputFileName;
     QString printerName;
-    QString printProgram;
     QString selectionOption;
     QString title;
     QString creator;

@@ -248,8 +248,7 @@ QByteArray QSslCertificate::version() const
 {
     QMutexLocker lock(QMutexPool::globalInstanceGet(d.data()));
     if (d->versionString.isEmpty() && d->x509) {
-        d->versionString =
-	    QByteArray::number(qlonglong(X509_get_version(d->x509)) + 1);
+        d->versionString = QByteArray::number(qlonglong(X509_get_version(d->x509)) + 1);
     }
     return d->versionString;
 }

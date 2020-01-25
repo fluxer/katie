@@ -65,8 +65,6 @@ struct QVectorTypedData : private QVectorData
     static inline void free(QVectorTypedData<T> *x) { QVectorData::freeData(static_cast<QVectorData *>(x)); }
 };
 
-class QRegion;
-
 template <typename T>
 class Q_CORE_EXPORT QVector
 {
@@ -269,8 +267,6 @@ public:
     inline std::vector<T> toStdVector() const
     { std::vector<T> tmp; tmp.reserve(size()); qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
 private:
-    friend class QRegion; // Optimization for QRegion::rects()
-
     void detach_helper();
     QVectorData *malloc(int alloc);
     void realloc(int size, int alloc);

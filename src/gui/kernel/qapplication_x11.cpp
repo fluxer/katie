@@ -117,140 +117,131 @@ char *_Xsetlocale(int category, const char *locale)
 #endif // X_NOT_BROKEN
 
 /* Warning: if you modify this string, modify the list of atoms in qt_x11_p.h as well! */
-static const char * x11_atomnames = {
+static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     // window-manager <-> client protocols
-    "WM_PROTOCOLS\0"
-    "WM_DELETE_WINDOW\0"
-    "WM_TAKE_FOCUS\0"
-    "_NET_WM_PING\0"
-    "_NET_WM_CONTEXT_HELP\0"
-    "_NET_WM_SYNC_REQUEST\0"
-    "_NET_WM_SYNC_REQUEST_COUNTER\0"
+    "WM_PROTOCOLS\0",
+    "WM_DELETE_WINDOW\0",
+    "WM_TAKE_FOCUS\0",
+    "_NET_WM_PING\0",
+    "_NET_WM_CONTEXT_HELP\0",
+    "_NET_WM_SYNC_REQUEST\0",
+    "_NET_WM_SYNC_REQUEST_COUNTER\0",
 
     // ICCCM window state
-    "WM_STATE\0"
-    "WM_CHANGE_STATE\0"
+    "WM_STATE\0",
+    "WM_CHANGE_STATE\0",
 
     // Session management
-    "WM_CLIENT_LEADER\0"
-    "WM_WINDOW_ROLE\0"
-    "SM_CLIENT_ID\0"
+    "WM_CLIENT_LEADER\0",
+    "WM_WINDOW_ROLE\0",
+    "SM_CLIENT_ID\0",
 
     // Clipboard
-    "CLIPBOARD\0"
-    "INCR\0"
-    "TARGETS\0"
-    "MULTIPLE\0"
-    "TIMESTAMP\0"
-    "SAVE_TARGETS\0"
-    "CLIP_TEMPORARY\0"
-    "_QT_SELECTION\0"
-    "_QT_CLIPBOARD_SENTINEL\0"
-    "_QT_SELECTION_SENTINEL\0"
-    "CLIPBOARD_MANAGER\0"
+    "CLIPBOARD\0",
+    "INCR\0",
+    "TARGETS\0",
+    "MULTIPLE\0",
+    "TIMESTAMP\0",
+    "SAVE_TARGETS\0",
+    "CLIP_TEMPORARY\0",
+    "_QT_SELECTION\0",
+    "_QT_CLIPBOARD_SENTINEL\0",
+    "_QT_SELECTION_SENTINEL\0",
+    "CLIPBOARD_MANAGER\0",
 
-    "_XSETROOT_ID\0"
+    "_XSETROOT_ID\0",
 
-    "_QT_SCROLL_DONE\0"
-    "_QT_INPUT_ENCODING\0"
+    "_QT_SCROLL_DONE\0",
 
-    "_MOTIF_WM_HINTS\0"
+    "_MOTIF_WM_HINTS\0",
 
     // EWMH (aka NETWM)
-    "_NET_SUPPORTED\0"
-    "_NET_VIRTUAL_ROOTS\0"
-    "_NET_WORKAREA\0"
+    "_NET_SUPPORTED\0",
+    "_NET_VIRTUAL_ROOTS\0",
+    "_NET_WORKAREA\0",
 
-    "_NET_MOVERESIZE_WINDOW\0"
-    "_NET_WM_MOVERESIZE\0"
+    "_NET_MOVERESIZE_WINDOW\0",
+    "_NET_WM_MOVERESIZE\0",
 
-    "_NET_WM_NAME\0"
-    "_NET_WM_ICON_NAME\0"
-    "_NET_WM_ICON\0"
+    "_NET_WM_NAME\0",
+    "_NET_WM_ICON_NAME\0",
+    "_NET_WM_ICON\0",
 
-    "_NET_WM_PID\0"
+    "_NET_WM_PID\0",
 
-    "_NET_WM_WINDOW_OPACITY\0"
+    "_NET_WM_WINDOW_OPACITY\0",
 
-    "_NET_WM_STATE\0"
-    "_NET_WM_STATE_ABOVE\0"
-    "_NET_WM_STATE_BELOW\0"
-    "_NET_WM_STATE_FULLSCREEN\0"
-    "_NET_WM_STATE_MAXIMIZED_HORZ\0"
-    "_NET_WM_STATE_MAXIMIZED_VERT\0"
-    "_NET_WM_STATE_MODAL\0"
-    "_NET_WM_STATE_STAYS_ON_TOP\0"
-    "_NET_WM_STATE_DEMANDS_ATTENTION\0"
+    "_NET_WM_STATE\0",
+    "_NET_WM_STATE_ABOVE\0",
+    "_NET_WM_STATE_BELOW\0",
+    "_NET_WM_STATE_FULLSCREEN\0",
+    "_NET_WM_STATE_MAXIMIZED_HORZ\0",
+    "_NET_WM_STATE_MAXIMIZED_VERT\0",
+    "_NET_WM_STATE_MODAL\0",
+    "_NET_WM_STATE_STAYS_ON_TOP\0",
+    "_NET_WM_STATE_DEMANDS_ATTENTION\0",
 
-    "_NET_WM_USER_TIME\0"
-    "_NET_WM_USER_TIME_WINDOW\0"
-    "_NET_WM_FULL_PLACEMENT\0"
+    "_NET_WM_USER_TIME\0",
+    "_NET_WM_USER_TIME_WINDOW\0",
+    "_NET_WM_FULL_PLACEMENT\0",
 
-    "_NET_WM_WINDOW_TYPE\0"
-    "_NET_WM_WINDOW_TYPE_DESKTOP\0"
-    "_NET_WM_WINDOW_TYPE_DOCK\0"
-    "_NET_WM_WINDOW_TYPE_TOOLBAR\0"
-    "_NET_WM_WINDOW_TYPE_MENU\0"
-    "_NET_WM_WINDOW_TYPE_UTILITY\0"
-    "_NET_WM_WINDOW_TYPE_SPLASH\0"
-    "_NET_WM_WINDOW_TYPE_DIALOG\0"
-    "_NET_WM_WINDOW_TYPE_DROPDOWN_MENU\0"
-    "_NET_WM_WINDOW_TYPE_POPUP_MENU\0"
-    "_NET_WM_WINDOW_TYPE_TOOLTIP\0"
-    "_NET_WM_WINDOW_TYPE_NOTIFICATION\0"
-    "_NET_WM_WINDOW_TYPE_COMBO\0"
-    "_NET_WM_WINDOW_TYPE_DND\0"
-    "_NET_WM_WINDOW_TYPE_NORMAL\0"
+    "_NET_WM_WINDOW_TYPE\0",
+    "_NET_WM_WINDOW_TYPE_DESKTOP\0",
+    "_NET_WM_WINDOW_TYPE_DOCK\0",
+    "_NET_WM_WINDOW_TYPE_TOOLBAR\0",
+    "_NET_WM_WINDOW_TYPE_MENU\0",
+    "_NET_WM_WINDOW_TYPE_UTILITY\0",
+    "_NET_WM_WINDOW_TYPE_SPLASH\0",
+    "_NET_WM_WINDOW_TYPE_DIALOG\0",
+    "_NET_WM_WINDOW_TYPE_DROPDOWN_MENU\0",
+    "_NET_WM_WINDOW_TYPE_POPUP_MENU\0",
+    "_NET_WM_WINDOW_TYPE_TOOLTIP\0",
+    "_NET_WM_WINDOW_TYPE_NOTIFICATION\0",
+    "_NET_WM_WINDOW_TYPE_COMBO\0",
+    "_NET_WM_WINDOW_TYPE_DND\0",
+    "_NET_WM_WINDOW_TYPE_NORMAL\0",
 
-    "_NET_STARTUP_INFO\0"
-    "_NET_STARTUP_INFO_BEGIN\0"
+    "_NET_STARTUP_INFO\0",
+    "_NET_STARTUP_INFO_BEGIN\0",
 
-    "_NET_SUPPORTING_WM_CHECK\0"
+    "_NET_SUPPORTING_WM_CHECK\0",
 
-    "_NET_WM_CM_S0\0"
+    "_NET_WM_CM_S0\0",
 
-    "_NET_SYSTEM_TRAY_VISUAL\0"
+    "_NET_SYSTEM_TRAY_VISUAL\0",
 
-    "_NET_ACTIVE_WINDOW\0"
+    "_NET_ACTIVE_WINDOW\0",
 
     // Property formats
-    "COMPOUND_TEXT\0"
-    "TEXT\0"
-    "UTF8_STRING\0"
+    "COMPOUND_TEXT\0",
+    "TEXT\0",
+    "UTF8_STRING\0",
 
     // xdnd
-    "XdndEnter\0"
-    "XdndPosition\0"
-    "XdndStatus\0"
-    "XdndLeave\0"
-    "XdndDrop\0"
-    "XdndFinished\0"
-    "XdndTypeList\0"
-    "XdndActionList\0"
+    "XdndEnter\0",
+    "XdndPosition\0",
+    "XdndStatus\0",
+    "XdndLeave\0",
+    "XdndDrop\0",
+    "XdndFinished\0",
+    "XdndTypeList\0",
+    "XdndActionList\0",
 
-    "XdndSelection\0"
+    "XdndSelection\0",
 
-    "XdndAware\0"
-    "XdndProxy\0"
+    "XdndAware\0",
+    "XdndProxy\0",
 
-    "XdndActionCopy\0"
-    "XdndActionLink\0"
-    "XdndActionMove\0"
-    "XdndActionPrivate\0"
-
-    // Motif DND
-    "_MOTIF_DRAG_AND_DROP_MESSAGE\0"
-    "_MOTIF_DRAG_INITIATOR_INFO\0"
-    "_MOTIF_DRAG_RECEIVER_INFO\0"
-    "_MOTIF_DRAG_WINDOW\0"
-    "_MOTIF_DRAG_TARGETS\0"
-
-    "XmTRANSFER_SUCCESS\0"
-    "XmTRANSFER_FAILURE\0"
+    "XdndActionCopy\0",
+    "XdndActionLink\0",
+    "XdndActionMove\0",
+    "XdndActionPrivate\0",
 
     // XEMBED
-    "_XEMBED\0"
-    "_XEMBED_INFO\0"
+    "_XEMBED\0",
+    "_XEMBED_INFO\0",
+
+    "_QT_SETTINGS_TIMESTAMP\0"
 };
 
 Q_GUI_EXPORT QX11Data *qt_x11Data = 0;
@@ -519,13 +510,6 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
         break;
 
     default:
-#if !defined(QT_NO_XINPUT)
-        if (err->request_code == qt_x11Data->xinput_major
-            && err->error_code == (qt_x11Data->xinput_errorbase + XI_BadDevice)
-            && err->minor_code == 3 /* X_OpenDevice */) {
-            return 0;
-        }
-#endif
         break;
     }
 
@@ -551,8 +535,6 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
             extensionName = "RENDER";
         else if (err->request_code == qt_x11Data->xrandr_major)
             extensionName = "RANDR";
-        else if (err->request_code == qt_x11Data->xinput_major)
-            extensionName = "XInputExtension";
         else if (err->request_code == qt_x11Data->mitshm_major)
             extensionName = "MIT-SHM";
 
@@ -639,29 +621,13 @@ static Bool qt_sync_request_scanner(Display*, XEvent *event, XPointer arg)
 
 static void qt_x11_create_intern_atoms()
 {
-    const char *names[QX11Data::NAtoms];
-    const char *ptr = x11_atomnames;
-
-    int i = 0;
-    while (*ptr) {
-        names[i++] = ptr;
-        while (*ptr)
-            ++ptr;
-        ++ptr;
-    }
-
-    Q_ASSERT(i == QX11Data::NPredefinedAtoms);
-
-    QByteArray settings_atom_name("_QT_SETTINGS_TIMESTAMP_");
-    settings_atom_name += XDisplayName(qt_x11Data->displayName);
-    names[i++] = settings_atom_name;
-
-    Q_ASSERT(i == QX11Data::NAtoms);
 #if defined(XlibSpecificationRelease) && (XlibSpecificationRelease >= 6)
-    XInternAtoms(qt_x11Data->display, (char **)names, i, False, qt_x11Data->atoms);
+    XInternAtoms(qt_x11Data->display, const_cast<char**>(X11AtomsTbl),
+        QX11Data::NPredefinedAtoms, False, qt_x11Data->atoms);
 #else
-    for (i = 0; i < QX11Data::NAtoms; ++i)
-        qt_x11Data->atoms[i] = XInternAtom(qt_x11Data->display, (char *)names[i], False);
+    for (qint16 i = 0; i < QX11Data::NPredefinedAtoms; i++) {
+        qt_x11Data->atoms[i] = XInternAtom(qt_x11Data->display, const_cast<char*>(X11AtomsTbl[i]), False);
+    }
 #endif
 }
 
@@ -837,40 +803,6 @@ bool QApplicationPrivate::x11_apply_settings()
 void QApplicationPrivate::reset_instance_pointer()
 { QApplication::self = 0; }
 
-
-// read the _QT_INPUT_ENCODING property and apply the settings to
-// the application
-static void qt_set_input_encoding()
-{
-    Atom type;
-    int format;
-    ulong  nitems, after = 1;
-    unsigned char *data = 0;
-
-    int e = XGetWindowProperty(qt_x11Data->display, QX11Info::appRootWindow(),
-                                ATOM(_QT_INPUT_ENCODING), 0, 1024,
-                                False, XA_STRING, &type, &format, &nitems,
-                                &after, &data);
-    if (e != Success || !nitems || type == XNone) {
-        // Always use the locale codec, since we have no examples of non-local
-        // XIMs, and since we cannot get a sensible answer about the encoding
-        // from the XIM.
-        qt_input_mapper = QTextCodec::codecForLocale();
-
-    } else {
-        if (!qstricmp((char *)data, "locale"))
-            qt_input_mapper = QTextCodec::codecForLocale();
-        else
-            qt_input_mapper = QTextCodec::codecForName((char *)data);
-        // make sure we have an input codec
-        if(!qt_input_mapper)
-            qt_input_mapper = QTextCodec::codecForName("ISO-8859-1");
-    }
-    if (qt_input_mapper && qt_input_mapper->mibEnum() == 11) // 8859-8
-        qt_input_mapper = QTextCodec::codecForName("ISO-8859-8-I");
-    if(data)
-        XFree((char *)data);
-}
 
 // update the supported array
 static void qt_get_net_supported()
@@ -1147,12 +1079,6 @@ void qt_init(QApplicationPrivate *priv, int,
     qt_x11Data->xfixes_eventbase = 0;
     qt_x11Data->xfixes_errorbase = 0;
 
-    // XInputExtension
-    qt_x11Data->use_xinput = false;
-    qt_x11Data->xinput_major = 0;
-    qt_x11Data->xinput_eventbase = 0;
-    qt_x11Data->xinput_errorbase = 0;
-
     // MIT-SHM
     qt_x11Data->use_mitshm = false;
     qt_x11Data->use_mitshm_pixmaps = false;
@@ -1170,8 +1096,6 @@ void qt_init(QApplicationPrivate *priv, int,
     qt_x11Data->userTime = CurrentTime;
     qt_x11Data->ignore_badwindow = false;
     qt_x11Data->seen_badwindow = false;
-
-    qt_x11Data->motifdnd_active = false;
 
     // colormap control
     qt_x11Data->visual_class = -1;
@@ -1368,7 +1292,8 @@ void qt_init(QApplicationPrivate *priv, int,
 #ifndef QT_NO_XRENDER
         int xrender_eventbase,  xrender_errorbase;
         // See if XRender is supported on the connected display
-        if (XQueryExtension(qt_x11Data->display, "RENDER", &qt_x11Data->xrender_major,
+        if (qgetenv("QT_X11_NO_XRENDER").isNull()
+            && XQueryExtension(qt_x11Data->display, "RENDER", &qt_x11Data->xrender_major,
                             &xrender_eventbase, &xrender_errorbase)
             && XRenderQueryExtension(qt_x11Data->display, &xrender_eventbase,
                                      &xrender_errorbase)) {
@@ -1376,10 +1301,8 @@ void qt_init(QApplicationPrivate *priv, int,
             int major = 0;
             int minor = 0;
             XRenderQueryVersion(qt_x11Data->display, &major, &minor);
-            if (qgetenv("QT_X11_NO_XRENDER").isNull()) {
-                qt_x11Data->use_xrender = (major >= 0 && minor >= 5);
-                qt_x11Data->xrender_minor = minor;
-            }
+            qt_x11Data->use_xrender = (major >= 0 && minor >= 5);
+            qt_x11Data->xrender_minor = minor;
         }
 #endif // QT_NO_XRENDER
 
@@ -1389,7 +1312,8 @@ void qt_init(QApplicationPrivate *priv, int,
         int mitshm_eventbase;
         int mitshm_errorbase;
         int mitshm_pixmaps;
-        if (XQueryExtension(qt_x11Data->display, "MIT-SHM", &qt_x11Data->mitshm_major,
+        if (qgetenv("QT_X11_NO_MITSHM").isNull()
+            && XQueryExtension(qt_x11Data->display, "MIT-SHM", &qt_x11Data->mitshm_major,
                             &mitshm_eventbase, &mitshm_errorbase)
             && XShmQueryVersion(qt_x11Data->display, &mitshm_major, &mitshm_minor,
                                 &mitshm_pixmaps))
@@ -1400,8 +1324,7 @@ void qt_init(QApplicationPrivate *priv, int,
             // to determine whether the display is local or not (not 100 % accurate).
             // BGR server layouts are not supported either, since it requires the raster
             // engine to work on a QImage with BGR layout.
-            bool local = displayName.isEmpty() || displayName.lastIndexOf(QLatin1Char(':')) == 0;
-            if (local && (qgetenv("QT_X11_NO_MITSHM").toInt() == 0)) {
+            if (displayName.isEmpty() || displayName.lastIndexOf(QLatin1Char(':')) == 0) {
                 Visual *defaultVisual = DefaultVisual(qt_x11Data->display, DefaultScreen(qt_x11Data->display));
                 qt_x11Data->use_mitshm = ((defaultVisual->red_mask == 0xff0000
                                     || defaultVisual->red_mask == 0xf800)
@@ -1431,7 +1354,8 @@ void qt_init(QApplicationPrivate *priv, int,
 
 #ifndef QT_NO_XRANDR
         // See if XRandR is supported on the connected display
-        if (XQueryExtension(qt_x11Data->display, "RANDR", &qt_x11Data->xrandr_major,
+        if (qgetenv("QT_X11_NO_XRANDR").isNull()
+            && XQueryExtension(qt_x11Data->display, "RANDR", &qt_x11Data->xrandr_major,
                             &qt_x11Data->xrandr_eventbase, &qt_x11Data->xrandr_errorbase)) {
 
             if (XRRQueryExtension(qt_x11Data->display, &qt_x11Data->xrandr_eventbase, &qt_x11Data->xrandr_errorbase)) {
@@ -1457,7 +1381,8 @@ void qt_init(QApplicationPrivate *priv, int,
 
 #ifndef QT_NO_XFIXES
         // See if Xfixes is supported on the connected display
-        if (XQueryExtension(qt_x11Data->display, "XFIXES", &qt_x11Data->xfixes_major,
+        if (qgetenv("QT_X11_NO_XFIXES").isNull()
+            && XQueryExtension(qt_x11Data->display, "XFIXES", &qt_x11Data->xfixes_major,
                             &qt_x11Data->xfixes_eventbase, &qt_x11Data->xfixes_errorbase)) {
             if(XFixesQueryExtension(qt_x11Data->display, &qt_x11Data->xfixes_eventbase,
                                                   &qt_x11Data->xfixes_errorbase)) {
@@ -1483,12 +1408,6 @@ void qt_init(QApplicationPrivate *priv, int,
         if (XSyncQueryExtension(qt_x11Data->display, &xsync_evbase, &xsync_errbase))
             XSyncInitialize(qt_x11Data->display, &major, &minor);
 #endif // QT_NO_XSYNC
-
-#ifndef QT_NO_XINPUT
-        // See if Xinput is supported on the connected display
-        qt_x11Data->use_xinput = XQueryExtension(qt_x11Data->display, "XInputExtension", &qt_x11Data->xinput_major,
-                                          &qt_x11Data->xinput_eventbase, &qt_x11Data->xinput_errorbase);
-#endif // QT_NO_XINPUT
 
 #if !defined(QT_NO_FONTCONFIG)
         int dpi = 0;
@@ -1597,7 +1516,10 @@ void qt_init(QApplicationPrivate *priv, int,
         qt_x11Data->compositingManagerRunning = XGetSelectionOwner(qt_x11Data->display,
                                                             ATOM(_NET_WM_CM_S0));
 
-        qt_set_input_encoding();
+        // Always use the locale codec, since we have no examples of non-local
+        // XIMs, and since we cannot get a sensible answer about the encoding
+        // from the XIM.
+        qt_input_mapper = QTextCodec::codecForLocale();
 
         QApplicationPrivate::x11_apply_settings();
 
@@ -2102,8 +2024,6 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
             if (passive_only) return 0;
             // All other are interactions
         }
-    } else {
-        qt_x11Data->motifdndHandle(widget, event, passive_only);
     }
 
     return 0;
@@ -2687,9 +2607,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
         }
         if (event->xproperty.window == QX11Info::appRootWindow()) {
             // root properties for the default screen
-            if (event->xproperty.atom == ATOM(_QT_INPUT_ENCODING)) {
-                qt_set_input_encoding();
-            } else if (event->xproperty.atom == ATOM(_NET_SUPPORTED)) {
+            if (event->xproperty.atom == ATOM(_NET_SUPPORTED)) {
                 qt_get_net_supported();
             } else if (event->xproperty.atom == ATOM(_NET_VIRTUAL_ROOTS)) {
                 qt_get_net_virtual_roots();
@@ -3345,7 +3263,7 @@ bool QETWidget::translateWheelEvent(int global_x, int global_y, int delta,
 
 
 //
-// XInput Translation Event
+// XEvent Translation Event
 //
 bool QETWidget::translatePropertyEvent(const XEvent *event)
 {

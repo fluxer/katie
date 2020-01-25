@@ -57,7 +57,7 @@ inline QAction *QDesignerTaskMenuExtension::preferredEditAction() const
 
 QT_END_NAMESPACE
 
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerTaskMenuExtension, "com.trolltech.Qt.Designer.TaskMenu")
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerTaskMenuExtension, "Katie.Designer.TaskMenu")
 
 QT_END_HEADER
 

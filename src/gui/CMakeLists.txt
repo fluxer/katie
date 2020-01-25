@@ -4,8 +4,6 @@ set(EXTRA_GUI_LIBS
     ${FREETYPE_LIBRARIES}
     ${X11_LIBRARIES}
     ${X11_X11_LIB}
-    ${X11_Xt_LIB}
-    ${X11_Xi_LIB}
     ${ICU_LIBRARIES}
 )
 
@@ -325,7 +323,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxbmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qgifhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qheaderview.h
@@ -767,7 +764,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcursor_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmotifdnd_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
@@ -941,7 +937,7 @@ set(GUI_SOURCES
 )
 
 # keep in sync with the top-level CMake file, only libraries setup is needed here
-foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xinput Xext)
+foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xext)
     if(X11_${x11ext}_FOUND AND X11_${x11ext}_LIB)
         set(EXTRA_GUI_LIBS
             ${EXTRA_GUI_LIBS}
@@ -1008,54 +1004,6 @@ elseif(WITH_PNG)
         ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwutil.c
     )
     include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/libpng)
-endif()
-
-if(WITH_JPEG AND JPEG_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qjpeghandler_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qjpeghandler.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${JPEG_LIBRARIES}
-    )
-    include_directories(${JPEG_INCLUDE_DIR})
-endif()
-
-if(WITH_MNG AND MNG_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qmnghandler_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qmnghandler.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${MNG_LIBRARIES}
-    )
-    include_directories(${MNG_INCLUDES})
-endif()
-
-if(WITH_TIFF AND TIFF_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qtiffhandler_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qtiffhandler.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${TIFF_LIBRARIES}
-    )
-    include_directories(${TIFF_INCLUDE_DIR})
 endif()
 
 if(WITH_CUPS AND CUPS_FOUND)
@@ -1173,7 +1121,6 @@ katie_allinone_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmotifdnd_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
@@ -1181,7 +1128,6 @@ katie_allinone_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_x11.cpp

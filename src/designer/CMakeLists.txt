@@ -1,5 +1,5 @@
 add_definitions(
-    -DQT_SCRIPT_LIB
+    -DQT_SCRIPT_LIB -DQT_UITOOLS_LIB
     -DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}"
 )
 set(EXTRA_DESIGNER_LIBS
@@ -29,6 +29,8 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/shared
     # for rcc.h
     ${CMAKE_SOURCE_DIR}/src/tools/rcc
+    # for ui4.h
+    ${CMAKE_SOURCE_DIR}/src/tools/uic
 )
 
 set(DESIGNER_HEADERS

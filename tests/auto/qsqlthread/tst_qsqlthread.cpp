@@ -41,8 +41,6 @@
 #include <QtSql>
 
 const QString qtest(qTableName("qtest", __FILE__));
-// set this define if Oracle is built with threading support
-//#define QOCI_THREADED
 
 class tst_QSqlThread : public QObject
 {

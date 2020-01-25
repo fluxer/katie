@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
 
 /*
  * Copyright (c) 1987, 1993
- *	The Regents of the University of California.  All rights reserved.
+ * The Regents of the University of California.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -111,7 +111,7 @@ static bool createFileFromTemplate(int &file,
             0600);
 
     if (file == -1) {
-        error = QSystemError(errno, QSystemError::NativeError);
+        error = QSystemError(errno, QSystemError::StandardLibraryError);
         return false;
     }
 

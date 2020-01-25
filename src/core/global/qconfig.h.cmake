@@ -90,6 +90,7 @@
 #define QT_NO_IMAGE_TEXT
 #define QT_NO_GLIB
 #define QT_NO_ICONV
+#define QT_NO_LPR
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -114,7 +115,7 @@
 /* Build specs */
 #define QT_KATIE
 #cmakedefine QT_VISIBILITY_AVAILABLE
-#cmakedefine QT_LARGEFILE_SUPPORT ${QT_LARGEFILE_SUPPORT}
+#cmakedefine QT_LARGEFILE_SUPPORT
 #cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
 
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -213,7 +214,6 @@
 #cmakedefine QT_NO_LOCALFILE_OPTIMIZED_QML
 #cmakedefine QT_NO_LOCALSERVER
 #cmakedefine QT_NO_LOCALSOCKET
-#cmakedefine QT_NO_LPR
 #cmakedefine QT_NO_MAINWINDOW
 #cmakedefine QT_NO_MATRIX4X4
 #cmakedefine QT_NO_MDIAREA
@@ -325,7 +325,6 @@
 #cmakedefine QT_NO_XCURSOR
 #cmakedefine QT_NO_XFIXES
 #cmakedefine QT_NO_XINERAMA
-#cmakedefine QT_NO_XINPUT
 #cmakedefine QT_NO_XMLSTREAM
 #cmakedefine QT_NO_XMLSTREAMREADER
 #cmakedefine QT_NO_XMLSTREAMWRITER

@@ -38,15 +38,16 @@
 #include "qfileinfo.h"
 #include "qcore_unix_p.h"
 
-#include <stdlib.h> // for realpath()
-#include <unistd.h>
-#include <stdio.h>
 #include <errno.h>
 #include <pwd.h>
 #include <grp.h>
 
 #ifdef Q_OS_LINUX
 #  include <sys/sendfile.h>
+#endif
+
+#ifndef PATH_MAX
+#  define PATH_MAX _POSIX_PATH_MAX
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -59,45 +60,21 @@ bool QFileSystemEngine::isCaseSensitive()
 //static
 QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, QFileSystemMetaData &data)
 {
-#if defined(__GLIBC__) && !defined(PATH_MAX)
-#define PATH_CHUNK_SIZE 256
-    char *s = 0;
-    int len = -1;
-    int size = PATH_CHUNK_SIZE;
-
-    while (1) {
-        s = (char *) ::realloc(s, size);
-        Q_CHECK_PTR(s);
-        len = ::readlink(link.nativeFilePath().constData(), s, size);
-        if (len < 0) {
-            ::free(s);
-            break;
-        }
-        if (len < size) {
-            break;
-        }
-        size *= 2;
-    }
-#else
-    char s[PATH_MAX+1];
-    int len = readlink(link.nativeFilePath().constData(), s, PATH_MAX);
-#endif
+    char readlinkbuf[PATH_MAX];
+    int len = ::readlink(link.nativeFilePath().constData(), readlinkbuf, sizeof(readlinkbuf));
     if (len > 0) {
         QString ret;
         if (!data.hasFlags(QFileSystemMetaData::DirectoryType))
             fillMetaData(link, data, QFileSystemMetaData::DirectoryType);
-        if (data.isDirectory() && s[0] != '/') {
+        if (data.isDirectory() && readlinkbuf[0] != '/') {
             QDir parent(link.filePath());
             parent.cdUp();
             ret = parent.path();
             if (!ret.isEmpty() && !ret.endsWith(QLatin1Char('/')))
                 ret += QLatin1Char('/');
         }
-        s[len] = '\0';
-        ret += QFile::decodeName(QByteArray(s));
-#if defined(__GLIBC__) && !defined(PATH_MAX)
-        ::free(s);
-#endif
+        readlinkbuf[len] = '\0';
+        ret += QFile::decodeName(QByteArray(readlinkbuf));
 
         if (!ret.startsWith(QLatin1Char('/'))) {
             if (link.filePath().startsWith(QLatin1Char('/'))) {
@@ -172,16 +149,16 @@ QFileSystemEntry QFileSystemEngine::absoluteName(const QFileSystemEntry &entry)
 //static
 QString QFileSystemEngine::resolveUserName(uint userId)
 {
-    struct passwd *pw = 0;
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETPWUID_R)
     int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
     char buf[size_max];
     struct passwd entry;
-    getpwuid_r(userId, &entry, buf, size_max, &pw);
+    struct passwd *pw = Q_NULLPTR;
+    ::getpwuid_r(userId, &entry, buf, size_max, &pw);
 #else
-    pw = getpwuid(userId);
+    struct passwd *pw = ::getpwuid(userId);
 #endif
     if (pw)
         return QFile::decodeName(QByteArray(pw->pw_name));
@@ -191,16 +168,16 @@ QString QFileSystemEngine::resolveUserName(uint userId)
 //static
 QString QFileSystemEngine::resolveGroupName(uint groupId)
 {
-    struct group *gr = 0;
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETGRGID_R)
     int size_max = sysconf(_SC_GETGR_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
     char buf[size_max];
     struct group entry;
-    getgrgid_r(groupId, &entry, buf, size_max, &gr);
+    struct group *gr = Q_NULLPTR;
+    ::getgrgid_r(groupId, &entry, buf, size_max, &gr);
 #else
-    gr = getgrgid(groupId);
+    struct group *gr = ::getgrgid(groupId);
 #endif
     if (gr)
         return QFile::decodeName(QByteArray(gr->gr_name));
@@ -379,7 +356,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 
 #ifdef Q_OS_LINUX
 // not in qplatformdefs.h since it is platform specific
-#if defined(QT_USE_XOPEN_LFS_EXTENSIONS) && defined(QT_LARGEFILE_SUPPORT)
+#if defined(QT_LARGEFILE_SUPPORT)
 #  define QT_SENDFILE ::sendfile64
 #else
 #  define QT_SENDFILE ::sendfile
@@ -400,7 +377,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 // TODO: FreeBSD sendfile() support, signature is different
 #else
     size_t totalwrite = 0;
-    char copybuffer[BUFSIZ]; // BUFSIZ is defined in stdio.h
+    char copybuffer[QT_BUFFSIZE];
     while (QT_OFF_T(totalwrite) != tocopy) {
         const size_t readresult = QT_READ(sourcefd, copybuffer, sizeof(copybuffer));
         if (readresult == -1) {
@@ -511,20 +488,20 @@ bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &path)
 QFileSystemEntry QFileSystemEngine::currentPath()
 {
     QFileSystemEntry result;
-#if defined(__GLIBC__)
+#ifdef QT_HAVE_GET_CURRENT_DIR_NAME
 #define GETCWDFUNCNAME "get_current_dir_name"
-    char *currentName = ::get_current_dir_name();
-    if (currentName) {
-        result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
-        ::free(currentName);
+    char *currentdir = ::get_current_dir_name();
+    if (currentdir) {
+        result = QFileSystemEntry(QByteArray(currentdir), QFileSystemEntry::FromNativePath());
+        ::free(currentdir);
     }
 #else
 #define GETCWDFUNCNAME "getcwd"
-    char currentName[PATH_MAX+1];
-    if (::getcwd(currentName, PATH_MAX)) {
-        result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
+    char getcwdbuffer[PATH_MAX];
+    if (::getcwd(getcwdbuffer, sizeof(getcwdbuffer))) {
+        result = QFileSystemEntry(QByteArray(getcwdbuffer), QFileSystemEntry::FromNativePath());
     }
-#endif // __GLIBC__
+#endif // QT_HAVE_GET_CURRENT_DIR_NAME
 
 #ifndef QT_NO_DEBUG
     if (result.isEmpty())

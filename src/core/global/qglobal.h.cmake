@@ -213,10 +213,6 @@ QT_USE_NAMESPACE
 #  define Q_OS_SOLARIS
 #elif defined(hpux) || defined(__hpux)
 #  define Q_OS_HPUX
-#elif defined(__ultrix) || defined(ultrix)
-#  define Q_OS_ULTRIX
-#elif defined(sinix)
-#  define Q_OS_RELIANT
 #elif defined(__native_client__)
 #  define Q_OS_NACL
 #elif defined(__linux__) || defined(__linux)
@@ -360,21 +356,17 @@ QT_USE_NAMESPACE
 #define Q_NULLPTR nullptr
 #define Q_DECL_CONSTEXPR constexpr
 
-#ifndef Q_CONSTRUCTOR_FUNCTION
-# define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
+#define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
    static const int AFUNC ## __init_variable__ = AFUNC();
-# define Q_CONSTRUCTOR_FUNCTION(AFUNC) Q_CONSTRUCTOR_FUNCTION0(AFUNC)
-#endif
+#define Q_CONSTRUCTOR_FUNCTION(AFUNC) Q_CONSTRUCTOR_FUNCTION0(AFUNC)
 
-#ifndef Q_DESTRUCTOR_FUNCTION
-# define Q_DESTRUCTOR_FUNCTION0(AFUNC) \
+#define Q_DESTRUCTOR_FUNCTION0(AFUNC) \
     class AFUNC ## __dest_class__ { \
     public: \
        inline AFUNC ## __dest_class__() { } \
        inline ~ AFUNC ## __dest_class__() { AFUNC(); } \
     } AFUNC ## __dest_instance__;
-# define Q_DESTRUCTOR_FUNCTION(AFUNC) Q_DESTRUCTOR_FUNCTION0(AFUNC)
-#endif
+#define Q_DESTRUCTOR_FUNCTION(AFUNC) Q_DESTRUCTOR_FUNCTION0(AFUNC)
 
 /*
    The window system, must be one of: (Q_WS_x)

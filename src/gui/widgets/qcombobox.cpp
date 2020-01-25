@@ -252,7 +252,7 @@ QSize QComboBoxPrivate::recomputeSizeHint(QSize &sh) const
 {
     Q_Q(const QComboBox);
     if (!sh.isValid()) {
-        bool hasIcon = sizeAdjustPolicy == QComboBox::AdjustToMinimumContentsLengthWithIcon ? true : false;
+        bool hasIcon = (sizeAdjustPolicy == QComboBox::AdjustToMinimumContentsLengthWithIcon);
         int count = q->count();
         QSize iconSize = q->iconSize();
         const QFontMetrics &fm = q->fontMetrics();
@@ -2642,12 +2642,13 @@ void QComboBox::mousePressEvent(QMouseEvent *e)
                                                            this);
     if (e->button() == Qt::LeftButton && (sc == QStyle::SC_ComboBoxArrow || !isEditable())
         && !d->viewContainer()->isVisible()) {
-        if (sc == QStyle::SC_ComboBoxArrow)
+        if (sc == QStyle::SC_ComboBoxArrow) {
             d->updateArrow(QStyle::State_Sunken);
             // We've restricted the next couple of lines, because by not calling
             // viewContainer(), we avoid creating the QComboBoxPrivateContainer.
             d->viewContainer()->blockMouseReleaseTimer.start(QApplication::doubleClickInterval());
             d->viewContainer()->initialClickPosition = mapToGlobal(e->pos());
+        }
         showPopup();
     } else {
         QWidget::mousePressEvent(e);

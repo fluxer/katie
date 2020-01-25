@@ -56,7 +56,7 @@ QT_BEGIN_NAMESPACE
 
 template<typename T> inline void qt_sharedpointer_cast_check(T *) { }
 # define QSHAREDPOINTER_VERIFY_AUTO_CAST(T, X)          \
-    qt_sharedpointer_cast_check<T>(static_cast<X *>(0))
+    qt_sharedpointer_cast_check<T>(static_cast<X *>(Q_NULLPTR))
 #endif
 
 //
@@ -116,13 +116,13 @@ namespace QtSharedPointer {
 
         inline T *data() const { return value; }
         inline bool isNull() const { return !data(); }
-        inline operator RestrictedBool() const { return isNull() ? 0 : &Basic::value; }
+        inline operator RestrictedBool() const { return isNull() ? Q_NULLPTR : &Basic::value; }
         inline bool operator !() const { return isNull(); }
         inline T &operator*() const { return *data(); }
         inline T *operator->() const { return data(); }
 
     protected:
-        inline Basic(T *ptr = 0) : value(ptr) { }
+        inline Basic(T *ptr = Q_NULLPTR) : value(ptr) { }
         inline Basic(Qt::Initialization) { }
         // ~Basic();
 
@@ -387,13 +387,13 @@ namespace QtSharedPointer {
                 if (tmp > 0)
                     o->weakref.ref();
                 else
-                    o = 0;
+                    o = Q_NULLPTR;
             }
 
             qSwap(d, o);
             qSwap(this->value, actual);
             if (!d || d->strongref == 0)
-                this->value = 0;
+                this->value = Q_NULLPTR;
 
             // dereference saved data
             deref(o, actual);
@@ -520,7 +520,7 @@ public:
     typedef qptrdiff difference_type;
 
     inline bool isNull() const { return d == Q_NULLPTR || d->strongref == 0 || value == Q_NULLPTR; }
-    inline operator RestrictedBool() const { return isNull() ? 0 : &QWeakPointer::value; }
+    inline operator RestrictedBool() const { return isNull() ? Q_NULLPTR : &QWeakPointer::value; }
     inline bool operator !() const { return isNull(); }
     inline T *data() const { return d == Q_NULLPTR || d->strongref == 0 ? Q_NULLPTR : value; }
 

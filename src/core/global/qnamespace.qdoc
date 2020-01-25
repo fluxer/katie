@@ -263,8 +263,6 @@
     \value CustomDashLine  A custom pattern defined using
                            QPainterPathStroker::setDashPattern().
 
-    \omitvalue MPenStyle
-
     \sa QPen
 */
 
@@ -290,7 +288,6 @@
     \value SquareCap  a square line end that covers the end point and
         extends beyond it by half the line width.
     \value RoundCap  a rounded line end.
-    \omitvalue MPenCapStyle
 
     \sa QPen
 */
@@ -319,7 +316,6 @@
     \value RoundJoin  A circular arc between the two lines is filled.
     \value SvgMiterJoin A miter join corresponding to the definition of
            a miter join in the \l{SVG 1.2 Tiny} specification.
-    \omitvalue MPenJoinStyle
 
     \sa QPen
 */
@@ -431,13 +427,13 @@
             determined when the signal is emitted.
 
     \value DirectConnection
-	   The slot is invoked immediately, when the signal is
-       	   emitted.
+           The slot is invoked immediately, when the signal is
+           emitted.
 
     \value QueuedConnection
-    	   The slot is invoked when control returns to the event loop
-       	   of the receiver's thread. The slot is executed in the
-       	   receiver's thread.
+           The slot is invoked when control returns to the event loop
+           of the receiver's thread. The slot is executed in the
+           receiver's thread.
 
     \value BlockingQueuedConnection
            Same as QueuedConnection, except the current thread blocks
@@ -448,10 +444,10 @@
 
     \value UniqueConnection
            Same as AutoConnection, but the connection is made only if
-    	   it does not duplicate an existing connection. i.e., if the
-    	   same signal is already connected to the same slot for the
-    	   same pair of objects, then the connection will fail. This
-    	   connection type was introduced in Qt 4.6.
+           it does not duplicate an existing connection. i.e., if the
+           same signal is already connected to the same slot for the
+           same pair of objects, then the connection will fail. This
+           connection type was introduced in Qt 4.6.
 
     With queued connections, the parameters must be of types that are
     known to Qt's meta-object system, because Qt needs to copy the

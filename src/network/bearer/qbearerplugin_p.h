@@ -63,7 +63,7 @@ struct Q_NETWORK_EXPORT QBearerEngineFactoryInterface : public QFactoryInterface
 
 QT_END_NAMESPACE
 
-#define QBearerEngineFactoryInterface_iid "com.trolltech.Qt.QBearerEngineFactoryInterface"
+#define QBearerEngineFactoryInterface_iid "Katie.QBearerEngineFactoryInterface"
 Q_DECLARE_INTERFACE(QBearerEngineFactoryInterface, QBearerEngineFactoryInterface_iid)
 
 QT_BEGIN_NAMESPACE

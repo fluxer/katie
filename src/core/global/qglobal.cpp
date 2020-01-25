@@ -51,6 +51,7 @@
 #endif
 
 #ifndef QT_NO_UNWIND
+#  include "qcoreapplication.h"
 #  define UNW_LOCAL_ONLY
 #  include <libunwind.h>
 #  include <cxxabi.h>
@@ -1021,13 +1022,6 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_OS_ULTRIX
-    \relates <QtGlobal>
-
-    Defined on DEC Ultrix.
-*/
-
-/*!
     \macro Q_OS_LINUX
     \relates <QtGlobal>
 
@@ -1102,13 +1096,6 @@ bool qSharedBuild()
     \relates <QtGlobal>
 
     Defined on DG/UX.
-*/
-
-/*!
-    \macro Q_OS_RELIANT
-    \relates <QtGlobal>
-
-    Defined on Reliant UNIX.
 */
 
 /*!
@@ -1265,14 +1252,21 @@ void qBadAlloc()
     QT_THROW(std::bad_alloc());
 }
 
-static inline void qt_print_backtrace()
-{
 #ifndef QT_NO_UNWIND
+static void qt_print_backtrace()
+{
     unw_cursor_t cursor;
     unw_context_t context;
 
-    unw_getcontext(&context);
-    unw_init_local(&cursor, &context);
+    if (unw_getcontext(&context) != 0) {
+        ::fprintf(stderr, "qt_print_backtrace: unable to get context\n");
+        return;
+    }
+
+    if (unw_init_local(&cursor, &context) != 0) {
+        ::fprintf(stderr, "qt_print_backtrace: unable to initialize\n");
+        return;
+    }
 
     while (unw_step(&cursor) > 0) {
         unw_word_t offset;
@@ -1287,18 +1281,89 @@ static inline void qt_print_backtrace()
                 printf(" %s\n", sym);
             }
         } else {
-            printf("qt_print_backtrace: unable to obtain symbol name for this frame\n");
+            ::fprintf(stderr, "qt_print_backtrace: unable to obtain symbol name for this frame\n");
         }
     }
-#endif
 }
+
+typedef void (*QCrashHandler)(int);
+
+static bool qt_set_crash_handler(QCrashHandler handler) {
+    sigset_t mask;
+    if (::sigemptyset(&mask) != 0) {
+        ::fprintf(stderr, "sigaddset error: %s\n", ::strerror(errno));
+        return false;
+    }
+
+#define HANDLE_SIGNAL(x) \
+    ::signal(x, handler); \
+    if (::sigaddset(&mask, x) != 0) { \
+        ::fprintf(stderr, "sigaddset error: %s\n", ::strerror(errno)); \
+        return false; \
+    }
+
+#ifdef SIGSEGV
+    HANDLE_SIGNAL(SIGSEGV)
+#endif
+#ifdef SIGBUS
+    HANDLE_SIGNAL(SIGBUS)
+#endif
+#ifdef SIGFPE
+    HANDLE_SIGNAL(SIGFPE)
+#endif
+#ifdef SIGILL
+    HANDLE_SIGNAL(SIGILL)
+#endif
+#ifdef SIGABRT
+    HANDLE_SIGNAL(SIGABRT)
+#endif
+
+#undef HANDLE_SIGNAL
+
+    if (::sigprocmask(SIG_UNBLOCK, &mask, nullptr) != 0) {
+        ::fprintf(stderr, "sigprocmask error: %s\n", ::strerror(errno));
+        return false;
+    }
+
+    return true;
+}
+
+static void qt_crash_handler(int sig) {
+    const QByteArray name = QCoreApplication::applicationName().toLatin1();
+    const std::string pid = std::to_string(::getpid());
+
+    if (name.isEmpty()) {
+        ::fprintf(stderr, "PID %s crashed\n", pid.c_str());
+    } else {
+        ::fprintf(stderr, "%s with PID %s crashed\n", name.constData(), pid.c_str());
+    }
+
+    qt_set_crash_handler(SIG_DFL);
+
+    qt_print_backtrace();
+
+    ::raise(sig);
+}
+
+int qt_install_crash_handler()
+{
+    qt_set_crash_handler(qt_crash_handler);
+    return 0;
+}
+
+Q_CONSTRUCTOR_FUNCTION(qt_install_crash_handler);
+#endif
 
 /*
   The Q_ASSERT macro calls this function when the test fails.
 */
 void qt_assert(const char *assertion, const char *file, int line)
 {
-    qt_print_backtrace();
+#ifndef QT_NO_UNWIND
+    // don't print backtrace twice if abort() will be called in qt_message_output()
+    if (qgetenv("QT_FATAL_WARNINGS").isNull())
+        qt_print_backtrace();
+#endif
     qFatal("ASSERT: \"%s\" in file %s, line %d", assertion, file, line);
 }
 
@@ -1307,37 +1372,12 @@ void qt_assert(const char *assertion, const char *file, int line)
 */
 void qt_assert_x(const char *where, const char *what, const char *file, int line)
 {
-    qt_print_backtrace();
+#ifndef QT_NO_UNWIND
+    // don't print backtrace twice if abort() will be called in qt_message_output()
+    if (qgetenv("QT_FATAL_WARNINGS").isNull())
+        qt_print_backtrace();
+#endif
     qFatal("ASSERT failure in %s: \"%s\", file %s, line %d", where, what, file, line);
-}
-
-
-/*
-    Dijkstra's bisection algorithm to find the square root of an integer.
-    Deliberately not exported as part of the Qt API, but used in both
-    qsimplerichtext.cpp and qgfxraster_qws.cpp
-*/
-Q_CORE_EXPORT unsigned int qt_int_sqrt(unsigned int n)
-{
-    // n must be in the range 0...UINT_MAX/2-1
-    if (n >= (UINT_MAX>>2)) {
-        unsigned int r = 2 * qt_int_sqrt(n / 4);
-        unsigned int r2 = r + 1;
-        return (n >= r2 * r2) ? r2 : r;
-    }
-    uint h, p= 0, q= 1, r= n;
-    while (q <= n)
-        q <<= 2;
-    while (q != 1) {
-        q >>= 2;
-        h= p + q;
-        p >>= 1;
-        if (r >= h) {
-            p += q;
-            r -= h;
-        }
-    }
-    return p;
 }
 
 static QtMsgHandler handler = 0;                // pointer to debug handler

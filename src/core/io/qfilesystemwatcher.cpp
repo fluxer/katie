@@ -211,7 +211,7 @@ void QPollingFileSystemWatcherEngine::timeout()
 void QFileSystemWatcherPrivate::initNativeEngine()
 {
     Q_ASSERT(!watcher);
-    Q_Q(QFileSystemWatcher);
+    Q_Q(const QFileSystemWatcher);
 
 #if defined(Q_OS_LINUX)
     watcher = QInotifyFileSystemWatcherEngine::create();
@@ -238,9 +238,9 @@ QFileSystemWatcherPrivate::QFileSystemWatcherPrivate()
 
 void QFileSystemWatcherPrivate::init()
 {
-    Q_Q(QFileSystemWatcher);
-
 #ifdef QT_BUILD_INTERNAL
+    Q_Q(const QFileSystemWatcher);
+
     const QObject *parent = q->parent();
     if (parent && parent->objectName().startsWith(QLatin1String("_qt_autotest_force_engine_"))) {
         // Autotest override case - use the explicitly selected engine only
@@ -270,7 +270,7 @@ void QFileSystemWatcherPrivate::init()
 void QFileSystemWatcherPrivate::initForcedEngine(const QString &forceName)
 {
     Q_ASSERT(!watcher);
-    Q_Q(QFileSystemWatcher);
+    Q_Q(const QFileSystemWatcher);
 
 #if defined(Q_OS_LINUX)
     if (forceName == QLatin1String("inotify")) {
@@ -295,7 +295,7 @@ void QFileSystemWatcherPrivate::initForcedEngine(const QString &forceName)
 void QFileSystemWatcherPrivate::initPollerEngine()
 {
     Q_ASSERT(!watcher);
-    Q_Q(QFileSystemWatcher);
+    Q_Q(const QFileSystemWatcher);
     watcher = new QPollingFileSystemWatcherEngine; // that was a mouthful
     QObject::connect(watcher,
                      SIGNAL(fileChanged(QString,bool)),

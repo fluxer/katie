@@ -64,12 +64,12 @@ static const struct ErrorTblData {
     { QDBusError::TimedOut, "org.freedesktop.DBus.Error.TimedOut\0" },
     { QDBusError::InvalidSignature, "org.freedesktop.DBus.Error.InvalidSignature\0" },
     { QDBusError::UnknownInterface, "org.freedesktop.DBus.Error.UnknownInterface\0" },
-    { QDBusError::InternalError, "com.trolltech.QtDBus.Error.InternalError\0" },
+    { QDBusError::InternalError, "Katie.QtDBus.Error.InternalError\0" },
     { QDBusError::UnknownObject, "org.freedesktop.DBus.Error.UnknownObject\0" },
-    { QDBusError::InvalidService, "com.trolltech.QtDBus.Error.InvalidService\0" },
-    { QDBusError::InvalidObjectPath, "com.trolltech.QtDBus.Error.InvalidObjectPath\0" },
-    { QDBusError::InvalidInterface, "com.trolltech.QtDBus.Error.InvalidInterface\0" },
-    { QDBusError::InvalidMember, "com.trolltech.QtDBus.Error.InvalidMember\0" },
+    { QDBusError::InvalidService, "Katie.QtDBus.Error.InvalidService\0" },
+    { QDBusError::InvalidObjectPath, "Katie.QtDBus.Error.InvalidObjectPath\0" },
+    { QDBusError::InvalidInterface, "Katie.QtDBus.Error.InvalidInterface\0" },
+    { QDBusError::InvalidMember, "Katie.QtDBus.Error.InvalidMember\0" },
 };
 static const qint16 ErrorTblSize = sizeof(ErrorTbl) / sizeof(ErrorTblData);
 
@@ -167,7 +167,7 @@ static inline QDBusError::ErrorType getError(const char *name)
                                 (\c org.freedesktop.DBus.Error.InvalidSignature)
     \value UnknownInterface     The interface is not known
     \value InternalError        An internal error occurred
-                                (\c com.trolltech.QtDBus.Error.InternalError)
+                                (\c Katie.QtDBus.Error.InternalError)
 
     \value InvalidObjectPath    The object path provided is invalid.
 

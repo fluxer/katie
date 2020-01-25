@@ -53,7 +53,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QDeclarativePropertyValueInterceptor, "com.trolltech.qml.QDeclarativePropertyValueInterceptor")
+Q_DECLARE_INTERFACE(QDeclarativePropertyValueInterceptor, "Katie.qml.QDeclarativePropertyValueInterceptor")
 
 QT_END_HEADER
 

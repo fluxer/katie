@@ -7,7 +7,8 @@ licenses = ['BSD', 'FDL', 'LGPL', 'LGPL3', 'LGPL21']
 lfiles = []
 for root, subdirs, files in os.walk(os.curdir):
     for sfile in files:
-        if sfile.endswith(('.cpp', '.h', '.js', '.qs', '.qml', '.ui', '.g', '.sh', '.cmake')):
+        if sfile.endswith(('.cpp', '.h', '.js', '.qs', '.qml', '.ui', \
+            '.g', '.sh', '.cmake', '.pod')):
             lfiles.append('%s/%s' % (root, sfile))
 
 def readlicense(sfile, replacedashes, replacehashes):

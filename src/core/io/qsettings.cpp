@@ -254,7 +254,7 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
 }
 
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)
-    : format(format), scope(scope), status(QSettings::NoError), shouldwrite(false)
+    : format(format), scope(scope), status(QSettings::NoError)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(scope, QCoreApplication::applicationName(), handler.extension);
@@ -263,7 +263,7 @@ QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope sc
 }
 
 QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
-    : format(format), scope(QSettings::UserScope), status(QSettings::NoError), shouldwrite(false)
+    : format(format), scope(QSettings::UserScope), status(QSettings::NoError)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(scope, fileName, handler.extension);
@@ -292,15 +292,10 @@ void QSettingsPrivate::read()
         return;
     }
 
-    QSettings::SettingsMap readmap;
-    if (Q_UNLIKELY(!readFunc(file, readmap))) {
+    if (Q_UNLIKELY(!readFunc(file, map))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::read: could not read %s", filename.toLocal8Bit().constData());
         return;
-    }
-
-    foreach (const QString &key, readmap.keys()) {
-        map.insert(key, readmap.value(key));
     }
 
     timestamp = info.lastModified();
@@ -308,7 +303,7 @@ void QSettingsPrivate::read()
 
 void QSettingsPrivate::write()
 {
-    if (!shouldwrite) {
+    if (pending.isEmpty()) {
         return;
     }
 
@@ -316,6 +311,12 @@ void QSettingsPrivate::write()
     const QDateTime newstamp = info.lastModified();
     if (timestamp < newstamp || !newstamp.isValid()) {
         QSettingsPrivate::read();
+    }
+
+    foreach (const QString &key, map.keys()) {
+        if (!pending.contains(key)) {
+            pending.insert(key, map.value(key));
+        }
     }
 
     int fd = QT_OPEN(filename.toLocal8Bit().constData(), QT_OPEN_WRONLY | QT_OPEN_CREAT, 0666);
@@ -326,13 +327,13 @@ void QSettingsPrivate::write()
         return;
     }
 
-    if (Q_UNLIKELY(!writeFunc(file, map))) {
+    if (Q_UNLIKELY(!writeFunc(file, pending))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::write: could not write %s", filename.toLocal8Bit().constData());
         return;
     }
 
-    shouldwrite = false;
+    pending.clear();
 }
 
 void QSettingsPrivate::notify()
@@ -343,7 +344,7 @@ void QSettingsPrivate::notify()
         QSettings *setting = qGlobalSettings()->at(i);
         if (setting != q && setting->fileName() == q->fileName()) {
             setting->d_func()->map = map;
-            setting->d_func()->shouldwrite = shouldwrite;
+            setting->d_func()->pending = pending;
         }
     }
 }
@@ -861,7 +862,7 @@ void QSettings::clear()
 {
     Q_D(QSettings);
     d->map.clear();
-    d->shouldwrite = true;
+    d->pending.clear();
     d->notify();
 }
 
@@ -960,6 +961,13 @@ QSettings::SettingsMap QSettings::map() const
 QStringList QSettings::keys() const
 {
     Q_D(const QSettings);
+    if (!d->pending.isEmpty()) {
+        QStringList mapkeys = d->map.keys();
+        foreach(const QString &key, d->pending.keys()) {
+            mapkeys.append(key);
+        }
+        return mapkeys;
+    }
     return d->map.keys();
 }
 
@@ -997,8 +1005,7 @@ bool QSettings::isWritable() const
 void QSettings::setValue(const QString &key, const QVariant &value)
 {
     Q_D(QSettings);
-    d->map.insert(key, value);
-    d->shouldwrite = true;
+    d->pending.insert(key, value);
     d->notify();
 }
 
@@ -1011,7 +1018,7 @@ void QSettings::remove(const QString &key)
 {
     Q_D(QSettings);
     d->map.remove(key);
-    d->shouldwrite = true;
+    d->pending.remove(key);
     d->notify();
 }
 
@@ -1024,7 +1031,7 @@ void QSettings::remove(const QString &key)
 bool QSettings::contains(const QString &key) const
 {
     Q_D(const QSettings);
-    return d->map.contains(key);
+    return (d->map.contains(key) || d->pending.contains(key));
 }
 
 /*!
@@ -1039,6 +1046,9 @@ bool QSettings::contains(const QString &key) const
 QVariant QSettings::value(const QString &key, const QVariant &defaultValue) const
 {
     Q_D(const QSettings);
+    if (d->pending.contains(key)) {
+        return d->pending.value(key);
+    }
     return d->map.value(key, defaultValue);
 }
 
@@ -1046,7 +1056,7 @@ QVariant QSettings::value(const QString &key, const QVariant &defaultValue) cons
     \typedef QSettings::SettingsMap
 
     Typedef for QMap<QString, QVariant>.
-	
+
     \sa registerFormat()
 */
 

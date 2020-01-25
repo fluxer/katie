@@ -6,6 +6,7 @@ set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
 set(KATIE_LRELEASE "lrelease")
 
+include(CMakePushCheckState)
 include(CheckSymbolExists)
 include(CheckFunctionExists)
 
@@ -16,23 +17,64 @@ macro(KATIE_WARNING MESSAGESTR)
     endif()
 endmacro()
 
-# a macro to check for function presence in header, if function is found a
-# definition is added. note that check_symbol_exists() and
-# check_function_exists() cache the result variables so they can be used
-# anywhere
-macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
-    check_symbol_exists("${FORFUNCTION}" "${FROMHEADER}" HAVE_${FORFUNCTION})
-    if(NOT HAVE_${FORFUNCTION})
-        check_function_exists("${FORFUNCTION}" HAVE_${FORFUNCTION})
+# a function to check for C function/definition, works for external functions
+# too. note that check_symbol_exists() and check_function_exists() cache the
+# result variables so they can be used anywhere
+function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
+    cmake_reset_check_state()
+    set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} ${ARGN})
+    check_symbol_exists("${FORDEFINITION}" "${FROMHEADER}" HAVE_${FORDEFINITION})
+    if(NOT HAVE_${FORDEFINITION})
+        check_function_exists("${FORDEFINITION}" HAVE_${FORDEFINITION})
     endif()
+    cmake_pop_check_state()
+
+    if(NOT HAVE_${FORDEFINITION})
+        set(compileout "${CMAKE_BINARY_DIR}/${FORDEFINITION}.cpp")
+        configure_file(
+            "${CMAKE_SOURCE_DIR}/cmake/modules/katie_check_defined.cpp.cmake"
+            "${compileout}"
+            @ONLY
+        )
+        try_compile(${FORDEFINITION}_test
+            "${CMAKE_BINARY_DIR}"
+            "${compileout}"
+            COMPILE_DEFINITIONS ${ARGN}
+            OUTPUT_VARIABLE ${FORDEFINITION}_test_output
+        )
+        if(${FORDEFINITION}_test)
+            message(STATUS "Found ${FORDEFINITION} in: <${FROMHEADER}>")
+            set(HAVE_${FORDEFINITION} TRUE PARENT_SCOPE)
+        else()
+            message(STATUS "Could not find ${FORDEFINITION} in: <${FROMHEADER}>")
+            set(HAVE_${FORDEFINITION} FALSE PARENT_SCOPE)
+        endif()
+    endif()
+endfunction()
+
+# a macro to check for C function presence in header, if function is found a
+# definition is added.
+macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
+    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}")
+
     if(HAVE_${FORFUNCTION})
         string(TOUPPER "${FORFUNCTION}" upperfunction)
         add_definitions(-DQT_HAVE_${upperfunction})
     endif()
 endmacro()
 
+# a function to check for C function with 64-bit offset alternative, sets
+# QT_LARGEFILE_SUPPORT to FALSE if not available
+function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
+    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
+
+    if(NOT HAVE_${FORFUNCTION})
+        set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
+    endif()
+endfunction()
+
 # a macro to write data to file, does nothing if the file exists and its
-# content is the same as the data
+# content is the same as the data to be written
 macro(KATIE_WRITE_FILE OUTFILE DATA)
     if(NOT EXISTS "${OUTFILE}")
         file(WRITE "${OUTFILE}" "${DATA}")
@@ -45,7 +87,7 @@ macro(KATIE_WRITE_FILE OUTFILE DATA)
 endmacro()
 
 # a macro to create camel-case headers pointing to their lower-case alternative
-# as well as meta header that includes component headers
+# as well as meta header that includes all component headers
 macro(KATIE_GENERATE_PUBLIC PUBLIC_INCLUDES SUBDIR)
     foreach(pubheader ${PUBLIC_INCLUDES})
         string(TOLOWER ${pubheader} pubname)
@@ -303,6 +345,11 @@ function(KATIE_SETUP_PATHS)
         _APPLICATIONS _PIXMAPS _PKGCONFIG
     )
     foreach(instpath ${instpaths})
+        string(FIND "${KATIE${instpath}_FULL}" "/" slashindex)
+        if(NOT "${slashindex}" STREQUAL "0")
+            message(FATAL_ERROR "KATIE${instpath}_FULL should not be relative: ${KATIE${instpath}_FULL}")
+        endif()
+
         string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${KATIE${instpath}_FULL}")
         string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
         set(KATIE${instpath}_RELATIVE "${modpath}" PARENT_SCOPE)

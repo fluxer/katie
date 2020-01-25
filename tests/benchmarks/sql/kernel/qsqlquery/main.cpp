@@ -118,8 +118,7 @@ void tst_QSqlQuery::cleanup()
         populateTestTables( db );
     }
 
-    if ( QTest::currentTestFailed() && ( db.driverName().startsWith( QLatin1String("QOCI") )
-                                         || db.driverName().startsWith( QLatin1String("QODBC") ) ) ) {
+    if ( QTest::currentTestFailed() && ( db.driverName().startsWith( QLatin1String("QODBC") ) ) ) {
         //since Oracle ODBC totally craps out on error, we init again
         db.close();
         db.open();
@@ -177,7 +176,7 @@ void tst_QSqlQuery::dropTestTables( QSqlDatabase db )
     if ( db.driverName().startsWith( QLatin1String("QSQLITE") ) )
         tablenames << qTableName( QLatin1String("record_sqlite"), __FILE__ );
 
-    if ( tst_Databases::isSqlServer( db ) || db.driverName().startsWith( QLatin1String("QOCI") ) )
+    if ( tst_Databases::isSqlServer( db ) )
         tablenames << qTableName( QLatin1String("qtest_longstr"), __FILE__ );
 
     if (tst_Databases::isSqlServer( db ))
@@ -187,11 +186,6 @@ void tst_QSqlQuery::dropTestTables( QSqlDatabase db )
         db.exec( QLatin1String("DROP PROCEDURE IF EXISTS ") + qTableName( QLatin1String("bug6852_proc"), __FILE__));
 
     tst_Databases::safeDropTables( db, tablenames );
-
-    if ( db.driverName().startsWith( QLatin1String("QOCI") ) ) {
-        QSqlQuery q( db );
-        q.exec( QLatin1String("DROP PACKAGE ") + qTableName( QLatin1String("pkg"), __FILE__) );
-    }
 }
 
 void tst_QSqlQuery::createTestTables( QSqlDatabase db )

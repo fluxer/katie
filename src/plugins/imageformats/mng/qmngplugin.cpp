@@ -36,23 +36,28 @@
 
 #ifndef QT_NO_IMAGEFORMATPLUGIN
 
-#ifdef QT_NO_IMAGEFORMAT_MNG
-#undef QT_NO_IMAGEFORMAT_MNG
-#endif
 #include "qmnghandler_p.h"
-
-#include "qiodevice.h"
-#include "qbytearray.h"
 
 QT_BEGIN_NAMESPACE
 
 class QMngPlugin : public QImageIOPlugin
 {
-    public:
+public:
+    QMngPlugin();
+    ~QMngPlugin();
+
     QStringList keys() const;
     Capabilities capabilities(QIODevice *device, const QByteArray &format) const;
     QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const;
 };
+
+QMngPlugin::QMngPlugin()
+{
+}
+
+QMngPlugin::~QMngPlugin()
+{
+}
 
 QStringList QMngPlugin::keys() const
 {
@@ -64,7 +69,7 @@ QStringList QMngPlugin::keys() const
 QImageIOPlugin::Capabilities QMngPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
     if (format == "mng")
-        return Capabilities(CanRead);
+        return Capabilities(CanRead | CanWrite);
     if (!format.isEmpty())
         return 0;
     if (!device->isOpen())
@@ -73,20 +78,22 @@ QImageIOPlugin::Capabilities QMngPlugin::capabilities(QIODevice *device, const Q
     Capabilities cap;
     if (device->isReadable() && QMngHandler::canRead(device))
         cap |= CanRead;
+    if (device->isWritable())
+        cap |= CanWrite;
     return cap;
 }
 
 QImageIOHandler *QMngPlugin::create(QIODevice *device, const QByteArray &format) const
 {
-    QMngHandler *hand = new QMngHandler();
-    hand->setDevice(device);
-    hand->setFormat(format);
-    return hand;
+    QImageIOHandler *handler = new QMngHandler;
+    handler->setDevice(device);
+    handler->setFormat(format);
+    return handler;
 }
 
 Q_EXPORT_STATIC_PLUGIN(QMngPlugin)
 Q_EXPORT_PLUGIN2(qmng, QMngPlugin)
 
-QT_END_NAMESPACE
+#endif // QT_NO_IMAGEFORMATPLUGIN
 
-#endif // !QT_NO_IMAGEFORMATPLUGIN
+QT_END_NAMESPACE

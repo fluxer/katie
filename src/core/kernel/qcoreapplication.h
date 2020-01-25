@@ -140,8 +140,7 @@ Q_SIGNALS:
 
 protected:
     bool event(QEvent *);
-
-    virtual bool compressEvent(QEvent *, QObject *receiver, QPostEventList *);
+    bool compressEvent(QEvent *, QObject *receiver, QPostEventList *);
 
     QCoreApplication(QCoreApplicationPrivate &p);
 

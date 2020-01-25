@@ -85,7 +85,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerLayoutDecorationExtension, "com.trolltech.Qt.Designer.LayoutDecoration")
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerLayoutDecorationExtension, "Katie.Designer.LayoutDecoration")
 
 QT_END_HEADER
 

@@ -65,10 +65,16 @@ QT_BEGIN_NAMESPACE
 
 QString QCoreApplicationPrivate::appName() const
 {
+#ifdef QT_HAVE_GETPROGNAME
+    if (applicationName.isEmpty()) {
+        return QString::fromLocal8Bit(::getprogname());
+    }
+#else
     if (applicationName.isEmpty() && argv[0]) {
-        const char *p = strrchr(argv[0], '/');
+        const char *p = ::strrchr(argv[0], '/');
         return QString::fromLocal8Bit(p ? p + 1 : argv[0]);
     }
+#endif // QT_HAVE_GETPROGNAME
     return applicationName;
 }
 
@@ -107,10 +113,6 @@ void qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet &callback_set)
     qt_signal_spy_callback_set = callback_set;
 }
 
-extern "C" void Q_CORE_EXPORT qt_startup_hook()
-{
-}
-
 typedef QList<QtCleanUpFunction> QVFuncList;
 Q_GLOBAL_STATIC(QVFuncList, postRList)
 
@@ -144,9 +146,6 @@ void Q_CORE_EXPORT qt_call_post_routines()
 bool QCoreApplicationPrivate::is_app_running = false;
  // app closing down if true
 bool QCoreApplicationPrivate::is_app_closing = false;
-// initialized in qcoreapplication and in qtextstream autotest when setlocale is called.
-Q_CORE_EXPORT bool qt_locale_initialized = false;
-
 
 /*
   Create an instance of Katie.conf. This ensures that the settings will not
@@ -175,7 +174,7 @@ void qt_set_current_thread_to_main_thread()
 
 QCoreApplication *QCoreApplication::self = 0;
 QAbstractEventDispatcher *QCoreApplicationPrivate::eventDispatcher = 0;
-uint QCoreApplicationPrivate::attribs;
+std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 
 #ifdef Q_OS_UNIX
 Qt::HANDLE qt_application_thread_id = 0;
@@ -428,7 +427,6 @@ void QCoreApplication::init()
 
 #ifdef Q_OS_UNIX
     setlocale(LC_ALL, "");                // use correct char set mapping
-    qt_locale_initialized = true;
 #endif
 
     Q_ASSERT_X(!self, "QCoreApplication", "there should be only one application object");
@@ -464,8 +462,6 @@ void QCoreApplication::init()
 
 
     d->processCommandLineArguments();
-
-    qt_startup_hook();
 }
 
 
@@ -519,10 +515,7 @@ QCoreApplication::~QCoreApplication()
 */
 void QCoreApplication::setAttribute(Qt::ApplicationAttribute attribute, bool on)
 {
-    if (on)
-        QCoreApplicationPrivate::attribs |= 1 << attribute;
-    else
-        QCoreApplicationPrivate::attribs &= ~(1 << attribute);
+    QCoreApplicationPrivate::attribs.set(attribute, on);
 }
 
 /*!
@@ -533,7 +526,7 @@ void QCoreApplication::setAttribute(Qt::ApplicationAttribute attribute, bool on)
  */
 bool QCoreApplication::testAttribute(Qt::ApplicationAttribute attribute)
 {
-    return QCoreApplicationPrivate::testAttribute(attribute);
+    return QCoreApplicationPrivate::attribs.test(attribute);
 }
 
 
@@ -1636,7 +1629,7 @@ QString QCoreApplication::applicationFilePath()
         */
         QByteArray pEnv = qgetenv("PATH");
         QDir currentDir = QDir::current();
-        QStringList paths = QString::fromLocal8Bit(pEnv.constData(), pEnv.size()).split(QLatin1Char(':'));
+        QStringList paths = QString::fromLocal8Bit(pEnv.constData()).split(QLatin1Char(':'));
         foreach (const QString &p, paths) {
             if (p.isEmpty())
                 continue;
@@ -1842,9 +1835,10 @@ QStringList QCoreApplication::libraryPaths()
     if (!coreappdata()->app_libpaths) {
         QStringList *app_libpaths = coreappdata()->app_libpaths = new QStringList;
         QString installPathPlugins =  QLibraryInfo::location(QLibraryInfo::PluginsPath);
-        if (QFile::exists(installPathPlugins)) {
+        QDir installPathPluginsDir(installPathPlugins);
+        if (installPathPluginsDir.exists()) {
             // Make sure we convert from backslashes to slashes.
-            installPathPlugins = QDir(installPathPlugins).canonicalPath();
+            installPathPlugins = installPathPluginsDir.canonicalPath();
             if (!app_libpaths->contains(installPathPlugins))
                 app_libpaths->append(installPathPlugins);
         }

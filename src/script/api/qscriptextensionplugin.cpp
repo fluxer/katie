@@ -95,11 +95,11 @@ QScriptExtensionPlugin::~QScriptExtensionPlugin()
   initialize(). It splits the given \a key on \c{'.'} (dot), and
   ensures that there's a corresponding path of objects in the
   environment of the given \a engine, creating new objects to complete
-  the path if necessary.  E.g. if the key is "com.trolltech", after
-  the call to setupPackage() the script expression \c{com.trolltech}
+  the path if necessary.  E.g. if the key is "com.MySoft", after
+  the call to setupPackage() the script expression \c{com.MySoft}
   will evaluate to an object. More specifically, the engine's Global
   Object will have a property called "com", which in turn has a
-  property called "trolltech".
+  property called "MySoft".
 
   Use this function to avoid global namespace pollution when installing
   your extensions in the engine.

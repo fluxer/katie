@@ -32,13 +32,10 @@
 ****************************************************************************/
 
 #include "qimageiohandler.h"
-#include "qdebug.h"
+#include "qstringlist.h"
 
 #ifndef QT_NO_IMAGEFORMATPLUGIN
 
-#ifdef QT_NO_IMAGEFORMAT_TIFF
-#undef QT_NO_IMAGEFORMAT_TIFF
-#endif
 #include "qtiffhandler_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -46,14 +43,33 @@ QT_BEGIN_NAMESPACE
 class QTiffPlugin : public QImageIOPlugin
 {
 public:
-    Capabilities capabilities(QIODevice * device, const QByteArray & format) const;
-    QImageIOHandler * create(QIODevice * device, const QByteArray & format = QByteArray()) const;
+    QTiffPlugin();
+    ~QTiffPlugin();
+
     QStringList keys() const;
+    Capabilities capabilities(QIODevice *device, const QByteArray &format) const;
+    QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const;
 };
+
+QTiffPlugin::QTiffPlugin()
+{
+}
+
+QTiffPlugin::~QTiffPlugin()
+{
+}
+
+QStringList QTiffPlugin::keys() const
+{
+    static const QStringList list = QStringList()
+        << QLatin1String("tif")
+        << QLatin1String("tiff");
+    return list;
+}
 
 QImageIOPlugin::Capabilities QTiffPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
-    if (format == "tiff" || format == "tif")
+    if (format == "tif" || format == "tiff")
         return Capabilities(CanRead | CanWrite);
     if (!format.isEmpty())
         return 0;
@@ -68,25 +84,17 @@ QImageIOPlugin::Capabilities QTiffPlugin::capabilities(QIODevice *device, const 
     return cap;
 }
 
-QImageIOHandler* QTiffPlugin::create(QIODevice *device, const QByteArray &format) const
+QImageIOHandler *QTiffPlugin::create(QIODevice *device, const QByteArray &format) const
 {
-    QImageIOHandler *tiffHandler = new QTiffHandler();
-    tiffHandler->setDevice(device);
-    tiffHandler->setFormat(format);
-    return tiffHandler;
-}
-
-QStringList QTiffPlugin::keys() const
-{
-    static const QStringList list = QStringList()
-        << QLatin1String("tiff")
-        << QLatin1String("tif");
-    return list;
+    QImageIOHandler *handler = new QTiffHandler;
+    handler->setDevice(device);
+    handler->setFormat(format);
+    return handler;
 }
 
 Q_EXPORT_STATIC_PLUGIN(QTiffPlugin)
 Q_EXPORT_PLUGIN2(qtiff, QTiffPlugin)
 
-QT_END_NAMESPACE
+#endif // QT_NO_IMAGEFORMATPLUGIN
 
-#endif /* QT_NO_IMAGEFORMATPLUGIN */
+QT_END_NAMESPACE

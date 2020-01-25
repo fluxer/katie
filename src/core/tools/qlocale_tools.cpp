@@ -359,4 +359,69 @@ bool qt_u_strToLower(const QString &str, QString *out, const QLocale &locale)
     return true;
 }
 
+
+/*
+----------------------------------------------------------------------
+Copyright © 2005-2020 Rich Felker, et al.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+----------------------------------------------------------------------
+*/
+#if !defined(QT_HAVE_FCVT) || !defined(QT_HAVE_ECVT)
+char *qfcvt(double x, int n, int *dp, int *sign)
+{
+    char tmp[1500];
+    int i, lz;
+
+    if (n > 1400U) n = 1400;
+    sprintf(tmp, "%.*f", n, x);
+    i = (tmp[0] == '-');
+    if (tmp[i] == '0') lz = strspn(tmp+i+2, "0");
+    else lz = -(int)strcspn(tmp+i, ".");
+
+    if (n<=lz) {
+        *sign = i;
+        *dp = 1;
+        if (n>14U) n = 14;
+        return (char*)"000000000000000"+14-n;
+    }
+
+    return qecvt(x, n-lz, dp, sign);
+}
+
+char *qecvt(double x, int n, int *dp, int *sign)
+{
+    static char buf[16];
+    char tmp[32];
+    int i, j;
+
+    if (n-1U > 15) n = 15;
+    sprintf(tmp, "%.*e", n-1, x);
+    i = *sign = (tmp[0]=='-');
+    for (j=0; tmp[i]!='e'; j+=(tmp[i++]!='.'))
+        buf[j] = tmp[i];
+    buf[j] = 0;
+    *dp = atoi(tmp+i+1)+1;
+
+    return buf;
+}
+#endif // QT_HAVE_ECVT
+
 QT_END_NAMESPACE

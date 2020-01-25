@@ -139,8 +139,8 @@ add_feature_info(tiff WITH_TIFF "build TIFF support")
 option(WITH_MNG "Build MNG support" ON)
 add_feature_info(mng WITH_MNG "build MNG support")
 
-option(WITH_DBUS "Build DBus support" ON)
-add_feature_info(dbus WITH_DBUS "build DBus support")
+option(WITH_DBUS "Build D-Bus support" ON)
+add_feature_info(dbus WITH_DBUS "build D-Bus support")
 
 option(WITH_FONTCONFIG "Build Fontconfig support" ON)
 add_feature_info(fontconfig WITH_FONTCONFIG "build Fontconfig support")
@@ -204,13 +204,6 @@ add_definitions(
     -DQT_NO_OPENTYPE
 )
 
-# used in qconfig.h
-set(QT_LARGEFILE_SUPPORT 64)
-add_definitions(
-    -D_LARGEFILE64_SOURCE
-    -D_LARGEFILE_SOURCE
-)
-
 # some things just cannot be done right, yet
 if(KATIE_ALLINONE)
     add_definitions(-DQT_ALLINONE)
@@ -234,8 +227,40 @@ katie_check_function(strerror_r "string.h")
 # SUSv2
 katie_check_function(localtime_r "time.h")
 katie_check_function(gmtime_r "time.h")
+# SVr2, removed in POSIX.1-2008
+katie_check_function(fcvt "stdlib.h")
+katie_check_function(ecvt "stdlib.h")
+# NetBSD 1.6 and FreeBSD 4.4
+katie_check_function(getprogname "stdlib.h")
+# GNU
+katie_check_function(get_current_dir_name "unistd.h")
+# ISO/IEC 9899:1999
+katie_check_function(fegetenv "fenv.h")
+katie_check_function(fesetenv "fenv.h")
+katie_check_function(feclearexcept "fenv.h")
+katie_check_function(feenableexcept "fenv.h")
 # non-standard
 katie_check_function(flock "sys/file.h")
+
+# 64-bit offset alternatives, if any of the functions is not found it will set
+# QT_LARGEFILE_SUPPORT to FALSE. QT_LARGEFILE_SUPPORT is used in qconfig.h
+set(QT_LARGEFILE_SUPPORT TRUE)
+katie_check_function64(stat64 "sys/stat.h")
+katie_check_function64(lstat64 "sys/stat.h")
+katie_check_function64(fstat64 "sys/stat.h")
+katie_check_function64(open64 "fcntl.h")
+katie_check_function64(creat64 "fcntl.h")
+katie_check_function64(lseek64 "unistd.h")
+katie_check_function64(truncate64 "unistd.h")
+katie_check_function64(ftruncate64 "unistd.h")
+katie_check_function64(fopen64 "stdio.h")
+katie_check_function64(fseeko64 "stdio.h")
+katie_check_function64(ftello64 "stdio.h")
+katie_check_function64(fgetpos64 "stdio.h")
+katie_check_function64(fsetpos64 "stdio.h")
+katie_check_function64(mmap64 "sys/mman.h")
+katie_check_function64(readdir64 "dirent.h")
+katie_check_function64(readdir64_r "dirent.h")
 
 if(KATIE_COMPILER MATCHES "(gcc|clang)")
     set(QT_VISIBILITY_AVAILABLE TRUE)
@@ -442,7 +467,8 @@ set_package_properties(PostgreSQL PROPERTIES
     TYPE OPTIONAL
 )
 
-find_package(MySQL)
+# v4.1.13+ required for multiple statements query and UTF-8 support
+find_package(MySQL 4.1.13)
 set_package_properties(MySQL PROPERTIES
     PURPOSE "Required for MySQL database support"
     DESCRIPTION "The world's most popular open source database"
@@ -452,7 +478,7 @@ set_package_properties(MySQL PROPERTIES
 
 find_package(Unwind)
 set_package_properties(Unwind PROPERTIES
-    PURPOSE "Required for stack traces on assert"
+    PURPOSE "Required for stack traces on assert and crash"
     DESCRIPTION "A (mostly) platform-independent unwind API"
     URL "https://www.nongnu.org/libunwind/index.html"
     TYPE OPTIONAL
@@ -504,7 +530,7 @@ else()
 endif()
 
 if(NOT WITH_CUPS OR NOT CUPS_FOUND)
-    katie_definition(-DQT_NO_CUPS -DQT_NO_LPR)
+    katie_definition(-DQT_NO_CUPS)
 endif()
 
 if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)
@@ -541,7 +567,7 @@ if(NOT WITH_ACCESSIBILITY)
 endif()
 
 # keep in sync with the gui component CMake file, only definitions setup is needed here
-foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xinput)
+foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor)
     if(NOT X11_${x11ext}_FOUND)
         message(WARNING "The X11 ${x11ext} extension was not found")
         string(TOUPPER "${x11ext}" upperext)
@@ -625,7 +651,6 @@ katie_generate_obsolete(QAtomicInt QtCore qatomic.h)
 katie_generate_obsolete(QAtomicPointer QtCore qatomic.h)
 katie_generate_obsolete(QBasicAtomicInt QtCore qbasicatomic.h)
 katie_generate_obsolete(QBitRef QtCore qbitarray.h)
-katie_generate_obsolete(QBool QtCore qglobal.h)
 katie_generate_obsolete(QBrushData QtGui qbrush.h)
 katie_generate_obsolete(QByteRef QtCore qbytearray.h)
 katie_generate_obsolete(QCharRef QtCore qstring.h)

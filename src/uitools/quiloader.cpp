@@ -39,7 +39,7 @@
 #include "formbuilder.h"
 #include <formbuilderextra_p.h>
 #include <textbuilder_p.h>
-#include <ui4_p.h>
+#include <ui4.h>
 
 #include <QtCore/QDebug>
 #include <QtCore/QDir>

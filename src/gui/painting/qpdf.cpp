@@ -258,8 +258,6 @@ namespace QPdf {
     }
 }
 
-#define QT_PATH_ELEMENT(elm)
-
 QByteArray QPdf::generatePath(const QPainterPath &path, const QTransform &matrix, PathFlags flags)
 {
     QByteArray result;
@@ -1419,9 +1417,6 @@ void QPdfBaseEngine::setProperty(PrintEnginePropertyKey key, const QVariant &val
     case PPK_PrinterName:
         d->printerName = value.toString();
         break;
-    case PPK_PrinterProgram:
-        d->printProgram = value.toString();
-        break;
     case PPK_Resolution:
         d->resolution = value.toInt();
         break;
@@ -1523,9 +1518,6 @@ QVariant QPdfBaseEngine::property(PrintEnginePropertyKey key) const
         break;
     case PPK_PrinterName:
         ret = d->printerName;
-        break;
-    case PPK_PrinterProgram:
-        ret = d->printProgram;
         break;
     case PPK_Resolution:
         ret = d->resolution;
@@ -1632,28 +1624,6 @@ bool QPdfBaseEngine::end()
     return true;
 }
 
-#ifndef QT_NO_LPR
-static void closeAllOpenFds()
-{
-    // hack time... getting the maximum number of open
-    // files, if possible.  if not we assume it's the
-    // larger of 256 and the fd we got
-    int i;
-#if defined(_SC_OPEN_MAX)
-    i = (int)sysconf(_SC_OPEN_MAX);
-#elif defined(_POSIX_OPEN_MAX)
-    i = (int)_POSIX_OPEN_MAX;
-#elif defined(OPEN_MAX)
-    i = (int)OPEN_MAX;
-#else
-    i = 256;
-#endif
-    // leave stdin/out/err untouched
-    while(--i > 2)
-        QT_CLOSE(i);
-}
-#endif
-
 bool QPdfBaseEnginePrivate::openPrintDevice()
 {
     if(outDevice)
@@ -1678,118 +1648,6 @@ bool QPdfBaseEnginePrivate::openPrintDevice()
         outDevice = new QFile();
         static_cast<QFile *>(outDevice)->open(ret.first, QIODevice::WriteOnly);
         fd = ret.first;
-#endif
-#ifndef QT_NO_LPR
-    } else {
-        QString pr;
-        if (!printerName.isEmpty())
-            pr = printerName;
-        int fds[2];
-        if (qt_safe_pipe(fds) != 0) {
-            qWarning("QPdfPrinter: Could not open pipe to print");
-            return false;
-        }
-
-        pid_t pid = fork();
-        if (pid == 0) {       // child process
-            // if possible, exit quickly, so the actual lp/lpr
-            // becomes a child of init, and ::waitpid() is
-            // guaranteed not to wait.
-            if (fork() > 0) {
-                closeAllOpenFds();
-
-                // try to replace this process with "true" - this prevents
-                // global destructors from being called (that could possibly
-                // do wrong things to the parent process)
-                (void)execlp("true", "true", (char *)0);
-                (void)execl("/bin/true", "true", (char *)0);
-                (void)execl("/usr/bin/true", "true", (char *)0);
-                ::_exit(0);
-            }
-            qt_safe_dup2(fds[0], 0, 0);
-
-            closeAllOpenFds();
-
-            if (!printProgram.isEmpty()) {
-                if (!selectionOption.isEmpty())
-                    pr.prepend(selectionOption);
-                else
-                    pr.prepend(QLatin1String("-P"));
-                (void)execlp(printProgram.toLocal8Bit().data(), printProgram.toLocal8Bit().data(),
-                             pr.toLocal8Bit().data(), (char *)0);
-            } else {
-                // if no print program has been specified, be smart
-                // about the option string too.
-                QList<QByteArray> lprhack;
-                QList<QByteArray> lphack;
-                QByteArray media;
-                if (!pr.isEmpty() || !selectionOption.isEmpty()) {
-                    if (!selectionOption.isEmpty()) {
-                        QStringList list = selectionOption.split(QLatin1Char(' '));
-                        for (int i = 0; i < list.size(); ++i)
-                            lprhack.append(list.at(i).toLocal8Bit());
-                        lphack = lprhack;
-                    } else {
-                        lprhack.append("-P");
-                        lphack.append("-d");
-                    }
-                    lprhack.append(pr.toLocal8Bit());
-                    lphack.append(pr.toLocal8Bit());
-                }
-                lphack.append("-s");
-
-                char ** lpargs = new char *[lphack.size()+6];
-                char lp[] = "lp";
-                lpargs[0] = lp;
-                int i;
-                for (i = 0; i < lphack.size(); ++i)
-                    lpargs[i+1] = (char *)lphack.at(i).constData();
-#ifndef Q_OS_OSF
-                char dash_o[] = "-o";
-                if (QPdf::paperSizeToString(paperSize)) {
-                    lpargs[++i] = dash_o;
-                    lpargs[++i] = const_cast<char *>(QPdf::paperSizeToString(paperSize));
-                    lpargs[++i] = dash_o;
-                    media = "media=";
-                    media += QPdf::paperSizeToString(paperSize);
-                    lpargs[++i] = media.data();
-                }
-#endif
-                lpargs[++i] = 0;
-                char **lprargs = new char *[lprhack.size()+2];
-                char lpr[] = "lpr";
-                lprargs[0] = lpr;
-                for (int i = 0; i < lprhack.size(); ++i)
-                    lprargs[i+1] = (char *)lprhack[i].constData();
-                lprargs[lprhack.size() + 1] = 0;
-                (void)execvp("lp", lpargs);
-                (void)execvp("lpr", lprargs);
-                (void)execv("/bin/lp", lpargs);
-                (void)execv("/bin/lpr", lprargs);
-                (void)execv("/usr/bin/lp", lpargs);
-                (void)execv("/usr/bin/lpr", lprargs);
-
-                delete []lpargs;
-                delete []lprargs;
-            }
-            // if we couldn't exec anything, close the fd,
-            // wait for a second so the parent process (the
-            // child of the GUI process) has exited.  then
-            // exit.
-            QT_CLOSE(0);
-            (void)::sleep(1);
-            ::_exit(0);
-        }
-        // parent process
-        QT_CLOSE(fds[0]);
-        fd = fds[1];
-        (void)qt_safe_waitpid(pid, 0, 0);
-
-        if (fd < 0)
-            return false;
-
-        outDevice = new QFile();
-        static_cast<QFile *>(outDevice)->open(fd, QIODevice::WriteOnly);
 #endif
     }
 

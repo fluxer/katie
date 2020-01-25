@@ -33,7 +33,7 @@
 
 #include "qdesigner_dnditem_p.h"
 #include "formwindowbase_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 
 #include <QtGui/QPainter>
 #include <QtGui/QBitmap>
