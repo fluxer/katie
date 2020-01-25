@@ -345,6 +345,11 @@ function(KATIE_SETUP_PATHS)
         _APPLICATIONS _PIXMAPS _PKGCONFIG
     )
     foreach(instpath ${instpaths})
+        string(FIND "${KATIE${instpath}_FULL}" "/" slashindex)
+        if(NOT "${slashindex}" STREQUAL "0")
+            message(FATAL_ERROR "KATIE${instpath}_FULL should not be relative: ${KATIE${instpath}_FULL}")
+        endif()
+
         string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${KATIE${instpath}_FULL}")
         string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
         set(KATIE${instpath}_RELATIVE "${modpath}" PARENT_SCOPE)

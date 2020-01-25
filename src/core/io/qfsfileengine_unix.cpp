@@ -122,17 +122,6 @@ static inline int openModeToOpenFlags(QIODevice::OpenMode mode)
 
 /*!
     \internal
-
-    Sets the file descriptor to close on exec. That is, the file
-    descriptor is not inherited by child processes.
-*/
-static inline bool setCloseOnExec(int fd)
-{
-    return fd != -1 && fcntl(fd, F_SETFD, FD_CLOEXEC) != -1;
-}
-
-/*!
-    \internal
 */
 bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
 {
@@ -194,10 +183,11 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
             return false;
         }
 
+        const int fhfd = QT_FILENO(fh);
         if (!(mode & QIODevice::WriteOnly)) {
             // we don't need this check if we tried to open for writing because then
             // we had received EISDIR anyway.
-            if (QFileSystemEngine::fillMetaData(QT_FILENO(fh), metaData)
+            if (QFileSystemEngine::fillMetaData(fhfd, metaData)
                     && metaData.isDirectory()) {
                 q->setError(QFile::OpenError, QLatin1String("file to open is a directory"));
                 fclose(fh);
@@ -205,7 +195,8 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
             }
         }
 
-        setCloseOnExec(fileno(fh)); // ignore failure
+        if (fhfd != -1)
+            ::fcntl(fhfd, F_SETFD, FD_CLOEXEC); // ignore failure
 
         // Seek to the end when in Append mode.
         if (mode & QIODevice::Append) {

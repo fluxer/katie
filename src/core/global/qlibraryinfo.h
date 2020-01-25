@@ -47,16 +47,7 @@ QT_BEGIN_NAMESPACE
 class Q_CORE_EXPORT QLibraryInfo
 {
 public:
-    static QString licensee();
-    static QString licensedProducts();
-
-    static QString buildKey();
-#ifndef QT_NO_DATESTRING
-    static QDate buildDate();
-#endif //QT_NO_DATESTRING
-
-    enum LibraryLocation
-    {
+    enum LibraryLocation {
         PrefixPath,
         HeadersPath,
         LibrariesPath,
@@ -67,10 +58,19 @@ public:
         SettingsPath,
         ImportsPath
     };
+
+    static QString licensee();
+    static QString licensedProducts();
+
+    static QString buildKey();
+#ifndef QT_NO_DATESTRING
+    static QDate buildDate();
+#endif //QT_NO_DATESTRING
+
     static QString location(LibraryLocation);
 
 private:
-    QLibraryInfo();
+    Q_DISABLE_COPY(QLibraryInfo);
 };
 
 #endif /* QT_NO_SETTINGS */
