@@ -787,14 +787,6 @@ bool QAbstractFileEngine::unmap(uchar *address)
 */
 
 /*!
-    \enum QAbstractFileEngineIterator::EntryInfoType
-    \internal
-
-    This enum describes the different types of information that can be
-    requested through the QAbstractFileEngineIterator::entryInfo() function.
-*/
-
-/*!
     \typedef QAbstractFileEngine::Iterator
     \since 4.3
     \relates QAbstractFileEngine
@@ -921,21 +913,6 @@ QFileInfo QAbstractFileEngineIterator::currentFileInfo() const
 
     // return a shallow copy
     return d->fileInfo;
-}
-
-/*!
-    \internal
-
-    Returns the entry info \a type for this iterator's current directory entry
-    as a QVariant. If \a type is undefined for this entry, a null QVariant is
-    returned.
-
-    \sa QAbstractFileEngine::beginEntryList(), QDir::beginEntryList()
-*/
-QVariant QAbstractFileEngineIterator::entryInfo(EntryInfoType type) const
-{
-    Q_UNUSED(type)
-    return QVariant();
 }
 
 /*!
