@@ -75,11 +75,11 @@ public:
     QSettings::SettingsStatus status;
     QString filename;
     QSettings::SettingsMap map;
+    QSettings::SettingsMap pending;
 
     QSettings::ReadFunc readFunc;
     QSettings::WriteFunc writeFunc;
     QDateTime timestamp;
-    bool shouldwrite;
 };
 
 QT_END_NAMESPACE
