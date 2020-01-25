@@ -44,148 +44,31 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \class QLibraryInfo
-    \brief The QLibraryInfo class provides information about the Qt library.
+    \brief The QLibraryInfo class provides information about the Katie library.
 
-    Many pieces of information are established when Qt is configured.
+    Many pieces of information are established when Katie is configured.
     Installation paths, license information, and even a unique build
     key. This class provides an abstraction for accessing this
     information.
 
     \table
     \header \o Function           \o Return value
-    \row    \o buildKey()         \o A string that identifies the Qt version and
+    \row    \o buildKey()         \o A string that identifies the Katie version and
                                      the configuration. This key is used to ensure
                                      that \l{plugins} link against the same version
-                                     of Qt as the application.
-    \row    \o location()         \o The path to a certain Qt
+                                     of Katie as the application.
+    \row    \o location()         \o The path to a certain Katie
                                      component (e.g., documentation, header files).
     \row    \o licensee(),
                licensedProducts() \o Licensing information.
     \endtable
 
-    You can also use a \c qt.conf file to override the hard-coded paths
-    that are compiled into the Qt library. For more information, see
-    the \l {Using qt.conf} documentation.
+    You can also use a \c Katie.conf file to override the hard-coded paths
+    that are compiled into the Katie library. For more information, see
+    the \l {Using Katie.conf} documentation.
 
-    \sa QSysInfo, {Using qt.conf}
+    \sa QSysInfo, {Using Katie.conf}
 */
-
-/*! \internal
-
-   You cannot create a QLibraryInfo, instead only the static functions are available to query
-   information.
-*/
-
-QLibraryInfo::QLibraryInfo()
-{ }
-
-/*!
-  Returns the person to whom this build of Qt is licensed.
-
-  \sa licensedProducts()
-*/
-
-QString
-QLibraryInfo::licensee()
-{
-    return QString::fromLocal8Bit(qt_configure_licensee_str);
-}
-
-/*!
-  Returns the products that the license for this build of Qt has access to.
-
-  \sa licensee()
-*/
-
-QString
-QLibraryInfo::licensedProducts()
-{
-    return QString::fromLatin1(qt_configure_licensed_products_str);
-}
-
-/*!
-    Returns a unique key identifying this build of Qt and its
-    configurations. This key is not globally unique, rather only useful
-    for establishing of two configurations are compatible.
-
-    \sa location()
-*/
-
-QString
-QLibraryInfo::buildKey()
-{
-    return QString::fromLatin1(qt_configure_build_key_str);
-}
-
-/*!
-    \since 4.6
-    Returns the installation date for this build of Qt. The install date will
-    usually be the last time that Qt sources were configured.
-*/
-#ifndef QT_NO_DATESTRING
-QDate
-QLibraryInfo::buildDate()
-{
-    return QDate::fromString(QString::fromLatin1(qt_configure_build_date_str), Qt::ISODate);
-}
-#endif //QT_NO_DATESTRING
-
-/*!
-  Returns the location specified by \a loc.
-
-*/
-
-QString
-QLibraryInfo::location(LibraryLocation loc)
-{
-    QString ret;
-    switch (loc) {
-        case PrefixPath:
-            ret = QString::fromLocal8Bit(qt_configure_prefix_path_str);
-            break;
-        case HeadersPath:
-            ret = QString::fromLocal8Bit(qt_configure_headers_path_str);
-            break;
-        case LibrariesPath:
-            ret = QString::fromLocal8Bit(qt_configure_libraries_path_str);
-            break;
-        case BinariesPath:
-            ret = QString::fromLocal8Bit(qt_configure_binaries_path_str);
-            break;
-        case PluginsPath:
-            ret = QString::fromLocal8Bit(qt_configure_plugins_path_str);
-            break;
-        case ImportsPath:
-            ret = QString::fromLocal8Bit(qt_configure_imports_path_str);
-            break;
-        case DataPath:
-            ret = QString::fromLocal8Bit(qt_configure_data_path_str);
-            break;
-        case TranslationsPath:
-            ret = QString::fromLocal8Bit(qt_configure_translations_path_str);
-            break;
-        case SettingsPath:
-            ret = QString::fromLocal8Bit(qt_configure_settings_path_str);
-            break;
-    }
-
-    if (QDir::isRelativePath(ret)) {
-        QString baseDir;
-        if (loc == PrefixPath) {
-            // we make the prefix path absolute to the executable's directory
-            if (QCoreApplication::instance()) {
-                baseDir = QCoreApplication::applicationDirPath();
-            } else {
-                baseDir = QDir::currentPath();
-            }
-        } else {
-            // we make any other path absolute to the prefix directory
-            baseDir = location(PrefixPath);
-        }
-        ret = QDir::cleanPath(baseDir + QLatin1Char('/') + ret);
-    }
-    return ret;
-}
 
 /*!
     \enum QLibraryInfo::LibraryLocation
@@ -207,6 +90,84 @@ QLibraryInfo::location(LibraryLocation loc)
 
     \sa location()
 */
+
+/*!
+  Returns the person to whom this build of Qt is licensed.
+
+  \sa licensedProducts()
+*/
+
+QString QLibraryInfo::licensee()
+{
+    return QString::fromLocal8Bit(qt_configure_licensee_str);
+}
+
+/*!
+  Returns the products that the license for this build of Qt has access to.
+
+  \sa licensee()
+*/
+
+QString QLibraryInfo::licensedProducts()
+{
+    return QString::fromLatin1(qt_configure_licensed_products_str);
+}
+
+/*!
+    Returns a unique key identifying this build of Qt and its
+    configurations. This key is not globally unique, rather only useful
+    for establishing of two configurations are compatible.
+
+    \sa location()
+*/
+
+QString QLibraryInfo::buildKey()
+{
+    return QString::fromLatin1(qt_configure_build_key_str);
+}
+
+/*!
+    \since 4.6
+    Returns the installation date for this build of Qt. The install date will
+    usually be the last time that Qt sources were configured.
+*/
+#ifndef QT_NO_DATESTRING
+QDate QLibraryInfo::buildDate()
+{
+    return QDate::fromString(QString::fromLatin1(qt_configure_build_date_str), Qt::ISODate);
+}
+#endif //QT_NO_DATESTRING
+
+/*!
+  Returns the location specified by \a loc.
+
+*/
+
+QString QLibraryInfo::location(LibraryLocation loc)
+{
+    switch (loc) {
+        case PrefixPath:
+            return QString::fromLocal8Bit(qt_configure_prefix_path_str);
+        case HeadersPath:
+            return QString::fromLocal8Bit(qt_configure_headers_path_str);
+        case LibrariesPath:
+            return QString::fromLocal8Bit(qt_configure_libraries_path_str);
+        case BinariesPath:
+            return QString::fromLocal8Bit(qt_configure_binaries_path_str);
+        case PluginsPath:
+            return QString::fromLocal8Bit(qt_configure_plugins_path_str);
+        case DataPath:
+            return QString::fromLocal8Bit(qt_configure_data_path_str);
+        case TranslationsPath:
+            return QString::fromLocal8Bit(qt_configure_translations_path_str);
+        case SettingsPath:
+            return QString::fromLocal8Bit(qt_configure_settings_path_str);
+        case ImportsPath:
+            return QString::fromLocal8Bit(qt_configure_imports_path_str);
+    }
+
+    Q_UNREACHABLE();
+}
 
 #endif // QT_NO_SETTINGS
 
