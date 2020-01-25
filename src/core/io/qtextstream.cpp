@@ -342,7 +342,6 @@ public:
     // string
     QString *string;
     int stringOffset;
-    QIODevice::OpenMode stringOpenMode;
 
 #ifndef QT_NO_TEXTCODEC
     // codec
@@ -449,7 +448,6 @@ void QTextStreamPrivate::reset()
     deleteDevice = false;
     string = Q_NULLPTR;
     stringOffset = 0;
-    stringOpenMode = QIODevice::NotOpen;
 
     readBufferOffset = 0;
     readBufferStartDevicePos = 0;
@@ -950,7 +948,6 @@ QTextStream::QTextStream(QString *string, QIODevice::OpenMode openMode)
 #endif
     Q_D(QTextStream);
     d->string = string;
-    d->stringOpenMode = openMode;
     d->status = Ok;
 }
 
@@ -1260,7 +1257,6 @@ void QTextStream::setString(QString *string, QIODevice::OpenMode openMode)
     d->reset();
     d->status = Ok;
     d->string = string;
-    d->stringOpenMode = openMode;
 }
 
 /*!
