@@ -232,7 +232,7 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
 }
 
 // values are from likelySubtags.xml distributed with Unicode CLDR data
-static const char *specialLanguages[] = {
+static const char *specialLanguagesTbl[] = {
     "en", // Common
     "la", // Latin
     "el", // Greek
@@ -386,10 +386,10 @@ static const char *specialLanguages[] = {
     "mww-us", // NyiakengPuachueHmong
     "npp-in" // Wancho
 };
-enum { SpecialLanguageCount = sizeof(specialLanguages) / sizeof(const char *) };
+enum { SpecialLanguageCount = sizeof(specialLanguagesTbl) / sizeof(const char *) };
 
 // values obtained via genutf script
-static const uint specialChars[] = {
+static const uint specialCharsTbl[] = {
     0x0, // Common
     0x0041, // Latin
     0x0370, // Greek
@@ -543,7 +543,7 @@ static const uint specialChars[] = {
     0x1E100, // NyiakengPuachueHmong
     0x1E2C0, // Wancho
 };
-enum { SpecialCharCount = sizeof(specialChars) / sizeof(uint) };
+enum { SpecialCharCount = sizeof(specialCharsTbl) / sizeof(uint) };
 
 static const struct DefaultFontTblData {
     const QLatin1String name;
@@ -849,10 +849,10 @@ static void qt_addPatternProps(FcPattern *pattern, int screen, int script, const
                          !(request.styleStrategy & QFont::NoAntialias));
     }
 
-    if (script != QUnicodeTables::Common && specialLanguages[script]) {
+    if (script != QUnicodeTables::Common && specialLanguagesTbl[script]) {
         Q_ASSERT(script < QUnicodeTables::ScriptCount);
         FcLangSet *ls = FcLangSetCreate();
-        FcLangSetAdd(ls, (const FcChar8*)specialLanguages[script]);
+        FcLangSetAdd(ls, (const FcChar8*)specialLanguagesTbl[script]);
         FcPatternDel(pattern, FC_LANG);
         FcPatternAddLangSet(pattern, FC_LANG, ls);
         FcLangSetDestroy(ls);
@@ -1004,20 +1004,20 @@ static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
 
     if (script != QUnicodeTables::Common) {
         // skip font if it doesn't support the language we want
-        if (specialLanguages[script]){
+        if (specialLanguagesTbl[script]){
             FcLangSet *langSet = 0;
             if (FcPatternGetLangSet(match, FC_LANG, 0, &langSet) != FcResultMatch)
                 goto special_char;
-            if (FcLangSetHasLang(langSet, (const FcChar8*)specialLanguages[script]) != FcLangEqual)
+            if (FcLangSetHasLang(langSet, (const FcChar8*)specialLanguagesTbl[script]) != FcLangEqual)
                 goto special_char;
         }
 special_char:
-        if (specialChars[script]) {
+        if (specialCharsTbl[script]) {
             // need to check the charset, as the langset doesn't work for some scripts
             FcCharSet *cs;
             if (FcPatternGetCharSet(match, FC_CHARSET, 0, &cs) != FcResultMatch)
                 return Q_NULLPTR;
-            if (!FcCharSetHasChar(cs, specialChars[script]))
+            if (!FcCharSetHasChar(cs, specialCharsTbl[script]))
                 return Q_NULLPTR;
         }
     }
