@@ -96,8 +96,6 @@ public:
     void beginMapEntry();
     void endMapEntry();
 
-    void appendVariant(const QVariant &v);
-
     // used for de-marshalling (D-BUS -> Qt)
     QString currentSignature() const;
     ElementType currentType() const;

@@ -534,20 +534,6 @@ QDBusArgument &QDBusArgument::operator<<(const QByteArray &arg)
 
 /*!
     \internal
-    \since 4.5
-
-    Appends the variant \a v.
-
-    \sa asVariant()
-*/
-void QDBusArgument::appendVariant(const QVariant &v)
-{
-    if (QDBusArgumentPrivate::checkWrite(d))
-        d->marshaller()->appendVariantInternal(v);
-}
-
-/*!
-    \internal
     Returns the type signature of the D-Bus type this QDBusArgument
     object is currently pointing to.
 */
