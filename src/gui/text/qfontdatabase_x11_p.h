@@ -1081,10 +1081,9 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
     FcPatternPrint(pattern);
 #endif
 
-    QFontEngine *fe = 0;
     FcResult res;
     FcPattern *match = FcFontMatch(0, pattern, &res);
-    fe = tryPatternLoad(match, fp->screen, request, script);
+    QFontEngine *fe = tryPatternLoad(match, fp->screen, request, script);
     if (!fe) {
         FcFontSet *fs = qt_fontSetForPattern(pattern, request);
 
