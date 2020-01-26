@@ -55,7 +55,7 @@ QT_BEGIN_NAMESPACE
 class QPersistentModelIndexData
 {
 public:
-    QPersistentModelIndexData() : model(0) {}
+    QPersistentModelIndexData() : model(Q_NULLPTR) {}
     QPersistentModelIndexData(const QModelIndex &idx) : index(idx), model(idx.model()) {}
     QModelIndex index;
     QAtomicInt ref;
@@ -102,7 +102,7 @@ public:
     inline void invalidatePersistentIndexes() {
         foreach (QPersistentModelIndexData *data, persistent.indexes) {
             data->index = QModelIndex();
-            data->model = 0;
+            data->model = Q_NULLPTR;
         }
         persistent.indexes.clear();
     }

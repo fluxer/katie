@@ -1126,7 +1126,7 @@ static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id,
     extern FT_Library qt_getFreetype();
     FT_Library lib = qt_getFreetype();
 
-    FcPattern *pattern = 0;
+    FcPattern *pattern = Q_NULLPTR;
 
     FT_Face face;
     if (!FT_New_Memory_Face(lib, (const FT_Byte *)data.constData(), data.size(), id, &face)) {
