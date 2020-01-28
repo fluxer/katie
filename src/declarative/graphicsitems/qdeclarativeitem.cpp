@@ -1274,38 +1274,6 @@ void QDeclarativeItemPrivate::setLayoutMirror(bool mirror)
     parameter provides information about the event.
 */
 
-const QDeclarativeKeysAttached::SigMap QDeclarativeKeysAttached::sigMap[] = {
-    { Qt::Key_Left, "leftPressed" },
-    { Qt::Key_Right, "rightPressed" },
-    { Qt::Key_Up, "upPressed" },
-    { Qt::Key_Down, "downPressed" },
-    { Qt::Key_Tab, "tabPressed" },
-    { Qt::Key_Backtab, "backtabPressed" },
-    { Qt::Key_Asterisk, "asteriskPressed" },
-    { Qt::Key_NumberSign, "numberSignPressed" },
-    { Qt::Key_Escape, "escapePressed" },
-    { Qt::Key_Return, "returnPressed" },
-    { Qt::Key_Enter, "enterPressed" },
-    { Qt::Key_Delete, "deletePressed" },
-    { Qt::Key_Space, "spacePressed" },
-    { Qt::Key_Back, "backPressed" },
-    { Qt::Key_Cancel, "cancelPressed" },
-    { Qt::Key_Select, "selectPressed" },
-    { Qt::Key_Yes, "yesPressed" },
-    { Qt::Key_No, "noPressed" },
-    { Qt::Key_Context1, "context1Pressed" },
-    { Qt::Key_Context2, "context2Pressed" },
-    { Qt::Key_Context3, "context3Pressed" },
-    { Qt::Key_Context4, "context4Pressed" },
-    { Qt::Key_Call, "callPressed" },
-    { Qt::Key_Hangup, "hangupPressed" },
-    { Qt::Key_Flip, "flipPressed" },
-    { Qt::Key_Menu, "menuPressed" },
-    { Qt::Key_VolumeUp, "volumeUpPressed" },
-    { Qt::Key_VolumeDown, "volumeDownPressed" },
-    { 0, 0 }
-};
-
 bool QDeclarativeKeysAttachedPrivate::isConnected(const char *signalName)
 {
     return isSignalConnected(signalIndex(signalName));
@@ -1336,6 +1304,57 @@ void QDeclarativeKeysAttached::setPriority(Priority order)
         m_processPost = processPost;
         emit priorityChanged();
     }
+}
+
+static const struct KeySignalTblData {
+    const Qt::Key qtkey;
+    const char* signal;
+} KeySignalTbl[] = {
+    { Qt::Key_Left, "leftPressed" },
+    { Qt::Key_Right, "rightPressed" },
+    { Qt::Key_Up, "upPressed" },
+    { Qt::Key_Down, "downPressed" },
+    { Qt::Key_Tab, "tabPressed" },
+    { Qt::Key_Backtab, "backtabPressed" },
+    { Qt::Key_Asterisk, "asteriskPressed" },
+    { Qt::Key_NumberSign, "numberSignPressed" },
+    { Qt::Key_Escape, "escapePressed" },
+    { Qt::Key_Return, "returnPressed" },
+    { Qt::Key_Enter, "enterPressed" },
+    { Qt::Key_Delete, "deletePressed" },
+    { Qt::Key_Space, "spacePressed" },
+    { Qt::Key_Back, "backPressed" },
+    { Qt::Key_Cancel, "cancelPressed" },
+    { Qt::Key_Select, "selectPressed" },
+    { Qt::Key_Yes, "yesPressed" },
+    { Qt::Key_No, "noPressed" },
+    { Qt::Key_Context1, "context1Pressed" },
+    { Qt::Key_Context2, "context2Pressed" },
+    { Qt::Key_Context3, "context3Pressed" },
+    { Qt::Key_Context4, "context4Pressed" },
+    { Qt::Key_Call, "callPressed" },
+    { Qt::Key_Hangup, "hangupPressed" },
+    { Qt::Key_Flip, "flipPressed" },
+    { Qt::Key_Menu, "menuPressed" },
+    { Qt::Key_VolumeUp, "volumeUpPressed" },
+    { Qt::Key_VolumeDown, "volumeDownPressed" }
+};
+static const qint16 KeySignalTblSize = sizeof(KeySignalTbl) / sizeof(KeySignalTblData);
+
+static const QByteArray keyToSignal(int key) {
+    QByteArray keySignal;
+    if (key >= Qt::Key_0 && key <= Qt::Key_9) {
+        keySignal = "digit0Pressed";
+        keySignal[5] = '0' + (key - Qt::Key_0);
+    } else {
+        for (qint16 i = 0; i < KeySignalTblSize; i++) {
+            if (KeySignalTbl[i].qtkey == key) {
+                keySignal = KeySignalTbl[i].signal;
+                break;
+            }
+        }
+    }
+    return keySignal;
 }
 
 void QDeclarativeKeysAttached::keyPressed(QKeyEvent *event, bool post)
