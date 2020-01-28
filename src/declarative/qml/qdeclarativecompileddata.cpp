@@ -44,21 +44,6 @@
 
 QT_BEGIN_NAMESPACE
 
-int QDeclarativeCompiledData::pack(const char *data, size_t size)
-{
-    const char *p = packData.constData();
-    unsigned int ps = packData.size();
-
-    for (unsigned int ii = 0; (ii + size) <= ps; ii += sizeof(int)) {
-        if (0 == ::memcmp(p + ii, data, size))
-            return ii;
-    }
-
-    int rv = packData.size();
-    packData.append(data, size);
-    return rv;
-}
-
 int QDeclarativeCompiledData::indexForString(const QString &data)
 {
     int idx = primitives.indexOf(data);

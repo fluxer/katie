@@ -97,7 +97,7 @@ class QResourceRoot
 public:
     mutable QAtomicInt ref;
 
-    inline QResourceRoot(): tree(0), names(0), payloads(0) {}
+    inline QResourceRoot(): tree(Q_NULLPTR), names(Q_NULLPTR), payloads(Q_NULLPTR) {}
     inline QResourceRoot(const uchar *t, const uchar *n, const uchar *d) { setSource(t, n, d); }
     virtual ~QResourceRoot() { }
     int findNode(const QString &path, const QLocale &locale=QLocale()) const;
@@ -106,7 +106,7 @@ public:
     const uchar *data(int node, qint64 *size) const;
     QStringList children(int node) const;
     virtual QString mappingRoot() const { return QString(); }
-    bool mappingRootSubdir(const QString &path, QString *match=0) const;
+    bool mappingRootSubdir(const QString &path, QString *match=Q_NULLPTR) const;
     inline bool operator==(const QResourceRoot &other) const
     { return tree == other.tree && names == other.names && payloads == other.payloads; }
     inline bool operator!=(const QResourceRoot &other) const
@@ -214,7 +214,7 @@ QResourcePrivate::clear()
     absoluteFilePath.clear();
     container = false;
     compressed = false;
-    data = 0;
+    data = Q_NULLPTR;
     size = 0;
     children.clear();
     for(int i = 0; i < related.size(); ++i) {
@@ -242,7 +242,7 @@ QResourcePrivate::load(const QString &file)
                     data = res->data(node, &size);
                     compressed = res->isCompressed(node);
                 } else {
-                    data = 0;
+                    data = Q_NULLPTR;
                     size = 0;
                     compressed = false;
                 }
@@ -253,7 +253,7 @@ QResourcePrivate::load(const QString &file)
             related.append(res);
         } else if(res->mappingRootSubdir(file)) {
             container = true;
-            data = 0;
+            data = Q_NULLPTR;
             size = 0;
             compressed = false;
             res->ref.ref();
@@ -667,7 +667,7 @@ const uchar *QResourceRoot::data(int node, qint64 *size) const
 {
     if(node == -1) {
         *size = 0;
-        return 0;
+        return Q_NULLPTR;
     }
     int offset = findOffset(node) + 4; //jump past name
 
@@ -686,7 +686,7 @@ const uchar *QResourceRoot::data(int node, qint64 *size) const
         return ret;
     }
     *size = 0;
-    return 0;
+    return Q_NULLPTR;
 }
 QStringList QResourceRoot::children(int node) const
 {
@@ -784,7 +784,7 @@ class QDynamicBufferResourceRoot: public QResourceRoot
     const uchar *buffer;
 
 public:
-    inline QDynamicBufferResourceRoot(const QString &_root) : root(_root), buffer(0) { }
+    inline QDynamicBufferResourceRoot(const QString &_root) : root(_root), buffer(Q_NULLPTR) { }
     inline ~QDynamicBufferResourceRoot() { }
     inline const uchar *mappingBuffer() const { return buffer; }
     virtual QString mappingRoot() const { return root; }
@@ -846,7 +846,6 @@ public:
             uchar *data = new uchar[data_len];
             if (data_len != (uint)file.read((char*)data, data_len)) {
                 delete [] data;
-                data = 0;
                 data_len = 0;
                 return false;
             } else if (QDynamicBufferResourceRoot::registerSelf(data)) {
@@ -1244,7 +1243,7 @@ bool QResourceFileEngine::extension(Extension extension, const ExtensionOption *
         const MapExtensionOption *options = (MapExtensionOption*)(option);
         MapExtensionReturn *returnValue = static_cast<MapExtensionReturn*>(output);
         returnValue->address = d->map(options->offset, options->size);
-        return (returnValue->address != 0);
+        return (returnValue->address != Q_NULLPTR);
     }
     if (extension == UnMapExtension) {
         UnMapExtensionOption *options = (UnMapExtensionOption*)option;
@@ -1263,7 +1262,7 @@ uchar *QResourceFileEnginePrivate::map(qint64 offset, qint64 size)
     Q_Q(QResourceFileEngine);
     if (offset < 0 || size <= 0 || !resource.isValid() || offset + size > resource.size()) {
         q->setError(QFile::UnspecifiedError, QString());
-        return 0;
+        return Q_NULLPTR;
     }
     uchar *address = const_cast<uchar *>(resource.data());
     return (address + offset);

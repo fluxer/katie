@@ -316,10 +316,9 @@
 
 QT_BEGIN_NAMESPACE
 
-static bool isConfigFunction(QEasingCurve::Type type)
+static inline bool isConfigFunction(QEasingCurve::Type type)
 {
-    return type >= QEasingCurve::InElastic
-            && type <= QEasingCurve::OutInBounce;
+    return type >= QEasingCurve::InElastic && type <= QEasingCurve::OutInBounce;
 }
 
 class QEasingCurveFunction

@@ -445,4 +445,6 @@ bool QtKeySequenceEdit::event(QEvent *e)
 }
 
 QT_END_NAMESPACE
+
 #include "moc_qtpropertybrowserutils_p.h"
+#include "qrc_qtpropertybrowser.cpp"

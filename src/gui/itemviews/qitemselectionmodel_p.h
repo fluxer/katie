@@ -55,7 +55,7 @@ class QItemSelectionModelPrivate: public QObjectPrivate
     Q_DECLARE_PUBLIC(QItemSelectionModel)
 public:
     QItemSelectionModelPrivate()
-      : model(0),
+      : model(Q_NULLPTR),
         currentCommand(QItemSelectionModel::NoUpdate),
         tableSelected(false), tableColCount(0), tableRowCount(0) {}
 

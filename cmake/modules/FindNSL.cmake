@@ -5,7 +5,7 @@
 #  NSL_INCLUDES - the NSL include directory
 #  NSL_LIBRARIES - the libraries needed to use NSL
 #
-# Copyright (c) 2016-2019, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2016-2020, Ivailo Monev, <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 

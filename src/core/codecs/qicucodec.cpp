@@ -1088,8 +1088,7 @@ QList<QByteArray> QIcuCodec::allCodecs()
 {
     QList<QByteArray> allcodecs;
 
-    const int count = ucnv_countAvailable();
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < ucnv_countAvailable(); i++) {
         const char *name = ucnv_getAvailableName(i);
         allcodecs += QByteArray::fromRawData(name, qstrlen(name));
     }

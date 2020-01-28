@@ -45,22 +45,7 @@
 #include <QtGui/qmenubar.h>
 #include <QtGui/qboxlayout.h>
 
-// this has to be outside the namespace
-static void initScriptEngineDebuggerResources()
-{
-    Q_INIT_RESOURCE(scripttools_debugging);
-}
-
 QT_BEGIN_NAMESPACE
-
-class QtScriptDebuggerResourceInitializer
-{
-public:
-    QtScriptDebuggerResourceInitializer() {
-        // call outside-the-namespace function
-        initScriptEngineDebuggerResources();
-    }
-};
 
 /*!
   \since 4.5
@@ -248,8 +233,6 @@ public:
     QMainWindow *standardWindow;
 #endif
     bool autoShow;
-
-    static QtScriptDebuggerResourceInitializer resourceInitializer;
 };
 
 namespace {
@@ -282,8 +265,6 @@ private:
 };
 
 } // namespace
-
-QtScriptDebuggerResourceInitializer QScriptEngineDebuggerPrivate::resourceInitializer;
 
 QScriptEngineDebuggerPrivate::QScriptEngineDebuggerPrivate()
 {

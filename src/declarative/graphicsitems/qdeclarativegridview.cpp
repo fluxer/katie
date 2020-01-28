@@ -43,7 +43,6 @@
 #include <QEvent>
 
 #include "qmath.h"
-#include <math.h>
 #include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE
@@ -150,8 +149,8 @@ public:
     , footerComponent(0), footer(0), headerComponent(0), header(0)
     , bufferMode(BufferBefore | BufferAfter), snapMode(QDeclarativeGridView::NoSnap)
     , ownModel(false), wrap(false), autoHighlight(true)
-    , fixCurrentVisibility(false), lazyRelease(false), layoutScheduled(false)
-    , deferredRelease(false), haveHighlightRange(false), currentIndexCleared(false) {}
+    , lazyRelease(false), layoutScheduled(false), deferredRelease(false)
+    , haveHighlightRange(false), currentIndexCleared(false) {}
 
     void init();
     void clear();
@@ -476,15 +475,14 @@ public:
     int bufferMode;
     QDeclarativeGridView::SnapMode snapMode;
 
-    bool ownModel : 1;
-    bool wrap : 1;
-    bool autoHighlight : 1;
-    bool fixCurrentVisibility : 1;
-    bool lazyRelease : 1;
-    bool layoutScheduled : 1;
-    bool deferredRelease : 1;
-    bool haveHighlightRange : 1;
-    bool currentIndexCleared : 1;
+    bool ownModel;
+    bool wrap;
+    bool autoHighlight;
+    bool lazyRelease;
+    bool layoutScheduled;
+    bool deferredRelease;
+    bool haveHighlightRange;
+    bool currentIndexCleared;
 };
 
 void QDeclarativeGridViewPrivate::init()
@@ -922,7 +920,6 @@ void QDeclarativeGridViewPrivate::updateCurrent(int modelIndex)
     FxGridItem *oldCurrentItem = currentItem;
     currentIndex = modelIndex;
     currentItem = createItem(modelIndex);
-    fixCurrentVisibility = true;
     if (oldCurrentItem && (!currentItem || oldCurrentItem->item != currentItem->item))
         oldCurrentItem->attached->setIsCurrentItem(false);
     if (currentItem) {

@@ -1738,17 +1738,13 @@ QString QDir::cleanPath(const QString &path)
 {
     if (path.isEmpty())
         return path;
-    QString name = path;
-    QChar dir_separator = separator();
-    if (dir_separator != QLatin1Char('/'))
-       name.replace(dir_separator, QLatin1Char('/'));
 
     int used = 0, levels = 0;
-    const int len = name.length();
+    const int len = path.length();
     QVarLengthArray<QChar> outVector(len);
     QChar *out = outVector.data();
 
-    const QChar *p = name.unicode();
+    const QChar *p = path.unicode();
     for (int i = 0, last = -1, iwrite = 0; i < len; ++i) {
         if (p[i] == QLatin1Char('/')) {
             while (i+1 < len && p[i+1] == QLatin1Char('/')) {
@@ -1836,7 +1832,7 @@ QString QDir::cleanPath(const QString &path)
         used++;
     }
 
-    QString ret = (used == len ? name : QString(out, used));
+    QString ret = (used == len ? path : QString(out, used));
     // Strip away last slash except for root directories
     if (ret.length() > 1 && ret.endsWith(QLatin1Char('/'))) {
         ret.chop(1);
