@@ -583,10 +583,10 @@ QDBusMessage QDBusConnection::call(const QDBusMessage &message, QDBus::CallMode 
 QDBusPendingCall QDBusConnection::asyncCall(const QDBusMessage &message, int timeout) const
 {
     if (!d || !d->connection) {
-        return QDBusPendingCall(0); // null pointer -> disconnected
+        return QDBusPendingCall(Q_NULLPTR); // null pointer -> disconnected
     }
 
-    QDBusPendingCallPrivate *priv = d->sendWithReplyAsync(message, 0, 0, 0, timeout);
+    QDBusPendingCallPrivate *priv = d->sendWithReplyAsync(message, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, timeout);
     return QDBusPendingCall(priv);
 }
 
