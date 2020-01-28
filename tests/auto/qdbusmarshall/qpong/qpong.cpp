@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2020 Ivailo Monev
 **
-** This file is part of the QtDeclarative module of the Katie Toolkit.
+** This file is part of the test suite of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 **
@@ -31,45 +31,44 @@
 **
 ****************************************************************************/
 
-#ifndef QDECLARATIVEBINDING_P_P_H
-#define QDECLARATIVEBINDING_P_P_H
+#include <QtCore/QtCore>
+#include <QtDBus/QtDBus>
 
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Katie API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
-//
+static const char serviceName[] = "com.trolltech.autotests.qpong";
+static const char objectPath[] = "/com/trolltech/qpong";
+//static const char *interfaceName = serviceName;
 
-#include "qdeclarativebinding_p.h"
-
-#include "qdeclarativeproperty.h"
-#include "qdeclarativeexpression_p.h"
-
-QT_BEGIN_NAMESPACE
-
-class QDeclarativeBindingPrivate : public QDeclarativeExpressionPrivate
+class Pong: public QObject
 {
-    Q_DECLARE_PUBLIC(QDeclarativeBinding)
-public:
-    QDeclarativeBindingPrivate();
-    ~QDeclarativeBindingPrivate();
+    Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "com.trolltech.autotests.qpong")
+public slots:
 
-    virtual void emitValueChanged();
-
-protected:
-    virtual void refresh();
-
-private:
-    bool updating:1;
-    bool enabled:1;
-    QDeclarativeProperty property; 
+    void ping(QDBusMessage msg)
+    {
+        msg.setDelayedReply(true);
+        if (!QDBusConnection::sessionBus().send(msg.createReply(msg.arguments())))
+            exit(1);
+    }
 };
 
-QT_END_NAMESPACE
+int main(int argc, char *argv[])
+{
+    QCoreApplication app(argc, argv);
 
-#endif // QDECLARATIVEBINDING_P_P_H
+    QDBusConnection con = QDBusConnection::sessionBus();
+    if (!con.isConnected())
+        exit(1);
+
+    if (!con.registerService(serviceName))
+        exit(2);
+
+    Pong pong;
+    con.registerObject(objectPath, &pong, QDBusConnection::ExportAllSlots);
+
+    printf("ready.\n");
+
+    return app.exec();
+}
+
+#include "moc_qpong.cpp"

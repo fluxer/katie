@@ -554,13 +554,7 @@ QDBusMessage QDBusConnection::call(const QDBusMessage &message, QDBus::CallMode 
         return QDBusMessage::createError(err);
     }
 
-    if (mode != QDBus::NoBlock)
-        return d->sendWithReply(message, mode, timeout);
-
-    d->send(message);
-    QDBusMessage retval;
-    retval << QVariant(); // add one argument (to avoid .at(0) problems)
-    return retval;
+    return d->sendWithReply(message, mode, timeout);
 }
 
 /*!
@@ -583,10 +577,10 @@ QDBusMessage QDBusConnection::call(const QDBusMessage &message, QDBus::CallMode 
 QDBusPendingCall QDBusConnection::asyncCall(const QDBusMessage &message, int timeout) const
 {
     if (!d || !d->connection) {
-        return QDBusPendingCall(0); // null pointer -> disconnected
+        return QDBusPendingCall(Q_NULLPTR); // null pointer -> disconnected
     }
 
-    QDBusPendingCallPrivate *priv = d->sendWithReplyAsync(message, 0, 0, 0, timeout);
+    QDBusPendingCallPrivate *priv = d->sendWithReplyAsync(message, Q_NULLPTR, Q_NULLPTR, Q_NULLPTR, timeout);
     return QDBusPendingCall(priv);
 }
 
@@ -903,21 +897,6 @@ QDBusConnectionInterface *QDBusConnection::interface() const
     if (!d)
         return 0;
     return d->busService;
-}
-
-/*!
-    \internal
-    \since 4.8
-
-    Returns the internal, implementation-defined pointer for this
-    connection. Currently, this returns a DBusConnection* pointer,
-    without changing the reference count. It is the responsibility of
-    the caller to call dbus_connection_ref if it wants to store the
-    pointer.
-*/
-void *QDBusConnection::internalPointer() const
-{
-    return d ? d->connection : 0;
 }
 
 /*!

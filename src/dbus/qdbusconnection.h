@@ -154,8 +154,6 @@ public:
 
     QDBusConnectionInterface *interface() const;
 
-    void *internalPointer() const;
-
     static QDBusConnection connectToBus(BusType type, const QString &name);
     static QDBusConnection connectToBus(const QString &address, const QString &name);
     static QDBusConnection connectToPeer(const QString &address, const QString &name);

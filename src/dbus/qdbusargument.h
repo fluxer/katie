@@ -96,7 +96,9 @@ public:
     void beginMapEntry();
     void endMapEntry();
 
+#ifdef QT_BUILD_INTERNAL
     void appendVariant(const QVariant &v);
+#endif
 
     // used for de-marshalling (D-BUS -> Qt)
     QString currentSignature() const;
@@ -137,14 +139,16 @@ private:
     mutable QDBusArgumentPrivate *d;
 };
 
-template<typename T> inline T qdbus_cast(const QDBusArgument &arg, T * = 0)
+template<typename T>
+inline T qdbus_cast(const QDBusArgument &arg)
 {
     T item;
     arg >> item;
     return item;
 }
 
-template<typename T> inline T qdbus_cast(const QVariant &v, T * = 0)
+template<typename T>
+inline T qdbus_cast(const QVariant &v)
 {
     int id = v.userType();
     if (id == qMetaTypeId<QDBusArgument>())
@@ -154,13 +158,14 @@ template<typename T> inline T qdbus_cast(const QVariant &v, T * = 0)
 }
 
 // specialize for QVariant, allowing it to be used in place of QDBusVariant
-template<> inline QVariant qdbus_cast<QVariant>(const QDBusArgument &arg, QVariant *)
+template<>
+inline QVariant qdbus_cast<QVariant>(const QDBusArgument &arg)
 {
     QDBusVariant item;
     arg >> item;
     return item.variant();
 }
-template<> inline QVariant qdbus_cast<QVariant>(const QVariant &v, QVariant *)
+template<> inline QVariant qdbus_cast<QVariant>(const QVariant &v)
 {
     return qdbus_cast<QDBusVariant>(v).variant();
 }
