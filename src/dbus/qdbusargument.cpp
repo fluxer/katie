@@ -911,6 +911,22 @@ void QDBusArgument::endMapEntry()
         d = d->marshaller()->endMapEntry();
 }
 
+#ifdef QT_BUILD_INTERNAL
+/*!
+    \internal
+    \since 4.5
+
+    Appends the variant \a v.
+
+    \sa asVariant()
+*/
+void QDBusArgument::appendVariant(const QVariant &v)
+{
+    if (QDBusArgumentPrivate::checkWrite(d))
+        d->marshaller()->appendVariantInternal(v);
+}
+#endif
+
 /*!
     Opens a D-Bus structure suitable for extracting elements.
 
