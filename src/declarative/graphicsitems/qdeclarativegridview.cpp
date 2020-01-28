@@ -43,7 +43,6 @@
 #include <QEvent>
 
 #include "qmath.h"
-#include <math.h>
 #include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE
