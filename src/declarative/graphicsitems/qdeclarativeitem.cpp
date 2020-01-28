@@ -2905,25 +2905,25 @@ QPointF QDeclarativeItemPrivate::computeTransformOrigin() const
     QRectF br = q->boundingRect();
 
     switch(origin) {
-    default:
-    case QDeclarativeItem::TopLeft:
-        return QPointF(0, 0);
-    case QDeclarativeItem::Top:
-        return QPointF(br.width() / 2., 0);
-    case QDeclarativeItem::TopRight:
-        return QPointF(br.width(), 0);
-    case QDeclarativeItem::Left:
-        return QPointF(0, br.height() / 2.);
-    case QDeclarativeItem::Center:
-        return QPointF(br.width() / 2., br.height() / 2.);
-    case QDeclarativeItem::Right:
-        return QPointF(br.width(), br.height() / 2.);
-    case QDeclarativeItem::BottomLeft:
-        return QPointF(0, br.height());
-    case QDeclarativeItem::Bottom:
-        return QPointF(br.width() / 2., br.height());
-    case QDeclarativeItem::BottomRight:
-        return QPointF(br.width(), br.height());
+        case QDeclarativeItem::Top:
+            return QPointF(br.width() / 2., 0);
+        case QDeclarativeItem::TopRight:
+            return QPointF(br.width(), 0);
+        case QDeclarativeItem::Left:
+            return QPointF(0, br.height() / 2.);
+        case QDeclarativeItem::Center:
+            return QPointF(br.width() / 2., br.height() / 2.);
+        case QDeclarativeItem::Right:
+            return QPointF(br.width(), br.height() / 2.);
+        case QDeclarativeItem::BottomLeft:
+            return QPointF(0, br.height());
+        case QDeclarativeItem::Bottom:
+            return QPointF(br.width() / 2., br.height());
+        case QDeclarativeItem::BottomRight:
+            return QPointF(br.width(), br.height());
+        case QDeclarativeItem::TopLeft:
+        default:
+            return QPointF(0, 0);
     }
 }
 
