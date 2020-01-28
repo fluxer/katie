@@ -68,8 +68,6 @@ private:
     bool updating:1;
     bool enabled:1;
     QDeclarativeProperty property; 
-
-    bool *deleted;
 };
 
 QT_END_NAMESPACE
