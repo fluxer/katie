@@ -59,8 +59,8 @@ QT_BEGIN_NAMESPACE
 
 QAbstractItemViewPrivate::QAbstractItemViewPrivate()
     :   model(QAbstractItemModelPrivate::staticEmptyModel()),
-        itemDelegate(0),
-        selectionModel(0),
+        itemDelegate(Q_NULLPTR),
+        selectionModel(Q_NULLPTR),
         ctrlDragSelectionFlag(QItemSelectionModel::NoUpdate),
         noSelectionOnMousePress(false),
         selectionMode(QAbstractItemView::ExtendedSelection),
@@ -690,7 +690,7 @@ void QAbstractItemView::setModel(QAbstractItemModel *model)
 QAbstractItemModel *QAbstractItemView::model() const
 {
     Q_D(const QAbstractItemView);
-    return (d->model == QAbstractItemModelPrivate::staticEmptyModel() ? 0 : d->model);
+    return (d->model == QAbstractItemModelPrivate::staticEmptyModel() ? Q_NULLPTR : d->model);
 }
 
 /*!
@@ -2956,7 +2956,7 @@ QWidget* QAbstractItemView::indexWidget(const QModelIndex &index) const
         if (QWidget *editor = d->editorForIndex(index).widget.data())
             return editor;
 
-    return 0;
+    return Q_NULLPTR;
 }
 
 /*!
@@ -3846,7 +3846,7 @@ QWidget *QAbstractItemViewPrivate::editor(const QModelIndex &index,
     if (!w) {
         QAbstractItemDelegate *delegate = delegateForIndex(index);
         if (!delegate)
-            return 0;
+            return Q_NULLPTR;
         w = delegate->createEditor(viewport, options, index);
         if (w) {
             w->installEventFilter(delegate);

@@ -125,9 +125,7 @@ private:
     void dump(QDeclarativeInstruction *, int idx = -1);
     QDeclarativeCompiledData(const QDeclarativeCompiledData &other);
     QDeclarativeCompiledData &operator=(const QDeclarativeCompiledData &other);
-    QByteArray packData;
     friend class QDeclarativeCompiler;
-    int pack(const char *, size_t);
 
     int indexForString(const QString &);
     int indexForByteArray(const QByteArray &);

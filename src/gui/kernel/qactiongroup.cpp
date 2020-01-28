@@ -278,8 +278,7 @@ bool QActionGroup::isExclusive() const
     \property QActionGroup::enabled
     \brief whether the action group is enabled
 
-    Each action in the group will be enabled or disabled unless it
-    has been explicitly disabled.
+    Each action in the group will be enabled or disabled.
 
     \sa QAction::setEnabled()
 */
@@ -313,7 +312,7 @@ QAction *QActionGroup::checkedAction() const
     \brief whether the action group is visible
 
     Each action in the action group will match the visible state of
-    this group unless it has been explicitly hidden.
+    this group.
 
     \sa QAction::setEnabled()
 */
