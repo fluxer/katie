@@ -927,26 +927,26 @@ void tst_QDBusMarshall::sendCallErrors_data()
             << "Method \"ping\" with signature \"\" on interface \"com.trolltech.autotests.qpong\" doesn't exist\n" << (const char*)0;
 
     QTest::newRow("invalid-service") << "this isn't valid" << objectPath << interfaceName << "ping" << QVariantList()
-            << "com.trolltech.QtDBus.Error.InvalidService"
+            << "Katie.QtDBus.Error.InvalidService"
             << "Invalid service name: this isn't valid" << "";
 
     QTest::newRow("empty-path") << serviceName << "" << interfaceName << "ping" << QVariantList()
-            << "com.trolltech.QtDBus.Error.InvalidObjectPath"
+            << "Katie.QtDBus.Error.InvalidObjectPath"
             << "Object path cannot be empty" << "";
     QTest::newRow("invalid-path") << serviceName << "//" << interfaceName << "ping" << QVariantList()
-            << "com.trolltech.QtDBus.Error.InvalidObjectPath"
+            << "Katie.QtDBus.Error.InvalidObjectPath"
             << "Invalid object path: //" << "";
 
     // empty interfaces are valid
     QTest::newRow("invalid-interface") << serviceName << objectPath << "this isn't valid" << "ping" << QVariantList()
-            << "com.trolltech.QtDBus.Error.InvalidInterface"
+            << "Katie.QtDBus.Error.InvalidInterface"
             << "Invalid interface class: this isn't valid" << "";
 
     QTest::newRow("empty-method") << serviceName << objectPath << interfaceName << "" << QVariantList()
-            << "com.trolltech.QtDBus.Error.InvalidMember"
+            << "Katie.QtDBus.Error.InvalidMember"
             << "method name cannot be empty" << "";
     QTest::newRow("invalid-method") << serviceName << objectPath << interfaceName << "this isn't valid" << QVariantList()
-            << "com.trolltech.QtDBus.Error.InvalidMember"
+            << "Katie.QtDBus.Error.InvalidMember"
             << "Invalid method name: this isn't valid" << "";
 
     QTest::newRow("invalid-variant1") << serviceName << objectPath << interfaceName << "ping"
@@ -964,7 +964,7 @@ void tst_QDBusMarshall::sendCallErrors_data()
             << (QVariantList() << QLocale::c())
             << "org.freedesktop.DBus.Error.Failed"
             << "Marshalling failed: Unregistered type QLocale passed in arguments"
-            << "QDBusMarshaller: type `QLocale' (18) is not registered with D-BUS. Use qDBusRegisterMetaType to register it";
+            << "QDBusMarshaller: type `QLocale' (17) is not registered with D-BUS. Use qDBusRegisterMetaType to register it";
 
     // this type is known to the meta type system, but not registered with D-Bus
     qRegisterMetaType<UnregisteredType>();
