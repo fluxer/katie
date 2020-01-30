@@ -181,7 +181,6 @@ public:
     QDBusDemarshaller *beginCommon();
     QDBusDemarshaller *endCommon();
     QDBusArgument duplicate();
-    inline void close() { }
 
     bool atEnd();
 

@@ -69,10 +69,10 @@ namespace QDBusPendingReplyTypes {
         typedef T1 Type;
     };
 
-    template<typename T1> inline int metaTypeFor(T1 * = 0)
+    template<typename T1> inline int metaTypeFor()
     { return qMetaTypeId<T1>(); }
     // specialize for QVariant, allowing it to be used in place of QDBusVariant
-    template<> inline int metaTypeFor<QVariant>(QVariant *)
+    template<> inline int metaTypeFor<QVariant>()
     { return qMetaTypeId<QDBusVariant>(); }
 
     template<typename T1, typename T2, typename T3, typename T4,
@@ -83,7 +83,7 @@ namespace QDBusPendingReplyTypes {
         enum { Total = Next::Total + 1 };
         static inline void fillMetaTypes(int *p)
         {
-            *p = metaTypeFor<T1>(0);
+            *p = metaTypeFor<T1>();
             Next::fillMetaTypes(++p);
         }
     };
