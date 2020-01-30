@@ -1244,8 +1244,6 @@ bool QDBusConnectionPrivate::prepareHook(QDBusConnectionPrivate::SignalHook &hoo
         hook.midx = findSlot(receiver, normalizedName, hook.params);
     }
     if (hook.midx < minMIdx) {
-        if (hook.midx == -1)
-        {}
         return false;
     }
 

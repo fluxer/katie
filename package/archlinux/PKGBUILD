@@ -2,15 +2,13 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=katie-git
-pkgver=4.9.0.e49dfa18
+pkgver=4.9.0.rc17.r367.g28d8736c
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
 url='https://github.com/fluxer/katie'
 license=('LGPL' 'FDL' 'custom')
-depends=('openssl' 'zlib' 'cups' 'libice' 'libsm' 'pcre' 'libxcursor' 'icu'
-        'libxext' 'libxfixes' 'libxinerama' 'libxrandr' 'libxrender' 'libx11'
-        'fontconfig' 'freetype2' 'libmng' 'zstd')
+depends=('libsm' 'libxcursor' 'libxinerama' 'libmng' 'icu' 'libcups' 'libxrandr' 'sqlite' 'fontconfig')
 makedepends=('cmake' 'git' 'postgresql' 'libmariadbclient' 'unixodbc' 'unifdef')
 optdepends=('postgresql-libs: PostgreSQL driver'
         'libmariadbclient: MariaDB driver'
@@ -22,7 +20,8 @@ conflicts=('katie')
 
 pkgver() {
     cd katie
-    printf "4.9.0.%s" "$(git rev-parse --short HEAD)"
+    #printf "4.9.0."r%s.%s "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 prepare() {
