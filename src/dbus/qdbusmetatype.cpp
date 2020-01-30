@@ -272,7 +272,8 @@ bool QDBusMetaType::demarshall(const QDBusArgument &arg, int id, void *data)
             df = info.demarshall;
     }
 
-    df(arg, data);
+    QDBusArgument copy(arg); // const violation in demarshaller
+    df(copy, data);
     return true;
 }
 
