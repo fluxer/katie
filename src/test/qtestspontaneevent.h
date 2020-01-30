@@ -40,36 +40,11 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QSpontaneKeyEvent
+class QSpontaneKeyEvent : public QEvent
 {
 public:
     void setSpontaneous() { spont = true; }
-    bool spontaneous() { return spont; }
-    virtual ~QSpontaneKeyEvent() {}
-
-    static inline void setSpontaneous(QEvent *ev)
-    {
-        Q_ASSERT(sizeof(QSpontaneKeyEvent) == sizeof(QEvent));
-
-        // use a union instead of a reinterpret_cast to prevent alignment warnings
-        union
-        {
-            QSpontaneKeyEvent *skePtr;
-            QEvent *evPtr;
-        } helper;
-
-        helper.evPtr = ev;
-        helper.skePtr->setSpontaneous();
-    }
-
-protected:
-    QEvent::Type t;
-
-private:
-    bool posted;
-    bool spont;
-    bool m_accept;
-    int looplevel;
+    static inline void setSpontaneous(QEvent *ev) { ev->spont = true; }
 };
 
 QT_END_NAMESPACE
