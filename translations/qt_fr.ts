@@ -529,7 +529,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>Boucle détectée dans l&apos;affectation pour la propriété &quot;%1&quot;</translation>
     </message>
@@ -2544,31 +2544,27 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1356"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
         <source>Permission denied</source>
         <translation>Autorisation refusée</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>Trop de fichiers ouverts simultanément</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No such file or directory</source>
         <translation>Aucun fichier ou dossier de ce nom</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No space left on device</source>
         <translation>Aucun espace disponible sur le périphérique</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>Erreur inconnue</translation>
     </message>
@@ -2662,7 +2658,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Données de vérification du plugin différente dans &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+247"/>
+        <location line="+244"/>
         <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2682,24 +2678,24 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Erreur inconnue</translation>
     </message>
     <message>
-        <location line="-397"/>
-        <location line="+43"/>
+        <location line="-394"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>La bibliothèque partagée est introuvable.</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
         <source>Cannot load library %1: %2</source>
         <translation>Impossible de charger la bibliothèque %1 : %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Impossible de décharger la bibliothèque %1 : %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Impossible de résoudre le symbole &quot;%1&quot; dans %2 : %3</translation>
     </message>
@@ -2836,7 +2832,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1264"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1198"/>
         <source>Unable to open database &apos;</source>
         <translation>Impossible d&apos;ouvrir la base de données &apos;</translation>
     </message>
@@ -2846,7 +2842,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Impossible d&apos;établir une connexion</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+140"/>
         <source>Unable to begin transaction</source>
         <translation>Impossible de démarrer la transaction</translation>
     </message>
@@ -2864,13 +2860,13 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-975"/>
-        <location line="+31"/>
+        <location line="-923"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>Impossible de récuperer des données</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+153"/>
         <source>Unable to execute query</source>
         <translation>Impossible d&apos;exécuter la requête</translation>
     </message>
@@ -2880,13 +2876,13 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Impossible de stocker le résultat</translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+171"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>Impossible de préparer l&apos;instruction</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>Impossible de réinitialiser l&apos;instruction</translation>
     </message>
@@ -2912,7 +2908,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Impossible de stocker les résultats de la requête</translation>
     </message>
     <message>
-        <location line="-254"/>
+        <location line="-244"/>
         <source>Unable to execute next query</source>
         <translation>Impossible d&apos;exécuterla prochaine requête</translation>
     </message>
@@ -4699,7 +4695,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>Scripts chargés</translation>
     </message>
@@ -6828,7 +6824,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+47"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+48"/>
         <source>no error occurred</source>
         <translation>aucune erreur ne s&apos;est produite</translation>
     </message>

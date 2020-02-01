@@ -529,7 +529,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>Zapętlenie powiązania dla właściwości &quot;%1&quot;</translation>
     </message>
@@ -2539,31 +2539,27 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1365"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+59"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1398"/>
         <source>No space left on device</source>
         <translation>Brak wolnego miejsca na urządzeniu</translation>
     </message>
     <message>
-        <location line="-3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="-3"/>
+        <location line="-2"/>
         <source>No such file or directory</source>
         <translation>Brak pliku lub katalogu</translation>
     </message>
     <message>
-        <location line="-6"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="-6"/>
+        <location line="-4"/>
         <source>Permission denied</source>
         <translation>Brak uprawnień</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>Zbyt wiele otwartych plików</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>Nieznany błąd</translation>
     </message>
@@ -2657,7 +2653,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Niezgodność podczas weryfikacji danych we wtyczce &quot;%1&quot;</translation>
     </message>
     <message>
-        <location line="+247"/>
+        <location line="+244"/>
         <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2677,24 +2673,24 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Nieznany błąd</translation>
     </message>
     <message>
-        <location line="-397"/>
-        <location line="+43"/>
+        <location line="-394"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>Biblioteka współdzielona niedostępna.</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
         <source>Cannot load library %1: %2</source>
         <translation>Nie można załadować biblioteki %1: %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Nie można zwolnić biblioteki %1: %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Nie można zidentyfikować symbolu &quot;%1&quot; w %2: %3</translation>
     </message>
@@ -2831,7 +2827,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1424"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1349"/>
         <source>Unable to begin transaction</source>
         <translation>Nie można rozpocząć transakcji</translation>
     </message>
@@ -2841,7 +2837,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Nie można dokonać transakcji</translation>
     </message>
     <message>
-        <location line="-166"/>
+        <location line="-157"/>
         <source>Unable to connect</source>
         <translation>Nie można nawiązać połączenia</translation>
     </message>
@@ -2851,7 +2847,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Nie można otworzyć bazy danych &apos;</translation>
     </message>
     <message>
-        <location line="+194"/>
+        <location line="+185"/>
         <source>Unable to rollback transaction</source>
         <translation>Nie można wycofać transakcji</translation>
     </message>
@@ -2859,7 +2855,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-431"/>
+        <location line="-410"/>
         <location line="+21"/>
         <source>Unable to bind outvalues</source>
         <translation>Nie można powiązać wartości zewnętrznych</translation>
@@ -2870,44 +2866,44 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Nie można powiązać wartości</translation>
     </message>
     <message>
-        <location line="-328"/>
+        <location line="-308"/>
         <source>Unable to execute query</source>
         <translation>Nie można wykonać zapytania</translation>
     </message>
     <message>
-        <location line="+339"/>
+        <location line="+319"/>
         <source>Unable to execute statement</source>
         <translation>Nie można wykonać polecenia</translation>
     </message>
     <message>
-        <location line="-530"/>
-        <location line="+31"/>
+        <location line="-499"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>Nie można pobrać danych</translation>
     </message>
     <message>
-        <location line="+354"/>
+        <location line="+330"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>Nie można przygotować polecenia</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>Nie można zresetować polecenia</translation>
     </message>
     <message>
-        <location line="-231"/>
+        <location line="-211"/>
         <source>Unable to store result</source>
         <translation>Nie można zachować wyników</translation>
     </message>
     <message>
-        <location line="+356"/>
+        <location line="+336"/>
         <source>Unable to store statement results</source>
         <translation>Nie można zachować wyników polecenia</translation>
     </message>
     <message>
-        <location line="-254"/>
+        <location line="-244"/>
         <source>Unable to execute next query</source>
         <translation>Nie można wykonać następnego zapytania</translation>
     </message>
@@ -4694,7 +4690,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>Załadowane skrypty</translation>
     </message>
@@ -6821,7 +6817,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+58"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+59"/>
         <source>encoding declaration or standalone declaration expected while reading the XML declaration</source>
         <translation>oczekiwano deklaracji &quot;encoding&quot; lub &quot;standalone&quot; podczas odczytywania deklaracji XML</translation>
     </message>

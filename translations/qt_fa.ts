@@ -444,7 +444,7 @@ Script: %3</source>
     <message>
         <location line="+29"/>
         <source>Possible anchor loop detected on centerIn.</source>
-        <translation>حلقهٔ احتمال��� تکیه‌گاه در «مرکز-داخل» تشخیص داده شد.</translation>
+        <translation>حلقهٔ احتمال���� تکیه‌گاه در «مرکز-داخل» تشخیص داده شد.</translation>
     </message>
     <message>
         <location line="+208"/>
@@ -529,7 +529,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>حلقهٔ مقیدسازی برای ویژگی «%1» تشخیص داده شد</translation>
     </message>
@@ -1812,7 +1812,7 @@ Script: %3</source>
         <location line="+55"/>
         <location line="+1447"/>
         <source>&amp;Open</source>
-        <translation>&amp;بازکردن</translation>
+        <translation>&amp;بازک��دن</translation>
     </message>
     <message>
         <location line="-1502"/>
@@ -2537,31 +2537,27 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1356"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
         <source>Permission denied</source>
         <translation>حق دسترسی رد شد</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>پرونده‌های زیادی باز است</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No such file or directory</source>
         <translation>چنین پوشه یا پرونده‌ای وجود ندارد</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No space left on device</source>
         <translation>فضایی در دستگاه باقی نمانده است</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>خطای ناشناخته</translation>
     </message>
@@ -2656,7 +2652,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+202"/>
-        <location line="+43"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>کتابخانه اشتراکی پیدا نشد.</translation>
@@ -2682,17 +2678,17 @@ Do you want to delete it anyway?</source>
         <translation>خطای ناشناخته</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
         <source>Cannot load library %1: %2</source>
         <translation>نمی‌توان کتابخانه %1 را بارگذاری کرد: %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>نمی‌توان کتابخانه %1 را تخلیه کرد: %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>نمی‌توان درباره نماد «%1» در %2 تصمیم‌گیری کرد: %3</translation>
     </message>
@@ -2829,7 +2825,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1264"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1198"/>
         <source>Unable to open database &apos;</source>
         <translation>نمی‌توان پایگاه داده را باز کرد &apos;</translation>
     </message>
@@ -2839,7 +2835,7 @@ Do you want to delete it anyway?</source>
         <translation>نمی‌توان اتصال برقرار نمود</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+140"/>
         <source>Unable to begin transaction</source>
         <translation>نمی‌توان تراکنش را شروع کرد</translation>
     </message>
@@ -2857,13 +2853,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-975"/>
-        <location line="+31"/>
+        <location line="-923"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>عدم موفقیت در واکشی داده</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+153"/>
         <source>Unable to execute query</source>
         <translation>نمی‌توان پرس‌وجو را اجرا کرد</translation>
     </message>
@@ -2873,7 +2869,7 @@ Do you want to delete it anyway?</source>
         <translation>نمی‌توان نتیجه را ذخیره کرد</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+92"/>
         <source>Unable to execute next query</source>
         <translation>نمی‌توان درخواست بعدی را اجرا کرد</translation>
     </message>
@@ -2883,13 +2879,13 @@ Do you want to delete it anyway?</source>
         <translation>نمی‌توان نتیجه بعدی را ذخیره کرد</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+69"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>نمی‌توان عبارت را آماده کرد</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>نمی‌توان عبارت را بازنشانی کرد</translation>
     </message>
@@ -4692,7 +4688,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>اسکریپت بار‌گذاری‌شده</translation>
     </message>
@@ -6819,7 +6815,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+47"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+48"/>
         <source>no error occurred</source>
         <translation>خطایی رخ نداد</translation>
     </message>
