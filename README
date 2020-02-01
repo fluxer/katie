@@ -39,8 +39,12 @@ There are several things you should be aware before considering Katie:
   - state machine is no more
   - removed non-open source DB2, OCI, TDS and InterBase database drivers
   - removed 3rd party sources that are very common nowdays
+  - dropped non-open source platforms support
   - dropped dnotify filesystem watcher support
   - dropped Glib2 event dispatcher support
+  - dropped support for a.out format
+  - dropped Motif Drag-And-Drop (DND) support
+  - dropped LPR support
 
  - some additions have been made: 
   - JSON classes and types
