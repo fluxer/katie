@@ -57,16 +57,16 @@ There are several things you should be aware before considering Katie:
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
   - verification section for plugins build with Clang
   - faster alternatives to qCompress() and qUncompress()
-  - stack unwinding on assert via libunwind
+  - stack unwinding on assert or crash via libunwind
   - brief manual pages for all command-line tools
   - desktop files, Shell profile and dynamic linker/loader config
-  - automatic async DBus calls based on return type, no Q_NOREPLY needed
+  - automatic async D-Bus calls based on return type, no Q_NOREPLY needed
   - more reliable qrand(), seeded per thread
   - improved signal/slot template arguments handling
   - improved OpenSSL default certificate and certificates directory detection
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - improved cross-compilation support
-  - improved POSIX requirements build checks
+  - improved POSIX, XSI, SUSv2, etc. requirements build checks
   - script component relies on PCRE instead of internal copy
   - tests and benchmarks can be run without prior installation
 
