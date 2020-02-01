@@ -80,7 +80,7 @@ QString QCoreApplicationPrivate::appName() const
 
 bool QCoreApplicationPrivate::checkInstance(const char *function)
 {
-    if (QCoreApplication::self == 0) {
+    if (Q_UNLIKELY(!QCoreApplication::self)) {
         qWarning("QApplication::%s: Please instantiate the QApplication object first", function);
         return false;
     }
@@ -224,7 +224,7 @@ QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
     qt_application_thread_id = QThread::currentThreadId();
 
     // note: this call to QThread::currentThread() may end up setting theMainThread!
-    if (QThread::currentThread() != theMainThread)
+    if (Q_UNLIKELY(QThread::currentThread() != theMainThread))
         qWarning("WARNING: QApplication was not created in the main() thread.");
 }
 
@@ -616,7 +616,7 @@ bool QCoreApplication::notify(QObject *receiver, QEvent *event)
     if (QCoreApplicationPrivate::is_app_closing)
         return true;
 
-    if (receiver == 0) {                        // serious error
+    if (Q_UNLIKELY(!receiver)) {                        // serious error
         qWarning("QCoreApplication::notify: Unexpected null receiver");
         return true;
     }
@@ -636,7 +636,7 @@ bool QCoreApplicationPrivate::sendThroughApplicationEventFilters(QObject *receiv
             QObject *obj = eventFilters.at(i);
             if (!obj)
                 continue;
-            if (obj->d_func()->threadData != threadData) {
+            if (Q_UNLIKELY(obj->d_func()->threadData != threadData)) {
                 qWarning("QCoreApplication: Application event filter cannot be in a different thread.");
                 continue;
             }
@@ -655,7 +655,7 @@ bool QCoreApplicationPrivate::sendThroughObjectEventFilters(QObject *receiver, Q
             QObject *obj = receiver->d_func()->eventFilters.at(i);
             if (!obj)
                 continue;
-            if (obj->d_func()->threadData != receiver->d_func()->threadData) {
+            if (Q_UNLIKELY(obj->d_func()->threadData != receiver->d_func()->threadData)) {
                 qWarning("QCoreApplication: Object event filter cannot be in a different thread.");
                 continue;
             }
@@ -802,11 +802,10 @@ int QCoreApplication::exec()
         return -1;
 
     QThreadData *threadData = self->d_func()->threadData;
-    if (threadData != QThreadData::current()) {
+    if (Q_UNLIKELY(threadData != QThreadData::current())) {
         qWarning("%s::exec: Must be called from the main thread", self->metaObject()->className());
         return -1;
-    }
-    if (!threadData->eventLoops.isEmpty()) {
+    } else if (Q_UNLIKELY(!threadData->eventLoops.isEmpty())) {
         qWarning("QCoreApplication::exec: The event loop is already running");
         return -1;
     }
@@ -933,7 +932,7 @@ void QCoreApplication::postEvent(QObject *receiver, QEvent *event)
 */
 void QCoreApplication::postEvent(QObject *receiver, QEvent *event, int priority)
 {
-    if (receiver == 0) {
+    if (Q_UNLIKELY(!receiver)) {
         qWarning("QCoreApplication::postEvent: Unexpected null receiver");
         delete event;
         return;
@@ -1050,7 +1049,7 @@ void QCoreApplicationPrivate::sendPostedEvents(QObject *receiver, int event_type
         event_type = 0;
     }
 
-    if (receiver && receiver->d_func()->threadData != data) {
+    if (Q_UNLIKELY(receiver && receiver->d_func()->threadData != data)) {
         qWarning("QCoreApplication::sendPostedEvents: Cannot send "
                  "posted events for objects in another thread");
         return;
@@ -1560,7 +1559,7 @@ bool QCoreApplicationPrivate::isTranslatorInstalled(QTranslator *translator)
 */
 QString QCoreApplication::applicationDirPath()
 {
-    if (!self) {
+    if (Q_UNLIKELY(!self)) {
         qWarning("QCoreApplication::applicationDirPath: Please instantiate the QApplication object first");
         return QString();
     }
@@ -1588,7 +1587,7 @@ QString QCoreApplication::applicationDirPath()
 */
 QString QCoreApplication::applicationFilePath()
 {
-    if (!self) {
+    if (Q_UNLIKELY(!self)) {
         qWarning("QCoreApplication::applicationFilePath: Please instantiate the QApplication object first");
         return QString();
     }
@@ -1699,7 +1698,7 @@ QStringList QCoreApplication::arguments()
 {
     QStringList list;
 
-    if (!self) {
+    if (Q_UNLIKELY(!self)) {
         qWarning("QCoreApplication::arguments: Please instantiate the QApplication object first");
         return list;
     }

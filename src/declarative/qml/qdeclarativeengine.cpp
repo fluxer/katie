@@ -342,7 +342,7 @@ QUrl QDeclarativeScriptEngine::resolvedUrl(QScriptContext *context, const QUrl& 
 }
 
 QDeclarativeScriptEngine::QDeclarativeScriptEngine(QDeclarativeEnginePrivate *priv)
-: p(priv), namedNodeMapClass(0), nodeListClass(0)
+: p(priv)
 {
     // Note that all documentation for stuff put on the global object goes in
     // doc/src/declarative/globalobject.qdoc
@@ -410,8 +410,6 @@ QDeclarativeScriptEngine::QDeclarativeScriptEngine(QDeclarativeEnginePrivate *pr
 
 QDeclarativeScriptEngine::~QDeclarativeScriptEngine()
 {
-    delete nodeListClass;
-    delete namedNodeMapClass;
 }
 
 QScriptValue QDeclarativeScriptEngine::resolvedUrl(QScriptContext *ctxt, QScriptEngine *engine)

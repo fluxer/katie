@@ -403,7 +403,6 @@ private:
     QString stringValue; // used for any other strings that are parsed
     int     stringArrayPos;
     int     stringValueLen;
-    QString emptyStr;
 
     QHash<QString, int> literalEntitySizes;
     // The entity at (QMap<QString,) referenced the entities at (QMap<QString,) (int>) times.

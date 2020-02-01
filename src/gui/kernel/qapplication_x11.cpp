@@ -2108,10 +2108,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
         }
     }
 
-    if (XFilterEvent(event, XNone))
-        return true;
-
-    if (qt_x11EventFilter(event))                // send through app filter
+    if (XFilterEvent(event, XNone) || qt_x11EventFilter(event)) // send through event filters
         return 1;
 
     if (event->type == MappingNotify) {

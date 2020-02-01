@@ -25,7 +25,6 @@ include/katie/QtCore/QBasicAtomicInt
 include/katie/QtCore/QBasicTimer
 include/katie/QtCore/QBitArray
 include/katie/QtCore/QBitRef
-include/katie/QtCore/QBool
 include/katie/QtCore/QBuffer
 include/katie/QtCore/QByteArray
 include/katie/QtCore/QByteArrayMatcher
