@@ -99,6 +99,11 @@ public:
 
     SettingsMap map() const;
     QStringList keys() const;
+    QString group() const;
+    void beginGroup(const QString &prefix);
+    void endGroup();
+    QStringList groupKeys() const;
+
     bool isWritable() const;
 
     void setValue(const QString &key, const QVariant &value);
