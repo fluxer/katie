@@ -2,23 +2,24 @@
 #
 # It defines relevant to other projects variables:
 #
-#  KATIE_FOUND                  - wheather the project is found
-#  KATIE_DEFINITIONS            - all preprocessor definitions
-#  KATIE_INCLUDES               - all headers directories
-#  KATIE_LIBRARIES              - all component libraries
-#  KATIE_<COMPONENT>_FOUND      - wheather component is found
-#  KATIE_<COMPONENT>_INCLUDES   - component headers directories for e.g. QtCore
-#  KATIE_<COMPONENT>_LIBRARIES  - component libraries to link against e.g. QtCore
-#  KATIE_<TOOL>                 - path to tool e.g. moc
-#  KATIE_<DATA>_PATH            - path to different data type files e.g. translations
-#  KATIE_MKSPECS_DIR            - directory to mkspecs
-#  KATIE_TYPE                   - build type, either SHARED or STATIC
+#  KATIE_FOUND                   - wheather the project is found
+#  KATIE_DEFINITIONS             - all preprocessor definitions
+#  KATIE_INCLUDES                - all headers directories
+#  KATIE_LIBRARIES               - all component libraries
+#  KATIE_<COMPONENT>_FOUND       - wheather component is found
+#  KATIE_<COMPONENT>_INCLUDES    - component headers directories for e.g. QtCore
+#  KATIE_<COMPONENT>_DEFINITIONS - component preprocessor definitions e.g. -DQT_CORE_LIB
+#  KATIE_<COMPONENT>_LIBRARIES   - component libraries to link against e.g. QtCore
+#  KATIE_<TOOL>                  - path to tool e.g. moc
+#  KATIE_<DATA>_PATH             - path to different data type files e.g. translations
+#  KATIE_MKSPECS_DIR             - directory to mkspecs
+#  KATIE_TYPE                    - build type, either SHARED or STATIC
 #
 # As well as some that are unilkely to be needed outside the project:
 #
-#  KATIE_TOOLS_SUFFIX           - tools suffix set when the project was build
-#  KATIE_COMPONENTS             - components that were build
-#  KATIE_TOOLS                  - tools that were build
+#  KATIE_TOOLS_SUFFIX            - tools suffix set when the project was build
+#  KATIE_COMPONENTS              - components that were build
+#  KATIE_TOOLS                   - tools that were build
 
 # avoiding use of return()
 if(NOT KATIE_FOUND)
@@ -60,11 +61,15 @@ if(NOT KATIE_FOUND)
     foreach(component ${KATIE_COMPONENTS})
         string(TOUPPER ${component} uppercomp)
         set(KATIE_INCLUDES ${KATIE_INCLUDES} "${KATIE_HEADERS_PATH}/Qt${component}")
-        set(KATIE_${uppercomp}_INCLUDES "${KATIE_HEADERS_PATH}/Qt${component}")
+        set(KATIE_${uppercomp}_DEFINITIONS ${KATIE_DEFINITIONS} -DQT_${uppercomp}_LIB)
+        set(KATIE_${uppercomp}_INCLUDES "${KATIE_HEADERS_PATH}" "${KATIE_HEADERS_PATH}/Qt${component}")
         set(KATIE_LIBRARIES ${KATIE_LIBRARIES} Katie::${component})
 
         set(KATIE_${uppercomp}_LIBRARIES Katie::${component})
         set(KATIE_${uppercomp}_FOUND TRUE)
+
+        target_compile_definitions(Katie::${component} INTERFACE ${KATIE_${uppercomp}_DEFINITIONS})
+        target_include_directories(Katie::${component} INTERFACE ${KATIE_${uppercomp}_INCLUDES})
     endforeach()
 
     foreach(tool ${KATIE_TOOLS})
@@ -157,10 +162,10 @@ if(NOT KATIE_FOUND)
             set(QT4_QT${uppercomp}_LIBRARY "${KATIE_${uppercomp}_LIBRARIES}")
             set(QT_QT${uppercomp}_LIBRARIES "${KATIE_${uppercomp}_LIBRARIES}")
             set(QT4_QT${uppercomp}_LIBRARIES "${KATIE_${uppercomp}_LIBRARIES}")
-            set(QT_QT${uppercomp}_INCLUDE_DIR "${KATIE_HEADERS_PATH}" "${KATIE_${uppercomp}_INCLUDES}")
-            set(QT4_QT${uppercomp}_INCLUDE_DIR "${KATIE_HEADERS_PATH}" "${KATIE_${uppercomp}_INCLUDES}")
-            set(QT_QT${uppercomp}_DEFINITIONS "-DQT_${uppercomp}_LIB ${KATIE_DEFINITIONS}")
-            set(QT4_QT${uppercomp}_DEFINITIONS "-DQT_${uppercomp}_LIB ${KATIE_DEFINITIONS}")
+            set(QT_QT${uppercomp}_DEFINITIONS ${KATIE_${uppercomp}_DEFINITIONS})
+            set(QT4_QT${uppercomp}_DEFINITIONS ${KATIE_${uppercomp}_DEFINITIONS})
+            set(QT_QT${uppercomp}_INCLUDE_DIR ${KATIE_${uppercomp}_INCLUDES})
+            set(QT4_QT${uppercomp}_INCLUDE_DIR ${KATIE_${uppercomp}_INCLUDES})
         endforeach()
 
         # not much to be done about those since they are complex and many projects rely on them
