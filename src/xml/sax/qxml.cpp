@@ -1548,7 +1548,7 @@ QString QXmlInputSource::fromRawData(const QByteArray &data, bool beginning)
         d->encMapper = Q_NULLPTR;
     }
 
-    int mib = 106; // UTF-8
+    int mib = 106; // fallback to UTF-8 even for non-UTF data
 
     // This is the initial UTF codec we will read the encoding declaration with
     if (!d->encMapper) {
@@ -1556,11 +1556,8 @@ QString QXmlInputSource::fromRawData(const QByteArray &data, bool beginning)
         d->encodingDeclChars.clear();
         d->lookingForEncodingDecl = true;
 
-        QTextCodec *codec = QTextCodec::codecForUtfText(data);
-        if (!codec) {
-            // fallback to UTF-8 even for non-UTF data
-            codec = QTextCodec::codecForName("UTF-8");
-        }
+        QTextCodec *fallback = QTextCodec::codecForMib(mib);
+        QTextCodec *codec = QTextCodec::codecForUtfText(data, fallback);
         Q_ASSERT(codec);
         mib = codec->mibEnum();
 
