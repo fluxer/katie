@@ -39,8 +39,12 @@ There are several things you should be aware before considering Katie:
   - state machine is no more
   - removed non-open source DB2, OCI, TDS and InterBase database drivers
   - removed 3rd party sources that are very common nowdays
+  - dropped non-open source platforms support
   - dropped dnotify filesystem watcher support
   - dropped Glib2 event dispatcher support
+  - dropped support for a.out format
+  - dropped Motif Drag-And-Drop (DND) support
+  - dropped LPR support
 
  - some additions have been made: 
   - JSON classes and types
@@ -55,6 +59,7 @@ There are several things you should be aware before considering Katie:
   - Unicode v5.0+ characters and partial scripts support
   - support for locale aliases
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
+  - support for generating CRC-32 checksums via qChecksum32() function
   - verification section for plugins build with Clang
   - faster alternatives to qCompress() and qUncompress()
   - stack unwinding on assert or crash via libunwind
@@ -67,6 +72,7 @@ There are several things you should be aware before considering Katie:
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - improved cross-compilation support
   - improved POSIX, XSI, SUSv2, etc. requirements build checks
+  - improved Large File Support (LFS) requirements checks
   - script component relies on PCRE instead of internal copy
   - tests and benchmarks can be run without prior installation
 

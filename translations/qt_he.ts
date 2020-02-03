@@ -444,7 +444,7 @@ Script: %3</source>
     <message>
         <location line="+29"/>
         <source>Possible anchor loop detected on centerIn.</source>
-        <translation>אותרה לולאת ���וגן אפשרית בתוך centerin.</translation>
+        <translation>אותרה לולאת ����וגן אפשרית בתוך centerin.</translation>
     </message>
     <message>
         <location line="+208"/>
@@ -529,7 +529,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>אותרה לולאת קישור עבור תכונה &quot;%1&quot;</translation>
     </message>
@@ -623,7 +623,7 @@ Script: %3</source>
     <message>
         <location line="+5"/>
         <source>Invalid property assignment: boolean expected</source>
-        <translation>השמה לא תקינה למאפיין: צפוי ערך בוליאני</translation>
+        <translation>השמה לא תקינה למאפיין: צפוי ערך בול��אני</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -2539,31 +2539,27 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1356"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
         <source>Permission denied</source>
         <translation>הרשאה נדחתה</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>יותר מדי קבצים פתוחים</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No such file or directory</source>
         <translation>לא קיים קובץ או ספרייה</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No space left on device</source>
         <translation>לא נשאר מקום בהתקן</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>שגיאה לא מוכרת</translation>
     </message>
@@ -2657,7 +2653,7 @@ Do you want to delete it anyway?</source>
         <translation>חוסר התאמה במידע אימות תוסף בתוך &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+247"/>
+        <location line="+244"/>
         <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2677,24 +2673,24 @@ Do you want to delete it anyway?</source>
         <translation>שגיאה לא מוכרת</translation>
     </message>
     <message>
-        <location line="-397"/>
-        <location line="+43"/>
+        <location line="-394"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>הספריה המשותפת לא נמצאה.</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
         <source>Cannot load library %1: %2</source>
         <translation>אין אפשרות לטעון ספרייה %1: %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>אין אפשרות לפרוק ספרייה %1: %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>אין אפשרות לפתור סמל &quot;%1&quot; בתוך %2: %3</translation>
     </message>
@@ -2832,7 +2828,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1264"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1198"/>
         <source>Unable to open database &apos;</source>
         <translation>אין אפשרות לפתוח מסד נתונים &apos;</translation>
     </message>
@@ -2842,7 +2838,7 @@ Do you want to delete it anyway?</source>
         <translation>אין אפשרות להתחבר</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+140"/>
         <source>Unable to begin transaction</source>
         <translation>אין אפשרות להתחיל טרנזקציה</translation>
     </message>
@@ -2860,13 +2856,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-975"/>
-        <location line="+31"/>
+        <location line="-923"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>אין אפשרות להביא נתונים</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+153"/>
         <source>Unable to execute query</source>
         <translation>אין אפשרות לבצע שאילתא</translation>
     </message>
@@ -2876,13 +2872,13 @@ Do you want to delete it anyway?</source>
         <translation>אין אפשרות לאחסן תוצאה</translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+171"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>אין אפשרות להכין הוראה</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>אין אפשרות לאפס הוראה</translation>
     </message>
@@ -2908,7 +2904,7 @@ Do you want to delete it anyway?</source>
         <translation>אין אפשרות לאחסן תוצאות הוראה</translation>
     </message>
     <message>
-        <location line="-254"/>
+        <location line="-244"/>
         <source>Unable to execute next query</source>
         <translation>אין אפשרות לבצע שאילתא באה</translation>
     </message>
@@ -4695,7 +4691,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>תסריטים טעונים</translation>
     </message>
@@ -6525,7 +6521,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+7"/>
         <source>Copy &amp;Link Location</source>
-        <translation>העתק כתובת &amp;קישור</translation>
+        <translation>הע��ק כתובת &amp;קישור</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6824,7 +6820,7 @@ Please choose a different file name.</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+47"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+48"/>
         <source>no error occurred</source>
         <translation>לא אירעה כל שגיאה</translation>
     </message>

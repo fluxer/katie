@@ -529,7 +529,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>Знайдено циклічну прив’язку для властивості &quot;%1&quot;</translation>
     </message>
@@ -2537,31 +2537,27 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1356"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
         <source>Permission denied</source>
         <translation>Доступ заборонено</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>Забагато відкритих файлів</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No such file or directory</source>
         <translation>Файл чи тека не існують</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No space left on device</source>
         <translation>На пристрої немає вільного місця</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>Невідома помилка</translation>
     </message>
@@ -2656,7 +2652,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+202"/>
-        <location line="+43"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>Динамічна бібліотека не знайдена.</translation>
@@ -2682,17 +2678,17 @@ Do you want to delete it anyway?</source>
         <translation>Невідома помилка</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
         <source>Cannot load library %1: %2</source>
         <translation>Неможливо завантажити бібліотеку %1: %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Неможливо вивантажити бібліотеку %1: %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Неможливо розв’язати символ &quot;%1&quot; в %2: %3</translation>
     </message>
@@ -2829,7 +2825,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1264"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1198"/>
         <source>Unable to open database &apos;</source>
         <translation>Неможливо відкрити базу даних &apos;</translation>
     </message>
@@ -2839,7 +2835,7 @@ Do you want to delete it anyway?</source>
         <translation>Неможливо з&apos;єднатись</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+140"/>
         <source>Unable to begin transaction</source>
         <translation>Неможливо почати транзакцію</translation>
     </message>
@@ -2857,13 +2853,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-975"/>
-        <location line="+31"/>
+        <location line="-923"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>Неможливо отримати дані</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+153"/>
         <source>Unable to execute query</source>
         <translation>Неможливо виконати запит</translation>
     </message>
@@ -2873,7 +2869,7 @@ Do you want to delete it anyway?</source>
         <translation>Неможливо зберегти результат</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+92"/>
         <source>Unable to execute next query</source>
         <translation>Неможливо виконати наступний запит</translation>
     </message>
@@ -2883,13 +2879,13 @@ Do you want to delete it anyway?</source>
         <translation>Неможливо зберегти наступний результат</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+69"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>Неможливо підготувати вираз</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>Неможливо скинути вираз</translation>
     </message>
@@ -3437,7 +3433,7 @@ Do you want to delete it anyway?</source>
         <location line="-735"/>
         <location line="+339"/>
         <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
-        <translation>QODBCResult::reset: Неможливо встановити &apos;SQL_CURSOR_STATIC&apos;, як атрибут виразу. Будь ласка, перевірте налаштування вашого драйверу ODBC</translation>
+        <translation>QODBCResult::reset: Неможливо встановити &apos;SQL_CURSOR_STATIC&apos;, як атрибут виразу. Будь ласка, перевірте налаштува��ня вашого драйверу ODBC</translation>
     </message>
     <message>
         <location line="-329"/>
@@ -4427,7 +4423,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+2"/>
         <source>Condition</source>
-        <translation>Умова</translation>
+        <translation>У��ова</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -4692,7 +4688,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>Завантажені скрипти</translation>
     </message>
@@ -6198,7 +6194,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+2"/>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
-        <translation>Не вдалося знайти сертифікат видавця для сертифіката, що шукається локально</translation>
+        <translation>Не вдалося знайти сертифікат вида��ця для сертифіката, що шукається локально</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6819,7 +6815,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+47"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+48"/>
         <source>no error occurred</source>
         <translation>без помилок</translation>
     </message>

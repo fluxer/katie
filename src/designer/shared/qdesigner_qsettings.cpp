@@ -60,12 +60,12 @@ QString QDesignerQSettings::settingsApplicationName()
 void QDesignerQSettings::beginGroup(const QString &prefix)
 {
     Q_ASSERT(m_group.isEmpty()); // no sub-groups support
-    m_group = prefix;
+    m_settings.beginGroup(prefix);
 }
 
 void QDesignerQSettings::endGroup()
 {
-    m_group.clear();
+    m_settings.endGroup();
 }
 
 bool QDesignerQSettings::contains(const QString &key) const

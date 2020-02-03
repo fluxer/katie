@@ -49,8 +49,6 @@ public:
     QString m_ininame;
 
 public slots:
-    void initTestCase();
-    void cleanupTestCase();
     void init();
     void cleanup();
 
@@ -61,9 +59,11 @@ private slots:
     void sync();
     void variant_data();
     void variant();
+    void group_data();
+    void group();
 };
 
-void tst_QSettings::initTestCase()
+void tst_QSettings::init()
 {
     const QString filename = QDir::tempPath() + QLatin1String("/tst_qsettings_")
         + QString::number(qrand());
@@ -71,18 +71,10 @@ void tst_QSettings::initTestCase()
     m_ininame = filename + QLatin1String(".ini");
 }
 
-void tst_QSettings::cleanupTestCase()
+void tst_QSettings::cleanup()
 {
     QFile::remove(m_nativename);
     QFile::remove(m_ininame);
-}
-
-void tst_QSettings::init()
-{
-}
-
-void tst_QSettings::cleanup()
-{
 }
 
 void tst_QSettings::value_data()
@@ -176,6 +168,34 @@ void tst_QSettings::variant()
     QVARIANT_TEST(qfont);
 }
 #undef QVARIANT_TEST
+
+void tst_QSettings::group_data()
+{
+    tst_QSettings::value_data();
+}
+
+void tst_QSettings::group()
+{
+    QFETCH(QString, filename);
+    QFETCH(QSettings::Format, format);
+
+    QSettings settings(filename, format);
+    settings.setValue("a/a", 1);
+    settings.setValue("a/b", 2);
+    settings.setValue("a/c", 3);
+    settings.setValue("a/c/d", 4);
+
+    QCOMPARE(settings.groupKeys(), QStringList());
+
+    settings.beginGroup("a");
+    QCOMPARE(settings.groupKeys(), QStringList() << "a" << "b" << "c");
+    QVERIFY(settings.contains("b"));
+    settings.remove("c");
+    QVERIFY(!settings.contains("c"));
+    QCOMPARE(settings.value("c"), QVariant());
+    QCOMPARE(settings.value("c/d"), QVariant());
+    settings.endGroup();
+}
 
 QTEST_MAIN(tst_QSettings)
 

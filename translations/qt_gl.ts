@@ -530,7 +530,7 @@ superior, inferior nin vcenter.</translation>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>Detectouse un ciclo de unión para a propiedade «%1»</translation>
     </message>
@@ -2538,31 +2538,27 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1356"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
         <source>Permission denied</source>
         <translation>Permiso negado</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>Demasiados ficheiros abertos</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No such file or directory</source>
         <translation>Non existe ese ficheiro nin cartafol</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No space left on device</source>
         <translation>Non queda espazo no dispositivo</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>Erro descoñecido</translation>
     </message>
@@ -2657,7 +2653,7 @@ Desexa aínda así borralo?</translation>
     </message>
     <message>
         <location line="+202"/>
-        <location line="+43"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>Non se atopou a biblioteca compartida.</translation>
@@ -2683,17 +2679,17 @@ Desexa aínda así borralo?</translation>
         <translation>Erro descoñecido</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
         <source>Cannot load library %1: %2</source>
         <translation>Non foi posíbel cargar a biblioteca %1: %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Non foi posíbel descargar a biblioteca %1: %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Non é posíbel resolver o símbolo «%1» en %2: %3</translation>
     </message>
@@ -2830,7 +2826,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1264"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1198"/>
         <source>Unable to open database &apos;</source>
         <translation>Non foi posíbel abrir a base de datos «</translation>
     </message>
@@ -2840,7 +2836,7 @@ Desexa aínda así borralo?</translation>
         <translation>Non foi posíbel conectar</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+140"/>
         <source>Unable to begin transaction</source>
         <translation>Non foi posíbel comezar a transacción</translation>
     </message>
@@ -2858,13 +2854,13 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-975"/>
-        <location line="+31"/>
+        <location line="-923"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>Non foi posíbel acadar os datos</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+153"/>
         <source>Unable to execute query</source>
         <translation>Non foi posíbel executar a consulta</translation>
     </message>
@@ -2874,7 +2870,7 @@ Desexa aínda así borralo?</translation>
         <translation>Non foi posíbel gardar os resultados</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+92"/>
         <source>Unable to execute next query</source>
         <translation>Non foi posíbel executar a seguinte consulta</translation>
     </message>
@@ -2884,13 +2880,13 @@ Desexa aínda así borralo?</translation>
         <translation>Non foi posíbel gardar o seguinte resultado</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+69"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>Non foi posíbel preparar a sentenza</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>Non foi posíbel reiniciar a sentenza</translation>
     </message>
@@ -4694,7 +4690,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>Scripts cargados</translation>
     </message>
@@ -6821,7 +6817,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+47"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+48"/>
         <source>no error occurred</source>
         <translation>non aconteceu ningún erro</translation>
     </message>

@@ -529,7 +529,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>Lotura bigizta atzeman da &quot;%1&quot; ezaugarrirako</translation>
     </message>
@@ -2537,31 +2537,27 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1356"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
         <source>Permission denied</source>
         <translation>Baimena ukatuta</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>Agiri gehiegi irekita</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No such file or directory</source>
         <translation>Ez dago agiria edo zuzenbidea</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No space left on device</source>
         <translation>Ez da tokirik gelditzen gailuan</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>Akats ezezaguna</translation>
     </message>
@@ -2656,7 +2652,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
     </message>
     <message>
         <location line="+202"/>
-        <location line="+43"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>Elkarbanatutako liburutegia ez da aurkitu.</translation>
@@ -2682,17 +2678,17 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Akats ezezaguna</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
         <source>Cannot load library %1: %2</source>
         <translation>Ezin da liburutegia gertatu %1: %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Ezin da liburutegia desgertatu %1: %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Ezin da &quot;%1&quot; sinboloa erabaki hemen, %2: %3</translation>
     </message>
@@ -2829,7 +2825,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1264"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1198"/>
         <source>Unable to open database &apos;</source>
         <translation>Ezinezkoa datubasea irekitzea</translation>
     </message>
@@ -2839,7 +2835,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Ezinezkoa elkarketatzea</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+140"/>
         <source>Unable to begin transaction</source>
         <translation>Ezinezkoa eskualdaketa hastea</translation>
     </message>
@@ -2857,13 +2853,13 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-975"/>
-        <location line="+31"/>
+        <location line="-923"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>Ezinezkoa datuak lortzea</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+153"/>
         <source>Unable to execute query</source>
         <translation>Ezinezkoa eskaera exekutatzea</translation>
     </message>
@@ -2873,7 +2869,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Ezinezkoa emaitza biltegiratzea</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+92"/>
         <source>Unable to execute next query</source>
         <translation>Ezinezkoa hurrengo eskaera exekutatzea</translation>
     </message>
@@ -2883,13 +2879,13 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Ezinezkoa hurrengo emaitza biltegiratzea</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+69"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>Ezinezkoa estamentua gertatzea</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>Ezinezkoa estamentua berrezartzea</translation>
     </message>
@@ -4692,7 +4688,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>Gertaturiko Eskriptak</translation>
     </message>
@@ -6819,7 +6815,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+47"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+48"/>
         <source>no error occurred</source>
         <translation>ez da akatsik gertatu</translation>
     </message>
