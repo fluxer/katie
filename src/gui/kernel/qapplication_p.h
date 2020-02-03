@@ -175,7 +175,6 @@ private:
 public:
     static QFont *sys_font;
     static QFont *set_font;
-    static QWidget *main_widget;
     static QWidget *focus_widget;
     static QWidget *hidden_focus_widget;
     static QWidget *active_window;
