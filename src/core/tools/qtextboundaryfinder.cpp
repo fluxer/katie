@@ -46,7 +46,7 @@ public:
     QTextBoundaryFinder::BoundaryType type;
     int pos;
     QString string;
-    UBreakIterator *breakiter;
+    mutable UBreakIterator *breakiter; // ubrk_isBoundary() takes non-const argument
 
     QTextBoundaryFinderPrivate& operator=(const QTextBoundaryFinderPrivate &other);
 };
