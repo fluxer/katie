@@ -64,9 +64,6 @@ QT_BEGIN_NAMESPACE
 extern double qt_pointSize(double pixelSize, int dpi);
 extern double qt_pixelSize(double pointSize, int dpi);
 
-// from qapplication.cpp
-extern bool qt_is_gui_used;
-
 static inline void capitalize (char *s)
 {
     bool space = true;

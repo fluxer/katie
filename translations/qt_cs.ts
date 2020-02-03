@@ -529,7 +529,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>U pro vlastnost &quot;%1&quot; zadané vazby byla zjištěna nekonečná smyčka</translation>
     </message>
@@ -2537,31 +2537,27 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1362"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+56"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1396"/>
         <source>No such file or directory</source>
         <translation>Nepodařilo se najít žádný takový soubor nebo adresář</translation>
     </message>
     <message>
-        <location line="-6"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="-6"/>
+        <location line="-4"/>
         <source>Permission denied</source>
         <translation>Přístup odepřen</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+9"/>
+        <location line="+6"/>
         <source>No space left on device</source>
         <translation>Na zařízení není žádný volný úložný prostor</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="-6"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="-6"/>
+        <location filename="../src/core/global/qglobal.cpp" line="-4"/>
         <source>Too many open files</source>
         <translation>Příliš mnoho otevřených souborů</translation>
     </message>
@@ -2650,17 +2646,17 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+216"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+191"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Knihovnu %1 nelze vyjmout: %2</translation>
     </message>
     <message>
-        <location line="-17"/>
+        <location line="-12"/>
         <source>Cannot load library %1: %2</source>
         <translation>Knihovnu %1 nelze nahrát: %2</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+28"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Symbol &quot;%1&quot; nelze v %2 vyřešit: %3</translation>
     </message>
@@ -2671,7 +2667,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location line="+202"/>
-        <location line="+43"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>Nepodařilo se nalézt sdílenou knihovnu.</translation>
@@ -2829,12 +2825,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1441"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1366"/>
         <source>Unable to commit transaction</source>
         <translation>Transakci se nepodařilo zapsat</translation>
     </message>
     <message>
-        <location line="-177"/>
+        <location line="-168"/>
         <source>Unable to open database &apos;</source>
         <translation>Nepodařilo se otevřít spojení s databází &apos;</translation>
     </message>
@@ -2844,7 +2840,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Nepodařilo se navázat spojení</translation>
     </message>
     <message>
-        <location line="+183"/>
+        <location line="+174"/>
         <source>Unable to rollback transaction</source>
         <translation>Transakci se nepodařilo zvrátit</translation>
     </message>
@@ -2857,7 +2853,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-411"/>
+        <location line="-390"/>
         <source>Unable to execute statement</source>
         <translation>Příkaz se nepodařilo provést</translation>
     </message>
@@ -2867,50 +2863,50 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Výsledky příkazu se nepodařilo uložit</translation>
     </message>
     <message>
-        <location line="-254"/>
+        <location line="-244"/>
         <source>Unable to execute next query</source>
         <translation>Další dotaz nelze provést</translation>
     </message>
     <message>
-        <location line="+245"/>
+        <location line="+235"/>
         <location line="+21"/>
         <source>Unable to bind outvalues</source>
         <translation>Výstupní hodnoty se nepodařilo spojit</translation>
     </message>
     <message>
-        <location line="-256"/>
+        <location line="-246"/>
         <source>Unable to store next result</source>
         <translation>Další výsledek nelze uložit</translation>
     </message>
     <message>
-        <location line="-309"/>
-        <location line="+31"/>
+        <location line="-288"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>Nepodařilo se natáhnout žádná data</translation>
     </message>
     <message>
-        <location line="+354"/>
+        <location line="+330"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>Příkaz se nepodařilo připravit</translation>
     </message>
     <message>
-        <location line="-196"/>
+        <location line="-179"/>
         <source>Unable to store result</source>
         <translation>Výsledek se nepodařilo uložit</translation>
     </message>
     <message>
-        <location line="+322"/>
+        <location line="+302"/>
         <source>Unable to bind value</source>
         <translation>Hodnotu se nepodařilo spojit</translation>
     </message>
     <message>
-        <location line="-328"/>
+        <location line="-308"/>
         <source>Unable to execute query</source>
         <translation>Dotaz se nepodařilo provést</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location line="+217"/>
         <source>Unable to reset statement</source>
         <translation>Příkaz se nepodařilo znovu nastavit</translation>
     </message>
@@ -4692,7 +4688,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>Nahrané skripty</translation>
     </message>
@@ -6819,7 +6815,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+67"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+68"/>
         <source>unparsed entity reference in wrong context</source>
         <translation>používán nevyhodnocený odkaz na entitu v nesprávné souvislosti</translation>
     </message>

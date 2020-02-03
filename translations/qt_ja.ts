@@ -531,7 +531,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>プロパティ &quot;%1&quot; へのバインディングにループが発生しています</translation>
     </message>
@@ -804,7 +804,7 @@ Script: %3</source>
     <message>
         <location line="+6"/>
         <source>Can only assign one binding to lists</source>
-        <translation>リストへは一つのバインディングのみ割り当��ることができます</translation>
+        <translation>リストへは一つのバインディングのみ割り当���ることができます</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -991,7 +991,7 @@ Script: %3</source>
     <message>
         <location line="+3"/>
         <source>Connections: syntax error</source>
-        <translation>接��: 構文エラー</translation>
+        <translation>����: 構文エラー</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -1821,7 +1821,7 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translation>%1
 ディレクトリが見つかりません。
-正しいディレクトリ名が入力されたかどうか確認してください。</translation>
+正しいディレクトリ名が入力さ��たかどうか確認してください。</translation>
     </message>
     <message>
         <location line="-2246"/>
@@ -2539,31 +2539,27 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1356"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
         <source>Permission denied</source>
         <translation>許可されていません</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>開かれたファイルが多すぎます</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No such file or directory</source>
         <translation>そのようなファイルやディレクトリはありません</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No space left on device</source>
         <translation>デバイスの残り容量がありません</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
     </message>
@@ -2657,7 +2653,7 @@ Do you want to delete it anyway?</source>
         <translation>&apos;%1&apos; でプラグイン検証データが一致しません</translation>
     </message>
     <message>
-        <location line="+247"/>
+        <location line="+244"/>
         <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2677,24 +2673,24 @@ Do you want to delete it anyway?</source>
         <translation>未知のエラー</translation>
     </message>
     <message>
-        <location line="-397"/>
-        <location line="+43"/>
+        <location line="-394"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>共有ライブラリがみつかりません。</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
         <source>Cannot load library %1: %2</source>
         <translation>ライブラリ &apos;%1&apos; を読み込めません: %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>ライブラリ %1 を解放できません: %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>&apos;%2&apos;に含まれる識別子 &quot;%1&quot; を解決できません: %3</translation>
     </message>
@@ -2831,7 +2827,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1264"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1198"/>
         <source>Unable to open database &apos;</source>
         <translation>データベースを開けません &apos;</translation>
     </message>
@@ -2841,7 +2837,7 @@ Do you want to delete it anyway?</source>
         <translation>接続できません</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+140"/>
         <source>Unable to begin transaction</source>
         <translation>トランザクションを開始できません</translation>
     </message>
@@ -2859,13 +2855,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-975"/>
-        <location line="+31"/>
+        <location line="-923"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>データをフェッチできません</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+153"/>
         <source>Unable to execute query</source>
         <translation>クエリーを実行できません</translation>
     </message>
@@ -2875,13 +2871,13 @@ Do you want to delete it anyway?</source>
         <translation>実行結果を記録できません</translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+171"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>プリペアステートメントを使えません</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>ステートメントをリセットできません</translation>
     </message>
@@ -2907,7 +2903,7 @@ Do you want to delete it anyway?</source>
         <translation>ステートメントの実行結果を記録できません</translation>
     </message>
     <message>
-        <location line="-254"/>
+        <location line="-244"/>
         <source>Unable to execute next query</source>
         <translation>次のクエリーを実行できません</translation>
     </message>
@@ -4382,7 +4378,7 @@ Please choose a different file name.</source>
         <location line="+75"/>
         <location line="+9"/>
         <source>Unable to fetch row</source>
-        <translation>レコードをフェッチできません</translation>
+        <translation>レコードをフェッチできま��ん</translation>
     </message>
     <message>
         <location line="+63"/>
@@ -4695,7 +4691,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>ロードしたスクリプト</translation>
     </message>
@@ -6220,7 +6216,7 @@ Please choose a different file name.</source>
     <message>
         <location line="-48"/>
         <source>No error</source>
-        <translation>エラーはありません</translation>
+        <translation>エラーはありませ��</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6825,7 +6821,7 @@ Please choose a different file name.</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+47"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+48"/>
         <source>no error occurred</source>
         <translation>エラーは発生しませんでした</translation>
     </message>
