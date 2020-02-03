@@ -529,7 +529,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>Kötési hurok észlelhető a(z) &quot;%1&quot; tulajdonságon</translation>
     </message>
@@ -2542,31 +2542,27 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1356"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
         <source>Permission denied</source>
         <translation>Hozzáférés megtagadva</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>Túl sok fájl van nyitva</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No such file or directory</source>
         <translation>Nincs ilyen fájl vagy könyvtár</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No space left on device</source>
         <translation>Nincs több hely az eszközön</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>Ismeretlen hiba</translation>
     </message>
@@ -2660,7 +2656,7 @@ Biztosan törölni akarja?</translation>
         <translation>Plugin ellenőrző adat eltérés: &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+247"/>
+        <location line="+244"/>
         <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2680,24 +2676,24 @@ Biztosan törölni akarja?</translation>
         <translation>Ismeretlen hiba</translation>
     </message>
     <message>
-        <location line="-397"/>
-        <location line="+43"/>
+        <location line="-394"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>Az osztott függvénykönyvtár nem található.</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
         <source>Cannot load library %1: %2</source>
         <translation>A(z) %1 könyvtár nem tölthető be: %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>A(z) %1 könyvtár nem távolítható el: %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>A(z) &quot;%1&quot; szimbólum nem oldható fel a(z) %2 könyvtárban: %3</translation>
     </message>
@@ -2834,7 +2830,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1264"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1198"/>
         <source>Unable to open database &apos;</source>
         <translation>Az adatbázis nem nyitható meg: &apos;</translation>
     </message>
@@ -2844,7 +2840,7 @@ Biztosan törölni akarja?</translation>
         <translation>Nem sikerült kapcsolódni</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+140"/>
         <source>Unable to begin transaction</source>
         <translation>A tranzakció nem indítható</translation>
     </message>
@@ -2862,13 +2858,13 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-975"/>
-        <location line="+31"/>
+        <location line="-923"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>Az adat nem olvasható ki</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+153"/>
         <source>Unable to execute query</source>
         <translation>A lekérdezés nem hajtható végre</translation>
     </message>
@@ -2878,13 +2874,13 @@ Biztosan törölni akarja?</translation>
         <translation>Az eredmény nem tárolható</translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+171"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>A művelet előkészítése nem lehetséges</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>A művelet visszaállítása nem lehetséges</translation>
     </message>
@@ -2910,7 +2906,7 @@ Biztosan törölni akarja?</translation>
         <translation>A művelet eredményének tárolása sikertelen</translation>
     </message>
     <message>
-        <location line="-254"/>
+        <location line="-244"/>
         <source>Unable to execute next query</source>
         <translation>A következő lekérdezés nem hajtható végre</translation>
     </message>
@@ -4699,7 +4695,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>Betöltött parancsfájlok</translation>
     </message>
@@ -6837,7 +6833,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+47"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+48"/>
         <source>no error occurred</source>
         <translation>nem történt hiba</translation>
     </message>

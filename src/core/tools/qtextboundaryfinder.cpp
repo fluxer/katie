@@ -46,7 +46,7 @@ public:
     QTextBoundaryFinder::BoundaryType type;
     int pos;
     QString string;
-    UBreakIterator *breakiter;
+    mutable UBreakIterator *breakiter; // ubrk_isBoundary() takes non-const argument
 
     QTextBoundaryFinderPrivate& operator=(const QTextBoundaryFinderPrivate &other);
 };
@@ -303,10 +303,12 @@ QString QTextBoundaryFinder::string() const
 */
 int QTextBoundaryFinder::toNextBoundary()
 {
-    if (!d->breakiter)
+    if (!d->breakiter) {
         return -1;
-    if (d->pos != -1)
+    }
+    if (d->pos != -1) {
         ubrk_following(d->breakiter, d->pos - 1);
+    }
     d->pos = ubrk_next(d->breakiter);
     return d->pos;
 }
@@ -318,10 +320,12 @@ int QTextBoundaryFinder::toNextBoundary()
 */
 int QTextBoundaryFinder::toPreviousBoundary()
 {
-    if (!d->breakiter)
+    if (!d->breakiter) {
         return -1;
-    if (d->pos != -1)
+    }
+    if (d->pos != -1) {
         ubrk_preceding(d->breakiter, d->pos + 1);
+    }
     d->pos = ubrk_previous(d->breakiter);
     return d->pos;
 }
@@ -331,8 +335,9 @@ int QTextBoundaryFinder::toPreviousBoundary()
 */
 bool QTextBoundaryFinder::isAtBoundary() const
 {
-    if (!d->breakiter)
+    if (!d->breakiter) {
         return false;
+    }
     return ubrk_isBoundary(d->breakiter, d->pos);
 }
 

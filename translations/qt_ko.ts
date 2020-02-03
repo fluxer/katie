@@ -529,7 +529,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+436"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>속성 &quot;%1&quot;에서 바인딩 반복이 감지됨</translation>
     </message>
@@ -2537,31 +2537,27 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1356"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
         <source>Permission denied</source>
         <translation>권한이 거부됨</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>너무 많은 파일이 열렸음</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No such file or directory</source>
         <translation>그러한 파일이나 디렉터리가 없음</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No space left on device</source>
         <translation>장치에 공간이 부족함</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>알 수 없는 오류</translation>
     </message>
@@ -2656,7 +2652,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+202"/>
-        <location line="+43"/>
+        <location line="+40"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
         <source>The shared library was not found.</source>
         <translation>공유 라이브러리를 찾을 수 없습니다.</translation>
@@ -2682,17 +2678,17 @@ Do you want to delete it anyway?</source>
         <translation>알 수 없는 오류</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
         <source>Cannot load library %1: %2</source>
         <translation>라이브러리 %1을(를) 불러올 수 없음: %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>라이브러리 %1을(를) 닫을 수 없음: %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>%2의 심볼 &quot;%1&quot;을(를) 불러올 수 없음: %3</translation>
     </message>
@@ -2829,7 +2825,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1264"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1198"/>
         <source>Unable to open database &apos;</source>
         <translation>다음 데이터베이스를 열 수 없음: &apos;</translation>
     </message>
@@ -2839,7 +2835,7 @@ Do you want to delete it anyway?</source>
         <translation>연결할 수 없음</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+140"/>
         <source>Unable to begin transaction</source>
         <translation>트랜잭션을 시작할 수 없음</translation>
     </message>
@@ -2857,13 +2853,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-975"/>
-        <location line="+31"/>
+        <location line="-923"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>데이터를 가져올 수 없음</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+153"/>
         <source>Unable to execute query</source>
         <translation>쿼리를 실행할 수 없음</translation>
     </message>
@@ -2873,7 +2869,7 @@ Do you want to delete it anyway?</source>
         <translation>결과를 저장할 수 없음</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+92"/>
         <source>Unable to execute next query</source>
         <translation>다음 쿼리를 실행할 수 없음</translation>
     </message>
@@ -2883,13 +2879,13 @@ Do you want to delete it anyway?</source>
         <translation>다음 결과를 저장할 수 없음</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+69"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>구문을 준비할 수 없음</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>구문을 초기화할 수 없음</translation>
     </message>
@@ -4359,7 +4355,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+19"/>
         <source>Unable to begin transaction</source>
-        <translation>트랜잭션을 시작할 수 없음</translation>
+        <translation>��랜잭션을 시작할 수 없음</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -4692,7 +4688,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+516"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>불러온 스크립트</translation>
     </message>
@@ -6819,7 +6815,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+47"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+48"/>
         <source>no error occurred</source>
         <translation>오류 없음</translation>
     </message>

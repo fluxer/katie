@@ -169,8 +169,8 @@ public:
     ~QEventDispatcherUNIXPrivate();
 
     int doSelect(QEventLoop::ProcessEventsFlags flags, timeval *timeout);
-    virtual int initThreadWakeUp();
-    virtual int processThreadWakeUp(int nsel);
+    int initThreadWakeUp();
+    int processThreadWakeUp(int nsel);
 
     bool mainThread;
     int thread_pipe[2];

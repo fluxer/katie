@@ -349,6 +349,14 @@ void QSettingsPrivate::notify()
     }
 }
 
+QString QSettingsPrivate::toGroupKey(const QString &key) const
+{
+    if (group.isEmpty()) {
+        return key;
+    }
+    return group + QLatin1Char('/') + key;
+}
+
 QString QSettingsPrivate::variantToString(const QVariant &v)
 {
     switch (v.type()) {
@@ -962,7 +970,7 @@ QSettings::SettingsMap QSettings::map() const
     You can navigate through the entire setting hierarchy using
     keys() and map().
 
-    \sa map()
+    \sa map(), groupKeys()
 */
 QStringList QSettings::keys() const
 {
@@ -975,6 +983,96 @@ QStringList QSettings::keys() const
         return mapkeys;
     }
     return d->map.keys();
+}
+
+/*!
+    Returns the current group.
+
+    \sa beginGroup(), endGroup()
+*/
+QString QSettings::group() const
+{
+    Q_D(const QSettings);
+    return d->group;
+}
+
+/*!
+    Appends \a prefix to the current group.
+
+    The current group is automatically prepended to all keys
+    specified to QSettings. In addition, query functions such as
+    groupKeys() are based on the group. By default, no group is set.
+
+    Call endGroup() to reset the current group to what it was before
+    the corresponding beginGroup() call. Groups cannot be nested.
+
+    \sa endGroup(), group()
+*/
+void QSettings::beginGroup(const QString &group)
+{
+    Q_D(QSettings);
+
+    if (!d->group.isEmpty()) {
+        qWarning("QSettings::beginGroup: sub-groups are not supported");
+        return;
+    }
+
+    d->group = group;
+}
+
+/*!
+    Resets the group to what it was before the corresponding
+    beginGroup() call.
+
+    \sa beginGroup(), group()
+*/
+void QSettings::endGroup()
+{
+    Q_D(QSettings);
+    if (d->group.isEmpty()) {
+        qWarning("QSettings::endGroup: No matching beginGroup()");
+        return;
+    }
+
+    d->group.clear();
+}
+
+/*!
+    Returns a list of all top-level keys that can be read using the
+    QSettings object.
+
+    If a group is set using beginGroup(), the top-level keys in that
+    group are returned, without the group prefix:
+
+    You can navigate through the entire setting hierarchy using
+    keys() and groupKeys() recursively.
+
+    \sa keys()
+*/
+QStringList QSettings::groupKeys() const
+{
+    Q_D(const QSettings);
+    if (d->group.isEmpty()) {
+        return QStringList();
+    }
+
+    QStringList result;
+    foreach(const QString &key, keys()) {
+        if (!key.startsWith(d->group + QLatin1Char('/'))) {
+            continue;
+        }
+        const int groupsize = d->group.size() + 1;
+        QString groupkey = key.mid(groupsize, key.size() - groupsize);
+        const int slashindex = groupkey.indexOf("/");
+        if (slashindex) {
+            groupkey = groupkey.mid(0, slashindex);
+        }
+        if (result.contains(groupkey)) {
+            continue;
+        }
+        result.append(groupkey);
+    }
+    return result;
 }
 
 /*!
@@ -1011,7 +1109,7 @@ bool QSettings::isWritable() const
 void QSettings::setValue(const QString &key, const QVariant &value)
 {
     Q_D(QSettings);
-    d->pending.insert(key, value);
+    d->pending.insert(d->toGroupKey(key), value);
     d->notify();
 }
 
@@ -1023,8 +1121,17 @@ void QSettings::setValue(const QString &key, const QVariant &value)
 void QSettings::remove(const QString &key)
 {
     Q_D(QSettings);
-    d->map.remove(key);
-    d->pending.remove(key);
+    const QString groupkey = d->toGroupKey(key);
+    foreach(const QString &key, d->map.keys()) {
+        if (key.startsWith(groupkey)) {
+            d->map.remove(key);
+        }
+    }
+    foreach(const QString &key, d->pending.keys()) {
+        if (key.startsWith(groupkey)) {
+            d->pending.remove(key);
+        }
+    }
     d->notify();
 }
 
@@ -1037,7 +1144,8 @@ void QSettings::remove(const QString &key)
 bool QSettings::contains(const QString &key) const
 {
     Q_D(const QSettings);
-    return (d->map.contains(key) || d->pending.contains(key));
+    const QString groupkey = d->toGroupKey(key);
+    return (d->map.contains(groupkey) || d->pending.contains(groupkey));
 }
 
 /*!
@@ -1052,10 +1160,11 @@ bool QSettings::contains(const QString &key) const
 QVariant QSettings::value(const QString &key, const QVariant &defaultValue) const
 {
     Q_D(const QSettings);
-    if (d->pending.contains(key)) {
-        return d->pending.value(key);
+    const QString groupkey = d->toGroupKey(key);
+    if (d->pending.contains(groupkey)) {
+        return d->pending.value(groupkey);
     }
-    return d->map.value(key, defaultValue);
+    return d->map.value(groupkey, defaultValue);
 }
 
 /*!
