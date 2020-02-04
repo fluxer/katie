@@ -2,7 +2,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=katie-git
-pkgver=4.9.0.rc17.r367.g28d8736c
+pkgver=4.9.0.rc18.r16.gea38d0ce
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
