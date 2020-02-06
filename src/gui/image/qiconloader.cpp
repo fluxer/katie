@@ -119,22 +119,17 @@ QStringList QIconLoader::themeSearchPaths() const
 QIconTheme::QIconTheme(const QString &themeName)
         : m_valid(false)
 {
-    QFile themeIndex;
-
-    QList <QIconDirInfo> keyList;
     QStringList iconDirs = QIcon::themeSearchPaths();
     for ( int i = 0 ; i < iconDirs.size() ; ++i) {
-        QDir iconDir(iconDirs[i]);
-        QString themeDir = iconDir.path() + QLatin1Char('/') + themeName;
-        themeIndex.setFileName(themeDir + QLatin1String("/index.theme"));
-        if (themeIndex.exists()) {
+        QString themeDir = iconDirs[i] + QLatin1Char('/') + themeName;
+        if (QFile::exists(themeDir + QLatin1String("/index.theme"))) {
             m_contentDir = themeDir;
             m_valid = true;
             break;
         }
     }
-    if (themeIndex.exists()) {
-        const QSettings indexReader(themeIndex.fileName(), QSettings::IniFormat);
+    if (m_valid) {
+        const QSettings indexReader(m_contentDir + QLatin1String("/index.theme"), QSettings::IniFormat);
         QStringListIterator keyIterator(indexReader.keys());
         while (keyIterator.hasNext()) {
 
@@ -174,8 +169,7 @@ QIconTheme::QIconTheme(const QString &themeName)
         }
 
         // Parent themes provide fallbacks for missing icons
-        m_parents = indexReader.value(
-                QLatin1String("Icon Theme/Inherits")).toStringList();
+        m_parents = indexReader.value(QLatin1String("Icon Theme/Inherits")).toStringList();
 
         // Ensure a default platform fallback for all themes
         if (m_parents.isEmpty())
