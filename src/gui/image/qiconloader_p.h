@@ -115,7 +115,6 @@ public:
 
 private:
     QString key() const;
-    bool hasIcon() const;
     void ensureLoaded();
     QIconLoaderEngineEntry *entryForSize(const QSize &size);
     QIconLoaderEngine(const QIconLoaderEngine &other);

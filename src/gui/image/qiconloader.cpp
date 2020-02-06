@@ -294,11 +294,6 @@ bool QIconLoaderEngine::write(QDataStream &out) const
     return true;
 }
 
-bool QIconLoaderEngine::hasIcon() const
-{
-    return !(m_entries.isEmpty());
-}
-
 // Lazily load the icon
 void QIconLoaderEngine::ensureLoaded()
 {
