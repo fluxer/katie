@@ -112,9 +112,9 @@ public:
     QIconEngine *clone() const;
     bool read(QDataStream &in);
     bool write(QDataStream &out) const;
+    QString key() const;
 
 private:
-    QString key() const;
     void ensureLoaded();
     QIconLoaderEngineEntry *entryForSize(const QSize &size);
     QIconLoaderEngine(const QIconLoaderEngine &other);
