@@ -109,6 +109,8 @@ public:
     void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state);
     QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
     QSize actualSize(const QSize &size, QIcon::Mode mode, QIcon::State state);
+    QList<QSize> availableSizes(QIcon::Mode mode = QIcon::Normal, QIcon::State state = QIcon::Off) const;
+    QString iconName() const;
     QIconEngine *clone() const;
     bool read(QDataStream &in);
     bool write(QDataStream &out) const;
