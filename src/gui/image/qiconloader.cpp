@@ -119,22 +119,17 @@ QStringList QIconLoader::themeSearchPaths() const
 QIconTheme::QIconTheme(const QString &themeName)
         : m_valid(false)
 {
-    QFile themeIndex;
-
-    QList <QIconDirInfo> keyList;
     QStringList iconDirs = QIcon::themeSearchPaths();
     for ( int i = 0 ; i < iconDirs.size() ; ++i) {
-        QDir iconDir(iconDirs[i]);
-        QString themeDir = iconDir.path() + QLatin1Char('/') + themeName;
-        themeIndex.setFileName(themeDir + QLatin1String("/index.theme"));
-        if (themeIndex.exists()) {
+        QString themeDir = iconDirs[i] + QLatin1Char('/') + themeName;
+        if (QFile::exists(themeDir + QLatin1String("/index.theme"))) {
             m_contentDir = themeDir;
             m_valid = true;
             break;
         }
     }
-    if (themeIndex.exists()) {
-        const QSettings indexReader(themeIndex.fileName(), QSettings::IniFormat);
+    if (m_valid) {
+        const QSettings indexReader(m_contentDir + QLatin1String("/index.theme"), QSettings::IniFormat);
         QStringListIterator keyIterator(indexReader.keys());
         while (keyIterator.hasNext()) {
 
@@ -174,8 +169,7 @@ QIconTheme::QIconTheme(const QString &themeName)
         }
 
         // Parent themes provide fallbacks for missing icons
-        m_parents = indexReader.value(
-                QLatin1String("Icon Theme/Inherits")).toStringList();
+        m_parents = indexReader.value(QLatin1String("Icon Theme/Inherits")).toStringList();
 
         // Ensure a default platform fallback for all themes
         if (m_parents.isEmpty())
@@ -268,6 +262,7 @@ QThemeIconEntries QIconLoader::loadIcon(const QString &name) const
 QIconLoaderEngine::QIconLoaderEngine(const QString& iconName)
         : m_iconName(iconName), m_key(0)
 {
+    ensureLoaded();
 }
 
 QIconLoaderEngine::~QIconLoaderEngine()
@@ -282,6 +277,7 @@ QIconLoaderEngine::QIconLoaderEngine(const QIconLoaderEngine &other)
         m_iconName(other.m_iconName),
         m_key(0)
 {
+    ensureLoaded();
 }
 
 QIconEngine *QIconLoaderEngine::clone() const
@@ -300,12 +296,6 @@ bool QIconLoaderEngine::write(QDataStream &out) const
     return true;
 }
 
-bool QIconLoaderEngine::hasIcon() const
-{
-    return !(m_entries.isEmpty());
-}
-
-// Lazily load the icon
 void QIconLoaderEngine::ensureLoaded()
 {
     if (!(iconLoaderInstance()->themeKey() == m_key)) {
@@ -414,8 +404,6 @@ QIconLoaderEngineEntry *QIconLoaderEngine::entryForSize(const QSize &size)
 QSize QIconLoaderEngine::actualSize(const QSize &size, QIcon::Mode mode,
                                    QIcon::State state)
 {
-    ensureLoaded();
-
     QIconLoaderEngineEntry *entry = entryForSize(size);
     if (entry) {
         const QIconDirInfo &dir = entry->dir;
@@ -427,6 +415,22 @@ QSize QIconLoaderEngine::actualSize(const QSize &size, QIcon::Mode mode,
         }
     }
     return QIconEngineV2::actualSize(size, mode, state);
+}
+
+QList<QSize> QIconLoaderEngine::availableSizes(QIcon::Mode mode, QIcon::State state) const
+{
+    QList<QSize> result;
+    // Gets all sizes from the DirectoryInfo entries
+    for (int i = 0 ; i < m_entries.size(); i++) {
+        int size = m_entries.at(i)->dir.size;
+        result.append(QSize(size, size));
+    }
+    return result;
+}
+
+QString QIconLoaderEngine::iconName() const
+{
+    return m_iconName;
 }
 
 QPixmap PixmapEntry::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
@@ -470,8 +474,6 @@ QPixmap ScalableEntry::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State 
 QPixmap QIconLoaderEngine::pixmap(const QSize &size, QIcon::Mode mode,
                                  QIcon::State state)
 {
-    ensureLoaded();
-
     QIconLoaderEngineEntry *entry = entryForSize(size);
     if (entry)
         return entry->pixmap(size, mode, state);

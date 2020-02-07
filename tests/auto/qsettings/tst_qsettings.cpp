@@ -61,6 +61,8 @@ private slots:
     void variant();
     void group_data();
     void group();
+    void custom_data();
+    void custom();
 };
 
 void tst_QSettings::init()
@@ -195,6 +197,56 @@ void tst_QSettings::group()
     QCOMPARE(settings.value("c"), QVariant());
     QCOMPARE(settings.value("c/d"), QVariant());
     settings.endGroup();
+}
+
+struct CustomType {
+    int a;
+    QByteArray b;
+    QSize c;
+};
+Q_DECLARE_METATYPE(CustomType);
+
+QDataStream &operator<<(QDataStream &stream, const CustomType &custom)
+{
+    stream << custom.a;
+    stream << custom.b;
+    stream << custom.c;
+    return stream;
+}
+
+QDataStream &operator>>(QDataStream &stream, CustomType &custom)
+{
+    stream >> custom.a;
+    stream >> custom.b;
+    stream >> custom.c;
+    return stream;
+}
+
+void tst_QSettings::custom_data()
+{
+    tst_QSettings::value_data();
+}
+
+void tst_QSettings::custom()
+{
+    QFETCH(QString, filename);
+    QFETCH(QSettings::Format, format);
+
+    qRegisterMetaType<CustomType>();
+    qRegisterMetaTypeStreamOperators<CustomType>();
+
+    CustomType test;
+    test.a = 10;
+    test.b = QByteArray("test");
+    test.c = QSize(10, 10);
+
+    QSettings settings(filename, format);
+    settings.setValue("a", QVariant::fromValue(test));
+
+    CustomType result = qvariant_cast<CustomType>(settings.value("a"));
+    QCOMPARE(result.a, 10);
+    QCOMPARE(result.b, QByteArray("test"));
+    QCOMPARE(result.c, QSize(10, 10));
 }
 
 QTEST_MAIN(tst_QSettings)
