@@ -150,12 +150,17 @@ if(NOT KATIE_FOUND)
             find_package(X11 REQUIRED)
         endif()
 
-        set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} -DQT_NAMESPACE_COMPAT -DQT_FOREACH_COMPAT)
+        set(compat_definitions -DQT_NAMESPACE_COMPAT -DQT_FOREACH_COMPAT)
+        set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} ${compat_definitions})
         set(QT_DEFINITIONS ${KATIE_DEFINITIONS})
         set(QT4_DEFINITIONS ${KATIE_DEFINITIONS})
 
         foreach(component ${KATIE_COMPONENTS})
             string(TOUPPER ${component} uppercomp)
+
+            set(KATIE_${uppercomp}_DEFINITIONS ${KATIE_${uppercomp}_DEFINITIONS} ${compat_definitions})
+            target_compile_definitions(Katie::${component} INTERFACE ${KATIE_${uppercomp}_DEFINITIONS})
+
             set(QT_QT${uppercomp}_FOUND ${KATIE_${uppercomp}_FOUND})
             set(QT4_QT${uppercomp}_FOUND ${KATIE_${uppercomp}_FOUND})
             set(QT_QT${uppercomp}_LIBRARY "${KATIE_${uppercomp}_LIBRARIES}")
