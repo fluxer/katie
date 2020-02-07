@@ -287,6 +287,18 @@ QSize QPixmapIconEngine::actualSize(const QSize &size, QIcon::Mode mode, QIcon::
     return actualSize;
 }
 
+QList<QSize> QPixmapIconEngine::availableSizes(QIcon::Mode mode, QIcon::State state) const
+{
+    QList<QSize> result;
+    for (int i = 0; i < pixmaps.size(); i++) {
+        const QPixmapIconEngineEntry &pe = pixmaps.at(i);
+        if (pe.mode == mode && pe.state == state && !pe.size.isEmpty()) {
+            result.append(pe.size);
+        }
+    }
+    return result;
+}
+
 void QPixmapIconEngine::addPixmap(const QPixmap &pixmap, QIcon::Mode mode, QIcon::State state)
 {
     if (!pixmap.isNull()) {

@@ -97,6 +97,7 @@ public:
     QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
     QPixmapIconEngineEntry *bestMatch(const QSize &size, QIcon::Mode mode, QIcon::State state, bool sizeOnly);
     QSize actualSize(const QSize &size, QIcon::Mode mode, QIcon::State state);
+    QList<QSize> availableSizes(QIcon::Mode mode = QIcon::Normal, QIcon::State state = QIcon::Off) const;
     void addPixmap(const QPixmap &pixmap, QIcon::Mode mode, QIcon::State state);
     void addFile(const QString &fileName, const QSize &size, QIcon::Mode mode, QIcon::State state);
 
