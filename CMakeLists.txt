@@ -524,7 +524,7 @@ if(NOT WITH_DBUS OR NOT DBUS_FOUND)
     katie_definition(-DQT_NO_DBUS)
 else()
     set(KATIE_COMPONENTS "${KATIE_COMPONENTS} DBus")
-    set(KATIE_TOOLS "${KATIE_TOOLS} qdbusxml2cpp qdbuscpp2xml qdbusviewer")
+    set(KATIE_TOOLS "${KATIE_TOOLS} qdbus qdbusxml2cpp qdbuscpp2xml qdbusviewer")
 endif()
 
 if(NOT WITH_CUPS OR NOT CUPS_FOUND)
