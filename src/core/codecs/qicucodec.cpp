@@ -937,11 +937,12 @@ static const UChar nullchar[2] = { 0x5c, 0x30 };
 static const UChar questionmarkchar[1] = { 0x3f };
 
 QIcuCodec::QIcuCodec(const QByteArray &name)
-    : m_name(name)
+    : m_name(name), callbackstate(Q_NULLPTR)
 {
 }
 
 QIcuCodec::QIcuCodec(const int mib)
+    : callbackstate(Q_NULLPTR)
 {
     for (qint16 i = 0; i < MIBTblSize; i++) {
         if (mib == MIBTbl[i].mib) {
@@ -983,17 +984,7 @@ QString QIcuCodec::convertToUnicode(const char *src, int length,
         }
     }
 
-    if (state) {
-        error = U_ZERO_ERROR;
-        char errorbytes[10];
-        int8_t invalidlen = 0;
-        ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
-        if (Q_UNLIKELY(U_FAILURE(error))) {
-            qWarning("QIcuCodec::convertToUnicode: ucnv_getInvalidChars(%s) failed %s",
-                m_name.constData(), u_errorName(error));
-        }
-        state->invalidChars = invalidlen;
-    } else {
+    if (!state) {
         ucnv_close(conv);
     }
 
@@ -1018,17 +1009,7 @@ QByteArray QIcuCodec::convertFromUnicode(const QChar *unicode, int length,
         result.resize(convresult);
     }
 
-    if (state) {
-        error = U_ZERO_ERROR;
-        char errorbytes[10];
-        int8_t invalidlen = 0;
-        ucnv_getInvalidChars(conv, errorbytes, &invalidlen, &error);
-        if (Q_UNLIKELY(U_FAILURE(error))) {
-            qWarning("QIcuCodec::convertFromUnicode: ucnv_getInvalidChars(%s) failed %s",
-                m_name.constData(), u_errorName(error));
-        }
-        state->invalidChars = invalidlen;
-    } else {
+    if (!state) {
         ucnv_close(conv);
     }
 
@@ -1163,6 +1144,39 @@ QTextCodec *QIcuCodec::codecForData(const QByteArray &text, QTextCodec *defaultC
 }
 #endif
 
+static void icu_from_callback(
+    const void* context,
+    UConverterFromUnicodeArgs *args,
+    const UChar* codeUnits,
+    int32_t length,
+    UChar32 codePoint,
+    UConverterCallbackReason reason,
+    UErrorCode *pErrorCode)
+{
+    qDebug() << length << reason;
+    if (reason == UCNV_ILLEGAL || reason == UCNV_UNASSIGNED) {
+        const QIcuCodec* codec = static_cast<const QIcuCodec*>(context);
+        codec->invalidChars(length);
+    }
+    UCNV_FROM_U_CALLBACK_SUBSTITUTE(context, args, codeUnits, length, codePoint, reason, pErrorCode);
+}
+
+static void icu_to_callback (
+    const void* context,
+    UConverterToUnicodeArgs *args,
+    const char *codeUnits,
+    int32_t length,
+    UConverterCallbackReason reason,
+    UErrorCode *pErrorCode)
+{
+    qDebug() << length << reason;
+    if (reason == UCNV_ILLEGAL || reason == UCNV_UNASSIGNED) {
+        const QIcuCodec* codec = static_cast<const QIcuCodec*>(context);
+        codec->invalidChars(length);
+    }
+    UCNV_TO_U_CALLBACK_SUBSTITUTE(context, args, codeUnits, length, reason, pErrorCode);
+}
+
 UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
 {
     if (state && !state->d) {
@@ -1174,7 +1188,8 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
                 m_name.constData(), u_errorName(error));
             return Q_NULLPTR;
         } else {
-            error = U_ZERO_ERROR;
+            UConverter *converter = static_cast<UConverter *>(state->d);
+
             if (state->flags & QTextCodec::ConvertInvalidToNull) {
                 ucnv_setSubstString(static_cast<UConverter *>(state->d), nullchar, 2, &error);
             } else {
@@ -1182,10 +1197,25 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
             }
             if (Q_UNLIKELY(U_FAILURE(error))) {
                 qWarning("QIcuCodec::getConverter: ucnv_setSubstString(%s) failed %s",
+                m_name.constData(), u_errorName(error));
+            }
+
+            error = U_ZERO_ERROR;
+            ucnv_setToUCallBack(converter, &icu_to_callback, state, Q_NULLPTR, Q_NULLPTR, &error);
+            if (Q_UNLIKELY(U_FAILURE(error))) {
+                qWarning("QIcuCodec::getConverter: ucnv_setToUCallBack(%s) failed %s",
                     m_name.constData(), u_errorName(error));
             }
 
-            return static_cast<UConverter *>(state->d);
+            error = U_ZERO_ERROR;
+            ucnv_setFromUCallBack(converter, &icu_from_callback, state, Q_NULLPTR, Q_NULLPTR, &error);
+            if (Q_UNLIKELY(U_FAILURE(error))) {
+                qWarning("QIcuCodec::getConverter: ucnv_setFromUCallBack(%s) failed %s",
+                    m_name.constData(), u_errorName(error));
+            }
+            callbackstate = state;
+
+            return converter;
         }
     }
 
@@ -1205,6 +1235,13 @@ UConverter *QIcuCodec::getConverter(QTextCodec::ConverterState *state) const
     }
 
     return conv;
+}
+
+void QIcuCodec::invalidChars(int length) const
+{
+    if (callbackstate) {
+        callbackstate->invalidChars += length;
+    }
 }
 
 QT_END_NAMESPACE

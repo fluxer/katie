@@ -74,10 +74,13 @@ public:
     static QTextCodec* codecForData(const QByteArray &text, QTextCodec *defaultCodec);
 #endif
 
+    void invalidChars(int length) const;
+
 private:
     UConverter *getConverter(QTextCodec::ConverterState *state) const;
 
     QByteArray m_name;
+    mutable QTextCodec::ConverterState *callbackstate;
 };
 
 QT_END_NAMESPACE
