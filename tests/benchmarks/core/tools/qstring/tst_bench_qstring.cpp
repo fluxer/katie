@@ -228,4 +228,4 @@ void tst_QString::toCaseFolded() const
 
 QTEST_MAIN(tst_QString)
 
-#include "moc_main.cpp"
+#include "moc_tst_bench_qstring.cpp"
