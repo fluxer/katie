@@ -6349,28 +6349,26 @@ QString QString::arg(double a, int fieldWidth, char fmt, int prec, const QChar &
     return replaceArgEscapes(*this, d, fieldWidth, arg, locale_arg, fillChar);
 }
 
-static int getEscape(const QChar *uc, int *pos, int len, int maxNumber = 999)
+static inline int getArgNumber(const QChar uc)
 {
-    int i = *pos;
-    ++i;
-    if (i < len && uc[i] == QLatin1Char('L'))
-        ++i;
-    if (i < len) {
-        int escape = uc[i].unicode() - '0';
-        if (uint(escape) >= 10U)
-            return -1;
-        ++i;
-        while (i < len) {
-            int digit = uc[i].unicode() - '0';
-            if (uint(digit) >= 10U)
-                break;
-            escape = (escape * 10) + digit;
-            ++i;
-        }
-        if (escape <= maxNumber) {
-            *pos = i;
-            return escape;
-        }
+    if (uc == QLatin1Char('1')) {
+        return 1;
+    } else if (uc == QLatin1Char('2')) {
+        return 2;
+    } else if (uc == QLatin1Char('3')) {
+        return 3;
+    } else if (uc == QLatin1Char('4')) {
+        return 4;
+    } else if (uc == QLatin1Char('5')) {
+        return 5;
+    } else if (uc == QLatin1Char('6')) {
+        return 6;
+    } else if (uc == QLatin1Char('7')) {
+        return 7;
+    } else if (uc == QLatin1Char('8')) {
+        return 8;
+    } else if (uc == QLatin1Char('9')) {
+        return 9;
     }
     return -1;
 }
@@ -6378,53 +6376,28 @@ static int getEscape(const QChar *uc, int *pos, int len, int maxNumber = 999)
 QString QString::multiArg(int numArgs, const QString **args) const
 {
     QString result;
-    QMap<int, int> numbersUsed;
-    const QChar *uc = (const QChar *) d->data;
-    const int len = d->size;
-    const int end = len - 1;
-    int lastNumber = -1;
-    int i = 0;
+    const QChar *uc = reinterpret_cast<const QChar *>(d->data);
 
-    // populate the numbersUsed map with the %n's that actually occur in the string
-    while (i < end) {
-        if (uc[i] == QLatin1Char('%')) {
-            int number = getEscape(uc, &i, len);
-            if (number != -1) {
-                numbersUsed.insert(number, -1);
+    // replace %n's with argument
+    int usedArgs = 0;
+    for (int i = 0; i < d->size; i++) {
+        if (uc[i] == QLatin1Char('%') && i < d->size) {
+            int number = getArgNumber(uc[i + 1]);
+            if (number > 0 && number <= numArgs) {
+                result += *args[number - 1];
+                usedArgs++;
+                i++;
                 continue;
             }
         }
-        ++i;
-    }
-
-    // assign an argument number to each of the %n's
-    QMap<int, int>::iterator j = numbersUsed.begin();
-    QMap<int, int>::iterator jend = numbersUsed.end();
-    int arg = 0;
-    while (j != jend && arg < numArgs) {
-        *j = arg++;
-        lastNumber = j.key();
-        ++j;
+        result += uc[i];
     }
 
     // sanity
-    if (Q_UNLIKELY(numArgs > arg)) {
-        qWarning("QString::arg: %d argument(s) missing in %s", numArgs - arg, toLocal8Bit().data());
-        numArgs = arg;
+    if (Q_UNLIKELY(numArgs != usedArgs)) {
+        qWarning("QString::arg: %d argument(s) missing in %s", numArgs - usedArgs, toLocal8Bit().data());
     }
 
-    i = 0;
-    while (i < len) {
-        if (uc[i] == QLatin1Char('%') && i != end) {
-            int number = getEscape(uc, &i, len, lastNumber);
-            int arg = numbersUsed[number];
-            if (number != -1 && arg != -1) {
-                result += *args[arg];
-                continue;
-            }
-        }
-        result += uc[i++];
-    }
     return result;
 }
 
