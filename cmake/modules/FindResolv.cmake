@@ -16,19 +16,13 @@ endif()
 # resolv does not provide pkg-config files
 
 find_path(RESOLV_INCLUDES
-    NAMES
-    resolv.h
-    HINTS
-    $ENV{RESOLVDIR}/include
-    ${INCLUDE_INSTALL_DIR}
+    NAMES resolv.h
+    HINTS $ENV{RESOLVDIR}/include
 )
 
 find_library(RESOLV_LIBRARIES
-    NAMES
-    resolv c
-    HINTS
-    $ENV{RESOLVDIR}/lib
-    ${LIB_INSTALL_DIR}
+    NAMES resolv c
+    HINTS $ENV{RESOLVDIR}/lib
 )
 
 include(FindPackageHandleStandardArgs)

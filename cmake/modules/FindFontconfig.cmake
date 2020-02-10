@@ -16,24 +16,22 @@ endif()
 if(NOT WIN32)
     include(FindPkgConfig)
     pkg_check_modules(PC_FONTCONFIG QUIET fontconfig)
+
+    set(FONTCONFIG_INCLUDES ${PC_FONTCONFIG_INCLUDE_DIRS})
+    set(FONTCONFIG_LIBRARIES ${PC_FONTCONFIG_LIBRARIES})
 endif()
 
-find_path(FONTCONFIG_INCLUDES
-    NAMES
-    fontconfig/fontconfig.h
-    HINTS
-    $ENV{FONTCONFIGDIR}/include
-    ${PC_FONTCONFIG_INCLUDEDIR}
-    ${INCLUDE_INSTALL_DIR}
-)
+if(NOT FONTCONFIG_INCLUDES OR NOT FONTCONFIG_LIBRARIES)
+    find_path(FONTCONFIG_INCLUDES
+        NAMES fontconfig/fontconfig.h
+        HINTS $ENV{FONTCONFIGDIR}/include
+    )
 
-find_library(FONTCONFIG_LIBRARIES
-    fontconfig
-    HINTS
-    $ENV{FONTCONFIGDIR}/lib
-    ${PC_FONTCONFIG_LIBDIR}
-    ${LIB_INSTALL_DIR}
-)
+    find_library(FONTCONFIG_LIBRARIES
+        NAMES fontconfig
+        HINTS $ENV{FONTCONFIGDIR}/lib
+    )
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Fontconfig
