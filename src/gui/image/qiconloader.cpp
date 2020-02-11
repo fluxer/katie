@@ -229,12 +229,8 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
     }
 
     if (entries.isEmpty()) {
-        const QStringList parents = theme.parents();
         // Search recursively through inherited themes
-        for (int i = 0 ; i < parents.size() ; ++i) {
-
-            const QString parentTheme = parents.at(i).trimmed();
-
+        foreach (const QString &parentTheme, theme.parents()) {
             if (!visited.contains(parentTheme)) // guard against recursion
                 entries = findIconHelper(parentTheme, iconName, visited);
 
