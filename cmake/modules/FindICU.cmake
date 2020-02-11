@@ -16,32 +16,30 @@ endif()
 if(NOT WIN32)
     include(FindPkgConfig)
     pkg_check_modules(PC_ICU QUIET icu-i18n)
+    pkg_check_modules(PC_ICUUC QUIET icu-uc)
+
+    set(ICU_INCLUDES ${PC_ICU_INCLUDE_DIRS})
+    set(ICU_LIBRARIES ${PC_ICU_LIBRARIES})
+    set(ICUUC_LIBRARIES ${PC_ICUUC_LIBRARIES})
 endif()
 
-find_path(ICU_INCLUDES
-    NAMES
-    unicode/unistr.h
-    HINTS
-    $ENV{ICUDIR}/include
-    ${PC_ICU_INCLUDEDIR}
-    ${INCLUDE_INSTALL_DIR}
-)
+if(NOT ICU_INCLUDES OR NOT ICU_LIBRARIES OR NOT ICUUC_LIBRARIES)
+    find_path(ICU_INCLUDES
+        NAMES
+        unicode/unistr.h
+        HINTS $ENV{ICUDIR}/include
+    )
 
-find_library(ICU_LIBRARIES
-    icui18n
-    HINTS
-    $ENV{ICUDIR}/lib
-    ${PC_ICU_LIBDIR}
-    ${LIB_INSTALL_DIR}
-)
+    find_library(ICU_LIBRARIES
+        NAME icui18n
+        HINTS $ENV{ICUDIR}/lib
+    )
 
-find_library(ICUUC_LIBRARIES
-    icuuc
-    HINTS
-    $ENV{ICUDIR}/lib
-    ${PC_ICU_LIBDIR}
-    ${LIB_INSTALL_DIR}
-)
+    find_library(ICUUC_LIBRARIES
+        NAMES icuuc
+        HINTS $ENV{ICUDIR}/lib
+    )
+endif()
 
 if(ICU_LIBRARIES AND ICUUC_LIBRARIES)
     set(ICU_LIBRARIES ${ICU_LIBRARIES} ${ICUUC_LIBRARIES})

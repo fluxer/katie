@@ -1543,7 +1543,7 @@ QChar QChar::fromAscii(const char c)
         // #####
         return QTextCodec::codecForCStrings()->toUnicode(&c, 1).at(0).unicode();
 #endif
-    return QChar(ushort((uchar)c));
+    return QChar(ushort(uchar(c)));
 }
 
 #ifndef QT_NO_DATASTREAM

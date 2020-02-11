@@ -16,25 +16,23 @@ endif()
 if(NOT WIN32)
     include(FindPkgConfig)
     pkg_check_modules(PC_HARFBUZZ QUIET harfbuzz)
+
+    set(HARFBUZZ_INCLUDES ${PC_HARFBUZZ_INCLUDE_DIRS})
+    set(HARFBUZZ_LIBRARIES ${PC_HARFBUZZ_LIBRARIES})
 endif()
 
-find_path(HARFBUZZ_INCLUDES
-    NAMES
-    hb.h
-    PATH_SUFFIXES harfbuzz
-    HINTS
-    $ENV{HARFBUZZDIR}/include
-    ${PC_HARFBUZZ_INCLUDEDIR}
-    ${INCLUDE_INSTALL_DIR}
-)
+if(NOT HARFBUZZ_INCLUDES OR NOT HARFBUZZ_LIBRARIES)
+    find_path(HARFBUZZ_INCLUDES
+        NAMES hb.h
+        PATH_SUFFIXES harfbuzz
+        HINTS $ENV{HARFBUZZDIR}/include
+    )
 
-find_library(HARFBUZZ_LIBRARIES
-    harfbuzz
-    HINTS
-    $ENV{HARFBUZZDIR}/lib
-    ${PC_HARFBUZZ_LIBDIR}
-    ${LIB_INSTALL_DIR}
-)
+    find_library(HARFBUZZ_LIBRARIES
+        NAMES harfbuzz
+        HINTS $ENV{HARFBUZZDIR}/lib
+    )
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(HarfBuzz

@@ -21,10 +21,8 @@ endif()
 
 # However, both provide config program
 find_program(MYSQL_CONFIG
-    NAMES
-    mariadb_config mysql_config
-    HINTS
-    $ENV{MYSQLDIR}/bin
+    NAMES mariadb_config mysql_config
+    HINTS $ENV{MYSQLDIR}/bin
 )
 
 if(MYSQL_CONFIG)
@@ -56,21 +54,14 @@ endif()
 
 if(NOT MYSQL_INCLUDES OR NOT MYSQL_LIBRARIES)
     find_path(MYSQL_INCLUDES
-        NAMES
-        mysql.h
+        NAMES mysql.h
         PATH_SUFFIXES mariadb mysql
-        HINTS
-        $ENV{MYSQLDIR}/include
-        ${PC_MYSQL_INCLUDEDIR}
-        ${INCLUDE_INSTALL_DIR}
+        HINTS $ENV{MYSQLDIR}/include ${PC_MYSQL_INCLUDEDIR}
     )
 
     find_library(MYSQL_LIBRARIES
-        mariadbd mysqld
-        HINTS
-        $ENV{MYSQLDIR}/lib
-        ${PC_MYSQL_LIBDIR}
-        ${LIB_INSTALL_DIR}
+        NAMES mariadbd mysqld
+        HINTS $ENV{MYSQLDIR}/lib ${PC_MYSQL_LIBDIR}
     )
 endif()
 
