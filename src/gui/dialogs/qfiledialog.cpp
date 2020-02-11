@@ -49,7 +49,6 @@
 #include "qdebug.h"
 #include "qapplication.h"
 #include "qstylepainter.h"
-#include "qfileiconprovider_p.h"
 #include "qcoreapplication_p.h"
 #include "ui_qfiledialog.h"
 

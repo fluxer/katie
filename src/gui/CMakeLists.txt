@@ -358,7 +358,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qtreewidgetitemiterator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qdatawidgetmapper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qfileiconprovider.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qfileiconprovider_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qcolumnviewgrip_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qcolumnview.h 
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qcolumnview_p.h
