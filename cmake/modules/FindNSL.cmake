@@ -16,19 +16,13 @@ endif()
 # NSL does not provide pkg-config files
 
 find_path(NSL_INCLUDES
-    NAMES
-    rpcsvc/ypclnt.h
-    HINTS
-    $ENV{NSLDIR}/include
-    ${INCLUDE_INSTALL_DIR}
+    NAMES rpcsvc/ypclnt.h
+    HINTS $ENV{NSLDIR}/include
 )
 
 find_library(NSL_LIBRARIES
-    NAMES
-    nsl c
-    HINTS
-    $ENV{NSLDIR}/lib
-    ${LIB_INSTALL_DIR}
+    NAMES nsl c
+    HINTS $ENV{NSLDIR}/lib
 )
 
 include(FindPackageHandleStandardArgs)

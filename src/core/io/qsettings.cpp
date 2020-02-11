@@ -997,7 +997,7 @@ QString QSettings::group() const
 }
 
 /*!
-    Appends \a prefix to the current group.
+    Sets the group prefix to \a group.
 
     The current group is automatically prepended to all keys
     specified to QSettings. In addition, query functions such as
@@ -1038,14 +1038,14 @@ void QSettings::endGroup()
 }
 
 /*!
-    Returns a list of all top-level keys that can be read using the
-    QSettings object.
+    Returns a list of group-level keys without the group prefix
+    that can be read using the QSettings object.
 
-    If a group is set using beginGroup(), the top-level keys in that
-    group are returned, without the group prefix:
+    If a group is not set using beginGroup(), empty list is
+    returned.
 
     You can navigate through the entire setting hierarchy using
-    keys() and groupKeys() recursively.
+    keys(), beginGroup(), groupKeys() and endGroup() recursively.
 
     \sa keys()
 */

@@ -16,24 +16,22 @@ endif()
 if(NOT WIN32)
     include(FindPkgConfig)
     pkg_check_modules(PC_ZSTD QUIET libzstd)
+
+    set(ZSTD_INCLUDES ${PC_ZSTD_INCLUDE_DIRS})
+    set(ZSTD_LIBRARIES ${PC_ZSTD_LIBRARIES})
 endif()
 
-find_path(ZSTD_INCLUDES
-    NAMES
-    zstd.h
-    HINTS
-    $ENV{ZSTDDIR}/include
-    ${PC_ZSTD_INCLUDEDIR}
-    ${INCLUDE_INSTALL_DIR}
-)
+if(NOT ZSTD_INCLUDES OR NOT ZSTD_LIBRARIES)
+    find_path(ZSTD_INCLUDES
+        NAMES zstd.h
+        HINTS $ENV{ZSTDDIR}/include
+    )
 
-find_library(ZSTD_LIBRARIES
-    zstd
-    HINTS
-    $ENV{ZSTDDIR}/lib
-    ${PC_ZSTD_LIBDIR}
-    ${LIB_INSTALL_DIR}
-)
+    find_library(ZSTD_LIBRARIES
+        NAMES zstd
+        HINTS $ENV{ZSTDDIR}/lib
+    )
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ZSTD

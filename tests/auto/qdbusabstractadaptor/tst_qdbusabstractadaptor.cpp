@@ -482,6 +482,7 @@ void tst_QDBusAbstractAdaptor::initTestCase()
     QString myserverprogram = workingDirectory.absoluteFilePath(QLatin1String("qmyserver"));
     proc.start(myserverprogram);
     QVERIFY(proc.waitForStarted());
+    QTest::qWait(2000);
 
     WaitForQMyServer w;
     QVERIFY(w.ok());

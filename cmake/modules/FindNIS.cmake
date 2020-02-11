@@ -16,18 +16,13 @@ endif()
 # NIS does not provide pkg-config files
 
 find_path(NIS_INCLUDES
-    NAMES
-    rpc/rpc.h
-    HINTS
-    $ENV{NISDIR}/include
-    ${INCLUDE_INSTALL_DIR}
+    NAMES rpc/rpc.h
+    HINTS $ENV{NISDIR}/include
 )
 
 find_library(NIS_LIBRARIES
-    nsl
-    HINTS
-    $ENV{NISDIR}/lib
-    ${LIB_INSTALL_DIR}
+    NAMES nsl
+    HINTS $ENV{NISDIR}/lib
 )
 
 include(FindPackageHandleStandardArgs)

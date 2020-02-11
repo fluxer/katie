@@ -35,8 +35,6 @@
 
 #include "qunicodetables_p.h"
 
-#include <unicode/uchar.h>
-
 QT_BEGIN_NAMESPACE
 
 Q_GUI_EXPORT QUnicodeTables::CombiningClass QT_FASTCALL QUnicodeTables::combiningClass(uint ucs4)
@@ -599,27 +597,1222 @@ Q_GUI_EXPORT QUnicodeTables::CombiningClass QT_FASTCALL QUnicodeTables::combinin
 
 Q_GUI_EXPORT QUnicodeTables::GraphemeBreak QT_FASTCALL QUnicodeTables::graphemeBreak(uint ucs4)
 {
-    const int32_t property = u_getIntPropertyValue(ucs4, UCHAR_GRAPHEME_CLUSTER_BREAK);
-    switch (property) {
-        case U_GCB_CR:
-            return GraphemeBreak_CR;
-        case U_GCB_LF:
-            return GraphemeBreak_LF;
-        case U_GCB_CONTROL:
-            return GraphemeBreak_Control;
-        case U_GCB_EXTEND:
-            return GraphemeBreak_Extend;
-        case U_GCB_L:
-            return GraphemeBreak_L;
-        case U_GCB_V:
-            return GraphemeBreak_V;
-        case U_GCB_LV:
-            return GraphemeBreak_LV;
-        case U_GCB_LVT:
-            return GraphemeBreak_LVT;
-        default:
-            return GraphemeBreak_Other;
+    switch (ucs4) {
+        case 0x000D:
+            return QUnicodeTables::GraphemeBreak_CR;
+        case 0x000A:
+            return QUnicodeTables::GraphemeBreak_LF;
+        case 0xAC00:
+        case 0xAC1C:
+        case 0xAC38:
+        case 0xAC54:
+        case 0xAC70:
+        case 0xAC8C:
+        case 0xACA8:
+        case 0xACC4:
+        case 0xACE0:
+        case 0xACFC:
+        case 0xAD18:
+        case 0xAD34:
+        case 0xAD50:
+        case 0xAD6C:
+        case 0xAD88:
+        case 0xADA4:
+        case 0xADC0:
+        case 0xADDC:
+        case 0xADF8:
+        case 0xAE14:
+        case 0xAE30:
+        case 0xAE4C:
+        case 0xAE68:
+        case 0xAE84:
+        case 0xAEA0:
+        case 0xAEBC:
+        case 0xAED8:
+        case 0xAEF4:
+        case 0xAF10:
+        case 0xAF2C:
+        case 0xAF48:
+        case 0xAF64:
+        case 0xAF80:
+        case 0xAF9C:
+        case 0xAFB8:
+        case 0xAFD4:
+        case 0xAFF0:
+        case 0xB00C:
+        case 0xB028:
+        case 0xB044:
+        case 0xB060:
+        case 0xB07C:
+        case 0xB098:
+        case 0xB0B4:
+        case 0xB0D0:
+        case 0xB0EC:
+        case 0xB108:
+        case 0xB124:
+        case 0xB140:
+        case 0xB15C:
+        case 0xB178:
+        case 0xB194:
+        case 0xB1B0:
+        case 0xB1CC:
+        case 0xB1E8:
+        case 0xB204:
+        case 0xB220:
+        case 0xB23C:
+        case 0xB258:
+        case 0xB274:
+        case 0xB290:
+        case 0xB2AC:
+        case 0xB2C8:
+        case 0xB2E4:
+        case 0xB300:
+        case 0xB31C:
+        case 0xB338:
+        case 0xB354:
+        case 0xB370:
+        case 0xB38C:
+        case 0xB3A8:
+        case 0xB3C4:
+        case 0xB3E0:
+        case 0xB3FC:
+        case 0xB418:
+        case 0xB434:
+        case 0xB450:
+        case 0xB46C:
+        case 0xB488:
+        case 0xB4A4:
+        case 0xB4C0:
+        case 0xB4DC:
+        case 0xB4F8:
+        case 0xB514:
+        case 0xB530:
+        case 0xB54C:
+        case 0xB568:
+        case 0xB584:
+        case 0xB5A0:
+        case 0xB5BC:
+        case 0xB5D8:
+        case 0xB5F4:
+        case 0xB610:
+        case 0xB62C:
+        case 0xB648:
+        case 0xB664:
+        case 0xB680:
+        case 0xB69C:
+        case 0xB6B8:
+        case 0xB6D4:
+        case 0xB6F0:
+        case 0xB70C:
+        case 0xB728:
+        case 0xB744:
+        case 0xB760:
+        case 0xB77C:
+        case 0xB798:
+        case 0xB7B4:
+        case 0xB7D0:
+        case 0xB7EC:
+        case 0xB808:
+        case 0xB824:
+        case 0xB840:
+        case 0xB85C:
+        case 0xB878:
+        case 0xB894:
+        case 0xB8B0:
+        case 0xB8CC:
+        case 0xB8E8:
+        case 0xB904:
+        case 0xB920:
+        case 0xB93C:
+        case 0xB958:
+        case 0xB974:
+        case 0xB990:
+        case 0xB9AC:
+        case 0xB9C8:
+        case 0xB9E4:
+        case 0xBA00:
+        case 0xBA1C:
+        case 0xBA38:
+        case 0xBA54:
+        case 0xBA70:
+        case 0xBA8C:
+        case 0xBAA8:
+        case 0xBAC4:
+        case 0xBAE0:
+        case 0xBAFC:
+        case 0xBB18:
+        case 0xBB34:
+        case 0xBB50:
+        case 0xBB6C:
+        case 0xBB88:
+        case 0xBBA4:
+        case 0xBBC0:
+        case 0xBBDC:
+        case 0xBBF8:
+        case 0xBC14:
+        case 0xBC30:
+        case 0xBC4C:
+        case 0xBC68:
+        case 0xBC84:
+        case 0xBCA0:
+        case 0xBCBC:
+        case 0xBCD8:
+        case 0xBCF4:
+        case 0xBD10:
+        case 0xBD2C:
+        case 0xBD48:
+        case 0xBD64:
+        case 0xBD80:
+        case 0xBD9C:
+        case 0xBDB8:
+        case 0xBDD4:
+        case 0xBDF0:
+        case 0xBE0C:
+        case 0xBE28:
+        case 0xBE44:
+        case 0xBE60:
+        case 0xBE7C:
+        case 0xBE98:
+        case 0xBEB4:
+        case 0xBED0:
+        case 0xBEEC:
+        case 0xBF08:
+        case 0xBF24:
+        case 0xBF40:
+        case 0xBF5C:
+        case 0xBF78:
+        case 0xBF94:
+        case 0xBFB0:
+        case 0xBFCC:
+        case 0xBFE8:
+        case 0xC004:
+        case 0xC020:
+        case 0xC03C:
+        case 0xC058:
+        case 0xC074:
+        case 0xC090:
+        case 0xC0AC:
+        case 0xC0C8:
+        case 0xC0E4:
+        case 0xC100:
+        case 0xC11C:
+        case 0xC138:
+        case 0xC154:
+        case 0xC170:
+        case 0xC18C:
+        case 0xC1A8:
+        case 0xC1C4:
+        case 0xC1E0:
+        case 0xC1FC:
+        case 0xC218:
+        case 0xC234:
+        case 0xC250:
+        case 0xC26C:
+        case 0xC288:
+        case 0xC2A4:
+        case 0xC2C0:
+        case 0xC2DC:
+        case 0xC2F8:
+        case 0xC314:
+        case 0xC330:
+        case 0xC34C:
+        case 0xC368:
+        case 0xC384:
+        case 0xC3A0:
+        case 0xC3BC:
+        case 0xC3D8:
+        case 0xC3F4:
+        case 0xC410:
+        case 0xC42C:
+        case 0xC448:
+        case 0xC464:
+        case 0xC480:
+        case 0xC49C:
+        case 0xC4B8:
+        case 0xC4D4:
+        case 0xC4F0:
+        case 0xC50C:
+        case 0xC528:
+        case 0xC544:
+        case 0xC560:
+        case 0xC57C:
+        case 0xC598:
+        case 0xC5B4:
+        case 0xC5D0:
+        case 0xC5EC:
+        case 0xC608:
+        case 0xC624:
+        case 0xC640:
+        case 0xC65C:
+        case 0xC678:
+        case 0xC694:
+        case 0xC6B0:
+        case 0xC6CC:
+        case 0xC6E8:
+        case 0xC704:
+        case 0xC720:
+        case 0xC73C:
+        case 0xC758:
+        case 0xC774:
+        case 0xC790:
+        case 0xC7AC:
+        case 0xC7C8:
+        case 0xC7E4:
+        case 0xC800:
+        case 0xC81C:
+        case 0xC838:
+        case 0xC854:
+        case 0xC870:
+        case 0xC88C:
+        case 0xC8A8:
+        case 0xC8C4:
+        case 0xC8E0:
+        case 0xC8FC:
+        case 0xC918:
+        case 0xC934:
+        case 0xC950:
+        case 0xC96C:
+        case 0xC988:
+        case 0xC9A4:
+        case 0xC9C0:
+        case 0xC9DC:
+        case 0xC9F8:
+        case 0xCA14:
+        case 0xCA30:
+        case 0xCA4C:
+        case 0xCA68:
+        case 0xCA84:
+        case 0xCAA0:
+        case 0xCABC:
+        case 0xCAD8:
+        case 0xCAF4:
+        case 0xCB10:
+        case 0xCB2C:
+        case 0xCB48:
+        case 0xCB64:
+        case 0xCB80:
+        case 0xCB9C:
+        case 0xCBB8:
+        case 0xCBD4:
+        case 0xCBF0:
+        case 0xCC0C:
+        case 0xCC28:
+        case 0xCC44:
+        case 0xCC60:
+        case 0xCC7C:
+        case 0xCC98:
+        case 0xCCB4:
+        case 0xCCD0:
+        case 0xCCEC:
+        case 0xCD08:
+        case 0xCD24:
+        case 0xCD40:
+        case 0xCD5C:
+        case 0xCD78:
+        case 0xCD94:
+        case 0xCDB0:
+        case 0xCDCC:
+        case 0xCDE8:
+        case 0xCE04:
+        case 0xCE20:
+        case 0xCE3C:
+        case 0xCE58:
+        case 0xCE74:
+        case 0xCE90:
+        case 0xCEAC:
+        case 0xCEC8:
+        case 0xCEE4:
+        case 0xCF00:
+        case 0xCF1C:
+        case 0xCF38:
+        case 0xCF54:
+        case 0xCF70:
+        case 0xCF8C:
+        case 0xCFA8:
+        case 0xCFC4:
+        case 0xCFE0:
+        case 0xCFFC:
+        case 0xD018:
+        case 0xD034:
+        case 0xD050:
+        case 0xD06C:
+        case 0xD088:
+        case 0xD0A4:
+        case 0xD0C0:
+        case 0xD0DC:
+        case 0xD0F8:
+        case 0xD114:
+        case 0xD130:
+        case 0xD14C:
+        case 0xD168:
+        case 0xD184:
+        case 0xD1A0:
+        case 0xD1BC:
+        case 0xD1D8:
+        case 0xD1F4:
+        case 0xD210:
+        case 0xD22C:
+        case 0xD248:
+        case 0xD264:
+        case 0xD280:
+        case 0xD29C:
+        case 0xD2B8:
+        case 0xD2D4:
+        case 0xD2F0:
+        case 0xD30C:
+        case 0xD328:
+        case 0xD344:
+        case 0xD360:
+        case 0xD37C:
+        case 0xD398:
+        case 0xD3B4:
+        case 0xD3D0:
+        case 0xD3EC:
+        case 0xD408:
+        case 0xD424:
+        case 0xD440:
+        case 0xD45C:
+        case 0xD478:
+        case 0xD494:
+        case 0xD4B0:
+        case 0xD4CC:
+        case 0xD4E8:
+        case 0xD504:
+        case 0xD520:
+        case 0xD53C:
+        case 0xD558:
+        case 0xD574:
+        case 0xD590:
+        case 0xD5AC:
+        case 0xD5C8:
+        case 0xD5E4:
+        case 0xD600:
+        case 0xD61C:
+        case 0xD638:
+        case 0xD654:
+        case 0xD670:
+        case 0xD68C:
+        case 0xD6A8:
+        case 0xD6C4:
+        case 0xD6E0:
+        case 0xD6FC:
+        case 0xD718:
+        case 0xD734:
+        case 0xD750:
+        case 0xD76C:
+        case 0xD788:
+            return QUnicodeTables::GraphemeBreak_LV;
     }
+    if (ucs4 <= 0x115F && ucs4 >= 0x1100)
+        return QUnicodeTables::GraphemeBreak_L;
+    if (ucs4 <= 0xA97C && ucs4 >= 0xA960)
+        return QUnicodeTables::GraphemeBreak_L;
+    if (ucs4 <= 0x11A7 && ucs4 >= 0x1160)
+        return QUnicodeTables::GraphemeBreak_V;
+    if (ucs4 <= 0xD7C6 && ucs4 >= 0xD7B0)
+        return QUnicodeTables::GraphemeBreak_V;
+    if (ucs4 <= 0xAC1B && ucs4 >= 0xAC01)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAC37 && ucs4 >= 0xAC1D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAC53 && ucs4 >= 0xAC39)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAC6F && ucs4 >= 0xAC55)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAC8B && ucs4 >= 0xAC71)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xACA7 && ucs4 >= 0xAC8D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xACC3 && ucs4 >= 0xACA9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xACDF && ucs4 >= 0xACC5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xACFB && ucs4 >= 0xACE1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAD17 && ucs4 >= 0xACFD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAD33 && ucs4 >= 0xAD19)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAD4F && ucs4 >= 0xAD35)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAD6B && ucs4 >= 0xAD51)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAD87 && ucs4 >= 0xAD6D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xADA3 && ucs4 >= 0xAD89)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xADBF && ucs4 >= 0xADA5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xADDB && ucs4 >= 0xADC1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xADF7 && ucs4 >= 0xADDD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAE13 && ucs4 >= 0xADF9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAE2F && ucs4 >= 0xAE15)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAE4B && ucs4 >= 0xAE31)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAE67 && ucs4 >= 0xAE4D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAE83 && ucs4 >= 0xAE69)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAE9F && ucs4 >= 0xAE85)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAEBB && ucs4 >= 0xAEA1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAED7 && ucs4 >= 0xAEBD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAEF3 && ucs4 >= 0xAED9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAF0F && ucs4 >= 0xAEF5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAF2B && ucs4 >= 0xAF11)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAF47 && ucs4 >= 0xAF2D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAF63 && ucs4 >= 0xAF49)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAF7F && ucs4 >= 0xAF65)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAF9B && ucs4 >= 0xAF81)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAFB7 && ucs4 >= 0xAF9D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAFD3 && ucs4 >= 0xAFB9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xAFEF && ucs4 >= 0xAFD5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB00B && ucs4 >= 0xAFF1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB027 && ucs4 >= 0xB00D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB043 && ucs4 >= 0xB029)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB05F && ucs4 >= 0xB045)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB07B && ucs4 >= 0xB061)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB097 && ucs4 >= 0xB07D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB0B3 && ucs4 >= 0xB099)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB0CF && ucs4 >= 0xB0B5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB0EB && ucs4 >= 0xB0D1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB107 && ucs4 >= 0xB0ED)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB123 && ucs4 >= 0xB109)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB13F && ucs4 >= 0xB125)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB15B && ucs4 >= 0xB141)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB177 && ucs4 >= 0xB15D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB193 && ucs4 >= 0xB179)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB1AF && ucs4 >= 0xB195)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB1CB && ucs4 >= 0xB1B1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB1E7 && ucs4 >= 0xB1CD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB203 && ucs4 >= 0xB1E9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB21F && ucs4 >= 0xB205)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB23B && ucs4 >= 0xB221)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB257 && ucs4 >= 0xB23D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB273 && ucs4 >= 0xB259)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB28F && ucs4 >= 0xB275)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB2AB && ucs4 >= 0xB291)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB2C7 && ucs4 >= 0xB2AD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB2E3 && ucs4 >= 0xB2C9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB2FF && ucs4 >= 0xB2E5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB31B && ucs4 >= 0xB301)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB337 && ucs4 >= 0xB31D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB353 && ucs4 >= 0xB339)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB36F && ucs4 >= 0xB355)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB38B && ucs4 >= 0xB371)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB3A7 && ucs4 >= 0xB38D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB3C3 && ucs4 >= 0xB3A9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB3DF && ucs4 >= 0xB3C5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB3FB && ucs4 >= 0xB3E1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB417 && ucs4 >= 0xB3FD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB433 && ucs4 >= 0xB419)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB44F && ucs4 >= 0xB435)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB46B && ucs4 >= 0xB451)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB487 && ucs4 >= 0xB46D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB4A3 && ucs4 >= 0xB489)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB4BF && ucs4 >= 0xB4A5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB4DB && ucs4 >= 0xB4C1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB4F7 && ucs4 >= 0xB4DD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB513 && ucs4 >= 0xB4F9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB52F && ucs4 >= 0xB515)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB54B && ucs4 >= 0xB531)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB567 && ucs4 >= 0xB54D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB583 && ucs4 >= 0xB569)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB59F && ucs4 >= 0xB585)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB5BB && ucs4 >= 0xB5A1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB5D7 && ucs4 >= 0xB5BD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB5F3 && ucs4 >= 0xB5D9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB60F && ucs4 >= 0xB5F5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB62B && ucs4 >= 0xB611)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB647 && ucs4 >= 0xB62D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB663 && ucs4 >= 0xB649)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB67F && ucs4 >= 0xB665)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB69B && ucs4 >= 0xB681)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB6B7 && ucs4 >= 0xB69D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB6D3 && ucs4 >= 0xB6B9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB6EF && ucs4 >= 0xB6D5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB70B && ucs4 >= 0xB6F1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB727 && ucs4 >= 0xB70D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB743 && ucs4 >= 0xB729)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB75F && ucs4 >= 0xB745)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB77B && ucs4 >= 0xB761)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB797 && ucs4 >= 0xB77D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB7B3 && ucs4 >= 0xB799)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB7CF && ucs4 >= 0xB7B5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB7EB && ucs4 >= 0xB7D1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB807 && ucs4 >= 0xB7ED)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB823 && ucs4 >= 0xB809)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB83F && ucs4 >= 0xB825)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB85B && ucs4 >= 0xB841)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB877 && ucs4 >= 0xB85D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB893 && ucs4 >= 0xB879)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB8AF && ucs4 >= 0xB895)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB8CB && ucs4 >= 0xB8B1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB8E7 && ucs4 >= 0xB8CD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB903 && ucs4 >= 0xB8E9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB91F && ucs4 >= 0xB905)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB93B && ucs4 >= 0xB921)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB957 && ucs4 >= 0xB93D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB973 && ucs4 >= 0xB959)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB98F && ucs4 >= 0xB975)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB9AB && ucs4 >= 0xB991)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB9C7 && ucs4 >= 0xB9AD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB9E3 && ucs4 >= 0xB9C9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xB9FF && ucs4 >= 0xB9E5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBA1B && ucs4 >= 0xBA01)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBA37 && ucs4 >= 0xBA1D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBA53 && ucs4 >= 0xBA39)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBA6F && ucs4 >= 0xBA55)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBA8B && ucs4 >= 0xBA71)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBAA7 && ucs4 >= 0xBA8D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBAC3 && ucs4 >= 0xBAA9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBADF && ucs4 >= 0xBAC5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBAFB && ucs4 >= 0xBAE1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBB17 && ucs4 >= 0xBAFD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBB33 && ucs4 >= 0xBB19)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBB4F && ucs4 >= 0xBB35)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBB6B && ucs4 >= 0xBB51)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBB87 && ucs4 >= 0xBB6D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBBA3 && ucs4 >= 0xBB89)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBBBF && ucs4 >= 0xBBA5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBBDB && ucs4 >= 0xBBC1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBBF7 && ucs4 >= 0xBBDD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBC13 && ucs4 >= 0xBBF9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBC2F && ucs4 >= 0xBC15)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBC4B && ucs4 >= 0xBC31)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBC67 && ucs4 >= 0xBC4D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBC83 && ucs4 >= 0xBC69)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBC9F && ucs4 >= 0xBC85)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBCBB && ucs4 >= 0xBCA1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBCD7 && ucs4 >= 0xBCBD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBCF3 && ucs4 >= 0xBCD9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBD0F && ucs4 >= 0xBCF5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBD2B && ucs4 >= 0xBD11)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBD47 && ucs4 >= 0xBD2D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBD63 && ucs4 >= 0xBD49)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBD7F && ucs4 >= 0xBD65)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBD9B && ucs4 >= 0xBD81)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBDB7 && ucs4 >= 0xBD9D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBDD3 && ucs4 >= 0xBDB9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBDEF && ucs4 >= 0xBDD5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBE0B && ucs4 >= 0xBDF1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBE27 && ucs4 >= 0xBE0D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBE43 && ucs4 >= 0xBE29)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBE5F && ucs4 >= 0xBE45)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBE7B && ucs4 >= 0xBE61)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBE97 && ucs4 >= 0xBE7D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBEB3 && ucs4 >= 0xBE99)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBECF && ucs4 >= 0xBEB5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBEEB && ucs4 >= 0xBED1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBF07 && ucs4 >= 0xBEED)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBF23 && ucs4 >= 0xBF09)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBF3F && ucs4 >= 0xBF25)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBF5B && ucs4 >= 0xBF41)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBF77 && ucs4 >= 0xBF5D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBF93 && ucs4 >= 0xBF79)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBFAF && ucs4 >= 0xBF95)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBFCB && ucs4 >= 0xBFB1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xBFE7 && ucs4 >= 0xBFCD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC003 && ucs4 >= 0xBFE9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC01F && ucs4 >= 0xC005)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC03B && ucs4 >= 0xC021)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC057 && ucs4 >= 0xC03D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC073 && ucs4 >= 0xC059)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC08F && ucs4 >= 0xC075)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC0AB && ucs4 >= 0xC091)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC0C7 && ucs4 >= 0xC0AD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC0E3 && ucs4 >= 0xC0C9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC0FF && ucs4 >= 0xC0E5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC11B && ucs4 >= 0xC101)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC137 && ucs4 >= 0xC11D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC153 && ucs4 >= 0xC139)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC16F && ucs4 >= 0xC155)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC18B && ucs4 >= 0xC171)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC1A7 && ucs4 >= 0xC18D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC1C3 && ucs4 >= 0xC1A9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC1DF && ucs4 >= 0xC1C5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC1FB && ucs4 >= 0xC1E1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC217 && ucs4 >= 0xC1FD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC233 && ucs4 >= 0xC219)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC24F && ucs4 >= 0xC235)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC26B && ucs4 >= 0xC251)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC287 && ucs4 >= 0xC26D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC2A3 && ucs4 >= 0xC289)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC2BF && ucs4 >= 0xC2A5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC2DB && ucs4 >= 0xC2C1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC2F7 && ucs4 >= 0xC2DD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC313 && ucs4 >= 0xC2F9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC32F && ucs4 >= 0xC315)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC34B && ucs4 >= 0xC331)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC367 && ucs4 >= 0xC34D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC383 && ucs4 >= 0xC369)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC39F && ucs4 >= 0xC385)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC3BB && ucs4 >= 0xC3A1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC3D7 && ucs4 >= 0xC3BD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC3F3 && ucs4 >= 0xC3D9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC40F && ucs4 >= 0xC3F5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC42B && ucs4 >= 0xC411)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC447 && ucs4 >= 0xC42D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC463 && ucs4 >= 0xC449)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC47F && ucs4 >= 0xC465)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC49B && ucs4 >= 0xC481)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC4B7 && ucs4 >= 0xC49D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC4D3 && ucs4 >= 0xC4B9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC4EF && ucs4 >= 0xC4D5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC50B && ucs4 >= 0xC4F1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC527 && ucs4 >= 0xC50D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC543 && ucs4 >= 0xC529)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC55F && ucs4 >= 0xC545)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC57B && ucs4 >= 0xC561)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC597 && ucs4 >= 0xC57D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC5B3 && ucs4 >= 0xC599)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC5CF && ucs4 >= 0xC5B5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC5EB && ucs4 >= 0xC5D1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC607 && ucs4 >= 0xC5ED)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC623 && ucs4 >= 0xC609)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC63F && ucs4 >= 0xC625)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC65B && ucs4 >= 0xC641)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC677 && ucs4 >= 0xC65D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC693 && ucs4 >= 0xC679)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC6AF && ucs4 >= 0xC695)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC6CB && ucs4 >= 0xC6B1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC6E7 && ucs4 >= 0xC6CD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC703 && ucs4 >= 0xC6E9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC71F && ucs4 >= 0xC705)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC73B && ucs4 >= 0xC721)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC757 && ucs4 >= 0xC73D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC773 && ucs4 >= 0xC759)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC78F && ucs4 >= 0xC775)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC7AB && ucs4 >= 0xC791)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC7C7 && ucs4 >= 0xC7AD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC7E3 && ucs4 >= 0xC7C9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC7FF && ucs4 >= 0xC7E5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC81B && ucs4 >= 0xC801)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC837 && ucs4 >= 0xC81D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC853 && ucs4 >= 0xC839)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC86F && ucs4 >= 0xC855)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC88B && ucs4 >= 0xC871)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC8A7 && ucs4 >= 0xC88D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC8C3 && ucs4 >= 0xC8A9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC8DF && ucs4 >= 0xC8C5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC8FB && ucs4 >= 0xC8E1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC917 && ucs4 >= 0xC8FD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC933 && ucs4 >= 0xC919)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC94F && ucs4 >= 0xC935)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC96B && ucs4 >= 0xC951)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC987 && ucs4 >= 0xC96D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC9A3 && ucs4 >= 0xC989)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC9BF && ucs4 >= 0xC9A5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC9DB && ucs4 >= 0xC9C1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xC9F7 && ucs4 >= 0xC9DD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCA13 && ucs4 >= 0xC9F9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCA2F && ucs4 >= 0xCA15)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCA4B && ucs4 >= 0xCA31)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCA67 && ucs4 >= 0xCA4D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCA83 && ucs4 >= 0xCA69)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCA9F && ucs4 >= 0xCA85)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCABB && ucs4 >= 0xCAA1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCAD7 && ucs4 >= 0xCABD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCAF3 && ucs4 >= 0xCAD9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCB0F && ucs4 >= 0xCAF5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCB2B && ucs4 >= 0xCB11)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCB47 && ucs4 >= 0xCB2D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCB63 && ucs4 >= 0xCB49)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCB7F && ucs4 >= 0xCB65)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCB9B && ucs4 >= 0xCB81)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCBB7 && ucs4 >= 0xCB9D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCBD3 && ucs4 >= 0xCBB9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCBEF && ucs4 >= 0xCBD5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCC0B && ucs4 >= 0xCBF1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCC27 && ucs4 >= 0xCC0D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCC43 && ucs4 >= 0xCC29)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCC5F && ucs4 >= 0xCC45)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCC7B && ucs4 >= 0xCC61)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCC97 && ucs4 >= 0xCC7D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCCB3 && ucs4 >= 0xCC99)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCCCF && ucs4 >= 0xCCB5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCCEB && ucs4 >= 0xCCD1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCD07 && ucs4 >= 0xCCED)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCD23 && ucs4 >= 0xCD09)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCD3F && ucs4 >= 0xCD25)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCD5B && ucs4 >= 0xCD41)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCD77 && ucs4 >= 0xCD5D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCD93 && ucs4 >= 0xCD79)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCDAF && ucs4 >= 0xCD95)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCDCB && ucs4 >= 0xCDB1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCDE7 && ucs4 >= 0xCDCD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCE03 && ucs4 >= 0xCDE9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCE1F && ucs4 >= 0xCE05)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCE3B && ucs4 >= 0xCE21)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCE57 && ucs4 >= 0xCE3D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCE73 && ucs4 >= 0xCE59)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCE8F && ucs4 >= 0xCE75)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCEAB && ucs4 >= 0xCE91)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCEC7 && ucs4 >= 0xCEAD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCEE3 && ucs4 >= 0xCEC9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCEFF && ucs4 >= 0xCEE5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCF1B && ucs4 >= 0xCF01)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCF37 && ucs4 >= 0xCF1D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCF53 && ucs4 >= 0xCF39)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCF6F && ucs4 >= 0xCF55)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCF8B && ucs4 >= 0xCF71)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCFA7 && ucs4 >= 0xCF8D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCFC3 && ucs4 >= 0xCFA9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCFDF && ucs4 >= 0xCFC5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xCFFB && ucs4 >= 0xCFE1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD017 && ucs4 >= 0xCFFD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD033 && ucs4 >= 0xD019)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD04F && ucs4 >= 0xD035)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD06B && ucs4 >= 0xD051)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD087 && ucs4 >= 0xD06D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD0A3 && ucs4 >= 0xD089)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD0BF && ucs4 >= 0xD0A5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD0DB && ucs4 >= 0xD0C1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD0F7 && ucs4 >= 0xD0DD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD113 && ucs4 >= 0xD0F9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD12F && ucs4 >= 0xD115)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD14B && ucs4 >= 0xD131)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD167 && ucs4 >= 0xD14D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD183 && ucs4 >= 0xD169)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD19F && ucs4 >= 0xD185)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD1BB && ucs4 >= 0xD1A1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD1D7 && ucs4 >= 0xD1BD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD1F3 && ucs4 >= 0xD1D9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD20F && ucs4 >= 0xD1F5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD22B && ucs4 >= 0xD211)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD247 && ucs4 >= 0xD22D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD263 && ucs4 >= 0xD249)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD27F && ucs4 >= 0xD265)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD29B && ucs4 >= 0xD281)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD2B7 && ucs4 >= 0xD29D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD2D3 && ucs4 >= 0xD2B9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD2EF && ucs4 >= 0xD2D5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD30B && ucs4 >= 0xD2F1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD327 && ucs4 >= 0xD30D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD343 && ucs4 >= 0xD329)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD35F && ucs4 >= 0xD345)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD37B && ucs4 >= 0xD361)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD397 && ucs4 >= 0xD37D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD3B3 && ucs4 >= 0xD399)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD3CF && ucs4 >= 0xD3B5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD3EB && ucs4 >= 0xD3D1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD407 && ucs4 >= 0xD3ED)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD423 && ucs4 >= 0xD409)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD43F && ucs4 >= 0xD425)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD45B && ucs4 >= 0xD441)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD477 && ucs4 >= 0xD45D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD493 && ucs4 >= 0xD479)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD4AF && ucs4 >= 0xD495)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD4CB && ucs4 >= 0xD4B1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD4E7 && ucs4 >= 0xD4CD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD503 && ucs4 >= 0xD4E9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD51F && ucs4 >= 0xD505)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD53B && ucs4 >= 0xD521)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD557 && ucs4 >= 0xD53D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD573 && ucs4 >= 0xD559)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD58F && ucs4 >= 0xD575)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD5AB && ucs4 >= 0xD591)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD5C7 && ucs4 >= 0xD5AD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD5E3 && ucs4 >= 0xD5C9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD5FF && ucs4 >= 0xD5E5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD61B && ucs4 >= 0xD601)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD637 && ucs4 >= 0xD61D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD653 && ucs4 >= 0xD639)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD66F && ucs4 >= 0xD655)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD68B && ucs4 >= 0xD671)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD6A7 && ucs4 >= 0xD68D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD6C3 && ucs4 >= 0xD6A9)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD6DF && ucs4 >= 0xD6C5)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD6FB && ucs4 >= 0xD6E1)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD717 && ucs4 >= 0xD6FD)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD733 && ucs4 >= 0xD719)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD74F && ucs4 >= 0xD735)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD76B && ucs4 >= 0xD751)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD787 && ucs4 >= 0xD76D)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0xD7A3 && ucs4 >= 0xD789)
+        return QUnicodeTables::GraphemeBreak_LVT;
+    if (ucs4 <= 0x11FF && ucs4 >= 0x11A8)
+        return QUnicodeTables::GraphemeBreak_T;
+    if (ucs4 <= 0xD7FB && ucs4 >= 0xD7CB)
+        return QUnicodeTables::GraphemeBreak_T;
     return GraphemeBreak_Other;
 }
 

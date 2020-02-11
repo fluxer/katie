@@ -122,14 +122,13 @@ public:
     };
     Q_DECLARE_FLAGS(KeyboardModifiers, KeyboardModifier)
 
-    //shorter names for shortcuts
+    // shorter names for shortcuts
     enum Modifier {
         META          = Qt::MetaModifier,
         SHIFT         = Qt::ShiftModifier,
         CTRL          = Qt::ControlModifier,
         ALT           = Qt::AltModifier,
-        MODIFIER_MASK = KeyboardModifierMask,
-        UNICODE_ACCEL = 0x00000000
+        MODIFIER_MASK = KeyboardModifierMask
     };
 
     enum MouseButton {

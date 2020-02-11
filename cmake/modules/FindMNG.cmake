@@ -16,25 +16,23 @@ endif()
 if(NOT WIN32)
     include(FindPkgConfig)
     pkg_check_modules(PC_MNG QUIET libmng)
+
+    set(MNG_INCLUDES ${PC_MNG_INCLUDE_DIRS})
+    set(MNG_LIBRARIES ${PC_MNG_LIBRARIES})
 endif()
 
-find_path(MNG_INCLUDES
-    NAMES
-    libmng.h
-    PATH_SUFFIXES mng
-    HINTS
-    $ENV{MNGDIR}/include
-    ${PC_MNG_INCLUDEDIR}
-    ${INCLUDE_INSTALL_DIR}
-)
+if(NOT MNG_INCLUDES OR NOT MNG_LIBRARIES)
+    find_path(MNG_INCLUDES
+        NAMES libmng.h
+        PATH_SUFFIXES mng
+        HINTS $ENV{MNGDIR}/include
+    )
 
-find_library(MNG_LIBRARIES
-    mng
-    HINTS
-    $ENV{MNGDIR}/lib
-    ${PC_MNG_LIBDIR}
-    ${LIB_INSTALL_DIR}
-)
+    find_library(MNG_LIBRARIES
+        NAMES mng
+        HINTS $ENV{MNGDIR}/lib
+    )
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(MNG

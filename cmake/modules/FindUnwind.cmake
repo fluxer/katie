@@ -16,24 +16,22 @@ endif()
 if(NOT WIN32)
     include(FindPkgConfig)
     pkg_check_modules(PC_UNWIND QUIET libunwind)
+
+    set(UNWIND_INCLUDES ${PC_UNWIND_INCLUDE_DIRS})
+    set(UNWIND_LIBRARIES ${PC_UNWIND_LIBRARIES})
 endif()
 
-find_path(UNWIND_INCLUDES
-    NAMES
-    libunwind.h
-    HINTS
-    $ENV{UNWINDDIR}/include
-    ${PC_UNWIND_INCLUDEDIR}
-    ${INCLUDE_INSTALL_DIR}
-)
+if(NOT UNWIND_INCLUDES OR NOT UNWIND_LIBRARIES)
+    find_path(UNWIND_INCLUDES
+        NAMES libunwind.h
+        HINTS $ENV{UNWINDDIR}/include
+    )
 
-find_library(UNWIND_LIBRARIES
-    unwind
-    HINTS
-    $ENV{UNWINDDIR}/lib
-    ${PC_UNWIND_LIBDIR}
-    ${LIB_INSTALL_DIR}
-)
+    find_library(UNWIND_LIBRARIES
+        NAMES unwind
+        HINTS $ENV{UNWINDDIR}/lib
+    )
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Unwind
