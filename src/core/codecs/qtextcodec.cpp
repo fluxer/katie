@@ -900,7 +900,7 @@ QString QTextCodec::toUnicode(const char *chars) const
     \since 4.7
 */
 QTextEncoder::QTextEncoder(const QTextCodec *codec, QTextCodec::ConversionFlags flags)
-    : c(codec), state()
+    : c(codec)
 {
     state.flags = flags;
 }
@@ -971,7 +971,7 @@ QByteArray QTextEncoder::fromUnicode(const QChar *uc, int len)
 */
 
 QTextDecoder::QTextDecoder(const QTextCodec *codec, QTextCodec::ConversionFlags flags)
-    : c(codec), state()
+    : c(codec)
 {
     state.flags = flags;
 }
