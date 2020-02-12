@@ -7,12 +7,12 @@ set(PSQLDRIVER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qsql_psql.cpp
 )
 
-include_directories(${PostgreSQL_INCLUDE_DIRS})
+include_directories(${POSTGRESQL_INCLUDES})
 
 katie_setup_target(qsqlpsqlplugin ${PSQLDRIVER_SOURCES} ${PSQLDRIVER_HEADERS})
 
 add_library(qsqlpsqlplugin MODULE ${qsqlpsqlplugin_SOURCES})
-target_link_libraries(qsqlpsqlplugin KtSql ${PostgreSQL_LIBRARIES})
+target_link_libraries(qsqlpsqlplugin KtSql ${POSTGRESQL_LIBRARIES})
 set_target_properties(qsqlpsqlplugin PROPERTIES OUTPUT_NAME qsqlpsql)
 
 install(
