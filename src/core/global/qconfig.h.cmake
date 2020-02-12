@@ -194,7 +194,6 @@
 #cmakedefine QT_NO_IMAGEFORMAT_ICO
 #cmakedefine QT_NO_IMAGEFORMAT_JPEG
 #cmakedefine QT_NO_IMAGEFORMAT_MNG
-#cmakedefine QT_NO_IMAGEFORMAT_PNG
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
 #cmakedefine QT_NO_IMAGEFORMAT_TGA
 #cmakedefine QT_NO_IMAGEFORMAT_TIFF

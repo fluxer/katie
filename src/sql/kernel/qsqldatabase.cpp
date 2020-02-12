@@ -34,20 +34,6 @@
 #include "qsqldatabase.h"
 #include "qsqlquery.h"
 
-// NOTE: if the following are defined then drivers must be built-in
-#ifdef QT_SQL_PSQL
-#include "../drivers/psql/qsql_psql.h"
-#endif
-#ifdef QT_SQL_MYSQL
-#include "../drivers/mysql/qsql_mysql.h"
-#endif
-#ifdef QT_SQL_ODBC
-#include "../drivers/odbc/qsql_odbc.h"
-#endif
-#ifdef QT_SQL_SQLITE
-#include "../drivers/sqlite/qsql_sqlite.h"
-#endif
-
 #include "qdebug.h"
 #include "qcoreapplication.h"
 #include "qreadwritelock.h"
@@ -59,6 +45,8 @@
 #include "qsqlnulldriver_p.h"
 #include "qmutex.h"
 #include "qhash.h"
+#include "qsql_sqlite.h"
+
 #include <stdlib.h>
 
 QT_BEGIN_NAMESPACE
@@ -500,22 +488,7 @@ void QSqlDatabase::removeDatabase(const QString& connectionName)
 QStringList QSqlDatabase::drivers()
 {
     QStringList list;
-
-#ifdef QT_SQL_PSQL
-    list << QLatin1String("QPSQL7");
-    list << QLatin1String("QPSQL");
-#endif
-#ifdef QT_SQL_MYSQL
-    list << QLatin1String("QMYSQL3");
-    list << QLatin1String("QMYSQL");
-#endif
-#ifdef QT_SQL_ODBC
-    list << QLatin1String("QODBC3");
-    list << QLatin1String("QODBC");
-#endif
-#ifdef QT_SQL_SQLITE
     list << QLatin1String("QSQLITE");
-#endif
 
 #ifndef QT_NO_LIBRARY
     if (QFactoryLoader *fl = sqlloader()) {
@@ -661,23 +634,8 @@ void QSqlDatabasePrivate::init(const QString &type)
 {
     drvName = type;
 
-    if (!driver) {
-#ifdef QT_SQL_PSQL
-        if (type == QLatin1String("QPSQL") || type == QLatin1String("QPSQL7"))
-            driver = new QPSQLDriver();
-#endif
-#ifdef QT_SQL_MYSQL
-        if (type == QLatin1String("QMYSQL") || type == QLatin1String("QMYSQL3"))
-            driver = new QMYSQLDriver();
-#endif
-#ifdef QT_SQL_ODBC
-        if (type == QLatin1String("QODBC") || type == QLatin1String("QODBC3"))
-            driver = new QODBCDriver();
-#endif
-#ifdef QT_SQL_SQLITE
-        if (type == QLatin1String("QSQLITE"))
-            driver = new QSQLiteDriver();
-#endif
+    if (!driver && type == QLatin1String("QSQLITE")) {
+        driver = new QSQLiteDriver();
     }
 
     if (!driver) {

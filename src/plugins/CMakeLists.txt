@@ -103,10 +103,6 @@ endif()
 if(WITH_PSQL AND PostgreSQL_FOUND)
     add_subdirectory(sqldrivers/psql)
 endif()
-if(WITH_SQLITE)
-    add_subdirectory(sqldrivers/sqlite)
-endif()
-
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/designer")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/designer")

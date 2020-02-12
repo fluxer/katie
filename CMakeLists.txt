@@ -106,9 +106,6 @@ add_feature_info(nis WITH_NIS "build NIS support")
 option(WITH_CUPS "Build CUPS support" ON)
 add_feature_info(cups WITH_CUPS "build CUPS support")
 
-option(WITH_PNG "Build PNG support" ON)
-add_feature_info(png WITH_PNG "build PNG support")
-
 option(WITH_JPEG "Build JPEG support" ON)
 add_feature_info(jpeg WITH_JPEG "build JPEG support")
 
@@ -136,9 +133,6 @@ add_feature_info(postgresql WITH_PSQL "build PostgreSQL support")
 
 option(WITH_MYSQL "Build MySQL database plugin" ON)
 add_feature_info(mysql WITH_MYSQL "build MySQL support")
-
-option(WITH_SQLITE "Build SQLite database plugin" ON)
-add_feature_info(sqlite WITH_SQLITE "build SQLite support")
 
 option(WITH_RESOLV "Build resolv support" ON)
 add_feature_info(resolv WITH_RESOLV "build resolv support")
@@ -484,13 +478,11 @@ foreach(script exec dbg)
 endforeach()
 
 # optional packages which if not found are build internally
-if(NOT WITH_PNG)
-    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
-elseif(NOT PNG_FOUND)
+if(NOT PNG_FOUND)
     message(WARNING "Using internal copy of libpng")
 endif()
 
-if(WITH_SQLITE AND NOT SQLITE_FOUND)
+if(NOT SQLITE_FOUND)
     message(WARNING "Using internal copy of sqlite")
 endif()
 

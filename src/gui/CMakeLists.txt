@@ -320,6 +320,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxbmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qheaderview.h
@@ -698,6 +699,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxbmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qheaderview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qidentityproxymodel.cpp
@@ -958,30 +960,16 @@ if(WITH_NSL AND NSL_FOUND)
     include_directories(${NSL_INCLUDES})
 endif()
 
-if(WITH_PNG AND PNG_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler.cpp
-    )
+if(PNG_FOUND)
     set(EXTRA_GUI_LIBS
         ${EXTRA_GUI_LIBS}
         ${PNG_LIBRARIES}
     )
     include_directories(${PNG_INCLUDE_DIRS})
     add_definitions(${PNG_DEFINITIONS})
-elseif(WITH_PNG)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler_p.h
-    )
-
+else()
     set(GUI_SOURCES
         ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler.cpp
         ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/png.c
         ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngerror.c
         ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngget.c
