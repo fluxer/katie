@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
 QPersistentModelIndexData *QPersistentModelIndexData::create(const QModelIndex &index)
 {
     Q_ASSERT(index.isValid()); // we will _never_ insert an invalid index in the list
-    QPersistentModelIndexData *d = 0;
+    QPersistentModelIndexData *d = Q_NULLPTR;
     QAbstractItemModel *model = const_cast<QAbstractItemModel *>(index.model());
     QHash<QModelIndex, QPersistentModelIndexData *> &indexes = model->d_func()->persistent.indexes;
     const QHash<QModelIndex, QPersistentModelIndexData *>::iterator it = indexes.find(index);
@@ -105,7 +105,7 @@ void QPersistentModelIndexData::destroy(QPersistentModelIndexData *data)
 */
 
 QPersistentModelIndex::QPersistentModelIndex()
-    : d(0)
+    : d(Q_NULLPTR)
 {
 }
 
@@ -127,7 +127,7 @@ QPersistentModelIndex::QPersistentModelIndex(const QPersistentModelIndex &other)
 */
 
 QPersistentModelIndex::QPersistentModelIndex(const QModelIndex &index)
-    : d(0)
+    : d(Q_NULLPTR)
 {
     if (index.isValid()) {
         d = QPersistentModelIndexData::create(index);
@@ -145,7 +145,7 @@ QPersistentModelIndex::~QPersistentModelIndex()
 {
     if (d && !d->ref.deref()) {
         QPersistentModelIndexData::destroy(d);
-        d = 0;
+        d = Q_NULLPTR;
     }
 }
 
@@ -219,7 +219,7 @@ QPersistentModelIndex &QPersistentModelIndex::operator=(const QModelIndex &other
         d = QPersistentModelIndexData::create(other);
         if (d) d->ref.ref();
     } else {
-        d = 0;
+        d = Q_NULLPTR;
     }
     return *this;
 }
@@ -308,7 +308,7 @@ void *QPersistentModelIndex::internalPointer() const
 {
     if (d)
         return d->index.internalPointer();
-    return 0;
+    return Q_NULLPTR;
 }
 
 /*!
@@ -400,7 +400,7 @@ const QAbstractItemModel *QPersistentModelIndex::model() const
 {
     if (d)
         return d->index.model();
-    return 0;
+    return Q_NULLPTR;
 }
 
 /*!
@@ -752,7 +752,7 @@ void QAbstractItemModelPrivate::rowsRemoved(const QModelIndex &parent,
         QPersistentModelIndexData *data = *it;
         persistent.indexes.erase(persistent.indexes.find(data->index));
         data->index = QModelIndex();
-        data->model = 0;
+        data->model = Q_NULLPTR;
     }
 }
 
@@ -847,7 +847,7 @@ void QAbstractItemModelPrivate::columnsRemoved(const QModelIndex &parent,
         QPersistentModelIndexData *data = *it;
         persistent.indexes.erase(persistent.indexes.find(data->index));
         data->index = QModelIndex();
-        data->model = 0;
+        data->model = Q_NULLPTR;
     }
 }
 
@@ -1736,10 +1736,10 @@ QStringList QAbstractItemModel::mimeTypes() const
 QMimeData *QAbstractItemModel::mimeData(const QModelIndexList &indexes) const
 {
     if (indexes.count() <= 0)
-        return 0;
+        return Q_NULLPTR;
     QStringList types = mimeTypes();
     if (types.isEmpty())
-        return 0;
+        return Q_NULLPTR;
     QMimeData *data = new QMimeData();
     QString format = types.at(0);
     QByteArray encoded;
@@ -2968,7 +2968,7 @@ void QAbstractItemModel::changePersistentIndex(const QModelIndex &from, const QM
         if (to.isValid())
             d->persistent.insertMultiAtEnd(to, data);
         else
-            data->model = 0;
+            data->model = Q_NULLPTR;
     }
 }
 
@@ -3002,7 +3002,7 @@ void QAbstractItemModel::changePersistentIndexList(const QModelIndexList &from,
             if (data->index.isValid())
                 toBeReinserted << data;
             else
-                data->model = 0;
+                data->model = Q_NULLPTR;
         }
     }
 
@@ -3134,7 +3134,7 @@ QAbstractTableModel::~QAbstractTableModel()
 
 QModelIndex QAbstractTableModel::index(int row, int column, const QModelIndex &parent) const
 {
-    return hasIndex(row, column, parent) ? createIndex(row, column, 0) : QModelIndex();
+    return hasIndex(row, column, parent) ? createIndex(row, column, Q_NULLPTR) : QModelIndex();
 }
 
 /*!
@@ -3262,7 +3262,7 @@ QAbstractListModel::~QAbstractListModel()
 
 QModelIndex QAbstractListModel::index(int row, int column, const QModelIndex &parent) const
 {
-    return hasIndex(row, column, parent) ? createIndex(row, column, 0) : QModelIndex();
+    return hasIndex(row, column, parent) ? createIndex(row, column, Q_NULLPTR) : QModelIndex();
 }
 
 /*!
