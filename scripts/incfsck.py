@@ -390,8 +390,6 @@ incmap = {
         'Q_IPV6ADDR': 'qhostaddress.h',
     },
     'QtSql': {
-        'QSqlDriverCreator': 'qsqldatabase.h',
-        'QSqlDriverCreatorBase': 'qsqldatabase.h',
         'QSqlDriverFactoryInterface': 'qsqldriverplugin.h',
         'QSqlRelation': 'qsqlrelationaltablemodel.h',
     },

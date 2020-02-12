@@ -581,8 +581,6 @@ classlist = [
     "QSpontaneKeyEvent",
     "QSqlDatabase",
     "QSqlDriver",
-    "QSqlDriverCreator",
-    "QSqlDriverCreatorBase",
     "QSqlDriverFactoryInterface",
     "QSqlDriverPlugin",
     "QSqlError",

@@ -538,7 +538,6 @@ static const struct ClassTblData {
     { QLatin1String("QSplitterHandle"), QLatin1String("QtGui/qsplitter.h") },
     { QLatin1String("QSqlDatabase"), QLatin1String("QtSql/qsqldatabase.h") },
     { QLatin1String("QSqlDriver"), QLatin1String("QtSql/qsqldriver.h") },
-    { QLatin1String("QSqlDriverCreatorBase"), QLatin1String("QtSql/qsqldatabase.h") },
     { QLatin1String("QSqlDriverFactoryInterface"), QLatin1String("QtSql/qsqldriverplugin.h") },
     { QLatin1String("QSqlDriverPlugin"), QLatin1String("QtSql/qsqldriverplugin.h") },
     { QLatin1String("QSqlError"), QLatin1String("QtSql/qsqlerror.h") },

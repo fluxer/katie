@@ -1330,8 +1330,6 @@ include/katie/QtScriptTools/QtScriptTools
 include/katie/QtScriptTools/qscriptenginedebugger.h
 include/katie/QtSql/QSqlDatabase
 include/katie/QtSql/QSqlDriver
-include/katie/QtSql/QSqlDriverCreator
-include/katie/QtSql/QSqlDriverCreatorBase
 include/katie/QtSql/QSqlDriverFactoryInterface
 include/katie/QtSql/QSqlDriverPlugin
 include/katie/QtSql/QSqlError
