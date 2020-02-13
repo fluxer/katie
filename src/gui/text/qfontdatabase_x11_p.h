@@ -679,7 +679,6 @@ static void loadFontConfig()
     for (qint16 i = 0; i < DefaultFontTblSize; i++) {
         QtFontFamily *family = db->family(DefaultFontTbl[i].name, true);
         family->fixedPitch = DefaultFontTbl[i].fixedpitch;
-        family->synthetic = true;
         QtFontFoundry *foundry = family->foundry(QString(), true);
 
         QtFontStyle::Key styleKey;
