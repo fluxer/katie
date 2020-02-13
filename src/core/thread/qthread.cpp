@@ -506,8 +506,7 @@ void QThread::exit(int returnCode)
     d->exited = true;
     d->returnCode = returnCode;
     d->data->quitNow = true;
-    for (int i = 0; i < d->data->eventLoops.size(); ++i) {
-        QEventLoop *eventLoop = d->data->eventLoops.at(i);
+    foreach (QEventLoop *eventLoop, d->data->eventLoops) {
         eventLoop->exit(returnCode);
     }
 }
