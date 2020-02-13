@@ -4,7 +4,6 @@ import sys, os, re
 
 incmap = {
     'QtCore': {
-        'QAbstractFileEngineHandler': 'qabstractfileengine.h',
         'QAbstractFileEngineIterator': 'qabstractfileengine.h',
         'QAbstractListModel': 'qabstractitemmodel.h',
         'QAbstractTableModel': 'qabstractitemmodel.h',

@@ -587,7 +587,6 @@ endif()
 # the macro calls bellow are generted via the incfsck script
 katie_generate_obsolete(QAbstractExtensionFactory QtDesigner extension.h)
 katie_generate_obsolete(QAbstractExtensionManager QtDesigner extension.h)
-katie_generate_obsolete(QAbstractFileEngineHandler QtCore qabstractfileengine.h)
 katie_generate_obsolete(QAbstractFileEngineIterator QtCore qabstractfileengine.h)
 katie_generate_obsolete(QAbstractFormBuilder QtDesigner abstractformbuilder.h)
 katie_generate_obsolete(QAbstractGraphicsShapeItem QtGui qgraphicsitem.h)

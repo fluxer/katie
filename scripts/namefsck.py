@@ -10,7 +10,6 @@ classlist = [
     "QAbstractExtensionFactory",
     "QAbstractExtensionManager",
     "QAbstractFileEngine",
-    "QAbstractFileEngineHandler",
     "QAbstractFileEngineIterator",
     "QAbstractFormBuilder",
     "QAbstractGraphicsShapeItem",

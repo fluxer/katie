@@ -77,7 +77,6 @@ static const struct ClassTblData {
     { QLatin1String("QAbstractButton"), QLatin1String("QtGui/qabstractbutton.h") },
     { QLatin1String("QAbstractEventDispatcher"), QLatin1String("QtCore/qabstracteventdispatcher.h") },
     { QLatin1String("QAbstractFileEngine"), QLatin1String("QtCore/qabstractfileengine.h") },
-    { QLatin1String("QAbstractFileEngineHandler"), QLatin1String("QtCore/qabstractfileengine.h") },
     { QLatin1String("QAbstractFileEngineIterator"), QLatin1String("QtCore/qabstractfileengine.h") },
     { QLatin1String("QAbstractFormBuilder"), QLatin1String("QtUiTools/abstractformbuilder.h") },
     { QLatin1String("QAbstractGraphicsShapeItem"), QLatin1String("QtGui/qgraphicsitem.h") },
