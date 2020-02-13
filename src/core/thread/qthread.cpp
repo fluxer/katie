@@ -50,7 +50,7 @@ QT_BEGIN_NAMESPACE
 
 QThreadData::QThreadData(int initialRefCount)
     : quitNow(false), canWait(true), isAdopted(false), loopLevel(0),
-    threadId(0), thread(0), eventDispatcher(0), _ref(initialRefCount)
+    threadId(0), thread(Q_NULLPTR), eventDispatcher(Q_NULLPTR), _ref(initialRefCount)
 {
     // fprintf(stderr, "QThreadData %p created\n", this);
 }
@@ -66,13 +66,12 @@ QThreadData::~QThreadData()
     // safeguard the main thread here.. This fix is a bit crude, but it solves
     // the problem...
     if (this->thread == QCoreApplicationPrivate::theMainThread) {
-       QCoreApplicationPrivate::theMainThread = 0;
+       QCoreApplicationPrivate::theMainThread = Q_NULLPTR;
        QThreadData::clearCurrentThreadData();
     }
 
-    QThread *t = thread;
-    thread = 0;
-    delete t;
+    delete thread;
+    thread = Q_NULLPTR;
 
     for (int i = 0; i < postEventList.size(); ++i) {
         const QPostEvent &pe = postEventList.at(i);
@@ -340,7 +339,7 @@ QThreadPrivate::~QThreadPrivate()
 QThread *QThread::currentThread()
 {
     QThreadData *data = QThreadData::current();
-    Q_ASSERT(data != 0);
+    Q_ASSERT(data);
     return data->thread;
 }
 
@@ -390,7 +389,7 @@ QThread::~QThread()
     if (Q_UNLIKELY(d->running && !d->finished && !d->data->isAdopted))
         qWarning("QThread: Destroyed while thread is still running");
 
-    d->data->thread = 0;
+    d->data->thread = Q_NULLPTR;
 }
 
 /*!
@@ -683,7 +682,7 @@ QThread::Priority QThread::priority() const
 #else // QT_NO_THREAD
 
 QThread::QThread(QObject *parent)
-    : QObject(*(new QThreadPrivate), (QObject*)0){
+    : QObject(*(new QThreadPrivate), Q_NULLPTR){
     Q_D(QThread);
     d->data->thread = this;
 }
