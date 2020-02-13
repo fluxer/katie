@@ -949,16 +949,6 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, int script, const QFontDe
     FcConfigSubstitute(0, pattern, FcMatchPattern);
     FcDefaultSubstitute(pattern);
 
-    // these should only get added to the pattern _after_ substitution
-    // append the default fallback font for the specified script
-    extern QString qt_fallback_font_family(int);
-    QString fallback = qt_fallback_font_family(script);
-    if (!fallback.isEmpty()) {
-        QByteArray cs = fallback.toUtf8();
-        value.u.s = (const FcChar8 *)cs.data();
-        FcPatternAddWeak(pattern, FC_FAMILY, value, FcTrue);
-    }
-
     // add the default family
     QString defaultFamily = QApplication::font().family();
     QByteArray cs = defaultFamily.toUtf8();
