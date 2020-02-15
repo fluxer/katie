@@ -1275,10 +1275,10 @@ static void qt_print_backtrace()
             int status;
             char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
             if (status == 0) {
-                printf(" %s\n", demangled);
-                free(demangled);
+                ::printf(" %s\n", demangled);
+                ::free(demangled);
             } else {
-                printf(" %s\n", sym);
+                ::printf(" %s\n", sym);
             }
         } else {
             ::fprintf(stderr, "qt_print_backtrace: unable to obtain symbol name for this frame\n");
