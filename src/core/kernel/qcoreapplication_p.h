@@ -89,7 +89,6 @@ public:
 #endif
     int &argc;
     char **argv;
-    void appendApplicationPathToLibraryPaths(void);
     void processCommandLineArguments();
 
 #ifndef QT_NO_TRANSLATION

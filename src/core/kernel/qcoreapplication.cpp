@@ -274,19 +274,6 @@ void QCoreApplicationPrivate::checkReceiverThread(QObject *receiver)
 }
 #endif
 
-void QCoreApplicationPrivate::appendApplicationPathToLibraryPaths()
-{
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
-    QStringList *app_libpaths = coreappdata()->app_libpaths;
-    Q_ASSERT(app_libpaths);
-    QString app_location( QCoreApplication::applicationFilePath() );
-    app_location.truncate(app_location.lastIndexOf(QLatin1Char('/')));
-    app_location = QDir(app_location).canonicalPath();
-    if (QDir(app_location).exists() && !app_libpaths->contains(app_location))
-        app_libpaths->append(app_location);
-#endif
-}
-
 /*!
     \class QCoreApplication
     \brief The QCoreApplication class provides an event loop for console Qt
@@ -449,8 +436,6 @@ void QCoreApplication::init()
     if (!coreappdata()->app_libpaths) {
         // make sure that library paths is initialized
         libraryPaths();
-    } else {
-        d->appendApplicationPathToLibraryPaths();
     }
 #endif
 
@@ -1841,10 +1826,6 @@ QStringList QCoreApplication::libraryPaths()
             if (!app_libpaths->contains(installPathPlugins))
                 app_libpaths->append(installPathPlugins);
         }
-
-        // If QCoreApplication is not yet instantiated,
-        // make sure we add the application path when we construct the QCoreApplication
-        if (self) self->d_func()->appendApplicationPathToLibraryPaths();
 
         const QByteArray libPathEnv = qgetenv("QT_PLUGIN_PATH");
         if (!libPathEnv.isEmpty()) {
