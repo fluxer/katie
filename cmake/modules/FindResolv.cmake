@@ -9,10 +9,6 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(RESOLV_INCLUDES AND RESOLV_LIBRARIES)
-    set(RESOLV_FIND_QUIETLY TRUE)
-endif()
-
 # resolv does not provide pkg-config files
 
 find_path(RESOLV_INCLUDES

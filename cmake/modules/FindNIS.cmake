@@ -9,10 +9,6 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NIS_INCLUDES AND NIS_LIBRARIES)
-    set(NIS_FIND_QUIETLY TRUE)
-endif()
-
 # NIS does not provide pkg-config files
 
 find_path(NIS_INCLUDES

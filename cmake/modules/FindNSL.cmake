@@ -9,10 +9,6 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NSL_INCLUDES AND NSL_LIBRARIES)
-    set(NSL_FIND_QUIETLY TRUE)
-endif()
-
 # NSL does not provide pkg-config files
 
 find_path(NSL_INCLUDES
