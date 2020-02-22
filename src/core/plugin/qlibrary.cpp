@@ -50,6 +50,7 @@
 #include "qdebug.h"
 #include "qvector.h"
 #include "qdir.h"
+#include "qfilesystementry_p.h"
 
 #include <errno.h>
 
@@ -145,12 +146,6 @@ Q_GLOBAL_STATIC(QMutex, qt_library_mutex)
     \value ExportExternalSymbolsHint
     Exports unresolved and external symbols in the library so that they can be
     resolved in other dynamically-loaded libraries loaded later.
-    \value LoadArchiveMemberHint
-    Allows the file name of the library to specify a particular object file
-    within an archive file.
-    If this hint is given, the filename of the library consists of
-    a path, which is a reference to an archive file, followed by
-    a reference to the archive member.
 
     \sa loadHints
 */
@@ -378,6 +373,75 @@ QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QS
     if (QLibraryPrivate *lib = libraryMap()->value(fileName)) {
         lib->libraryRefCount.ref();
         return lib;
+    }
+
+    QFileSystemEntry fsEntry(fileName);
+
+    QString path = fsEntry.path();
+    QString name = fsEntry.fileName();
+    if (path == QLatin1String(".") && !fileName.startsWith(path))
+        path.clear();
+    else
+        path += QLatin1Char('/');
+
+    QStringList suffixes;
+    suffixes << QLatin1String("");
+    QStringList prefixes;
+    prefixes << QLatin1String("") << QLatin1String("lib");
+
+    if (path.isEmpty()) {
+        foreach(const QString &libpath, QCoreApplication::libraryPaths()) {
+            prefixes << (libpath + QLatin1Char('/')) << (libpath + QLatin1String("/lib"));
+        }
+    }
+
+#if defined(Q_OS_HPUX)
+    // according to
+    // http://docs.hp.com/en/B2355-90968/linkerdifferencesiapa.htm
+
+    // In PA-RISC (PA-32 and PA-64) shared libraries are suffixed
+    // with .sl. In IPF (32-bit and 64-bit), the shared libraries
+    // are suffixed with .so. For compatibility, the IPF linker
+    // also supports the .sl suffix.
+
+    // But since we don't know if we are built on HPUX or HPUXi,
+    // we support both .sl (and .<version>) and .so suffixes but
+    // .so is preferred.
+# if defined(QT_ARCH_IA64)
+    if (!version.isEmpty()) {
+        suffixes << QString::fromLatin1(".so.%1").arg(version);
+    } else {
+        suffixes << QLatin1String(".so");
+    }
+# endif
+    if (!version.isEmpty()) {
+        suffixes << QString::fromLatin1(".sl.%1").arg(version);
+        suffixes << QString::fromLatin1(".%1").arg(version);
+    } else {
+        suffixes << QLatin1String(".sl");
+    }
+#else
+#ifdef Q_OS_AIX
+    suffixes << ".a";
+#endif // Q_OS_AIX
+    if (!version.isEmpty()) {
+        suffixes << QString::fromLatin1(".so.%1").arg(version);
+    } else {
+        suffixes << QLatin1String(".so");
+    }
+#endif
+
+    for(int prefix = 0; prefix < prefixes.size(); prefix++) {
+        for(int suffix = 0; suffix < suffixes.size(); suffix++) {
+            if (!prefixes.at(prefix).isEmpty() && name.startsWith(prefixes.at(prefix)))
+                continue;
+            if (!suffixes.at(suffix).isEmpty() && name.endsWith(suffixes.at(suffix)))
+                continue;
+            const QString attempt = path + prefixes.at(prefix) + name + suffixes.at(suffix);
+            if (QFile::exists(attempt)) {
+                return new QLibraryPrivate(attempt, version);
+            }
+        }
     }
 
     return new QLibraryPrivate(fileName, version);
@@ -955,13 +1019,6 @@ QString QLibrary::errorString() const
 
     Setting ExportExternalSymbolsHint will make the external symbols in the
     library available for resolution in subsequent loaded libraries.
-
-    If LoadArchiveMemberHint is set, the file name
-    is composed of two components: A path which is a reference to an
-    archive file followed by the second component which is the reference to
-    the archive member. For instance, the fileName \c libGL.a(shr_64.o) will refer
-    to the library \c shr_64.o in the archive file named \c libGL.a. This
-    is only supported on the AIX platform.
 
     The interpretation of the load hints is platform dependent, and if
     you use it you are probably making some assumptions on which platform

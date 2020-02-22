@@ -1818,21 +1818,24 @@ QStringList QCoreApplication::libraryPaths()
     QMutexLocker locker(libraryPathMutex());
     if (!coreappdata()->app_libpaths) {
         QStringList *app_libpaths = coreappdata()->app_libpaths = new QStringList;
-        QString installPathPlugins =  QLibraryInfo::location(QLibraryInfo::PluginsPath);
-        QDir installPathPluginsDir(installPathPlugins);
-        if (installPathPluginsDir.exists()) {
-            // Make sure we convert from backslashes to slashes.
-            installPathPlugins = installPathPluginsDir.canonicalPath();
+
+        QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::PluginsPath);
+        if (QDir(installPathPlugins).exists()) {
+            if (!app_libpaths->contains(installPathPlugins))
+                app_libpaths->append(installPathPlugins);
+        }
+
+        installPathPlugins = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
+        if (QDir(installPathPlugins).exists()) {
             if (!app_libpaths->contains(installPathPlugins))
                 app_libpaths->append(installPathPlugins);
         }
 
         const QByteArray libPathEnv = qgetenv("QT_PLUGIN_PATH");
         if (!libPathEnv.isEmpty()) {
-            const QLatin1Char pathSep(':');
-            QStringList paths = QString::fromLatin1(libPathEnv.constData()).split(pathSep, QString::SkipEmptyParts);
-            for (QStringList::const_iterator it = paths.constBegin(); it != paths.constEnd(); ++it) {
-                QString canonicalPath = QDir(*it).canonicalPath();
+            const QStringList paths = QString::fromLatin1(libPathEnv.constData()).split(QLatin1Char(':'), QString::SkipEmptyParts);
+            foreach (const QString &it, paths) {
+                QString canonicalPath = QDir(it).canonicalPath();
                 if (!canonicalPath.isEmpty()
                     && !app_libpaths->contains(canonicalPath)) {
                     app_libpaths->append(canonicalPath);
