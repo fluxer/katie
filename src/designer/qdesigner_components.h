@@ -34,6 +34,7 @@
 #ifndef QDESIGNER_COMPONENTS_H
 #define QDESIGNER_COMPONENTS_H
 
+#include <QtCore/QObject>
 #include <QtDesigner/qdesigner_components_global.h>
 
 QT_BEGIN_HEADER
@@ -53,7 +54,7 @@ class QDESIGNER_COMPONENTS_EXPORT QDesignerComponents
 {
 public:
     static void initializeResources();
-    static void initializePlugins(QDesignerFormEditorInterface *core);
+    static QObjectList initializePlugins(QDesignerFormEditorInterface *core);
 
     static QDesignerFormEditorInterface *createFormEditor(QObject *parent);
     static QDesignerWidgetBoxInterface *createWidgetBox(QDesignerFormEditorInterface *core, QWidget *parent);

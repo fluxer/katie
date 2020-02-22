@@ -719,18 +719,23 @@ void QDesignerPluginManager::ensureInitialized()
     const QString designerLanguage = getDesignerLanguage(m_d->m_core);
 
     m_d->clearCustomWidgets();
-    // Add the static custom widgets
-    const QObjectList staticPluginObjects = QPluginLoader::staticInstances();
-    if (!staticPluginObjects.empty()) {
-        const QString staticPluginPath = QCoreApplication::applicationFilePath();
-        foreach(QObject *o, staticPluginObjects)
-            m_d->addCustomWidgets(o, staticPluginPath, designerLanguage);
-    }
+    // Add the custom widgets
     foreach (const QString &plugin, m_d->m_registeredPlugins)
         if (QObject *o = instance(plugin))
             m_d->addCustomWidgets(o, plugin, designerLanguage);
 
     m_d->m_initialized = true;
+}
+
+void QDesignerPluginManager::ensureInitializedStatic(const QObjectList &plugins)
+{
+    // Add the static custom widgets
+    if (!plugins.empty()) {
+        const QString designerLanguage = getDesignerLanguage(m_d->m_core);
+        const QString staticPluginPath = QCoreApplication::applicationFilePath();
+        foreach(QObject *o, plugins)
+            m_d->addCustomWidgets(o, staticPluginPath, designerLanguage);
+    }
 }
 
 QDesignerPluginManager::CustomWidgetList QDesignerPluginManager::registeredCustomWidgets() const

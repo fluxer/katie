@@ -3449,7 +3449,6 @@ QScriptValue QScriptEngine::importExtension(const QString &extension)
     if (!app)
         return context->throwError(QLatin1String("No application object"));
 
-    QObjectList staticPlugins = QPluginLoader::staticInstances();
     QStringList libraryPaths = app->libraryPaths();
     QString dot = QLatin1String(".");
     QStringList pathComponents = extension.split(dot);
@@ -3472,17 +3471,6 @@ QScriptValue QScriptEngine::importExtension(const QString &extension)
         QScriptExtensionInterface *iface = 0;
         QString initjsContents;
         QString initjsFileName;
-
-        // look for the extension in static plugins
-        for (int j = 0; j < staticPlugins.size(); ++j) {
-            iface = qobject_cast<QScriptExtensionInterface*>(staticPlugins.at(j));
-            if (!iface)
-                continue;
-            if (iface->keys().contains(ext))
-                break; // use this one
-            else
-                iface = 0; // keep looking
-        }
 
         {
             // look for __init__.js resource
@@ -3623,17 +3611,6 @@ QStringList QScriptEngine::availableExtensions() const
         return QStringList();
 
     QSet<QString> result;
-
-    QObjectList staticPlugins = QPluginLoader::staticInstances();
-    for (int i = 0; i < staticPlugins.size(); ++i) {
-        QScriptExtensionInterface *iface;
-        iface = qobject_cast<QScriptExtensionInterface*>(staticPlugins.at(i));
-        if (iface) {
-            QStringList keys = iface->keys();
-            for (int j = 0; j < keys.count(); ++j)
-                result << keys.at(j);
-        }
-    }
 
     QStringList libraryPaths = app->libraryPaths();
     for (int i = 0; i < libraryPaths.count(); ++i) {

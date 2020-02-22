@@ -106,8 +106,7 @@ QT_BEGIN_NAMESPACE
     how to make your application extensible through plugins.
 
     Note that the QPluginLoader cannot be used if your application is
-    statically linked against Qt. In this case, you will also have to
-    link to plugins statically. You can use QLibrary if you need to
+    statically linked against Qt. You can use QLibrary if you need to
     load dynamic libraries in a statically linked application.
 
     \sa QLibrary, {Plug & Paint Example}
@@ -300,9 +299,6 @@ QString QPluginLoader::errorString() const
     return (!d || d->errorString.isEmpty()) ? tr("Unknown error") : d->errorString;
 }
 
-typedef QList<QtPluginInstanceFunction> StaticInstanceFunctionList;
-Q_GLOBAL_STATIC(StaticInstanceFunctionList, staticInstanceFunctionList)
-
 /*! \since 4.4
 
     \property QPluginLoader::loadHints
@@ -334,34 +330,6 @@ QLibrary::LoadHints QPluginLoader::loadHints() const
         that->d->errorString.clear();
     }
     return d->loadHints;
-}
-
-/*!
-    \relates QPluginLoader
-    \since 4.4
-
-    Registers the given \a function with the plugin loader.
-*/
-void Q_CORE_EXPORT qRegisterStaticPluginInstanceFunction(QtPluginInstanceFunction function)
-{
-    staticInstanceFunctionList()->append(function);
-}
-
-/*!
-    Returns a list of static plugin instances (root components) held
-    by the plugin loader.
-*/
-QObjectList QPluginLoader::staticInstances()
-{
-    QObjectList instances;
-    StaticInstanceFunctionList *functions = staticInstanceFunctionList();
-    if (functions) {
-        const int numFunctions = functions->size();
-        instances.reserve(numFunctions);
-        for (int i = 0; i < numFunctions; ++i)
-            instances.append((*functions)[i]());
-    }
-    return instances;
 }
 
 #include "moc_qpluginloader.h"

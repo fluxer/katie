@@ -197,6 +197,8 @@ private:
 
     enum State { StateInitializing, StateUp, StateClosing };
     State m_state;
+
+    QObjectList m_staticPlugins;
 };
 
 QT_END_NAMESPACE
