@@ -56,18 +56,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifdef QT_NO_DEBUG
-#  define QLIBRARY_AS_DEBUG false
-#else
-#  define QLIBRARY_AS_DEBUG true
-#endif
-
-#if defined(Q_OS_UNIX)
-// We don't use separate debug and release libs on UNIX, so we want
-// to allow loading plugins, regardless of how they were built.
-#  define QT_NO_DEBUG_PLUGIN_CHECK
-#endif
-
 Q_GLOBAL_STATIC(QMutex, qt_library_mutex)
 
 /*!
@@ -232,7 +220,7 @@ static int qt_tokenize(const char *s, ulong s_len, ulong *advance,
 /*
   returns true if the string s was correctly parsed, false otherwise.
 */
-static bool qt_parse_pattern(const char *s, uint *version, bool *debug)
+static bool qt_parse_pattern(const char *s, uint *version)
 {
     bool ret = true;
 
@@ -253,8 +241,6 @@ static bool qt_parse_pattern(const char *s, uint *version, bool *debug)
             QByteArray qv(pinfo.results[1], pinfo.lengths[1]);
             bool ok;
             *version = qv.toUInt(&ok, 0);
-        } else if (qstrncmp("debug", pinfo.results[0], pinfo.lengths[0]) == 0) {
-            *debug = (qstrncmp("true", pinfo.results[1], pinfo.lengths[1]) == 0);
         }
     } while (parse == 1 && parselen > 0);
 
@@ -307,7 +293,7 @@ static long qt_find_pattern(const char *s, ulong s_len,
                 information could not be read.
   Returns  true if version information is present and successfully read.
 */
-static bool qt_unix_query(const QString &library, uint *version, bool *debug, QLibraryPrivate *lib)
+static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate *lib)
 {
     QFile file(library);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -336,7 +322,7 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
     const long pos = qt_find_pattern(filedata, fdlen, pattern, plen);
     bool ret = false;
     if (pos >= 0)
-        ret = qt_parse_pattern(filedata + pos, version, debug);
+        ret = qt_parse_pattern(filedata + pos, version);
 
     if (!ret)
         lib->errorString = QLibrary::tr("Plugin verification data mismatch in '%1'").arg(library);
@@ -599,7 +585,6 @@ bool QLibraryPrivate::isPlugin()
         return pluginState == IsAPlugin;
 
 #ifndef QT_NO_PLUGIN_CHECK
-    bool debug = !QLIBRARY_AS_DEBUG;
     bool success = false;
 
 #if defined(Q_OS_UNIX)
@@ -621,28 +606,24 @@ bool QLibraryPrivate::isPlugin()
 #ifndef QT_NO_DATESTRING
     lastModified  = fileinfo.lastModified().toString(Qt::ISODate);
 #endif
-    QString regkey = QString::fromLatin1("Katie Plugin Cache %1.%2/%3")
+    QString regkey = QString::fromLatin1("Katie Plugin Cache %1/%2")
                      .arg(QLatin1String(QT_VERSION_HEX_STR))
-                     .arg(QLIBRARY_AS_DEBUG ? QLatin1String("debug") : QLatin1String("false"))
                      .arg(fileName);
 
 #ifndef QT_NO_SETTINGS
     QSettings *settings = QCoreApplicationPrivate::staticConf();
     QStringList reg = settings->value(regkey).toStringList();
-    if (reg.count() == 3 && lastModified == reg.at(2)) {
+    if (reg.count() == 2 && lastModified == reg.at(1)) {
         qt_version = reg.at(0).toUInt();
-        debug = bool(reg.at(1).toInt());
         success = qt_version != 0;
     } else {
 #endif
         // use unix shortcut to avoid loading the library
-        success = qt_unix_query(fileName, &qt_version, &debug, this);
+        success = qt_unix_query(fileName, &qt_version, this);
 
 #ifndef QT_NO_SETTINGS
         QStringList queried;
-        queried << QString::number(qt_version, 16)
-                << QString::number((int)debug)
-                << lastModified;
+        queried << QString::number(qt_version, 16) << lastModified;
         settings->setValue(regkey, queried);
     }
 #endif
@@ -669,12 +650,6 @@ bool QLibraryPrivate::isPlugin()
             .arg(fileName)
             .arg(qt_version)
             .arg(current);
-#ifndef QT_NO_DEBUG_PLUGIN_CHECK
-    } else if(debug != QLIBRARY_AS_DEBUG) {
-        //don't issue a qWarning since we will hopefully find a non-debug? --Sam
-        errorString = QLibrary::tr("The plugin '%1' uses incompatible Katie library."
-                 " (Cannot mix debug and release libraries.)").arg(fileName);
-#endif
     } else {
         pluginState = IsAPlugin;
     }

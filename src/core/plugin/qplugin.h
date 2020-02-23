@@ -51,35 +51,8 @@ QT_BEGIN_NAMESPACE
 
 typedef QObject *(*QtPluginInstanceFunction)();
 
-#define Q_PLUGIN_INSTANCE(IMPLEMENTATION) \
-        { \
-            static QT_PREPEND_NAMESPACE(QPointer)<QT_PREPEND_NAMESPACE(QObject)> _instance; \
-            if (!_instance)      \
-                _instance = new IMPLEMENTATION; \
-            return _instance; \
-        }
-
 #define Q_EXPORT_PLUGIN(PLUGIN) \
           Q_EXPORT_PLUGIN2(PLUGIN, PLUGIN)
-
-// NOTE: if you change pattern, you MUST change the pattern in
-// qlibrary.cpp as well.  changing the pattern will break all
-// backwards compatibility as well (no old plugins will be loaded).
-// QT5: should probably remove the entire pattern thing and do the section
-//      trick for all platforms. for now, keep it and fallback to scan for it.
-#ifdef QT_NO_DEBUG
-#  define QPLUGIN_DEBUG_STR "false"
-#  define QPLUGIN_SECTION_DEBUG_STR ""
-#else
-#  define QPLUGIN_DEBUG_STR "true"
-#  define QPLUGIN_SECTION_DEBUG_STR ".debug"
-#endif
-
-#define Q_PLUGIN_VERIFICATION_DATA \
-  static const char kt_plugin_verification_data[] = \
-    "pattern=KT_PLUGIN_VERIFICATION_DATA\n" \
-    "version=" QT_VERSION_HEX_STR "\n" \
-    "debug=" QPLUGIN_DEBUG_STR;
 
 #if defined(Q_OF_ELF) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG))
 #  define Q_PLUGIN_VERIFICATION_SECTION \
@@ -88,13 +61,22 @@ typedef QObject *(*QtPluginInstanceFunction)();
 #  define Q_PLUGIN_VERIFICATION_SECTION
 #endif
 
+// NOTE: if you change pattern, you MUST change the pattern in
+// qlibrary.cpp as well.  changing the pattern will break all
+// backwards compatibility as well (no old plugins will be loaded).
 #define Q_EXPORT_PLUGIN2(PLUGIN, PLUGINCLASS) \
-          Q_PLUGIN_VERIFICATION_SECTION Q_PLUGIN_VERIFICATION_DATA \
-          Q_EXTERN_C Q_DECL_EXPORT \
-          const char * kt_plugin_query_verification_data() \
-          { return kt_plugin_verification_data; } \
-          Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * kt_plugin_instance() \
-          Q_PLUGIN_INSTANCE(PLUGINCLASS)
+  Q_PLUGIN_VERIFICATION_SECTION static const char kt_plugin_verification_data[] = \
+    "pattern=KT_PLUGIN_VERIFICATION_DATA\n" \
+    "version=" QT_VERSION_HEX_STR "\n"; \
+  Q_EXTERN_C Q_DECL_EXPORT const char * kt_plugin_query_verification_data() \
+  { return kt_plugin_verification_data; } \
+  Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * kt_plugin_instance() \
+  { \
+    static QT_PREPEND_NAMESPACE(QPointer)<QT_PREPEND_NAMESPACE(QObject)> _instance; \
+    if (!_instance)      \
+      _instance = new PLUGINCLASS; \
+    return _instance; \
+  }
 
 QT_END_NAMESPACE
 
