@@ -68,7 +68,7 @@ class QPrintPropertiesDialog : public QDialog
 {
     Q_OBJECT
 public:
-    QPrintPropertiesDialog(QAbstractPrintDialog *parent = 0);
+    QPrintPropertiesDialog(QAbstractPrintDialog *parent = Q_NULLPTR);
     ~QPrintPropertiesDialog();
 
 #if !defined(QT_NO_CUPS)
@@ -210,7 +210,7 @@ class QPPDOptionsEditor : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    QPPDOptionsEditor(QObject* parent = 0) : QStyledItemDelegate(parent) {}
+    QPPDOptionsEditor(QObject *parent = Q_NULLPTR) : QStyledItemDelegate(parent) {}
     ~QPPDOptionsEditor() {}
 
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
@@ -609,7 +609,7 @@ QUnixPrintWidgetPrivate::QUnixPrintWidgetPrivate(QUnixPrintWidget *p)
     , cups(0), cupsPrinterCount(0), cupsPrinters(0), cupsPPD(0)
 #endif
 {
-    q = 0;
+    q = Q_NULLPTR;
     if (parent)
         q = qobject_cast<QAbstractPrintDialog*> (parent->parent());
 
