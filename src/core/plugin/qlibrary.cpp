@@ -247,8 +247,7 @@ static bool qt_parse_pattern(const char *s, uint *version)
     return ret;
 }
 
-static long qt_find_pattern(const char *s, ulong s_len,
-                             const char *pattern, ulong p_len)
+static long qt_find_pattern(const char *s, ulong s_len)
 {
     /*
       we search from the end of the file because on the supported
@@ -262,7 +261,11 @@ static long qt_find_pattern(const char *s, ulong s_len,
       because we have to skip over all the debugging symbols first
     */
 
-    if (! s || ! pattern || p_len > s_len) return -1;
+    static const char pattern[] = "pattern=KT_PLUGIN_VERIFICATION_DATA";
+    static const ulong p_len = qstrlen(pattern);
+
+    if (!s || p_len > s_len)
+        return -1;
     ulong i, hs = 0, hp = 0, delta = s_len - p_len;
 
     for (i = 0; i < p_len; ++i) {
@@ -317,9 +320,7 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
     /*
        ELF binaries build with GNU or Clang have .ktplugin sections.
     */
-    const char pattern[] = "pattern=KT_PLUGIN_VERIFICATION_DATA";
-    const ulong plen = qstrlen(pattern);
-    const long pos = qt_find_pattern(filedata, fdlen, pattern, plen);
+    const long pos = qt_find_pattern(filedata, fdlen);
     bool ret = false;
     if (pos >= 0)
         ret = qt_parse_pattern(filedata + pos, version);
