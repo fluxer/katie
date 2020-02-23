@@ -254,7 +254,7 @@ void BrushManagerProxy::setBrushManager(QtBrushManager *manager)
 
     if (!customBrushesExist) {
         // load brushes from resources
-        QFile qrcFile(QLatin1String(":trolltech/brushes/defaultbrushes.xml"));
+        QFile qrcFile(QLatin1String(":/trolltech/brushes/defaultbrushes.xml"));
         if (!qrcFile.open(QIODevice::ReadOnly))
             Q_ASSERT(false);
 
