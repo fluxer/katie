@@ -615,10 +615,10 @@ bool QChar::isSpace() const
         case U_PARAGRAPH_SEPARATOR:
             return true;
         default:
-            return false;
+            // special characters check
+            return u_isblank(ucs);
     }
-    // special characters check
-    return u_isblank(ucs);
+    return false;
 }
 
 /*!
