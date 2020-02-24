@@ -189,20 +189,17 @@ QT_USE_NAMESPACE
 
      SOLARIS  - Sun Solaris
      HPUX     - HP-UX
-     ULTRIX   - DEC Ultrix
      LINUX    - Linux
      FREEBSD  - FreeBSD
      NETBSD   - NetBSD
      OPENBSD  - OpenBSD
      BSDI     - BSD/OS
-     IRIX     - SGI Irix
      OSF      - HP Tru64 UNIX
      SCO      - SCO OpenServer 5
      UNIXWARE - UnixWare 7, Open UNIX 8
      AIX      - AIX
      HURD     - GNU Hurd
      DGUX     - DG/UX
-     RELIANT  - Reliant UNIX
      DYNIX    - DYNIX/ptx
      LYNX     - LynxOS
      BSD4     - Any BSD 4.4 system
