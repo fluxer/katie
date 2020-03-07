@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished">Qt 라이브러리 호환성 오류</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1872"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1871"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1750,7 +1750,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+504"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+503"/>
         <source>Find Directory</source>
         <translation>디렉터리 찾기</translation>
     </message>
@@ -1895,7 +1895,7 @@ Do you want to delete it anyway?</source>
         <translation>내 컴퓨터</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+177"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+169"/>
         <source>Drive</source>
         <translation>드라이브</translation>
     </message>
@@ -2070,50 +2070,50 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+86"/>
-        <location line="+848"/>
+        <location line="+844"/>
         <source>Normal</source>
         <translation>일반</translation>
     </message>
     <message>
-        <location line="-845"/>
+        <location line="-841"/>
         <location line="+12"/>
-        <location line="+821"/>
+        <location line="+817"/>
         <source>Bold</source>
         <translation>굵게</translation>
     </message>
     <message>
-        <location line="-830"/>
-        <location line="+832"/>
+        <location line="-826"/>
+        <location line="+828"/>
         <source>Demi Bold</source>
         <translation>데미볼드</translation>
     </message>
     <message>
-        <location line="-829"/>
+        <location line="-825"/>
         <location line="+18"/>
-        <location line="+807"/>
+        <location line="+803"/>
         <source>Black</source>
         <translation>블랙</translation>
     </message>
     <message>
-        <location line="-817"/>
+        <location line="-813"/>
         <source>Demi</source>
         <translation>데미</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+817"/>
+        <location line="+813"/>
         <source>Light</source>
         <translation>라이트</translation>
     </message>
     <message>
-        <location line="-671"/>
-        <location line="+674"/>
+        <location line="-667"/>
+        <location line="+670"/>
         <source>Italic</source>
         <translation>이탤릭</translation>
     </message>
     <message>
-        <location line="-671"/>
-        <location line="+673"/>
+        <location line="-667"/>
+        <location line="+669"/>
         <source>Oblique</source>
         <translation>기울임꼴</translation>
     </message>
@@ -2646,14 +2646,14 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+347"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+329"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>&apos;%1&apos;의 플러그인 확인 데이터가 일치하지 않음</translation>
     </message>
     <message>
-        <location line="+202"/>
-        <location line="+40"/>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
+        <location line="+270"/>
+        <location line="+36"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+275"/>
         <source>The shared library was not found.</source>
         <translation>공유 라이브러리를 찾을 수 없습니다.</translation>
     </message>
@@ -2668,17 +2668,12 @@ Do you want to delete it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Katie library. (Cannot mix debug and release libraries.)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+332"/>
+        <location line="+333"/>
         <source>Unknown error</source>
         <translation>알 수 없는 오류</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+179"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+80"/>
         <source>Cannot load library %1: %2</source>
         <translation>라이브러리 %1을(를) 불러올 수 없음: %2</translation>
     </message>
@@ -3528,7 +3523,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1180"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1150"/>
         <source>Name</source>
         <translation>이름</translation>
     </message>
@@ -3690,12 +3685,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPluginLoader</name>
     <message>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="-48"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="-46"/>
         <source>The plugin was not loaded.</source>
         <translation>플러그인을 불러오지 못했습니다.</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+70"/>
         <source>Unknown error</source>
         <translation>알 수 없는 오류</translation>
     </message>
@@ -3864,7 +3859,7 @@ Do you want to delete it anyway?</source>
         <translation>사용자 정의</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-815"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-787"/>
         <location line="+68"/>
         <source>&amp;Options &gt;&gt;</source>
         <translation>설정(&amp;O) &gt;&gt;</translation>
@@ -3880,7 +3875,7 @@ Do you want to delete it anyway?</source>
         <translation>설정(&amp;O) &lt;&lt;</translation>
     </message>
     <message>
-        <location line="+235"/>
+        <location line="+227"/>
         <source>Print to File (PDF)</source>
         <translation>파일로 인쇄 (PDF)</translation>
     </message>
@@ -3900,7 +3895,7 @@ Do you want to delete it anyway?</source>
         <translation>%1 파일로 쓰기</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+61"/>
         <source>Print To File ...</source>
         <translation>파일로 인쇄...</translation>
     </message>
@@ -3924,23 +3919,6 @@ Please choose a different file name.</source>
 Do you want to overwrite it?</source>
         <translation>%1이(가) 이미 존재합니다.
 덮어쓰시겠습니까?</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+121"/>
-        <source>locally connected</source>
-        <translation>로컬로 연결됨</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <location line="+225"/>
-        <source>Aliases: %1</source>
-        <translation>별명: %1</translation>
-    </message>
-    <message>
-        <location line="+217"/>
-        <location line="+199"/>
-        <source>unknown</source>
-        <translation>알 수 없음</translation>
     </message>
 </context>
 <context>
@@ -4343,7 +4321,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+589"/>
+        <location filename="../src/sql/drivers/qsql_sqlite.cpp" line="+589"/>
         <source>Error opening database</source>
         <translation>데이터베이스를 여는 중 오류 발생</translation>
     </message>
@@ -6954,7 +6932,7 @@ Do you want to overwrite it?</source>
         <translation>내용에 문자열 &apos;]]&gt;&apos;가 올 수 없습니다.</translation>
     </message>
     <message>
-        <location line="+212"/>
+        <location line="+210"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="-691"/>
         <source>Encountered incorrectly encoded content.</source>
         <translation>잘못 인코딩된 내용을 발견하였습니다.</translation>
