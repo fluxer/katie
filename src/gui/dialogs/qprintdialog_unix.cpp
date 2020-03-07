@@ -141,7 +141,6 @@ class QUnixPrintWidget : public QWidget
 public:
     QUnixPrintWidget(QPrinter *printer, QWidget *parent = Q_NULLPTR);
     ~QUnixPrintWidget();
-    void updatePrinter();
 
 private:
     friend class QPrintDialogPrivate;
@@ -990,16 +989,6 @@ QUnixPrintWidget::~QUnixPrintWidget()
 {
     delete d;
 }
-
-/*! \internal
-
-    Updates the printer with the states held in the QUnixPrintWidget.
-*/
-void QUnixPrintWidget::updatePrinter()
-{
-    d->setupPrinter();
-}
-
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
