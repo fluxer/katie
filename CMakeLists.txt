@@ -100,9 +100,6 @@ set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 katie_setup_paths()
 
 # optional package
-option(WITH_NIS "Build NIS support" ON)
-add_feature_info(nis WITH_NIS "build NIS support")
-
 option(WITH_CUPS "Build CUPS support" ON)
 add_feature_info(cups WITH_CUPS "build CUPS support")
 
@@ -136,9 +133,6 @@ add_feature_info(mysql WITH_MYSQL "build MySQL support")
 
 option(WITH_RESOLV "Build resolv support" ON)
 add_feature_info(resolv WITH_RESOLV "build resolv support")
-
-option(WITH_NSL "Build NSL support" ON)
-add_feature_info(nsl WITH_NSL "build NSL support")
 
 option(WITH_UNWIND "Build Unwind support" OFF)
 add_feature_info(unwind WITH_UNWIND "build Unwind support")
@@ -320,26 +314,10 @@ set_package_properties(Threads PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(NIS)
-set_package_properties(NIS PROPERTIES
-    PURPOSE "Required for Network Information Service support"
-    DESCRIPTION "Standard C library specific NIS implementation"
-    URL ""
-    TYPE RECOMMENDED
-)
-
 find_package(Resolv)
 set_package_properties(Resolv PROPERTIES
     PURPOSE "Required for domain resolving support"
     DESCRIPTION "Standard C library specific resolv implementation"
-    URL ""
-    TYPE RECOMMENDED
-)
-
-find_package(NSL)
-set_package_properties(NSL PROPERTIES
-    PURPOSE "Required for printing information support"
-    DESCRIPTION "Standard C library specific NSL implementation"
     URL ""
     TYPE RECOMMENDED
 )
@@ -504,14 +482,6 @@ endif()
 
 if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)
     katie_definition(-DQT_NO_RESOLV)
-endif()
-
-if(NOT WITH_NSL OR NOT NSL_FOUND)
-    katie_definition(-DQT_NO_NSL)
-endif()
-
-if(NOT WITH_NIS OR NOT NIS_FOUND)
-    katie_definition(-DQT_NO_NIS)
 endif()
 
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)

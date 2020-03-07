@@ -120,7 +120,6 @@ public:
     Ui::QPrintWidget widget;
     QAbstractPrintDialog * q;
     QPrinter *printer;
-    QList<QPrinterDescription> lprPrinters;
     void updateWidget();
 
 private:
@@ -637,14 +636,6 @@ QUnixPrintWidgetPrivate::QUnixPrintWidgetPrivate(QUnixPrintWidget *p)
             widget.properties->setEnabled(true);
         }
         currentPrinterIndex = cups->currentPrinterIndex();
-    } else {
-#endif
-        currentPrinterIndex = qt_getLprPrinters(lprPrinters);
-        // populating printer combo
-        QList<QPrinterDescription>::const_iterator i = lprPrinters.constBegin();
-        for(; i != lprPrinters.constEnd(); ++i)
-            widget.printers->addItem((*i).name);
-#if !defined(QT_NO_CUPS)
     }
 #endif
 
@@ -765,16 +756,6 @@ void QUnixPrintWidgetPrivate::_q_printerChanged(int index)
     } else {
         if (optionsPane)
             optionsPane->selectPrinter(0);
-#endif
-        if (lprPrinters.count() > 0) {
-            QString type = lprPrinters.at(index).name + QLatin1Char('@') + lprPrinters.at(index).host;
-            if (!lprPrinters.at(index).comment.isEmpty())
-            type += QLatin1String(", ") + lprPrinters.at(index).comment;
-            widget.type->setText(type);
-            if (propertiesDialog)
-                propertiesDialog->selectPrinter();
-        }
-#if !defined(QT_NO_CUPS)
     }
 #endif
 }

@@ -91,6 +91,8 @@
 #define QT_NO_GLIB
 #define QT_NO_ICONV
 #define QT_NO_LPR
+#define QT_NO_NIS
+#define QT_NO_NSL
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -225,8 +227,6 @@
 #cmakedefine QT_NO_NETWORKDISKCACHE
 #cmakedefine QT_NO_NETWORKINTERFACE
 #cmakedefine QT_NO_NETWORKPROXY
-#cmakedefine QT_NO_NIS
-#cmakedefine QT_NO_NSL
 #cmakedefine QT_NO_PDF
 #cmakedefine QT_NO_PLUGIN_CHECK
 #cmakedefine QT_NO_PRINTDIALOG

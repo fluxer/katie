@@ -944,22 +944,6 @@ foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xext SM ICE)
     endif()
 endforeach()
 
-if(WITH_NIS AND NIS_FOUND)
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${NIS_LIBRARIES}
-    )
-    include_directories(${NIS_INCLUDES})
-endif()
-
-if(WITH_NSL AND NSL_FOUND)
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${NSL_LIBRARIES}
-    )
-    include_directories(${NSL_INCLUDES})
-endif()
-
 if(PNG_FOUND)
     set(EXTRA_GUI_LIBS
         ${EXTRA_GUI_LIBS}
