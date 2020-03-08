@@ -80,8 +80,7 @@ public:
           readOnly(true),
           lazyChildCount(false),
           allowAppendChild(true),
-          iconProvider(&defaultProvider),
-          shouldStat(true) // ### This is set to false by QFileDialog
+          iconProvider(&defaultProvider)
     { }
 
     void init();
@@ -108,8 +107,6 @@ public:
     inline void populate(QDirNode *parent) const;
     inline void clear(QDirNode *parent);
 
-    void invalidate();
-
     mutable QDirNode root;
     bool resolveSymlinks;
     bool readOnly;
@@ -131,14 +128,7 @@ public:
     };
     QList<SavedPersistent> savedPersistent;
     QPersistentModelIndex toBeRefreshed;
-
-    bool shouldStat; // use the "carefull not to stat directories" mode
 };
-
-void qt_setDirModelShouldNotStat(QDirModelPrivate *modelPrivate)
-{
-    modelPrivate->shouldStat = false;
-}
 
 QDirModelPrivate::QDirNode *QDirModelPrivate::node(const QModelIndex &index) const
 {
@@ -160,19 +150,6 @@ void QDirModelPrivate::clear(QDirNode *parent)
      Q_ASSERT(parent);
      parent->children.clear();
      parent->populated = false;
-}
-
-void QDirModelPrivate::invalidate()
-{
-    QStack<const QDirNode*> nodes;
-    nodes.push(&root);
-    while (!nodes.empty()) {
-        const QDirNode *current = nodes.pop();
-        current->stat = false;
-        const QVector<QDirNode> children = current->children;
-        for (int i = 0; i < children.count(); ++i)
-            nodes.push(&children.at(i));
-    }
 }
 
 /*!
@@ -589,7 +566,7 @@ bool QDirModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
                 QModelIndex idx=index(QFileInfo(path).path());
                 if (idx.isValid()) {
                     refresh(idx);
-                    //the previous call to refresh may invalidate the _parent. so recreate a new QModelIndex
+                    // the previous call to refresh may invalidate the _parent. so recreate a new QModelIndex
                     _parent = index(to);
                 }
             } else {
@@ -648,10 +625,7 @@ void QDirModel::setNameFilters(const QStringList &filters)
     Q_D(QDirModel);
     d->nameFilters = filters;
     emit layoutAboutToBeChanged();
-    if (d->shouldStat)
-       refresh(QModelIndex());
-    else
-        d->invalidate();
+    refresh(QModelIndex());
     emit layoutChanged();
 }
 
@@ -679,10 +653,7 @@ void QDirModel::setFilter(QDir::Filters filters)
     Q_D(QDirModel);
     d->filters = filters;
     emit layoutAboutToBeChanged();
-    if (d->shouldStat)
-        refresh(QModelIndex());
-    else
-        d->invalidate();
+    refresh(QModelIndex());
     emit layoutChanged();
 }
 
@@ -709,10 +680,7 @@ void QDirModel::setSorting(QDir::SortFlags sort)
     Q_D(QDirModel);
     d->sort = sort;
     emit layoutAboutToBeChanged();
-    if (d->shouldStat)
-        refresh(QModelIndex());
-    else
-        d->invalidate();
+    refresh(QModelIndex());
     emit layoutChanged();
 }
 
@@ -1157,7 +1125,7 @@ QVector<QDirModelPrivate::QDirNode> QDirModelPrivate::children(QDirNode *parent,
         node.parent = parent;
         node.info = infoList.at(i);
         node.populated = false;
-        node.stat = shouldStat;
+        node.stat = true;
     }
 
     return nodes;
@@ -1276,7 +1244,7 @@ void QDirModelPrivate::appendChild(QDirModelPrivate::QDirNode *parent, const QSt
 {
     QDirModelPrivate::QDirNode node;
     node.populated = false;
-    node.stat = shouldStat;
+    node.stat = true;
     node.parent = (parent == &root ? 0 : parent);
     node.info = QFileInfo(path);
     node.info.setCaching(true);
