@@ -54,9 +54,7 @@ class Q_SCRIPT_EXPORT QScriptValue
 public:
     enum ResolveFlag {
         ResolveLocal        = 0x00,
-        ResolvePrototype    = 0x01,
-        ResolveScope        = 0x02,
-        ResolveFull         = ResolvePrototype | ResolveScope
+        ResolvePrototype    = 0x01
     };
 
     Q_DECLARE_FLAGS(ResolveFlags, ResolveFlag)
@@ -151,9 +149,6 @@ public:
 
     QScriptValue prototype() const;
     void setPrototype(const QScriptValue &prototype);
-
-    QScriptValue scope() const;
-    void setScope(const QScriptValue &scope);
 
     QScriptValue property(const QString &name,
                           const ResolveFlags &mode = ResolvePrototype) const;

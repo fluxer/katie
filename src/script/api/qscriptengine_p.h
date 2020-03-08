@@ -175,12 +175,12 @@ public:
     static inline const QMetaObject *toQMetaObject(JSC::ExecState *, JSC::JSValue);
 
     static inline JSC::JSValue property(JSC::ExecState*, JSC::JSValue, const JSC::Identifier &id,
-                                 int resolveMode = QScriptValue::ResolvePrototype);
-    static JSC::JSValue propertyHelper(JSC::ExecState*, JSC::JSValue, const JSC::Identifier &id, int resolveMode);
+                                 QScriptValue::ResolveFlags resolveMode = QScriptValue::ResolvePrototype);
+    static JSC::JSValue propertyHelper(JSC::ExecState*, JSC::JSValue, const JSC::Identifier &id, QScriptValue::ResolveFlags resolveMode);
     static inline JSC::JSValue property(JSC::ExecState*, JSC::JSValue, quint32 index,
-                                 int resolveMode = QScriptValue::ResolvePrototype);
-    static JSC::JSValue propertyHelper(JSC::ExecState*, JSC::JSValue, quint32, int resolveMode);
-    static inline JSC::JSValue property(JSC::ExecState*, JSC::JSValue, const JSC::UString &, int resolveMode);
+                                 QScriptValue::ResolveFlags resolveMode = QScriptValue::ResolvePrototype);
+    static JSC::JSValue propertyHelper(JSC::ExecState*, JSC::JSValue, quint32, QScriptValue::ResolveFlags resolveMode);
+    static inline JSC::JSValue property(JSC::ExecState*, JSC::JSValue, const JSC::UString &, QScriptValue::ResolveFlags resolveMode);
     static inline void setProperty(JSC::ExecState*, JSC::JSValue object, const JSC::UString &name, JSC::JSValue,
                      const QScriptValue::PropertyFlags &flags = QScriptValue::KeepExistingFlags);
     static void setProperty(JSC::ExecState*, JSC::JSValue object, const JSC::Identifier &id, JSC::JSValue,
@@ -694,12 +694,12 @@ inline void QScriptValuePrivate::initFrom(const QString &value)
         engine->registerScriptValue(this);
 }
 
-inline JSC::JSValue QScriptEnginePrivate::property(JSC::ExecState *exec, JSC::JSValue value, const JSC::UString &name, int resolveMode)
+inline JSC::JSValue QScriptEnginePrivate::property(JSC::ExecState *exec, JSC::JSValue value, const JSC::UString &name, QScriptValue::ResolveFlags resolveMode)
 {
     return property(exec, value, JSC::Identifier(exec, name), resolveMode);
 }
 
-inline JSC::JSValue QScriptEnginePrivate::property(JSC::ExecState *exec, JSC::JSValue value, const JSC::Identifier &id, int resolveMode)
+inline JSC::JSValue QScriptEnginePrivate::property(JSC::ExecState *exec, JSC::JSValue value, const JSC::Identifier &id, QScriptValue::ResolveFlags resolveMode)
 {
     Q_ASSERT(isObject(value));
     JSC::JSObject *object = JSC::asObject(value);
@@ -709,7 +709,7 @@ inline JSC::JSValue QScriptEnginePrivate::property(JSC::ExecState *exec, JSC::JS
     return propertyHelper(exec, value, id, resolveMode);
 }
 
-inline JSC::JSValue QScriptEnginePrivate::property(JSC::ExecState *exec, JSC::JSValue value, quint32 index, int resolveMode)
+inline JSC::JSValue QScriptEnginePrivate::property(JSC::ExecState *exec, JSC::JSValue value, quint32 index, QScriptValue::ResolveFlags resolveMode)
 {
     Q_ASSERT(isObject(value));
     JSC::JSObject *object = JSC::asObject(value);

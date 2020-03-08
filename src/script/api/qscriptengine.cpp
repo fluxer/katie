@@ -1759,7 +1759,8 @@ QVariant QScriptEnginePrivate::toVariant(JSC::ExecState *exec, JSC::JSValue valu
     return QVariant();
 }
 
-JSC::JSValue QScriptEnginePrivate::propertyHelper(JSC::ExecState *exec, JSC::JSValue value, const JSC::Identifier &id, int resolveMode)
+JSC::JSValue QScriptEnginePrivate::propertyHelper(JSC::ExecState *exec, JSC::JSValue value,
+                                                  const JSC::Identifier &id, QScriptValue::ResolveFlags resolveMode)
 {
     JSC::JSValue result;
     if (!(resolveMode & QScriptValue::ResolvePrototype)) {
@@ -1769,16 +1770,11 @@ JSC::JSValue QScriptEnginePrivate::propertyHelper(JSC::ExecState *exec, JSC::JSV
         if (object->getOwnPropertySlot(exec, id, slot))
             result = slot.getValue(exec, id);
     }
-    if (!result && (resolveMode & QScriptValue::ResolveScope)) {
-        // ### check if it's a function object and look in the scope chain
-        JSC::JSValue scope = property(exec, value, "__qt_scope__", QScriptValue::ResolveLocal);
-        if (isObject(scope))
-            result = property(exec, scope, id, resolveMode);
-    }
     return result;
 }
 
-JSC::JSValue QScriptEnginePrivate::propertyHelper(JSC::ExecState *exec, JSC::JSValue value, quint32 index, int resolveMode)
+JSC::JSValue QScriptEnginePrivate::propertyHelper(JSC::ExecState *exec, JSC::JSValue value,
+                                                  quint32 index, QScriptValue::ResolveFlags resolveMode)
 {
     JSC::JSValue result;
     if (!(resolveMode & QScriptValue::ResolvePrototype)) {
