@@ -15,9 +15,7 @@ Build-Depends: debhelper (>= 9~), libssl-dev, zlib1g-dev, libzstd-dev,
 
 Package: katie-runtime
 Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x
-Depends: ${shlibs:Depends}, ${misc:Depends}, openssl, zlib1g, libzstd1, libc6,
- libpng16-16, libjpeg62-turbo, libtiffxx5, libmng1, libcups2, libfreetype6,
- libfontconfig1, libpcre3,  libdbus-1-3, libsqlite3-0, libicu63
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: unixodbc, libpq5, libmariadbclient, xserver-xorg-core
 Description: C++ toolkit derived from the Qt 4.8 framework
  This package is pre-release version of the Katie tookit (includes libraries,
