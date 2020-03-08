@@ -27,6 +27,6 @@ katie_setup_object(qconnmanbearerplugin sharedbearer)
 
 install(
     TARGETS qconnmanbearerplugin
-    DESTINATION ${KATIE_PLUGINS_RELATIVE}/bearer
+    DESTINATION ${KATIE_PLUGINS_PATH}/bearer
     COMPONENT Runtime
 )

@@ -80,24 +80,23 @@ set(KATIE_LICENSE "Open Source")
 set(KATIE_PRODUCT "AwesomeSauce")
 
 include(GNUInstallDirs)
-set(KATIE_PREFIX_FULL "${CMAKE_INSTALL_PREFIX}" CACHE PATH "General installation prefix")
-set(KATIE_HEADERS_FULL "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
-set(KATIE_LIBRARIES_FULL "${CMAKE_INSTALL_FULL_LIBDIR}" CACHE PATH "Libraries installation path")
-set(KATIE_BINARIES_FULL "${CMAKE_INSTALL_FULL_BINDIR}" CACHE PATH "Binaries installation path")
-set(KATIE_PLUGINS_FULL "${KATIE_LIBRARIES_FULL}/katie/plugins" CACHE PATH "Plugins installation path")
-set(KATIE_IMPORTS_FULL "${KATIE_LIBRARIES_FULL}/katie/imports" CACHE PATH "Declarative imports installation path")
-set(KATIE_DATA_FULL "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
-set(KATIE_TRANSLATIONS_FULL "${KATIE_DATA_FULL}/katie/translations" CACHE PATH "Translations installation path")
-set(KATIE_SETTINGS_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg" CACHE PATH "Settings runtime path")
-set(KATIE_CMAKE_FULL "${KATIE_LIBRARIES_FULL}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
-set(KATIE_LDCONF_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
-set(KATIE_PROFILE_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/profile.d" CACHE PATH "Shell profile scripts installation path")
-set(KATIE_MAN_FULL "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages installation path")
-set(KATIE_APPLICATIONS_FULL "${KATIE_DATA_FULL}/applications" CACHE PATH "Desktop applications register installation path")
-set(KATIE_PIXMAPS_FULL "${KATIE_DATA_FULL}/pixmaps" CACHE PATH "Desktop applications icon installation path")
-set(KATIE_PKGCONFIG_FULL "${KATIE_LIBRARIES_FULL}/pkgconfig" CACHE PATH "pkg-config installation path")
+set(KATIE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}" CACHE PATH "General installation prefix")
+set(KATIE_HEADERS_PATH "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
+set(KATIE_LIBRARIES_PATH "${CMAKE_INSTALL_FULL_LIBDIR}" CACHE PATH "Libraries installation path")
+set(KATIE_BINARIES_PATH "${CMAKE_INSTALL_FULL_BINDIR}" CACHE PATH "Binaries installation path")
+set(KATIE_PLUGINS_PATH "${KATIE_LIBRARIES_PATH}/katie/plugins" CACHE PATH "Plugins installation path")
+set(KATIE_IMPORTS_PATH "${KATIE_LIBRARIES_PATH}/katie/imports" CACHE PATH "Declarative imports installation path")
+set(KATIE_DATA_PATH "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
+set(KATIE_TRANSLATIONS_PATH "${KATIE_DATA_PATH}/katie/translations" CACHE PATH "Translations installation path")
+set(KATIE_SETTINGS_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg" CACHE PATH "Settings runtime path")
+set(KATIE_CMAKE_PATH "${KATIE_LIBRARIES_PATH}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
+set(KATIE_LDCONF_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
+set(KATIE_PROFILE_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/profile.d" CACHE PATH "Shell profile scripts installation path")
+set(KATIE_MAN_PATH "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages installation path")
+set(KATIE_APPLICATIONS_PATH "${KATIE_DATA_PATH}/applications" CACHE PATH "Desktop applications register installation path")
+set(KATIE_PIXMAPS_PATH "${KATIE_DATA_PATH}/pixmaps" CACHE PATH "Desktop applications icon installation path")
+set(KATIE_PKGCONFIG_PATH "${KATIE_LIBRARIES_PATH}/pkgconfig" CACHE PATH "pkg-config installation path")
 set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
-katie_setup_paths()
 
 # optional package
 option(WITH_CUPS "Build CUPS support" ON)
@@ -1016,7 +1015,7 @@ configure_file(
 
 install(
     DIRECTORY mkspecs
-    DESTINATION ${KATIE_CMAKE_RELATIVE}
+    DESTINATION ${KATIE_CMAKE_PATH}
     COMPONENT Devel
 )
 
@@ -1026,14 +1025,14 @@ install(
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
     ${CMAKE_SOURCE_DIR}/cmake/Qt4UseFile.cmake
     ${CMAKE_SOURCE_DIR}/cmake/modules/KatieMacros.cmake
-    DESTINATION ${KATIE_CMAKE_RELATIVE}
+    DESTINATION ${KATIE_CMAKE_PATH}
     COMPONENT Devel
 )
 
 install(
     EXPORT KatieLibraryTargets
     NAMESPACE Katie::
-    DESTINATION ${KATIE_CMAKE_RELATIVE}
+    DESTINATION ${KATIE_CMAKE_PATH}
     FILE KatieLibraryTargets.cmake
     COMPONENT Devel
 )
@@ -1041,20 +1040,20 @@ install(
 install(
     EXPORT KatieBinaryTargets
     NAMESPACE Katie::
-    DESTINATION ${KATIE_CMAKE_RELATIVE}
+    DESTINATION ${KATIE_CMAKE_PATH}
     FILE KatieBinaryTargets.cmake
     COMPONENT Devel
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.conf
-    DESTINATION ${KATIE_LDCONF_RELATIVE}
+    DESTINATION ${KATIE_LDCONF_PATH}
     COMPONENT Runtime
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.sh
-    DESTINATION ${KATIE_PROFILE_RELATIVE}
+    DESTINATION ${KATIE_PROFILE_PATH}
     COMPONENT Runtime
 )
 

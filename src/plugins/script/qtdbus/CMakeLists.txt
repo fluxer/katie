@@ -14,6 +14,6 @@ set_target_properties(qtscriptdbusplugin PROPERTIES OUTPUT_NAME qtscriptdbus)
 
 install(
     TARGETS qtscriptdbusplugin
-    DESTINATION ${KATIE_PLUGINS_RELATIVE}/script
+    DESTINATION ${KATIE_PLUGINS_PATH}/script
     COMPONENT Runtime
 )
