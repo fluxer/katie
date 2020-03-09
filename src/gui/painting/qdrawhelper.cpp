@@ -5178,22 +5178,14 @@ static void qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
     }
 }
 
-template <class T>
-inline void qt_rectfill_template(QRasterBuffer *rasterBuffer,
-                                 int x, int y, int width, int height,
-                                 quint32 color)
-{
-    qt_rectfill<T>(reinterpret_cast<T*>(rasterBuffer->buffer()),
-                   qt_colorConvert<T, quint32p>(quint32p::fromRawData(color), 0),
-                   x, y, width, height, rasterBuffer->bytesPerLine());
-}
-
 #define QT_RECTFILL(T)                                                  \
     inline static void qt_rectfill_##T(QRasterBuffer *rasterBuffer,     \
                                        int x, int y, int width, int height, \
                                        quint32 color)                   \
     {                                                                   \
-        qt_rectfill_template<T>(rasterBuffer, x, y, width, height, color); \
+        qt_rectfill<T>(reinterpret_cast<T*>(rasterBuffer->buffer()),    \
+                    qt_colorConvert<T, quint32p>(quint32p::fromRawData(color), 0), \
+                    x, y, width, height, rasterBuffer->bytesPerLine()); \
     }
 
 QT_RECTFILL(quint32)
