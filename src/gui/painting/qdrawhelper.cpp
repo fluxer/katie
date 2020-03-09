@@ -5221,7 +5221,6 @@ static void qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
                                     int mapWidth, int mapHeight, int mapStride,
                                     const QClipData *clip)
 {
-    const quint32 c = color;
     const int destStride = rasterBuffer->bytesPerLine() / sizeof(quint32);
 
     if (!clip) {
@@ -5233,10 +5232,10 @@ static void qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
                 if (coverage == 0) {
                     // nothing
                 } else if (coverage == 255) {
-                    dest[i] = c;
+                    dest[i] = color;
                 } else {
                     const int ialpha = 255 - coverage;
-                    dest[i] = INTERPOLATE_PIXEL_255(c, coverage, dest[i], ialpha);
+                    dest[i] = INTERPOLATE_PIXEL_255(color, coverage, dest[i], ialpha);
                 }
             }
             dest += destStride;
@@ -5266,10 +5265,10 @@ static void qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
                     if (coverage == 0) {
                         // nothing
                     } else if (coverage == 255) {
-                        dest[xp] = c;
+                        dest[xp] = color;
                     } else {
                         const int ialpha = 255 - coverage;
-                        dest[xp] = INTERPOLATE_PIXEL_255(c, coverage, dest[xp], ialpha);
+                        dest[xp] = INTERPOLATE_PIXEL_255(color, coverage, dest[xp], ialpha);
                     }
 
                 } // for (i -> line.count)
@@ -5284,8 +5283,6 @@ static void qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
                                     const uint *src, int mapWidth, int mapHeight, int srcStride,
                                     const QClipData *clip)
 {
-    const quint32 c = color;
-
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
@@ -5305,7 +5302,7 @@ static void qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
             for (int i = 0; i < mapWidth; ++i) {
                 const uint coverage = src[i];
                 if (coverage == 0xffffffff) {
-                    dst[i] = c;
+                    dst[i] = color;
                 } else if (coverage != 0xff000000) {
                     rgbBlendPixel(dst+i, coverage, sr, sg, sb);
                 }
@@ -5335,7 +5332,7 @@ static void qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
                 for (int xp=start; xp<end; ++xp) {
                     const uint coverage = src[xp - x];
                     if (coverage == 0xffffffff) {
-                        dst[xp] = c;
+                        dst[xp] = color;
                     } else if (coverage != 0xff000000) {
                         rgbBlendPixel(dst+xp, coverage, sr, sg, sb);
                     }
