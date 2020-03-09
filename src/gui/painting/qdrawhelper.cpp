@@ -4877,9 +4877,7 @@ static void qt_gradient_quint32(int count, const QSpan *spans, void *userData)
                 qreal ry = data->m22 * (y + 0.5) + data->dy;
                 qreal t = linear.dy*ry + linear.off;
                 t *= (GRADIENT_STOPTABLE_SIZE - 1);
-                quint32 color =
-                    qt_gradient_pixel_fixed(&data->gradient,
-                                            int(t * FIXPT_SIZE));
+                quint32 color = qt_gradient_pixel_fixed(&data->gradient, int(t * FIXPT_SIZE));
 
             This has then been converted to fixed point to improve performance.
          */
@@ -4888,12 +4886,8 @@ static void qt_gradient_quint32(int count, const QSpan *spans, void *userData)
         int off = int((((linear.dy * (data->m22 * qreal(0.5) + data->dy) + linear.off) * gss) * FIXPT_SIZE));
 
         while (count--) {
-            int y = spans->y;
-            int x = spans->x;
-
-            quint32 *dst = (quint32 *)(data->rasterBuffer->scanLine(y)) + x;
-            quint32 color =
-                qt_gradient_pixel_fixed(&data->gradient, yinc * y + off);
+            quint32 *dst = (quint32 *)(data->rasterBuffer->scanLine(spans->y)) + spans->x;
+            quint32 color = qt_gradient_pixel_fixed(&data->gradient, yinc * spans->y + off);
 
             funcSolid(dst, spans->len, color, spans->coverage);
             ++spans;
@@ -4925,9 +4919,7 @@ static void qt_gradient_quint16(int count, const QSpan *spans, void *userData)
                 qreal ry = data->m22 * (y + 0.5) + data->dy;
                 qreal t = linear.dy*ry + linear.off;
                 t *= (GRADIENT_STOPTABLE_SIZE - 1);
-                quint32 color =
-                    qt_gradient_pixel_fixed(&data->gradient,
-                                            int(t * FIXPT_SIZE));
+                quint32 color = qt_gradient_pixel_fixed(&data->gradient, int(t * FIXPT_SIZE));
 
             This has then been converted to fixed point to improve performance.
          */
@@ -4937,11 +4929,7 @@ static void qt_gradient_quint16(int count, const QSpan *spans, void *userData)
 
         uint oldColor = data->solid.color;
         while (count--) {
-            int y = spans->y;
-
-            quint32 color = qt_gradient_pixel_fixed(&data->gradient, yinc * y + off);
-
-            data->solid.color = color;
+            data->solid.color = qt_gradient_pixel_fixed(&data->gradient, yinc * spans->y + off);
             blend_color_generic(1, spans, userData);
             ++spans;
         }
