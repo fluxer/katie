@@ -508,12 +508,6 @@ static inline uint BYTE_MUL_RGB16(uint x, uint a) {
     return t;
 }
 
-static inline uint BYTE_MUL_RGB16_32(uint x, uint a) {
-    uint t = (((x & 0xf81f07e0) >> 5)*a) & 0xf81f07e0;
-    t |= (((x & 0x07e0f81f)*a) >> 5) & 0x07e0f81f;
-    return t;
-}
-
 #define INV_PREMUL(p)                                   \
     (qAlpha(p) == 0 ? 0 :                               \
     ((qAlpha(p) << 24)                                  \
@@ -1769,42 +1763,12 @@ QT_RECTCONVERT_TRIVIAL_IMPL(qrgb444)
 
 static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
-inline ushort qConvertRgb32To16(uint c)
-{
-   return (((c) >> 3) & 0x001f)
-       | (((c) >> 5) & 0x07e0)
-       | (((c) >> 8) & 0xf800);
-}
-
-inline quint32 qConvertRgb32To16x2(quint64 c)
-{
-    c = (((c) >> 3) & Q_UINT64_C(0x001f0000001f))
-        | (((c) >> 5) & Q_UINT64_C(0x07e0000007e0))
-        | (((c) >> 8) & Q_UINT64_C(0xf8000000f800));
-    return c | (c >> 16);
-}
-
 inline QRgb qConvertRgb16To32(uint c)
 {
     return 0xff000000
         | ((((c) << 3) & 0xf8) | (((c) >> 2) & 0x7))
         | ((((c) << 5) & 0xfc00) | (((c) >> 1) & 0x300))
         | ((((c) << 8) & 0xf80000) | (((c) << 3) & 0x70000));
-}
-
-inline int qRed565(quint16 rgb) {
-    const int r = (rgb & 0xf800);
-    return (r >> 8) | (r >> 13);
-}
-
-inline int qGreen565(quint16 rgb) {
-    const int g = (rgb & 0x07e0);
-    return (g >> 3) | (g >> 9);
-}
-
-inline int qBlue565(quint16 rgb) {
-    const int b = (rgb & 0x001f);
-    return (b << 3) | (b >> 2);
 }
 
 const uint qt_bayer_matrix[16][16] = {
@@ -1854,12 +1818,6 @@ const uint qt_bayer_matrix[16][16] = {
 #define AMIX(mask) quint32(qMin(((qint64(s)&mask) + (qint64(d)&mask)), qint64(mask)))
 #define MIX(mask) (qMin(((quint32(s)&mask) + (quint32(d)&mask)), quint32(mask)))
 #endif
-
-inline int comp_func_Plus_one_pixel_const_alpha(uint d, const uint s, const uint const_alpha, const uint one_minus_const_alpha)
-{
-    const int result = (AMIX(AMASK) | MIX(RMASK) | MIX(GMASK) | MIX(BMASK));
-    return INTERPOLATE_PIXEL_255(result, const_alpha, d, one_minus_const_alpha);
-}
 
 inline int comp_func_Plus_one_pixel(uint d, const uint s)
 {
