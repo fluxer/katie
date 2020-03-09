@@ -236,7 +236,6 @@ private:
     inline void ensurePen() { ensurePen(state()->pen); }
 
     void updateOutlineMapper();
-    inline void ensureOutlineMapper();
 
     void updateRasterState();
     inline void ensureRasterState() {
@@ -301,7 +300,6 @@ public:
     int deviceDepth;
 
     bool mono_surface;
-    bool outlinemapper_xform_dirty;
 
     QScopedPointer<QRasterizer> rasterizer;
 };
@@ -431,11 +429,6 @@ private:
     int bytes_per_pixel;
     uchar *m_buffer;
 };
-
-inline void QRasterPaintEngine::ensureOutlineMapper() {
-    if (d_func()->outlinemapper_xform_dirty)
-        updateOutlineMapper();
-}
 
 inline const QClipData *QRasterPaintEnginePrivate::clip() const {
     Q_Q(const QRasterPaintEngine);

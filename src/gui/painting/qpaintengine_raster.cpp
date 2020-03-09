@@ -220,7 +220,6 @@ void QRasterPaintEngine::init()
     d->rasterizer.reset(new QRasterizer);
     d->rasterBuffer.reset(new QRasterBuffer());
     d->outlineMapper.reset(new QOutlineMapper);
-    d->outlinemapper_xform_dirty = true;
 
     d->basicStroker.setMoveToHook(qt_ft_outline_move_to);
     d->basicStroker.setLineToHook(qt_ft_outline_line_to);
@@ -307,7 +306,7 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
     d->systemStateChanged();
 
     QRasterPaintEngineState *s = state();
-    ensureOutlineMapper();
+    updateOutlineMapper();
     d->outlineMapper->m_clip_rect = d->deviceRect;
 
     if (d->outlineMapper->m_clip_rect.width() > RASTER_COORD_LIMIT)
@@ -401,7 +400,7 @@ void QRasterPaintEngine::updateMatrix(const QTransform &matrix)
     s->matrix = matrix;
     s->flags.tx_noshear = qt_scaleForTransform(s->matrix, &s->txscale);
 
-    ensureOutlineMapper();
+    updateOutlineMapper();
 }
 
 
@@ -913,7 +912,7 @@ void QRasterPaintEngine::clip(const QVectorPath &path, Qt::ClipOperation op)
         QClipData *newClip = new QClipData(d->rasterBuffer->height());
         newClip->initialize();
         ClipData clipData = { base, newClip, isectOp };
-        ensureOutlineMapper();
+        updateOutlineMapper();
         d->rasterize(d->outlineMapper->convertPath(path), qt_span_clip, &clipData);
 
         newClip->fixup();
@@ -1098,7 +1097,7 @@ void QRasterPaintEngine::fillPath(const QPainterPath &path, QSpanData *fillData)
         return;
     }
 
-    ensureOutlineMapper();
+    updateOutlineMapper();
     d->rasterize(d->outlineMapper->convertPath(path), blend, fillData);
 }
 
@@ -1407,7 +1406,7 @@ void QRasterPaintEngine::fill(const QVectorPath &path, const QBrush &brush)
 //             return;
 //         }
 
-    ensureOutlineMapper();
+    updateOutlineMapper();
     d->rasterize(d->outlineMapper->convertPath(path), blend, &s->brushData);
 }
 
@@ -1445,7 +1444,7 @@ void QRasterPaintEngine::fillRect(const QRectF &r, QSpanData *data)
 
     QPainterPath path;
     path.addRect(r);
-    ensureOutlineMapper();
+    updateOutlineMapper();
     fillPath(path, data);
 }
 
@@ -1504,7 +1503,7 @@ void QRasterPaintEngine::fillPolygon(const QPointF *points, int pointCount, Poly
 
     // Compose polygon fill..,
     QVectorPath vp((qreal *) points, pointCount, 0, QVectorPath::polygonFlags(mode));
-    ensureOutlineMapper();
+    updateOutlineMapper();
     QT_FT_Outline *outline = d->outlineMapper->convertPath(vp);
 
     // scanconvert.
@@ -1578,7 +1577,7 @@ void QRasterPaintEngine::drawPolygon(const QPoint *points, int pointCount, Polyg
         ensureBrush();
         if (s->brushData.blend) {
             // Compose polygon fill..,
-            ensureOutlineMapper();
+            updateOutlineMapper();
             d->outlineMapper->beginOutline(mode == WindingMode ? Qt::WindingFill : Qt::OddEvenFill);
             d->outlineMapper->moveTo(*points);
             const QPoint *p = points;
