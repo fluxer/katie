@@ -742,7 +742,7 @@ void QRasterPaintEngine::clipEnabledChanged()
 
 void QRasterPaintEnginePrivate::systemStateChanged()
 {
-    deviceRectUnclipped = QRect(0, 0,
+    const QRect deviceRectUnclipped = QRect(0, 0,
             qMin(RASTER_COORD_LIMIT, device->width()),
             qMin(RASTER_COORD_LIMIT, device->height()));
 

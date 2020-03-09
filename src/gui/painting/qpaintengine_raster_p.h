@@ -286,7 +286,6 @@ public:
     QScopedPointer<QRasterBuffer>  rasterBuffer;
 
     QRect deviceRect;
-    QRect deviceRectUnclipped;
 
     QStroker basicStroker;
     QScopedPointer<QDashStroker> dashStroker;
