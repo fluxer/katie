@@ -96,28 +96,6 @@ typedef void (*RectFillFunc)(QRasterBuffer *rasterBuffer,
                              int x, int y, int width, int height,
                              quint32 color);
 
-typedef void (*SrcOverBlendFunc)(uchar *destPixels, int dbpl,
-                                 const uchar *src, int spbl,
-                                 int w, int h,
-                                 int const_alpha);
-
-typedef void (*SrcOverScaleFunc)(uchar *destPixels, int dbpl,
-                                 const uchar *src, int spbl, int srch,
-                                 const QRectF &targetRect,
-                                 const QRectF &sourceRect,
-                                 const QRect &clipRect,
-                                 int const_alpha);
-
-typedef void (*SrcOverTransformFunc)(uchar *destPixels, int dbpl,
-                                     const uchar *src, int spbl,
-                                     const QRectF &targetRect,
-                                     const QRectF &sourceRect,
-                                     const QRect &clipRect,
-                                     const QTransform &targetRectTransform,
-                                     int const_alpha);
-
-typedef void (*MemRotateFunc)(const uchar *srcPixels, int w, int h, int sbpl, uchar *destPixels, int dbpl);
-
 struct DrawHelper {
     ProcessSpans blendColor;
     ProcessSpans blendGradient;
@@ -1475,7 +1453,7 @@ qrgb444 qrgb444::byte_mul(quint8 a) const
 template <class T>
 inline void qt_memfill(T *dest, const T value, int count)
 {
-    memset(dest, value, count);
+    ::memset(dest, value, count);
 }
 
 template <class DST, class SRC>
@@ -1557,7 +1535,7 @@ inline void qt_memconvert(DST *dest, const SRC *src, int count)
     template <> \
     inline void qt_memconvert(T *dest, const T *src, int count) \
     { \
-        memcpy(dest, src, count * sizeof(T)); \
+        ::memcpy(dest, src, count * sizeof(T)); \
     }
 QT_TRIVIAL_MEMCONVERT_IMPL(quint32)
 QT_TRIVIAL_MEMCONVERT_IMPL(qrgb888)

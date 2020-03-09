@@ -262,9 +262,6 @@ public:
 
     void systemStateChanged();
 
-    void drawImage(const QPointF &pt, const QImage &img, SrcOverBlendFunc func,
-                   const QRect &clip, int alpha, const QRect &sr = QRect());
-
     QTransform brushMatrix() const {
         Q_Q(const QRasterPaintEngine);
         const QRasterPaintEngineState *s = q->state();
