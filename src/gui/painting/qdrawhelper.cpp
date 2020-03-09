@@ -97,7 +97,7 @@ template <class DST>
 static uint * QT_FASTCALL destFetch(uint *buffer, QRasterBuffer *rasterBuffer,
                                     int x, int y, int length)
 {
-    const DST *src = reinterpret_cast<DST*>(rasterBuffer->scanLine(y)) + x;
+    const DST *src = reinterpret_cast<const DST*>(rasterBuffer->scanLine(y)) + x;
     quint32 *dest = reinterpret_cast<quint32*>(buffer);
     while (length--)
         *dest++ = *src++;
