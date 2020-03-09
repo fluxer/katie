@@ -2576,9 +2576,10 @@ static inline Operator getOperator(const QSpanData *data, const QSpan *spans, in
         op.src_fetch = qt_fetch_conical_gradient;
         break;
     case QSpanData::Texture:
-        op.src_fetch = sourceFetch[getBlendType(data)][data->texture.format];
         solidSource = !data->texture.hasAlpha;
-    default:
+        op.src_fetch = sourceFetch[getBlendType(data)][data->texture.format];
+        break;
+    case QSpanData::None:
         break;
     }
 
