@@ -2422,19 +2422,6 @@ QRasterPaintEnginePrivate::getBrushFunc(const QRectF &rect,
     return isUnclipped(rect, 0) ? data->unclipped_blend : data->blend;
 }
 
-inline ProcessSpans
-QRasterPaintEnginePrivate::getPenFunc(const QRectF &rect,
-                                      const QSpanData *data) const
-{
-    Q_Q(const QRasterPaintEngine);
-    const QRasterPaintEngineState *s = q->state();
-
-    if (s->matrix.type() > QTransform::TxTranslate)
-        return data->blend;
-    const int penWidth = qCeil(s->lastPen.widthF());
-    return isUnclipped(rect, penWidth) ? data->unclipped_blend : data->blend;
-}
-
 /*!
    \reimp
 */
