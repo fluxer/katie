@@ -66,9 +66,6 @@ Q_GUI_EXPORT extern bool qt_scaleForTransform(const QTransform &transform, qreal
 void dumpClip(int width, int height, const QClipData *clip);
 #endif
 
-#define QT_FAST_SPANS
-
-
 // A little helper macro to get a better approximation of dimensions.
 // If we have a rect that starting at 0.5 of width 3.5 it should span
 // 4 pixels.
@@ -217,7 +214,6 @@ void QRasterPaintEngine::init()
 {
     Q_D(QRasterPaintEngine);
 
-    d->rasterizer.reset(new QRasterizer);
     d->rasterBuffer.reset(new QRasterBuffer());
     d->outlineMapper.reset(new QOutlineMapper);
 
@@ -314,8 +310,6 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
     if (d->outlineMapper->m_clip_rect.height() > RASTER_COORD_LIMIT)
         d->outlineMapper->m_clip_rect.setHeight(RASTER_COORD_LIMIT);
 
-    d->rasterizer->setClipRect(d->deviceRect);
-
     s->penData.init(d->rasterBuffer.data(), this);
     s->penData.setup(s->pen.brush(), s->intOpacity, s->composition_mode);
     s->stroker = &d->basicStroker;
@@ -398,7 +392,6 @@ void QRasterPaintEngine::updateMatrix(const QTransform &matrix)
     QRasterPaintEngineState *s = state();
     // FALCON: get rid of this line, see drawImage call below.
     s->matrix = matrix;
-    s->flags.tx_noshear = qt_scaleForTransform(s->matrix, &s->txscale);
 
     updateOutlineMapper();
 }
@@ -426,7 +419,6 @@ QRasterPaintEngineState::QRasterPaintEngineState()
     flags.antialiased = false;
     flags.bilinear = false;
     flags.fast_text = true;
-    flags.tx_noshear = true;
 
     clip = 0;
     flags.has_clip_ownership = false;
@@ -558,9 +550,7 @@ void QRasterPaintEngine::updatePen(const QPen &pen)
         s->stroker = 0;
     }
 
-    ensureRasterState(); // needed because of tx_noshear...
-
-    s->flags.non_complex_pen = s->lastPen.capStyle() <= Qt::SquareCap && s->flags.tx_noshear;
+    ensureRasterState(); // needed because of fast_text...
 
     s->strokeFlags = 0;
 }
@@ -1086,16 +1076,6 @@ void QRasterPaintEngine::fillPath(const QPainterPath &path, QSpanData *fillData)
     QRasterPaintEngineState *s = state();
     const QRect deviceRect = s->matrix.mapRect(controlPointRect).toRect();
     ProcessSpans blend = d->getBrushFunc(deviceRect, fillData);
-    const bool do_clip = (deviceRect.left() < -RASTER_COORD_LIMIT
-                          || deviceRect.right() > RASTER_COORD_LIMIT
-                          || deviceRect.top() < -RASTER_COORD_LIMIT
-                          || deviceRect.bottom() > RASTER_COORD_LIMIT);
-
-    if (!s->flags.antialiased && !do_clip) {
-        d->initializeRasterizer(fillData);
-        d->rasterizer->rasterize(path * s->matrix, path.fillRule());
-        return;
-    }
 
     updateOutlineMapper();
     d->rasterize(d->outlineMapper->convertPath(path), blend, fillData);
@@ -1219,50 +1199,6 @@ void QRasterPaintEngine::drawRects(const QRect *rects, int rectCount)
 }
 
 /*!
-    \reimp
-*/
-void QRasterPaintEngine::drawRects(const QRectF *rects, int rectCount)
-{
-#ifdef QT_DEBUG_DRAW
-    qDebug(" - QRasterPaintEngine::drawRect(QRectF*), rectCount=%d", rectCount);
-#endif
-#ifdef QT_FAST_SPANS
-    Q_D(QRasterPaintEngine);
-    ensureRasterState();
-    QRasterPaintEngineState *s = state();
-
-
-    if (s->flags.tx_noshear) {
-        ensureBrush();
-        if (s->brushData.blend) {
-            d->initializeRasterizer(&s->brushData);
-            for (int i = 0; i < rectCount; ++i) {
-                const QRectF &rect = rects[i].normalized();
-                if (rect.isEmpty())
-                    continue;
-                const QPointF a = s->matrix.map((rect.topLeft() + rect.bottomLeft()) * 0.5f);
-                const QPointF b = s->matrix.map((rect.topRight() + rect.bottomRight()) * 0.5f);
-                d->rasterizer->rasterizeLine(a, b, rect.height() / rect.width());
-            }
-        }
-
-        ensurePen();
-        if (s->penData.blend) {
-            QRectVectorPath path;
-            for (int i = 0; i < rectCount; ++i) {
-                path.set(rects[i]);
-                QPaintEngineEx::stroke(path, s->lastPen);
-            }
-        }
-
-        return;
-    }
-#endif // QT_FAST_SPANS
-    QPaintEngineEx::drawRects(rects, rectCount);
-}
-
-
-/*!
     \internal
 */
 void QRasterPaintEngine::stroke(const QVectorPath &path, const QPen &pen)
@@ -1273,59 +1209,7 @@ void QRasterPaintEngine::stroke(const QVectorPath &path, const QPen &pen)
     if (!s->penData.blend)
         return;
 
-    if (s->flags.non_complex_pen && path.shape() == QVectorPath::LinesHint) {
-        const qreal lastwidthf = s->lastPen.widthF();
-        const qreal width = s->lastPen.isCosmetic()
-                            ? (lastwidthf == 0 ? 1 : lastwidthf)
-                            : lastwidthf * s->txscale;
-        int dashIndex = 0;
-        qreal dashOffset = s->lastPen.dashOffset();
-        bool inDash = true;
-        qreal patternLength = 0;
-        const QVector<qreal> pattern = s->lastPen.dashPattern();
-        for (int i = 0; i < pattern.size(); ++i)
-            patternLength += pattern.at(i);
-
-        if (patternLength > 0) {
-            int n = qFloor(dashOffset / patternLength);
-            dashOffset -= n * patternLength;
-            while (dashOffset >= pattern.at(dashIndex)) {
-                dashOffset -= pattern.at(dashIndex);
-                if (++dashIndex >= pattern.size())
-                    dashIndex = 0;
-                inDash = !inDash;
-            }
-        }
-
-        Q_D(QRasterPaintEngine);
-        d->initializeRasterizer(&s->penData);
-        int lineCount = path.elementCount() / 2;
-        const QLineF *lines = reinterpret_cast<const QLineF *>(path.points());
-
-        for (int i = 0; i < lineCount; ++i) {
-            if (lines[i].p1() == lines[i].p2()) {
-                if (s->lastPen.capStyle() != Qt::FlatCap) {
-                    QPointF p = lines[i].p1();
-                    QLineF line = s->matrix.map(QLineF(QPointF(p.x() - width*qreal(0.5), p.y()),
-                                                       QPointF(p.x() + width*qreal(0.5), p.y())));
-                    d->rasterizer->rasterizeLine(line.p1(), line.p2(), 1);
-                }
-                continue;
-            }
-
-            const QLineF line = s->matrix.map(lines[i]);
-            if (s->lastPen.style() == Qt::SolidLine) {
-                d->rasterizer->rasterizeLine(line.p1(), line.p2(),
-                                            width / line.length(),
-                                            s->lastPen.capStyle() == Qt::SquareCap);
-            } else {
-                d->rasterizeLine_dashed(line, width,
-                                        &dashIndex, &dashOffset, &inDash);
-            }
-        }
-    } else {
-        QPaintEngineEx::stroke(path, pen);
-    }
+    QPaintEngineEx::stroke(path, pen);
 }
 
 static inline QRect toNormalizedFillRect(const QRectF &rect)
@@ -1373,38 +1257,12 @@ void QRasterPaintEngine::fill(const QVectorPath &path, const QBrush &brush)
             fillRect_normalized(toNormalizedFillRect(QRectF(tl, br)), &s->brushData, d);
             return;
         }
-        ensureRasterState();
-        if (s->flags.tx_noshear) {
-            d->initializeRasterizer(&s->brushData);
-            // ### Is normalizing really necessary here?
-            const qreal *p = path.points();
-            QRectF r = QRectF(p[0], p[1], p[2] - p[0], p[7] - p[1]).normalized();
-            if (!r.isEmpty()) {
-                const QPointF a = s->matrix.map((r.topLeft() + r.bottomLeft()) * 0.5f);
-                const QPointF b = s->matrix.map((r.topRight() + r.bottomRight()) * 0.5f);
-                d->rasterizer->rasterizeLine(a, b, r.height() / r.width());
-            }
-            return;
-        }
     }
 
     // ### Optimize for non transformed ellipses and rectangles...
     QRectF cpRect = path.controlPointRect();
     const QRect deviceRect = s->matrix.mapRect(cpRect).toRect();
     ProcessSpans blend = d->getBrushFunc(deviceRect, &s->brushData);
-
-        // ### Falcon
-//         const bool do_clip = (deviceRect.left() < -RASTER_COORD_LIMIT
-//                               || deviceRect.right() > RASTER_COORD_LIMIT
-//                               || deviceRect.top() < -RASTER_COORD_LIMIT
-//                               || deviceRect.bottom() > RASTER_COORD_LIMIT);
-
-        // ### Falonc: implement....
-//         if (!s->flags.antialiased && !do_clip) {
-//             d->initializeRasterizer(&s->brushData);
-//             d->rasterizer->rasterize(path * d->matrix, path.fillRule());
-//             return;
-//         }
 
     updateOutlineMapper();
     d->rasterize(d->outlineMapper->convertPath(path), blend, &s->brushData);
@@ -1431,16 +1289,6 @@ void QRasterPaintEngine::fillRect(const QRectF &r, QSpanData *data)
         }
     }
     ensureRasterState();
-    if (s->flags.tx_noshear) {
-        d->initializeRasterizer(data);
-        QRectF nr = r.normalized();
-        if (!nr.isEmpty()) {
-            const QPointF a = s->matrix.map((nr.topLeft() + nr.bottomLeft()) * 0.5f);
-            const QPointF b = s->matrix.map((nr.topRight() + nr.bottomRight()) * 0.5f);
-            d->rasterizer->rasterizeLine(a, b, nr.height() / nr.width());
-        }
-        return;
-    }
 
     QPainterPath path;
     path.addRect(r);
@@ -1528,7 +1376,7 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, Poly
 
     if (mode != PolylineMode && isRect((qreal *) points, pointCount)) {
         QRectF r(points[0], points[2]);
-        drawRects(&r, 1);
+        QPaintEngineEx::drawRects(&r, 1);
         return;
     }
 
@@ -1840,25 +1688,6 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
             return;
         }
 
-#ifdef QT_FAST_SPANS
-        ensureRasterState();
-        if (s->flags.tx_noshear || s->matrix.type() == QTransform::TxScale) {
-            d->initializeRasterizer(&d->image_filler_xform);
-            d->rasterizer->setAntialiased(s->flags.antialiased);
-
-            const QPointF offs = s->flags.antialiased ? QPointF() : QPointF(aliasedCoordinateDelta, aliasedCoordinateDelta);
-
-            const QRectF &rect = r.normalized();
-            const QPointF a = s->matrix.map((rect.topLeft() + rect.bottomLeft()) * 0.5f) - offs;
-            const QPointF b = s->matrix.map((rect.topRight() + rect.bottomRight()) * 0.5f) - offs;
-
-            if (s->flags.tx_noshear)
-                d->rasterizer->rasterizeLine(a, b, rect.height() / rect.width());
-            else
-                d->rasterizer->rasterizeLine(a, b, qAbs((s->matrix.m22() * rect.height()) / (s->matrix.m11() * rect.width())));
-            return;
-        }
-#endif
         const qreal offs = s->flags.antialiased ? qreal(0) : aliasedCoordinateDelta;
         QPainterPath path;
         path.addRect(r);
@@ -1921,22 +1750,6 @@ void QRasterPaintEngine::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap,
             return;
         d->image_filler_xform.setupMatrix(copy, s->flags.bilinear);
 
-#ifdef QT_FAST_SPANS
-        ensureRasterState();
-        if (s->flags.tx_noshear || s->matrix.type() == QTransform::TxScale) {
-            d->initializeRasterizer(&d->image_filler_xform);
-            d->rasterizer->setAntialiased(s->flags.antialiased);
-
-            const QRectF &rect = r.normalized();
-            const QPointF a = s->matrix.map((rect.topLeft() + rect.bottomLeft()) * 0.5f);
-            const QPointF b = s->matrix.map((rect.topRight() + rect.bottomRight()) * 0.5f);
-            if (s->flags.tx_noshear)
-                d->rasterizer->rasterizeLine(a, b, rect.height() / rect.width());
-            else
-                d->rasterizer->rasterizeLine(a, b, qAbs((s->matrix.m22() * rect.height()) / (s->matrix.m11() * rect.width())));
-            return;
-        }
-#endif
         QPainterPath path;
         path.addRect(r);
         fillPath(path, &d->image_filler_xform);
@@ -2525,52 +2338,6 @@ void QRasterPaintEngine::drawLines(const QLine *lines, int lineCount)
     QPaintEngineEx::drawLines(lines, lineCount);
 }
 
-void QRasterPaintEnginePrivate::rasterizeLine_dashed(QLineF line,
-                                                     qreal width,
-                                                     int *dashIndex,
-                                                     qreal *dashOffset,
-                                                     bool *inDash)
-{
-    Q_Q(QRasterPaintEngine);
-    QRasterPaintEngineState *s = q->state();
-
-    const QPen &pen = s->lastPen;
-    const bool squareCap = (pen.capStyle() == Qt::SquareCap);
-    const QVector<qreal> pattern = pen.dashPattern();
-
-    qreal patternLength = 0;
-    for (int i = 0; i < pattern.size(); ++i)
-        patternLength += pattern.at(i);
-
-    if (patternLength <= 0)
-        return;
-
-    qreal length = line.length();
-    Q_ASSERT(length > 0);
-    while (length > 0) {
-        const bool rasterize = *inDash;
-        qreal dash = (pattern.at(*dashIndex) - *dashOffset) * width;
-        QLineF l = line;
-
-        if (dash >= length) {
-            dash = length;
-            *dashOffset += dash / width;
-            length = 0;
-        } else {
-            *dashOffset = 0;
-            *inDash = !(*inDash);
-            if (++*dashIndex >= pattern.size())
-                *dashIndex = 0;
-            length -= dash;
-            l.setLength(dash);
-            line.setP1(l.p2());
-        }
-
-        if (rasterize && dash > 0)
-            rasterizer->rasterizeLine(l.p1(), l.p2(), width / dash, squareCap);
-    }
-}
-
 /*!
     \reimp
 */
@@ -2816,53 +2583,12 @@ static void qt_merge_clip(const QClipData *c1, const QClipData *c2, QClipData *r
     }
 }
 
-void QRasterPaintEnginePrivate::initializeRasterizer(QSpanData *data)
-{
-    Q_Q(QRasterPaintEngine);
-    QRasterPaintEngineState *s = q->state();
-
-    rasterizer->setAntialiased(s->flags.antialiased);
-
-    QRect clipRect(deviceRect);
-    ProcessSpans blend;
-    // ### get from optimized rectbased QClipData
-
-    const QClipData *c = clip();
-    if (c) {
-        const QRect r(QPoint(c->xmin, c->ymin),
-                      QSize(c->xmax - c->xmin, c->ymax - c->ymin));
-        clipRect = clipRect.intersected(r);
-        blend = data->blend;
-    } else {
-        blend = data->unclipped_blend;
-    }
-
-    rasterizer->setClipRect(clipRect);
-    rasterizer->initialize(blend, data);
-}
-
 void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
                                           ProcessSpans callback,
                                           void *userData)
 {
     if (!callback || !outline)
         return;
-
-    Q_Q(QRasterPaintEngine);
-    QRasterPaintEngineState *s = q->state();
-
-    if (!s->flags.antialiased) {
-        rasterizer->setAntialiased(s->flags.antialiased);
-        rasterizer->setClipRect(deviceRect);
-        rasterizer->initialize(callback, userData);
-
-        const Qt::FillRule fillRule = outline->flags == QT_FT_OUTLINE_NONE
-                                      ? Qt::WindingFill
-                                      : Qt::OddEvenFill;
-
-        rasterizer->rasterize(outline, fillRule);
-        return;
-    }
 
     gray_raster_reset();
 

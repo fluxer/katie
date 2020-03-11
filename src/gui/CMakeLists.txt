@@ -448,7 +448,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrasterizer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstroker_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstylepainter.h
@@ -798,7 +797,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_ps.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrasterizer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstroker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstylepainter.cpp

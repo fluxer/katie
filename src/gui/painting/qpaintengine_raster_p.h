@@ -49,7 +49,6 @@
 #include "QtGui/qpainterpath.h"
 #include "qdrawhelper_p.h"
 #include "qpaintengine_p.h"
-#include "qrasterizer_p.h"
 #include "qstroker_p.h"
 #include "qpainter_p.h"
 #include "qtextureglyphcache_p.h"
@@ -95,11 +94,9 @@ public:
 
     struct Flags {
         bool has_clip_ownership;        // should delete the clip member..
-        bool non_complex_pen;           // can use rasterizer, rather than stroker
         bool antialiased;
         bool bilinear;
         bool fast_text;
-        bool tx_noshear;
     };
 
     Flags flags;
@@ -154,7 +151,6 @@ public:
     void fillRect(const QRectF &rect, const QColor &color);
 
     void drawRects(const QRect  *rects, int rectCount);
-    void drawRects(const QRectF *rects, int rectCount);
 
     void drawPixmap(const QPointF &p, const QPixmap &pm);
     void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
@@ -254,8 +250,6 @@ class QRasterPaintEnginePrivate : public QPaintEngineExPrivate
 public:
     QRasterPaintEnginePrivate();
 
-    void rasterizeLine_dashed(QLineF line, qreal width,
-                              int *dashIndex, qreal *dashOffset, bool *inDash);
     void rasterize(QT_FT_Outline *outline, ProcessSpans callback, void *userData);
     void updateMatrixData(QSpanData *spanData, const QBrush &brush, const QTransform &brushMatrix);
 
@@ -276,8 +270,6 @@ public:
     ProcessSpans getBrushFunc(const QRectF &rect, const QSpanData *data) const;
 
     inline const QClipData *clip() const;
-
-    void initializeRasterizer(QSpanData *data);
 
     QPaintDevice *device;
     QScopedPointer<QOutlineMapper> outlineMapper;
@@ -300,8 +292,6 @@ public:
     int deviceDepth;
 
     bool mono_surface;
-
-    QScopedPointer<QRasterizer> rasterizer;
 };
 
 
