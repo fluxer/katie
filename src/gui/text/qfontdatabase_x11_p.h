@@ -381,7 +381,11 @@ static const char *specialLanguagesTbl[] = {
     "arc-ir", // Elymaic
     "sa-in", // Nandinagari
     "mww-us", // NyiakengPuachueHmong
-    "npp-in" // Wancho
+    "npp-in", // Wancho
+    0, // Chorasmian
+    0, // DivesAkuru
+    0, // KhitanSmallScript
+    0 // Yezidi
 };
 enum { SpecialLanguageCount = sizeof(specialLanguagesTbl) / sizeof(const char *) };
 
@@ -405,7 +409,7 @@ static const uint specialCharsTbl[] = {
     0x0C00, // Telugu
     0x0C80, // Kannada
     0x0D00, // Malayalam
-    0x0D82, // Sinhala
+    0x0D81, // Sinhala
     0x0E01, // Thai
     0x0E81, // Lao
     0x0F00, // Tibetan
@@ -539,6 +543,10 @@ static const uint specialCharsTbl[] = {
     0x119A0, // Nandinagari
     0x1E100, // NyiakengPuachueHmong
     0x1E2C0, // Wancho
+    0x10FB0, // Chorasmian
+    0x11900, // DivesAkuru
+    0x16FE4, // KhitanSmallScript
+    0x10E80, // Yezidi
 };
 enum { SpecialCharCount = sizeof(specialCharsTbl) / sizeof(uint) };
 
