@@ -4105,7 +4105,7 @@ static void blend_tiled_argb(int count, const QSpan *spans, void *userData)
             int l = qMin(image_width - sx, length);
             if (buffer_size < l)
                 l = buffer_size;
-            const uint *src = (uint *)data->texture.scanLine(sy) + sx;
+            const uint *src = (const uint *)data->texture.scanLine(sy) + sx;
             uint *dest = ((uint *)data->rasterBuffer->scanLine(spans->y)) + x;
             op.func(dest, src, l, coverage);
             x += l;
