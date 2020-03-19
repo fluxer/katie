@@ -4874,12 +4874,10 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
     QRect boundingRect;
     bool dirtyBoundingRect = true;
     const bool exludeOpaqueChildren = (flags & DontDrawOpaqueChildren);
-    const bool excludeNativeChildren = (flags & DontDrawNativeChildren);
 
     do {
         QWidget *x =  qobject_cast<QWidget*>(siblings.at(index));
-        if (x && !(exludeOpaqueChildren && x->d_func()->isOpaque) && !x->isHidden() && !x->isWindow()
-            && !(excludeNativeChildren && x->internalWinId())) {
+        if (x && !(exludeOpaqueChildren && x->d_func()->isOpaque) && !x->isHidden() && !x->isWindow()) {
             if (dirtyBoundingRect) {
                 boundingRect = rgn.boundingRect();
                 dirtyBoundingRect = false;
