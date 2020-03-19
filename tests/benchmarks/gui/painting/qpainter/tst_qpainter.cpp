@@ -1184,7 +1184,7 @@ void tst_QPainter::clipAndFill()
 
 QTransform tst_QPainter::transformForAngle(qreal angle)
 {
-    const qreal inv_dist_to_plane = 1. / 1024.;
+    static const qreal inv_dist_to_plane = 1. / 1024.;
 
     QTransform transform;
 
