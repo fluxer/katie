@@ -2634,9 +2634,14 @@ static void blend_color_argb(int count, const QSpan *spans, void *userData)
     }
 }
 
-template <typename T>
-void handleSpans(int count, const QSpan *spans, const QSpanData *data, T &handler)
+static void blend_src_generic(int count, const QSpan *spans, void *userData)
 {
+    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
+
+    uint buffer[buffer_size];
+    uint src_buffer[buffer_size];
+    Operator op = getOperator(data, spans, count);
+
     uint const_alpha = 256;
     if (data->type == QSpanData::Texture)
         const_alpha = data->texture.const_alpha;
@@ -2659,7 +2664,9 @@ void handleSpans(int count, const QSpan *spans, const QSpanData *data, T &handle
             int process_length = l;
             int process_x = x;
 
-            const uint *src = handler.fetch(process_x, y, process_length);
+            uint *dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, process_x, y, process_length) : buffer;
+            const uint *src = op.src_fetch(src_buffer, &op, data, y, process_x, process_length);
+
             int offset = 0;
             while (l > 0) {
                 if (x == spans->x) // new span?
@@ -2668,7 +2675,7 @@ void handleSpans(int count, const QSpan *spans, const QSpanData *data, T &handle
                 int right = spans->x + spans->len;
                 int len = qMin(l, right - x);
 
-                handler.process(x, y, len, coverage, src, offset);
+                op.func(dest + offset, src + offset, len, coverage);
 
                 l -= len;
                 x += len;
@@ -2679,53 +2686,12 @@ void handleSpans(int count, const QSpan *spans, const QSpanData *data, T &handle
                     --count;
                 }
             }
-            handler.store(process_x, y, process_length);
+
+            if (op.dest_store) {
+                op.dest_store(data->rasterBuffer, process_x, y, dest, process_length);
+            }
         }
     }
-}
-
-class BlendSrcGeneric
-{
-public:
-    BlendSrcGeneric(QSpanData *d, Operator o)
-        : data(d)
-        , op(o)
-        , dest(0)
-    {
-    }
-
-    const uint *fetch(int x, int y, int len)
-    {
-        dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, x, y, len) : buffer;
-        return op.src_fetch(src_buffer, &op, data, y, x, len);
-    }
-
-    void process(int x, int y, int len, int coverage, const uint *src, int offset)
-    {
-        op.func(dest + offset, src + offset, len, coverage);
-    }
-
-    void store(int x, int y, int len)
-    {
-        if (op.dest_store) {
-            op.dest_store(data->rasterBuffer, x, y, dest, len);
-        }
-    }
-
-    QSpanData *data;
-    Operator op;
-
-    uint *dest;
-
-    uint buffer[buffer_size];
-    uint src_buffer[buffer_size];
-};
-
-static void blend_src_generic(int count, const QSpan *spans, void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    BlendSrcGeneric blend(data, getOperator(data, spans, count));
-    handleSpans(count, spans, data, blend);
 }
 
 static void blend_untransformed_generic(int count, const QSpan *spans, void *userData)
