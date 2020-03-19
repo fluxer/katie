@@ -229,16 +229,14 @@ void QWidgetBackingStore::releaseBuffer()
 }
 
 /*!
-    Prepares the window surface to paint a\ toClean region of the \a widget and
-    updates the BeginPaintInfo struct accordingly.
+    Prepares the window surface to paint a\ toClean region and updates the
+    BeginPaintInfo struct accordingly.
 
     The \a toClean region might be clipped by the window surface.
 */
-void QWidgetBackingStore::beginPaint(QRegion &toClean, QWidget *widget, QWindowSurface *windowSurface,
+void QWidgetBackingStore::beginPaint(QRegion &toClean, QWindowSurface *windowSurface,
                                      BeginPaintInfo *returnInfo)
 {
-    Q_UNUSED(widget);
-
     // Always flush repainted areas.
     dirtyOnScreen += toClean;
 
@@ -1035,7 +1033,7 @@ void QWidgetBackingStore::sync()
 
 #ifndef Q_BACKINGSTORE_SUBSURFACES
     BeginPaintInfo beginPaintInfo;
-    beginPaint(toClean, tlw, windowSurface, &beginPaintInfo);
+    beginPaint(toClean, windowSurface, &beginPaintInfo);
     if (beginPaintInfo.nothingToPaint) {
         for (int i = 0; i < opaqueNonOverlappedWidgets.size(); ++i)
             resetWidget(opaqueNonOverlappedWidgets[i]);
@@ -1071,7 +1069,7 @@ void QWidgetBackingStore::sync()
 
         QPoint off = w->mapTo(tlw, QPoint());
         toBePainted.translate(off);
-        beginPaint(toBePainted, w, subSurface, &beginPaintInfo, true);
+        beginPaint(toBePainted, subSurface, &beginPaintInfo);
         toBePainted.translate(-off);
 
         if (beginPaintInfo.nothingToPaint)
@@ -1129,7 +1127,7 @@ void QWidgetBackingStore::sync()
 
         toClean = dirtyCopy;
         BeginPaintInfo beginPaintInfo;
-        beginPaint(toClean, w, subSurface, &beginPaintInfo);
+        beginPaint(toClean, subSurface, &beginPaintInfo);
         if (beginPaintInfo.nothingToPaint)
             continue;
 
