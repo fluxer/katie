@@ -85,7 +85,7 @@ QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
     }
 
     for (qint16 i = 0; i < languageTblSize; i++) {
-        if (QString::fromLatin1(languageTbl[i].code) ==  lower)
+        if (QString::fromLatin1(languageTbl[i].code) == lower)
             return languageTbl[i].language;
     }
 
