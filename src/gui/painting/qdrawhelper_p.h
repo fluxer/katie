@@ -1608,7 +1608,7 @@ QT_RECTCONVERT_TRIVIAL_IMPL(qrgb444)
 
 static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
-inline QRgb qConvertRgb16To32(uint c)
+static inline QRgb qConvertRgb16To32(uint c)
 {
     return 0xff000000
         | ((((c) << 3) & 0xf8) | (((c) >> 2) & 0x7))
@@ -1616,7 +1616,7 @@ inline QRgb qConvertRgb16To32(uint c)
         | ((((c) << 8) & 0xf80000) | (((c) << 3) & 0x70000));
 }
 
-const uint qt_bayer_matrix[16][16] = {
+static const uint qt_bayer_matrix[16][16] = {
     { 0x1, 0xc0, 0x30, 0xf0, 0xc, 0xcc, 0x3c, 0xfc,
       0x3, 0xc3, 0x33, 0xf3, 0xf, 0xcf, 0x3f, 0xff},
     { 0x80, 0x40, 0xb0, 0x70, 0x8c, 0x4c, 0xbc, 0x7c,
