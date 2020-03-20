@@ -1620,12 +1620,12 @@ QPainterPath QPathClipper::clip(Operation operation)
 
     QWingedEdge list(subjectPath, clipPath);
 
-    doClip(list, ClipMode);
+    doClip(list);
 
     return list.toPath();
 }
 
-bool QPathClipper::doClip(QWingedEdge &list, ClipperMode mode) const
+bool QPathClipper::doClip(QWingedEdge &list) const
 {
     QVector<qreal> y_coords;
     y_coords.reserve(list.vertexCount());
@@ -1698,15 +1698,14 @@ bool QPathClipper::doClip(QWingedEdge &list, ClipperMode mode) const
             printf("y: %.9f, gap: %.9f\n", bestY, biggestGap);
 #endif
 
-            if (handleCrossingEdges(list, bestY, mode) && mode == CheckMode)
+            if (handleCrossingEdges(list, bestY))
                 return true;
 
             edge->flag |= 0x3;
         }
     } while (found);
 
-    if (mode == ClipMode)
-        list.simplify();
+    list.simplify();
 
     return false;
 }
@@ -1803,7 +1802,7 @@ static QVector<QCrossingEdge> findCrossings(const QWingedEdge &list, qreal y)
     return crossings;
 }
 
-bool QPathClipper::handleCrossingEdges(QWingedEdge &list, qreal y, ClipperMode mode) const
+bool QPathClipper::handleCrossingEdges(QWingedEdge &list, qreal y) const
 {
     QVector<QCrossingEdge> crossings = findCrossings(list, y);
 
@@ -1842,9 +1841,6 @@ bool QPathClipper::handleCrossingEdges(QWingedEdge &list, qreal y, ClipperMode m
 #endif
 
         if (add) {
-            if (mode == CheckMode)
-                return true;
-
             const qreal y0 = list.vertex(edge->first)->y;
             const qreal y1 = list.vertex(edge->second)->y;
 

@@ -82,13 +82,8 @@ public:
 private:
     Q_DISABLE_COPY(QPathClipper)
 
-    enum ClipperMode {
-        ClipMode, // do the full clip
-        CheckMode // for contains/intersects (only interested in whether the result path is non-empty)
-    };
-
-    bool handleCrossingEdges(QWingedEdge &list, qreal y, ClipperMode mode) const;
-    bool doClip(QWingedEdge &list, ClipperMode mode) const;
+    bool handleCrossingEdges(QWingedEdge &list, qreal y) const;
+    bool doClip(QWingedEdge &list) const;
 
     QPainterPath subjectPath;
     QPainterPath clipPath;
