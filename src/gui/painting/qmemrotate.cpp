@@ -143,20 +143,6 @@ static inline void qt_memrotate270_template(const SRC *src,
 #endif
 }
 
-template <>
-inline void qt_memrotate90_template<quint24, quint24>(const quint24 *src,
-                                                             int srcWidth, int srcHeight, int srcStride,
-                                                             quint24 *dest, int dstStride)
-{
-#if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDREAD
-    qt_memrotate90_cachedRead<quint24,quint24>(src, srcWidth, srcHeight,
-                                               srcStride, dest, dstStride);
-#elif QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
-    qt_memrotate90_cachedWrite<quint24,quint24>(src, srcWidth, srcHeight,
-                                                srcStride, dest, dstStride);
-#endif
-}
-
 #define QT_IMPL_MEMROTATE(srctype, desttype)                        \
 void qt_memrotate90(const srctype *src, int w, int h, int sstride,  \
                     desttype *dest, int dstride)                    \
