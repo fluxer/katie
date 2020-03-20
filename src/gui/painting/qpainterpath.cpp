@@ -84,8 +84,6 @@ struct QPainterPathPrivateDeleter
 // #define QPP_STROKE_DEBUG
 //#define QPP_FILLPOLYGONS_DEBUG
 
-QPainterPath qt_stroke_dash(const QPainterPath &path, qreal *dashes, int dashCount);
-
 void qt_find_ellipse_coords(const QRectF &r, qreal angle, qreal length,
                             QPointF* startPoint, QPointF *endPoint)
 {
