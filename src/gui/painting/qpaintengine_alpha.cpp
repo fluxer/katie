@@ -352,7 +352,6 @@ void QAlphaPaintEngine::flushAndInit(bool init)
         d->m_picpainter->setFont(painter()->font());
         d->m_picpainter->setOpacity(painter()->opacity());
         d->m_picpainter->setTransform(painter()->combinedTransform());
-        d->m_picengine->syncState();
     }
 }
 

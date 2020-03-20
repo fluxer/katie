@@ -185,11 +185,6 @@ public:
     inline QPainterState *state() { return static_cast<QPainterState *>(QPaintEngine::state); }
     inline const QPainterState *state() const { return static_cast<const QPainterState *>(QPaintEngine::state); }
 
-    virtual void sync() {}
-
-    virtual void beginNativePainting() {}
-    virtual void endNativePainting() {}
-
     virtual bool supportsTransformations(const qreal pixelSize, const QTransform &m) const;
 
 protected:

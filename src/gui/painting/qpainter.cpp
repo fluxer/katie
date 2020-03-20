@@ -1636,56 +1636,6 @@ QPaintEngine *QPainter::paintEngine() const
 }
 
 /*!
-    \since 4.6
-
-    Flushes the painting pipeline and prepares for the user issuing commands
-    directly to the underlying graphics context. Must be followed by a call to
-    endNativePainting().
-
-    Note that only the states the underlying paint engine changes will be reset
-    to their respective default states. The states we reset may change from
-    release to release.
-
-    \snippet doc/src/snippets/code/src_gui_painting_qpainter.cpp 21
-
-    \sa endNativePainting()
-*/
-void QPainter::beginNativePainting()
-{
-    Q_D(QPainter);
-    if (Q_UNLIKELY(!d->engine)) {
-        qWarning("QPainter::beginNativePainting: Painter not active");
-        return;
-    }
-
-    if (d->extended)
-        d->extended->beginNativePainting();
-}
-
-/*!
-    \since 4.6
-
-    Restores the painter after manually issuing native painting commands. Lets
-    the painter restore any native state that it relies on before calling any
-    other painter commands.
-
-    \sa beginNativePainting()
-*/
-void QPainter::endNativePainting()
-{
-    Q_D(const QPainter);
-    if (Q_UNLIKELY(!d->engine)) {
-        qWarning("QPainter::beginNativePainting: Painter not active");
-        return;
-    }
-
-    if (d->extended)
-        d->extended->endNativePainting();
-    else
-        d->engine->syncState();
-}
-
-/*!
     Returns the font metrics for the painter if the painter is
     active. Otherwise, the return value is undefined.
 
