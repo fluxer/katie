@@ -3640,7 +3640,7 @@ void QSpanData::init(QRasterBuffer *rb, const QRasterPaintEngine *pe)
     clip = pe ? pe->d_func()->clip() : 0;
 }
 
-Q_GUI_EXPORT extern QImage qt_imageForBrush(int brushStyle, bool invert);
+Q_GUI_EXPORT extern QImage qt_imageForBrush(int brushStyle);
 
 void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode compositionMode)
 {
@@ -3729,7 +3729,7 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
         type = Texture;
         if (!tempImage)
             tempImage = new QImage();
-        *tempImage = rasterBuffer->colorizeBitmap(qt_imageForBrush(brushStyle, true), brush.color());
+        *tempImage = rasterBuffer->colorizeBitmap(qt_imageForBrush(brushStyle), brush.color());
         initTexture(tempImage, alpha, QTextureData::Tiled);
         break;
     case Qt::TexturePattern:

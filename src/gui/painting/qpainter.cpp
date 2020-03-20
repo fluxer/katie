@@ -63,8 +63,6 @@ QT_BEGIN_NAMESPACE
 
 // #define QT_DEBUG_DRAW
 
-extern QPixmap qt_pixmapForBrush(int style, bool invert);
-
 void qt_format_text(const QFont &font,
                     const QRectF &_r, int tf, const QTextOption *option, const QString& str, QRectF *brect,
                     int tabstops, int* tabarray, int tabarraylen,

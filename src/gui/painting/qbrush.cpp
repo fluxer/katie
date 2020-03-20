@@ -45,42 +45,22 @@
 
 QT_BEGIN_NAMESPACE
 
-const uchar *qt_patternForBrush(int brushStyle, bool invert)
+static const uchar *qt_patternForBrush(int brushStyle)
 {
     Q_ASSERT(brushStyle > Qt::SolidPattern && brushStyle < Qt::LinearGradientPattern);
-    if(invert) {
-        static const uchar dense1_pat[] = { 0xff, 0xbb, 0xff, 0xff, 0xff, 0xbb, 0xff, 0xff };
-        static const uchar dense2_pat[] = { 0x77, 0xff, 0xdd, 0xff, 0x77, 0xff, 0xdd, 0xff };
-        static const uchar dense3_pat[] = { 0x55, 0xbb, 0x55, 0xee, 0x55, 0xbb, 0x55, 0xee };
-        static const uchar dense4_pat[] = { 0xaa, 0x55, 0xaa, 0x55, 0xaa, 0x55, 0xaa, 0x55 };
-        static const uchar dense5_pat[] = { 0xaa, 0x44, 0xaa, 0x11, 0xaa, 0x44, 0xaa, 0x11 };
-        static const uchar dense6_pat[] = { 0x88, 0x00, 0x22, 0x00, 0x88, 0x00, 0x22, 0x00 };
-        static const uchar dense7_pat[] = { 0x00, 0x44, 0x00, 0x00, 0x00, 0x44, 0x00, 0x00 };
-        static const uchar hor_pat[]    = { 0x00, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00 };
-        static const uchar ver_pat[]    = { 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10 };
-        static const uchar cross_pat[]  = { 0x10, 0x10, 0x10, 0xff, 0x10, 0x10, 0x10, 0x10 };
-        static const uchar bdiag_pat[]  = { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
-        static const uchar fdiag_pat[]  = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
-        static const uchar dcross_pat[] = { 0x81, 0x42, 0x24, 0x18, 0x18, 0x24, 0x42, 0x81 };
-        static const uchar *const pat_tbl[] = {
-            dense1_pat, dense2_pat, dense3_pat, dense4_pat, dense5_pat,
-            dense6_pat, dense7_pat,
-            hor_pat, ver_pat, cross_pat, bdiag_pat, fdiag_pat, dcross_pat };
-        return pat_tbl[brushStyle - Qt::Dense1Pattern];
-    }
-    static const uchar dense1_pat[] = { 0x00, 0x44, 0x00, 0x00, 0x00, 0x44, 0x00, 0x00 };
-    static const uchar dense2_pat[] = { 0x88, 0x00, 0x22, 0x00, 0x88, 0x00, 0x22, 0x00 };
-    static const uchar dense3_pat[] = { 0xaa, 0x44, 0xaa, 0x11, 0xaa, 0x44, 0xaa, 0x11 };
-    static const uchar dense4_pat[] = { 0x55, 0xaa, 0x55, 0xaa, 0x55, 0xaa, 0x55, 0xaa };
-    static const uchar dense5_pat[] = { 0x55, 0xbb, 0x55, 0xee, 0x55, 0xbb, 0x55, 0xee };
-    static const uchar dense6_pat[] = { 0x77, 0xff, 0xdd, 0xff, 0x77, 0xff, 0xdd, 0xff };
-    static const uchar dense7_pat[] = { 0xff, 0xbb, 0xff, 0xff, 0xff, 0xbb, 0xff, 0xff };
-    static const uchar hor_pat[]    = { 0xff, 0xff, 0xff, 0x00, 0xff, 0xff, 0xff, 0xff };
-    static const uchar ver_pat[]    = { 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef, 0xef };
-    static const uchar cross_pat[]  = { 0xef, 0xef, 0xef, 0x00, 0xef, 0xef, 0xef, 0xef };
-    static const uchar bdiag_pat[]  = { 0x7f, 0xbf, 0xdf, 0xef, 0xf7, 0xfb, 0xfd, 0xfe };
-    static const uchar fdiag_pat[]  = { 0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf, 0xbf, 0x7f };
-    static const uchar dcross_pat[] = { 0x7e, 0xbd, 0xdb, 0xe7, 0xe7, 0xdb, 0xbd, 0x7e };
+    static const uchar dense1_pat[] = { 0xff, 0xbb, 0xff, 0xff, 0xff, 0xbb, 0xff, 0xff };
+    static const uchar dense2_pat[] = { 0x77, 0xff, 0xdd, 0xff, 0x77, 0xff, 0xdd, 0xff };
+    static const uchar dense3_pat[] = { 0x55, 0xbb, 0x55, 0xee, 0x55, 0xbb, 0x55, 0xee };
+    static const uchar dense4_pat[] = { 0xaa, 0x55, 0xaa, 0x55, 0xaa, 0x55, 0xaa, 0x55 };
+    static const uchar dense5_pat[] = { 0xaa, 0x44, 0xaa, 0x11, 0xaa, 0x44, 0xaa, 0x11 };
+    static const uchar dense6_pat[] = { 0x88, 0x00, 0x22, 0x00, 0x88, 0x00, 0x22, 0x00 };
+    static const uchar dense7_pat[] = { 0x00, 0x44, 0x00, 0x00, 0x00, 0x44, 0x00, 0x00 };
+    static const uchar hor_pat[]    = { 0x00, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00 };
+    static const uchar ver_pat[]    = { 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10 };
+    static const uchar cross_pat[]  = { 0x10, 0x10, 0x10, 0xff, 0x10, 0x10, 0x10, 0x10 };
+    static const uchar bdiag_pat[]  = { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
+    static const uchar fdiag_pat[]  = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
+    static const uchar dcross_pat[] = { 0x81, 0x42, 0x24, 0x18, 0x18, 0x24, 0x42, 0x81 };
     static const uchar *const pat_tbl[] = {
         dense1_pat, dense2_pat, dense3_pat, dense4_pat, dense5_pat,
         dense6_pat, dense7_pat,
@@ -88,15 +68,13 @@ const uchar *qt_patternForBrush(int brushStyle, bool invert)
     return pat_tbl[brushStyle - Qt::Dense1Pattern];
 }
 
-QPixmap qt_pixmapForBrush(int brushStyle, bool invert)
+QPixmap qt_pixmapForBrush(int brushStyle)
 {
 
     QPixmap pm;
-    QString key = QLatin1String("$qt-brush$")
-                  + HexString<uint>(brushStyle)
-                  + QLatin1Char(invert ? '1' : '0');
+    QString key = QLatin1String("$qt-brush$") + HexString<uint>(brushStyle);
     if (!QPixmapCache::find(key, pm)) {
-        pm = QBitmap::fromData(QSize(8, 8), qt_patternForBrush(brushStyle, invert),
+        pm = QBitmap::fromData(QSize(8, 8), qt_patternForBrush(brushStyle),
                                QImage::Format_MonoLSB);
         QPixmapCache::insert(key, pm);
     }
@@ -111,34 +89,32 @@ public:
     {
         for (int style = Qt::Dense1Pattern; style <= Qt::DiagCrossPattern; ++style) {
             int i = style - Qt::Dense1Pattern;
-            m_images[i][0] = QImage(qt_patternForBrush(style, 0), 8, 8, 1, QImage::Format_MonoLSB);
-            m_images[i][1] = QImage(qt_patternForBrush(style, 1), 8, 8, 1, QImage::Format_MonoLSB);
+            m_images[i] = QImage(qt_patternForBrush(style), 8, 8, 1, QImage::Format_MonoLSB);
         }
     }
 
     ~QBrushPatternImageCache() {
         for (int style = Qt::Dense1Pattern; style <= Qt::DiagCrossPattern; ++style) {
             int i = style - Qt::Dense1Pattern;
-            m_images[i][0] = QImage();
-            m_images[i][1] = QImage();
+            m_images[i] = QImage();
         }
     }
 
-    QImage getImage(int brushStyle, bool invert) const
+    QImage getImage(int brushStyle) const
     {
         Q_ASSERT(brushStyle >= Qt::Dense1Pattern && brushStyle <= Qt::DiagCrossPattern);
-        return m_images[brushStyle - Qt::Dense1Pattern][invert];
+        return m_images[brushStyle - Qt::Dense1Pattern];
     }
 
 private:
-    QImage m_images[Qt::DiagCrossPattern - Qt::Dense1Pattern + 1][2];
+    QImage m_images[Qt::DiagCrossPattern - Qt::Dense1Pattern + 1];
 };
 
 Q_GLOBAL_STATIC(QBrushPatternImageCache, qt_brushPatternImageCache)
 
-Q_GUI_EXPORT QImage qt_imageForBrush(int brushStyle, bool invert)
+Q_GUI_EXPORT QImage qt_imageForBrush(int brushStyle)
 {
-    return qt_brushPatternImageCache()->getImage(brushStyle, invert);
+    return qt_brushPatternImageCache()->getImage(brushStyle);
 }
 
 struct QTexturedBrushData : public QBrushData
