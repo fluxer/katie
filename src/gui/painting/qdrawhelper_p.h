@@ -1556,20 +1556,6 @@ inline void qt_memconvert(qrgb666 *dest, const quint32 *src, int count)
 }
 #endif // Q_BYTE_ORDER
 
-template <class T>
-inline void qt_rectcopy(T *dest, const T *src,
-                        int x, int y, int width, int height,
-                        int dstStride, int srcStride)
-{
-    char *d = (char*)(dest + x) + y * dstStride;
-    const char *s = (const char*)(src);
-    for (int i = 0; i < height; ++i) {
-        ::memcpy(d, s, width * sizeof(T));
-        d += dstStride;
-        s += srcStride;
-    }
-}
-
 template <class DST, class SRC>
 inline void qt_rectconvert(DST *dest, const SRC *src,
                            int x, int y, int width, int height,
@@ -1590,7 +1576,13 @@ inline void qt_rectconvert(DST *dest, const SRC *src,
                                int x, int y, int width, int height,     \
                                int dstStride, int srcStride)            \
     {                                                                   \
-        qt_rectcopy(dest, src, x, y, width, height, dstStride, srcStride); \
+        char *d = (char*)(dest + x) + y * dstStride; \
+        const char *s = (const char*)(src); \
+        for (int i = 0; i < height; ++i) { \
+            ::memcpy(d, s, width * sizeof(T)); \
+            d += dstStride; \
+            s += srcStride; \
+        } \
     }
 
 QT_RECTCONVERT_TRIVIAL_IMPL(quint32)
@@ -1607,14 +1599,6 @@ QT_RECTCONVERT_TRIVIAL_IMPL(qrgb444)
 #undef QT_RECTCONVERT_TRIVIAL_IMPL
 
 static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
-
-static inline QRgb qConvertRgb16To32(uint c)
-{
-    return 0xff000000
-        | ((((c) << 3) & 0xf8) | (((c) >> 2) & 0x7))
-        | ((((c) << 5) & 0xfc00) | (((c) >> 1) & 0x300))
-        | ((((c) << 8) & 0xf80000) | (((c) << 3) & 0x70000));
-}
 
 static const uint qt_bayer_matrix[16][16] = {
     { 0x1, 0xc0, 0x30, 0xf0, 0xc, 0xcc, 0x3c, 0xfc,
