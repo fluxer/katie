@@ -115,8 +115,6 @@ public:
 QDebug Q_GUI_EXPORT &operator<<(QDebug &, const QVectorPath &path);
 #endif
 
-class QPixmapFilter;
-
 class Q_GUI_EXPORT QPaintEngineEx : public QPaintEngine
 {
     Q_DECLARE_PRIVATE(QPaintEngineEx)
