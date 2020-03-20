@@ -3208,16 +3208,6 @@ inline quint32 eff_ialpha_4(quint32 a, const qargb8555 *dummy)
 }
 
 template <class DST, class SRC>
-inline void interpolate_pixel_unaligned_2(DST *dest, const SRC *src,
-                                          quint16 alpha)
-{
-    const quint16 a = eff_alpha_2(alpha, dest);
-    const quint16 ia = eff_ialpha_2(alpha, dest);
-    dest[0] = DST(src[0]).byte_mul(a >> 8) + dest[0].byte_mul(ia >> 8);
-    dest[1] = DST(src[1]).byte_mul(a & 0xff) + dest[1].byte_mul(ia & 0xff);
-}
-
-template <class DST, class SRC>
 inline void interpolate_pixel_2(DST *dest, const SRC *src, quint16 alpha)
 {
     Q_ASSERT((quintptr(dest) & 0x3) == 0);
