@@ -1036,10 +1036,7 @@ bool QPaintEngineEx::supportsTransformations(const qreal pixelSize, const QTrans
 {
     Q_UNUSED(pixelSize);
 
-    if (!m.isAffine())
-        return true;
-
-    return false;
+    return !m.isAffine();
 }
 
 QT_END_NAMESPACE
