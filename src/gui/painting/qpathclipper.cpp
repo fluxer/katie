@@ -1622,8 +1622,7 @@ QPainterPath QPathClipper::clip(Operation operation)
 
     doClip(list, ClipMode);
 
-    QPainterPath path = list.toPath();
-    return path;
+    return list.toPath();
 }
 
 bool QPathClipper::doClip(QWingedEdge &list, ClipperMode mode) const
