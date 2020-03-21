@@ -60,12 +60,9 @@ static qint64 getticks()
     clockId = CLOCK_REALTIME;
 
 #  if (_POSIX_THREAD_CPUTIME-0 == 0)
-    // detect availablility of CLOCK_THREAD_CPUTIME_ID
-    static long useThreadCpuTime = -2;
-    if (useThreadCpuTime == -2) {
-        // sysconf() will return either -1 or _POSIX_VERSION (don't care about thread races here)
-        useThreadCpuTime = sysconf(_SC_THREAD_CPUTIME);
-    }
+    // detect availablility of CLOCK_THREAD_CPUTIME_ID,
+    // sysconf() will return either -1 or _POSIX_VERSION (don't care about thread races here)
+    static long useThreadCpuTime = sysconf(_SC_THREAD_CPUTIME);
     if (useThreadCpuTime != -1)
         clockId = CLOCK_THREAD_CPUTIME_ID;
 #  endif

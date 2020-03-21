@@ -828,7 +828,7 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
         QString userName = tokens.first();
         userName.remove(0, 1);
 #if defined(QT_HAVE_GETPWNAM_R)
-        int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
+        static int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
         if (size_max == -1)
             size_max = 1024;
         char buf[size_max];
