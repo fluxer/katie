@@ -60,7 +60,7 @@ public:
     QAlphaWidget(QWidget* w, Qt::WindowFlags f = 0);
     ~QAlphaWidget();
 
-    void run(int time);
+    void run();
 
 protected:
     void paintEvent(QPaintEvent* e);
@@ -114,14 +114,11 @@ void QAlphaWidget::paintEvent(QPaintEvent*)
 
 /*
   Starts the alphablending animation.
-  The animation will take about \a time ms
+  The animation will take about 150 ms
 */
-void QAlphaWidget::run(int time)
+void QAlphaWidget::run()
 {
-    duration = time;
-
-    if (duration < 0)
-        duration = 150;
+    duration = 150;
 
     if (!widget)
         return;
@@ -306,7 +303,7 @@ class QRollEffect : public QWidget, private QEffects
 public:
     QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient);
 
-    void run(int time);
+    void run();
 
 protected:
     void paintEvent(QPaintEvent*);
@@ -400,25 +397,21 @@ void QRollEffect::closeEvent(QCloseEvent *e)
 /*
   Start the animation.
 
-  The animation will take about \a time ms, or is
-  calculated if \a time is negative
+  The animation time is calculated
 */
-void QRollEffect::run(int time)
+void QRollEffect::run()
 {
     if (!widget)
         return;
 
-    duration  = time;
     elapsed = 0;
 
-    if (duration < 0) {
-        int dist = 0;
-        if (orientation & (RightScroll|LeftScroll))
-            dist += totalWidth - currentWidth;
-        if (orientation & (DownScroll|UpScroll))
-            dist += totalHeight - currentHeight;
-        duration = qMin(qMax(dist/3, 50), 120);
-    }
+    int dist = 0;
+    if (orientation & (RightScroll|LeftScroll))
+        dist += totalWidth - currentWidth;
+    if (orientation & (DownScroll|UpScroll))
+        dist += totalHeight - currentHeight;
+    duration = qMin(qMax(dist/3, 50), 120);
 
     connect(&anim, SIGNAL(timeout()), this, SLOT(scroll()));
 
@@ -511,10 +504,9 @@ void QRollEffect::scroll()
 }
 
 /*!
-    Scroll widget \a w in \a time ms. \a orient may be 1 (vertical), 2
-    (horizontal) or 3 (diagonal).
+    Scroll widget \a w. \a orient may be 1 (vertical), 2 (horizontal) or 3 (diagonal).
 */
-void qScrollEffect(QWidget* w, QEffects::DirFlags orient, int time)
+void qScrollEffect(QWidget* w, QEffects::DirFlags orient)
 {
     if (q_roll) {
         q_roll->deleteLater();
@@ -526,17 +518,16 @@ void qScrollEffect(QWidget* w, QEffects::DirFlags orient, int time)
 
     QApplication::sendPostedEvents(w, QEvent::Move);
     QApplication::sendPostedEvents(w, QEvent::Resize);
-    Qt::WindowFlags flags = Qt::ToolTip;
 
     // those can be popups - they would steal the focus, but are disabled
-    q_roll = new QRollEffect(w, flags, orient);
-    q_roll->run(time);
+    q_roll = new QRollEffect(w, Qt::ToolTip, orient);
+    q_roll->run();
 }
 
 /*!
-    Fade in widget \a w in \a time ms.
+    Fade in widget \a w.
 */
-void qFadeEffect(QWidget* w, int time)
+void qFadeEffect(QWidget* w)
 {
     if (q_blend) {
         q_blend->deleteLater();
@@ -549,12 +540,10 @@ void qFadeEffect(QWidget* w, int time)
     QApplication::sendPostedEvents(w, QEvent::Move);
     QApplication::sendPostedEvents(w, QEvent::Resize);
 
-    Qt::WindowFlags flags = Qt::ToolTip;
-
     // those can be popups - they would steal the focus, but are disabled
-    q_blend = new QAlphaWidget(w, flags);
+    q_blend = new QAlphaWidget(w, Qt::ToolTip);
 
-    q_blend->run(time);
+    q_blend->run();
 }
 
 QT_END_NAMESPACE
