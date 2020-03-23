@@ -757,7 +757,7 @@ void expblur(QImage &img, qreal radius, bool improvedQuality = false, int transp
 #define AVG(a,b)  ( ((((a)^(b)) & 0xfefefefeUL) >> 1) + ((a)&(b)) )
 #define AVG16(a,b)  ( ((((a)^(b)) & 0xf7deUL) >> 1) + ((a)&(b)) )
 
-Q_GUI_EXPORT QImage qt_halfScaled(const QImage &source)
+static QImage qt_halfScaled(const QImage &source)
 {
     if (source.width() < 2 || source.height() < 2)
         return QImage();
@@ -845,7 +845,7 @@ Q_GUI_EXPORT QImage qt_halfScaled(const QImage &source)
     return dest;
 }
 
-Q_GUI_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0)
+static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0)
 {
     if (blurImage.format() != QImage::Format_ARGB32_Premultiplied
         && blurImage.format() != QImage::Format_RGB32)
@@ -871,7 +871,7 @@ Q_GUI_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, boo
     }
 }
 
-Q_GUI_EXPORT void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0)
+static void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0)
 {
     if (blurImage.format() == QImage::Format_Indexed8)
         expblur<12, 10, true>(blurImage, radius, quality, transposed);
