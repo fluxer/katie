@@ -906,8 +906,6 @@ void QPixmapBlurFilter::draw(QPainter *painter, const QPointF &p, const QPixmap 
         scaledRadius /= scale;
 
     QImage srcImage;
-    QImage destImage;
-
     if (srcRect == src.rect()) {
         srcImage = src.toImage();
     } else {
