@@ -196,7 +196,7 @@ QRectF QPixmapFilter::boundingRectFor(const QRectF &rect) const
 class QPixmapConvolutionFilterPrivate : public QPixmapFilterPrivate
 {
 public:
-    QPixmapConvolutionFilterPrivate(): convolutionKernel(0), kernelWidth(0), kernelHeight(0), convoluteAlpha(false) {}
+    QPixmapConvolutionFilterPrivate(): convolutionKernel(0), kernelWidth(0), kernelHeight(0) {}
     ~QPixmapConvolutionFilterPrivate() {
         delete[] convolutionKernel;
     }
@@ -204,7 +204,6 @@ public:
     qreal *convolutionKernel;
     int kernelWidth;
     int kernelHeight;
-    bool convoluteAlpha;
 };
 
 
@@ -219,7 +218,6 @@ QPixmapConvolutionFilter::QPixmapConvolutionFilter(QObject *parent)
     : QPixmapFilter(*new QPixmapConvolutionFilterPrivate, ConvolutionFilter, parent)
 {
     Q_D(QPixmapConvolutionFilter);
-    d->convoluteAlpha = true;
 }
 
 /*!
