@@ -975,6 +975,9 @@ bool QWidgetPrivate::isBackgroundInherited() const
     return true;
 }
 
+extern void qPRCleanup(QWidget *widget); // from qapplication_x11.cpp
+extern void qPRCreate(QWidget *, Window);
+
 void QWidget::destroy(bool destroyWindow, bool destroySubWindows)
 {
     Q_D(QWidget);
@@ -1025,7 +1028,6 @@ void QWidget::destroy(bool destroyWindow, bool destroySubWindows)
         }
         d->setWinId(0);
 
-        extern void qPRCleanup(QWidget *widget); // from qapplication_x11.cpp
         if (testAttribute(Qt::WA_WState_Reparented))
             qPRCleanup(this);
     }
@@ -1049,7 +1051,6 @@ void QWidgetPrivate::setParent_sys(QWidget *parent, Qt::WindowFlags f)
     bool wasCreated = q->testAttribute(Qt::WA_WState_Created);
     if (q->isVisible() && q->parentWidget() && parent != q->parentWidget())
         q->parentWidget()->d_func()->invalidateBuffer(effectiveRectFor(q->geometry()));
-    extern void qPRCreate(const QWidget *, Window);
 #ifndef QT_NO_CURSOR
     QCursor oldcurs;
 #endif

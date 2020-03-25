@@ -1918,19 +1918,19 @@ Qt::KeyboardModifiers QApplication::queryKeyboardModifiers()
 
 static QWidgetMapper *wPRmapper = 0;                // alternative widget mapper
 
-void qPRCreate(const QWidget *widget, Window oldwin)
+void qPRCreate(QWidget *widget, Window oldwin)
 {                                                // QWidget::reparent mechanism
     if (!wPRmapper)
         wPRmapper = new QWidgetMapper;
 
-    QETWidget *w = static_cast<QETWidget *>(const_cast<QWidget *>(widget));
+    QETWidget *w = static_cast<QETWidget *>(widget);
     wPRmapper->insert((int)oldwin, w);        // add old window to mapper
     w->setAttribute(Qt::WA_WState_Reparented);        // set reparented flag
 }
 
 void qPRCleanup(QWidget *widget)
 {
-    QETWidget *etw = static_cast<QETWidget *>(const_cast<QWidget *>(widget));
+    QETWidget *etw = static_cast<QETWidget *>(widget);
     if (!(wPRmapper && widget->testAttribute(Qt::WA_WState_Reparented)))
         return;                                        // not a reparented widget
     QWidgetMapper::iterator it = wPRmapper->begin();
