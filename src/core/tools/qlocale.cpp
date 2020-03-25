@@ -298,7 +298,7 @@ static const QLocalePrivate *findLocale(const QString &name)
     return QLocalePrivate::findLocale(lang, script, cntry);
 }
 
-QString qt_readEscapedFormatString(const QString &format, int *idx)
+static QString qt_readEscapedFormatString(const QString &format, int *idx)
 {
     int &i = *idx;
 
@@ -332,11 +332,10 @@ QString qt_readEscapedFormatString(const QString &format, int *idx)
     return result;
 }
 
-int qt_repeatCount(const QString &s, int i)
+static int qt_repeatCount(const QString &s, int i)
 {
-    QChar c = s.at(i);
     int j = i + 1;
-    while (j < s.size() && s.at(j) == c)
+    while (j < s.size() && s.at(j) == s.at(i))
         ++j;
     return j - i;
 }
