@@ -1117,7 +1117,6 @@ include/katie/QtGui/qmdiarea.h
 include/katie/QtGui/qmdisubwindow.h
 include/katie/QtGui/qmenu.h
 include/katie/QtGui/qmenubar.h
-include/katie/QtGui/qmenudata.h
 include/katie/QtGui/qmessagebox.h
 include/katie/QtGui/qmotifstyle.h
 include/katie/QtGui/qmovie.h
