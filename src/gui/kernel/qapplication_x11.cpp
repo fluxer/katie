@@ -343,8 +343,6 @@ extern bool qt_check_selection_sentinel(); //def in qclipboard_x11.cpp
 extern bool qt_xfixes_clipboard_changed(Window clipboardOwner, Time timestamp); //def in qclipboard_x11.cpp
 extern bool qt_xfixes_selection_changed(Window selectionOwner, Time timestamp); //def in qclipboard_x11.cpp
 
-Q_GUI_EXPORT bool qt_try_modal(QWidget *, XEvent *);
-
 QWidget *qt_button_down = 0; // last widget to be pressed with the mouse
 QPointer<QWidget> qt_last_mouse_receiver = 0;
 static QWidget *qt_popup_down = 0;  // popup that contains the pressed widget
@@ -2029,6 +2027,49 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
     return 0;
 }
 
+static bool qt_try_modal(QWidget *widget, XEvent *event)
+{
+    if (qt_xdnd_dragging) {
+        // allow mouse events while DnD is active
+        switch (event->type) {
+        case XButtonPress:
+        case XButtonRelease:
+        case MotionNotify:
+            return true;
+        default:
+            break;
+        }
+    }
+
+    // allow mouse release events to be sent to widgets that have been pressed
+    if (event->type == XButtonRelease) {
+        QWidget *alienWidget = widget->childAt(widget->mapFromGlobal(QPoint(event->xbutton.x_root,
+                                                                            event->xbutton.y_root)));
+        if (widget == qt_button_down || (alienWidget && alienWidget == qt_button_down))
+            return true;
+    }
+
+    if (QApplicationPrivate::tryModalHelper(widget))
+        return true;
+
+    // disallow mouse/key events
+    switch (event->type) {
+    case XButtonPress:
+    case XButtonRelease:
+    case MotionNotify:
+    case XKeyPress:
+    case XKeyRelease:
+    case EnterNotify:
+    case LeaveNotify:
+    case ClientMessage:
+        return false;
+    default:
+        break;
+    }
+
+    return true;
+}
+
 int QApplication::x11ProcessEvent(XEvent* event)
 {
     Q_D(QApplication);
@@ -2697,50 +2738,6 @@ void QApplicationPrivate::leaveModal_sys(QWidget *widget)
     }
     app_do_modal = qt_modal_stack != 0;
 }
-
-bool qt_try_modal(QWidget *widget, XEvent *event)
-{
-    if (qt_xdnd_dragging) {
-        // allow mouse events while DnD is active
-        switch (event->type) {
-        case XButtonPress:
-        case XButtonRelease:
-        case MotionNotify:
-            return true;
-        default:
-            break;
-        }
-    }
-
-    // allow mouse release events to be sent to widgets that have been pressed
-    if (event->type == XButtonRelease) {
-        QWidget *alienWidget = widget->childAt(widget->mapFromGlobal(QPoint(event->xbutton.x_root,
-                                                                            event->xbutton.y_root)));
-        if (widget == qt_button_down || (alienWidget && alienWidget == qt_button_down))
-            return true;
-    }
-
-    if (QApplicationPrivate::tryModalHelper(widget))
-        return true;
-
-    // disallow mouse/key events
-    switch (event->type) {
-    case XButtonPress:
-    case XButtonRelease:
-    case MotionNotify:
-    case XKeyPress:
-    case XKeyRelease:
-    case EnterNotify:
-    case LeaveNotify:
-    case ClientMessage:
-        return false;
-    default:
-        break;
-    }
-
-    return true;
-}
-
 
 /*****************************************************************************
   Popup widget mechanism
