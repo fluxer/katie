@@ -599,11 +599,15 @@ int QColormap::depth() const
 
 int QColormap::size() const
 {
-    return (d->mode == Gray
-            ? d->r_max
-            : (d->mode == Indexed
-               ? d->r_max * d->g_max * d->b_max
-               : -1));
+    switch (d->mode) {
+        case Gray:
+            return d->r_max;
+        case Indexed:
+            return d->r_max * d->g_max * d->b_max;
+        case Direct:
+            return -1;
+    }
+    Q_UNREACHABLE();
 }
 
 uint QColormap::pixel(const QColor &color) const
