@@ -72,10 +72,10 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
                                    QTextItem::RenderFlags flags, qreal width,
                                    const QTextCharFormat &charFormat);
 // Helper function to calculate left most position, width and flags for decoration drawing
-Q_GUI_EXPORT void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
-                                                const QFixedPoint *positions, int glyphCount,
-                                                QFontEngine *fontEngine, const QFont &font,
-                                                const QTextCharFormat &charFormat);
+static void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
+                                          const QFixedPoint *positions, int glyphCount,
+                                          QFontEngine *fontEngine, const QFont &font,
+                                          const QTextCharFormat &charFormat);
 
 static inline QGradient::CoordinateMode coordinateMode(const QBrush &brush)
 {
@@ -5573,10 +5573,10 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
     painter->setBrush(oldBrush);
 }
 
-Q_GUI_EXPORT void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
-                                                const QFixedPoint *positions, int glyphCount,
-                                                QFontEngine *fontEngine, const QFont &font,
-                                                const QTextCharFormat &charFormat)
+static void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
+                                          const QFixedPoint *positions, int glyphCount,
+                                          QFontEngine *fontEngine, const QFont &font,
+                                          const QTextCharFormat &charFormat)
 {
     if (!(font.underline() || font.strikeOut() || font.overline()))
         return;

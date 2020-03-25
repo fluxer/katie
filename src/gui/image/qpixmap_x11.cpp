@@ -282,7 +282,6 @@ static int defaultScreen = -1;
  *****************************************************************************/
 
 QAtomicInt qt_pixmap_serial = QAtomicInt(0);
-int Q_GUI_EXPORT qt_x11_preferred_pixmap_depth = 0;
 
 QX11PixmapData::QX11PixmapData(PixelType type)
     : QPixmapData(type, X11Class), hd(0),
@@ -316,10 +315,7 @@ void QX11PixmapData::resize(int width, int height)
         xinfo.setX11Data(xd);
     }
 
-    int dd = xinfo.depth();
-
-    if (qt_x11_preferred_pixmap_depth)
-        dd = qt_x11_preferred_pixmap_depth;
+    const int dd = xinfo.depth();
 
     bool make_null = w <= 0 || h <= 0;                // create null pixmap
     d = (pixelType() == BitmapType ? 1 : dd);
@@ -417,10 +413,7 @@ void QX11PixmapData::fromImage(const QImage &img,
     }
 
     QX11AlphaDetector alphaCheck(&img, flags);
-    int dd = alphaCheck.hasXRenderAndAlpha() ? 32 : xinfo.depth();
-
-    if (qt_x11_preferred_pixmap_depth)
-        dd = qt_x11_preferred_pixmap_depth;
+    const int dd = alphaCheck.hasXRenderAndAlpha() ? 32 : xinfo.depth();
 
     QImage image = img;
 

@@ -758,7 +758,7 @@ const QGradient *QBrush::gradient() const
     return 0;
 }
 
-Q_GUI_EXPORT bool qt_isExtendedRadialGradient(const QBrush &brush)
+static bool qt_isExtendedRadialGradient(const QBrush &brush)
 {
     if (brush.style() == Qt::RadialGradientPattern) {
         const QGradient *g = brush.gradient();

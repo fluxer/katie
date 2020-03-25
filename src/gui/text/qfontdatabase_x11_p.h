@@ -704,6 +704,7 @@ static void loadFontConfig()
 #endif // QT_NO_FONTCONFIG
 
 static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt);
+static QString styleStringHelper(int weight, QFont::Style style);
 
 static void initializeFontDb()
 {
@@ -1175,12 +1176,6 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
         if (!privateDb()->count)
             initializeFontDb();
 
-#ifdef QT_BUILD_INTERNAL
-        if (qt_enable_test_font && req.family == QLatin1String("__Qt__Box__Engine__")) {
-            fe = new QTestFontEngine(req.pixelSize);
-            fe->fontDef = req;
-        } else
-#endif
 #ifndef QT_NO_FONTCONFIG
         if (qt_x11Data->has_fontconfig) {
             fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);

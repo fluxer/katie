@@ -67,15 +67,6 @@ QT_BEGIN_NAMESPACE
 
 #define SMOOTH_SCALABLE 0xffff
 
-bool qt_enable_test_font = false;
-
-static QString styleStringHelper(int weight, QFont::Style style);
-
-Q_AUTOTEST_EXPORT void qt_setQtEnableTestFont(bool value)
-{
-    qt_enable_test_font = value;
-}
-
 static int getFontWeight(const QString &weightString)
 {
     QString s = weightString.toLower();

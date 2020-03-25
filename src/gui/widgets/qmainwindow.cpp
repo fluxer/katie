@@ -31,8 +31,6 @@
 **
 ****************************************************************************/
 
-//#define QT_EXPERIMENTAL_CLIENT_DECORATIONS
-
 #include "qmainwindow.h"
 #include "qmainwindowlayout_p.h"
 
@@ -90,57 +88,11 @@ QMainWindowLayout *qt_mainwindow_layout(const QMainWindow *mainWindow)
     return QMainWindowPrivate::mainWindowLayout(mainWindow);
 }
 
-#ifdef QT_EXPERIMENTAL_CLIENT_DECORATIONS
-Q_GUI_EXPORT void qt_setMainWindowTitleWidget(QMainWindow *mainWindow, Qt::DockWidgetArea area, QWidget *widget)
-{
-    QGridLayout *topLayout = qobject_cast<QGridLayout *>(mainWindow->layout());
-    Q_ASSERT(topLayout);
-
-    int row = 0;
-    int column = 0;
-
-    switch (area) {
-    case Qt::LeftDockWidgetArea:
-        row = 1;
-        column = 0;
-        break;
-    case Qt::TopDockWidgetArea:
-        row = 0;
-        column = 1;
-        break;
-    case Qt::BottomDockWidgetArea:
-        row = 2;
-        column = 1;
-        break;
-    case Qt::RightDockWidgetArea:
-        row = 1;
-        column = 2;
-        break;
-    default:
-        Q_ASSERT_X(false, "qt_setMainWindowTitleWidget", "Unknown area");
-        return;
-    }
-
-    if (QLayoutItem *oldItem = topLayout->itemAtPosition(row, column))
-        delete oldItem->widget();
-    topLayout->addWidget(widget, row, column);
-}
-#endif
-
 void QMainWindowPrivate::init()
 {
     Q_Q(QMainWindow);
 
-#ifdef QT_EXPERIMENTAL_CLIENT_DECORATIONS
-    QGridLayout *topLayout = new QGridLayout(q);
-    topLayout->setContentsMargins(0, 0, 0, 0);
-
-    layout = new QMainWindowLayout(q, topLayout);
-
-    topLayout->addItem(layout, 1, 1);
-#else
     layout = new QMainWindowLayout(q, 0);
-#endif
 
     const int metric = q->style()->pixelMetric(QStyle::PM_ToolBarIconSize, 0, q);
     iconSize = QSize(metric, metric);
