@@ -304,7 +304,7 @@ static void convolute(
         int kernelWidth,
         int kernelHeight )
 {
-    const QImage processImage = (srcImage.format() != QImage::Format_ARGB32_Premultiplied ) ?               srcImage.convertToFormat(QImage::Format_ARGB32_Premultiplied) : srcImage;
+    const QImage processImage = (srcImage.format() != QImage::Format_ARGB32_Premultiplied ) ? srcImage.convertToFormat(QImage::Format_ARGB32_Premultiplied) : srcImage;
     // TODO: support also other formats directly without copying
 
     int *fixedKernel = new int[kernelWidth*kernelHeight];
