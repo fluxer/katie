@@ -50,7 +50,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static QString qdlerror()
+static inline QString qdlerror()
 {
 #if defined(QT_NO_DYNAMIC_LIBRARY)
     return QLatin1String("This platform does not support dynamic libraries.");
