@@ -290,25 +290,6 @@ Qt::DropAction QDrag::start(Qt::DropActions request)
 }
 
 /*!
-    Sets the drag \a cursor for the \a action. This allows you
-    to override the default native cursors. To revert to using the
-    native cursor for \a action pass in a null QPixmap as \a cursor.
-
-    The \a action can only be CopyAction, MoveAction or LinkAction.
-    All other values of DropAction are ignored.
-*/
-void QDrag::setDragCursor(const QPixmap &cursor, Qt::DropAction action)
-{
-    Q_D(QDrag);
-    if (action != Qt::CopyAction && action != Qt::MoveAction && action != Qt::LinkAction)
-        return;
-    if (cursor.isNull())
-        d->customCursors.remove(action);
-    else
-        d->customCursors[action] = cursor;
-}
-
-/*!
     \fn void QDrag::actionChanged(Qt::DropAction action)
 
     This signal is emitted when the \a action associated with the
