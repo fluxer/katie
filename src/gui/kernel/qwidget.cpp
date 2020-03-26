@@ -1286,7 +1286,7 @@ void QWidgetPrivate::setWinId(WId id)                // set widget identifier
     // will have the same windowid (the root window id) as the
     // qt_desktopWidget. We should not add the second desktop widget
     // to the mapper.
-    bool userDesktopWidget = qt_desktopWidget != 0 && qt_desktopWidget != q && q->windowType() == Qt::Desktop;
+    bool userDesktopWidget = (qt_desktopWidget && qt_desktopWidget != q && q->windowType() == Qt::Desktop);
     if (mapper && data.winid && !userDesktopWidget) {
         mapper->remove(data.winid);
     }

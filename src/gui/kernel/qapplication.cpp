@@ -812,11 +812,11 @@ QApplication::~QApplication()
     }
 
     delete qt_desktopWidget;
-    qt_desktopWidget = 0;
+    qt_desktopWidget = Q_NULLPTR;
 
 #ifndef QT_NO_CLIPBOARD
     delete qt_clipboard;
-    qt_clipboard = 0;
+    qt_clipboard = Q_NULLPTR;
 #endif
 
 #if defined(Q_WS_X11)
@@ -2644,12 +2644,12 @@ QDesktopWidget *QApplication::desktop()
 */
 QClipboard *QApplication::clipboard()
 {
-    if (qt_clipboard == 0) {
+    if (!qt_clipboard) {
         if (Q_UNLIKELY(!qApp)) {
             qWarning("QApplication: Must construct a QApplication before accessing a QClipboard");
-            return 0;
+            return Q_NULLPTR;
         }
-        qt_clipboard = new QClipboard(0);
+        qt_clipboard = new QClipboard(Q_NULLPTR);
     }
     return qt_clipboard;
 }
