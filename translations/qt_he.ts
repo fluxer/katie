@@ -444,7 +444,7 @@ Script: %3</source>
     <message>
         <location line="+29"/>
         <source>Possible anchor loop detected on centerIn.</source>
-        <translation>אותרה לולאת �����וגן אפשרית בתוך centerin.</translation>
+        <translation>אותרה לולאת ������וגן אפשרית בתוך centerin.</translation>
     </message>
     <message>
         <location line="+208"/>
@@ -623,7 +623,7 @@ Script: %3</source>
     <message>
         <location line="+5"/>
         <source>Invalid property assignment: boolean expected</source>
-        <translation>השמה לא תקינה למאפיין: צפוי ערך בול��אני</translation>
+        <translation>השמה לא תקינה למאפיין: צפוי ערך ��ול��אני</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1646,7 +1646,7 @@ Script: %3</source>
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+430"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+407"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
@@ -1833,7 +1833,7 @@ Please verify the correct file name was given.</source>
 אנא ודא כי שם הקובץ הנכון הוזן.</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+402"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+393"/>
         <source>My Computer</source>
         <translation>המחשב שלי</translation>
     </message>
@@ -1998,31 +1998,31 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+655"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <source>%1 TB</source>
         <translation>%1 ט&quot;ב</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 GB</source>
         <translation>%1 ג&quot;ב</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 MB</source>
         <translation>%1 מ&quot;ב</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 KB</source>
         <translation>%1 ק&quot;ב</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+1"/>
+        <location line="+1"/>
         <source>%1 bytes</source>
         <translation>%1 בתים</translation>
     </message>
@@ -2071,7 +2071,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+86"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
         <location line="+844"/>
         <source>Normal</source>
         <translation>רגיל</translation>
@@ -2385,13 +2385,13 @@ Do you want to delete it anyway?</source>
         <translation>חיבור נדחה</translation>
     </message>
     <message>
-        <location line="-3"/>
         <location filename="../src/network/access/qhttp.cpp" line="+2599"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-3"/>
         <source>Host %1 not found</source>
         <translation>מארח %1 לא נמצא</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-62"/>
+        <location line="-62"/>
         <source>Wrong content length</source>
         <translation>אורך תוכן שגוי</translation>
     </message>
@@ -2539,7 +2539,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
         <source>Permission denied</source>
         <translation>הרשאה נדחתה</translation>
     </message>
@@ -2731,7 +2731,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+213"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: שגיאת שם</translation>
@@ -2756,66 +2756,52 @@ Do you want to delete it anyway?</source>
     <name>QLocalSocket</name>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+127"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+124"/>
         <source>%1: Connection refused</source>
         <translation>%1: חיבור נדחה</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Remote closed</source>
         <translation>%1: קצה מרוחק סגר</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: שם לא תקין</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket access error</source>
         <translatorcomment>גישת שקע</translatorcomment>
         <translation>%1: ש���יאת גישה לשקע</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket resource error</source>
         <translation>%1: שגיאת משאב שקע</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket operation timed out</source>
         <translation>%1: תם זמן פעולת שקע</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Datagram too large</source>
         <translation>%1: צרור נתונים גדול מדי</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: שגיאת חיבור</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: The socket operation is not supported</source>
         <translation>%1: פעולת השקע אינה נתמכת</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+4"/>
-        <source>%1: Unknown error</source>
-        <translation>%1: שגיאה לא מוכרת</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: שגיאה לא מוכרת %2</translation>
     </message>
@@ -4897,7 +4883,7 @@ Please choose a different file name.</source>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+299"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+296"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>רווח</translation>
@@ -5282,7 +5268,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+1"/>
         <source>Sleep</source>
-        <translation>תנומה</translation>
+        <translation>תנו��ה</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5963,7 +5949,7 @@ Please choose a different file name.</source>
         <translation>האנגול מיוחד</translation>
     </message>
     <message>
-        <location line="+464"/>
+        <location line="+458"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -5998,7 +5984,7 @@ Please choose a different file name.</source>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-751"/>
+        <location line="-745"/>
         <source>Home Page</source>
         <translation>דף בית</translation>
     </message>
@@ -6283,7 +6269,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+3"/>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
-        <translation>תעודת המנפיק של התעודה הנוכחית נדחתה כיוון ששם המנפיק והמספר הסידורי נמצאים ואינם תואמים למזהה מפתח האמינות של התעודה הנוכחית</translation>
+        <translation>תעודת המנפיק של התעודה הנוכחית נדחתה כיוון ששם המנפיק והמספר הסיד��רי נמצאים ואינם תואמים למזהה מפתח האמינות של התעודה הנוכחית</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6667,7 +6653,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5178"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
         <source>*</source>
         <translation>*</translation>
     </message>
