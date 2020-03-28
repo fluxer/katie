@@ -208,6 +208,9 @@ if(WITH_RESOLV AND RESOLV_FOUND)
         ${RESOLV_LIBRARIES}
     )
     include_directories(${RESOLV_INCLUDES})
+    if(RESOLV_THREAD_SAFE)
+        add_definitions(-DQT_HAVE_RES_NINIT)
+    endif()
 endif()
 
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)

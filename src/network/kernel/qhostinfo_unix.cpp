@@ -286,8 +286,8 @@ QString QHostInfo::localHostName()
 
 QString QHostInfo::localDomainName()
 {
-// a dirty way to support both thread-safe/unsafe
-#if !defined(QT_NO_RESOLV) && defined(res_ninit)
+//support both thread-safe and unsafe versions
+#if !defined(QT_NO_RESOLV) && defined(QT_HAVE_RES_NINIT)
     // using thread-safe version
     struct __res_state state;
     res_ninit(&state);
