@@ -698,7 +698,7 @@ inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 #   define Q_FUNC_INFO __func__
 #endif
 
-enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg, QtSystemMsg = QtCriticalMsg };
+enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg };
 
 Q_CORE_EXPORT void qt_message_output(QtMsgType, const char *buf);
 
