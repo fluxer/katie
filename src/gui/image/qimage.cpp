@@ -112,11 +112,6 @@ static inline bool checkPixelSize(const QImage::Format format)
         return QImage(); \
     }
 
-
-static QImage rotated90(const QImage &src);
-static QImage rotated180(const QImage &src);
-static QImage rotated270(const QImage &src);
-
 QAtomicInt qimage_serial_number = QAtomicInt(1);
 
 QImageData::QImageData()
@@ -5123,7 +5118,6 @@ int QImage::bitPlaneCount() const
 */
 
 
-
 static QImage rotated90(const QImage &image) {
     QImage out(image.height(), image.width(), image.format());
     QIMAGE_SANITYCHECK_MEMORY(out);
@@ -5182,7 +5176,6 @@ static QImage rotated90(const QImage &image) {
 static QImage rotated180(const QImage &image) {
     return image.mirrored(true, true);
 }
-
 
 static QImage rotated270(const QImage &image) {
     QImage out(image.height(), image.width(), image.format());
