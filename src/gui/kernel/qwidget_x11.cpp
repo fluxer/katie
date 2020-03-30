@@ -2531,7 +2531,7 @@ void QWidgetPrivate::setGeometry_sys(int x, int y, int w, int h, bool isMove)
             QApplication::sendEvent(q, &e);
         }
         if (isResize) {
-            static bool slowResize = qgetenv("QT_SLOW_TOPLEVEL_RESIZE").toInt();
+            static const bool slowResize = qgetenv("QT_SLOW_TOPLEVEL_RESIZE").toInt();
             // If we have a backing store with static contents, we have to disable the top-level
             // resize optimization in order to get invalidated regions for resized widgets.
             // The optimization discards all invalidateBuffer() calls since we're going to

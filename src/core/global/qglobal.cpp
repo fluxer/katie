@@ -1454,7 +1454,8 @@ void qt_message_output(QtMsgType msgType, const char *buf)
         fflush(stderr);
     }
 
-    if (msgType == QtFatalMsg || (msgType == QtWarningMsg && (!qgetenv("QT_FATAL_WARNINGS").isNull())))
+    static const bool fatalwarnings = qgetenv("QT_FATAL_WARNINGS").isNull();
+    if (msgType == QtFatalMsg || (msgType == QtWarningMsg && !fatalwarnings))
         abort(); // trap; generates core dump
 }
 

@@ -1046,7 +1046,7 @@ QStyle *QApplication::style()
         //
         QString style;
 #ifdef QT_BUILD_INTERNAL
-        QString envStyle = QString::fromLocal8Bit(qgetenv("QT_STYLE_OVERRIDE"));
+        static const QString envStyle = QString::fromLocal8Bit(qgetenv("QT_STYLE_OVERRIDE"));
 #endif
         if (!QApplicationPrivate::styleOverride.isEmpty()) {
             style = QApplicationPrivate::styleOverride;

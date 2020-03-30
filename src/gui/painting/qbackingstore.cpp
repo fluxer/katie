@@ -74,14 +74,14 @@ static inline void qt_flush(QWidget *widget, const QRegion &region, QWindowSurfa
     Q_ASSERT(tlw);
 
 #if !defined(QT_NO_DEBUG)
-    static int flushUpdate = qgetenv("QT_FLUSH_UPDATE").toInt();
+    static const int flushUpdate = qgetenv("QT_FLUSH_UPDATE").toInt();
     if (flushUpdate > 0)
         QWidgetBackingStore::showYellowThing(widget, region, flushUpdate * 10, false);
 #endif
 
     //The performance hit by doing this should be negligible. However, be aware that
     //using this FPS when you have > 1 windowsurface can give you inaccurate FPS
-    static bool fpsDebug = qgetenv("QT_DEBUG_FPS").toInt();
+    static const bool fpsDebug = qgetenv("QT_DEBUG_FPS").toInt();
     if (fpsDebug) {
         static QTime time = QTime::currentTime();
         static int frames = 0;
@@ -695,10 +695,7 @@ void QWidgetPrivate::moveRect(const QRect &rect, int dx, int dy)
     if (x->inTopLevelResize)
         return;
 
-    static int accelEnv = -1;
-    if (accelEnv == -1) {
-        accelEnv = qgetenv("QT_NO_FAST_MOVE").toInt() == 0;
-    }
+    static const int accelEnv = qgetenv("QT_NO_FAST_MOVE").toInt() == 0;
 
     QWidget *pw = q->parentWidget();
     QPoint toplevelOffset = pw->mapTo(tlw, QPoint());
@@ -777,10 +774,7 @@ void QWidgetPrivate::scrollRect(const QRect &rect, int dx, int dy)
     if (!wbs)
         return;
 
-    static int accelEnv = -1;
-    if (accelEnv == -1) {
-        accelEnv = qgetenv("QT_NO_FAST_SCROLL").toInt() == 0;
-    }
+    static const int accelEnv = qgetenv("QT_NO_FAST_SCROLL").toInt() == 0;
 
     QRect scrollRect = rect & clipRect();
     bool overlapped = false;
