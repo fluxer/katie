@@ -641,7 +641,7 @@ Q_CORE_EXPORT void qWarning(const char *, ...) /* print warning message */
 #endif
 ;
 
-Q_CORE_EXPORT QString qt_error_string(int errorCode = -1);
+Q_CORE_EXPORT QString qt_error_string(int errorCode);
 Q_CORE_EXPORT void qCritical(const char *, ...) /* print critical message */
 #if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))

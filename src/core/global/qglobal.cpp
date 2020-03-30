@@ -1368,9 +1368,6 @@ static QtMsgHandler handler = 0;                // pointer to debug handler
 
 QString qt_error_string(int errorCode)
 {
-    if (Q_UNLIKELY(errorCode == -1))
-        errorCode = errno;
-
     switch (errorCode) {
         case EACCES:
             return QString::fromLatin1(QT_TRANSLATE_NOOP("QIODevice", "Permission denied"));
