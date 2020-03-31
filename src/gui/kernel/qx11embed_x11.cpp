@@ -257,11 +257,6 @@ enum QX11EmbedMessageType {
     XEMBED_FOCUS_OUT = 5,
     XEMBED_FOCUS_NEXT = 6,
     XEMBED_FOCUS_PREV = 7,
-    XEMBED_MODALITY_ON = 10,
-    XEMBED_MODALITY_OFF = 11,
-    XEMBED_REGISTER_ACCELERATOR = 12,
-    XEMBED_UNREGISTER_ACCELERATOR = 13,
-    XEMBED_ACTIVATE_ACCELERATOR = 14
 };
 
 enum QX11EmbedFocusInDetail {
@@ -270,25 +265,8 @@ enum QX11EmbedFocusInDetail {
     XEMBED_FOCUS_LAST = 2
 };
 
-enum QX11EmbedFocusInFlags {
-    XEMBED_FOCUS_OTHER = (0 << 0),
-    XEMBED_FOCUS_WRAPAROUND = (1 << 0)
-};
-
 enum QX11EmbedInfoFlags {
     XEMBED_MAPPED = (1 << 0)
-};
-
-enum QX11EmbedAccelModifiers {
-    XEMBED_MODIFIER_SHIFT = (1 << 0),
-    XEMBED_MODIFIER_CONTROL = (1 << 1),
-    XEMBED_MODIFIER_ALT = (1 << 2),
-    XEMBED_MODIFIER_SUPER = (1 << 3),
-    XEMBED_MODIFIER_HYPER = (1 << 4)
-};
-
-enum QX11EmbedAccelFlags {
-    XEMBED_ACCELERATOR_OVERLOADED = (1 << 0)
 };
 
 // Silence the default X11 error handler.
