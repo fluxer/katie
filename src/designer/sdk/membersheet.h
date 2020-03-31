@@ -75,7 +75,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerMemberSheetExtension, "com.trolltech.Qt.Designer.MemberSheet")
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerMemberSheetExtension, "Katie.Designer.MemberSheet")
 
 QT_END_HEADER
 

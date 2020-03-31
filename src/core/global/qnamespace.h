@@ -122,14 +122,13 @@ public:
     };
     Q_DECLARE_FLAGS(KeyboardModifiers, KeyboardModifier)
 
-    //shorter names for shortcuts
+    // shorter names for shortcuts
     enum Modifier {
         META          = Qt::MetaModifier,
         SHIFT         = Qt::ShiftModifier,
         CTRL          = Qt::ControlModifier,
         ALT           = Qt::AltModifier,
-        MODIFIER_MASK = KeyboardModifierMask,
-        UNICODE_ACCEL = 0x00000000
+        MODIFIER_MASK = KeyboardModifierMask
     };
 
     enum MouseButton {
@@ -884,9 +883,6 @@ public:
         DashDotLine,
         DashDotDotLine,
         CustomDashLine
-#ifndef Q_MOC_RUN
-        , MPenStyle = 0x0f
-#endif
     };
 
     // line endcap style
@@ -894,7 +890,6 @@ public:
         FlatCap = 0x00,
         SquareCap = 0x10,
         RoundCap = 0x20,
-        MPenCapStyle = 0x30
     };
 
     // line join style
@@ -903,7 +898,6 @@ public:
         BevelJoin = 0x40,
         RoundJoin = 0x80,
         SvgMiterJoin = 0x100,
-        MPenJoinStyle = 0x1c0
     };
 
     enum BrushStyle {
@@ -1017,9 +1011,6 @@ public:
     enum DateFormat {
         TextDate,      // default Qt
         ISODate,       // ISO 8601
-        SystemLocaleDate, // deprecated
-        LocalDate = SystemLocaleDate, // deprecated
-        LocaleDate,     // deprecated
         SystemLocaleShortDate,
         SystemLocaleLongDate,
         DefaultLocaleShortDate,

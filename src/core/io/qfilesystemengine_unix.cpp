@@ -36,16 +36,18 @@
 #include "qfsfileengine.h"
 #include "qfile.h"
 #include "qfileinfo.h"
+#include "qcore_unix_p.h"
 
-#include <stdlib.h> // for realpath()
-#include <unistd.h>
-#include <stdio.h>
 #include <errno.h>
 #include <pwd.h>
 #include <grp.h>
 
 #ifdef Q_OS_LINUX
 #  include <sys/sendfile.h>
+#endif
+
+#ifndef PATH_MAX
+#  define PATH_MAX _POSIX_PATH_MAX
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -58,45 +60,21 @@ bool QFileSystemEngine::isCaseSensitive()
 //static
 QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, QFileSystemMetaData &data)
 {
-#if defined(__GLIBC__) && !defined(PATH_MAX)
-#define PATH_CHUNK_SIZE 256
-    char *s = 0;
-    int len = -1;
-    int size = PATH_CHUNK_SIZE;
-
-    while (1) {
-        s = (char *) ::realloc(s, size);
-        Q_CHECK_PTR(s);
-        len = ::readlink(link.nativeFilePath().constData(), s, size);
-        if (len < 0) {
-            ::free(s);
-            break;
-        }
-        if (len < size) {
-            break;
-        }
-        size *= 2;
-    }
-#else
-    char s[PATH_MAX+1];
-    int len = readlink(link.nativeFilePath().constData(), s, PATH_MAX);
-#endif
+    char readlinkbuf[PATH_MAX];
+    int len = ::readlink(link.nativeFilePath().constData(), readlinkbuf, sizeof(readlinkbuf));
     if (len > 0) {
         QString ret;
         if (!data.hasFlags(QFileSystemMetaData::DirectoryType))
             fillMetaData(link, data, QFileSystemMetaData::DirectoryType);
-        if (data.isDirectory() && s[0] != '/') {
+        if (data.isDirectory() && readlinkbuf[0] != '/') {
             QDir parent(link.filePath());
             parent.cdUp();
             ret = parent.path();
             if (!ret.isEmpty() && !ret.endsWith(QLatin1Char('/')))
                 ret += QLatin1Char('/');
         }
-        s[len] = '\0';
-        ret += QFile::decodeName(QByteArray(s));
-#if defined(__GLIBC__) && !defined(PATH_MAX)
-        ::free(s);
-#endif
+        readlinkbuf[len] = '\0';
+        ret += QFile::decodeName(QByteArray(readlinkbuf));
 
         if (!ret.startsWith(QLatin1Char('/'))) {
             if (link.filePath().startsWith(QLatin1Char('/'))) {
@@ -120,27 +98,12 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
     if (entry.isEmpty() || entry.isRoot())
         return entry;
 
-#if _POSIX_VERSION < 200809L
-    // realpath(X,0) is not supported
-    Q_UNUSED(data);
-    return QFileSystemEntry(slowCanonicalized(absoluteName(entry).filePath()));
-#else
-#if _POSIX_VERSION >= 200801L
-    char *ret = realpath(entry.nativeFilePath().constData(), (char*)0);
-#else
-    char *ret = static_cast<char*>(malloc(PATH_MAX + 1));
-    if (realpath(entry.nativeFilePath().constData(), ret) == 0) {
-        const int savedErrno = errno; // errno is checked below, and free() might change it
-        free(ret);
-        errno = savedErrno;
-        ret = 0;
-    }
-#endif
+    char *ret = ::realpath(entry.nativeFilePath().constData(), (char*)0);
     if (ret) {
         data.knownFlagsMask |= QFileSystemMetaData::ExistsAttribute;
         data.entryFlags |= QFileSystemMetaData::ExistsAttribute;
         QString canonicalPath = QDir::cleanPath(QString::fromLocal8Bit(ret));
-        free(ret);
+        ::free(ret);
         return QFileSystemEntry(canonicalPath);
     } else if (errno == ENOENT) { // file doesn't exist
         data.knownFlagsMask |= QFileSystemMetaData::ExistsAttribute;
@@ -148,7 +111,6 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
         return QFileSystemEntry();
     }
     return entry;
-#endif
 }
 
 //static
@@ -187,16 +149,16 @@ QFileSystemEntry QFileSystemEngine::absoluteName(const QFileSystemEntry &entry)
 //static
 QString QFileSystemEngine::resolveUserName(uint userId)
 {
-    struct passwd *pw = 0;
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && !defined(Q_OS_OPENBSD)
-    int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETPWUID_R)
+    static int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
     char buf[size_max];
     struct passwd entry;
-    getpwuid_r(userId, &entry, buf, size_max, &pw);
+    struct passwd *pw = Q_NULLPTR;
+    ::getpwuid_r(userId, &entry, buf, size_max, &pw);
 #else
-    pw = getpwuid(userId);
+    struct passwd *pw = ::getpwuid(userId);
 #endif
     if (pw)
         return QFile::decodeName(QByteArray(pw->pw_name));
@@ -206,16 +168,16 @@ QString QFileSystemEngine::resolveUserName(uint userId)
 //static
 QString QFileSystemEngine::resolveGroupName(uint groupId)
 {
-    struct group *gr = 0;
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && !defined(Q_OS_OPENBSD)
-    int size_max = sysconf(_SC_GETGR_R_SIZE_MAX);
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETGRGID_R)
+    static int size_max = sysconf(_SC_GETGR_R_SIZE_MAX);
     if (size_max == -1)
         size_max = 1024;
     char buf[size_max];
     struct group entry;
-    getgrgid_r(groupId, &entry, buf, size_max, &gr);
+    struct group *gr = Q_NULLPTR;
+    ::getgrgid_r(groupId, &entry, buf, size_max, &gr);
 #else
-    gr = getgrgid(groupId);
+    struct group *gr = ::getgrgid(groupId);
 #endif
     if (gr)
         return QFile::decodeName(QByteArray(gr->gr_name));
@@ -319,20 +281,20 @@ bool QFileSystemEngine::createDirectory(const QFileSystemEntry &entry, bool crea
                 slash = dirName.length();
             }
             if (slash) {
-                const char* chunk = QFile::encodeName(dirName.left(slash)).constData();
+                const QByteArray chunk = QFile::encodeName(dirName.left(slash));
                 QT_STATBUF st;
-                if (QT_STAT(chunk, &st) == 0) {
+                if (QT_STAT(chunk.constData(), &st) == 0) {
                     if ((st.st_mode & S_IFMT) != S_IFDIR)
                         return false;
-                } else if (QT_MKDIR(chunk, 0777) != 0) {
+                } else if (QT_MKDIR(chunk.constData(), 0777) != 0) {
                     return false;
                 }
             }
         }
         return true;
     }
-    const char* cDirName = QFile::encodeName(dirName).constData();
-    return (QT_MKDIR(cDirName, 0777) == 0);
+    const QByteArray eDirName = QFile::encodeName(dirName);
+    return (QT_MKDIR(eDirName.constData(), 0777) == 0);
 }
 
 //static
@@ -341,12 +303,12 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
     if (removeEmptyParents) {
         QString dirName = QDir::cleanPath(entry.filePath());
         for (int oldslash = 0, slash=dirName.length(); slash > 0; oldslash = slash) {
-            const char* chunk = QFile::encodeName(dirName.left(slash)).constData();
+            const QByteArray chunk = QFile::encodeName(dirName.left(slash));
             QT_STATBUF st;
-            if (QT_STAT(chunk, &st) == 0) {
+            if (QT_STAT(chunk.constData(), &st) == 0) {
                 if ((st.st_mode & S_IFMT) != S_IFDIR)
                     return false;
-                if (::rmdir(chunk) != 0)
+                if (::rmdir(chunk.constData()) != 0)
                     return oldslash != 0;
             } else {
                 return false;
@@ -355,8 +317,8 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
         }
         return true;
     }
-    const char* cDirName = QFile::encodeName(entry.filePath()).constData();
-    return rmdir(cDirName) == 0;
+    const QByteArray eDirName = QFile::encodeName(entry.filePath());
+    return ::rmdir(eDirName.constData()) == 0;
 }
 
 //static
@@ -371,15 +333,6 @@ bool QFileSystemEngine::createLink(const QFileSystemEntry &source, const QFileSy
 //static
 bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSystemEntry &target, QSystemError &error)
 {
-#ifdef Q_OS_LINUX
-
-// not in qplatformdefs.h since it is Linux specific
-#if defined(QT_USE_XOPEN_LFS_EXTENSIONS) && defined(QT_LARGEFILE_SUPPORT)
-#  define QT_SENDFILE ::sendfile64
-#else
-#  define QT_SENDFILE ::sendfile
-#endif
-
     QT_STATBUF st;
     if (QT_STAT(source.nativeFilePath().constData(), &st) == 0) {
         if (!S_ISREG(st.st_mode))
@@ -399,31 +352,56 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
         return false;
     }
 
-    QT_OFF_T tosend = st.st_size;
-    ssize_t sendresult = QT_SENDFILE(targetfd, sourcefd, Q_NULLPTR, tosend);
-    while (sendresult != tosend) {
+    QT_OFF_T tocopy = st.st_size;
+
+#ifdef Q_OS_LINUX
+// not in qplatformdefs.h since it is platform specific
+#if defined(QT_LARGEFILE_SUPPORT)
+#  define QT_SENDFILE ::sendfile64
+#else
+#  define QT_SENDFILE ::sendfile
+#endif
+
+    ssize_t sendresult = QT_SENDFILE(targetfd, sourcefd, Q_NULLPTR, tocopy);
+    while (sendresult != tocopy) {
         if (sendresult == -1) {
             error = QSystemError(errno, QSystemError::StandardLibraryError);
             ::close(sourcefd);
             ::close(targetfd);
             return false;
         }
-        tosend -= sendresult;
-        sendresult = QT_SENDFILE(targetfd, sourcefd, &tosend, tosend);
+        tocopy -= sendresult;
+        sendresult = QT_SENDFILE(targetfd, sourcefd, &tocopy, tocopy);
     }
+#undef QT_SENDFILE
+// TODO: FreeBSD sendfile() support, signature is different
+#else
+    size_t totalwrite = 0;
+    char copybuffer[QT_BUFFSIZE];
+    while (QT_OFF_T(totalwrite) != tocopy) {
+        const size_t readresult = QT_READ(sourcefd, copybuffer, sizeof(copybuffer));
+        if (readresult == -1) {
+            error = QSystemError(errno, QSystemError::StandardLibraryError);
+            ::close(sourcefd);
+            ::close(targetfd);
+            return false;
+        }
+
+        const size_t writeresult = QT_WRITE(targetfd, copybuffer, readresult);
+        if (writeresult != readresult) {
+            error = QSystemError(errno, QSystemError::StandardLibraryError);
+            ::close(sourcefd);
+            ::close(targetfd);
+            return false;
+        }
+
+        totalwrite += readresult;
+    }
+#endif
 
     ::close(sourcefd);
     ::close(targetfd);
     return true;
-
-#undef QT_SENDFILE
-
-#else
-    Q_UNUSED(source);
-    Q_UNUSED(target);
-    error = QSystemError(ENOSYS, QSystemError::StandardLibraryError); //Function not implemented
-    return false;
-#endif // Q_OS_LINUX
 }
 
 //static
@@ -446,7 +424,7 @@ bool QFileSystemEngine::removeFile(const QFileSystemEntry &entry, QSystemError &
 }
 
 //static
-bool QFileSystemEngine::setPermissions(const QFileSystemEntry &entry, QFile::Permissions permissions, QSystemError &error, QFileSystemMetaData *data)
+bool QFileSystemEngine::setPermissions(const QFileSystemEntry &entry, QFile::Permissions permissions, QSystemError &error)
 {
     mode_t mode = 0;
     if (permissions & QFile::ReadOwner)
@@ -474,15 +452,10 @@ bool QFileSystemEngine::setPermissions(const QFileSystemEntry &entry, QFile::Per
     if (permissions & QFile::ExeOther)
         mode |= S_IXOTH;
 
-    bool success = ::chmod(entry.nativeFilePath().constData(), mode) == 0;
-    if (success && data) {
-        data->entryFlags &= ~QFileSystemMetaData::Permissions;
-        data->entryFlags |= QFileSystemMetaData::MetaDataFlag(uint(permissions));
-        data->knownFlagsMask |= QFileSystemMetaData::Permissions;
-    }
-    if (!success)
-        error = QSystemError(errno, QSystemError::StandardLibraryError);
-    return success;
+    if (::chmod(entry.nativeFilePath().constData(), mode) == 0)
+        return true;
+    error = QSystemError(errno, QSystemError::StandardLibraryError);
+    return false;
 }
 
 QString QFileSystemEngine::homePath()
@@ -515,20 +488,20 @@ bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &path)
 QFileSystemEntry QFileSystemEngine::currentPath()
 {
     QFileSystemEntry result;
-#if defined(__GLIBC__)
+#ifdef QT_HAVE_GET_CURRENT_DIR_NAME
 #define GETCWDFUNCNAME "get_current_dir_name"
-    char *currentName = ::get_current_dir_name();
-    if (currentName) {
-        result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
-        ::free(currentName);
+    char *currentdir = ::get_current_dir_name();
+    if (currentdir) {
+        result = QFileSystemEntry(QByteArray(currentdir), QFileSystemEntry::FromNativePath());
+        ::free(currentdir);
     }
 #else
 #define GETCWDFUNCNAME "getcwd"
-    char currentName[PATH_MAX+1];
-    if (::getcwd(currentName, PATH_MAX)) {
-        result = QFileSystemEntry(QByteArray(currentName), QFileSystemEntry::FromNativePath());
+    char getcwdbuffer[PATH_MAX];
+    if (::getcwd(getcwdbuffer, sizeof(getcwdbuffer))) {
+        result = QFileSystemEntry(QByteArray(getcwdbuffer), QFileSystemEntry::FromNativePath());
     }
-#endif // __GLIBC__
+#endif // QT_HAVE_GET_CURRENT_DIR_NAME
 
 #ifndef QT_NO_DEBUG
     if (result.isEmpty())

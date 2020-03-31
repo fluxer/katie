@@ -122,17 +122,6 @@ static inline int openModeToOpenFlags(QIODevice::OpenMode mode)
 
 /*!
     \internal
-
-    Sets the file descriptor to close on exec. That is, the file
-    descriptor is not inherited by child processes.
-*/
-static inline bool setCloseOnExec(int fd)
-{
-    return fd != -1 && fcntl(fd, F_SETFD, FD_CLOEXEC) != -1;
-}
-
-/*!
-    \internal
 */
 bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
 {
@@ -173,7 +162,7 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
 
             if (ret == -1) {
                 q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                            qt_error_string(int(errno)));
+                            qt_error_string(errno));
                 return false;
             }
         }
@@ -190,14 +179,15 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
         // On failure, return and report the error.
         if (!fh) {
             q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                        qt_error_string(int(errno)));
+                        qt_error_string(errno));
             return false;
         }
 
+        const int fhfd = QT_FILENO(fh);
         if (!(mode & QIODevice::WriteOnly)) {
             // we don't need this check if we tried to open for writing because then
             // we had received EISDIR anyway.
-            if (QFileSystemEngine::fillMetaData(QT_FILENO(fh), metaData)
+            if (QFileSystemEngine::fillMetaData(fhfd, metaData)
                     && metaData.isDirectory()) {
                 q->setError(QFile::OpenError, QLatin1String("file to open is a directory"));
                 fclose(fh);
@@ -205,7 +195,8 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
             }
         }
 
-        setCloseOnExec(fileno(fh)); // ignore failure
+        if (fhfd != -1)
+            ::fcntl(fhfd, F_SETFD, FD_CLOEXEC); // ignore failure
 
         // Seek to the end when in Append mode.
         if (mode & QIODevice::Append) {
@@ -216,7 +207,7 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
 
             if (ret == -1) {
                 q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                            qt_error_string(int(errno)));
+                            qt_error_string(errno));
                 return false;
             }
         }
@@ -226,14 +217,6 @@ bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
 
     closeFileHandle = true;
     return true;
-}
-
-/*!
-    \internal
-*/
-bool QFSFileEnginePrivate::nativeClose()
-{
-    return closeFdFh();
 }
 
 /*!
@@ -252,7 +235,7 @@ qint64 QFSFileEnginePrivate::nativeRead(char *data, qint64 len)
 {
     Q_Q(QFSFileEngine);
 
-    if (fh && nativeIsSequential()) {
+    if (fh && isSequentialFdFh()) {
         size_t readBytes = 0;
         int oldFlags = fcntl(QT_FILENO(fh), F_GETFL);
         for (int i = 0; i < 2; ++i) {
@@ -297,7 +280,7 @@ qint64 QFSFileEnginePrivate::nativeRead(char *data, qint64 len)
         }
         if (readBytes == 0 && !feof(fh)) {
             // if we didn't read anything and we're not at EOF, it must be an error
-            q->setError(QFile::ReadError, qt_error_string(int(errno)));
+            q->setError(QFile::ReadError, qt_error_string(errno));
             return -1;
         }
         return readBytes;
@@ -309,50 +292,9 @@ qint64 QFSFileEnginePrivate::nativeRead(char *data, qint64 len)
 /*!
     \internal
 */
-qint64 QFSFileEnginePrivate::nativeReadLine(char *data, qint64 maxlen)
-{
-    return readLineFdFh(data, maxlen);
-}
-
-/*!
-    \internal
-*/
-qint64 QFSFileEnginePrivate::nativeWrite(const char *data, qint64 len)
-{
-    return writeFdFh(data, len);
-}
-
-/*!
-    \internal
-*/
-qint64 QFSFileEnginePrivate::nativePos() const
-{
-    return posFdFh();
-}
-
-/*!
-    \internal
-*/
-bool QFSFileEnginePrivate::nativeSeek(qint64 pos)
-{
-    return seekFdFh(pos);
-}
-
-/*!
-    \internal
-*/
 int QFSFileEnginePrivate::nativeHandle() const
 {
     return fh ? fileno(fh) : fd;
-}
-
-
-/*!
-    \internal
-*/
-bool QFSFileEnginePrivate::nativeIsSequential() const
-{
-    return isSequentialFdFh();
 }
 
 bool QFSFileEngine::remove()
@@ -400,11 +342,6 @@ bool QFSFileEngine::link(const QString &newName)
         setError(QFile::RenameError, error.toString());
     }
     return ret;
-}
-
-qint64 QFSFileEnginePrivate::nativeSize() const
-{
-    return sizeFdFh();
 }
 
 bool QFSFileEngine::mkdir(const QString &name, bool createParentDirectories) const
@@ -595,7 +532,7 @@ bool QFSFileEngine::setPermissions(uint perms)
 {
     Q_D(QFSFileEngine);
     QSystemError error;
-    if (!QFileSystemEngine::setPermissions(d->fileEntry, QFile::Permissions(perms), error, 0)) {
+    if (!QFileSystemEngine::setPermissions(d->fileEntry, QFile::Permissions(perms), error)) {
         setError(QFile::PermissionsError, error.toString());
         return false;
     }
@@ -631,13 +568,13 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size)
 {
     Q_Q(QFSFileEngine);
     if (openMode == QIODevice::NotOpen) {
-        q->setError(QFile::PermissionsError, qt_error_string(int(EACCES)));
+        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
         return 0;
     }
 
     if (offset < 0 || offset != qint64(QT_OFF_T(offset))
             || size < 0 || quint64(size) > quint64(size_t(-1))) {
-        q->setError(QFile::UnspecifiedError, qt_error_string(int(EINVAL)));
+        q->setError(QFile::UnspecifiedError, qt_error_string(EINVAL));
         return 0;
     }
 
@@ -655,7 +592,7 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size)
     const int extra = offset % pageSize;
 
     if (quint64(size + extra) > quint64((size_t)-1)) {
-        q->setError(QFile::UnspecifiedError, qt_error_string(int(EINVAL)));
+        q->setError(QFile::UnspecifiedError, qt_error_string(EINVAL));
         return 0;
     }
 
@@ -673,16 +610,16 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size)
 
     switch(errno) {
     case EBADF:
-        q->setError(QFile::PermissionsError, qt_error_string(int(EACCES)));
+        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
         break;
     case ENFILE:
     case ENOMEM:
-        q->setError(QFile::ResourceError, qt_error_string(int(errno)));
+        q->setError(QFile::ResourceError, qt_error_string(errno));
         break;
     case EINVAL:
         // size are out of bounds
     default:
-        q->setError(QFile::UnspecifiedError, qt_error_string(int(errno)));
+        q->setError(QFile::UnspecifiedError, qt_error_string(errno));
         break;
     }
     return 0;

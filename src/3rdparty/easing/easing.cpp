@@ -18,13 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 */
 
 #include <QtCore/qmath.h>
-#include <math.h>
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-#ifndef M_PI_2
-#define M_PI_2 (M_PI / 2)
-#endif
 
 QT_USE_NAMESPACE
 

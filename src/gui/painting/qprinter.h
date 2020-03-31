@@ -136,9 +136,6 @@ public:
     void setOutputFileName(const QString &);
     QString outputFileName()const;
 
-    void setPrintProgram(const QString &);
-    QString printProgram() const;
-
     void setDocName(const QString &);
     QString docName() const;
 

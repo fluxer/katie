@@ -35,7 +35,7 @@
 #include "abstractformbuilder.h"
 #include "resourcebuilder_p.h"
 #include "textbuilder_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 
 #include <QtGui/QLabel>
 #include <QtGui/QBoxLayout>
@@ -124,25 +124,19 @@ void QFormBuilderExtra::applyInternalProperties() const
 bool QFormBuilderExtra::applyBuddy(const QString &buddyName, BuddyMode applyMode, QLabel *label)
 {
     if (buddyName.isEmpty()) {
-        label->setBuddy(0);
+        label->setBuddy(Q_NULLPTR);
         return false;
     }
 
     const QWidgetList widgets = label->window()->findChildren<QWidget*>(buddyName);
-    if (widgets.empty()) {
-        label->setBuddy(0);
-        return false;
-    }
-
-    const QWidgetList::const_iterator cend = widgets.constEnd();
-    for ( QWidgetList::const_iterator it =  widgets.constBegin(); it !=  cend; ++it) {
-        if (applyMode == BuddyApplyAll || !(*it)->isHidden()) {
-            label->setBuddy(*it);
+    foreach (QWidget* it, widgets) {
+        if (applyMode == BuddyApplyAll || !it->isHidden()) {
+            label->setBuddy(it);
             return true;
         }
     }
 
-    label->setBuddy(0);
+    label->setBuddy(Q_NULLPTR);
     return false;
 }
 

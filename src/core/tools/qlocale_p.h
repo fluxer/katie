@@ -145,8 +145,8 @@ public:
 
     typedef QVarLengthArray<char, 256> CharBuff;
     bool numberToCLocale(const QString &num,
-    	    	    	  GroupSeparatorMode group_sep_mode,
-                          CharBuff *result) const;
+                         GroupSeparatorMode group_sep_mode,
+                         CharBuff *result) const;
     inline char digitToCLocale(const QChar &c) const;
 
     enum NumberMode { IntegerMode, DoubleStandardMode, DoubleScientificMode };
@@ -242,10 +242,7 @@ inline char QLocalePrivate::digitToCLocale(const QChar &in) const
     return 0;
 }
 
-
-QString qt_readEscapedFormatString(const QString &format, int *idx);
 bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QString &cntry);
-int qt_repeatCount(const QString &s, int i);
 
 QT_END_NAMESPACE
 

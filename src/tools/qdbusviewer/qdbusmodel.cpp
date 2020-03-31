@@ -44,7 +44,7 @@ QT_BEGIN_NAMESPACE
 
 struct QDBusItem
 {
-    inline QDBusItem(QDBusModel::Type aType, const QString &aName, QDBusItem *aParent = 0)
+    inline QDBusItem(QDBusModel::Type aType, const QString &aName, QDBusItem *aParent = Q_NULLPTR)
         : type(aType), parent(aParent), isPrefetched(type != QDBusModel::PathItem), name(aName)
         {}
     inline ~QDBusItem()
@@ -112,7 +112,7 @@ void QDBusModel::addMethods(QDBusItem *parent, const QDomElement &iface)
 
     QDomElement child = iface.firstChildElement();
     while (!child.isNull()) {
-        QDBusItem *item = 0;
+        QDBusItem *item = Q_NULLPTR;
         if (child.tagName() == QLatin1String("method")) {
             item = new QDBusItem(QDBusModel::MethodItem,
                     child.attribute(QLatin1String("name")), parent);
@@ -174,7 +174,7 @@ void QDBusModel::addPath(QDBusItem *parent)
 }
 
 QDBusModel::QDBusModel(const QString &aService, const QDBusConnection &connection)
-    : service(aService), c(connection), root(0)
+    : service(aService), c(connection), root(Q_NULLPTR)
 {
     root = new QDBusItem(QDBusModel::PathItem, QLatin1String("/"));
 }

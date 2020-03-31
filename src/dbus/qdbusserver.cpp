@@ -59,7 +59,7 @@ QDBusServer::QDBusServer(const QString &address, QObject *parent)
 
     d = new QDBusConnectionPrivate(this);
 
-    QObject::connect(d, SIGNAL(newServerConnection(QDBusConnection)),
+    connect(d, SIGNAL(newServerConnection(QDBusConnection)),
                      this, SIGNAL(newConnection(QDBusConnection)));
 
     QDBusErrorInternal error;

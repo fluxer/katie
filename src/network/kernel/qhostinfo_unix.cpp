@@ -106,13 +106,33 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 #endif
 
         char hbuf[NI_MAXHOST];
-        if (sa && getnameinfo(sa, saSize, hbuf, sizeof(hbuf), 0, 0, 0) == 0)
+        int result = (sa ? ::getnameinfo(sa, saSize, hbuf, sizeof(hbuf), 0, 0, 0) : EAI_NONAME);
+        if (result == 0) {
             results.setHostName(QString::fromLatin1(hbuf));
+        } else if (result == EAI_NONAME || result == EAI_FAIL
+#ifdef EAI_NODATA
+               // EAI_NODATA is deprecated in RFC 3493
+               || result == EAI_NODATA
+#endif
+               ) {
+            results.setError(QHostInfo::HostNotFound);
+            results.setErrorString(tr("Host not found"));
+        } else {
+            results.setError(QHostInfo::UnknownError);
+            results.setErrorString(QString::fromLocal8Bit(gai_strerror(result)));
+        }
 #else
         in_addr_t inetaddr = ::inet_addr(hostName.toLatin1().constData());
         struct hostent *ent = gethostbyaddr((const char *)&inetaddr, sizeof(inetaddr), AF_INET);
-        if (ent)
+        if (ent) {
             results.setHostName(QString::fromLatin1(ent->h_name));
+        } else if (h_errno == HOST_NOT_FOUND || h_errno == NO_DATA || h_errno == NO_ADDRESS) {
+            results.setError(QHostInfo::HostNotFound);
+            results.setErrorString(tr("Host not found"));
+        } else {
+            results.setError(QHostInfo::UnknownError);
+            results.setErrorString(tr("Unknown error"));
+        }
 #endif
 
         if (results.hostName().isEmpty())
@@ -187,13 +207,12 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 
         results.setAddresses(addresses);
         freeaddrinfo(res);
-    } else if (result == EAI_NONAME
-               || result ==  EAI_FAIL
+    } else if (result == EAI_NONAME || result ==  EAI_FAIL
 #ifdef EAI_NODATA
-	       // EAI_NODATA is deprecated in RFC 3493
-	       || result == EAI_NODATA
+                // EAI_NODATA is deprecated in RFC 3493
+                || result == EAI_NODATA
 #endif
-	       ) {
+                ) {
         results.setError(QHostInfo::HostNotFound);
         results.setErrorString(tr("Host not found"));
     } else {
@@ -254,17 +273,21 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 
 QString QHostInfo::localHostName()
 {
-    char hostName[HOST_NAME_MAX];
-    if (gethostname(hostName, sizeof(hostName)) == -1)
-        return QString();
-    hostName[sizeof(hostName) - 1] = '\0';
-    return QString::fromLocal8Bit(hostName);
+    static int size_max = sysconf(_SC_HOST_NAME_MAX);
+    if (size_max == -1)
+        size_max = _POSIX_HOST_NAME_MAX;
+    char gethostbuffer[size_max];
+    if (Q_LIKELY(::gethostname(gethostbuffer, size_max) == 0)) {
+        gethostbuffer[size_max - 1] = '\0';
+        return QString::fromLocal8Bit(gethostbuffer);
+    }
+    return QString();
 }
 
 QString QHostInfo::localDomainName()
 {
-// a dirty way to support both thread-safe/unsafe
-#if !defined(QT_NO_RESOLV) && defined(res_ninit)
+//support both thread-safe and unsafe versions
+#if !defined(QT_NO_RESOLV) && defined(QT_HAVE_RES_NINIT)
     // using thread-safe version
     struct __res_state state;
     res_ninit(&state);

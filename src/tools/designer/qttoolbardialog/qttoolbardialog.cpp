@@ -1863,3 +1863,4 @@ QT_END_NAMESPACE
 
 #include "moc_qttoolbardialog.cpp"
 #include "moc_qttoolbardialog.h"
+#include "qrc_qttoolbardialog.cpp"

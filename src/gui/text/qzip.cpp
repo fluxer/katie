@@ -585,9 +585,7 @@ void QZipWriterPrivate::addEntry(EntryType type, const QString &fileName, const 
     }
 // TODO add a check if data.length() > contents.length().  Then try to store the original and revert the compression method to be uncompressed
     writeUInt(header.h.compressed_size, data.length());
-    uint crc_32 = ::crc32(0, 0, 0);
-    crc_32 = ::crc32(crc_32, (const uchar *)contents.constData(), contents.length());
-    writeUInt(header.h.crc_32, crc_32);
+    writeUInt(header.h.crc_32, qChecksum32(contents.constData(), contents.length()));
 
     header.file_name = fileName.toLocal8Bit();
     if (header.file_name.size() > 0xffff) {

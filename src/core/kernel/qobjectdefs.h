@@ -99,7 +99,6 @@ class QString;
 #endif
 
 #if defined(QT_NO_QOBJECT_CHECK)
-/* tmake ignore Q_OBJECT */
 #define Q_OBJECT_CHECK
 #else
 
@@ -115,7 +114,6 @@ class QString;
    to contains a Q_OBJECT macro.
 */
 
-/* tmake ignore Q_OBJECT */
 #define Q_OBJECT_CHECK \
     template <typename T> inline void qt_check_for_QOBJECT_macro(const T &_q_argument) const \
     { int i = qYouForgotTheQ_OBJECT_Macro(this, &_q_argument); i = i + 1; }
@@ -133,7 +131,6 @@ inline void qYouForgotTheQ_OBJECT_Macro(T1, T2) {}
 #define Q_OBJECT_GETSTATICMETAOBJECT
 #endif
 
-/* tmake ignore Q_OBJECT */
 #define Q_OBJECT \
 public: \
     Q_OBJECT_CHECK \
@@ -146,9 +143,7 @@ public: \
 private: \
     Q_DECL_HIDDEN static void qt_static_metacall(QObject *, QMetaObject::Call, int, void **);
 
-/* tmake ignore Q_OBJECT */
 #define Q_OBJECT_FAKE Q_OBJECT
-/* tmake ignore Q_GADGET */
 #define Q_GADGET \
 public: \
     static const QMetaObject staticMetaObject; \
@@ -167,11 +162,8 @@ private:
 #define Q_OVERRIDE(text) Q_OVERRIDE(text)
 #define Q_ENUMS(x) Q_ENUMS(x)
 #define Q_FLAGS(x) Q_FLAGS(x)
- /* tmake ignore Q_OBJECT */
 #define Q_OBJECT Q_OBJECT
- /* tmake ignore Q_OBJECT */
 #define Q_OBJECT_FAKE Q_OBJECT_FAKE
- /* tmake ignore Q_GADGET */
 #define Q_GADGET Q_GADGET
 #define Q_SCRIPTABLE Q_SCRIPTABLE
 #define Q_INVOKABLE Q_INVOKABLE

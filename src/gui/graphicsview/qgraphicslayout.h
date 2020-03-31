@@ -80,7 +80,7 @@ private:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QGraphicsLayout, "com.trolltech.Qt.QGraphicsLayout")
+Q_DECLARE_INTERFACE(QGraphicsLayout, "Katie.QGraphicsLayout")
 
 #endif
 

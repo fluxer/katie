@@ -1021,7 +1021,7 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
     if (++QWidgetPrivate::instanceCounter > QWidgetPrivate::maxInstances)
         QWidgetPrivate::maxInstances = QWidgetPrivate::instanceCounter;
 
-    if (QApplicationPrivate::testAttribute(Qt::AA_ImmediateWidgetCreation))
+    if (QApplication::testAttribute(Qt::AA_ImmediateWidgetCreation))
         q->create();
 
 
@@ -1099,13 +1099,11 @@ void QWidget::create(WId window, bool initializeWindow, bool destroyOldWindow)
         }
     }
 
-    static int paintOnScreenEnv = -1;
-    if (paintOnScreenEnv == -1)
-        paintOnScreenEnv = qgetenv("QT_ONSCREEN_PAINT").toInt() > 0 ? 1 : 0;
-    if (paintOnScreenEnv == 1)
+    static const int paintOnScreenEnv = qgetenv("QT_ONSCREEN_PAINT").toInt();
+    if (paintOnScreenEnv)
         setAttribute(Qt::WA_PaintOnScreen);
 
-    if (QApplicationPrivate::testAttribute(Qt::AA_NativeWindows))
+    if (QApplication::testAttribute(Qt::AA_NativeWindows))
         setAttribute(Qt::WA_NativeWindow);
 
 #ifdef ALIEN_DEBUG
@@ -1286,7 +1284,7 @@ void QWidgetPrivate::setWinId(WId id)                // set widget identifier
     // will have the same windowid (the root window id) as the
     // qt_desktopWidget. We should not add the second desktop widget
     // to the mapper.
-    bool userDesktopWidget = qt_desktopWidget != 0 && qt_desktopWidget != q && q->windowType() == Qt::Desktop;
+    bool userDesktopWidget = (qt_desktopWidget && qt_desktopWidget != q && q->windowType() == Qt::Desktop);
     if (mapper && data.winid && !userDesktopWidget) {
         mapper->remove(data.winid);
     }
@@ -2456,7 +2454,7 @@ Qt::WindowStates QWidget::windowState() const
    The function sets the window state on child widgets similar to
    setWindowState(). The difference is that the window state changed
    event has the isOverride() flag set. It exists mainly to keep
-   Q3Workspace working.
+   QWorkspace working.
  */
 void QWidget::overrideWindowState(Qt::WindowStates newstate)
 {
@@ -4874,12 +4872,10 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
     QRect boundingRect;
     bool dirtyBoundingRect = true;
     const bool exludeOpaqueChildren = (flags & DontDrawOpaqueChildren);
-    const bool excludeNativeChildren = (flags & DontDrawNativeChildren);
 
     do {
         QWidget *x =  qobject_cast<QWidget*>(siblings.at(index));
-        if (x && !(exludeOpaqueChildren && x->d_func()->isOpaque) && !x->isHidden() && !x->isWindow()
-            && !(excludeNativeChildren && x->internalWinId())) {
+        if (x && !(exludeOpaqueChildren && x->d_func()->isOpaque) && !x->isHidden() && !x->isWindow()) {
             if (dirtyBoundingRect) {
                 boundingRect = rgn.boundingRect();
                 dirtyBoundingRect = false;
@@ -6535,7 +6531,7 @@ void QWidgetPrivate::show_helper()
     bool isEmbedded = false;
 #ifndef QT_NO_GRAPHICSVIEW
     if (q->isWindow()) {
-        isEmbedded = q->graphicsProxyWidget() ? true : false;
+        isEmbedded = (q->graphicsProxyWidget() != Q_NULLPTR);
         if (!isEmbedded && !bypassGraphicsProxyWidget(q)) {
             QGraphicsProxyWidget *ancestorProxy = nearestGraphicsProxyWidget(q->parentWidget());
             if (ancestorProxy) {
@@ -8805,7 +8801,7 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
         oldBs->moveStaticWidgets(this);
     }
 
-    if (QApplicationPrivate::testAttribute(Qt::AA_ImmediateWidgetCreation)
+    if (QApplication::testAttribute(Qt::AA_ImmediateWidgetCreation)
         && !testAttribute(Qt::WA_WState_Created))
         create();
 

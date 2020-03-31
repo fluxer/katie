@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -189,20 +189,17 @@ QT_USE_NAMESPACE
 
      SOLARIS  - Sun Solaris
      HPUX     - HP-UX
-     ULTRIX   - DEC Ultrix
      LINUX    - Linux
      FREEBSD  - FreeBSD
      NETBSD   - NetBSD
      OPENBSD  - OpenBSD
      BSDI     - BSD/OS
-     IRIX     - SGI Irix
      OSF      - HP Tru64 UNIX
      SCO      - SCO OpenServer 5
      UNIXWARE - UnixWare 7, Open UNIX 8
      AIX      - AIX
      HURD     - GNU Hurd
      DGUX     - DG/UX
-     RELIANT  - Reliant UNIX
      DYNIX    - DYNIX/ptx
      LYNX     - LynxOS
      BSD4     - Any BSD 4.4 system
@@ -213,10 +210,6 @@ QT_USE_NAMESPACE
 #  define Q_OS_SOLARIS
 #elif defined(hpux) || defined(__hpux)
 #  define Q_OS_HPUX
-#elif defined(__ultrix) || defined(ultrix)
-#  define Q_OS_ULTRIX
-#elif defined(sinix)
-#  define Q_OS_RELIANT
 #elif defined(__native_client__)
 #  define Q_OS_NACL
 #elif defined(__linux__) || defined(__linux)
@@ -360,21 +353,17 @@ QT_USE_NAMESPACE
 #define Q_NULLPTR nullptr
 #define Q_DECL_CONSTEXPR constexpr
 
-#ifndef Q_CONSTRUCTOR_FUNCTION
-# define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
+#define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
    static const int AFUNC ## __init_variable__ = AFUNC();
-# define Q_CONSTRUCTOR_FUNCTION(AFUNC) Q_CONSTRUCTOR_FUNCTION0(AFUNC)
-#endif
+#define Q_CONSTRUCTOR_FUNCTION(AFUNC) Q_CONSTRUCTOR_FUNCTION0(AFUNC)
 
-#ifndef Q_DESTRUCTOR_FUNCTION
-# define Q_DESTRUCTOR_FUNCTION0(AFUNC) \
+#define Q_DESTRUCTOR_FUNCTION0(AFUNC) \
     class AFUNC ## __dest_class__ { \
     public: \
        inline AFUNC ## __dest_class__() { } \
        inline ~ AFUNC ## __dest_class__() { AFUNC(); } \
     } AFUNC ## __dest_instance__;
-# define Q_DESTRUCTOR_FUNCTION(AFUNC) Q_DESTRUCTOR_FUNCTION0(AFUNC)
-#endif
+#define Q_DESTRUCTOR_FUNCTION(AFUNC) Q_DESTRUCTOR_FUNCTION0(AFUNC)
 
 /*
    The window system, must be one of: (Q_WS_x)
@@ -652,7 +641,7 @@ Q_CORE_EXPORT void qWarning(const char *, ...) /* print warning message */
 #endif
 ;
 
-Q_CORE_EXPORT QString qt_error_string(int errorCode = -1);
+Q_CORE_EXPORT QString qt_error_string(int errorCode);
 Q_CORE_EXPORT void qCritical(const char *, ...) /* print critical message */
 #if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
@@ -703,23 +692,13 @@ Q_CORE_EXPORT void qBadAlloc();
 template <typename T>
 inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 
-#if defined(Q_CC_GNU) && !defined(Q_OS_SOLARIS)
+#if defined(Q_CC_GNU) || defined(Q_CC_CLANG)
 #  define Q_FUNC_INFO __PRETTY_FUNCTION__
 #else
-#   if defined(Q_OS_SOLARIS)
-#      define Q_FUNC_INFO __FILE__ "(line number unavailable)"
-#   else
-        /* These two macros makes it possible to turn the builtin line expander into a
-         * string literal. */
-#       define QT_STRINGIFY2(x) #x
-#       define QT_STRINGIFY(x) QT_STRINGIFY2(x)
-#       define Q_FUNC_INFO __FILE__ ":" QT_STRINGIFY(__LINE__)
-#   endif
-#   undef QT_STRINGIFY2
-#   undef QT_STRINGIFY
+#   define Q_FUNC_INFO __func__
 #endif
 
-enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg, QtSystemMsg = QtCriticalMsg };
+enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg };
 
 Q_CORE_EXPORT void qt_message_output(QtMsgType, const char *buf);
 

@@ -33,23 +33,18 @@
 
 
 #include "qplatformdefs.h"
-
 #include "qbackingstore_p.h"
-
-#include <QtCore/qglobal.h>
-#include <QtCore/qdebug.h>
-#include <QtCore/qvarlengtharray.h>
-#include <QtGui/qevent.h>
-#include <QtGui/qapplication.h>
-#include <QtGui/qpaintengine.h>
-#include <QtGui/qgraphicsproxywidget.h>
-
+#include "qdebug.h"
+#include "qvarlengtharray.h"
+#include "qevent.h"
+#include "qapplication.h"
+#include "qpaintengine.h"
+#include "qgraphicsproxywidget.h"
 #include "qwidget_p.h"
 #include "qwindowsurface_raster_p.h"
 #include "qapplication_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qgraphicseffect_p.h"
-
 #include "qgraphicssystem_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -79,14 +74,14 @@ static inline void qt_flush(QWidget *widget, const QRegion &region, QWindowSurfa
     Q_ASSERT(tlw);
 
 #if !defined(QT_NO_DEBUG)
-    static int flushUpdate = qgetenv("QT_FLUSH_UPDATE").toInt();
+    static const int flushUpdate = qgetenv("QT_FLUSH_UPDATE").toInt();
     if (flushUpdate > 0)
         QWidgetBackingStore::showYellowThing(widget, region, flushUpdate * 10, false);
 #endif
 
     //The performance hit by doing this should be negligible. However, be aware that
     //using this FPS when you have > 1 windowsurface can give you inaccurate FPS
-    static bool fpsDebug = qgetenv("QT_DEBUG_FPS").toInt();
+    static const bool fpsDebug = qgetenv("QT_DEBUG_FPS").toInt();
     if (fpsDebug) {
         static QTime time = QTime::currentTime();
         static int frames = 0;
@@ -229,16 +224,14 @@ void QWidgetBackingStore::releaseBuffer()
 }
 
 /*!
-    Prepares the window surface to paint a\ toClean region of the \a widget and
-    updates the BeginPaintInfo struct accordingly.
+    Prepares the window surface to paint a\ toClean region and updates the
+    BeginPaintInfo struct accordingly.
 
     The \a toClean region might be clipped by the window surface.
 */
-void QWidgetBackingStore::beginPaint(QRegion &toClean, QWidget *widget, QWindowSurface *windowSurface,
+void QWidgetBackingStore::beginPaint(QRegion &toClean, QWindowSurface *windowSurface,
                                      BeginPaintInfo *returnInfo)
 {
-    Q_UNUSED(widget);
-
     // Always flush repainted areas.
     dirtyOnScreen += toClean;
 
@@ -702,10 +695,7 @@ void QWidgetPrivate::moveRect(const QRect &rect, int dx, int dy)
     if (x->inTopLevelResize)
         return;
 
-    static int accelEnv = -1;
-    if (accelEnv == -1) {
-        accelEnv = qgetenv("QT_NO_FAST_MOVE").toInt() == 0;
-    }
+    static const int accelEnv = qgetenv("QT_NO_FAST_MOVE").toInt() == 0;
 
     QWidget *pw = q->parentWidget();
     QPoint toplevelOffset = pw->mapTo(tlw, QPoint());
@@ -784,10 +774,7 @@ void QWidgetPrivate::scrollRect(const QRect &rect, int dx, int dy)
     if (!wbs)
         return;
 
-    static int accelEnv = -1;
-    if (accelEnv == -1) {
-        accelEnv = qgetenv("QT_NO_FAST_SCROLL").toInt() == 0;
-    }
+    static const int accelEnv = qgetenv("QT_NO_FAST_SCROLL").toInt() == 0;
 
     QRect scrollRect = rect & clipRect();
     bool overlapped = false;
@@ -1035,7 +1022,7 @@ void QWidgetBackingStore::sync()
 
 #ifndef Q_BACKINGSTORE_SUBSURFACES
     BeginPaintInfo beginPaintInfo;
-    beginPaint(toClean, tlw, windowSurface, &beginPaintInfo);
+    beginPaint(toClean, windowSurface, &beginPaintInfo);
     if (beginPaintInfo.nothingToPaint) {
         for (int i = 0; i < opaqueNonOverlappedWidgets.size(); ++i)
             resetWidget(opaqueNonOverlappedWidgets[i]);
@@ -1071,7 +1058,7 @@ void QWidgetBackingStore::sync()
 
         QPoint off = w->mapTo(tlw, QPoint());
         toBePainted.translate(off);
-        beginPaint(toBePainted, w, subSurface, &beginPaintInfo, true);
+        beginPaint(toBePainted, subSurface, &beginPaintInfo);
         toBePainted.translate(-off);
 
         if (beginPaintInfo.nothingToPaint)
@@ -1129,7 +1116,7 @@ void QWidgetBackingStore::sync()
 
         toClean = dirtyCopy;
         BeginPaintInfo beginPaintInfo;
-        beginPaint(toClean, w, subSurface, &beginPaintInfo);
+        beginPaint(toClean, subSurface, &beginPaintInfo);
         if (beginPaintInfo.nothingToPaint)
             continue;
 

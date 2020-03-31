@@ -40,11 +40,6 @@ QT_BEGIN_NAMESPACE
 
 #ifdef QT_BUILD_INTERNAL
 
-enum {
-    ReadBufferSize = 16384,
-    WriteBufferSize = ReadBufferSize
-};
-
 QNetworkAccessBackend *
 QNetworkAccessDebugPipeBackendFactory::create(QNetworkAccessManager::Operation op,
                                               const QNetworkRequest &request) const
@@ -81,7 +76,7 @@ QNetworkAccessDebugPipeBackend::~QNetworkAccessDebugPipeBackend()
 void QNetworkAccessDebugPipeBackend::open()
 {
     socket.connectToHost(url().host(), url().port(12345));
-    socket.setReadBufferSize(ReadBufferSize);
+    socket.setReadBufferSize(QT_BUFFSIZE);
 
     // socket ready read -> we can push from socket to downstream
     connect(&socket, SIGNAL(readyRead()), SLOT(socketReadyRead()));
@@ -132,8 +127,8 @@ void QNetworkAccessDebugPipeBackend::pushFromSocketToDownstream()
         if (hasDownloadFinished)
             return;
 
-        buffer.resize(ReadBufferSize);
-        qint64 haveRead = socket.read(buffer.data(), ReadBufferSize);
+        buffer.resize(QT_BUFFSIZE);
+        qint64 haveRead = socket.read(buffer.data(), QT_BUFFSIZE);
         
         if (haveRead == -1) {
             hasDownloadFinished = true;
@@ -164,11 +159,11 @@ void QNetworkAccessDebugPipeBackend::pushFromUpstreamToSocket()
             return;
 
         forever {
-            if (socket.bytesToWrite() >= WriteBufferSize)
+            if (socket.bytesToWrite() >= QT_BUFFSIZE)
                 return;
 
             qint64 haveRead;
-            const char *readPointer = uploadByteDevice->readPointer(WriteBufferSize, haveRead);
+            const char *readPointer = uploadByteDevice->readPointer(QT_BUFFSIZE, haveRead);
             if (haveRead == -1) {
                 // EOF
                 hasUploadFinished = true;

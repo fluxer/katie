@@ -163,7 +163,7 @@ QDirIteratorPrivate::QDirIteratorPrivate(const QFileSystemEntry &entry, const QS
 #endif
     QFileSystemMetaData metaData;
     if (resolveEngine)
-        engine.reset(QFileSystemEngine::resolveEntryAndCreateLegacyEngine(dirEntry, metaData));
+        engine.reset(QAbstractFileEngine::create(dirEntry.filePath()));
     QFileInfo fileInfo(new QFileInfoPrivate(dirEntry, metaData));
 
     // Populate fields for hasNext() and next()
@@ -318,18 +318,12 @@ bool QDirIteratorPrivate::matchesFilters(const QString &fileName, const QFileInf
 #ifndef QT_NO_REGEXP
     // Pass all entries through name filters, except dirs if the AllDirs
     if (!nameFilters.isEmpty() && !((filters & QDir::AllDirs) && fi.isDir())) {
-        bool matched = false;
-        for (QVector<QRegExp>::const_iterator iter = nameRegExps.constBegin(),
-                                              end = nameRegExps.constEnd();
-                iter != end; ++iter) {
-
-            if (iter->exactMatch(fileName)) {
-                matched = true;
-                break;
+        foreach (const QRegExp &iter, nameRegExps) {
+            if (iter.exactMatch(fileName)) {
+                return true;
             }
         }
-        if (!matched)
-            return false;
+        return false;
     }
 #endif
     // skip symlinks

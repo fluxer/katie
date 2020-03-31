@@ -109,8 +109,7 @@ private:
     bool bltRect(const QRect &rect, int dx, int dy, QWidget *widget);
     void releaseBuffer();
 
-    void beginPaint(QRegion &toClean, QWidget *widget, QWindowSurface *windowSurface,
-                    BeginPaintInfo *returnInfo);
+    void beginPaint(QRegion &toClean, QWindowSurface *windowSurface, BeginPaintInfo *returnInfo);
     void endPaint(const QRegion &cleaned, QWindowSurface *windowSurface, BeginPaintInfo *beginPaintInfo);
 
     QRegion dirtyRegion(QWidget *widget = 0) const;

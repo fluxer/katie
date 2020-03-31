@@ -65,6 +65,7 @@ public:
     void write();
     void notify();
 
+    QString toGroupKey(const QString &key) const;
     // INI parser functions
     static QString variantToString(const QVariant &v);
     static QVariant stringToVariant(const QString &s);
@@ -75,11 +76,12 @@ public:
     QSettings::SettingsStatus status;
     QString filename;
     QSettings::SettingsMap map;
+    QSettings::SettingsMap pending;
+    QString group;
 
     QSettings::ReadFunc readFunc;
     QSettings::WriteFunc writeFunc;
     QDateTime timestamp;
-    bool shouldwrite;
 };
 
 QT_END_NAMESPACE

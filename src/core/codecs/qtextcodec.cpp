@@ -89,7 +89,7 @@ static QTextCodec *createForName(const QByteArray &name)
     }
 #endif
 
-    foreach(const QByteArray codec, QIcuCodec::allCodecs()) {
+    foreach(const QByteArray &codec, QIcuCodec::allCodecs()) {
         if (nameMatch(name, codec)) {
             return new QIcuCodec(name);
         }
@@ -286,8 +286,32 @@ static void setup()
 */
 QTextCodec::ConverterState::~ConverterState()
 {
-    if (d)
+    if (d) {
         ucnv_close(static_cast<UConverter *>(d));
+    }
+}
+
+QTextCodec::ConverterState::ConverterState(const QTextCodec::ConverterState &other)
+{
+    QTextCodec::ConverterState::operator=(other);
+}
+
+QTextCodec::ConverterState& QTextCodec::ConverterState::operator=(const QTextCodec::ConverterState &other)
+{
+    flags = other.flags;
+    invalidChars = other.invalidChars;
+    if (other.d) {
+        if (d) {
+            ucnv_close(static_cast<UConverter *>(d));
+        }
+        UErrorCode error = U_ZERO_ERROR;
+        d = ucnv_safeClone(static_cast<UConverter*>(other.d), Q_NULLPTR, Q_NULLPTR, &error);
+        if (Q_UNLIKELY(U_FAILURE(error))) {
+            qWarning("ConverterState: ucnv_safeClone() failed %s", u_errorName(error));
+            d = Q_NULLPTR;
+        }
+    }
+    return *this;
 }
 
 /*!
@@ -876,7 +900,7 @@ QString QTextCodec::toUnicode(const char *chars) const
     \since 4.7
 */
 QTextEncoder::QTextEncoder(const QTextCodec *codec, QTextCodec::ConversionFlags flags)
-    : c(codec), state()
+    : c(codec)
 {
     state.flags = flags;
 }
@@ -947,7 +971,7 @@ QByteArray QTextEncoder::fromUnicode(const QChar *uc, int len)
 */
 
 QTextDecoder::QTextDecoder(const QTextCodec *codec, QTextCodec::ConversionFlags flags)
-    : c(codec), state()
+    : c(codec)
 {
     state.flags = flags;
 }

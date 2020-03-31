@@ -427,7 +427,7 @@ int QHttpNetworkReplyPrivate::gunzipBodyPartially(QByteArray &compressed, QByteA
 {
     int ret = Z_DATA_ERROR;
     unsigned have;
-    unsigned char out[CHUNK];
+    unsigned char out[QT_BUFFSIZE];
     int pos = -1;
 
     if (!initInflate) {

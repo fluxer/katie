@@ -47,9 +47,6 @@
 
 QT_BEGIN_NAMESPACE
 
-static bool qt_sequence_no_mnemonics = false;
-void Q_GUI_EXPORT qt_set_sequence_auto_mnemonic(bool b) { qt_sequence_no_mnemonics = !b; }
-
 /*!
     \class QKeySequence
     \brief The QKeySequence class encapsulates a key sequence as used
@@ -870,16 +867,10 @@ bool QKeySequence::isEmpty() const
     in English. At the time of writing, Microsoft and Open Group do
     not appear to have issued equivalent recommendations for other
     languages.
-
-    \sa qt_set_sequence_auto_mnemonic()
 */
 QKeySequence QKeySequence::mnemonic(const QString &text)
 {
     QKeySequence ret;
-
-    if(qt_sequence_no_mnemonics)
-        return ret;
-
     bool found = false;
     int p = 0;
     while (p >= 0) {

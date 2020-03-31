@@ -53,7 +53,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QAbstractExtensionFactory, "com.trolltech.Qt.QAbstractExtensionFactory")
+Q_DECLARE_INTERFACE(QAbstractExtensionFactory, "Katie.QAbstractExtensionFactory")
 
 QT_BEGIN_NAMESPACE
 
@@ -70,7 +70,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QAbstractExtensionManager, "com.trolltech.Qt.QAbstractExtensionManager")
+Q_DECLARE_INTERFACE(QAbstractExtensionManager, "Katie.QAbstractExtensionManager")
 
 QT_BEGIN_NAMESPACE
 

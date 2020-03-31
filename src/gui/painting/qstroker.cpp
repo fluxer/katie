@@ -33,7 +33,6 @@
 
 #include "qstroker_p.h"
 #include "qbezier_p.h"
-#include "qmath_p.h"
 #include "qline.h"
 #include "qtransform.h"
 #include "qmath.h"
@@ -783,7 +782,7 @@ qreal qt_t_for_arc_angle(qreal angle)
     if (qFuzzyCompare(angle, qreal(90)))
         return 1;
 
-    qreal radians = Q_PI * angle / 180;
+    qreal radians = M_PI * angle / 180;
     qreal cosAngle = qCos(radians);
     qreal sinAngle = qSin(radians);
 
@@ -992,7 +991,7 @@ static inline void qdashstroker_lineTo(qfixed x, qfixed y, void *data) {
 }
 
 static inline void qdashstroker_cubicTo(qfixed, qfixed, qfixed, qfixed, qfixed, qfixed, void *) {
-    Q_ASSERT(0);
+    Q_ASSERT(false);
 //     ((QStroker *) data)->cubicTo(c1x, c1y, c2x, c2y, ex, ey);
 }
 

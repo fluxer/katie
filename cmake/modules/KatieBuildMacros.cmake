@@ -1,10 +1,14 @@
-# Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2015-2020, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 set(KATIE_UIC "uic")
 set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
 set(KATIE_LRELEASE "lrelease")
+
+include(CMakePushCheckState)
+include(CheckSymbolExists)
+include(CheckFunctionExists)
 
 # a macro to print a dev warning but only when the build type is Debug
 macro(KATIE_WARNING MESSAGESTR)
@@ -13,8 +17,64 @@ macro(KATIE_WARNING MESSAGESTR)
     endif()
 endmacro()
 
+# a function to check for C function/definition, works for external functions
+# too. note that check_symbol_exists() and check_function_exists() cache the
+# result variables so they can be used anywhere
+function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
+    cmake_reset_check_state()
+    set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} ${ARGN})
+    check_symbol_exists("${FORDEFINITION}" "${FROMHEADER}" HAVE_${FORDEFINITION})
+    if(NOT HAVE_${FORDEFINITION})
+        check_function_exists("${FORDEFINITION}" HAVE_${FORDEFINITION})
+    endif()
+    cmake_pop_check_state()
+
+    if(NOT HAVE_${FORDEFINITION})
+        set(compileout "${CMAKE_BINARY_DIR}/${FORDEFINITION}.cpp")
+        configure_file(
+            "${CMAKE_SOURCE_DIR}/cmake/modules/katie_check_defined.cpp.cmake"
+            "${compileout}"
+            @ONLY
+        )
+        try_compile(${FORDEFINITION}_test
+            "${CMAKE_BINARY_DIR}"
+            "${compileout}"
+            COMPILE_DEFINITIONS ${ARGN}
+            OUTPUT_VARIABLE ${FORDEFINITION}_test_output
+        )
+        if(${FORDEFINITION}_test)
+            message(STATUS "Found ${FORDEFINITION} in: <${FROMHEADER}>")
+            set(HAVE_${FORDEFINITION} TRUE PARENT_SCOPE)
+        else()
+            message(STATUS "Could not find ${FORDEFINITION} in: <${FROMHEADER}>")
+            set(HAVE_${FORDEFINITION} FALSE PARENT_SCOPE)
+        endif()
+    endif()
+endfunction()
+
+# a macro to check for C function presence in header, if function is found a
+# definition is added.
+macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
+    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}")
+
+    if(HAVE_${FORFUNCTION})
+        string(TOUPPER "${FORFUNCTION}" upperfunction)
+        add_definitions(-DQT_HAVE_${upperfunction})
+    endif()
+endmacro()
+
+# a function to check for C function with 64-bit offset alternative, sets
+# QT_LARGEFILE_SUPPORT to FALSE if not available
+function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
+    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
+
+    if(NOT HAVE_${FORFUNCTION})
+        set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
+    endif()
+endfunction()
+
 # a macro to write data to file, does nothing if the file exists and its
-# content is the same as the data
+# content is the same as the data to be written
 macro(KATIE_WRITE_FILE OUTFILE DATA)
     if(NOT EXISTS "${OUTFILE}")
         file(WRITE "${OUTFILE}" "${DATA}")
@@ -27,7 +87,7 @@ macro(KATIE_WRITE_FILE OUTFILE DATA)
 endmacro()
 
 # a macro to create camel-case headers pointing to their lower-case alternative
-# as well as meta header that includes component headers
+# as well as meta header that includes all component headers
 macro(KATIE_GENERATE_PUBLIC PUBLIC_INCLUDES SUBDIR)
     foreach(pubheader ${PUBLIC_INCLUDES})
         string(TOLOWER ${pubheader} pubname)
@@ -86,10 +146,9 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
         "${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake"
         "${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc"
     )
-    katie_setup_paths()
     install(
         FILES "${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc"
-        DESTINATION "${KATIE_PKGCONFIG_RELATIVE}"
+        DESTINATION "${KATIE_PKGCONFIG_PATH}"
         COMPONENT Devel
     )
 endmacro()
@@ -122,12 +181,9 @@ endfunction()
 # a function to get the Git checkout hash and store it in a variable
 function(KATIE_GIT_CHECKOUT OUTSTR)
     find_program(git NAMES git)
-    if(NOT EXISTS "${CMAKE_SOURCE_DIR}/.git")
-       set(${OUTSTR} "unknown" PARENT_SCOPE)
-    elseif(NOT git)
+    if(EXISTS "${CMAKE_SOURCE_DIR}/.git" AND NOT git)
         message(WARNING "Git was not found, unable to obtain checkout.\n")
-        set(${OUTSTR} "unknown" PARENT_SCOPE)
-    else()
+    else(EXISTS "${CMAKE_SOURCE_DIR}/.git")
         execute_process(
             COMMAND "${git}" rev-parse HEAD
             WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
@@ -139,7 +195,6 @@ function(KATIE_GIT_CHECKOUT OUTSTR)
 
         if(NOT git_result STREQUAL 0)
             message(WARNING "Git command failed, unable to obtain checkout:\n${git_output}")
-            set(${OUTSTR} "unknown" PARENT_SCOPE)
         else()
             set(${OUTSTR} "${git_output}" PARENT_SCOPE)
         endif()
@@ -217,12 +272,12 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set_source_files_properties("${rscout}" PROPERTIES GENERATED TRUE)
             install(
                 FILES "${rscout}"
-                DESTINATION "${KATIE_TRANSLATIONS_RELATIVE}"
+                DESTINATION "${KATIE_TRANSLATIONS_PATH}"
                 COMPONENT Runtime
             )
         endif()
     endforeach()
-    set_source_files_properties("${resourcesdep}" PROPERTIES OBJECT_DEPENDS "${targetresources}")
+    set_property(SOURCE "${resourcesdep}" APPEND PROPERTY OBJECT_DEPENDS "${targetresources}")
 
     if(NOT KATIE_ALLINONE)
         set(filteredsources)
@@ -276,24 +331,6 @@ macro(KATIE_SETUP_OBJECT FORTARGET)
         target_include_directories(${FORTARGET} PRIVATE ${object_includes})
     endforeach()
 endmacro()
-
-# a function to change full installation paths to relative so that CPack
-# generators do not choke, still paths must contain a string of some sort that
-# is not just CMAKE_INSTALL_PREFIX - if they are null after they have been made
-# relative even quoting them will not help and CMake will complain that not
-# enought arguments have been passed to install() for DESTINATION
-function(KATIE_SETUP_PATHS)
-    set(instpaths
-        _PREFIX _HEADERS _LIBRARIES _BINARIES _PLUGINS _IMPORTS _DATA
-        _TRANSLATIONS _SETTINGS _CMAKE _LDCONF _PROFILE _MAN
-        _APPLICATIONS _PIXMAPS _PKGCONFIG
-    )
-    foreach(instpath ${instpaths})
-        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${KATIE${instpath}_FULL}")
-        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
-        set(KATIE${instpath}_RELATIVE "${modpath}" PARENT_SCOPE)
-    endforeach()
-endfunction()
 
 # a macro to remove conditional code from headers which is only relevant to the
 # process of building Katie itself

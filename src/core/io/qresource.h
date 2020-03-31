@@ -41,6 +41,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
+#define Q_RCC_OUTPUT_REVISION 0x02
 
 class QResourcePrivate;
 
@@ -62,9 +63,6 @@ public:
     bool isCompressed() const;
     qint64 size() const;
     const uchar *data() const;
-
-    static void addSearchPath(const QString &path);
-    static QStringList searchPaths();
 
     static bool registerResource(const QString &rccFilename, const QString &resourceRoot=QString());
     static bool unregisterResource(const QString &rccFilename, const QString &resourceRoot=QString());

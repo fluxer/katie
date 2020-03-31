@@ -64,7 +64,31 @@
 
 QT_BEGIN_NAMESPACE
 
-Q_CORE_EXPORT unsigned int qt_int_sqrt(unsigned int n);
+/*
+    Dijkstra's bisection algorithm to find the square root of an integer.
+*/
+static uint qt_int_sqrt(uint n)
+{
+    // n must be in the range 0...UINT_MAX/2-1
+    if (n >= (UINT_MAX>>2)) {
+        uint r = 2 * qt_int_sqrt(n / 4);
+        uint r2 = r + 1;
+        return (n >= r2 * r2) ? r2 : r;
+    }
+    uint h, p= 0, q= 1, r= n;
+    while (q <= n)
+        q <<= 2;
+    while (q != 1) {
+        q >>= 2;
+        h= p + q;
+        p >>= 1;
+        if (r >= h) {
+            p += q;
+            r -= h;
+        }
+    }
+    return p;
+}
 
 /*!
     Returns true if the string \a text is likely to be rich text;

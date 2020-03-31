@@ -573,9 +573,10 @@ int QMetaObjectPrivate::indexOfSignalRelative(const QMetaObject **baseObject,
     const QMetaObject *m = *baseObject;
     if (i >= 0 && m && m->d.superdata) {
         int conflict = m->d.superdata->indexOfMethod(signal);
-        if (conflict >= 0)
+        if (Q_UNLIKELY(conflict >= 0)) {
             qWarning("QMetaObject::indexOfSignal: signal %s from %s redefined in %s",
                      signal, m->d.superdata->d.stringdata, m->d.stringdata);
+        }
     }
 #endif
     return i;
@@ -700,12 +701,13 @@ int QMetaObject::indexOfClassInfo(const char *name) const
     int i = -1;
     const QMetaObject *m = this;
     while (m && i < 0) {
-        for (i = priv(m->d.data)->classInfoCount-1; i >= 0; --i)
+        for (i = priv(m->d.data)->classInfoCount-1; i >= 0; --i) {
             if (strcmp(name, m->d.stringdata
                        + m->d.data[priv(m->d.data)->classInfoData + 2*i]) == 0) {
                 i += m->classInfoOffset();
                 break;
             }
+        }
         m = m->d.superdata;
     }
     return i;

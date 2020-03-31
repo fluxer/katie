@@ -44,7 +44,6 @@
 #include <QDoubleSpinBox>
 #include <QDial>
 #include "qmath.h"
-#include "qmath_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -866,12 +865,12 @@ QRect QAccessibleDial::rect(int child) const
                                                         : (dial()->maximum() - dial()->value());
         qreal angle = 0;
         if (dial()->maximum() == dial()->minimum()) {
-            angle = Q_PI / 2;
+            angle = M_PI / 2;
         } else if (dial()->wrapping()) {
-            angle = Q_PI * 3 / 2 - (sliderValue - dial()->minimum()) * 2 * Q_PI
+            angle = M_PI * 3 / 2 - (sliderValue - dial()->minimum()) * 2 * M_PI
                     / (dial()->maximum() - dial()->minimum());
         } else {
-            angle = (Q_PI * 8 - (sliderValue - dial()->minimum()) * 10 * Q_PI
+            angle = (M_PI * 8 - (sliderValue - dial()->minimum()) * 10 * M_PI
                     / (dial()->maximum() - dial()->minimum())) / 6;
         }
 
@@ -893,10 +892,10 @@ QRect QAccessibleDial::rect(int child) const
         QPolygonF arrow(3);
         arrow[0] = QPointF(0.5 + xc + len * qCos(angle),
                            0.5 + yc - len * qSin(angle));
-        arrow[1] = QPointF(0.5 + xc + back * qCos(angle + Q_PI * 5 / 6),
-                           0.5 + yc - back * qSin(angle + Q_PI * 5 / 6));
-        arrow[2] = QPointF(0.5 + xc + back * qCos(angle - Q_PI * 5 / 6),
-                           0.5 + yc - back * qSin(angle - Q_PI * 5 / 6));
+        arrow[1] = QPointF(0.5 + xc + back * qCos(angle + M_PI * 5 / 6),
+                           0.5 + yc - back * qSin(angle + M_PI * 5 / 6));
+        arrow[2] = QPointF(0.5 + xc + back * qCos(angle - M_PI * 5 / 6),
+                           0.5 + yc - back * qSin(angle - M_PI * 5 / 6));
         rect = arrow.boundingRect().toRect();
         break;
     }

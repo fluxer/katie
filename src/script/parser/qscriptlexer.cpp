@@ -52,7 +52,6 @@ QScript::Lexer::Lexer(QScriptEnginePrivate *eng)
       size8(128), size16(128), restrKeyword(false),
       stackToken(-1), pos(0),
       code(0), length(0),
-      bol(true),
       current(0), next1(0), next2(0), next3(0),
       err(NoError),
       check_reserved(true),
@@ -62,9 +61,6 @@ QScript::Lexer::Lexer(QScriptEnginePrivate *eng)
     // allocate space for read buffers
     buffer8 = new char[size8];
     buffer16 = new QChar[size16];
-    pattern = 0;
-    flags = 0;
-
 }
 
 QScript::Lexer::~Lexer()
@@ -84,7 +80,6 @@ void QScript::Lexer::setCode(const QString &c, int lineno)
     pos = 0;
     code = c.unicode();
     length = c.length();
-    bol = true;
 
     // read first characters
     current = (length > 0) ? code[0].unicode() : 0;
@@ -443,7 +438,6 @@ int QScript::Lexer::lex()
                 shiftWindowsLineBreak();
                 yylineno++;
                 yycolumn = 0;
-                bol = true;
                 terminator = true;
                 syncProhibitAutomaticSemicolon();
                 if (restrKeyword) {
@@ -534,7 +528,6 @@ int QScript::Lexer::lex()
                     shiftWindowsLineBreak();
                     yylineno++;
                     yycolumn = 0;
-                    bol = true;
                 } else {
                     record16(singleEscape(current));
                 }
@@ -578,7 +571,6 @@ int QScript::Lexer::lex()
                 yylineno++;
                 yycolumn = 0;
                 terminator = true;
-                bol = true;
                 if (restrKeyword) {
                     token = QScriptGrammar::T_SEMICOLON;
                     setDone(Other);
@@ -693,8 +685,6 @@ int QScript::Lexer::lex()
         // move on to the next character
         if (!done)
             shift(1);
-        if (state != Start && state != InSingleLineComment)
-            bol = false;
     }
 
     // no identifiers allowed directly after numeric literal, e.g. "3in" is bad
@@ -1040,9 +1030,7 @@ bool QScript::Lexer::scanRegExp(RegExpBodyPrefix prefix)
         else {
             if (driver) {
                 Q_ASSERT_X(false, Q_FUNC_INFO, "not implemented");
-                pattern = 0; // driver->intern(buffer16, pos16);
-            } else
-                pattern = 0;
+            }
             pos16 = 0;
             shift(1);
             break;
@@ -1050,7 +1038,6 @@ bool QScript::Lexer::scanRegExp(RegExpBodyPrefix prefix)
         shift(1);
     }
 
-    flags = 0;
     while (isIdentLetter(current)) {
         // current version was remade from this line:
         //int flag = QScript::Ecma::RegExp::flagFromChar(current);
@@ -1067,7 +1054,6 @@ bool QScript::Lexer::scanRegExp(RegExpBodyPrefix prefix)
                      .arg(QChar(current));
             return false;
         }
-        flags |= flag;
         record16(current);
         shift(1);
     }

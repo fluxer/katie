@@ -84,8 +84,6 @@ public:
 
     virtual bool setSize(qint64 size);
 
-    virtual QStringList entryList(QDir::Filters filters, const QStringList &filterNames) const;
-
     virtual bool caseSensitive() const;
 
     virtual FileFlags fileFlags(FileFlags type) const;
@@ -100,7 +98,6 @@ public:
     virtual QDateTime fileTime(FileTime time) const;
 
     virtual Iterator *beginEntryList(QDir::Filters filters, const QStringList &filterNames);
-    virtual Iterator *endEntryList();
     
     bool extension(Extension extension, const ExtensionOption *option = Q_NULLPTR, ExtensionReturn *output = Q_NULLPTR);
     bool supportsExtension(Extension extension) const;

@@ -60,7 +60,7 @@ private:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QDeclarativeParserStatus, "com.trolltech.qml.QDeclarativeParserStatus")
+Q_DECLARE_INTERFACE(QDeclarativeParserStatus, "Katie.qml.QDeclarativeParserStatus")
 
 QT_END_HEADER
 

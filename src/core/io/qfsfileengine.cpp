@@ -58,8 +58,7 @@ QT_BEGIN_NAMESPACE
     QFSFileEngine is the default file engine for accessing regular files. It
     is provided for convenience; by subclassing this class, you can alter its
     behavior slightly, without having to write a complete QAbstractFileEngine
-    subclass. To install your custom file engine, you must also subclass
-    QAbstractFileEngineHandler and create an instance of your handler.
+    subclass
 
     It can also be useful to create a QFSFileEngine object directly if you
     need to use the local file system inside QAbstractFileEngine::create(), in
@@ -153,7 +152,7 @@ void QFSFileEngine::setFileName(const QString &file)
 bool QFSFileEngine::open(QIODevice::OpenMode openMode)
 {
     Q_D(QFSFileEngine);
-    if (d->fileEntry.isEmpty()) {
+    if (Q_UNLIKELY(d->fileEntry.isEmpty())) {
         qWarning("QFSFileEngine::open: No file name specified");
         setError(QFile::OpenError, QLatin1String("No file name specified"));
         return false;
@@ -233,7 +232,7 @@ bool QFSFileEnginePrivate::openFh(QIODevice::OpenMode openMode, FILE *fh)
 
         if (ret != 0) {
             q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                        qt_error_string(int(errno)));
+                        qt_error_string(errno));
 
             this->openMode = QIODevice::NotOpen;
             this->fh = 0;
@@ -305,7 +304,7 @@ bool QFSFileEnginePrivate::openFd(QIODevice::OpenMode openMode, int fd)
 
         if (ret == -1) {
             q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                        qt_error_string(int(errno)));
+                        qt_error_string(errno));
 
             this->openMode = QIODevice::NotOpen;
             this->fd = -1;
@@ -324,7 +323,7 @@ bool QFSFileEngine::close()
 {
     Q_D(QFSFileEngine);
     d->openMode = QIODevice::NotOpen;
-    return d->nativeClose();
+    return d->closeFdFh();
 }
 
 /*!
@@ -333,8 +332,7 @@ bool QFSFileEngine::close()
 bool QFSFileEnginePrivate::closeFdFh()
 {
     Q_Q(QFSFileEngine);
-    if (fd == -1 && !fh
-        )
+    if (fd == -1 && !fh)
         return false;
 
     // Flush the file if it's buffered, and if the last flush didn't fail.
@@ -420,7 +418,7 @@ bool QFSFileEnginePrivate::flushFh()
 qint64 QFSFileEngine::size() const
 {
     Q_D(const QFSFileEngine);
-    return d->nativeSize();
+    return d->sizeFdFh();
 }
 
 /*!
@@ -444,7 +442,7 @@ qint64 QFSFileEnginePrivate::sizeFdFh() const
 qint64 QFSFileEngine::pos() const
 {
     Q_D(const QFSFileEngine);
-    return d->nativePos();
+    return d->posFdFh();
 }
 
 /*!
@@ -463,7 +461,7 @@ qint64 QFSFileEnginePrivate::posFdFh() const
 bool QFSFileEngine::seek(qint64 pos)
 {
     Q_D(QFSFileEngine);
-    return d->nativeSeek(pos);
+    return d->seekFdFh(pos);
 }
 
 /*!
@@ -490,12 +488,12 @@ bool QFSFileEnginePrivate::seekFdFh(qint64 pos)
         } while (ret != 0 && errno == EINTR);
 
         if (ret != 0) {
-            q->setError(QFile::ReadError, qt_error_string(int(errno)));
+            q->setError(QFile::ReadError, qt_error_string(errno));
             return false;
         }
     } else {
         // Unbuffered stdio mode.
-        if (QT_LSEEK(fd, QT_OFF_T(pos), SEEK_SET) == -1) {
+        if (Q_UNLIKELY(QT_LSEEK(fd, QT_OFF_T(pos), SEEK_SET) == -1)) {
             qWarning() << "QFile::at: Cannot set file position" << pos;
             q->setError(QFile::PositionError, qt_error_string(errno));
             return false;
@@ -538,7 +536,7 @@ qint64 QFSFileEnginePrivate::readFdFh(char *data, qint64 len)
 {
     Q_Q(QFSFileEngine);
 
-    if (len < 0 || len != qint64(size_t(len))) {
+    if (len < 0) {
         q->setError(QFile::ReadError, qt_error_string(EINVAL));
         return -1;
     }
@@ -599,7 +597,7 @@ qint64 QFSFileEngine::readLine(char *data, qint64 maxlen)
         d->lastIOCommand = QFSFileEnginePrivate::IOReadCommand;
     }
 
-    return d->nativeReadLine(data, maxlen);
+    return d->readLineFdFh(data, maxlen);
 }
 
 /*!
@@ -619,7 +617,7 @@ qint64 QFSFileEnginePrivate::readLineFdFh(char *data, qint64 maxlen)
     // solves this.
     if (!fgets(data, int(maxlen + 1), fh)) {
         if (!feof(fh))
-            q->setError(QFile::ReadError, qt_error_string(int(errno)));
+            q->setError(QFile::ReadError, qt_error_string(errno));
         return -1;              // error
     }
 
@@ -642,7 +640,7 @@ qint64 QFSFileEngine::write(const char *data, qint64 len)
         d->lastIOCommand = QFSFileEnginePrivate::IOWriteCommand;
     }
 
-    return d->nativeWrite(data, len);
+    return d->writeFdFh(data, len);
 }
 
 /*!
@@ -694,23 +692,7 @@ QAbstractFileEngine::Iterator *QFSFileEngine::beginEntryList(QDir::Filters filte
 {
     return new QFSFileEngineIterator(filters, filterNames);
 }
-
-/*!
-    \internal
-*/
-QAbstractFileEngine::Iterator *QFSFileEngine::endEntryList()
-{
-    return 0;
-}
 #endif
-
-/*!
-    \internal
-*/
-QStringList QFSFileEngine::entryList(QDir::Filters filters, const QStringList &filterNames) const
-{
-    return QAbstractFileEngine::entryList(filters, filterNames);
-}
 
 /*!
     \reimp
@@ -719,7 +701,7 @@ bool QFSFileEngine::isSequential() const
 {
     Q_D(const QFSFileEngine);
     if (d->is_sequential == 0)
-        d->is_sequential = d->nativeIsSequential() ? 1 : 2;
+        d->is_sequential = d->isSequentialFdFh() ? 1 : 2;
     return d->is_sequential == 1;
 }
 

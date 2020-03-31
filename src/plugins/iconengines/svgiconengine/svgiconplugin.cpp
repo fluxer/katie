@@ -68,7 +68,6 @@ QIconEngine *QSvgIconPlugin::create(const QString &file)
     return engine;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QSvgIconPlugin)
 Q_EXPORT_PLUGIN2(qsvgicon, QSvgIconPlugin)
 
 QT_END_NAMESPACE

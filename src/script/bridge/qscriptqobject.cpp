@@ -924,7 +924,7 @@ struct QtMethodCaller
                 params[i] = const_cast<void*>(v.constData());
                 break;
             default:
-                Q_ASSERT(0);
+                Q_ASSERT(false);
             }
         }
 
@@ -2097,7 +2097,7 @@ void QScript::QObjectConnectionManager::qt_static_metacall(QObject *_o, QMetaObj
 
 const QMetaObject QScript::QObjectConnectionManager::staticMetaObject = {
     { &QObject::staticMetaObject, qt_meta_stringdata_QScript__QObjectConnectionManager,
-      qt_meta_data_QScript__QObjectConnectionManager, qt_static_metacall, 0, 0 }
+      qt_meta_data_QScript__QObjectConnectionManager, qt_static_metacall, Q_NULLPTR, Q_NULLPTR }
 };
 
 

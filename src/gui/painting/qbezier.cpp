@@ -40,8 +40,6 @@
 #include "qlist.h"
 #include "qmath.h"
 
-#include "qmath_p.h"
-
 QT_BEGIN_NAMESPACE
 
 //#define QDEBUG_BEZIER
@@ -51,10 +49,6 @@ QT_BEGIN_NAMESPACE
 #else
 /* The value of 1.0 / (1L<<14) is enough for most applications */
 #define INV_EPS (1L<<14)
-#endif
-
-#ifndef M_SQRT2
-#define M_SQRT2	1.41421356237309504880
 #endif
 
 /*!
@@ -324,7 +318,7 @@ static bool addCircle(const QBezier *b, qreal offset, QBezier *o)
             cos_a = 1.;
         if (cos_a < -1.)
             cos_a = -1;
-        angles[i] = qAcos(cos_a)/Q_PI;
+        angles[i] = qAcos(cos_a)/M_PI;
     }
 
     if (angles[0] + angles[1] > 1.) {

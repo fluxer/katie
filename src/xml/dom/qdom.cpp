@@ -129,7 +129,7 @@ public:
 class QDomNodePrivate
 {
 public:
-    QDomNodePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = 0);
+    QDomNodePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = Q_NULLPTR);
     QDomNodePrivate(QDomNodePrivate* n, bool deep);
     virtual ~QDomNodePrivate();
 
@@ -277,7 +277,7 @@ public:
 class QDomDocumentTypePrivate : public QDomNodePrivate
 {
 public:
-    QDomDocumentTypePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = 0);
+    QDomDocumentTypePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = Q_NULLPTR);
     QDomDocumentTypePrivate(QDomDocumentTypePrivate* n, bool deep);
     ~QDomDocumentTypePrivate();
     void init();
@@ -306,7 +306,7 @@ public:
 class QDomDocumentFragmentPrivate : public QDomNodePrivate
 {
 public:
-    QDomDocumentFragmentPrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = 0);
+    QDomDocumentFragmentPrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = Q_NULLPTR);
     QDomDocumentFragmentPrivate(QDomNodePrivate* n, bool deep);
 
     // Reimplemented from QDomNodePrivate
@@ -4867,14 +4867,7 @@ void QDomElement::setAttribute(const QString& name, double value)
 {
     if (!impl)
         return;
-    QString x;
-    char buf[256];
-    int count = qsnprintf(buf, sizeof(buf), "%.16g", value);
-    if (count > 0)
-        x = QString::fromLatin1(buf, count);
-    else
-        x.setNum(value); // Fallback
-    IMPL->setAttribute(name, x);
+    IMPL->setAttribute(name, QString::number(value));
 }
 
 /*!
@@ -5164,7 +5157,7 @@ QDomNodePrivate* QDomTextPrivate::cloneNode(bool deep)
 
 QDomTextPrivate* QDomTextPrivate::splitText(int offset)
 {
-    if (!parent()) {
+    if (Q_UNLIKELY(!parent())) {
         qWarning("QDomText::splitText  The node has no parent. So I can not split");
         return 0;
     }
@@ -5179,8 +5172,7 @@ QDomTextPrivate* QDomTextPrivate::splitText(int offset)
 
 void QDomTextPrivate::save(QTextStream& s, int, int) const
 {
-    QDomTextPrivate *that = const_cast<QDomTextPrivate*>(this);
-    s << encodeText(value, s, !(that->parent() && that->parent()->isElement()), false, true);
+    s << encodeText(value, s, !(parent() && parent()->isElement()), false, true);
 }
 
 /**************************************************************

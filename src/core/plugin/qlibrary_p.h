@@ -83,7 +83,7 @@ public:
     QString errorString;
     QLibrary::LoadHints loadHints;
 
-    bool isPlugin(QSettings *settings = 0);
+    bool isPlugin();
 
 private:
     explicit QLibraryPrivate(const QString &canonicalFileName, const QString &version);

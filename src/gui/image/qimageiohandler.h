@@ -112,7 +112,7 @@ struct Q_GUI_EXPORT QImageIOHandlerFactoryInterface : public QFactoryInterface
 
 QT_END_NAMESPACE
 
-#define QImageIOHandlerFactoryInterface_iid "com.trolltech.Qt.QImageIOHandlerFactoryInterface"
+#define QImageIOHandlerFactoryInterface_iid "Katie.QImageIOHandlerFactoryInterface"
 Q_DECLARE_INTERFACE(QImageIOHandlerFactoryInterface, QImageIOHandlerFactoryInterface_iid)
 
 QT_BEGIN_NAMESPACE

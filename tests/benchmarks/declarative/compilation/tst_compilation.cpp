@@ -53,11 +53,6 @@ tst_compilation::tst_compilation()
 {
 }
 
-inline QUrl TEST_FILE(const QString &filename)
-{
-    return QUrl::fromLocalFile(QLatin1String(SRCDIR) + QLatin1String("/data/") + filename);
-}
-
 void tst_compilation::boomblock()
 {
     QFile f(QLatin1String(SRCDIR) + QLatin1String("/data/BoomBlock.qml"));

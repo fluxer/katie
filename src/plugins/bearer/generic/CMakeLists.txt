@@ -23,6 +23,6 @@ katie_setup_object(qgenericbearerplugin sharedbearer)
 
 install(
     TARGETS qgenericbearerplugin
-    DESTINATION ${KATIE_PLUGINS_RELATIVE}/bearer
+    DESTINATION ${KATIE_PLUGINS_PATH}/bearer
     COMPONENT Runtime
 )

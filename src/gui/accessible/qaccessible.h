@@ -443,7 +443,7 @@ inline QAccessibleEvent::QAccessibleEvent(Type atype, int achild)
 
 QT_END_NAMESPACE
 
-#define QAccessibleInterface_iid "com.trolltech.Qt.QAccessibleInterface"
+#define QAccessibleInterface_iid "Katie.QAccessibleInterface"
 Q_DECLARE_INTERFACE(QAccessibleInterface, QAccessibleInterface_iid)
 
 QT_END_HEADER

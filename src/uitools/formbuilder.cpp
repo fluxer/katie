@@ -34,7 +34,7 @@
 #include "customwidget.h"
 #include "formbuilder.h"
 #include "formbuilderextra_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 
 #include <QtGui/QtGui>
 #include <QtCore/QCoreApplication>
@@ -483,11 +483,6 @@ void QFormBuilder::updateCustomWidgets()
                 insertPlugins(loader.instance(), &m_customWidgets);
         }
     }
-    // Check statically linked plugins
-    const QObjectList staticPlugins = QPluginLoader::staticInstances();
-    if (!staticPlugins.empty())
-        foreach (QObject *o, staticPlugins)
-            insertPlugins(o, &m_customWidgets);
 }
 
 /*!

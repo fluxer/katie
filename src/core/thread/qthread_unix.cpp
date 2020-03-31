@@ -450,8 +450,8 @@ void QThread::terminate()
 
     int code = pthread_cancel(d->thread_id);
     if (Q_UNLIKELY(code)) {
-        qWarning("QThread::start: Thread termination error: %s",
-                 qPrintable(qt_error_string((code))));
+        qWarning("QThread::terminate: Thread termination error: %s",
+                 qPrintable(qt_error_string(code)));
     } else {
         d->terminated = true;
     }
@@ -496,8 +496,6 @@ void QThread::setPriority(Priority priority)
         return;
     }
 
-    d->priority = priority;
-
     // copied from start() with a few modifications:
 
 #ifdef QT_HAS_THREAD_PRIORITY_SCHEDULING
@@ -534,6 +532,8 @@ void QThread::setPriority(Priority priority)
     Q_UNUSED(status);
 # endif // SCHED_IDLE
 #endif
+
+    d->priority = priority;
 }
 
 #include "moc_qthread.h"

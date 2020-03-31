@@ -316,10 +316,9 @@
 
 QT_BEGIN_NAMESPACE
 
-static bool isConfigFunction(QEasingCurve::Type type)
+static inline bool isConfigFunction(QEasingCurve::Type type)
 {
-    return type >= QEasingCurve::InElastic
-            && type <= QEasingCurve::OutInBounce;
+    return type >= QEasingCurve::InElastic && type <= QEasingCurve::OutInBounce;
 }
 
 class QEasingCurveFunction
@@ -331,7 +330,7 @@ public:
     { }
     virtual ~QEasingCurveFunction() {}
     virtual qreal value(qreal t);
-    virtual QEasingCurveFunction *copy() const;
+    QEasingCurveFunction *copy() const;
     bool operator==(const QEasingCurveFunction& other) const;
 
     QEasingCurve::Type _t;
@@ -367,7 +366,7 @@ class QEasingCurvePrivate
 public:
     QEasingCurvePrivate()
         : type(QEasingCurve::Linear),
-          config(0),
+          config(Q_NULLPTR),
           func(&easeNone)
     { }
     ~QEasingCurvePrivate() { delete config; }
@@ -383,14 +382,6 @@ struct ElasticEase : public QEasingCurveFunction
     ElasticEase(QEasingCurve::Type type)
         : QEasingCurveFunction(type, qreal(0.3), qreal(1.0))
     { }
-
-    QEasingCurveFunction *copy() const
-    {
-        ElasticEase *rv = new ElasticEase(_t);
-        rv->_p = _p;
-        rv->_a = _a;
-        return rv;
-    }
 
     qreal value(qreal t)
     {
@@ -417,13 +408,6 @@ struct BounceEase : public QEasingCurveFunction
         : QEasingCurveFunction(type, qreal(0.3), qreal(1.0))
     { }
 
-    QEasingCurveFunction *copy() const
-    {
-        BounceEase *rv = new BounceEase(_t);
-        rv->_a = _a;
-        return rv;
-    }
-
     qreal value(qreal t)
     {
         qreal a = (_a < 0) ? qreal(1.0) : _a;
@@ -447,13 +431,6 @@ struct BackEase : public QEasingCurveFunction
     BackEase(QEasingCurve::Type type)
         : QEasingCurveFunction(type, qreal(0.3), qreal(1.0), qreal(1.70158))
     { }
-
-    QEasingCurveFunction *copy() const
-    {
-        BackEase *rv = new BackEase(_t);
-        rv->_o = _o;
-        return rv;
-    }
 
     qreal value(qreal t)
     {
@@ -544,7 +521,7 @@ static QEasingCurve::EasingFunction curveToFunc(QEasingCurve::Type curve)
         case QEasingCurve::CosineCurve:
             return &easeCosineCurve;
         default:
-            return 0;
+            return Q_NULLPTR;
     };
 }
 
@@ -611,7 +588,7 @@ QEasingCurve &QEasingCurve::operator=(const QEasingCurve &other)
     // ### non-atomic, requires malloc on shallow copy
     if (d_ptr->config) {
         delete d_ptr->config;
-        d_ptr->config = 0;
+        d_ptr->config = Q_NULLPTR;
     }
 
     *d_ptr = *other.d_ptr;
@@ -745,7 +722,7 @@ void QEasingCurvePrivate::setType_helper(QEasingCurve::Type newType)
         period = config->_p;
         overshoot = config->_o;
         delete config;
-        config = 0;
+        config = Q_NULLPTR;
     }
 
     if (isConfigFunction(newType) || (amp != -1.0) || (period != -1.0) || (overshoot != -1.0)) {
@@ -756,11 +733,11 @@ void QEasingCurvePrivate::setType_helper(QEasingCurve::Type newType)
             config->_p = period;
         if (overshoot != -1.0)
             config->_o = overshoot;
-        func = 0;
+        func = Q_NULLPTR;
     } else if (newType != QEasingCurve::Custom) {
         func = curveToFunc(newType);
     }
-    Q_ASSERT((func == 0) == (config != 0));
+    Q_ASSERT((func == Q_NULLPTR) == (config != Q_NULLPTR));
     type = newType;
 }
 
@@ -807,7 +784,7 @@ void QEasingCurve::setCustomType(EasingFunction func)
 */
 QEasingCurve::EasingFunction QEasingCurve::customType() const
 {
-    return d_ptr->type == Custom ? d_ptr->func : 0;
+    return d_ptr->type == Custom ? d_ptr->func : Q_NULLPTR;
 }
 
 /*!

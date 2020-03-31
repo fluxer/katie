@@ -39,142 +39,15 @@
 // built-in handlers
 #include "qfsfileengine.h"
 #include "qdiriterator.h"
+#ifndef QT_BOOTSTRAPPED
+#  include "qresource_p.h"
+#endif
 
 #include "qfilesystementry_p.h"
 #include "qfilesystemmetadata_p.h"
 #include "qfilesystemengine_p.h"
 
 QT_BEGIN_NAMESPACE
-
-/*!
-    \class QAbstractFileEngineHandler
-    \reentrant
-
-    \brief The QAbstractFileEngineHandler class provides a way to register
-    custom file engines with your application.
-
-    \ingroup io
-    \since 4.1
-
-    QAbstractFileEngineHandler is a factory for creating QAbstractFileEngine
-    objects (file engines), which are used internally by QFile, QFileInfo, and
-    QDir when working with files and directories.
-
-    When you open a file, Qt chooses a suitable file engine by passing the
-    file name from QFile or QDir through an internal list of registered file
-    engine handlers. The first handler to recognize the file name is used to
-    create the engine. Qt provides internal file engines for working with
-    regular files and resources, but you can also register your own
-    QAbstractFileEngine subclasses.
-
-    To install an application-specific file engine, you subclass
-    QAbstractFileEngineHandler and reimplement create(). When you instantiate
-    the handler (e.g. by creating an instance on the stack or on the heap), it
-    will automatically register with Qt. (The latest registered handler takes
-    precedence over existing handlers.)
-
-    For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qabstractfileengine.cpp 0
-
-    When the handler is destroyed, it is automatically removed from Qt.
-
-    The most common approach to registering a handler is to create an instance
-    as part of the start-up phase of your application. It is also possible to
-    limit the scope of the file engine handler to a particular area of
-    interest (e.g. a special file dialog that needs a custom file engine). By
-    creating the handler inside a local scope, you can precisely control the
-    area in which your engine will be applied without disturbing file
-    operations in other parts of your application.
-
-    \sa QAbstractFileEngine, QAbstractFileEngine::create()
-*/
-
-static bool qt_file_engine_handlers_in_use = false;
-
-/*
-    All application-wide handlers are stored in this list. The mutex must be
-    acquired to ensure thread safety.
- */
-Q_GLOBAL_STATIC_WITH_ARGS(QReadWriteLock, fileEngineHandlerMutex, (QReadWriteLock::Recursive))
-static bool qt_abstractfileenginehandlerlist_shutDown = false;
-class QAbstractFileEngineHandlerList : public QList<QAbstractFileEngineHandler *>
-{
-public:
-    ~QAbstractFileEngineHandlerList()
-    {
-        QWriteLocker locker(fileEngineHandlerMutex());
-        qt_abstractfileenginehandlerlist_shutDown = true;
-    }
-};
-Q_GLOBAL_STATIC(QAbstractFileEngineHandlerList, fileEngineHandlers)
-
-/*!
-    Constructs a file handler and registers it with Qt. Once created this
-    handler's create() function will be called (along with all the other
-    handlers) for any paths used. The most recently created handler that
-    recognizes the given path (i.e. that returns a QAbstractFileEngine) is
-    used for the new path.
-
-    \sa create()
- */
-QAbstractFileEngineHandler::QAbstractFileEngineHandler()
-{
-    QWriteLocker locker(fileEngineHandlerMutex());
-    qt_file_engine_handlers_in_use = true;
-    fileEngineHandlers()->prepend(this);
-}
-
-/*!
-    Destroys the file handler. This will automatically unregister the handler
-    from Qt.
- */
-QAbstractFileEngineHandler::~QAbstractFileEngineHandler()
-{
-    QWriteLocker locker(fileEngineHandlerMutex());
-    // Remove this handler from the handler list only if the list is valid.
-    if (!qt_abstractfileenginehandlerlist_shutDown) {
-        QAbstractFileEngineHandlerList *handlers = fileEngineHandlers();
-        handlers->removeOne(this);
-        if (handlers->isEmpty())
-            qt_file_engine_handlers_in_use = false;
-    }
-}
-
-/*
-   \ìnternal
-
-   Handles calls to custom file engine handlers.
-*/
-QAbstractFileEngine *qt_custom_file_engine_handler_create(const QString &path)
-{
-    if (qt_file_engine_handlers_in_use) {
-        QReadLocker locker(fileEngineHandlerMutex());
-
-        // check for registered handlers that can load the file
-        QAbstractFileEngineHandlerList *handlers = fileEngineHandlers();
-        for (int i = 0; i < handlers->size(); i++) {
-            QAbstractFileEngine *engine = handlers->at(i)->create(path);
-            if (engine)
-                return engine;
-        }
-    }
-
-    return 0;
-}
-
-/*!
-    \fn QAbstractFileEngine *QAbstractFileEngineHandler::create(const QString &fileName) const
-
-    Creates a file engine for file \a fileName. Returns 0 if this
-    file handler cannot handle \a fileName.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qabstractfileengine.cpp 1
-
-    \sa QAbstractFileEngine::create()
-*/
 
 /*!
     Creates and returns a QAbstractFileEngine suitable for processing \a
@@ -186,53 +59,21 @@ QAbstractFileEngine *qt_custom_file_engine_handler_create(const QString &path)
     If you reimplemnt this function, it should only return file
     engines that knows how to handle \a fileName; otherwise, it should
     return 0.
-
-    \sa QAbstractFileEngineHandler
 */
 QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
 {
-    QFileSystemEntry entry(fileName);
-    QFileSystemMetaData metaData;
-    QAbstractFileEngine *engine = QFileSystemEngine::resolveEntryAndCreateLegacyEngine(entry, metaData);
-
-#ifndef QT_NO_FSFILEENGINE
-    if (!engine)
-        // fall back to regular file engine
-        return new QFSFileEngine(entry.filePath());
+#ifndef QT_BOOTSTRAPPED
+    // check if a resource file is being handled
+    if(fileName.startsWith(":/"))
+        return new QResourceFileEngine(fileName);
 #endif
-
-    return engine;
+#ifndef QT_NO_FSFILEENGINE
+    // fall back to regular file engine
+    return new QFSFileEngine(fileName);
+#else
+    return Q_NULLPTR;
+#endif
 }
-
-/*!
-    \class QAbstractFileEngine
-    \reentrant
-
-    \brief The QAbstractFileEngine class provides an abstraction for accessing
-    the filesystem.
-
-    \ingroup io
-    \since 4.1
-
-    The QDir, QFile, and QFileInfo classes all make use of a
-    QAbstractFileEngine internally. If you create your own QAbstractFileEngine
-    subclass (and register it with Qt by creating a QAbstractFileEngineHandler
-    subclass), your file engine will be used when the path is one that your
-    file engine handles.
-
-    A QAbstractFileEngine refers to one file or one directory. If the referent
-    is a file, the setFileName(), rename(), and remove() functions are
-    applicable. If the referent is a directory the mkdir(), rmdir(), and
-    entryList() functions are applicable. In all cases the caseSensitive(),
-    isRelativePath(), fileFlags(), ownerId(), owner(), and fileTime()
-    functions are applicable.
-
-    A QAbstractFileEngine subclass can be created to do synchronous network I/O
-    based file system operations, local file system operations, or to operate
-    as a resource system to access file based resources.
-
-   \sa QAbstractFileEngineHandler
-*/
 
 /*!
     \enum QAbstractFileEngine::FileName
@@ -836,14 +677,6 @@ bool QAbstractFileEngine::unmap(uchar *address)
 */
 
 /*!
-    \enum QAbstractFileEngineIterator::EntryInfoType
-    \internal
-
-    This enum describes the different types of information that can be
-    requested through the QAbstractFileEngineIterator::entryInfo() function.
-*/
-
-/*!
     \typedef QAbstractFileEngine::Iterator
     \since 4.3
     \relates QAbstractFileEngine
@@ -970,21 +803,6 @@ QFileInfo QAbstractFileEngineIterator::currentFileInfo() const
 
     // return a shallow copy
     return d->fileInfo;
-}
-
-/*!
-    \internal
-
-    Returns the entry info \a type for this iterator's current directory entry
-    as a QVariant. If \a type is undefined for this entry, a null QVariant is
-    returned.
-
-    \sa QAbstractFileEngine::beginEntryList(), QDir::beginEntryList()
-*/
-QVariant QAbstractFileEngineIterator::entryInfo(EntryInfoType type) const
-{
-    Q_UNUSED(type)
-    return QVariant();
 }
 
 /*!

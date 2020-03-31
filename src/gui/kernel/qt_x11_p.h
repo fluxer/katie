@@ -109,10 +109,6 @@
 #  include <X11/extensions/XShm.h>
 #endif // QT_NO_XSHM
 
-#ifndef QT_NO_XINPUT
-#  include <X11/extensions/XInput.h>
-#endif // QT_NO_XINPUT
-
 #ifndef QT_NO_XFIXES
 #  include <X11/extensions/Xfixes.h>
 #endif // QT_NO_XFIXES
@@ -191,13 +187,6 @@ struct QX11Data
 
     QList<QXdndDropTransaction> dndDropTransactions;
 
-    // from qmotifdnd_x11.cpp
-    void motifdndHandle(QWidget *, const XEvent *, bool);
-    void motifdndEnable(QWidget *, bool);
-    QVariant motifdndObtainData(const char *format);
-    QByteArray motifdndFormat(int n);
-    bool motifdnd_active;
-
     Display *display;
     char *displayName;
     bool foreignDisplay;
@@ -230,12 +219,6 @@ struct QX11Data
     bool use_mitshm;
     bool use_mitshm_pixmaps;
     int mitshm_major;
-
-    // true if Qt is compiled w/ INPUT support and INPUT is supported on the connected Display
-    bool use_xinput;
-    int xinput_major;
-    int xinput_eventbase;
-    int xinput_errorbase;
 
     QList<QWidget *> deferred_map;
     struct ScrollInProgress {
@@ -351,7 +334,6 @@ struct QX11Data
         _XSETROOT_ID,
 
         _QT_SCROLL_DONE,
-        _QT_INPUT_ENCODING,
 
         _MOTIF_WM_HINTS,
 
@@ -437,26 +419,14 @@ struct QX11Data
         XdndActionMove,
         XdndActionPrivate,
 
-        // Motif DND
-        _MOTIF_DRAG_AND_DROP_MESSAGE,
-        _MOTIF_DRAG_INITIATOR_INFO,
-        _MOTIF_DRAG_RECEIVER_INFO,
-        _MOTIF_DRAG_WINDOW,
-        _MOTIF_DRAG_TARGETS,
-
-        XmTRANSFER_SUCCESS,
-        XmTRANSFER_FAILURE,
-
         // XEMBED
         _XEMBED,
         _XEMBED_INFO,
 
-        NPredefinedAtoms,
-
-        _QT_SETTINGS_TIMESTAMP = NPredefinedAtoms,
-        NAtoms
+        _QT_SETTINGS_TIMESTAMP,
+        NPredefinedAtoms
     };
-    Atom atoms[NAtoms];
+    Atom atoms[NPredefinedAtoms];
 
     bool isSupportedByWM(Atom atom);
 

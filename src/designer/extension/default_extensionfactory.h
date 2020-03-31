@@ -38,7 +38,7 @@
 #include <QtDesigner/extension.h>
 
 #include <QtCore/QMap>
-#include <QtCore/QHash>
+#include <QtCore/QSet>
 #include <QtCore/QPair>
 
 QT_BEGIN_HEADER
@@ -67,7 +67,7 @@ private:
     typedef QPair<QString,QObject*> IdObjectKey;
     typedef QMap< IdObjectKey, QObject*> ExtensionMap;
     mutable ExtensionMap m_extensions;
-    typedef QHash<QObject*, bool> ExtendedSet;
+    typedef QSet<QObject*> ExtendedSet;
     mutable ExtendedSet m_extended;
 };
 

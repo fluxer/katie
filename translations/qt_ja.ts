@@ -4,7 +4,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2206"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2191"/>
         <source>Close Tab</source>
         <translatorcomment>ToolTip</translatorcomment>
         <translation>タブを閉じる</translation>
@@ -13,7 +13,7 @@
 <context>
     <name>FormBuilder</name>
     <message>
-        <location filename="../src/uitools/formbuilderextra.cpp" line="+375"/>
+        <location filename="../src/uitools/formbuilderextra.cpp" line="+361"/>
         <source>Invalid stretch value for &apos;%1&apos;: &apos;%2&apos;</source>
         <extracomment>Parsing layout stretch values</extracomment>
         <translation type="unfinished"></translation>
@@ -28,7 +28,7 @@
 <context>
     <name>QAbstractFormBuilder</name>
     <message>
-        <location filename="../src/uitools/abstractformbuilder.cpp" line="+206"/>
+        <location filename="../src/uitools/abstractformbuilder.cpp" line="+195"/>
         <source>Unexpected element &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -64,7 +64,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+764"/>
+        <location line="+746"/>
         <source>Flags property are not supported yet.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -87,9 +87,9 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+899"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+670"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+649"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+891"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+662"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+641"/>
         <location line="+26"/>
         <source>Host not found</source>
         <translation>ホストが見つかりません</translation>
@@ -109,14 +109,14 @@ This indicates an inconsistency in the ui-file.</source>
     <message>
         <location line="-538"/>
         <location line="+810"/>
-        <location line="+223"/>
+        <location line="+213"/>
         <source>Operation on socket is not supported</source>
         <translatorcomment>抽象ソケットクラスでのソケットのエラー</translatorcomment>
         <translation>このソケットへのこの操作はサポートされていません</translation>
     </message>
     <message>
-        <location line="+199"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
+        <location line="+191"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+677"/>
         <source>Socket operation timed out</source>
         <translation>ソケット操作がタイムアウトしました</translation>
     </message>
@@ -134,7 +134,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1228"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1170"/>
         <source>&amp;Step up</source>
         <translation>上(&amp;S)</translation>
     </message>
@@ -152,7 +152,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAccessibleButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+265"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+257"/>
         <source>Uncheck</source>
         <translation>選択解除</translation>
     </message>
@@ -170,7 +170,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/accessible/qaccessibleobject.cpp" line="+373"/>
+        <location filename="../src/gui/accessible/qaccessibleobject.cpp" line="+365"/>
         <source>Activate</source>
         <translation>アクティブに</translation>
     </message>
@@ -190,7 +190,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>互換性のないQtライブラリエラー</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1890"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1871"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -217,7 +217,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1262"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1255"/>
         <source>Hu&amp;e:</source>
         <translation>色相(&amp;E):</translation>
     </message>
@@ -257,7 +257,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>色</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+127"/>
         <source>&amp;Basic colors</source>
         <translation>基本的なカラー(&amp;B)</translation>
     </message>
@@ -275,13 +275,13 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QComboBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="+1849"/>
+        <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="+1841"/>
         <location line="+66"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qitemeditorfactory.cpp" line="+556"/>
+        <location filename="../src/gui/itemviews/qitemeditorfactory.cpp" line="+548"/>
         <source>False</source>
         <translation>偽</translation>
     </message>
@@ -371,7 +371,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>%1: fork に失敗しました</translation>
     </message>
     <message>
-        <location filename="../src/uitools/formscriptrunner.cpp" line="+88"/>
+        <location filename="../src/uitools/formscriptrunner.cpp" line="+80"/>
         <source>Exception at line %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -390,7 +390,7 @@ Script: %3</source>
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2266"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2105"/>
         <source>AM</source>
         <translation>AM</translation>
     </message>
@@ -413,7 +413,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAbstractAnimation</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeanimation.cpp" line="+172"/>
+        <location filename="../src/declarative/util/qdeclarativeanimation.cpp" line="+164"/>
         <source>Cannot animate non-existent property &quot;%1&quot;</source>
         <translation>存在しないプロパティ &quot;%1&quot; はアニメーションできません</translation>
     </message>
@@ -423,7 +423,7 @@ Script: %3</source>
         <translation>読込専用のプロパティ &quot;%1&quot; はアニメーションできません</translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+107"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+99"/>
         <source>Animation is an abstract class</source>
         <translation>Animation は抽象クラスです</translation>
     </message>
@@ -439,7 +439,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnchors</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+197"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+189"/>
         <source>Possible anchor loop detected on fill.</source>
         <translation>fill によってアンカーのループが発生しています。</translation>
     </message>
@@ -507,7 +507,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+103"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+95"/>
         <source>Qt was built without support for QMovie</source>
         <translation>Qt は QMovie のサポートを外してビルドされています</translation>
     </message>
@@ -523,7 +523,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBehavior</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativebehavior.cpp" line="+127"/>
+        <location filename="../src/declarative/util/qdeclarativebehavior.cpp" line="+119"/>
         <source>Cannot change the animation assigned to a Behavior.</source>
         <translation>Behavior へ割り当てられたアニメーションは変更できません。</translation>
     </message>
@@ -531,7 +531,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeBinding</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+444"/>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+419"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>プロパティ &quot;%1&quot; へのバインディングにループが発生しています</translation>
     </message>
@@ -539,7 +539,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeCompiledBindings</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+345"/>
+        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+337"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>プロパティ &quot;%1&quot; へのバインディングにループが発生しています</translation>
     </message>
@@ -547,7 +547,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeCompiler</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecompiler.cpp" line="+185"/>
+        <location filename="../src/declarative/qml/qdeclarativecompiler.cpp" line="+176"/>
         <location line="+1672"/>
         <location line="+205"/>
         <location line="+81"/>
@@ -804,7 +804,7 @@ Script: %3</source>
     <message>
         <location line="+6"/>
         <source>Can only assign one binding to lists</source>
-        <translation>リストへは一つのバインディングのみ割り当てることができます</translation>
+        <translation>リストへは一つのバインディングのみ割り当�����ることができます</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -965,7 +965,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeComponent</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+497"/>
+        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+489"/>
         <source>Invalid empty URL</source>
         <translation>空の URL は無効です</translation>
     </message>
@@ -978,7 +978,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeConnections</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeconnections.cpp" line="+207"/>
+        <location filename="../src/declarative/util/qdeclarativeconnections.cpp" line="+199"/>
         <location line="+64"/>
         <source>Cannot assign to non-existent property &quot;%1&quot;</source>
         <translation>存在しないプロパティ &quot;%1&quot; へは割り当てできません</translation>
@@ -991,7 +991,7 @@ Script: %3</source>
     <message>
         <location line="+3"/>
         <source>Connections: syntax error</source>
-        <translation>接続: 構文エラー</translation>
+        <translation>����: 構文エラー</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -1002,7 +1002,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeFlipable</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeflipable.cpp" line="+138"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeflipable.cpp" line="+130"/>
         <source>front is a write-once property</source>
         <translation>front は一度のみ書き込み可能なプロパティです</translation>
     </message>
@@ -1015,7 +1015,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeImportDatabase</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativeimport.cpp" line="+380"/>
+        <location filename="../src/declarative/qml/qdeclarativeimport.cpp" line="+372"/>
         <source>plugin cannot be loaded for module &quot;%1&quot;: %2</source>
         <translation>&quot;%1&quot; モジュール用のプラグインがロードできません: %2</translation>
     </message>
@@ -1083,7 +1083,7 @@ Script: %3</source>
         <translation>は型ではありません</translation>
     </message>
     <message>
-        <location line="+265"/>
+        <location line="+263"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation type="unfinished">ファイル名の大文字小文字が &quot;%2&quot; に合っていません {1&quot;?}</translation>
     </message>
@@ -1107,7 +1107,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeLayoutMirroringAttached</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+803"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+795"/>
         <source>LayoutDirection attached property only works with Items</source>
         <translation>アタッチされたプロパティ LayoutDirection はアイテムでのみ利用できます</translation>
     </message>
@@ -1120,7 +1120,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeListModel</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativelistmodel.cpp" line="+390"/>
+        <location filename="../src/declarative/util/qdeclarativelistmodel.cpp" line="+382"/>
         <source>remove: index %1 out of range</source>
         <translation>remove: インデックス %1 は有効範囲外の値です</translation>
     </message>
@@ -1180,7 +1180,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeLoader</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeloader.cpp" line="+407"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeloader.cpp" line="+399"/>
         <source>Loader does not support loading non-visual elements.</source>
         <translation>Loader は可視化できない要素の読み込みをサポートしていません。</translation>
     </message>
@@ -1207,7 +1207,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeParentChange</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+103"/>
+        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+95"/>
         <source>Unable to preserve appearance under complex transform</source>
         <translation>複雑な変換を伴う外観は保持できません</translation>
     </message>
@@ -1226,7 +1226,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeParser</name>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+540"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+532"/>
         <location line="+123"/>
         <location line="+54"/>
         <source>Illegal unicode escape sequence</source>
@@ -1284,7 +1284,7 @@ Script: %3</source>
         <translation>正規表現の文字クラスが閉じていません</translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1825"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1817"/>
         <location line="+68"/>
         <source>Syntax error</source>
         <translation>構文エラー</translation>
@@ -1301,7 +1301,7 @@ Script: %3</source>
         <translation>トークン &apos;%1&apos; を予期してます</translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativescriptparser.cpp" line="+254"/>
+        <location filename="../src/declarative/qml/qdeclarativescriptparser.cpp" line="+246"/>
         <location line="+429"/>
         <location line="+59"/>
         <source>Property value set multiple times</source>
@@ -1379,19 +1379,19 @@ Script: %3</source>
 <context>
     <name>QDeclarativePixmap</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+318"/>
+        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+298"/>
         <source>Error decoding: %1: %2</source>
         <translation>デコード中にエラーが発生しました: %1: %2</translation>
     </message>
     <message>
-        <location line="+191"/>
-        <location line="+370"/>
+        <location line="+173"/>
+        <location line="+361"/>
         <source>Failed to get image from provider: %1</source>
         <translation>プロバイダーからの画像の取得に失敗しました: %1</translation>
     </message>
     <message>
-        <location line="-352"/>
-        <location line="+370"/>
+        <location line="-343"/>
+        <location line="+361"/>
         <source>Cannot open: %1</source>
         <translation>開けませんでした: %1</translation>
     </message>
@@ -1407,7 +1407,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativePropertyChanges</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativepropertychanges.cpp" line="+256"/>
+        <location filename="../src/declarative/util/qdeclarativepropertychanges.cpp" line="+248"/>
         <source>PropertyChanges does not support creating state-specific objects.</source>
         <translation>PropertyChanges は状態特有のオブジェクトの作成をサポートしていません。</translation>
     </message>
@@ -1425,7 +1425,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTextInput</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+929"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+921"/>
         <location line="+8"/>
         <source>Could not load cursor delegate</source>
         <translation>カーソルデリゲートがロードできません</translation>
@@ -1439,7 +1439,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTypeLoader</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+929"/>
+        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+921"/>
         <source>Script %1 unavailable</source>
         <translation>スクリプト %1 が利用できません</translation>
     </message>
@@ -1462,7 +1462,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeVME</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+220"/>
+        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+212"/>
         <source>Unable to create object of type %1</source>
         <translation>型 %1 のオブジェクトを作成できません</translation>
     </message>
@@ -1510,7 +1510,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeVisualDataModel</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativevisualitemmodel.cpp" line="+1101"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativevisualitemmodel.cpp" line="+1093"/>
         <source>Delegate component must be Item type.</source>
         <translation>デリゲートコンポーネントの型は Item である必要があります。</translation>
     </message>
@@ -1527,7 +1527,7 @@ Script: %3</source>
 <context>
     <name>QDial</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+933"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+924"/>
         <source>QDial</source>
         <translation>ダイヤル</translation>
     </message>
@@ -1545,7 +1545,7 @@ Script: %3</source>
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+515"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+507"/>
         <source>What&apos;s This?</source>
         <translation>ヒント</translation>
     </message>
@@ -1553,7 +1553,7 @@ Script: %3</source>
 <context>
     <name>QDialogButtonBox</name>
     <message>
-        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+460"/>
+        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+452"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1646,7 +1646,7 @@ Script: %3</source>
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+438"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+407"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
@@ -1670,7 +1670,7 @@ Script: %3</source>
 <context>
     <name>QDockWidget</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/qaccessiblewidgets.cpp" line="+1329"/>
+        <location filename="../src/plugins/accessible/widgets/qaccessiblewidgets.cpp" line="+1321"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
@@ -1701,7 +1701,7 @@ Script: %3</source>
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+164"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+156"/>
         <source>Debug Message:</source>
         <translation>デバッグメッセージ:</translation>
     </message>
@@ -1729,13 +1729,12 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+604"/>
-        <location line="+154"/>
+        <location filename="../src/core/io/qfile.cpp" line="+606"/>
         <source>Destination file exists</source>
         <translation>新しい名前のファイルは既に存在します</translation>
     </message>
     <message>
-        <location line="-139"/>
+        <location line="+15"/>
         <source>Will not rename sequential file using block copy</source>
         <translation>ブロックコピーを用いてシーケンシャルファイルの名前を変更することはできません</translation>
     </message>
@@ -1745,27 +1744,7 @@ Script: %3</source>
         <translation>元のファイルを削除できません</translation>
     </message>
     <message>
-        <location line="+129"/>
-        <source>Cannot open %1 for input</source>
-        <translation>コピー元ファイル %1 を読めません</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Cannot open for output</source>
-        <translation>コピー先のファイルを開けません</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Failure to write block</source>
-        <translation>書き込みに失敗しました</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Cannot create %1 for output</source>
-        <translation>コピー先として %1 を作成できません</translation>
-    </message>
-    <message>
-        <location line="+296"/>
+        <location line="+399"/>
         <source>No file engine available or engine does not support UnMapExtension</source>
         <translation>ファイルエンジンが見つからないか、UnMapExtension をサポートしていません</translation>
     </message>
@@ -1773,8 +1752,8 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+533"/>
-        <location line="+512"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+522"/>
+        <location line="+513"/>
         <source>All Files (*)</source>
         <translation>すべてのファイル(*)</translation>
     </message>
@@ -1784,37 +1763,37 @@ Script: %3</source>
         <translation>ディレクトリ</translation>
     </message>
     <message>
-        <location line="-667"/>
-        <location line="+671"/>
+        <location line="-668"/>
+        <location line="+672"/>
         <source>Directory:</source>
         <translation>ディレクトリ:</translation>
     </message>
     <message>
-        <location line="-669"/>
-        <location line="+675"/>
+        <location line="-670"/>
+        <location line="+676"/>
         <source>File &amp;name:</source>
         <translation>ファイル名(&amp;N):</translation>
     </message>
     <message>
         <location line="-13"/>
         <location line="+55"/>
-        <location line="+1450"/>
+        <location line="+1447"/>
         <source>&amp;Open</source>
         <translation>開く(&amp;O)</translation>
     </message>
     <message>
-        <location line="-1505"/>
+        <location line="-1502"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location line="-758"/>
+        <location line="-759"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location line="+1457"/>
+        <location line="+1458"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 はすでに存在します。
@@ -1830,22 +1809,22 @@ Please verify the correct file name was given.</source>
 正しいファイル名が入力されたかどうか確認してください。</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+405"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+396"/>
         <source>My Computer</source>
         <translation>マイコンピュータ</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-54"/>
-        <location line="+856"/>
+        <location line="+853"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translation>%1
 ディレクトリが見つかりません。
-正しいディレクトリ名が入力されたかどうか確認してください。</translation>
+正しいディレクトリ名が����さ��たかどうか確認してください。</translation>
     </message>
     <message>
-        <location line="-2248"/>
+        <location line="-2246"/>
         <source>&amp;Rename</source>
         <translation>名前の変更(&amp;R)</translation>
     </message>
@@ -1860,7 +1839,7 @@ Please verify the correct directory name was given.</source>
         <translation>隠しファイルの表示(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+185"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+169"/>
         <source>Drive</source>
         <translation>ドライブ</translation>
     </message>
@@ -1893,7 +1872,7 @@ Please verify the correct directory name was given.</source>
         <translation>名前を付けて保存</translation>
     </message>
     <message>
-        <location line="+2055"/>
+        <location line="+2053"/>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translation>&apos;%1&apos; は書き込みが禁止されています。
@@ -1910,7 +1889,7 @@ Do you want to delete it anyway?</source>
         <translation>ディレクトリを削除できませんでした。</translation>
     </message>
     <message>
-        <location line="-2079"/>
+        <location line="-2077"/>
         <source>Find Directory</source>
         <translation>ディレクトリの検索</translation>
     </message>
@@ -1925,23 +1904,23 @@ Do you want to delete it anyway?</source>
         <translation>新しいフォルダ(&amp;N)</translation>
     </message>
     <message>
-        <location line="+679"/>
+        <location line="+680"/>
         <location line="+43"/>
         <source>&amp;Choose</source>
         <translation>選択(&amp;C)</translation>
     </message>
     <message>
-        <location line="+1173"/>
+        <location line="+1170"/>
         <source>New Folder</source>
         <translation>新しいフォルダ</translation>
     </message>
     <message>
-        <location line="+556"/>
+        <location line="+552"/>
         <source>Recent Places</source>
         <translation>履歴</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+425"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+417"/>
         <source>Remove</source>
         <translation>削除</translation>
     </message>
@@ -2019,7 +1998,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+804"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+797"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
@@ -2040,38 +2019,38 @@ Do you want to delete it anyway?</source>
         <translation>タイプ</translation>
     </message>
     <message>
+        <location line="-146"/>
         <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-146"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 GB</source>
         <translation>%1 GB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 MB</source>
         <translation>%1 MB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 KB</source>
         <translation>%1 KB</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+1"/>
+        <location line="+1"/>
         <source>%1 bytes</source>
         <translation>%1 バイト</translation>
     </message>
     <message>
         <location line="+70"/>
         <source>Invalid filename</source>
-        <translation>無効なファイル名</translation>
+        <translation>無効�����ファイル名</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2092,51 +2071,51 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+852"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
+        <location line="+844"/>
         <source>Normal</source>
         <translation>標準</translation>
     </message>
     <message>
-        <location line="-849"/>
+        <location line="-841"/>
         <location line="+12"/>
-        <location line="+825"/>
+        <location line="+817"/>
         <source>Bold</source>
         <translation>太字</translation>
     </message>
     <message>
-        <location line="-834"/>
-        <location line="+836"/>
+        <location line="-826"/>
+        <location line="+828"/>
         <source>Demi Bold</source>
         <translation>Demi Bold</translation>
     </message>
     <message>
-        <location line="-833"/>
+        <location line="-825"/>
         <location line="+18"/>
-        <location line="+811"/>
+        <location line="+803"/>
         <source>Black</source>
         <translation>太字</translation>
     </message>
     <message>
-        <location line="-821"/>
+        <location line="-813"/>
         <source>Demi</source>
         <translation>Demi</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+821"/>
+        <location line="+813"/>
         <source>Light</source>
         <translation>細字</translation>
     </message>
     <message>
-        <location line="-675"/>
-        <location line="+678"/>
+        <location line="-667"/>
+        <location line="+670"/>
         <source>Italic</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location line="-675"/>
-        <location line="+677"/>
+        <location line="-667"/>
+        <location line="+669"/>
         <source>Oblique</source>
         <translation>斜体</translation>
     </message>
@@ -2144,7 +2123,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+699"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+691"/>
         <source>&amp;Font</source>
         <translation>フォント(&amp;F)</translation>
     </message>
@@ -2197,7 +2176,7 @@ Do you want to delete it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/uitools/properties.cpp" line="+106"/>
+        <location filename="../src/uitools/properties.cpp" line="+98"/>
         <source>The set-type property %1 could not be read.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2217,13 +2196,13 @@ Do you want to delete it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/uitools/formbuilder.cpp" line="+170"/>
+        <location filename="../src/uitools/formbuilder.cpp" line="+162"/>
         <source>An empty class name was passed on to %1 (object name: &apos;%2&apos;).</source>
         <extracomment>Empty class name passed to widget factory method</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+54"/>
         <source>QFormBuilder was unable to create a custom widget of the class &apos;%1&apos;; defaulting to base class &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2233,7 +2212,7 @@ Do you want to delete it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+41"/>
         <source>The layout type `%1&apos; is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2241,7 +2220,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFtp</name>
     <message>
-        <location filename="../src/network/access/qftp.cpp" line="+875"/>
+        <location filename="../src/network/access/qftp.cpp" line="+867"/>
         <source>Not connected</source>
         <translation>未接続です</translation>
     </message>
@@ -2355,12 +2334,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfo</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_p.h" line="+101"/>
+        <location filename="../src/network/kernel/qhostinfo_p.h" line="+92"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo.cpp" line="+174"/>
+        <location filename="../src/network/kernel/qhostinfo.cpp" line="+146"/>
         <source>No host name given</source>
         <translation>ホストネームが与えられていません</translation>
     </message>
@@ -2368,19 +2347,21 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+206"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+119"/>
+        <location line="+12"/>
+        <location line="+86"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>ホストが見つかりません</translation>
     </message>
     <message>
-        <location line="-44"/>
-        <location line="+39"/>
+        <location line="-43"/>
+        <location line="+38"/>
         <source>Unknown address type</source>
         <translation>未知のアドレス型です</translation>
     </message>
     <message>
-        <location line="-94"/>
+        <location line="-93"/>
         <source>No host name given</source>
         <translation>ホストネームが与えられていません</translation>
     </message>
@@ -2390,7 +2371,8 @@ Do you want to delete it anyway?</source>
         <translation>無効なホスト名</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="-17"/>
+        <location line="+117"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
     </message>
@@ -2398,7 +2380,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHttp</name>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+1562"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+1554"/>
         <location line="+816"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
@@ -2439,13 +2421,13 @@ Do you want to delete it anyway?</source>
         <translation>接続が拒否されました</translation>
     </message>
     <message>
-        <location line="-3"/>
         <location filename="../src/network/access/qhttp.cpp" line="-319"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-3"/>
         <source>Host %1 not found</source>
         <translation>ホスト %1 が見つかりません</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+20"/>
+        <location line="+20"/>
         <source>HTTP request failed</source>
         <translation>HTTP要求に失敗しました</translation>
     </message>
@@ -2557,31 +2539,27 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1413"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+50"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
         <source>Permission denied</source>
         <translation>許可されていません</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>Too many open files</source>
         <translation>開かれたファイルが多すぎます</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No such file or directory</source>
         <translation>そのようなファイルやディレクトリはありません</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
+        <location line="+2"/>
         <source>No space left on device</source>
         <translation>デバイスの残り容量がありません</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1545"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1543"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
     </message>
@@ -2589,7 +2567,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QInputDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qinputdialog.cpp" line="+217"/>
+        <location filename="../src/gui/dialogs/qinputdialog.cpp" line="+209"/>
         <source>Enter a value:</source>
         <translation>数値を入力:</translation>
     </message>
@@ -2670,12 +2648,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+347"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+329"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>&apos;%1&apos; でプラグイン検証データが一致しません</translation>
     </message>
     <message>
-        <location line="+247"/>
+        <location line="+308"/>
         <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2685,34 +2663,29 @@ Do you want to delete it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Katie library. (Cannot mix debug and release libraries.)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+332"/>
+        <location line="+333"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
     </message>
     <message>
-        <location line="-397"/>
-        <location line="+43"/>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="+280"/>
+        <location line="-384"/>
+        <location line="+36"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+275"/>
         <source>The shared library was not found.</source>
         <translation>共有ライブラリがみつかりません。</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+199"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+80"/>
         <source>Cannot load library %1: %2</source>
         <translation>ライブラリ &apos;%1&apos; を読み込めません: %2</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+12"/>
         <source>Cannot unload library %1: %2</source>
         <translation>ライブラリ %1 を解放できません: %2</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+16"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>&apos;%2&apos;に含まれる識別子 &quot;%1&quot; を解決できません: %3</translation>
     </message>
@@ -2720,7 +2693,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1863"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1769"/>
         <source>&amp;Undo</source>
         <translation>元に戻す(&amp;U)</translation>
     </message>
@@ -2758,8 +2731,8 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+221"/>
-        <location filename="../src/network/socket/qlocalserver.cpp" line="+222"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
+        <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: 名前の解決に失敗</translation>
     </message>
@@ -2782,66 +2755,52 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalSocket</name>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+135"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+132"/>
+        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+127"/>
         <source>%1: Connection refused</source>
         <translation>%1: 接続が拒否されました</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Remote closed</source>
         <translation>%1: リモートにより接続が閉じられました</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: 無効な名前です</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket access error</source>
         <translation>%1: ソケットアクセスのエラーです</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket resource error</source>
         <translation>%1: ソケットリソースのエラーです</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket operation timed out</source>
         <translation>%1: ソケット操作がタイムアウトしました</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Datagram too large</source>
         <translation>%1: データグラムが大きすぎます</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: 接続のエラーが発生しました</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: The socket operation is not supported</source>
         <translation>%1: そのソケット操作はサポートされていません</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+4"/>
-        <source>%1: Unknown error</source>
-        <translation>%1: 未知のエラーです</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: 未知のエラー %2</translation>
     </message>
@@ -2849,7 +2808,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1289"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1198"/>
         <source>Unable to open database &apos;</source>
         <translation>データベースを開けません &apos;</translation>
     </message>
@@ -2859,7 +2818,7 @@ Do you want to delete it anyway?</source>
         <translation>接続できません</translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+140"/>
         <source>Unable to begin transaction</source>
         <translation>トランザクションを開始できません</translation>
     </message>
@@ -2877,13 +2836,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-986"/>
-        <location line="+31"/>
+        <location line="-923"/>
+        <location line="+27"/>
         <source>Unable to fetch data</source>
         <translation>データをフェッチできません</translation>
     </message>
     <message>
-        <location line="+161"/>
+        <location line="+153"/>
         <source>Unable to execute query</source>
         <translation>クエリーを実行できません</translation>
     </message>
@@ -2893,13 +2852,13 @@ Do you want to delete it anyway?</source>
         <translation>実行結果を記録できません</translation>
     </message>
     <message>
-        <location line="+191"/>
+        <location line="+171"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>プリペアステートメントを使えません</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+32"/>
         <source>Unable to reset statement</source>
         <translation>ステートメントをリセットできません</translation>
     </message>
@@ -2925,7 +2884,7 @@ Do you want to delete it anyway?</source>
         <translation>ステートメントの実行結果を記録できません</translation>
     </message>
     <message>
-        <location line="-258"/>
+        <location line="-244"/>
         <source>Unable to execute next query</source>
         <translation>次のクエリーを実行できません</translation>
     </message>
@@ -2938,7 +2897,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiArea</name>
     <message>
-        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+271"/>
+        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+263"/>
         <source>(Untitled)</source>
         <translation>(タイトルなし)</translation>
     </message>
@@ -2946,7 +2905,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+270"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+262"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
@@ -2963,7 +2922,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+13"/>
         <source>Restore Down</source>
-        <translation>元に戻す</translation>
+        <translation>����に戻す</translation>
     </message>
     <message>
         <location line="+707"/>
@@ -3040,7 +2999,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMenu</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/qaccessiblemenu.cpp" line="+157"/>
+        <location filename="../src/plugins/accessible/widgets/qaccessiblemenu.cpp" line="+149"/>
         <location line="+225"/>
         <source>Close</source>
         <translation>閉じる</translation>
@@ -3063,7 +3022,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1619"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1611"/>
         <source>Corner Toolbar</source>
         <translation>コーナーツールバー</translation>
     </message>
@@ -3071,7 +3030,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+125"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+117"/>
         <source>Show Details...</source>
         <translation>詳細を表示...</translation>
     </message>
@@ -3099,7 +3058,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNativeSocketEngine</name>
     <message>
-        <location filename="../src/network/socket/qnativesocketengine.cpp" line="+201"/>
+        <location filename="../src/network/socket/qnativesocketengine.cpp" line="+193"/>
         <source>Unable to initialize non-blocking socket</source>
         <translation>非ブロック型ソケットを初期化できません</translation>
     </message>
@@ -3232,7 +3191,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessCacheBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesscachebackend.cpp" line="+66"/>
+        <location filename="../src/network/access/qnetworkaccesscachebackend.cpp" line="+58"/>
         <source>Error opening %1</source>
         <translation>オープン時のエラー %1</translation>
     </message>
@@ -3240,7 +3199,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessDataBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+81"/>
+        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+73"/>
         <source>Invalid URI: %1</source>
         <translation>無効なURIです: %1</translation>
     </message>
@@ -3248,7 +3207,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessDebugPipeBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+195"/>
+        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+182"/>
         <source>Write error writing to %1: %2</source>
         <translation>%1 への書き込み時にエラーが発生しました: %2</translation>
     </message>
@@ -3266,8 +3225,8 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessFileBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+107"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+74"/>
+        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+99"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+66"/>
         <source>Request for opening non-local file %1</source>
         <translation>非ローカルファイル %1 をオープンするよう要求されましたが、ローカルファイルのみオープンできます</translation>
     </message>
@@ -3297,7 +3256,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessFtpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessftpbackend.cpp" line="+134"/>
+        <location filename="../src/network/access/qnetworkaccessftpbackend.cpp" line="+126"/>
         <source>No suitable proxy found</source>
         <translation>適切なプロキシーがみつかりません</translation>
     </message>
@@ -3325,7 +3284,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+416"/>
         <source>No suitable proxy found</source>
         <translation>適切なプロキシーがみつかりません</translation>
     </message>
@@ -3333,7 +3292,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1107"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1099"/>
         <source>Network access is disabled.</source>
         <translation>ネットワークへのアクセスが禁止されています。</translation>
     </message>
@@ -3341,7 +3300,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+426"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+418"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>%1 をダウンロード中にエラーが発生しました。サーバの返答: %2</translation>
@@ -3380,7 +3339,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkSession</name>
     <message>
-        <location filename="../src/network/bearer/qnetworksession.cpp" line="+452"/>
+        <location filename="../src/network/bearer/qnetworksession.cpp" line="+444"/>
         <source>Invalid configuration.</source>
         <translation>無効な設定です。</translation>
     </message>
@@ -3388,7 +3347,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+255"/>
+        <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+247"/>
         <source>Unknown session error.</source>
         <translation>未知のセッションエラーです。</translation>
     </message>
@@ -3400,7 +3359,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+2"/>
         <source>The requested operation is not supported by the system.</source>
-        <translation>要求された操作はこのシステムではサポートされていません。</translation>
+        <translation>要求された操作はこのシステムではサポートされ��いません。</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -3416,7 +3375,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1834"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1826"/>
         <source>Unable to connect</source>
         <translation>接続できません</translation>
     </message>
@@ -3500,7 +3459,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+138"/>
+        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+130"/>
         <source>Could not read image data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3553,7 +3512,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1192"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1150"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
@@ -3566,7 +3525,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPSQLDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/psql/qsql_psql.cpp" line="+866"/>
+        <location filename="../src/plugins/sqldrivers/psql/qsql_psql.cpp" line="+858"/>
         <source>Unable to connect</source>
         <translation>接続できません</translation>
     </message>
@@ -3583,7 +3542,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+17"/>
         <source>Could not rollback transaction</source>
-        <translation>トランザクションをロールバックできませんでした</translation>
+        <translation>トランザクションをロールバックできませんでし���</translation>
     </message>
     <message>
         <location line="+385"/>
@@ -3612,7 +3571,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPageSetupWidget</name>
     <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+289"/>
+        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+281"/>
         <source>Centimeters (cm)</source>
         <translation>センチメートル (cm)</translation>
     </message>
@@ -3720,7 +3679,7 @@ Do you want to delete it anyway?</source>
         <translation>未知のエラー</translation>
     </message>
     <message>
-        <location line="-72"/>
+        <location line="-70"/>
         <source>The plugin was not loaded.</source>
         <translation>そのプラグインはロードされていません。</translation>
     </message>
@@ -3728,30 +3687,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+129"/>
-        <source>locally connected</source>
-        <translation>ローカルに接続しています</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <location line="+225"/>
-        <source>Aliases: %1</source>
-        <translation>エイリアス: %1</translation>
-    </message>
-    <message>
-        <location line="+217"/>
-        <location line="+199"/>
-        <source>unknown</source>
-        <translation>不明</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+112"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+104"/>
         <location line="+13"/>
         <source>Print</source>
         <translation>印刷</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-392"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-378"/>
         <source>Print To File ...</source>
         <translation>ファイルへ出力...</translation>
     </message>
@@ -3932,7 +3874,7 @@ Please choose a different file name.</source>
         <translation>カスタム</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-505"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-487"/>
         <location line="+68"/>
         <source>&amp;Options &gt;&gt;</source>
         <translation>オプション(&amp;O) &gt;&gt;</translation>
@@ -3948,7 +3890,7 @@ Please choose a different file name.</source>
         <translation>オプション(&amp;O) &lt;&lt;</translation>
     </message>
     <message>
-        <location line="+235"/>
+        <location line="+227"/>
         <source>Print to File (PDF)</source>
         <translation>PDFファイルに出力</translation>
     </message>
@@ -3971,13 +3913,13 @@ Please choose a different file name.</source>
 <context>
     <name>QPrintPreviewDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qabstractpagesetupdialog.cpp" line="+68"/>
+        <location filename="../src/gui/dialogs/qabstractpagesetupdialog.cpp" line="+60"/>
         <location line="+12"/>
         <source>Page Setup</source>
         <translation>ページ設定</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+246"/>
+        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+238"/>
         <source>%1%</source>
         <translation>%1%</translation>
     </message>
@@ -4234,7 +4176,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+404"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+398"/>
         <source>Could not open input redirection for reading</source>
         <translation>標準入力リダイレクトを読み込みのために開けませんでした</translation>
     </message>
@@ -4249,7 +4191,7 @@ Please choose a different file name.</source>
         <translation>リソースエラー (fork に失敗しました): %1</translation>
     </message>
     <message>
-        <location line="+236"/>
+        <location line="+237"/>
         <location line="+48"/>
         <location line="+70"/>
         <location line="+62"/>
@@ -4257,7 +4199,7 @@ Please choose a different file name.</source>
         <translation>プロセス処理がタイムアウトしました</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+814"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+815"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>プロセスからの読み込みにおいてエラーが発生しました</translation>
@@ -4281,7 +4223,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProgressDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+184"/>
+        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+176"/>
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
@@ -4368,17 +4310,17 @@ Please choose a different file name.</source>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+570"/>
+        <location filename="../src/sql/drivers/qsql_sqlite.cpp" line="+589"/>
         <source>Error opening database</source>
         <translation>データベースのオープン時にエラーが発生しました</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+22"/>
         <source>Error closing database</source>
         <translation>データベースのクローズ時にエラーが発生しました</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+19"/>
         <source>Unable to begin transaction</source>
         <translation>トランザクションを開始できません</translation>
     </message>
@@ -4396,14 +4338,14 @@ Please choose a different file name.</source>
 <context>
     <name>QSQLiteResult</name>
     <message>
-        <location line="-410"/>
-        <location line="+63"/>
-        <location line="+8"/>
+        <location line="-437"/>
+        <location line="+75"/>
+        <location line="+9"/>
         <source>Unable to fetch row</source>
-        <translation>レコードをフェッチできません</translation>
+        <translation>レコードをフェッチできま��ん</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+63"/>
         <source>Unable to execute statement</source>
         <translation>ステートメントを実行できません</translation>
     </message>
@@ -4418,7 +4360,7 @@ Please choose a different file name.</source>
         <translation>ステートメントをリセットできません</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+52"/>
         <source>Unable to bind parameters</source>
         <translation>パラメータをバインドできません</translation>
     </message>
@@ -4428,7 +4370,7 @@ Please choose a different file name.</source>
         <translation>パラメータの数が合っていません</translation>
     </message>
     <message>
-        <location line="-212"/>
+        <location line="-230"/>
         <source>No query</source>
         <translation>クエリーがありません</translation>
     </message>
@@ -4436,7 +4378,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptBreakpointsModel</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptbreakpointsmodel.cpp" line="+455"/>
+        <location filename="../src/scripttools/debugging/qscriptbreakpointsmodel.cpp" line="+447"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -4469,7 +4411,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptBreakpointsWidget</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptbreakpointswidget.cpp" line="+293"/>
+        <location filename="../src/scripttools/debugging/qscriptbreakpointswidget.cpp" line="+285"/>
         <source>New</source>
         <translation>新規</translation>
     </message>
@@ -4482,7 +4424,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+880"/>
+        <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+872"/>
         <location line="+1013"/>
         <source>Go to Line</source>
         <translation>指定した行へ移動</translation>
@@ -4626,7 +4568,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptDebuggerCodeFinderWidget</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp" line="+136"/>
+        <location filename="../src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp" line="+128"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
@@ -4659,7 +4601,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptDebuggerLocalsModel</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp" line="+896"/>
+        <location filename="../src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp" line="+888"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
@@ -4672,7 +4614,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptDebuggerStackModel</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebuggerstackmodel.cpp" line="+161"/>
+        <location filename="../src/scripttools/debugging/qscriptdebuggerstackmodel.cpp" line="+153"/>
         <source>Level</source>
         <translation>レベル</translation>
     </message>
@@ -4690,7 +4632,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptEdit</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptedit.cpp" line="+411"/>
+        <location filename="../src/scripttools/debugging/qscriptedit.cpp" line="+403"/>
         <source>Toggle Breakpoint</source>
         <translation>ブレークポイントの有効/無効の切り替え</translation>
     </message>
@@ -4713,7 +4655,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptEngineDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+523"/>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
         <translation>ロードしたスクリプト</translation>
     </message>
@@ -4774,7 +4716,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScrollBar</name>
     <message>
-        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+402"/>
+        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+394"/>
         <source>Scroll here</source>
         <translation>ここにスクロール</translation>
     </message>
@@ -4859,7 +4801,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+230"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+225"/>
         <source>%1: unable to set key on lock</source>
         <translatorcomment>共有メモリ関連</translatorcomment>
         <translation>%1: ロックするためのキーを設定できません</translation>
@@ -4883,7 +4825,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+83"/>
         <source>%1: permission denied</source>
-        <translation>%1: 許可されていません</translation>
+        <translation>%1: 許可されていま������</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -4902,32 +4844,22 @@ Please choose a different file name.</source>
     </message>
     <message>
         <location line="+23"/>
-        <location line="+26"/>
+        <location line="+18"/>
         <source>%1: key is empty</source>
         <translation>%1: キーが空です</translation>
     </message>
     <message>
-        <location line="-12"/>
-        <source>%1: ftok failed</source>
-        <translation>%1: fork に失敗しました</translation>
-    </message>
-    <message>
-        <location line="+75"/>
+        <location line="+63"/>
         <source>%1: unable to make key</source>
         <translation>%1: キーを作成できません</translation>
     </message>
     <message>
-        <location line="-128"/>
+        <location line="-120"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: 存在しません</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <source>%1: UNIX key file doesn&apos;t exist</source>
-        <translation>%1: UNIX key file が存在しません</translation>
-    </message>
-    <message>
-        <location line="+100"/>
+        <location line="+138"/>
         <source>%1: system-imposed size restrictions</source>
         <translatorcomment>EINVAL</translatorcomment>
         <translation>%1: 指定されたサイズはシステムにより拒否されました</translation>
@@ -4944,7 +4876,7 @@ Please choose a different file name.</source>
         <translation>%1: アタッチしていません</translation>
     </message>
     <message>
-        <location line="-261"/>
+        <location line="-253"/>
         <source>%1: invalid size</source>
         <translation>%1: 無効なサイズです</translation>
     </message>
@@ -4952,7 +4884,7 @@ Please choose a different file name.</source>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+309"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+296"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Space</translation>
@@ -6023,7 +5955,7 @@ Please choose a different file name.</source>
         <translation>Hangul Special</translation>
     </message>
     <message>
-        <location line="+464"/>
+        <location line="+458"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -6175,7 +6107,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+274"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+266"/>
         <source>Error creating SSL context (%1)</source>
         <translation>SSL context の作成に失敗しました (%1)</translation>
     </message>
@@ -6241,14 +6173,14 @@ Please choose a different file name.</source>
         <translation>SSL ハンドシェーク時にエラーが発生しました: %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+265"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+257"/>
         <source>The peer certificate is blacklisted</source>
         <translation>通信相手の証明書がブラックリストに載っています</translation>
     </message>
     <message>
         <location line="-48"/>
         <source>No error</source>
-        <translation>エラーはありません</translation>
+        <translation>エラーはありませ��</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6364,7 +6296,7 @@ Please choose a different file name.</source>
 <context>
     <name>QStandardPaths</name>
     <message>
-        <location filename="../src/core/io/qstandardpaths.cpp" line="+373"/>
+        <location filename="../src/core/io/qstandardpaths.cpp" line="+300"/>
         <source>Desktop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6523,8 +6455,8 @@ Please choose a different file name.</source>
 <context>
     <name>QTcpServer</name>
     <message>
-        <location filename="../src/network/socket/qtcpserver.cpp" line="+286"/>
-        <location line="+129"/>
+        <location filename="../src/network/socket/qtcpserver.cpp" line="+278"/>
+        <location line="+124"/>
         <source>Operation on socket is not supported</source>
         <translation>このソケットへの操作はサポートされていません</translation>
     </message>
@@ -6532,7 +6464,7 @@ Please choose a different file name.</source>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1936"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1873"/>
         <source>&amp;Undo</source>
         <translation>元に戻す(&amp;U)</translation>
     </message>
@@ -6590,7 +6522,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUdpSocket</name>
     <message>
-        <location filename="../src/network/socket/qudpsocket.cpp" line="+199"/>
+        <location filename="../src/network/socket/qudpsocket.cpp" line="+191"/>
         <source>This platform does not support IPv6</source>
         <translation>このプラットフォームは IPv6 をサポートしていません</translation>
     </message>
@@ -6598,7 +6530,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUndoGroup</name>
     <message>
-        <location filename="../src/gui/util/qundogroup.cpp" line="+388"/>
+        <location filename="../src/gui/util/qundogroup.cpp" line="+380"/>
         <source>Undo %1</source>
         <translation>%1 を元に戻す</translation>
     </message>
@@ -6623,7 +6555,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUndoModel</name>
     <message>
-        <location filename="../src/gui/util/qundoview.cpp" line="+101"/>
+        <location filename="../src/gui/util/qundoview.cpp" line="+93"/>
         <source>&lt;empty&gt;</source>
         <translation>&lt;空&gt;</translation>
     </message>
@@ -6631,7 +6563,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUndoStack</name>
     <message>
-        <location filename="../src/gui/util/qundostack.cpp" line="+877"/>
+        <location filename="../src/gui/util/qundostack.cpp" line="+869"/>
         <source>Undo %1</source>
         <translation>%1 を元に戻す</translation>
     </message>
@@ -6656,7 +6588,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUnicodeControlCharacterMenu</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+903"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+900"/>
         <source>LRM Left-to-right mark</source>
         <translation>LRM (左横書き指定)</translation>
     </message>
@@ -6714,7 +6646,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
+        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+480"/>
         <source>What&apos;s This?</source>
         <translation>ヒント</translation>
     </message>
@@ -6722,7 +6654,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5267"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -6730,7 +6662,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+598"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+590"/>
         <source>Go Back</source>
         <translation>戻る</translation>
     </message>
@@ -6783,7 +6715,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWorkspace</name>
     <message>
-        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1034"/>
+        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1026"/>
         <source>&amp;Restore</source>
         <translation>元に戻す(&amp;R)</translation>
     </message>
@@ -6853,7 +6785,7 @@ Please choose a different file name.</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+55"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+48"/>
         <source>no error occurred</source>
         <translation>エラーは発生しませんでした</translation>
     </message>
@@ -6971,13 +6903,13 @@ Please choose a different file name.</source>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+591"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1756"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+583"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1748"/>
         <source>Extra content at end of document.</source>
         <translation>ドキュメントの末尾に余計なものがついています。</translation>
     </message>
     <message>
-        <location line="+273"/>
+        <location line="+237"/>
         <source>Invalid entity value.</source>
         <translation>エンティティの値が無効です。</translation>
     </message>
@@ -6992,7 +6924,7 @@ Please choose a different file name.</source>
         <translation>このコンテンツでは、&apos;]]&gt;&apos; は許可されていません。</translation>
     </message>
     <message>
-        <location line="+228"/>
+        <location line="+210"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="-691"/>
         <source>Encountered incorrectly encoded content.</source>
         <translation>正しくないエンコードの文脈に遭遇しました。</translation>

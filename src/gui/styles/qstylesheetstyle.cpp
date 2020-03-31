@@ -36,7 +36,6 @@
 #ifndef QT_NO_STYLE_STYLESHEET
 
 #include "qcssparser_p.h"
-#include "qmath_p.h"
 #include "qstylesheetstyle_p.h"
 #include "qcssutil_p.h"
 #include "qabstractscrollarea_p.h"

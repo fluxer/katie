@@ -1533,7 +1533,7 @@ struct QDesignerAbstractPropertySheetFactory::PropertySheetFactoryPrivate {
 
     typedef QMap<QObject*, QObject*> ExtensionMap;
     ExtensionMap m_extensions;
-    typedef QHash<QObject*, bool> ExtendedSet;
+    typedef QSet<QObject*> ExtendedSet;
     ExtendedSet m_extended;
 };
 
@@ -1576,7 +1576,7 @@ QObject *QDesignerAbstractPropertySheetFactory::extension(QObject *object, const
 
     if (!m_impl->m_extended.contains(object)) {
         connect(object, SIGNAL(destroyed(QObject*)), this, SLOT(objectDestroyed(QObject*)));
-        m_impl->m_extended.insert(object, true);
+        m_impl->m_extended.insert(object);
     }
 
     if (it == m_impl->m_extensions.end())

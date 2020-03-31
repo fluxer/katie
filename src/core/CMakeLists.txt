@@ -379,7 +379,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qpointer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmath.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemerror.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_unix.cpp
@@ -481,14 +480,14 @@ set_target_properties(KtCore PROPERTIES
 install(
     TARGETS KtCore
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
+    DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtCore
-    DESTINATION ${KATIE_HEADERS_RELATIVE}
+    DESTINATION ${KATIE_HEADERS_PATH}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${KATIE_HEADERS_FULL}/QtCore)
+katie_optimize_headers(${KATIE_HEADERS_PATH}/QtCore)

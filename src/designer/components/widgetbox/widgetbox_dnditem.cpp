@@ -32,7 +32,7 @@
 ****************************************************************************/
 
 #include "widgetbox_dnditem.h"
-#include "ui4_p.h"
+#include "ui4.h"
 
 #include <widgetfactory_p.h>
 #include <spacer_widget_p.h>

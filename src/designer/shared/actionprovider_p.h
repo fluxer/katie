@@ -95,6 +95,6 @@ template <class Widget>
 
 QT_END_NAMESPACE
 
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerActionProviderExtension, "com.trolltech.Qt.Designer.ActionProvider")
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerActionProviderExtension, "Katie.Designer.ActionProvider")
 
 #endif // ACTIONPROVIDER_H

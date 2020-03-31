@@ -92,22 +92,23 @@ QFactoryLoader::QFactoryLoader(const char *iid,
 }
 
 
-void QFactoryLoader::updateDir(const QString &pluginDir, QSettings *settings)
+void QFactoryLoader::updateDir(const QString &pluginDir)
 {
     Q_D(QFactoryLoader);
     QString path = pluginDir + d->suffix;
-    if (!QDir(path).exists(QLatin1String(".")))
+    QDir pathdir(path);
+    if (!pathdir.exists())
         return;
 
-    QStringList plugins = QDir(path).entryList(QDir::Files);
-    foreach (const QString &plugin, plugins) {
+    QSettings *settings = QCoreApplicationPrivate::staticConf();
+    foreach (const QString &plugin, pathdir.entryList(QDir::Files)) {
         QString fileName = QDir::cleanPath(path + QLatin1Char('/') + plugin);
 
         if (qt_debug_component()) {
             qDebug() << "QFactoryLoader::QFactoryLoader() looking at" << fileName;
         }
         QLibraryPrivate *library = QLibraryPrivate::findOrCreate(QFileInfo(fileName).canonicalFilePath());
-        if (!library->isPlugin(settings)) {
+        if (!library->isPlugin()) {
             if (qt_debug_component()) {
                 qDebug() << library->errorString;
                 qDebug() << "         not a plugin";
@@ -115,13 +116,13 @@ void QFactoryLoader::updateDir(const QString &pluginDir, QSettings *settings)
             library->release();
             continue;
         }
-        QString regkey = QString::fromLatin1("Qt Factory Cache %1.%2/%3:/%4")
+        QString regkey = QString::fromLatin1("Katie Factory Cache %1.%2/%3:/%4")
                          .arg((QT_VERSION & 0xff0000) >> 16)
                          .arg((QT_VERSION & 0xff00) >> 8)
                          .arg(QString::fromLatin1(d->iid.constData()))
                          .arg(fileName);
-        QStringList reg, keys;
-        reg = settings->value(regkey).toStringList();
+        QStringList keys;
+        QStringList reg = settings->value(regkey).toStringList();
         if (reg.count() && library->lastModified == reg[0]) {
             keys = reg;
             keys.removeFirst();
@@ -191,7 +192,7 @@ void QFactoryLoader::update()
         if (d->loadedPaths.contains(pluginDir))
             continue;
         d->loadedPaths << pluginDir;
-        updateDir(pluginDir, QCoreApplicationPrivate::staticConf());
+        updateDir(pluginDir);
     }
 #else
     Q_D(QFactoryLoader);
@@ -212,25 +213,13 @@ QStringList QFactoryLoader::keys() const
 {
     Q_D(const QFactoryLoader);
     QMutexLocker locker(&d->mutex);
-    QStringList keys = d->keyList;
-    QObjectList instances = QPluginLoader::staticInstances();
-    for (int i = 0; i < instances.count(); ++i)
-        if (QFactoryInterface *factory = qobject_cast<QFactoryInterface*>(instances.at(i)))
-            if (instances.at(i)->qt_metacast(d->iid.constData()))
-                keys += factory->keys();
-    return keys;
+    return d->keyList;
 }
 
 QObject *QFactoryLoader::instance(const QString &key) const
 {
     Q_D(const QFactoryLoader);
     QMutexLocker locker(&d->mutex);
-    QObjectList instances = QPluginLoader::staticInstances();
-    for (int i = 0; i < instances.count(); ++i)
-        if (QFactoryInterface *factory = qobject_cast<QFactoryInterface*>(instances.at(i)))
-            if (instances.at(i)->qt_metacast(d->iid.constData()) && factory->keys().contains(key, Qt::CaseInsensitive))
-                return instances.at(i);
-
     QString lowered = d->cs ? key : key.toLower();
     if (QLibraryPrivate* library = d->keyMap.value(lowered)) {
         if (library->instance || library->loadPlugin()) {

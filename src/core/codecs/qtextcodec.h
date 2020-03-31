@@ -95,18 +95,22 @@ public:
 
     struct Q_CORE_EXPORT ConverterState {
         ConverterState(ConversionFlags f = DefaultConversion)
-            : flags(f), remainingChars(0), invalidChars(0), d(Q_NULLPTR)
+            : flags(f), invalidChars(0), d(Q_NULLPTR)
         {
         }
         ~ConverterState();
+
         ConversionFlags flags;
-        int remainingChars;
         int invalidChars;
     private:
-        friend class QIcuCodec;
         void *d;
 
-        Q_DISABLE_COPY(ConverterState)
+        friend class QIcuCodec;
+        friend class QTextStreamPrivate;
+        friend class QTextStream;
+
+        ConverterState(const ConverterState &other);
+        ConverterState& operator=(const ConverterState &other);
     };
 
     QString toUnicode(const char *in, int length, ConverterState *state = Q_NULLPTR) const
@@ -137,7 +141,7 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QTextCodec::ConversionFlags)
 class Q_CORE_EXPORT QTextEncoder {
     Q_DISABLE_COPY(QTextEncoder)
 public:
-    explicit QTextEncoder(const QTextCodec *codec) : c(codec), state() {}
+    explicit QTextEncoder(const QTextCodec *codec) : c(codec) {}
     QTextEncoder(const QTextCodec *codec, QTextCodec::ConversionFlags flags);
     ~QTextEncoder();
     QByteArray fromUnicode(const QString& str);
@@ -151,7 +155,7 @@ private:
 class Q_CORE_EXPORT QTextDecoder {
     Q_DISABLE_COPY(QTextDecoder)
 public:
-    explicit QTextDecoder(const QTextCodec *codec) : c(codec), state() {}
+    explicit QTextDecoder(const QTextCodec *codec) : c(codec) {}
     QTextDecoder(const QTextCodec *codec, QTextCodec::ConversionFlags flags);
     ~QTextDecoder();
     QString toUnicode(const char* chars, int len);

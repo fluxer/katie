@@ -49,20 +49,6 @@ class QSqlRecord;
 class QSqlQuery;
 class QSqlDatabasePrivate;
 
-class Q_SQL_EXPORT QSqlDriverCreatorBase
-{
-public:
-    virtual ~QSqlDriverCreatorBase() {}
-    virtual QSqlDriver *createObject() const = 0;
-};
-
-template <class T>
-class QSqlDriverCreator : public QSqlDriverCreatorBase
-{
-public:
-    QSqlDriver *createObject() const { return new T; }
-};
-
 class Q_SQL_EXPORT QSqlDatabase
 {
 public:
@@ -120,7 +106,6 @@ public:
     static bool contains(const QString& connectionName = QLatin1String(defaultConnection));
     static QStringList drivers();
     static QStringList connectionNames();
-    static void registerSqlDriver(const QString &name, QSqlDriverCreatorBase *creator);
     static bool isDriverAvailable(const QString &name);
 
 protected:

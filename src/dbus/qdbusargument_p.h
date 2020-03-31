@@ -50,11 +50,6 @@
 
 #include <dbus/dbus.h>
 
-#ifndef DBUS_TYPE_UNIX_FD
-# define DBUS_TYPE_UNIX_FD int('h')
-# define DBUS_TYPE_UNIX_FD_AS_STRING "h"
-#endif
-
 QT_BEGIN_NAMESPACE
 
 class QDBusMarshaller;
@@ -186,7 +181,6 @@ public:
     QDBusDemarshaller *beginCommon();
     QDBusDemarshaller *endCommon();
     QDBusArgument duplicate();
-    inline void close() { }
 
     bool atEnd();
 

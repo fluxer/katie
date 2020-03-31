@@ -32,7 +32,7 @@
 ****************************************************************************/
 
 #include "resourcebuilder_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 #include <QtCore/QVariant>
 #include <QtCore/QFileInfo>
 #include <QtCore/QDir>

@@ -5486,7 +5486,6 @@ void QGraphicsItemPrivate::setSubFocus(QGraphicsItem *rootItem, QGraphicsItem *s
             parent->d_ptr->subFocusItem->d_ptr->clearSubFocus(0, stopItem);
         }
         parent->d_ptr->subFocusItem = q_ptr;
-        parent->d_ptr->subFocusItemChange();
     } while (!parent->isPanel() && (parent = parent->d_ptr->parent) && (visible || !parent->d_ptr->visible));
 
     if (scene && !scene->isActive()) {
@@ -5506,8 +5505,6 @@ void QGraphicsItemPrivate::clearSubFocus(QGraphicsItem *rootItem, QGraphicsItem 
         if (parent->d_ptr->subFocusItem != q_ptr)
             break;
         parent->d_ptr->subFocusItem = 0;
-        if (parent != stopItem && !parent->isAncestorOf(stopItem))
-            parent->d_ptr->subFocusItemChange();
     } while (!parent->isPanel() && (parent = parent->d_ptr->parent));
 }
 
@@ -5522,16 +5519,6 @@ void QGraphicsItemPrivate::resetFocusProxy()
     for (int i = 0; i < focusProxyRefs.size(); ++i)
         *focusProxyRefs.at(i) = 0;
     focusProxyRefs.clear();
-}
-
-/*!
-    \internal
-
-    Subclasses can reimplement this function to be notified when subFocusItem
-    changes.
-*/
-void QGraphicsItemPrivate::subFocusItemChange()
-{
 }
 
 /*!

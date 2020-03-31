@@ -74,10 +74,7 @@ QT_BEGIN_NAMESPACE
     shown and the character will be underlined. On Windows, shortcuts
     are normally not displayed until the user presses the \gui Alt
     key, but this is a setting the user can change. On Mac, shortcuts
-    are disabled by default. Call qt_set_sequence_auto_mnemonic() to
-    enable them. However, because mnemonic shortcuts do not fit in
-    with Aqua's guidelines, Qt will not show the shortcut character
-    underlined.
+    are disabled by default.
 
     For applications that use menus, it may be more convenient to
     use the convenience functions provided in the QMenu class to

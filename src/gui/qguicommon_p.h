@@ -29,7 +29,7 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, imageloader,
     (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
 #endif
 
-const uchar qt_pixmap_bit_mask[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
+static const uchar qt_pixmap_bit_mask[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
 
 #ifndef QT_NO_TABBAR
 inline static bool verticalTabs(QTabBar::Shape shape)
@@ -81,8 +81,8 @@ inline static int lowest_bit(uint v)
     return i==32 ? -1 : i;
 }
 
-const qreal deg2rad = qreal(0.017453292519943295769);        // pi/180
-const qreal inv_dist_to_plane = 1. / 1024.;
+static const qreal deg2rad = qreal(0.017453292519943295769);        // pi/180
+static const qreal inv_dist_to_plane = 1. / 1024.;
 
 #ifndef QT_NO_IMAGEFORMAT_XPM
 // Message box icons, from page 210 of the Windows style guide.

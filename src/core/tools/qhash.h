@@ -135,11 +135,7 @@ inline bool QHashData::willGrow()
 inline void QHashData::hasShrunk()
 {
     if (size <= (numBuckets >> 3) && numBits > userNumBits) {
-        QT_TRY {
-            rehash(qMax(int(numBits) - 2, int(userNumBits)));
-        } QT_CATCH(const std::bad_alloc &) {
-            // ignore bad allocs - shrinking shouldn't throw. rehash is exception safe.
-        }
+        rehash(qMax(int(numBits) - 2, int(userNumBits)));
     }
 }
 

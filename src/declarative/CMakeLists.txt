@@ -343,14 +343,14 @@ set_target_properties(KtDeclarative PROPERTIES
 install(
     TARGETS KtDeclarative
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
+    DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtDeclarative
-    DESTINATION ${KATIE_HEADERS_RELATIVE}
+    DESTINATION ${KATIE_HEADERS_PATH}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${KATIE_HEADERS_FULL}/QtDeclarative)
+katie_optimize_headers(${KATIE_HEADERS_PATH}/QtDeclarative)

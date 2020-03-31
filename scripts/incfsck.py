@@ -4,7 +4,6 @@ import sys, os, re
 
 incmap = {
     'QtCore': {
-        'QAbstractFileEngineHandler': 'qabstractfileengine.h',
         'QAbstractFileEngineIterator': 'qabstractfileengine.h',
         'QAbstractListModel': 'qabstractitemmodel.h',
         'QAbstractTableModel': 'qabstractitemmodel.h',
@@ -13,7 +12,6 @@ incmap = {
         'QAtomicPointer': 'qatomic.h',
         'QBasicAtomicInt': 'qbasicatomic.h',
         'QBitRef': 'qbitarray.h',
-        'QBool': 'qglobal.h',
         'QByteRef': 'qbytearray.h',
         'QCharRef': 'qstring.h',
         'QChildEvent': 'qcoreevent.h',
@@ -391,8 +389,6 @@ incmap = {
         'Q_IPV6ADDR': 'qhostaddress.h',
     },
     'QtSql': {
-        'QSqlDriverCreator': 'qsqldatabase.h',
-        'QSqlDriverCreatorBase': 'qsqldatabase.h',
         'QSqlDriverFactoryInterface': 'qsqldriverplugin.h',
         'QSqlRelation': 'qsqlrelationaltablemodel.h',
     },

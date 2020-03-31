@@ -44,8 +44,8 @@
 #include <float.h>
 #include <stdlib.h>
 
-// TODO: should check if feenableexcept is available
-#if defined(Q_OS_LINUX) && defined(__GLIBC__)
+#if defined(Q_OS_LINUX) && defined(QT_HAVE_FEGETENV) && defined(QT_HAVE_FESETENV) \
+    && defined(QT_HAVE_FECLEAREXCEPT) && defined(QT_HAVE_FEENABLEEXCEPT)
 #  define TEST_FP_EXCEPTION
 #endif
 

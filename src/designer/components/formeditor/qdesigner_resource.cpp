@@ -66,7 +66,7 @@
 
 #include "qlayout_widget_p.h"
 #include "qdesigner_utils_p.h"
-#include <ui4_p.h>
+#include <ui4.h>
 
 // sdk
 #include <QtDesigner/propertysheet.h>
@@ -420,7 +420,6 @@ QDesignerResource::QDesignerResource(FormWindow *formWindow)  :
     m_internal_to_qt.insert(QLatin1String("QDesignerMenuBar"), QLatin1String("QMenuBar"));
     m_internal_to_qt.insert(QLatin1String("QDesignerMenu"), QLatin1String("QMenu"));
     m_internal_to_qt.insert(QLatin1String("QDesignerDockWidget"), QLatin1String("QDockWidget"));
-    m_internal_to_qt.insert(QLatin1String("QDesignerQ3WidgetStack"), QLatin1String("Q3WidgetStack"));
 
     // invert
     QHash<QString, QString>::const_iterator cend = m_internal_to_qt.constEnd();

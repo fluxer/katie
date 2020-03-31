@@ -188,15 +188,11 @@ namespace JSC {
             if (v1.isUndefinedOrNull()) {
                 if (v2.isUndefinedOrNull())
                     return true;
-                if (!v2.isCell())
-                    return false;
-                return v2.asCell()->structure()->typeInfo().masqueradesAsUndefined();
+                return false;
             }
 
             if (v2.isUndefinedOrNull()) {
-                if (!v1.isCell())
-                    return false;
-                return v1.asCell()->structure()->typeInfo().masqueradesAsUndefined();
+                return false;
             }
 
             if (v1.isObject()) {

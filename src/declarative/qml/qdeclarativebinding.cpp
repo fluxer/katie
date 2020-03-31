@@ -212,13 +212,12 @@ void QDeclarativeBindingPrivate::refresh()
 }
 
 QDeclarativeBindingPrivate::QDeclarativeBindingPrivate()
-: updating(false), enabled(false), deleted(0)
+: updating(false), enabled(false)
 {
 }
 
 QDeclarativeBindingPrivate::~QDeclarativeBindingPrivate()
 {
-    if (deleted) *deleted = true;
 }
 
 QDeclarativeBinding::QDeclarativeBinding(void *data, QDeclarativeRefCount *rc, QObject *obj, 
@@ -317,8 +316,6 @@ void QDeclarativeBinding::update(QDeclarativePropertyPrivate::WriteFlags flags)
 
     if (!d->updating) {
         d->updating = true;
-        bool wasDeleted = false;
-        d->deleted = &wasDeleted;
 
         if (d->property.propertyType() == qMetaTypeId<QDeclarativeBinding *>()) {
 
@@ -331,10 +328,6 @@ void QDeclarativeBinding::update(QDeclarativePropertyPrivate::WriteFlags flags)
             QMetaObject::metacall(d->property.object(),
                                   QMetaObject::WriteProperty,
                                   idx, a);
-
-            if (wasDeleted)
-                return;
-
         } else {
             QDeclarativeEnginePrivate *ep = QDeclarativeEnginePrivate::get(d->context()->engine);
 
@@ -342,9 +335,6 @@ void QDeclarativeBinding::update(QDeclarativePropertyPrivate::WriteFlags flags)
             QVariant value;
 
             QScriptValue scriptValue = d->scriptValue(0, &isUndefined);
-            if (wasDeleted)
-                return;
-
             if (d->property.propertyTypeCategory() == QDeclarativeProperty::List) {
                 value = ep->scriptValueToVariant(scriptValue, qMetaTypeId<QList<QObject *> >());
             } else if (scriptValue.isNull() && 
@@ -400,9 +390,6 @@ void QDeclarativeBinding::update(QDeclarativePropertyPrivate::WriteFlags flags)
             } else if (d->property.object() &&
                        !QDeclarativePropertyPrivate::write(d->property, value, flags)) {
 
-                if (wasDeleted)
-                    return;
-
                 QUrl url = QUrl(d->url);
                 int line = d->line;
                 if (url.isEmpty()) url = QUrl(QLatin1String("<Unknown File>"));
@@ -420,9 +407,6 @@ void QDeclarativeBinding::update(QDeclarativePropertyPrivate::WriteFlags flags)
                                         QLatin1String(QMetaType::typeName(d->property.propertyType())));
             }
 
-            if (wasDeleted)
-                return;
-
             if (d->error.isValid()) {
                if (!d->addError(ep)) ep->warning(this->error());
             } else {
@@ -431,7 +415,6 @@ void QDeclarativeBinding::update(QDeclarativePropertyPrivate::WriteFlags flags)
         }
 
         d->updating = false;
-        d->deleted = 0;
     } else {
         qmlInfo(d->property.object()) << tr("Binding loop detected for property \"%1\"").arg(d->property.name());
     }

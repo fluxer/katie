@@ -125,12 +125,6 @@ QApplicationPrivate::QApplicationPrivate(int &argc, char **argv, QApplication::T
     gestureWidget = 0;
 #endif // QT_NO_GESTURES
 
-#if defined(Q_WS_X11)
-    move_cursor = 0;
-    copy_cursor = 0;
-    link_cursor = 0;
-#endif
-
     if (!self)
         self = this;
 }
@@ -359,7 +353,6 @@ QFont *QApplicationPrivate::sys_font = 0;        // default system font
 QFont *QApplicationPrivate::set_font = 0;        // default font set by programmer
 
 QIcon *QApplicationPrivate::app_icon = 0;
-QWidget *QApplicationPrivate::main_widget = 0;        // main application widget
 QWidget *QApplicationPrivate::focus_widget = 0;        // has keyboard input focus
 QWidget *QApplicationPrivate::hidden_focus_widget = 0; // will get keyboard input focus after show()
 QWidget *QApplicationPrivate::active_window = 0;        // toplevel with keyboard focus
@@ -813,17 +806,11 @@ QApplication::~QApplication()
     }
 
     delete qt_desktopWidget;
-    qt_desktopWidget = 0;
+    qt_desktopWidget = Q_NULLPTR;
 
 #ifndef QT_NO_CLIPBOARD
     delete qt_clipboard;
-    qt_clipboard = 0;
-#endif
-
-#if defined(Q_WS_X11)
-    delete d->move_cursor; d->move_cursor = 0;
-    delete d->copy_cursor; d->copy_cursor = 0;
-    delete d->link_cursor; d->link_cursor = 0;
+    qt_clipboard = Q_NULLPTR;
 #endif
 
     delete QApplicationPrivate::app_pal;
@@ -1059,7 +1046,7 @@ QStyle *QApplication::style()
         //
         QString style;
 #ifdef QT_BUILD_INTERNAL
-        QString envStyle = QString::fromLocal8Bit(qgetenv("QT_STYLE_OVERRIDE"));
+        static const QString envStyle = QString::fromLocal8Bit(qgetenv("QT_STYLE_OVERRIDE"));
 #endif
         if (!QApplicationPrivate::styleOverride.isEmpty()) {
             style = QApplicationPrivate::styleOverride;
@@ -2645,12 +2632,12 @@ QDesktopWidget *QApplication::desktop()
 */
 QClipboard *QApplication::clipboard()
 {
-    if (qt_clipboard == 0) {
+    if (!qt_clipboard) {
         if (Q_UNLIKELY(!qApp)) {
             qWarning("QApplication: Must construct a QApplication before accessing a QClipboard");
-            return 0;
+            return Q_NULLPTR;
         }
-        qt_clipboard = new QClipboard(0);
+        qt_clipboard = new QClipboard(Q_NULLPTR);
     }
     return qt_clipboard;
 }
@@ -3222,9 +3209,13 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
         case QEvent::Paint:
         case QEvent::MetaCall:
         case QEvent::DeferredDelete:
-        case QEvent::DragEnter: case QEvent::DragMove: case QEvent::DragLeave:
-        case QEvent::Drop: case QEvent::DragResponse:
-        case QEvent::ChildAdded: case QEvent::ChildPolished:
+        case QEvent::DragEnter:
+        case QEvent::DragMove:
+        case QEvent::DragLeave:
+        case QEvent::Drop:
+        case QEvent::DragResponse:
+        case QEvent::ChildAdded:
+        case QEvent::ChildPolished:
         case QEvent::ChildRemoved:
         case QEvent::UpdateRequest:
         case QEvent::UpdateLater:
@@ -3662,10 +3653,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
         touchEvent->setAccepted(eventAccepted);
         break;
     }
-    case QEvent::RequestSoftwareInputPanel:
-    case QEvent::CloseSoftwareInputPanel:
-        res = d->notify_helper(receiver, e);
-        break;
 
 #ifndef QT_NO_GESTURES
     case QEvent::NativeGesture:
@@ -3749,6 +3736,8 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
         break;
     }
 #endif // QT_NO_GESTURES
+    case QEvent::RequestSoftwareInputPanel:
+    case QEvent::CloseSoftwareInputPanel:
     default:
         res = d->notify_helper(receiver, e);
         break;
@@ -4725,136 +4714,6 @@ QGestureManager* QGestureManager::instance()
     return qAppPriv->gestureManager;
 }
 #endif // QT_NO_GESTURES
-
-// These pixmaps approximate the images in the Windows User Interface Guidelines.
-
-// XPM
-#if defined(Q_WS_X11)
-static const char * const move_xpm[] = {
-"11 20 3 1",
-".        c None",
-"a        c #FFFFFF",
-"X        c #000000", // X11 cursor is traditionally black
-"aa.........",
-"aXa........",
-"aXXa.......",
-"aXXXa......",
-"aXXXXa.....",
-"aXXXXXa....",
-"aXXXXXXa...",
-"aXXXXXXXa..",
-"aXXXXXXXXa.",
-"aXXXXXXXXXa",
-"aXXXXXXaaaa",
-"aXXXaXXa...",
-"aXXaaXXa...",
-"aXa..aXXa..",
-"aa...aXXa..",
-"a.....aXXa.",
-"......aXXa.",
-".......aXXa",
-".......aXXa",
-"........aa."};
-
-/* XPM */
-static const char * const copy_xpm[] = {
-"24 30 3 1",
-".        c None",
-"a        c #000000",
-"X        c #FFFFFF",
-"XX......................",
-"XaX.....................",
-"XaaX....................",
-"XaaaX...................",
-"XaaaaX..................",
-"XaaaaaX.................",
-"XaaaaaaX................",
-"XaaaaaaaX...............",
-"XaaaaaaaaX..............",
-"XaaaaaaaaaX.............",
-"XaaaaaaXXXX.............",
-"XaaaXaaX................",
-"XaaXXaaX................",
-"XaX..XaaX...............",
-"XX...XaaX...............",
-"X.....XaaX..............",
-"......XaaX..............",
-".......XaaX.............",
-".......XaaX.............",
-"........XX...aaaaaaaaaaa",
-".............aXXXXXXXXXa",
-".............aXXXXXXXXXa",
-".............aXXXXaXXXXa",
-".............aXXXXaXXXXa",
-".............aXXaaaaaXXa",
-".............aXXXXaXXXXa",
-".............aXXXXaXXXXa",
-".............aXXXXXXXXXa",
-".............aXXXXXXXXXa",
-".............aaaaaaaaaaa"};
-
-/* XPM */
-static const char * const link_xpm[] = {
-"24 30 3 1",
-".        c None",
-"a        c #000000",
-"X        c #FFFFFF",
-"XX......................",
-"XaX.....................",
-"XaaX....................",
-"XaaaX...................",
-"XaaaaX..................",
-"XaaaaaX.................",
-"XaaaaaaX................",
-"XaaaaaaaX...............",
-"XaaaaaaaaX..............",
-"XaaaaaaaaaX.............",
-"XaaaaaaXXXX.............",
-"XaaaXaaX................",
-"XaaXXaaX................",
-"XaX..XaaX...............",
-"XX...XaaX...............",
-"X.....XaaX..............",
-"......XaaX..............",
-".......XaaX.............",
-".......XaaX.............",
-"........XX...aaaaaaaaaaa",
-".............aXXXXXXXXXa",
-".............aXXXaaaaXXa",
-".............aXXXXaaaXXa",
-".............aXXXaaaaXXa",
-".............aXXaaaXaXXa",
-".............aXXaaXXXXXa",
-".............aXXaXXXXXXa",
-".............aXXXaXXXXXa",
-".............aXXXXXXXXXa",
-".............aaaaaaaaaaa"};
-#endif // defined(Q_WS_X11)
-
-QPixmap QApplicationPrivate::getPixmapCursor(Qt::CursorShape cshape)
-{
-#if defined(Q_WS_X11)
-    if (!move_cursor) {
-        move_cursor = new QPixmap((const char **)move_xpm);
-        copy_cursor = new QPixmap((const char **)copy_xpm);
-        link_cursor = new QPixmap((const char **)link_xpm);
-    }
-
-    switch (cshape) {
-    case Qt::DragMoveCursor:
-        return *move_cursor;
-    case Qt::DragCopyCursor:
-        return *copy_cursor;
-    case Qt::DragLinkCursor:
-        return *link_cursor;
-    default:
-        break;
-    }
-#else
-    Q_UNUSED(cshape);
-#endif
-    return QPixmap();
-}
 
 QT_END_NAMESPACE
 

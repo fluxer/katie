@@ -184,49 +184,32 @@ static inline int qt_safe_pipe(int pipefd[2], int flags = 0)
 }
 
 // don't call dup or fcntl(F_DUPFD)
-static inline int qt_safe_dup(int oldfd, int atleast = 0, int flags = FD_CLOEXEC)
+static inline int qt_safe_dup(int oldfd)
 {
-    Q_ASSERT(flags == FD_CLOEXEC || flags == 0);
-
     int ret;
 #ifdef F_DUPFD_CLOEXEC
     // use this fcntl
-    if (flags & FD_CLOEXEC) {
-        ret = ::fcntl(oldfd, F_DUPFD_CLOEXEC, atleast);
-        if (ret != -1 || errno != EINVAL)
-            return ret;
-    }
+    ret = ::fcntl(oldfd, F_DUPFD_CLOEXEC, 0);
+    if (ret != -1 || errno != EINVAL)
+        return ret;
 #endif
 
     // use F_DUPFD
-    ret = ::fcntl(oldfd, F_DUPFD, atleast);
+    ret = ::fcntl(oldfd, F_DUPFD, 0);
 
-    if (flags && ret != -1)
-        ::fcntl(ret, F_SETFD, flags);
+    if (ret != -1)
+        ::fcntl(ret, F_SETFD, FD_CLOEXEC);
     return ret;
 }
 
 // don't call dup2
 // call qt_safe_dup2
-static inline int qt_safe_dup2(int oldfd, int newfd, int flags = FD_CLOEXEC)
+static inline int qt_safe_dup2(int oldfd, int newfd)
 {
-    Q_ASSERT(flags == FD_CLOEXEC || flags == 0);
-
     int ret;
-#if defined(Q_OS_LINUX) && defined(O_CLOEXEC)
-    // use dup3
-    if (flags & FD_CLOEXEC) {
-        EINTR_LOOP(ret, ::dup3(oldfd, newfd, O_CLOEXEC));
-        if (ret == 0 || errno != ENOSYS)
-            return ret;
-    }
-#endif
     EINTR_LOOP(ret, ::dup2(oldfd, newfd));
     if (ret == -1)
         return -1;
-
-    if (flags)
-        ::fcntl(newfd, F_SETFD, flags);
     return 0;
 }
 
@@ -292,10 +275,6 @@ static inline pid_t qt_safe_waitpid(pid_t pid, int *status, int options)
     return ret;
 }
 
-#if !defined(_POSIX_MONOTONIC_CLOCK)
-#  define _POSIX_MONOTONIC_CLOCK -1
-#endif
-
 timeval qt_gettime(); // in qelapsedtimer_unix.cpp
 
 Q_CORE_EXPORT int qt_safe_select(int nfds, fd_set *fdread, fd_set *fdwrite, fd_set *fdexcept,
@@ -315,12 +294,12 @@ union qt_semun {
    Returns the difference between msecs and elapsed. If msecs is -1,
    however, -1 is returned.
 */
-inline static int qt_timeout_value(int msecs, int elapsed)
+inline static qint64 qt_timeout_value(qint64 msecs, qint64 elapsed)
 {
     if (msecs == -1)
         return -1;
 
-    int timeout = msecs - elapsed;
+    qint64 timeout = msecs - elapsed;
     return timeout < 0 ? 0 : timeout;
 }
 

@@ -783,7 +783,7 @@ static QVariant parseHeaderValue(QNetworkRequest::KnownHeaders header, const QBy
         return QVariant::fromValue(QNetworkCookie::parseCookies(value));
 
     default:
-        Q_ASSERT(0);
+        Q_ASSERT(false);
     }
     return QVariant();
 }

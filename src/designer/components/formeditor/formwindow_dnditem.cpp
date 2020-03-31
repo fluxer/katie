@@ -34,7 +34,7 @@
 #include "formwindow_dnditem.h"
 #include "formwindow.h"
 
-#include <ui4_p.h>
+#include <ui4.h>
 #include "qdesigner_resource.h"
 #include "qtresourcemodel_p.h"
 

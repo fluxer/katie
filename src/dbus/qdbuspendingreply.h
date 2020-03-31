@@ -69,10 +69,10 @@ namespace QDBusPendingReplyTypes {
         typedef T1 Type;
     };
 
-    template<typename T1> inline int metaTypeFor(T1 * = 0)
+    template<typename T1> inline int metaTypeFor()
     { return qMetaTypeId<T1>(); }
     // specialize for QVariant, allowing it to be used in place of QDBusVariant
-    template<> inline int metaTypeFor<QVariant>(QVariant *)
+    template<> inline int metaTypeFor<QVariant>()
     { return qMetaTypeId<QDBusVariant>(); }
 
     template<typename T1, typename T2, typename T3, typename T4,
@@ -83,7 +83,7 @@ namespace QDBusPendingReplyTypes {
         enum { Total = Next::Total + 1 };
         static inline void fillMetaTypes(int *p)
         {
-            *p = metaTypeFor<T1>(0);
+            *p = metaTypeFor<T1>();
             Next::fillMetaTypes(++p);
         }
     };
@@ -142,7 +142,7 @@ public:
         Q_ASSERT_X(Index < count() && Index >= 0, "QDBusPendingReply::argumentAt",
                    "Index out of bounds");
         typedef typename Select<Index>::Type ResultType;
-        return qdbus_cast<ResultType>(argumentAt(Index), 0);
+        return qdbus_cast<ResultType>(argumentAt(Index));
     }
 
     inline typename Select<0>::Type value() const

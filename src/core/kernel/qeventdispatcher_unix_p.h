@@ -68,14 +68,12 @@ struct QTimerInfo {
 
 class QTimerInfoList : public QList<QTimerInfo*>
 {
-#if (_POSIX_MONOTONIC_CLOCK-0 <= 0) || defined(QT_BOOTSTRAPPED)
     timeval previousTime;
     clock_t previousTicks;
     int ticksPerSecond;
     int msPerTick;
 
     bool timeChanged(timeval *delta);
-#endif
 
     // state variables used by activateTimers()
     QTimerInfo *firstTimerInfo;
@@ -171,8 +169,8 @@ public:
     ~QEventDispatcherUNIXPrivate();
 
     int doSelect(QEventLoop::ProcessEventsFlags flags, timeval *timeout);
-    virtual int initThreadWakeUp();
-    virtual int processThreadWakeUp(int nsel);
+    int initThreadWakeUp();
+    int processThreadWakeUp(int nsel);
 
     bool mainThread;
     int thread_pipe[2];

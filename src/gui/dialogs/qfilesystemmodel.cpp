@@ -358,8 +358,9 @@ QFileSystemModelPrivate::QFileSystemNode *QFileSystemModelPrivate::node(const QS
 
             QFileSystemModelPrivate *p = const_cast<QFileSystemModelPrivate*>(this);
             p->addVisibleFiles(parent, QStringList(element));
-            if (!p->bypassFilters.contains(node))
-                p->bypassFilters[node] = 1;
+            if (!p->bypassFilters.contains(node)) {
+                p->bypassFilters.insert(node);
+            }
             QString dir = q->filePath(this->index(parent));
             if (!node->hasInformation() && fetch) {
                 Fetching f;
@@ -669,7 +670,7 @@ QString QFileSystemModelPrivate::time(const QModelIndex &index) const
     if (!index.isValid())
         return QString();
 #ifndef QT_NO_DATESTRING
-    return node(index)->lastModified().toString(Qt::SystemLocaleDate);
+    return node(index)->lastModified().toString(Qt::SystemLocaleShortDate);
 #else
     Q_UNUSED(index);
     return QString();
@@ -1409,7 +1410,7 @@ void QFileSystemModel::setNameFilters(const QStringList &filters)
                 if (d->bypassFilters.contains(node))
                     break;
                 if (node->isDir())
-                    d->bypassFilters[node] = true;
+                    d->bypassFilters.insert(node);
                 node = node->parent;
             }
         }

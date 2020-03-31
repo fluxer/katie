@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 #-*- coding: UTF-8 -*-
 
-# Data is from https://unicode.org/Public/cldr/36/core.zip
+# Data is from https://unicode.org/Public/cldr/36.1/core.zip
 
 import sys, re
 import xml.etree.ElementTree as ET
 
 printenumsandexit = ('--printenums' in sys.argv)
+printdocsandexit = ('--printdocs' in sys.argv)
 
 def normalizestring(fromstring):
     result = fromstring.replace(' ', '')
@@ -106,6 +107,15 @@ def printenum(frommap, prefix):
     print('\n        Last%s = %s' % (prefix, lastkey))
 
     print('    };\n')
+def printdoc(frommap, prefix):
+    print('// %s' % prefix)
+    for key in sorted(frommap.keys()):
+        if key in ('Any%s' % prefix, 'C'):
+            continue
+        code = frommap[key]['code']
+        name = frommap[key]['name']
+        print('    \\value %s' % key)
+    print('')
 
 def printtable(frommap, prefix):
     lowerprefix = prefix.lower()
@@ -199,6 +209,8 @@ for language in root.findall('./localeDisplayNames/languages/language'):
 
 if printenumsandexit:
     printenum(languagemap, 'Language')
+elif printdocsandexit:
+    printdoc(languagemap, 'Language')
 else:
     printtable(languagemap, 'Language')
 
@@ -213,6 +225,8 @@ for country in root.findall('./localeDisplayNames/territories/territory'):
 
 if printenumsandexit:
     printenum(countrymap, 'Country')
+elif printdocsandexit:
+    printdoc(countrymap, 'Country')
 else:
     printtable(countrymap, 'Country')
 
@@ -233,6 +247,9 @@ for script in root.findall('./localeDisplayNames/scripts/script'):
 
 if printenumsandexit:
     printenum(scriptmap, 'Script')
+    sys.exit(0)
+elif printdocsandexit:
+    printdoc(scriptmap, 'Script')
     sys.exit(0)
 else:
     printtable(scriptmap, 'Script')

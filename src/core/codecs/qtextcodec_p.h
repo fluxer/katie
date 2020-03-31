@@ -68,9 +68,14 @@ public:
         ConversionFlags flags;
         int remainingChars;
         int invalidChars;
-        void *d;
     private:
-        Q_DISABLE_COPY(ConverterState)
+        friend class QIcuCodec;
+        friend class QTextStreamPrivate;
+        friend class QTextStream;
+        void *d;
+
+        ConverterState(const ConverterState &other);
+        ConverterState& operator=(const ConverterState &other);
     };
 };
 

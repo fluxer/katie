@@ -15,6 +15,6 @@ set_target_properties(qsvgplugin PROPERTIES OUTPUT_NAME qsvg)
 
 install(
     TARGETS qsvgplugin
-    DESTINATION ${KATIE_PLUGINS_RELATIVE}/imageformats
+    DESTINATION ${KATIE_PLUGINS_PATH}/imageformats
     COMPONENT Runtime
 )

@@ -31,64 +31,18 @@
 **
 ****************************************************************************/
 
-#include "qglobal.h"
 #include "qsystemerror_p.h"
-#include "qcorecommon_p.h"
-
-#include <errno.h>
 
 QT_BEGIN_NAMESPACE
 
-static QString standardLibraryErrorString(int errorCode)
-{
-    const char *s = 0;
-    QString ret;
-    switch (errorCode) {
-    case 0:
-        break;
-    case EACCES:
-        s = QT_TRANSLATE_NOOP("QIODevice", "Permission denied");
-        break;
-    case EMFILE:
-        s = QT_TRANSLATE_NOOP("QIODevice", "Too many open files");
-        break;
-    case ENOENT:
-        s = QT_TRANSLATE_NOOP("QIODevice", "No such file or directory");
-        break;
-    case ENOSPC:
-        s = QT_TRANSLATE_NOOP("QIODevice", "No space left on device");
-        break;
-    default: {
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && _POSIX_VERSION >= 200112L
-        QByteArray buf(1024, '\0');
-        ret = fromstrerror_helper(strerror_r(errorCode, buf.data(), buf.size()), buf);
-#else
-        ret = QString::fromLocal8Bit(strerror(errorCode));
-#endif
-    break; }
-    }
-    if (s) {
-        // ######## this breaks moc build currently
-        // ret = QCoreApplication::translate("QIODevice", s);
-        ret = QString::fromLatin1(s);
-    }
-    return ret.trimmed();
-}
-
-
 QString QSystemError::toString()
 {
-    switch(errorScope) {
-    // native and standard library are the same
-    case NativeError:
-    case StandardLibraryError:
-        return standardLibraryErrorString(errorCode);
-    default:
-        qWarning("invalid error scope");
-        //fall through
-    case NoError:
-        return QLatin1String("No error");
+    if (Q_LIKELY(errorScope == QSystemError::StandardLibraryError)) {
+        return qt_error_string(errorCode);
     }
+
+    qWarning("invalid error scope");
+    return QLatin1String("No error");
 }
 
 QT_END_NAMESPACE

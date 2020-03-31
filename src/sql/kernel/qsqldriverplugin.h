@@ -50,7 +50,7 @@ struct Q_SQL_EXPORT QSqlDriverFactoryInterface : public QFactoryInterface
 
 QT_END_NAMESPACE
 
-#define QSqlDriverFactoryInterface_iid "com.trolltech.Qt.QSqlDriverFactoryInterface"
+#define QSqlDriverFactoryInterface_iid "Katie.QSqlDriverFactoryInterface"
 Q_DECLARE_INTERFACE(QSqlDriverFactoryInterface, QSqlDriverFactoryInterface_iid)
 
 QT_BEGIN_NAMESPACE

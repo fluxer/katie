@@ -35,7 +35,7 @@
 #include "brushmanagerproxy.h"
 #include "qsimpleresource_p.h"
 #include "qdesigner_utils_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 
 #include <QtXml/QXmlStreamWriter>
 
@@ -254,9 +254,9 @@ void BrushManagerProxy::setBrushManager(QtBrushManager *manager)
 
     if (!customBrushesExist) {
         // load brushes from resources
-        QFile qrcFile(QLatin1String(":trolltech/brushes/defaultbrushes.xml"));
+        QFile qrcFile(QLatin1String(":/trolltech/brushes/defaultbrushes.xml"));
         if (!qrcFile.open(QIODevice::ReadOnly))
-            Q_ASSERT(0);
+            Q_ASSERT(false);
 
         QXmlStreamReader reader(&qrcFile);
 

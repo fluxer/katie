@@ -216,19 +216,12 @@ QT_BEGIN_NAMESPACE
     re-using a custom event type already in use elsewhere in your
     application.
 
-    \omitvalue Accel
-    \omitvalue AccelAvailable
-    \omitvalue AccelOverride
+    \omitvalue GraphicsSceneLeave
     \omitvalue AcceptDropsChange
-    \omitvalue ChildInsertedRequest
-    \omitvalue ChildInserted
     \omitvalue Create
     \omitvalue Destroy
     \omitvalue DragResponse
-    \omitvalue IconChange
-    \omitvalue LayoutHint
     \omitvalue Quit
-    \omitvalue Reparent
     \omitvalue ShowWindowRequest
     \omitvalue Speech
     \omitvalue Style

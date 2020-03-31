@@ -134,7 +134,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QTextObjectInterface, "com.trolltech.Qt.QTextObjectInterface")
+Q_DECLARE_INTERFACE(QTextObjectInterface, "Katie.QTextObjectInterface")
 
 QT_END_HEADER
 

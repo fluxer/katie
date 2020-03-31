@@ -249,14 +249,14 @@ set_target_properties(KtScript PROPERTIES
 install(
     TARGETS KtScript
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
+    DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtScript
-    DESTINATION ${KATIE_HEADERS_RELATIVE}
+    DESTINATION ${KATIE_HEADERS_PATH}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${KATIE_HEADERS_FULL}/QtScript)
+katie_optimize_headers(${KATIE_HEADERS_PATH}/QtScript)

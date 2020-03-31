@@ -82,14 +82,12 @@ void QMimeDataPrivate::setData(const QString &format, const QVariant &data)
 
 QVariant QMimeDataPrivate::getData(const QString &format) const
 {
-    QVariant data;
     for (int i=0; i<dataList.size(); i++) {
         if (dataList.at(i).format == format) {
-            data = dataList.at(i).data;
-            break;
+            return dataList.at(i).data;
         }
     }
-    return data;
+    return QVariant();
 }
 
 QVariant QMimeDataPrivate::retrieveTypedData(const QString &format, QVariant::Type type) const

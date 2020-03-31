@@ -57,8 +57,6 @@ public:
 
     QObject *instance();
 
-    static QObjectList staticInstances();
-
     bool load();
     bool unload();
     bool isLoaded() const;

@@ -5,35 +5,29 @@
 #  ZSTD_INCLUDES - the ZSTD include directory
 #  ZSTD_LIBRARIES - the libraries needed to use ZSTD
 #
-# Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2015-2020, Ivailo Monev, <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
-
-if(ZSTD_INCLUDES AND ZSTD_LIBRARIES)
-    set(ZSTD_FIND_QUIETLY TRUE)
-endif()
 
 if(NOT WIN32)
     include(FindPkgConfig)
     pkg_check_modules(PC_ZSTD QUIET libzstd)
+
+    set(ZSTD_INCLUDES ${PC_ZSTD_INCLUDE_DIRS})
+    set(ZSTD_LIBRARIES ${PC_ZSTD_LIBRARIES})
 endif()
 
-find_path(ZSTD_INCLUDES
-    NAMES
-    zstd.h
-    HINTS
-    $ENV{ZSTDDIR}/include
-    ${PC_ZSTD_INCLUDEDIR}
-    ${INCLUDE_INSTALL_DIR}
-)
+if(NOT ZSTD_INCLUDES OR NOT ZSTD_LIBRARIES)
+    find_path(ZSTD_INCLUDES
+        NAMES zstd.h
+        HINTS $ENV{ZSTDDIR}/include
+    )
 
-find_library(ZSTD_LIBRARIES
-    zstd
-    HINTS
-    $ENV{ZSTDDIR}/lib
-    ${PC_ZSTD_LIBDIR}
-    ${LIB_INSTALL_DIR}
-)
+    find_library(ZSTD_LIBRARIES
+        NAMES zstd
+        HINTS $ENV{ZSTDDIR}/lib
+    )
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ZSTD

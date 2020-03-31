@@ -65,16 +65,22 @@ QT_BEGIN_NAMESPACE
 
 QString QCoreApplicationPrivate::appName() const
 {
+#ifdef QT_HAVE_GETPROGNAME
+    if (applicationName.isEmpty()) {
+        return QString::fromLocal8Bit(::getprogname());
+    }
+#else
     if (applicationName.isEmpty() && argv[0]) {
-        const char *p = strrchr(argv[0], '/');
+        const char *p = ::strrchr(argv[0], '/');
         return QString::fromLocal8Bit(p ? p + 1 : argv[0]);
     }
+#endif // QT_HAVE_GETPROGNAME
     return applicationName;
 }
 
 bool QCoreApplicationPrivate::checkInstance(const char *function)
 {
-    if (QCoreApplication::self == 0) {
+    if (Q_UNLIKELY(!QCoreApplication::self)) {
         qWarning("QApplication::%s: Please instantiate the QApplication object first", function);
         return false;
     }
@@ -107,10 +113,6 @@ void qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet &callback_set)
     qt_signal_spy_callback_set = callback_set;
 }
 
-extern "C" void Q_CORE_EXPORT qt_startup_hook()
-{
-}
-
 typedef QList<QtCleanUpFunction> QVFuncList;
 Q_GLOBAL_STATIC(QVFuncList, postRList)
 
@@ -132,14 +134,7 @@ void qRemovePostRoutine(QtCleanUpFunction p)
 
 void Q_CORE_EXPORT qt_call_post_routines()
 {
-    QVFuncList *list = 0;
-    QT_TRY {
-        list = postRList();
-    } QT_CATCH(const std::bad_alloc &) {
-        // ignore - if we can't allocate a post routine list,
-        // there's a high probability that there's no post
-        // routine to be executed :)
-    }
+    QVFuncList *list = postRList();
     if (!list)
         return;
     while (!list->isEmpty())
@@ -151,9 +146,6 @@ void Q_CORE_EXPORT qt_call_post_routines()
 bool QCoreApplicationPrivate::is_app_running = false;
  // app closing down if true
 bool QCoreApplicationPrivate::is_app_closing = false;
-// initialized in qcoreapplication and in qtextstream autotest when setlocale is called.
-Q_CORE_EXPORT bool qt_locale_initialized = false;
-
 
 /*
   Create an instance of Katie.conf. This ensures that the settings will not
@@ -174,15 +166,9 @@ Q_CORE_EXPORT uint qGlobalPostedEventsCount()
     return currentThreadData->postEventList.size() - currentThreadData->postEventList.startOffset;
 }
 
-
-void qt_set_current_thread_to_main_thread()
-{
-    QCoreApplicationPrivate::theMainThread = QThread::currentThread();
-}
-
 QCoreApplication *QCoreApplication::self = 0;
 QAbstractEventDispatcher *QCoreApplicationPrivate::eventDispatcher = 0;
-uint QCoreApplicationPrivate::attribs;
+std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 
 #ifdef Q_OS_UNIX
 Qt::HANDLE qt_application_thread_id = 0;
@@ -232,7 +218,7 @@ QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
     qt_application_thread_id = QThread::currentThreadId();
 
     // note: this call to QThread::currentThread() may end up setting theMainThread!
-    if (QThread::currentThread() != theMainThread)
+    if (Q_UNLIKELY(QThread::currentThread() != theMainThread))
         qWarning("WARNING: QApplication was not created in the main() thread.");
 }
 
@@ -281,19 +267,6 @@ void QCoreApplicationPrivate::checkReceiverThread(QObject *receiver)
     Q_UNUSED(thr);
 }
 #endif
-
-void QCoreApplicationPrivate::appendApplicationPathToLibraryPaths()
-{
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
-    QStringList *app_libpaths = coreappdata()->app_libpaths;
-    Q_ASSERT(app_libpaths);
-    QString app_location( QCoreApplication::applicationFilePath() );
-    app_location.truncate(app_location.lastIndexOf(QLatin1Char('/')));
-    app_location = QDir(app_location).canonicalPath();
-    if (QFile::exists(app_location) && !app_libpaths->contains(app_location))
-        app_libpaths->append(app_location);
-#endif
-}
 
 /*!
     \class QCoreApplication
@@ -435,7 +408,6 @@ void QCoreApplication::init()
 
 #ifdef Q_OS_UNIX
     setlocale(LC_ALL, "");                // use correct char set mapping
-    qt_locale_initialized = true;
 #endif
 
     Q_ASSERT_X(!self, "QCoreApplication", "there should be only one application object");
@@ -458,8 +430,6 @@ void QCoreApplication::init()
     if (!coreappdata()->app_libpaths) {
         // make sure that library paths is initialized
         libraryPaths();
-    } else {
-        d->appendApplicationPathToLibraryPaths();
     }
 #endif
 
@@ -471,8 +441,6 @@ void QCoreApplication::init()
 
 
     d->processCommandLineArguments();
-
-    qt_startup_hook();
 }
 
 
@@ -526,10 +494,7 @@ QCoreApplication::~QCoreApplication()
 */
 void QCoreApplication::setAttribute(Qt::ApplicationAttribute attribute, bool on)
 {
-    if (on)
-        QCoreApplicationPrivate::attribs |= 1 << attribute;
-    else
-        QCoreApplicationPrivate::attribs &= ~(1 << attribute);
+    QCoreApplicationPrivate::attribs.set(attribute, on);
 }
 
 /*!
@@ -540,7 +505,7 @@ void QCoreApplication::setAttribute(Qt::ApplicationAttribute attribute, bool on)
  */
 bool QCoreApplication::testAttribute(Qt::ApplicationAttribute attribute)
 {
-    return QCoreApplicationPrivate::testAttribute(attribute);
+    return QCoreApplicationPrivate::attribs.test(attribute);
 }
 
 
@@ -630,7 +595,7 @@ bool QCoreApplication::notify(QObject *receiver, QEvent *event)
     if (QCoreApplicationPrivate::is_app_closing)
         return true;
 
-    if (receiver == 0) {                        // serious error
+    if (Q_UNLIKELY(!receiver)) {                        // serious error
         qWarning("QCoreApplication::notify: Unexpected null receiver");
         return true;
     }
@@ -650,7 +615,7 @@ bool QCoreApplicationPrivate::sendThroughApplicationEventFilters(QObject *receiv
             QObject *obj = eventFilters.at(i);
             if (!obj)
                 continue;
-            if (obj->d_func()->threadData != threadData) {
+            if (Q_UNLIKELY(obj->d_func()->threadData != threadData)) {
                 qWarning("QCoreApplication: Application event filter cannot be in a different thread.");
                 continue;
             }
@@ -669,7 +634,7 @@ bool QCoreApplicationPrivate::sendThroughObjectEventFilters(QObject *receiver, Q
             QObject *obj = receiver->d_func()->eventFilters.at(i);
             if (!obj)
                 continue;
-            if (obj->d_func()->threadData != receiver->d_func()->threadData) {
+            if (Q_UNLIKELY(obj->d_func()->threadData != receiver->d_func()->threadData)) {
                 qWarning("QCoreApplication: Object event filter cannot be in a different thread.");
                 continue;
             }
@@ -816,11 +781,10 @@ int QCoreApplication::exec()
         return -1;
 
     QThreadData *threadData = self->d_func()->threadData;
-    if (threadData != QThreadData::current()) {
+    if (Q_UNLIKELY(threadData != QThreadData::current())) {
         qWarning("%s::exec: Must be called from the main thread", self->metaObject()->className());
         return -1;
-    }
-    if (!threadData->eventLoops.isEmpty()) {
+    } else if (Q_UNLIKELY(!threadData->eventLoops.isEmpty())) {
         qWarning("QCoreApplication::exec: The event loop is already running");
         return -1;
     }
@@ -947,7 +911,7 @@ void QCoreApplication::postEvent(QObject *receiver, QEvent *event)
 */
 void QCoreApplication::postEvent(QObject *receiver, QEvent *event, int priority)
 {
-    if (receiver == 0) {
+    if (Q_UNLIKELY(!receiver)) {
         qWarning("QCoreApplication::postEvent: Unexpected null receiver");
         delete event;
         return;
@@ -1064,7 +1028,7 @@ void QCoreApplicationPrivate::sendPostedEvents(QObject *receiver, int event_type
         event_type = 0;
     }
 
-    if (receiver && receiver->d_func()->threadData != data) {
+    if (Q_UNLIKELY(receiver && receiver->d_func()->threadData != data)) {
         qWarning("QCoreApplication::sendPostedEvents: Cannot send "
                  "posted events for objects in another thread");
         return;
@@ -1574,7 +1538,7 @@ bool QCoreApplicationPrivate::isTranslatorInstalled(QTranslator *translator)
 */
 QString QCoreApplication::applicationDirPath()
 {
-    if (!self) {
+    if (Q_UNLIKELY(!self)) {
         qWarning("QCoreApplication::applicationDirPath: Please instantiate the QApplication object first");
         return QString();
     }
@@ -1602,7 +1566,7 @@ QString QCoreApplication::applicationDirPath()
 */
 QString QCoreApplication::applicationFilePath()
 {
-    if (!self) {
+    if (Q_UNLIKELY(!self)) {
         qWarning("QCoreApplication::applicationFilePath: Please instantiate the QApplication object first");
         return QString();
     }
@@ -1713,7 +1677,7 @@ QStringList QCoreApplication::arguments()
 {
     QStringList list;
 
-    if (!self) {
+    if (Q_UNLIKELY(!self)) {
         qWarning("QCoreApplication::arguments: Please instantiate the QApplication object first");
         return list;
     }
@@ -1848,24 +1812,24 @@ QStringList QCoreApplication::libraryPaths()
     QMutexLocker locker(libraryPathMutex());
     if (!coreappdata()->app_libpaths) {
         QStringList *app_libpaths = coreappdata()->app_libpaths = new QStringList;
-        QString installPathPlugins =  QLibraryInfo::location(QLibraryInfo::PluginsPath);
-        if (QFile::exists(installPathPlugins)) {
-            // Make sure we convert from backslashes to slashes.
-            installPathPlugins = QDir(installPathPlugins).canonicalPath();
+
+        QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::PluginsPath);
+        if (QDir(installPathPlugins).exists()) {
             if (!app_libpaths->contains(installPathPlugins))
                 app_libpaths->append(installPathPlugins);
         }
 
-        // If QCoreApplication is not yet instantiated,
-        // make sure we add the application path when we construct the QCoreApplication
-        if (self) self->d_func()->appendApplicationPathToLibraryPaths();
+        installPathPlugins = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
+        if (QDir(installPathPlugins).exists()) {
+            if (!app_libpaths->contains(installPathPlugins))
+                app_libpaths->append(installPathPlugins);
+        }
 
         const QByteArray libPathEnv = qgetenv("QT_PLUGIN_PATH");
         if (!libPathEnv.isEmpty()) {
-            const QLatin1Char pathSep(':');
-            QStringList paths = QString::fromLatin1(libPathEnv.constData()).split(pathSep, QString::SkipEmptyParts);
-            for (QStringList::const_iterator it = paths.constBegin(); it != paths.constEnd(); ++it) {
-                QString canonicalPath = QDir(*it).canonicalPath();
+            const QStringList paths = QString::fromLatin1(libPathEnv.constData()).split(QLatin1Char(':'), QString::SkipEmptyParts);
+            foreach (const QString &it, paths) {
+                QString canonicalPath = QDir(it).canonicalPath();
                 if (!canonicalPath.isEmpty()
                     && !app_libpaths->contains(canonicalPath)) {
                     app_libpaths->append(canonicalPath);

@@ -635,7 +635,7 @@ bool QHttpNetworkConnectionChannel::expand(bool dataComplete)
     Q_ASSERT(reply);
 
     qint64 total = reply->d_func()->compressedData.size();
-    if (total >= CHUNK || dataComplete) {
+    if (total >= QT_BUFFSIZE || dataComplete) {
          // uncompress the data
         QByteArray content, inflated;
         content = reply->d_func()->compressedData;

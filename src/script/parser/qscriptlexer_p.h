@@ -113,9 +113,6 @@ public:
 
     bool scanRegExp(RegExpBodyPrefix prefix = NoPrefix);
 
-    QScriptNameIdImpl *pattern;
-    int flags;
-
     State lexerState() const
         { return state; }
 
@@ -190,7 +187,6 @@ private:
     int yycolumn;
     int startlineno;
     int startcolumn;
-    int bol;     // begin of line
 
     union {
         int ival;

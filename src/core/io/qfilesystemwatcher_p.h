@@ -86,15 +86,14 @@ class QFileSystemWatcherPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QFileSystemWatcher)
 
-    static QFileSystemWatcherEngine *createNativeEngine();
-
 public:
     QFileSystemWatcherPrivate();
     void init();
+    void initNativeEngine();
     void initPollerEngine();
     void initForcedEngine(const QString &);
 
-    QFileSystemWatcherEngine *native, *poller, *forced;
+    QFileSystemWatcherEngine *watcher;
     QStringList files, directories;
 
     // private slots

@@ -826,7 +826,7 @@ void QFont::setHintingPreference(HintingPreference hintingPreference)
 */
 QFont::HintingPreference QFont::hintingPreference() const
 {
-    return QFont::HintingPreference(d->request.hintingPreference);
+    return d->request.hintingPreference;
 }
 
 /*!
@@ -1159,7 +1159,7 @@ void QFont::setKerning(bool enable)
 */
 QFont::StyleStrategy QFont::styleStrategy() const
 {
-    return (StyleStrategy) d->request.styleStrategy;
+    return d->request.styleStrategy;
 }
 
 /*!
@@ -1172,7 +1172,7 @@ QFont::StyleStrategy QFont::styleStrategy() const
 */
 QFont::StyleHint QFont::styleHint() const
 {
-    return (StyleHint) d->request.styleHint;
+    return d->request.styleHint;
 }
 
 /*!
@@ -1261,8 +1261,7 @@ void QFont::setStyleHint(StyleHint hint, StyleStrategy strategy)
     detach();
 
     if ((resolve_mask & (QFont::StyleHintResolved | QFont::StyleStrategyResolved)) &&
-         (StyleHint) d->request.styleHint == hint &&
-         (StyleStrategy) d->request.styleStrategy == strategy)
+         d->request.styleHint == hint && d->request.styleStrategy == strategy)
         return;
 
     d->request.styleHint = hint;
@@ -1280,8 +1279,7 @@ void QFont::setStyleStrategy(StyleStrategy s)
 {
     detach();
 
-    if ((resolve_mask & QFont::StyleStrategyResolved) &&
-         s == (StyleStrategy)d->request.styleStrategy)
+    if ((resolve_mask & QFont::StyleStrategyResolved) && s == d->request.styleStrategy)
         return;
 
     d->request.styleStrategy = s;

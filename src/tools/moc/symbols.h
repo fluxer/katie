@@ -42,8 +42,6 @@
 
 QT_BEGIN_NAMESPACE
 
-//#define USE_LEXEM_STORE
-
 struct SubArray
 {
     inline SubArray():from(0),len(-1){}
@@ -70,35 +68,6 @@ inline uint qHash(const SubArray &key)
 
 struct Symbol
 {
-#ifdef USE_LEXEM_STORE
-    typedef QSet<SubArray> LexemStore;
-    static LexemStore lexemStore;
-
-    inline Symbol() : lineNum(-1),token(NOTOKEN){}
-    inline Symbol(int lineNum, Token token):
-        lineNum(lineNum), token(token){}
-    inline Symbol(int lineNum, Token token, const QByteArray &lexem):
-        lineNum(lineNum), token(token),lex(lexem){}
-    inline Symbol(int lineNum, Token token, const QByteArray &lexem, int from, int len):
-        lineNum(lineNum), token(token){
-        LexemStore::const_iterator it = lexemStore.constFind(SubArray(lexem, from, len));
-
-        if (it != lexemStore.constEnd()) {
-            lex = it.key().array;
-        } else {
-            lex = lexem.mid(from, len);
-            lexemStore.insert(lex);
-        }
-    }
-    int lineNum;
-    Token token;
-    inline QByteArray unquotedLexem() const { return lex.mid(1, lex.length()-2); }
-    inline QByteArray lexem() const { return lex; }
-    inline operator QByteArray() const { return lex; }
-    QByteArray lex;
-
-#else
-
     inline Symbol() : lineNum(-1),token(NOTOKEN), from(0),len(-1) {}
     inline Symbol(int lineNum, Token token):
         lineNum(lineNum), token(token), from(0), len(-1) {}
@@ -114,8 +83,6 @@ struct Symbol
     inline operator SubArray() const { return SubArray(lex, from, len); }
     QByteArray lex;
     int from, len;
-
-#endif
 };
 Q_DECLARE_TYPEINFO(Symbol, Q_MOVABLE_TYPE);
 

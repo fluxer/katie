@@ -62,7 +62,7 @@ class Q_CORE_EXPORT QFactoryLoader : public QObject
 
 public:
     QFactoryLoader(const char *iid,
-                   const QString &suffix = QString(),
+                   const QString &suffix,
                    Qt::CaseSensitivity = Qt::CaseSensitive);
     ~QFactoryLoader();
 
@@ -70,7 +70,7 @@ public:
     QObject *instance(const QString &key) const;
 
     void update();
-    void updateDir(const QString &pluginDir, QSettings *settings);
+    void updateDir(const QString &pluginDir);
 
     static void refreshAll();
 };

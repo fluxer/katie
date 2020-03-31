@@ -83,7 +83,7 @@ QLocale::Language QLocalePrivate::codeToLanguage(const QString &code)
     }
 
     for (qint16 i = 0; i < languageTblSize; i++) {
-        if (QString::fromLatin1(languageTbl[i].code) ==  lower)
+        if (QString::fromLatin1(languageTbl[i].code) == lower)
             return languageTbl[i].language;
     }
 
@@ -366,33 +366,33 @@ QString QLocalePrivate::findSystem()
 
 bool qt_splitLocaleName(const QString &name, QString &lang, QString &script, QString &cntry)
 {
-    const char* latinname = name.toLatin1().constData();
+    const QByteArray latinname = name.toLatin1();
     char getbuffer[20];
     UErrorCode error = U_ZERO_ERROR;
-    const int langresult = uloc_getLanguage(latinname, getbuffer, sizeof(getbuffer), &error);
+    const int langresult = uloc_getLanguage(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("qt_splitLocaleName: uloc_getLanguage(%s) failed",
-            latinname, u_errorName(error));
+        qWarning("qt_splitLocaleName: uloc_getLanguage(%s) failed %s",
+            latinname.constData(), u_errorName(error));
         return false;
     }
     lang = QString::fromLatin1(getbuffer, langresult);
 
     error = U_ZERO_ERROR;
     memset(getbuffer, 0, sizeof(getbuffer));
-    const int scriptresult = uloc_getScript(latinname, getbuffer, sizeof(getbuffer), &error);
+    const int scriptresult = uloc_getScript(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("qt_splitLocaleName: uloc_getScript(%s) failed",
-            latinname, u_errorName(error));
+        qWarning("qt_splitLocaleName: uloc_getScript(%s) failed %s",
+            latinname.constData(), u_errorName(error));
         return false;
     }
     script = QString::fromLatin1(getbuffer, scriptresult);
 
     error = U_ZERO_ERROR;
     memset(getbuffer, 0, sizeof(getbuffer));
-    const int countryresult = uloc_getCountry(latinname, getbuffer, sizeof(getbuffer), &error);
+    const int countryresult = uloc_getCountry(latinname.constData(), getbuffer, sizeof(getbuffer), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("qt_splitLocaleName: uloc_getCountry(%s) failed",
-            latinname, u_errorName(error));
+        qWarning("qt_splitLocaleName: uloc_getCountry(%s) failed %s",
+            latinname.constData(), u_errorName(error));
         return false;
     }
     cntry = QString::fromLatin1(getbuffer, countryresult);
@@ -411,7 +411,7 @@ void QLocalePrivate::getLangAndCountry(const QString &name, QLocale::Language &l
     QString script_code;
     QString cntry_code;
 
-    if (!qt_splitLocaleName(name, lang_code, script_code, cntry_code))
+    if (Q_UNLIKELY(!qt_splitLocaleName(name, lang_code, script_code, cntry_code)))
         return;
     lang = QLocalePrivate::codeToLanguage(lang_code);
     if (lang == QLocale::C)
@@ -454,11 +454,10 @@ QString qt_readEscapedFormatString(const QString &format, int *idx)
     return result;
 }
 
-int qt_repeatCount(const QString &s, int i)
+static int qt_repeatCount(const QString &s, int i)
 {
-    QChar c = s.at(i);
     int j = i + 1;
-    while (j < s.size() && s.at(j) == c)
+    while (j < s.size() && s.at(j) == s.at(i))
         ++j;
     return j - i;
 }
@@ -1642,7 +1641,7 @@ QString QLocale::monthName(int month, FormatType type) const
     if (month < 1 || month > 12)
         return QString();
 
-    const quint16 idx = month - 1;
+    const qint16 idx = month - 1;
     switch (type) {
         case QLocale::LongFormat:
             return getLocaleListData(d()->m_long_month_names, idx);
@@ -1670,7 +1669,7 @@ QString QLocale::standaloneMonthName(int month, FormatType type) const
     if (month < 1 || month > 12)
         return QString();
 
-    const quint16 idx = month - 1;
+    const qint16 idx = month - 1;
     switch (type) {
         case QLocale::LongFormat:
             return getLocaleListData(d()->m_standalone_long_month_names, idx);
@@ -1696,7 +1695,7 @@ QString QLocale::dayName(int day, FormatType type) const
     if (day < 1 || day > 7)
         return QString();
 
-    const quint16 idx = day - 1;
+    const qint16 idx = day - 1;
     switch (type) {
         case QLocale::LongFormat:
             return getLocaleListData(d()->m_long_day_names, idx);
@@ -1725,7 +1724,7 @@ QString QLocale::standaloneDayName(int day, FormatType type) const
     if (day < 1 || day > 7)
         return QString();
 
-    quint16 idx = day - 1;
+    const qint16 idx = day - 1;
     switch (type) {
         case QLocale::LongFormat:
             return getLocaleListData(d()->m_standalone_long_day_names, idx);
@@ -1786,6 +1785,7 @@ QLocale::MeasurementSystem QLocale::measurementSystem() const
             return QLocale::ImperialSystem;
         case UMS_UK:
             return QLocale::UKSystem;
+        // just to silence compiler warning
 #ifndef U_HIDE_DEPRECATED_API
         case UMS_LIMIT:
             break;
@@ -1801,9 +1801,8 @@ QLocale::MeasurementSystem QLocale::measurementSystem() const
 */
 Qt::LayoutDirection QLocale::textDirection() const
 {
-    if(uloc_isRightToLeft(bcp47Name().toLatin1().constData())) {
+    if (uloc_isRightToLeft(bcp47Name().toLatin1().constData()))
         return Qt::RightToLeft;
-    }
     return Qt::LeftToRight;
 }
 
@@ -2123,14 +2122,22 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
 
         // NOT thread safe!
         if (form == DFDecimal) {
-            digits = QLatin1String(fcvt(d, precision, &decpt, &sign));
+#ifdef QT_HAVE_FCVT
+            digits = QLatin1String(::fcvt(d, precision, &decpt, &sign));
+#else
+            digits = QLatin1String(qfcvt(d, precision, &decpt, &sign));
+#endif
         } else {
             int pr = precision;
             if (form == DFExponent)
                 ++pr;
             else if (form == DFSignificantDigits && pr == 0)
                 pr = 1;
-            digits = QLatin1String(ecvt(d, pr, &decpt, &sign));
+#ifdef QT_HAVE_ECVT
+            digits = QLatin1String(::ecvt(d, pr, &decpt, &sign));
+#else
+            digits = QLatin1String(qecvt(d, pr, &decpt, &sign));
+#endif
 
             // Chop trailing zeros
             if (digits.length() > 0) {

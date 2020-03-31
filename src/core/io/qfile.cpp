@@ -47,12 +47,10 @@
 
 QT_BEGIN_NAMESPACE
 
-static const int QFILE_WRITEBUFFER_SIZE = 16384;
-
 //************* QFilePrivate
 QFilePrivate::QFilePrivate()
     : fileEngine(0), lastWasWrite(false),
-      writeBuffer(QFILE_WRITEBUFFER_SIZE), error(QFile::NoError),
+      writeBuffer(QT_BUFFSIZE), error(QFile::NoError),
       cachedSize(0)
 {
 }
@@ -120,13 +118,6 @@ QFilePrivate::setError(QFile::FileError err, const QString &errStr)
 {
     error = err;
     errorString = errStr;
-}
-
-void
-QFilePrivate::setError(QFile::FileError err, int errNum)
-{
-    error = err;
-    errorString = qt_error_string(errNum);
 }
 
 //************* QFile
@@ -478,8 +469,11 @@ bool
 QFile::exists() const
 {
     // 0x1000000 = QAbstractFileEngine::Refresh, forcing an update
-    return (fileEngine()->fileFlags(QAbstractFileEngine::FlagsMask
-                                    | QAbstractFileEngine::FileFlag(0x1000000)) & QAbstractFileEngine::ExistsFlag);
+    const QAbstractFileEngine::FileFlags flags = fileEngine()->fileFlags(QAbstractFileEngine::Refresh
+        | QAbstractFileEngine::FlagsMask);
+    const QAbstractFileEngine::FileFlags type = fileEngine()->fileFlags(QAbstractFileEngine::Refresh
+        | QAbstractFileEngine::TypesMask);
+    return ((flags & QAbstractFileEngine::ExistsFlag) && (type & QAbstractFileEngine::FileType));
 }
 
 /*!
@@ -490,7 +484,8 @@ QFile::exists() const
 bool
 QFile::exists(const QString &fileName)
 {
-    return QFileInfo(fileName).exists();
+    QFileInfo info(fileName);
+    return (info.exists() && info.isFile());
 }
 
 /*!
@@ -624,7 +619,7 @@ QFile::rename(const QString &newName)
         if (open(QIODevice::ReadOnly)) {
             if (out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
                 bool error = false;
-                char block[4096];
+                char block[QT_BUFFSIZE];
                 qint64 bytes;
                 while ((bytes = read(block, sizeof(block))) > 0) {
                     if (bytes != out.write(block, bytes)) {
@@ -751,84 +746,15 @@ QFile::copy(const QString &newName)
         qWarning("QFile::copy: Empty or null file name");
         return false;
     }
-    if (QFile(newName).exists()) {
-        // ### Race condition. If a file is moved in after this, it /will/ be
-        // overwritten. On Unix, the proper solution is to use hardlinks:
-        // return ::link(old, new) && ::remove(old); See also rename().
-        d->setError(QFile::CopyError, tr("Destination file exists"));
-        return false;
-    }
+
     unsetError();
     close();
     if(error() == QFile::NoError) {
         if(fileEngine()->copy(newName)) {
             unsetError();
             return true;
-        } else {
-            bool error = false;
-            if(!open(QFile::ReadOnly)) {
-                error = true;
-                d->setError(QFile::CopyError, tr("Cannot open %1 for input").arg(d->fileName));
-            } else {
-                QString fileTemplate = QLatin1String("%1/qt_temp.XXXXXX");
-#ifdef QT_NO_TEMPORARYFILE
-                QFile out(fileTemplate.arg(QFileInfo(newName).path()));
-                if (!out.open(QIODevice::ReadWrite))
-                    error = true;
-#else
-                QTemporaryFile out(fileTemplate.arg(QFileInfo(newName).path()));
-                if (!out.open()) {
-                    out.setFileTemplate(fileTemplate.arg(QDir::tempPath()));
-                    if (!out.open())
-                        error = true;
-                }
-#endif
-                if (error) {
-                    out.close();
-                    close();
-                    d->setError(QFile::CopyError, tr("Cannot open for output"));
-                } else {
-                    char block[4096];
-                    qint64 totalRead = 0;
-                    while(!atEnd()) {
-                        qint64 in = read(block, sizeof(block));
-                        if (in <= 0)
-                            break;
-                        totalRead += in;
-                        if(in != out.write(block, in)) {
-                            close();
-                            d->setError(QFile::CopyError, tr("Failure to write block"));
-                            error = true;
-                            break;
-                        }
-                    }
-
-                    if (totalRead != size()) {
-                        // Unable to read from the source. The error string is
-                        // already set from read().
-                        error = true;
-                    }
-                    if (!error && !out.rename(newName)) {
-                        error = true;
-                        close();
-                        d->setError(QFile::CopyError, tr("Cannot create %1 for output").arg(newName));
-                    }
-#ifdef QT_NO_TEMPORARYFILE
-                    if (error)
-                        out.remove();
-#else
-                    if (!error)
-                        out.setAutoRemove(false);
-#endif
-                }
-            }
-            if(!error) {
-                QFile::setPermissions(newName, permissions());
-                close();
-                unsetError();
-                return true;
-            }
         }
+        d->setError(QFile::CopyError, d->fileEngine->errorString());
     }
     return false;
 }
@@ -1448,7 +1374,7 @@ bool QFilePrivate::putCharHelper(char c)
 
     // Cutoff for code that doesn't only touch the buffer.
     int writeBufferSize = writeBuffer.size();
-    if ((openMode & QIODevice::Unbuffered) || writeBufferSize + 1 >= QFILE_WRITEBUFFER_SIZE) {
+    if ((openMode & QIODevice::Unbuffered) || writeBufferSize + 1 >= QT_BUFFSIZE) {
         return QIODevicePrivate::putCharHelper(c);
     }
 
@@ -1493,14 +1419,14 @@ QFile::writeData(const char *data, qint64 len)
     bool buffered = !(d->openMode & Unbuffered);
 
     // Flush buffered data if this read will overflow.
-    if (buffered && (d->writeBuffer.size() + len) > QFILE_WRITEBUFFER_SIZE) {
+    if (buffered && (d->writeBuffer.size() + len) > QT_BUFFSIZE) {
         if (!flush())
             return -1;
     }
 
     // Write directly to the engine if the block size is larger than
     // the write buffer size.
-    if (!buffered || len > QFILE_WRITEBUFFER_SIZE) {
+    if (!buffered || len > QT_BUFFSIZE) {
         qint64 ret = d->fileEngine->write(data, len);
         if(ret < 0) {
             QFile::FileError err = d->fileEngine->error();

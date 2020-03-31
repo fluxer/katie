@@ -557,7 +557,7 @@ bool QAbstractSocketPrivate::initSocketLayer(QAbstractSocket::NetworkLayerProtoc
                socketEngine->errorString().toLatin1().constData());
 #endif
         socketError = socketEngine->error();
-	q->setErrorString(socketEngine->errorString());
+        q->setErrorString(socketEngine->errorString());
         return false;
     }
 

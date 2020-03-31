@@ -52,7 +52,7 @@ struct Q_CORE_EXPORT QTextCodecFactoryInterface : public QFactoryInterface
 
 QT_END_NAMESPACE
 
-#define QTextCodecFactoryInterface_iid "com.trolltech.Qt.QTextCodecFactoryInterface"
+#define QTextCodecFactoryInterface_iid "Katie.QTextCodecFactoryInterface"
 Q_DECLARE_INTERFACE(QTextCodecFactoryInterface, QTextCodecFactoryInterface_iid)
 
 QT_BEGIN_NAMESPACE

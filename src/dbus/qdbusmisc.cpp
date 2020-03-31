@@ -120,10 +120,7 @@ int qDBusParametersForMethod(const QMetaMethod &mm, QList<int>& metaTypes)
     metaTypes.append(0);        // return type
     int inputCount = 0;
     bool seenMessage = false;
-    QList<QByteArray>::ConstIterator it = parameterTypes.constBegin();
-    QList<QByteArray>::ConstIterator end = parameterTypes.constEnd();
-    for ( ; it != end; ++it) {
-        const QByteArray &type = *it;
+    foreach (const QByteArray &type, parameterTypes) {
         if (type.endsWith('*')) {
             //qWarning("Could not parse the method '%s'", mm.signature());
             // pointer?

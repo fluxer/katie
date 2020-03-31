@@ -874,7 +874,9 @@ bool QPen::isDetached() const
 
 QDataStream &operator<<(QDataStream &s, const QPen &p)
 {
-    s << (quint16)(p.style() | p.capStyle() | p.joinStyle());
+    s << (quint8)p.style();
+    s << (quint8)p.capStyle();
+    s << (quint8)p.joinStyle();
     s << (bool)(p.d->cosmetic);
 
     s << double(p.widthF());
@@ -907,7 +909,7 @@ QDataStream &operator<<(QDataStream &s, const QPen &p)
 
 QDataStream &operator>>(QDataStream &s, QPen &p)
 {
-    quint16 style;
+    quint8 style, capStyle, joinStyle;
     double width = 0;
     QColor color;
     QBrush brush;
@@ -916,6 +918,8 @@ QDataStream &operator>>(QDataStream &s, QPen &p)
     double dashOffset = 0;
     bool cosmetic = false;
     s >> style;
+    s >> capStyle;
+    s >> joinStyle;
     s >> cosmetic;
     s >> width;
     s >> brush;
@@ -936,9 +940,9 @@ QDataStream &operator>>(QDataStream &s, QPen &p)
     p.detach();
     p.d->width = width;
     p.d->brush = brush;
-    p.d->style = Qt::PenStyle(style & Qt::MPenStyle);
-    p.d->capStyle = Qt::PenCapStyle(style & Qt::MPenCapStyle);
-    p.d->joinStyle = Qt::PenJoinStyle(style & Qt::MPenJoinStyle);
+    p.d->style = Qt::PenStyle(style);
+    p.d->capStyle = Qt::PenCapStyle(capStyle);
+    p.d->joinStyle = Qt::PenJoinStyle(joinStyle);
     p.d->dashPattern = dashPattern;
     p.d->miterLimit = miterLimit;
     p.d->dashOffset = dashOffset;

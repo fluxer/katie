@@ -236,7 +236,7 @@
 <!--    <xsl:variable name="hasText" select="$node[@mixed='true']"/>-->
         <xsl:variable name="hasText" select="true()"/>
 
-        <xsl:text>class QDESIGNER_UILIB_EXPORT </xsl:text>
+        <xsl:text>class QUI_EXPORT </xsl:text>
         <xsl:value-of select="$name"/>
         <xsl:text> {&endl;</xsl:text>
         <xsl:text>public:&endl;</xsl:text>
@@ -398,11 +398,11 @@
 QT_BEGIN_NAMESPACE
 
 #if defined(QT_DESIGNER_STATIC)
-#  define QDESIGNER_UILIB_EXPORT
-#elif defined(QDESIGNER_UILIB_LIBRARY)
-#  define QDESIGNER_UILIB_EXPORT Q_DECL_EXPORT
+#  define QUI_EXPORT
+#elif defined(QT_UITOOLS_LIB)
+#  define QUI_EXPORT Q_DECL_EXPORT
 #else
-#  define QDESIGNER_UILIB_EXPORT Q_DECL_IMPORT
+#  define QUI_EXPORT Q_DECL_IMPORT
 #endif
 
 #ifdef QFORMINTERNAL_NAMESPACE

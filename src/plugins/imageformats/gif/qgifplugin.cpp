@@ -39,6 +39,7 @@
 #ifdef QT_NO_IMAGEFORMAT_GIF
 #undef QT_NO_IMAGEFORMAT_GIF
 #endif
+
 #include "qgifhandler_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -84,7 +85,6 @@ QImageIOHandler *QGifPlugin::create(QIODevice *device, const QByteArray &format)
     return handler;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QGifPlugin)
 Q_EXPORT_PLUGIN2(qgif, QGifPlugin)
 
 #endif // QT_NO_IMAGEFORMATPLUGIN

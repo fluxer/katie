@@ -887,9 +887,7 @@ void tst_QFileInfo::isLocalFs()
 
     QFileInfo info(path);
     QFileInfoPrivate *privateInfo = getPrivate(info);
-    QCOMPARE((privateInfo->fileEngine == 0), isLocalFs);
-    if (privateInfo->fileEngine)
-       QCOMPARE(bool(privateInfo->fileEngine->fileFlags(QAbstractFileEngine::LocalDiskFlag)
+    QCOMPARE(bool(privateInfo->fileEngine->fileFlags(QAbstractFileEngine::LocalDiskFlag)
                      & QAbstractFileEngine::LocalDiskFlag), isLocalFs);
 }
 

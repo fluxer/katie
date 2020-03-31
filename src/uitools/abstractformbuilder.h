@@ -203,7 +203,7 @@ protected:
 // utils
 //
 
-    QVariant toVariant(const QMetaObject *meta, DomProperty *property);
+    QVariant toVariant(const QMetaObject *meta, const DomProperty *property);
     static QString toString(const DomString *str);
 
     typedef QHash<QString, DomProperty*> DomPropertyHash;

@@ -252,7 +252,7 @@ QSize QComboBoxPrivate::recomputeSizeHint(QSize &sh) const
 {
     Q_Q(const QComboBox);
     if (!sh.isValid()) {
-        bool hasIcon = sizeAdjustPolicy == QComboBox::AdjustToMinimumContentsLengthWithIcon ? true : false;
+        bool hasIcon = (sizeAdjustPolicy == QComboBox::AdjustToMinimumContentsLengthWithIcon);
         int count = q->count();
         QSize iconSize = q->iconSize();
         const QFontMetrics &fm = q->fontMetrics();
@@ -1152,9 +1152,8 @@ void QComboBoxPrivate::emitActivated(const QModelIndex &index)
     Q_Q(QComboBox);
     if (!index.isValid())
         return;
-    QString text(itemText(index));
     emit q->activated(index.row());
-    emit q->activated(text);
+    emit q->activated(itemText(index));
 }
 
 void QComboBoxPrivate::_q_emitHighlighted(const QModelIndex &index)
@@ -1162,9 +1161,8 @@ void QComboBoxPrivate::_q_emitHighlighted(const QModelIndex &index)
     Q_Q(QComboBox);
     if (!index.isValid())
         return;
-    QString text(itemText(index));
     emit q->highlighted(index.row());
-    emit q->highlighted(text);
+    emit q->highlighted(itemText(index));
 }
 
 void QComboBoxPrivate::_q_emitCurrentIndexChanged(const QModelIndex &index)
@@ -1403,9 +1401,8 @@ void QComboBox::setDuplicatesEnabled(bool enable)
 int QComboBox::findData(const QVariant &data, int role, Qt::MatchFlags flags) const
 {
     Q_D(const QComboBox);
-    QModelIndexList result;
     QModelIndex start = d->model->index(0, d->modelColumn, d->root);
-    result = d->model->match(start, role, data, 1, flags);
+    QModelIndexList result = d->model->match(start, role, data, 1, flags);
     if (result.isEmpty())
         return -1;
     return result.first().row();
@@ -2645,12 +2642,13 @@ void QComboBox::mousePressEvent(QMouseEvent *e)
                                                            this);
     if (e->button() == Qt::LeftButton && (sc == QStyle::SC_ComboBoxArrow || !isEditable())
         && !d->viewContainer()->isVisible()) {
-        if (sc == QStyle::SC_ComboBoxArrow)
+        if (sc == QStyle::SC_ComboBoxArrow) {
             d->updateArrow(QStyle::State_Sunken);
             // We've restricted the next couple of lines, because by not calling
             // viewContainer(), we avoid creating the QComboBoxPrivateContainer.
             d->viewContainer()->blockMouseReleaseTimer.start(QApplication::doubleClickInterval());
             d->viewContainer()->initialClickPosition = mapToGlobal(e->pos());
+        }
         showPopup();
     } else {
         QWidget::mousePressEvent(e);

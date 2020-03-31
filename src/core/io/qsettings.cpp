@@ -220,11 +220,18 @@ static QSettingsCustomFormat getSettingsFormat(QSettings::Format format)
     return result;
 }
 
+static inline QString createLeadingDir(const QString &filename)
+{
+    QFileInfo info(filename);
+    QDir().mkpath(info.absolutePath());
+    return filename;
+}
+
 static QString getSettingsPath(QSettings::Scope scope, const QString &filename, const QString &extension)
 {
     QFileInfo info(filename);
     if (info.isAbsolute()) {
-        return filename;
+        return createLeadingDir(filename);
     }
 
     QString nameandext = filename;
@@ -240,21 +247,16 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
     foreach (const QString &location, locations) {
         QDir dir(location);
         if (dir.exists(location)) {
-            return location + QDir::separator() + nameandext;
+            return createLeadingDir(location + QDir::separator() + nameandext);
         }
     }
 
     const QString fallback = QLibraryInfo::location(QLibraryInfo::SettingsPath);
-    QDir fallbackdir(fallback);
-    if (!fallbackdir.mkpath(fallback)) {
-        qWarning("QSettingsPrivate::getSettingsPath: no settings location");
-        fallbackdir.currentPath() + QDir::separator() + nameandext;
-    }
-    return fallback + QDir::separator() + nameandext;
+    return createLeadingDir(fallback + QDir::separator() + nameandext);
 }
 
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)
-    : format(format), scope(scope), status(QSettings::NoError), shouldwrite(false)
+    : format(format), scope(scope), status(QSettings::NoError)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(scope, QCoreApplication::applicationName(), handler.extension);
@@ -263,7 +265,7 @@ QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope sc
 }
 
 QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
-    : format(format), scope(QSettings::UserScope), status(QSettings::NoError), shouldwrite(false)
+    : format(format), scope(QSettings::UserScope), status(QSettings::NoError)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(scope, fileName, handler.extension);
@@ -291,15 +293,10 @@ void QSettingsPrivate::read()
         return;
     }
 
-    QSettings::SettingsMap readmap;
-    if (Q_UNLIKELY(!readFunc(file, readmap))) {
+    if (Q_UNLIKELY(!readFunc(file, map))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::read: could not read %s", filename.toLocal8Bit().constData());
         return;
-    }
-
-    foreach (const QString &key, readmap.keys()) {
-        map.insert(key, readmap.value(key));
     }
 
     timestamp = info.lastModified();
@@ -307,7 +304,7 @@ void QSettingsPrivate::read()
 
 void QSettingsPrivate::write()
 {
-    if (!shouldwrite) {
+    if (pending.isEmpty()) {
         return;
     }
 
@@ -315,6 +312,13 @@ void QSettingsPrivate::write()
     const QDateTime newstamp = info.lastModified();
     if (timestamp < newstamp || !newstamp.isValid()) {
         QSettingsPrivate::read();
+    }
+
+
+    foreach (const QString &key, map.keys()) {
+        if (!pending.contains(key)) {
+            pending.insert(key, map.value(key));
+        }
     }
 
     QMutexLocker locker(qSettingsMutex());
@@ -325,12 +329,13 @@ void QSettingsPrivate::write()
         return;
     }
 
-    if (Q_UNLIKELY(!writeFunc(file, map))) {
+    if (Q_UNLIKELY(!writeFunc(file, pending))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::write: could not write %s", filename.toLocal8Bit().constData());
+        return;
     }
 
-    shouldwrite = false;
+    pending.clear();
 }
 
 void QSettingsPrivate::notify()
@@ -341,9 +346,17 @@ void QSettingsPrivate::notify()
         QSettings *setting = qGlobalSettings()->at(i);
         if (setting != q && setting->fileName() == q->fileName()) {
             setting->d_func()->map = map;
-            setting->d_func()->shouldwrite = shouldwrite;
+            setting->d_func()->pending = pending;
         }
     }
+}
+
+QString QSettingsPrivate::toGroupKey(const QString &key) const
+{
+    if (group.isEmpty()) {
+        return key;
+    }
+    return group + QLatin1Char('/') + key;
 }
 
 QString QSettingsPrivate::variantToString(const QVariant &v)
@@ -865,7 +878,7 @@ void QSettings::clear()
 {
     Q_D(QSettings);
     d->map.clear();
-    d->shouldwrite = true;
+    d->pending.clear();
     d->notify();
 }
 
@@ -959,12 +972,109 @@ QSettings::SettingsMap QSettings::map() const
     You can navigate through the entire setting hierarchy using
     keys() and map().
 
-    \sa map()
+    \sa map(), groupKeys()
 */
 QStringList QSettings::keys() const
 {
     Q_D(const QSettings);
+    if (!d->pending.isEmpty()) {
+        QStringList mapkeys = d->map.keys();
+        foreach(const QString &key, d->pending.keys()) {
+            mapkeys.append(key);
+        }
+        return mapkeys;
+    }
     return d->map.keys();
+}
+
+/*!
+    Returns the current group.
+
+    \sa beginGroup(), endGroup()
+*/
+QString QSettings::group() const
+{
+    Q_D(const QSettings);
+    return d->group;
+}
+
+/*!
+    Sets the group prefix to \a group.
+
+    The current group is automatically prepended to all keys
+    specified to QSettings. In addition, query functions such as
+    groupKeys() are based on the group. By default, no group is set.
+
+    Call endGroup() to reset the current group to what it was before
+    the corresponding beginGroup() call. Groups cannot be nested.
+
+    \sa endGroup(), group()
+*/
+void QSettings::beginGroup(const QString &group)
+{
+    Q_D(QSettings);
+
+    if (!d->group.isEmpty()) {
+        qWarning("QSettings::beginGroup: sub-groups are not supported");
+        return;
+    }
+
+    d->group = group;
+}
+
+/*!
+    Resets the group to what it was before the corresponding
+    beginGroup() call.
+
+    \sa beginGroup(), group()
+*/
+void QSettings::endGroup()
+{
+    Q_D(QSettings);
+    if (d->group.isEmpty()) {
+        qWarning("QSettings::endGroup: No matching beginGroup()");
+        return;
+    }
+
+    d->group.clear();
+}
+
+/*!
+    Returns a list of group-level keys without the group prefix
+    that can be read using the QSettings object.
+
+    If a group is not set using beginGroup(), empty list is
+    returned.
+
+    You can navigate through the entire setting hierarchy using
+    keys(), beginGroup(), groupKeys() and endGroup() recursively.
+
+    \sa keys()
+*/
+QStringList QSettings::groupKeys() const
+{
+    Q_D(const QSettings);
+    if (d->group.isEmpty()) {
+        return QStringList();
+    }
+
+    QStringList result;
+    foreach(const QString &key, keys()) {
+        if (!key.startsWith(d->group + QLatin1Char('/'))) {
+            continue;
+        }
+        const int groupsize = d->group.size() + 1;
+        QString groupkey = key.mid(groupsize, key.size() - groupsize);
+        const int slashindex = groupkey.indexOf("/");
+        if (slashindex) {
+            groupkey = groupkey.mid(0, slashindex);
+        }
+        if (result.contains(groupkey)) {
+            continue;
+        }
+        result.append(groupkey);
+    }
+    return result;
 }
 
 /*!
@@ -1001,8 +1111,7 @@ bool QSettings::isWritable() const
 void QSettings::setValue(const QString &key, const QVariant &value)
 {
     Q_D(QSettings);
-    d->map.insert(key, value);
-    d->shouldwrite = true;
+    d->pending.insert(d->toGroupKey(key), value);
     d->notify();
 }
 
@@ -1014,8 +1123,17 @@ void QSettings::setValue(const QString &key, const QVariant &value)
 void QSettings::remove(const QString &key)
 {
     Q_D(QSettings);
-    d->map.remove(key);
-    d->shouldwrite = true;
+    const QString groupkey = d->toGroupKey(key);
+    foreach(const QString &key, d->map.keys()) {
+        if (key.startsWith(groupkey)) {
+            d->map.remove(key);
+        }
+    }
+    foreach(const QString &key, d->pending.keys()) {
+        if (key.startsWith(groupkey)) {
+            d->pending.remove(key);
+        }
+    }
     d->notify();
 }
 
@@ -1028,7 +1146,8 @@ void QSettings::remove(const QString &key)
 bool QSettings::contains(const QString &key) const
 {
     Q_D(const QSettings);
-    return d->map.contains(key);
+    const QString groupkey = d->toGroupKey(key);
+    return (d->map.contains(groupkey) || d->pending.contains(groupkey));
 }
 
 /*!
@@ -1043,14 +1162,18 @@ bool QSettings::contains(const QString &key) const
 QVariant QSettings::value(const QString &key, const QVariant &defaultValue) const
 {
     Q_D(const QSettings);
-    return d->map.value(key, defaultValue);
+    const QString groupkey = d->toGroupKey(key);
+    if (d->pending.contains(groupkey)) {
+        return d->pending.value(groupkey);
+    }
+    return d->map.value(groupkey, defaultValue);
 }
 
 /*!
     \typedef QSettings::SettingsMap
 
     Typedef for QMap<QString, QVariant>.
-	
+
     \sa registerFormat()
 */
 

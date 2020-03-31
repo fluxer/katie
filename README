@@ -26,7 +26,7 @@ There are several things you should be aware before considering Katie:
   - moc, uic, rcc, lrelease, lupdate, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
   - updated bundled FFTW and Valgrind from upstream
-  - updated localizations data from Common Locale Data Repository v36
+  - updated localizations data from Common Locale Data Repository v36.1
   - SQLite driver uses UTF-8 encoding instead of UTF-16
   - default text codec for C-strings is UTF-8
   - Symbian, QWS, QPA, Mac and Windows are no longer supported platforms
@@ -39,8 +39,12 @@ There are several things you should be aware before considering Katie:
   - state machine is no more
   - removed non-open source DB2, OCI, TDS and InterBase database drivers
   - removed 3rd party sources that are very common nowdays
+  - dropped non-open source platforms support
   - dropped dnotify filesystem watcher support
   - dropped Glib2 event dispatcher support
+  - dropped support for a.out format
+  - dropped Motif Drag-And-Drop (DND) support
+  - dropped LPR support
 
  - some additions have been made: 
   - JSON classes and types
@@ -55,17 +59,20 @@ There are several things you should be aware before considering Katie:
   - Unicode v5.0+ characters and partial scripts support
   - support for locale aliases
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
+  - support for generating CRC-32 checksums via qChecksum32() function
   - verification section for plugins build with Clang
   - faster alternatives to qCompress() and qUncompress()
-  - stack unwinding on assert via libunwind
+  - stack unwinding on assert or crash via libunwind
   - brief manual pages for all command-line tools
   - desktop files, Shell profile and dynamic linker/loader config
-  - automatic async DBus calls based on return type, no Q_NOREPLY needed
+  - automatic async D-Bus calls based on return type, no Q_NOREPLY needed
   - more reliable qrand(), seeded per thread
   - improved signal/slot template arguments handling
   - improved OpenSSL default certificate and certificates directory detection
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - improved cross-compilation support
+  - improved POSIX, XSI, SUSv2, etc. requirements build checks
+  - improved Large File Support (LFS) requirements checks
   - script component relies on PCRE instead of internal copy
   - tests and benchmarks can be run without prior installation
 
@@ -78,7 +85,7 @@ QTBUG-25114, QTBUG-24672, QTBUG-23524 (WIP), QTBUG-56088, QTBUG-42189,
 QTBUG-39285, QTBUG-18173, QTBUG-28968, QTBUG-34336, QTBUG-40974, QTBUG-44286,
 QTBUG-12564, QTBUG-20028, QTBUG-71967, QTBUG-70956, QTBUG-71446, QTBUG-61307,
 QTBUG-27287, QTBUG-25143, QTBUG-22833, QTBUG-57399, QTBUG-59159, QTBUG-15773,
-QTBUG-70506, QTBUG-46054
+QTBUG-70506, QTBUG-46054, QTBUG-11223
 
 Unless you use QMake and QDoc porting to Katie or even supporting it along with
 Qt4 in the same codebase is trivial and requires only minor changes because

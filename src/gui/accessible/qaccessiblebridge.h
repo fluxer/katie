@@ -61,7 +61,7 @@ struct Q_GUI_EXPORT QAccessibleBridgeFactoryInterface : public QFactoryInterface
 
 QT_END_NAMESPACE
 
-#define QAccessibleBridgeFactoryInterface_iid "com.trolltech.Qt.QAccessibleBridgeFactoryInterface"
+#define QAccessibleBridgeFactoryInterface_iid "Katie.QAccessibleBridgeFactoryInterface"
 Q_DECLARE_INTERFACE(QAccessibleBridgeFactoryInterface, QAccessibleBridgeFactoryInterface_iid)
 
 QT_BEGIN_NAMESPACE

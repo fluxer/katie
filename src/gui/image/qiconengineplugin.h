@@ -52,7 +52,7 @@ typedef QIconEngineFactoryInterface QIconEngineFactoryInterfaceV2;
 QT_END_NAMESPACE
 
 #define QIconEngineFactoryInterface_iid \
-    "com.trolltech.Qt.QIconEngineFactoryInterface"
+    "Katie.QIconEngineFactoryInterface"
 Q_DECLARE_INTERFACE(QIconEngineFactoryInterface, QIconEngineFactoryInterface_iid)
 
 QT_BEGIN_NAMESPACE

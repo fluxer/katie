@@ -60,15 +60,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_BOOTSTRAPPED
-struct QCoreGlobalData {
-    QMap<QString, QStringList> dirSearchPaths;
-    QReadWriteLock dirSearchPathsLock;
-};
-
-Q_GLOBAL_STATIC(QCoreGlobalData, globalData)
-#endif
-
 //************* QDirPrivate
 QDirPrivate::QDirPrivate(const QString &path, const QStringList &nameFilters_, QDir::SortFlags sort_, QDir::Filters filters_)
     : QSharedData()
@@ -99,7 +90,7 @@ QDirPrivate::QDirPrivate(const QDirPrivate &copy)
     , nameFilters(copy.nameFilters)
     , sort(copy.sort)
     , filters(copy.filters)
-    , fileEngine(0)
+    , fileEngine(Q_NULLPTR)
     , fileListsInitialized(false)
     , dirEntry(copy.dirEntry)
     , metaData(copy.metaData)
@@ -127,27 +118,6 @@ bool QDirPrivate::exists() const
     return info & QAbstractFileEngine::ExistsFlag;
 }
 
-// static
-inline QChar QDirPrivate::getFilterSepChar(const QString &nameFilter)
-{
-    QChar sep(QLatin1Char(';'));
-    int i = nameFilter.indexOf(sep, 0);
-    if (i == -1 && nameFilter.indexOf(QLatin1Char(' '), 0) != -1)
-        sep = QChar(QLatin1Char(' '));
-    return sep;
-}
-
-// static
-inline QStringList QDirPrivate::splitFilters(const QString &nameFilter, QChar sep)
-{
-    if (sep == 0)
-        sep = getFilterSepChar(nameFilter);
-    QStringList ret = nameFilter.split(sep);
-    for (int i = 0; i < ret.count(); ++i)
-        ret[i] = ret[i].trimmed();
-    return ret;
-}
-
 inline void QDirPrivate::setPath(const QString &path)
 {
     QString p = QDir::fromNativeSeparators(path);
@@ -155,7 +125,7 @@ inline void QDirPrivate::setPath(const QString &path)
         p.truncate(p.length() - 1);
     }
 
-    dirEntry = QFileSystemEntry(p);
+    dirEntry = QFileSystemEntry(QDir::fromNativeSeparators(path));
     metaData.clear();
     initFileEngine();
     clearFileLists();
@@ -316,7 +286,7 @@ inline void QDirPrivate::initFileLists(const QDir &dir) const
 inline void QDirPrivate::initFileEngine()
 {
     delete fileEngine;
-    fileEngine = QFileSystemEngine::resolveEntryAndCreateLegacyEngine(dirEntry, metaData);
+    fileEngine = QAbstractFileEngine::create(dirEntry.filePath());
 }
 
 /*!
@@ -649,7 +619,7 @@ QString QDir::filePath(const QString &fileName) const
 {
     const QDirPrivate* d = d_ptr.constData();
     if (isAbsolutePath(fileName))
-        return QString(fileName);
+        return fileName;
 
     QString ret = d->dirEntry.filePath();
     if (!fileName.isEmpty()) {
@@ -854,81 +824,6 @@ void QDir::setNameFilters(const QStringList &nameFilters)
 
     d->nameFilters = nameFilters;
 }
-
-#ifndef QT_BOOTSTRAPPED
-/*!
-    \since 4.3
-
-    Sets or replaces Qt's search paths for file names with the prefix \a prefix
-    to \a searchPaths.
-
-    To specify a prefix for a file name, prepend the prefix followed by a single
-    colon (e.g., "images:undo.png", "xmldocs:books.xml"). \a prefix can only
-    contain letters or numbers (e.g., it cannot contain a colon, nor a slash).
-
-    Qt uses this search path to locate files with a known prefix. The search
-    path entries are tested in order, starting with the first entry.
-
-    \snippet doc/src/snippets/code/src_corelib_io_qdir.cpp 8
-
-    File name prefix must be at least 2 characters long to avoid conflicts with
-    Windows drive letters.
-
-    Search paths may contain paths to \l{The Qt Resource System}.
-*/
-void QDir::setSearchPaths(const QString &prefix, const QStringList &searchPaths)
-{
-    if (prefix.length() < 2) {
-        qWarning("QDir::setSearchPaths: Prefix must be longer than 1 character");
-        return;
-    }
-
-    for (int i = 0; i < prefix.count(); ++i) {
-        if (!prefix.at(i).isLetterOrNumber()) {
-            qWarning("QDir::setSearchPaths: Prefix can only contain letters or numbers");
-            return;
-        }
-    }
-
-    QWriteLocker lock(&globalData()->dirSearchPathsLock);
-    QMap<QString, QStringList> &paths = globalData()->dirSearchPaths;
-    if (searchPaths.isEmpty()) {
-        paths.remove(prefix);
-    } else {
-        paths.insert(prefix, searchPaths);
-    }
-}
-
-/*!
-    \since 4.3
-
-    Adds \a path to the search path for \a prefix.
-
-    \sa setSearchPaths()
-*/
-void QDir::addSearchPath(const QString &prefix, const QString &path)
-{
-    if (path.isEmpty())
-        return;
-
-    QWriteLocker lock(&globalData()->dirSearchPathsLock);
-    globalData()->dirSearchPaths[prefix] += path;
-}
-
-/*!
-    \since 4.3
-
-    Returns the search paths for \a prefix.
-
-    \sa setSearchPaths(), addSearchPath()
-*/
-QStringList QDir::searchPaths(const QString &prefix)
-{
-    QReadLocker lock(&globalData()->dirSearchPathsLock);
-    return globalData()->dirSearchPaths.value(prefix);
-}
-
-#endif // QT_BOOTSTRAPPED
 
 /*!
     Returns the value set by setFilter()
@@ -1254,7 +1149,7 @@ QFileInfoList QDir::entryInfoList(const QStringList &nameFilters, Filters filter
 // ### Qt5: behaviour when directory already exists should be made consistent for mkdir and mkpath
 bool QDir::mkdir(const QString &dirName) const
 {
-    if (dirName.isEmpty()) {
+    if (Q_UNLIKELY(dirName.isEmpty())) {
         qWarning("QDir::mkdir: Empty or null file name(s)");
         return false;
     }
@@ -1278,7 +1173,7 @@ bool QDir::mkdir(const QString &dirName) const
 */
 bool QDir::rmdir(const QString &dirName) const
 {
-    if (dirName.isEmpty()) {
+    if (Q_UNLIKELY(dirName.isEmpty())) {
         qWarning("QDir::rmdir: Empty or null file name(s)");
         return false;
     }
@@ -1307,7 +1202,7 @@ bool QDir::rmdir(const QString &dirName) const
 // ### Qt5: behaviour when directory already exists should be made consistent for mkdir and mkpath
 bool QDir::mkpath(const QString &dirPath) const
 {
-    if (dirPath.isEmpty()) {
+    if (Q_UNLIKELY(dirPath.isEmpty())) {
         qWarning("QDir::mkpath: Empty or null file name(s)");
         return false;
     }
@@ -1333,7 +1228,7 @@ bool QDir::mkpath(const QString &dirPath) const
 */
 bool QDir::rmpath(const QString &dirPath) const
 {
-    if (dirPath.isEmpty()) {
+    if (Q_UNLIKELY(dirPath.isEmpty())) {
         qWarning("QDir::rmpath: Empty or null file name(s)");
         return false;
     }
@@ -1562,7 +1457,7 @@ QDir &QDir::operator=(const QString &path)
 */
 bool QDir::remove(const QString &fileName)
 {
-    if (fileName.isEmpty()) {
+    if (Q_UNLIKELY(fileName.isEmpty())) {
         qWarning("QDir::remove: Empty or null file name");
         return false;
     }
@@ -1582,7 +1477,7 @@ bool QDir::remove(const QString &fileName)
 */
 bool QDir::rename(const QString &oldName, const QString &newName)
 {
-    if (oldName.isEmpty() || newName.isEmpty()) {
+    if (Q_UNLIKELY(oldName.isEmpty() || newName.isEmpty())) {
         qWarning("QDir::rename: Empty or null file name(s)");
         return false;
     }
@@ -1605,11 +1500,12 @@ bool QDir::rename(const QString &oldName, const QString &newName)
 */
 bool QDir::exists(const QString &name) const
 {
-    if (name.isEmpty()) {
+    if (Q_UNLIKELY(name.isEmpty())) {
         qWarning("QDir::exists: Empty or null file name");
         return false;
     }
-    return QFile::exists(filePath(name));
+    QFileInfo info(filePath(name));
+    return info.exists();
 }
 
 /*!
@@ -1842,17 +1738,13 @@ QString QDir::cleanPath(const QString &path)
 {
     if (path.isEmpty())
         return path;
-    QString name = path;
-    QChar dir_separator = separator();
-    if (dir_separator != QLatin1Char('/'))
-       name.replace(dir_separator, QLatin1Char('/'));
 
     int used = 0, levels = 0;
-    const int len = name.length();
+    const int len = path.length();
     QVarLengthArray<QChar> outVector(len);
     QChar *out = outVector.data();
 
-    const QChar *p = name.unicode();
+    const QChar *p = path.unicode();
     for (int i = 0, last = -1, iwrite = 0; i < len; ++i) {
         if (p[i] == QLatin1Char('/')) {
             while (i+1 < len && p[i+1] == QLatin1Char('/')) {
@@ -1940,7 +1832,7 @@ QString QDir::cleanPath(const QString &path)
         used++;
     }
 
-    QString ret = (used == len ? name : QString(out, used));
+    QString ret = (used == len ? path : QString(out, used));
     // Strip away last slash except for root directories
     if (ret.length() > 1 && ret.endsWith(QLatin1Char('/'))) {
         ret.chop(1);
@@ -1963,9 +1855,9 @@ bool QDir::isRelativePath(const QString &path)
 /*!
     Refreshes the directory information.
 */
-void QDir::refresh() const
+void QDir::refresh()
 {
-    QDirPrivate *d = const_cast<QDir*>(this)->d_ptr.data();
+    QDirPrivate *d = d_ptr.data();
     d->metaData.clear();
     d->initFileEngine();
     d->clearFileLists();
@@ -1980,7 +1872,14 @@ void QDir::refresh() const
 */
 QStringList QDir::nameFiltersFromString(const QString &nameFilter)
 {
-    return QDirPrivate::splitFilters(nameFilter);
+    QChar sep(QLatin1Char(';'));
+    int i = nameFilter.indexOf(sep, 0);
+    if (i == -1 && nameFilter.indexOf(QLatin1Char(' '), 0) != -1)
+        sep = QChar(QLatin1Char(' '));
+    QStringList ret = nameFilter.split(sep);
+    for (int i = 0; i < ret.count(); ++i)
+        ret[i] = ret[i].trimmed();
+    return ret;
 }
 
 /*!

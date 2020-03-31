@@ -1059,7 +1059,7 @@ void QAction::setVisible(bool b)
         return;
     QAPP_CHECK("setVisible");
     d->visible = b;
-    d->enabled = b && d->enabled && (!d->group || d->group->isEnabled()) ;
+    d->enabled = b && (!d->group || d->group->isEnabled()) ;
 #ifndef QT_NO_SHORTCUT
     d->setShortcutEnabled(d->enabled, qApp->d_func()->shortcutMap);
 #endif

@@ -32,29 +32,20 @@
 ****************************************************************************/
 
 #include "qdeclarativeparticles_p.h"
-
 #include "qdeclarativeinfo.h"
 #include "qdeclarativeitem_p.h"
-
 #include "qdeclarativepixmapcache_p.h"
 #include <QAbstractAnimation>
-
 #include <QPainter>
 #include <QVarLengthArray>
+#include "qmath.h"
 
 #include <stdlib.h>
-#include <math.h>
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#define M_PI_2 (M_PI / 2.)
-#endif
-#ifndef INT_MAX
-#define INT_MAX 2147483647
-#endif
+#define PI_SQR 9.8696044
 
 QT_BEGIN_NAMESPACE
-#define PI_SQR 9.8696044
+
 // parabolic approximation
 inline qreal fastSin(qreal theta)
 {

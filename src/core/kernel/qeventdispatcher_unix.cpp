@@ -45,10 +45,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#if (_POSIX_MONOTONIC_CLOCK-0 <= 0) || defined(QT_BOOTSTRAPPED)
-#  include <sys/times.h>
-#endif
+#include <sys/times.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -83,9 +80,7 @@ QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
 
 QEventDispatcherUNIXPrivate::~QEventDispatcherUNIXPrivate()
 {
-#if defined(Q_OS_NACL)
-   // do nothing.
-#else
+#ifndef Q_OS_NACL
     // cleanup the common parts of the event loop
     close(thread_pipe[0]);
     close(thread_pipe[1]);
@@ -238,8 +233,14 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
 
 QTimerInfoList::QTimerInfoList()
 {
-#if (_POSIX_MONOTONIC_CLOCK-0 <= 0) && !defined(Q_OS_NACL)
-    if (!QElapsedTimer::isMonotonic()) {
+#ifndef Q_OS_NACL
+    if (Q_LIKELY(QElapsedTimer::isMonotonic())) {
+        // detected monotonic timers
+        previousTime.tv_sec = previousTime.tv_usec = 0;
+        previousTicks = 0;
+        ticksPerSecond = 0;
+        msPerTick = 0;
+    } else {
         // not using monotonic timers, initialize the timeChanged() machinery
         previousTime = qt_gettime();
 
@@ -248,12 +249,6 @@ QTimerInfoList::QTimerInfoList()
 
         ticksPerSecond = sysconf(_SC_CLK_TCK);
         msPerTick = 1000/ticksPerSecond;
-    } else {
-        // detected monotonic timers
-        previousTime.tv_sec = previousTime.tv_usec = 0;
-        previousTicks = 0;
-        ticksPerSecond = 0;
-        msPerTick = 0;
     }
 #endif
 
@@ -264,8 +259,6 @@ timeval QTimerInfoList::updateCurrentTime()
 {
     return (currentTime = qt_gettime());
 }
-
-#if (_POSIX_MONOTONIC_CLOCK-0 <= 0) || defined(QT_BOOTSTRAPPED)
 
 timeval qAbsTimeval(const timeval &t)
 {
@@ -292,7 +285,7 @@ bool QTimerInfoList::timeChanged(timeval *delta)
 #ifdef Q_OS_NACL
     Q_UNUSED(delta)
     return false; // Calling "times" crashes.
-#endif
+#else
     struct tms unused;
     clock_t currentTicks = times(&unused);
 
@@ -317,24 +310,17 @@ bool QTimerInfoList::timeChanged(timeval *delta)
     tickGranularity.tv_sec = 0;
     tickGranularity.tv_usec = msPerTick * 1000;
     return elapsedTimeTicks < ((qAbsTimeval(*delta) - tickGranularity) * 10);
+#endif // Q_OS_NACL
 }
 
 void QTimerInfoList::repairTimersIfNeeded()
 {
-    if (QElapsedTimer::isMonotonic())
+    if (Q_LIKELY(QElapsedTimer::isMonotonic()))
         return;
     timeval delta;
     if (timeChanged(&delta))
         timerRepair(delta);
 }
-
-#else // !(_POSIX_MONOTONIC_CLOCK-0 <= 0) && !defined(QT_BOOTSTRAPPED)
-
-void QTimerInfoList::repairTimersIfNeeded()
-{
-}
-
-#endif
 
 /*
   insert timer info into list

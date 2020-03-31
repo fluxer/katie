@@ -54,7 +54,7 @@ struct Q_GUI_EXPORT QAccessibleFactoryInterface : public QAccessible, public QFa
 
 QT_END_NAMESPACE
 
-#define QAccessibleFactoryInterface_iid "com.trolltech.Qt.QAccessibleFactoryInterface"
+#define QAccessibleFactoryInterface_iid "Katie.QAccessibleFactoryInterface"
 Q_DECLARE_INTERFACE(QAccessibleFactoryInterface, QAccessibleFactoryInterface_iid)
 
 QT_BEGIN_NAMESPACE

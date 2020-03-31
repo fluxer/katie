@@ -368,7 +368,7 @@ bool tst_qnetworkdiskcache::isUrlCached(quint32 id)
     stream << fakeURLbase << id;
     QUrl url(str);
     QIODevice *iod = cache->data(url);
-    return ((iod == 0) ? false : true) ;
+    return (iod != Q_NULLPTR);
 
 }
 

@@ -1,19 +1,19 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2019 Ivailo Monev
+** Copyright (C) 2016-2020 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
+**
 ** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
 ** As a special exception, The Qt Company gives you certain additional
 ** rights. These rights are described in The Qt Company LGPL Exception
@@ -90,6 +90,9 @@
 #define QT_NO_IMAGE_TEXT
 #define QT_NO_GLIB
 #define QT_NO_ICONV
+#define QT_NO_LPR
+#define QT_NO_NIS
+#define QT_NO_NSL
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -114,7 +117,7 @@
 /* Build specs */
 #define QT_KATIE
 #cmakedefine QT_VISIBILITY_AVAILABLE
-#cmakedefine QT_LARGEFILE_SUPPORT ${QT_LARGEFILE_SUPPORT}
+#cmakedefine QT_LARGEFILE_SUPPORT
 #cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
 
 #cmakedefine QT_NO_USING_NAMESPACE
@@ -193,7 +196,6 @@
 #cmakedefine QT_NO_IMAGEFORMAT_ICO
 #cmakedefine QT_NO_IMAGEFORMAT_JPEG
 #cmakedefine QT_NO_IMAGEFORMAT_MNG
-#cmakedefine QT_NO_IMAGEFORMAT_PNG
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
 #cmakedefine QT_NO_IMAGEFORMAT_TGA
 #cmakedefine QT_NO_IMAGEFORMAT_TIFF
@@ -213,7 +215,6 @@
 #cmakedefine QT_NO_LOCALFILE_OPTIMIZED_QML
 #cmakedefine QT_NO_LOCALSERVER
 #cmakedefine QT_NO_LOCALSOCKET
-#cmakedefine QT_NO_LPR
 #cmakedefine QT_NO_MAINWINDOW
 #cmakedefine QT_NO_MATRIX4X4
 #cmakedefine QT_NO_MDIAREA
@@ -226,8 +227,6 @@
 #cmakedefine QT_NO_NETWORKDISKCACHE
 #cmakedefine QT_NO_NETWORKINTERFACE
 #cmakedefine QT_NO_NETWORKPROXY
-#cmakedefine QT_NO_NIS
-#cmakedefine QT_NO_NSL
 #cmakedefine QT_NO_PDF
 #cmakedefine QT_NO_PLUGIN_CHECK
 #cmakedefine QT_NO_PRINTDIALOG
@@ -325,7 +324,6 @@
 #cmakedefine QT_NO_XCURSOR
 #cmakedefine QT_NO_XFIXES
 #cmakedefine QT_NO_XINERAMA
-#cmakedefine QT_NO_XINPUT
 #cmakedefine QT_NO_XMLSTREAM
 #cmakedefine QT_NO_XMLSTREAMREADER
 #cmakedefine QT_NO_XMLSTREAMWRITER

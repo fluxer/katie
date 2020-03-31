@@ -80,7 +80,7 @@ NodePool::NodePool(const QString &fileName, Engine *engine)
 
 Code *NodePool::createCompiledCode(AST::Node *, CompilationUnit &)
 {
-    Q_ASSERT(0);
+    Q_ASSERT(false);
     return 0;
 }
 

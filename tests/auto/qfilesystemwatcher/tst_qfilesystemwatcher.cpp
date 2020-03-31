@@ -120,8 +120,8 @@ void tst_QFileSystemWatcher::basicTest()
     testFile.setPermissions(QFile::ReadOwner | QFile::WriteOwner);
 
     // create watcher, forcing it to use a specific backend
-    QFileSystemWatcher watcher;
-    watcher.setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
+    setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
+    QFileSystemWatcher watcher(this);
     watcher.removePath(testFile.fileName());
     watcher.addPath(testFile.fileName());
 
@@ -256,8 +256,8 @@ void tst_QFileSystemWatcher::watchDirectory()
     QString testFileName = testDir.filePath("testFile.txt");
     QFile::remove(testFileName);
 
-    QFileSystemWatcher watcher;
-    watcher.setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
+    setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
+    QFileSystemWatcher watcher(this);
     watcher.addPath(testDir.dirName());
 
     QSignalSpy changedSpy(&watcher, SIGNAL(directoryChanged(const QString &)));
@@ -409,8 +409,8 @@ void tst_QFileSystemWatcher::watchFileAndItsDirectory()
     testFile.write(QByteArray("hello"));
     testFile.close();
 
-    QFileSystemWatcher watcher;
-    watcher.setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
+    setObjectName(QLatin1String("_qt_autotest_force_engine_") + backend);
+    QFileSystemWatcher watcher(this);
 
     watcher.addPath(testDir.dirName());
     watcher.addPath(testFileName);

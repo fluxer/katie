@@ -1244,8 +1244,6 @@ bool QDBusConnectionPrivate::prepareHook(QDBusConnectionPrivate::SignalHook &hoo
         hook.midx = findSlot(receiver, normalizedName, hook.params);
     }
     if (hook.midx < minMIdx) {
-        if (hook.midx == -1)
-        {}
         return false;
     }
 
@@ -1649,10 +1647,6 @@ void QDBusConnectionPrivate::setPeer(DBusConnection *c, const QDBusErrorInternal
 static QDBusConnection::ConnectionCapabilities connectionCapabilies(DBusConnection *connection)
 {
     QDBusConnection::ConnectionCapabilities result = 0;
-
-#ifndef DBUS_TYPE_UNIX_FD
-# define DBUS_TYPE_UNIX_FD int('h')
-#endif
     if (dbus_connection_can_send_type(connection, DBUS_TYPE_UNIX_FD))
         result |= QDBusConnection::UnixFileDescriptorPassing;
 

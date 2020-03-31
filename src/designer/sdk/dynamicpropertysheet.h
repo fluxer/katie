@@ -67,7 +67,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerDynamicPropertySheetExtension, "com.trolltech.Qt.Designer.DynamicPropertySheet")
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerDynamicPropertySheetExtension, "Katie.Designer.DynamicPropertySheet")
 
 QT_END_HEADER
 

@@ -1759,7 +1759,8 @@ QVariant QScriptEnginePrivate::toVariant(JSC::ExecState *exec, JSC::JSValue valu
     return QVariant();
 }
 
-JSC::JSValue QScriptEnginePrivate::propertyHelper(JSC::ExecState *exec, JSC::JSValue value, const JSC::Identifier &id, int resolveMode)
+JSC::JSValue QScriptEnginePrivate::propertyHelper(JSC::ExecState *exec, JSC::JSValue value,
+                                                  const JSC::Identifier &id, QScriptValue::ResolveFlags resolveMode)
 {
     JSC::JSValue result;
     if (!(resolveMode & QScriptValue::ResolvePrototype)) {
@@ -1769,16 +1770,11 @@ JSC::JSValue QScriptEnginePrivate::propertyHelper(JSC::ExecState *exec, JSC::JSV
         if (object->getOwnPropertySlot(exec, id, slot))
             result = slot.getValue(exec, id);
     }
-    if (!result && (resolveMode & QScriptValue::ResolveScope)) {
-        // ### check if it's a function object and look in the scope chain
-        JSC::JSValue scope = property(exec, value, "__qt_scope__", QScriptValue::ResolveLocal);
-        if (isObject(scope))
-            result = property(exec, scope, id, resolveMode);
-    }
     return result;
 }
 
-JSC::JSValue QScriptEnginePrivate::propertyHelper(JSC::ExecState *exec, JSC::JSValue value, quint32 index, int resolveMode)
+JSC::JSValue QScriptEnginePrivate::propertyHelper(JSC::ExecState *exec, JSC::JSValue value,
+                                                  quint32 index, QScriptValue::ResolveFlags resolveMode)
 {
     JSC::JSValue result;
     if (!(resolveMode & QScriptValue::ResolvePrototype)) {
@@ -2493,12 +2489,6 @@ QScriptValue QScriptEngine::newQMetaObject(
 */
 bool QScriptEngine::canEvaluate(const QString &program) const
 {
-    return QScriptEnginePrivate::canEvaluate(program);
-}
-
-
-bool QScriptEnginePrivate::canEvaluate(const QString &program)
-{
     QScript::SyntaxChecker checker;
     QScript::SyntaxChecker::Result result = checker.checkSyntax(program);
     return (result.state != QScript::SyntaxChecker::Intermediate);
@@ -2512,32 +2502,28 @@ bool QScriptEnginePrivate::canEvaluate(const QString &program)
 */
 QScriptSyntaxCheckResult QScriptEngine::checkSyntax(const QString &program)
 {
-    return QScriptEnginePrivate::checkSyntax(program);
-}
-
-QScriptSyntaxCheckResult QScriptEnginePrivate::checkSyntax(const QString &program)
-{
     QScript::SyntaxChecker checker;
     QScript::SyntaxChecker::Result result = checker.checkSyntax(program);
     QScriptSyntaxCheckResultPrivate *p = new QScriptSyntaxCheckResultPrivate();
     switch (result.state) {
-    case QScript::SyntaxChecker::Error:
-        p->state = QScriptSyntaxCheckResult::Error;
-        break;
-    case QScript::SyntaxChecker::Intermediate:
-        p->state = QScriptSyntaxCheckResult::Intermediate;
-        break;
-    case QScript::SyntaxChecker::Valid:
-        p->state = QScriptSyntaxCheckResult::Valid;
-        break;
+        case QScript::SyntaxChecker::Error: {
+            p->state = QScriptSyntaxCheckResult::Error;
+            break;
+        }
+        case QScript::SyntaxChecker::Intermediate: {
+            p->state = QScriptSyntaxCheckResult::Intermediate;
+            break;
+        }
+        case QScript::SyntaxChecker::Valid: {
+            p->state = QScriptSyntaxCheckResult::Valid;
+            break;
+        }
     }
     p->errorLineNumber = result.errorLineNumber;
     p->errorColumnNumber = result.errorColumnNumber;
     p->errorMessage = result.errorMessage;
     return QScriptSyntaxCheckResult(p);
 }
-
-
 
 /*!
   Evaluates \a program, using \a lineNumber as the base line number,
@@ -3459,7 +3445,6 @@ QScriptValue QScriptEngine::importExtension(const QString &extension)
     if (!app)
         return context->throwError(QLatin1String("No application object"));
 
-    QObjectList staticPlugins = QPluginLoader::staticInstances();
     QStringList libraryPaths = app->libraryPaths();
     QString dot = QLatin1String(".");
     QStringList pathComponents = extension.split(dot);
@@ -3482,17 +3467,6 @@ QScriptValue QScriptEngine::importExtension(const QString &extension)
         QScriptExtensionInterface *iface = 0;
         QString initjsContents;
         QString initjsFileName;
-
-        // look for the extension in static plugins
-        for (int j = 0; j < staticPlugins.size(); ++j) {
-            iface = qobject_cast<QScriptExtensionInterface*>(staticPlugins.at(j));
-            if (!iface)
-                continue;
-            if (iface->keys().contains(ext))
-                break; // use this one
-            else
-                iface = 0; // keep looking
-        }
 
         {
             // look for __init__.js resource
@@ -3633,17 +3607,6 @@ QStringList QScriptEngine::availableExtensions() const
         return QStringList();
 
     QSet<QString> result;
-
-    QObjectList staticPlugins = QPluginLoader::staticInstances();
-    for (int i = 0; i < staticPlugins.size(); ++i) {
-        QScriptExtensionInterface *iface;
-        iface = qobject_cast<QScriptExtensionInterface*>(staticPlugins.at(i));
-        if (iface) {
-            QStringList keys = iface->keys();
-            for (int j = 0; j < keys.count(); ++j)
-                result << keys.at(j);
-        }
-    }
 
     QStringList libraryPaths = app->libraryPaths();
     for (int i = 0; i < libraryPaths.count(); ++i) {

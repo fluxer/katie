@@ -663,29 +663,26 @@ QString QDate::toString(Qt::DateFormat f) const
     int y, m, d;
     getDateFromJulianDay(jd, &y, &m, &d);
     switch (f) {
-    case Qt::SystemLocaleDate:
-    case Qt::SystemLocaleShortDate:
-    case Qt::SystemLocaleLongDate:
-        return QLocale::system().toString(*this, f == Qt::SystemLocaleLongDate ? QLocale::LongFormat
-                                                                               : QLocale::ShortFormat);
-    case Qt::LocaleDate:
-    case Qt::DefaultLocaleShortDate:
-    case Qt::DefaultLocaleLongDate:
-        return QLocale().toString(*this, f == Qt::DefaultLocaleLongDate ? QLocale::LongFormat
-                                                                        : QLocale::ShortFormat);
-    default:
+        case Qt::SystemLocaleShortDate:
+        case Qt::SystemLocaleLongDate:
+            return QLocale::system().toString(*this, f == Qt::SystemLocaleLongDate ? QLocale::LongFormat
+                                                                                : QLocale::ShortFormat);
+        case Qt::DefaultLocaleShortDate:
+        case Qt::DefaultLocaleLongDate:
+            return QLocale().toString(*this, f == Qt::DefaultLocaleLongDate ? QLocale::LongFormat
+                                                                            : QLocale::ShortFormat);
 #ifndef QT_NO_TEXTDATE
-    case Qt::TextDate:
-        {
+        case Qt::TextDate: {
             return QString::fromLatin1("%0 %1 %2 %3")
                 .arg(shortDayName(dayOfWeek()))
                 .arg(shortMonthName(m))
                 .arg(d)
                 .arg(y);
         }
+#else
+        case Qt::TextDate:
 #endif
-    case Qt::ISODate:
-        {
+        case Qt::ISODate: {
             if (year() < 0 || year() > 9999)
                 return QString();
             QString month(QString::number(m).rightJustified(2, QLatin1Char('0')));
@@ -693,6 +690,8 @@ QString QDate::toString(Qt::DateFormat f) const
             return QString::number(y) + QLatin1Char('-') + month + QLatin1Char('-') + day;
         }
     }
+
+    return QString();
 }
 
 /*!
@@ -1027,55 +1026,53 @@ QDate QDate::fromString(const QString& s, Qt::DateFormat f)
         return QDate();
 
     switch (f) {
-    case Qt::ISODate:
-        {
+        case Qt::SystemLocaleShortDate:
+        case Qt::SystemLocaleLongDate:
+            return QLocale::system().toDate(s, f == Qt::SystemLocaleLongDate ? QLocale::LongFormat
+                                                                            : QLocale::ShortFormat);
+
+        case Qt::DefaultLocaleShortDate:
+        case Qt::DefaultLocaleLongDate:
+            return QLocale().toDate(s, f == Qt::DefaultLocaleLongDate ? QLocale::LongFormat
+                                                                    : QLocale::ShortFormat);
+
+#ifndef QT_NO_TEXTDATE
+        case Qt::TextDate: {
+            QStringList parts = s.split(QLatin1Char(' '), QString::SkipEmptyParts);
+
+            if (parts.count() != 4) {
+                return QDate();
+            }
+
+            int month = fromShortMonthName(parts.at(1));
+            if (month < 1 || month > 12) {
+                return QDate();
+            }
+
+            bool ok;
+            int day = parts.at(2).toInt(&ok);
+            if (!ok) {
+                return QDate();
+            }
+
+            int year = parts.at(3).toInt(&ok);
+            if (!ok) {
+                return QDate();
+            }
+
+            return QDate(year, month, day);
+        }
+#else
+        case Qt::TextDate:
+#endif
+        case Qt::ISODate: {
             int year(s.mid(0, 4).toInt());
             int month(s.mid(5, 2).toInt());
             int day(s.mid(8, 2).toInt());
             if (year && month && day)
                 return QDate(year, month, day);
+            break;
         }
-        break;
-    case Qt::SystemLocaleDate:
-    case Qt::SystemLocaleShortDate:
-    case Qt::SystemLocaleLongDate:
-        return QLocale::system().toDate(s, f == Qt::SystemLocaleLongDate ? QLocale::LongFormat
-                                                                         : QLocale::ShortFormat);
-    case Qt::LocaleDate:
-    case Qt::DefaultLocaleShortDate:
-    case Qt::DefaultLocaleLongDate:
-        return QLocale().toDate(s, f == Qt::DefaultLocaleLongDate ? QLocale::LongFormat
-                                                                  : QLocale::ShortFormat);
-    default:
-#ifndef QT_NO_TEXTDATE
-    case Qt::TextDate: {
-        QStringList parts = s.split(QLatin1Char(' '), QString::SkipEmptyParts);
-
-        if (parts.count() != 4) {
-            return QDate();
-        }
-
-        int month = fromShortMonthName(parts.at(1));
-        if (month < 1 || month > 12) {
-            return QDate();
-        }
-
-        bool ok;
-        int day = parts.at(2).toInt(&ok);
-        if (!ok) {
-            return QDate();
-        }
-
-        int year = parts.at(3).toInt(&ok);
-        if (!ok) {
-            return QDate();
-        }
-
-        return QDate(year, month, day);
-    }
-#else
-        break;
-#endif
     }
     return QDate();
 }
@@ -1427,25 +1424,24 @@ QString QTime::toString(Qt::DateFormat format) const
         return QString();
 
     switch (format) {
-    case Qt::SystemLocaleDate:
-    case Qt::SystemLocaleShortDate:
-    case Qt::SystemLocaleLongDate:
-        return QLocale::system().toString(*this, format == Qt::SystemLocaleLongDate ? QLocale::LongFormat
-                                          : QLocale::ShortFormat);
-    case Qt::LocaleDate:
-    case Qt::DefaultLocaleShortDate:
-    case Qt::DefaultLocaleLongDate:
-        return QLocale().toString(*this, format == Qt::DefaultLocaleLongDate ? QLocale::LongFormat
-                                  : QLocale::ShortFormat);
+        case Qt::SystemLocaleShortDate:
+        case Qt::SystemLocaleLongDate:
+            return QLocale::system().toString(*this, format == Qt::SystemLocaleLongDate ? QLocale::LongFormat
+                                            : QLocale::ShortFormat);
+        case Qt::DefaultLocaleShortDate:
+        case Qt::DefaultLocaleLongDate:
+            return QLocale().toString(*this, format == Qt::DefaultLocaleLongDate ? QLocale::LongFormat
+                                    : QLocale::ShortFormat);
 
-    default:
-    case Qt::ISODate:
-    case Qt::TextDate:
-        return QString::fromLatin1("%1:%2:%3")
-            .arg(hour(), 2, 10, QLatin1Char('0'))
-            .arg(minute(), 2, 10, QLatin1Char('0'))
-            .arg(second(), 2, 10, QLatin1Char('0'));
+        case Qt::ISODate:
+        case Qt::TextDate:
+            return QString::fromLatin1("%1:%2:%3")
+                .arg(hour(), 2, 10, QLatin1Char('0'))
+                .arg(minute(), 2, 10, QLatin1Char('0'))
+                .arg(second(), 2, 10, QLatin1Char('0'));
     }
+
+    return QString();
 }
 
 /*!
@@ -1666,18 +1662,17 @@ QTime QTime::fromString(const QString& s, Qt::DateFormat f)
     }
 
     switch (f) {
-    case Qt::SystemLocaleDate:
-    case Qt::SystemLocaleShortDate:
-    case Qt::SystemLocaleLongDate:
-        return QLocale::system().toTime(s, f == Qt::SystemLocaleLongDate ? QLocale::LongFormat
-                                                                         : QLocale::ShortFormat);
-    case Qt::LocaleDate:
-    case Qt::DefaultLocaleShortDate:
-    case Qt::DefaultLocaleLongDate:
-        return QLocale().toTime(s, f == Qt::DefaultLocaleLongDate ? QLocale::LongFormat
-                                                                  : QLocale::ShortFormat);
-    default:
-        {
+        case Qt::SystemLocaleShortDate:
+        case Qt::SystemLocaleLongDate:
+            return QLocale::system().toTime(s, f == Qt::SystemLocaleLongDate ? QLocale::LongFormat
+                                                                            : QLocale::ShortFormat);
+
+        case Qt::DefaultLocaleShortDate:
+        case Qt::DefaultLocaleLongDate:
+            return QLocale().toTime(s, f == Qt::DefaultLocaleLongDate ? QLocale::LongFormat
+                                                                    : QLocale::ShortFormat);
+        case Qt::ISODate:
+        case Qt::TextDate: {
             bool ok = true;
             const int hour(s.mid(0, 2).toInt(&ok));
             if (!ok)
@@ -1695,6 +1690,8 @@ QTime QTime::fromString(const QString& s, Qt::DateFormat f)
             return QTime(hour, minute, second, qMin(qRound(msec * 1000.0), 999));
         }
     }
+
+    return QTime();
 }
 
 /*!
@@ -2169,11 +2166,9 @@ void QDateTime::setTimeSpec(Qt::TimeSpec spec)
     }
 }
 
-qint64 toMSecsSinceEpoch_helper(qint64 jd, int msecs)
+static inline qint64 toMSecsSinceEpoch_helper(qint64 jd, int msecs)
 {
-    qint64 days = jd - JULIAN_DAY_FOR_EPOCH;
-    qint64 retval = (days * MSECS_PER_DAY) + msecs;
-    return retval;
+    return (((jd - JULIAN_DAY_FOR_EPOCH) * MSECS_PER_DAY) + msecs);
 }
 
 /*!
@@ -2363,9 +2358,8 @@ QString QDateTime::toString(Qt::DateFormat f) const
         default:
             break;
         }
-    }
 #ifndef QT_NO_TEXTDATE
-    else if (f == Qt::TextDate) {
+    } else if (f == Qt::TextDate) {
         buf = d->date.shortDayName(d->date.dayOfWeek());
         buf += QLatin1Char(' ');
         buf += d->date.shortMonthName(d->date.month());
@@ -2375,9 +2369,8 @@ QString QDateTime::toString(Qt::DateFormat f) const
         buf += d->time.toString();
         buf += QLatin1Char(' ');
         buf += QString::number(d->date.year());
-    }
 #endif
-    else {
+    } else {
         buf = d->date.toString(f);
         if (buf.isEmpty())
             return QString();   // failed to convert
@@ -2781,14 +2774,14 @@ QDate QDate::currentDate()
     time_t ltime;
     time(&ltime);
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
     struct tm *t = localtime_r(&ltime, &res);
 #else
     struct tm *t = localtime(&ltime);
-#endif // !QT_NO_THREAD && _POSIX_THREAD_SAFE_FUNCTIONS
+#endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
 
     d.jd = julianDayFromDate(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday);
     return d;
@@ -2802,14 +2795,14 @@ QTime QTime::currentTime()
     gettimeofday(&tv, Q_NULLPTR);
     time_t ltime = tv.tv_sec;
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
     struct tm *t = localtime_r(&ltime, &res);
 #else
     struct tm *t = localtime(&ltime);
-#endif
+#endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
     Q_CHECK_PTR(t);
 
     ct.mds = msecsFromDecomposed(t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
@@ -2824,14 +2817,14 @@ QDateTime QDateTime::currentDateTime()
     gettimeofday(&tv, Q_NULLPTR);
     time_t ltime = tv.tv_sec;
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
     struct tm *t = localtime_r(&ltime, &res);
 #else
     struct tm *t = localtime(&ltime);
-#endif
+#endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
 
     QDateTime dt;
     dt.d->time.mds = msecsFromDecomposed(t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
@@ -2851,13 +2844,13 @@ QDateTime QDateTime::currentDateTimeUtc()
     gettimeofday(&tv, Q_NULLPTR);
     time_t ltime = tv.tv_sec;
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
-    // use the reentrant version of localtime() where available
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GMTIME_R)
+    // use the reentrant version of gmtime_r() where available
     struct tm res;
     struct tm *t = gmtime_r(&ltime, &res);
 #else
     struct tm *t = gmtime(&ltime);
-#endif
+#endif // !QT_NO_THREAD && QT_HAVE_GMTIME_R
 
     QDateTime dt;
     dt.d->time.mds = msecsFromDecomposed(t->tm_hour, t->tm_min, t->tm_sec, tv.tv_usec / 1000);
@@ -3027,12 +3020,12 @@ QDateTime QDateTime::fromString(const QString& s, Qt::DateFormat f)
         }
         return QDateTime(date, QTime::fromString(tmp, Qt::ISODate), ts);
     }
-    case Qt::SystemLocaleDate:
+
     case Qt::SystemLocaleShortDate:
     case Qt::SystemLocaleLongDate:
         return QLocale::system().toDateTime(s, f == Qt::SystemLocaleLongDate ? QLocale::LongFormat
                                                                              : QLocale::ShortFormat);
-    case Qt::LocaleDate:
+
     case Qt::DefaultLocaleShortDate:
     case Qt::DefaultLocaleLongDate:
         return QLocale().toDateTime(s, f == Qt::DefaultLocaleLongDate ? QLocale::LongFormat
@@ -3484,14 +3477,14 @@ static QDateTimePrivate::Spec utcToLocal(QDate &date, QTime &time)
     // won't overflow because of fakeDate
     time_t secsSince1Jan1970UTC = toMSecsSinceEpoch_helper(fakeDate.toJulianDay(), QTime().msecsTo(time)) / 1000;
 
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     tm res;
     tm *brokenDown = localtime_r(&secsSince1Jan1970UTC, &res);
 #else
     tm *brokenDown = localtime(&secsSince1Jan1970UTC);
-#endif
+#endif  // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
     if (!brokenDown) {
         date = QDate(1970, 1, 1);
         time = QTime();
@@ -3526,13 +3519,13 @@ static void localToUtc(QDate &date, QTime &time, int isdst)
     localTM.tm_year = fakeDate.year() - 1900;
     localTM.tm_isdst = isdst;
     time_t secsSince1Jan1970UTC = mktime(&localTM);
-#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(QT_HAVE_GMTIME_R)
     // use the reentrant version of gmtime() where available
     tm res;
     tm *brokenDown = gmtime_r(&secsSince1Jan1970UTC, &res);
 #else
     tm *brokenDown = gmtime(&secsSince1Jan1970UTC);
-#endif // !QT_NO_THREAD && _POSIX_THREAD_SAFE_FUNCTIONS
+#endif // !QT_NO_THREAD && QT_HAVE_GMTIME_R
     if (!brokenDown) {
         date = QDate(1970, 1, 1);
         time = QTime();

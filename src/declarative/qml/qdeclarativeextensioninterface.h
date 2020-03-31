@@ -51,7 +51,7 @@ struct Q_DECLARATIVE_EXPORT QDeclarativeExtensionInterface
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QDeclarativeExtensionInterface, "com.trolltech.Qt.QDeclarativeExtensionInterface/1.0")
+Q_DECLARE_INTERFACE(QDeclarativeExtensionInterface, "Katie.QDeclarativeExtensionInterface/1.0")
 
 QT_END_HEADER
 

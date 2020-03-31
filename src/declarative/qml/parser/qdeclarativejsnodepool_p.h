@@ -47,7 +47,6 @@
 
 #include "qdeclarativejsmemorypool_p.h"
 
-#include <QtCore/QHash>
 #include <QtCore/QString>
 
 QT_BEGIN_NAMESPACE
@@ -111,7 +110,6 @@ public:
 #endif
 
 private:
-    QHash<AST::Node*, Code*> m_codeCache;
     QString m_fileName;
     Engine *m_engine;
 #ifndef J_SCRIPT_NO_EVENT_NOTIFY

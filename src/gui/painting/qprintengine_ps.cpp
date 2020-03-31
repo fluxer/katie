@@ -646,49 +646,6 @@ QPSPrintEngine::QPSPrintEngine(QPrinter::PrinterMode m)
 {
 }
 
-static void ignoreSigPipe(bool b)
-{
-#ifndef QT_NO_LPR
-    static struct sigaction *users_sigpipe_handler = 0;
-    static int lockCount = 0;
-
-    QMutexLocker locker(QMutexPool::globalInstanceGet(&users_sigpipe_handler));
-
-    if (b) {
-        if (lockCount++ > 0)
-            return;
-
-        if (users_sigpipe_handler != 0)
-            return; // already ignoring sigpipe
-
-        users_sigpipe_handler = new struct sigaction;
-        struct sigaction tmp_sigpipe_handler;
-        tmp_sigpipe_handler.sa_handler = SIG_IGN;
-        sigemptyset(&tmp_sigpipe_handler.sa_mask);
-        tmp_sigpipe_handler.sa_flags = 0;
-
-        if (sigaction(SIGPIPE, &tmp_sigpipe_handler, users_sigpipe_handler) == -1) {
-            delete users_sigpipe_handler;
-            users_sigpipe_handler = 0;
-        }
-    }
-    else {
-        if (--lockCount > 0)
-            return;
-
-        if (users_sigpipe_handler == 0)
-            return; // not ignoring sigpipe
-
-        if (sigaction(SIGPIPE, users_sigpipe_handler, 0) == -1)
-            qWarning("QPSPrintEngine: Could not restore SIGPIPE handler");
-
-        delete users_sigpipe_handler;
-        users_sigpipe_handler = 0;
-    }
-#else
-    Q_UNUSED(b);
-#endif
-}
 QPSPrintEngine::~QPSPrintEngine()
 {
     Q_D(QPSPrintEngine);
@@ -745,9 +702,6 @@ bool QPSPrintEngine::end()
             return true;
     }
 
-    // we're writing to lp/lpr through a pipe, we don't want to crash with SIGPIPE
-    // if lp/lpr dies
-    ignoreSigPipe(true);
     d->flushPage(true);
     QByteArray trailer;
     QPdf::ByteStream s(&trailer);
@@ -758,7 +712,6 @@ bool QPSPrintEngine::end()
     d->outDevice->write(trailer);
 
     QPdfBaseEngine::end();
-    ignoreSigPipe(false);
 
     d->firstPage = true;
     d->headerDone = false;
@@ -912,13 +865,9 @@ bool QPSPrintEngine::newPage()
     if (!d->firstPage && d->useAlphaEngine)
         flushAndInit();
 
-    // we're writing to lp/lpr through a pipe, we don't want to crash with SIGPIPE
-    // if lp/lpr dies
-    ignoreSigPipe(true);
     if (!d->firstPage)
         d->flushPage();
     d->firstPage = false;
-    ignoreSigPipe(false);
 
     delete d->currentPage;
     d->currentPage = new QPdfPage;

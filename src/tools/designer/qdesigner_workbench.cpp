@@ -180,8 +180,8 @@ QDesignerWorkbench::QDesignerWorkbench()  :
 
     (void) QDesignerComponents::createTaskMenu(core(), this);
 
+    m_staticPlugins = QDesignerComponents::initializePlugins(core());
     initializeCorePlugins();
-    QDesignerComponents::initializePlugins(core());
     m_actionManager = new QDesignerActions(this); // accesses plugin components
 
     m_windowActions->setExclusive(true);
@@ -327,7 +327,7 @@ Qt::WindowFlags QDesignerWorkbench::magicalWindowFlags() const
         case DockedMode:
             return Qt::Window | Qt::WindowShadeButtonHint | Qt::WindowSystemMenuHint | Qt::WindowTitleHint;
         default:
-            Q_ASSERT(0);
+            Q_ASSERT(false);
             return 0;
     }
 }
@@ -346,7 +346,7 @@ QWidget *QDesignerWorkbench::magicalParent(const QWidget *w) const
         case NeutralMode:
             return 0;
         default:
-            Q_ASSERT(0);
+            Q_ASSERT(false);
             return 0;
     }
 }
@@ -593,8 +593,15 @@ void QDesignerWorkbench::removeFormWindow(QDesignerFormWindow *formWindow)
 
 void QDesignerWorkbench::initializeCorePlugins()
 {
-    QList<QObject*> plugins = QPluginLoader::staticInstances();
-    plugins += core()->pluginManager()->instances();
+    QList<QObject*> plugins= core()->pluginManager()->instances();
+
+    core()->pluginManager()->ensureInitializedStatic(m_staticPlugins);
+    foreach (QObject *plugin, m_staticPlugins) {
+        if (QDesignerFormEditorPluginInterface *formEditorPlugin = qobject_cast<QDesignerFormEditorPluginInterface*>(plugin)) {
+            if (!formEditorPlugin->isInitialized())
+                formEditorPlugin->initialize(core());
+        }
+    }
 
     foreach (QObject *plugin, plugins) {
         if (QDesignerFormEditorPluginInterface *formEditorPlugin = qobject_cast<QDesignerFormEditorPluginInterface*>(plugin)) {
@@ -1045,7 +1052,7 @@ void QDesignerWorkbench::restoreUISettings()
             switchToDockedMode();
             break;
 
-        default: Q_ASSERT(0);
+        default: Q_ASSERT(false);
     }
 
     ToolWindowFontSettings fontSettings = QDesignerSettings(m_core).toolWindowFont();

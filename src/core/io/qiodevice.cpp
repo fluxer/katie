@@ -474,7 +474,7 @@ void QIODevice::setOpenMode(OpenMode openMode)
 void QIODevice::setTextModeEnabled(bool enabled)
 {
     Q_D(QIODevice);
-    if (!isOpen()) {
+    if (Q_UNLIKELY(!isOpen())) {
         qWarning("QIODevice::setTextModeEnabled: The device is not open");
         return;
     }
@@ -631,15 +631,13 @@ qint64 QIODevice::size() const
 bool QIODevice::seek(qint64 pos)
 {
     Q_D(QIODevice);
-    if (d->isSequential()) {
+    if (Q_UNLIKELY(d->isSequential())) {
         qWarning("QIODevice::seek: Cannot call seek on a sequential device");
         return false;
-    }
-    if (d->openMode == NotOpen) {
+    } else if (Q_UNLIKELY(d->openMode == NotOpen)) {
         qWarning("QIODevice::seek: The device is not open");
         return false;
-    }
-    if (pos < 0) {
+    } else if (Q_UNLIKELY(pos < 0)) {
         qWarning("QIODevice::seek: Invalid pos: %lld", pos);
         return false;
     }
@@ -929,7 +927,7 @@ QByteArray QIODevice::read(qint64 maxSize)
     Q_UNUSED(d);
 #endif
 
-    if (maxSize >= QBYTEARRAY_MAX) {
+    if (Q_UNLIKELY(maxSize >= QBYTEARRAY_MAX)) {
         qWarning("QIODevice::read: maxSize argument exceeds QByteArray size limit");
         maxSize = QBYTEARRAY_MAX - 1;
     }
@@ -1061,7 +1059,7 @@ QByteArray QIODevice::readAll()
 qint64 QIODevice::readLine(char *data, qint64 maxSize)
 {
     Q_D(QIODevice);
-    if (maxSize < 2) {
+    if (Q_UNLIKELY(maxSize < 2)) {
         qWarning("QIODevice::readLine: Called with maxSize < 2");
         return qint64(-1);
     }
@@ -1166,7 +1164,7 @@ QByteArray QIODevice::readLine(qint64 maxSize)
     Q_UNUSED(d);
 #endif
 
-    if (maxSize >= QBYTEARRAY_MAX) {
+    if (Q_UNLIKELY(maxSize >= QBYTEARRAY_MAX)) {
         qWarning("QIODevice::read: maxSize argument exceeds QByteArray size limit");
         maxSize = QBYTEARRAY_MAX - 1;
     }

@@ -236,7 +236,6 @@ private:
     inline void ensurePen() { ensurePen(state()->pen); }
 
     void updateOutlineMapper();
-    inline void ensureOutlineMapper();
 
     void updateRasterState();
     inline void ensureRasterState() {
@@ -262,9 +261,6 @@ public:
 
     void systemStateChanged();
 
-    void drawImage(const QPointF &pt, const QImage &img, SrcOverBlendFunc func,
-                   const QRect &clip, int alpha, const QRect &sr = QRect());
-
     QTransform brushMatrix() const {
         Q_Q(const QRasterPaintEngine);
         const QRasterPaintEngineState *s = q->state();
@@ -274,9 +270,8 @@ public:
     }
 
     bool isUnclipped_normalized(const QRect &rect) const;
-    bool isUnclipped(const QRect &rect, int penWidth) const;
-    bool isUnclipped(const QRectF &rect, int penWidth) const;
-    ProcessSpans getPenFunc(const QRectF &rect, const QSpanData *data) const;
+    bool isUnclipped(const QRect &rect) const;
+    bool isUnclipped(const QRectF &rect) const;
     ProcessSpans getBrushFunc(const QRect &rect, const QSpanData *data) const;
     ProcessSpans getBrushFunc(const QRectF &rect, const QSpanData *data) const;
 
@@ -289,7 +284,6 @@ public:
     QScopedPointer<QRasterBuffer>  rasterBuffer;
 
     QRect deviceRect;
-    QRect deviceRectUnclipped;
 
     QStroker basicStroker;
     QScopedPointer<QDashStroker> dashStroker;
@@ -306,7 +300,6 @@ public:
     int deviceDepth;
 
     bool mono_surface;
-    bool outlinemapper_xform_dirty;
 
     QScopedPointer<QRasterizer> rasterizer;
 };
@@ -436,11 +429,6 @@ private:
     int bytes_per_pixel;
     uchar *m_buffer;
 };
-
-inline void QRasterPaintEngine::ensureOutlineMapper() {
-    if (d_func()->outlinemapper_xform_dirty)
-        updateOutlineMapper();
-}
 
 inline const QClipData *QRasterPaintEnginePrivate::clip() const {
     Q_Q(const QRasterPaintEngine);

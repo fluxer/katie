@@ -65,8 +65,6 @@ struct QVectorTypedData : private QVectorData
     static inline void free(QVectorTypedData<T> *x) { QVectorData::freeData(static_cast<QVectorData *>(x)); }
 };
 
-class QRegion;
-
 template <typename T>
 class Q_CORE_EXPORT QVector
 {
@@ -269,8 +267,6 @@ public:
     inline std::vector<T> toStdVector() const
     { std::vector<T> tmp; tmp.reserve(size()); qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
 private:
-    friend class QRegion; // Optimization for QRegion::rects()
-
     void detach_helper();
     QVectorData *malloc(int alloc);
     void realloc(int size, int alloc);
@@ -448,15 +444,10 @@ void QVector<T>::realloc(int asize, int aalloc)
                 x.d->size = d->size;
             }
         } else {
-            QT_TRY {
-                QVectorData *mem = QVectorData::reallocate(d, sizeOfTypedData() + (aalloc - 1) * sizeof(T));
-                Q_CHECK_PTR(mem);
-                x.d = d = mem;
-                x.d->size = d->size;
-            } QT_CATCH (const std::bad_alloc &) {
-                if (aalloc > d->alloc) // ignore the error in case we are just shrinking.
-                    QT_RETHROW;
-            }
+            QVectorData *mem = QVectorData::reallocate(d, sizeOfTypedData() + (aalloc - 1) * sizeof(T));
+            Q_CHECK_PTR(mem);
+            x.d = d = mem;
+            x.d->size = d->size;
         }
         x.d->ref = 1;
         x.d->alloc = aalloc;

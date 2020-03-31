@@ -2422,7 +2422,7 @@ bool QRegExpCharClass::in(QChar ch) const
 
     for (int i = 0; i < size; ++i) {
         const QRegExpCharClassRange &range = r.at(i);
-        if (uint(uc - range.from) < uint(r.at(i).len))
+        if (uint(uc - range.from) < uint(range.len))
             return !n;
     }
     return n;

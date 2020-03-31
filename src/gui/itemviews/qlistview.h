@@ -131,8 +131,6 @@ Q_SIGNALS:
 protected:
     QListView(QListViewPrivate &, QWidget *parent = Q_NULLPTR);
 
-    bool event(QEvent *e);
-
     void scrollContentsBy(int dx, int dy);
 
     void resizeContents(int width, int height);

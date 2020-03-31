@@ -78,7 +78,6 @@ QBearerEngine *QConnmanEnginePlugin::create(const QString &key) const
     return 0;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QConnmanEnginePlugin)
 Q_EXPORT_PLUGIN2(qconnmanbearer, QConnmanEnginePlugin)
 
 QT_END_NAMESPACE

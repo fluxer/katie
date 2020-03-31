@@ -43,7 +43,7 @@ struct Q_SCRIPT_EXPORT QScriptExtensionInterface
 QT_END_NAMESPACE
 
 Q_DECLARE_INTERFACE(QScriptExtensionInterface,
-    "com.trolltech.Qt.QScriptExtensionInterface/1.0")
+    "Katie.QScriptExtensionInterface/1.0")
 
 QT_END_HEADER
 

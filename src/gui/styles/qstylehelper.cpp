@@ -34,7 +34,6 @@
 #include "qstyleoption.h"
 #include "qpainter.h"
 #include "qpixmapcache.h"
-#include "qmath_p.h"
 #include "qstyle_p.h"
 #include "qmath.h"
 #include "qpen.h"
@@ -84,12 +83,12 @@ static QPointF calcRadialPos(const QStyleOptionSlider *dial, qreal offset)
     const int currentSliderPosition = dial->upsideDown ? dial->sliderPosition : (dial->maximum - dial->sliderPosition);
     qreal a = 0;
     if (dial->maximum == dial->minimum)
-        a = Q_PI / 2;
+        a = M_PI / 2;
     else if (dial->dialWrapping)
-        a = Q_PI * 3 / 2 - (currentSliderPosition - dial->minimum) * 2 * Q_PI
+        a = M_PI * 3 / 2 - (currentSliderPosition - dial->minimum) * 2 * M_PI
             / (dial->maximum - dial->minimum);
     else
-        a = (Q_PI * 8 - (currentSliderPosition - dial->minimum) * 10 * Q_PI
+        a = (M_PI * 8 - (currentSliderPosition - dial->minimum) * 10 * M_PI
             / (dial->maximum - dial->minimum)) / 6;
     qreal xc = width / 2.0;
     qreal yc = height / 2.0;
@@ -100,7 +99,7 @@ static QPointF calcRadialPos(const QStyleOptionSlider *dial, qreal offset)
 
 qreal angle(const QPointF &p1, const QPointF &p2)
 {
-    static const qreal rad_factor = 180 / Q_PI;
+    static const qreal rad_factor = 180 / M_PI;
     qreal _angle = 0;
 
     if (p1.x() == p2.x()) {
@@ -154,8 +153,8 @@ QPolygonF calcLines(const QStyleOptionSlider *dial)
     poly.resize(2 + 2 * notches);
     int smallLineSize = bigLineSize / 2;
     for (int i = 0; i <= notches; ++i) {
-        qreal angle = dial->dialWrapping ? Q_PI * 3 / 2 - i * 2 * Q_PI / notches
-                  : (Q_PI * 8 - i * 10 * Q_PI / notches) / 6;
+        qreal angle = dial->dialWrapping ? M_PI * 3 / 2 - i * 2 * M_PI / notches
+                  : (M_PI * 8 - i * 10 * M_PI / notches) / 6;
         qreal s = qSin(angle);
         qreal c = qCos(angle);
         if (i == 0 || (((ns * i) % (dial->pageStep ? dial->pageStep : 1)) == 0)) {

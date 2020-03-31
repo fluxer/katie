@@ -115,10 +115,6 @@ public:
 
     QDeclarativeEnginePrivate *p;
 
-    // Used by DOM Core 3 API
-    QScriptClass *namedNodeMapClass;
-    QScriptClass *nodeListClass;
-
     QUrl baseUrl;
 
     virtual QNetworkAccessManager *networkAccessManager();

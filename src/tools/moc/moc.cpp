@@ -33,7 +33,6 @@
 
 #include "moc.h"
 #include "generator.h"
-#include "qdatetime.h"
 #include "utils.h"
 
 // for normalizeTypeInternal

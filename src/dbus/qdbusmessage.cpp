@@ -245,10 +245,8 @@ QDBusMessage QDBusMessagePrivate::makeLocal(const QDBusConnectionPrivate &conn,
 
     // determine if we are carrying any complex types
     QString computedSignature;
-    QVariantList::ConstIterator it = asSent.d_ptr->arguments.constBegin();
-    QVariantList::ConstIterator end = asSent.d_ptr->arguments.constEnd();
-    for ( ; it != end; ++it) {
-        int id = it->userType();
+    foreach (const QVariant &it, asSent.d_ptr->arguments) {
+        int id = it.userType();
         const char *signature = QDBusMetaType::typeToSignature(id);
         if ((id != QVariant::StringList && id != QVariant::ByteArray &&
              qstrlen(signature) != 1) || id == qMetaTypeId<QDBusVariant>()) {

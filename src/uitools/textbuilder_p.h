@@ -50,7 +50,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QDir;
 class QVariant;
 
 #ifdef QFORMINTERNAL_NAMESPACE

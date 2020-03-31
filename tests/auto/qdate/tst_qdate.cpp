@@ -751,14 +751,14 @@ void tst_QDate::yearsZeroToNinetyNine()
 void tst_QDate::toString()
 {
     QDate date(1974,12,1);
-    QCOMPARE(date.toString(Qt::SystemLocaleDate),
+    QCOMPARE(date.toString(Qt::SystemLocaleShortDate),
                 QLocale::system().toString(date, QLocale::ShortFormat));
-    QCOMPARE(date.toString(Qt::LocaleDate),
+    QCOMPARE(date.toString(Qt::DefaultLocaleShortDate),
                 QLocale().toString(date, QLocale::ShortFormat));
     QLocale::setDefault(QLocale::German);
-    QCOMPARE(date.toString(Qt::SystemLocaleDate),
+    QCOMPARE(date.toString(Qt::SystemLocaleShortDate),
                 QLocale::system().toString(date, QLocale::ShortFormat));
-    QCOMPARE(date.toString(Qt::LocaleDate),
+    QCOMPARE(date.toString(Qt::DefaultLocaleShortDate),
                 QLocale().toString(date, QLocale::ShortFormat));
 }
 

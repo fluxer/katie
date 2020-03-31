@@ -35,7 +35,7 @@
 #include "formbuilderextra_p.h"
 #include "resourcebuilder_p.h"
 #include "textbuilder_p.h"
-#include "ui4_p.h"
+#include "ui4.h"
 #include "properties_p.h"
 
 #include <QtCore/QVariant>
@@ -103,7 +103,7 @@ using namespace QFormInternal;
 class QFriendlyLayout: public QLayout
 {
 public:
-    inline QFriendlyLayout() { Q_ASSERT(0); }
+    inline QFriendlyLayout() { Q_ASSERT(false); }
 
 #ifdef QFORMINTERNAL_NAMESPACE
     friend class QFormInternal::QAbstractFormBuilder;
@@ -924,18 +924,15 @@ QLayoutItem *QAbstractFormBuilder::create(DomLayoutItem *ui_layoutItem, QLayout 
 */
 void QAbstractFormBuilder::applyProperties(QObject *o, const QList<DomProperty*> &properties)
 {
-    typedef QList<DomProperty*> DomPropertyList;
-
     if (properties.empty())
         return;
 
     QFormBuilderExtra *fb = QFormBuilderExtra::instance(this);
 
-    const DomPropertyList::const_iterator cend = properties.constEnd();
-    for (DomPropertyList::const_iterator it = properties.constBegin(); it != cend; ++it) {
-        const QVariant v = toVariant(o->metaObject(), *it);
+    foreach (const DomProperty* it, properties) {
+        const QVariant v = toVariant(o->metaObject(), it);
         if (!v.isNull()) {
-            const  QString attributeName = (*it)->attributeName();
+            const  QString attributeName = it->attributeName();
             if (!fb->applyPropertyInternally(o, attributeName, v))
                 o->setProperty(attributeName.toUtf8(), v);
         }
@@ -958,7 +955,7 @@ bool QAbstractFormBuilder::applyPropertyInternally(QObject *o, const QString &pr
     \internal
 */
 
-QVariant QAbstractFormBuilder::toVariant(const QMetaObject *meta, DomProperty *p)
+QVariant QAbstractFormBuilder::toVariant(const QMetaObject *meta, const DomProperty *p)
 {
     return domPropertyToVariant(this, meta, p);
 }
@@ -979,11 +976,7 @@ void QAbstractFormBuilder::setupColorGroup(QPalette &palette, QPalette::ColorGro
 
     // new format
     const QMetaEnum colorRole_enum = metaEnum<QAbstractFormBuilderGadget>("colorRole");
-
-    const QList<DomColorRole*> colorRoles = group->elementColorRole();
-    for (int role = 0; role < colorRoles.size(); ++role) {
-        const DomColorRole *colorRole = colorRoles.at(role);
-
+    foreach (const DomColorRole *colorRole, group->elementColorRole()) {
         if (colorRole->hasAttributeRole()) {
             const int r = colorRole_enum.keyToValue(colorRole->attributeRole().toLatin1());
             if (r != -1) {
@@ -1612,17 +1605,11 @@ QList<DomProperty*> QAbstractFormBuilder::computeProperties(QObject *obj)
 
     const QMetaObject *meta = obj->metaObject();
 
-    QHash<QByteArray, bool> properties;
     const int propertyCount = meta->propertyCount();
-    for(int i=0; i < propertyCount; ++i)
-        properties.insert(meta->property(i).name(), true);
-
-    const QList<QByteArray> propertyNames = properties.keys();
-
-    const int propertyNamesCount = propertyNames.size();
-    for(int i=0; i<propertyNamesCount ; ++i) {
-        const QString pname = QString::fromUtf8(propertyNames.at(i));
-        const QMetaProperty prop = meta->property(meta->indexOfProperty(pname.toUtf8()));
+    for (int i = 0; i < propertyCount; i++) {
+        const QByteArray propname = meta->property(i).name();
+        const QString pname = QString::fromUtf8(propname);
+        const QMetaProperty prop = meta->property(meta->indexOfProperty(propname));
 
         if (!prop.isWritable() || !checkProperty(obj, QLatin1String(prop.name())))
             continue;

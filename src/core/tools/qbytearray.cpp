@@ -55,7 +55,7 @@
 #include <zstd_errors.h>
 
 // ZSTD_getErrorString and ZSTD_getErrorCode are not exported in versions prior to v1.1.3
-#if !defined(QT_VISIBILITY_AVAILABLE) || (ZSTD_VERSION_MAJOR + ZSTD_VERSION_MINOR + ZSTD_VERSION_RELEASE) >= 5
+#if !defined(QT_VISIBILITY_AVAILABLE) || (ZSTD_VERSION_NUMBER >= 10103)
 #  define QT_USE_ZSTD_ERROR
 #endif
 
@@ -112,7 +112,7 @@ int qAllocMore(int alloc, int extra)
     deleted using \c delete[].
 */
 
-char *qstrdup(const char *src)
+char* qstrdup(const char *src)
 {
     if (!src)
         return Q_NULLPTR;
@@ -132,7 +132,7 @@ char *qstrdup(const char *src)
     \sa qstrncpy()
 */
 
-char *qstrcpy(char *dst, const char *src)
+char* qstrcpy(char *dst, const char *src)
 {
     if (!src)
         return Q_NULLPTR;
@@ -158,7 +158,7 @@ char *qstrcpy(char *dst, const char *src)
     \sa qstrcpy()
 */
 
-char *qstrncpy(char *dst, const char *src, uint len)
+char* qstrncpy(char *dst, const char *src, uint len)
 {
     if (!src || !dst)
         return Q_NULLPTR;
@@ -191,7 +191,8 @@ char *qstrncpy(char *dst, const char *src, uint len)
     \sa qstrlen()
 */
 
-/*!
+/*! \fn int qstrcmp(const char *str1, const char *str2);
+
     \relates QByteArray
 
     A safe \c strcmp() function.
@@ -207,11 +208,6 @@ char *qstrncpy(char *dst, const char *src, uint len)
 
     \sa qstrncmp(), qstricmp(), qstrnicmp(), {8-bit Character Comparisons}
 */
-int qstrcmp(const char *str1, const char *str2)
-{
-    return (str1 && str2) ? strcmp(str1, str2)
-        : (str1 ? 1 : (str2 ? -1 : 0));
-}
 
 /*! \fn int qstrncmp(const char *str1, const char *str2, uint len);
 
@@ -233,7 +229,9 @@ int qstrcmp(const char *str1, const char *str2)
     \sa qstrcmp(), qstricmp(), qstrnicmp(), {8-bit Character Comparisons}
 */
 
-/*! \relates QByteArray
+/*! \fn int qstricmp(const char *str1, const char *str2)
+
+   \relates QByteArray
 
     A safe \c stricmp() function.
 
@@ -252,21 +250,9 @@ int qstrcmp(const char *str1, const char *str2)
     \sa qstrcmp(), qstrncmp(), qstrnicmp(), {8-bit Character Comparisons}
 */
 
-int qstricmp(const char *str1, const char *str2)
-{
-    const uchar *s1 = reinterpret_cast<const uchar *>(str1);
-    const uchar *s2 = reinterpret_cast<const uchar *>(str2);
-    int res;
-    uchar c;
-    if (!s1 || !s2)
-        return s1 ? 1 : (s2 ? -1 : 0);
-    for (; !(res = (c = QChar::toLower((ushort)*s1)) - QChar::toLower((ushort)*s2)); s1++, s2++)
-        if (!c)                                // strings are equal
-            break;
-    return res;
-}
+/*! \fn int qstrnicmp(const char *str1, const char *str2, uint len)
 
-/*! \relates QByteArray
+   \relates QByteArray
 
     A safe \c strnicmp() function.
 
@@ -285,23 +271,6 @@ int qstricmp(const char *str1, const char *str2)
 
     \sa qstrcmp(), qstrncmp(), qstricmp(), {8-bit Character Comparisons}
 */
-
-int qstrnicmp(const char *str1, const char *str2, uint len)
-{
-    const uchar *s1 = reinterpret_cast<const uchar *>(str1);
-    const uchar *s2 = reinterpret_cast<const uchar *>(str2);
-    int res;
-    uchar c;
-    if (!s1 || !s2)
-        return s1 ? 1 : (s2 ? -1 : 0);
-    for (; len--; s1++, s2++) {
-        if ((res = (c = QChar::toLower((ushort)*s1)) - QChar::toLower((ushort)*s2)))
-            return res;
-        if (!c)                                // strings are equal
-            break;
-    }
-    return 0;
-}
 
 // the CRC table below is created by the following piece of code
 #if 0
@@ -369,6 +338,26 @@ quint16 qChecksum(const char *data, uint len)
         crc = ((crc >> 4) & 0x0fff) ^ crc_tbl[((crc ^ c) & 15)];
     }
     return ~crc & 0xffff;
+}
+
+/*!
+    \relates QByteArray
+
+    Returns the CRC-32 checksum of the first \a len bytes of \a data.
+
+    The checksum is independent of the byte order (endianness).
+*/
+quint32 qChecksum32(const char *data, uint len)
+{
+#ifndef QT_NO_COMPRESS
+    quint32 crc_32 = ::crc32(0, 0, 0);
+    return ::crc32(crc_32, reinterpret_cast<const uchar *>(data), len);
+#else
+    Q_UNUSED(data)
+    Q_UNUSED(len)
+    Q_ASSERT_X(false, "qChecksum32", "Function is a stub!");
+    return 0;
+#endif
 }
 
 /*!

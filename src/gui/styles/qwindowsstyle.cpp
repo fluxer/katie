@@ -57,7 +57,6 @@
 #include "qpixmapcache.h"
 #include "qwizard.h"
 #include "qlistview.h"
-#include "qmath_p.h"
 #include "qmath.h"
 #include "qstylehelper_p.h"
 #include "qguicommon_p.h"

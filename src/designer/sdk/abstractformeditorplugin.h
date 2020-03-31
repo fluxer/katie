@@ -59,7 +59,7 @@ public:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QDesignerFormEditorPluginInterface, "com.trolltech.Qt.Designer.QDesignerFormEditorPluginInterface")
+Q_DECLARE_INTERFACE(QDesignerFormEditorPluginInterface, "Katie.Designer.QDesignerFormEditorPluginInterface")
 
 QT_END_HEADER
 

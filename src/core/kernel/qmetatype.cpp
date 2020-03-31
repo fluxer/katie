@@ -467,8 +467,7 @@ static int qMetaTypeCustomType_unlocked(const char *typeName, int length)
 int QMetaType::registerType(const char *typeName, Destructor destructor,
                             Constructor constructor)
 {
-    QVector<QCustomTypeInfo> *ct = customTypes();
-    if (!ct || !typeName || !destructor || !constructor)
+    if (!typeName || !destructor || !constructor)
         return -1;
 
 #ifdef QT_NO_QOBJECT
@@ -482,6 +481,7 @@ int QMetaType::registerType(const char *typeName, Destructor destructor,
 
     if (!idx) {
         QWriteLocker locker(customTypesLock());
+        QVector<QCustomTypeInfo> *ct = customTypes();
         idx = qMetaTypeCustomType_unlocked(normalizedTypeName.constData(),
                                            normalizedTypeName.size());
         if (!idx) {
@@ -504,8 +504,7 @@ int QMetaType::registerType(const char *typeName, Destructor destructor,
 */
 int QMetaType::registerTypedef(const char* typeName, int aliasId)
 {
-    QVector<QCustomTypeInfo> *ct = customTypes();
-    if (!ct || !typeName)
+    if (!typeName)
         return -1;
 
 #ifdef QT_NO_QOBJECT
@@ -523,6 +522,7 @@ int QMetaType::registerTypedef(const char* typeName, int aliasId)
     }
 
     QWriteLocker locker(customTypesLock());
+    QVector<QCustomTypeInfo> *ct = customTypes();
     idx = qMetaTypeCustomType_unlocked(normalizedTypeName.constData(),
                                            normalizedTypeName.size());
 
@@ -547,8 +547,7 @@ int QMetaType::registerTypedef(const char* typeName, int aliasId)
  */
 void QMetaType::unregisterType(const char *typeName)
 {
-    QVector<QCustomTypeInfo> *ct = customTypes();
-    if (!ct || !typeName)
+    if (!typeName)
         return;
 
 #ifdef QT_NO_QOBJECT
@@ -557,6 +556,7 @@ void QMetaType::unregisterType(const char *typeName)
     NS(QByteArray) normalizedTypeName = QMetaObject::normalizedType(typeName);
 #endif
     QWriteLocker locker(customTypesLock());
+    QVector<QCustomTypeInfo> *ct = customTypes();
     for (int v = 0; v < ct->count(); ++v) {
         if (ct->at(v).typeName == typeName) {
             QCustomTypeInfo &inf = (*ct)[v];

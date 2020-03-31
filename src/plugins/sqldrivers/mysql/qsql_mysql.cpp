@@ -52,16 +52,9 @@
 
 Q_DECLARE_METATYPE(MYSQL_RES*)
 Q_DECLARE_METATYPE(MYSQL*)
-
-#if MYSQL_VERSION_ID >= 40108
 Q_DECLARE_METATYPE(MYSQL_STMT*)
-#endif
 
-#if MYSQL_VERSION_ID >= 40100
-#  define Q_CLIENT_MULTI_STATEMENTS CLIENT_MULTI_STATEMENTS
-#else
-#  define Q_CLIENT_MULTI_STATEMENTS 0
-#endif
+#define Q_CLIENT_MULTI_STATEMENTS CLIENT_MULTI_STATEMENTS
 
 QT_BEGIN_NAMESPACE
 
@@ -157,9 +150,7 @@ class QMYSQLResultPrivate : public QObject
 public:
     QMYSQLResultPrivate(const QMYSQLDriver* dp, const QMYSQLResult* d) : driver(dp), result(Q_NULLPTR),
         q(d), rowsAffected(0), hasBlobs(false)
-#if MYSQL_VERSION_ID >= 40108
         , stmt(Q_NULLPTR), meta(Q_NULLPTR), inBinds(Q_NULLPTR), outBinds(Q_NULLPTR)
-#endif
         , preparedQuery(false)
         {
             connect(dp, SIGNAL(destroyed()), this, SLOT(driverDestroyed()));
@@ -191,13 +182,11 @@ public:
 
     QVector<QMyField> fields;
 
-#if MYSQL_VERSION_ID >= 40108
     MYSQL_STMT* stmt;
     MYSQL_RES* meta;
 
     MYSQL_BIND *inBinds;
     MYSQL_BIND *outBinds;
-#endif
 
     bool preparedQuery;
 
@@ -208,11 +197,9 @@ private Q_SLOTS:
 #ifndef QT_NO_TEXTCODEC
 static QTextCodec* codec(MYSQL* mysql)
 {
-#if MYSQL_VERSION_ID >= 32321
     QTextCodec* heuristicCodec = QTextCodec::codecForName(mysql_character_set_name(mysql));
     if (heuristicCodec)
         return heuristicCodec;
-#endif
     return QTextCodec::codecForLocale();
 }
 #endif // QT_NO_TEXTCODEC
@@ -289,8 +276,6 @@ static QSqlField qToField(MYSQL_FIELD *field, QTextCodec *tc)
     f.setAutoValue(field->flags & AUTO_INCREMENT_FLAG);
     return f;
 }
-
-#if MYSQL_VERSION_ID >= 40108
 
 static QSqlError qMakeStmtError(const QString& err, QSqlError::ErrorType type,
                             MYSQL_STMT* stmt)
@@ -383,7 +368,6 @@ bool QMYSQLResultPrivate::bindInValues()
     }
     return true;
 }
-#endif
 
 QMYSQLResult::QMYSQLResult(const QMYSQLDriver* db)
 : QSqlResult(db), d(new QMYSQLResultPrivate(db, this))
@@ -398,10 +382,8 @@ QMYSQLResult::~QMYSQLResult()
 
 QVariant QMYSQLResult::handle() const
 {
-#if MYSQL_VERSION_ID >= 40108
     if(d->preparedQuery)
         return d->meta ? QVariant::fromValue(d->meta) : qVariantFromValue(d->stmt);
-#endif
     return QVariant::fromValue(d->result);
 }
 
@@ -412,15 +394,12 @@ void QMYSQLResult::cleanup()
 
 // must iterate trough leftover result sets from multi-selects or stored procedures
 // if this isn't done subsequent queries will fail with "Commands out of sync"
-#if MYSQL_VERSION_ID >= 40100
     while (d->driver && d->driver->d->mysql && mysql_next_result(d->driver->d->mysql) == 0) {
         MYSQL_RES *res = mysql_store_result(d->driver->d->mysql);
         if (res)
             mysql_free_result(res);
     }
-#endif
 
-#if MYSQL_VERSION_ID >= 40108
     if (d->stmt) {
         if (mysql_stmt_close(d->stmt))
             qWarning("QMYSQLResult::cleanup: unable to free statement handle");
@@ -444,7 +423,6 @@ void QMYSQLResult::cleanup()
         delete[] d->inBinds;
         d->inBinds = 0;
     }
-#endif
 
     d->hasBlobs = false;
     d->fields.clear();
@@ -470,7 +448,6 @@ bool QMYSQLResult::fetch(int i)
     if (at() == i)
         return true;
     if (d->preparedQuery) {
-#if MYSQL_VERSION_ID >= 40108
         mysql_stmt_data_seek(d->stmt, i);
 
         int rc = mysql_stmt_fetch(d->stmt);
@@ -484,9 +461,6 @@ bool QMYSQLResult::fetch(int i)
                          "Unable to fetch data"), QSqlError::StatementError, d->stmt));
             return false;
         }
-#else
-        return false;
-#endif
     } else {
         mysql_data_seek(d->result, i);
         d->row = mysql_fetch_row(d->result);
@@ -503,7 +477,6 @@ bool QMYSQLResult::fetchNext()
     if(!d->driver)
         return false;
     if (d->preparedQuery) {
-#if MYSQL_VERSION_ID >= 40108
         int rc = mysql_stmt_fetch(d->stmt);
         if (rc) {
 #ifdef MYSQL_DATA_TRUNCATED
@@ -515,9 +488,6 @@ bool QMYSQLResult::fetchNext()
                                     "Unable to fetch data"), QSqlError::StatementError, d->stmt));
             return false;
         }
-#else
-        return false;
-#endif
     } else {
         d->row = mysql_fetch_row(d->result);
         if (!d->row)
@@ -539,11 +509,7 @@ bool QMYSQLResult::fetchLast()
 
     my_ulonglong numRows;
     if (d->preparedQuery) {
-#if MYSQL_VERSION_ID >= 40108
         numRows = mysql_stmt_num_rows(d->stmt);
-#else
-        numRows = 0;
-#endif
     } else {
         numRows = mysql_num_rows(d->result);
     }
@@ -701,11 +667,7 @@ int QMYSQLResult::size() const
 {
     if (d->driver && isSelect()) {
         if (d->preparedQuery) {
-#if MYSQL_VERSION_ID >= 40108
             return mysql_stmt_num_rows(d->stmt);
-#else
-            return -1;
-#endif
         }
         return int(mysql_num_rows(d->result));
     }
@@ -723,11 +685,9 @@ QVariant QMYSQLResult::lastInsertId() const
         return QVariant();
 
     if (d->preparedQuery) {
-#if MYSQL_VERSION_ID >= 40108
         quint64 id = mysql_stmt_insert_id(d->stmt);
         if (id)
             return QVariant(id);
-#endif
     } else {
         quint64 id = mysql_insert_id(d->driver->d->mysql);
         if (id)
@@ -742,11 +702,7 @@ QSqlRecord QMYSQLResult::record() const
     if (!isActive() || !isSelect() || !d->driver)
         return info;
 
-#if MYSQL_VERSION_ID >= 40108
     MYSQL_RES *res = d->preparedQuery ? d->meta : d->result;
-#else
-    MYSQL_RES *res = d->result;
-#endif
 
     if (!mysql_errno(d->driver->d->mysql)) {
         mysql_field_seek(res, 0);
@@ -764,7 +720,7 @@ bool QMYSQLResult::nextResult()
 {
     if (!d->driver)
         return false;
-#if MYSQL_VERSION_ID >= 40100 
+
     setAt(-1);
     setActive(false);
 
@@ -807,9 +763,6 @@ bool QMYSQLResult::nextResult()
 
     setActive(true);
     return true;
-#else
-    return false;
-#endif
 }
 
 void QMYSQLResult::virtual_hook(int id, void *data)
@@ -823,9 +776,6 @@ void QMYSQLResult::virtual_hook(int id, void *data)
         QSqlResult::virtual_hook(id, data);
     }
 }
-
-
-#if MYSQL_VERSION_ID >= 40108
 
 static MYSQL_TIME *toMySqlDate(QDate date, QTime time, QVariant::Type type)
 {
@@ -854,7 +804,6 @@ bool QMYSQLResult::prepare(const QString& query)
 {
     if(!d->driver)
         return false;
-#if MYSQL_VERSION_ID >= 40108
     cleanup();
     if (!d->driver->d->preparedQuerysEnabled)
         return QSqlResult::prepare(query);
@@ -886,9 +835,6 @@ bool QMYSQLResult::prepare(const QString& query)
     setSelect(d->bindInValues());
     d->preparedQuery = true;
     return true;
-#else
-    return false;
-#endif
 }
 
 bool QMYSQLResult::exec()
@@ -1055,7 +1001,7 @@ bool QMYSQLResult::exec()
     setActive(true);
     return true;
 }
-#endif
+
 /////////////////////////////////////////////////////////
 
 static int qMySqlConnectionCount = 0;
@@ -1064,30 +1010,26 @@ static bool qMySqlInitHandledByUser = false;
 static inline void qLibraryInit()
 {
 #ifndef Q_NO_MYSQL_EMBEDDED
-# if MYSQL_VERSION_ID >= 40000
     if (qMySqlInitHandledByUser || qMySqlConnectionCount > 1)
         return;
 
-# if (MYSQL_VERSION_ID >= 40110 && MYSQL_VERSION_ID < 50000) || MYSQL_VERSION_ID >= 50003
+# if MYSQL_VERSION_ID < 50000 || MYSQL_VERSION_ID >= 50003
     if (mysql_library_init(0, Q_NULLPTR, Q_NULLPTR)) {
 # else
     if (mysql_server_init(0, Q_NULLPTR, Q_NULLPTR)) {
 # endif
         qWarning("QMYSQLDriver::qServerInit: unable to start server.");
     }
-# endif // MYSQL_VERSION_ID
 #endif // Q_NO_MYSQL_EMBEDDED
 }
 
 static inline void qLibraryEnd()
 {
 #ifndef Q_NO_MYSQL_EMBEDDED
-# if MYSQL_VERSION_ID > 40000
-#  if (MYSQL_VERSION_ID >= 40110 && MYSQL_VERSION_ID < 50000) || MYSQL_VERSION_ID >= 50003
+# if MYSQL_VERSION_ID < 50000 || MYSQL_VERSION_ID >= 50003
     mysql_library_end();
-#  else
+# else
     mysql_server_end();
-#  endif
 # endif
 #endif
 }
@@ -1163,17 +1105,9 @@ bool QMYSQLDriver::hasFeature(DriverFeature f) const
         return true;
     case PreparedQueries:
     case PositionalPlaceholders:
-#if MYSQL_VERSION_ID >= 40108
         return d->preparedQuerysEnabled;
-#else
-        return false;
-#endif
     case MultipleResultSets:
-#if MYSQL_VERSION_ID >= 40100
         return true;
-#else
-        return false;
-#endif
     }
     return false;
 }
@@ -1280,7 +1214,7 @@ bool QMYSQLDriver::open(const QString& db,
         return false;
     }
 
-#if (MYSQL_VERSION_ID >= 40113 && MYSQL_VERSION_ID < 50000) || MYSQL_VERSION_ID >= 50007
+#if MYSQL_VERSION_ID < 50000 || MYSQL_VERSION_ID >= 50007
     // force the communication to be utf8
     mysql_set_character_set(d->mysql, "utf8");
 #endif
@@ -1288,12 +1222,8 @@ bool QMYSQLDriver::open(const QString& db,
     d->tc = codec(d->mysql);
 #endif
 
-#if MYSQL_VERSION_ID >= 40108
     d->preparedQuerysEnabled = mysql_get_client_version() >= 40108
                         && mysql_get_server_version(d->mysql) >= 40100;
-#else
-    d->preparedQuerysEnabled = false;
-#endif
 
     mysql_thread_init();
 
@@ -1322,10 +1252,7 @@ QSqlResult *QMYSQLDriver::createResult() const
 QStringList QMYSQLDriver::tables(QSql::TableType type) const
 {
     QStringList tl;
-#if MYSQL_VERSION_ID >= 40100
-    if( mysql_get_server_version(d->mysql) < 50000)
-    {
-#endif
+    if (mysql_get_server_version(d->mysql) < 50000) {
         if (!isOpen())
             return tl;
         if (!(type & QSql::Tables))
@@ -1342,7 +1269,6 @@ QStringList QMYSQLDriver::tables(QSql::TableType type) const
             i++;
         }
         mysql_free_result(tableRes);
-#if MYSQL_VERSION_ID >= 40100
     } else {
         QSqlQuery q(createResult());
         if(type & QSql::Tables) {
@@ -1360,7 +1286,6 @@ QStringList QMYSQLDriver::tables(QSql::TableType type) const
                 tl.append(q.value(0).toString());
         }
     }
-#endif
     return tl;
 }
 

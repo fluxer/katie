@@ -193,7 +193,7 @@ QSslCipher QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(const SSL_CIPHER
         ciph.d->bits = cipher->strength_bits;
         ciph.d->supportedBits = cipher->alg_bits;
 #else
-	ciph.d->bits = SSL_CIPHER_get_bits(cipher, &ciph.d->supportedBits);
+        ciph.d->bits = SSL_CIPHER_get_bits(cipher, &ciph.d->supportedBits);
 #endif
     }
     return ciph;
@@ -582,7 +582,7 @@ void QSslSocketPrivate::resetDefaultCiphers()
         if (cipher) {
 
 #if OPENSSL_VERSION_NUMBER < 0x10100000L
-	  if (cipher->valid) {
+            if (cipher->valid) {
 #endif
                 QSslCipher ciph = QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(cipher);
                 if (!ciph.isNull()) {

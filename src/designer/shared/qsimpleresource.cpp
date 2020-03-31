@@ -37,7 +37,7 @@
 
 #include <formscriptrunner_p.h>
 #include <properties_p.h>
-#include <ui4_p.h>
+#include <ui4.h>
 
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractlanguage.h>

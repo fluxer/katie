@@ -91,24 +91,24 @@ class QAbstractFormBuilderGadget: public QWidget
     Q_PROPERTY(QLocale::Language language READ fakeLanguage)
     Q_PROPERTY(QLocale::Country country READ fakeCountry)
 public:
-    QAbstractFormBuilderGadget() { Q_ASSERT(0); }
+    QAbstractFormBuilderGadget() { Q_ASSERT(false); }
 
-    Qt::Orientation fakeOrientation() const     { Q_ASSERT(0); return Qt::Horizontal; }
-    QSizePolicy::Policy fakeSizeType() const    { Q_ASSERT(0); return QSizePolicy::Expanding; }
-    QPalette::ColorGroup fakeColorGroup() const { Q_ASSERT(0); return static_cast<QPalette::ColorGroup>(0); }
-    QPalette::ColorRole fakeColorRole() const   { Q_ASSERT(0); return static_cast<QPalette::ColorRole>(0); }
-    QFont::StyleStrategy fakeStyleStrategy() const     { Q_ASSERT(0); return QFont::PreferDefault; }
-    Qt::CursorShape fakeCursorShape() const     { Q_ASSERT(0); return Qt::ArrowCursor; }
-    Qt::BrushStyle fakeBrushStyle() const       { Q_ASSERT(0); return Qt::NoBrush; }
-    Qt::ToolBarArea fakeToolBarArea() const {  Q_ASSERT(0); return Qt::NoToolBarArea; }
-    QGradient::Type fakeGradientType() const    { Q_ASSERT(0); return QGradient::NoGradient; }
-    QGradient::Spread fakeGradientSpread() const  { Q_ASSERT(0); return QGradient::PadSpread; }
-    QGradient::CoordinateMode fakeGradientCoordinate() const  { Q_ASSERT(0); return QGradient::LogicalMode; }
-    QLocale::Language fakeLanguage() const  { Q_ASSERT(0); return QLocale::C; }
-    QLocale::Country fakeCountry() const  { Q_ASSERT(0); return QLocale::AnyCountry; }
-    Qt::ItemFlags fakeItemFlags() const         { Q_ASSERT(0); return Qt::NoItemFlags; }
-    Qt::CheckState fakeCheckState() const       { Q_ASSERT(0); return Qt::Unchecked; }
-    Qt::Alignment fakeAlignment() const         { Q_ASSERT(0); return Qt::AlignLeft; }
+    Qt::Orientation fakeOrientation() const     { Q_ASSERT(false); return Qt::Horizontal; }
+    QSizePolicy::Policy fakeSizeType() const    { Q_ASSERT(false); return QSizePolicy::Expanding; }
+    QPalette::ColorGroup fakeColorGroup() const { Q_ASSERT(false); return static_cast<QPalette::ColorGroup>(0); }
+    QPalette::ColorRole fakeColorRole() const   { Q_ASSERT(false); return static_cast<QPalette::ColorRole>(0); }
+    QFont::StyleStrategy fakeStyleStrategy() const     { Q_ASSERT(false); return QFont::PreferDefault; }
+    Qt::CursorShape fakeCursorShape() const     { Q_ASSERT(false); return Qt::ArrowCursor; }
+    Qt::BrushStyle fakeBrushStyle() const       { Q_ASSERT(false); return Qt::NoBrush; }
+    Qt::ToolBarArea fakeToolBarArea() const {  Q_ASSERT(false); return Qt::NoToolBarArea; }
+    QGradient::Type fakeGradientType() const    { Q_ASSERT(false); return QGradient::NoGradient; }
+    QGradient::Spread fakeGradientSpread() const  { Q_ASSERT(false); return QGradient::PadSpread; }
+    QGradient::CoordinateMode fakeGradientCoordinate() const  { Q_ASSERT(false); return QGradient::LogicalMode; }
+    QLocale::Language fakeLanguage() const  { Q_ASSERT(false); return QLocale::C; }
+    QLocale::Country fakeCountry() const  { Q_ASSERT(false); return QLocale::AnyCountry; }
+    Qt::ItemFlags fakeItemFlags() const         { Q_ASSERT(false); return Qt::NoItemFlags; }
+    Qt::CheckState fakeCheckState() const       { Q_ASSERT(false); return Qt::Unchecked; }
+    Qt::Alignment fakeAlignment() const         { Q_ASSERT(false); return Qt::AlignLeft; }
 };
 
 // Convert key to value for a given QMetaEnum

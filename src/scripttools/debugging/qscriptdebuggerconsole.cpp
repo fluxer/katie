@@ -63,7 +63,7 @@ static QScriptValue debuggerResponseToScriptValue(QScriptEngine *eng, const QScr
 
 static void debuggerResponseFromScriptValue(const QScriptValue &, QScriptDebuggerResponse &)
 {
-    Q_ASSERT(0);
+    Q_ASSERT(false);
 }
 
 static QScriptValue breakpointDataToScriptValue(QScriptEngine *eng, const QScriptBreakpointData &in)
@@ -108,7 +108,7 @@ static QScriptValue breakpointMapToScriptValue(QScriptEngine *eng, const QScript
 
 static void breakpointMapFromScriptValue(const QScriptValue &, QScriptBreakpointMap &)
 {
-    Q_ASSERT(0);
+    Q_ASSERT(false);
 }
 
 static QScriptValue scriptDataToScriptValue(QScriptEngine *eng, const QScriptScriptData &in)
@@ -141,7 +141,7 @@ static QScriptValue scriptMapToScriptValue(QScriptEngine *eng, const QScriptScri
 
 static void scriptMapFromScriptValue(const QScriptValue &, QScriptScriptMap &)
 {
-    Q_ASSERT(0);
+    Q_ASSERT(false);
 }
 
 static QScriptValue consoleCommandToScriptValue(
@@ -162,7 +162,7 @@ static QScriptValue consoleCommandToScriptValue(
 static void consoleCommandFromScriptValue(
     const QScriptValue &, QScriptDebuggerConsoleCommand* &)
 {
-    Q_ASSERT(0);
+    Q_ASSERT(false);
 }
 
 static QScriptValue consoleCommandGroupDataToScriptValue(
@@ -177,7 +177,7 @@ static QScriptValue consoleCommandGroupDataToScriptValue(
 static void consoleCommandGroupDataFromScriptValue(
     const QScriptValue &, QScriptDebuggerConsoleCommandGroupData &)
 {
-    Q_ASSERT(0);
+    Q_ASSERT(false);
 }
 
 static QScriptValue consoleCommandGroupMapToScriptValue(
@@ -194,7 +194,7 @@ static QScriptValue consoleCommandGroupMapToScriptValue(
 static void consoleCommandGroupMapFromScriptValue(
     const QScriptValue &, QScriptDebuggerConsoleCommandGroupMap &)
 {
-    Q_ASSERT(0);
+    Q_ASSERT(false);
 }
 
 static QScriptValue contextInfoToScriptValue(QScriptEngine *eng, const QScriptContextInfo &in)
@@ -210,7 +210,7 @@ static QScriptValue contextInfoToScriptValue(QScriptEngine *eng, const QScriptCo
 
 static void contextInfoFromScriptValue(const QScriptValue &, QScriptContextInfo &)
 {
-    Q_ASSERT(0);
+    Q_ASSERT(false);
 }
 
 static QScriptValue debuggerScriptValuePropertyToScriptValue(QScriptEngine *eng, const QScriptDebuggerValueProperty &in)

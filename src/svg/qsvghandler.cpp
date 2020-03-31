@@ -42,7 +42,6 @@
 #include "qsvggraphics_p.h"
 #include "qsvgnode_p.h"
 #include "qsvgfont_p.h"
-
 #include "qapplication.h"
 #include "qwidget.h"
 #include "qpen.h"
@@ -54,88 +53,16 @@
 #include "qfileinfo.h"
 #include "qfile.h"
 #include "qdebug.h"
-#include "qmath.h"
 #include "qnumeric.h"
 #include "qvarlengtharray.h"
-#include "qmath_p.h"
+#include "qmath.h"
 
-#include "float.h"
+#include <float.h>
 
 QT_BEGIN_NAMESPACE
 
 static const char *qt_inherit_text = "inherit";
 #define QT_INHERIT QLatin1String(qt_inherit_text)
-
-// ======== duplicated from qcolor_p
-
-static inline int qsvg_h2i(char hex)
-{
-    if (hex >= '0' && hex <= '9')
-        return hex - '0';
-    if (hex >= 'a' && hex <= 'f')
-        return hex - 'a' + 10;
-    if (hex >= 'A' && hex <= 'F')
-        return hex - 'A' + 10;
-    return -1;
-}
-
-static inline int qsvg_hex2int(const char *s)
-{
-    return (qsvg_h2i(s[0]) << 4) | qsvg_h2i(s[1]);
-}
-
-static inline int qsvg_hex2int(char s)
-{
-    int h = qsvg_h2i(s);
-    return (h << 4) | h;
-}
-
-bool qsvg_get_hex_rgb(const char *name, QRgb *rgb)
-{
-    if(name[0] != '#')
-        return false;
-    name++;
-    int len = qstrlen(name);
-    int r, g, b;
-    if (len == 12) {
-        r = qsvg_hex2int(name);
-        g = qsvg_hex2int(name + 4);
-        b = qsvg_hex2int(name + 8);
-    } else if (len == 9) {
-        r = qsvg_hex2int(name);
-        g = qsvg_hex2int(name + 3);
-        b = qsvg_hex2int(name + 6);
-    } else if (len == 6) {
-        r = qsvg_hex2int(name);
-        g = qsvg_hex2int(name + 2);
-        b = qsvg_hex2int(name + 4);
-    } else if (len == 3) {
-        r = qsvg_hex2int(name[0]);
-        g = qsvg_hex2int(name[1]);
-        b = qsvg_hex2int(name[2]);
-    } else {
-        r = g = b = -1;
-    }
-    if ((uint)r > 255 || (uint)g > 255 || (uint)b > 255) {
-        *rgb = 0;
-        return false;
-    }
-    *rgb = qRgb(r, g ,b);
-    return true;
-}
-
-bool qsvg_get_hex_rgb(const QChar *str, int len, QRgb *rgb)
-{
-    if (len > 13)
-        return false;
-    char tmp[16];
-    for(int i = 0; i < len; ++i)
-        tmp[i] = str[i].toLatin1();
-    tmp[len] = 0;
-    return qsvg_get_hex_rgb(tmp, rgb);
-}
-
-// ======== end of qcolor_p duplicate
 
 static bool parsePathDataFast(const QStringRef &data, QPainterPath &path);
 
@@ -778,18 +705,6 @@ static bool resolveColor(const QStringRef &colorStr, QColor &color, QSvgHandler 
 
     switch(colorStrTr.at(0).unicode()) {
 
-        case '#':
-            {
-                // #rrggbb is very very common, so let's tackle it here
-                // rather than falling back to QColor
-                QRgb rgb;
-                bool ok = qsvg_get_hex_rgb(colorStrTr.unicode(), colorStrTr.length(), &rgb);
-                if (ok)
-                    color.setRgb(rgb);
-                return ok;
-            }
-            break;
-
         case 'r':
             {
                 // starts with "rgb(", ends with ")" and consists of at least 7 characters "rgb(,,)"
@@ -1385,8 +1300,8 @@ static void pathArcSegment(QPainterPath &path,
     qreal t;
     qreal thHalf;
 
-    sinTh = qSin(xAxisRotation * (Q_PI / 180.0));
-    cosTh = qCos(xAxisRotation * (Q_PI / 180.0));
+    sinTh = qSin(xAxisRotation * (M_PI / 180.0));
+    cosTh = qCos(xAxisRotation * (M_PI / 180.0));
 
     a00 =  cosTh * rx;
     a01 = -sinTh * ry;
@@ -1454,8 +1369,8 @@ static void pathArc(QPainterPath &path,
     rx = qAbs(rx);
     ry = qAbs(ry);
 
-    sin_th = qSin(x_axis_rotation * (Q_PI / 180.0));
-    cos_th = qCos(x_axis_rotation * (Q_PI / 180.0));
+    sin_th = qSin(x_axis_rotation * (M_PI / 180.0));
+    cos_th = qCos(x_axis_rotation * (M_PI / 180.0));
 
     dx = (curx - x) / 2.0;
     dy = (cury - y) / 2.0;
@@ -1499,11 +1414,11 @@ static void pathArc(QPainterPath &path,
 
     th_arc = th1 - th0;
     if (th_arc < 0 && sweep_flag)
-        th_arc += 2 * Q_PI;
+        th_arc += 2 * M_PI;
     else if (th_arc > 0 && !sweep_flag)
-        th_arc -= 2 * Q_PI;
+        th_arc -= 2 * M_PI;
 
-    n_segs = qCeil(qAbs(th_arc / (Q_PI * 0.5 + 0.001)));
+    n_segs = qCeil(qAbs(th_arc / (M_PI * 0.5 + 0.001)));
 
     for (i = 0; i < n_segs; i++) {
         pathArcSegment(path, xc, yc,

@@ -983,6 +983,15 @@ QString QIcuCodec::convertToUnicode(const char *src, int length,
         }
     } else {
         result.resize(convresult);
+        if (state && state->flags & QTextCodec::IgnoreHeader) {
+            // ICU always generates BOMs when converter is UTF-32/UTF-16 so no check is done to
+            // verify that, unless someone makes it an option
+            if (ucnv_compareNames(m_name.constData(), "UTF-32")) {
+                result.remove(0, 4);
+            } else if (ucnv_compareNames(m_name.constData(), "UTF-16")) {
+                result.remove(0, 2);
+            }
+        }
     }
 
     if (!state)
@@ -1079,8 +1088,7 @@ QList<QByteArray> QIcuCodec::allCodecs()
 {
     QList<QByteArray> allcodecs;
 
-    const int count = ucnv_countAvailable();
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < ucnv_countAvailable(); i++) {
         const char *name = ucnv_getAvailableName(i);
         allcodecs += QByteArray::fromRawData(name, qstrlen(name));
     }

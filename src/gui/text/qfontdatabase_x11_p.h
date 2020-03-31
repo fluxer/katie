@@ -64,9 +64,6 @@ QT_BEGIN_NAMESPACE
 extern double qt_pointSize(double pixelSize, int dpi);
 extern double qt_pixelSize(double pointSize, int dpi);
 
-// from qapplication.cpp
-extern bool qt_is_gui_used;
-
 static inline void capitalize (char *s)
 {
     bool space = true;
@@ -232,7 +229,7 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
 }
 
 // values are from likelySubtags.xml distributed with Unicode CLDR data
-static const char *specialLanguages[] = {
+static const char *specialLanguagesTbl[] = {
     "en", // Common
     "la", // Latin
     "el", // Greek
@@ -298,7 +295,7 @@ static const char *specialLanguages[] = {
     "akk-iq", // Cuneiform
     "phn-lb", // Phoenician
     "lzh-cn", // PhagsPa
-    0, // Nko
+    "nqo-gn", // Nko
     "su-id", // Sundanese
     "lep-in", // Lepcha
     "sat-in", // OlChiki
@@ -309,7 +306,7 @@ static const char *specialLanguages[] = {
     "xlc-tr", // Lycian
     "xcr-tr", // Carian
     "xld-tr", // Lydian
-    0, // Cham
+    "cjm-vn", // Cham
     0, // TaiTham
     "blt-vn", // TaiViet
     "ae-ir", // Avestan
@@ -317,21 +314,21 @@ static const char *specialLanguages[] = {
     "smp-il", // Samaritan
     "lis-cn", // Lisu
     "bax-cm", // Bamum
-    0, // Javanese
+    "jv-id", // Javanese
     "mni-in", // MeeteiMayek
     "arc-ir", // ImperialAramaic
     "ar", // OldSouthArabian
     "xpr-ir", // InscriptionalParthian
     "pal-ir", // InscriptionalPahlavi
-    0, // OldTurkic
+    "otk-mn", // OldTurkic
     "bho-in", // Kaithi
     "bbc-id", // Batak
     "pka-in", // Brahmi
     "myz-ir", // Mandaic
     "ccp-bd", // Chakma
     "xmr-sd", // MeroiticCursive
-    0, // MeroiticHieroglyphs
-    0, // Miao
+    "xmr-sd", // MeroiticHieroglyphs
+    "hmd-cn", // Miao
     "sa-in", // Sharada
     "srb-in", // SoraSompeng
     "doi-in", // Takri
@@ -371,7 +368,7 @@ static const char *specialLanguages[] = {
     "osa-us", // Osage
     "txg-cn", // Tangut
     "esg-in", // MasaramGondi
-    0, // Nushu
+    "zhx-cn", // Nushu
     "cmg-mn", // Soyombo
     "cmg-mn", // ZanabazarSquare
     "doi-in", // Dogra
@@ -384,12 +381,16 @@ static const char *specialLanguages[] = {
     "arc-ir", // Elymaic
     "sa-in", // Nandinagari
     "mww-us", // NyiakengPuachueHmong
-    "npp-in" // Wancho
+    "npp-in", // Wancho
+    "xco-uz", // Chorasmian
+    "dv-mv", // DivesAkuru
+    "zkt-cn", // KhitanSmallScript
+    "ku-ge" // Yezidi
 };
-enum { SpecialLanguageCount = sizeof(specialLanguages) / sizeof(const char *) };
+enum { SpecialLanguageCount = sizeof(specialLanguagesTbl) / sizeof(const char *) };
 
 // values obtained via genutf script
-static const uint specialChars[] = {
+static const uint specialCharsTbl[] = {
     0x0, // Common
     0x0041, // Latin
     0x0370, // Greek
@@ -408,7 +409,7 @@ static const uint specialChars[] = {
     0x0C00, // Telugu
     0x0C80, // Kannada
     0x0D00, // Malayalam
-    0x0D82, // Sinhala
+    0x0D81, // Sinhala
     0x0E01, // Thai
     0x0E81, // Lao
     0x0F00, // Tibetan
@@ -542,8 +543,12 @@ static const uint specialChars[] = {
     0x119A0, // Nandinagari
     0x1E100, // NyiakengPuachueHmong
     0x1E2C0, // Wancho
+    0x10FB0, // Chorasmian
+    0x11900, // DivesAkuru
+    0x16FE4, // KhitanSmallScript
+    0x10E80, // Yezidi
 };
-enum { SpecialCharCount = sizeof(specialChars) / sizeof(uint) };
+enum { SpecialCharCount = sizeof(specialCharsTbl) / sizeof(uint) };
 
 static const struct DefaultFontTblData {
     const QLatin1String name;
@@ -682,7 +687,6 @@ static void loadFontConfig()
     for (qint16 i = 0; i < DefaultFontTblSize; i++) {
         QtFontFamily *family = db->family(DefaultFontTbl[i].name, true);
         family->fixedPitch = DefaultFontTbl[i].fixedpitch;
-        family->synthetic = true;
         QtFontFoundry *foundry = family->foundry(QString(), true);
 
         QtFontStyle::Key styleKey;
@@ -700,6 +704,7 @@ static void loadFontConfig()
 #endif // QT_NO_FONTCONFIG
 
 static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt);
+static QString styleStringHelper(int weight, QFont::Style style);
 
 static void initializeFontDb()
 {
@@ -849,10 +854,10 @@ static void qt_addPatternProps(FcPattern *pattern, int screen, int script, const
                          !(request.styleStrategy & QFont::NoAntialias));
     }
 
-    if (script != QUnicodeTables::Common && specialLanguages[script]) {
+    if (script != QUnicodeTables::Common && specialLanguagesTbl[script]) {
         Q_ASSERT(script < QUnicodeTables::ScriptCount);
         FcLangSet *ls = FcLangSetCreate();
-        FcLangSetAdd(ls, (const FcChar8*)specialLanguages[script]);
+        FcLangSetAdd(ls, (const FcChar8*)specialLanguagesTbl[script]);
         FcPatternDel(pattern, FC_LANG);
         FcPatternAddLangSet(pattern, FC_LANG, ls);
         FcLangSetDestroy(ls);
@@ -952,16 +957,6 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, int script, const QFontDe
     FcConfigSubstitute(0, pattern, FcMatchPattern);
     FcDefaultSubstitute(pattern);
 
-    // these should only get added to the pattern _after_ substitution
-    // append the default fallback font for the specified script
-    extern QString qt_fallback_font_family(int);
-    QString fallback = qt_fallback_font_family(script);
-    if (!fallback.isEmpty()) {
-        QByteArray cs = fallback.toUtf8();
-        value.u.s = (const FcChar8 *)cs.data();
-        FcPatternAddWeak(pattern, FC_FAMILY, value, FcTrue);
-    }
-
     // add the default family
     QString defaultFamily = QApplication::font().family();
     QByteArray cs = defaultFamily.toUtf8();
@@ -1004,20 +999,20 @@ static QFontEngine *tryPatternLoad(FcPattern *match, int screen,
 
     if (script != QUnicodeTables::Common) {
         // skip font if it doesn't support the language we want
-        if (specialLanguages[script]){
+        if (specialLanguagesTbl[script]){
             FcLangSet *langSet = 0;
             if (FcPatternGetLangSet(match, FC_LANG, 0, &langSet) != FcResultMatch)
                 goto special_char;
-            if (FcLangSetHasLang(langSet, (const FcChar8*)specialLanguages[script]) != FcLangEqual)
+            if (FcLangSetHasLang(langSet, (const FcChar8*)specialLanguagesTbl[script]) != FcLangEqual)
                 goto special_char;
         }
 special_char:
-        if (specialChars[script]) {
+        if (specialCharsTbl[script]) {
             // need to check the charset, as the langset doesn't work for some scripts
             FcCharSet *cs;
             if (FcPatternGetCharSet(match, FC_CHARSET, 0, &cs) != FcResultMatch)
                 return Q_NULLPTR;
-            if (!FcCharSetHasChar(cs, specialChars[script]))
+            if (!FcCharSetHasChar(cs, specialCharsTbl[script]))
                 return Q_NULLPTR;
         }
     }
@@ -1081,10 +1076,9 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
     FcPatternPrint(pattern);
 #endif
 
-    QFontEngine *fe = 0;
     FcResult res;
     FcPattern *match = FcFontMatch(0, pattern, &res);
-    fe = tryPatternLoad(match, fp->screen, request, script);
+    QFontEngine *fe = tryPatternLoad(match, fp->screen, request, script);
     if (!fe) {
         FcFontSet *fs = qt_fontSetForPattern(pattern, request);
 
@@ -1126,7 +1120,7 @@ static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id,
     extern FT_Library qt_getFreetype();
     FT_Library lib = qt_getFreetype();
 
-    FcPattern *pattern = 0;
+    FcPattern *pattern = Q_NULLPTR;
 
     FT_Face face;
     if (!FT_New_Memory_Face(lib, (const FT_Byte *)data.constData(), data.size(), id, &face)) {
@@ -1182,12 +1176,6 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
         if (!privateDb()->count)
             initializeFontDb();
 
-#ifdef QT_BUILD_INTERNAL
-        if (qt_enable_test_font && req.family == QLatin1String("__Qt__Box__Engine__")) {
-            fe = new QTestFontEngine(req.pixelSize);
-            fe->fontDef = req;
-        } else
-#endif
 #ifndef QT_NO_FONTCONFIG
         if (qt_x11Data->has_fontconfig) {
             fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);

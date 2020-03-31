@@ -39,6 +39,7 @@
 #ifdef QT_NO_IMAGEFORMAT_ICO
 #undef QT_NO_IMAGEFORMAT_ICO
 #endif
+
 #include "qicohandler.h"
 
 QT_BEGIN_NAMESPACE

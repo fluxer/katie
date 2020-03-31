@@ -74,7 +74,6 @@ QBearerEngine *QGenericEnginePlugin::create(const QString &key) const
         return 0;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QGenericEnginePlugin)
 Q_EXPORT_PLUGIN2(qgenericbearer, QGenericEnginePlugin)
 
 QT_END_NAMESPACE
