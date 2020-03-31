@@ -85,10 +85,6 @@ static QWidget *requestor = 0;
 static bool timer_event_clear = false;
 static int timer_id = 0;
 
-static int pending_timer_id = 0;
-static bool pending_clipboard_changed = false;
-static bool pending_selection_changed = false;
-
 class QClipboardWatcher; // forward decl
 static QClipboardWatcher *selection_watcher = 0;
 static QClipboardWatcher *clipboard_watcher = 0;
@@ -777,23 +773,6 @@ bool QClipboard::event(QEvent *e)
             if (clipboard_watcher) // clear clipboard
                 clipboardData()->clear();
             timer_event_clear = false;
-
-            return true;
-        } else if (te->timerId() == pending_timer_id) {
-            // I hate klipper
-            killTimer(pending_timer_id);
-            pending_timer_id = 0;
-
-            if (pending_clipboard_changed) {
-                pending_clipboard_changed = false;
-                clipboardData()->clear();
-                emitChanged(QClipboard::Clipboard);
-            }
-            if (pending_selection_changed) {
-                pending_selection_changed = false;
-                selectionData()->clear();
-                emitChanged(QClipboard::Selection);
-            }
 
             return true;
         } else if (te->timerId() == incr_timer_id) {
