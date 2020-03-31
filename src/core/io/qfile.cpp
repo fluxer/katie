@@ -50,8 +50,7 @@ QT_BEGIN_NAMESPACE
 //************* QFilePrivate
 QFilePrivate::QFilePrivate()
     : fileEngine(0), lastWasWrite(false),
-      writeBuffer(QT_BUFFSIZE), error(QFile::NoError),
-      cachedSize(0)
+      error(QFile::NoError), cachedSize(0)
 {
 }
 
