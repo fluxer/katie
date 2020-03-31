@@ -45,6 +45,7 @@ set(SQL_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqltablemodel_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlrelationaldelegate.h
     ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlrelationaltablemodel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/qsql_sqlite.h
 )
 
 set(SQL_SOURCES
@@ -62,7 +63,34 @@ set(SQL_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqltablemodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlrelationaldelegate.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlrelationaltablemodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/qsql_sqlite.cpp
 )
+
+if(SQLITE_FOUND)
+    set(EXTRA_SQL_LIBS
+        ${EXTRA_SQL_LIBS}
+        ${SQLITE_LIBRARIES}
+    )
+    include_directories(${SQLITE_INCLUDES})
+else()
+    set(SQL_HEADERS
+        ${SQL_HEADERS}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite/sqlite3.h
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite/sqlite3ext.h
+    )
+
+    set(SQL_SOURCES
+        ${SQL_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite/sqlite3.c
+    )
+
+    add_definitions(
+        -DSQLITE_OMIT_LOAD_EXTENSION
+        -DSQLITE_OMIT_COMPLETE
+    )
+    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite)
+endif()
+
 
 katie_generate_misc("${SQL_HEADERS}" QtSql)
 katie_generate_public("${SQL_PUBLIC_HEADERS}" QtSql)
@@ -80,14 +108,14 @@ set_target_properties(KtSql PROPERTIES
 install(
     TARGETS KtSql
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
+    DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtSql
-    DESTINATION ${KATIE_HEADERS_RELATIVE}
+    DESTINATION ${KATIE_HEADERS_PATH}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${KATIE_HEADERS_FULL}/QtSql)
+katie_optimize_headers(${KATIE_HEADERS_PATH}/QtSql)

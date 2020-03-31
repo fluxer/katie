@@ -62,86 +62,6 @@ if 'combining' in sys.argv:
         if value == '0':
             # not ordered is default
             continue
-        elif value == '1':
-            value = 'QUnicodeTables::Combining_Overlay'
-        elif value == '7':
-            value = 'QUnicodeTables::Combining_Nukta'
-        elif value == '8':
-            value = 'QUnicodeTables::Combining_Kana_Voicing'
-        elif value == '9':
-            value = 'QUnicodeTables::Combining_Virama'
-        elif value == '10':
-            value = 'QUnicodeTables::Combining_CCC10'
-        elif value == '11':
-            value = 'QUnicodeTables::Combining_CCC11'
-        elif value == '12':
-            value = 'QUnicodeTables::Combining_CCC12'
-        elif value == '13':
-            value = 'QUnicodeTables::Combining_CCC13'
-        elif value == '14':
-            value = 'QUnicodeTables::Combining_CCC14'
-        elif value == '15':
-            value = 'QUnicodeTables::Combining_CCC15'
-        elif value == '16':
-            value = 'QUnicodeTables::Combining_CCC16'
-        elif value == '17':
-            value = 'QUnicodeTables::Combining_CCC17'
-        elif value == '18':
-            value = 'QUnicodeTables::Combining_CCC18'
-        elif value == '19':
-            value = 'QUnicodeTables::Combining_CCC19'
-        elif value == '20':
-            value = 'QUnicodeTables::Combining_CCC20'
-        elif value == '21':
-            value = 'QUnicodeTables::Combining_CCC21'
-        elif value == '22':
-            value = 'QUnicodeTables::Combining_CCC22'
-        elif value == '23':
-            value = 'QUnicodeTables::Combining_CCC23'
-        elif value == '24':
-            value = 'QUnicodeTables::Combining_CCC24'
-        elif value == '25':
-            value = 'QUnicodeTables::Combining_CCC25'
-        elif value == '26':
-            value = 'QUnicodeTables::Combining_CCC26'
-        elif value == '27':
-            value = 'QUnicodeTables::Combining_CCC27'
-        elif value == '28':
-            value = 'QUnicodeTables::Combining_CCC28'
-        elif value == '29':
-            value = 'QUnicodeTables::Combining_CCC29'
-        elif value == '30':
-            value = 'QUnicodeTables::Combining_CCC30'
-        elif value == '31':
-            value = 'QUnicodeTables::Combining_CCC31'
-        elif value == '32':
-            value = 'QUnicodeTables::Combining_CCC32'
-        elif value == '33':
-            value = 'QUnicodeTables::Combining_CCC33'
-        elif value == '34':
-            value = 'QUnicodeTables::Combining_CCC34'
-        elif value == '35':
-            value = 'QUnicodeTables::Combining_CCC35'
-        elif value == '36':
-            value = 'QUnicodeTables::Combining_CCC36'
-        elif value == '84':
-            value = 'QUnicodeTables::Combining_CCC84'
-        elif value == '91':
-            value = 'QUnicodeTables::Combining_CCC91'
-        elif value == '103':
-            value = 'QUnicodeTables::Combining_CCC103'
-        elif value == '107':
-            value = 'QUnicodeTables::Combining_CCC107'
-        elif value == '118':
-            value = 'QUnicodeTables::Combining_CCC118'
-        elif value == '122':
-            value = 'QUnicodeTables::Combining_CCC122'
-        elif value == '129':
-            value = 'QUnicodeTables::Combining_CCC129'
-        elif value == '130':
-            value = 'QUnicodeTables::Combining_CCC130'
-        elif value == '132':
-            value = 'QUnicodeTables::Combining_CCC132'
         elif value == '202':
             value = 'QUnicodeTables::Combining_AttachedBelow'
         elif value == '214':
@@ -170,9 +90,12 @@ if 'combining' in sys.argv:
             value = 'QUnicodeTables::Combining_DoubleAbove'
         elif value == '240':
             value = 'QUnicodeTables::Combining_IotaSubscript'
-        else:
-            print('Unhandled combining type: %s' % value)
+        elif value in ['200', '204', '208', '210', '212']:
+            print('Unhandled deprecated combining type: %s' % value)
             sys.exit(2)
+        else:
+            # only some are supported by harfbuzz
+            continue
         mapdecideinsert(switchmap, rangemap, value, codepoint)
     printswitch(switchmap)
     printifrange(rangemap)
@@ -324,5 +247,5 @@ elif 'special' in sys.argv:
 else:
     print('''usage: <combining|grapheme|word|sentence|line|script|special>
 
-Data is from https://unicode.org/Public/12.1.0/ucd/UCD.zip''')
+Data is from https://unicode.org/Public/13.0.0/ucd/UCD.zip''')
     sys.exit(1)

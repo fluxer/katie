@@ -535,7 +535,6 @@ void tst_QPainter::drawLine()
     QPainter p(&pixmapUnclipped);
     p.translate(offset, offset);
     p.setPen(pen);
-    p.paintEngine()->syncState();
 
     QBENCHMARK {
         p.drawLine(line);
@@ -569,7 +568,6 @@ void tst_QPainter::drawLine_clipped()
     p.translate(offset, offset);
     p.setClipRect(clip);
     p.setPen(pen);
-    p.paintEngine()->syncState();
 
     QBENCHMARK {
         p.drawLine(line);
@@ -605,7 +603,6 @@ void tst_QPainter::drawLine_antialiased_clipped()
     p.translate(offset, offset);
     p.setClipRect(clip);
     p.setPen(pen);
-    p.paintEngine()->syncState();
 
     QBENCHMARK {
         p.drawLine(line);
@@ -883,8 +880,6 @@ void tst_QPainter::drawTiledPixmap()
 
 void tst_QPainter::fillPrimitives_helper(QPainter *p, PrimitiveType type, PrimitiveSet *s)
 {
-    p->paintEngine()->syncState();
-
     switch (type) {
     case Primitive_Int_DiagLine:        QBENCHMARK { p->drawLine(s->i_line_diag); } break;
     case Primitive_Int_VerLine:         QBENCHMARK { p->drawLine(s->i_line_ver); } break;
@@ -1184,7 +1179,7 @@ void tst_QPainter::clipAndFill()
 
 QTransform tst_QPainter::transformForAngle(qreal angle)
 {
-    const qreal inv_dist_to_plane = 1. / 1024.;
+    static const qreal inv_dist_to_plane = 1. / 1024.;
 
     QTransform transform;
 

@@ -191,7 +191,8 @@ char* qstrncpy(char *dst, const char *src, uint len)
     \sa qstrlen()
 */
 
-/*!
+/*! \fn int qstrcmp(const char *str1, const char *str2);
+
     \relates QByteArray
 
     A safe \c strcmp() function.
@@ -207,11 +208,6 @@ char* qstrncpy(char *dst, const char *src, uint len)
 
     \sa qstrncmp(), qstricmp(), qstrnicmp(), {8-bit Character Comparisons}
 */
-int qstrcmp(const char *str1, const char *str2)
-{
-    return (str1 && str2) ? strcmp(str1, str2)
-        : (str1 ? 1 : (str2 ? -1 : 0));
-}
 
 /*! \fn int qstrncmp(const char *str1, const char *str2, uint len);
 

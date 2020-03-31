@@ -67,15 +67,6 @@ QT_BEGIN_NAMESPACE
 
 #define SMOOTH_SCALABLE 0xffff
 
-bool qt_enable_test_font = false;
-
-static QString styleStringHelper(int weight, QFont::Style style);
-
-Q_AUTOTEST_EXPORT void qt_setQtEnableTestFont(bool value)
-{
-    qt_enable_test_font = value;
-}
-
 static int getFontWeight(const QString &weightString)
 {
     QString s = weightString.toLower();
@@ -340,7 +331,7 @@ struct  QtFontFamily
     QtFontFamily(const QString &n)
         :
 #ifdef Q_WS_X11
-        fixedPitch(true), synthetic(false),
+        fixedPitch(true),
 #else
         fixedPitch(false),
 #endif
@@ -354,11 +345,7 @@ struct  QtFontFamily
         free(foundries);
     }
 
-    bool fixedPitch : 1;
-#ifdef Q_WS_X11
-    bool synthetic : 1;
-#endif
-
+    bool fixedPitch;
     QString name;
 #if defined(Q_WS_X11)
     QByteArray fontFilename;

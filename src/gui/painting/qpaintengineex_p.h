@@ -115,8 +115,6 @@ public:
 QDebug Q_GUI_EXPORT &operator<<(QDebug &, const QVectorPath &path);
 #endif
 
-class QPixmapFilter;
-
 class Q_GUI_EXPORT QPaintEngineEx : public QPaintEngine
 {
     Q_DECLARE_PRIVATE(QPaintEngineEx)
@@ -184,11 +182,6 @@ public:
     virtual void setState(QPainterState *s);
     inline QPainterState *state() { return static_cast<QPainterState *>(QPaintEngine::state); }
     inline const QPainterState *state() const { return static_cast<const QPainterState *>(QPaintEngine::state); }
-
-    virtual void sync() {}
-
-    virtual void beginNativePainting() {}
-    virtual void endNativePainting() {}
 
     virtual bool supportsTransformations(const qreal pixelSize, const QTransform &m) const;
 

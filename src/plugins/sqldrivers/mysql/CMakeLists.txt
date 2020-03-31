@@ -17,6 +17,6 @@ set_target_properties(qsqlmysqlplugin PROPERTIES OUTPUT_NAME qsqlmysql)
 
 install(
     TARGETS qsqlmysqlplugin
-    DESTINATION ${KATIE_PLUGINS_RELATIVE}/sqldrivers
+    DESTINATION ${KATIE_PLUGINS_PATH}/sqldrivers
     COMPONENT Runtime
 )

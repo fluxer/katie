@@ -92,17 +92,6 @@ public:
     QStringList failedResources() const { return m_failedResources; }
 
 private:
-    struct Strings {
-        Strings();
-        const QString TAG_RCC;
-        const QString TAG_RESOURCE;
-        const QString TAG_FILE;
-        const QString ATTRIBUTE_LANG;
-        const QString ATTRIBUTE_PREFIX;
-        const QString ATTRIBUTE_ALIAS;
-        const QString ATTRIBUTE_THRESHOLD;
-        const QString ATTRIBUTE_COMPRESS;
-    };
     friend class RCCFileInfo;
     void reset();
     bool addFile(const QString &alias, const RCCFileInfo &file);
@@ -122,7 +111,6 @@ private:
     void writeByteArray(const QByteArray &);
     void write(const char *, int len);
 
-    const Strings m_strings;
     RCCFileInfo *m_root;
     QStringList m_fileNames;
     QString m_resourceRoot;

@@ -221,7 +221,7 @@ QLayout *LayoutInfo::managedLayout(const QDesignerFormEditorInterface *core, QLa
     /* This code exists mainly for the Q3GroupBox class, for which
      * widget->layout() returns an internal VBoxLayout. */
     const QDesignerMetaDataBaseItemInterface *item = metaDataBase->item(layout);
-    if (item == 0) {
+    if (!item) {
         layout = layout->findChild<QLayout*>();
         item = metaDataBase->item(layout);
     }
@@ -233,7 +233,7 @@ QLayout *LayoutInfo::managedLayout(const QDesignerFormEditorInterface *core, QLa
 // Is it a a dummy grid placeholder created by Designer?
 bool LayoutInfo::isEmptyItem(QLayoutItem *item)
 {
-    if (item == 0) {
+    if (!item) {
         qDebug() << "** WARNING Zero-item passed on to isEmptyItem(). This indicates a layout inconsistency.";
         return true;
     }

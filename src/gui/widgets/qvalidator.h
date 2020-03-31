@@ -52,7 +52,7 @@ class Q_GUI_EXPORT QValidator : public QObject
 {
     Q_OBJECT
 public:
-    explicit QValidator(QObject * parent = 0);
+    explicit QValidator(QObject *parent = Q_NULLPTR);
     ~QValidator();
 
     enum State {
@@ -84,7 +84,7 @@ class Q_GUI_EXPORT QIntValidator : public QValidator
     Q_PROPERTY(int top READ top WRITE setTop)
 
 public:
-    explicit QIntValidator(QObject * parent = 0);
+    explicit QIntValidator(QObject *parent = Q_NULLPTR);
     QIntValidator(int bottom, int top, QObject *parent = Q_NULLPTR);
     ~QIntValidator();
 
@@ -119,7 +119,7 @@ class Q_GUI_EXPORT QDoubleValidator : public QValidator
     Q_PROPERTY(Notation notation READ notation WRITE setNotation)
 
 public:
-    explicit QDoubleValidator(QObject * parent = 0);
+    explicit QDoubleValidator(QObject *parent = Q_NULLPTR);
     QDoubleValidator(double bottom, double top, int decimals, QObject *parent = Q_NULLPTR);
     ~QDoubleValidator();
 

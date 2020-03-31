@@ -35,81 +35,29 @@
 
 QT_BEGIN_NAMESPACE
 
-#if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDREAD
-template <class DST, class SRC>
-static inline void qt_memrotate90_cachedRead(const SRC *src, int w, int h,
-                                             int sstride,
-                                             DST *dest, int dstride)
-{
-    const char *s = reinterpret_cast<const char*>(src);
-    char *d = reinterpret_cast<char*>(dest);
-    for (int y = 0; y < h; ++y) {
-        for (int x = w - 1; x >= 0; --x) {
-            DST *destline = reinterpret_cast<DST*>(d + (w - x - 1) * dstride);
-            destline[y] = src[x];
-        }
-        s += sstride;
-        src = reinterpret_cast<const SRC*>(s);
-    }
-}
-
-template <class DST, class SRC>
-static inline void qt_memrotate270_cachedRead(const SRC *src, int w, int h,
-                                              int sstride,
-                                              DST *dest, int dstride)
-{
-    const char *s = reinterpret_cast<const char*>(src);
-    char *d = reinterpret_cast<char*>(dest);
-    s += (h - 1) * sstride;
-    for (int y = h - 1; y >= 0; --y) {
-        src = reinterpret_cast<const SRC*>(s);
-        for (int x = 0; x < w; ++x) {
-            DST *destline = reinterpret_cast<DST*>(d + x * dstride);
-            destline[h - y - 1] = src[x];
-        }
-        s -= sstride;
-    }
-}
-#elif QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
-template <class DST, class SRC>
-static inline void qt_memrotate90_cachedWrite(const SRC *src, int w, int h,
-                                              int sstride,
-                                              DST *dest, int dstride)
-{
-    for (int x = w - 1; x >= 0; --x) {
-        DST *d = dest + (w - x - 1) * dstride;
-        for (int y = 0; y < h; ++y) {
-            *d++ = src[y * sstride + x];
-        }
-    }
-
-}
-
-template <class DST, class SRC>
-static inline void qt_memrotate270_cachedWrite(const SRC *src, int w, int h,
-                                               int sstride,
-                                               DST *dest, int dstride)
-{
-    for (int x = 0; x < w; ++x) {
-        DST *d = dest + x * dstride;
-        for (int y = h - 1; y >= 0; --y) {
-            *d++ = src[y * sstride + x];
-        }
-    }
-}
-#endif // QT_ROTATION_ALGORITHM
-
 template <class DST, class SRC>
 static inline void qt_memrotate90_template(const SRC *src,
                                            int srcWidth, int srcHeight, int srcStride,
                                            DST *dest, int dstStride)
 {
 #if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDREAD
-    qt_memrotate90_cachedRead<DST,SRC>(src, srcWidth, srcHeight, srcStride,
-                                       dest, dstStride);
+    const char *s = reinterpret_cast<const char*>(src);
+    char *d = reinterpret_cast<char*>(dest);
+    for (int y = 0; y < srcHeight; ++y) {
+        for (int x = srcWidth - 1; x >= 0; --x) {
+            DST *destline = reinterpret_cast<DST*>(d + (srcWidth - x - 1) * dstStride);
+            destline[y] = src[x];
+        }
+        s += srcStride;
+        src = reinterpret_cast<const SRC*>(s);
+    }
 #elif QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
-    qt_memrotate90_cachedWrite<DST,SRC>(src, srcWidth, srcHeight, srcStride,
-                                        dest, dstStride);
+    for (int x = srcWidth - 1; x >= 0; --x) {
+        DST *d = dest + (srcWidth - x - 1) * dstStride;
+        for (int y = 0; y < srcHeight; ++y) {
+            *d++ = src[y * srcStride + x];
+        }
+    }
 #endif
 }
 
@@ -135,25 +83,24 @@ static inline void qt_memrotate270_template(const SRC *src,
                                             DST *dest, int dstStride)
 {
 #if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDREAD
-    qt_memrotate270_cachedRead<DST,SRC>(src, srcWidth, srcHeight, srcStride,
-                                        dest, dstStride);
+    const char *s = reinterpret_cast<const char*>(src);
+    char *d = reinterpret_cast<char*>(dest);
+    s += (srcHeight - 1) * srcStride;
+    for (int y = srcHeight - 1; y >= 0; --y) {
+        src = reinterpret_cast<const SRC*>(s);
+        for (int x = 0; x < srcWidth; ++x) {
+            DST *destline = reinterpret_cast<DST*>(d + x * dstStride);
+            destline[srcHeight - y - 1] = src[x];
+        }
+        s -= srcStride;
+    }
 #elif QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
-    qt_memrotate270_cachedWrite<DST,SRC>(src, srcWidth, srcHeight, srcStride,
-                                         dest, dstStride);
-#endif
-}
-
-template <>
-inline void qt_memrotate90_template<quint24, quint24>(const quint24 *src,
-                                                             int srcWidth, int srcHeight, int srcStride,
-                                                             quint24 *dest, int dstStride)
-{
-#if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDREAD
-    qt_memrotate90_cachedRead<quint24,quint24>(src, srcWidth, srcHeight,
-                                               srcStride, dest, dstStride);
-#elif QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
-    qt_memrotate90_cachedWrite<quint24,quint24>(src, srcWidth, srcHeight,
-                                                srcStride, dest, dstStride);
+    for (int x = 0; x < srcWidth; ++x) {
+        DST *d = dest + x * dstStride;
+        for (int y = srcHeight - 1; y >= 0; --y) {
+            *d++ = src[y * srcStride + x];
+        }
+    }
 #endif
 }
 

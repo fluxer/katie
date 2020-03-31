@@ -49,8 +49,6 @@ QT_BEGIN_NAMESPACE
 #define AUTO_REPEAT_DELAY  300
 #define AUTO_REPEAT_INTERVAL 100
 
-Q_GUI_EXPORT extern bool qt_tab_all_widgets;
-
 /*!
     \class QAbstractButton
 

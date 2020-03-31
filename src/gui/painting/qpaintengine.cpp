@@ -280,24 +280,6 @@ QFont QTextItem::font() const
     A paint engine must update every dirty state.
 */
 
-/*!
-    \fn void QPaintEngine::syncState()
-
-    \internal
-
-    Updates all dirty states in this engine. This function should ONLY
-    be used when drawing with native handles directly and immediate sync
-    from QPainters state to the native state is required.
-*/
-void QPaintEngine::syncState()
-{
-    Q_ASSERT(state);
-    updateState(*state);
-
-    if (isExtended())
-        static_cast<QPaintEngineEx *>(this)->sync();
-}
-
 static QPaintEngine *qt_polygon_recursion = 0;
 
 /*!

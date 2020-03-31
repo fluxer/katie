@@ -41,13 +41,13 @@ katie_setup_object(lupdate sharedlinguist)
 install(
     TARGETS lupdate
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
+    RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )
 
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/lupdate.1
-    DESTINATION ${KATIE_MAN_RELATIVE}/man1
+    DESTINATION ${KATIE_MAN_PATH}/man1
     RENAME lupdate${KATIE_TOOLS_SUFFIX}.1
     COMPONENT Doc
 )

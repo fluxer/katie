@@ -424,10 +424,6 @@ public:
 
     QPaintEngine *paintEngine() const;
 
-    void beginNativePainting();
-    void endNativePainting();
-
-
 private:
     Q_DISABLE_COPY(QPainter)
 

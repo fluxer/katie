@@ -208,6 +208,9 @@ if(WITH_RESOLV AND RESOLV_FOUND)
         ${RESOLV_LIBRARIES}
     )
     include_directories(${RESOLV_INCLUDES})
+    if(RESOLV_THREAD_SAFE)
+        add_definitions(-DQT_HAVE_RES_NINIT)
+    endif()
 endif()
 
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)
@@ -226,14 +229,14 @@ set_target_properties(KtNetwork PROPERTIES
 install(
     TARGETS KtNetwork
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
+    DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtNetwork
-    DESTINATION ${KATIE_HEADERS_RELATIVE}
+    DESTINATION ${KATIE_HEADERS_PATH}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${KATIE_HEADERS_FULL}/QtNetwork)
+katie_optimize_headers(${KATIE_HEADERS_PATH}/QtNetwork)

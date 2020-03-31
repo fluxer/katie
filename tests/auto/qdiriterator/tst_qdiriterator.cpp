@@ -99,7 +99,6 @@ private slots:
     void iterateResource_data();
     void iterateResource();
     void stopLinkLoop();
-    void engineWithNoIterator();
     void absoluteFilePathsFromRelativeIteratorPath();
     void recurseWithFilters() const;
     void longPath();
@@ -415,23 +414,6 @@ public:
     QAbstractFileEngineIterator *beginEntryList(QDir::Filters, const QStringList &)
     { return 0; }
 };
-
-class EngineWithNoIteratorHandler : public QAbstractFileEngineHandler
-{
-public:
-    QAbstractFileEngine *create(const QString &fileName) const
-    {
-        return new EngineWithNoIterator(fileName);
-    }
-};
-
-void tst_QDirIterator::engineWithNoIterator()
-{
-    EngineWithNoIteratorHandler handler;
-
-    QDir("entrylist").entryList();
-    QVERIFY(true); // test that the above line doesn't crash
-}
 
 void tst_QDirIterator::absoluteFilePathsFromRelativeIteratorPath()
 {

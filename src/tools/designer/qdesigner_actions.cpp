@@ -342,8 +342,7 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
     connect(formWindowManager, SIGNAL(activeFormWindowChanged(QDesignerFormWindowInterface*)),
                 this, SLOT(activeFormWindowChanged(QDesignerFormWindowInterface*)));
 
-    QList<QObject*> builtinPlugins = QPluginLoader::staticInstances();
-    builtinPlugins += m_core->pluginManager()->instances();
+    QList<QObject*> builtinPlugins = m_core->pluginManager()->instances();
     foreach (QObject *plugin, builtinPlugins) {
         if (QDesignerFormEditorPluginInterface *formEditorPlugin = qobject_cast<QDesignerFormEditorPluginInterface*>(plugin)) {
             if (QAction *action = formEditorPlugin->action()) {

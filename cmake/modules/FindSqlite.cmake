@@ -9,10 +9,6 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(SQLITE_INCLUDES AND SQLITE_LIBRARIES)
-    set(SQLITE_FIND_QUIETLY TRUE)
-endif()
-
 if(NOT WIN32)
     include(FindPkgConfig)
     pkg_check_modules(PC_SQLITE QUIET sqlite3)

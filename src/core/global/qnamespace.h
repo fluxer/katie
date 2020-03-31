@@ -1011,9 +1011,6 @@ public:
     enum DateFormat {
         TextDate,      // default Qt
         ISODate,       // ISO 8601
-        SystemLocaleDate, // deprecated
-        LocalDate = SystemLocaleDate, // deprecated
-        LocaleDate,     // deprecated
         SystemLocaleShortDate,
         SystemLocaleLongDate,
         DefaultLocaleShortDate,

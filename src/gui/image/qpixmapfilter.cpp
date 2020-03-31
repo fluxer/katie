@@ -75,9 +75,6 @@ public:
 
     This enum describes the types of filter that can be applied to pixmaps.
 
-    \value ConvolutionFilter  A filter that is used to calculate the convolution
-                              of the image with a kernel. See
-                              QPixmapConvolutionFilter for more information.
     \value ColorizeFilter     A filter that is used to change the overall color
                               of an image. See QPixmapColorizeFilter for more
                               information.
@@ -164,303 +161,6 @@ QRectF QPixmapFilter::boundingRectFor(const QRectF &rect) const
 */
 
 /*!
-    \class QPixmapConvolutionFilter
-    \since 4.5
-    \ingroup painting
-
-    \brief The QPixmapConvolutionFilter class provides convolution
-    filtering for pixmaps.
-
-    QPixmapConvolutionFilter implements a convolution pixmap filter,
-    which is applied when \l{QPixmapFilter::}{draw()} is called. A
-    convolution filter lets you distort an image by setting the values
-    of a matrix of qreal values called its
-    \l{setConvolutionKernel()}{kernel}. The matrix's values are
-    usually between -1.0 and 1.0.
-
-    \omit
-    In convolution filtering, the pixel value is calculated from the
-    neighboring pixels based on the weighting convolution kernel.
-    This needs explaining to be useful.
-    \endomit
-
-    Example:
-    \snippet doc/src/snippets/code/src_gui_image_qpixmapfilter.cpp 1
-
-    \sa {Pixmap Filters Example}, QPixmapColorizeFilter, QPixmapDropShadowFilter
-
-
-    \internal
-*/
-
-class QPixmapConvolutionFilterPrivate : public QPixmapFilterPrivate
-{
-public:
-    QPixmapConvolutionFilterPrivate(): convolutionKernel(0), kernelWidth(0), kernelHeight(0), convoluteAlpha(false) {}
-    ~QPixmapConvolutionFilterPrivate() {
-        delete[] convolutionKernel;
-    }
-
-    qreal *convolutionKernel;
-    int kernelWidth;
-    int kernelHeight;
-    bool convoluteAlpha;
-};
-
-
-/*!
-    Constructs a pixmap convolution filter.
-
-    By default there is no convolution kernel.
-
-    \internal
-*/
-QPixmapConvolutionFilter::QPixmapConvolutionFilter(QObject *parent)
-    : QPixmapFilter(*new QPixmapConvolutionFilterPrivate, ConvolutionFilter, parent)
-{
-    Q_D(QPixmapConvolutionFilter);
-    d->convoluteAlpha = true;
-}
-
-/*!
-    Destructor of pixmap convolution filter.
-
-    \internal
-*/
-QPixmapConvolutionFilter::~QPixmapConvolutionFilter()
-{
-}
-
-/*!
-     Sets convolution kernel with the given number of \a rows and \a columns.
-     Values from \a kernel are copied to internal data structure.
-
-     To preserve the intensity of the pixmap, the sum of all the
-     values in the convolution kernel should add up to 1.0. A sum
-     greater than 1.0 produces a lighter result and a sum less than 1.0
-     produces a darker and transparent result.
-
-    \internal
-*/
-void QPixmapConvolutionFilter::setConvolutionKernel(const qreal *kernel, int rows, int columns)
-{
-    Q_D(QPixmapConvolutionFilter);
-    delete [] d->convolutionKernel;
-    d->convolutionKernel = new qreal[rows * columns];
-    memcpy(d->convolutionKernel, kernel, sizeof(qreal) * rows * columns);
-    d->kernelWidth = columns;
-    d->kernelHeight = rows;
-}
-
-/*!
-    Gets the convolution kernel data.
-
-    \internal
-*/
-const qreal *QPixmapConvolutionFilter::convolutionKernel() const
-{
-    Q_D(const QPixmapConvolutionFilter);
-    return d->convolutionKernel;
-}
-
-/*!
-    Gets the number of rows in the convolution kernel.
-
-    \internal
-*/
-int QPixmapConvolutionFilter::rows() const
-{
-    Q_D(const QPixmapConvolutionFilter);
-    return d->kernelHeight;
-}
-
-/*!
-    Gets the number of columns in the convolution kernel.
-
-    \internal
-*/
-int QPixmapConvolutionFilter::columns() const
-{
-    Q_D(const QPixmapConvolutionFilter);
-    return d->kernelWidth;
-}
-
-
-/*!
-    \internal
-*/
-QRectF QPixmapConvolutionFilter::boundingRectFor(const QRectF &rect) const
-{
-    Q_D(const QPixmapConvolutionFilter);
-    return rect.adjusted(-d->kernelWidth / 2, -d->kernelHeight / 2, (d->kernelWidth - 1) / 2, (d->kernelHeight - 1) / 2);
-}
-
-// Convolutes the image
-static void convolute(
-        QImage *destImage,
-        const QPointF &pos,
-        const QImage &srcImage,
-        const QRectF &srcRect,
-        QPainter::CompositionMode mode,
-        qreal *kernel,
-        int kernelWidth,
-        int kernelHeight )
-{
-    const QImage processImage = (srcImage.format() != QImage::Format_ARGB32_Premultiplied ) ?               srcImage.convertToFormat(QImage::Format_ARGB32_Premultiplied) : srcImage;
-    // TODO: support also other formats directly without copying
-
-    int *fixedKernel = new int[kernelWidth*kernelHeight];
-    for(int i = 0; i < kernelWidth*kernelHeight; i++)
-    {
-        fixedKernel[i] = (int)(65536 * kernel[i]);
-    }
-    QRectF trect = srcRect.isNull() ? processImage.rect() : srcRect;
-    trect.moveTo(pos);
-    QRectF bounded = trect.adjusted(-kernelWidth / 2, -kernelHeight / 2, (kernelWidth - 1) / 2, (kernelHeight - 1) / 2);
-    QRect rect = bounded.toAlignedRect();
-    QRect targetRect = rect.intersected(destImage->rect());
-
-    QRectF srect = srcRect.isNull() ? processImage.rect() : srcRect;
-    QRectF sbounded = srect.adjusted(-kernelWidth / 2, -kernelHeight / 2, (kernelWidth - 1) / 2, (kernelHeight - 1) / 2);
-    QPoint srcStartPoint = sbounded.toAlignedRect().topLeft()+(targetRect.topLeft()-rect.topLeft());
-
-    const uint *sourceStart = (const uint*)processImage.scanLine(0);
-    uint *outputStart = (uint*)destImage->scanLine(0);
-
-    int yk = srcStartPoint.y();
-    for (int y = targetRect.top(); y <= targetRect.bottom(); y++) {
-        uint* output = outputStart + (destImage->bytesPerLine()/sizeof(uint))*y+targetRect.left();
-        int xk = srcStartPoint.x();
-        for(int x = targetRect.left(); x <= targetRect.right(); x++) {
-            int r = 0;
-            int g = 0;
-            int b = 0;
-            int a = 0;
-
-            // some out of bounds pre-checking to avoid inner-loop ifs
-            int kernely = -kernelHeight/2;
-            int starty = 0;
-            int endy = kernelHeight;
-            if(yk+kernely+endy >= srcImage.height())
-                endy = kernelHeight-((yk+kernely+endy)-srcImage.height())-1;
-            if(yk+kernely < 0)
-                starty = -(yk+kernely);
-
-            int kernelx = -kernelWidth/2;
-            int startx = 0;
-            int endx = kernelWidth;
-            if(xk+kernelx+endx >= srcImage.width())
-                endx = kernelWidth-((xk+kernelx+endx)-srcImage.width())-1;
-            if(xk+kernelx < 0)
-                startx = -(xk+kernelx);
-
-            for (int ys = starty; ys < endy; ys ++) {
-                const uint *pix = sourceStart + (processImage.bytesPerLine()/sizeof(uint))*(yk+kernely+ys) + ((xk+kernelx+startx));
-                const uint *endPix = pix+endx-startx;
-                int kernelPos = ys*kernelWidth+startx;
-                while (pix < endPix) {
-                    int factor = fixedKernel[kernelPos++];
-                    a += (((*pix) & 0xff000000)>>24) * factor;
-                    r += (((*pix) & 0x00ff0000)>>16) * factor;
-                    g += (((*pix) & 0x0000ff00)>>8 ) * factor;
-                    b += (((*pix) & 0x000000ff)    ) * factor;
-                    pix++;
-                }
-            }
-
-            r = qBound((int)0, r >> 16, (int)255);
-            g = qBound((int)0, g >> 16, (int)255);
-            b = qBound((int)0, b >> 16, (int)255);
-            a = qBound((int)0, a >> 16, (int)255);
-            // composition mode checking could be moved outside of loop
-            if(mode == QPainter::CompositionMode_Source) {
-                uint color = (a<<24)+(r<<16)+(g<<8)+b;
-                *output++ = color;
-            } else {
-                uint current = *output;
-                uchar ca = (current&0xff000000)>>24;
-                uchar cr = (current&0x00ff0000)>>16;
-                uchar cg = (current&0x0000ff00)>>8;
-                uchar cb = (current&0x000000ff);
-                uint color =
-                        (((ca*(255-a) >> 8)+a) << 24)+
-                        (((cr*(255-a) >> 8)+r) << 16)+
-                        (((cg*(255-a) >> 8)+g) << 8)+
-                        (((cb*(255-a) >> 8)+b));
-                *output++ = color;;
-            }
-            xk++;
-        }
-        yk++;
-    }
-    delete[] fixedKernel;
-}
-
-/*!
-    \internal
-*/
-void QPixmapConvolutionFilter::draw(QPainter *painter, const QPointF &p, const QPixmap &src, const QRectF& srcRect) const
-{
-    Q_D(const QPixmapConvolutionFilter);
-    if (!painter->isActive())
-        return;
-
-    if(d->kernelWidth<=0 || d->kernelHeight <= 0)
-        return;
-
-    if (src.isNull())
-        return;
-
-    // raster implementation
-    QImage *target = 0;
-    if (painter->paintEngine()->paintDevice()->devType() == QInternal::Image) {
-        target = static_cast<QImage *>(painter->paintEngine()->paintDevice());
-
-        QTransform mat = painter->combinedTransform();
-
-        if (mat.type() > QTransform::TxTranslate) {
-            // Disabled because of transformation...
-            target = 0;
-        } else {
-            QRasterPaintEngine *pe = static_cast<QRasterPaintEngine *>(painter->paintEngine());
-            if (pe->clipType() == QRasterPaintEngine::ComplexClip)
-                // disabled because of complex clipping...
-                target = 0;
-            else {
-                QRectF clip = pe->clipBoundingRect();
-                QRectF rect = boundingRectFor(srcRect.isEmpty() ? src.rect() : srcRect);
-                QTransform x = painter->deviceTransform();
-                if (!clip.contains(rect.translated(x.dx() + p.x(), x.dy() + p.y()))) {
-                    target = 0;
-                }
-
-            }
-        }
-    }
-
-    if (target) {
-        QTransform x = painter->deviceTransform();
-        QPointF offset(x.dx(), x.dy());
-
-        convolute(target, p+offset, src.toImage(), srcRect, QPainter::CompositionMode_SourceOver, d->convolutionKernel, d->kernelWidth, d->kernelHeight);
-    } else {
-        QRect srect = srcRect.isNull() ? src.rect() : srcRect.toRect();
-        QRect rect = boundingRectFor(srect).toRect();
-        QImage result = QImage(rect.size(), QImage::Format_ARGB32_Premultiplied);
-        QPoint offset = srect.topLeft() - rect.topLeft();
-        convolute(&result,
-                  offset,
-                  src.toImage(),
-                  srect,
-                  QPainter::CompositionMode_Source,
-                  d->convolutionKernel,
-                  d->kernelWidth,
-                  d->kernelHeight);
-        painter->drawImage(p - offset, result);
-    }
-}
-
-/*!
     \class QPixmapBlurFilter
     \since 4.6
     \ingroup multimedia
@@ -479,7 +179,7 @@ void QPixmapConvolutionFilter::draw(QPainter *painter, const QPointF &p, const Q
     may override this with a custom blur that is faster on the
     underlying hardware.
 
-    \sa {Pixmap Filters Example}, QPixmapConvolutionFilter, QPixmapDropShadowFilter
+    \sa {Pixmap Filters Example}, QPixmapDropShadowFilter
 
     \internal
 */
@@ -757,7 +457,7 @@ void expblur(QImage &img, qreal radius, bool improvedQuality = false, int transp
 #define AVG(a,b)  ( ((((a)^(b)) & 0xfefefefeUL) >> 1) + ((a)&(b)) )
 #define AVG16(a,b)  ( ((((a)^(b)) & 0xf7deUL) >> 1) + ((a)&(b)) )
 
-Q_GUI_EXPORT QImage qt_halfScaled(const QImage &source)
+static QImage qt_halfScaled(const QImage &source)
 {
     if (source.width() < 2 || source.height() < 2)
         return QImage();
@@ -845,7 +545,7 @@ Q_GUI_EXPORT QImage qt_halfScaled(const QImage &source)
     return dest;
 }
 
-Q_GUI_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0)
+static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0)
 {
     if (blurImage.format() != QImage::Format_ARGB32_Premultiplied
         && blurImage.format() != QImage::Format_RGB32)
@@ -871,7 +571,7 @@ Q_GUI_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, boo
     }
 }
 
-Q_GUI_EXPORT void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0)
+static void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0)
 {
     if (blurImage.format() == QImage::Format_Indexed8)
         expblur<12, 10, true>(blurImage, radius, quality, transposed);
@@ -908,8 +608,6 @@ void QPixmapBlurFilter::draw(QPainter *painter, const QPointF &p, const QPixmap 
         scaledRadius /= scale;
 
     QImage srcImage;
-    QImage destImage;
-
     if (srcRect == src.rect()) {
         srcImage = src.toImage();
     } else {
@@ -1131,10 +829,8 @@ public:
 
     The drop shadow is produced by taking a copy of the source pixmap
     and applying a color to the copy using a
-    QPainter::CompositionMode_DestinationIn operation. This produces a
-    homogeneously-colored pixmap which is then drawn using a
-    QPixmapConvolutionFilter at an offset. The original pixmap is
-    drawn on top.
+    QPainter::CompositionMode_DestinationIn operation. The original
+    pixmap is drawn on top.
 
     The QPixmapDropShadowFilter class provides some customization
     options to specify how the drop shadow should appear. The color of
@@ -1149,7 +845,7 @@ public:
     Example:
     \snippet doc/src/snippets/code/src_gui_image_qpixmapfilter.cpp 2
 
-    \sa QPixmapColorizeFilter, QPixmapConvolutionFilter
+    \sa QPixmapColorizeFilter
 
     \internal
  */

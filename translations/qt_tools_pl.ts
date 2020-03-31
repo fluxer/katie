@@ -1765,12 +1765,12 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+854"/>
+        <location line="+853"/>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-853"/>
+        <location line="-852"/>
         <source>Save &amp;Image...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1815,7 +1815,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+125"/>
         <source>CTRL+R</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2134,7 +2134,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+282"/>
+        <location line="+289"/>
         <source>Save Forms?</source>
         <translation type="unfinished"></translation>
     </message>

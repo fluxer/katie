@@ -528,15 +528,9 @@ bool QX11Data::xdndMimeDataForAtom(Atom a, QMimeData *mimeData, QByteArray *data
                 img = img.convertToFormat(QImage::Format_MonoLSB);
                 pm = QPixmap::fromImage(img);
             }
-            QDragManager *dm = QDragManager::self();
-            if (dm) {
-                Pixmap handle = pm.handle();
-                *data = QByteArray((const char *) &handle, sizeof(Pixmap));
-                dm->xdndMimeTransferedPixmap[dm->xdndMimeTransferedPixmapIndex] = pm;
-                dm->xdndMimeTransferedPixmapIndex =
-                            (dm->xdndMimeTransferedPixmapIndex + 1) % 2;
-                ret = true;
-            }
+            Pixmap handle = pm.handle();
+            *data = QByteArray(reinterpret_cast<const char *>(&handle), sizeof(Pixmap));
+            ret = true;
         } else {
             DEBUG("QClipboard: xdndMimeDataForAtom(): converting to type '%s' is not supported", qPrintable(atomName));
         }

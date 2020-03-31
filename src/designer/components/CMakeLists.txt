@@ -1,4 +1,4 @@
-add_definitions(-DQT_STATICPLUGIN -DQDESIGNER_COMPONENTS_LIBRARY)
+add_definitions(-DQDESIGNER_COMPONENTS_LIBRARY)
 set(EXTRA_DESIGNERCOMPONENTS_LIBS
     KtCore KtGui KtXml KtDesigner KtScript KtUiTools
 )
@@ -120,7 +120,6 @@ set(DESIGNERCOMPONENTS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/buddyeditor/buddyeditor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/buddyeditor/buddyeditor_tool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/buddyeditor/buddyeditor_plugin.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/buddyeditor/buddyeditor_instance.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/deviceprofiledialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/formwindowsettings.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/formeditor/templateoptionspage.ui
@@ -181,13 +180,11 @@ set(DESIGNERCOMPONENTS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor_tool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor_plugin.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditor_instance.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/signalsloteditorwindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor/connectdialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor/tabordereditor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor/tabordereditor_tool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor/tabordereditor_plugin.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor/tabordereditor_instance.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/taskmenu/button_taskmenu.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/taskmenu/groupbox_taskmenu.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/taskmenu/label_taskmenu.cpp
@@ -241,14 +238,14 @@ katie_setup_object(KtDesignerComponents sharedfindwidget sharedqtpropertybrowser
 install(
     TARGETS KtDesignerComponents
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
+    DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtDesignerComponents
-    DESTINATION ${KATIE_HEADERS_RELATIVE}
+    DESTINATION ${KATIE_HEADERS_PATH}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${KATIE_HEADERS_FULL}/QtDesignerComponents)
+katie_optimize_headers(${KATIE_HEADERS_PATH}/QtDesignerComponents)

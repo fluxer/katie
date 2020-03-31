@@ -189,20 +189,17 @@ QT_USE_NAMESPACE
 
      SOLARIS  - Sun Solaris
      HPUX     - HP-UX
-     ULTRIX   - DEC Ultrix
      LINUX    - Linux
      FREEBSD  - FreeBSD
      NETBSD   - NetBSD
      OPENBSD  - OpenBSD
      BSDI     - BSD/OS
-     IRIX     - SGI Irix
      OSF      - HP Tru64 UNIX
      SCO      - SCO OpenServer 5
      UNIXWARE - UnixWare 7, Open UNIX 8
      AIX      - AIX
      HURD     - GNU Hurd
      DGUX     - DG/UX
-     RELIANT  - Reliant UNIX
      DYNIX    - DYNIX/ptx
      LYNX     - LynxOS
      BSD4     - Any BSD 4.4 system
@@ -644,7 +641,7 @@ Q_CORE_EXPORT void qWarning(const char *, ...) /* print warning message */
 #endif
 ;
 
-Q_CORE_EXPORT QString qt_error_string(int errorCode = -1);
+Q_CORE_EXPORT QString qt_error_string(int errorCode);
 Q_CORE_EXPORT void qCritical(const char *, ...) /* print critical message */
 #if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
@@ -701,7 +698,7 @@ inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 #   define Q_FUNC_INFO __func__
 #endif
 
-enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg, QtSystemMsg = QtCriticalMsg };
+enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg };
 
 Q_CORE_EXPORT void qt_message_output(QtMsgType, const char *buf);
 

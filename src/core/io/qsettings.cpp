@@ -220,11 +220,18 @@ static QSettingsCustomFormat getSettingsFormat(QSettings::Format format)
     return result;
 }
 
+static inline QString createLeadingDir(const QString &filename)
+{
+    QFileInfo info(filename);
+    QDir().mkpath(info.absolutePath());
+    return filename;
+}
+
 static QString getSettingsPath(QSettings::Scope scope, const QString &filename, const QString &extension)
 {
     QFileInfo info(filename);
     if (info.isAbsolute()) {
-        return filename;
+        return createLeadingDir(filename);
     }
 
     QString nameandext = filename;
@@ -240,17 +247,12 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
     foreach (const QString &location, locations) {
         QDir dir(location);
         if (dir.exists(location)) {
-            return location + QDir::separator() + nameandext;
+            return createLeadingDir(location + QDir::separator() + nameandext);
         }
     }
 
     const QString fallback = QLibraryInfo::location(QLibraryInfo::SettingsPath);
-    QDir fallbackdir(fallback);
-    if (!fallbackdir.mkpath(fallback)) {
-        qWarning("QSettingsPrivate::getSettingsPath: no settings location");
-        fallbackdir.currentPath() + QDir::separator() + nameandext;
-    }
-    return fallback + QDir::separator() + nameandext;
+    return createLeadingDir(fallback + QDir::separator() + nameandext);
 }
 
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)

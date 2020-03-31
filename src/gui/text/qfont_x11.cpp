@@ -73,26 +73,6 @@ double qt_pointSize(double pixelSize, int dpi)
     return pixelSize * 72. / ((double) dpi);
 }
 
-typedef QHash<int, QString> FallBackHash;
-Q_GLOBAL_STATIC(FallBackHash, fallBackHash)
-
-// Returns the user-configured fallback family for the specified script.
-QString qt_fallback_font_family(int script)
-{
-    FallBackHash *hash = fallBackHash();
-    return hash->value(script);
-}
-
-// Sets the fallback family for the specified script.
-Q_GUI_EXPORT void qt_x11_set_fallback_font_family(int script, const QString &family)
-{
-    FallBackHash *hash = fallBackHash();
-    if (!family.isEmpty())
-        hash->insert(script, family);
-    else
-        hash->remove(script);
-}
-
 int QFontPrivate::defaultEncodingID = -1;
 
 void QFont::initialize()

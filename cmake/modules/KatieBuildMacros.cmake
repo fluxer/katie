@@ -146,10 +146,9 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
         "${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake"
         "${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc"
     )
-    katie_setup_paths()
     install(
         FILES "${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc"
-        DESTINATION "${KATIE_PKGCONFIG_RELATIVE}"
+        DESTINATION "${KATIE_PKGCONFIG_PATH}"
         COMPONENT Devel
     )
 endmacro()
@@ -273,12 +272,12 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set_source_files_properties("${rscout}" PROPERTIES GENERATED TRUE)
             install(
                 FILES "${rscout}"
-                DESTINATION "${KATIE_TRANSLATIONS_RELATIVE}"
+                DESTINATION "${KATIE_TRANSLATIONS_PATH}"
                 COMPONENT Runtime
             )
         endif()
     endforeach()
-    set_source_files_properties("${resourcesdep}" PROPERTIES OBJECT_DEPENDS "${targetresources}")
+    set_property(SOURCE "${resourcesdep}" APPEND PROPERTY OBJECT_DEPENDS "${targetresources}")
 
     if(NOT KATIE_ALLINONE)
         set(filteredsources)
@@ -332,29 +331,6 @@ macro(KATIE_SETUP_OBJECT FORTARGET)
         target_include_directories(${FORTARGET} PRIVATE ${object_includes})
     endforeach()
 endmacro()
-
-# a function to change full installation paths to relative so that CPack
-# generators do not choke, still paths must contain a string of some sort that
-# is not just CMAKE_INSTALL_PREFIX - if they are null after they have been made
-# relative even quoting them will not help and CMake will complain that not
-# enought arguments have been passed to install() for DESTINATION
-function(KATIE_SETUP_PATHS)
-    set(instpaths
-        _PREFIX _HEADERS _LIBRARIES _BINARIES _PLUGINS _IMPORTS _DATA
-        _TRANSLATIONS _SETTINGS _CMAKE _LDCONF _PROFILE _MAN
-        _APPLICATIONS _PIXMAPS _PKGCONFIG
-    )
-    foreach(instpath ${instpaths})
-        string(FIND "${KATIE${instpath}_FULL}" "/" slashindex)
-        if(NOT "${slashindex}" STREQUAL "0")
-            message(FATAL_ERROR "KATIE${instpath}_FULL should not be relative: ${KATIE${instpath}_FULL}")
-        endif()
-
-        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${KATIE${instpath}_FULL}")
-        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
-        set(KATIE${instpath}_RELATIVE "${modpath}" PARENT_SCOPE)
-    endforeach()
-endfunction()
 
 # a macro to remove conditional code from headers which is only relevant to the
 # process of building Katie itself

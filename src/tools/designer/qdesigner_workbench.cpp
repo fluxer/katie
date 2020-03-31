@@ -180,8 +180,8 @@ QDesignerWorkbench::QDesignerWorkbench()  :
 
     (void) QDesignerComponents::createTaskMenu(core(), this);
 
+    m_staticPlugins = QDesignerComponents::initializePlugins(core());
     initializeCorePlugins();
-    QDesignerComponents::initializePlugins(core());
     m_actionManager = new QDesignerActions(this); // accesses plugin components
 
     m_windowActions->setExclusive(true);
@@ -593,8 +593,15 @@ void QDesignerWorkbench::removeFormWindow(QDesignerFormWindow *formWindow)
 
 void QDesignerWorkbench::initializeCorePlugins()
 {
-    QList<QObject*> plugins = QPluginLoader::staticInstances();
-    plugins += core()->pluginManager()->instances();
+    QList<QObject*> plugins= core()->pluginManager()->instances();
+
+    core()->pluginManager()->ensureInitializedStatic(m_staticPlugins);
+    foreach (QObject *plugin, m_staticPlugins) {
+        if (QDesignerFormEditorPluginInterface *formEditorPlugin = qobject_cast<QDesignerFormEditorPluginInterface*>(plugin)) {
+            if (!formEditorPlugin->isInitialized())
+                formEditorPlugin->initialize(core());
+        }
+    }
 
     foreach (QObject *plugin, plugins) {
         if (QDesignerFormEditorPluginInterface *formEditorPlugin = qobject_cast<QDesignerFormEditorPluginInterface*>(plugin)) {

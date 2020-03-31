@@ -388,8 +388,6 @@ void QtDBusScriptPlugin::initialize(const QString &key, QScriptEngine *engine)
     (void)new QScriptDBusMessageConstructor(engine, extensionObject);
 }
 
-
-Q_EXPORT_STATIC_PLUGIN(QtDBusScriptPlugin)
 Q_EXPORT_PLUGIN2(qtscriptdbus, QtDBusScriptPlugin)
 
 #endif // QT_NO_DBUS

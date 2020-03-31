@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Qt není slučitelná</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1872"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1871"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1644,7 +1644,7 @@ Script: %3</source>
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+430"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+407"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -1750,7 +1750,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+180"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+172"/>
         <location line="+1"/>
         <source>File</source>
         <translation>Soubor</translation>
@@ -1768,7 +1768,7 @@ Script: %3</source>
         <translation>Zkratka</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+506"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+505"/>
         <source>Open</source>
         <translation>Otevřít</translation>
     </message>
@@ -1824,7 +1824,7 @@ Přesto chcete soubor smazat?</translation>
         <translation>Odstranit</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+402"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+393"/>
         <source>My Computer</source>
         <translation>Můj počítač</translation>
     </message>
@@ -2006,31 +2006,31 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Velikost</translation>
     </message>
     <message>
+        <location line="-142"/>
         <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+414"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-142"/>
         <source>%1 GB</source>
         <translation>%1 GB</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+4"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+4"/>
         <source>%1 KB</source>
         <translation>%1 KB</translation>
     </message>
     <message>
         <location line="-2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="-2"/>
         <source>%1 MB</source>
         <translation>%1 MB</translation>
     </message>
     <message>
         <location line="-4"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-4"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="-4"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+78"/>
+        <location line="+78"/>
         <source>&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
         <translation>&lt;b&gt;Název &quot;%1&quot; nelze použít.&lt;/b&gt;&lt;p&gt;Zkuste použít jiný název, s menším počtem znaků nebo bez zvláštních znaků.</translation>
     </message>
@@ -2069,51 +2069,51 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+89"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+80"/>
         <location line="+12"/>
-        <location line="+821"/>
+        <location line="+817"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location line="-819"/>
+        <location line="-815"/>
         <source>Demi</source>
         <translation>Polotučné</translation>
     </message>
     <message>
         <location line="-8"/>
         <location line="+18"/>
-        <location line="+807"/>
+        <location line="+803"/>
         <source>Black</source>
         <translation>Černé</translation>
     </message>
     <message>
-        <location line="-811"/>
-        <location line="+817"/>
+        <location line="-807"/>
+        <location line="+813"/>
         <source>Light</source>
         <translation>Jemné</translation>
     </message>
     <message>
-        <location line="-834"/>
-        <location line="+832"/>
+        <location line="-830"/>
+        <location line="+828"/>
         <source>Demi Bold</source>
         <translation>Polotučné</translation>
     </message>
     <message>
-        <location line="-669"/>
-        <location line="+674"/>
+        <location line="-665"/>
+        <location line="+670"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location line="-843"/>
-        <location line="+848"/>
+        <location line="-839"/>
+        <location line="+844"/>
         <source>Normal</source>
         <translation>Normální</translation>
     </message>
     <message>
-        <location line="-676"/>
-        <location line="+673"/>
+        <location line="-672"/>
+        <location line="+669"/>
         <source>Oblique</source>
         <translation>Skloněné</translation>
     </message>
@@ -2388,13 +2388,13 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Data jsou poškozena</translation>
     </message>
     <message>
-        <location line="-18"/>
         <location filename="../src/network/access/qhttp.cpp" line="+3"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-18"/>
         <source>Host %1 not found</source>
         <translation>Počítač %1 se nepodařilo nalézt</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+15"/>
         <source>Host requires authentication</source>
         <translation>Hostitelský počítač požaduje autentizaci</translation>
     </message>
@@ -2537,7 +2537,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1396"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1380"/>
         <source>No such file or directory</source>
         <translation>Nepodařilo se najít žádný takový soubor nebo adresář</translation>
     </message>
@@ -2646,7 +2646,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+191"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+92"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Knihovnu %1 nelze vyjmout: %2</translation>
     </message>
@@ -2661,14 +2661,14 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Symbol &quot;%1&quot; nelze v %2 vyřešit: %3</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+347"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+329"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Ověřovací data přídavného nesouhlasí v &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+202"/>
-        <location line="+40"/>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="+278"/>
+        <location line="+270"/>
+        <location line="+36"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+275"/>
         <source>The shared library was not found.</source>
         <translation>Nepodařilo se nalézt sdílenou knihovnu.</translation>
     </message>
@@ -2683,12 +2683,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Katie library. (Cannot mix debug and release libraries.)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+332"/>
+        <location line="+333"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
@@ -2734,7 +2729,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+213"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: Chybný název</translation>
@@ -2759,13 +2754,11 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     <name>QLocalSocket</name>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+148"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+145"/>
         <source>%1: Connection error</source>
         <translation>%1: Chyba spojení</translation>
     </message>
     <message>
         <location line="-21"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="-21"/>
         <source>%1: Connection refused</source>
         <translation>%1: Spojení bylo odmítnuto</translation>
     </message>
@@ -2776,48 +2769,36 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location line="-19"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+9"/>
         <source>%1: Socket access error</source>
         <translation>%1: Chyba při přístupu k socketu</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket resource error</source>
         <translation>%1: Chyba socketu - potíže se zdrojem</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+12"/>
         <source>%1: The socket operation is not supported</source>
         <translation>%1: Tato operace se socketem není podporována</translation>
     </message>
     <message>
         <location line="-18"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="-18"/>
         <source>%1: Invalid name</source>
         <translation>%1: Neplatný název</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+22"/>
-        <source>%1: Unknown error</source>
-        <translation>%1: Neznámá chyba</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+9"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="-13"/>
+        <location line="+9"/>
         <source>%1: Socket operation timed out</source>
         <translation>%1: Překročení času při operaci se socketem</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Datagram too large</source>
         <translation>%1: Datagram je příliš veliký</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="-15"/>
         <source>%1: Remote closed</source>
         <translation>%1: Spojení bylo protější stranou uzavřeno</translation>
     </message>
@@ -3528,7 +3509,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1180"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1150"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -3690,12 +3671,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QPluginLoader</name>
     <message>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="-48"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="-46"/>
         <source>The plugin was not loaded.</source>
         <translation>Přídavný modul nebyl nahrán.</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+70"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
@@ -3834,7 +3815,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Tisk</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-743"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-715"/>
         <source>&amp;Options &lt;&lt;</source>
         <translation>&amp;Nastavení &lt;&lt; </translation>
     </message>
@@ -3850,12 +3831,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>&amp;Tisk</translation>
     </message>
     <message>
-        <location line="+303"/>
+        <location line="+295"/>
         <source>Print to File (Postscript)</source>
         <translation>Tisk do souboru (Postscript)</translation>
     </message>
     <message>
-        <location line="+205"/>
+        <location line="+195"/>
         <source>%1 already exists.
 Do you want to overwrite it?</source>
         <translation>Soubor %1 již existuje.
@@ -3877,7 +3858,7 @@ Má se přepsat?</translation>
         <translation>US Letter</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-157"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-147"/>
         <source>Write %1 file</source>
         <translation>Zapsat %1 soubor</translation>
     </message>
@@ -3887,23 +3868,12 @@ Má se přepsat?</translation>
         <translation>Místní soubor</translation>
     </message>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+121"/>
-        <source>locally connected</source>
-        <translation>přímo spojeno</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <location line="+225"/>
-        <source>Aliases: %1</source>
-        <translation>Přezdívka: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-48"/>
+        <location line="-48"/>
         <source>Print to File (PDF)</source>
         <translation>Tisk do souboru (PDF)</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+110"/>
         <source>Print To File ...</source>
         <translation>Tisk do souboru...</translation>
     </message>
@@ -3918,13 +3888,7 @@ Má se přepsat?</translation>
         <translation>US Executive</translation>
     </message>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+217"/>
-        <location line="+199"/>
-        <source>unknown</source>
-        <translation>Neznámý</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+6"/>
+        <location line="+6"/>
         <source>US Common #10 Envelope</source>
         <translation>US běžná #10 obálka</translation>
     </message>
@@ -4343,7 +4307,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+645"/>
+        <location filename="../src/sql/drivers/qsql_sqlite.cpp" line="+645"/>
         <source>Unable to commit transaction</source>
         <translation>Transakci se nepodařilo zapsat</translation>
     </message>
@@ -4915,12 +4879,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1069"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1060"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location line="-588"/>
+        <location line="-582"/>
         <source>No</source>
         <translation>Ne</translation>
     </message>
@@ -4930,7 +4894,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Nahoru</translation>
     </message>
     <message>
-        <location line="+691"/>
+        <location line="+685"/>
         <location line="+79"/>
         <source>Alt</source>
         <translation>Alt</translation>
@@ -4941,7 +4905,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-793"/>
+        <location line="-787"/>
         <source>Del</source>
         <translation>Delete</translation>
     </message>
@@ -4982,13 +4946,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Volání</translation>
     </message>
     <message>
-        <location line="+513"/>
+        <location line="+507"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-766"/>
+        <location line="-760"/>
         <source>Down</source>
         <translation>Dolů</translation>
     </message>
@@ -5198,13 +5162,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Hangul zvláštní</translation>
     </message>
     <message>
-        <location line="+467"/>
+        <location line="+461"/>
         <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location line="-763"/>
+        <location line="-757"/>
         <source>PgUp</source>
         <translation>PgUp</translation>
     </message>
@@ -5234,13 +5198,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location line="+689"/>
+        <location line="+683"/>
         <location line="+82"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-787"/>
+        <location line="-781"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Mezerník</translation>
@@ -6684,7 +6648,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5178"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -6938,7 +6902,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Odkaz na nevyhodnocenou entitu &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+1621"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+1619"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
         <translation>&apos;%1&apos; není platným znakem v údaji veřejného id, který je tvořen písmeny.</translation>
     </message>
@@ -6951,12 +6915,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Neplatná deklarace jmenného prostoru.</translation>
     </message>
     <message>
-        <location line="-546"/>
+        <location line="-544"/>
         <source>Invalid XML character.</source>
         <translation>Neplatný znak XML.</translation>
     </message>
     <message>
-        <location line="+1068"/>
+        <location line="+1066"/>
         <source>Expected character data.</source>
         <translation>Byly očekávány údaje o znacích.</translation>
     </message>
@@ -6998,12 +6962,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Pseudovlastnost standalone musí následovat bezprostředně po kódování.</translation>
     </message>
     <message>
-        <location line="-484"/>
+        <location line="-482"/>
         <source>Sequence &apos;]]&gt;&apos; not allowed in content.</source>
         <translation>Sled znaků &apos;]]&gt;&apos; není v obsahu povolen.</translation>
     </message>
     <message>
-        <location line="+486"/>
+        <location line="+484"/>
         <source>%1 is an invalid encoding name.</source>
         <translation>%1 není platným názvem pro kódování.</translation>
     </message>
@@ -7064,7 +7028,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1 není platným údajem VEŘEJNÉHO identifikátoru (id).</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="-924"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="-922"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="+129"/>
         <source>Extra content at end of document.</source>
         <translation>Přebytečný obsah za koncem dokumentu.</translation>
@@ -7075,7 +7039,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Neplatný název XML.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+1132"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+1130"/>
         <source>Premature end of document.</source>
         <translation>Předčasný konec dokumentu.</translation>
     </message>
@@ -7100,12 +7064,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Na tomto místě neplatný &apos; </translation>
     </message>
     <message>
-        <location line="-952"/>
+        <location line="-950"/>
         <source>Invalid entity value.</source>
         <translation>Neplatná hodnota entity.</translation>
     </message>
     <message>
-        <location line="+861"/>
+        <location line="+859"/>
         <source>Encoding %1 is unsupported</source>
         <translation>Kódování %1 není podporováno</translation>
     </message>

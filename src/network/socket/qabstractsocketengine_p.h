@@ -173,7 +173,7 @@ public Q_SLOTS:
 public:
     void setReceiver(QAbstractSocketEngineReceiver *receiver);
 protected:
-    QAbstractSocketEngine(QAbstractSocketEnginePrivate &dd, QObject* parent = 0);
+    QAbstractSocketEngine(QAbstractSocketEnginePrivate &dd, QObject *parent = Q_NULLPTR);
 
     void setError(QAbstractSocket::SocketError error, const QString &errorString) const;
     void setState(QAbstractSocket::SocketState state);

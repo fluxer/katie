@@ -50,84 +50,6 @@
 QT_BEGIN_NAMESPACE
 
 /*!
-    \class QAbstractFileEngineHandler
-    \reentrant
-
-    \brief The QAbstractFileEngineHandler class provides a way to register
-    custom file engines with your application.
-
-    \ingroup io
-    \since 4.1
-
-    QAbstractFileEngineHandler is a factory for creating QAbstractFileEngine
-    objects (file engines), which are used internally by QFile, QFileInfo, and
-    QDir when working with files and directories.
-
-    When you open a file, Qt chooses a suitable file engine by passing the
-    file name from QFile or QDir through an internal list of registered file
-    engine handlers. The first handler to recognize the file name is used to
-    create the engine. Qt provides internal file engines for working with
-    regular files and resources, but you can also register your own
-    QAbstractFileEngine subclasses.
-
-    To install an application-specific file engine, you subclass
-    QAbstractFileEngineHandler and reimplement create(). When you instantiate
-    the handler (e.g. by creating an instance on the stack or on the heap), it
-    will automatically register with Qt. (The latest registered handler takes
-    precedence over existing handlers.)
-
-    For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qabstractfileengine.cpp 0
-
-    When the handler is destroyed, it is automatically removed from Qt.
-
-    The most common approach to registering a handler is to create an instance
-    as part of the start-up phase of your application. It is also possible to
-    limit the scope of the file engine handler to a particular area of
-    interest (e.g. a special file dialog that needs a custom file engine). By
-    creating the handler inside a local scope, you can precisely control the
-    area in which your engine will be applied without disturbing file
-    operations in other parts of your application.
-
-    \sa QAbstractFileEngine, QAbstractFileEngine::create()
-*/
-
-/*!
-    Constructs a file handler and registers it with Qt. Once created this
-    handler's create() function will be called (along with all the other
-    handlers) for any paths used. The most recently created handler that
-    recognizes the given path (i.e. that returns a QAbstractFileEngine) is
-    used for the new path.
-
-    \sa create()
- */
-QAbstractFileEngineHandler::QAbstractFileEngineHandler()
-{
-}
-
-/*!
-    Destroys the file handler. This will automatically unregister the handler
-    from Qt.
- */
-QAbstractFileEngineHandler::~QAbstractFileEngineHandler()
-{
-}
-
-/*!
-    \fn QAbstractFileEngine *QAbstractFileEngineHandler::create(const QString &fileName) const
-
-    Creates a file engine for file \a fileName. Returns 0 if this
-    file handler cannot handle \a fileName.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qabstractfileengine.cpp 1
-
-    \sa QAbstractFileEngine::create()
-*/
-
-/*!
     Creates and returns a QAbstractFileEngine suitable for processing \a
     fileName.
 
@@ -137,8 +59,6 @@ QAbstractFileEngineHandler::~QAbstractFileEngineHandler()
     If you reimplemnt this function, it should only return file
     engines that knows how to handle \a fileName; otherwise, it should
     return 0.
-
-    \sa QAbstractFileEngineHandler
 */
 QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
 {
@@ -154,36 +74,6 @@ QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
     return Q_NULLPTR;
 #endif
 }
-
-/*!
-    \class QAbstractFileEngine
-    \reentrant
-
-    \brief The QAbstractFileEngine class provides an abstraction for accessing
-    the filesystem.
-
-    \ingroup io
-    \since 4.1
-
-    The QDir, QFile, and QFileInfo classes all make use of a
-    QAbstractFileEngine internally. If you create your own QAbstractFileEngine
-    subclass (and register it with Qt by creating a QAbstractFileEngineHandler
-    subclass), your file engine will be used when the path is one that your
-    file engine handles.
-
-    A QAbstractFileEngine refers to one file or one directory. If the referent
-    is a file, the setFileName(), rename(), and remove() functions are
-    applicable. If the referent is a directory the mkdir(), rmdir(), and
-    entryList() functions are applicable. In all cases the caseSensitive(),
-    isRelativePath(), fileFlags(), ownerId(), owner(), and fileTime()
-    functions are applicable.
-
-    A QAbstractFileEngine subclass can be created to do synchronous network I/O
-    based file system operations, local file system operations, or to operate
-    as a resource system to access file based resources.
-
-   \sa QAbstractFileEngineHandler
-*/
 
 /*!
     \enum QAbstractFileEngine::FileName

@@ -98,7 +98,6 @@ public:
     QPoint hotspot;
     Qt::DropActions possible_actions;
     Qt::DropAction executed_action;
-    QMap<Qt::DropAction, QPixmap> customCursors;
     Qt::DropAction defaultDropAction;
 };
 
@@ -153,21 +152,12 @@ public:
     bool willDrop;
     QEventLoop *eventLoop;
 
-    QPixmap dragCursor(Qt::DropAction action) const;
-
-    bool hasCustomDragCursors() const;
-
     QDropData *dropData;
 
     void emitActionChanged(Qt::DropAction newAction) { if (object) emit object->actionChanged(newAction); }
 
     void setCurrentTarget(QWidget *target, bool dropped = false);
     QWidget *currentTarget();
-
-#ifdef Q_WS_X11
-    QPixmap xdndMimeTransferedPixmap[2];
-    int xdndMimeTransferedPixmapIndex;
-#endif
 
 private:
     QWidget *currentDropTarget;

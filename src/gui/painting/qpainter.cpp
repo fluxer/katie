@@ -63,8 +63,6 @@ QT_BEGIN_NAMESPACE
 
 // #define QT_DEBUG_DRAW
 
-extern QPixmap qt_pixmapForBrush(int style, bool invert);
-
 void qt_format_text(const QFont &font,
                     const QRectF &_r, int tf, const QTextOption *option, const QString& str, QRectF *brect,
                     int tabstops, int* tabarray, int tabarraylen,
@@ -74,10 +72,10 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
                                    QTextItem::RenderFlags flags, qreal width,
                                    const QTextCharFormat &charFormat);
 // Helper function to calculate left most position, width and flags for decoration drawing
-Q_GUI_EXPORT void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
-                                                const QFixedPoint *positions, int glyphCount,
-                                                QFontEngine *fontEngine, const QFont &font,
-                                                const QTextCharFormat &charFormat);
+static void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
+                                          const QFixedPoint *positions, int glyphCount,
+                                          QFontEngine *fontEngine, const QFont &font,
+                                          const QTextCharFormat &charFormat);
 
 static inline QGradient::CoordinateMode coordinateMode(const QBrush &brush)
 {
@@ -1635,56 +1633,6 @@ QPaintEngine *QPainter::paintEngine() const
 {
     Q_D(const QPainter);
     return d->engine;
-}
-
-/*!
-    \since 4.6
-
-    Flushes the painting pipeline and prepares for the user issuing commands
-    directly to the underlying graphics context. Must be followed by a call to
-    endNativePainting().
-
-    Note that only the states the underlying paint engine changes will be reset
-    to their respective default states. The states we reset may change from
-    release to release.
-
-    \snippet doc/src/snippets/code/src_gui_painting_qpainter.cpp 21
-
-    \sa endNativePainting()
-*/
-void QPainter::beginNativePainting()
-{
-    Q_D(QPainter);
-    if (Q_UNLIKELY(!d->engine)) {
-        qWarning("QPainter::beginNativePainting: Painter not active");
-        return;
-    }
-
-    if (d->extended)
-        d->extended->beginNativePainting();
-}
-
-/*!
-    \since 4.6
-
-    Restores the painter after manually issuing native painting commands. Lets
-    the painter restore any native state that it relies on before calling any
-    other painter commands.
-
-    \sa beginNativePainting()
-*/
-void QPainter::endNativePainting()
-{
-    Q_D(const QPainter);
-    if (Q_UNLIKELY(!d->engine)) {
-        qWarning("QPainter::beginNativePainting: Painter not active");
-        return;
-    }
-
-    if (d->extended)
-        d->extended->endNativePainting();
-    else
-        d->engine->syncState();
 }
 
 /*!
@@ -5625,10 +5573,10 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
     painter->setBrush(oldBrush);
 }
 
-Q_GUI_EXPORT void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
-                                                const QFixedPoint *positions, int glyphCount,
-                                                QFontEngine *fontEngine, const QFont &font,
-                                                const QTextCharFormat &charFormat)
+static void qt_draw_decoration_for_glyphs(QPainter *painter, const glyph_t *glyphArray,
+                                          const QFixedPoint *positions, int glyphCount,
+                                          QFontEngine *fontEngine, const QFont &font,
+                                          const QTextCharFormat &charFormat)
 {
     if (!(font.underline() || font.strikeOut() || font.overline()))
         return;

@@ -133,9 +133,6 @@ QDragManager::QDragManager()
     eventLoop = 0;
     dropData = new QDropData();
     currentDropTarget = 0;
-#ifdef Q_WS_X11
-    xdndMimeTransferedPixmapIndex = 0;
-#endif
 }
 
 
@@ -154,26 +151,6 @@ QDragManager *QDragManager::self()
     if (!instance && !QApplication::closingDown())
         instance = new QDragManager;
     return instance;
-}
-
-QPixmap QDragManager::dragCursor(Qt::DropAction action) const
-{
-    QDragPrivate * d = dragPrivate();
-    if (d && d->customCursors.contains(action))
-        return d->customCursors[action];
-    else if (action == Qt::MoveAction)
-        return QApplicationPrivate::instance()->getPixmapCursor(Qt::DragMoveCursor);
-    else if (action == Qt::CopyAction)
-        return QApplicationPrivate::instance()->getPixmapCursor(Qt::DragCopyCursor);
-    else if (action == Qt::LinkAction)
-        return QApplicationPrivate::instance()->getPixmapCursor(Qt::DragLinkCursor);
-    return QPixmap();
-}
-
-bool QDragManager::hasCustomDragCursors() const
-{
-    QDragPrivate * d = dragPrivate();
-    return d && !d->customCursors.isEmpty();
 }
 
 Qt::DropAction QDragManager::defaultAction(Qt::DropActions possibleActions,

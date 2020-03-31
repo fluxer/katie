@@ -13,7 +13,6 @@ bin/rcc-katie
 bin/uic-katie
 include/katie/QtCore/QAbstractEventDispatcher
 include/katie/QtCore/QAbstractFileEngine
-include/katie/QtCore/QAbstractFileEngineHandler
 include/katie/QtCore/QAbstractFileEngineIterator
 include/katie/QtCore/QAbstractItemModel
 include/katie/QtCore/QAbstractListModel
@@ -1118,7 +1117,6 @@ include/katie/QtGui/qmdiarea.h
 include/katie/QtGui/qmdisubwindow.h
 include/katie/QtGui/qmenu.h
 include/katie/QtGui/qmenubar.h
-include/katie/QtGui/qmenudata.h
 include/katie/QtGui/qmessagebox.h
 include/katie/QtGui/qmotifstyle.h
 include/katie/QtGui/qmovie.h
@@ -1330,8 +1328,6 @@ include/katie/QtScriptTools/QtScriptTools
 include/katie/QtScriptTools/qscriptenginedebugger.h
 include/katie/QtSql/QSqlDatabase
 include/katie/QtSql/QSqlDriver
-include/katie/QtSql/QSqlDriverCreator
-include/katie/QtSql/QSqlDriverCreatorBase
 include/katie/QtSql/QSqlDriverFactoryInterface
 include/katie/QtSql/QSqlDriverPlugin
 include/katie/QtSql/QSqlError
