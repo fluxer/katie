@@ -80,34 +80,27 @@ set(KATIE_LICENSE "Open Source")
 set(KATIE_PRODUCT "AwesomeSauce")
 
 include(GNUInstallDirs)
-set(KATIE_PREFIX_FULL "${CMAKE_INSTALL_PREFIX}" CACHE PATH "General installation prefix")
-set(KATIE_HEADERS_FULL "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
-set(KATIE_LIBRARIES_FULL "${CMAKE_INSTALL_FULL_LIBDIR}" CACHE PATH "Libraries installation path")
-set(KATIE_BINARIES_FULL "${CMAKE_INSTALL_FULL_BINDIR}" CACHE PATH "Binaries installation path")
-set(KATIE_PLUGINS_FULL "${KATIE_LIBRARIES_FULL}/katie/plugins" CACHE PATH "Plugins installation path")
-set(KATIE_IMPORTS_FULL "${KATIE_LIBRARIES_FULL}/katie/imports" CACHE PATH "Declarative imports installation path")
-set(KATIE_DATA_FULL "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
-set(KATIE_TRANSLATIONS_FULL "${KATIE_DATA_FULL}/katie/translations" CACHE PATH "Translations installation path")
-set(KATIE_SETTINGS_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg" CACHE PATH "Settings runtime path")
-set(KATIE_CMAKE_FULL "${KATIE_LIBRARIES_FULL}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
-set(KATIE_LDCONF_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
-set(KATIE_PROFILE_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/profile.d" CACHE PATH "Shell profile scripts installation path")
-set(KATIE_MAN_FULL "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages installation path")
-set(KATIE_APPLICATIONS_FULL "${KATIE_DATA_FULL}/applications" CACHE PATH "Desktop applications register installation path")
-set(KATIE_PIXMAPS_FULL "${KATIE_DATA_FULL}/pixmaps" CACHE PATH "Desktop applications icon installation path")
-set(KATIE_PKGCONFIG_FULL "${KATIE_LIBRARIES_FULL}/pkgconfig" CACHE PATH "pkg-config installation path")
+set(KATIE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}" CACHE PATH "General installation prefix")
+set(KATIE_HEADERS_PATH "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
+set(KATIE_LIBRARIES_PATH "${CMAKE_INSTALL_FULL_LIBDIR}" CACHE PATH "Libraries installation path")
+set(KATIE_BINARIES_PATH "${CMAKE_INSTALL_FULL_BINDIR}" CACHE PATH "Binaries installation path")
+set(KATIE_PLUGINS_PATH "${KATIE_LIBRARIES_PATH}/katie/plugins" CACHE PATH "Plugins installation path")
+set(KATIE_IMPORTS_PATH "${KATIE_LIBRARIES_PATH}/katie/imports" CACHE PATH "Declarative imports installation path")
+set(KATIE_DATA_PATH "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
+set(KATIE_TRANSLATIONS_PATH "${KATIE_DATA_PATH}/katie/translations" CACHE PATH "Translations installation path")
+set(KATIE_SETTINGS_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg" CACHE PATH "Settings runtime path")
+set(KATIE_CMAKE_PATH "${KATIE_LIBRARIES_PATH}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
+set(KATIE_LDCONF_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
+set(KATIE_PROFILE_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/profile.d" CACHE PATH "Shell profile scripts installation path")
+set(KATIE_MAN_PATH "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages installation path")
+set(KATIE_APPLICATIONS_PATH "${KATIE_DATA_PATH}/applications" CACHE PATH "Desktop applications register installation path")
+set(KATIE_PIXMAPS_PATH "${KATIE_DATA_PATH}/pixmaps" CACHE PATH "Desktop applications icon installation path")
+set(KATIE_PKGCONFIG_PATH "${KATIE_LIBRARIES_PATH}/pkgconfig" CACHE PATH "pkg-config installation path")
 set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
-katie_setup_paths()
 
 # optional package
-option(WITH_NIS "Build NIS support" ON)
-add_feature_info(nis WITH_NIS "build NIS support")
-
 option(WITH_CUPS "Build CUPS support" ON)
 add_feature_info(cups WITH_CUPS "build CUPS support")
-
-option(WITH_PNG "Build PNG support" ON)
-add_feature_info(png WITH_PNG "build PNG support")
 
 option(WITH_JPEG "Build JPEG support" ON)
 add_feature_info(jpeg WITH_JPEG "build JPEG support")
@@ -137,14 +130,8 @@ add_feature_info(postgresql WITH_PSQL "build PostgreSQL support")
 option(WITH_MYSQL "Build MySQL database plugin" ON)
 add_feature_info(mysql WITH_MYSQL "build MySQL support")
 
-option(WITH_SQLITE "Build SQLite database plugin" ON)
-add_feature_info(sqlite WITH_SQLITE "build SQLite support")
-
 option(WITH_RESOLV "Build resolv support" ON)
 add_feature_info(resolv WITH_RESOLV "build resolv support")
-
-option(WITH_NSL "Build NSL support" ON)
-add_feature_info(nsl WITH_NSL "build NSL support")
 
 option(WITH_UNWIND "Build Unwind support" OFF)
 add_feature_info(unwind WITH_UNWIND "build Unwind support")
@@ -326,26 +313,10 @@ set_package_properties(Threads PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(NIS)
-set_package_properties(NIS PROPERTIES
-    PURPOSE "Required for Network Information Service support"
-    DESCRIPTION "Standard C library specific NIS implementation"
-    URL ""
-    TYPE RECOMMENDED
-)
-
 find_package(Resolv)
 set_package_properties(Resolv PROPERTIES
     PURPOSE "Required for domain resolving support"
     DESCRIPTION "Standard C library specific resolv implementation"
-    URL ""
-    TYPE RECOMMENDED
-)
-
-find_package(NSL)
-set_package_properties(NSL PROPERTIES
-    PURPOSE "Required for printing information support"
-    DESCRIPTION "Standard C library specific NSL implementation"
     URL ""
     TYPE RECOMMENDED
 )
@@ -484,13 +455,11 @@ foreach(script exec dbg)
 endforeach()
 
 # optional packages which if not found are build internally
-if(NOT WITH_PNG)
-    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
-elseif(NOT PNG_FOUND)
+if(NOT PNG_FOUND)
     message(WARNING "Using internal copy of libpng")
 endif()
 
-if(WITH_SQLITE AND NOT SQLITE_FOUND)
+if(NOT SQLITE_FOUND)
     message(WARNING "Using internal copy of sqlite")
 endif()
 
@@ -512,14 +481,6 @@ endif()
 
 if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)
     katie_definition(-DQT_NO_RESOLV)
-endif()
-
-if(NOT WITH_NSL OR NOT NSL_FOUND)
-    katie_definition(-DQT_NO_NSL)
-endif()
-
-if(NOT WITH_NIS OR NOT NIS_FOUND)
-    katie_definition(-DQT_NO_NIS)
 endif()
 
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)
@@ -595,7 +556,6 @@ endif()
 # the macro calls bellow are generted via the incfsck script
 katie_generate_obsolete(QAbstractExtensionFactory QtDesigner extension.h)
 katie_generate_obsolete(QAbstractExtensionManager QtDesigner extension.h)
-katie_generate_obsolete(QAbstractFileEngineHandler QtCore qabstractfileengine.h)
 katie_generate_obsolete(QAbstractFileEngineIterator QtCore qabstractfileengine.h)
 katie_generate_obsolete(QAbstractFormBuilder QtDesigner abstractformbuilder.h)
 katie_generate_obsolete(QAbstractGraphicsShapeItem QtGui qgraphicsitem.h)
@@ -866,8 +826,6 @@ katie_generate_obsolete(QSizeF QtCore qsize.h)
 katie_generate_obsolete(QSpacerItem QtGui qlayoutitem.h)
 katie_generate_obsolete(QSplitterHandle QtGui qsplitter.h)
 katie_generate_obsolete(QSpontaneKeyEvent QtTest qtestspontaneevent.h)
-katie_generate_obsolete(QSqlDriverCreatorBase QtSql qsqldatabase.h)
-katie_generate_obsolete(QSqlDriverCreator QtSql qsqldatabase.h)
 katie_generate_obsolete(QSqlDriverFactoryInterface QtSql qsqldriverplugin.h)
 katie_generate_obsolete(QSqlRelation QtSql qsqlrelationaltablemodel.h)
 katie_generate_obsolete(QStandardItemEditorCreator QtGui qitemeditorfactory.h)
@@ -1057,7 +1015,7 @@ configure_file(
 
 install(
     DIRECTORY mkspecs
-    DESTINATION ${KATIE_CMAKE_RELATIVE}
+    DESTINATION ${KATIE_CMAKE_PATH}
     COMPONENT Devel
 )
 
@@ -1067,14 +1025,14 @@ install(
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
     ${CMAKE_SOURCE_DIR}/cmake/Qt4UseFile.cmake
     ${CMAKE_SOURCE_DIR}/cmake/modules/KatieMacros.cmake
-    DESTINATION ${KATIE_CMAKE_RELATIVE}
+    DESTINATION ${KATIE_CMAKE_PATH}
     COMPONENT Devel
 )
 
 install(
     EXPORT KatieLibraryTargets
     NAMESPACE Katie::
-    DESTINATION ${KATIE_CMAKE_RELATIVE}
+    DESTINATION ${KATIE_CMAKE_PATH}
     FILE KatieLibraryTargets.cmake
     COMPONENT Devel
 )
@@ -1082,20 +1040,20 @@ install(
 install(
     EXPORT KatieBinaryTargets
     NAMESPACE Katie::
-    DESTINATION ${KATIE_CMAKE_RELATIVE}
+    DESTINATION ${KATIE_CMAKE_PATH}
     FILE KatieBinaryTargets.cmake
     COMPONENT Devel
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.conf
-    DESTINATION ${KATIE_LDCONF_RELATIVE}
+    DESTINATION ${KATIE_LDCONF_PATH}
     COMPONENT Runtime
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.sh
-    DESTINATION ${KATIE_PROFILE_RELATIVE}
+    DESTINATION ${KATIE_PROFILE_PATH}
     COMPONENT Runtime
 )
 

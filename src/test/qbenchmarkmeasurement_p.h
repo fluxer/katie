@@ -55,7 +55,6 @@ class QBenchmarkMeasurerBase
 {
 public:
     virtual ~QBenchmarkMeasurerBase(){};
-    virtual void init() {};
     virtual void start() = 0;
     virtual qint64 checkpoint() = 0;
     virtual qint64 stop() = 0;

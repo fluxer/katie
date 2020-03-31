@@ -483,11 +483,6 @@ void QFormBuilder::updateCustomWidgets()
                 insertPlugins(loader.instance(), &m_customWidgets);
         }
     }
-    // Check statically linked plugins
-    const QObjectList staticPlugins = QPluginLoader::staticInstances();
-    if (!staticPlugins.empty())
-        foreach (QObject *o, staticPlugins)
-            insertPlugins(o, &m_customWidgets);
 }
 
 /*!

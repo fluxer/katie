@@ -189,14 +189,6 @@ private:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QAbstractFileEngine::FileFlags)
 
-class Q_CORE_EXPORT QAbstractFileEngineHandler
-{
-public:
-    QAbstractFileEngineHandler();
-    virtual ~QAbstractFileEngineHandler();
-    virtual QAbstractFileEngine *create(const QString &fileName) const = 0;
-};
-
 class QAbstractFileEngineIteratorPrivate;
 class Q_CORE_EXPORT QAbstractFileEngineIterator
 {

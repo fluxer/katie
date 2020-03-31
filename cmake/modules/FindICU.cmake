@@ -9,10 +9,6 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(ICU_INCLUDES AND ICU_LIBRARIES)
-    set(ICU_FIND_QUIETLY TRUE)
-endif()
-
 if(NOT WIN32)
     include(FindPkgConfig)
     pkg_check_modules(PC_ICU QUIET icu-i18n)

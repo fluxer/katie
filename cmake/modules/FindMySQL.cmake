@@ -9,10 +9,6 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(MYSQL_INCLUDES AND MYSQL_LIBRARIES)
-    set(MYSQL_FIND_QUIETLY TRUE)
-endif()
-
 # Only MariaDB provides pkg-config files and only in recent versions
 if(NOT WIN32)
     include(FindPkgConfig)

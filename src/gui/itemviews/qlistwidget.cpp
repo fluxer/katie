@@ -575,7 +575,7 @@ Qt::DropActions QListModel::supportedDropActions() const
     \sa type()
 */
 QListWidgetItem::QListWidgetItem(QListWidget *view, int type)
-    : rtti(type), view(view), d(new QListWidgetItemPrivate(this)),
+    : rtti(type), view(view), d(new QListWidgetItemPrivate()),
       itemFlags(Qt::ItemIsSelectable
                 |Qt::ItemIsUserCheckable
                 |Qt::ItemIsEnabled
@@ -602,7 +602,7 @@ QListWidgetItem::QListWidgetItem(QListWidget *view, int type)
     \sa type()
 */
 QListWidgetItem::QListWidgetItem(const QString &text, QListWidget *view, int type)
-    : rtti(type), view(0), d(new QListWidgetItemPrivate(this)),
+    : rtti(type), view(0), d(new QListWidgetItemPrivate()),
       itemFlags(Qt::ItemIsSelectable
                 |Qt::ItemIsUserCheckable
                 |Qt::ItemIsEnabled
@@ -633,7 +633,7 @@ QListWidgetItem::QListWidgetItem(const QString &text, QListWidget *view, int typ
 */
 QListWidgetItem::QListWidgetItem(const QIcon &icon,const QString &text,
                                  QListWidget *view, int type)
-    : rtti(type), view(0), d(new QListWidgetItemPrivate(this)),
+    : rtti(type), view(0), d(new QListWidgetItemPrivate()),
       itemFlags(Qt::ItemIsSelectable
                 |Qt::ItemIsUserCheckable
                 |Qt::ItemIsEnabled
@@ -749,7 +749,7 @@ void QListWidgetItem::write(QDataStream &out) const
 */
 QListWidgetItem::QListWidgetItem(const QListWidgetItem &other)
     : rtti(Type), view(0),
-      d(new QListWidgetItemPrivate(this)),
+      d(new QListWidgetItemPrivate()),
       itemFlags(other.itemFlags)
 {
     d->values = other.d->values;

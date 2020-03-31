@@ -242,9 +242,7 @@ public:
         DrawRecursive = 0x04,
         DrawInvisible = 0x08,
         DontSubtractOpaqueChildren = 0x10,
-        DontSetCompositionMode = 0x20,
-        DontDrawOpaqueChildren = 0x40,
-        DontDrawNativeChildren = 0x80
+        DontDrawOpaqueChildren = 0x20
     };
 
     enum CloseMode {

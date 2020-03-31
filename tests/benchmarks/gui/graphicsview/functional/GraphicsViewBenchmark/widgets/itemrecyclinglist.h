@@ -47,7 +47,7 @@ class ItemRecyclingList : public ItemRecyclingListView
     Q_OBJECT
 
 public:
-    ItemRecyclingList(const int itemBuffer = 4, QGraphicsWidget * parent = 0);
+    ItemRecyclingList(const int itemBuffer = 4, QGraphicsWidget *parent = Q_NULLPTR);
     virtual ~ItemRecyclingList();
 
     virtual void insertItem(int index, RecycledListItem *item);

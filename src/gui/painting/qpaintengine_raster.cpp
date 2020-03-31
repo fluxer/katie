@@ -220,7 +220,6 @@ void QRasterPaintEngine::init()
     d->rasterizer.reset(new QRasterizer);
     d->rasterBuffer.reset(new QRasterBuffer());
     d->outlineMapper.reset(new QOutlineMapper);
-    d->outlinemapper_xform_dirty = true;
 
     d->basicStroker.setMoveToHook(qt_ft_outline_move_to);
     d->basicStroker.setLineToHook(qt_ft_outline_line_to);
@@ -307,7 +306,7 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
     d->systemStateChanged();
 
     QRasterPaintEngineState *s = state();
-    ensureOutlineMapper();
+    updateOutlineMapper();
     d->outlineMapper->m_clip_rect = d->deviceRect;
 
     if (d->outlineMapper->m_clip_rect.width() > RASTER_COORD_LIMIT)
@@ -401,7 +400,7 @@ void QRasterPaintEngine::updateMatrix(const QTransform &matrix)
     s->matrix = matrix;
     s->flags.tx_noshear = qt_scaleForTransform(s->matrix, &s->txscale);
 
-    ensureOutlineMapper();
+    updateOutlineMapper();
 }
 
 
@@ -740,78 +739,9 @@ void QRasterPaintEngine::clipEnabledChanged()
     }
 }
 
-void QRasterPaintEnginePrivate::drawImage(const QPointF &pt,
-                                          const QImage &img,
-                                          SrcOverBlendFunc func,
-                                          const QRect &clip,
-                                          int alpha,
-                                          const QRect &sr)
-{
-    if (alpha == 0 || !clip.isValid())
-        return;
-
-    Q_ASSERT(img.depth() >= 8);
-
-    const int srcBPL = img.bytesPerLine();
-    const uchar *srcBits = img.constBits();
-    const int srcSize = img.depth() >> 3; // This is the part that is incompatible with lower than 8-bit..
-    int iw = img.width();
-    int ih = img.height();
-
-    if (!sr.isEmpty()) {
-        iw = sr.width();
-        ih = sr.height();
-        // Adjust the image according to the source offset...
-        srcBits += ((sr.y() * srcBPL) + sr.x() * srcSize);
-    }
-
-    // adapt the x parameters
-    int x = qRound(pt.x());
-    int cx1 = clip.x();
-    int cx2 = clip.x() + clip.width();
-    if (x < cx1) {
-        int d = cx1 - x;
-        srcBits += srcSize * d;
-        iw -= d;
-        x = cx1;
-    }
-    if (x + iw > cx2) {
-        int d = x + iw - cx2;
-        iw -= d;
-    }
-    if (iw <= 0)
-        return;
-
-    // adapt the y paremeters...
-    int cy1 = clip.y();
-    int cy2 = clip.y() + clip.height();
-    int y = qRound(pt.y());
-    if (y < cy1) {
-        int d = cy1 - y;
-        srcBits += srcBPL * d;
-        ih -= d;
-        y = cy1;
-    }
-    if (y + ih > cy2) {
-        int d = y + ih - cy2;
-        ih -= d;
-    }
-    if (ih <= 0)
-        return;
-
-    // call the blend function...
-    int dstSize = rasterBuffer->bytesPerPixel();
-    int dstBPL = rasterBuffer->bytesPerLine();
-    func(rasterBuffer->buffer() + x * dstSize + y * dstBPL, dstBPL,
-         srcBits, srcBPL,
-         iw, ih,
-         alpha);
-}
-
-
 void QRasterPaintEnginePrivate::systemStateChanged()
 {
-    deviceRectUnclipped = QRect(0, 0,
+    const QRect deviceRectUnclipped = QRect(0, 0,
             qMin(RASTER_COORD_LIMIT, device->width()),
             qMin(RASTER_COORD_LIMIT, device->height()));
 
@@ -982,7 +912,7 @@ void QRasterPaintEngine::clip(const QVectorPath &path, Qt::ClipOperation op)
         QClipData *newClip = new QClipData(d->rasterBuffer->height());
         newClip->initialize();
         ClipData clipData = { base, newClip, isectOp };
-        ensureOutlineMapper();
+        updateOutlineMapper();
         d->rasterize(d->outlineMapper->convertPath(path), qt_span_clip, &clipData);
 
         newClip->fixup();
@@ -1167,7 +1097,7 @@ void QRasterPaintEngine::fillPath(const QPainterPath &path, QSpanData *fillData)
         return;
     }
 
-    ensureOutlineMapper();
+    updateOutlineMapper();
     d->rasterize(d->outlineMapper->convertPath(path), blend, fillData);
 }
 
@@ -1476,7 +1406,7 @@ void QRasterPaintEngine::fill(const QVectorPath &path, const QBrush &brush)
 //             return;
 //         }
 
-    ensureOutlineMapper();
+    updateOutlineMapper();
     d->rasterize(d->outlineMapper->convertPath(path), blend, &s->brushData);
 }
 
@@ -1514,7 +1444,7 @@ void QRasterPaintEngine::fillRect(const QRectF &r, QSpanData *data)
 
     QPainterPath path;
     path.addRect(r);
-    ensureOutlineMapper();
+    updateOutlineMapper();
     fillPath(path, data);
 }
 
@@ -1573,7 +1503,7 @@ void QRasterPaintEngine::fillPolygon(const QPointF *points, int pointCount, Poly
 
     // Compose polygon fill..,
     QVectorPath vp((qreal *) points, pointCount, 0, QVectorPath::polygonFlags(mode));
-    ensureOutlineMapper();
+    updateOutlineMapper();
     QT_FT_Outline *outline = d->outlineMapper->convertPath(vp);
 
     // scanconvert.
@@ -1647,7 +1577,7 @@ void QRasterPaintEngine::drawPolygon(const QPoint *points, int pointCount, Polyg
         ensureBrush();
         if (s->brushData.blend) {
             // Compose polygon fill..,
-            ensureOutlineMapper();
+            updateOutlineMapper();
             d->outlineMapper->beginOutline(mode == WindingMode ? Qt::WindingFill : Qt::OddEvenFill);
             d->outlineMapper->moveTo(*points);
             const QPoint *p = points;
@@ -2431,8 +2361,7 @@ bool QRasterPaintEnginePrivate::isUnclipped_normalized(const QRect &r) const
     }
 }
 
-bool QRasterPaintEnginePrivate::isUnclipped(const QRect &rect,
-                                            int penWidth) const
+bool QRasterPaintEnginePrivate::isUnclipped(const QRect &rect) const
 {
     Q_Q(const QRasterPaintEngine);
     const QRasterPaintEngineState *s = q->state();
@@ -2450,15 +2379,12 @@ bool QRasterPaintEnginePrivate::isUnclipped(const QRect &rect,
     if (cl->hasRectClip && cl->clipRect == deviceRect)
         return true;
 
-    if (s->flags.antialiased)
-        ++penWidth;
-
     QRect r = rect.normalized();
-    if (penWidth > 0) {
-        r.setX(r.x() - penWidth);
-        r.setY(r.y() - penWidth);
-        r.setWidth(r.width() + 2 * penWidth);
-        r.setHeight(r.height() + 2 * penWidth);
+    if (s->flags.antialiased) {
+        r.setX(r.x() - 1);
+        r.setY(r.y() - 1);
+        r.setWidth(r.width() + 2);
+        r.setHeight(r.height() + 2);
     }
 
     if (cl->hasRectClip) {
@@ -2471,37 +2397,23 @@ bool QRasterPaintEnginePrivate::isUnclipped(const QRect &rect,
     }
 }
 
-inline bool QRasterPaintEnginePrivate::isUnclipped(const QRectF &rect,
-                                                   int penWidth) const
+inline bool QRasterPaintEnginePrivate::isUnclipped(const QRectF &rect) const
 {
-    return isUnclipped(rect.normalized().toAlignedRect(), penWidth);
+    return isUnclipped(rect.normalized().toAlignedRect());
 }
 
 inline ProcessSpans
 QRasterPaintEnginePrivate::getBrushFunc(const QRect &rect,
                                         const QSpanData *data) const
 {
-    return isUnclipped(rect, 0) ? data->unclipped_blend : data->blend;
+    return isUnclipped(rect) ? data->unclipped_blend : data->blend;
 }
 
 inline ProcessSpans
 QRasterPaintEnginePrivate::getBrushFunc(const QRectF &rect,
                                         const QSpanData *data) const
 {
-    return isUnclipped(rect, 0) ? data->unclipped_blend : data->blend;
-}
-
-inline ProcessSpans
-QRasterPaintEnginePrivate::getPenFunc(const QRectF &rect,
-                                      const QSpanData *data) const
-{
-    Q_Q(const QRasterPaintEngine);
-    const QRasterPaintEngineState *s = q->state();
-
-    if (s->matrix.type() > QTransform::TxTranslate)
-        return data->blend;
-    const int penWidth = qCeil(s->lastPen.widthF());
-    return isUnclipped(rect, penWidth) ? data->unclipped_blend : data->blend;
+    return isUnclipped(rect) ? data->unclipped_blend : data->blend;
 }
 
 /*!
@@ -3723,7 +3635,7 @@ void QSpanData::init(QRasterBuffer *rb, const QRasterPaintEngine *pe)
     clip = pe ? pe->d_func()->clip() : 0;
 }
 
-Q_GUI_EXPORT extern QImage qt_imageForBrush(int brushStyle, bool invert);
+Q_GUI_EXPORT extern QImage qt_imageForBrush(int brushStyle);
 
 void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode compositionMode)
 {
@@ -3812,7 +3724,7 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
         type = Texture;
         if (!tempImage)
             tempImage = new QImage();
-        *tempImage = rasterBuffer->colorizeBitmap(qt_imageForBrush(brushStyle, true), brush.color());
+        *tempImage = rasterBuffer->colorizeBitmap(qt_imageForBrush(brushStyle), brush.color());
         initTexture(tempImage, alpha, QTextureData::Tiled);
         break;
     case Qt::TexturePattern:

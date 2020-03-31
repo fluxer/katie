@@ -134,6 +134,7 @@ public:
 public slots:
     bool syncSettings();
     void ensureInitialized();
+    void ensureInitializedStatic(const QObjectList &plugins);
 
 private:
     void updateRegisteredPlugins();

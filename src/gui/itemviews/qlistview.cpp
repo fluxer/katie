@@ -1595,14 +1595,6 @@ bool QListView::isSelectionRectVisible() const
     return d->isSelectionRectVisible();
 }
 
-/*!
-    \reimp
-*/
-bool QListView::event(QEvent *e)
-{
-    return QAbstractItemView::event(e);
-}
-
 /*
  * private object implementation
  */

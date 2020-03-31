@@ -116,7 +116,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir)
             library->release();
             continue;
         }
-        QString regkey = QString::fromLatin1("Qt Factory Cache %1.%2/%3:/%4")
+        QString regkey = QString::fromLatin1("Katie Factory Cache %1.%2/%3:/%4")
                          .arg((QT_VERSION & 0xff0000) >> 16)
                          .arg((QT_VERSION & 0xff00) >> 8)
                          .arg(QString::fromLatin1(d->iid.constData()))
@@ -213,25 +213,13 @@ QStringList QFactoryLoader::keys() const
 {
     Q_D(const QFactoryLoader);
     QMutexLocker locker(&d->mutex);
-    QStringList keys = d->keyList;
-    QObjectList instances = QPluginLoader::staticInstances();
-    for (int i = 0; i < instances.count(); ++i)
-        if (QFactoryInterface *factory = qobject_cast<QFactoryInterface*>(instances.at(i)))
-            if (instances.at(i)->qt_metacast(d->iid.constData()))
-                keys += factory->keys();
-    return keys;
+    return d->keyList;
 }
 
 QObject *QFactoryLoader::instance(const QString &key) const
 {
     Q_D(const QFactoryLoader);
     QMutexLocker locker(&d->mutex);
-    QObjectList instances = QPluginLoader::staticInstances();
-    for (int i = 0; i < instances.count(); ++i)
-        if (QFactoryInterface *factory = qobject_cast<QFactoryInterface*>(instances.at(i)))
-            if (instances.at(i)->qt_metacast(d->iid.constData()) && factory->keys().contains(key, Qt::CaseInsensitive))
-                return instances.at(i);
-
     QString lowered = d->cs ? key : key.toLower();
     if (QLibraryPrivate* library = d->keyMap.value(lowered)) {
         if (library->instance || library->loadPlugin()) {

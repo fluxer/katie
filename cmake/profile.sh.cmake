@@ -18,12 +18,12 @@ safe_path_append() {
     esac
 }
 
-safe_path_append PATH "$PATH" "@KATIE_BINARIES_FULL@"
+safe_path_append PATH "$PATH" "@KATIE_BINARIES_PATH@"
 
-safe_path_append LD_LIBRARY_PATH "$LD_LIBRARY_PATH" "@KATIE_LIBRARIES_FULL@"
+safe_path_append LD_LIBRARY_PATH "$LD_LIBRARY_PATH" "@KATIE_LIBRARIES_PATH@"
 
-safe_path_append PKG_CONFIG_PATH "$PKG_CONFIG_PATH" "@KATIE_PKGCONFIG_FULL@"
+safe_path_append PKG_CONFIG_PATH "$PKG_CONFIG_PATH" "@KATIE_PKGCONFIG_PATH@"
 
-export Katie_DIR="@KATIE_CMAKE_FULL@"
+export Katie_DIR="@KATIE_CMAKE_PATH@"
 
 unset -f safe_path_append

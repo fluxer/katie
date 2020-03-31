@@ -92,7 +92,6 @@ QImageIOHandler *QTiffPlugin::create(QIODevice *device, const QByteArray &format
     return handler;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QTiffPlugin)
 Q_EXPORT_PLUGIN2(qtiff, QTiffPlugin)
 
 #endif // QT_NO_IMAGEFORMATPLUGIN

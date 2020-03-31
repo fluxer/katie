@@ -255,10 +255,10 @@ void QCursorData::update()
     }
 
 #ifndef QT_NO_XCURSOR
-    if (!hcurs && CursorTbl[cshape].alternative)
-        hcurs = XcursorLibraryLoadCursor(dpy, CursorTbl[cshape].alternative);
     if (!hcurs)
         hcurs = XcursorLibraryLoadCursor(dpy, CursorTbl[cshape].name);
+    if (!hcurs && CursorTbl[cshape].alternative)
+        hcurs = XcursorLibraryLoadCursor(dpy, CursorTbl[cshape].alternative);
     if (hcurs)
         return;
 #endif // QT_NO_XCURSOR

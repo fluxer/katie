@@ -192,7 +192,7 @@ void QFontEngineMultiFT::loadEngine(int at)
 
 
 
-Q_GUI_EXPORT void qt_x11ft_convert_pattern(FcPattern *pattern, QByteArray *file_name, int *index, bool *antialias)
+static void qt_x11ft_convert_pattern(FcPattern *pattern, QByteArray *file_name, int *index, bool *antialias)
 {
     FcChar8 *fileName;
     FcPatternGetString(pattern, FC_FILE, 0, &fileName);

@@ -727,31 +727,27 @@ static QSqlIndex qGetTableInfo(QSqlQuery &q, const QString &tableName, bool only
     return ind;
 }
 
-QSqlIndex QSQLiteDriver::primaryIndex(const QString &tblname) const
+QSqlIndex QSQLiteDriver::primaryIndex(const QString &table) const
 {
     if (!isOpen())
         return QSqlIndex();
 
-    QString table = tblname;
-    if (isIdentifierEscaped(table, QSqlDriver::TableName))
-        table = stripDelimiters(table, QSqlDriver::TableName);
-
     QSqlQuery q(createResult());
     q.setForwardOnly(true);
+    if (isIdentifierEscaped(table, QSqlDriver::TableName))
+        return qGetTableInfo(q, stripDelimiters(table, QSqlDriver::TableName), true);
     return qGetTableInfo(q, table, true);
 }
 
-QSqlRecord QSQLiteDriver::record(const QString &tbl) const
+QSqlRecord QSQLiteDriver::record(const QString &table) const
 {
     if (!isOpen())
         return QSqlRecord();
 
-    QString table = tbl;
-    if (isIdentifierEscaped(table, QSqlDriver::TableName))
-        table = stripDelimiters(table, QSqlDriver::TableName);
-
     QSqlQuery q(createResult());
     q.setForwardOnly(true);
+    if (isIdentifierEscaped(table, QSqlDriver::TableName))
+        return qGetTableInfo(q, stripDelimiters(table, QSqlDriver::TableName));
     return qGetTableInfo(q, table);
 }
 

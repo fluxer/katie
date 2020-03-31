@@ -92,7 +92,6 @@ QImageIOHandler *QJpegPlugin::create(QIODevice *device, const QByteArray &format
     return handler;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QJpegPlugin)
 Q_EXPORT_PLUGIN2(qjpeg, QJpegPlugin)
 
 #endif // QT_NO_IMAGEFORMATPLUGIN

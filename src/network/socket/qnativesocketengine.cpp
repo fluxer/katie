@@ -825,7 +825,7 @@ qint64 QNativeSocketEngine::read(char *data, qint64 maxSize)
         if (!d->hasSetSocketError) {
             d->hasSetSocketError = true;
             d->socketError = QAbstractSocket::NetworkError;
-            d->socketErrorString = qt_error_string();
+            d->socketErrorString = qt_error_string(errno);
         }
         close();
         return -1;

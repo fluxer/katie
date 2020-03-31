@@ -58,7 +58,7 @@ QT_BEGIN_NAMESPACE
 class QDBusCustomTypeInfo
 {
 public:
-    QDBusCustomTypeInfo() : signature(0, '\0'), marshall(0), demarshall(0)
+    QDBusCustomTypeInfo() : signature(0, '\0'), marshall(Q_NULLPTR), demarshall(Q_NULLPTR)
     { }
 
     // Suggestion:
@@ -69,7 +69,7 @@ public:
 };
 
 template<typename T>
-inline static void registerHelper(T * = 0)
+inline static void registerHelper()
 {
     void (*mf)(QDBusArgument &, const T *) = qDBusMarshallHelper<T>;
     void (*df)(const QDBusArgument &, T *) = qDBusDemarshallHelper<T>;

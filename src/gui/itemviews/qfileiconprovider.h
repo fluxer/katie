@@ -43,8 +43,6 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_FILEICONPROVIDER
 
-class QFileIconProviderPrivate;
-
 class Q_GUI_EXPORT QFileIconProvider
 {
 public:
@@ -54,11 +52,6 @@ public:
     virtual QIcon icon(IconType type) const;
     virtual QIcon icon(const QFileInfo &info) const;
     virtual QString type(const QFileInfo &info) const;
-
-private:
-    Q_DECLARE_PRIVATE(QFileIconProvider)
-    Q_DISABLE_COPY(QFileIconProvider)
-    QFileIconProviderPrivate* d_ptr;
 };
 
 #endif // QT_NO_FILEICONPROVIDER

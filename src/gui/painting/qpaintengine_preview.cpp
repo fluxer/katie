@@ -150,7 +150,6 @@ bool QPreviewPaintEngine::newPage()
     // composition modes aren't supported on a QPrinter and yields a
     // warning, so ignore it for now
     tmp_engine->setDirty(DirtyFlags(AllDirty & ~DirtyCompositionMode));
-    tmp_engine->syncState();
 
     delete d->painter;
     d->painter = tmp_painter;

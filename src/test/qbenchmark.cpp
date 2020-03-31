@@ -92,7 +92,6 @@ QBenchmarkMeasurerBase * QBenchmarkGlobalData::createMeasurer()
     } else {
         m =  new QBenchmarkTimeMeasurer;
     }
-    m->init();
     return m;
 }
 

@@ -158,10 +158,6 @@
 #define QT_SOCKET_CONNECT       ::connect
 #define QT_SOCKET_BIND          ::bind
 
-#define QT_SIGNAL_RETTYPE       void
-#define QT_SIGNAL_ARGS          int
-#define QT_SIGNAL_IGNORE        SIG_IGN
-
 #if defined(_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
 #define QT_SNPRINTF             ::snprintf
 #define QT_VSNPRINTF            ::vsnprintf

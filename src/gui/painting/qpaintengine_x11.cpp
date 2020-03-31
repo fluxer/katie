@@ -72,7 +72,7 @@ QT_BEGIN_NAMESPACE
 
 extern Qt::HANDLE qt_x11Handle(const QPaintDevice *pd);
 extern const QX11Info *qt_x11Info(const QPaintDevice *pd);
-extern QPixmap qt_pixmapForBrush(int brushStyle, bool invert); //in qbrush.cpp
+extern QPixmap qt_pixmapForBrush(int brushStyle); //in qbrush.cpp
 extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap);
 
 #ifndef QT_NO_XRENDER
@@ -302,7 +302,7 @@ static Picture getPatternFill(int screen, const QBrush &b)
 
     XRenderFillRectangle(qt_x11Data->display, PictOpSrc, qt_x11Data->pattern_fills[i].picture, &bg_color, 0, 0, 8, 8);
 
-    QPixmap pattern(qt_pixmapForBrush(b.style(), true));
+    QPixmap pattern(qt_pixmapForBrush(b.style()));
     XRenderPictureAttributes attrs;
     attrs.repeat = true;
     XRenderChangePicture(qt_x11Data->display, pattern.x11PictureHandle(), CPRepeat, &attrs);
@@ -1335,7 +1335,7 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
             }
 #endif
         } else {
-            d->brush_pm = qt_toX11Pixmap(qt_pixmapForBrush(bs, true));
+            d->brush_pm = qt_toX11Pixmap(qt_pixmapForBrush(bs));
         }
         d->brush_pm.x11SetScreen(d->scrn);
         if (d->brush_pm.depth() == 1) {

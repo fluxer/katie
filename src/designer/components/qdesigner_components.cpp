@@ -60,45 +60,12 @@
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 
-// ### keep it in sync with Q_IMPORT_PLUGIN in qplugin.h
-#define DECLARE_PLUGIN_INSTANCE(PLUGIN) \
-    extern QT_PREPEND_NAMESPACE(QObject) *kt_plugin_instance_##PLUGIN(); \
-    class Static##PLUGIN##PluginInstance { public: \
-        Static##PLUGIN##PluginInstance() {                      \
-            QT_PREPEND_NAMESPACE(qRegisterStaticPluginInstanceFunction) \
-                (&kt_plugin_instance_##PLUGIN); \
-        } \
-    };
-
-#define INIT_PLUGIN_INSTANCE(PLUGIN) \
-    do { \
-        Static##PLUGIN##PluginInstance instance; \
-        Q_UNUSED(instance); \
-    } while (0)
-
-DECLARE_PLUGIN_INSTANCE(SignalSlotEditorPlugin)
-DECLARE_PLUGIN_INSTANCE(BuddyEditorPlugin)
-DECLARE_PLUGIN_INSTANCE(TabOrderEditorPlugin)
-
 static void initResources()
 {
     // Q_INIT_RESOURCE only usable in functions in global namespace
     Q_INIT_RESOURCE(formeditor);
     Q_INIT_RESOURCE(widgetbox);
     Q_INIT_RESOURCE(propertyeditor);
-}
-
-
-static void initInstances()
-{
-    static bool plugins_initialized = false;
-
-    if (!plugins_initialized) {
-        INIT_PLUGIN_INSTANCE(SignalSlotEditorPlugin);
-        INIT_PLUGIN_INSTANCE(BuddyEditorPlugin);
-        INIT_PLUGIN_INSTANCE(TabOrderEditorPlugin);
-        plugins_initialized = true;
-    }
 }
 
 QT_BEGIN_NAMESPACE
@@ -126,18 +93,26 @@ void QDesignerComponents::initializeResources()
     initResources();
 }
 
+Q_GLOBAL_STATIC(qdesigner_internal::SignalSlotEditorPlugin, signalsloteditorplugin);
+Q_GLOBAL_STATIC(qdesigner_internal::BuddyEditorPlugin, buddyeditorplugin);
+Q_GLOBAL_STATIC(qdesigner_internal::TabOrderEditorPlugin, tabordereditorplugin);
+
 /*!
     Initializes the plugins used by the components.*/
-void QDesignerComponents::initializePlugins(QDesignerFormEditorInterface *core)
+QObjectList QDesignerComponents::initializePlugins(QDesignerFormEditorInterface *core)
 {
     qdesigner_internal::QDesignerIntegration::initializePlugins(core);
+    static QObjectList builtin = QObjectList()
+        << signalsloteditorplugin()
+        << buddyeditorplugin()
+        << tabordereditorplugin();
+    return builtin;
 }
 
 /*!
     Constructs a form editor interface with the given \a parent.*/
 QDesignerFormEditorInterface *QDesignerComponents::createFormEditor(QObject *parent)
 {
-    initInstances();
     return new qdesigner_internal::FormEditor(parent);
 }
 

@@ -129,7 +129,7 @@ public:
 class QDomNodePrivate
 {
 public:
-    QDomNodePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = 0);
+    QDomNodePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = Q_NULLPTR);
     QDomNodePrivate(QDomNodePrivate* n, bool deep);
     virtual ~QDomNodePrivate();
 
@@ -277,7 +277,7 @@ public:
 class QDomDocumentTypePrivate : public QDomNodePrivate
 {
 public:
-    QDomDocumentTypePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = 0);
+    QDomDocumentTypePrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = Q_NULLPTR);
     QDomDocumentTypePrivate(QDomDocumentTypePrivate* n, bool deep);
     ~QDomDocumentTypePrivate();
     void init();
@@ -306,7 +306,7 @@ public:
 class QDomDocumentFragmentPrivate : public QDomNodePrivate
 {
 public:
-    QDomDocumentFragmentPrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = 0);
+    QDomDocumentFragmentPrivate(QDomDocumentPrivate*, QDomNodePrivate* parent = Q_NULLPTR);
     QDomDocumentFragmentPrivate(QDomNodePrivate* n, bool deep);
 
     // Reimplemented from QDomNodePrivate

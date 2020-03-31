@@ -347,7 +347,6 @@ QAccessibleInterface *AccessibleFactory::create(const QString &classname, QObjec
     return iface;
 }
 
-Q_EXPORT_STATIC_PLUGIN(AccessibleFactory)
 Q_EXPORT_PLUGIN2(qtaccessiblewidgets, AccessibleFactory)
 
 QT_END_NAMESPACE

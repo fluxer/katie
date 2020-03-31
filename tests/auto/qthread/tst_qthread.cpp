@@ -407,10 +407,16 @@ void tst_QThread::priority()
 
 void tst_QThread::setStackSize()
 {
+#ifdef PTHREAD_STACK_MIN
+    static const uint stack_size = PTHREAD_STACK_MIN * 2;
+#else
+    static const uint stack_size = 16384; // default on Linux
+#endif
+
     Simple_Thread thread;
     QCOMPARE(thread.stackSize(), 0u);
-    thread.setStackSize(8192u);
-    QCOMPARE(thread.stackSize(), 8192u);
+    thread.setStackSize(stack_size);
+    QCOMPARE(thread.stackSize(), stack_size);
     thread.setStackSize(0u);
     QCOMPARE(thread.stackSize(), 0u);
 }

@@ -50,22 +50,11 @@
 #include "qdebug.h"
 #include "qvector.h"
 #include "qdir.h"
+#include "qfilesystementry_p.h"
 
 #include <errno.h>
 
 QT_BEGIN_NAMESPACE
-
-#ifdef QT_NO_DEBUG
-#  define QLIBRARY_AS_DEBUG false
-#else
-#  define QLIBRARY_AS_DEBUG true
-#endif
-
-#if defined(Q_OS_UNIX)
-// We don't use separate debug and release libs on UNIX, so we want
-// to allow loading plugins, regardless of how they were built.
-#  define QT_NO_DEBUG_PLUGIN_CHECK
-#endif
 
 Q_GLOBAL_STATIC(QMutex, qt_library_mutex)
 
@@ -145,12 +134,6 @@ Q_GLOBAL_STATIC(QMutex, qt_library_mutex)
     \value ExportExternalSymbolsHint
     Exports unresolved and external symbols in the library so that they can be
     resolved in other dynamically-loaded libraries loaded later.
-    \value LoadArchiveMemberHint
-    Allows the file name of the library to specify a particular object file
-    within an archive file.
-    If this hint is given, the filename of the library consists of
-    a path, which is a reference to an archive file, followed by
-    a reference to the archive member.
 
     \sa loadHints
 */
@@ -237,7 +220,7 @@ static int qt_tokenize(const char *s, ulong s_len, ulong *advance,
 /*
   returns true if the string s was correctly parsed, false otherwise.
 */
-static bool qt_parse_pattern(const char *s, uint *version, bool *debug)
+static bool qt_parse_pattern(const char *s, uint *version)
 {
     bool ret = true;
 
@@ -258,16 +241,13 @@ static bool qt_parse_pattern(const char *s, uint *version, bool *debug)
             QByteArray qv(pinfo.results[1], pinfo.lengths[1]);
             bool ok;
             *version = qv.toUInt(&ok, 0);
-        } else if (qstrncmp("debug", pinfo.results[0], pinfo.lengths[0]) == 0) {
-            *debug = (qstrncmp("true", pinfo.results[1], pinfo.lengths[1]) == 0);
         }
     } while (parse == 1 && parselen > 0);
 
     return ret;
 }
 
-static long qt_find_pattern(const char *s, ulong s_len,
-                             const char *pattern, ulong p_len)
+static long qt_find_pattern(const char *s, ulong s_len)
 {
     /*
       we search from the end of the file because on the supported
@@ -281,7 +261,11 @@ static long qt_find_pattern(const char *s, ulong s_len,
       because we have to skip over all the debugging symbols first
     */
 
-    if (! s || ! pattern || p_len > s_len) return -1;
+    static const char pattern[] = "pattern=KT_PLUGIN_VERIFICATION_DATA";
+    static const ulong p_len = qstrlen(pattern);
+
+    if (!s || p_len > s_len)
+        return -1;
     ulong i, hs = 0, hp = 0, delta = s_len - p_len;
 
     for (i = 0; i < p_len; ++i) {
@@ -312,7 +296,7 @@ static long qt_find_pattern(const char *s, ulong s_len,
                 information could not be read.
   Returns  true if version information is present and successfully read.
 */
-static bool qt_unix_query(const QString &library, uint *version, bool *debug, QLibraryPrivate *lib)
+static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate *lib)
 {
     QFile file(library);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -336,12 +320,10 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
     /*
        ELF binaries build with GNU or Clang have .ktplugin sections.
     */
-    const char pattern[] = "pattern=KT_PLUGIN_VERIFICATION_DATA";
-    const ulong plen = qstrlen(pattern);
-    const long pos = qt_find_pattern(filedata, fdlen, pattern, plen);
+    const long pos = qt_find_pattern(filedata, fdlen);
     bool ret = false;
     if (pos >= 0)
-        ret = qt_parse_pattern(filedata + pos, version, debug);
+        ret = qt_parse_pattern(filedata + pos, version);
 
     if (!ret)
         lib->errorString = QLibrary::tr("Plugin verification data mismatch in '%1'").arg(library);
@@ -378,6 +360,75 @@ QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QS
     if (QLibraryPrivate *lib = libraryMap()->value(fileName)) {
         lib->libraryRefCount.ref();
         return lib;
+    }
+
+    QFileSystemEntry fsEntry(fileName);
+
+    QString path = fsEntry.path();
+    QString name = fsEntry.fileName();
+    if (path == QLatin1String(".") && !fileName.startsWith(path))
+        path.clear();
+    else
+        path += QLatin1Char('/');
+
+    QStringList suffixes;
+    suffixes << QLatin1String("");
+    QStringList prefixes;
+    prefixes << QLatin1String("") << QLatin1String("lib");
+
+    if (path.isEmpty()) {
+        foreach(const QString &libpath, QCoreApplication::libraryPaths()) {
+            prefixes << (libpath + QLatin1Char('/')) << (libpath + QLatin1String("/lib"));
+        }
+    }
+
+#if defined(Q_OS_HPUX)
+    // according to
+    // http://docs.hp.com/en/B2355-90968/linkerdifferencesiapa.htm
+
+    // In PA-RISC (PA-32 and PA-64) shared libraries are suffixed
+    // with .sl. In IPF (32-bit and 64-bit), the shared libraries
+    // are suffixed with .so. For compatibility, the IPF linker
+    // also supports the .sl suffix.
+
+    // But since we don't know if we are built on HPUX or HPUXi,
+    // we support both .sl (and .<version>) and .so suffixes but
+    // .so is preferred.
+# if defined(QT_ARCH_IA64)
+    if (!version.isEmpty()) {
+        suffixes << QString::fromLatin1(".so.%1").arg(version);
+    } else {
+        suffixes << QLatin1String(".so");
+    }
+# endif
+    if (!version.isEmpty()) {
+        suffixes << QString::fromLatin1(".sl.%1").arg(version);
+        suffixes << QString::fromLatin1(".%1").arg(version);
+    } else {
+        suffixes << QLatin1String(".sl");
+    }
+#else
+#ifdef Q_OS_AIX
+    suffixes << ".a";
+#endif // Q_OS_AIX
+    if (!version.isEmpty()) {
+        suffixes << QString::fromLatin1(".so.%1").arg(version);
+    } else {
+        suffixes << QLatin1String(".so");
+    }
+#endif
+
+    for(int prefix = 0; prefix < prefixes.size(); prefix++) {
+        for(int suffix = 0; suffix < suffixes.size(); suffix++) {
+            if (!prefixes.at(prefix).isEmpty() && name.startsWith(prefixes.at(prefix)))
+                continue;
+            if (!suffixes.at(suffix).isEmpty() && name.endsWith(suffixes.at(suffix)))
+                continue;
+            const QString attempt = path + prefixes.at(prefix) + name + suffixes.at(suffix);
+            if (QFile::exists(attempt)) {
+                return new QLibraryPrivate(attempt, version);
+            }
+        }
     }
 
     return new QLibraryPrivate(fileName, version);
@@ -535,7 +586,6 @@ bool QLibraryPrivate::isPlugin()
         return pluginState == IsAPlugin;
 
 #ifndef QT_NO_PLUGIN_CHECK
-    bool debug = !QLIBRARY_AS_DEBUG;
     bool success = false;
 
 #if defined(Q_OS_UNIX)
@@ -557,28 +607,24 @@ bool QLibraryPrivate::isPlugin()
 #ifndef QT_NO_DATESTRING
     lastModified  = fileinfo.lastModified().toString(Qt::ISODate);
 #endif
-    QString regkey = QString::fromLatin1("Katie Plugin Cache %1.%2/%3")
+    QString regkey = QString::fromLatin1("Katie Plugin Cache %1/%2")
                      .arg(QLatin1String(QT_VERSION_HEX_STR))
-                     .arg(QLIBRARY_AS_DEBUG ? QLatin1String("debug") : QLatin1String("false"))
                      .arg(fileName);
 
 #ifndef QT_NO_SETTINGS
     QSettings *settings = QCoreApplicationPrivate::staticConf();
     QStringList reg = settings->value(regkey).toStringList();
-    if (reg.count() == 3 && lastModified == reg.at(2)) {
+    if (reg.count() == 2 && lastModified == reg.at(1)) {
         qt_version = reg.at(0).toUInt();
-        debug = bool(reg.at(1).toInt());
         success = qt_version != 0;
     } else {
 #endif
         // use unix shortcut to avoid loading the library
-        success = qt_unix_query(fileName, &qt_version, &debug, this);
+        success = qt_unix_query(fileName, &qt_version, this);
 
 #ifndef QT_NO_SETTINGS
         QStringList queried;
-        queried << QString::number(qt_version, 16)
-                << QString::number((int)debug)
-                << lastModified;
+        queried << QString::number(qt_version, 16) << lastModified;
         settings->setValue(regkey, queried);
     }
 #endif
@@ -605,12 +651,6 @@ bool QLibraryPrivate::isPlugin()
             .arg(fileName)
             .arg(qt_version)
             .arg(current);
-#ifndef QT_NO_DEBUG_PLUGIN_CHECK
-    } else if(debug != QLIBRARY_AS_DEBUG) {
-        //don't issue a qWarning since we will hopefully find a non-debug? --Sam
-        errorString = QLibrary::tr("The plugin '%1' uses incompatible Katie library."
-                 " (Cannot mix debug and release libraries.)").arg(fileName);
-#endif
     } else {
         pluginState = IsAPlugin;
     }
@@ -955,13 +995,6 @@ QString QLibrary::errorString() const
 
     Setting ExportExternalSymbolsHint will make the external symbols in the
     library available for resolution in subsequent loaded libraries.
-
-    If LoadArchiveMemberHint is set, the file name
-    is composed of two components: A path which is a reference to an
-    archive file followed by the second component which is the reference to
-    the archive member. For instance, the fileName \c libGL.a(shr_64.o) will refer
-    to the library \c shr_64.o in the archive file named \c libGL.a. This
-    is only supported on the AIX platform.
 
     The interpretation of the load hints is platform dependent, and if
     you use it you are probably making some assumptions on which platform

@@ -68,7 +68,7 @@ class QPrintPropertiesDialog : public QDialog
 {
     Q_OBJECT
 public:
-    QPrintPropertiesDialog(QAbstractPrintDialog *parent = 0);
+    QPrintPropertiesDialog(QAbstractPrintDialog *parent = Q_NULLPTR);
     ~QPrintPropertiesDialog();
 
 #if !defined(QT_NO_CUPS)
@@ -120,7 +120,6 @@ public:
     Ui::QPrintWidget widget;
     QAbstractPrintDialog * q;
     QPrinter *printer;
-    QList<QPrinterDescription> lprPrinters;
     void updateWidget();
 
 private:
@@ -141,7 +140,6 @@ class QUnixPrintWidget : public QWidget
 public:
     QUnixPrintWidget(QPrinter *printer, QWidget *parent = Q_NULLPTR);
     ~QUnixPrintWidget();
-    void updatePrinter();
 
 private:
     friend class QPrintDialogPrivate;
@@ -210,7 +208,7 @@ class QPPDOptionsEditor : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    QPPDOptionsEditor(QObject* parent = 0) : QStyledItemDelegate(parent) {}
+    QPPDOptionsEditor(QObject *parent = Q_NULLPTR) : QStyledItemDelegate(parent) {}
     ~QPPDOptionsEditor() {}
 
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
@@ -609,7 +607,7 @@ QUnixPrintWidgetPrivate::QUnixPrintWidgetPrivate(QUnixPrintWidget *p)
     , cups(0), cupsPrinterCount(0), cupsPrinters(0), cupsPPD(0)
 #endif
 {
-    q = 0;
+    q = Q_NULLPTR;
     if (parent)
         q = qobject_cast<QAbstractPrintDialog*> (parent->parent());
 
@@ -638,14 +636,6 @@ QUnixPrintWidgetPrivate::QUnixPrintWidgetPrivate(QUnixPrintWidget *p)
             widget.properties->setEnabled(true);
         }
         currentPrinterIndex = cups->currentPrinterIndex();
-    } else {
-#endif
-        currentPrinterIndex = qt_getLprPrinters(lprPrinters);
-        // populating printer combo
-        QList<QPrinterDescription>::const_iterator i = lprPrinters.constBegin();
-        for(; i != lprPrinters.constEnd(); ++i)
-            widget.printers->addItem((*i).name);
-#if !defined(QT_NO_CUPS)
     }
 #endif
 
@@ -766,16 +756,6 @@ void QUnixPrintWidgetPrivate::_q_printerChanged(int index)
     } else {
         if (optionsPane)
             optionsPane->selectPrinter(0);
-#endif
-        if (lprPrinters.count() > 0) {
-            QString type = lprPrinters.at(index).name + QLatin1Char('@') + lprPrinters.at(index).host;
-            if (!lprPrinters.at(index).comment.isEmpty())
-            type += QLatin1String(", ") + lprPrinters.at(index).comment;
-            widget.type->setText(type);
-            if (propertiesDialog)
-                propertiesDialog->selectPrinter();
-        }
-#if !defined(QT_NO_CUPS)
     }
 #endif
 }
@@ -990,16 +970,6 @@ QUnixPrintWidget::~QUnixPrintWidget()
 {
     delete d;
 }
-
-/*! \internal
-
-    Updates the printer with the states held in the QUnixPrintWidget.
-*/
-void QUnixPrintWidget::updatePrinter()
-{
-    d->setupPrinter();
-}
-
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -63,9 +63,7 @@ class QGraphicsWidget;
 #ifndef QT_NO_DEBUG
 inline bool qt_graphicsLayoutDebug()
 {
-    static int checked_env = -1;
-    if(checked_env == -1)
-        checked_env = !!qgetenv("QT_GRAPHICSLAYOUT_DEBUG").toInt();
+    static const int checked_env = !!qgetenv("QT_GRAPHICSLAYOUT_DEBUG").toInt();
     return checked_env;
 }
 #endif

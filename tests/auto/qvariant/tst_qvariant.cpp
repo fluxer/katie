@@ -140,9 +140,6 @@ private slots:
     void toString_data();
     void toString();
 
-    void toCString_data();
-    void toCString();
-
     void toDate_data();
     void toDate();
 
@@ -1285,32 +1282,6 @@ void tst_QVariant::toString()
     QVERIFY( value.canConvert( QVariant::String ) );
     QString str = value.toString();
     QCOMPARE( str, result );
-}
-
-void tst_QVariant::toCString_data()
-{
-#ifdef QT3_SUPPORT
-    QTest::addColumn<QVariant>("value");
-    QTest::addColumn<Q3CString>("result");
-
-    QTest::newRow( "qstring" ) << QVariant( Q3CString( "Test" ) ) << Q3CString( "Test" );
-    QTest::newRow( "qcstring") << QVariant( Q3CString( "Test\0" ) ) << Q3CString( "Test" );
-#endif
-}
-
-void tst_QVariant::toCString()
-{
-#ifdef QT3_SUPPORT
-    QFETCH( QVariant, value );
-    QFETCH( Q3CString, result );
-    QVERIFY( value.isValid() );
-
-    Q3CString str = value.toCString();
-
-    QCOMPARE( str, result );
-#else
-    QSKIP("Qt not build with Qt3Support", SkipAll);
-#endif
 }
 
 void tst_QVariant::toDate_data()
