@@ -34,20 +34,6 @@
 #include "qsqldatabase.h"
 #include "qsqlquery.h"
 
-// NOTE: if the following are defined then drivers must be built-in
-#ifdef QT_SQL_PSQL
-#include "../drivers/psql/qsql_psql.h"
-#endif
-#ifdef QT_SQL_MYSQL
-#include "../drivers/mysql/qsql_mysql.h"
-#endif
-#ifdef QT_SQL_ODBC
-#include "../drivers/odbc/qsql_odbc.h"
-#endif
-#ifdef QT_SQL_SQLITE
-#include "../drivers/sqlite/qsql_sqlite.h"
-#endif
-
 #include "qdebug.h"
 #include "qcoreapplication.h"
 #include "qreadwritelock.h"
@@ -59,6 +45,8 @@
 #include "qsqlnulldriver_p.h"
 #include "qmutex.h"
 #include "qhash.h"
+#include "qsql_sqlite.h"
+
 #include <stdlib.h>
 
 QT_BEGIN_NAMESPACE
@@ -70,8 +58,6 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, sqlloader,
 #endif
 
 const char *QSqlDatabase::defaultConnection = "qt_sql_default_connection";
-
-typedef QHash<QString, QSqlDriverCreatorBase*> DriverDict;
 
 class QConnectionDict: public QHash<QString, QSqlDatabase>
 {
@@ -94,7 +80,7 @@ Q_GLOBAL_STATIC(QConnectionDict, dbDict)
 class QSqlDatabasePrivate
 {
 public:
-    QSqlDatabasePrivate(QSqlDriver *dr = 0):
+    QSqlDatabasePrivate(QSqlDriver *dr = Q_NULLPTR):
         driver(dr),
         port(-1)
     {
@@ -124,7 +110,6 @@ public:
     static void addDatabase(const QSqlDatabase &db, const QString & name);
     static void removeDatabase(const QString& name);
     static void invalidateDb(const QSqlDatabase &db, const QString &name, bool doWarn = true);
-    static DriverDict &driverDict();
     static void cleanConnections();
 };
 
@@ -160,25 +145,6 @@ void QSqlDatabasePrivate::cleanConnections()
         ++it;
     }
     dict->clear();
-}
-
-static bool qDriverDictInit = false;
-static void cleanDriverDict()
-{
-    qDeleteAll(QSqlDatabasePrivate::driverDict());
-    QSqlDatabasePrivate::driverDict().clear();
-    QSqlDatabasePrivate::cleanConnections();
-    qDriverDictInit = false;
-}
-
-DriverDict &QSqlDatabasePrivate::driverDict()
-{
-    static DriverDict dict;
-    if (!qDriverDictInit) {
-        qDriverDictInit = true;
-        qAddPostRoutine(cleanDriverDict);
-    }
-    return dict;
 }
 
 QSqlDatabasePrivate *QSqlDatabasePrivate::shared_null()
@@ -266,54 +232,6 @@ void QSqlDatabasePrivate::disable()
         driver = shared_null()->driver;
     }
 }
-
-/*!
-    \class QSqlDriverCreatorBase
-    \brief The QSqlDriverCreatorBase class is the base class for
-    SQL driver factories.
-
-    \ingroup database
-    \inmodule QtSql
-
-    Reimplement createObject() to return an instance of the specific
-    QSqlDriver subclass that you want to provide.
-
-    See QSqlDatabase::registerSqlDriver() for details.
-
-    \sa QSqlDriverCreator
-*/
-
-/*!
-    \fn QSqlDriverCreatorBase::~QSqlDriverCreatorBase()
-
-    Destroys the SQL driver creator object.
-*/
-
-/*!
-    \fn QSqlDriver *QSqlDriverCreatorBase::createObject() const
-
-    Reimplement this function to returns a new instance of a
-    QSqlDriver subclass.
-*/
-
-/*!
-    \class QSqlDriverCreator
-    \brief The QSqlDriverCreator class is a template class that
-    provides a SQL driver factory for a specific driver type.
-
-    \ingroup database
-    \inmodule QtSql
-
-    QSqlDriverCreator<T> instantiates objects of type T, where T is a
-    QSqlDriver subclass.
-
-    See QSqlDatabase::registerSqlDriver() for details.
-*/
-
-/*!
-    \fn QSqlDriver *QSqlDriverCreator::createObject() const
-    \reimp
-*/
 
 /*!
     \class QSqlDatabase
@@ -500,60 +418,18 @@ void QSqlDatabase::removeDatabase(const QString& connectionName)
 QStringList QSqlDatabase::drivers()
 {
     QStringList list;
-
-#ifdef QT_SQL_PSQL
-    list << QLatin1String("QPSQL7");
-    list << QLatin1String("QPSQL");
-#endif
-#ifdef QT_SQL_MYSQL
-    list << QLatin1String("QMYSQL3");
-    list << QLatin1String("QMYSQL");
-#endif
-#ifdef QT_SQL_ODBC
-    list << QLatin1String("QODBC3");
-    list << QLatin1String("QODBC");
-#endif
-#ifdef QT_SQL_SQLITE
     list << QLatin1String("QSQLITE");
-#endif
 
 #ifndef QT_NO_LIBRARY
     if (QFactoryLoader *fl = sqlloader()) {
-        QStringList keys = fl->keys();
-        for (QStringList::const_iterator i = keys.constBegin(); i != keys.constEnd(); ++i) {
-            if (!list.contains(*i))
-                list << *i;
+        foreach (const QString &it, fl->keys()) {
+            if (!list.contains(it))
+                list << it;
         }
     }
 #endif
 
-    DriverDict dict = QSqlDatabasePrivate::driverDict();
-    for (DriverDict::const_iterator i = dict.constBegin(); i != dict.constEnd(); ++i) {
-        if (!list.contains(i.key()))
-            list << i.key();
-    }
-
     return list;
-}
-
-/*!
-    This function registers a new SQL driver called \a name, within
-    the SQL framework. This is useful if you have a custom SQL driver
-    and don't want to compile it as a plugin.
-
-    Example:
-    \snippet doc/src/snippets/code/src_sql_kernel_qsqldatabase.cpp 2
-
-    QSqlDatabase takes ownership of the \a creator pointer, so you
-    mustn't delete it yourself.
-
-    \sa drivers()
-*/
-void QSqlDatabase::registerSqlDriver(const QString& name, QSqlDriverCreatorBase *creator)
-{
-    delete QSqlDatabasePrivate::driverDict().take(name);
-    if (creator)
-        QSqlDatabasePrivate::driverDict().insert(name, creator);
 }
 
 /*!
@@ -661,33 +537,8 @@ void QSqlDatabasePrivate::init(const QString &type)
 {
     drvName = type;
 
-    if (!driver) {
-#ifdef QT_SQL_PSQL
-        if (type == QLatin1String("QPSQL") || type == QLatin1String("QPSQL7"))
-            driver = new QPSQLDriver();
-#endif
-#ifdef QT_SQL_MYSQL
-        if (type == QLatin1String("QMYSQL") || type == QLatin1String("QMYSQL3"))
-            driver = new QMYSQLDriver();
-#endif
-#ifdef QT_SQL_ODBC
-        if (type == QLatin1String("QODBC") || type == QLatin1String("QODBC3"))
-            driver = new QODBCDriver();
-#endif
-#ifdef QT_SQL_SQLITE
-        if (type == QLatin1String("QSQLITE"))
-            driver = new QSQLiteDriver();
-#endif
-    }
-
-    if (!driver) {
-        DriverDict dict = QSqlDatabasePrivate::driverDict();
-        for (DriverDict::const_iterator it = dict.constBegin();
-             it != dict.constEnd() && !driver; ++it) {
-            if (type == it.key()) {
-                driver = ((QSqlDriverCreatorBase*)(*it))->createObject();
-            }
-        }
+    if (!driver && type == QLatin1String("QSQLITE")) {
+        driver = new QSQLiteDriver();
     }
 
 #ifndef QT_NO_LIBRARY
@@ -701,7 +552,7 @@ void QSqlDatabasePrivate::init(const QString &type)
         qWarning("QSqlDatabase: %s driver not loaded", type.toLatin1().data());
         qWarning("QSqlDatabase: available drivers: %s",
                         QSqlDatabase::drivers().join(QLatin1String(" ")).toLatin1().data());
-        if (QCoreApplication::instance() == 0)
+        if (!QCoreApplication::instance())
             qWarning("QSqlDatabase: an instance of QCoreApplication is required for loading driver plugins");
         driver = shared_null()->driver;
     }

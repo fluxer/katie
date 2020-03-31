@@ -63,10 +63,7 @@
 //#define Q_DEBUG_MAINWINDOW_LAYOUT
 
 #if defined(Q_DEBUG_MAINWINDOW_LAYOUT) && !defined(QT_NO_DOCKWIDGET)
-QT_BEGIN_NAMESPACE
-class QTextStream;
-Q_GUI_EXPORT void qt_dumpLayout(QTextStream &qout, QMainWindow *window);
-QT_END_NAMESPACE
+#include "qtextstream.h"
 #endif // Q_DEBUG_MAINWINDOW_LAYOUT && !QT_NO_DOCKWIDGET
 
 QT_BEGIN_NAMESPACE

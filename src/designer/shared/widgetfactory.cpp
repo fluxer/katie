@@ -255,7 +255,7 @@ QWidget*  WidgetFactory::createCustomWidget(const QString &className, QWidget *p
                 // over.
                 if (mo && mo->className() == className)
                     mo = mo->superClass();
-                while (mo != 0) {
+                while (mo) {
                     if (core()->widgetDataBase()->indexOfClassName(mo->className()) != -1) {
                         wdb->item(widgetInfoIndex)->setExtends(mo->className());
                         break;
@@ -384,7 +384,7 @@ QWidget *WidgetFactory::createWidget(const QString &widgetName, QWidget *parentW
         QString baseClass = item->extends();
         if (baseClass.isEmpty()) {
             // Currently happens in the case of Q3-Support widgets
-            baseClass =fallBackBaseClass;
+            baseClass = fallBackBaseClass;
         }
         if (QWidget *promotedWidget = createWidget(baseClass, parentWidget)) {
             promoteWidget(core(), promotedWidget, widgetName);

@@ -58,8 +58,7 @@ QT_BEGIN_NAMESPACE
     QFSFileEngine is the default file engine for accessing regular files. It
     is provided for convenience; by subclassing this class, you can alter its
     behavior slightly, without having to write a complete QAbstractFileEngine
-    subclass. To install your custom file engine, you must also subclass
-    QAbstractFileEngineHandler and create an instance of your handler.
+    subclass
 
     It can also be useful to create a QFSFileEngine object directly if you
     need to use the local file system inside QAbstractFileEngine::create(), in

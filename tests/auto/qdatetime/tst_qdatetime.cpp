@@ -529,7 +529,7 @@ void tst_QDateTime::toString_enumformat()
     QString str2 = dt1.toString(Qt::ISODate);
     QCOMPARE(str2, QString("1995-05-20T12:34:56"));
 
-    QString str3 = dt1.toString(Qt::LocalDate);
+    QString str3 = dt1.toString(Qt::SystemLocaleShortDate);
     qDebug() << str3;
     QVERIFY(!str3.isEmpty());
     //check for date/time components in any order
@@ -1560,8 +1560,8 @@ void tst_QDateTime::fromString()
     QCOMPARE(QDateTime::fromString(dt2.toString(Qt::SystemLocaleShortDate), Qt::SystemLocaleShortDate), dt2);
 
     // obsolete
-    QCOMPARE(QDateTime::fromString(dt2.toString(Qt::SystemLocaleDate), Qt::SystemLocaleDate), dt2);
-    QCOMPARE(QDateTime::fromString(dt2.toString(Qt::LocaleDate), Qt::LocaleDate), dt2);
+    QCOMPARE(QDateTime::fromString(dt2.toString(Qt::SystemLocaleShortDate), Qt::SystemLocaleShortDate), dt2);
+    QCOMPARE(QDateTime::fromString(dt2.toString(Qt::DefaultLocaleShortDate), Qt::DefaultLocaleShortDate), dt2);
 
     QCOMPARE(QDateTime::fromString(dt2.toString(Qt::DefaultLocaleLongDate), Qt::DefaultLocaleLongDate), dt2);
     QCOMPARE(QDateTime::fromString(dt2.toString(Qt::SystemLocaleLongDate), Qt::SystemLocaleLongDate), dt2);
@@ -1571,12 +1571,12 @@ void tst_QDateTime::fromString()
 
     QCOMPARE(QDate::fromString(dt2.date().toString(Qt::DefaultLocaleShortDate), Qt::DefaultLocaleShortDate), dt2.date());
     QCOMPARE(QDate::fromString(dt2.date().toString(Qt::SystemLocaleShortDate), Qt::SystemLocaleShortDate), dt2.date());
-    QCOMPARE(QDate::fromString(dt2.date().toString(Qt::LocaleDate), Qt::LocaleDate), dt2.date());
-    QCOMPARE(QDate::fromString(dt2.date().toString(Qt::SystemLocaleDate), Qt::SystemLocaleDate), dt2.date());
+    QCOMPARE(QDate::fromString(dt2.date().toString(Qt::DefaultLocaleShortDate), Qt::DefaultLocaleShortDate), dt2.date());
+    QCOMPARE(QDate::fromString(dt2.date().toString(Qt::SystemLocaleShortDate), Qt::SystemLocaleShortDate), dt2.date());
     QCOMPARE(QTime::fromString(dt2.time().toString(Qt::DefaultLocaleShortDate), Qt::DefaultLocaleShortDate), dt2.time());
     QCOMPARE(QTime::fromString(dt2.time().toString(Qt::SystemLocaleShortDate), Qt::SystemLocaleShortDate), dt2.time());
-    QCOMPARE(QTime::fromString(dt2.time().toString(Qt::LocaleDate), Qt::LocaleDate), dt2.time());
-    QCOMPARE(QTime::fromString(dt2.time().toString(Qt::SystemLocaleDate), Qt::SystemLocaleDate), dt2.time());
+    QCOMPARE(QTime::fromString(dt2.time().toString(Qt::DefaultLocaleShortDate), Qt::DefaultLocaleShortDate), dt2.time());
+    QCOMPARE(QTime::fromString(dt2.time().toString(Qt::SystemLocaleShortDate), Qt::SystemLocaleShortDate), dt2.time());
 
     QLocale::setDefault(def);
 }

@@ -6256,9 +6256,7 @@ QString QString::arg(qulonglong a, int fieldWidth, int base, const QChar &fillCh
 */
 QString QString::arg(QChar a, int fieldWidth, const QChar &fillChar) const
 {
-    QString c;
-    c += a;
-    return arg(c, fieldWidth, fillChar);
+    return arg(QString(a), fieldWidth, fillChar);
 }
 
 /*!
@@ -6268,9 +6266,7 @@ QString QString::arg(QChar a, int fieldWidth, const QChar &fillChar) const
 */
 QString QString::arg(char a, int fieldWidth, const QChar &fillChar) const
 {
-    QString c;
-    c += QLatin1Char(a);
-    return arg(c, fieldWidth, fillChar);
+    return arg(QString(QChar::fromLatin1(a)), fieldWidth, fillChar);
 }
 
 /*!

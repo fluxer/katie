@@ -17,6 +17,6 @@ set_target_properties(qtiffplugin PROPERTIES OUTPUT_NAME qtiff)
 
 install(
     TARGETS qtiffplugin
-    DESTINATION ${KATIE_PLUGINS_RELATIVE}/imageformats
+    DESTINATION ${KATIE_PLUGINS_PATH}/imageformats
     COMPONENT Runtime
 )

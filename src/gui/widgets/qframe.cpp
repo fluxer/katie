@@ -477,7 +477,7 @@ void QFrame::paintEvent(QPaintEvent *)
 /*!
     \internal
 
-    Mostly for the sake of Q3Frame
+    Used in QLabel and QLCDNumber
  */
 void QFrame::drawFrame(QPainter *p)
 {

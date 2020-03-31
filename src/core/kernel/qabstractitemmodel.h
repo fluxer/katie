@@ -48,10 +48,10 @@ class Q_CORE_EXPORT QModelIndex
     friend class QAbstractItemModel;
     friend class QProxyModel;
 public:
-    inline QModelIndex() : r(-1), c(-1), p(0), m(0) {}
+    inline QModelIndex() : r(-1), c(-1), p(Q_NULLPTR), m(Q_NULLPTR) {}
     inline QModelIndex(const QModelIndex &other)
         : r(other.r), c(other.c), p(other.p), m(other.m) {}
-    inline ~QModelIndex() { p = 0; m = 0; }
+    inline ~QModelIndex() { p = Q_NULLPTR; m = Q_NULLPTR; }
     inline int row() const { return r; }
     inline int column() const { return c; }
     inline void *internalPointer() const { return p; }
@@ -62,7 +62,7 @@ public:
     inline QVariant data(int role = Qt::DisplayRole) const;
     inline Qt::ItemFlags flags() const;
     inline const QAbstractItemModel *model() const { return m; }
-    inline bool isValid() const { return (r >= 0) && (c >= 0) && (m != 0); }
+    inline bool isValid() const { return (r >= 0) && (c >= 0) && (m != Q_NULLPTR); }
     inline bool operator==(const QModelIndex &other) const
         { return (other.r == r) && (other.p == p) && (other.c == c) && (other.m == m); }
     inline bool operator!=(const QModelIndex &other) const
@@ -255,7 +255,7 @@ public Q_SLOTS:
 protected:
     QAbstractItemModel(QAbstractItemModelPrivate &dd, QObject *parent = Q_NULLPTR);
 
-    inline QModelIndex createIndex(int row, int column, void *data = 0) const;
+    inline QModelIndex createIndex(int row, int column, void *data = Q_NULLPTR) const;
     inline QModelIndex createIndex(int row, int column, int id) const;
     inline QModelIndex createIndex(int row, int column, quint32 id) const;
 

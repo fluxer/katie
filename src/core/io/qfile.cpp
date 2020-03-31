@@ -155,13 +155,6 @@ QFilePrivate::setError(QFile::FileError err, const QString &errStr)
     errorString = errStr;
 }
 
-void
-QFilePrivate::setError(QFile::FileError err, int errNum)
-{
-    error = err;
-    errorString = qt_error_string(errNum);
-}
-
 //************* QFile
 
 /*!

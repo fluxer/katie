@@ -68,7 +68,6 @@ QStringList QODBCDriverPlugin::keys() const
     return list;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QODBCDriverPlugin)
 Q_EXPORT_PLUGIN2(qsqlodbc, QODBCDriverPlugin)
 
 QT_END_NAMESPACE

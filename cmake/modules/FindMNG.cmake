@@ -9,10 +9,6 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(MNG_INCLUDES AND MNG_LIBRARIES)
-    set(MNG_FIND_QUIETLY TRUE)
-endif()
-
 if(NOT WIN32)
     include(FindPkgConfig)
     pkg_check_modules(PC_MNG QUIET libmng)

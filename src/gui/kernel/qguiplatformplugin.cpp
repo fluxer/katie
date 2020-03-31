@@ -57,7 +57,7 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin()
     {
 #ifndef QT_NO_LIBRARY
 
-        QString key = QString::fromLocal8Bit(qgetenv("QT_PLATFORM_PLUGIN"));
+        static QString key = QString::fromLocal8Bit(qgetenv("QT_PLATFORM_PLUGIN"));
         if (key.isEmpty()) {
             key = QString::fromLocal8Bit(qgetenv("DESKTOP_SESSION"));
         }

@@ -273,7 +273,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 
 QString QHostInfo::localHostName()
 {
-    int size_max = sysconf(_SC_HOST_NAME_MAX);
+    static int size_max = sysconf(_SC_HOST_NAME_MAX);
     if (size_max == -1)
         size_max = _POSIX_HOST_NAME_MAX;
     char gethostbuffer[size_max];
@@ -286,8 +286,8 @@ QString QHostInfo::localHostName()
 
 QString QHostInfo::localDomainName()
 {
-// a dirty way to support both thread-safe/unsafe
-#if !defined(QT_NO_RESOLV) && defined(res_ninit)
+//support both thread-safe and unsafe versions
+#if !defined(QT_NO_RESOLV) && defined(QT_HAVE_RES_NINIT)
     // using thread-safe version
     struct __res_state state;
     res_ninit(&state);

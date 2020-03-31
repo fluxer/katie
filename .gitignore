@@ -30,5 +30,6 @@ package/debian/katie-*.log
 package/debian/katie-*.substvars
 package/debian/katie-*/
 
-# tarballs from oldmake.sh
+# tarballs from tarball.sh and oldmake.sh
+*.tar.xz
 scripts/cmake-*.tar.gz

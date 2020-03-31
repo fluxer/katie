@@ -313,17 +313,14 @@ qint64 RCCFileInfo::writeDataName(RCCResourceLibrary &lib, qint64 offset)
 //
 ///////////////////////////////////////////////////////////
 
-RCCResourceLibrary::Strings::Strings() :
-   TAG_RCC(QLatin1String("RCC")),
-   TAG_RESOURCE(QLatin1String("qresource")),
-   TAG_FILE(QLatin1String("file")),
-   ATTRIBUTE_LANG(QLatin1String("lang")),
-   ATTRIBUTE_PREFIX(QLatin1String("prefix")),
-   ATTRIBUTE_ALIAS(QLatin1String("alias")),
-   ATTRIBUTE_THRESHOLD(QLatin1String("threshold")),
-   ATTRIBUTE_COMPRESS(QLatin1String("compress"))
-{
-}
+static const QString TAG_RCC = QLatin1String("RCC");
+static const QString TAG_RESOURCE = QLatin1String("qresource");
+static const QString TAG_FILE = QLatin1String("file");
+static const QString ATTRIBUTE_LANG = QLatin1String("lang");
+static const QString ATTRIBUTE_PREFIX = QLatin1String("prefix");
+static const QString ATTRIBUTE_ALIAS = QLatin1String("alias");
+static const QString ATTRIBUTE_THRESHOLD = QLatin1String("threshold");
+static const QString ATTRIBUTE_COMPRESS = QLatin1String("compress");
 
 RCCResourceLibrary::RCCResourceLibrary()
   : m_root(0),
@@ -367,19 +364,19 @@ bool RCCResourceLibrary::interpretResourceFile(QIODevice *inputDevice,
         }
     }
 
-    QDomElement domRoot = document.firstChildElement(m_strings.TAG_RCC).toElement();
-    if (!domRoot.isNull() && domRoot.tagName() == m_strings.TAG_RCC) {
+    QDomElement domRoot = document.firstChildElement(TAG_RCC).toElement();
+    if (!domRoot.isNull() && domRoot.tagName() == TAG_RCC) {
         for (QDomNode node = domRoot.firstChild(); !node.isNull(); node = node.nextSibling()) {
             if (!node.isElement())
                 continue;
 
             QDomElement child = node.toElement();
-            if (!child.isNull() && child.tagName() == m_strings.TAG_RESOURCE) {
+            if (!child.isNull() && child.tagName() == TAG_RESOURCE) {
                 QLocale::Language language = QLocale::c().language();
                 QLocale::Country country = QLocale::c().country();
 
-                if (child.hasAttribute(m_strings.ATTRIBUTE_LANG)) {
-                    QString attribute = child.attribute(m_strings.ATTRIBUTE_LANG);
+                if (child.hasAttribute(ATTRIBUTE_LANG)) {
+                    QString attribute = child.attribute(ATTRIBUTE_LANG);
                     QLocale lang = QLocale(attribute);
                     language = lang.language();
                     if (2 == attribute.length()) {
@@ -391,15 +388,15 @@ bool RCCResourceLibrary::interpretResourceFile(QIODevice *inputDevice,
                 }
 
                 QString prefix;
-                if (child.hasAttribute(m_strings.ATTRIBUTE_PREFIX))
-                    prefix = child.attribute(m_strings.ATTRIBUTE_PREFIX);
+                if (child.hasAttribute(ATTRIBUTE_PREFIX))
+                    prefix = child.attribute(ATTRIBUTE_PREFIX);
                 if (!prefix.startsWith(slash))
                     prefix.prepend(slash);
                 if (!prefix.endsWith(slash))
                     prefix += slash;
 
                 for (QDomNode res = child.firstChild(); !res.isNull(); res = res.nextSibling()) {
-                    if (res.isElement() && res.toElement().tagName() == m_strings.TAG_FILE) {
+                    if (res.isElement() && res.toElement().tagName() == TAG_FILE) {
 
                         QString fileName(res.firstChild().toText().data());
                         if (fileName.isEmpty()) {
@@ -407,17 +404,17 @@ bool RCCResourceLibrary::interpretResourceFile(QIODevice *inputDevice,
                             m_errorDevice->write(msg.toUtf8());
                         }
                         QString alias;
-                        if (res.toElement().hasAttribute(m_strings.ATTRIBUTE_ALIAS))
-                            alias = res.toElement().attribute(m_strings.ATTRIBUTE_ALIAS);
+                        if (res.toElement().hasAttribute(ATTRIBUTE_ALIAS))
+                            alias = res.toElement().attribute(ATTRIBUTE_ALIAS);
                         else
                             alias = fileName;
 
                         int compressLevel = m_compressLevel;
-                        if (res.toElement().hasAttribute(m_strings.ATTRIBUTE_COMPRESS))
-                            compressLevel = res.toElement().attribute(m_strings.ATTRIBUTE_COMPRESS).toInt();
+                        if (res.toElement().hasAttribute(ATTRIBUTE_COMPRESS))
+                            compressLevel = res.toElement().attribute(ATTRIBUTE_COMPRESS).toInt();
                         int compressThreshold = m_compressThreshold;
-                        if (res.toElement().hasAttribute(m_strings.ATTRIBUTE_THRESHOLD))
-                            compressThreshold = res.toElement().attribute(m_strings.ATTRIBUTE_THRESHOLD).toInt();
+                        if (res.toElement().hasAttribute(ATTRIBUTE_THRESHOLD))
+                            compressThreshold = res.toElement().attribute(ATTRIBUTE_THRESHOLD).toInt();
 
                         // Special case for -no-compress. Overrides all other settings.
                         if (m_compressLevel == -2)

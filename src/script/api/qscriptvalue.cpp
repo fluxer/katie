@@ -160,10 +160,6 @@
     \value ResolveLocal Only check the object's own properties.
 
     \value ResolvePrototype Check the object's own properties first, then search the prototype chain. This is the default.
-
-    \omitvalue ResolveScope Check the object's own properties first, then search the scope chain.
-
-    \omitvalue ResolveFull Check the object's own properties first, then search the prototype chain, and finally search the scope chain.
 */
 
 QT_BEGIN_NAMESPACE
@@ -568,46 +564,6 @@ void QScriptValue::setPrototype(const QScriptValue &prototype)
          && !d->engine->customGlobalObject())
         || (thisObject == d->engine->customGlobalObject())) {
         d->engine->originalGlobalObject()->setPrototype(other);
-    }
-}
-
-/*!
-  \internal
-*/
-QScriptValue QScriptValue::scope() const
-{
-    Q_D(const QScriptValue);
-    if (!d || !d->isObject())
-        return QScriptValue();
-    QScript::APIShim shim(d->engine);
-    // ### make hidden property
-    JSC::JSValue result = d->property("__qt_scope__", QScriptValue::ResolveLocal);
-    return d->engine->scriptValueFromJSCValue(result);
-}
-
-/*!
-  \internal
-*/
-void QScriptValue::setScope(const QScriptValue &scope)
-{
-    Q_D(QScriptValue);
-    if (!d || !d->isObject())
-        return;
-    if (scope.isValid() && QScriptValuePrivate::getEngine(scope)
-        && (QScriptValuePrivate::getEngine(scope) != d->engine)) {
-        qWarning("QScriptValue::setScope() failed: "
-                 "cannot set a scope object created in "
-                 "a different engine");
-        return;
-    }
-    JSC::JSValue other = d->engine->scriptValueToJSCValue(scope);
-    JSC::ExecState *exec = d->engine->currentFrame;
-    JSC::Identifier id = JSC::Identifier(exec, "__qt_scope__");
-    if (!scope.isValid()) {
-        JSC::asObject(d->jscValue)->removeDirect(id);
-    } else {
-        // ### make hidden property
-        JSC::asObject(d->jscValue)->putDirect(id, other);
     }
 }
 

@@ -80,7 +80,6 @@ QBearerEngine *QNetworkManagerEnginePlugin::create(const QString &key) const
     return 0;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QNetworkManagerEnginePlugin)
 Q_EXPORT_PLUGIN2(qnmbearer, QNetworkManagerEnginePlugin)
 
 QT_END_NAMESPACE

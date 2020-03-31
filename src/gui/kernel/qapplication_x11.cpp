@@ -298,41 +298,11 @@ static bool popupGrabOk;
 
 bool qt_sm_blockUserInput = false;                // session management
 
-Q_GUI_EXPORT int qt_xfocusout_grab_counter = 0;
-
-typedef bool(*QX11FilterFunction)(XEvent *event);
-
-Q_GLOBAL_STATIC(QList<QX11FilterFunction>, x11Filters)
-
-Q_GUI_EXPORT void qt_installX11EventFilter(QX11FilterFunction func)
-{
-    Q_ASSERT(func);
-
-    if (QList<QX11FilterFunction> *list = x11Filters())
-        list->append(func);
-}
-
-Q_GUI_EXPORT void qt_removeX11EventFilter(QX11FilterFunction func)
-{
-    Q_ASSERT(func);
-
-    if (QList<QX11FilterFunction> *list = x11Filters())
-        list->removeOne(func);
-}
-
-
 static bool qt_x11EventFilter(XEvent* ev)
 {
     long unused;
     if (qApp->filterEvent(ev, &unused))
         return true;
-    if (const QList<QX11FilterFunction> *list = x11Filters()) {
-        for (QList<QX11FilterFunction>::const_iterator it = list->constBegin(); it != list->constEnd(); ++it) {
-            if ((*it)(ev))
-                return true;
-        }
-    }
-
     return qApp->x11EventFilter(ev);
 }
 
@@ -342,8 +312,6 @@ extern bool qt_check_clipboard_sentinel(); //def in qclipboard_x11.cpp
 extern bool qt_check_selection_sentinel(); //def in qclipboard_x11.cpp
 extern bool qt_xfixes_clipboard_changed(Window clipboardOwner, Time timestamp); //def in qclipboard_x11.cpp
 extern bool qt_xfixes_selection_changed(Window selectionOwner, Time timestamp); //def in qclipboard_x11.cpp
-
-Q_GUI_EXPORT bool qt_try_modal(QWidget *, XEvent *);
 
 QWidget *qt_button_down = 0; // last widget to be pressed with the mouse
 QPointer<QWidget> qt_last_mouse_receiver = 0;
@@ -1918,19 +1886,19 @@ Qt::KeyboardModifiers QApplication::queryKeyboardModifiers()
 
 static QWidgetMapper *wPRmapper = 0;                // alternative widget mapper
 
-void qPRCreate(const QWidget *widget, Window oldwin)
+void qPRCreate(QWidget *widget, Window oldwin)
 {                                                // QWidget::reparent mechanism
     if (!wPRmapper)
         wPRmapper = new QWidgetMapper;
 
-    QETWidget *w = static_cast<QETWidget *>(const_cast<QWidget *>(widget));
+    QETWidget *w = static_cast<QETWidget *>(widget);
     wPRmapper->insert((int)oldwin, w);        // add old window to mapper
     w->setAttribute(Qt::WA_WState_Reparented);        // set reparented flag
 }
 
 void qPRCleanup(QWidget *widget)
 {
-    QETWidget *etw = static_cast<QETWidget *>(const_cast<QWidget *>(widget));
+    QETWidget *etw = static_cast<QETWidget *>(widget);
     if (!(wPRmapper && widget->testAttribute(Qt::WA_WState_Reparented)))
         return;                                        // not a reparented widget
     QWidgetMapper::iterator it = wPRmapper->begin();
@@ -2027,6 +1995,49 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
     }
 
     return 0;
+}
+
+static bool qt_try_modal(QWidget *widget, XEvent *event)
+{
+    if (qt_xdnd_dragging) {
+        // allow mouse events while DnD is active
+        switch (event->type) {
+        case XButtonPress:
+        case XButtonRelease:
+        case MotionNotify:
+            return true;
+        default:
+            break;
+        }
+    }
+
+    // allow mouse release events to be sent to widgets that have been pressed
+    if (event->type == XButtonRelease) {
+        QWidget *alienWidget = widget->childAt(widget->mapFromGlobal(QPoint(event->xbutton.x_root,
+                                                                            event->xbutton.y_root)));
+        if (widget == qt_button_down || (alienWidget && alienWidget == qt_button_down))
+            return true;
+    }
+
+    if (QApplicationPrivate::tryModalHelper(widget))
+        return true;
+
+    // disallow mouse/key events
+    switch (event->type) {
+    case XButtonPress:
+    case XButtonRelease:
+    case MotionNotify:
+    case XKeyPress:
+    case XKeyRelease:
+    case EnterNotify:
+    case LeaveNotify:
+    case ClientMessage:
+        return false;
+    default:
+        break;
+    }
+
+    return true;
 }
 
 int QApplication::x11ProcessEvent(XEvent* event)
@@ -2289,7 +2300,6 @@ int QApplication::x11ProcessEvent(XEvent* event)
         if (!widget->isWindow())
             break;
         if (event->xfocus.mode == NotifyGrab) {
-            qt_xfocusout_grab_counter++;
             break;
         }
         if (event->xfocus.detail != NotifyAncestor &&
@@ -2697,50 +2707,6 @@ void QApplicationPrivate::leaveModal_sys(QWidget *widget)
     }
     app_do_modal = qt_modal_stack != 0;
 }
-
-bool qt_try_modal(QWidget *widget, XEvent *event)
-{
-    if (qt_xdnd_dragging) {
-        // allow mouse events while DnD is active
-        switch (event->type) {
-        case XButtonPress:
-        case XButtonRelease:
-        case MotionNotify:
-            return true;
-        default:
-            break;
-        }
-    }
-
-    // allow mouse release events to be sent to widgets that have been pressed
-    if (event->type == XButtonRelease) {
-        QWidget *alienWidget = widget->childAt(widget->mapFromGlobal(QPoint(event->xbutton.x_root,
-                                                                            event->xbutton.y_root)));
-        if (widget == qt_button_down || (alienWidget && alienWidget == qt_button_down))
-            return true;
-    }
-
-    if (QApplicationPrivate::tryModalHelper(widget))
-        return true;
-
-    // disallow mouse/key events
-    switch (event->type) {
-    case XButtonPress:
-    case XButtonRelease:
-    case MotionNotify:
-    case XKeyPress:
-    case XKeyRelease:
-    case EnterNotify:
-    case LeaveNotify:
-    case ClientMessage:
-        return false;
-    default:
-        break;
-    }
-
-    return true;
-}
-
 
 /*****************************************************************************
   Popup widget mechanism

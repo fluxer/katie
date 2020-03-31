@@ -154,8 +154,7 @@ public:
 class QListWidgetItemPrivate
 {
 public:
-    QListWidgetItemPrivate(QListWidgetItem *item) : q(item), theid(-1) {}
-    QListWidgetItem *q;
+    QListWidgetItemPrivate() : theid(-1) {}
     QVector<QWidgetItemData> values;
     int theid;
 };

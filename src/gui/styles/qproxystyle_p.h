@@ -60,8 +60,8 @@ public:
     void ensureBaseStyle() const;
 private:
     QProxyStylePrivate() :
-    QCommonStylePrivate(), baseStyle(0) {}
-    mutable QPointer <QStyle> baseStyle;
+    QCommonStylePrivate(), baseStyle(Q_NULLPTR) {}
+    mutable QPointer<QStyle> baseStyle;
 };
 
 QT_END_NAMESPACE

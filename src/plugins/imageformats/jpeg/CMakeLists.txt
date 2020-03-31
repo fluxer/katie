@@ -17,6 +17,6 @@ set_target_properties(qjpegplugin PROPERTIES OUTPUT_NAME qjpeg)
 
 install(
     TARGETS qjpegplugin
-    DESTINATION ${KATIE_PLUGINS_RELATIVE}/imageformats
+    DESTINATION ${KATIE_PLUGINS_PATH}/imageformats
     COMPONENT Runtime
 )

@@ -51,7 +51,7 @@ class MyServer : public QDBusServer
     Q_CLASSINFO("D-Bus Interface", "com.trolltech.autotests.qmyserver")
 
 public:
-    MyServer(QString addr = "unix:tmpdir=/tmp", QObject* parent = 0)
+    MyServer(QString addr = "unix:tmpdir=/tmp", QObject *parent = Q_NULLPTR)
         : QDBusServer(addr, parent),
           m_conn("none"),
           obj(NULL)

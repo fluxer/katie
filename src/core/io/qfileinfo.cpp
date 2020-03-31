@@ -80,8 +80,6 @@ QString QFileInfoPrivate::getFileName(QAbstractFileEngine::FileName name) const
     } else {
         ret = fileEngine->fileName(name);
     }
-    if (ret.isNull())
-        ret = QLatin1String("");
     if (cache_enabled)
         fileNames[(int)name] = ret;
     return ret;

@@ -471,7 +471,7 @@ class QWhatsThisAction: public QAction
     Q_OBJECT
 
 public:
-    explicit QWhatsThisAction(QObject* parent = 0);
+    explicit QWhatsThisAction(QObject* parent = Q_NULLPTR);
 
 private slots:
     void actionTriggered();

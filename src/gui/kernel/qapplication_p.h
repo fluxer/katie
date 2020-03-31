@@ -163,7 +163,6 @@ public:
     static QSize app_strut;
     static QWidgetList *popupWidgets;
     static QStyle *app_style;
-    static int app_cspec;
     static QPalette *app_pal;
     static QPalette *sys_pal;
     static QPalette *set_pal;
@@ -231,12 +230,6 @@ public:
     QGestureManager *gestureManager;
     QWidget *gestureWidget;
 #endif
-#if defined(Q_WS_X11)
-    QPixmap *move_cursor;
-    QPixmap *copy_cursor;
-    QPixmap *link_cursor;
-#endif
-    QPixmap getPixmapCursor(Qt::CursorShape cshape);
 
     QMap<int, QWeakPointer<QWidget> > widgetForTouchPointId;
     QMap<int, QTouchEvent::TouchPoint> appCurrentTouchPoints;

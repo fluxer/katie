@@ -90,7 +90,7 @@ private:
 };
 
 LanguageResourceDialogPrivate::LanguageResourceDialogPrivate(QDesignerResourceBrowserInterface *rb) :
-    q_ptr(0),
+    q_ptr(Q_NULLPTR),
     m_browser(rb),
     m_dialogButtonBox(new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel))
 {
@@ -170,7 +170,7 @@ LanguageResourceDialog* LanguageResourceDialog::create(QDesignerFormEditorInterf
     if (QDesignerIntegration *di = qobject_cast<QDesignerIntegration*>(core->integration()))
         if (QDesignerResourceBrowserInterface *rb = di->createResourceBrowser(0))
             return new LanguageResourceDialog(rb, parent);
-    return 0;
+    return Q_NULLPTR;
 }
 
 // ------------ IconSelectorPrivate
@@ -215,16 +215,16 @@ public:
 };
 
 IconSelectorPrivate::IconSelectorPrivate() :
-    q_ptr(0),
+    q_ptr(Q_NULLPTR),
     m_emptyIcon(emptyPixmap()),
-    m_stateComboBox(0),
-    m_iconButton(0),
-    m_resetAction(0),
-    m_resetAllAction(0),
-    m_iconCache(0),
-    m_pixmapCache(0),
-    m_resourceModel(0),
-    m_core(0)
+    m_stateComboBox(Q_NULLPTR),
+    m_iconButton(Q_NULLPTR),
+    m_resetAction(Q_NULLPTR),
+    m_resetAllAction(Q_NULLPTR),
+    m_iconCache(Q_NULLPTR),
+    m_pixmapCache(Q_NULLPTR),
+    m_resourceModel(Q_NULLPTR),
+    m_core(Q_NULLPTR)
 {
 }
 void IconSelectorPrivate::slotUpdate()
@@ -538,7 +538,7 @@ void IconSelector::setPixmapCache(DesignerPixmapCache *pixmapCache)
 // Validator for theme line edit, accepts empty or non-blank strings.
 class BlankSuppressingValidator : public QValidator {
 public:
-    explicit BlankSuppressingValidator(QObject * parent = 0) : QValidator(parent) {}
+    explicit BlankSuppressingValidator(QObject * parent = Q_NULLPTR) : QValidator(parent) {}
 
     virtual State validate(QString &input, int &pos) const {
         const int blankPos = input.indexOf(QLatin1Char(' '));
@@ -619,7 +619,7 @@ void IconThemeEditor::updatePreview(const QString &t)
     // Update preview label with icon.
     if (t.isEmpty() || !QIcon::hasThemeIcon(t)) { // Empty
         const QPixmap *currentPixmap = d->m_themeLabel->pixmap();
-        if (currentPixmap == 0 || currentPixmap->cacheKey() != d->m_emptyPixmap.cacheKey())
+        if (!currentPixmap || currentPixmap->cacheKey() != d->m_emptyPixmap.cacheKey())
             d->m_themeLabel->setPixmap(d->m_emptyPixmap);
     } else {
         const QIcon icon = QIcon::fromTheme(t);

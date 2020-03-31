@@ -65,7 +65,6 @@ public slots:
 private slots:
     void open();
     void openInvalid();
-    void registerSqlDriver();
 
     // problem specific tests
     void openErrorRecovery();
@@ -256,21 +255,6 @@ void tst_QSql::openErrorRecovery()
 	QFAIL_SQL( db, isOpen() );
 	QVERIFY_SQL( db, isOpenError() );
     }
-}
-
-void tst_QSql::registerSqlDriver()
-{
-    int argc = 1;
-    char *argv[] = { const_cast<char*>(QTest::currentAppName()) };
-    QApplication app( argc, argv );
-
-    QSqlDatabase::registerSqlDriver( "QSQLTESTDRIVER", new QSqlDriverCreator<QSqlNullDriver> );
-    QVERIFY( QSqlDatabase::drivers().contains( "QSQLTESTDRIVER" ) );
-
-    QSqlDatabase db = QSqlDatabase::addDatabase( "QSQLTESTDRIVER" );
-    QVERIFY( db.isValid() );
-
-    QCOMPARE( db.tables(), QStringList() );
 }
 
 QTEST_APPLESS_MAIN(tst_QSql)

@@ -143,7 +143,7 @@ static inline int *allocateBucket(int bucket)
 void QAbstractEventDispatcherPrivate::init()
 {
     Q_Q(QAbstractEventDispatcher);
-    if (threadData->eventDispatcher != 0) {
+    if (threadData->eventDispatcher) {
         qWarning("QAbstractEventDispatcher: An event dispatcher has already been created for this thread");
     } else {
         threadData->eventDispatcher = q;
