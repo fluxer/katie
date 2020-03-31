@@ -1014,11 +1014,7 @@ public:
     QSize wmMinimumSizeHint;
 
     QX11EmbedContainer::Error lastError;
-
-    static QX11EmbedContainer *activeContainer;
 };
-
-QX11EmbedContainer *QX11EmbedContainerPrivate::activeContainer = 0;
 
 /*!
     Creates a QX11EmbedContainer object with the given \a parent.
@@ -1306,9 +1302,6 @@ bool QX11EmbedContainer::eventFilter(QObject *o, QEvent *event)
         // directly to the client, and it will ask us for focus with
         // XEMBED_REQUEST_FOCUS.
         if (o == this && d->client) {
-            if (!d->isEmbedded())
-                d->activeContainer = this;
-
             if (d->clientIsXEmbed) {
                 if (!d->isEmbedded())
                     d->moveInputToProxy();
@@ -1338,7 +1331,6 @@ bool QX11EmbedContainer::eventFilter(QObject *o, QEvent *event)
         // focus.
         if (o == this && d->client) {
             if (!d->isEmbedded()) {
-                d->activeContainer = 0;
                 if (isActiveWindow())
                     d->moveInputToProxy();
             }
