@@ -275,13 +275,6 @@ static int x11ErrorHandler(Display *, XErrorEvent *)
     return 0;
 }
 
-// Returns the X11 timestamp. Maintained mainly by qapplication
-// internals, but also updated by the XEmbed widgets.
-static Time x11Time()
-{
-    return qt_x11Data->time;
-}
-
 // Gives the version and flags of the supported XEmbed protocol.
 static unsigned int XEmbedVersion()
 {
@@ -300,7 +293,7 @@ static void sendXEmbedMessage(WId window, Display *display, long message,
     c.display = display;
     c.window = window;
 
-    c.data.l[0] = x11Time();
+    c.data.l[0] = qt_x11Data->time;
     c.data.l[1] = message;
     c.data.l[2] = detail;
     c.data.l[3] = data1;
@@ -1254,7 +1247,7 @@ bool QX11EmbedContainer::eventFilter(QObject *o, QEvent *event)
             } else {
                 d->checkGrab();
                 if (hasFocus())
-                    XSetInputFocus(x11Info().display(), d->client, RevertToParent, x11Time());
+                    XSetInputFocus(x11Info().display(), d->client, RevertToParent, qt_x11Data->time);
             }
             if (!d->isEmbedded())
                 d->moveInputToProxy();
@@ -1298,7 +1291,7 @@ bool QX11EmbedContainer::eventFilter(QObject *o, QEvent *event)
                 }
             } else {
                 d->checkGrab();
-                XSetInputFocus(x11Info().display(), d->client, RevertToParent, x11Time());
+                XSetInputFocus(x11Info().display(), d->client, RevertToParent, qt_x11Data->time);
             }
         }
         break;
@@ -1695,7 +1688,7 @@ void QX11EmbedContainerPrivate::acceptClient(WId window)
     if (!clientIsXEmbed) {
         checkGrab();
         if (q->hasFocus()) {
-            XSetInputFocus(q->x11Info().display(), client, RevertToParent, x11Time());
+            XSetInputFocus(q->x11Info().display(), client, RevertToParent, qt_x11Data->time);
         }
     } else {
         if (!isEmbedded())
