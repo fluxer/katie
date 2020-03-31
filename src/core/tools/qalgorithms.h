@@ -194,17 +194,6 @@ inline typename Container::const_iterator qUpperBound(const Container &container
     return std::upper_bound(container.constBegin(), container.constEnd(), value, qLess<T>());
 }
 
-template <typename RandomAccessIterator, typename T, typename LessThan>
-inline RandomAccessIterator qBinaryFindHelper(RandomAccessIterator begin, RandomAccessIterator end, const T &value, LessThan lessThan)
-{
-    RandomAccessIterator it = qLowerBound(begin, end, value, lessThan);
-
-    if (it == end || lessThan(value, *it))
-        return end;
-
-    return it;
-}
-
 template <typename RandomAccessIterator, typename T>
 inline RandomAccessIterator qBinaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T &value)
 {
@@ -219,13 +208,18 @@ inline RandomAccessIterator qBinaryFind(RandomAccessIterator begin, RandomAccess
 template <typename RandomAccessIterator, typename T, typename LessThan>
 inline RandomAccessIterator qBinaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T &value, LessThan lessThan)
 {
-    return qBinaryFindHelper(begin, end, value, lessThan);
+    RandomAccessIterator it = qLowerBound(begin, end, value, lessThan);
+
+    if (it == end || lessThan(value, *it))
+        return end;
+
+    return it;
 }
 
 template <typename Container, typename T>
 inline typename Container::const_iterator qBinaryFind(const Container &container, const T &value)
 {
-    return qBinaryFindHelper(container.constBegin(), container.constEnd(), value, qLess<T>());
+    return qBinaryFind(container.constBegin(), container.constEnd(), value, qLess<T>());
 }
 
 template <typename ForwardIterator>

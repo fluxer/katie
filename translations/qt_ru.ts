@@ -1468,7 +1468,7 @@ Script: %3</source>
     <message>
         <location line="+441"/>
         <source>Cannot assign value %1 to property %2</source>
-        <translation>Невозможно присвоить значение «%1» свой������тву «%2»</translation>
+        <translation>Невозможно присвоить значение «%1» свой��������тву «%2»</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -1645,7 +1645,7 @@ Script: %3</source>
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+430"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+407"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
@@ -1862,7 +1862,7 @@ Please verify the correct file name was given.</source>
 Проверьте правильность указанного имени файла.</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+402"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+393"/>
         <source>My Computer</source>
         <translation>Мой компьютер</translation>
     </message>
@@ -1997,31 +1997,31 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+655"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <source>%1 TB</source>
         <translation>%1 Тб</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 GB</source>
         <translation>%1 Гб</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 MB</source>
         <translation>%1 Мб</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 KB</source>
         <translation>%1 Кб</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+1"/>
+        <location line="+1"/>
         <source>%1 bytes</source>
         <translation>%1 байт</translation>
     </message>
@@ -2070,7 +2070,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+86"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
         <location line="+844"/>
         <source>Normal</source>
         <translation>Обычный</translation>
@@ -2384,13 +2384,13 @@ Please verify the correct directory name was given.</source>
         <translation>Отказано в соединении</translation>
     </message>
     <message>
-        <location line="-3"/>
         <location filename="../src/network/access/qhttp.cpp" line="+2599"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-3"/>
         <source>Host %1 not found</source>
         <translation>Узел %1 не найден</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-62"/>
+        <location line="-62"/>
         <source>Wrong content length</source>
         <translation>Неверная длина содержимого</translation>
     </message>
@@ -2538,7 +2538,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
         <source>Permission denied</source>
         <translation>Доступ запрещён</translation>
     </message>
@@ -2730,7 +2730,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+213"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: Некорректное имя</translation>
@@ -2755,65 +2755,51 @@ Please verify the correct directory name was given.</source>
     <name>QLocalSocket</name>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+127"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+124"/>
         <source>%1: Connection refused</source>
         <translation>%1: Отказано в соединении</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Remote closed</source>
         <translation>%1: Закрыто удаленной стороной</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: Некорректное имя</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket access error</source>
         <translation>%1: Ошибка обращения к сокету</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket resource error</source>
         <translation>%1: Ошибка выделения ресурсов сокета</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket operation timed out</source>
         <translation>%1: Время на операцию с сокетом истекло</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Datagram too large</source>
         <translation>%1: Датаграмма слишком большая</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: Ошибка соединения</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: The socket operation is not supported</source>
         <translation>%1: Операция с сокетом не поддерживается</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+4"/>
-        <source>%1: Unknown error</source>
-        <translation>%1: Неизвестная ошибка</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: Неизвестная ошибка %2</translation>
     </message>
@@ -4190,7 +4176,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="+398"/>
         <source>Could not open input redirection for reading</source>
-        <translation>Не удалось открыть перенаправление ввода для чтения</translation>
+        <translation>Не удалось открыть п��ренаправление ввода для чтения</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -4894,7 +4880,7 @@ Please choose a different file name.</source>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+299"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+296"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Пробел</translation>
@@ -5960,7 +5946,7 @@ Please choose a different file name.</source>
         <translation type="unfinished">Крышка</translation>
     </message>
     <message>
-        <location line="+508"/>
+        <location line="+502"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -5994,7 +5980,7 @@ Please choose a different file name.</source>
         <translation type="unfinished">F%1</translation>
     </message>
     <message>
-        <location line="-751"/>
+        <location line="-745"/>
         <source>Home Page</source>
         <translation type="unfinished">Домашняя страница</translation>
     </message>
@@ -6663,7 +6649,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5178"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -6945,7 +6931,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+114"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
-        <translation>Неожиданный символ «%1» в литерале открытого идентификатора.</translation>
+        <translation>Неожиданны�� символ «%1» в литерале открытого идентификатора.</translation>
     </message>
     <message>
         <location line="+28"/>

@@ -74,8 +74,6 @@ QT_BEGIN_NAMESPACE
 
 static QTextStream qout(stderr, QIODevice::WriteOnly);
 
-static void dumpLayout(QTextStream &qout, const QDockAreaLayoutInfo &layout, QString indent);
-
 static void dumpLayout(QTextStream &qout, const QDockAreaLayoutItem &item, QString indent)
 {
     qout << indent << "QDockAreaLayoutItem: "
@@ -144,13 +142,6 @@ static void dumpLayout(QTextStream &qout, const QDockAreaLayout &layout, QString
 
     qout.flush();
 };
-
-void qt_dumpLayout(QTextStream &qout, QMainWindow *window)
-{
-    QMainWindowLayout *layout = qt_mainwindow_layout(window);
-    dumpLayout(qout, layout->layoutState.dockAreaLayout, QString());
-}
-
 #endif // Q_DEBUG_MAINWINDOW_LAYOUT && !QT_NO_DOCKWIDGET
 
 /******************************************************************************

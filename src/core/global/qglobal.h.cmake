@@ -641,7 +641,7 @@ Q_CORE_EXPORT void qWarning(const char *, ...) /* print warning message */
 #endif
 ;
 
-Q_CORE_EXPORT QString qt_error_string(int errorCode = -1);
+Q_CORE_EXPORT QString qt_error_string(int errorCode);
 Q_CORE_EXPORT void qCritical(const char *, ...) /* print critical message */
 #if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
@@ -698,7 +698,7 @@ inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 #   define Q_FUNC_INFO __func__
 #endif
 
-enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg, QtSystemMsg = QtCriticalMsg };
+enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg };
 
 Q_CORE_EXPORT void qt_message_output(QtMsgType, const char *buf);
 

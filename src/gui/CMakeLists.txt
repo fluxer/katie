@@ -581,7 +581,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenu_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenubar.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenubar_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenudata.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprogressbar.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qpushbutton.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qpushbutton_p.h
@@ -897,7 +896,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmdisubwindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenu.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenubar.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenudata.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprogressbar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qpushbutton.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qradiobutton.cpp

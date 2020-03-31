@@ -66,7 +66,6 @@ public:
     virtual ~QPixmapFilter() = 0;
 
     enum FilterType {
-        ConvolutionFilter,
         ColorizeFilter,
         DropShadowFilter,
         BlurFilter,
@@ -83,28 +82,6 @@ public:
 protected:
     QPixmapFilter(QPixmapFilterPrivate &d, FilterType type, QObject *parent);
     QPixmapFilter(FilterType type, QObject *parent);
-};
-
-class QPixmapConvolutionFilterPrivate;
-
-class Q_GUI_EXPORT QPixmapConvolutionFilter : public QPixmapFilter
-{
-    Q_OBJECT
-    Q_DECLARE_PRIVATE(QPixmapConvolutionFilter)
-
-public:
-    QPixmapConvolutionFilter(QObject *parent = Q_NULLPTR);
-    ~QPixmapConvolutionFilter();
-
-    void setConvolutionKernel(const qreal *matrix, int rows, int columns);
-
-    QRectF boundingRectFor(const QRectF &rect) const;
-    void draw(QPainter *painter, const QPointF &dest, const QPixmap &src, const QRectF &srcRect = QRectF()) const;
-
-private:
-    const qreal *convolutionKernel() const;
-    int rows() const;
-    int columns() const;
 };
 
 class QPixmapBlurFilterPrivate;

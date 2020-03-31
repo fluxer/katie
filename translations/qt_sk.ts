@@ -1644,7 +1644,7 @@ Script: %3</source>
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+430"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+407"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
@@ -1890,7 +1890,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Odstrániť</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+402"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+393"/>
         <source>My Computer</source>
         <translation>Môj počítač</translation>
     </message>
@@ -1996,31 +1996,31 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+655"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 GB</source>
         <translation>%1 GB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 MB</source>
         <translation>%1 MB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 KB</source>
         <translation>%1 KB</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+1"/>
+        <location line="+1"/>
         <source>%1 bytes</source>
         <translation>%1 bytov</translation>
     </message>
@@ -2069,7 +2069,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+86"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
         <location line="+844"/>
         <source>Normal</source>
         <translation>Normálne</translation>
@@ -2409,13 +2409,13 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Spojenie bolo odmietnuté (alebo vypršal čas)</translation>
     </message>
     <message>
+        <location line="+3"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-9"/>
-        <location filename="../src/network/access/qhttp.cpp" line="+3"/>
         <source>Host %1 not found</source>
         <translation>Hostiteľ %1 nenájdený</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+20"/>
+        <location line="+20"/>
         <source>HTTP request failed</source>
         <translation>HTTP požiadavka zlyhala</translation>
     </message>
@@ -2537,7 +2537,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
         <source>Permission denied</source>
         <translation>Prístup zamietnutý</translation>
     </message>
@@ -2729,7 +2729,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+213"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: Chyba názvu</translation>
@@ -2754,65 +2754,51 @@ Chcete ho aj tak zmazať?</translation>
     <name>QLocalSocket</name>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+127"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+124"/>
         <source>%1: Connection refused</source>
         <translation>%1: Spojenie odmietnuté</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Remote closed</source>
         <translation>%1: Spojenie bolo druhou stranou uzatvorené</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: Neplatný názov</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket access error</source>
         <translation>%1: Chyba pri prístupe ku soketu</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket resource error</source>
         <translation>%1: Chyba zdroja soketu</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket operation timed out</source>
         <translation>%1: Prekročenie času pri práci so soketom</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Datagram too large</source>
         <translation>%1: Datagram je príliš veľký</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: Chyba spojenia</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: The socket operation is not supported</source>
         <translation>%1: Operácia so soketom nie je podporovaná</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+4"/>
-        <source>%1: Unknown error</source>
-        <translation>%1: Neznáma chyba</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: Neznáma chyba %2</translation>
     </message>
@@ -4893,7 +4879,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+299"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+296"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Medzerník</translation>
@@ -5964,7 +5950,7 @@ Má sa prepísať?</translation>
         <translation>Hangul špeciálny</translation>
     </message>
     <message>
-        <location line="+464"/>
+        <location line="+458"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -6662,7 +6648,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5178"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
         <source>*</source>
         <translation>*</translation>
     </message>

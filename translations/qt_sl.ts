@@ -1644,7 +1644,7 @@ Script: %3</source>
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+430"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+407"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
@@ -1795,7 +1795,7 @@ Datoteka ni bila najdena.
 Preverite, ali je bilo podano pravilno ime datoteke.</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+402"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+393"/>
         <source>My Computer</source>
         <translation>Moj računalnik</translation>
     </message>
@@ -2032,31 +2032,31 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Računalnik</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-152"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <source>%1 TB</source>
         <translation>%1 TiB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 GB</source>
         <translation>%1 GiB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 MB</source>
         <translation>%1 MiB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 KB</source>
         <translation>%1 KiB</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+1"/>
+        <location line="+1"/>
         <source>%1 bytes</source>
         <translation>%1 B</translation>
     </message>
@@ -2069,7 +2069,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+86"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
         <location line="+844"/>
         <source>Normal</source>
         <translation>Običajno</translation>
@@ -2419,13 +2419,13 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Povezava je zavrnjena</translation>
     </message>
     <message>
-        <location line="-3"/>
         <location filename="../src/network/access/qhttp.cpp" line="-319"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-3"/>
         <source>Host %1 not found</source>
         <translation>Gostitelj %1 ni bil najden</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+20"/>
+        <location line="+20"/>
         <source>HTTP request failed</source>
         <translation>Zahtevek HTTP ni uspel</translation>
     </message>
@@ -2537,7 +2537,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
         <source>Permission denied</source>
         <translation>Nimate dovoljenja</translation>
     </message>
@@ -2729,7 +2729,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+213"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: napaka v imenu</translation>
@@ -2754,65 +2754,51 @@ Ali jo kljub temu želite izbrisati?</translation>
     <name>QLocalSocket</name>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+127"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+124"/>
         <source>%1: Connection refused</source>
         <translation>%1: povezava je bila zavrnjena</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Remote closed</source>
         <translation>%1: oddaljeni je prekinil</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: neveljavno ime</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket access error</source>
         <translation>%1: napaka pri dostopu do vtičnice</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket resource error</source>
         <translation>%1: napaka vira vtičnice</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket operation timed out</source>
         <translation>%1: čas za dejanje na vtičnici je potekel</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Datagram too large</source>
         <translation>%1: datagram je prevelik</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: napaka povezave</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: The socket operation is not supported</source>
         <translation>%1: dejanje na vtičnici ni podprto</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+4"/>
-        <source>%1: Unknown error</source>
-        <translation>%1: neznana napaka</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: neznana napaka %2</translation>
     </message>
@@ -4893,7 +4879,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+299"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+296"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Preslednica</translation>
@@ -5959,7 +5945,7 @@ Izberite drugo ime datoteke.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+464"/>
+        <location line="+458"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -5993,7 +5979,7 @@ Izberite drugo ime datoteke.</translation>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-751"/>
+        <location line="-745"/>
         <source>Home Page</source>
         <translation>Domača stran</translation>
     </message>
@@ -6662,7 +6648,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5178"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
         <source>*</source>
         <translation>*</translation>
     </message>

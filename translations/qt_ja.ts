@@ -804,7 +804,7 @@ Script: %3</source>
     <message>
         <location line="+6"/>
         <source>Can only assign one binding to lists</source>
-        <translation>リストへは一つのバインディングのみ割り当����ることができます</translation>
+        <translation>リストへは一つのバインディングのみ割り当�����ることができます</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1646,7 +1646,7 @@ Script: %3</source>
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+430"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+407"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
@@ -1809,7 +1809,7 @@ Please verify the correct file name was given.</source>
 正しいファイル名が入力されたかどうか確認してください。</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+405"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+396"/>
         <source>My Computer</source>
         <translation>マイコンピュータ</translation>
     </message>
@@ -1821,7 +1821,7 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translation>%1
 ディレクトリが見つかりません。
-正しいディレクトリ名が入��さ��たかどうか確認してください。</translation>
+正しいディレクトリ名が����さ��たかどうか確認してください。</translation>
     </message>
     <message>
         <location line="-2246"/>
@@ -2019,31 +2019,31 @@ Do you want to delete it anyway?</source>
         <translation>タイプ</translation>
     </message>
     <message>
+        <location line="-146"/>
         <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-146"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 GB</source>
         <translation>%1 GB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 MB</source>
         <translation>%1 MB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 KB</source>
         <translation>%1 KB</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+1"/>
+        <location line="+1"/>
         <source>%1 bytes</source>
         <translation>%1 バイト</translation>
     </message>
@@ -2071,7 +2071,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+86"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
         <location line="+844"/>
         <source>Normal</source>
         <translation>標準</translation>
@@ -2421,13 +2421,13 @@ Do you want to delete it anyway?</source>
         <translation>接続が拒否されました</translation>
     </message>
     <message>
-        <location line="-3"/>
         <location filename="../src/network/access/qhttp.cpp" line="-319"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-3"/>
         <source>Host %1 not found</source>
         <translation>ホスト %1 が見つかりません</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+20"/>
+        <location line="+20"/>
         <source>HTTP request failed</source>
         <translation>HTTP要求に失敗しました</translation>
     </message>
@@ -2539,7 +2539,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
         <source>Permission denied</source>
         <translation>許可されていません</translation>
     </message>
@@ -2731,7 +2731,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+213"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: 名前の解決に失敗</translation>
@@ -2756,65 +2756,51 @@ Do you want to delete it anyway?</source>
     <name>QLocalSocket</name>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+127"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+124"/>
         <source>%1: Connection refused</source>
         <translation>%1: 接続が拒否されました</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Remote closed</source>
         <translation>%1: リモートにより接続が閉じられました</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: 無効な名前です</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket access error</source>
         <translation>%1: ソケットアクセスのエラーです</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket resource error</source>
         <translation>%1: ソケットリソースのエラーです</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket operation timed out</source>
         <translation>%1: ソケット操作がタイムアウトしました</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Datagram too large</source>
         <translation>%1: データグラムが大きすぎます</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: 接続のエラーが発生しました</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: The socket operation is not supported</source>
         <translation>%1: そのソケット操作はサポートされていません</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+4"/>
-        <source>%1: Unknown error</source>
-        <translation>%1: 未知のエラーです</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: 未知のエラー %2</translation>
     </message>
@@ -3373,7 +3359,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+2"/>
         <source>The requested operation is not supported by the system.</source>
-        <translation>要求された操作はこのシステムではサポートされていません。</translation>
+        <translation>要求された操作はこのシステムではサポートされ��いません。</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -4898,7 +4884,7 @@ Please choose a different file name.</source>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+299"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+296"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Space</translation>
@@ -5969,7 +5955,7 @@ Please choose a different file name.</source>
         <translation>Hangul Special</translation>
     </message>
     <message>
-        <location line="+464"/>
+        <location line="+458"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -6668,7 +6654,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5178"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
         <source>*</source>
         <translation>*</translation>
     </message>

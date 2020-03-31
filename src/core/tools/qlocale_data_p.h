@@ -48,7 +48,7 @@
 QT_BEGIN_NAMESPACE
 
 /*
-    This part of the file was generated from Common Locale Data Repository v36
+    This part of the file was generated from Common Locale Data Repository v36.1
 
     http://www.unicode.org/cldr/
 
@@ -1021,12 +1021,14 @@ static const struct scriptTblData {
     { QLocale::Script::ChakmaScript, "Chakma\0", "Cakm\0" },
     { QLocale::Script::ChamScript, "Cham\0", "Cham\0" },
     { QLocale::Script::CherokeeScript, "Cherokee\0", "Cher\0" },
+    { QLocale::Script::ChorasmianScript, "Chorasmian\0", "Chrs\0" },
     { QLocale::Script::CirthScript, "Cirth\0", "Cirt\0" },
     { QLocale::Script::CopticScript, "Coptic\0", "Copt\0" },
     { QLocale::Script::CypriotScript, "Cypriot\0", "Cprt\0" },
     { QLocale::Script::CyrillicScript, "Cyrillic\0", "Cyrl\0" },
     { QLocale::Script::DeseretScript, "Deseret\0", "Dsrt\0" },
     { QLocale::Script::DevanagariScript, "Devanagari\0", "Deva\0" },
+    { QLocale::Script::DivesAkuruScript, "Dives Akuru\0", "Diak\0" },
     { QLocale::Script::DograScript, "Dogra\0", "Dogr\0" },
     { QLocale::Script::DuployanshorthandScript, "Duployan shorthand\0", "Dupl\0" },
     { QLocale::Script::EasternSyriacScript, "Eastern Syriac\0", "Syrn\0" },
@@ -1073,6 +1075,7 @@ static const struct scriptTblData {
     { QLocale::Script::KatakanaScript, "Katakana\0", "Kana\0" },
     { QLocale::Script::KayahLiScript, "Kayah Li\0", "Kali\0" },
     { QLocale::Script::KharoshthiScript, "Kharoshthi\0", "Khar\0" },
+    { QLocale::Script::KhitansmallscriptScript, "Khitan small script\0", "Kits\0" },
     { QLocale::Script::KhmerScript, "Khmer\0", "Khmr\0" },
     { QLocale::Script::KhojkiScript, "Khojki\0", "Khoj\0" },
     { QLocale::Script::KhudawadiScript, "Khudawadi\0", "Sind\0" },
@@ -1181,6 +1184,7 @@ static const struct scriptTblData {
     { QLocale::Script::WanchoScript, "Wancho\0", "Wcho\0" },
     { QLocale::Script::WesternSyriacScript, "Western Syriac\0", "Syrj\0" },
     { QLocale::Script::WoleaiScript, "Woleai\0", "Wole\0" },
+    { QLocale::Script::YezidiScript, "Yezidi\0", "Yezi\0" },
     { QLocale::Script::YiScript, "Yi\0", "Yiii\0" },
     { QLocale::Script::ZanabazarSquareScript, "Zanabazar Square\0", "Zanb\0" },
     { QLocale::Script::ZawgyiScript, "Zawgyi\0", "Qaag\0" },
@@ -9918,7 +9922,7 @@ static const QLocalePrivate localeTbl[] = {
         { "Jan\0", "Fra\0", "Mar\0", "Apr\0", "Mej\0", "Ġun\0", "Lul\0", "Aww\0", "Set\0", "Ott\0", "Nov\0", "Diċ\0" },
         { "Jannar\0", "Frar\0", "Marzu\0", "April\0", "Mejju\0", "Ġunju\0", "Lulju\0", "Awwissu\0", "Settembru\0", "Ottubru\0", "Novembru\0", "Diċembru\0" },
         { "Jn\0", "Fr\0", "Mz\0", "Ap\0", "Mj\0", "Ġn\0", "Lj\0", "Aw\0", "St\0", "Ob\0", "Nv\0", "Dċ\0" },
-        { "Jan\0", "Fra\0", "Mar\0", "Apr\0", "Mej\0", "Ġun\0", "Lul\0", "Aww\0", "Set\0", "Ott\0", "Nov\0", "Diċ\0" },
+        { "Jan\0", "Fra\0", "Mar\0", "Apr\0", "Mej\0", "��un\0", "Lul\0", "Aww\0", "Set\0", "Ott\0", "Nov\0", "Diċ\0" },
         { "Jannar\0", "Frar\0", "Marzu\0", "April\0", "Mejju\0", "Ġunju\0", "Lulju\0", "Awwissu\0", "Settembru\0", "Ottubru\0", "Novembru\0", "Diċembru\0" },
         { "J\0", "F\0", "M\0", "A\0", "M\0", "Ġ\0", "L\0", "A\0", "S\0", "O\0", "N\0", "D\0" },
         { "Tne\0", "Tli\0", "Erb\0", "Ħam\0", "Ġim\0", "Sib\0", "Ħad\0" },

@@ -295,7 +295,7 @@ static const char *specialLanguagesTbl[] = {
     "akk-iq", // Cuneiform
     "phn-lb", // Phoenician
     "lzh-cn", // PhagsPa
-    0, // Nko
+    "nqo-gn", // Nko
     "su-id", // Sundanese
     "lep-in", // Lepcha
     "sat-in", // OlChiki
@@ -306,7 +306,7 @@ static const char *specialLanguagesTbl[] = {
     "xlc-tr", // Lycian
     "xcr-tr", // Carian
     "xld-tr", // Lydian
-    0, // Cham
+    "cjm-vn", // Cham
     0, // TaiTham
     "blt-vn", // TaiViet
     "ae-ir", // Avestan
@@ -314,21 +314,21 @@ static const char *specialLanguagesTbl[] = {
     "smp-il", // Samaritan
     "lis-cn", // Lisu
     "bax-cm", // Bamum
-    0, // Javanese
+    "jv-id", // Javanese
     "mni-in", // MeeteiMayek
     "arc-ir", // ImperialAramaic
     "ar", // OldSouthArabian
     "xpr-ir", // InscriptionalParthian
     "pal-ir", // InscriptionalPahlavi
-    0, // OldTurkic
+    "otk-mn", // OldTurkic
     "bho-in", // Kaithi
     "bbc-id", // Batak
     "pka-in", // Brahmi
     "myz-ir", // Mandaic
     "ccp-bd", // Chakma
     "xmr-sd", // MeroiticCursive
-    0, // MeroiticHieroglyphs
-    0, // Miao
+    "xmr-sd", // MeroiticHieroglyphs
+    "hmd-cn", // Miao
     "sa-in", // Sharada
     "srb-in", // SoraSompeng
     "doi-in", // Takri
@@ -368,7 +368,7 @@ static const char *specialLanguagesTbl[] = {
     "osa-us", // Osage
     "txg-cn", // Tangut
     "esg-in", // MasaramGondi
-    0, // Nushu
+    "zhx-cn", // Nushu
     "cmg-mn", // Soyombo
     "cmg-mn", // ZanabazarSquare
     "doi-in", // Dogra
@@ -381,7 +381,11 @@ static const char *specialLanguagesTbl[] = {
     "arc-ir", // Elymaic
     "sa-in", // Nandinagari
     "mww-us", // NyiakengPuachueHmong
-    "npp-in" // Wancho
+    "npp-in", // Wancho
+    "xco-uz", // Chorasmian
+    "dv-mv", // DivesAkuru
+    "zkt-cn", // KhitanSmallScript
+    "ku-ge" // Yezidi
 };
 enum { SpecialLanguageCount = sizeof(specialLanguagesTbl) / sizeof(const char *) };
 
@@ -405,7 +409,7 @@ static const uint specialCharsTbl[] = {
     0x0C00, // Telugu
     0x0C80, // Kannada
     0x0D00, // Malayalam
-    0x0D82, // Sinhala
+    0x0D81, // Sinhala
     0x0E01, // Thai
     0x0E81, // Lao
     0x0F00, // Tibetan
@@ -539,6 +543,10 @@ static const uint specialCharsTbl[] = {
     0x119A0, // Nandinagari
     0x1E100, // NyiakengPuachueHmong
     0x1E2C0, // Wancho
+    0x10FB0, // Chorasmian
+    0x11900, // DivesAkuru
+    0x16FE4, // KhitanSmallScript
+    0x10E80, // Yezidi
 };
 enum { SpecialCharCount = sizeof(specialCharsTbl) / sizeof(uint) };
 
@@ -696,6 +704,7 @@ static void loadFontConfig()
 #endif // QT_NO_FONTCONFIG
 
 static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt);
+static QString styleStringHelper(int weight, QFont::Style style);
 
 static void initializeFontDb()
 {
@@ -1167,12 +1176,6 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
         if (!privateDb()->count)
             initializeFontDb();
 
-#ifdef QT_BUILD_INTERNAL
-        if (qt_enable_test_font && req.family == QLatin1String("__Qt__Box__Engine__")) {
-            fe = new QTestFontEngine(req.pixelSize);
-            fe->fontDef = req;
-        } else
-#endif
 #ifndef QT_NO_FONTCONFIG
         if (qt_x11Data->has_fontconfig) {
             fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);

@@ -1652,7 +1652,7 @@ Script: %3</source>
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+430"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+407"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -1822,7 +1822,7 @@ Fichier introuvable.
 Veuillez vérifier que le nom du fichier est correct.</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+402"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+393"/>
         <source>My Computer</source>
         <translation>Poste de travail</translation>
     </message>
@@ -2003,31 +2003,31 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+655"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <source>%1 TB</source>
         <translation>%1 To</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 GB</source>
         <translation>%1 Go</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 MB</source>
         <translation>%1 Mo</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 KB</source>
         <translation>%1 Ko</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+1"/>
+        <location line="+1"/>
         <source>%1 bytes</source>
         <translation>%1 octets</translation>
     </message>
@@ -2076,7 +2076,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+86"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
         <location line="+844"/>
         <source>Normal</source>
         <translation>Normal</translation>
@@ -2390,13 +2390,13 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Connexion refusée</translation>
     </message>
     <message>
-        <location line="-3"/>
         <location filename="../src/network/access/qhttp.cpp" line="+2599"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-3"/>
         <source>Host %1 not found</source>
         <translation>Hôte %1 introuvable</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-62"/>
+        <location line="-62"/>
         <source>Wrong content length</source>
         <translation>Longueur du contenu invalide</translation>
     </message>
@@ -2544,7 +2544,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
         <source>Permission denied</source>
         <translation>Autorisation refusée</translation>
     </message>
@@ -2736,7 +2736,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+213"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1 : Erreur de nom</translation>
@@ -2761,65 +2761,51 @@ Voulez-vous quand même le supprimer ?</translation>
     <name>QLocalSocket</name>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+127"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+124"/>
         <source>%1: Connection refused</source>
         <translation>%1 : Connexion refusée</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Remote closed</source>
         <translation>%1 : Connexion fermée</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1 : Nom invalide</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket access error</source>
         <translation>%1 : Erreur d&apos;accès au socket</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket resource error</source>
         <translation>%1 : Erreur de ressource du socket</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket operation timed out</source>
         <translation>%1 : L&apos;opération socket a expiré</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Datagram too large</source>
         <translation>%1 : Datagramme trop grand</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1 : Erreur de connexion</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: The socket operation is not supported</source>
         <translation>%1 : L&apos;opération n&apos;est pas supportée</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+4"/>
-        <source>%1: Unknown error</source>
-        <translation>%1 : erreur inconnue</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: Unknown error %2</source>
         <translation>%1 : Erreur inconnue %2</translation>
     </message>
@@ -4900,7 +4886,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+299"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+296"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Espace</translation>
@@ -5510,7 +5496,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="+464"/>
+        <location line="+458"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -5544,7 +5530,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-751"/>
+        <location line="-745"/>
         <source>Home Page</source>
         <translation>Page d&apos;accueil</translation>
     </message>
@@ -6402,7 +6388,7 @@ Veuillez choisir un nom de fichier différent.</translation>
     <message>
         <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-46"/>
         <source>%1: out of resources</source>
-        <translation>%1 : plus de ressources disponibles</translation>
+        <translation>%1��: plus de ressources disponibles</translation>
     </message>
     <message>
         <location line="-17"/>
@@ -6656,7 +6642,7 @@ Veuillez choisir un nom de fichier différent.</translation>
     <message>
         <location line="+6"/>
         <source>Insert Unicode control character</source>
-        <translation>Insérer caractère de contrôle Unicode</translation>
+        <translation>Insérer caractère de contr��le Unicode</translation>
     </message>
 </context>
 <context>
@@ -6670,7 +6656,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5178"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
         <source>*</source>
         <translation></translation>
     </message>

@@ -2174,8 +2174,7 @@ bool QRasterPaintEnginePrivate::isUnclipped_normalized(const QRect &r) const
     }
 }
 
-bool QRasterPaintEnginePrivate::isUnclipped(const QRect &rect,
-                                            int penWidth) const
+bool QRasterPaintEnginePrivate::isUnclipped(const QRect &rect) const
 {
     Q_Q(const QRasterPaintEngine);
     const QRasterPaintEngineState *s = q->state();
@@ -2193,15 +2192,12 @@ bool QRasterPaintEnginePrivate::isUnclipped(const QRect &rect,
     if (cl->hasRectClip && cl->clipRect == deviceRect)
         return true;
 
-    if (s->flags.antialiased)
-        ++penWidth;
-
     QRect r = rect.normalized();
-    if (penWidth > 0) {
-        r.setX(r.x() - penWidth);
-        r.setY(r.y() - penWidth);
-        r.setWidth(r.width() + 2 * penWidth);
-        r.setHeight(r.height() + 2 * penWidth);
+    if (s->flags.antialiased) {
+        r.setX(r.x() - 1);
+        r.setY(r.y() - 1);
+        r.setWidth(r.width() + 2);
+        r.setHeight(r.height() + 2);
     }
 
     if (cl->hasRectClip) {
@@ -2214,24 +2210,23 @@ bool QRasterPaintEnginePrivate::isUnclipped(const QRect &rect,
     }
 }
 
-inline bool QRasterPaintEnginePrivate::isUnclipped(const QRectF &rect,
-                                                   int penWidth) const
+inline bool QRasterPaintEnginePrivate::isUnclipped(const QRectF &rect) const
 {
-    return isUnclipped(rect.normalized().toAlignedRect(), penWidth);
+    return isUnclipped(rect.normalized().toAlignedRect());
 }
 
 inline ProcessSpans
 QRasterPaintEnginePrivate::getBrushFunc(const QRect &rect,
                                         const QSpanData *data) const
 {
-    return isUnclipped(rect, 0) ? data->unclipped_blend : data->blend;
+    return isUnclipped(rect) ? data->unclipped_blend : data->blend;
 }
 
 inline ProcessSpans
 QRasterPaintEnginePrivate::getBrushFunc(const QRectF &rect,
                                         const QSpanData *data) const
 {
-    return isUnclipped(rect, 0) ? data->unclipped_blend : data->blend;
+    return isUnclipped(rect) ? data->unclipped_blend : data->blend;
 }
 
 /*!
@@ -3366,7 +3361,7 @@ void QSpanData::init(QRasterBuffer *rb, const QRasterPaintEngine *pe)
     clip = pe ? pe->d_func()->clip() : 0;
 }
 
-Q_GUI_EXPORT extern QImage qt_imageForBrush(int brushStyle, bool invert);
+Q_GUI_EXPORT extern QImage qt_imageForBrush(int brushStyle);
 
 void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode compositionMode)
 {
@@ -3455,7 +3450,7 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
         type = Texture;
         if (!tempImage)
             tempImage = new QImage();
-        *tempImage = rasterBuffer->colorizeBitmap(qt_imageForBrush(brushStyle, true), brush.color());
+        *tempImage = rasterBuffer->colorizeBitmap(qt_imageForBrush(brushStyle), brush.color());
         initTexture(tempImage, alpha, QTextureData::Tiled);
         break;
     case Qt::TexturePattern:

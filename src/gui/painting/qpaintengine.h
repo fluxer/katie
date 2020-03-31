@@ -195,7 +195,6 @@ public:
 
     QPainter *painter() const;
 
-    void syncState();
     inline bool isExtended() const { return extended; }
 
 protected:

@@ -26,7 +26,7 @@ There are several things you should be aware before considering Katie:
   - moc, uic, rcc, lrelease, lupdate, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
   - updated bundled FFTW and Valgrind from upstream
-  - updated localizations data from Common Locale Data Repository v36
+  - updated localizations data from Common Locale Data Repository v36.1
   - SQLite driver uses UTF-8 encoding instead of UTF-16
   - default text codec for C-strings is UTF-8
   - Symbian, QWS, QPA, Mac and Windows are no longer supported platforms

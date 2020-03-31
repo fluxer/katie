@@ -166,12 +166,6 @@ Q_CORE_EXPORT uint qGlobalPostedEventsCount()
     return currentThreadData->postEventList.size() - currentThreadData->postEventList.startOffset;
 }
 
-
-void qt_set_current_thread_to_main_thread()
-{
-    QCoreApplicationPrivate::theMainThread = QThread::currentThread();
-}
-
 QCoreApplication *QCoreApplication::self = 0;
 QAbstractEventDispatcher *QCoreApplicationPrivate::eventDispatcher = 0;
 std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;

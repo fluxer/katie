@@ -69,7 +69,6 @@ class QSizeGripPrivate : public QWidgetPrivate
 {
     Q_DECLARE_PUBLIC(QSizeGrip)
 public:
-    void init();
     QPoint p;
     QRect r;
     int d;
@@ -182,27 +181,19 @@ QSizeGrip::QSizeGrip(QWidget * parent)
     : QWidget(*new QSizeGripPrivate, parent, 0)
 {
     Q_D(QSizeGrip);
-    d->init();
-}
-
-
-void QSizeGripPrivate::init()
-{
-    Q_Q(QSizeGrip);
-    dxMax = 0;
-    dyMax = 0;
-    tlw = 0;
-    m_corner = q->isLeftToRight() ? Qt::BottomRightCorner : Qt::BottomLeftCorner;
-    gotMousePress = false;
+    d->dxMax = 0;
+    d->dyMax = 0;
+    d->tlw = 0;
+    d->m_corner = isLeftToRight() ? Qt::BottomRightCorner : Qt::BottomLeftCorner;
+    d->gotMousePress = false;
 
 #if !defined(QT_NO_CURSOR)
-    q->setCursor(m_corner == Qt::TopLeftCorner || m_corner == Qt::BottomRightCorner
+    setCursor(d->m_corner == Qt::TopLeftCorner || d->m_corner == Qt::BottomRightCorner
                  ? Qt::SizeFDiagCursor : Qt::SizeBDiagCursor);
 #endif
-    q->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
-    updateTopLevelWidget();
+    setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
+    d->updateTopLevelWidget();
 }
-
 
 /*!
     Destroys this size grip.

@@ -1644,7 +1644,7 @@ Script: %3</source>
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+430"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+407"/>
         <source>Name</source>
         <translation>이름</translation>
     </message>
@@ -1890,7 +1890,7 @@ Do you want to delete it anyway?</source>
         <translation>삭제</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+402"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+393"/>
         <source>My Computer</source>
         <translation>내 컴퓨터</translation>
     </message>
@@ -1996,31 +1996,31 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+655"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 GB</source>
         <translation>%1 GB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 MB</source>
         <translation>%1 MB</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+2"/>
         <source>%1 KB</source>
         <translation>%1 KB</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+1"/>
+        <location line="+1"/>
         <source>%1 bytes</source>
         <translation>%1바이트</translation>
     </message>
@@ -2069,7 +2069,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+86"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
         <location line="+844"/>
         <source>Normal</source>
         <translation>일반</translation>
@@ -2409,13 +2409,13 @@ Do you want to delete it anyway?</source>
         <translation>연결이 거부됨 (또는 시간 초과됨)</translation>
     </message>
     <message>
+        <location line="+3"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-9"/>
-        <location filename="../src/network/access/qhttp.cpp" line="+3"/>
         <source>Host %1 not found</source>
         <translation>호스트 %1을(를) 찾을 수 없음</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+20"/>
+        <location line="+20"/>
         <source>HTTP request failed</source>
         <translation>HTTP 요청이 실패함</translation>
     </message>
@@ -2537,7 +2537,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1392"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
         <source>Permission denied</source>
         <translation>권한이 거부됨</translation>
     </message>
@@ -2729,7 +2729,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+213"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: 이름 오류</translation>
@@ -2754,65 +2754,51 @@ Do you want to delete it anyway?</source>
     <name>QLocalSocket</name>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+127"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+124"/>
         <source>%1: Connection refused</source>
         <translation>%1: 연결이 거부됨</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Remote closed</source>
         <translation>%1: 원격 호스트가 연결 닫음</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: 잘못된 이름</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket access error</source>
         <translation>%1: 소켓 접근 오류</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket resource error</source>
         <translation>%1: 소켓 자원 오류</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket operation timed out</source>
         <translation>%1: 소켓 작업 시간 초과됨</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Datagram too large</source>
         <translation>%1: 데이터그램이 너무 큼</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: 연결 오류</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: The socket operation is not supported</source>
         <translation>%1: 소켓 작업이 지원되지 않음</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+4"/>
-        <source>%1: Unknown error</source>
-        <translation>%1: 알 수 없는 오류</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: 알 수 없는 오류 %2</translation>
     </message>
@@ -3325,7 +3311,7 @@ Do you want to delete it anyway?</source>
         <location line="+26"/>
         <location line="+191"/>
         <source>Network session error.</source>
-        <translation>네트워크 세션 오류.</translation>
+        <translation>���트워크 세션 오류.</translation>
     </message>
     <message>
         <location line="-184"/>
@@ -3548,7 +3534,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+33"/>
         <source>Could not commit transaction</source>
-        <translation>트랙잭션을 커밋할 수 없음</translation>
+        <translation>트랙잭션을 커밋할 수 ���음</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -4893,7 +4879,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+299"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+296"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Space</translation>
@@ -5458,7 +5444,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+1"/>
         <source>Keyboard Menu</source>
-        <translation>키보드 메뉴</translation>
+        <translation>��보드 메뉴</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5964,7 +5950,7 @@ Do you want to overwrite it?</source>
         <translation>한글 특수 기호</translation>
     </message>
     <message>
-        <location line="+464"/>
+        <location line="+458"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -6023,7 +6009,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+0"/>
         <source>Page down</source>
-        <translation>한 쪽 아래로</translation>
+        <translation>한 쪽 아래��</translation>
     </message>
 </context>
 <context>
@@ -6217,7 +6203,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+4"/>
         <source>The peer did not present any certificate</source>
-        <translation>동료 측이 인증서를 제시하지 않았음</translation>
+        <translation>동료 측이 인증서�� 제시하지 않았음</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6662,7 +6648,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5178"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
         <source>*</source>
         <translation>*</translation>
     </message>

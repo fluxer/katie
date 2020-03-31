@@ -73,8 +73,6 @@ public:
     Qt::DropAction exec(Qt::DropActions supportedActions = Qt::MoveAction,
                         Qt::DropAction defaultAction = Qt::IgnoreAction);
 
-    void setDragCursor(const QPixmap &cursor, Qt::DropAction action);
-
 Q_SIGNALS:
     void actionChanged(Qt::DropAction action);
     void targetChanged(QWidget *newTarget);

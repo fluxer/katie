@@ -599,11 +599,15 @@ int QColormap::depth() const
 
 int QColormap::size() const
 {
-    return (d->mode == Gray
-            ? d->r_max
-            : (d->mode == Indexed
-               ? d->r_max * d->g_max * d->b_max
-               : -1));
+    switch (d->mode) {
+        case Gray:
+            return d->r_max;
+        case Indexed:
+            return d->r_max * d->g_max * d->b_max;
+        case Direct:
+            return -1;
+    }
+    Q_UNREACHABLE();
 }
 
 uint QColormap::pixel(const QColor &color) const
@@ -612,12 +616,16 @@ uint QColormap::pixel(const QColor &color) const
     const uint r = (c.ct.argb.red   * d->r_max) >> 16;
     const uint g = (c.ct.argb.green * d->g_max) >> 16;
     const uint b = (c.ct.argb.blue  * d->b_max) >> 16;
-    if (d->mode != Direct) {
-        if (d->mode == Gray)
+
+    switch (d->mode) {
+        case Gray:
             return d->pixels.at((r * 30 + g * 59 + b * 11) / 100);
-        return d->pixels.at(r * d->g_max * d->b_max + g * d->b_max + b);
+        case Indexed:
+            return d->pixels.at(r * d->g_max * d->b_max + g * d->b_max + b);
+        case Direct:
+            return (r << d->r_shift) + (g << d->g_shift) + (b << d->b_shift);
     }
-    return (r << d->r_shift) + (g << d->g_shift) + (b << d->b_shift);
+    Q_UNREACHABLE();
 }
 
 const QColor QColormap::colorAt(uint pixel) const

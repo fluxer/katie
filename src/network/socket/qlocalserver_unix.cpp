@@ -183,8 +183,7 @@ void QLocalServerPrivate::waitForNewConnection(int msec, bool *timedOut)
     timeout.tv_sec = msec / 1000;
     timeout.tv_usec = (msec % 1000) * 1000;
 
-    int result = -1;
-    result = qt_safe_select(listenSocket + 1, &readfds, 0, 0, (msec == -1) ? 0 : &timeout);
+    int result = qt_safe_select(listenSocket + 1, &readfds, 0, 0, (msec == -1) ? 0 : &timeout);
     if (-1 == result) {
         setError(QLatin1String("QLocalServer::waitForNewConnection"));
         closeServer();

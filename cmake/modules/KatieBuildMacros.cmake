@@ -277,7 +277,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             )
         endif()
     endforeach()
-    set_source_files_properties("${resourcesdep}" PROPERTIES OBJECT_DEPENDS "${targetresources}")
+    set_property(SOURCE "${resourcesdep}" APPEND PROPERTY OBJECT_DEPENDS "${targetresources}")
 
     if(NOT KATIE_ALLINONE)
         set(filteredsources)

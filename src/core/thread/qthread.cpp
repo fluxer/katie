@@ -42,6 +42,8 @@
 #include "qcoreapplication_p.h"
 #include "qscopedpointer.h"
 
+#include <limits.h> // for PTHREAD_STACK_MIN
+
 QT_BEGIN_NAMESPACE
 
 /*
@@ -432,6 +434,16 @@ void QThread::setStackSize(uint stackSize)
     QMutexLocker locker(&d->mutex);
     Q_ASSERT_X(!d->running, "QThread::setStackSize",
                "cannot change stack size while the thread is running");
+#ifdef PTHREAD_STACK_MIN
+    static int stack_min = sysconf(_SC_THREAD_STACK_MIN);
+    if (stack_min == -1)
+        stack_min = PTHREAD_STACK_MIN;
+    // 0 means default stack size
+    if (Q_UNLIKELY(stackSize != 0 && stackSize < stack_min)) {
+        qWarning("QThread::setStackSize: %u is less than the minimum %u", stackSize, stack_min);
+        stackSize = stack_min;
+    }
+#endif
     d->stackSize = stackSize;
 }
 

@@ -272,46 +272,6 @@ struct QSpanData
     void adjustSpanMethods();
 };
 
-static inline uint qt_gradient_clamp(const QGradientData *data, int ipos)
-{
-    if (ipos < 0 || ipos >= GRADIENT_STOPTABLE_SIZE) {
-        if (data->spread == QGradient::RepeatSpread) {
-            ipos = ipos % GRADIENT_STOPTABLE_SIZE;
-            ipos = ipos < 0 ? GRADIENT_STOPTABLE_SIZE + ipos : ipos;
-        } else if (data->spread == QGradient::ReflectSpread) {
-            const int limit = GRADIENT_STOPTABLE_SIZE * 2;
-            ipos = ipos % limit;
-            ipos = ipos < 0 ? limit + ipos : ipos;
-            ipos = ipos >= GRADIENT_STOPTABLE_SIZE ? limit - 1 - ipos : ipos;
-        } else {
-            if (ipos < 0)
-                ipos = 0;
-            else if (ipos >= GRADIENT_STOPTABLE_SIZE)
-                ipos = GRADIENT_STOPTABLE_SIZE-1;
-        }
-    }
-
-    Q_ASSERT(ipos >= 0);
-    Q_ASSERT(ipos < GRADIENT_STOPTABLE_SIZE);
-
-    return ipos;
-}
-
-static inline uint qt_gradient_pixel(const QGradientData *data, qreal pos)
-{
-    int ipos = int(pos * (GRADIENT_STOPTABLE_SIZE - 1) + qreal(0.5));
-    return data->colorTable[qt_gradient_clamp(data, ipos)];
-}
-
-static inline qreal qRadialDeterminant(qreal a, qreal b, qreal c)
-{
-    return (b * b) - (4 * a * c);
-}
-
-template <class DST, class SRC>
-void qt_memfill(DST *dest, SRC value, int count);
-
-
 static inline uint INTERPOLATE_PIXEL_255(uint x, uint a, uint y, uint b) {
     uint t = (x & 0xff00ff) * a + (y & 0xff00ff) * b;
     t = (t + ((t >> 8) & 0xff00ff) + 0x800080) >> 8;
@@ -325,7 +285,6 @@ static inline uint INTERPOLATE_PIXEL_255(uint x, uint a, uint y, uint b) {
 }
 
 #if QT_POINTER_SIZE == 8 // 64-bit versions
-
 static inline uint INTERPOLATE_PIXEL_256(uint x, uint a, uint y, uint b) {
     quint64 t = (((quint64(x)) | ((quint64(x)) << 24)) & 0x00ff00ff00ff00ff) * a;
     t += (((quint64(y)) | ((quint64(y)) << 24)) & 0x00ff00ff00ff00ff) * b;
@@ -386,8 +345,7 @@ static inline uint PREMUL(uint x) {
     x |= t | (a << 24);
     return x;
 }
-#endif
-
+#endif // QT_POINTER_SIZE
 
 static inline uint BYTE_MUL_RGB16(uint x, uint a) {
     a += 1;
@@ -409,7 +367,6 @@ inline DST qt_colorConvert(const SRC color, const DST dummy)
     Q_UNUSED(dummy);
     return DST(color);
 }
-
 
 template <>
 inline quint32 qt_colorConvert(const quint16 color, const quint32 dummy)
@@ -1599,20 +1556,6 @@ inline void qt_memconvert(qrgb666 *dest, const quint32 *src, int count)
 }
 #endif // Q_BYTE_ORDER
 
-template <class T>
-inline void qt_rectcopy(T *dest, const T *src,
-                        int x, int y, int width, int height,
-                        int dstStride, int srcStride)
-{
-    char *d = (char*)(dest + x) + y * dstStride;
-    const char *s = (const char*)(src);
-    for (int i = 0; i < height; ++i) {
-        ::memcpy(d, s, width * sizeof(T));
-        d += dstStride;
-        s += srcStride;
-    }
-}
-
 template <class DST, class SRC>
 inline void qt_rectconvert(DST *dest, const SRC *src,
                            int x, int y, int width, int height,
@@ -1633,7 +1576,13 @@ inline void qt_rectconvert(DST *dest, const SRC *src,
                                int x, int y, int width, int height,     \
                                int dstStride, int srcStride)            \
     {                                                                   \
-        qt_rectcopy(dest, src, x, y, width, height, dstStride, srcStride); \
+        char *d = (char*)(dest + x) + y * dstStride; \
+        const char *s = (const char*)(src); \
+        for (int i = 0; i < height; ++i) { \
+            ::memcpy(d, s, width * sizeof(T)); \
+            d += dstStride; \
+            s += srcStride; \
+        } \
     }
 
 QT_RECTCONVERT_TRIVIAL_IMPL(quint32)
@@ -1651,15 +1600,7 @@ QT_RECTCONVERT_TRIVIAL_IMPL(qrgb444)
 
 static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
-inline QRgb qConvertRgb16To32(uint c)
-{
-    return 0xff000000
-        | ((((c) << 3) & 0xf8) | (((c) >> 2) & 0x7))
-        | ((((c) << 5) & 0xfc00) | (((c) >> 1) & 0x300))
-        | ((((c) << 8) & 0xf80000) | (((c) << 3) & 0x70000));
-}
-
-const uint qt_bayer_matrix[16][16] = {
+static const uint qt_bayer_matrix[16][16] = {
     { 0x1, 0xc0, 0x30, 0xf0, 0xc, 0xcc, 0x3c, 0xfc,
       0x3, 0xc3, 0x33, 0xf3, 0xf, 0xcf, 0x3f, 0xff},
     { 0x80, 0x40, 0xb0, 0x70, 0x8c, 0x4c, 0xbc, 0x7c,
@@ -1696,24 +1637,6 @@ const uint qt_bayer_matrix[16][16] = {
 
 #define ARGB_COMBINE_ALPHA(argb, alpha) \
     ((((argb >> 24) * alpha) >> 8) << 24) | (argb & 0x00ffffff)
-
-
-#if QT_POINTER_SIZE == 8 // 64-bit versions
-#define AMIX(mask) (qMin(((qint64(s)&mask) + (qint64(d)&mask)), qint64(mask)))
-#define MIX(mask) (qMin(((qint64(s)&mask) + (qint64(d)&mask)), qint64(mask)))
-#else // 32 bits
-// The mask for alpha can overflow over 32 bits
-#define AMIX(mask) quint32(qMin(((qint64(s)&mask) + (qint64(d)&mask)), qint64(mask)))
-#define MIX(mask) (qMin(((quint32(s)&mask) + (quint32(d)&mask)), quint32(mask)))
-#endif
-
-inline int comp_func_Plus_one_pixel(uint d, const uint s)
-{
-    return (AMIX(AMASK) | MIX(RMASK) | MIX(GMASK) | MIX(BMASK));
-}
-
-#undef MIX
-#undef AMIX
 
 QT_END_NAMESPACE
 
