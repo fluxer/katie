@@ -406,7 +406,6 @@ struct QX11Data
         XdndDrop,
         XdndFinished,
         XdndTypelist,
-        XdndActionList,
 
         XdndSelection,
 
@@ -416,7 +415,6 @@ struct QX11Data
         XdndActionCopy,
         XdndActionLink,
         XdndActionMove,
-        XdndActionPrivate,
 
         // XEMBED
         _XEMBED,

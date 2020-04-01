@@ -225,7 +225,6 @@ static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     "XdndDrop\0",
     "XdndFinished\0",
     "XdndTypeList\0",
-    "XdndActionList\0",
 
     "XdndSelection\0",
 
@@ -235,7 +234,6 @@ static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     "XdndActionCopy\0",
     "XdndActionLink\0",
     "XdndActionMove\0",
-    "XdndActionPrivate\0",
 
     // XEMBED
     "_XEMBED\0",
