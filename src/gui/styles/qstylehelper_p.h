@@ -79,7 +79,7 @@ template <typename T>
         : val(t)
     {}
 
-    operator const QChar() const {
+    inline operator const QChar() const {
         const char *c = reinterpret_cast<const char *>(&val);
         return QChar(qChecksum(c ,sizeof(T)));
     }
