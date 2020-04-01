@@ -190,12 +190,12 @@ struct QX11Data
     char *displayName;
     bool foreignDisplay;
     // current focus model
-    enum {
+    enum FocusModel {
         FM_Unknown = -1,
         FM_Other = 0,
         FM_PointerRoot = 1
     };
-    int focus_model;
+    FocusModel focus_model;
 
     // true if Qt is compiled w/ RANDR support and RANDR is supported on the connected Display
     bool use_xrandr;
