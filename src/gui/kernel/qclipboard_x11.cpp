@@ -438,12 +438,6 @@ void QClipboard::clear(Mode mode)
     setMimeData(0, mode);
 }
 
-
-bool QClipboard::supportsMode(Mode mode) const
-{
-    return (mode == Clipboard || mode == Selection);
-}
-
 bool QClipboard::ownsMode(Mode mode) const
 {
     if (mode == Clipboard)
@@ -750,13 +744,6 @@ static Atom send_selection(QClipboardData *d, Atom target, Window window, Atom p
     }
     return property;
 }
-
-/*! \internal
-    Internal optimization for Windows.
-*/
-void QClipboard::connectNotify(const char *)
-{ }
-
 
 bool QClipboard::event(QEvent *e)
 {

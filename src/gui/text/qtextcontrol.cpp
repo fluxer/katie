@@ -583,12 +583,11 @@ void QTextControlPrivate::_q_updateCurrentCharFormatAndSelection()
 #ifndef QT_NO_CLIPBOARD
 void QTextControlPrivate::setClipboardSelection()
 {
-    QClipboard *clipboard = QApplication::clipboard();
-    if (!cursor.hasSelection() || !clipboard->supportsSelection())
+    if (!cursor.hasSelection())
         return;
     Q_Q(QTextControl);
     QMimeData *data = q->createMimeDataFromSelection();
-    clipboard->setMimeData(data, QClipboard::Selection);
+    QApplication::clipboard()->setMimeData(data, QClipboard::Selection);
 }
 #endif
 
@@ -1644,9 +1643,7 @@ void QTextControlPrivate::mouseReleaseEvent(QEvent *e, Qt::MouseButton button, c
 #ifndef QT_NO_CLIPBOARD
         setClipboardSelection();
         selectionChanged(true);
-    } else if (button == Qt::MiddleButton
-               && (interactionFlags & Qt::TextEditable)
-               && QApplication::clipboard()->supportsSelection()) {
+    } else if (button == Qt::MiddleButton && (interactionFlags & Qt::TextEditable)) {
         setCursorPosition(pos);
         const QMimeData *md = QApplication::clipboard()->mimeData(QClipboard::Selection);
         if (md)
