@@ -1925,7 +1925,7 @@ bool QX11Data::dndEnable(QWidget* w, bool on)
 
     if (bool(((QExtraWidget*)w)->topData()->dnd) == on)
         return true; // been there, done that
-    ((QExtraWidget*)w)->topData()->dnd = on ? 1 : 0;
+    ((QExtraWidget*)w)->topData()->dnd = on ? true : false;
 
     return xdndEnable(w, on);
 }
