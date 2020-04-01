@@ -731,12 +731,6 @@ static const uchar bitflip[256] = {
     15, 143, 79, 207, 47, 175, 111, 239, 31, 159, 95, 223, 63, 191, 127, 255
 };
 
-const uchar *qt_get_bitflip_array()                        // called from QPixmap code
-{
-    return bitflip;
-}
-
-
 /*!
     Constructs a null image.
 
@@ -3903,7 +3897,6 @@ inline void do_mirror(QImageData *dst, QImageData *src, bool horizontal, bool ve
     if (horizontal && dst->depth == 1) {
         Q_ASSERT(dst->format == QImage::Format_Mono || dst->format == QImage::Format_MonoLSB);
         const int shift = 8 - (dst->width % 8);
-        const uchar *bitflip = qt_get_bitflip_array();
         for (int y = 0; y < h; ++y) {
             uchar *begin = dst->data + y * dst->bytes_per_line;
             uchar *end = begin + dst->bytes_per_line;
