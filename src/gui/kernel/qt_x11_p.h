@@ -166,12 +166,12 @@ struct QX11Data
     // from qdnd_x11.cpp
     bool dndEnable(QWidget* w, bool on);
     static void xdndSetup();
-    void xdndHandleEnter(QWidget *, const XEvent *, bool);
+    void xdndHandleEnter(const XEvent *);
     void xdndHandlePosition(QWidget *, const XEvent *, bool);
     void xdndHandleStatus(QWidget *, const XEvent *, bool);
-    void xdndHandleLeave(QWidget *, const XEvent *, bool);
-    void xdndHandleDrop(QWidget *, const XEvent *, bool);
-    void xdndHandleFinished(QWidget *, const XEvent *, bool);
+    void xdndHandleLeave(QWidget *, const XEvent *);
+    void xdndHandleDrop(const XEvent *, bool);
+    void xdndHandleFinished(const XEvent *, bool);
     void xdndHandleSelectionRequest(const XSelectionRequestEvent *);
     static bool xdndHandleBadwindow();
     QByteArray xdndAtomToString(Atom a);

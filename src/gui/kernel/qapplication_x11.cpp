@@ -1979,15 +1979,15 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
         } else if (event->xclient.message_type == ATOM(XdndPosition)) {
             qt_x11Data->xdndHandlePosition(widget, event, passive_only);
         } else if (event->xclient.message_type == ATOM(XdndEnter)) {
-            qt_x11Data->xdndHandleEnter(widget, event, passive_only);
+            qt_x11Data->xdndHandleEnter(event);
         } else if (event->xclient.message_type == ATOM(XdndStatus)) {
             qt_x11Data->xdndHandleStatus(widget, event, passive_only);
         } else if (event->xclient.message_type == ATOM(XdndLeave)) {
-            qt_x11Data->xdndHandleLeave(widget, event, passive_only);
+            qt_x11Data->xdndHandleLeave(widget, event);
         } else if (event->xclient.message_type == ATOM(XdndDrop)) {
-            qt_x11Data->xdndHandleDrop(widget, event, passive_only);
+            qt_x11Data->xdndHandleDrop(event, passive_only);
         } else if (event->xclient.message_type == ATOM(XdndFinished)) {
-            qt_x11Data->xdndHandleFinished(widget, event, passive_only);
+            qt_x11Data->xdndHandleFinished(event, passive_only);
         } else {
             if (passive_only) return 0;
             // All other are interactions

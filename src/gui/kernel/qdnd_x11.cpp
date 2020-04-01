@@ -780,7 +780,7 @@ static bool checkEmbedded(QWidget* w, const XEvent* xe)
     return false;
 }
 
-void QX11Data::xdndHandleEnter(QWidget *, const XEvent * xe, bool /*passive*/)
+void QX11Data::xdndHandleEnter(const XEvent * xe)
 {
     last_enter_event.xclient = xe->xclient;
 
@@ -1023,7 +1023,7 @@ void QX11Data::xdndHandleStatus(QWidget * w, const XEvent * xe, bool passive)
     DEBUG("xdndHandleStatus end");
 }
 
-void QX11Data::xdndHandleLeave(QWidget *w, const XEvent * xe, bool /*passive*/)
+void QX11Data::xdndHandleLeave(QWidget *w, const XEvent * xe)
 {
     DEBUG("xdnd leave");
     if (!qt_xdnd_current_widget ||
@@ -1079,7 +1079,7 @@ void qt_xdnd_send_leave()
         w = 0;
 
     if (w)
-        qt_x11Data->xdndHandleLeave(w, (const XEvent *)&leave, false);
+        qt_x11Data->xdndHandleLeave(w, (const XEvent *)&leave);
     else
         XSendEvent(qt_x11Data->display, qt_xdnd_current_proxy_target, False,
                     NoEventMask, (XEvent*)&leave);
@@ -1096,7 +1096,7 @@ void qt_xdnd_send_leave()
     waiting_for_status = false;
 }
 
-void QX11Data::xdndHandleDrop(QWidget *, const XEvent * xe, bool passive)
+void QX11Data::xdndHandleDrop(const XEvent * xe, bool passive)
 {
     DEBUG("xdndHandleDrop");
     if (!qt_xdnd_current_widget) {
@@ -1193,7 +1193,7 @@ void QX11Data::xdndHandleDrop(QWidget *, const XEvent * xe, bool passive)
 }
 
 
-void QX11Data::xdndHandleFinished(QWidget *, const XEvent * xe, bool passive)
+void QX11Data::xdndHandleFinished(const XEvent * xe, bool passive)
 {
     DEBUG("xdndHandleFinished");
     const unsigned long *l = (const unsigned long *)xe->xclient.data.l;
@@ -1648,7 +1648,7 @@ void QDragManager::move(const QPoint & globalPos)
 
             DEBUG("sending Xdnd enter");
             if (w)
-                qt_x11Data->xdndHandleEnter(w, (const XEvent *)&enter, false);
+                qt_x11Data->xdndHandleEnter((const XEvent *)&enter);
             else if (target)
                 XSendEvent(qt_x11Data->display, proxy_target, False, NoEventMask, (XEvent*)&enter);
             waiting_for_status = false;
@@ -1733,7 +1733,7 @@ void QDragManager::drop()
     restartXdndDropExpiryTimer();
 
     if (w)
-        qt_x11Data->xdndHandleDrop(w, (const XEvent *)&drop, false);
+        qt_x11Data->xdndHandleDrop((const XEvent *)&drop, false);
     else
         XSendEvent(qt_x11Data->display, qt_xdnd_current_proxy_target, False,
                    NoEventMask, (XEvent*)&drop);
