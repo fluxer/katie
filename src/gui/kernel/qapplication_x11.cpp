@@ -1384,9 +1384,6 @@ void qt_init(QApplicationPrivate *priv, int,
                 QX11Info::setAppDpiY(s, dpi);
             }
         }
-        double fc_scale = 1.;
-        getXDefault("Xft", FC_SCALE, &fc_scale);
-        qt_x11Data->fc_scale = fc_scale;
         for (int s = 0; s < ScreenCount(qt_x11Data->display); ++s) {
             int subpixel = FC_RGBA_UNKNOWN;
 #if !defined(QT_NO_XRENDER) && (RENDER_MAJOR > 0 || RENDER_MINOR >= 6)

@@ -291,7 +291,6 @@ struct QX11Data
 #endif
 
     bool has_fontconfig;
-    qreal fc_scale;
     bool fc_antialias;
     int fc_hint_style;
 
