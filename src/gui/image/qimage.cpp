@@ -2682,7 +2682,7 @@ static void convert_Mono_to_Indexed8(QImageData *dest, const QImageData *src, Qt
     {                                                                   \
         qt_rectconvert<DST, SRC>(reinterpret_cast<DST*>(dest->data),    \
                                  reinterpret_cast<const SRC*>(src->data), \
-                                 0, 0, src->width, src->height,         \
+                                 src->width, src->height,               \
                                  dest->bytes_per_line, src->bytes_per_line); \
     }
 
