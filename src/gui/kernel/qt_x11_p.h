@@ -175,7 +175,6 @@ struct QX11Data
     void xdndHandleSelectionRequest(const XSelectionRequestEvent *);
     static bool xdndHandleBadwindow();
     QByteArray xdndAtomToString(Atom a);
-    Atom xdndStringToAtom(const char *);
 
     QString xdndMimeAtomToString(Atom a);
     Atom xdndMimeStringToAtom(const QString &mimeType);

@@ -409,13 +409,6 @@ QByteArray QX11Data::xdndAtomToString(Atom a)
     return result;
 }
 
-Atom QX11Data::xdndStringToAtom(const char *mimeType)
-{
-    if (!mimeType || !*mimeType)
-        return 0;
-    return XInternAtom(display, mimeType, False);
-}
-
 //$$$
 QString QX11Data::xdndMimeAtomToString(Atom a)
 {
