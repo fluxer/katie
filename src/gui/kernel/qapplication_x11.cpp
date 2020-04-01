@@ -1028,7 +1028,7 @@ void qt_init(QApplicationPrivate *priv, int,
     qt_x11Data->display = display;
     qt_x11Data->displayName = 0;
     qt_x11Data->foreignDisplay = (display != 0);
-    qt_x11Data->focus_model = -1;
+    qt_x11Data->focus_model = QX11Data::FM_Unknown;
 
     // RANDR
     qt_x11Data->use_xrandr = false;
