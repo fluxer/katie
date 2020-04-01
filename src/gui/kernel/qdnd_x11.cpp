@@ -543,18 +543,15 @@ QList<Atom> QX11Data::xdndMimeAtomsForFormat(const QString &format)
         atoms.append(XA_STRING);
         atoms.append(ATOM(TEXT));
         atoms.append(ATOM(COMPOUND_TEXT));
-    }
-
     // special cases for uris
-    if (format == QLatin1String("text/uri-list")) {
+    } else if (format == QLatin1String("text/uri-list")) {
         atoms.append(xdndMimeStringToAtom(QLatin1String("text/x-moz-url")));
-    }
-
     //special cases for images
-    if (format == QLatin1String("image/ppm"))
+    } else if (format == QLatin1String("image/ppm")) {
         atoms.append(XA_PIXMAP);
-    if (format == QLatin1String("image/pbm"))
+    } else if (format == QLatin1String("image/pbm")) {
         atoms.append(XA_BITMAP);
+    }
 
     return atoms;
 }
