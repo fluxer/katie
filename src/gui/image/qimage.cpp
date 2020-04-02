@@ -61,8 +61,6 @@ QT_BEGIN_NAMESPACE
 #  define QIMAGE_STREAM_FORMAT "png"
 #elif !defined(QT_NO_IMAGEFORMAT_JPEG)
 #  define QIMAGE_STREAM_FORMAT "jpeg"
-#elif !defined(QT_NO_IMAGEFORMAT_MNG)
-#  define QIMAGE_STREAM_FORMAT "mng"
 #elif !defined(QT_NO_IMAGEFORMAT_BMP)
 #  define QIMAGE_STREAM_FORMAT "bmp"
 #elif !defined(QT_NO_IMAGEFORMAT_TIFF)

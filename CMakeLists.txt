@@ -108,9 +108,6 @@ add_feature_info(jpeg WITH_JPEG "build JPEG support")
 option(WITH_TIFF "Build TIFF support" ON)
 add_feature_info(tiff WITH_TIFF "build TIFF support")
 
-option(WITH_MNG "Build MNG support" ON)
-add_feature_info(mng WITH_MNG "build MNG support")
-
 option(WITH_DBUS "Build D-Bus support" ON)
 add_feature_info(dbus WITH_DBUS "build D-Bus support")
 
@@ -347,14 +344,6 @@ set_package_properties(TIFF PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(MNG)
-set_package_properties(MNG PROPERTIES
-    PURPOSE "MNG format handler"
-    DESCRIPTION "THE reference library for reading, displaying, writing and examining Multiple-Image Network Graphics"
-    URL "https://sourceforge.net/projects/libmng/"
-    TYPE RECOMMENDED
-)
-
 find_package(Cups)
 set_package_properties(Cups PROPERTIES
     PURPOSE "Required for printing support"
@@ -485,10 +474,6 @@ endif()
 
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_JPEG)
-endif()
-
-if(NOT WITH_MNG OR NOT MNG_FOUND)
-    katie_definition(-DQT_NO_IMAGEFORMAT_MNG)
 endif()
 
 if(NOT WITH_TIFF OR NOT TIFF_FOUND)

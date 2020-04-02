@@ -93,6 +93,7 @@
 #define QT_NO_LPR
 #define QT_NO_NIS
 #define QT_NO_NSL
+#define QT_NO_IMAGEFORMAT_MNG
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -195,7 +196,6 @@
 #cmakedefine QT_NO_IMAGEFORMAT_GIF
 #cmakedefine QT_NO_IMAGEFORMAT_ICO
 #cmakedefine QT_NO_IMAGEFORMAT_JPEG
-#cmakedefine QT_NO_IMAGEFORMAT_MNG
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
 #cmakedefine QT_NO_IMAGEFORMAT_TGA
 #cmakedefine QT_NO_IMAGEFORMAT_TIFF
