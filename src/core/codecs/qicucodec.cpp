@@ -1072,14 +1072,26 @@ QList<QByteArray> QIcuCodec::aliases() const
 
 int QIcuCodec::mibEnum() const
 {
-    for (qint16 i = 0; i < MIBTblSize; i++) {
-        if (ucnv_compareNames(m_name.constData(), MIBTbl[i].name) == 0) {
-            return MIBTbl[i].mib;
+    UErrorCode error = U_ZERO_ERROR;
+    const char *iana = ucnv_getStandardName(m_name.constData(), "IANA", &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QIcuCodec::aliases: ucnv_getStandardName(%s) failed %s",
+            m_name.constData(), u_errorName(error));
+        // 2 is for unknown, see https://www.iana.org/assignments/ianacharset-mib/ianacharset-mib
+        return 2;
+    }
+
+    // some codecs and their aliases are made up by ICU (e.g. IMAP-mailbox-name), you may get a
+    // warning for those
+    if (Q_LIKELY(iana)) {
+        for (qint16 i = 0; i < MIBTblSize; i++) {
+            if (ucnv_compareNames(iana, MIBTbl[i].name) == 0) {
+                return MIBTbl[i].mib;
+            }
         }
     }
 
     qWarning("QIcuCodec::mibEnum: internal error, could not find MIB for %s", m_name.constData());
-    // 2 is for unknown, see https://www.iana.org/assignments/ianacharset-mib/ianacharset-mib
     return 2;
 }
 
