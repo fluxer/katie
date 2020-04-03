@@ -1919,12 +1919,6 @@
     \value LinkAction       Create a link from the source to the target.
     \value ActionMask
     \value IgnoreAction     Ignore the action (do nothing with the data).
-    \value TargetMoveAction On Windows, this value is used when the ownership of the D&D data
-                            should be taken over by the target application,
-                            i.e., the source application should not delete
-                            the data.
-                            \br
-                            On X11 this value is used to do a move.
 */
 
 /*!
