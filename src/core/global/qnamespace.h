@@ -1150,7 +1150,6 @@ public:
         MoveAction = 0x2,
         LinkAction = 0x4,
         ActionMask = 0xff,
-        TargetMoveAction = 0x8002,
         IgnoreAction = 0x0
     };
     Q_DECLARE_FLAGS(DropActions, DropAction)

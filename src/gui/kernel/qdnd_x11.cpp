@@ -181,7 +181,6 @@ static int qtaction_to_xdndaction(Qt::DropAction a)
     case Qt::LinkAction:
         return ATOM(XdndActionLink);
     case Qt::MoveAction:
-    case Qt::TargetMoveAction:
         return ATOM(XdndActionMove);
     case Qt::IgnoreAction:
         return XNone;
