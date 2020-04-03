@@ -906,7 +906,7 @@ void QRasterPaintEngine::clip(const QVectorPath &path, Qt::ClipOperation op)
         // intersect with, in which case we simplify the operation to
         // a replace...
         Qt::ClipOperation isectOp = Qt::IntersectClip;
-        if (base == 0)
+        if (!base)
             isectOp = Qt::ReplaceClip;
 
         QClipData *newClip = new QClipData(d->rasterBuffer->height());
