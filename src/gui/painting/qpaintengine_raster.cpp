@@ -68,12 +68,6 @@ void dumpClip(int width, int height, const QClipData *clip);
 
 #define QT_FAST_SPANS
 
-
-// A little helper macro to get a better approximation of dimensions.
-// If we have a rect that starting at 0.5 of width 3.5 it should span
-// 4 pixels.
-#define int_dim(pos, dim) (int(pos+dim) - int(pos))
-
 /********************************************************************************
  * Span functions
  */
