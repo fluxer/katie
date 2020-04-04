@@ -1794,12 +1794,6 @@
     the appearance of top-level windows. These have no effect on other
     windows:
 
-    \value MSWindowsFixedSizeDialogHint  Gives the window a thin dialog border on Windows.
-           This style is traditionally used for fixed-size dialogs.
-
-    \value MSWindowsOwnDC  Gives the window its own display
-           context on Windows.
-
     \value X11BypassWindowManagerHint  Bypass the window
            manager completely. This results in a borderless window
            that is not managed at all (i.e., no keyboard input unless
@@ -1882,7 +1876,6 @@
 
     \value WStyle_Customize     No longer needed.
     \value WStyle_NormalBorder  No longer needed.
-    \value WStyle_DialogBorder  Use Qt::MSWindowsFixedSizeDialogHint instead.
     \value WStyle_NoBorder      Use Qt::FramelessWindowHint instead.
     \value WStyle_Title         Use Qt::WindowTitleHint instead.
     \value WStyle_SysMenu       Use Qt::WindowSystemMenuHint instead.
