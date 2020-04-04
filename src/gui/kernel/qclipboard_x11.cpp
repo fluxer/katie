@@ -440,12 +440,14 @@ void QClipboard::clear(Mode mode)
 
 bool QClipboard::ownsMode(Mode mode) const
 {
-    if (mode == Clipboard)
-        return clipboardData()->timestamp != CurrentTime;
-    else if(mode == Selection)
-        return selectionData()->timestamp != CurrentTime;
-    else
-        return false;
+    switch (mode) {
+        case QClipboard::Clipboard:
+            return clipboardData()->timestamp != CurrentTime;
+        case QClipboard::Selection:
+            return selectionData()->timestamp != CurrentTime;
+    }
+
+    Q_UNREACHABLE();
 }
 
 static Bool checkForClipboardEvents(Display *, XEvent *e, XPointer)
@@ -1022,10 +1024,6 @@ QClipboardWatcher::QClipboardWatcher(QClipboard::Mode mode)
     case QClipboard::Clipboard:
         atom = ATOM(CLIPBOARD);
         break;
-
-    default:
-        qWarning("QClipboardWatcher: Internal error: Unsupported clipboard mode");
-        break;
     }
 
     setupOwner();
@@ -1167,15 +1165,12 @@ const QMimeData* QClipboard::mimeData(Mode mode) const
 {
     QClipboardData *d = 0;
     switch (mode) {
-    case Selection:
+    case QClipboard::Selection:
         d = selectionData();
         break;
-    case Clipboard:
+    case QClipboard::Clipboard:
         d = clipboardData();
         break;
-    default:
-        qWarning("QClipboard::mimeData: unsupported mode '%d'", mode);
-        return 0;
     }
 
     if (! d->source() && ! timer_event_clear) {
@@ -1209,21 +1204,17 @@ void QClipboard::setMimeData(QMimeData* src, Mode mode)
     Atom atom, sentinel_atom;
     QClipboardData *d;
     switch (mode) {
-    case Selection:
+    case QClipboard::Selection:
         atom = XA_PRIMARY;
         sentinel_atom = ATOM(_QT_SELECTION_SENTINEL);
         d = selectionData();
         break;
 
-    case Clipboard:
+    case QClipboard::Clipboard:
         atom = ATOM(CLIPBOARD);
         sentinel_atom = ATOM(_QT_CLIPBOARD_SENTINEL);
         d = clipboardData();
         break;
-
-    default:
-        qWarning("QClipboard::setMimeData: unsupported mode '%d'", mode);
-        return;
     }
 
     Display *dpy = qt_x11Data->display;
