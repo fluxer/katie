@@ -106,15 +106,6 @@ public:
     Qt::LayoutDirection keyboardInputDirection;
 
 #if defined(Q_WS_X11)
-    bool translateKeyEventInternal(QWidget *keywidget,
-                                   const XEvent *,
-                                   KeySym &keysym,
-                                   int& count,
-                                   QString& text,
-                                   Qt::KeyboardModifiers& modifiers,
-                                   int &code,
-                                   QEvent::Type &type,
-                                   bool statefulTranslation = true);
     bool translateKeyEvent(QWidget *keywidget,
                            const XEvent *);
 

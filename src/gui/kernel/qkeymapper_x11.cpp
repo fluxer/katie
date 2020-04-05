@@ -869,15 +869,14 @@ static QString translateKeySym(KeySym keysym, uint xmodifiers,
 
 extern bool qt_use_rtl_extensions; // from qapplication_x11.cpp
 
-bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
-                                                  const XEvent *event,
-                                                  KeySym &keysym,
-                                                  int& count,
-                                                  QString& text,
-                                                  Qt::KeyboardModifiers &modifiers,
-                                                  int& code,
-                                                  QEvent::Type &type,
-                                                  bool statefulTranslation)
+void static translateKeyEventInternal(QWidget *keyWidget,
+                                      const XEvent *event,
+                                      KeySym &keysym,
+                                      int& count,
+                                      QString& text,
+                                      Qt::KeyboardModifiers &modifiers,
+                                      int& code,
+                                      QEvent::Type &type)
 {
     XKeyEvent xkeyevent = event->xkey;
     // save the modifier state, we will use the keystate uint later by passing
@@ -890,14 +889,14 @@ bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
     static unsigned int lastWinId = 0;
 
     // translate pending direction change
-    if (statefulTranslation && qt_use_rtl_extensions && type == QEvent::KeyRelease) {
+    if (qt_use_rtl_extensions && type == QEvent::KeyRelease) {
         if (directionKeyEvent == Qt::Key_Direction_R || directionKeyEvent == Qt::Key_Direction_L) {
             type = QEvent::KeyPress;
             code = directionKeyEvent;
             text = QString();
             directionKeyEvent = 0;
             lastWinId = 0;
-            return true;
+            return;
         } else {
             directionKeyEvent = 0;
             lastWinId = 0;
@@ -920,7 +919,7 @@ bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
     // (to figure out whether the Ctrl modifier is held while Shift is pressed,
     // or Shift is held while Ctrl is pressed) since the 'state' doesn't tell
     // us whether the modifier held is Left or Right.
-    if (statefulTranslation && qt_use_rtl_extensions && type == QEvent::KeyPress) {
+    if (qt_use_rtl_extensions && type == QEvent::KeyPress) {
         if (keysym == XK_Control_L || keysym == XK_Control_R
             || keysym == XK_Shift_L || keysym == XK_Shift_R) {
             if (!directionKeyEvent) {
@@ -948,8 +947,6 @@ bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
             directionKeyEvent = Qt::Key_Space; // invalid
         }
     }
-
-    return true;
 }
 
 
