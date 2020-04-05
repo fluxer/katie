@@ -5630,7 +5630,7 @@ QIcon QCommonStyle::standardIcon(StandardPixmap standardicon, const QStyleOption
 }
 
 // in qpixmapfilter.cpp
-extern Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest, const QRect& rect);
+extern Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest);
 
 /*! \reimp */
 QPixmap QCommonStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
@@ -5639,7 +5639,7 @@ QPixmap QCommonStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &p
     switch (iconMode) {
         case QIcon::Disabled: {
             QImage im = pixmap.toImage();
-            qt_grayscale(im, im, im.rect());
+            qt_grayscale(im, im);
             return QPixmap::fromImage(im);
         }
         case QIcon::Selected: {
