@@ -49,12 +49,8 @@
 #include "qatomic.h"
 
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 #include <sys/wait.h>
 #include <errno.h>
-#include <fcntl.h>
 
 #define EINTR_LOOP(var, cmd)                    \
     do {                                        \
