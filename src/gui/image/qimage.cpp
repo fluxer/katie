@@ -124,16 +124,16 @@ QImageData::QImageData()
 {
 }
 
-/*! \fn QImageData * QImageData::create(const QSize &size, QImage::Format format, int numColors)
+/*! \fn QImageData * QImageData::create(const QSize &size, QImage::Format format)
 
     \internal
 
     Creates a new image data.
     Returns 0 if invalid parameters are give or anything else failed.
 */
-QImageData * QImageData::create(const QSize &size, QImage::Format format, int numColors)
+QImageData * QImageData::create(const QSize &size, QImage::Format format)
 {
-    if (!size.isValid() || numColors < 0 || format == QImage::Format_Invalid)
+    if (!size.isValid() || format == QImage::Format_Invalid)
         return 0;                                // invalid parameter(s)
 
     if (!checkPixelSize(format)) {
@@ -145,20 +145,6 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format, int nu
     uint width = size.width();
     uint height = size.height();
     uint depth = qt_depthForFormat(format);
-
-    switch (format) {
-    case QImage::Format_Mono:
-    case QImage::Format_MonoLSB:
-        numColors = 2;
-        break;
-    case QImage::Format_Indexed8:
-        numColors = qBound(0, numColors, 256);
-        break;
-    default:
-        numColors = 0;
-        break;
-    }
-
     const int bytes_per_line = ((width * depth + 31) >> 5) << 2; // bytes per scanline (must be multiple of 4)
 
     // sanity check for potential overflows
@@ -170,13 +156,11 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format, int nu
         return 0;
 
     QScopedPointer<QImageData> d(new QImageData);
-    d->colortable.resize(numColors);
     if (depth == 1) {
+        // QImage::Format_Mono or QImage::Format_MonoLSB
+        d->colortable.resize(2);
         d->colortable[0] = QColor(Qt::black).rgba();
         d->colortable[1] = QColor(Qt::white).rgba();
-    } else {
-        for (int i = 0; i < numColors; ++i)
-            d->colortable[i] = 0;
     }
 
     d->width = width;
@@ -754,7 +738,7 @@ QImage::QImage()
 QImage::QImage(int width, int height, Format format)
     : QPaintDevice()
 {
-    d = QImageData::create(QSize(width, height), format, 0);
+    d = QImageData::create(QSize(width, height), format);
 }
 
 /*!
@@ -769,7 +753,7 @@ QImage::QImage(int width, int height, Format format)
 QImage::QImage(const QSize &size, Format format)
     : QPaintDevice()
 {
-    d = QImageData::create(size, format, 0);
+    d = QImageData::create(size, format);
 }
 
 
