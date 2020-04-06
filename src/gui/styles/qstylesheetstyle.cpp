@@ -3222,7 +3222,7 @@ void QStyleSheetStyle::drawComplexControl(ComplexControl cc, const QStyleOptionC
                 drawItemPixmap(p, ir, Qt::AlignCenter, pm);
             }
 
-            int pes[] = {
+            static const int pesTbl[] = {
                 PseudoElement_TitleBarMaxButton,
                 PseudoElement_TitleBarMinButton,
                 PseudoElement_TitleBarNormalButton,
@@ -3231,8 +3231,8 @@ void QStyleSheetStyle::drawComplexControl(ComplexControl cc, const QStyleOptionC
                 PseudoElement_TitleBarContextHelpButton
             };
 
-            for (unsigned int i = 0; i < sizeof(pes)/sizeof(int); i++) {
-                int pe = pes[i];
+            for (quint16 i = 0; i < sizeof(pesTbl)/sizeof(int); i++) {
+                const int pe = pesTbl[i];
                 QStyle::SubControl sc = knownPseudoElements[pe].subControl;
                 ir = layout[sc];
                 if (!ir.isValid())
