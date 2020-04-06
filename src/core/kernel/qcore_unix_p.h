@@ -204,9 +204,7 @@ static inline int qt_safe_dup2(int oldfd, int newfd)
 {
     int ret;
     EINTR_LOOP(ret, ::dup2(oldfd, newfd));
-    if (ret == -1)
-        return -1;
-    return 0;
+    return ret;
 }
 
 static inline qint64 qt_safe_read(int fd, void *data, qint64 maxlen)
