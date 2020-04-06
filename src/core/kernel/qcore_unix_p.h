@@ -104,9 +104,8 @@ inline timeval operator*(const timeval &t1, int mul)
     return normalizedTimeval(tmp);
 }
 
-inline void qt_ignore_sigpipe()
+static inline void qt_ignore_sigpipe()
 {
-#ifndef Q_NO_POSIX_SIGNALS
     // Set to ignore SIGPIPE once only.
     static QAtomicInt atom = QAtomicInt(0);
     if (!atom) {
@@ -119,10 +118,6 @@ inline void qt_ignore_sigpipe()
         ::sigaction(SIGPIPE, &noaction, Q_NULLPTR);
         atom = 1;
     }
-#else
-    // Posix signals are not supported by the underlying platform
-    // so we don't need to ignore sigpipe signal explicitly
-#endif
 }
 
 // don't call QT_OPEN or ::open
