@@ -1751,8 +1751,7 @@ void QAbstractItemView::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_D(QAbstractItemView);
 
-    QPoint pos = event->pos();
-    QPersistentModelIndex index = indexAt(pos);
+    QPersistentModelIndex index = indexAt(event->pos());
 
     if (state() == EditingState) {
         if (d->isIndexValid(index)
