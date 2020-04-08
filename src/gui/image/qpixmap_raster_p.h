@@ -75,7 +75,6 @@ public:
 
 protected:
     int metric(QPaintDevice::PaintDeviceMetric metric) const;
-    void setImage(const QImage &image);
     QImage image;
 
 private:
