@@ -271,8 +271,7 @@ QPaintEngine* QRasterPixmapData::paintEngine() const
 
 int QRasterPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
 {
-    const QImageData *d = image.d;
-    if (!d)
+    if (!image.d)
         return 0;
 
     // override the image dpi with the screen dpi when rendering to a pixmap
@@ -282,11 +281,11 @@ int QRasterPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
     case QPaintDevice::PdmHeight:
         return h;
     case QPaintDevice::PdmWidthMM:
-        return qRound(d->width * 25.4 / QX11Info::appDpiX());
+        return qRound(image.d->width * 25.4 / QX11Info::appDpiX());
     case QPaintDevice::PdmHeightMM:
-        return qRound(d->height * 25.4 / QX11Info::appDpiY());
+        return qRound(image.d->height * 25.4 / QX11Info::appDpiY());
     case QPaintDevice::PdmNumColors:
-        return d->colortable.size();
+        return image.d->colortable.size();
     case QPaintDevice::PdmDepth:
         return depth();
     case QPaintDevice::PdmDpiX: // fall-through
@@ -295,11 +294,9 @@ int QRasterPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
     case QPaintDevice::PdmDpiY: // fall-through
     case QPaintDevice::PdmPhysicalDpiY:
         return QX11Info::appDpiY();
-    default:
-        qWarning("QRasterPixmapData::metric(): Unhandled metric type %d", metric);
-        break;
     }
 
+    qWarning("QRasterPixmapData::metric(): Unhandled metric type %d", metric);
     return 0;
 }
 
