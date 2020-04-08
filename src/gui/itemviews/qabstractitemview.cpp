@@ -112,10 +112,6 @@ void QAbstractItemViewPrivate::init()
     vbar->setRange(0, 0);
     hbar->setRange(0, 0);
 
-    QObject::connect(vbar, SIGNAL(actionTriggered(int)),
-                     q, SLOT(verticalScrollbarAction(int)));
-    QObject::connect(hbar, SIGNAL(actionTriggered(int)),
-                     q, SLOT(horizontalScrollbarAction(int)));
     QObject::connect(vbar, SIGNAL(valueChanged(int)),
                      q, SLOT(verticalScrollbarValueChanged(int)));
     QObject::connect(hbar, SIGNAL(valueChanged(int)),
@@ -2513,22 +2509,6 @@ void QAbstractItemView::horizontalScrollbarValueChanged(int value)
     QPoint posInVp = viewport()->mapFromGlobal(QCursor::pos());
     if (viewport()->rect().contains(posInVp))
         d->checkMouseMove(posInVp);
-}
-
-/*!
-    \internal
-*/
-void QAbstractItemView::verticalScrollbarAction(int)
-{
-    //do nothing
-}
-
-/*!
-    \internal
-*/
-void QAbstractItemView::horizontalScrollbarAction(int)
-{
-    //do nothing
 }
 
 /*!
