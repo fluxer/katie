@@ -51,7 +51,7 @@
 QT_BEGIN_NAMESPACE
 
 // must be kept in sync with the moc
-static int qmetaobjectrevision = 6;
+static const int qmetaobjectrevision = 6;
 
 class QDBusMetaObjectGenerator
 {
