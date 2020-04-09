@@ -316,10 +316,7 @@ void QDBusMetaObjectGenerator::parseSignals()
 
 void QDBusMetaObjectGenerator::parseProperties()
 {
-    QDBusIntrospection::Properties::ConstIterator prop_it = data->properties.constBegin();
-    QDBusIntrospection::Properties::ConstIterator prop_end = data->properties.constEnd();
-    for ( ; prop_it != prop_end; ++prop_it) {
-        const QDBusIntrospection::Property &p = *prop_it;
+    foreach (const QDBusIntrospection::Property &p, data->properties) {
         Property mp;
         Type type = findType(p.type.toLatin1(), p.annotations);
         if (type.id == QVariant::Invalid)
