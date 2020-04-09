@@ -336,7 +336,7 @@ void QDBusMetaObjectGenerator::parseProperties()
 
         if (mp.typeName == "QDBusVariant")
             mp.flags |= 0xff << 24;
-        else if (mp.type < 0xff)
+        else if (mp.type < QVariant::Invalid)
             // encode the type in the flags
             mp.flags |= mp.type << 24;
 
