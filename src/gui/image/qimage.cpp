@@ -3782,6 +3782,7 @@ QImage QImage::createMaskFromColor(QRgb color, Qt::MaskMode mode) const
     QIMAGE_SANITYCHECK_MEMORY(maskImage);
     maskImage.fill(0);
     uchar *s = maskImage.bits();
+    const int bpl = maskImage.bytesPerLine();
 
     if (depth() == 32) {
         for (int h = 0; h < d->height; h++) {
@@ -3790,7 +3791,7 @@ QImage QImage::createMaskFromColor(QRgb color, Qt::MaskMode mode) const
                 if (sl[w] == color)
                     *(s + (w >> 3)) |= (1 << (w & 7));
             }
-            s += maskImage.bytesPerLine();
+            s += bpl;
         }
     } else {
         for (int h = 0; h < d->height; h++) {
@@ -3798,7 +3799,7 @@ QImage QImage::createMaskFromColor(QRgb color, Qt::MaskMode mode) const
                 if ((uint) pixel(w, h) == color)
                     *(s + (w >> 3)) |= (1 << (w & 7));
             }
-            s += maskImage.bytesPerLine();
+            s += bpl;
         }
     }
     if  (mode == Qt::MaskOutColor)
