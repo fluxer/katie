@@ -2500,7 +2500,6 @@
     \value SwipeGesture      A Swipe gesture.
     \value CustomGesture A flag that can be used to test if the gesture is a
     user-defined gesture ID.
-    \omitvalue LastGestureType
 
     User-defined gestures are registered with the
     QGestureRecognizer::registerRecognizer() function which generates a custom

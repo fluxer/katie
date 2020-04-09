@@ -1305,8 +1305,6 @@ public:
         SwipeGesture      = 5,
 
         CustomGesture     = 0x0100,
-
-        LastGestureType   = ~0u
     };
 
     enum GestureFlag
