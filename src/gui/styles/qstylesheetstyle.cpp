@@ -1480,8 +1480,6 @@ public:
     { NodePtr n; n.ptr = 0; return n; }
     NodePtr duplicateNode(NodePtr node) const
     { return node; }
-    void freeNode(NodePtr) const
-    { }
 
 private:
     mutable QHash<const QWidget *, QHash<QString, QString> > m_attributeCache;

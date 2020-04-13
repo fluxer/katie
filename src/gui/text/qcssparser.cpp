@@ -1819,13 +1819,9 @@ bool StyleSelector::selectorMatches(const Selector &selector, NodePtr node)
         if (sel.relationToNext == BasicSelector::MatchNextSelectorIfAncestor
             || sel.relationToNext == BasicSelector::MatchNextSelectorIfParent) {
 
-            NodePtr nextParent = parentNode(node);
-            freeNode(node);
-            node = nextParent;
+            node = parentNode(node);
        } else if (sel.relationToNext == BasicSelector::MatchNextSelectorIfPreceeds) {
-            NodePtr previousSibling = previousSiblingNode(node);
-            freeNode(node);
-            node = previousSibling;
+            node = previousSiblingNode(node);
        }
         if (isNullNode(node)) {
             match = false;
@@ -1833,7 +1829,6 @@ bool StyleSelector::selectorMatches(const Selector &selector, NodePtr node)
         }
    } while (i >= 0 && (match || sel.relationToNext == BasicSelector::MatchNextSelectorIfAncestor));
 
-    freeNode(node);
 
     return match;
 }
