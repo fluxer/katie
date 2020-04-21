@@ -72,7 +72,7 @@ public:
     void tryToStartMoreThreads();
     bool tooManyThreadsActive() const;
 
-    void startThread(QRunnable *runnable = 0);
+    void startThread(QRunnable *runnable);
     void reset();
     bool waitForDone(int msecs = -1);
     void stealRunnable(QRunnable *);
