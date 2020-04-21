@@ -2255,9 +2255,9 @@ static void convert_ARGB_PM_to_Mono(QImageData *dst, const QImageData *src, Qt::
 // if dithering is needed, only 1 color at most is available for alpha.
 //
 struct QRgbMap {
-    inline QRgbMap() : used(0) { }
+    inline QRgbMap() : used(false) { }
     uchar  pix;
-    uchar used;
+    bool used;
     QRgb  rgb;
 };
 
@@ -2301,7 +2301,7 @@ static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::
                     dst->colortable[pix] = p;
                     table[hash].pix = pix++;
                     table[hash].rgb = p;
-                    table[hash].used = 1;
+                    table[hash].used = true;
                     break;
                 }
             }
@@ -2339,7 +2339,7 @@ static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::
                             dst->colortable[pix] = p;
                             table[hash].pix = pix++;
                             table[hash].rgb = p;
-                            table[hash].used = 1;
+                            table[hash].used = true;
                         }
                         break;
                     }
