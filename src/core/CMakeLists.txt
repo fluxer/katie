@@ -2,7 +2,6 @@
 set(EXTRA_CORE_LIBS
     ${ZLIB_LIBRARIES}
     ${ICU_LIBRARIES}
-    ${OPENSSL_LIBRARIES}
     ${ZSTD_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
     # libm should be present by default becaue this is C++
@@ -24,7 +23,6 @@ set(CORE_PUBLIC_HEADERS
     QAbstractFileEngine
     QTranslator
     QFuture
-    QCryptographicHash
     QWaitCondition
     QMimeData
     QtConcurrentMap
@@ -119,7 +117,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${ZLIB_INCLUDE_DIRS}
     ${ICU_INCLUDES}
-    ${OPENSSL_INCLUDE_DIR}
     ${ZSTD_INCLUDES}
 )
 
@@ -260,7 +257,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qchar.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcontainerfwd.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcryptographichash.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qdatetime.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qdatetime_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qeasingcurve.h
@@ -401,7 +397,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbytearray.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qbytearraymatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qchar.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcryptographichash.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qdatetime.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qeasingcurve.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer.cpp
