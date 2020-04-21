@@ -86,7 +86,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+891"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+886"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+662"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+641"/>
         <location line="+26"/>
@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1871"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>RTL</translation>
@@ -444,7 +444,7 @@ Script: %3</source>
     <message>
         <location line="+29"/>
         <source>Possible anchor loop detected on centerIn.</source>
-        <translation>אותרה לולאת ������וגן אפשרית בתוך centerin.</translation>
+        <translation>אותרה לולאת �������וגן אפשרית בתוך centerin.</translation>
     </message>
     <message>
         <location line="+208"/>
@@ -623,7 +623,7 @@ Script: %3</source>
     <message>
         <location line="+5"/>
         <source>Invalid property assignment: boolean expected</source>
-        <translation>השמה לא תקינה למאפיין: צפוי ערך ��ול��אני</translation>
+        <translation>השמה לא תקינה למאפיין: צפוי ער�� ��ול��אני</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1729,7 +1729,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+606"/>
+        <location filename="../src/core/io/qfile.cpp" line="+598"/>
         <source>Destination file exists</source>
         <translation>קובץ יעד קיים</translation>
     </message>
@@ -1758,7 +1758,7 @@ Script: %3</source>
         <translation>כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+172"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+148"/>
         <location line="+1"/>
         <source>File</source>
         <translation>קובץ</translation>
@@ -2539,7 +2539,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
         <source>Permission denied</source>
         <translation>הרשאה נדחתה</translation>
     </message>
@@ -2693,7 +2693,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1769"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1767"/>
         <source>&amp;Undo</source>
         <translation>&amp;בטל</translation>
     </message>
@@ -6463,7 +6463,7 @@ Please choose a different file name.</source>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1873"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1870"/>
         <source>&amp;Undo</source>
         <translation>&amp;בטל</translation>
     </message>
@@ -6653,7 +6653,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5174"/>
         <source>*</source>
         <translation>*</translation>
     </message>
