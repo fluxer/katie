@@ -37,10 +37,10 @@
 
 #include <QtCore/qnamespace.h>
 #include <QtCore/qbytearray.h>
-#include <QtCore/qcryptographichash.h>
 #include <QtCore/qregexp.h>
 #include <QtCore/qsharedpointer.h>
 #include <QtNetwork/qssl.h>
+#include <QtNetwork/qcryptographichash.h>
 
 QT_BEGIN_HEADER
 
