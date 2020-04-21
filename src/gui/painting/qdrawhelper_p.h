@@ -150,8 +150,6 @@ struct Operator
     };
 };
 
-void qInitDrawhelper();
-
 struct QSolidData
 {
     uint color;

@@ -4970,10 +4970,6 @@ inline static void qt_bitmapblit_quint16(QRasterBuffer *rasterBuffer,
                                     map, mapWidth, mapHeight, mapStride);
 }
 
-
-uchar qt_pow_rgb_gamma[256];
-uchar qt_pow_rgb_invgamma[256];
-
 static void qt_alphamapblit_quint16(QRasterBuffer *rasterBuffer,
                                     int x, int y, quint32 color,
                                     const uchar *map,
@@ -5014,9 +5010,9 @@ static inline void rgbBlendPixel(quint32 *dst, int coverage, int sr, int sg, int
     if (da != 255) {
 
         int a = qGray(coverage);
-        sr = qt_div_255(qt_pow_rgb_invgamma[sr] * a);
-        sg = qt_div_255(qt_pow_rgb_invgamma[sg] * a);
-        sb = qt_div_255(qt_pow_rgb_invgamma[sb] * a);
+        sr = qt_div_255(sr * a);
+        sg = qt_div_255(sg * a);
+        sb = qt_div_255(sb * a);
 
         int ia = 255 - a;
         dr = qt_div_255(dr * ia);
@@ -5034,17 +5030,9 @@ static inline void rgbBlendPixel(quint32 *dst, int coverage, int sr, int sg, int
     int mg = qGreen(coverage);
     int mb = qBlue(coverage);
 
-    dr = qt_pow_rgb_gamma[dr];
-    dg = qt_pow_rgb_gamma[dg];
-    db = qt_pow_rgb_gamma[db];
-
     int nr = qt_div_255((sr - dr) * mr) + dr;
     int ng = qt_div_255((sg - dg) * mg) + dg;
     int nb = qt_div_255((sb - db) * mb) + db;
-
-    nr = qt_pow_rgb_invgamma[nr];
-    ng = qt_pow_rgb_invgamma[ng];
-    nb = qt_pow_rgb_invgamma[nb];
 
     *dst = qRgb(nr, ng, nb);
 }
@@ -5121,10 +5109,6 @@ static void qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
     int sg = qGreen(color);
     int sb = qBlue(color);
     int sa = qAlpha(color);
-
-    sr = qt_pow_rgb_gamma[sr];
-    sg = qt_pow_rgb_gamma[sg];
-    sb = qt_pow_rgb_gamma[sb];
 
     if (sa == 0)
         return;
@@ -5327,21 +5311,5 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
         qt_rectfill_qargb4444
     }
 };
-
-void qInitDrawhelper()
-{
-#ifdef Q_WS_X11
-    for (int i=0; i<256; ++i) {
-        qt_pow_rgb_gamma[i] = uchar(i);
-        qt_pow_rgb_invgamma[i] = uchar(i);
-    }
-#else
-    const qreal smoothing = qreal(1.7);
-    for (int i=0; i<256; ++i) {
-        qt_pow_rgb_gamma[i] = uchar(qRound(qPow(i / qreal(255.0), smoothing) * 255));
-        qt_pow_rgb_invgamma[i] = uchar(qRound(qPow(i / qreal(255.), 1 / smoothing) * 255));
-    }
-#endif
-}
 
 QT_END_NAMESPACE
