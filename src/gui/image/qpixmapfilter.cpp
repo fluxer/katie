@@ -381,7 +381,7 @@ inline void qt_blurrow(QImage & im, int line, int alpha)
 *  zR,zG,zB and zA in fp format 8.zprec
 */
 template <int aprec, int zprec, bool alphaOnly>
-void expblur(QImage &img, qreal radius, bool improvedQuality = false, int transposed = 0)
+void expblur(QImage &img, qreal radius, bool improvedQuality = false)
 {
     // halve the radius if we're using two passes
     if (improvedQuality)
@@ -406,30 +406,16 @@ void expblur(QImage &img, qreal radius, bool improvedQuality = false, int transp
     }
 
     QImage temp(img.height(), img.width(), img.format());
-    if (transposed >= 0) {
-        if (img.depth() == 8) {
-            qt_memrotate270(reinterpret_cast<const quint8*>(img.bits()),
-                            img.width(), img.height(), img.bytesPerLine(),
-                            reinterpret_cast<quint8*>(temp.bits()),
-                            temp.bytesPerLine());
-        } else {
-            qt_memrotate270(reinterpret_cast<const quint32*>(img.bits()),
-                            img.width(), img.height(), img.bytesPerLine(),
-                            reinterpret_cast<quint32*>(temp.bits()),
-                            temp.bytesPerLine());
-        }
+    if (img.depth() == 8) {
+        qt_memrotate270(reinterpret_cast<const quint8*>(img.bits()),
+                        img.width(), img.height(), img.bytesPerLine(),
+                        reinterpret_cast<quint8*>(temp.bits()),
+                        temp.bytesPerLine());
     } else {
-        if (img.depth() == 8) {
-            qt_memrotate90(reinterpret_cast<const quint8*>(img.bits()),
-                           img.width(), img.height(), img.bytesPerLine(),
-                           reinterpret_cast<quint8*>(temp.bits()),
-                           temp.bytesPerLine());
-        } else {
-            qt_memrotate90(reinterpret_cast<const quint32*>(img.bits()),
-                           img.width(), img.height(), img.bytesPerLine(),
-                           reinterpret_cast<quint32*>(temp.bits()),
-                           temp.bytesPerLine());
-        }
+        qt_memrotate270(reinterpret_cast<const quint32*>(img.bits()),
+                        img.width(), img.height(), img.bytesPerLine(),
+                        reinterpret_cast<quint32*>(temp.bits()),
+                        temp.bytesPerLine());
     }
 
     img_height = temp.height();
@@ -438,20 +424,16 @@ void expblur(QImage &img, qreal radius, bool improvedQuality = false, int transp
             qt_blurrow<aprec, zprec, alphaOnly>(temp, row, alpha);
     }
 
-    if (transposed == 0) {
-        if (img.depth() == 8) {
-            qt_memrotate90(reinterpret_cast<const quint8*>(temp.bits()),
-                           temp.width(), temp.height(), temp.bytesPerLine(),
-                           reinterpret_cast<quint8*>(img.bits()),
-                           img.bytesPerLine());
-        } else {
-            qt_memrotate90(reinterpret_cast<const quint32*>(temp.bits()),
-                           temp.width(), temp.height(), temp.bytesPerLine(),
-                           reinterpret_cast<quint32*>(img.bits()),
-                           img.bytesPerLine());
-        }
+    if (img.depth() == 8) {
+        qt_memrotate90(reinterpret_cast<const quint8*>(temp.bits()),
+                        temp.width(), temp.height(), temp.bytesPerLine(),
+                        reinterpret_cast<quint8*>(img.bits()),
+                        img.bytesPerLine());
     } else {
-        img = temp;
+        qt_memrotate90(reinterpret_cast<const quint32*>(temp.bits()),
+                        temp.width(), temp.height(), temp.bytesPerLine(),
+                        reinterpret_cast<quint32*>(img.bits()),
+                        img.bytesPerLine());
     }
 }
 #define AVG(a,b)  ( ((((a)^(b)) & 0xfefefefeUL) >> 1) + ((a)&(b)) )
@@ -545,7 +527,7 @@ static QImage qt_halfScaled(const QImage &source)
     return dest;
 }
 
-static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0)
+static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly)
 {
     if (blurImage.format() != QImage::Format_ARGB32_Premultiplied
         && blurImage.format() != QImage::Format_RGB32)
@@ -561,9 +543,9 @@ static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool qual
     }
 
     if (alphaOnly)
-        expblur<12, 10, true>(blurImage, radius, quality, transposed);
+        expblur<12, 10, true>(blurImage, radius, quality);
     else
-        expblur<12, 10, false>(blurImage, radius, quality, transposed);
+        expblur<12, 10, false>(blurImage, radius, quality);
 
     if (p) {
         p->scale(scale, scale);
@@ -571,12 +553,12 @@ static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool qual
     }
 }
 
-static void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0)
+static void qt_blurImage(QImage &blurImage, qreal radius, bool quality)
 {
     if (blurImage.format() == QImage::Format_Indexed8)
-        expblur<12, 10, true>(blurImage, radius, quality, transposed);
+        expblur<12, 10, true>(blurImage, radius, quality);
     else
-        expblur<12, 10, false>(blurImage, radius, quality, transposed);
+        expblur<12, 10, false>(blurImage, radius, quality);
 }
 
 Q_GUI_EXPORT bool qt_scaleForTransform(const QTransform &transform, qreal *scale);
