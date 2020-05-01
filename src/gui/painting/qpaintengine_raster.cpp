@@ -358,15 +358,6 @@ bool QRasterPaintEngine::end()
 /*!
     \internal
 */
-void QRasterPaintEngine::releaseBuffer()
-{
-    Q_D(QRasterPaintEngine);
-    d->rasterBuffer.reset(new QRasterBuffer);
-}
-
-/*!
-    \internal
-*/
 QSize QRasterPaintEngine::size() const
 {
     Q_D(const QRasterPaintEngine);
