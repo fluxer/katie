@@ -736,8 +736,11 @@ static BrushData parseBrushValue(const QCss::Value &v, const QPalette &pal)
     if (lst.count() != 2)
         return BrushData();
 
-    QStringList gradFuncs;
-    gradFuncs << QLatin1String("qlineargradient") << QLatin1String("qradialgradient") << QLatin1String("qconicalgradient") << QLatin1String("qgradient");
+    static const QStringList gradFuncs = QStringList()
+        << QLatin1String("qlineargradient")
+        << QLatin1String("qradialgradient")
+        << QLatin1String("qconicalgradient")
+        << QLatin1String("qgradient");
     int gradType = -1;
 
     if ((gradType = gradFuncs.indexOf(lst.at(0).toLower())) == -1)
@@ -747,8 +750,10 @@ static BrushData parseBrushValue(const QCss::Value &v, const QPalette &pal)
     QVector<QGradientStop> stops;
 
     int spread = -1;
-    QStringList spreads;
-    spreads << QLatin1String("pad") << QLatin1String("reflect") << QLatin1String("repeat");
+    static const QStringList spreads = QStringList()
+        << QLatin1String("pad")
+        << QLatin1String("reflect")
+        << QLatin1String("repeat");
 
     bool dependsOnThePalette = false;
     Parser parser(lst.at(1));
