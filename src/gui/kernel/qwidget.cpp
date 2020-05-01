@@ -4769,11 +4769,8 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
     }
 
     if (recursive && !children.isEmpty()) {
-        paintSiblingsRecursive(pdev, children, children.size() - 1, rgn, offset, flags & ~DrawAsRoot
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-                                , q->windowSurface()
-#endif
-                                , sharedPainter, backingStore);
+        paintSiblingsRecursive(pdev, children, children.size() - 1, rgn, offset, flags & ~DrawAsRoot,
+                               sharedPainter, backingStore);
     }
 }
 
@@ -4862,11 +4859,8 @@ void QWidgetPrivate::render(QPaintDevice *target, const QPoint &targetOffset,
 }
 
 void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectList& siblings, int index, const QRegion &rgn,
-                                            const QPoint &offset, int flags
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-                                            , const QWindowSurface *currentSurface
-#endif
-                                            , QPainter *sharedPainter, QWidgetBackingStore *backingStore)
+                                            const QPoint &offset, int flags,
+                                            QPainter *sharedPainter, QWidgetBackingStore *backingStore)
 {
     QWidget *w = 0;
     QRect boundingRect;
@@ -4882,13 +4876,8 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
             }
 
             if (qRectIntersects(boundingRect, x->d_func()->effectiveRectFor(x->data->crect))) {
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-                if (x->windowSurface() == currentSurface)
-#endif
-                {
-                    w = x;
-                    break;
-                }
+                w = x;
+                break;
             }
         }
         --index;
@@ -4904,11 +4893,8 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
         QRegion wr(rgn);
         if (wd->isOpaque)
             wr -= hasMask ? wd->extra->mask.translated(widgetPos) : w->data->crect;
-        paintSiblingsRecursive(pdev, siblings, --index, wr, offset, flags
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-                               , currentSurface
-#endif
-                               , sharedPainter, backingStore);
+        paintSiblingsRecursive(pdev, siblings, --index, wr, offset, flags,
+                               sharedPainter, backingStore);
     }
 
     if (w->updatesEnabled()
@@ -8777,22 +8763,6 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
     if (desktopWidget)
         parent = 0;
 
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    QTLWExtra *extra = d->maybeTopData();
-    QWindowSurface *windowSurface = (extra ? extra->windowSurface : 0);
-    if (newParent && windowSurface) {
-        QWidgetBackingStore *oldBs = oldtlw->d_func()->maybeBackingStore();
-        if (oldBs)
-            oldBs->subSurfaces.removeAll(windowSurface);
-
-        if (parent) {
-            QWidgetBackingStore *newBs = parent->d_func()->maybeBackingStore();
-            if (newBs)
-                newBs->subSurfaces.append(windowSurface);
-        }
-    }
-#endif
-
     if (QWidgetBackingStore *oldBs = oldtlw->d_func()->maybeBackingStore()) {
         if (newParent)
             oldBs->removeDirtyWidget(this);
@@ -10212,10 +10182,8 @@ void QWidget::setWindowSurface(QWindowSurface *surface)
 {
     // ### createWinId() ??
 
-#ifndef Q_BACKINGSTORE_SUBSURFACES
     if (!isTopLevel())
         return;
-#endif
 
     Q_D(QWidget);
 
@@ -10236,12 +10204,6 @@ void QWidget::setWindowSurface(QWindowSurface *surface)
             delete bs->windowSurface;
         bs->windowSurface = surface;
     }
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    else {
-        bs->subSurfaces.append(surface);
-    }
-    bs->subSurfaces.removeOne(oldSurface);
-#endif
 }
 
 /*!
@@ -10258,23 +10220,6 @@ QWindowSurface *QWidget::windowSurface() const
         return extra->windowSurface;
 
     QWidgetBackingStore *bs = d->maybeBackingStore();
-
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    if (bs && bs->subSurfaces.isEmpty())
-        return bs->windowSurface;
-
-    if (!isTopLevel()) {
-        const QWidget *w = parentWidget();
-        while (w) {
-            QTLWExtra *extra = w->d_func()->maybeTopData();
-            if (extra && extra->windowSurface)
-                return extra->windowSurface;
-            if (w->isTopLevel())
-                break;
-            w = w->parentWidget();
-        }
-    }
-#endif // Q_BACKINGSTORE_SUBSURFACES
 
     return bs ? bs->windowSurface : 0;
 }

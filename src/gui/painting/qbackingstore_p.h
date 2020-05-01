@@ -96,9 +96,6 @@ private:
     QVector<QWidget *> dirtyOnScreenWidgets;
     QList<QWidget *> staticWidgets;
     QWindowSurface *windowSurface;
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    QList<QWindowSurface*> subSurfaces;
-#endif
     bool fullUpdatePending;
 
     QPoint tlwOffset;
@@ -107,7 +104,6 @@ private:
     static void unflushPaint(QWidget *widget, const QRegion &rgn);
 
     bool bltRect(const QRect &rect, int dx, int dy, QWidget *widget);
-    void releaseBuffer();
 
     void beginPaint(QRegion &toClean, QWindowSurface *windowSurface, BeginPaintInfo *returnInfo);
     void endPaint(const QRegion &cleaned, QWindowSurface *windowSurface, BeginPaintInfo *beginPaintInfo);

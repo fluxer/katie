@@ -317,11 +317,8 @@ public:
 
 
     void paintSiblingsRecursive(QPaintDevice *pdev, const QObjectList& children, int index,
-                                const QRegion &rgn, const QPoint &offset, int flags
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-                                , const QWindowSurface *currentSurface
-#endif
-                                , QPainter *sharedPainter, QWidgetBackingStore *backingStore);
+                                const QRegion &rgn, const QPoint &offset, int flags,
+                                QPainter *sharedPainter, QWidgetBackingStore *backingStore);
 
 
     QPainter *beginSharedPainter();
