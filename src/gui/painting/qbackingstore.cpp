@@ -743,9 +743,8 @@ void QWidgetPrivate::scrollRect(const QRect &rect, int dx, int dy)
     static const int accelEnv = qgetenv("QT_NO_FAST_SCROLL").toInt() == 0;
 
     QRect scrollRect = rect & clipRect();
-    bool overlapped = false;
-    bool accelerateScroll = accelEnv && isOpaque
-                            && !(overlapped = isOverlapped(scrollRect.translated(data.crect.topLeft())));
+    bool overlapped = isOverlapped(scrollRect.translated(data.crect.topLeft()));
+    bool accelerateScroll = accelEnv && isOpaque && !overlapped;
 
     if (!accelerateScroll) {
         if (overlapped) {
