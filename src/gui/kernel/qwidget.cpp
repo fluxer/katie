@@ -252,32 +252,14 @@ QWidgetPrivate::~QWidgetPrivate()
 #endif //QT_NO_GRAPHICSEFFECT
 }
 
-class QDummyWindowSurface : public QWindowSurface
-{
-public:
-    QDummyWindowSurface(QWidget *window) : QWindowSurface(window) {}
-    QPaintDevice *paintDevice() { return window(); }
-    void flush(QWidget *, const QRegion &, const QPoint &) {}
-};
-
 QWindowSurface *QWidgetPrivate::createDefaultWindowSurface()
 {
     Q_Q(QWidget);
 
-    QWindowSurface *surface;
-#ifndef QT_NO_PROPERTIES
-    if (q->property("_q_DummyWindowSurface").toBool()) {
-        surface = new QDummyWindowSurface(q);
-    } else
-#endif
-    {
-        if (QApplicationPrivate::graphics_system)
-            surface = QApplicationPrivate::graphics_system->createWindowSurface(q);
-        else
-            surface = createDefaultWindowSurface_sys();
+    if (QApplicationPrivate::graphics_system) {
+        return QApplicationPrivate::graphics_system->createWindowSurface(q);
     }
-
-    return surface;
+    return createDefaultWindowSurface_sys();
 }
 
 /*!
