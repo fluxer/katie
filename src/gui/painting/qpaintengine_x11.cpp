@@ -1175,7 +1175,7 @@ void QX11PaintEngine::updatePen(const QPen &pen)
 
     d->adapted_pen_origin = false;
 
-    char dashes[10];                            // custom pen dashes
+    char dashes[6];                             // custom pen dashes
     int dash_len = 0;                           // length of dash list
     int xStyle = LineSolid;
 
