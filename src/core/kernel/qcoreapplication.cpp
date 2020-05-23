@@ -37,7 +37,6 @@
 #include "qabstracteventdispatcher.h"
 #include "qcoreevent.h"
 #include "qeventloop.h"
-#include "qcorecmdlineargs_p.h"
 #include "qdatastream.h"
 #include "qdebug.h"
 #include "qdir.h"

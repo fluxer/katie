@@ -204,7 +204,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qbasictimer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventloop.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qpointer.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcorecmdlineargs_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreevent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmetaobject.h
