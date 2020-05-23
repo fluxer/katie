@@ -939,8 +939,7 @@ QDebug operator<<(QDebug dbg, const QBrush &b)
      "LinearGradientPattern",
      "RadialGradientPattern",
      "ConicalGradientPattern",
-     0, 0, 0, 0, 0, 0,
-     "TexturePattern" // 24
+     "TexturePattern"
     };
 
     dbg.nospace() << "QBrush(" << b.color() << ',' << BRUSH_STYLES[b.style()] << ')';

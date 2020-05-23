@@ -919,7 +919,7 @@ public:
         LinearGradientPattern,
         RadialGradientPattern,
         ConicalGradientPattern,
-        TexturePattern = 24
+        TexturePattern
     };
 
     enum SizeMode {
