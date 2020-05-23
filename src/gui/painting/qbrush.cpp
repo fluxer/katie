@@ -502,13 +502,13 @@ QBrush::QBrush(const QGradient &gradient)
                "QGradient should not be used directly, use the linear, radial\n"
                "or conical gradients instead");
 
-    const Qt::BrushStyle enum_table[] = {
+    static const Qt::BrushStyle enumTbl[] = {
         Qt::LinearGradientPattern,
         Qt::RadialGradientPattern,
         Qt::ConicalGradientPattern
     };
 
-    init(QColor(), enum_table[gradient.type()]);
+    init(QColor(), enumTbl[gradient.type()]);
     QGradientBrushData *grad = static_cast<QGradientBrushData *>(d.data());
     grad->gradient = gradient;
 }
