@@ -1794,13 +1794,12 @@ Q_GUI_EXPORT void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const Q
     const int w = rect.width();
     const int h = rect.height();
 
-    QImage im;
     int image_byte_order = ImageByteOrder(qt_x11Data->display);
     if ((QSysInfo::ByteOrder == QSysInfo::BigEndian && ((image_byte_order == LSBFirst) || bgr_layout))
         || (image_byte_order == MSBFirst && QSysInfo::ByteOrder == QSysInfo::LittleEndian)
         || (image_byte_order == LSBFirst && bgr_layout))
     {
-        im = image->copy(rect);
+        QImage im = image->copy(rect);
         const int iw = im.bytesPerLine() / 4;
         uint *data = (uint *)im.bits();
         for (int i=0; i < h; i++) {
