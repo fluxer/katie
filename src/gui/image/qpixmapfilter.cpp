@@ -279,8 +279,7 @@ QRectF QPixmapBlurFilter::boundingRectFor(const QRectF &rect) const
     return rect.adjusted(-delta, -delta, delta, delta);
 }
 
-template <int shift>
-inline int qt_static_shift(int value)
+static inline int qt_static_shift(int shift, int value)
 {
     if (shift == 0)
         return value;
@@ -299,10 +298,10 @@ static inline void qt_blurinner(uchar *bptr, int &zR, int &zG, int &zB, int &zA,
     QRgb *pixel = (QRgb *)bptr;
 
 #define Z_MASK (0xff << zprec)
-    const int A_zprec = qt_static_shift<zprec - 24>(*pixel) & Z_MASK;
-    const int R_zprec = qt_static_shift<zprec - 16>(*pixel) & Z_MASK;
-    const int G_zprec = qt_static_shift<zprec - 8>(*pixel)  & Z_MASK;
-    const int B_zprec = qt_static_shift<zprec>(*pixel)      & Z_MASK;
+    const int A_zprec = qt_static_shift(zprec - 24, *pixel) & Z_MASK;
+    const int R_zprec = qt_static_shift(zprec - 16, *pixel) & Z_MASK;
+    const int G_zprec = qt_static_shift(zprec - 8, *pixel)  & Z_MASK;
+    const int B_zprec = qt_static_shift(zprec, *pixel)      & Z_MASK;
 #undef Z_MASK
 
     const int zR_zprec = zR >> aprec;
@@ -317,10 +316,10 @@ static inline void qt_blurinner(uchar *bptr, int &zR, int &zG, int &zB, int &zA,
 
 #define ZA_MASK (0xff << (zprec + aprec))
     *pixel =
-        qt_static_shift<24 - zprec - aprec>(zA & ZA_MASK)
-        | qt_static_shift<16 - zprec - aprec>(zR & ZA_MASK)
-        | qt_static_shift<8 - zprec - aprec>(zG & ZA_MASK)
-        | qt_static_shift<-zprec - aprec>(zB & ZA_MASK);
+        qt_static_shift(24 - zprec - aprec, zA & ZA_MASK)
+        | qt_static_shift(16 - zprec - aprec, zR & ZA_MASK)
+        | qt_static_shift(8 - zprec - aprec, zG & ZA_MASK)
+        | qt_static_shift(-zprec - aprec, zB & ZA_MASK);
 #undef ZA_MASK
 }
 
