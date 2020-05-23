@@ -969,16 +969,12 @@ QDebug operator<<(QDebug dbg, const QBrush &b)
 QDataStream &operator<<(QDataStream &s, const QBrush &b)
 {
     quint8 style = (quint8) b.style();
-    bool gradient_style = false;
-
-    if (style == Qt::LinearGradientPattern || style == Qt::RadialGradientPattern
-        || style == Qt::ConicalGradientPattern)
-        gradient_style = true;
 
     s << style << b.color();
     if (b.style() == Qt::TexturePattern) {
         s << b.texture();
-    } else if (gradient_style) {
+    } else if (style == Qt::LinearGradientPattern || style == Qt::RadialGradientPattern
+        || style == Qt::ConicalGradientPattern) {
         const QGradient *gradient = b.gradient();
         int type_as_int = int(gradient->type());
         s << type_as_int;
