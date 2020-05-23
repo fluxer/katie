@@ -54,7 +54,7 @@ typedef QObject *(*QtPluginInstanceFunction)();
 #define Q_EXPORT_PLUGIN(PLUGIN) \
           Q_EXPORT_PLUGIN2(PLUGIN, PLUGIN)
 
-#if defined(Q_OF_ELF) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG))
+#if defined(__ELF__) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG))
 #  define Q_PLUGIN_VERIFICATION_SECTION \
      __attribute__ ((section (".ktplugin"))) __attribute__((used))
 #else

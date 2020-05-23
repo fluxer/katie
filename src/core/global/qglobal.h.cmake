@@ -1195,12 +1195,6 @@ inline int qIntCast(float f) { return int(f); }
 Q_CORE_EXPORT void qsrand(uint seed);
 Q_CORE_EXPORT int qrand();
 
-#if defined (__ELF__)
-#  if defined (Q_OS_LINUX) || defined (Q_OS_SOLARIS) || defined (Q_OS_FREEBSD) || defined (Q_OS_OPENBSD)
-#    define Q_OF_ELF
-#  endif
-#endif
-
 QT_END_NAMESPACE
 QT_END_HEADER
 
