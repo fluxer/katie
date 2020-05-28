@@ -1355,11 +1355,6 @@ public:
         Printer           = 4
     };
 
-    enum Callback {
-        EventNotifyCallback,
-        LastCallback
-    };
-
     enum DockPosition {
         LeftDock,
         RightDock,
@@ -1368,10 +1363,10 @@ public:
         DockCount
     };
 
-    static bool registerCallback(Callback, qInternalCallback);
-    static bool unregisterCallback(Callback, qInternalCallback);
+    static void registerCallback(qInternalCallback);
+    static void unregisterCallback(qInternalCallback);
 
-    static bool activateCallbacks(Callback, void **);
+    static bool activateCallbacks(void **);
 };
 
 QT_END_NAMESPACE
