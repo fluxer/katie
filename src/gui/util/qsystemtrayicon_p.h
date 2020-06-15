@@ -131,7 +131,6 @@ public:
     };
 
     void addToTray();
-    void updateIcon();
     XVisualInfo* getSysTrayVisualInfo();
 
     // QObject::event is public but QWidget's ::event() re-implementation

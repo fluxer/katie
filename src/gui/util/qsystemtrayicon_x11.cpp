@@ -244,15 +244,10 @@ void QSystemTrayIconSys::addToTray()
     setMinimumSize(22, 22); // required at least on GNOME
 }
 
-void QSystemTrayIconSys::updateIcon()
-{
-    update();
-}
-
 void QSystemTrayIconSys::resizeEvent(QResizeEvent *re)
 {
      QWidget::resizeEvent(re);
-     updateIcon();
+     QWidget::update();
 }
 
 void QSystemTrayIconSys::paintEvent(QPaintEvent*)
@@ -351,7 +346,7 @@ void QSystemTrayIconPrivate::updateIcon_sys()
 {
     if (!sys)
         return;
-    sys->updateIcon();
+    sys->update();
 }
 
 void QSystemTrayIconPrivate::updateMenu_sys()
