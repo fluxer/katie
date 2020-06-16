@@ -163,7 +163,6 @@ public:
                         PropertyCheckable,
                         PropertyWindowTitle,
                         PropertyWindowIcon,
-                        PropertyWindowFilePath,
                         PropertyWindowOpacity,
                         PropertyWindowIconText,
                         PropertyWindowModality,

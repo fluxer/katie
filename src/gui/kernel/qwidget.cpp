@@ -5076,9 +5076,8 @@ static QString constructWindowTitleFromFilePath(const QString &filePath)
     \brief the window title (caption)
 
     This property only makes sense for top-level widgets, such as
-    windows and dialogs. If no caption has been set, the title is based of the
-    \l windowFilePath. If neither of these is set, then the title is
-    an empty string.
+    windows and dialogs. If no caption has been set, the title is an
+    empty string.
 
     If you use the \l windowModified mechanism, the window title must
     contain a "[*]" placeholder, which indicates where the '*' should
@@ -5087,7 +5086,7 @@ static QString constructWindowTitleFromFilePath(const QString &filePath)
     windowModified property is false (the default), the placeholder
     is simply removed.
 
-    \sa windowIcon, windowIconText, windowModified, windowFilePath
+    \sa windowIcon, windowIconText, windowModified
 */
 QString QWidget::windowTitle() const
 {
@@ -5095,8 +5094,6 @@ QString QWidget::windowTitle() const
     if (d->extra && d->extra->topextra) {
         if (!d->extra->topextra->caption.isEmpty())
             return d->extra->topextra->caption;
-        if (!d->extra->topextra->filePath.isEmpty())
-            return constructWindowTitleFromFilePath(d->extra->topextra->filePath);
     }
     return QString();
 }
@@ -5259,63 +5256,6 @@ QString QWidget::windowIconText() const
 {
     Q_D(const QWidget);
     return (d->extra && d->extra->topextra) ? d->extra->topextra->iconText : QString();
-}
-
-/*!
-    \property QWidget::windowFilePath
-    \since 4.4
-    \brief the file path associated with a widget
-
-    This property only makes sense for windows. It associates a file path with
-    a window. If you set the file path, but have not set the window title, Qt
-    sets the window title to contain a string created using the following
-    components.
-
-    On Mac OS X:
-
-    \list
-    \o The file name of the specified path, obtained using QFileInfo::fileName().
-    \endlist
-
-    On Windows and X11:
-
-    \list
-    \o The file name of the specified path, obtained using QFileInfo::fileName().
-    \o An optional \c{*} character, if the \l windowModified property is set.
-    \o The \c{0x2014} unicode character, padded either side by spaces.
-    \o The application name, obtained from the application's
-    \l{QCoreApplication::}{applicationName} property.
-    \endlist
-
-    If the window title is set at any point, then the window title takes precedence and
-    will be shown instead of the file path string.
-
-    If no file path is set, this property contains an empty string.
-
-    By default, this property contains an empty string.
-
-    \sa windowTitle, windowIcon
-*/
-
-QString QWidget::windowFilePath() const
-{
-    Q_D(const QWidget);
-    return (d->extra && d->extra->topextra) ? d->extra->topextra->filePath : QString();
-}
-
-void QWidget::setWindowFilePath(const QString &filePath)
-{
-    if (filePath == windowFilePath())
-        return;
-
-    Q_D(QWidget);
-
-    d->createTLExtra();
-    d->extra->topextra->filePath = filePath;
-
-    if (d->extra->topextra->caption.isEmpty()) {
-        d->setWindowTitle_helper(windowTitle());
-    }
 }
 
 /*!

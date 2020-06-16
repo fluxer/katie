@@ -134,7 +134,6 @@ struct QTLWExtra {
     QString caption; // widget caption
     QString iconText; // widget icon text
     QString role; // widget role
-    QString filePath; // widget file path
 
     // Other variables.
     short incw, inch; // size increments
