@@ -5667,7 +5667,7 @@ bool QWidget::focusNextPrevChild(bool next)
 
 QWidget *QWidget::focusWidget() const
 {
-    return const_cast<QWidget *>(d_func()->focus_child);
+    return d_func()->focus_child;
 }
 
 /*!
@@ -5677,7 +5677,7 @@ QWidget *QWidget::focusWidget() const
 */
 QWidget *QWidget::nextInFocusChain() const
 {
-    return const_cast<QWidget *>(d_func()->focus_next);
+    return d_func()->focus_next;
 }
 
 /*!
@@ -5690,7 +5690,7 @@ QWidget *QWidget::nextInFocusChain() const
 */
 QWidget *QWidget::previousInFocusChain() const
 {
-    return const_cast<QWidget *>(d_func()->focus_prev);
+    return d_func()->focus_prev;
 }
 
 /*!
