@@ -1190,7 +1190,7 @@ const QMimeData* QClipboard::mimeData(Mode mode) const
             // that way, the data is cached long enough for calls within a single
             // loop/function, but the data doesn't linger around in case the selection
             // changes
-            QClipboard *that = ((QClipboard *) this);
+            QClipboard *that = const_cast<QClipboard *>(this);
             timer_id = that->startTimer(0);
         }
     }
