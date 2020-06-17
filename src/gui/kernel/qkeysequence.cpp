@@ -1120,23 +1120,22 @@ QString QKeySequencePrivate::encodeString(int key, QKeySequence::SequenceFormat 
 */
 QKeySequence::SequenceMatch QKeySequence::matches(const QKeySequence &seq) const
 {
-    int userN = count();
-    int seqN = seq.count();
+    const int userN = count();
+    const int seqN = seq.count();
 
     if (userN > seqN)
-        return NoMatch;
+        return SequenceMatch::NoMatch;
+
+    for (int i = 0; i < userN; i++) {
+        if (d->key[i] != seq.d->key[i])
+            return SequenceMatch::NoMatch;
+    }
 
     // If equal in length, we have a potential ExactMatch sequence,
     // else we already know it can only be partial.
-    SequenceMatch match = (userN == seqN ? ExactMatch : PartialMatch);
-
-    for (int i = 0; i < userN; ++i) {
-        int userKey = (*this)[i],
-            sequenceKey = seq[i];
-        if (userKey != sequenceKey)
-            return NoMatch;
-    }
-    return match;
+    if (userN == seqN)
+        return SequenceMatch::ExactMatch;
+    return SequenceMatch::PartialMatch;
 }
 
 /*!
