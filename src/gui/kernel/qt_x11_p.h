@@ -283,7 +283,6 @@ struct QX11Data
         XRenderColor bg_color;
         int screen;
         int style;
-        bool opaque;
         Picture picture;
     } pattern_fills[pattern_fill_count];
     Picture getSolidFill(int screen, const QColor &c);

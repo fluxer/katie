@@ -264,7 +264,6 @@ static Picture getPatternFill(int screen, const QBrush &b)
 
     for (int i = 0; i < qt_x11Data->pattern_fill_count; ++i) {
         if (qt_x11Data->pattern_fills[i].screen == screen
-            && qt_x11Data->pattern_fills[i].opaque == false
             && qt_x11Data->pattern_fills[i].style == b.style()
             && qt_x11Data->pattern_fills[i].color.alpha == color.alpha
             && qt_x11Data->pattern_fills[i].color.red == color.red
@@ -297,7 +296,6 @@ static Picture getPatternFill(int screen, const QBrush &b)
     qt_x11Data->pattern_fills[i].screen = screen;
     qt_x11Data->pattern_fills[i].color = color;
     qt_x11Data->pattern_fills[i].bg_color = bg_color;
-    qt_x11Data->pattern_fills[i].opaque = false;
     qt_x11Data->pattern_fills[i].style = b.style();
 
     XRenderFillRectangle(qt_x11Data->display, PictOpSrc, qt_x11Data->pattern_fills[i].picture, &bg_color, 0, 0, 8, 8);
