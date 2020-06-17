@@ -538,81 +538,80 @@ static const struct KeyNameTblData {
 
 static const short KeyNameTblSize = sizeof(KeyNameTbl) / sizeof(KeyNameTblData);
 
-//Table of key bindings. It must be sorted on key sequence.
-//A priority of 1 indicates that this is the primary key binding when multiple are defined.
-
+// Table of key bindings, must be sorted by standard key priority
 const QKeyBinding QKeySequencePrivate::keyBindings[] = {
-//   StandardKey                            Priority    Key Sequence                            Platforms
-    {QKeySequence::InsertParagraphSeparator,0,          Qt::Key_Return},
-    {QKeySequence::InsertParagraphSeparator,0,          Qt::Key_Enter},
-    {QKeySequence::Delete,                  1,          Qt::Key_Delete},
-    {QKeySequence::MoveToStartOfLine,       0,          Qt::Key_Home},
-    {QKeySequence::MoveToEndOfLine,         0,          Qt::Key_End},
-    {QKeySequence::MoveToPreviousChar,      0,          Qt::Key_Left},
-    {QKeySequence::MoveToPreviousLine,      0,          Qt::Key_Up},
-    {QKeySequence::MoveToNextChar,          0,          Qt::Key_Right},
-    {QKeySequence::MoveToNextLine,          0,          Qt::Key_Down},
-    {QKeySequence::MoveToPreviousPage,      1,          Qt::Key_PageUp},
-    {QKeySequence::MoveToNextPage,          1,          Qt::Key_PageDown},
-    {QKeySequence::HelpContents,            0,          Qt::Key_F1},
-    {QKeySequence::FindNext,                0,          Qt::Key_F3},
-    {QKeySequence::Refresh,                 0,          Qt::Key_F5},
-    {QKeySequence::Undo,                    0,          Qt::Key_F14}, //Undo on sun keyboards
-    {QKeySequence::Copy,                    0,          Qt::Key_F16}, //Copy on sun keyboards
-    {QKeySequence::Paste,                   0,          Qt::Key_F18}, //Paste on sun keyboards      
-    {QKeySequence::Cut,                     0,          Qt::Key_F20}, //Cut on sun keyboards
-    {QKeySequence::PreviousChild,           0,          Qt::Key_Back},
-    {QKeySequence::NextChild,               0,          Qt::Key_Forward}, 
-    {QKeySequence::InsertLineSeparator,     0,          Qt::SHIFT | Qt::Key_Return},
-    {QKeySequence::InsertLineSeparator,     0,          Qt::SHIFT | Qt::Key_Enter},
-    {QKeySequence::Paste,                   0,          Qt::SHIFT | Qt::Key_Insert}, 
-    {QKeySequence::Cut,                     0,          Qt::SHIFT | Qt::Key_Delete},
-    {QKeySequence::SelectStartOfLine,       0,          Qt::SHIFT | Qt::Key_Home},
-    {QKeySequence::SelectEndOfLine,         0,          Qt::SHIFT | Qt::Key_End},
-    {QKeySequence::SelectPreviousChar,      0,          Qt::SHIFT | Qt::Key_Left},
-    {QKeySequence::SelectPreviousLine,      0,          Qt::SHIFT | Qt::Key_Up},
-    {QKeySequence::SelectNextChar,          0,          Qt::SHIFT | Qt::Key_Right},
-    {QKeySequence::SelectNextLine,          0,          Qt::SHIFT | Qt::Key_Down},
-    {QKeySequence::SelectPreviousPage,      0,          Qt::SHIFT | Qt::Key_PageUp},
-    {QKeySequence::SelectNextPage,          0,          Qt::SHIFT | Qt::Key_PageDown},
-    {QKeySequence::WhatsThis,               1,          Qt::SHIFT | Qt::Key_F1},
-    {QKeySequence::FindPrevious,            0,          Qt::SHIFT | Qt::Key_F3},
-    {QKeySequence::ZoomIn,                  1,          Qt::CTRL | Qt::Key_Plus},
-    {QKeySequence::ZoomOut,                 1,          Qt::CTRL | Qt::Key_Minus},
-    {QKeySequence::SelectAll,               1,          Qt::CTRL | Qt::Key_A},
-    {QKeySequence::Bold,                    1,          Qt::CTRL | Qt::Key_B},
-    {QKeySequence::Copy,                    1,          Qt::CTRL | Qt::Key_C},
-    {QKeySequence::Delete,                  0,          Qt::CTRL | Qt::Key_D,}, //emacs (line edit only)
-    {QKeySequence::Find,                    0,          Qt::CTRL | Qt::Key_F},
-    {QKeySequence::Italic,                  0,          Qt::CTRL | Qt::Key_I}, 
-    {QKeySequence::DeleteEndOfLine,         0,          Qt::CTRL | Qt::Key_K}, //emacs (line edit only)
-    {QKeySequence::New,                     1,          Qt::CTRL | Qt::Key_N},
-    {QKeySequence::Open,                    1,          Qt::CTRL | Qt::Key_O},
-    {QKeySequence::Print,                   1,          Qt::CTRL | Qt::Key_P},
-    {QKeySequence::Save,                    1,          Qt::CTRL | Qt::Key_S},
-    {QKeySequence::AddTab,                  0,          Qt::CTRL | Qt::Key_T},
-    {QKeySequence::Underline,               1,          Qt::CTRL | Qt::Key_U}, 
-    {QKeySequence::Paste,                   1,          Qt::CTRL | Qt::Key_V},
-    {QKeySequence::Close,                   0,          Qt::CTRL | Qt::Key_W},
-    {QKeySequence::Cut,                     1,          Qt::CTRL | Qt::Key_X},
-    {QKeySequence::Undo,                    1,          Qt::CTRL | Qt::Key_Z},
-    {QKeySequence::NextChild,               1,          Qt::CTRL | Qt::Key_Tab},
-    {QKeySequence::DeleteStartOfWord,       0,          Qt::CTRL | Qt::Key_Backspace},
-    {QKeySequence::Copy,                    0,          Qt::CTRL | Qt::Key_Insert}, 
-    {QKeySequence::DeleteEndOfWord,         0,          Qt::CTRL | Qt::Key_Delete},
-    {QKeySequence::MoveToStartOfDocument,   0,          Qt::CTRL | Qt::Key_Home},
-    {QKeySequence::MoveToEndOfDocument,     0,          Qt::CTRL | Qt::Key_End},
-    {QKeySequence::MoveToPreviousWord,      0,          Qt::CTRL | Qt::Key_Left},
-    {QKeySequence::MoveToNextWord,          0,          Qt::CTRL | Qt::Key_Right},
-    {QKeySequence::Redo,                    0,          Qt::CTRL | Qt::SHIFT | Qt::Key_Z},
-    {QKeySequence::PreviousChild,           1,          Qt::CTRL | Qt::SHIFT | Qt::Key_Backtab},
-    {QKeySequence::Paste,                   0,          Qt::CTRL | Qt::SHIFT | Qt::Key_Insert},
-    {QKeySequence::SelectStartOfDocument,   0,          Qt::CTRL | Qt::SHIFT | Qt::Key_Home},
-    {QKeySequence::SelectEndOfDocument,     0,          Qt::CTRL | Qt::SHIFT | Qt::Key_End},
-    {QKeySequence::SelectPreviousWord,      0,          Qt::CTRL | Qt::SHIFT | Qt::Key_Left},
-    {QKeySequence::SelectNextWord,          0,          Qt::CTRL | Qt::SHIFT | Qt::Key_Right},
-    {QKeySequence::Back,                    1,          Qt::ALT  | Qt::Key_Left},
-    {QKeySequence::Forward,                 1,          Qt::ALT  | Qt::Key_Right},
+    // StandardKey                             Key Sequence
+    { QKeySequence::Delete,                    Qt::Key_Delete },
+    { QKeySequence::Copy,                      Qt::CTRL | Qt::Key_C },
+    { QKeySequence::Copy,                      Qt::Key_F16 }, // Copy on sun keyboards
+    { QKeySequence::Paste,                     Qt::CTRL | Qt::Key_V },
+    { QKeySequence::Paste,                     Qt::Key_F18 }, //Paste on sun keyboards
+    { QKeySequence::Paste,                     Qt::SHIFT | Qt::Key_Insert },
+    { QKeySequence::Cut,                       Qt::CTRL | Qt::Key_X },
+    { QKeySequence::Cut,                       Qt::Key_F20 }, // Cut on sun keyboards
+    { QKeySequence::Undo,                      Qt::CTRL | Qt::Key_Z },
+    { QKeySequence::NextChild,                 Qt::CTRL | Qt::Key_Tab },
+    { QKeySequence::PreviousChild,             Qt::CTRL | Qt::SHIFT | Qt::Key_Backtab },
+    { QKeySequence::InsertParagraphSeparator,  Qt::Key_Return },
+    { QKeySequence::InsertLineSeparator,       Qt::SHIFT | Qt::Key_Return },
+    // Non-priority
+    { QKeySequence::Back,                      Qt::ALT  | Qt::Key_Left },
+    { QKeySequence::Forward,                   Qt::ALT  | Qt::Key_Right },
+    { QKeySequence::MoveToPreviousPage,        Qt::Key_PageUp },
+    { QKeySequence::MoveToNextPage,            Qt::Key_PageDown },
+    { QKeySequence::WhatsThis,                 Qt::SHIFT | Qt::Key_F1 },
+    { QKeySequence::ZoomIn,                    Qt::CTRL | Qt::Key_Plus },
+    { QKeySequence::ZoomOut,                   Qt::CTRL | Qt::Key_Minus },
+    { QKeySequence::SelectAll,                 Qt::CTRL | Qt::Key_A },
+    { QKeySequence::Bold,                      Qt::CTRL | Qt::Key_B },
+    { QKeySequence::New,                       Qt::CTRL | Qt::Key_N },
+    { QKeySequence::Open,                      Qt::CTRL | Qt::Key_O },
+    { QKeySequence::Print,                     Qt::CTRL | Qt::Key_P },
+    { QKeySequence::Save,                      Qt::CTRL | Qt::Key_S },
+    { QKeySequence::Underline,                 Qt::CTRL | Qt::Key_U },
+    { QKeySequence::InsertParagraphSeparator,  Qt::Key_Enter },
+    { QKeySequence::MoveToStartOfLine,         Qt::Key_Home },
+    { QKeySequence::MoveToEndOfLine,           Qt::Key_End },
+    { QKeySequence::MoveToPreviousChar,        Qt::Key_Left },
+    { QKeySequence::MoveToPreviousLine,        Qt::Key_Up },
+    { QKeySequence::MoveToNextChar,            Qt::Key_Right },
+    { QKeySequence::MoveToNextLine,            Qt::Key_Down },
+    { QKeySequence::HelpContents,              Qt::Key_F1 },
+    { QKeySequence::FindNext,                  Qt::Key_F3 },
+    { QKeySequence::Refresh,                   Qt::Key_F5 },
+    { QKeySequence::Undo,                      Qt::Key_F14 }, // Undo on sun keyboards
+    { QKeySequence::PreviousChild,             Qt::Key_Back },
+    { QKeySequence::NextChild,                 Qt::Key_Forward },
+    { QKeySequence::InsertLineSeparator,       Qt::SHIFT | Qt::Key_Enter },
+    { QKeySequence::Cut,                       Qt::SHIFT | Qt::Key_Delete },
+    { QKeySequence::SelectStartOfLine,         Qt::SHIFT | Qt::Key_Home },
+    { QKeySequence::SelectEndOfLine,           Qt::SHIFT | Qt::Key_End },
+    { QKeySequence::SelectPreviousChar,        Qt::SHIFT | Qt::Key_Left },
+    { QKeySequence::SelectPreviousLine,        Qt::SHIFT | Qt::Key_Up },
+    { QKeySequence::SelectNextChar,            Qt::SHIFT | Qt::Key_Right },
+    { QKeySequence::SelectNextLine,            Qt::SHIFT | Qt::Key_Down },
+    { QKeySequence::SelectPreviousPage,        Qt::SHIFT | Qt::Key_PageUp },
+    { QKeySequence::SelectNextPage,            Qt::SHIFT | Qt::Key_PageDown },
+    { QKeySequence::FindPrevious,              Qt::SHIFT | Qt::Key_F3 },
+    { QKeySequence::Delete,                    Qt::CTRL | Qt::Key_D }, // Emacs (line edit only)
+    { QKeySequence::Find,                      Qt::CTRL | Qt::Key_F },
+    { QKeySequence::Italic,                    Qt::CTRL | Qt::Key_I },
+    { QKeySequence::DeleteEndOfLine,           Qt::CTRL | Qt::Key_K }, // Emacs (line edit only)
+    { QKeySequence::AddTab,                    Qt::CTRL | Qt::Key_T },
+    { QKeySequence::Close,                     Qt::CTRL | Qt::Key_W },
+    { QKeySequence::DeleteStartOfWord,         Qt::CTRL | Qt::Key_Backspace },
+    { QKeySequence::Copy,                      Qt::CTRL | Qt::Key_Insert },
+    { QKeySequence::DeleteEndOfWord,           Qt::CTRL | Qt::Key_Delete },
+    { QKeySequence::MoveToStartOfDocument,     Qt::CTRL | Qt::Key_Home },
+    { QKeySequence::MoveToEndOfDocument,       Qt::CTRL | Qt::Key_End },
+    { QKeySequence::MoveToPreviousWord,        Qt::CTRL | Qt::Key_Left },
+    { QKeySequence::MoveToNextWord,            Qt::CTRL | Qt::Key_Right },
+    { QKeySequence::Redo,                      Qt::CTRL | Qt::SHIFT | Qt::Key_Z },
+    { QKeySequence::Paste,                     Qt::CTRL | Qt::SHIFT | Qt::Key_Insert },
+    { QKeySequence::SelectStartOfDocument,     Qt::CTRL | Qt::SHIFT | Qt::Key_Home },
+    { QKeySequence::SelectEndOfDocument,       Qt::CTRL | Qt::SHIFT | Qt::Key_End },
+    { QKeySequence::SelectPreviousWord,        Qt::CTRL | Qt::SHIFT | Qt::Key_Left },
+    { QKeySequence::SelectNextWord,            Qt::CTRL | Qt::SHIFT | Qt::Key_Right },
 };
 
 const short QKeySequencePrivate::numberOfKeyBindings = sizeof(QKeySequencePrivate::keyBindings) / sizeof(QKeyBinding);
@@ -792,13 +791,9 @@ QKeySequence::QKeySequence(const QKeySequence& keysequence)
 QList<QKeySequence> QKeySequence::keyBindings(StandardKey key)
 {
     QList <QKeySequence> list;
-    for (short i = 0; i < QKeySequencePrivate::numberOfKeyBindings; ++i) {
-        QKeyBinding keyBinding = QKeySequencePrivate::keyBindings[i];
-        if (keyBinding.standardKey == key) {
-            if (keyBinding.priority > 0)
-                list.prepend(QKeySequence(keyBinding.shortcut));
-            else
-                list.append(QKeySequence(keyBinding.shortcut));
+    for (short i = 0; i < QKeySequencePrivate::numberOfKeyBindings; i++) {
+        if (QKeySequencePrivate::keyBindings[i].standardKey == key) {
+            list.append(QKeySequence(QKeySequencePrivate::keyBindings[i].shortcut));
         }
     }
     return list;
