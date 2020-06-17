@@ -153,51 +153,49 @@ qt_XTranslateKey(QXCoreDesc *dpy,
     KeySym sym, lsym, usym;
 
     if (! dpy->keysyms)
-	return 0;
+        return 0;
     *modifiers_return = ((ShiftMask|LockMask)
-			 | dpy->mode_switch | dpy->num_lock);
-    if (((int)keycode < dpy->min_keycode) || ((int)keycode > dpy->max_keycode))
-    {
-	*keysym_return = NoSymbol;
-	return 1;
+                        | dpy->mode_switch | dpy->num_lock);
+    if (((int)keycode < dpy->min_keycode) || ((int)keycode > dpy->max_keycode)) {
+        *keysym_return = NoSymbol;
+        return 1;
     }
     per = dpy->keysyms_per_keycode;
     syms = &dpy->keysyms[(keycode - dpy->min_keycode) * per];
     while ((per > 2) && (syms[per - 1] == NoSymbol))
-	per--;
+        per--;
     if ((per > 2) && (modifiers & dpy->mode_switch)) {
-	syms += 2;
-	per -= 2;
+        syms += 2;
+        per -= 2;
     }
     if ((modifiers & dpy->num_lock) &&
-	(per > 1 && (IsKeypadKey(syms[1]) || IsPrivateKeypadKey(syms[1])))) {
-	if ((modifiers & ShiftMask) ||
-	    ((modifiers & LockMask) && (dpy->lock_meaning == XK_Shift_Lock)))
-	    *keysym_return = syms[0];
-	else
-	    *keysym_return = syms[1];
+        (per > 1 && (IsKeypadKey(syms[1]) || IsPrivateKeypadKey(syms[1])))) {
+        if ((modifiers & ShiftMask) ||
+            ((modifiers & LockMask) && (dpy->lock_meaning == XK_Shift_Lock)))
+            *keysym_return = syms[0];
+        else
+            *keysym_return = syms[1];
     } else if (!(modifiers & ShiftMask) &&
-	(!(modifiers & LockMask) || (dpy->lock_meaning == NoSymbol))) {
-	if ((per == 1) || (syms[1] == NoSymbol))
-	    XConvertCase(syms[0], keysym_return, &usym);
-	else
-	    *keysym_return = syms[0];
-    } else if (!(modifiers & LockMask) ||
-	       (dpy->lock_meaning != XK_Caps_Lock)) {
-	if ((per == 1) || ((usym = syms[1]) == NoSymbol))
-	    XConvertCase(syms[0], &lsym, &usym);
-	*keysym_return = usym;
+        (!(modifiers & LockMask) || (dpy->lock_meaning == NoSymbol))) {
+        if ((per == 1) || (syms[1] == NoSymbol))
+            XConvertCase(syms[0], keysym_return, &usym);
+        else
+            *keysym_return = syms[0];
+    } else if (!(modifiers & LockMask) || (dpy->lock_meaning != XK_Caps_Lock)) {
+        if ((per == 1) || ((usym = syms[1]) == NoSymbol))
+            XConvertCase(syms[0], &lsym, &usym);
+        *keysym_return = usym;
     } else {
-	if ((per == 1) || ((sym = syms[1]) == NoSymbol))
-	    sym = syms[0];
-	XConvertCase(sym, &lsym, &usym);
-	if (!(modifiers & ShiftMask) && (sym != syms[0]) &&
-	    ((sym != usym) || (lsym == usym)))
-	    XConvertCase(syms[0], &lsym, &usym);
-	*keysym_return = usym;
+        if ((per == 1) || ((sym = syms[1]) == NoSymbol))
+            sym = syms[0];
+        XConvertCase(sym, &lsym, &usym);
+        if (!(modifiers & ShiftMask) && (sym != syms[0]) &&
+            ((sym != usym) || (lsym == usym)))
+            XConvertCase(syms[0], &lsym, &usym);
+        *keysym_return = usym;
     }
     if (*keysym_return == XK_VoidSymbol)
-	*keysym_return = NoSymbol;
+        *keysym_return = NoSymbol;
     return 1;
 }
 
