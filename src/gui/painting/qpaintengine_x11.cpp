@@ -258,9 +258,7 @@ static Picture getPatternFill(int screen, const QBrush &b)
         return XNone;
 
     XRenderColor color = qt_x11Data->preMultiply(b.color());
-    XRenderColor bg_color;
-
-    bg_color = qt_x11Data->preMultiply(QColor(0, 0, 0, 0));
+    XRenderColor bg_color = qt_x11Data->preMultiply(QColor(0, 0, 0, 0));
 
     for (int i = 0; i < qt_x11Data->pattern_fill_count; ++i) {
         if (qt_x11Data->pattern_fills[i].screen == screen
