@@ -850,7 +850,7 @@ void QX11PaintEngine::drawRects(const QRect *rects, int rectCount)
             }
             d->resetAdaptedOrigin();
         } else {
-            QVarLengthArray<XRectangle> xrects(rectCount);
+            XRectangle xrects[rectCount];
             int numClipped = rectCount;
             for (int i = 0; i < rectCount; ++i) {
                 QRect r(rects[i]);
@@ -879,9 +879,9 @@ void QX11PaintEngine::drawRects(const QRect *rects, int rectCount)
             if (numClipped) {
                 d->setupAdaptedOrigin(rects[0].topLeft());
                 if (d->has_brush)
-                    XFillRectangles(d->dpy, d->hd, d->gc_brush, xrects.data(), numClipped);
+                    XFillRectangles(d->dpy, d->hd, d->gc_brush, xrects, numClipped);
                 else if (d->has_pen)
-                    XDrawRectangles(d->dpy, d->hd, d->gc, xrects.data(), numClipped);
+                    XDrawRectangles(d->dpy, d->hd, d->gc, xrects, numClipped);
                 d->resetAdaptedOrigin();
             }
         }
@@ -1463,7 +1463,7 @@ void QX11PaintEnginePrivate::fillPolygon_translated(const QPointF *polygonPoints
                                                     QPaintEngine::PolygonDrawMode mode)
 {
 
-    QVarLengthArray<QPointF> translated_points(pointCount);
+    QPointF translated_points[pointCount];
     QPointF offset(matrix.dx(), matrix.dy());
 
     qreal offs = adjust_coords ? aliasedCoordinateDelta : 0.0;
@@ -1477,7 +1477,7 @@ void QX11PaintEnginePrivate::fillPolygon_translated(const QPointF *polygonPoints
         translated_points[i].ry() = qRound(translated_points[i].y()) + offs;
     }
 
-    fillPolygon_dev(translated_points.data(), pointCount, gcMode, mode);
+    fillPolygon_dev(translated_points, pointCount, gcMode, mode);
 }
 
 #ifndef QT_NO_XRENDER
@@ -1608,7 +1608,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
 
                 q->drawImage(aligned, img, img.rect(), Qt::AutoColor);
             } else if (clippedCount > 0) {
-                QVarLengthArray<XPoint> xpoints(clippedCount);
+                XPoint xpoints[clippedCount];
                 for (int i = 0; i < clippedCount; ++i) {
                     xpoints[i].x = qFloor(clippedPoints[i].x());
                     xpoints[i].y = qFloor(clippedPoints[i].y());
@@ -1617,7 +1617,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
                     XSetFillRule(dpy, fill_gc, WindingRule);
                 setupAdaptedOrigin(QPoint(xpoints[0].x, xpoints[0].y));
                 XFillPolygon(dpy, hd, fill_gc,
-                             xpoints.data(), clippedCount,
+                             xpoints, clippedCount,
                              mode == QPaintEngine::ConvexMode ? Convex : Complex, CoordModeOrigin);
                 resetAdaptedOrigin();
                 if (mode == QPaintEngine::WindingMode)
@@ -1628,11 +1628,11 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
 
 void QX11PaintEnginePrivate::strokePolygon_translated(const QPointF *polygonPoints, int pointCount, bool close)
 {
-    QVarLengthArray<QPointF> translated_points(pointCount);
+    QPointF translated_points[pointCount];
     QPointF offset(matrix.dx(), matrix.dy());
     for (int i = 0; i < pointCount; ++i)
         translated_points[i] = polygonPoints[i] + offset;
-    strokePolygon_dev(translated_points.data(), pointCount, close);
+    strokePolygon_dev(translated_points, pointCount, close);
 }
 
 void QX11PaintEnginePrivate::strokePolygon_dev(const QPointF *polygonPoints, int pointCount, bool close)
@@ -1643,15 +1643,14 @@ void QX11PaintEnginePrivate::strokePolygon_dev(const QPointF *polygonPoints, int
                                &clippedPoints, &clippedCount, close);
 
     if (clippedCount > 0) {
-        QVarLengthArray<XPoint> xpoints(clippedCount);
+        XPoint xpoints[clippedCount];
         for (int i = 0; i < clippedCount; ++i) {
             xpoints[i].x = qRound(clippedPoints[i].x() + aliasedCoordinateDelta);
             xpoints[i].y = qRound(clippedPoints[i].y() + aliasedCoordinateDelta);
         }
         uint numberPoints = qMin(clippedCount, xlibMaxLinePoints);
-        XPoint *pts = xpoints.data();
-        XDrawLines(dpy, hd, gc, pts, numberPoints, CoordModeOrigin);
-        pts += numberPoints;
+        XDrawLines(dpy, hd, gc, xpoints, numberPoints, CoordModeOrigin);
+        XPoint *pts = xpoints + numberPoints;
         clippedCount -= numberPoints;
         numberPoints = qMin(clippedCount, xlibMaxLinePoints-1);
         while (clippedCount) {
@@ -1706,9 +1705,10 @@ void QX11PaintEnginePrivate::fillPath(const QPainterPath &path, QX11PaintEngineP
 
     QList<QPolygonF> polys = clippedPath.toFillPolygons();
     for (int i = 0; i < polys.size(); ++i) {
-        QVarLengthArray<QPointF> translated_points(polys.at(i).size());
+        const int translated_size = polys.at(i).size();
+        QPointF translated_points[translated_size];
 
-        for (int j = 0; j < polys.at(i).size(); ++j) {
+        for (int j = 0; j < translated_size; ++j) {
             translated_points[j] = polys.at(i).at(j);
             if (!qt_x11Data->use_xrender || !(render_hints & QPainter::Antialiasing)) {
                 translated_points[j].rx() = qRound(translated_points[j].rx() + aliasedCoordinateDelta) + offs;
@@ -1716,7 +1716,7 @@ void QX11PaintEnginePrivate::fillPath(const QPainterPath &path, QX11PaintEngineP
             }
         }
 
-        fillPolygon_dev(translated_points.data(), polys.at(i).size(), gc_mode,
+        fillPolygon_dev(translated_points, translated_size, gc_mode,
                         path.fillRule() == Qt::OddEvenFill ? QPaintEngine::OddEvenMode : QPaintEngine::WindingMode);
     }
 }
