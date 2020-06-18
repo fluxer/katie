@@ -5060,17 +5060,6 @@ void QWidget::unsetLocale()
     d->resolveLocale();
 }
 
-static QString constructWindowTitleFromFilePath(const QString &filePath)
-{
-    const QFileInfo fi(filePath);
-    QString windowTitle = fi.fileName() + QLatin1String("[*]");
-    const QString appName = QApplication::applicationName();
-    if (!appName.isEmpty())
-        // 0x2014 is UTF-8 character 
-        windowTitle += QLatin1Char(' ') + QChar(0x2014) + QLatin1Char(' ') + appName;
-    return windowTitle;
-}
-
 /*!
     \property QWidget::windowTitle
     \brief the window title (caption)
