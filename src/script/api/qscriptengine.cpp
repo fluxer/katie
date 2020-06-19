@@ -568,12 +568,6 @@ qsreal integerFromString(const char *buf, int size, int radix)
     return result;
 }
 
-qsreal integerFromString(const QString &str, int radix)
-{
-    QByteArray ba = str.trimmed().toUtf8();
-    return integerFromString(ba.constData(), ba.size(), radix);
-}
-
 bool isFunction(JSC::JSValue value)
 {
     if (!value || !value.isObject())
