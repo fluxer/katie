@@ -35,8 +35,6 @@
 
 #ifndef QT_NO_DESKTOPSERVICES
 
-#include "qprocess.h"
-#include "qurl.h"
 #include "qdir.h"
 #include "qfile.h"
 #include "qtextstream.h"
@@ -45,55 +43,6 @@
 #include <stdlib.h>
 
 QT_BEGIN_NAMESPACE
-
-inline static bool launch(const QUrl &url, const QString &client)
-{
-    QString command = client + QLatin1Char(' ') + url.toEncoded();
-    return (QProcess::startDetached(command));
-}
-
-bool qt_openDocument(const QUrl &url)
-{
-    if (!url.isValid())
-        return false;
-
-    if (launch(url, QLatin1String("xdg-open")))
-        return true;
-
-    if (launch(url, QLatin1String("firefox")))
-        return true;
-    if (launch(url, QLatin1String("chromium")))
-        return true;
-    if (launch(url, QLatin1String("opera")))
-        return true;
-
-    return false;
-}
-
-bool qt_launchWebBrowser(const QUrl &url)
-{
-    if (!url.isValid())
-        return false;
-    if (url.scheme() == QLatin1String("mailto"))
-        return qt_openDocument(url);
-
-    if (launch(url, QLatin1String("xdg-open")))
-        return true;
-    if (launch(url, QLatin1String(qgetenv("DEFAULT_BROWSER"))))
-        return true;
-    if (launch(url, QLatin1String(qgetenv("BROWSER"))))
-        return true;
-
-    if (launch(url, QLatin1String("firefox")))
-        return true;
-    if (launch(url, QLatin1String("chromium")))
-        return true;
-    if (launch(url, QLatin1String("opera")))
-        return true;
-    return false;
-}
-
-
 
 QString QDesktopServices::storageLocation(StandardLocation type)
 {
