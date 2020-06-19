@@ -864,10 +864,8 @@ JSC::JSValue QT_FASTCALL stringProtoFuncArg(JSC::ExecState *exec, JSC::JSObject*
 static QScriptValue __setupPackage__(QScriptContext *ctx, QScriptEngine *eng)
 {
     QString path = ctx->argument(0).toString();
-    QStringList components = path.split(QLatin1Char('.'));
     QScriptValue o = eng->globalObject();
-    for (int i = 0; i < components.count(); ++i) {
-        QString name = components.at(i);
+    foreach (const QString &name, path.split(QLatin1Char('.'))) {
         QScriptValue oo = o.property(name);
         if (!oo.isValid()) {
             oo = eng->newObject();
