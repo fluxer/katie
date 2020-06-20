@@ -1729,6 +1729,7 @@ public:
     virtual NodePtr parentNode(NodePtr node) const;
     virtual NodePtr previousSiblingNode(NodePtr node) const;
     virtual NodePtr duplicateNode(NodePtr node) const;
+    virtual void freeNode(NodePtr node) const;
 
 private:
     const QTextHtmlParser *parser;
@@ -1801,6 +1802,10 @@ QCss::StyleSelector::NodePtr QTextHtmlStyleSelector::previousSiblingNode(NodePtr
         return sibling;
     sibling.id = parser->at(parent).children.at(childIdx - 1);
     return sibling;
+}
+
+void QTextHtmlStyleSelector::freeNode(NodePtr) const
+{
 }
 
 void QTextHtmlParser::resolveStyleSheetImports(const QCss::StyleSheet &sheet)

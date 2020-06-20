@@ -463,6 +463,10 @@ public:
         n.id  = node.id;
         return n;
     }
+    virtual void freeNode(NodePtr node) const
+    {
+        Q_UNUSED(node);
+    }
 };
 
 // '0' is 0x30 and '9' is 0x39

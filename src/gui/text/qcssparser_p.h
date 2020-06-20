@@ -649,6 +649,7 @@ public:
     virtual NodePtr parentNode(NodePtr node) const = 0;
     virtual NodePtr previousSiblingNode(NodePtr node) const = 0;
     virtual NodePtr duplicateNode(NodePtr node) const = 0;
+    virtual void freeNode(NodePtr node) const = 0;
 
     QVector<StyleSheet> styleSheets;
     QString medium;
