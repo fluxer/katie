@@ -134,20 +134,16 @@ QStringList QStyleFactory::keys()
     QStringList list;
 #endif
 #ifndef QT_NO_STYLE_WINDOWS
-    if (!list.contains(QLatin1String("Windows")))
-        list << QLatin1String("Windows");
+    list << QLatin1String("Windows");
 #endif
 #ifndef QT_NO_STYLE_MOTIF
-    if (!list.contains(QLatin1String("Motif")))
-        list << QLatin1String("Motif");
+    list << QLatin1String("Motif");
 #endif
 #ifndef QT_NO_STYLE_PLASTIQUE
-    if (!list.contains(QLatin1String("Plastique")))
-        list << QLatin1String("Plastique");
+    list << QLatin1String("Plastique");
 #endif
 #ifndef QT_NO_STYLE_CLEANLOOKS
-    if (!list.contains(QLatin1String("Cleanlooks")))
-        list << QLatin1String("Cleanlooks");
+    list << QLatin1String("Cleanlooks");
 #endif
     return list;
 }
