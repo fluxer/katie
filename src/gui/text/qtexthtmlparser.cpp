@@ -1840,8 +1840,6 @@ void QTextHtmlParser::importStyleSheet(const QString &href)
 
 QVector<QCss::Declaration> QTextHtmlParser::declarationsForNode(int node) const
 {
-    QVector<QCss::Declaration> decls;
-
     QTextHtmlStyleSelector selector(this);
 
     int idx = 0;
@@ -1862,12 +1860,9 @@ QVector<QCss::Declaration> QTextHtmlParser::declarationsForNode(int node) const
     QCss::StyleSelector::NodePtr n;
     n.id = node;
 
-    const char *extraPseudo = 0;
     if (nodes.at(node).id == Html_a && nodes.at(node).hasHref)
-        extraPseudo = "link";
-    decls = selector.declarationsForNode(n, extraPseudo);
-
-    return decls;
+        return selector.declarationsForNode(n, "link");
+    return selector.declarationsForNode(n, 0);
 }
 
 bool QTextHtmlParser::nodeIsChildOf(int i, QTextHTMLElements id) const
