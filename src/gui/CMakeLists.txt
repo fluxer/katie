@@ -870,7 +870,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qundostack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qundoview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/qdesktopservices_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qabstractbutton.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qabstractslider.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qabstractspinbox.cpp

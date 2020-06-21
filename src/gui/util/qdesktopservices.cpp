@@ -42,6 +42,7 @@
 #include "qurl.h"
 #include "qmutex.h"
 #include "qprocess.h"
+#include "qstandardpaths.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -289,7 +290,6 @@ void QDesktopServices::unsetUrlHandler(const QString &scheme)
 */
 
 /*!
-    \fn QString QDesktopServices::storageLocation(StandardLocation type)
     \since 4.4
 
     Returns the default system directory where files of \a type belong, or an empty string
@@ -304,13 +304,19 @@ void QDesktopServices::unsetUrlHandler(const QString &scheme)
     Rest of the standard locations point to folder on same drive with executable, except
     that if executable is in ROM the folder from C drive is returned.
 */
+QString QDesktopServices::storageLocation(StandardLocation type)
+{
+    return QStandardPaths::writableLocation(static_cast<QStandardPaths::StandardLocation>(type));
+}
 
 /*!
-    \fn QString QDesktopServices::displayName(StandardLocation type)
-
     Returns a localized display name for the given location \a type or
     an empty QString if no relevant location can be found.
 */
+QString QDesktopServices::displayName(StandardLocation type)
+{
+    return QStandardPaths::displayName(static_cast<QStandardPaths::StandardLocation>(type));
+}
 
 QT_END_NAMESPACE
 
