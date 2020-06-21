@@ -78,7 +78,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
         case CacheLocation:
         case GenericCacheLocation: {
             // http://standards.freedesktop.org/basedir-spec/basedir-spec-0.6.html
-            QString xdgCacheHome = QFile::decodeName(qgetenv("XDG_CACHE_HOME"));
+            static QString xdgCacheHome = QFile::decodeName(qgetenv("XDG_CACHE_HOME"));
             if (xdgCacheHome.isEmpty()) {
                 xdgCacheHome = QDir::homePath() + QLatin1String("/.cache");
             }
@@ -89,7 +89,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
         }
         case DataLocation:
         case GenericDataLocation: {
-            QString xdgDataHome = QFile::decodeName(qgetenv("XDG_DATA_HOME"));
+            static QString xdgDataHome = QFile::decodeName(qgetenv("XDG_DATA_HOME"));
             if (xdgDataHome.isEmpty()) {
                 xdgDataHome = QDir::homePath() + QLatin1String("/.local/share");
             }
@@ -101,7 +101,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
         case ConfigLocation:
         case GenericConfigLocation: {
             // http://standards.freedesktop.org/basedir-spec/latest/
-            QString xdgConfigHome = QFile::decodeName(qgetenv("XDG_CONFIG_HOME"));
+            static QString xdgConfigHome = QFile::decodeName(qgetenv("XDG_CONFIG_HOME"));
             if (xdgConfigHome.isEmpty()) {
                 xdgConfigHome = QDir::homePath() + QLatin1String("/.config");
             }
@@ -110,7 +110,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
         case RuntimeLocation: {
             const uid_t myUid = geteuid();
             // http://standards.freedesktop.org/basedir-spec/latest/
-            QString xdgRuntimeDir = QFile::decodeName(qgetenv("XDG_RUNTIME_DIR"));
+            static QString xdgRuntimeDir = QFile::decodeName(qgetenv("XDG_RUNTIME_DIR"));
             if (xdgRuntimeDir.isEmpty()) {
                 const QString userName = QFileSystemEngine::resolveUserName(myUid);
                 xdgRuntimeDir = QDir::tempPath() + QLatin1String("/runtime-") + userName;
@@ -143,7 +143,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
     }
 
     // http://www.freedesktop.org/wiki/Software/xdg-user-dirs
-    QString xdgConfigHome = QFile::decodeName(qgetenv("XDG_CONFIG_HOME"));
+    static QString xdgConfigHome = QFile::decodeName(qgetenv("XDG_CONFIG_HOME"));
     if (xdgConfigHome.isEmpty()) {
         xdgConfigHome = QDir::homePath() + QLatin1String("/.config");
     }
@@ -169,44 +169,41 @@ QString QStandardPaths::writableLocation(StandardLocation type)
             }
         }
 
-        QString key;
+        QString value;
         switch (type) {
             case DesktopLocation: {
-                key = QLatin1String("DESKTOP");
+                value = lines.value(QLatin1String("DESKTOP"));
                 break;
             }
             case DocumentsLocation: {
-                key = QLatin1String("DOCUMENTS");
+                value = lines.value(QLatin1String("DOCUMENTS"));
                 break;
             }
             case PicturesLocation: {
-                key = QLatin1String("PICTURES");
+                value = lines.value(QLatin1String("PICTURES"));
                 break;
             }
             case MusicLocation: {
-                key = QLatin1String("MUSIC");
+                value = lines.value(QLatin1String("MUSIC"));
                 break;
             }
             case MoviesLocation: {
-                key = QLatin1String("VIDEOS");
+                value = lines.value(QLatin1String("VIDEOS"));
                 break;
             }
             case DownloadLocation: {
-                key = QLatin1String("DOWNLOAD");
+                value = lines.value(QLatin1String("DOWNLOAD"));
                 break;
             }
             default:
                 break;
         }
-        if (!key.isEmpty()) {
-            QString value = lines.value(key);
-            if (!value.isEmpty()) {
-                // value can start with $HOME
-                if (value.startsWith(QLatin1String("$HOME"))) {
-                    value = QDir::homePath() + value.mid(5);
-                }
-                return value;
+        if (!value.isEmpty()) {
+            // value can start with $HOME
+            if (value.startsWith(QLatin1String("$HOME"))) {
+                value = QDir::homePath() + value.mid(5);
             }
+            return value;
         }
     }
 
@@ -216,7 +213,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
 static QStringList xdgDataDirs()
 {
     // http://standards.freedesktop.org/basedir-spec/latest/
-    QString xdgDataDirsEnv = QFile::decodeName(qgetenv("XDG_DATA_DIRS"));
+    static const QString xdgDataDirsEnv = QFile::decodeName(qgetenv("XDG_DATA_DIRS"));
     if (xdgDataDirsEnv.isEmpty()) {
         QStringList dirs;
         dirs.append(QString::fromLatin1("/usr/local/share"));
@@ -233,7 +230,7 @@ QStringList QStandardPaths::standardLocations(StandardLocation type)
         case ConfigLocation:
         case GenericConfigLocation: {
             // http://standards.freedesktop.org/basedir-spec/latest/
-            const QString xdgConfigDirs = QFile::decodeName(qgetenv("XDG_CONFIG_DIRS"));
+            static const QString xdgConfigDirs = QFile::decodeName(qgetenv("XDG_CONFIG_DIRS"));
             if (xdgConfigDirs.isEmpty()) {
                 dirs.append(QString::fromLatin1("/etc/xdg"));
             } else {
