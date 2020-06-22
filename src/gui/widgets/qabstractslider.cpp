@@ -799,16 +799,11 @@ void QAbstractSlider::keyPressEvent(QKeyEvent *ev)
 void QAbstractSlider::changeEvent(QEvent *ev)
 {
     Q_D(QAbstractSlider);
-    switch (ev->type()) {
-    case QEvent::EnabledChange:
-        if (!isEnabled()) {
-            d->repeatActionTimer.stop();
-            setSliderDown(false);
-        }
-        // fall through...
-    default:
-        QWidget::changeEvent(ev);
+    if (ev->type() == QEvent::EnabledChange && !isEnabled()) {
+        d->repeatActionTimer.stop();
+        setSliderDown(false);
     }
+    QWidget::changeEvent(ev);
 }
 
 /*! \fn int QAbstractSlider::minValue() const
