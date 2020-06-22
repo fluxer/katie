@@ -756,44 +756,41 @@ void QAbstractSlider::keyPressEvent(QKeyEvent *ev)
     SliderAction action = SliderNoAction;
 
     switch (ev->key()) {
-
         // It seems we need to use invertedAppearance for Left and right, otherwise, things look weird.
         case Qt::Key_Left:
             if (isRightToLeft())
-                action = d->invertedAppearance ? SliderSingleStepSub : SliderSingleStepAdd;
+                triggerAction(d->invertedAppearance ? SliderSingleStepSub : SliderSingleStepAdd);
             else
-                action = !d->invertedAppearance ? SliderSingleStepSub : SliderSingleStepAdd;
+                triggerAction(!d->invertedAppearance ? SliderSingleStepSub : SliderSingleStepAdd);
             break;
         case Qt::Key_Right:
             if (isRightToLeft())
-                action = d->invertedAppearance ? SliderSingleStepAdd : SliderSingleStepSub;
+                triggerAction(d->invertedAppearance ? SliderSingleStepAdd : SliderSingleStepSub);
             else
-                action = !d->invertedAppearance ? SliderSingleStepAdd : SliderSingleStepSub;
+                triggerAction(!d->invertedAppearance ? SliderSingleStepAdd : SliderSingleStepSub);
             break;
         case Qt::Key_Up:
-            action = d->invertedControls ? SliderSingleStepSub : SliderSingleStepAdd;
+            triggerAction(d->invertedControls ? SliderSingleStepSub : SliderSingleStepAdd);
             break;
         case Qt::Key_Down:
-            action = d->invertedControls ? SliderSingleStepAdd : SliderSingleStepSub;
+            triggerAction(d->invertedControls ? SliderSingleStepAdd : SliderSingleStepSub);
             break;
         case Qt::Key_PageUp:
-            action = d->invertedControls ? SliderPageStepSub : SliderPageStepAdd;
+            triggerAction(d->invertedControls ? SliderPageStepSub : SliderPageStepAdd);
             break;
         case Qt::Key_PageDown:
-            action = d->invertedControls ? SliderPageStepAdd : SliderPageStepSub;
+            triggerAction(d->invertedControls ? SliderPageStepAdd : SliderPageStepSub);
             break;
         case Qt::Key_Home:
-            action = SliderToMinimum;
+            triggerAction(SliderToMinimum);
             break;
         case Qt::Key_End:
-            action = SliderToMaximum;
+            triggerAction(SliderToMaximum);
             break;
         default:
             ev->ignore();
             break;
     }
-    if (action)
-        triggerAction(action);
 }
 
 /*!
