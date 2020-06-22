@@ -1186,9 +1186,6 @@ class QByteArray;
 Q_CORE_EXPORT QByteArray qgetenv(const char *varName);
 Q_CORE_EXPORT bool qputenv(const char *varName, const QByteArray& value);
 
-inline int qIntCast(double f) { return int(f); }
-inline int qIntCast(float f) { return int(f); }
-
 /*
   Reentrant versions of basic rand() functions for random number generation
 */
