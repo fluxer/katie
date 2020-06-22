@@ -349,11 +349,6 @@ void QSystemTrayIconPrivate::updateIcon_sys()
     sys->update();
 }
 
-void QSystemTrayIconPrivate::updateMenu_sys()
-{
-
-}
-
 void QSystemTrayIconPrivate::updateToolTip_sys()
 {
     if (!sys)

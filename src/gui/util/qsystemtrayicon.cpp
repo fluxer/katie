@@ -162,7 +162,6 @@ void QSystemTrayIcon::setContextMenu(QMenu *menu)
 {
     Q_D(QSystemTrayIcon);
     d->menu = menu;
-    d->updateMenu_sys();
 }
 
 /*!
