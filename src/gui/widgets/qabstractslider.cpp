@@ -753,8 +753,6 @@ void QAbstractSlider::wheelEvent(QWheelEvent * e)
 void QAbstractSlider::keyPressEvent(QKeyEvent *ev)
 {
     Q_D(QAbstractSlider);
-    SliderAction action = SliderNoAction;
-
     switch (ev->key()) {
         // It seems we need to use invertedAppearance for Left and right, otherwise, things look weird.
         case Qt::Key_Left:
