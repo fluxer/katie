@@ -1105,17 +1105,6 @@ void QDateTimeEdit::keyPressEvent(QKeyEvent *event)
   \reimp
 */
 
-#ifndef QT_NO_WHEELEVENT
-void QDateTimeEdit::wheelEvent(QWheelEvent *event)
-{
-    QAbstractSpinBox::wheelEvent(event);
-}
-#endif
-
-/*!
-  \reimp
-*/
-
 void QDateTimeEdit::focusInEvent(QFocusEvent *event)
 {
     Q_D(QDateTimeEdit);
