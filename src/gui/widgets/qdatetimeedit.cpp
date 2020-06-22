@@ -1045,12 +1045,6 @@ void QDateTimeEdit::keyPressEvent(QKeyEvent *event)
         event->ignore();
         emit editingFinished();
         return;
-    default:
-        if (!d->isSeparatorKey(event)) {
-            inserted = select = !event->text().isEmpty() && event->text().at(0).isPrint()
-                       && !(event->modifiers() & ~(Qt::ShiftModifier|Qt::KeypadModifier));
-            break;
-        }
     case Qt::Key_Left:
     case Qt::Key_Right:
         if (event->key() == Qt::Key_Left || event->key() == Qt::Key_Right) {
@@ -1074,6 +1068,12 @@ void QDateTimeEdit::keyPressEvent(QKeyEvent *event)
             focusNextPrevChild(forward);
 
         return; }
+    default:
+        if (!d->isSeparatorKey(event)) {
+            inserted = select = !event->text().isEmpty() && event->text().at(0).isPrint()
+                       && !(event->modifiers() & ~(Qt::ShiftModifier|Qt::KeypadModifier));
+            break;
+        }
     }
     QAbstractSpinBox::keyPressEvent(event);
     if (select && !d->edit->hasSelectedText()) {
