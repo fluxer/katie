@@ -468,10 +468,10 @@ QMatchData QCompletionEngine::filterHistory()
     Q_UNUSED(isDirModel)
     Q_UNUSED(isFsModel)
 #ifndef QT_NO_DIRMODEL
-    isDirModel = (qobject_cast<QDirModel *>(source) != 0);
+    isDirModel = (qobject_cast<QDirModel *>(source) != Q_NULLPTR);
 #endif
 #ifndef QT_NO_FILESYSTEMMODEL
-    isFsModel = (qobject_cast<QFileSystemModel *>(source) != 0);
+    isFsModel = (qobject_cast<QFileSystemModel *>(source) != Q_NULLPTR);
 #endif
     QVector<int> v;
     QIndexMapper im(v);
