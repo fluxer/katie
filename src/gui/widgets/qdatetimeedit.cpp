@@ -1897,8 +1897,7 @@ QDateTime QDateTimeEditPrivate::stepBy(int sectionIndex, int steps, bool test) c
         }
     }
 
-    const QDateTime ret = bound(v, value, steps).toDateTime().toTimeSpec(spec);
-    return ret;
+    return bound(v, value, steps).toDateTime().toTimeSpec(spec);
 }
 
 /*!
