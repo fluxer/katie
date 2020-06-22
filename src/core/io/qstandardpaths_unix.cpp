@@ -131,7 +131,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
             }
             // "and he MUST be the only one having read and write access to it. Its Unix access mode MUST be 0700."
             QFile file(xdgRuntimeDir);
-            const QFile::Permissions wantedPerms = QFile::ReadUser | QFile::WriteUser | QFile::ExeUser;
+            static const QFile::Permissions wantedPerms = QFile::ReadUser | QFile::WriteUser | QFile::ExeUser;
             if (file.permissions() != wantedPerms && !file.setPermissions(wantedPerms)) {
                 qWarning("QStandardPaths: wrong permissions on runtime directory %s", qPrintable(xdgRuntimeDir));
                 return QString();
