@@ -77,10 +77,7 @@ public:
     enum Type {
         Box,
         Multi,
-
-        Freetype,
-
-        TestFontEngine = 0x1000
+        Freetype
     };
 
     enum GlyphFormat {
@@ -348,13 +345,6 @@ protected:
     friend class QPSPrintEngineFontMulti;
     virtual void loadEngine(int at) = 0;
     QVector<QFontEngine *> engines;
-};
-
-class QTestFontEngine : public QFontEngineBox
-{
-public:
-    QTestFontEngine(int size) : QFontEngineBox(size) {}
-    virtual Type type() const { return TestFontEngine; }
 };
 
 QT_END_NAMESPACE

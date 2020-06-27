@@ -2199,7 +2199,6 @@ void QX11PaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
     const QTextItemInt &ti = static_cast<const QTextItemInt &>(textItem);
 
     switch(ti.fontEngine->type()) {
-    case QFontEngine::TestFontEngine:
     case QFontEngine::Box:
         d_func()->drawBoxTextItem(p, ti);
         break;
