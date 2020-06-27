@@ -843,7 +843,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextformat.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextobject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextoption.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfragmentmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocument.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocument_p.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtexthtmlparser.cpp
