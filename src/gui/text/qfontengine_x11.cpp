@@ -189,34 +189,23 @@ void QFontEngineMultiFT::loadEngine(int at)
 // ------------------------------------------------------------------
 // X11 FT engine
 // ------------------------------------------------------------------
-
-
-
-static void qt_x11ft_convert_pattern(FcPattern *pattern, QByteArray *file_name, int *index, bool *antialias)
-{
-    FcChar8 *fileName;
-    FcPatternGetString(pattern, FC_FILE, 0, &fileName);
-    *file_name = (const char *)fileName;
-    if (!FcPatternGetInteger(pattern, FC_INDEX, 0, index))
-        index = 0;
-    FcBool b;
-    if (FcPatternGetBool(pattern, FC_ANTIALIAS, 0, &b) == FcResultMatch)
-        *antialias = b;
-}
-
-
 QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int screen)
     : QFontEngineFT(fd)
 {
 //     FcPatternPrint(pattern);
-
     bool antialias = qt_x11Data->fc_antialias;
-    QByteArray file_name;
-    int face_index;
-    qt_x11ft_convert_pattern(pattern, &file_name, &face_index, &antialias);
     QFontEngine::FaceId face_id;
-    face_id.filename = file_name;
-    face_id.index = face_index;
+    FcChar8 *fileName;
+    FcBool antiAlias;
+
+    FcPatternGetString(pattern, FC_FILE, 0, &fileName);
+    face_id.filename = (const char *)fileName;
+
+    if (!FcPatternGetInteger(pattern, FC_INDEX, 0, &face_id.index))
+        face_id.index = 0;
+
+    if (FcPatternGetBool(pattern, FC_ANTIALIAS, 0, &antiAlias) == FcResultMatch)
+        antialias = antiAlias;
 
     canUploadGlyphsToServer = QApplication::testAttribute(Qt::AA_X11InitThreads) || (qApp->thread() == QThread::currentThread());
 
