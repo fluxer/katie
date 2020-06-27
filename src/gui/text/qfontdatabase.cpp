@@ -523,7 +523,7 @@ struct QtFontDesc
 
 static void match(int script, const QFontDef &request,
                   const QString &family_name, const QString &foundry_name, int force_encoding_id,
-                  QtFontDesc *desc, const QList<int> &blacklistedFamilies = QList<int>());
+                  QtFontDesc *desc);
 
 #if defined(Q_WS_X11)
 static void getEngineData(const QFontPrivate *d, const QFontCache::Key &key)
@@ -822,7 +822,7 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
 */
 static void match(int script, const QFontDef &request,
                   const QString &family_name, const QString &foundry_name, int force_encoding_id,
-                  QtFontDesc *desc, const QList<int> &blacklistedFamilies)
+                  QtFontDesc *desc)
 {
     Q_UNUSED(force_encoding_id);
 
@@ -864,8 +864,6 @@ static void match(int script, const QFontDef &request,
 
     QFontDatabasePrivate *db = privateDb();
     for (int x = 0; x < db->count; ++x) {
-        if (blacklistedFamilies.contains(x))
-            continue;
         QtFontDesc test;
         test.family = db->families[x];
         test.familyIndex = x;
@@ -873,8 +871,6 @@ static void match(int script, const QFontDef &request,
         if (!family_name.isEmpty()
             && test.family->name.compare(family_name, Qt::CaseInsensitive) != 0)
             continue;
-
-        uint score_adjust = 0;
 
         // as we know the script is supported, we can be sure
         // to find a matching font here.
@@ -889,7 +885,6 @@ static void match(int script, const QFontDef &request,
                                    QString(), styleKey, request.pixelSize,
                                    pitch, &test, force_encoding_id);
         }
-        newscore += score_adjust;
 
         if (newscore < score) {
             score = newscore;
