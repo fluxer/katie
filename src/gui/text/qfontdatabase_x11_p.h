@@ -677,7 +677,7 @@ static void loadFontConfig()
             FcPatternGetDouble (fonts->fonts[i], FC_PIXEL_SIZE, 0, &pixel_size);
             size = style->pixelSize((int)pixel_size, true);
         }
-        QtFontEncoding *enc = size->encodingID(-1, 0, 0, 0, 0, true);
+        QtFontEncoding *enc = size->encodingID(-1, true);
         enc->pitch = (spacing_value >= FC_CHARCELL ? 'c' :
                       (spacing_value >= FC_MONO ? 'm' : 'p'));
     }
@@ -696,7 +696,7 @@ static void loadFontConfig()
             QtFontStyle *style = foundry->style(styleKey, QString(), true);
             style->smoothScalable = true;
             QtFontSize *size = style->pixelSize(SMOOTH_SCALABLE, true);
-            QtFontEncoding *enc = size->encodingID(-1, 0, 0, 0, 0, true);
+            QtFontEncoding *enc = size->encodingID(-1, true);
             enc->pitch = (DefaultFontTbl[i].fixedpitch ? 'm' : 'p');
         }
     }
@@ -741,7 +741,7 @@ static void initializeFontDb()
 
                 QtFontSize *size = style->pixelSize(SMOOTH_SCALABLE);
                 if (! size) continue; // should not happen
-                QtFontEncoding *enc = size->encodingID(-1, 0, 0, 0, 0, true);
+                QtFontEncoding *enc = size->encodingID(-1, true);
                 if (! enc) continue; // should not happen either
 
                 QtFontStyle::Key key = style->key;
@@ -762,7 +762,7 @@ static void initializeFontDb()
                 equiv->smoothScalable = true;
 
                 QtFontSize *equiv_size = equiv->pixelSize(SMOOTH_SCALABLE, true);
-                QtFontEncoding *equiv_enc = equiv_size->encodingID(-1, 0, 0, 0, 0, true);
+                QtFontEncoding *equiv_enc = equiv_size->encodingID(-1, true);
 
                 // keep the same pitch
                 equiv_enc->pitch = enc->pitch;
@@ -927,7 +927,7 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, int script, const QFontDe
             FcPatternAdd(pattern, FC_FAMILY, value, FcTrue);
         }
         if (i == 0) {
-            QT_PREPEND_NAMESPACE(match)(script, request, family, foundry, -1, &desc);
+            QT_PREPEND_NAMESPACE(match)(script, request, family, foundry, &desc);
             if (!foundry.isEmpty()) {
                 QByteArray cs = foundry.toUtf8();
                 value.u.s = (const FcChar8 *)cs.data();

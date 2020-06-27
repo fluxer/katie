@@ -125,11 +125,6 @@ QFont::Weight weightFromInteger(int weight)
 struct QtFontEncoding
 {
     signed int encoding : 16;
-
-    uint xpoint   : 16;
-    uint xres     : 8;
-    uint yres     : 8;
-    uint avgwidth : 16;
     uchar pitch   : 8;
 };
 
@@ -137,8 +132,7 @@ struct  QtFontSize
 {
 #ifdef Q_WS_X11
     QtFontEncoding *encodings;
-    QtFontEncoding *encodingID(int id, uint xpoint = 0, uint xres = 0,
-                                uint yres = 0, uint avgwidth = 0, bool add = false);
+    QtFontEncoding *encodingID(int id, bool add = false);
     unsigned short count : 16;
 #endif // Q_WS_X11
 
@@ -147,10 +141,8 @@ struct  QtFontSize
 
 
 #ifdef Q_WS_X11
-QtFontEncoding *QtFontSize::encodingID(int id, uint xpoint, uint xres,
-                                        uint yres, uint avgwidth, bool add)
+QtFontEncoding *QtFontSize::encodingID(int id, bool add)
 {
-    // we don't match using the xpoint, xres and yres parameters, only the id
     for (int i = 0; i < count; ++i) {
         if (encodings[i].encoding == id)
             return encodings + i;
@@ -166,10 +158,6 @@ QtFontEncoding *QtFontSize::encodingID(int id, uint xpoint, uint xres,
         encodings = newEncodings;
     }
     encodings[count].encoding = id;
-    encodings[count].xpoint = xpoint;
-    encodings[count].xres = xres;
-    encodings[count].yres = yres;
-    encodings[count].avgwidth = avgwidth;
     encodings[count].pitch = '*';
     return encodings + count++;
 }
@@ -521,9 +509,8 @@ struct QtFontDesc
     int familyIndex;
 };
 
-static void match(int script, const QFontDef &request,
-                  const QString &family_name, const QString &foundry_name, int force_encoding_id,
-                  QtFontDesc *desc);
+static void match(int script, const QFontDef &request, const QString &family_name,
+                  const QString &foundry_name, QtFontDesc *desc);
 
 #if defined(Q_WS_X11)
 static void getEngineData(const QFontPrivate *d, const QFontCache::Key &key)
@@ -630,15 +617,8 @@ static QtFontStyle *bestStyle(QtFontFoundry *foundry, const QtFontStyle::Key &st
 }
 
 #if defined(Q_WS_X11)
-static QtFontEncoding *findEncoding(QtFontSize *size, int force_encoding_id)
+static inline QtFontEncoding *findEncoding(QtFontSize *size)
 {
-    if (force_encoding_id >= 0) {
-        QtFontEncoding *encoding = size->encodingID(force_encoding_id);
-        if (!encoding)
-            FM_DEBUG("            required encoding_id not available");
-        return encoding;
-    }
-
     return size->encodingID(-1); // -1 == prefer Freetype;
 }
 #endif // Q_WS_X11
@@ -647,7 +627,7 @@ static
 unsigned int bestFoundry(unsigned int score, int styleStrategy,
                          const QtFontFamily *family, const QString &foundry_name,
                          QtFontStyle::Key styleKey, int pixelSize, char pitch,
-                         QtFontDesc *desc, int force_encoding_id)
+                         QtFontDesc *desc)
 {
     desc->foundry = 0;
     desc->style = 0;
@@ -711,8 +691,7 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
             unsigned int distance = ~0u;
             for (int x = 0; x < style->count; ++x) {
 #ifdef Q_WS_X11
-                encoding =
-                    findEncoding(style->pixelSizes + x, force_encoding_id);
+                encoding = findEncoding(style->pixelSizes + x);
                 if (!encoding) {
                     FM_DEBUG("          size %3d does not support the script we want",
                              style->pixelSizes[x].pixelSize);
@@ -755,7 +734,7 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
 
 #ifdef Q_WS_X11
         if (size) {
-            encoding = findEncoding(size, force_encoding_id);
+            encoding = findEncoding(size);
             if (!encoding) size = 0;
         }
         if (! encoding) {
@@ -820,12 +799,9 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
 
     Tries to find the best match for a given request and family/foundry
 */
-static void match(int script, const QFontDef &request,
-                  const QString &family_name, const QString &foundry_name, int force_encoding_id,
-                  QtFontDesc *desc)
+static void match(int script, const QFontDef &request, const QString &family_name,
+                  const QString &foundry_name, QtFontDesc *desc)
 {
-    Q_UNUSED(force_encoding_id);
-
     QtFontStyle::Key styleKey;
     styleKey.style = request.style;
     styleKey.weight = request.weight;
@@ -843,11 +819,6 @@ static void match(int script, const QFontDef &request,
              family_name.isEmpty() ? "-- first in script --" : family_name.toLatin1().constData(),
              foundry_name.isEmpty() ? "-- any --" : foundry_name.toLatin1().constData(),
              script, request.weight, request.style, request.stretch, request.pixelSize, pitch);
-#if defined(FONT_MATCH_DEBUG) && defined(Q_WS_X11)
-    if (force_encoding_id >= 0) {
-        FM_DEBUG("    required encoding: %d", force_encoding_id);
-    }
-#endif
 
     desc->family = 0;
     desc->foundry = 0;
@@ -877,13 +848,13 @@ static void match(int script, const QFontDef &request,
         unsigned int newscore =
             bestFoundry(score, request.styleStrategy,
                         test.family, foundry_name, styleKey, request.pixelSize, pitch,
-                        &test, force_encoding_id);
+                        &test);
         if (test.foundry == 0) {
             // the specific foundry was not found, so look for
             // any foundry matching our requirements
             newscore = bestFoundry(score, request.styleStrategy, test.family,
                                    QString(), styleKey, request.pixelSize,
-                                   pitch, &test, force_encoding_id);
+                                   pitch, &test);
         }
 
         if (newscore < score) {
