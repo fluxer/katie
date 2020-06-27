@@ -425,10 +425,6 @@ public:
     QTextEngine(const QString &str, const QFont &f);
     ~QTextEngine();
 
-    enum Mode {
-        WidthOnly = 0x07
-    };
-
     // keep in sync with QAbstractFontEngine::TextShapingFlag!!
     enum ShaperFlag {
         RightToLeft = 0x0001,
