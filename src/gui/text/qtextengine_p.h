@@ -454,8 +454,7 @@ public:
     glyph_metrics_t tightBoundingBox(int from,  int len) const;
 
     int length(int item) const {
-        const QScriptItem &si = layoutData->items[item];
-        int from = si.position;
+        int from = layoutData->items[item].position;
         item++;
         return (item < layoutData->items.size() ? layoutData->items[item].position : layoutData->string.length()) - from;
     }
