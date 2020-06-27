@@ -64,17 +64,6 @@ QT_BEGIN_NAMESPACE
 extern double qt_pointSize(double pixelSize, int dpi);
 extern double qt_pixelSize(double pointSize, int dpi);
 
-static inline void capitalize (char *s)
-{
-    bool space = true;
-    while(*s) {
-        if (space)
-            *s = toupper(*s);
-        space = (*s == ' ');
-        ++s;
-    }
-}
-
 // generated via util/unicode/makeencodings
 static const struct XlfdTblData {
     const char *name;
@@ -616,7 +605,6 @@ static void loadFontConfig()
     for (int i = 0; i < fonts->nfont; i++) {
         if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &value) != FcResultMatch)
             continue;
-        //         capitalize(value);
         familyName = QString::fromUtf8((const char *)value);
         slant_value = FC_SLANT_ROMAN;
         weight_value = FC_WEIGHT_MEDIUM;
