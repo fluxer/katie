@@ -167,8 +167,6 @@ public:
         return boundingBox(glyph, matrix);
     }
 
-    virtual void removeGlyphFromCache(glyph_t);
-
     virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const = 0;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const = 0;
     virtual glyph_metrics_t boundingBox(glyph_t glyph, const QTransform &matrix);
