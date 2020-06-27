@@ -107,21 +107,6 @@ static int getFontWeight(const QString &weightString)
     return (int) QFont::Normal;
 }
 
-// convert 0 ~ 1000 integer to QFont::Weight
-QFont::Weight weightFromInteger(int weight)
-{
-    if (weight < 400)
-        return QFont::Light;
-    else if (weight < 600)
-        return QFont::Normal;
-    else if (weight < 700)
-        return QFont::DemiBold;
-    else if (weight < 800)
-        return QFont::Bold;
-    else
-        return QFont::Black;
-}
-
 struct QtFontEncoding
 {
     signed int encoding : 16;
