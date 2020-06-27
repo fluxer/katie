@@ -189,18 +189,13 @@ struct QtFontStyle
     };
 
     QtFontStyle(const Key &k)
-        : key(k), bitmapScalable(false), smoothScalable(false),
+        : key(k), smoothScalable(false),
           count(0), pixelSizes(0)
     {
-#if defined(Q_WS_X11)
-        weightName = setwidthName = 0;
-#endif // Q_WS_X11
     }
 
     ~QtFontStyle() {
 #ifdef Q_WS_X11
-        delete [] weightName;
-        delete [] setwidthName;
         while (count) {
             // bitfield count-- in while condition does not work correctly in mwccsym2
             count--;
@@ -211,16 +206,10 @@ struct QtFontStyle
     }
 
     Key key;
-    bool bitmapScalable : 1;
-    bool smoothScalable : 1;
-    signed int count    : 30;
+    bool smoothScalable;
+    int count;
     QtFontSize *pixelSizes;
     QString styleName;
-
-#ifdef Q_WS_X11
-    const char *weightName;
-    const char *setwidthName;
-#endif // Q_WS_X11
 
     QtFontSize *pixelSize(unsigned short size, bool = false);
 };
@@ -673,20 +662,11 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
             }
         }
 
-        // 3. see if we have a bitmap scalable font
-        if (!size && style->bitmapScalable && (styleStrategy & QFont::PreferMatch)) {
-            size = style->pixelSize(0);
-            if (size) {
-                FM_DEBUG("          found bitmap scalable font (%d pixels)", pixelSize);
-                px = pixelSize;
-            }
-        }
-
 #ifdef Q_WS_X11
         QtFontEncoding *encoding = 0;
 #endif
 
-        // 4. find closest size match
+        // 3. find closest size match
         if (! size) {
             unsigned int distance = ~0u;
             for (int x = 0; x < style->count; ++x) {
@@ -721,15 +701,7 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
                 continue;
             }
 
-            if (style->bitmapScalable && ! (styleStrategy & QFont::PreferQuality) &&
-                (distance * 10 / pixelSize) >= 2) {
-                // the closest size is not close enough, go ahead and
-                // use a bitmap scaled font
-                size = style->pixelSize(0);
-                px = pixelSize;
-            } else {
-                px = size->pixelSize;
-            }
+            px = size->pixelSize;
         }
 
 #ifdef Q_WS_X11
@@ -1083,30 +1055,6 @@ bool QFontDatabase::isFixedPitch(const QString &family,
 bool QFontDatabase::isBitmapScalable(const QString &family,
                                       const QString &style) const
 {
-    QString familyName, foundryName;
-    parseFontName(family, foundryName, familyName);
-
-    QMutexLocker locker(fontDatabaseMutex());
-
-    createDatabase();
-
-    QtFontStyle::Key styleKey(style);
-
-    QtFontFamily *f = d->family(familyName);
-    if (!f) return false;
-
-    for (int j = 0; j < f->count; j++) {
-        QtFontFoundry *foundry = f->foundries[j];
-        if (foundryName.isEmpty() || foundry->name.compare(foundryName, Qt::CaseInsensitive) == 0) {
-            for (int k = 0; k < foundry->count; k++)
-                if ((style.isEmpty() ||
-                     foundry->styles[k]->styleName == style ||
-                     foundry->styles[k]->key == styleKey)
-                    && foundry->styles[k]->bitmapScalable && !foundry->styles[k]->smoothScalable) {
-                    return true;
-                }
-        }
-    }
     return false;
 }
 

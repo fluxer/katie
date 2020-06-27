@@ -784,15 +784,10 @@ static void initializeFontDb()
             FD_DEBUG("\t\t'%s'", foundry->name.toLatin1().constData());
             for (int s = 0; s < foundry->count; s++) {
                 QtFontStyle *style = foundry->styles[s];
-                FD_DEBUG("\t\t\tstyle: style=%d weight=%d (%s)\n"
-                         "\t\t\tstretch=%d (%s)",
-                         style->key.style, style->key.weight,
-                         style->weightName, style->key.stretch,
-                         style->setwidthName ? style->setwidthName : "nil");
+                FD_DEBUG("\t\t\tstyle: style=%d weight=%d stretch=%d",
+                         style->key.style, style->key.weight, style->key.stretch);
                 if (style->smoothScalable)
                     FD_DEBUG("\t\t\t\tsmooth scalable");
-                else if (style->bitmapScalable)
-                    FD_DEBUG("\t\t\t\tbitmap scalable");
                 if (style->pixelSizes) {
                     qDebug("\t\t\t\t%d pixel sizes", style->count);
                     for (int z = 0; z < style->count; ++z) {
