@@ -346,55 +346,6 @@ static WId xdndProxy(WId w)
     return proxy_id;
 }
 
-static bool xdndEnable(QWidget* w, bool on)
-{
-    DNDDEBUG << "xdndEnable" << w << on;
-    if (on) {
-        QWidget * xdnd_widget = 0;
-        if ((w->windowType() == Qt::Desktop)) {
-            if (xdnd_data.desktop_proxy) // *WE* already have one.
-                return false;
-
-            // As per Xdnd4, use XdndProxy
-            XGrabServer(qt_x11Data->display);
-            Q_ASSERT(w->testAttribute(Qt::WA_WState_Created));
-            WId proxy_id = xdndProxy(w->effectiveWinId());
-
-            if (!proxy_id) {
-                xdnd_widget = xdnd_data.desktop_proxy = new QWidget;
-                proxy_id = xdnd_data.desktop_proxy->effectiveWinId();
-                XChangeProperty (qt_x11Data->display, w->effectiveWinId(), ATOM(XdndProxy),
-                                 XA_WINDOW, 32, PropModeReplace, (unsigned char *)&proxy_id, 1);
-                XChangeProperty (qt_x11Data->display, proxy_id, ATOM(XdndProxy),
-                                 XA_WINDOW, 32, PropModeReplace, (unsigned char *)&proxy_id, 1);
-            }
-
-            XUngrabServer(qt_x11Data->display);
-        } else {
-            xdnd_widget = w->window();
-        }
-        if (xdnd_widget) {
-            DNDDEBUG << "setting XdndAware for" << xdnd_widget << xdnd_widget->effectiveWinId();
-            Atom atm = (Atom)xdnd_version;
-            Q_ASSERT(xdnd_widget->testAttribute(Qt::WA_WState_Created));
-            XChangeProperty(qt_x11Data->display, xdnd_widget->effectiveWinId(), ATOM(XdndAware),
-                             XA_ATOM, 32, PropModeReplace, (unsigned char *)&atm, 1);
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        if ((w->windowType() == Qt::Desktop)) {
-            XDeleteProperty(qt_x11Data->display, w->internalWinId(), ATOM(XdndProxy));
-            delete xdnd_data.desktop_proxy;
-            xdnd_data.desktop_proxy = 0;
-        } else {
-            DNDDEBUG << "not deleting XDndAware";
-        }
-        return true;
-    }
-}
-
 QByteArray QX11Data::xdndAtomToString(Atom a)
 {
     if (!a) return 0;
@@ -618,7 +569,7 @@ QVariant QX11Data::xdndMimeConvertToFormat(Atom a, const QByteArray &data, const
     return QVariant();
 }
 
-//$$$ middle of xdndObtainData
+//$$$ middle of retrieveData_sys
 Atom QX11Data::xdndMimeAtomForFormat(const QString &format, QVariant::Type requestedType, const QList<Atom> &atoms, QByteArray *encoding)
 {
     encoding->clear();
@@ -1127,7 +1078,7 @@ void QX11Data::xdndHandleDrop(const XEvent * xe, bool passive)
         const int at = findXdndDropTransactionByTime(qt_xdnd_target_current_time);
         if (at != -1) {
             dropData = QDragManager::dragPrivate(qt_x11Data->dndDropTransactions.at(at).object)->data;
-            // Can't use the source QMimeData if we need the image conversion code from xdndObtainData
+            // Can't use the source QMimeData if we need the image conversion code from retrieveData_sys
             if (dropData && dropData->hasImage())
                 dropData = 0;
         }
@@ -1844,73 +1795,6 @@ void QX11Data::xdndHandleSelectionRequest(const XSelectionRequestEvent * req)
     XSendEvent(qt_x11Data->display, req->requestor, False, 0, &evt);
 }
 
-static QVariant xdndObtainData(const char *format, QVariant::Type requestedType)
-{
-    QByteArray result;
-
-    QWidget* w;
-    QDragManager *manager = QDragManager::self();
-    if (qt_xdnd_dragsource_xid && manager->object &&
-         (w=QWidget::find(qt_xdnd_dragsource_xid))
-         && (!(w->windowType() == Qt::Desktop) || w->acceptDrops()))
-    {
-        QDragPrivate * o = QDragManager::self()->dragPrivate();
-        const QString mimeType = QString::fromLatin1(format);
-        if (o->data->hasFormat(mimeType)) {
-            result = o->data->data(mimeType);
-        } else if (mimeType.startsWith(QLatin1String("image/")) && o->data->hasImage()) {
-            // ### duplicated from QInternalMimeData::renderDataHelper
-            QImage image = qvariant_cast<QImage>(o->data->imageData());
-            QBuffer buf(&result);
-            buf.open(QBuffer::WriteOnly);
-            image.save(&buf, mimeType.mid(mimeType.indexOf(QLatin1Char('/')) + 1).toLatin1().toUpper());
-        }
-        return result;
-    }
-
-    QList<Atom> atoms;
-    int i = 0;
-    while ((qt_xdnd_types[i])) {
-        atoms.append(qt_xdnd_types[i]);
-        ++i;
-    }
-    QByteArray encoding;
-    Atom a = qt_x11Data->xdndMimeAtomForFormat(QLatin1String(format), requestedType, atoms, &encoding);
-    if (!a)
-        return result;
-
-    if (XGetSelectionOwner(qt_x11Data->display, ATOM(XdndSelection)) == XNone)
-        return result; // should never happen?
-
-    QWidget* tw = qt_xdnd_current_widget;
-    if (!qt_xdnd_current_widget || (qt_xdnd_current_widget->windowType() == Qt::Desktop))
-        tw = new QWidget;
-
-    XConvertSelection(qt_x11Data->display, ATOM(XdndSelection), a, ATOM(XdndSelection), tw->effectiveWinId(),
-                      qt_xdnd_target_current_time);
-    XFlush(qt_x11Data->display);
-
-    XEvent xevent;
-    bool got=qt_x11Data->clipboardWaitForEvent(tw->effectiveWinId(), SelectionNotify, &xevent, 5000);
-    if (got) {
-        Atom type;
-
-        if (qt_x11Data->clipboardReadProperty(tw->effectiveWinId(), ATOM(XdndSelection), true, &result, 0, &type, 0)) {
-            if (type == ATOM(INCR)) {
-                int nbytes = result.size() >= 4 ? *((int*)result.data()) : 0;
-                result = qt_x11Data->clipboardReadIncrementalProperty(tw->effectiveWinId(), ATOM(XdndSelection), nbytes, false);
-            } else if (type != a && type != XNone) {
-                DEBUG("Qt clipboard: unknown atom %ld", type);
-            }
-        }
-    }
-    if (!qt_xdnd_current_widget || (qt_xdnd_current_widget->windowType() == Qt::Desktop))
-        delete tw;
-
-    return qt_x11Data->xdndMimeConvertToFormat(a, result, QLatin1String(format), requestedType, encoding);
-}
-
-
 /*
   Enable drag and drop for widget w by installing the proper
   properties on w's toplevel widget.
@@ -1923,7 +1807,51 @@ bool QX11Data::dndEnable(QWidget* w, bool on)
         return true; // been there, done that
     ((QExtraWidget*)w)->topData()->dnd = on ? true : false;
 
-    return xdndEnable(w, on);
+    DNDDEBUG << "dndEnable" << w << on;
+    if (on) {
+        QWidget * xdnd_widget = 0;
+        if ((w->windowType() == Qt::Desktop)) {
+            if (xdnd_data.desktop_proxy) // *WE* already have one.
+                return false;
+
+            // As per Xdnd4, use XdndProxy
+            XGrabServer(qt_x11Data->display);
+            Q_ASSERT(w->testAttribute(Qt::WA_WState_Created));
+            WId proxy_id = xdndProxy(w->effectiveWinId());
+
+            if (!proxy_id) {
+                xdnd_widget = xdnd_data.desktop_proxy = new QWidget;
+                proxy_id = xdnd_data.desktop_proxy->effectiveWinId();
+                XChangeProperty (qt_x11Data->display, w->effectiveWinId(), ATOM(XdndProxy),
+                                 XA_WINDOW, 32, PropModeReplace, (unsigned char *)&proxy_id, 1);
+                XChangeProperty (qt_x11Data->display, proxy_id, ATOM(XdndProxy),
+                                 XA_WINDOW, 32, PropModeReplace, (unsigned char *)&proxy_id, 1);
+            }
+
+            XUngrabServer(qt_x11Data->display);
+        } else {
+            xdnd_widget = w->window();
+        }
+        if (xdnd_widget) {
+            DNDDEBUG << "setting XdndAware for" << xdnd_widget << xdnd_widget->effectiveWinId();
+            Atom atm = (Atom)xdnd_version;
+            Q_ASSERT(xdnd_widget->testAttribute(Qt::WA_WState_Created));
+            XChangeProperty(qt_x11Data->display, xdnd_widget->effectiveWinId(), ATOM(XdndAware),
+                             XA_ATOM, 32, PropModeReplace, (unsigned char *)&atm, 1);
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        if ((w->windowType() == Qt::Desktop)) {
+            XDeleteProperty(qt_x11Data->display, w->internalWinId(), ATOM(XdndProxy));
+            delete xdnd_data.desktop_proxy;
+            xdnd_data.desktop_proxy = 0;
+        } else {
+            DNDDEBUG << "not deleting XDndAware";
+        }
+        return true;
+    }
 }
 
 Qt::DropAction QDragManager::drag(QDrag * o)
@@ -2042,7 +1970,67 @@ void QDragManager::updatePixmap()
 
 QVariant QDropData::retrieveData_sys(const QString &mimetype, QVariant::Type requestedType) const
 {
-    return xdndObtainData(mimetype.toLatin1(), requestedType);
+    QByteArray result;
+
+    QWidget* w;
+    QDragManager *manager = QDragManager::self();
+    if (qt_xdnd_dragsource_xid && manager->object &&
+         (w=QWidget::find(qt_xdnd_dragsource_xid))
+         && (!(w->windowType() == Qt::Desktop) || w->acceptDrops()))
+    {
+        QDragPrivate * o = QDragManager::self()->dragPrivate();
+        if (o->data->hasFormat(mimetype)) {
+            result = o->data->data(mimetype);
+        } else if (mimetype.startsWith(QLatin1String("image/")) && o->data->hasImage()) {
+            // ### duplicated from QInternalMimeData::renderDataHelper
+            QImage image = qvariant_cast<QImage>(o->data->imageData());
+            QBuffer buf(&result);
+            buf.open(QBuffer::WriteOnly);
+            image.save(&buf, mimetype.mid(mimetype.indexOf(QLatin1Char('/')) + 1).toLatin1().toUpper());
+        }
+        return result;
+    }
+
+    QList<Atom> atoms;
+    int i = 0;
+    while ((qt_xdnd_types[i])) {
+        atoms.append(qt_xdnd_types[i]);
+        ++i;
+    }
+    QByteArray encoding;
+    Atom a = qt_x11Data->xdndMimeAtomForFormat(mimetype, requestedType, atoms, &encoding);
+    if (!a)
+        return result;
+
+    if (XGetSelectionOwner(qt_x11Data->display, ATOM(XdndSelection)) == XNone)
+        return result; // should never happen?
+
+    QWidget* tw = qt_xdnd_current_widget;
+    if (!qt_xdnd_current_widget || (qt_xdnd_current_widget->windowType() == Qt::Desktop))
+        tw = new QWidget;
+
+    XConvertSelection(qt_x11Data->display, ATOM(XdndSelection), a, ATOM(XdndSelection), tw->effectiveWinId(),
+                      qt_xdnd_target_current_time);
+    XFlush(qt_x11Data->display);
+
+    XEvent xevent;
+    bool got=qt_x11Data->clipboardWaitForEvent(tw->effectiveWinId(), SelectionNotify, &xevent, 5000);
+    if (got) {
+        Atom type;
+
+        if (qt_x11Data->clipboardReadProperty(tw->effectiveWinId(), ATOM(XdndSelection), true, &result, 0, &type, 0)) {
+            if (type == ATOM(INCR)) {
+                int nbytes = result.size() >= 4 ? *((int*)result.data()) : 0;
+                result = qt_x11Data->clipboardReadIncrementalProperty(tw->effectiveWinId(), ATOM(XdndSelection), nbytes, false);
+            } else if (type != a && type != XNone) {
+                DEBUG("Qt clipboard: unknown atom %ld", type);
+            }
+        }
+    }
+    if (!qt_xdnd_current_widget || (qt_xdnd_current_widget->windowType() == Qt::Desktop))
+        delete tw;
+
+    return qt_x11Data->xdndMimeConvertToFormat(a, result, mimetype, requestedType, encoding);
 }
 
 bool QDropData::hasFormat_sys(const QString &format) const
