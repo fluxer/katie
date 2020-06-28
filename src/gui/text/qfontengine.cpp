@@ -509,8 +509,6 @@ Q_GUI_EXPORT void qt_addBitmapToPath(qreal x0, qreal y0, const uchar *image_data
 void QFontEngine::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nGlyphs,
                                   QPainterPath *path, QTextItem::RenderFlags flags)
 {
-    qreal x = positions[0].x.toReal();
-    qreal y = positions[0].y.toReal();
     QVarLengthGlyphLayoutArray g(nGlyphs);
 
     for (int i = 0; i < nGlyphs; ++i) {
@@ -526,8 +524,8 @@ void QFontEngine::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int n
 
     // TODO what to do with 'flags' ??
     Q_UNUSED(flags);
-    QFixed advanceX = QFixed::fromReal(x);
-    QFixed advanceY = QFixed::fromReal(y);
+    QFixed advanceX = positions[0].x;
+    QFixed advanceY = positions[0].y;
     for (int i=0; i < g.numGlyphs; ++i) {
         glyph_metrics_t metrics = boundingBox(g.glyphs[i]);
         if (metrics.width.value() == 0 || metrics.height.value() == 0) {
