@@ -44,7 +44,7 @@ QT_BEGIN_NAMESPACE
 class QCryptographicHashPrivate;
 class QIODevice;
 
-class Q_CORE_EXPORT QCryptographicHash
+class Q_NETWORK_EXPORT QCryptographicHash
 {
 public:
     enum Algorithm {
