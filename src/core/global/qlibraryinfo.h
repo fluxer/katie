@@ -41,9 +41,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#ifndef QT_NO_SETTINGS
-
 class Q_CORE_EXPORT QLibraryInfo
 {
 public:
@@ -72,8 +69,6 @@ public:
 private:
     Q_DISABLE_COPY(QLibraryInfo);
 };
-
-#endif /* QT_NO_SETTINGS */
 
 QT_END_NAMESPACE
 
