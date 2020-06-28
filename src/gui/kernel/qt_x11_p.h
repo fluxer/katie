@@ -168,7 +168,7 @@ struct QX11Data
     static void xdndSetup();
     void xdndHandleEnter(const XEvent *);
     void xdndHandlePosition(QWidget *, const XEvent *, bool);
-    void xdndHandleStatus(QWidget *, const XEvent *, bool);
+    void xdndHandleStatus(const XEvent *);
     void xdndHandleLeave(QWidget *, const XEvent *);
     void xdndHandleDrop(const XEvent *, bool);
     void xdndHandleFinished(const XEvent *, bool);

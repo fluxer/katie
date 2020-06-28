@@ -158,7 +158,7 @@ static Window findXdndAwareParent(Window window)
 // and all this stuff is copied -into- qapp_x11.cpp
 
 static void handle_xdnd_position(QWidget *, const XEvent *, bool);
-static void handle_xdnd_status(QWidget * w, const XEvent * xe, bool /*passive*/);
+static void handle_xdnd_status(const XEvent * xe);
 
 const int xdnd_version = 5;
 
@@ -890,7 +890,7 @@ static void handle_xdnd_position(QWidget *w, const XEvent * xe, bool passive)
 
     DEBUG() << "sending XdndStatus";
     if (source)
-        handle_xdnd_status(source, (const XEvent *)&response, passive);
+        handle_xdnd_status((const XEvent *)&response);
     else
         XSendEvent(qt_x11Data->display, qt_xdnd_dragsource_xid, False, NoEventMask, (XEvent*)&response);
 }
@@ -917,7 +917,7 @@ void QX11Data::xdndHandlePosition(QWidget * w, const XEvent * xe, bool passive)
 }
 
 
-static void handle_xdnd_status(QWidget *, const XEvent * xe, bool)
+static void handle_xdnd_status(const XEvent * xe)
 {
     const unsigned long *l = (const unsigned long *)xe->xclient.data.l;
     // ignore late status messages
@@ -953,13 +953,13 @@ static Bool xdnd_status_scanner(Display *, XEvent *event, XPointer)
     return false;
 }
 
-void QX11Data::xdndHandleStatus(QWidget * w, const XEvent * xe, bool passive)
+void QX11Data::xdndHandleStatus(const XEvent * xe)
 {
     DEBUG("xdndHandleStatus");
     while (XCheckIfEvent(qt_x11Data->display, (XEvent *)xe, xdnd_status_scanner, 0))
         ;
 
-    handle_xdnd_status(w, xe, passive);
+    handle_xdnd_status(xe);
     DEBUG("xdndHandleStatus end");
 }
 

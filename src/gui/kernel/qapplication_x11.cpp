@@ -1976,7 +1976,7 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
         } else if (event->xclient.message_type == ATOM(XdndEnter)) {
             qt_x11Data->xdndHandleEnter(event);
         } else if (event->xclient.message_type == ATOM(XdndStatus)) {
-            qt_x11Data->xdndHandleStatus(widget, event, passive_only);
+            qt_x11Data->xdndHandleStatus(event);
         } else if (event->xclient.message_type == ATOM(XdndLeave)) {
             qt_x11Data->xdndHandleLeave(widget, event);
         } else if (event->xclient.message_type == ATOM(XdndDrop)) {
