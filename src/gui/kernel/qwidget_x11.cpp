@@ -1868,16 +1868,11 @@ void QWidgetPrivate::show_sys()
         }
 
         // set _NET_WM_USER_TIME
-        Time userTime = qt_x11Data->userTime;
-        bool setUserTime = false;
         if (q->testAttribute(Qt::WA_ShowWithoutActivating)) {
-            userTime = 0;
-            setUserTime = true;
-        } else if (userTime != CurrentTime) {
-            setUserTime = true;
+            qt_net_update_user_time(q, 0);
+        } else if (qt_x11Data->userTime != CurrentTime) {
+            qt_net_update_user_time(q, qt_x11Data->userTime);
         }
-        if (setUserTime)
-            qt_net_update_user_time(q, userTime);
 
 #ifndef QT_NO_XSYNC
         if (!topData()->syncUpdateCounter) {
