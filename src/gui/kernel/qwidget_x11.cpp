@@ -1310,60 +1310,13 @@ void QWidgetPrivate::unsetCursor_sys()
 }
 #endif
 
-static XTextProperty*
-qstring_to_xtp(const QString& s)
-{
-    static XTextProperty tp = { 0, 0, 0, 0 };
-    static bool free_prop = true; // we can't free tp.value in case it references
-    // the data of the static QCString below.
-    if (tp.value) {
-        if (free_prop)
-            XFree(tp.value);
-        tp.value = 0;
-        free_prop = true;
-    }
-
-    static const QTextCodec* mapper = QTextCodec::codecForLocale();
-    int errCode = 0;
-    if (mapper) {
-        QByteArray mapped = mapper->fromUnicode(s);
-        char* tl[2];
-        tl[0] = mapped.data();
-        tl[1] = 0;
-        errCode = XmbTextListToTextProperty(qt_x11Data->display, tl, 1, XStdICCTextStyle, &tp);
-#ifndef QT_NO_DEBUG
-        if (errCode < 0)
-            qDebug("qstring_to_xtp result code %d", errCode);
-#endif
-    }
-    if (!mapper || errCode < 0) {
-        static QByteArray qcs = s.toAscii();
-        tp.value = (uchar*)qcs.data();
-        tp.encoding = XA_STRING;
-        tp.format = 8;
-        tp.nitems = qcs.length();
-        free_prop = false;
-    }
-
-    // ### If we knew WM could understand unicode, we could use
-    // ### a much simpler, cheaper encoding...
-    /*
-        tp.value = (XChar2b*)s.unicode();
-        tp.encoding = XA_UNICODE; // wish
-        tp.format = 16;
-        tp.nitems = s.length();
-    */
-
-    return &tp;
-}
-
 void QWidgetPrivate::setWindowTitle_sys(const QString &caption)
 {
     Q_Q(QWidget);
     Q_ASSERT(q->testAttribute(Qt::WA_WState_Created));
     if (!q->internalWinId())
         return;
-    XSetWMName(qt_x11Data->display, q->internalWinId(), qstring_to_xtp(caption));
+    XStoreName(qt_x11Data->display, q->internalWinId(), caption.toLocal8Bit());
 
     QByteArray net_wm_name = caption.toUtf8();
     XChangeProperty(qt_x11Data->display, q->internalWinId(), ATOM(_NET_WM_NAME), ATOM(UTF8_STRING), 8,
@@ -1474,7 +1427,7 @@ void QWidgetPrivate::setWindowIconText_sys(const QString &iconText)
     if (!q->internalWinId())
         return;
     Q_ASSERT(q->testAttribute(Qt::WA_WState_Created));
-    XSetWMIconName(qt_x11Data->display, q->internalWinId(), qstring_to_xtp(iconText));
+    XSetIconName(qt_x11Data->display, q->internalWinId(), iconText.toAscii());
 
     QByteArray icon_name = iconText.toUtf8();
     XChangeProperty(qt_x11Data->display, q->internalWinId(), ATOM(_NET_WM_ICON_NAME), ATOM(UTF8_STRING), 8,
