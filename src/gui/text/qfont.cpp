@@ -1815,7 +1815,7 @@ QStringList QFont::substitutions()
     Internal function. Converts boolean font settings to an unsigned
     8-bit number. Used for serialization etc.
 */
-static quint8 get_font_bits(int version, const QFontPrivate *f)
+static inline quint8 get_font_bits(int version, const QFontPrivate *f)
 {
     Q_ASSERT(f != 0);
     quint8 bits = 0;
@@ -1838,7 +1838,7 @@ static quint8 get_font_bits(int version, const QFontPrivate *f)
     return bits;
 }
 
-static quint8 get_extended_font_bits(const QFontPrivate *f)
+static inline quint8 get_extended_font_bits(const QFontPrivate *f)
 {
     Q_ASSERT(f != 0);
     quint8 bits = 0;
