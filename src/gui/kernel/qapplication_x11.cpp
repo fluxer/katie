@@ -2498,7 +2498,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
         break;
 
     case ClientMessage:                        // client message
-        return x11ClientMessage(widget,event,False);
+        return x11ClientMessage(widget, event, false);
 
     case ReparentNotify: {                      // window manager reparents
         // compress old reparent events to self
