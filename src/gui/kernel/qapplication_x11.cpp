@@ -2737,7 +2737,7 @@ void QApplicationPrivate::openPopup(QWidget *popup)
                              GrabModeAsync, GrabModeAsync, XNone, XNone, qt_x11Data->time);
             if (!(popupGrabOk = (r == GrabSuccess))) {
                 // transfer grab back to the keyboard grabber if any
-                if (QWidgetPrivate::keyboardGrabber != 0)
+                if (QWidgetPrivate::keyboardGrabber)
                     QWidgetPrivate::keyboardGrabber->grabKeyboard();
                 else
                     XUngrabKeyboard(dpy, qt_x11Data->time);
@@ -2782,13 +2782,13 @@ void QApplicationPrivate::closePopup(QWidget *popup)
                 replayPopupMouseEvent = true;
             }
             // transfer grab back to mouse grabber if any, otherwise release the grab
-            if (QWidgetPrivate::mouseGrabber != 0)
+            if (QWidgetPrivate::mouseGrabber)
                 QWidgetPrivate::mouseGrabber->grabMouse();
             else
                 XUngrabPointer(dpy, qt_x11Data->time);
 
             // transfer grab back to keyboard grabber if any, otherwise release the grab
-            if (QWidgetPrivate::keyboardGrabber != 0)
+            if (QWidgetPrivate::keyboardGrabber)
                 QWidgetPrivate::keyboardGrabber->grabKeyboard();
             else
                 XUngrabKeyboard(dpy, qt_x11Data->time);
@@ -2827,7 +2827,7 @@ void QApplicationPrivate::closePopup(QWidget *popup)
                                  GrabModeAsync, GrabModeAsync, XNone, XNone, qt_x11Data->time);
                 if (!(popupGrabOk = (r == GrabSuccess))) {
                     // transfer grab back to keyboard grabber
-                    if (QWidgetPrivate::keyboardGrabber != 0)
+                    if (QWidgetPrivate::keyboardGrabber)
                         QWidgetPrivate::keyboardGrabber->grabKeyboard();
                     else
                         XUngrabKeyboard(dpy, qt_x11Data->time);
