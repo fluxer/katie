@@ -1983,10 +1983,8 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
             qt_x11Data->xdndHandleDrop(event, passive_only);
         } else if (event->xclient.message_type == ATOM(XdndFinished)) {
             qt_x11Data->xdndHandleFinished(event, passive_only);
-        } else {
-            if (passive_only) return 0;
-            // All other are interactions
         }
+        // All other are interactions
     }
 
     return 0;
@@ -3432,13 +3430,11 @@ static Bool isPaintOrScrollDoneEvent(Display *, XEvent *ev, XPointer a)
 
 
 
-static
-bool translateBySips(QWidget* that, QRect& paintRect)
+static void translateBySips(QWidget* that, QRect& paintRect)
 {
-    int dx=0, dy=0;
-    int sips=0;
-    for (int i = 0; i < qt_x11Data->sip_list.size(); ++i) {
-        const QX11Data::ScrollInProgress &sip = qt_x11Data->sip_list.at(i);
+    int dx = 0, dy = 0;
+    int sips = 0;
+    foreach (const QX11Data::ScrollInProgress &sip, qt_x11Data->sip_list) {
         if (sip.scrolled_widget == that) {
             if (sips) {
                 dx += sip.dx;
@@ -3449,9 +3445,7 @@ bool translateBySips(QWidget* that, QRect& paintRect)
     }
     if (sips > 1) {
         paintRect.translate(dx, dy);
-        return true;
     }
-    return false;
 }
 
 void QETWidget::translatePaintEvent(const XEvent *event)
@@ -3466,9 +3460,8 @@ void QETWidget::translatePaintEvent(const XEvent *event)
     PaintEventInfo info;
     info.window = internalWinId();
     translateBySips(this, paintRect);
-    paintRect = d->mapFromWS(paintRect);
 
-    QRegion paintRegion = paintRect;
+    QRegion paintRegion(d->mapFromWS(paintRect));
 
     // WARNING: this is O(number_of_events * number_of_matching_events)
     while (XCheckIfEvent(qt_x11Data->display,&xevent,isPaintOrScrollDoneEvent,
