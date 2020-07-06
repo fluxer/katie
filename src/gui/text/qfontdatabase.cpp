@@ -1260,12 +1260,26 @@ QList<int> QFontDatabase::smoothSizes(const QString &family,
 */
 QList<int> QFontDatabase::standardSizes()
 {
-    QList<int> ret;
-    static const unsigned short standard[] =
-        { 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72, 0 };
-    const unsigned short *sizes = standard;
-    while (*sizes) ret << *sizes++;
-    return ret;
+    static const QList<int> sizes = QList<int>()
+        << 6
+        << 7
+        << 8
+        << 9
+        << 10
+        << 11
+        << 12
+        << 14
+        << 16
+        << 18
+        << 20
+        << 22
+        << 24
+        << 26
+        << 28
+        << 36
+        << 48
+        << 72;
+    return sizes;
 }
 
 
