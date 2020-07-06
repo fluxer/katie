@@ -345,11 +345,6 @@ QVariant QInternalMimeData::retrieveData(const QString &mimeType, QVariant::Type
     return data;
 }
 
-bool QInternalMimeData::canReadData(const QString &mimeType)
-{
-    return imageReadMimeFormats().contains(mimeType);
-}
-
 // helper functions for rendering mimedata to the system, this is needed because QMimeData is in core.
 QStringList QInternalMimeData::formatsHelper(const QMimeData *data)
 {
