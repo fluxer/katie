@@ -1323,9 +1323,10 @@ void QGradient::setStops(const QGradientStops &stops)
 QGradientStops QGradient::stops() const
 {
     if (m_stops.isEmpty()) {
-        QGradientStops tmp;
-        tmp << QGradientStop(0, Qt::black) << QGradientStop(1, Qt::white);
-        return tmp;
+        static const QGradientStops stops = QGradientStops()
+            << QGradientStop(0, Qt::black)
+            << QGradientStop(1, Qt::white);
+        return stops;
     }
     return m_stops;
 }
