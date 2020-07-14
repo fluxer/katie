@@ -629,18 +629,13 @@ Q_CORE_EXPORT void qErrnoWarning(int code, const char *msg, ...);
 Q_CORE_EXPORT void qErrnoWarning(const char *msg, ...);
 
 Q_CORE_EXPORT void qt_assert(const char *assertion, const char *file, int line);
-
-#ifndef QT_NO_DEBUG
-#  define Q_ASSERT(cond) ((!(cond)) ? qt_assert(#cond,__FILE__,__LINE__) : qt_noop())
-#else
-#  define Q_ASSERT(cond) qt_noop()
-#endif
-
 Q_CORE_EXPORT void qt_assert_x(const char *where, const char *what, const char *file, int line);
 
 #ifndef QT_NO_DEBUG
+#  define Q_ASSERT(cond) ((!(cond)) ? qt_assert(#cond,__FILE__,__LINE__) : qt_noop())
 #  define Q_ASSERT_X(cond, where, what) ((!(cond)) ? qt_assert_x(where, what,__FILE__,__LINE__) : qt_noop())
 #else
+#  define Q_ASSERT(cond) qt_noop()
 #  define Q_ASSERT_X(cond, where, what) qt_noop()
 #endif
 
