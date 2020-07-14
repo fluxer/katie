@@ -73,11 +73,6 @@ QDBusAdaptorConnector *qDBusFindAdaptorConnector(QObject *obj)
     return 0;
 }
 
-QDBusAdaptorConnector *qDBusFindAdaptorConnector(QDBusAbstractAdaptor *adaptor)
-{
-    return qDBusFindAdaptorConnector(adaptor->parent());
-}
-
 QDBusAdaptorConnector *qDBusCreateAdaptorConnector(QObject *obj)
 {
     QDBusAdaptorConnector *connector = qDBusFindAdaptorConnector(obj);
