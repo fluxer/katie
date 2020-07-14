@@ -353,8 +353,7 @@ public:
         WA_AttributeCount
     };
 
-    enum ApplicationAttribute
-    {
+    enum ApplicationAttribute {
         AA_ImmediateWidgetCreation = 0,
         AA_DontShowIconsInMenus = 1,
         AA_NativeWindows = 2,
@@ -1287,8 +1286,7 @@ public:
     Q_DECLARE_FLAGS(TouchPointStates, TouchPointState)
 
 #ifndef QT_NO_GESTURES
-    enum GestureState
-    {
+    enum GestureState {
         NoGesture,
         GestureStarted  = 1,
         GestureUpdated  = 2,
@@ -1296,8 +1294,7 @@ public:
         GestureCanceled = 4
     };
 
-    enum GestureType
-    {
+    enum GestureType {
         TapGesture        = 1,
         TapAndHoldGesture = 2,
         PanGesture        = 3,
@@ -1307,8 +1304,7 @@ public:
         CustomGesture     = 0x0100,
     };
 
-    enum GestureFlag
-    {
+    enum GestureFlag {
         DontStartGestureOnChildren = 0x01,
         ReceivePartialGestures     = 0x02,
         IgnoredGesturesPropagateToParent = 0x04

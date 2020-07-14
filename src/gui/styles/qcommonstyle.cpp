@@ -4817,7 +4817,7 @@ int QCommonStyle::styleHint(StyleHint sh, const QStyleOption *opt, const QWidget
         break;
 
     case SH_ItemView_EllipsisLocation:
-        ret = Qt::AlignTrailing;
+        ret = Qt::AlignRight;
         break;
 
     case SH_ItemView_ShowDecorationSelected:
