@@ -435,8 +435,8 @@ void qt_x11_getX11InfoForWindow(QX11Info *xinfo, const void *att)
     xd->depth = a->depth;
     xd->cells = DisplayCells(qt_x11Data->display, xd->screen);
     xd->visual = a->visual;
-    xd->defaultVisual = (XVisualIDFromVisual((Visual *) a->visual) ==
-    XVisualIDFromVisual((Visual *) QX11Info::appVisual(xinfo->screen())));
+    xd->defaultVisual = (XVisualIDFromVisual(a->visual) ==
+        XVisualIDFromVisual((Visual *) QX11Info::appVisual(xinfo->screen())));
     xd->colormap = a->colormap;
     xd->defaultColormap = (a->colormap == QX11Info::appColormap(xinfo->screen()));
     xinfo->setX11Data(xd);
