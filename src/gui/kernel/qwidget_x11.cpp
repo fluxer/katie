@@ -425,8 +425,7 @@ void qt_x11_getX11InfoForWindow(QX11Info *xinfo, const void *att)
     const XWindowAttributes *a = static_cast<const XWindowAttributes*>(att);
     // find which screen the window is on...
     xd->screen = QX11Info::appScreen(); // by default, use the default :)
-    int i;
-    for (i = 0; i < ScreenCount(qt_x11Data->display); i++) {
+    for (int i = 0; i < ScreenCount(qt_x11Data->display); i++) {
         if (RootWindow(qt_x11Data->display, i) == a->root) {
             xd->screen = i;
             break;
