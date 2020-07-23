@@ -3716,20 +3716,18 @@ static void QT_FASTCALL blendUntransformed_unaligned(DST *dest, const SRC *src,
     Q_ASSERT(coverage == 0xff);
     Q_ASSERT(SRC::hasAlpha());
 
-    if (SRC::hasAlpha()) {
-        for (int i = 0; i < length; ++i) {
-            const quint8 a = src->alpha();
-            if (a == 0xff)
-                *dest = DST(*src);
-            else if (a > 0) {
-                if (DST::hasAlpha())
-                    *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(a));
-                else
-                    *dest = DST(SRC(*src).truncedAlpha()) + dest->byte_mul(DST::ialpha(a));
-            }
-            ++src;
-            ++dest;
+    for (int i = 0; i < length; ++i) {
+        const quint8 a = src->alpha();
+        if (a == 0xff)
+            *dest = DST(*src);
+        else if (a > 0) {
+            if (DST::hasAlpha())
+                *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(a));
+            else
+                *dest = DST(SRC(*src).truncedAlpha()) + dest->byte_mul(DST::ialpha(a));
         }
+        ++src;
+        ++dest;
     }
 }
 
@@ -3794,44 +3792,42 @@ static void QT_FASTCALL blendUntransformed_dest16(DST *dest, const SRC *src,
     }
 
     Q_ASSERT(SRC::hasAlpha());
-    if (SRC::hasAlpha()) {
-        if (align) {
-            const quint8 alpha = src->alpha();
-            if (alpha == 0xff)
-                *dest = DST(*src);
-            else if (alpha > 0)
-                *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(alpha));
-            ++dest;
-            ++src;
-            --length;
+    if (align) {
+        const quint8 alpha = src->alpha();
+        if (alpha == 0xff)
+            *dest = DST(*src);
+        else if (alpha > 0)
+            *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(alpha));
+        ++dest;
+        ++src;
+        --length;
+    }
+
+    while (length >= 2) {
+        Q_ASSERT((quintptr(dest) & 3) == 0);
+        Q_ASSERT((quintptr(src) & 3) == 0);
+
+        const quint16 a = alpha_2(src);
+        if (a == 0xffff) {
+            qt_memconvert(dest, src, 2);
+        } else if (a > 0) {
+            quint32 buf;
+            if (sizeof(DST) == 2)
+                qt_memconvert((DST*)(void*)&buf, src, 2);
+            madd_2(dest, eff_ialpha_2(a, dest), (DST*)(void*)&buf);
         }
 
-        while (length >= 2) {
-            Q_ASSERT((quintptr(dest) & 3) == 0);
-            Q_ASSERT((quintptr(src) & 3) == 0);
+        length -= 2;
+        src += 2;
+        dest += 2;
+    }
 
-            const quint16 a = alpha_2(src);
-            if (a == 0xffff) {
-                qt_memconvert(dest, src, 2);
-            } else if (a > 0) {
-                quint32 buf;
-                if (sizeof(DST) == 2)
-                    qt_memconvert((DST*)(void*)&buf, src, 2);
-                madd_2(dest, eff_ialpha_2(a, dest), (DST*)(void*)&buf);
-            }
-
-            length -= 2;
-            src += 2;
-            dest += 2;
-        }
-
-        if (length) {
-            const quint8 alpha = src->alpha();
-            if (alpha == 0xff)
-                *dest = DST(*src);
-            else if (alpha > 0)
-                *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(alpha));
-        }
+    if (length) {
+        const quint8 alpha = src->alpha();
+        if (alpha == 0xff)
+            *dest = DST(*src);
+        else if (alpha > 0)
+            *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(alpha));
     }
 }
 
@@ -3900,42 +3896,39 @@ static void QT_FASTCALL blendUntransformed_dest24(DST *dest, const SRC *src,
         return;
     }
 
-
     Q_ASSERT(coverage == 255);
     Q_ASSERT(SRC::hasAlpha());
 
-    if (SRC::hasAlpha()) {
-        // align
-        for (int i = 0; i < align; ++i) {
-            const quint8 a = src->alpha();
-            if (a == 0xff) {
-                *dest = DST(*src);
-            } else if (a > 0) {
-                *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(a));
-            }
-            ++dest;
-            ++src;
-            --length;
+    // align
+    for (int i = 0; i < align; ++i) {
+        const quint8 a = src->alpha();
+        if (a == 0xff) {
+            *dest = DST(*src);
+        } else if (a > 0) {
+            *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(a));
         }
+        ++dest;
+        ++src;
+        --length;
+    }
 
-        while (length >= 4) {
-            blend_sourceOver_4(dest, src);
-            length -= 4;
-            src += 4;
-            dest += 4;
-        }
+    while (length >= 4) {
+        blend_sourceOver_4(dest, src);
+        length -= 4;
+        src += 4;
+        dest += 4;
+    }
 
-        // tail
-        while (length--) {
-            const quint8 a = src->alpha();
-            if (a == 0xff) {
-                *dest = DST(*src);
-            } else if (a > 0) {
-                *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(a));
-            }
-            ++dest;
-            ++src;
+    // tail
+    while (length--) {
+        const quint8 a = src->alpha();
+        if (a == 0xff) {
+            *dest = DST(*src);
+        } else if (a > 0) {
+            *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(a));
         }
+        ++dest;
+        ++src;
     }
 }
 
