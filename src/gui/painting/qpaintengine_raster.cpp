@@ -31,12 +31,10 @@
 **
 ****************************************************************************/
 
-#include <QtCore/qglobal.h>
-#include <QtCore/qmutex.h>
-
 #define QT_FT_BEGIN_HEADER
 #define QT_FT_END_HEADER
 
+#include "qmutex.h"
 #include "qrasterdefs_p.h"
 #include "qpainterpath.h"
 #include "qdebug.h"
@@ -50,7 +48,6 @@
 #include "qpixmap_raster_p.h"
 #include "qimage_p.h"
 #include "qstatictext_p.h"
-#include "qmemrotate_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qoutlinemapper_p.h"
 #include "qguicommon_p.h"
