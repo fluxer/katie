@@ -45,7 +45,7 @@ include(FeatureSummary)
 include(KatieMacros)
 include(KatieBuildMacros)
 
-# mostly relevant to the build process, also stored in the version file for CMake
+# mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
 set(KATIE_MINOR "9")
 set(KATIE_MICRO "0")
@@ -173,7 +173,7 @@ check_include_file_cxx(cxxabi.h HAVE_CXXABI)
 # for 3rd party source used in test component
 check_include_file(sys/time.h HAVE_SYS_TIME_H)
 
-# used in qconfig.h
+# stored in qconfig.h.cmake
 check_type_size(size_t QT_POINTER_SIZE)
 
 # POSIX.1-2001
@@ -229,10 +229,6 @@ configure_file(
 configure_file(
     ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.cpp.cmake
     ${CMAKE_BINARY_DIR}/include/qconfig.cpp
-)
-configure_file(
-    ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.h.cmake
-    ${CMAKE_BINARY_DIR}/include/QtCore/qglobal.h
 )
 
 # v1.2.0+ required for compressBound()

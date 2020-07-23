@@ -149,10 +149,11 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfutureinterface_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qfuturewatcher_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qthreadpool_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/global/qnamespace.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qendian.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/global/qnumeric.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/global/qglobal.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/global/qnamespace.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/global/qnumeric.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qplatformdefs.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qabstractfileengine.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qabstractfileengine_p.h

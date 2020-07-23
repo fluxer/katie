@@ -34,6 +34,19 @@
 #ifndef QCONFIG_H
 #define QCONFIG_H
 
+/* Build specs */
+#define QT_VERSION_MAJOR ${KATIE_MAJOR}
+#define QT_VERSION_MINOR ${KATIE_MINOR}
+#define QT_VERSION_MICRO ${KATIE_MICRO}
+#define QT_VERSION_STR "${KATIE_VERSION}"
+#define QT_VERSION_HEX_STR "${KATIE_HEX}"
+#define QT_VERSION ${KATIE_HEX}
+
+#define QT_KATIE
+#cmakedefine QT_VISIBILITY_AVAILABLE
+#cmakedefine QT_LARGEFILE_SUPPORT
+#cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
+
 /* No longer supported */
 #define QT_NO_OPENVG
 #define QT_NO_PHONON
@@ -114,12 +127,6 @@
 #cmakedefine QT_NO_REGEXP_WILDCARD
 #cmakedefine QT_NO_STANDARDPATHS
 #cmakedefine QT_NO_SETTINGS
-
-/* Build specs */
-#define QT_KATIE
-#cmakedefine QT_VISIBILITY_AVAILABLE
-#cmakedefine QT_LARGEFILE_SUPPORT
-#cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
 
 #cmakedefine QT_NO_USING_NAMESPACE
 #cmakedefine QT_NO_ACCESSIBILITY
