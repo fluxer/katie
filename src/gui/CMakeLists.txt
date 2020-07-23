@@ -780,7 +780,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmemrotate.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qoutlinemapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine.cpp

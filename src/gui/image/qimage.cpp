@@ -4629,7 +4629,7 @@ int QImage::metric(PaintDeviceMetric metric) const
   line for the destination data, \a p_inc is the offset that we advance for
   every scanline and \a dHeight is the height of the destination image.
 
-  \a sprt is the pointer to the source data, \a sbpl specifies the bits per
+  \a sptr is the pointer to the source data, \a sbpl specifies the bits per
   line of the source data, \a sWidth and \a sHeight are the width and height of
   the source data.
 */
