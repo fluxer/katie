@@ -58,7 +58,6 @@ QT_BEGIN_NAMESPACE
 
 #define QT_DECL_MEMROTATE(srctype, desttype)                            \
     void qt_memrotate90(const srctype*, int, int, int, desttype*, int); \
-    void qt_memrotate180(const srctype*, int, int, int, desttype*, int); \
     void qt_memrotate270(const srctype*, int, int, int, desttype*, int)
 
 QT_DECL_MEMROTATE(quint8, quint8);

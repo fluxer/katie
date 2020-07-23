@@ -62,22 +62,6 @@ static inline void qt_memrotate90_template(const SRC *src,
 }
 
 template <class DST, class SRC>
-static inline void qt_memrotate180_template(const SRC *src,
-                                            int w, int h, int sstride,
-                                            DST *dest, int dstride)
-{
-    const char *s = (const char*)(src) + (h - 1) * sstride;
-    for (int y = h - 1; y >= 0; --y) {
-        DST *d = reinterpret_cast<DST*>((char *)(dest) + (h - y - 1) * dstride);
-        src = reinterpret_cast<const SRC*>(s);
-        for (int x = w - 1; x >= 0; --x) {
-            d[w - x - 1] = src[x];
-        }
-        s -= sstride;
-    }
-}
-
-template <class DST, class SRC>
 static inline void qt_memrotate270_template(const SRC *src,
                                             int srcWidth, int srcHeight, int srcStride,
                                             DST *dest, int dstStride)
@@ -110,11 +94,6 @@ void qt_memrotate90(const srctype *src, int w, int h, int sstride,  \
 {                                                                   \
     qt_memrotate90_template(src, w, h, sstride, dest, dstride);     \
 }                                                                   \
-void qt_memrotate180(const srctype *src, int w, int h, int sstride, \
-                     desttype *dest, int dstride)                   \
-{                                                                   \
-    qt_memrotate180_template(src, w, h, sstride, dest, dstride);    \
-}                                                                   \
 void qt_memrotate270(const srctype *src, int w, int h, int sstride, \
                      desttype *dest, int dstride)                   \
 {                                                                   \
@@ -129,7 +108,4 @@ QT_IMPL_MEMROTATE(quint32, quint32)
 #undef QT_IMPL_MEMROTATE
 
 QT_END_NAMESPACE
-
-
-
 
