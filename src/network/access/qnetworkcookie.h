@@ -104,10 +104,8 @@ Q_NETWORK_EXPORT QDebug operator<<(QDebug, const QNetworkCookie &);
 
 QT_END_NAMESPACE
 
-#ifndef QT_ALLINONE
 Q_DECLARE_METATYPE(QNetworkCookie)
 Q_DECLARE_METATYPE(QList<QNetworkCookie>)
-#endif
 
 QT_END_HEADER
 
