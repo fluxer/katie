@@ -167,11 +167,6 @@ add_definitions(
     -DQT_NO_OPENTYPE
 )
 
-# some things just cannot be done right, yet
-if(KATIE_ALLINONE)
-    add_definitions(-DQT_ALLINONE)
-endif()
-
 # for symbols mangling while unwinding in core component
 check_include_file_cxx(cxxabi.h HAVE_CXXABI)
 
