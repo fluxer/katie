@@ -40,14 +40,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#ifndef Q_EXTERN_C
-#  ifdef __cplusplus
-#    define Q_EXTERN_C extern "C"
-#  else
-#    define Q_EXTERN_C extern
-#  endif
-#endif
+#define Q_EXTERN_C extern "C"
 
 typedef QObject *(*QtPluginInstanceFunction)();
 

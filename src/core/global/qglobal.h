@@ -130,12 +130,10 @@
 #  error Unable to detect target endianness
 #endif
 
-#ifdef __cplusplus
 #include <utility> // std::swap
 #include <cstdint> // std::uintptr_t
-#endif
 
-#if defined(__cplusplus) && !defined(QT_NO_USING_NAMESPACE)
+#if !defined(QT_NO_USING_NAMESPACE)
 
 # define QT_NAMESPACE Katie
 # define QT_PREPEND_NAMESPACE(name) ::QT_NAMESPACE::name
@@ -153,7 +151,7 @@ namespace QT_NAMESPACE {}
 QT_USE_NAMESPACE
 # endif
 
-#else /* QT_NO_USING_NAMESPACE && __cplusplus */
+#else /* QT_NO_USING_NAMESPACE */
 
 # define QT_NAMESPACE
 # define QT_PREPEND_NAMESPACE(name) ::name
@@ -165,7 +163,7 @@ QT_USE_NAMESPACE
 # define QT_BEGIN_INCLUDE_NAMESPACE
 # define QT_END_INCLUDE_NAMESPACE
 
-#endif /* QT_NO_USING_NAMESPACE && __cplusplus */
+#endif /* QT_NO_USING_NAMESPACE */
 
 #define QT_BEGIN_HEADER
 #define QT_END_HEADER
@@ -254,6 +252,14 @@ QT_USE_NAMESPACE
      CLANG    - C++ front-end for the LLVM compiler
 
    Should be sorted most to least authoritative.
+
+   Paper             Macro                             SD-6 macro
+   N2672             Q_COMPILER_INITIALIZER_LISTS
+   N2118 N2844 N3053 Q_COMPILER_RVALUE_REFS            __cpp_rvalue_references = 200610
+
+  For any future version of the C++ standard, we use only the SD-6 macro.
+  For full listing, see
+   http://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
 */
 #if defined(__GNUC__)
 #  define Q_CC_GNU
@@ -264,10 +270,21 @@ QT_USE_NAMESPACE
 #  define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
 #  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
 #  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
+#  define Q_FUNC_INFO       __PRETTY_FUNCTION__
 #  if !defined(QT_MOC_CPP)
 #    define Q_PACKED __attribute__ ((__packed__))
 #    ifndef __ARM_EABI__
 #      define QT_NO_ARM_EABI
+#    endif
+#  endif
+#  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
+     /* C++0x features supported in GCC 4.3: */
+#    define Q_COMPILER_RVALUE_REFS
+     /* C++0x features supported in GCC 4.4: */
+#    define Q_COMPILER_INITIALIZER_LISTS
+#    /* C++0x features supported in GCC 4.6: */
+#    ifdef __EXCEPTIONS
+#      define Q_COMPILER_EXCEPTIONS
 #    endif
 #  endif
 
@@ -284,39 +301,10 @@ QT_USE_NAMESPACE
 #  define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
 #  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
 #  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
+#  define Q_FUNC_INFO       __PRETTY_FUNCTION__
 #  if !defined(QT_MOC_CPP)
 #    define Q_PACKED __attribute__ ((__packed__))
 #  endif
-
-#else
-#  error "Katie has not been tested with this compiler"
-#endif
-
-/*
- * C++11 support
- *
- *  Paper             Macro                             SD-6 macro
- *  N2672             Q_COMPILER_INITIALIZER_LISTS
- *  N2118 N2844 N3053 Q_COMPILER_RVALUE_REFS            __cpp_rvalue_references = 200610
- *
- * For any future version of the C++ standard, we use only the SD-6 macro.
- * For full listing, see
- *  http://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
- */
-
-#if defined(Q_CC_GNU)
-#  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
-     /* C++0x features supported in GCC 4.3: */
-#    define Q_COMPILER_RVALUE_REFS
-     /* C++0x features supported in GCC 4.4: */
-#    define Q_COMPILER_INITIALIZER_LISTS
-#    /* C++0x features supported in GCC 4.6: */
-#    ifdef __EXCEPTIONS
-#      define Q_COMPILER_EXCEPTIONS
-#    endif
-#  endif
-
-#elif defined(Q_CC_CLANG)
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
     /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
 #    if __has_feature(cxx_generalized_initializers)
@@ -329,6 +317,9 @@ QT_USE_NAMESPACE
 #      define Q_COMPILER_EXCEPTIONS
 #    endif
 #  endif
+
+#else
+#  error "Katie has not been tested with this compiler"
 #endif
 
 #define Q_OUTOFLINE_TEMPLATE
@@ -380,8 +371,6 @@ typedef quint64 qulonglong;
 #define Q_CLEANUP_RESOURCE(name) \
     do { extern int QT_MANGLE_NAMESPACE(qCleanupResources_ ## name) ();    \
         QT_MANGLE_NAMESPACE(qCleanupResources_ ## name) (); } while (0)
-
-#if defined(__cplusplus)
 
 /*
    Useful type definitions for Qt
@@ -643,12 +632,6 @@ Q_CORE_EXPORT void qBadAlloc();
 
 template <typename T>
 inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
-
-#if defined(Q_CC_GNU) || defined(Q_CC_CLANG)
-#  define Q_FUNC_INFO __PRETTY_FUNCTION__
-#else
-#   define Q_FUNC_INFO __func__
-#endif
 
 enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg };
 
@@ -1139,7 +1122,5 @@ Q_CORE_EXPORT int qrand();
 
 QT_END_NAMESPACE
 QT_END_HEADER
-
-#endif /* __cplusplus */
 
 #endif /* QGLOBAL_H */
