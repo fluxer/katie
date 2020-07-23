@@ -74,8 +74,8 @@
 #include <QtCore/qset.h>
 #include <QtCore/qtextstream.h>
 #include "qscriptextensioninterface.h"
+#include "qscriptcommon_p.h"
 
-Q_DECLARE_METATYPE(QScriptValue)
 Q_DECLARE_METATYPE(QObjectList)
 Q_DECLARE_METATYPE(QList<int>)
 
