@@ -2,9 +2,6 @@
 #define QNETWORKCOMMON_H
 
 #include "qnetworkaccesscache_p.h"
-#include "qnetworkcookie.h"
-#include "qnetworkrequest.h"
-#include "qnetworksession.h"
 
 Q_DECLARE_METATYPE(QNetworkAccessCache::CacheableObject*)
 Q_DECLARE_METATYPE(QSharedPointer<char>)
