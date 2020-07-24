@@ -1077,7 +1077,7 @@ QString QKeySequencePrivate::encodeString(int key, QKeySequence::SequenceFormat 
 
     if (key && key < Qt::Key_Escape && key != Qt::Key_Space) {
         if (!QChar::requiresSurrogates(key)) {
-            p = QChar(ushort(key)).toUpper();
+            p = QChar::toUpper(ushort(key));
         } else {
             p += QChar(QChar::highSurrogate(key));
             p += QChar(QChar::lowSurrogate(key));
@@ -1101,7 +1101,7 @@ QString QKeySequencePrivate::encodeString(int key, QKeySequence::SequenceFormat 
         // (Really depends on you locale)
         if (!foundmatch) {
             if (!QChar::requiresSurrogates(key)) {
-                p = QChar(ushort(key)).toUpper();
+                p = QChar::toUpper(ushort(key));
             } else {
                 p += QChar(QChar::highSurrogate(key));
                 p += QChar(QChar::lowSurrogate(key));
