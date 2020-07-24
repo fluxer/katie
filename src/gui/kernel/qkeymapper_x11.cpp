@@ -1027,7 +1027,7 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
         return true;
 
     QEvent::Type type;
-    bool    autor = false;
+    bool autorepeat = false;
     QString text;
 
     KeySym keysym = 0;
@@ -1042,7 +1042,7 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
     static uint curr_autorep = 0;
     if (event->type == XKeyPress) {
         if (curr_autorep == event->xkey.keycode) {
-            autor = true;
+            autorepeat = true;
             curr_autorep = 0;
         }
     } else {
@@ -1053,13 +1053,13 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
         auto_repeat_data.error = false;
         if (XCheckIfEvent(dpy, &nextpress, &qt_keypress_scanner,
                           (XPointer) &auto_repeat_data)) {
-            autor = true;
+            autorepeat = true;
 
             // Put it back... we COULD send the event now and not need
             // the static curr_autorep variable.
             XPutBackEvent(dpy,&nextpress);
         }
-        curr_autorep = autor ? event->xkey.keycode : 0;
+        curr_autorep = autorepeat ? event->xkey.keycode : 0;
     }
 
     // autorepeat compression makes sense for all widgets
@@ -1082,16 +1082,6 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
         }
     }
 
-    return QKeyMapper::sendKeyEvent(keyWidget, type, code, modifiers, text, autor,
-                                    qMax(qMax(count,1), int(text.length())),
-                                    event->xkey.keycode, keysym, event->xkey.state);
-}
-
-bool QKeyMapper::sendKeyEvent(QWidget *keyWidget,
-                              QEvent::Type type, int code, Qt::KeyboardModifiers modifiers,
-                              const QString &text, bool autorepeat, int count,
-                              quint32 nativeScanCode, quint32 nativeVirtualKey, quint32 nativeModifiers)
-{
     // try the menukey first
     if (type == QEvent::KeyPress && code == Qt::Key_Menu) {
         QPoint globalPos=  QCursor::pos();
@@ -1103,11 +1093,9 @@ bool QKeyMapper::sendKeyEvent(QWidget *keyWidget,
     }
 
     QKeyEvent e(type, code, modifiers,
-                  nativeScanCode, nativeVirtualKey, nativeModifiers,
+                  event->xkey.keycode, keysym, event->xkey.state,
                   text, autorepeat, qMax(qMax(count,1), int(text.length())));
     return qt_sendSpontaneousEvent(keyWidget, &e);
 }
 
 QT_END_NAMESPACE
-
-
