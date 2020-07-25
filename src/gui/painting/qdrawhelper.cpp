@@ -2287,29 +2287,10 @@ static void QT_FASTCALL comp_func_XOR(uint *dest, const uint *src, const int len
     }
 }
 
-struct QFullCoverage {
-    inline void store(uint *dest, const uint src) const
-    {
-        *dest = src;
-    }
-};
-
-struct QPartialCoverage {
-    inline QPartialCoverage(uint const_alpha)
-        : ca(const_alpha)
-        , ica(255 - const_alpha)
-    {
-    }
-
-    inline void store(uint *dest, const uint src) const
-    {
-        *dest = INTERPOLATE_PIXEL_255(src, ca, *dest, ica);
-    }
-
-private:
-    const uint ca;
-    const uint ica;
-};
+static inline uint partial_coverage_store(const uint dest, const uint src, uint const_alpha)
+{
+    return INTERPOLATE_PIXEL_255(src, const_alpha, dest, 255 - const_alpha);
+}
 
 static inline int mix_alpha(int da, int sa)
 {
@@ -2337,43 +2318,32 @@ static inline int comp_func_Plus_one_pixel(uint d, const uint s)
     Dca' = Sca.Da + Dca.Sa + Sca.(1 - Da) + Dca.(1 - Sa)
          = Sca + Dca
 */
-template <typename T>
-static inline void comp_func_solid_Plus_impl(uint *dest, const int length, uint color, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        d = comp_func_Plus_one_pixel(d, color);
-        coverage.store(&dest[i], d);
-    }
-}
-
 static void QT_FASTCALL comp_func_solid_Plus(uint *dest, const int length, uint color, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_solid_Plus_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_Plus_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_Plus_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        d = comp_func_Plus_one_pixel(d, s);
-
-        coverage.store(&dest[i], d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            dest[i] = comp_func_Plus_one_pixel(dest[i], color);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = comp_func_Plus_one_pixel(dest[i], color);
+            dest[i] = partial_coverage_store(dest[i], d, const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_Plus(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_Plus_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_Plus_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            dest[i] = comp_func_Plus_one_pixel(dest[i], src[i]);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = comp_func_Plus_one_pixel(dest[i], src[i]);
+            dest[i] = partial_coverage_store(dest[i], d, const_alpha);
+        }
+    }
 }
 
 /*
@@ -2384,128 +2354,162 @@ static inline int multiply_op(int dst, int src, int da, int sa)
     return qt_div_255(src * dst + src * (255 - da) + dst * (255 - sa));
 }
 
-template <typename T>
-static inline void comp_func_solid_Multiply_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_Multiply(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) multiply_op(a, b, da, sa)
-        int r = OP(  qRed(d), sr);
-        int b = OP( qBlue(d), sb);
-        int g = OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r = OP(  qRed(d), sr);
+            int b = OP( qBlue(d), sb);
+            int g = OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
-
-static void QT_FASTCALL comp_func_solid_Multiply(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_Multiply_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_Multiply_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_Multiply_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) multiply_op(a, b, da, sa)
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+            int r = OP(  qRed(d), sr);
+            int b = OP( qBlue(d), sb);
+            int g = OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_Multiply(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_Multiply_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_Multiply_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) multiply_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) multiply_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 /*
     Dca' = (Sca.Da + Dca.Sa - Sca.Dca) + Sca.(1 - Da) + Dca.(1 - Sa)
          = Sca + Dca - Sca.Dca
 */
-template <typename T>
-static inline void comp_func_solid_Screen_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_Screen(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) 255 - qt_div_255((255-a) * (255-b))
-        int r = OP(  qRed(d), sr);
-        int b = OP( qBlue(d), sb);
-        int g = OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r = OP(  qRed(d), sr);
+            int b = OP( qBlue(d), sb);
+            int g = OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
-static void QT_FASTCALL comp_func_solid_Screen(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_Screen_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_Screen_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_Screen_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
-
-#define OP(a, b) 255 - (((255-a) * (255-b)) >> 8)
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+#define OP(a, b) 255 - qt_div_255((255-a) * (255-b))
+            int r = OP(  qRed(d), sr);
+            int b = OP( qBlue(d), sb);
+            int g = OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_Screen(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_Screen_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_Screen_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) 255 - (((255-a) * (255-b)) >> 8)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) 255 - (((255-a) * (255-b)) >> 8)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 /*
@@ -2523,64 +2527,81 @@ static inline int overlay_op(int dst, int src, int da, int sa)
         return qt_div_255(sa * da - 2 * (da - dst) * (sa - src) + temp);
 }
 
-template <typename T>
-static inline void comp_func_solid_Overlay_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_Overlay(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) overlay_op(a, b, da, sa)
-        int r = OP(  qRed(d), sr);
-        int b = OP( qBlue(d), sb);
-        int g = OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r = OP(  qRed(d), sr);
+            int b = OP( qBlue(d), sb);
+            int g = OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
-
-static void QT_FASTCALL comp_func_solid_Overlay(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_Overlay_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_Overlay_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_Overlay_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) overlay_op(a, b, da, sa)
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+            int r = OP(  qRed(d), sr);
+            int b = OP( qBlue(d), sb);
+            int g = OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_Overlay(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_Overlay_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_Overlay_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) overlay_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) overlay_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 /*
@@ -2592,64 +2613,81 @@ static inline int darken_op(int dst, int src, int da, int sa)
     return qt_div_255(qMin(src * da, dst * sa) + src * (255 - da) + dst * (255 - sa));
 }
 
-template <typename T>
-static inline void comp_func_solid_Darken_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_Darken(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) darken_op(a, b, da, sa)
-        int r =  OP(  qRed(d), sr);
-        int b =  OP( qBlue(d), sb);
-        int g =  OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
-
-static void QT_FASTCALL comp_func_solid_Darken(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_Darken_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_Darken_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_Darken_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) darken_op(a, b, da, sa)
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_Darken(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_Darken_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_Darken_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) darken_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) darken_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 /*
@@ -2661,64 +2699,81 @@ static inline int lighten_op(int dst, int src, int da, int sa)
     return qt_div_255(qMax(src * da, dst * sa) + src * (255 - da) + dst * (255 - sa));
 }
 
-template <typename T>
-static inline void comp_func_solid_Lighten_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_Lighten(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) lighten_op(a, b, da, sa)
-        int r =  OP(  qRed(d), sr);
-        int b =  OP( qBlue(d), sb);
-        int g =  OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
-
-static void QT_FASTCALL comp_func_solid_Lighten(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_Lighten_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_Lighten_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_Lighten_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) lighten_op(a, b, da, sa)
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_Lighten(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_Lighten_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_Lighten_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) lighten_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) lighten_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 /*
@@ -2740,64 +2795,81 @@ static inline int color_dodge_op(int dst, int src, int da, int sa)
         return qt_div_255(255 * dst_sa / (255 - 255 * src / sa) + temp);
 }
 
-template <typename T>
-static inline void comp_func_solid_ColorDodge_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_ColorDodge(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a,b) color_dodge_op(a, b, da, sa)
-        int r = OP(  qRed(d), sr);
-        int b = OP( qBlue(d), sb);
-        int g = OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r = OP(  qRed(d), sr);
+            int b = OP( qBlue(d), sb);
+            int g = OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
-static void QT_FASTCALL comp_func_solid_ColorDodge(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_ColorDodge_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_ColorDodge_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_ColorDodge_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
-
-#define OP(a, b) color_dodge_op(a, b, da, sa)
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+#define OP(a,b) color_dodge_op(a, b, da, sa)
+            int r = OP(  qRed(d), sr);
+            int b = OP( qBlue(d), sb);
+            int g = OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_ColorDodge(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_ColorDodge_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_ColorDodge_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) color_dodge_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) color_dodge_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 /*
@@ -2819,64 +2891,81 @@ static inline int color_burn_op(int dst, int src, int da, int sa)
     return qt_div_255(sa * (src_da + dst_sa - sa_da) / src + temp);
 }
 
-template <typename T>
-static inline void comp_func_solid_ColorBurn_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_ColorBurn(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) color_burn_op(a, b, da, sa)
-        int r =  OP(  qRed(d), sr);
-        int b =  OP( qBlue(d), sb);
-        int g =  OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
-
-static void QT_FASTCALL comp_func_solid_ColorBurn(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_ColorBurn_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_ColorBurn_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_ColorBurn_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) color_burn_op(a, b, da, sa)
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_ColorBurn(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_ColorBurn_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_ColorBurn_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) color_burn_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) color_burn_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 /*
@@ -2895,64 +2984,81 @@ static inline uint hardlight_op(int dst, int src, int da, int sa)
         return qt_div_255(sa * da - 2 * (da - dst) * (sa - src) + temp);
 }
 
-template <typename T>
-static inline void comp_func_solid_HardLight_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_HardLight(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) hardlight_op(a, b, da, sa)
-        int r =  OP(  qRed(d), sr);
-        int b =  OP( qBlue(d), sb);
-        int g =  OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
-
-static void QT_FASTCALL comp_func_solid_HardLight(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_HardLight_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_HardLight_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_HardLight_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) hardlight_op(a, b, da, sa)
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_HardLight(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_HardLight_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_HardLight_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) hardlight_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) hardlight_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 /*
@@ -2978,64 +3084,81 @@ static inline int soft_light_op(int dst, int src, int da, int sa)
     }
 }
 
-template <typename T>
-static inline void comp_func_solid_SoftLight_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_SoftLight(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) soft_light_op(a, b, da, sa)
-        int r =  OP(  qRed(d), sr);
-        int b =  OP( qBlue(d), sb);
-        int g =  OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
-
-static void QT_FASTCALL comp_func_solid_SoftLight(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_SoftLight_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_SoftLight_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_SoftLight_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) soft_light_op(a, b, da, sa)
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_SoftLight(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_SoftLight_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_SoftLight_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) soft_light_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) soft_light_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 /*
@@ -3047,127 +3170,160 @@ static inline int difference_op(int dst, int src, int da, int sa)
     return src + dst - qt_div_255(2 * qMin(src * da, dst * sa));
 }
 
-template <typename T>
-static inline void comp_func_solid_Difference_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_Difference(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) difference_op(a, b, da, sa)
-        int r =  OP(  qRed(d), sr);
-        int b =  OP( qBlue(d), sb);
-        int g =  OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
-
-static void QT_FASTCALL comp_func_solid_Difference(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_Difference_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_Difference_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_Difference_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) difference_op(a, b, da, sa)
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_Difference(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_Difference_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_Difference_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) difference_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) difference_op(a, b, da, sa)
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 /*
     Dca' = (Sca.Da + Dca.Sa - 2.Sca.Dca) + Sca.(1 - Da) + Dca.(1 - Sa)
 */
-template <typename T>
-static inline void QT_FASTCALL comp_func_solid_Exclusion_impl(uint *dest, const int length, uint color, const T &coverage)
+static void QT_FASTCALL comp_func_solid_Exclusion(uint *dest, const int length, uint color, const uint const_alpha)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
     int sg = qGreen(color);
     int sb = qBlue(color);
 
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        int da = qAlpha(d);
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
 #define OP(a, b) (a + b - qt_div_255(2*(a*b)))
-        int r =  OP(  qRed(d), sr);
-        int b =  OP( qBlue(d), sb);
-        int g =  OP(qGreen(d), sg);
-        int a = mix_alpha(da, sa);
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
-    }
-}
+            dest[i] = qRgba(r, g, b, a);
+        }
+    } else {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            int da = qAlpha(d);
 
-static void QT_FASTCALL comp_func_solid_Exclusion(uint *dest, const int length, uint color, const uint const_alpha)
-{
-    if (const_alpha == 255)
-        comp_func_solid_Exclusion_impl(dest, length, color, QFullCoverage());
-    else
-        comp_func_solid_Exclusion_impl(dest, length, color, QPartialCoverage(const_alpha));
-}
-
-template <typename T>
-static inline void comp_func_Exclusion_impl(uint *dest, const uint *src, const int length, const T &coverage)
-{
-    for (int i = 0; i < length; ++i) {
-        uint d = dest[i];
-        uint s = src[i];
-
-        int da = qAlpha(d);
-        int sa = qAlpha(s);
-
-#define OP(a, b) (a + b - ((a*b) >> 7))
-        int r = OP(  qRed(d),   qRed(s));
-        int b = OP( qBlue(d),  qBlue(s));
-        int g = OP(qGreen(d), qGreen(s));
-        int a = mix_alpha(da, sa);
+#define OP(a, b) (a + b - qt_div_255(2*(a*b)))
+            int r =  OP(  qRed(d), sr);
+            int b =  OP( qBlue(d), sb);
+            int g =  OP(qGreen(d), sg);
+            int a = mix_alpha(da, sa);
 #undef OP
 
-        coverage.store(&dest[i], qRgba(r, g, b, a));
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
     }
 }
 
 static void QT_FASTCALL comp_func_Exclusion(uint *dest, const uint *src, const int length, const uint const_alpha)
 {
-    if (const_alpha == 255)
-        comp_func_Exclusion_impl(dest, src, length, QFullCoverage());
-    else
-        comp_func_Exclusion_impl(dest, src, length, QPartialCoverage(const_alpha));
+    if (const_alpha == 255) {
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) (a + b - ((a*b) >> 7))
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = qRgba(r, g, b, a);
+        }
+        for (int i = 0; i < length; ++i) {
+            uint d = dest[i];
+            uint s = src[i];
+
+            int da = qAlpha(d);
+            int sa = qAlpha(s);
+
+#define OP(a, b) (a + b - ((a*b) >> 7))
+            int r = OP(  qRed(d),   qRed(s));
+            int b = OP( qBlue(d),  qBlue(s));
+            int g = OP(qGreen(d), qGreen(s));
+            int a = mix_alpha(da, sa);
+#undef OP
+
+            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+        }
+    }
 }
 
 static void QT_FASTCALL rasterop_solid_SourceOrDestination(uint *dest,
