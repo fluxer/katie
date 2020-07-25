@@ -954,7 +954,7 @@ QMatrix QMatrix::inverted(bool *invertible) const
     if (dtr == 0.0) {
         if (invertible)
             *invertible = false;                // singular matrix
-        return QMatrix(true);
+        return QMatrix();
     }
     else {                                        // invertible matrix
         if (invertible)
@@ -963,8 +963,7 @@ QMatrix QMatrix::inverted(bool *invertible) const
         return QMatrix((_m22*dinv),        (-_m12*dinv),
                        (-_m21*dinv), (_m11*dinv),
                        ((_m21*_dy - _m22*_dx)*dinv),
-                       ((_m12*_dx - _m11*_dy)*dinv),
-                       true);
+                       ((_m12*_dx - _m11*_dy)*dinv));
     }
 }
 
@@ -1046,7 +1045,7 @@ QMatrix QMatrix::operator *(const QMatrix &m) const
 
     qreal tdx  = _dx*m._m11  + _dy*m._m21 + m._dx;
     qreal tdy =  _dx*m._m12  + _dy*m._m22 + m._dy;
-    return QMatrix(tm11, tm12, tm21, tm22, tdx, tdy, true);
+    return QMatrix(tm11, tm12, tm21, tm22, tdx, tdy);
 }
 
 /*!
