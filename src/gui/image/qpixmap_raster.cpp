@@ -172,9 +172,8 @@ bool QRasterPixmapData::scroll(int dx, int dy, const QRect &rect)
 
 void QRasterPixmapData::fill(const QColor &color)
 {
-    QImage::Format format = image.format();
     if (color.alpha() != 255 && !image.hasAlphaChannel()) {
-        switch (format) {
+        switch (image.format()) {
             case QImage::Format_RGB666: {
                 image = image.convertToFormat(QImage::Format_ARGB6666_Premultiplied);
                 break;
