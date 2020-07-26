@@ -337,16 +337,12 @@ void QX11PaintEnginePrivate::init()
 
 void QX11PaintEnginePrivate::setupAdaptedOrigin(const QPoint &p)
 {
-    if (adapted_pen_origin)
-        XSetTSOrigin(dpy, gc, p.x(), p.y());
     if (adapted_brush_origin)
         XSetTSOrigin(dpy, gc_brush, p.x(), p.y());
 }
 
 void QX11PaintEnginePrivate::resetAdaptedOrigin()
 {
-    if (adapted_pen_origin)
-        XSetTSOrigin(dpy, gc, 0, 0);
     if (adapted_brush_origin)
         XSetTSOrigin(dpy, gc_brush, 0, 0);
 }
@@ -1168,8 +1164,6 @@ void QX11PaintEngine::updatePen(const QPen &pen)
         jn = JoinMiter;
         break;
     }
-
-    d->adapted_pen_origin = false;
 
     char dashes[6];                             // custom pen dashes
     int dash_len = 0;                           // length of dash list
