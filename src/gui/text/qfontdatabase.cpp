@@ -309,10 +309,6 @@ struct  QtFontFamily
 
     bool fixedPitch;
     QString name;
-#if defined(Q_WS_X11)
-    QByteArray fontFilename;
-    int fontFileIndex;
-#endif
     int count;
     QtFontFoundry **foundries;
 

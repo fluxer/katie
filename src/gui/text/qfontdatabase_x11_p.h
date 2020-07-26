@@ -550,13 +550,19 @@ static const struct DefaultFontTblData {
 static const qint16 DefaultFontTblSize = sizeof(DefaultFontTbl) / sizeof(DefaultFontTblData);
 
 static const char* PatternPropertiesTbl[] = {
-    FC_FAMILY, FC_STYLE, FC_WEIGHT, FC_SLANT,
-    FC_SPACING, FC_FILE, FC_INDEX,
-    FC_LANG, FC_CHARSET, FC_FOUNDRY, FC_SCALABLE, FC_PIXEL_SIZE, FC_WEIGHT,
+    FC_FAMILY,
+    FC_STYLE,
+    FC_WEIGHT,
+    FC_SLANT,
+    FC_SPACING,
+    FC_LANG,
+    FC_CHARSET,
+    FC_FOUNDRY,
+    FC_SCALABLE,
+    FC_PIXEL_SIZE,
     FC_WIDTH,
-    FC_CAPABILITY,
 };
-static const qint16 PatternPropertiesTblSize = 15;
+static const qint16 PatternPropertiesTblSize = 11;
 
 static void loadFontConfig()
 {
@@ -585,8 +591,6 @@ static void loadFontConfig()
     int weight_value;
     int slant_value;
     int spacing_value;
-    FcChar8 *file_value;
-    int index_value;
     FcChar8 *foundry_value;
     FcChar8 *style_value;
     FcBool scalable;
@@ -609,8 +613,6 @@ static void loadFontConfig()
         slant_value = FC_SLANT_ROMAN;
         weight_value = FC_WEIGHT_MEDIUM;
         spacing_value = FC_PROPORTIONAL;
-        file_value = 0;
-        index_value = 0;
         scalable = FcTrue;
 
         if (FcPatternGetInteger (fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
@@ -619,10 +621,6 @@ static void loadFontConfig()
             weight_value = FC_WEIGHT_MEDIUM;
         if (FcPatternGetInteger (fonts->fonts[i], FC_SPACING, 0, &spacing_value) != FcResultMatch)
             spacing_value = FC_PROPORTIONAL;
-        if (FcPatternGetString (fonts->fonts[i], FC_FILE, 0, &file_value) != FcResultMatch)
-            file_value = 0;
-        if (FcPatternGetInteger (fonts->fonts[i], FC_INDEX, 0, &index_value) != FcResultMatch)
-            index_value = 0;
         if (FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable) != FcResultMatch)
             scalable = FcTrue;
         if (FcPatternGetString(fonts->fonts[i], FC_FOUNDRY, 0, &foundry_value) != FcResultMatch)
@@ -630,10 +628,6 @@ static void loadFontConfig()
         if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
             style_value = 0;
         QtFontFamily *family = db->family(familyName, true);
-
-        QByteArray file((const char *)file_value);
-        family->fontFilename = file;
-        family->fontFileIndex = index_value;
 
         QtFontStyle::Key styleKey;
         QString styleName = style_value ? QString::fromUtf8((const char *) style_value) : QString();
