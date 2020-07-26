@@ -233,21 +233,13 @@ void QRasterPaintEngine::init()
     d->mono_surface = false;
     gccaps &= ~PorterDuff;
 
-    QImage::Format format = QImage::Format_Invalid;
-
-    switch (d->device->devType()) {
-    case QInternal::Pixmap:
-        qWarning("QRasterPaintEngine: unsupported for pixmaps...");
-        break;
-    case QInternal::Image:
-        format = d->rasterBuffer->prepare(static_cast<QImage *>(d->device));
-        break;
-    default:
+    if (Q_UNLIKELY(d->device->devType() != QInternal::Image)) {
         qWarning("QRasterPaintEngine: unsupported target device %d\n", d->device->devType());
         d->device = 0;
         return;
     }
 
+    QImage::Format format = d->rasterBuffer->prepare(static_cast<QImage *>(d->device));
     switch (format) {
     case QImage::Format_MonoLSB:
     case QImage::Format_Mono:
