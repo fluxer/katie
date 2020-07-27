@@ -86,7 +86,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+891"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+886"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+662"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+641"/>
         <location line="+26"/>
@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1871"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1727,7 +1727,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+606"/>
+        <location filename="../src/core/io/qfile.cpp" line="+598"/>
         <source>Destination file exists</source>
         <translation>Die Zieldatei existiert bereits</translation>
     </message>
@@ -1756,7 +1756,7 @@ Script: %3</source>
         <translation>Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+172"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+148"/>
         <location line="+1"/>
         <source>File</source>
         <translation>Datei</translation>
@@ -2537,7 +2537,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
         <source>Permission denied</source>
         <translation>Zugriff verweigert</translation>
     </message>
@@ -2691,7 +2691,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1809"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1807"/>
         <source>Select All</source>
         <translation>Alles auswählen</translation>
     </message>
@@ -6458,7 +6458,7 @@ Bitte wählen Sie einen anderen Dateinamen.</translation>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1873"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1870"/>
         <source>&amp;Undo</source>
         <translation>&amp;Rückgängig</translation>
     </message>
@@ -6648,7 +6648,7 @@ Bitte wählen Sie einen anderen Dateinamen.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5174"/>
         <source>*</source>
         <translation>*</translation>
     </message>

@@ -40,7 +40,7 @@
 
 QT_BEGIN_NAMESPACE
 
-uint qvariant_nameToType(const char* name)
+static uint qvariant_nameToType(const char* name)
 {
     if (!name)
         return 0;
@@ -55,7 +55,7 @@ uint qvariant_nameToType(const char* name)
 /*
   Returns true if the type is a QVariant types.
 */
-bool isVariantType(const char* type)
+static bool isVariantType(const char* type)
 {
     return qvariant_nameToType(type) != 0;
 }

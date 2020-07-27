@@ -39,6 +39,7 @@ endif()
 
 if(ICU_LIBRARIES AND ICUUC_LIBRARIES)
     set(ICU_LIBRARIES ${ICU_LIBRARIES} ${ICUUC_LIBRARIES})
+    list(REMOVE_ITEM ICU_LIBRARIES "icudata") # internal data, dont need it
 endif()
 
 include(FindPackageHandleStandardArgs)

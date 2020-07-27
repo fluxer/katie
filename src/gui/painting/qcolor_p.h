@@ -49,7 +49,7 @@
 
 QT_BEGIN_NAMESPACE
 
-bool qt_get_hex_rgb(const char *, QRgb *);
+bool qt_get_hex_rgb(const char *, const int, QRgb *);
 
 QT_END_NAMESPACE
 

@@ -587,9 +587,7 @@ void QGestureManager::deliverEvents(const QSet<QGesture *> &gestures,
                 m_gestureTargets.insert(gesture, target);
         }
 
-        Qt::GestureType gestureType = gesture->gestureType();
-        Q_ASSERT(gestureType != Qt::CustomGesture);
-        Q_UNUSED(gestureType);
+        Q_ASSERT(gesture->gestureType() != Qt::CustomGesture);
 
         if (target) {
             if (gesture->state() == Qt::GestureStarted) {

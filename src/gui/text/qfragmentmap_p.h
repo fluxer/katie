@@ -201,7 +201,6 @@ private:
     void rotateLeft(uint x);
     void rotateRight(uint x);
     void rebalance(uint x);
-    void removeAndRebalance(uint z);
 
     uint createFragment();
     void freeFragment(uint f);

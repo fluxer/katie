@@ -150,8 +150,6 @@ struct Operator
     };
 };
 
-void qInitDrawhelper();
-
 struct QSolidData
 {
     uint color;
@@ -1558,10 +1556,10 @@ inline void qt_memconvert(qrgb666 *dest, const quint32 *src, int count)
 
 template <class DST, class SRC>
 inline void qt_rectconvert(DST *dest, const SRC *src,
-                           int x, int y, int width, int height,
+                           int width, int height,
                            int dstStride, int srcStride)
 {
-    char *d = (char*)(dest + x) + y * dstStride;
+    char *d = (char*)dest;
     const char *s = (const char*)(src);
     for (int i = 0; i < height; ++i) {
         qt_memconvert<DST,SRC>((DST*)d, (const SRC*)s, width);
@@ -1573,10 +1571,10 @@ inline void qt_rectconvert(DST *dest, const SRC *src,
 #define QT_RECTCONVERT_TRIVIAL_IMPL(T)                                  \
     template <>                                                         \
     inline void qt_rectconvert(T *dest, const T *src,                   \
-                               int x, int y, int width, int height,     \
+                               int width, int height,                   \
                                int dstStride, int srcStride)            \
     {                                                                   \
-        char *d = (char*)(dest + x) + y * dstStride; \
+        char *d = (char*)dest; \
         const char *s = (const char*)(src); \
         for (int i = 0; i < height; ++i) { \
             ::memcpy(d, s, width * sizeof(T)); \

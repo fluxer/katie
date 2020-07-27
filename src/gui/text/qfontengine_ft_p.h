@@ -179,7 +179,6 @@ public:
         unsigned long id; // server sided id, GlyphSet for X11
         bool outline_drawing;
 
-        void removeGlyphFromCache(glyph_t index, QFixed subPixelPosition);
         void clear();
         inline bool useFastGlyphData(glyph_t index, QFixed subPixelPosition) const {
             return (index < 256 && subPixelPosition == 0);
@@ -248,7 +247,6 @@ private:
                                                 QFixed subPixelPosition,
                                                 const QTransform &matrix,
                                                 QFontEngine::GlyphFormat format);
-    virtual void removeGlyphFromCache(glyph_t glyph);
 
     virtual int glyphCount() const;
 

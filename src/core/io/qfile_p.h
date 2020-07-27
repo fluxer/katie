@@ -74,8 +74,6 @@ protected:
     QFile::FileError error;
     void setError(QFile::FileError err);
     void setError(QFile::FileError err, const QString &errorString);
-
-    mutable qint64 cachedSize;
 };
 
 QT_END_NAMESPACE

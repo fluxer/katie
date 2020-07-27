@@ -824,25 +824,12 @@
   }
 
 
-  static inline int
+  static inline void
   gray_line_to( const QT_FT_Vector*  to,
                 PWorker           worker )
   {
     gray_render_line( worker, UPSCALE( to->x ), UPSCALE( to->y ) );
-    return 0;
   }
-
-
-  static inline int
-  gray_cubic_to( const QT_FT_Vector*  control1,
-                 const QT_FT_Vector*  control2,
-                 const QT_FT_Vector*  to,
-                 PWorker           worker )
-  {
-    gray_render_cubic( worker, control1, control2, to );
-    return 0;
-  }
-
 
   static void
   gray_hline( RAS_ARG_ TCoord  x,
@@ -1037,9 +1024,7 @@
             vec.x = point->x;
             vec.y = point->y;
 
-            error = gray_line_to( &vec, user );
-            if ( error )
-              goto Exit;
+            gray_line_to( &vec, user );
             continue;
           }
 
@@ -1069,32 +1054,24 @@
               vec.x = point->x;
               vec.y = point->y;
 
-              error = gray_cubic_to( &vec1, &vec2, &vec, user );
-              if ( error )
-                goto Exit;
+              gray_render_cubic( user, &vec1, &vec2, &vec );
               continue;
             }
 
-            error = gray_cubic_to( &vec1, &vec2, &v_start, user );
+            gray_render_cubic( user, &vec1, &vec2, &v_start );
             goto Close;
           }
         }
       }
 
       /* close the contour with a line segment */
-      error = gray_line_to( &v_start, user );
+      gray_line_to( &v_start, user );
 
    Close:
-      if ( error )
-        goto Exit;
-
       first = last + 1;
     }
 
     return 0;
-
-  Exit:
-    return error;
 
   Invalid_Outline:
     return ErrRaster_Invalid_Outline;
@@ -1355,7 +1332,6 @@
   {
     const QT_FT_Outline*  outline    = params->source;
     PWorker            worker;
-
 
     if ( !raster.buffer || !raster.buffer_size )
       return ErrRaster_Invalid_Argument;

@@ -31,16 +31,11 @@
 **
 ****************************************************************************/
 
-#include "qdir.h"
-#include "qfile.h"
 #include "qlibraryinfo.h"
-#include "qcoreapplication.h"
 
 #include "qconfig.cpp"
 
 QT_BEGIN_NAMESPACE
-
-#ifndef QT_NO_SETTINGS
 
 /*!
     \class QLibraryInfo
@@ -168,7 +163,5 @@ QString QLibraryInfo::location(LibraryLocation loc)
 
     Q_UNREACHABLE();
 }
-
-#endif // QT_NO_SETTINGS
 
 QT_END_NAMESPACE

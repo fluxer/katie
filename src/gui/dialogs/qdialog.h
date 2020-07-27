@@ -62,15 +62,6 @@ public:
 
     void setVisible(bool visible);
 
-    void setOrientation(Qt::Orientation orientation);
-    Qt::Orientation orientation() const;
-
-    void setExtension(QWidget* extension);
-    QWidget* extension() const;
-
-    QSize sizeHint() const;
-    QSize minimumSizeHint() const;
-
     void setSizeGripEnabled(bool);
     bool isSizeGripEnabled() const;
 
@@ -88,8 +79,6 @@ public Q_SLOTS:
     virtual void done(int);
     virtual void accept();
     virtual void reject();
-
-    void showExtension(bool);
 
 protected:
     QDialog(QDialogPrivate &, QWidget *parent, Qt::WindowFlags f = 0);

@@ -66,26 +66,17 @@
 
 QT_BEGIN_NAMESPACE
 
-static bool qt_pixmap_thread_test()
+static inline bool qt_pixmap_thread_test()
 {
-    if (!qApp) {
+    if (Q_UNLIKELY(!qApp)) {
         qFatal("QPixmap: Must construct a QApplication before a QPaintDevice");
         return false;
     }
 
-    if (qApp->thread() != QThread::currentThread()) {
-        bool fail = false;
-#if defined (Q_WS_X11)
-        if (!QApplication::testAttribute(Qt::AA_X11InitThreads))
-            fail = true;
-#else
-        if (QApplicationPrivate::graphics_system_name != QLatin1String("raster"))
-            fail = true;
-#endif
-        if (fail) {
-            qWarning("QPixmap: It is not safe to use pixmaps outside the GUI thread");
-            return false;
-        }
+    if (Q_UNLIKELY(qApp->thread() != QThread::currentThread()
+        && !QApplication::testAttribute(Qt::AA_X11InitThreads))) {
+        qWarning("QPixmap: It is not safe to use pixmaps outside the GUI thread");
+        return false;
     }
     return true;
 }

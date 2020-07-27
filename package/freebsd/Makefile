@@ -21,7 +21,7 @@ USE_XORG = xinerama xrandr xrender xcursor
 USE_LDCONFIG = yes
 LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu libicui18n.so:devel/icu \
 	libpcre.so:devel/pcre libpng.so:graphics/png libjpeg.so:graphics/jpeg-turbo \
-	libtiff.so:graphics/tiff libmng.so:graphics/libmng libfreetype.so:print/freetype2 \
+	libtiff.so:graphics/tiff libfreetype.so:print/freetype2 \
 	libfontconfig.so:x11-fonts/fontconfig libdbus-1.so:devel/dbus libcups.so:print/cups \
 	libiodbc.so:databases/libiodbc
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"

@@ -105,20 +105,6 @@ public:
 
 
 private:
-    inline QMatrix(bool)
-            : _m11(1.)
-            , _m12(0.)
-            , _m21(0.)
-            , _m22(1.)
-            , _dx(0.)
-            , _dy(0.) {}
-    inline QMatrix(qreal am11, qreal am12, qreal am21, qreal am22, qreal adx, qreal ady, bool)
-            : _m11(am11)
-            , _m12(am12)
-            , _m21(am21)
-            , _m22(am22)
-            , _dx(adx)
-            , _dy(ady) {}
     friend class QTransform;
     qreal _m11, _m12;
     qreal _m21, _m22;

@@ -1307,7 +1307,6 @@ QByteArray QImageReader::imageFormat(QIODevice *device)
     \row    \o GIF    \o Graphic Interchange Format (optional)
     \row    \o JPG    \o Joint Photographic Experts Group
     \row    \o JPEG   \o Joint Photographic Experts Group
-    \row    \o MNG    \o Multiple-image Network Graphics
     \row    \o PNG    \o Portable Network Graphics
     \row    \o PBM    \o Portable Bitmap
     \row    \o PGM    \o Portable Graymap

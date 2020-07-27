@@ -174,7 +174,6 @@ class Q_GUI_EXPORT QWidget : public QObject, public QPaintDevice
     Q_PROPERTY(QString styleSheet READ styleSheet WRITE setStyleSheet)
 #endif
     Q_PROPERTY(QLocale locale READ locale WRITE setLocale RESET unsetLocale)
-    Q_PROPERTY(QString windowFilePath READ windowFilePath WRITE setWindowFilePath DESIGNABLE isWindow)
 
 public:
     enum RenderFlag {
@@ -214,9 +213,8 @@ public Q_SLOTS:
     void setDisabled(bool);
     void setWindowModified(bool);
 
-    // Widget coordinates
-
 public:
+    // Widget coordinates
     QRect frameGeometry() const;
     const QRect &geometry() const;
     QRect normalGeometry() const;
@@ -247,7 +245,6 @@ public:
     void setMaximumWidth(int maxw);
     void setMaximumHeight(int maxh);
 
-
     QSize sizeIncrement() const;
     void setSizeIncrement(const QSize &);
     void setSizeIncrement(int w, int h);
@@ -261,7 +258,6 @@ public:
     void setFixedHeight(int h);
 
     // Widget coordinate mapping
-
     QPoint mapToGlobal(const QPoint &) const;
     QPoint mapFromGlobal(const QPoint &) const;
     QPoint mapToParent(const QPoint &) const;
@@ -336,8 +332,6 @@ public:
     QString windowIconText() const;
     void setWindowRole(const QString &);
     QString windowRole() const;
-    void setWindowFilePath(const QString &filePath);
-    QString windowFilePath() const;
 
     void setWindowOpacity(qreal level);
     qreal windowOpacity() const;
@@ -431,7 +425,6 @@ public:
 
 public Q_SLOTS:
     // Widget management functions
-
     virtual void setVisible(bool visible);
     inline void setHidden(bool hidden) { setVisible(!hidden); }
     inline void show() { setVisible(true); }
@@ -497,17 +490,16 @@ public:
     void scroll(int dx, int dy, const QRect&);
 
     // Misc. functions
-
     QWidget *focusWidget() const;
     QWidget *nextInFocusChain() const;
     QWidget *previousInFocusChain() const;
 
-    // drag and drop
+    // Drag and drop
     bool acceptDrops() const;
     void setAcceptDrops(bool on);
 
 #ifndef QT_NO_ACTION
-    //actions
+    // Actions
     void addAction(QAction *action);
     void addActions(const QList<QAction*> &actions);
     void insertAction(QAction *before, QAction *action);
@@ -542,7 +534,6 @@ public:
 
     void ensurePolished() const;
     bool isAncestorOf(const QWidget *child) const;
-
 
     bool autoFillBackground() const;
     void setAutoFillBackground(bool enabled);

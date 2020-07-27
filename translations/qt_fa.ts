@@ -86,7 +86,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1756"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1751"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+677"/>
         <source>Socket operation timed out</source>
         <translation>پایان زمان عملیات سوکت</translation>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>خطای کتابخانه ناسازگار کیوت</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1871"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>RTL</translation>
@@ -444,7 +444,7 @@ Script: %3</source>
     <message>
         <location line="+29"/>
         <source>Possible anchor loop detected on centerIn.</source>
-        <translation>حلقهٔ احتمال������ تکیه‌گاه در «مرکز-داخل» تشخیص داده شد.</translation>
+        <translation>حلقهٔ احتمال������� تکیه‌گاه در «مرکز-داخل» تشخیص داده شد.</translation>
     </message>
     <message>
         <location line="+208"/>
@@ -1727,7 +1727,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+606"/>
+        <location filename="../src/core/io/qfile.cpp" line="+598"/>
         <source>Destination file exists</source>
         <translation>پرونده مقصد موجود است</translation>
     </message>
@@ -1895,7 +1895,7 @@ Do you want to delete it anyway?</source>
         <translation>رایانه من</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+169"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+145"/>
         <source>Drive</source>
         <translation>درایو</translation>
     </message>
@@ -2537,7 +2537,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
         <source>Permission denied</source>
         <translation>حق دسترسی رد شد</translation>
     </message>
@@ -2691,7 +2691,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1769"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1767"/>
         <source>&amp;Undo</source>
         <translation>&amp;خنثی‌سازی</translation>
     </message>
@@ -3379,7 +3379,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+6"/>
         <source>Unable to connect - Driver doesn&apos;t support all functionality required</source>
-        <translation>نمی‌توان اتصال برقرار نمود. درایور تمام عملکردهای لازم را پشتیبانی نمی‌کند</translation>
+        <translation>نمی‌توان اتصال برقرار نمود. درایور تمام عملکردهای لازم را پشتیبانی نمی‌کن��</translation>
     </message>
     <message>
         <location line="+273"/>
@@ -3873,7 +3873,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+47"/>
         <source>Local file</source>
-        <translation>پروندهٔ محلی</translation>
+        <translation>پرو��دهٔ محلی</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5720,7 +5720,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+1"/>
         <source>System Request</source>
-        <translation>در‌خواست سیستم</translation>
+        <translation>در‌خواس�� سیستم</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6458,7 +6458,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1873"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1870"/>
         <source>&amp;Undo</source>
         <translation>&amp;خنثی‌سازی</translation>
     </message>
@@ -6648,7 +6648,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5174"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7066,7 +7066,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="-88"/>
         <source>Reference to unparsed entity &apos;%1&apos;.</source>
-        <translation>ارجاع به موجودیت تحلیل‌نشده «%1».</translation>
+        <translation>ارجاع به موج��دیت تحلیل‌نشده «%1».</translation>
     </message>
     <message>
         <location line="+62"/>

@@ -448,17 +448,6 @@ static const struct RGBData {
 #undef RGBCOLOR
 
 static const qint16 rgbTblSize = sizeof(rgbTbl) / sizeof(RGBData);
-
-static inline bool qt_get_named_rgb(const char *name, QRgb* rgb)
-{
-    for (qint16 i = 0; i < rgbTblSize; i++) {
-        if (qstrcmp(rgbTbl[i].name, name) == 0) {
-            *rgb = rgbTbl[i].value;
-            return true;
-        }
-    }
-    return false;
-}
 #endif // QT_NO_COLORNAMES
 
 /*****************************************************************************
@@ -704,9 +693,10 @@ bool QColor::setNamedColor(const QString &name)
         return true;
     }
 
+    QByteArray latin = name.toLatin1();
     if (name.startsWith(QLatin1Char('#'))) {
         QRgb rgb;
-        if (qt_get_hex_rgb(name.toLatin1(), &rgb)) {
+        if (qt_get_hex_rgb(latin.constData(), latin.length(), &rgb)) {
             setRgb(rgb);
             return true;
         } else {
@@ -716,28 +706,27 @@ bool QColor::setNamedColor(const QString &name)
     }
 
 #ifndef QT_NO_COLORNAMES
-    QRgb rgb;
-    if (qt_get_named_rgb(name.toLower().toLatin1(), &rgb)) {
-        setRgba(rgb);
-        return true;
-    } else
-#endif
-    {
-#ifdef Q_WS_X11
-        XColor result;
-        if (allowX11ColorNames()
-            && QApplication::instance()
-            && QX11Info::display()
-            && XParseColor(QX11Info::display(), QX11Info::appColormap(), name.toLatin1().constData(), &result)) {
-            setRgb(result.red >> 8, result.green >> 8, result.blue >> 8);
+    for (qint16 i = 0; i < rgbTblSize; i++) {
+        if (qstrnicmp(rgbTbl[i].name, latin.constData(), latin.length()) == 0) {
+            setRgba(rgbTbl[i].value);
             return true;
-        } else
-#endif
-        {
-            invalidate();
-            return false;
         }
     }
+#endif
+
+#ifdef Q_WS_X11
+    XColor result;
+    if (allowX11ColorNames()
+        && QApplication::instance()
+        && QX11Info::display()
+        && XParseColor(QX11Info::display(), QX11Info::appColormap(), latin.constData(), &result)) {
+        setRgb(result.red >> 8, result.green >> 8, result.blue >> 8);
+        return true;
+    }
+#endif
+
+    invalidate();
+    return false;
 }
 
 /*!

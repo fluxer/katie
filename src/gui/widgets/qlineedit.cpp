@@ -1384,13 +1384,11 @@ void QLineEdit::mouseReleaseEvent(QMouseEvent* e)
     }
 #endif
 #ifndef QT_NO_CLIPBOARD
-    if (QApplication::clipboard()->supportsSelection()) {
-        if (e->button() == Qt::LeftButton) {
-            d->control->copy(QClipboard::Selection);
-        } else if (!d->control->isReadOnly() && e->button() == Qt::MiddleButton) {
-            deselect();
-            insert(QApplication::clipboard()->text(QClipboard::Selection));
-        }
+    if (e->button() == Qt::LeftButton) {
+        d->control->copy(QClipboard::Selection);
+    } else if (!d->control->isReadOnly() && e->button() == Qt::MiddleButton) {
+        deselect();
+        insert(QApplication::clipboard()->text(QClipboard::Selection));
     }
 #endif
 

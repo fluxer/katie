@@ -211,16 +211,13 @@ QImage* QWindowSurface::buffer(const QWidget *widget)
   corresponding to \a widget. Returns a null QPixmap if an error
   occurs. The contents of the pixmap are only defined for the regions
   of \a widget that have received paint events since the last resize
-  of the backing store.
-
-  If \a rectangle is a null rectangle (the default), the entire widget
-  is grabbed. Otherwise, the grabbed area is limited to \a rectangle.
+  of the backing store. The entire widget is grabbed.
 
   The default implementation uses QWindowSurface::buffer().
 
   \sa QPixmap::grabWidget()
 */
-QPixmap QWindowSurface::grabWidget(const QWidget *widget, const QRect &rectangle) const
+QPixmap QWindowSurface::grabWidget(const QWidget *widget) const
 {
     if (widget->window() != window())
         return QPixmap();
@@ -230,7 +227,7 @@ QPixmap QWindowSurface::grabWidget(const QWidget *widget, const QRect &rectangle
     if (!img || img->isNull())
         return QPixmap();
 
-    QRect rect = rectangle.isEmpty() ? widget->rect() : (widget->rect() & rectangle);
+    QRect rect = widget->rect();
 
     rect.translate(offset(widget) - offset(widget->window()));
     rect &= QRect(QPoint(), img->size());

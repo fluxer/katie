@@ -206,19 +206,12 @@ bool QX11WindowSurface::scroll(const QRegion &area, int dx, int dy)
     return true;
 }
 
-QPixmap QX11WindowSurface::grabWidget(const QWidget *widget,
-                                      const QRect& rect) const
+QPixmap QX11WindowSurface::grabWidget(const QWidget *widget) const
 {
     if (!widget || d_ptr->device.isNull())
         return QPixmap();
 
-    QRect srcRect;
-
-    // make sure the rect is inside the widget & clip to widget's rect
-    if (!rect.isEmpty())
-        srcRect = rect & widget->rect();
-    else
-        srcRect = widget->rect();
+    QRect srcRect = widget->rect();
 
     if (srcRect.isEmpty())
         return QPixmap();
