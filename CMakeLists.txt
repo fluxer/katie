@@ -45,7 +45,7 @@ include(FeatureSummary)
 include(KatieMacros)
 include(KatieBuildMacros)
 
-# mostly relevant to the build process, also stored in the version file for CMake
+# mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
 set(KATIE_MINOR "9")
 set(KATIE_MICRO "0")
@@ -108,9 +108,6 @@ add_feature_info(jpeg WITH_JPEG "build JPEG support")
 option(WITH_TIFF "Build TIFF support" ON)
 add_feature_info(tiff WITH_TIFF "build TIFF support")
 
-option(WITH_MNG "Build MNG support" ON)
-add_feature_info(mng WITH_MNG "build MNG support")
-
 option(WITH_DBUS "Build D-Bus support" ON)
 add_feature_info(dbus WITH_DBUS "build D-Bus support")
 
@@ -170,18 +167,13 @@ add_definitions(
     -DQT_NO_OPENTYPE
 )
 
-# some things just cannot be done right, yet
-if(KATIE_ALLINONE)
-    add_definitions(-DQT_ALLINONE)
-endif()
-
 # for symbols mangling while unwinding in core component
 check_include_file_cxx(cxxabi.h HAVE_CXXABI)
 
 # for 3rd party source used in test component
 check_include_file(sys/time.h HAVE_SYS_TIME_H)
 
-# used in qconfig.h
+# stored in qconfig.h.cmake
 check_type_size(size_t QT_POINTER_SIZE)
 
 # POSIX.1-2001
@@ -239,10 +231,6 @@ configure_file(
 configure_file(
     ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.cpp.cmake
     ${CMAKE_BINARY_DIR}/include/qconfig.cpp
-)
-configure_file(
-    ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.h.cmake
-    ${CMAKE_BINARY_DIR}/include/QtCore/qglobal.h
 )
 
 # v1.2.0+ required for compressBound()
@@ -346,14 +334,6 @@ set_package_properties(TIFF PROPERTIES
     PURPOSE "TIFF format handler"
     DESCRIPTION "Library for manipulation of TIFF images"
     URL "http://www.libtiff.org/"
-    TYPE RECOMMENDED
-)
-
-find_package(MNG)
-set_package_properties(MNG PROPERTIES
-    PURPOSE "MNG format handler"
-    DESCRIPTION "THE reference library for reading, displaying, writing and examining Multiple-Image Network Graphics"
-    URL "https://sourceforge.net/projects/libmng/"
     TYPE RECOMMENDED
 )
 
@@ -487,10 +467,6 @@ endif()
 
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_JPEG)
-endif()
-
-if(NOT WITH_MNG OR NOT MNG_FOUND)
-    katie_definition(-DQT_NO_IMAGEFORMAT_MNG)
 endif()
 
 if(NOT WITH_TIFF OR NOT TIFF_FOUND)

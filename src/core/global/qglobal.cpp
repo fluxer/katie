@@ -1968,46 +1968,26 @@ int qrand()
     with meaningful parameter names in their signatures.
 */
 
+Q_GLOBAL_STATIC(QList<qInternalCallback>, qGlobalCallbacks)
 
-struct QInternal_CallBackTable {
-    QVector<QList<qInternalCallback> > callbacks;
-};
-
-Q_GLOBAL_STATIC(QInternal_CallBackTable, global_callback_table)
-
-bool QInternal::registerCallback(Callback cb, qInternalCallback callback)
+void QInternal::registerCallback(qInternalCallback callback)
 {
-    if (cb >= 0 && cb < QInternal::LastCallback) {
-        QInternal_CallBackTable *cbt = global_callback_table();
-        cbt->callbacks.resize(cb + 1);
-        cbt->callbacks[cb].append(callback);
-        return true;
-    }
-    return false;
+    qGlobalCallbacks()->append(callback);
 }
 
-bool QInternal::unregisterCallback(Callback cb, qInternalCallback callback)
+void QInternal::unregisterCallback(qInternalCallback callback)
 {
-    if (cb >= 0 && cb < QInternal::LastCallback) {
-        QInternal_CallBackTable *cbt = global_callback_table();
-        return (bool) cbt->callbacks[cb].removeAll(callback);
-    }
-    return false;
+    qGlobalCallbacks()->removeAll(callback);
 }
 
-bool QInternal::activateCallbacks(Callback cb, void **parameters)
+bool QInternal::activateCallbacks(void **parameters)
 {
-    Q_ASSERT_X(cb >= 0, "QInternal::activateCallback()", "Callback id must be a valid id");
-
-    QInternal_CallBackTable *cbt = global_callback_table();
-    if (cbt && cb < cbt->callbacks.size()) {
-        QList<qInternalCallback> callbacks = cbt->callbacks[cb];
-        bool ret = false;
-        for (int i=0; i<callbacks.size(); ++i)
-            ret |= (callbacks.at(i))(parameters);
-        return ret;
+    QList<qInternalCallback> *callbacks = qGlobalCallbacks();
+    bool ret = false;
+    for (int i = 0; i < callbacks->size(); i++) {
+        ret |= (callbacks->at(i))(parameters);
     }
-    return false;
+    return ret;
 }
 
 /*!

@@ -153,13 +153,11 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
         }
         break;
     case PE_IndicatorRadioButton: {
-        QRect ir = opt->rect;
         p->setPen(opt->palette.dark().color());
         p->drawArc(opt->rect, 0, 5760);
         if (opt->state & (State_Sunken | State_On)) {
-            ir.adjust(2, 2, -2, -2);
             p->setBrush(opt->palette.foreground());
-            p->drawEllipse(ir);
+            p->drawEllipse(opt->rect.adjusted(2, 2, -2, -2));
         }
         break; }
     case PE_FrameFocusRect:
@@ -176,8 +174,7 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
             } else {
                 p->setPen(opt->palette.foreground().color());
             }
-            QRect focusRect = opt->rect.adjusted(1, 1, -1, -1);
-            p->drawRect(focusRect.adjusted(0, 0, -1, -1)); //draw pen inclusive
+            p->drawRect(opt->rect.adjusted(1, 1, -2, -2)); //draw pen inclusive
             p->setPen(oldPen);
         }
         break;
@@ -240,8 +237,7 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
         }
 
         break;
-   case PE_PanelMenu:
-        break;
+    case PE_PanelMenu:
     case PE_PanelToolBar:
        break;
 #endif // QT_NO_TOOLBAR
@@ -461,9 +457,8 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
 #ifndef QT_NO_SPINBOX
     case PE_IndicatorSpinPlus:
     case PE_IndicatorSpinMinus: {
-        QRect r = opt->rect;
         int fw = proxy()->pixelMetric(PM_DefaultFrameWidth, opt, widget);
-        QRect br = r.adjusted(fw, fw, -fw, -fw);
+        QRect br = opt->rect.adjusted(fw, fw, -fw, -fw);
 
         int offset = (opt->state & State_Sunken) ? 1 : 0;
         int step = (br.width() + 4) / 5;
@@ -611,11 +606,10 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
     break; }
 #endif //QT_NO_COLUMNVIEW
     case PE_IndicatorItemViewItemDrop: {
-        QRect rect = opt->rect;
         if (opt->rect.height() == 0)
-            p->drawLine(rect.topLeft(), rect.topRight());
+            p->drawLine(opt->rect.topLeft(), opt->rect.topRight());
         else
-            p->drawRect(rect);
+            p->drawRect(opt->rect);
         break; }
 #ifndef QT_NO_ITEMVIEWS
     case PE_PanelItemViewRow:
@@ -667,7 +661,7 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
 
 #ifndef QT_NO_TOOLBUTTON
 static void drawArrow(const QStyle *style, const QStyleOptionToolButton *toolbutton,
-                      const QRect &rect, QPainter *painter, const QWidget *widget = Q_NULLPTR)
+                      const QRect &rect, QPainter *painter, const QWidget *widget)
 {
     QStyle::PrimitiveElement pe;
     switch (toolbutton->arrowType) {
@@ -1848,16 +1842,15 @@ void QCommonStyle::drawControl(ControlElement element, const QStyleOption *opt,
             tiledPixmap = QPixmap::fromImage(tiledPixmap.toImage());
 
             p->save();
-            QRect r = opt->rect;
             QStyleHintReturnMask mask;
             if (proxy()->styleHint(QStyle::SH_RubberBand_Mask, opt, widget, &mask))
                 p->setClipRegion(mask.region);
-            p->drawTiledPixmap(r.x(), r.y(), r.width(), r.height(), tiledPixmap);
+            p->drawTiledPixmap(opt->rect.x(), opt->rect.y(), opt->rect.width(), opt->rect.height(), tiledPixmap);
             p->setPen(opt->palette.color(QPalette::Active, QPalette::WindowText));
             p->setBrush(Qt::NoBrush);
-            p->drawRect(r.adjusted(0, 0, -1, -1));
+            p->drawRect(opt->rect.adjusted(0, 0, -1, -1));
             if (rbOpt->shape == QRubberBand::Rectangle)
-                p->drawRect(r.adjusted(3, 3, -4, -4));
+                p->drawRect(opt->rect.adjusted(3, 3, -4, -4));
             p->restore();
         }
         break; }
@@ -4824,7 +4817,7 @@ int QCommonStyle::styleHint(StyleHint sh, const QStyleOption *opt, const QWidget
         break;
 
     case SH_ItemView_EllipsisLocation:
-        ret = Qt::AlignTrailing;
+        ret = Qt::AlignRight;
         break;
 
     case SH_ItemView_ShowDecorationSelected:
@@ -5630,7 +5623,7 @@ QIcon QCommonStyle::standardIcon(StandardPixmap standardicon, const QStyleOption
 }
 
 // in qpixmapfilter.cpp
-extern Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest, const QRect& rect);
+extern Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest);
 
 /*! \reimp */
 QPixmap QCommonStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
@@ -5639,7 +5632,7 @@ QPixmap QCommonStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &p
     switch (iconMode) {
         case QIcon::Disabled: {
             QImage im = pixmap.toImage();
-            qt_grayscale(im, im, im.rect());
+            qt_grayscale(im, im);
             return QPixmap::fromImage(im);
         }
         case QIcon::Selected: {

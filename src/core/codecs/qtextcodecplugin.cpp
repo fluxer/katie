@@ -131,13 +131,16 @@ QTextCodecPlugin::~QTextCodecPlugin()
 QStringList QTextCodecPlugin::keys() const
 {
     QStringList keys;
-    QList<QByteArray> list = names();
-    list += aliases();
-    for (int i = 0; i < list.size(); ++i)
-        keys += QString::fromLatin1(list.at(i).constData());
-    QList<int> mibs = mibEnums();
-    for (int i = 0; i < mibs.count(); ++i)
-        keys += QLatin1String("MIB: ") + QString::number(mibs.at(i));
+
+    foreach (const QByteArray &name, names())
+        keys += QString::fromLatin1(name.constData());
+
+    foreach (const QByteArray &alias, aliases())
+        keys += QString::fromLatin1(alias.constData());
+
+    foreach (const int mib, mibEnums())
+        keys += QLatin1String("MIB: ") + QString::number(mib);
+
     return keys;
 }
 

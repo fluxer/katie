@@ -40,21 +40,14 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#ifndef Q_EXTERN_C
-#  ifdef __cplusplus
-#    define Q_EXTERN_C extern "C"
-#  else
-#    define Q_EXTERN_C extern
-#  endif
-#endif
+#define Q_EXTERN_C extern "C"
 
 typedef QObject *(*QtPluginInstanceFunction)();
 
 #define Q_EXPORT_PLUGIN(PLUGIN) \
           Q_EXPORT_PLUGIN2(PLUGIN, PLUGIN)
 
-#if defined(Q_OF_ELF) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG))
+#if defined(__ELF__) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG))
 #  define Q_PLUGIN_VERIFICATION_SECTION \
      __attribute__ ((section (".ktplugin"))) __attribute__((used))
 #else

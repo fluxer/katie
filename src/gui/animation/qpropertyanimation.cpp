@@ -219,15 +219,6 @@ void QPropertyAnimation::setPropertyName(const QByteArray &propertyName)
     d->updateMetaProperty();
 }
 
-
-/*!
-    \reimp
- */
-bool QPropertyAnimation::event(QEvent *event)
-{
-    return QVariantAnimation::event(event);
-}
-
 /*!
     This virtual function is called by QVariantAnimation whenever the current value
     changes. \a value is the new, updated value. It updates the current value

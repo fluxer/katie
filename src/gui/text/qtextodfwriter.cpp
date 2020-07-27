@@ -437,23 +437,20 @@ void QTextOdfWriter::writeBlockFormat(QXmlStreamWriter &writer, QTextBlockFormat
 
     if (format.hasProperty(QTextFormat::BlockAlignment)) {
         const Qt::Alignment alignment = format.alignment() & Qt::AlignHorizontal_Mask;
-        QString value;
-        if (alignment == Qt::AlignLeading)
-            value = QString::fromLatin1("start");
-        else if (alignment == Qt::AlignTrailing)
-            value = QString::fromLatin1("end");
+        if (alignment == Qt::AlignLeft)
+            writer.writeAttribute(foNS, QString::fromLatin1("text-align"), QString::fromLatin1("start"));
+        else if (alignment == Qt::AlignRight)
+            writer.writeAttribute(foNS, QString::fromLatin1("text-align"), QString::fromLatin1("end"));
         else if (alignment == (Qt::AlignLeft | Qt::AlignAbsolute))
-            value = QString::fromLatin1("left");
+            writer.writeAttribute(foNS, QString::fromLatin1("text-align"), QString::fromLatin1("left"));
         else if (alignment == (Qt::AlignRight | Qt::AlignAbsolute))
-            value = QString::fromLatin1("right");
+            writer.writeAttribute(foNS, QString::fromLatin1("text-align"), QString::fromLatin1("right"));
         else if (alignment == Qt::AlignHCenter)
-            value = QString::fromLatin1("center");
+            writer.writeAttribute(foNS, QString::fromLatin1("text-align"), QString::fromLatin1("center"));
         else if (alignment == Qt::AlignJustify)
-            value = QString::fromLatin1("justify");
+            writer.writeAttribute(foNS, QString::fromLatin1("text-align"), QString::fromLatin1("justify"));
         else
             qWarning() << "QTextOdfWriter: unsupported paragraph alignment; " << format.alignment();
-        if (! value.isNull())
-            writer.writeAttribute(foNS, QString::fromLatin1("text-align"), value);
     }
 
     if (format.hasProperty(QTextFormat::BlockTopMargin))

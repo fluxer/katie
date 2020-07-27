@@ -1776,11 +1776,6 @@ QImage QFontEngineFT::alphaRGBMapForGlyph(glyph_t g, QFixed subPixelPosition, in
     return img;
 }
 
-void QFontEngineFT::removeGlyphFromCache(glyph_t glyph)
-{
-    defaultGlyphSet.removeGlyphFromCache(glyph, 0);
-}
-
 int QFontEngineFT::glyphCount() const
 {
     int count = 0;
@@ -1856,20 +1851,6 @@ void QFontEngineFT::QGlyphSet::clear()
     }
     qDeleteAll(glyph_data);
     glyph_data.clear();
-}
-
-void QFontEngineFT::QGlyphSet::removeGlyphFromCache(glyph_t index, QFixed subPixelPosition)
-{
-    if (useFastGlyphData(index, subPixelPosition)) {
-        if (fast_glyph_data[index]) {
-            delete fast_glyph_data[index];
-            fast_glyph_data[index] = 0;
-            if (fast_glyph_count > 0)
-                --fast_glyph_count;
-        }
-    } else {
-        delete glyph_data.take(GlyphAndSubPixelPosition(index, subPixelPosition));
-    }
 }
 
 void QFontEngineFT::QGlyphSet::setGlyph(glyph_t index, QFixed subPixelPosition, Glyph *glyph)

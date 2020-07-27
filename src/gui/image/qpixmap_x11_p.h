@@ -117,8 +117,7 @@ private:
     enum Flag {
          NoFlags = 0x0,
          Uninitialized = 0x1,
-         Readonly = 0x2,
-         InvertedWhenBoundToTexture = 0x4
+         Readonly = 0x2
     };
     uint flags;
 

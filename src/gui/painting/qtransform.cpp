@@ -244,8 +244,7 @@ QT_BEGIN_NAMESPACE
     \sa reset()
 */
 QTransform::QTransform()
-    : affine(true)
-    , m_13(0), m_23(0), m_33(1)
+    : m_13(0), m_23(0), m_33(1)
     , m_type(TxNone)
     , m_dirty(TxNone)
 {
@@ -262,7 +261,7 @@ QTransform::QTransform()
 QTransform::QTransform(qreal h11, qreal h12, qreal h13,
                        qreal h21, qreal h22, qreal h23,
                        qreal h31, qreal h32, qreal h33)
-    : affine(h11, h12, h21, h22, h31, h32, true)
+    : affine(h11, h12, h21, h22, h31, h32)
     , m_13(h13), m_23(h23), m_33(h33)
     , m_type(TxNone)
     , m_dirty(TxProject)
@@ -278,7 +277,7 @@ QTransform::QTransform(qreal h11, qreal h12, qreal h13,
 */
 QTransform::QTransform(qreal h11, qreal h12, qreal h21,
                        qreal h22, qreal dx, qreal dy)
-    : affine(h11, h12, h21, h22, dx, dy, true)
+    : affine(h11, h12, h21, h22, dx, dy)
     , m_13(0), m_23(0), m_33(1)
     , m_type(TxNone)
     , m_dirty(TxShear)
@@ -293,7 +292,7 @@ QTransform::QTransform(qreal h11, qreal h12, qreal h21,
     and 1 respectively.
  */
 QTransform::QTransform(const QMatrix &mtx)
-    : affine(mtx._m11, mtx._m12, mtx._m21, mtx._m22, mtx._dx, mtx._dy, true),
+    : affine(mtx._m11, mtx._m12, mtx._m21, mtx._m22, mtx._dx, mtx._dy),
       m_13(0), m_23(0), m_33(1)
     , m_type(TxNone)
     , m_dirty(TxShear)
@@ -320,7 +319,7 @@ QTransform QTransform::adjoint() const
 
     return QTransform(h11, h12, h13,
                       h21, h22, h23,
-                      h31, h32, h33, true);
+                      h31, h32, h33);
 }
 
 /*!
@@ -330,7 +329,7 @@ QTransform QTransform::transposed() const
 {
     QTransform t(affine._m11, affine._m21, affine._dx,
                  affine._m12, affine._m22, affine._dy,
-                 m_13, m_23, m_33, true);
+                 m_13, m_23, m_33);
     t.m_type = m_type;
     t.m_dirty = m_dirty;
     return t;
@@ -348,7 +347,7 @@ QTransform QTransform::transposed() const
 */
 QTransform QTransform::inverted(bool *invertible) const
 {
-    QTransform invert(true);
+    QTransform invert;
     bool inv = true;
 
     switch(inline_type()) {
@@ -452,7 +451,7 @@ QTransform QTransform::fromTranslate(qreal dx, qreal dy)
         return QTransform();
 }
 #endif
-    QTransform transform(1, 0, 0, 0, 1, 0, dx, dy, 1, true);
+    QTransform transform(1, 0, 0, 0, 1, 0, dx, dy, 1);
     if (dx == 0 && dy == 0)
         transform.m_type = TxNone;
     else
@@ -518,7 +517,7 @@ QTransform QTransform::fromScale(qreal sx, qreal sy)
         return QTransform();
 }
 #endif
-    QTransform transform(sx, 0, 0, 0, sy, 0, 0, 0, 1, true);
+    QTransform transform(sx, 0, 0, 0, sy, 0, 0, 0, 1);
     if (sx == 1. && sy == 1.)
         transform.m_type = TxNone;
     else
@@ -875,7 +874,7 @@ QTransform QTransform::operator*(const QTransform &m) const
     if (thisType == TxNone)
         return m;
 
-    QTransform t(true);
+    QTransform t;
     TransformationType type = qMax(thisType, otherType);
     switch(type) {
     case TxNone:

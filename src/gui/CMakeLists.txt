@@ -780,7 +780,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmemrotate.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qoutlinemapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine.cpp
@@ -843,7 +842,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextformat.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextobject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextoption.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfragmentmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocument.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocument_p.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtexthtmlparser.cpp
@@ -870,7 +868,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qundostack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qundoview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/qdesktopservices_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qabstractbutton.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qabstractslider.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qabstractspinbox.cpp

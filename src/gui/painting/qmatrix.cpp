@@ -365,7 +365,6 @@ void QMatrix::map(int x, int y, int *tx, int *ty) const
 
 QRect QMatrix::mapRect(const QRect &rect) const
 {
-    QRect result;
     if (_m12 == 0.0F && _m21 == 0.0F) {
         int x = qRound(_m11*rect.x() + _dx);
         int y = qRound(_m22*rect.y() + _dy);
@@ -379,34 +378,33 @@ QRect QMatrix::mapRect(const QRect &rect) const
             h = -h;
             y -= h;
         }
-        result = QRect(x, y, w, h);
-    } else {
-        // see mapToPolygon for explanations of the algorithm.
-        qreal x0, y0;
-        qreal x, y;
-        MAPDOUBLE(rect.left(), rect.top(), x0, y0);
-        qreal xmin = x0;
-        qreal ymin = y0;
-        qreal xmax = x0;
-        qreal ymax = y0;
-        MAPDOUBLE(rect.right() + 1, rect.top(), x, y);
-        xmin = qMin(xmin, x);
-        ymin = qMin(ymin, y);
-        xmax = qMax(xmax, x);
-        ymax = qMax(ymax, y);
-        MAPDOUBLE(rect.right() + 1, rect.bottom() + 1, x, y);
-        xmin = qMin(xmin, x);
-        ymin = qMin(ymin, y);
-        xmax = qMax(xmax, x);
-        ymax = qMax(ymax, y);
-        MAPDOUBLE(rect.left(), rect.bottom() + 1, x, y);
-        xmin = qMin(xmin, x);
-        ymin = qMin(ymin, y);
-        xmax = qMax(xmax, x);
-        ymax = qMax(ymax, y);
-        result = QRect(qRound(xmin), qRound(ymin), qRound(xmax)-qRound(xmin), qRound(ymax)-qRound(ymin));
+        return QRect(x, y, w, h);
     }
-    return result;
+
+    // see mapToPolygon for explanations of the algorithm.
+    qreal x0, y0;
+    qreal x, y;
+    MAPDOUBLE(rect.left(), rect.top(), x0, y0);
+    qreal xmin = x0;
+    qreal ymin = y0;
+    qreal xmax = x0;
+    qreal ymax = y0;
+    MAPDOUBLE(rect.right() + 1, rect.top(), x, y);
+    xmin = qMin(xmin, x);
+    ymin = qMin(ymin, y);
+    xmax = qMax(xmax, x);
+    ymax = qMax(ymax, y);
+    MAPDOUBLE(rect.right() + 1, rect.bottom() + 1, x, y);
+    xmin = qMin(xmin, x);
+    ymin = qMin(ymin, y);
+    xmax = qMax(xmax, x);
+    ymax = qMax(ymax, y);
+    MAPDOUBLE(rect.left(), rect.bottom() + 1, x, y);
+    xmin = qMin(xmin, x);
+    ymin = qMin(ymin, y);
+    xmax = qMax(xmax, x);
+    ymax = qMax(ymax, y);
+    return QRect(qRound(xmin), qRound(ymin), qRound(xmax)-qRound(xmin), qRound(ymax)-qRound(ymin));
 }
 
 /*!
@@ -430,7 +428,6 @@ QRect QMatrix::mapRect(const QRect &rect) const
 */
 QRectF QMatrix::mapRect(const QRectF &rect) const
 {
-    QRectF result;
     if (_m12 == 0.0F && _m21 == 0.0F) {
         qreal x = _m11*rect.x() + _dx;
         qreal y = _m22*rect.y() + _dy;
@@ -444,33 +441,32 @@ QRectF QMatrix::mapRect(const QRectF &rect) const
             h = -h;
             y -= h;
         }
-        result = QRectF(x, y, w, h);
-    } else {
-        qreal x0, y0;
-        qreal x, y;
-        MAPDOUBLE(rect.x(), rect.y(), x0, y0);
-        qreal xmin = x0;
-        qreal ymin = y0;
-        qreal xmax = x0;
-        qreal ymax = y0;
-        MAPDOUBLE(rect.x() + rect.width(), rect.y(), x, y);
-        xmin = qMin(xmin, x);
-        ymin = qMin(ymin, y);
-        xmax = qMax(xmax, x);
-        ymax = qMax(ymax, y);
-        MAPDOUBLE(rect.x() + rect.width(), rect.y() + rect.height(), x, y);
-        xmin = qMin(xmin, x);
-        ymin = qMin(ymin, y);
-        xmax = qMax(xmax, x);
-        ymax = qMax(ymax, y);
-        MAPDOUBLE(rect.x(), rect.y() + rect.height(), x, y);
-        xmin = qMin(xmin, x);
-        ymin = qMin(ymin, y);
-        xmax = qMax(xmax, x);
-        ymax = qMax(ymax, y);
-        result = QRectF(xmin, ymin, xmax-xmin, ymax - ymin);
+        return QRectF(x, y, w, h);
     }
-    return result;
+
+    qreal x0, y0;
+    qreal x, y;
+    MAPDOUBLE(rect.x(), rect.y(), x0, y0);
+    qreal xmin = x0;
+    qreal ymin = y0;
+    qreal xmax = x0;
+    qreal ymax = y0;
+    MAPDOUBLE(rect.x() + rect.width(), rect.y(), x, y);
+    xmin = qMin(xmin, x);
+    ymin = qMin(ymin, y);
+    xmax = qMax(xmax, x);
+    ymax = qMax(ymax, y);
+    MAPDOUBLE(rect.x() + rect.width(), rect.y() + rect.height(), x, y);
+    xmin = qMin(xmin, x);
+    ymin = qMin(ymin, y);
+    xmax = qMax(xmax, x);
+    ymax = qMax(ymax, y);
+    MAPDOUBLE(rect.x(), rect.y() + rect.height(), x, y);
+    xmin = qMin(xmin, x);
+    ymin = qMin(ymin, y);
+    xmax = qMax(xmax, x);
+    ymax = qMax(ymax, y);
+    return QRectF(xmin, ymin, xmax-xmin, ymax - ymin);
 }
 
 /*!
@@ -597,11 +593,10 @@ QLine QMatrix::map(const QLine &line) const
 QPolygon QMatrix::map(const QPolygon &a) const
 {
     int size = a.size();
-    int i;
     QPolygon p(size);
     const QPoint *da = a.constData();
     QPoint *dp = p.data();
-    for(i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         MAPINT(da[i].x(), da[i].y(), dp[i].rx(), dp[i].ry());
     }
     return p;
@@ -618,11 +613,10 @@ QPolygon QMatrix::map(const QPolygon &a) const
 QPolygonF QMatrix::map(const QPolygonF &a) const
 {
     int size = a.size();
-    int i;
     QPolygonF p(size);
     const QPointF *da = a.constData();
     QPointF *dp = p.data();
-    for(i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         MAPDOUBLE(da[i].xp, da[i].yp, dp[i].xp, dp[i].yp);
     }
     return p;
@@ -664,9 +658,7 @@ QRegion QMatrix::map(const QRegion &r) const
     if (_m11 == 1.0 && _m22 == 1.0 && _m12 == 0.0 && _m21 == 0.0) { // translate or identity
         if (_dx == 0.0 && _dy == 0.0) // Identity
             return r;
-        QRegion copy(r);
-        copy.translate(qRound(_dx), qRound(_dy));
-        return copy;
+        return r.translated(qRound(_dx), qRound(_dy));
     }
 
     QPainterPath p = map(qt_regionToPath(r));
@@ -784,8 +776,7 @@ QPolygon QMatrix::mapToPolygon(const QRect &rect) const
         MAPDOUBLE(rect.x(), bottom, x[3], y[3]);
     }
 #if 0
-    int i;
-    for(i = 0; i< 4; i++)
+    for(int i = 0; i< 4; i++)
         qDebug("coords(%d) = (%f/%f) (%d/%d)", i, x[i], y[i], qRound(x[i]), qRound(y[i]));
     qDebug("width=%f, height=%f", qSqrt((x[1]-x[0])*(x[1]-x[0]) + (y[1]-y[0])*(y[1]-y[0])),
             qSqrt((x[0]-x[3])*(x[0]-x[3]) + (y[0]-y[3])*(y[0]-y[3])));
@@ -963,7 +954,7 @@ QMatrix QMatrix::inverted(bool *invertible) const
     if (dtr == 0.0) {
         if (invertible)
             *invertible = false;                // singular matrix
-        return QMatrix(true);
+        return QMatrix();
     }
     else {                                        // invertible matrix
         if (invertible)
@@ -972,8 +963,7 @@ QMatrix QMatrix::inverted(bool *invertible) const
         return QMatrix((_m22*dinv),        (-_m12*dinv),
                        (-_m21*dinv), (_m11*dinv),
                        ((_m21*_dy - _m22*_dx)*dinv),
-                       ((_m12*_dx - _m11*_dy)*dinv),
-                       true);
+                       ((_m12*_dx - _m11*_dy)*dinv));
     }
 }
 
@@ -1055,7 +1045,7 @@ QMatrix QMatrix::operator *(const QMatrix &m) const
 
     qreal tdx  = _dx*m._m11  + _dy*m._m21 + m._dx;
     qreal tdy =  _dx*m._m12  + _dy*m._m22 + m._dy;
-    return QMatrix(tm11, tm12, tm21, tm22, tdx, tdy, true);
+    return QMatrix(tm11, tm12, tm21, tm22, tdx, tdy);
 }
 
 /*!

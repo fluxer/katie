@@ -143,18 +143,6 @@ public:
     static QTransform fromScale(qreal dx, qreal dy);
 
 private:
-    inline QTransform(qreal h11, qreal h12, qreal h13,
-                      qreal h21, qreal h22, qreal h23,
-                      qreal h31, qreal h32, qreal h33, bool)
-        : affine(h11, h12, h21, h22, h31, h32, true)
-        , m_13(h13), m_23(h23), m_33(h33)
-        , m_type(TxNone)
-        , m_dirty(TxProject) {}
-    inline QTransform(bool)
-        : affine(true)
-        , m_13(0), m_23(0), m_33(1)
-        , m_type(TxNone)
-        , m_dirty(TxNone) {}
     inline TransformationType inline_type() const;
     QMatrix affine;
     qreal   m_13;

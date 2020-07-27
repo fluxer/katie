@@ -65,10 +65,8 @@ static quint64 xpmHash(char *str)
 
 #define QRGB(r,g,b) (r*65536 + g*256 + b)
 
-static const int xpmRgbTblSize = 657;
-
 static const struct XPMRGBData {
-    uint  value;
+    const uint value;
     const char *name;
 } xpmRgbTbl[] = {
   { QRGB(240,248,255),  "aliceblue" },
@@ -730,21 +728,7 @@ static const struct XPMRGBData {
   { QRGB(154,205, 50),  "yellowgreen" } };
 #undef QRGB
 
-inline bool operator<(const char *name, const XPMRGBData &data)
-{ return qstrcmp(name, data.name) < 0; }
-inline bool operator<(const XPMRGBData &data, const char *name)
-{ return qstrcmp(data.name, name) < 0; }
-
-static inline bool qt_get_named_xpm_rgb(const char *name_no_space, QRgb *rgb)
-{
-    const XPMRGBData *r = qBinaryFind(xpmRgbTbl, xpmRgbTbl + xpmRgbTblSize, name_no_space);
-    if (r != xpmRgbTbl + xpmRgbTblSize) {
-        *rgb = r->value;
-        return true;
-    } else {
-        return false;
-    }
-}
+static const qint16 xpmRgbTblSize = sizeof(xpmRgbTbl) / sizeof(XPMRGBData);
 
 /*****************************************************************************
   Misc. utility functions
@@ -843,7 +827,6 @@ static bool read_xpm_body(
     int cpp, int ncols, int w, int h, QImage& image)
 {
     QByteArray buf(200, 0);
-    int i;
 
     if (cpp < 0 || cpp > 15)
         return false;
@@ -862,10 +845,9 @@ static bool read_xpm_body(
     }
 
     QMap<quint64, int> colorMap;
-    int currentColor;
     bool hasTransparency = false;
 
-    for(currentColor=0; currentColor < ncols; ++currentColor) {
+    for(int currentColor=0; currentColor < ncols; ++currentColor) {
         if (!read_xpm_string(buf, device, source, index, state)) {
             qWarning("QImage: XPM color specification missing");
             return false;
@@ -874,7 +856,7 @@ static bool read_xpm_body(
         index = buf.left(cpp);
         buf = buf.mid(cpp).simplified().trimmed().toLower();
         QList<QByteArray> tokens = buf.split(' ');
-        i = tokens.indexOf("c");
+        int i = tokens.indexOf("c");
         if (i < 0)
             i = tokens.indexOf("g");
         if (i < 0)
@@ -905,13 +887,18 @@ static bool read_xpm_body(
             }
         } else {
             QRgb c_rgb;
-            if (((buf.length()-1) % 3) && (buf[0] == '#')) {
-                buf.truncate(((buf.length()-1) / 4 * 3) + 1); // remove alpha channel left by imagemagick
-            }
             if (buf[0] == '#') {
-                qt_get_hex_rgb(buf, &c_rgb);
+                if ((buf.length()-1) % 3) {
+                    buf.truncate(((buf.length()-1) / 4 * 3) + 1); // remove alpha channel left by imagemagick
+                }
+                qt_get_hex_rgb(buf, buf.length(), &c_rgb);
             } else {
-                qt_get_named_xpm_rgb(buf, &c_rgb);
+                for (qint16 j = 0; j < xpmRgbTblSize; j++) {
+                    if (qstrcmp(xpmRgbTbl[j].name, buf) == 0) {
+                        c_rgb = xpmRgbTbl[j].value;
+                        break;
+                    }
+                }
             }
             if (ncols <= 256) {
                 image.setColor(currentColor, 0xff000000 | c_rgb);

@@ -88,7 +88,7 @@ public:
     virtual void endPaint(const QRegion &);
 
     virtual QImage* buffer(const QWidget *widget);
-    virtual QPixmap grabWidget(const QWidget *widget, const QRect& rectangle = QRect()) const;
+    virtual QPixmap grabWidget(const QWidget *widget) const;
 
     virtual QPoint offset(const QWidget *widget) const;
     inline QRect rect(const QWidget *widget) const;

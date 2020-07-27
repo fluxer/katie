@@ -113,8 +113,6 @@ public:
     static void setWindowIcon(const QIcon &icon);
     static QIcon windowIcon();
 
-
-
     static QWidgetList allWidgets();
     static QWidgetList topLevelWidgets();
 
@@ -178,7 +176,7 @@ public:
 
 #if defined(Q_WS_X11)
     virtual bool x11EventFilter(XEvent *);
-    virtual int x11ClientMessage(QWidget*, XEvent*, bool passive_only);
+    int x11ClientMessage(QWidget*, XEvent*, bool passive_only);
     int x11ProcessEvent(XEvent*);
 #endif
 

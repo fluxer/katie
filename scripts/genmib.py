@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+# See https://github.com/fluxer/katie/wiki/Unicode-support
 # Data is from https://www.iana.org/assignments/character-sets/character-sets.xml
 
 import xml.etree.ElementTree as ET

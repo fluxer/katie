@@ -86,7 +86,6 @@ public:
 
 protected:
     QString highlightString(const QString &str, int pos) const;
-private:
 };
 
 QString QCalendarDateSectionValidator::highlightString(const QString &str, int pos) const

@@ -2053,9 +2053,6 @@ void QCleanlooksStyle::drawControl(ControlElement element, const QStyleOption *o
                tf |= Qt::TextHideMnemonic;
 
             if (!button->icon.isNull()) {
-                //Center both icon and text
-                QPoint point;
-
                 QIcon::Mode mode = button->state & State_Enabled ? QIcon::Normal
                                                               : QIcon::Disabled;
                 if (mode == QIcon::Normal && button->state & State_HasFocus)
@@ -2071,7 +2068,8 @@ void QCleanlooksStyle::drawControl(ControlElement element, const QStyleOption *o
                 if (!button->text.isEmpty())
                     w += button->fontMetrics.boundingRect(option->rect, tf, button->text).width() + 2;
 
-                point = QPoint(ir.x() + ir.width() / 2 - w / 2,
+                // center both icon and text
+                QPoint point(ir.x() + ir.width() / 2 - w / 2,
                                ir.y() + ir.height() / 2 - h / 2);
 
                 if (button->direction == Qt::RightToLeft)
@@ -2164,11 +2162,10 @@ void QCleanlooksStyle::drawControl(ControlElement element, const QStyleOption *o
             int borderThinkness = proxy()->pixelMetric(PM_TabBarBaseOverlap, tab, widget);
             if (selected)
                 borderThinkness /= 2;
-            QRect r2(option->rect);
-            int x1 = r2.left();
-            int x2 = r2.right();
-            int y1 = r2.top();
-            int y2 = r2.bottom();
+            int x1 = option->rect.left();
+            int x2 = option->rect.right();
+            int y1 = option->rect.top();
+            int y2 = option->rect.bottom();
 
             QTransform rotMatrix;
             bool flip = false;
@@ -2202,8 +2199,7 @@ void QCleanlooksStyle::drawControl(ControlElement element, const QStyleOption *o
             }
 
             if (flip) {
-                QRect tmp = rect;
-                rect = QRect(tmp.y(), tmp.x(), tmp.height(), tmp.width());
+                rect = QRect(rect.y(), rect.x(), rect.height(), rect.width());
                 int temp = x1;
                 x1 = y1;
                 y1 = temp;

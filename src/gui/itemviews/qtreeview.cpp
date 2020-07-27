@@ -2780,14 +2780,6 @@ int QTreeView::rowHeight(const QModelIndex &index) const
 }
 
 /*!
-  \internal
-*/
-void QTreeView::horizontalScrollbarAction(int action)
-{
-    QAbstractItemView::horizontalScrollbarAction(action);
-}
-
-/*!
   \reimp
 */
 bool QTreeView::isIndexHidden(const QModelIndex &index) const

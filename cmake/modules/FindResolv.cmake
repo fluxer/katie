@@ -12,7 +12,7 @@
 
 # resolv does not provide pkg-config files
 
-set(RESOLV_NAMES resolv c)
+set(RESOLV_NAMES c resolv)
 
 find_path(RESOLV_INCLUDES
     NAMES resolv.h
@@ -23,12 +23,12 @@ set(RESOLV_LIBRARIES)
 foreach(name ${RESOLV_NAMES})
     if(NOT HAVE_res_ninit AND NOT HAVE_res_init)
         cmake_reset_check_state()
-        set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} ${name})
+        set(CMAKE_REQUIRED_LIBRARIES ${name})
         katie_check_function(res_ninit "resolv.h")
         cmake_pop_check_state()
         if(NOT HAVE_res_ninit)
             cmake_reset_check_state()
-            set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} ${name})
+            set(CMAKE_REQUIRED_LIBRARIES ${name})
             katie_check_function(res_init "resolv.h")
             cmake_pop_check_state()
         endif()

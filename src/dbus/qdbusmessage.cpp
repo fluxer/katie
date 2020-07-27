@@ -269,7 +269,7 @@ QDBusMessage QDBusMessagePrivate::makeLocal(const QDBusConnectionPrivate &conn,
                 retval.d_ptr->service = conn.baseService;
             return retval;
         } else {
-            computedSignature += QLatin1String(signature);
+            computedSignature += QString::fromLatin1(signature);
         }
     }
 

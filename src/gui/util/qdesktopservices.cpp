@@ -41,12 +41,17 @@
 #include "qcoreapplication.h"
 #include "qurl.h"
 #include "qmutex.h"
+#include "qprocess.h"
+#include "qstandardpaths.h"
 
 QT_BEGIN_NAMESPACE
 
-// in qdesktopservices_x11.cpp
-extern bool qt_openDocument(const QUrl &url);
-extern bool qt_launchWebBrowser(const QUrl &url);
+
+inline static bool qt_launch(const QUrl &url, const QString &client)
+{
+    QString command = client + QLatin1Char(' ') + url.toEncoded();
+    return QProcess::startDetached(command);
+}
 
 class QOpenUrlHandlerRegistry : public QObject
 {
@@ -178,10 +183,36 @@ bool QDesktopServices::openUrl(const QUrl &url)
         }
     }
 
-    if (url.scheme() == QLatin1String("file"))
-        return qt_openDocument(url);
+    if (!url.isValid())
+        return false;
 
-    return qt_launchWebBrowser(url);
+    if (url.scheme() == QLatin1String("file") || url.scheme() == QLatin1String("mailto")) {
+        if (qt_launch(url, QLatin1String("xdg-open")))
+            return true;
+
+        if (qt_launch(url, QLatin1String("firefox")))
+            return true;
+        if (qt_launch(url, QLatin1String("chromium")))
+            return true;
+        if (qt_launch(url, QLatin1String("opera")))
+            return true;
+        return false;
+    }
+
+    if (qt_launch(url, QLatin1String("xdg-open")))
+        return true;
+    if (qt_launch(url, QLatin1String(qgetenv("DEFAULT_BROWSER"))))
+        return true;
+    if (qt_launch(url, QLatin1String(qgetenv("BROWSER"))))
+        return true;
+
+    if (qt_launch(url, QLatin1String("firefox")))
+        return true;
+    if (qt_launch(url, QLatin1String("chromium")))
+        return true;
+    if (qt_launch(url, QLatin1String("opera")))
+        return true;
+    return false;
 }
 
 /*!
@@ -259,7 +290,6 @@ void QDesktopServices::unsetUrlHandler(const QString &scheme)
 */
 
 /*!
-    \fn QString QDesktopServices::storageLocation(StandardLocation type)
     \since 4.4
 
     Returns the default system directory where files of \a type belong, or an empty string
@@ -274,13 +304,19 @@ void QDesktopServices::unsetUrlHandler(const QString &scheme)
     Rest of the standard locations point to folder on same drive with executable, except
     that if executable is in ROM the folder from C drive is returned.
 */
+QString QDesktopServices::storageLocation(StandardLocation type)
+{
+    return QStandardPaths::writableLocation(static_cast<QStandardPaths::StandardLocation>(type));
+}
 
 /*!
-    \fn QString QDesktopServices::displayName(StandardLocation type)
-
     Returns a localized display name for the given location \a type or
     an empty QString if no relevant location can be found.
 */
+QString QDesktopServices::displayName(StandardLocation type)
+{
+    return QStandardPaths::displayName(static_cast<QStandardPaths::StandardLocation>(type));
+}
 
 QT_END_NAMESPACE
 
