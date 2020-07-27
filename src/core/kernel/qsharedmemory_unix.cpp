@@ -260,7 +260,7 @@ bool QSharedMemoryPrivate::create(int size)
 
     // the size may only be set once; ignore errors
     int ret;
-    EINTR_LOOP(ret, ftruncate(fd, size));
+    EINTR_LOOP(ret, QT_FTRUNCATE(fd, size));
     if (ret == -1) {
         setErrorString(QLatin1String("QSharedMemory::create (ftruncate)"));
         qt_safe_close(fd);

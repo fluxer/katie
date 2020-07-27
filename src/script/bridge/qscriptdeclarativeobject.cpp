@@ -23,6 +23,7 @@
 
 #include "Platform.h"
 #include "qscriptdeclarativeobject_p.h"
+#include "qscriptcommon_p.h"
 
 #include "../api/qscriptengine.h"
 #include "../api/qscriptengine_p.h"
@@ -34,13 +35,7 @@
 #include "Error.h"
 #include "PropertyNameArray.h"
 
-#include <QtCore/qstringlist.h>
-
-Q_DECLARE_METATYPE(QScriptContext*)
-#ifndef QT_ALLINONE
-Q_DECLARE_METATYPE(QScriptValue)
-#endif
-Q_DECLARE_METATYPE(QScriptValueList)
+#include "qstringlist.h"
 
 QT_BEGIN_NAMESPACE
 

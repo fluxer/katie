@@ -588,7 +588,6 @@ void QDialog::setVisible(bool visible)
                 setWindowState(state);
         }
         QWidget::setVisible(visible);
-        showExtension(d->doShowExtension);
         QWidget *fw = window()->focusWidget();
         if (!fw)
             fw = this;
@@ -671,7 +670,6 @@ void QDialog::adjustPosition(QWidget* w)
     int extraw = 0, extrah = 0, scrn = 0;
     if (w)
         w = w->window();
-    QRect desk;
     if (w) {
         scrn = QApplication::desktop()->screenNumber(w);
     } else if (QApplication::desktop()->isVirtualDesktop()) {
@@ -679,7 +677,7 @@ void QDialog::adjustPosition(QWidget* w)
     } else {
         scrn = QApplication::desktop()->screenNumber(this);
     }
-    desk = QApplication::desktop()->availableGeometry(scrn);
+    QRect desk = QApplication::desktop()->availableGeometry(scrn);
 
     QWidgetList list = QApplication::topLevelWidgets();
     for (int i = 0; (extraw == 0 || extrah == 0) && i < list.size(); ++i) {
@@ -730,185 +728,6 @@ void QDialog::adjustPosition(QWidget* w)
     move(p);
 }
 
-
-/*!
-    \obsolete
-
-    If \a orientation is Qt::Horizontal, the extension will be displayed
-    to the right of the dialog's main area. If \a orientation is
-    Qt::Vertical, the extension will be displayed below the dialog's main
-    area.
-
-    Instead of using this functionality, we recommend that you simply call
-    show() or hide() on the part of the dialog that you want to use as an
-    extension. See the \l{Extension Example} for details.
-
-    \sa setExtension()
-*/
-void QDialog::setOrientation(Qt::Orientation orientation)
-{
-    Q_D(QDialog);
-    d->orientation = orientation;
-}
-
-/*!
-    \obsolete
-
-    Returns the dialog's extension orientation.
-
-    Instead of using this functionality, we recommend that you simply call
-    show() or hide() on the part of the dialog that you want to use as an
-    extension. See the \l{Extension Example} for details.
-
-    \sa extension()
-*/
-Qt::Orientation QDialog::orientation() const
-{
-    Q_D(const QDialog);
-    return d->orientation;
-}
-
-/*!
-    \obsolete
-
-    Sets the widget, \a extension, to be the dialog's extension,
-    deleting any previous extension. The dialog takes ownership of the
-    extension. Note that if 0 is passed any existing extension will be
-    deleted. This function must only be called while the dialog is hidden.
-
-    Instead of using this functionality, we recommend that you simply call
-    show() or hide() on the part of the dialog that you want to use as an
-    extension. See the \l{Extension Example} for details.
-
-    \sa showExtension(), setOrientation()
-*/
-void QDialog::setExtension(QWidget* extension)
-{
-    Q_D(QDialog);
-    delete d->extension;
-    d->extension = extension;
-
-    if (!extension)
-        return;
-
-    if (extension->parentWidget() != this)
-        extension->setParent(this);
-    extension->hide();
-}
-
-/*!
-    \obsolete
-
-    Returns the dialog's extension or 0 if no extension has been
-    defined.
-
-    Instead of using this functionality, we recommend that you simply call
-    show() or hide() on the part of the dialog that you want to use as an
-    extension. See the \l{Extension Example} for details.
-
-    \sa showExtension(), setOrientation()
-*/
-QWidget* QDialog::extension() const
-{
-    Q_D(const QDialog);
-    return d->extension;
-}
-
-
-/*!
-    \obsolete
-
-    If \a showIt is true, the dialog's extension is shown; otherwise the
-    extension is hidden.
-
-    Instead of using this functionality, we recommend that you simply call
-    show() or hide() on the part of the dialog that you want to use as an
-    extension. See the \l{Extension Example} for details.
-
-    \sa show(), setExtension(), setOrientation()
-*/
-void QDialog::showExtension(bool showIt)
-{
-    Q_D(QDialog);
-    d->doShowExtension = showIt;
-    if (!d->extension)
-        return;
-    if (!testAttribute(Qt::WA_WState_Visible))
-        return;
-    if (d->extension->isVisible() == showIt)
-        return;
-
-    if (showIt) {
-        d->size = size();
-        d->min = minimumSize();
-        d->max = maximumSize();
-        if (layout())
-            layout()->setEnabled(false);
-        QSize s(d->extension->sizeHint()
-                 .expandedTo(d->extension->minimumSize())
-                 .boundedTo(d->extension->maximumSize()));
-        if (d->orientation == Qt::Horizontal) {
-            int h = qMax(height(), s.height());
-            d->extension->setGeometry(width(), 0, s.width(), h);
-            setFixedSize(width() + s.width(), h);
-        } else {
-            int w = qMax(width(), s.width());
-            d->extension->setGeometry(0, height(), w, s.height());
-            setFixedSize(w, height() + s.height());
-        }
-        d->extension->show();
-#ifndef QT_NO_SIZEGRIP
-        const bool sizeGripEnabled = isSizeGripEnabled();
-        setSizeGripEnabled(false);
-        d->sizeGripEnabled = sizeGripEnabled;
-#endif
-    } else {
-        d->extension->hide();
-        // workaround for CDE window manager that won't shrink with (-1,-1)
-        setMinimumSize(d->min.expandedTo(QSize(1, 1)));
-        setMaximumSize(d->max);
-        resize(d->size);
-        if (layout())
-            layout()->setEnabled(true);
-#ifndef QT_NO_SIZEGRIP
-        setSizeGripEnabled(d->sizeGripEnabled);
-#endif
-    }
-}
-
-
-/*! \reimp */
-QSize QDialog::sizeHint() const
-{
-    Q_D(const QDialog);
-    if (d->extension) {
-        if (d->orientation == Qt::Horizontal)
-            return QSize(QWidget::sizeHint().width(),
-                        qMax(QWidget::sizeHint().height(),d->extension->sizeHint().height()));
-        else
-            return QSize(qMax(QWidget::sizeHint().width(), d->extension->sizeHint().width()),
-                        QWidget::sizeHint().height());
-    }
-    return QWidget::sizeHint();
-}
-
-
-/*! \reimp */
-QSize QDialog::minimumSizeHint() const
-{
-    Q_D(const QDialog);
-    if (d->extension) {
-        if (d->orientation == Qt::Horizontal)
-            return QSize(QWidget::minimumSizeHint().width(),
-                        qMax(QWidget::minimumSizeHint().height(), d->extension->minimumSizeHint().height()));
-        else
-            return QSize(qMax(QWidget::minimumSizeHint().width(), d->extension->minimumSizeHint().width()),
-                        QWidget::minimumSizeHint().height());
-    }
-
-    return QWidget::minimumSizeHint();
-}
-
 /*!
     \property QDialog::modal
     \brief whether show() should pop up the dialog as modal or modeless
@@ -948,8 +767,6 @@ void QDialog::setSizeGripEnabled(bool enabled)
     Q_D(QDialog);
 #ifndef QT_NO_SIZEGRIP
     d->sizeGripEnabled = enabled;
-    if (enabled && d->doShowExtension)
-        return;
 #endif
     if (!enabled != !d->resizer) {
         if (enabled) {
@@ -1030,8 +847,4 @@ void QDialog::resizeEvent(QResizeEvent *)
 
 QT_END_NAMESPACE
 
-
 #include "moc_qdialog.h"
-
-
-

@@ -64,17 +64,6 @@ QT_BEGIN_NAMESPACE
 extern double qt_pointSize(double pixelSize, int dpi);
 extern double qt_pixelSize(double pointSize, int dpi);
 
-static inline void capitalize (char *s)
-{
-    bool space = true;
-    while(*s) {
-        if (space)
-            *s = toupper(*s);
-        space = (*s == ' ');
-        ++s;
-    }
-}
-
 // generated via util/unicode/makeencodings
 static const struct XlfdTblData {
     const char *name;
@@ -561,13 +550,19 @@ static const struct DefaultFontTblData {
 static const qint16 DefaultFontTblSize = sizeof(DefaultFontTbl) / sizeof(DefaultFontTblData);
 
 static const char* PatternPropertiesTbl[] = {
-    FC_FAMILY, FC_STYLE, FC_WEIGHT, FC_SLANT,
-    FC_SPACING, FC_FILE, FC_INDEX,
-    FC_LANG, FC_CHARSET, FC_FOUNDRY, FC_SCALABLE, FC_PIXEL_SIZE, FC_WEIGHT,
+    FC_FAMILY,
+    FC_STYLE,
+    FC_WEIGHT,
+    FC_SLANT,
+    FC_SPACING,
+    FC_LANG,
+    FC_CHARSET,
+    FC_FOUNDRY,
+    FC_SCALABLE,
+    FC_PIXEL_SIZE,
     FC_WIDTH,
-    FC_CAPABILITY,
 };
-static const qint16 PatternPropertiesTblSize = 15;
+static const qint16 PatternPropertiesTblSize = 11;
 
 static void loadFontConfig()
 {
@@ -596,8 +591,6 @@ static void loadFontConfig()
     int weight_value;
     int slant_value;
     int spacing_value;
-    FcChar8 *file_value;
-    int index_value;
     FcChar8 *foundry_value;
     FcChar8 *style_value;
     FcBool scalable;
@@ -616,13 +609,10 @@ static void loadFontConfig()
     for (int i = 0; i < fonts->nfont; i++) {
         if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &value) != FcResultMatch)
             continue;
-        //         capitalize(value);
         familyName = QString::fromUtf8((const char *)value);
         slant_value = FC_SLANT_ROMAN;
         weight_value = FC_WEIGHT_MEDIUM;
         spacing_value = FC_PROPORTIONAL;
-        file_value = 0;
-        index_value = 0;
         scalable = FcTrue;
 
         if (FcPatternGetInteger (fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
@@ -631,10 +621,6 @@ static void loadFontConfig()
             weight_value = FC_WEIGHT_MEDIUM;
         if (FcPatternGetInteger (fonts->fonts[i], FC_SPACING, 0, &spacing_value) != FcResultMatch)
             spacing_value = FC_PROPORTIONAL;
-        if (FcPatternGetString (fonts->fonts[i], FC_FILE, 0, &file_value) != FcResultMatch)
-            file_value = 0;
-        if (FcPatternGetInteger (fonts->fonts[i], FC_INDEX, 0, &index_value) != FcResultMatch)
-            index_value = 0;
         if (FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable) != FcResultMatch)
             scalable = FcTrue;
         if (FcPatternGetString(fonts->fonts[i], FC_FOUNDRY, 0, &foundry_value) != FcResultMatch)
@@ -642,10 +628,6 @@ static void loadFontConfig()
         if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
             style_value = 0;
         QtFontFamily *family = db->family(familyName, true);
-
-        QByteArray file((const char *)file_value);
-        family->fontFilename = file;
-        family->fontFileIndex = index_value;
 
         QtFontStyle::Key styleKey;
         QString styleName = style_value ? QString::fromUtf8((const char *) style_value) : QString();
@@ -677,7 +659,7 @@ static void loadFontConfig()
             FcPatternGetDouble (fonts->fonts[i], FC_PIXEL_SIZE, 0, &pixel_size);
             size = style->pixelSize((int)pixel_size, true);
         }
-        QtFontEncoding *enc = size->encodingID(-1, 0, 0, 0, 0, true);
+        QtFontEncoding *enc = size->encodingID(-1, true);
         enc->pitch = (spacing_value >= FC_CHARCELL ? 'c' :
                       (spacing_value >= FC_MONO ? 'm' : 'p'));
     }
@@ -696,7 +678,7 @@ static void loadFontConfig()
             QtFontStyle *style = foundry->style(styleKey, QString(), true);
             style->smoothScalable = true;
             QtFontSize *size = style->pixelSize(SMOOTH_SCALABLE, true);
-            QtFontEncoding *enc = size->encodingID(-1, 0, 0, 0, 0, true);
+            QtFontEncoding *enc = size->encodingID(-1, true);
             enc->pitch = (DefaultFontTbl[i].fixedpitch ? 'm' : 'p');
         }
     }
@@ -741,7 +723,7 @@ static void initializeFontDb()
 
                 QtFontSize *size = style->pixelSize(SMOOTH_SCALABLE);
                 if (! size) continue; // should not happen
-                QtFontEncoding *enc = size->encodingID(-1, 0, 0, 0, 0, true);
+                QtFontEncoding *enc = size->encodingID(-1, true);
                 if (! enc) continue; // should not happen either
 
                 QtFontStyle::Key key = style->key;
@@ -762,7 +744,7 @@ static void initializeFontDb()
                 equiv->smoothScalable = true;
 
                 QtFontSize *equiv_size = equiv->pixelSize(SMOOTH_SCALABLE, true);
-                QtFontEncoding *equiv_enc = equiv_size->encodingID(-1, 0, 0, 0, 0, true);
+                QtFontEncoding *equiv_enc = equiv_size->encodingID(-1, true);
 
                 // keep the same pitch
                 equiv_enc->pitch = enc->pitch;
@@ -784,15 +766,10 @@ static void initializeFontDb()
             FD_DEBUG("\t\t'%s'", foundry->name.toLatin1().constData());
             for (int s = 0; s < foundry->count; s++) {
                 QtFontStyle *style = foundry->styles[s];
-                FD_DEBUG("\t\t\tstyle: style=%d weight=%d (%s)\n"
-                         "\t\t\tstretch=%d (%s)",
-                         style->key.style, style->key.weight,
-                         style->weightName, style->key.stretch,
-                         style->setwidthName ? style->setwidthName : "nil");
+                FD_DEBUG("\t\t\tstyle: style=%d weight=%d stretch=%d",
+                         style->key.style, style->key.weight, style->key.stretch);
                 if (style->smoothScalable)
                     FD_DEBUG("\t\t\t\tsmooth scalable");
-                else if (style->bitmapScalable)
-                    FD_DEBUG("\t\t\t\tbitmap scalable");
                 if (style->pixelSizes) {
                     qDebug("\t\t\t\t%d pixel sizes", style->count);
                     for (int z = 0; z < style->count; ++z) {
@@ -927,7 +904,7 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, int script, const QFontDe
             FcPatternAdd(pattern, FC_FAMILY, value, FcTrue);
         }
         if (i == 0) {
-            QT_PREPEND_NAMESPACE(match)(script, request, family, foundry, -1, &desc);
+            QT_PREPEND_NAMESPACE(match)(script, request, family, foundry, &desc);
             if (!foundry.isEmpty()) {
                 QByteArray cs = foundry.toUtf8();
                 value.u.s = (const FcChar8 *)cs.data();

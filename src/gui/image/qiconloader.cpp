@@ -199,11 +199,9 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
     }
 
     QString contentDir = theme.contentDir() + QLatin1Char('/');
-    QList<QIconDirInfo> subDirs = theme.keyList();
 
     // Add all relevant files
-    for (int i = 0; i < subDirs.size() ; ++i) {
-        const QIconDirInfo &dirInfo = subDirs.at(i);
+    foreach (const QIconDirInfo &dirInfo, theme.keyList()) {
         const QString subDir = contentDir + dirInfo.path + QLatin1Char('/');
         const QString pngPath = subDir + iconName + QLatin1String(".png");
         if (QFile::exists(pngPath)) {

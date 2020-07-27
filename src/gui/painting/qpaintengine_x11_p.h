@@ -202,7 +202,6 @@ public:
     bool adjust_coords;
     bool has_clipping;
     bool adapted_brush_origin;
-    bool adapted_pen_origin;
     bool has_pen;
     bool has_brush;
     bool has_texture;

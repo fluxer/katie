@@ -102,8 +102,7 @@ static QImage makeBitmapCompliantIfNeeded(QPixmapData *d, const QImage &image, Q
 void QPixmapData::fromImageReader(QImageReader *imageReader,
                                   Qt::ImageConversionFlags flags)
 {
-    const QImage image = imageReader->read();
-    fromImage(image, flags);
+    fromImage(imageReader->read(), flags);
 }
 
 bool QPixmapData::fromFile(const QString &fileName, const char *format,

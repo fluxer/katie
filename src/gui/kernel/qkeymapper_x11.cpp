@@ -153,51 +153,49 @@ qt_XTranslateKey(QXCoreDesc *dpy,
     KeySym sym, lsym, usym;
 
     if (! dpy->keysyms)
-	return 0;
+        return 0;
     *modifiers_return = ((ShiftMask|LockMask)
-			 | dpy->mode_switch | dpy->num_lock);
-    if (((int)keycode < dpy->min_keycode) || ((int)keycode > dpy->max_keycode))
-    {
-	*keysym_return = NoSymbol;
-	return 1;
+                        | dpy->mode_switch | dpy->num_lock);
+    if (((int)keycode < dpy->min_keycode) || ((int)keycode > dpy->max_keycode)) {
+        *keysym_return = NoSymbol;
+        return 1;
     }
     per = dpy->keysyms_per_keycode;
     syms = &dpy->keysyms[(keycode - dpy->min_keycode) * per];
     while ((per > 2) && (syms[per - 1] == NoSymbol))
-	per--;
+        per--;
     if ((per > 2) && (modifiers & dpy->mode_switch)) {
-	syms += 2;
-	per -= 2;
+        syms += 2;
+        per -= 2;
     }
     if ((modifiers & dpy->num_lock) &&
-	(per > 1 && (IsKeypadKey(syms[1]) || IsPrivateKeypadKey(syms[1])))) {
-	if ((modifiers & ShiftMask) ||
-	    ((modifiers & LockMask) && (dpy->lock_meaning == XK_Shift_Lock)))
-	    *keysym_return = syms[0];
-	else
-	    *keysym_return = syms[1];
+        (per > 1 && (IsKeypadKey(syms[1]) || IsPrivateKeypadKey(syms[1])))) {
+        if ((modifiers & ShiftMask) ||
+            ((modifiers & LockMask) && (dpy->lock_meaning == XK_Shift_Lock)))
+            *keysym_return = syms[0];
+        else
+            *keysym_return = syms[1];
     } else if (!(modifiers & ShiftMask) &&
-	(!(modifiers & LockMask) || (dpy->lock_meaning == NoSymbol))) {
-	if ((per == 1) || (syms[1] == NoSymbol))
-	    XConvertCase(syms[0], keysym_return, &usym);
-	else
-	    *keysym_return = syms[0];
-    } else if (!(modifiers & LockMask) ||
-	       (dpy->lock_meaning != XK_Caps_Lock)) {
-	if ((per == 1) || ((usym = syms[1]) == NoSymbol))
-	    XConvertCase(syms[0], &lsym, &usym);
-	*keysym_return = usym;
+        (!(modifiers & LockMask) || (dpy->lock_meaning == NoSymbol))) {
+        if ((per == 1) || (syms[1] == NoSymbol))
+            XConvertCase(syms[0], keysym_return, &usym);
+        else
+            *keysym_return = syms[0];
+    } else if (!(modifiers & LockMask) || (dpy->lock_meaning != XK_Caps_Lock)) {
+        if ((per == 1) || ((usym = syms[1]) == NoSymbol))
+            XConvertCase(syms[0], &lsym, &usym);
+        *keysym_return = usym;
     } else {
-	if ((per == 1) || ((sym = syms[1]) == NoSymbol))
-	    sym = syms[0];
-	XConvertCase(sym, &lsym, &usym);
-	if (!(modifiers & ShiftMask) && (sym != syms[0]) &&
-	    ((sym != usym) || (lsym == usym)))
-	    XConvertCase(syms[0], &lsym, &usym);
-	*keysym_return = usym;
+        if ((per == 1) || ((sym = syms[1]) == NoSymbol))
+            sym = syms[0];
+        XConvertCase(sym, &lsym, &usym);
+        if (!(modifiers & ShiftMask) && (sym != syms[0]) &&
+            ((sym != usym) || (lsym == usym)))
+            XConvertCase(syms[0], &lsym, &usym);
+        *keysym_return = usym;
     }
     if (*keysym_return == XK_VoidSymbol)
-	*keysym_return = NoSymbol;
+        *keysym_return = NoSymbol;
     return 1;
 }
 
@@ -869,15 +867,14 @@ static QString translateKeySym(KeySym keysym, uint xmodifiers,
 
 extern bool qt_use_rtl_extensions; // from qapplication_x11.cpp
 
-bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
-                                                  const XEvent *event,
-                                                  KeySym &keysym,
-                                                  int& count,
-                                                  QString& text,
-                                                  Qt::KeyboardModifiers &modifiers,
-                                                  int& code,
-                                                  QEvent::Type &type,
-                                                  bool statefulTranslation)
+void static translateKeyEventInternal(QWidget *keyWidget,
+                                      const XEvent *event,
+                                      KeySym &keysym,
+                                      int& count,
+                                      QString& text,
+                                      Qt::KeyboardModifiers &modifiers,
+                                      int& code,
+                                      QEvent::Type &type)
 {
     XKeyEvent xkeyevent = event->xkey;
     // save the modifier state, we will use the keystate uint later by passing
@@ -890,14 +887,14 @@ bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
     static unsigned int lastWinId = 0;
 
     // translate pending direction change
-    if (statefulTranslation && qt_use_rtl_extensions && type == QEvent::KeyRelease) {
+    if (qt_use_rtl_extensions && type == QEvent::KeyRelease) {
         if (directionKeyEvent == Qt::Key_Direction_R || directionKeyEvent == Qt::Key_Direction_L) {
             type = QEvent::KeyPress;
             code = directionKeyEvent;
             text = QString();
             directionKeyEvent = 0;
             lastWinId = 0;
-            return true;
+            return;
         } else {
             directionKeyEvent = 0;
             lastWinId = 0;
@@ -920,7 +917,7 @@ bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
     // (to figure out whether the Ctrl modifier is held while Shift is pressed,
     // or Shift is held while Ctrl is pressed) since the 'state' doesn't tell
     // us whether the modifier held is Left or Right.
-    if (statefulTranslation && qt_use_rtl_extensions && type == QEvent::KeyPress) {
+    if (qt_use_rtl_extensions && type == QEvent::KeyPress) {
         if (keysym == XK_Control_L || keysym == XK_Control_R
             || keysym == XK_Shift_L || keysym == XK_Shift_R) {
             if (!directionKeyEvent) {
@@ -948,8 +945,6 @@ bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
             directionKeyEvent = Qt::Key_Space; // invalid
         }
     }
-
-    return true;
 }
 
 
@@ -1032,7 +1027,7 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
         return true;
 
     QEvent::Type type;
-    bool    autor = false;
+    bool autorepeat = false;
     QString text;
 
     KeySym keysym = 0;
@@ -1047,7 +1042,7 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
     static uint curr_autorep = 0;
     if (event->type == XKeyPress) {
         if (curr_autorep == event->xkey.keycode) {
-            autor = true;
+            autorepeat = true;
             curr_autorep = 0;
         }
     } else {
@@ -1058,13 +1053,13 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
         auto_repeat_data.error = false;
         if (XCheckIfEvent(dpy, &nextpress, &qt_keypress_scanner,
                           (XPointer) &auto_repeat_data)) {
-            autor = true;
+            autorepeat = true;
 
             // Put it back... we COULD send the event now and not need
             // the static curr_autorep variable.
             XPutBackEvent(dpy,&nextpress);
         }
-        curr_autorep = autor ? event->xkey.keycode : 0;
+        curr_autorep = autorepeat ? event->xkey.keycode : 0;
     }
 
     // autorepeat compression makes sense for all widgets
@@ -1087,16 +1082,6 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
         }
     }
 
-    return QKeyMapper::sendKeyEvent(keyWidget, type, code, modifiers, text, autor,
-                                    qMax(qMax(count,1), int(text.length())),
-                                    event->xkey.keycode, keysym, event->xkey.state);
-}
-
-bool QKeyMapper::sendKeyEvent(QWidget *keyWidget,
-                              QEvent::Type type, int code, Qt::KeyboardModifiers modifiers,
-                              const QString &text, bool autorepeat, int count,
-                              quint32 nativeScanCode, quint32 nativeVirtualKey, quint32 nativeModifiers)
-{
     // try the menukey first
     if (type == QEvent::KeyPress && code == Qt::Key_Menu) {
         QPoint globalPos=  QCursor::pos();
@@ -1108,11 +1093,9 @@ bool QKeyMapper::sendKeyEvent(QWidget *keyWidget,
     }
 
     QKeyEvent e(type, code, modifiers,
-                  nativeScanCode, nativeVirtualKey, nativeModifiers,
+                  event->xkey.keycode, keysym, event->xkey.state,
                   text, autorepeat, qMax(qMax(count,1), int(text.length())));
     return qt_sendSpontaneousEvent(keyWidget, &e);
 }
 
 QT_END_NAMESPACE
-
-

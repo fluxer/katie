@@ -482,9 +482,12 @@ void QThread::setTerminationEnabled(bool enabled)
     Q_ASSERT_X(currentThread() != Q_NULLPTR, "QThread::setTerminationEnabled()",
                "Current thread was not started with QThread.");
 
-    pthread_setcancelstate(enabled ? PTHREAD_CANCEL_ENABLE : PTHREAD_CANCEL_DISABLE, Q_NULLPTR);
-    if (enabled)
+    if (enabled) {
+        pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, Q_NULLPTR);
         pthread_testcancel();
+    } else {
+        pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, Q_NULLPTR);
+    }
 }
 
 void QThread::setPriority(Priority priority)

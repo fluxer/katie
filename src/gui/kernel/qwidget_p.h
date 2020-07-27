@@ -134,7 +134,6 @@ struct QTLWExtra {
     QString caption; // widget caption
     QString iconText; // widget icon text
     QString role; // widget role
-    QString filePath; // widget file path
 
     // Other variables.
     short incw, inch; // size increments
@@ -317,15 +316,9 @@ public:
 
 
     void paintSiblingsRecursive(QPaintDevice *pdev, const QObjectList& children, int index,
-                                const QRegion &rgn, const QPoint &offset, int flags
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-                                , const QWindowSurface *currentSurface
-#endif
-                                , QPainter *sharedPainter, QWidgetBackingStore *backingStore);
+                                const QRegion &rgn, const QPoint &offset, int flags,
+                                QPainter *sharedPainter, QWidgetBackingStore *backingStore);
 
-
-    QPainter *beginSharedPainter();
-    bool endSharedPainter();
 #ifndef QT_NO_GRAPHICSVIEW
     static QGraphicsProxyWidget * nearestGraphicsProxyWidget(const QWidget *origin);
 #endif

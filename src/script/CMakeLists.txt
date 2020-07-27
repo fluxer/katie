@@ -89,6 +89,7 @@ set(SCRIPT_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptsyntaxchecker_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptlexer_p.h
     # ${CMAKE_CURRENT_SOURCE_DIR}/parser/qscriptparser_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qscriptcommon_p.h
 )
 
 set(SCRIPT_SOURCES

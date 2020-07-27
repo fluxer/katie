@@ -192,8 +192,6 @@ public:
     using QPaintEngineEx::drawEllipse;
 #endif
 
-    void releaseBuffer();
-
     QSize size() const;
 
 #ifndef QT_NO_DEBUG

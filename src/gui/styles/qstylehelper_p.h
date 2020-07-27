@@ -66,9 +66,6 @@ namespace QStyleHelper
     int calcBigLineSize(int radius);
     void drawDial(const QStyleOptionSlider *dial, QPainter *painter);
 #endif //QT_NO_DIAL
-    void drawBorderPixmap(const QPixmap &pixmap, QPainter *painter, const QRect &rect,
-                     int left = 0, int top = 0, int right = 0,
-                     int bottom = 0);
 }
 
 // internal helper. Converts an integer value to an unique string token
@@ -79,7 +76,7 @@ template <typename T>
         : val(t)
     {}
 
-    operator const QChar() const {
+    inline operator const QChar() const {
         const char *c = reinterpret_cast<const char *>(&val);
         return QChar(qChecksum(c ,sizeof(T)));
     }

@@ -2179,9 +2179,7 @@ void tst_QVariant::userType()
         data3 = qvariant_cast<MyType>(myCarrier);
         QCOMPARE(data3.number, 1);
         QCOMPARE(data3.text, (const char *)"eins");
-#ifndef Q_CC_SUN
         QCOMPARE(instanceCount, 4);
-#endif
 
     }
 
@@ -3030,7 +3028,7 @@ void tst_QVariant::task256984_setValue()
 
 void tst_QVariant::numericalConvert()
 {
-#if defined(Q_OS_LINUX) && defined(Q_CC_GNU) && !defined(__x86_64__)
+#if defined(Q_OS_LINUX) && defined(Q_CC_GNU) && !defined(QT_ARCH_X86_64)
     QSKIP("Known to fail due to a GCC bug on at least Ubuntu 10.04 32-bit - check QTBUG-8959", SkipAll);
 #endif
     QVariant vfloat(float(5.3));

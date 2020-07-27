@@ -114,7 +114,7 @@ void QFontFamilyDelegate::paint(QPainter *painter,
         QRectF tbr = fontMetrics.tightBoundingRect(text);
         painter->drawText(r.x(), r.y() + (r.height() + tbr.height()) / 2.0, text);
     } else {
-        painter->drawText(r, Qt::AlignVCenter|Qt::AlignLeading|Qt::TextSingleLine, text);
+        painter->drawText(r, Qt::AlignVCenter|Qt::AlignLeft|Qt::TextSingleLine, text);
     }
 
     painter->setFont(old);

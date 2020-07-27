@@ -190,8 +190,7 @@ QBitmap &QBitmap::operator=(const QPixmap &pixmap)
     } else if (pixmap.depth() == 1) {                // 1-bit pixmap
         QPixmap::operator=(pixmap);                  // shallow assignment
     } else {                                         // n-bit depth pixmap
-        QImage image = pixmap.toImage();             // convert pixmap to image
-        *this = fromImage(image);                    // will dither image
+        *this = fromImage(pixmap.toImage());         // convert pixmap to image and dither
     }
     return *this;
 }

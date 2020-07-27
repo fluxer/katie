@@ -723,11 +723,10 @@ int QMetaObject::indexOfClassInfo(const char *name) const
 QMetaMethod QMetaObject::constructor(int index) const
 {
     Q_ASSERT(priv(d.data)->revision >= 6);
-    int i = index;
     QMetaMethod result;
-    if (i >= 0 && i < priv(d.data)->constructorCount) {
+    if (index >= 0 && index < priv(d.data)->constructorCount) {
         result.mobj = this;
-        result.handle = priv(d.data)->constructorData + 5*i;
+        result.handle = priv(d.data)->constructorData + 5*index;
     }
     return result;
 }

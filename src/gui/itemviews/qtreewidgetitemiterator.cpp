@@ -118,8 +118,7 @@ QTreeWidgetItemIterator::QTreeWidgetItemIterator(QTreeWidgetItem *item, Iterator
 
     // Initialize m_currentIndex and m_parentIndex as it would be if we had traversed from
     // the beginning.
-    QTreeWidgetItem *parent = item;
-    parent = parent->parent();
+    QTreeWidgetItem *parent = item->parent();
     QTreeWidgetItem *root = d->m_model->rootItem;
     d->m_currentIndex = (parent ? parent : root)->indexOfChild(item);
 

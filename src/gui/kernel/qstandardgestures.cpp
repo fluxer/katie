@@ -107,11 +107,6 @@ QGestureRecognizer::Result QPanGestureRecognizer::recognize(QGesture *state,
         }
         break;
     }
-    case QEvent::MouseButtonPress:
-    case QEvent::MouseMove:
-    case QEvent::MouseButtonRelease:
-        result = QGestureRecognizer::Ignore;
-        break;
     default:
         result = QGestureRecognizer::Ignore;
         break;
@@ -231,11 +226,6 @@ QGestureRecognizer::Result QPinchGestureRecognizer::recognize(QGesture *state,
         }
         break;
     }
-    case QEvent::MouseButtonPress:
-    case QEvent::MouseMove:
-    case QEvent::MouseButtonRelease:
-        result = QGestureRecognizer::Ignore;
-        break;
     default:
         result = QGestureRecognizer::Ignore;
         break;
@@ -370,11 +360,6 @@ QGestureRecognizer::Result QSwipeGestureRecognizer::recognize(QGesture *state,
         }
         break;
     }
-    case QEvent::MouseButtonPress:
-    case QEvent::MouseMove:
-    case QEvent::MouseButtonRelease:
-        result = QGestureRecognizer::Ignore;
-        break;
     default:
         result = QGestureRecognizer::Ignore;
         break;
@@ -447,11 +432,6 @@ QGestureRecognizer::Result QTapGestureRecognizer::recognize(QGesture *state,
         }
         break;
     }
-    case QEvent::MouseButtonPress:
-    case QEvent::MouseMove:
-    case QEvent::MouseButtonRelease:
-        result = QGestureRecognizer::Ignore;
-        break;
     default:
         result = QGestureRecognizer::Ignore;
         break;

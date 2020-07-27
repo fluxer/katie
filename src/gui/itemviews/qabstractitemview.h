@@ -238,8 +238,6 @@ protected Q_SLOTS:
     virtual void updateEditorData();
     virtual void updateEditorGeometries();
     virtual void updateGeometries();
-    virtual void verticalScrollbarAction(int action);
-    virtual void horizontalScrollbarAction(int action);
     virtual void verticalScrollbarValueChanged(int value);
     virtual void horizontalScrollbarValueChanged(int value);
     virtual void closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint);

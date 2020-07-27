@@ -49,17 +49,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-/*
-   A version of QRect::intersects() that does not normalize the rects.
-*/
-static inline bool qRectIntersects(const QRect &r1, const QRect &r2)
-{
-    return (qMax(r1.left(), r2.left()) <= qMin(r1.right(), r2.right())
-            && qMax(r1.top(), r2.top()) <= qMin(r1.bottom(), r2.bottom()));
-}
-#endif
-
 /**
  * Flushes the contents of the \a windowSurface into the screen area of \a widget.
  * \a tlwOffset is the position of the top level widget relative to the window surface.
@@ -213,16 +202,6 @@ bool QWidgetBackingStore::bltRect(const QRect &rect, int dx, int dy, QWidget *wi
     return windowSurface->scroll(tlwRect, dx, dy);
 }
 
-void QWidgetBackingStore::releaseBuffer()
-{
-    if (windowSurface)
-        windowSurface->setGeometry(QRect());
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    for (int i = 0; i < subSurfaces.size(); ++i)
-        subSurfaces.at(i)->setGeometry(QRect());
-#endif
-}
-
 /*!
     Prepares the window surface to paint a\ toClean region and updates the
     BeginPaintInfo struct accordingly.
@@ -262,11 +241,7 @@ void QWidgetBackingStore::endPaint(const QRegion &cleaned, QWindowSurface *windo
     windowSurface->endPaint(cleaned);
 #endif
 
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    flush(static_cast<QWSWindowSurface *>(windowSurface)->window(), windowSurface);
-#else
     flush();
-#endif
 }
 
 /*!
@@ -645,12 +620,6 @@ void QWidgetBackingStore::updateLists(QWidget *cur)
 
     if (cur->testAttribute(Qt::WA_StaticContents))
         addStaticWidget(cur);
-
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    QTLWExtra *extra = cur->d_func()->maybeTopData();
-    if (extra && extra->windowSurface && cur != tlw)
-        subSurfaces.append(extra->windowSurface);
-#endif
 }
 
 QWidgetBackingStore::QWidgetBackingStore(QWidget *topLevel)
@@ -663,9 +632,6 @@ QWidgetBackingStore::QWidgetBackingStore(QWidget *topLevel)
 
     // The QWindowSurface constructor will call QWidget::setWindowSurface(),
     // but automatically created surfaces should not be added to the topdata.
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    Q_ASSERT(topLevel->d_func()->topData()->windowSurface == windowSurface);
-#endif
     topLevel->d_func()->topData()->windowSurface = 0;
 
     // Ensure all existing subsurfaces and static widgets are added to their respective lists.
@@ -777,9 +743,8 @@ void QWidgetPrivate::scrollRect(const QRect &rect, int dx, int dy)
     static const int accelEnv = qgetenv("QT_NO_FAST_SCROLL").toInt() == 0;
 
     QRect scrollRect = rect & clipRect();
-    bool overlapped = false;
-    bool accelerateScroll = accelEnv && isOpaque
-                            && !(overlapped = isOverlapped(scrollRect.translated(data.crect.topLeft())));
+    bool overlapped = isOverlapped(scrollRect.translated(data.crect.topLeft()));
+    bool accelerateScroll = accelEnv && isOpaque && !overlapped;
 
     if (!accelerateScroll) {
         if (overlapped) {
@@ -1020,7 +985,6 @@ void QWidgetBackingStore::sync()
     }
 #endif
 
-#ifndef Q_BACKINGSTORE_SUBSURFACES
     BeginPaintInfo beginPaintInfo;
     beginPaint(toClean, windowSurface, &beginPaintInfo);
     if (beginPaintInfo.nothingToPaint) {
@@ -1029,7 +993,6 @@ void QWidgetBackingStore::sync()
         dirty = QRegion();
         return;
     }
-#endif
 
     // Must do this before sending any paint events because
     // the size may change in the paint event.
@@ -1052,90 +1015,19 @@ void QWidgetBackingStore::sync()
         QRegion toBePainted(wd->dirty);
         resetWidget(w);
 
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-        QWindowSurface *subSurface = w->windowSurface();
-        BeginPaintInfo beginPaintInfo;
-
-        QPoint off = w->mapTo(tlw, QPoint());
-        toBePainted.translate(off);
-        beginPaint(toBePainted, subSurface, &beginPaintInfo);
-        toBePainted.translate(-off);
-
-        if (beginPaintInfo.nothingToPaint)
-            continue;
-
-        if (beginPaintInfo.windowSurfaceRecreated) {
-            // Eep the window surface has changed. The old one may have been
-            // deleted, in which case we will segfault on the call to
-            // painterOffset() below. Use the new window surface instead.
-            subSurface = w->windowSurface();
-        }
-
-        QPoint offset(tlwOffset);
-        if (subSurface == windowSurface)
-            offset += w->mapTo(tlw, QPoint());
-        else
-            offset = static_cast<QWSWindowSurface*>(subSurface)->painterOffset();
-        wd->drawWidget(subSurface->paintDevice(), toBePainted, offset, flags, 0, this);
-
-        endPaint(toBePainted, subSurface, &beginPaintInfo);
-#else
         QPoint offset(tlwOffset);
         if (w != tlw)
             offset += w->mapTo(tlw, QPoint());
         wd->drawWidget(windowSurface->paintDevice(), toBePainted, offset, flags, 0, this);
-#endif
     }
 
     // Paint the rest with composition.
-#ifndef Q_BACKINGSTORE_SUBSURFACES
     if (repaintAllWidgets || !dirtyCopy.isEmpty()) {
         const int flags = QWidgetPrivate::DrawAsRoot | QWidgetPrivate::DrawRecursive;
         tlw->d_func()->drawWidget(windowSurface->paintDevice(), dirtyCopy, tlwOffset, flags, 0, this);
     }
 
     endPaint(toClean, windowSurface, &beginPaintInfo);
-#else
-    if (!repaintAllWidgets && dirtyCopy.isEmpty())
-        return; // Nothing more to paint.
-
-    QList<QWindowSurface *> surfaceList(subSurfaces);
-    surfaceList.prepend(windowSurface);
-    const QRect dirtyBoundingRect(dirtyCopy.boundingRect());
-
-    // Loop through all window surfaces (incl. the top-level surface) and
-    // repaint those intersecting with the bounding rect of the dirty region.
-    for (int i = 0; i < surfaceList.size(); ++i) {
-        QWindowSurface *subSurface = surfaceList.at(i);
-        QWidget *w = subSurface->window();
-        QWidgetPrivate *wd = w->d_func();
-
-        const QRect clipRect = wd->clipRect().translated(w->mapTo(tlw, QPoint()));
-        if (!qRectIntersects(dirtyBoundingRect, clipRect))
-            continue;
-
-        toClean = dirtyCopy;
-        BeginPaintInfo beginPaintInfo;
-        beginPaint(toClean, subSurface, &beginPaintInfo);
-        if (beginPaintInfo.nothingToPaint)
-            continue;
-
-        if (beginPaintInfo.windowSurfaceRecreated) {
-            // Eep the window surface has changed. The old one may have been
-            // deleted, in which case we will segfault on the call to
-            // painterOffset() below. Use the new window surface instead.
-            subSurface = w->windowSurface();
-        }
-
-        int flags = QWidgetPrivate::DrawRecursive;
-        if (w == tlw)
-            flags |= QWidgetPrivate::DrawAsRoot;
-        const QPoint painterOffset = static_cast<QWSWindowSurface*>(subSurface)->painterOffset();
-        wd->drawWidget(subSurface->paintDevice(), toClean, painterOffset, flags, 0, this);
-
-        endPaint(toClean, subSurface, &beginPaintInfo);
-    }
-#endif
 }
 
 /*!

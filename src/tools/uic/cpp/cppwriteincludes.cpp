@@ -160,7 +160,7 @@ static const struct ClassTblData {
     { QLatin1String("QContiguousCache"), QLatin1String("QtCore/qcontiguouscache.h") },
     { QLatin1String("QContiguousCacheData"), QLatin1String("QtCore/qcontiguouscache.h") },
     { QLatin1String("QCoreApplication"), QLatin1String("QtCore/qcoreapplication.h") },
-    { QLatin1String("QCryptographicHash"), QLatin1String("QtCore/qcryptographichash.h") },
+    { QLatin1String("QCryptographicHash"), QLatin1String("QtNetwork/qcryptographichash.h") },
     { QLatin1String("QCursor"), QLatin1String("QtGui/qcursor.h") },
     { QLatin1String("QDBusAbstractAdaptor"), QLatin1String("QtDBus/qdbusabstractadaptor.h") },
     { QLatin1String("QDBusAbstractInterface"), QLatin1String("QtDBus/qdbusabstractinterface.h") },

@@ -55,16 +55,14 @@ private:
     ~QClipboard();
 
 public:
-    enum Mode { Clipboard, Selection, FindBuffer, LastMode = FindBuffer };
+    enum Mode { Clipboard, Selection, LastMode = Selection };
 
     void clear(Mode mode = Clipboard);
 
     bool supportsSelection() const;
-    bool supportsFindBuffer() const;
 
     bool ownsSelection() const;
     bool ownsClipboard() const;
-    bool ownsFindBuffer() const;
 
     QString text(Mode mode = Clipboard) const;
     QString text(QString& subtype, Mode mode = Clipboard) const;
@@ -81,11 +79,9 @@ public:
 Q_SIGNALS:
     void changed(QClipboard::Mode mode);
     void selectionChanged();
-    void findBufferChanged();
     void dataChanged();
 
 protected:
-    void connectNotify(const char *);
     bool event(QEvent *);
 
     friend class QApplication;
@@ -95,7 +91,6 @@ protected:
 private:
     Q_DISABLE_COPY(QClipboard)
 
-    bool supportsMode(Mode mode) const;
     bool ownsMode(Mode mode) const;
     void emitChanged(Mode mode);
 };

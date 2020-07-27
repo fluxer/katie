@@ -55,14 +55,11 @@ QT_BEGIN_NAMESPACE
 
 class QScriptClassPropertyIteratorPrivate
 {
-    Q_DECLARE_PUBLIC(QScriptClassPropertyIterator)
 public:
     QScriptClassPropertyIteratorPrivate() {}
     virtual ~QScriptClassPropertyIteratorPrivate() {}
 
     QScriptValue object;
-
-    QScriptClassPropertyIterator *q_ptr;
 };
 
 /*!
@@ -74,7 +71,6 @@ public:
 QScriptClassPropertyIterator::QScriptClassPropertyIterator(const QScriptValue &object)
     : d_ptr(new QScriptClassPropertyIteratorPrivate)
 {
-    d_ptr->q_ptr = this;
     d_ptr->object = object;
 }
 
@@ -85,7 +81,6 @@ QScriptClassPropertyIterator::QScriptClassPropertyIterator(const QScriptValue &o
                                            QScriptClassPropertyIteratorPrivate &dd)
     : d_ptr(&dd)
 {
-    d_ptr->q_ptr = this;
     d_ptr->object = object;
 }
 

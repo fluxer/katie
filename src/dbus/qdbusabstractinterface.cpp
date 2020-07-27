@@ -188,7 +188,6 @@ void QDBusAbstractInterfacePrivate::property(const QMetaProperty &mp, QVariant &
                                       QString::fromLatin1(mp.typeName()),
                                       QString::fromLatin1(expectedSignature)));
     where.clear();
-    return;
 }
 
 bool QDBusAbstractInterfacePrivate::setProperty(const QMetaProperty &mp, const QVariant &value)

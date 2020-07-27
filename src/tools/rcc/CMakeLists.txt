@@ -20,7 +20,6 @@ set(RCC_SOURCES
 
 set(RCC_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/rcc.h
-    ${CMAKE_SOURCE_DIR}/src/core/kernel/qcorecmdlineargs_p.h
 )
 
 katie_setup_target(rcc ${RCC_SOURCES} ${RCC_HEADERS})

@@ -134,8 +134,7 @@ bool QEventDispatcherX11::processEvents(QEventLoop::ProcessEventsFlags flags)
 
  out:
     if (!d->interrupt) {
-        const uint exclude_all =
-            QEventLoop::ExcludeSocketNotifiers | QEventLoop::X11ExcludeTimers | QEventLoop::WaitForMoreEvents;
+        const uint exclude_all = QEventLoop::ExcludeSocketNotifiers | QEventLoop::WaitForMoreEvents;
         if (nevents > 0 && ((uint)flags & exclude_all) == exclude_all) {
             QApplication::sendPostedEvents();
             return nevents > 0;

@@ -1449,8 +1449,8 @@ QPathClipper::QPathClipper(const QPainterPath &subject,
     bMask = clipPath.fillRule() == Qt::WindingFill ? ~0x0 : 0x1;
 }
 
-template <typename Iterator, typename Equality>
-Iterator qRemoveDuplicates(Iterator begin, Iterator end, Equality eq)
+template <typename Iterator>
+Iterator qRemoveDuplicates(Iterator begin, Iterator end)
 {
     if (begin == end)
         return end;
@@ -1459,7 +1459,7 @@ Iterator qRemoveDuplicates(Iterator begin, Iterator end, Equality eq)
     ++begin;
     Iterator insert = begin;
     for (Iterator it = begin; it != end; ++it) {
-        if (!eq(*it, *last)) {
+        if (!qFuzzyCompare(*it, *last)) {
             *insert++ = *it;
             last = it;
         }
@@ -1491,11 +1491,6 @@ InputIterator qFuzzyFind(InputIterator first, InputIterator last, qreal val)
     while (first != last && !QT_PREPEND_NAMESPACE(qFuzzyCompare)(qreal(*first), qreal(val)))
         ++first;
     return first;
-}
-
-static bool fuzzyCompare(qreal a, qreal b)
-{
-    return qFuzzyCompare(a, b);
 }
 
 bool QPathClipper::pathToRect(const QPainterPath &path, QRectF *rect)
@@ -1633,7 +1628,7 @@ bool QPathClipper::doClip(QWingedEdge &list) const
         y_coords << list.vertex(i)->y;
 
     qSort(y_coords.begin(), y_coords.end());
-    y_coords.resize(qRemoveDuplicates(y_coords.begin(), y_coords.end(), fuzzyCompare) - y_coords.begin());
+    y_coords.resize(qRemoveDuplicates(y_coords.begin(), y_coords.end()) - y_coords.begin());
 
 #ifdef QDEBUG_CLIPPER
     printf("sorted y coords:\n");

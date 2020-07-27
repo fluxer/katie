@@ -74,8 +74,8 @@
 #include <QtCore/qset.h>
 #include <QtCore/qtextstream.h>
 #include "qscriptextensioninterface.h"
+#include "qscriptcommon_p.h"
 
-Q_DECLARE_METATYPE(QScriptValue)
 Q_DECLARE_METATYPE(QObjectList)
 Q_DECLARE_METATYPE(QList<int>)
 
@@ -568,12 +568,6 @@ qsreal integerFromString(const char *buf, int size, int radix)
     return result;
 }
 
-qsreal integerFromString(const QString &str, int radix)
-{
-    QByteArray ba = str.trimmed().toUtf8();
-    return integerFromString(ba.constData(), ba.size(), radix);
-}
-
 bool isFunction(JSC::JSValue value)
 {
     if (!value || !value.isObject())
@@ -870,10 +864,8 @@ JSC::JSValue QT_FASTCALL stringProtoFuncArg(JSC::ExecState *exec, JSC::JSObject*
 static QScriptValue __setupPackage__(QScriptContext *ctx, QScriptEngine *eng)
 {
     QString path = ctx->argument(0).toString();
-    QStringList components = path.split(QLatin1Char('.'));
     QScriptValue o = eng->globalObject();
-    for (int i = 0; i < components.count(); ++i) {
-        QString name = components.at(i);
+    foreach (const QString &name, path.split(QLatin1Char('.'))) {
         QScriptValue oo = o.property(name);
         if (!oo.isValid()) {
             oo = eng->newObject();

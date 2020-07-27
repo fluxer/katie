@@ -459,8 +459,7 @@ void QMainWindow::setMenuBar(QMenuBar *menuBar)
 */
 QWidget *QMainWindow::menuWidget() const
 {
-    QWidget *menuBar = d_func()->layout->menuBar();
-    return menuBar;
+    return d_func()->layout->menuBar();
 }
 
 /*!

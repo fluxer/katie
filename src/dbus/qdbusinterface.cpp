@@ -238,9 +238,9 @@ void *QDBusInterface::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
     if (!strcmp(_clname, "QDBusInterface"))
-        return static_cast<void*>(const_cast<QDBusInterface*>(this));
+        return static_cast<void*>(this);
     if (d_func()->interface.toLatin1() == _clname)
-        return static_cast<void*>(const_cast<QDBusInterface*>(this));
+        return static_cast<void*>(this);
     return QDBusAbstractInterface::qt_metacast(_clname);
 }
 

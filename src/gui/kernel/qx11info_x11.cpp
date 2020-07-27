@@ -128,10 +128,10 @@ void QX11Info::cloneX11Data(const QPaintDevice *fromDevice)
         QX11InfoData *xd;
         if (fromDevice->devType() == QInternal::Widget) {
             xd = static_cast<const QWidget *>(fromDevice)->x11Info().x11data;
-	} else {
-	    Q_ASSERT(fromDevice->devType() == QInternal::Pixmap);
+        } else {
+            Q_ASSERT(fromDevice->devType() == QInternal::Pixmap);
             xd = static_cast<const QPixmap *>(fromDevice)->x11Info().x11data;
-	}
+        }
         d = new QX11InfoData(*xd);
         d->ref = 0;
     }

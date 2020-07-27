@@ -166,16 +166,15 @@ struct QX11Data
     // from qdnd_x11.cpp
     bool dndEnable(QWidget* w, bool on);
     static void xdndSetup();
-    void xdndHandleEnter(QWidget *, const XEvent *, bool);
+    void xdndHandleEnter(const XEvent *);
     void xdndHandlePosition(QWidget *, const XEvent *, bool);
-    void xdndHandleStatus(QWidget *, const XEvent *, bool);
-    void xdndHandleLeave(QWidget *, const XEvent *, bool);
-    void xdndHandleDrop(QWidget *, const XEvent *, bool);
-    void xdndHandleFinished(QWidget *, const XEvent *, bool);
+    void xdndHandleStatus(const XEvent *);
+    void xdndHandleLeave(QWidget *, const XEvent *);
+    void xdndHandleDrop(const XEvent *, bool);
+    void xdndHandleFinished(const XEvent *, bool);
     void xdndHandleSelectionRequest(const XSelectionRequestEvent *);
     static bool xdndHandleBadwindow();
     QByteArray xdndAtomToString(Atom a);
-    Atom xdndStringToAtom(const char *);
 
     QString xdndMimeAtomToString(Atom a);
     Atom xdndMimeStringToAtom(const QString &mimeType);
@@ -191,12 +190,12 @@ struct QX11Data
     char *displayName;
     bool foreignDisplay;
     // current focus model
-    enum {
+    enum FocusModel {
         FM_Unknown = -1,
         FM_Other = 0,
         FM_PointerRoot = 1
     };
-    int focus_model;
+    FocusModel focus_model;
 
     // true if Qt is compiled w/ RANDR support and RANDR is supported on the connected Display
     bool use_xrandr;
@@ -284,7 +283,6 @@ struct QX11Data
         XRenderColor bg_color;
         int screen;
         int style;
-        bool opaque;
         Picture picture;
     } pattern_fills[pattern_fill_count];
     Picture getSolidFill(int screen, const QColor &c);
@@ -292,7 +290,6 @@ struct QX11Data
 #endif
 
     bool has_fontconfig;
-    qreal fc_scale;
     bool fc_antialias;
     int fc_hint_style;
 
@@ -407,7 +404,6 @@ struct QX11Data
         XdndDrop,
         XdndFinished,
         XdndTypelist,
-        XdndActionList,
 
         XdndSelection,
 
@@ -417,7 +413,6 @@ struct QX11Data
         XdndActionCopy,
         XdndActionLink,
         XdndActionMove,
-        XdndActionPrivate,
 
         // XEMBED
         _XEMBED,

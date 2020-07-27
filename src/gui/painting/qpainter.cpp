@@ -1734,7 +1734,7 @@ QPoint QPainter::brushOrigin() const
         qWarning("QPainter::brushOrigin: Painter not active");
         return QPoint();
     }
-    return QPointF(d->state->brushOrigin).toPoint();
+    return d->state->brushOrigin.toPoint();
 }
 
 /*!

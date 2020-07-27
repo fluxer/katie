@@ -1573,32 +1573,31 @@ void QAbstractSpinBox::initStyleOption(QStyleOptionSpinBox *option) const
 
 QVariant QAbstractSpinBoxPrivate::bound(const QVariant &val, const QVariant &old, int steps) const
 {
-    QVariant v = val;
     if (!wrapping || steps == 0 || old.isNull()) {
-        if (variantCompare(v, minimum) < 0) {
-            v = wrapping ? maximum : minimum;
+        if (variantCompare(val, minimum) < 0) {
+            return (wrapping ? maximum : minimum);
         }
-        if (variantCompare(v, maximum) > 0) {
-            v = wrapping ? minimum : maximum;
-        }
-    } else {
-        const bool wasMin = old == minimum;
-        const bool wasMax = old == maximum;
-        const int oldcmp = variantCompare(v, old);
-        const int maxcmp = variantCompare(v, maximum);
-        const int mincmp = variantCompare(v, minimum);
-        const bool wrapped = (oldcmp > 0 && steps < 0) || (oldcmp < 0 && steps > 0);
-        if (maxcmp > 0) {
-            v = ((wasMax && !wrapped && steps > 0) || (steps < 0 && !wasMin && wrapped))
-                ? minimum : maximum;
-        } else if (wrapped && (maxcmp > 0 || mincmp < 0)) {
-            v = ((wasMax && steps > 0) || (!wasMin && steps < 0)) ? minimum : maximum;
-        } else if (mincmp < 0) {
-            v = (!wasMax && !wasMin ? minimum : maximum);
+        if (variantCompare(val, maximum) > 0) {
+            return (wrapping ? minimum : maximum);
         }
     }
 
-    return v;
+    const bool wasMin = old == minimum;
+    const bool wasMax = old == maximum;
+    const int oldcmp = variantCompare(val, old);
+    const int maxcmp = variantCompare(val, maximum);
+    const int mincmp = variantCompare(val, minimum);
+    const bool wrapped = (oldcmp > 0 && steps < 0) || (oldcmp < 0 && steps > 0);
+    if (maxcmp > 0) {
+        return ((wasMax && !wrapped && steps > 0) || (steps < 0 && !wasMin && wrapped))
+            ? minimum : maximum;
+    } else if (wrapped && (maxcmp > 0 || mincmp < 0)) {
+        return ((wasMax && steps > 0) || (!wasMin && steps < 0)) ? minimum : maximum;
+    } else if (mincmp < 0) {
+        return (!wasMax && !wasMin ? minimum : maximum);
+    }
+
+    return val;
 }
 
 /*!

@@ -555,7 +555,6 @@ void QApplicationPrivate::process_cmdline()
     \sa arguments()
 */
 
-extern void qInitDrawhelper();
 extern int qRegisterGuiVariant();
 extern int qUnregisterGuiVariant();
 
@@ -631,9 +630,6 @@ void QApplicationPrivate::construct(
 
     if (qgetenv("QT_USE_NATIVE_WINDOWS").toInt() > 0)
         q->setAttribute(Qt::AA_NativeWindows);
-
-    // Set up which span functions should be used in raster engine...
-    qInitDrawhelper();
 
 #ifndef QT_NO_WHEELEVENT
     QApplicationPrivate::wheel_scroll_lines = 3;

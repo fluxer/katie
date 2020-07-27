@@ -333,7 +333,7 @@ static inline qreal matrixDet4(const qreal m[4][4])
 */
 qreal QMatrix4x4::determinant() const
 {
-    return qreal(matrixDet4(m));
+    return matrixDet4(m);
 }
 
 /*!

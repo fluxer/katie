@@ -808,10 +808,8 @@ bool QEventDispatcherUNIX::processEvents(QEventLoop::ProcessEventsFlags flags)
         // return the maximum time we can wait for an event.
         timeval *tm = Q_NULLPTR;
         timeval wait_tm = { 0l, 0l };
-        if (!(flags & QEventLoop::X11ExcludeTimers)) {
-            if (d->timerList.timerWait(wait_tm))
-                tm = &wait_tm;
-        }
+        if (d->timerList.timerWait(wait_tm))
+            tm = &wait_tm;
 
         if (!canWait) {
             if (!tm)
@@ -825,9 +823,8 @@ bool QEventDispatcherUNIX::processEvents(QEventLoop::ProcessEventsFlags flags)
         int nevents = d->doSelect(flags, tm);
 
         // activate timers
-        if (! (flags & QEventLoop::X11ExcludeTimers)) {
-            nevents += activateTimers();
-        }
+        nevents += activateTimers();
+
         return (nevents > 0);
     }
 

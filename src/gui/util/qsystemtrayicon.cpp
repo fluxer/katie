@@ -162,7 +162,6 @@ void QSystemTrayIcon::setContextMenu(QMenu *menu)
 {
     Q_D(QSystemTrayIcon);
     d->menu = menu;
-    d->updateMenu_sys();
 }
 
 /*!
@@ -626,11 +625,6 @@ void QBalloonTip::timerEvent(QTimerEvent *e)
         return;
     }
     QWidget::timerEvent(e);
-}
-
-void qtsystray_sendActivated(QSystemTrayIcon *i, int r)
-{
-    emit i->activated((QSystemTrayIcon::ActivationReason)r);
 }
 
 QT_END_NAMESPACE

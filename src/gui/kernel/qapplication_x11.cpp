@@ -225,7 +225,6 @@ static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     "XdndDrop\0",
     "XdndFinished\0",
     "XdndTypeList\0",
-    "XdndActionList\0",
 
     "XdndSelection\0",
 
@@ -235,7 +234,6 @@ static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     "XdndActionCopy\0",
     "XdndActionLink\0",
     "XdndActionMove\0",
-    "XdndActionPrivate\0",
 
     // XEMBED
     "_XEMBED\0",
@@ -1028,7 +1026,7 @@ void qt_init(QApplicationPrivate *priv, int,
     qt_x11Data->display = display;
     qt_x11Data->displayName = 0;
     qt_x11Data->foreignDisplay = (display != 0);
-    qt_x11Data->focus_model = -1;
+    qt_x11Data->focus_model = QX11Data::FM_Unknown;
 
     // RANDR
     qt_x11Data->use_xrandr = false;
@@ -1386,9 +1384,6 @@ void qt_init(QApplicationPrivate *priv, int,
                 QX11Info::setAppDpiY(s, dpi);
             }
         }
-        double fc_scale = 1.;
-        getXDefault("Xft", FC_SCALE, &fc_scale);
-        qt_x11Data->fc_scale = fc_scale;
         for (int s = 0; s < ScreenCount(qt_x11Data->display); ++s) {
             int subpixel = FC_RGBA_UNKNOWN;
 #if !defined(QT_NO_XRENDER) && (RENDER_MAJOR > 0 || RENDER_MINOR >= 6)
@@ -1979,19 +1974,17 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
         } else if (event->xclient.message_type == ATOM(XdndPosition)) {
             qt_x11Data->xdndHandlePosition(widget, event, passive_only);
         } else if (event->xclient.message_type == ATOM(XdndEnter)) {
-            qt_x11Data->xdndHandleEnter(widget, event, passive_only);
+            qt_x11Data->xdndHandleEnter(event);
         } else if (event->xclient.message_type == ATOM(XdndStatus)) {
-            qt_x11Data->xdndHandleStatus(widget, event, passive_only);
+            qt_x11Data->xdndHandleStatus(event);
         } else if (event->xclient.message_type == ATOM(XdndLeave)) {
-            qt_x11Data->xdndHandleLeave(widget, event, passive_only);
+            qt_x11Data->xdndHandleLeave(widget, event);
         } else if (event->xclient.message_type == ATOM(XdndDrop)) {
-            qt_x11Data->xdndHandleDrop(widget, event, passive_only);
+            qt_x11Data->xdndHandleDrop(event, passive_only);
         } else if (event->xclient.message_type == ATOM(XdndFinished)) {
-            qt_x11Data->xdndHandleFinished(widget, event, passive_only);
-        } else {
-            if (passive_only) return 0;
-            // All other are interactions
+            qt_x11Data->xdndHandleFinished(event, passive_only);
         }
+        // All other are interactions
     }
 
     return 0;
@@ -2503,7 +2496,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
         break;
 
     case ClientMessage:                        // client message
-        return x11ClientMessage(widget,event,False);
+        return x11ClientMessage(widget, event, false);
 
     case ReparentNotify: {                      // window manager reparents
         // compress old reparent events to self
@@ -2744,7 +2737,7 @@ void QApplicationPrivate::openPopup(QWidget *popup)
                              GrabModeAsync, GrabModeAsync, XNone, XNone, qt_x11Data->time);
             if (!(popupGrabOk = (r == GrabSuccess))) {
                 // transfer grab back to the keyboard grabber if any
-                if (QWidgetPrivate::keyboardGrabber != 0)
+                if (QWidgetPrivate::keyboardGrabber)
                     QWidgetPrivate::keyboardGrabber->grabKeyboard();
                 else
                     XUngrabKeyboard(dpy, qt_x11Data->time);
@@ -2789,13 +2782,13 @@ void QApplicationPrivate::closePopup(QWidget *popup)
                 replayPopupMouseEvent = true;
             }
             // transfer grab back to mouse grabber if any, otherwise release the grab
-            if (QWidgetPrivate::mouseGrabber != 0)
+            if (QWidgetPrivate::mouseGrabber)
                 QWidgetPrivate::mouseGrabber->grabMouse();
             else
                 XUngrabPointer(dpy, qt_x11Data->time);
 
             // transfer grab back to keyboard grabber if any, otherwise release the grab
-            if (QWidgetPrivate::keyboardGrabber != 0)
+            if (QWidgetPrivate::keyboardGrabber)
                 QWidgetPrivate::keyboardGrabber->grabKeyboard();
             else
                 XUngrabKeyboard(dpy, qt_x11Data->time);
@@ -2834,7 +2827,7 @@ void QApplicationPrivate::closePopup(QWidget *popup)
                                  GrabModeAsync, GrabModeAsync, XNone, XNone, qt_x11Data->time);
                 if (!(popupGrabOk = (r == GrabSuccess))) {
                     // transfer grab back to keyboard grabber
-                    if (QWidgetPrivate::keyboardGrabber != 0)
+                    if (QWidgetPrivate::keyboardGrabber)
                         QWidgetPrivate::keyboardGrabber->grabKeyboard();
                     else
                         XUngrabKeyboard(dpy, qt_x11Data->time);
@@ -3437,13 +3430,11 @@ static Bool isPaintOrScrollDoneEvent(Display *, XEvent *ev, XPointer a)
 
 
 
-static
-bool translateBySips(QWidget* that, QRect& paintRect)
+static void translateBySips(QWidget* that, QRect& paintRect)
 {
-    int dx=0, dy=0;
-    int sips=0;
-    for (int i = 0; i < qt_x11Data->sip_list.size(); ++i) {
-        const QX11Data::ScrollInProgress &sip = qt_x11Data->sip_list.at(i);
+    int dx = 0, dy = 0;
+    int sips = 0;
+    foreach (const QX11Data::ScrollInProgress &sip, qt_x11Data->sip_list) {
         if (sip.scrolled_widget == that) {
             if (sips) {
                 dx += sip.dx;
@@ -3454,9 +3445,7 @@ bool translateBySips(QWidget* that, QRect& paintRect)
     }
     if (sips > 1) {
         paintRect.translate(dx, dy);
-        return true;
     }
-    return false;
 }
 
 void QETWidget::translatePaintEvent(const XEvent *event)
@@ -3471,9 +3460,8 @@ void QETWidget::translatePaintEvent(const XEvent *event)
     PaintEventInfo info;
     info.window = internalWinId();
     translateBySips(this, paintRect);
-    paintRect = d->mapFromWS(paintRect);
 
-    QRegion paintRegion = paintRect;
+    QRegion paintRegion(d->mapFromWS(paintRect));
 
     // WARNING: this is O(number_of_events * number_of_matching_events)
     while (XCheckIfEvent(qt_x11Data->display,&xevent,isPaintOrScrollDoneEvent,
