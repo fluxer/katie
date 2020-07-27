@@ -49,853 +49,13 @@ static inline QRgb qConvertRgb16To32(uint c)
         | ((((c) << 8) & 0xf80000) | (((c) << 3) & 0x70000));
 }
 
-template <class DST, class SRC>
-inline void madd_2(DST *dest, const quint16 alpha, const SRC *src)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-    dest[0] = dest[0].byte_mul(alpha >> 8) + DST(src[0]);
-    dest[1] = dest[1].byte_mul(alpha & 0xff) + DST(src[1]);
-}
-
-template <class DST, class SRC>
-inline void madd_4(DST *dest, const quint32 alpha, const SRC *src)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-    dest[0] = dest[0].byte_mul(alpha >> 24) + DST(src[0]);
-    dest[1] = dest[1].byte_mul((alpha >> 16) & 0xff) + DST(src[1]);
-    dest[2] = dest[2].byte_mul((alpha >> 8) & 0xff) + DST(src[2]);
-    dest[3] = dest[3].byte_mul(alpha & 0xff) + DST(src[3]);
-}
-
-#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-template <>
-inline void madd_4(qargb8565 *dest, const quint32 a, const qargb8565 *src)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    const quint32 *src32 = reinterpret_cast<const quint32*>(src);
-    quint32 *dest32 = reinterpret_cast<quint32*>(dest);
-    quint32 x, y, t;
-    quint8 a8;
-
-    {
-        x = dest32[0];
-        y = src32[0];
-
-        a8 = a >> 24;
-
-        // a0,g0
-        t = ((((x & 0x0007e0ff) * a8) >> 5) & 0x0007e0ff) + (y & 0x0007c0f8);
-
-        // r0,b0
-        t |= ((((x & 0x00f81f00) * a8) >> 5) & 0x00f81f00) + (y & 0x00f81f00);
-
-        a8 = (a >> 16) & 0xff;
-
-        // a1
-        t |= ((((x & 0xff000000) >> 5) * a8) & 0xff000000) + (y & 0xf8000000);
-
-        dest32[0] = t;
-    }
-    {
-        x = dest32[1];
-        y = src32[1];
-
-        // r1,b1
-        t = ((((x & 0x0000f81f) * a8) >> 5) & 0x0000f81f) + (y & 0x0000f81f);
-
-        // g1
-        t |= ((((x & 0x000007e0) * a8) >> 5) & 0x000007e0) + (y & 0x000007c0);
-
-        a8 = (a >> 8) & 0xff;
-
-        // a2
-        t |= ((((x & 0x00ff0000) * a8) >> 5)  & 0x00ff0000) + (y & 0x00f80000);
-
-        {
-            // rgb2
-            quint16 x16 = (x >> 24) | ((dest32[2] & 0x000000ff) << 8);
-            quint16 y16 = (y >> 24) | ((src32[2] & 0x000000ff) << 8);
-            quint16 t16;
-
-            t16 = ((((x16 & 0xf81f) * a8) >> 5) & 0xf81f)  + (y16 & 0xf81f);
-            t16 |= ((((x16 & 0x07e0) * a8) >> 5) & 0x07e0)  + (y16 & 0x07c0);
-
-            // rg2
-            t |= ((t16 & 0x00ff) << 24);
-
-            dest32[1] = t;
-
-            x = dest32[2];
-            y = src32[2];
-
-            // gb2
-            t = (t16 >> 8);
-        }
-    }
-    {
-        a8 = a & 0xff;
-
-        // g3,a3
-        t |= ((((x & 0x07e0ff00) * a8) >> 5) & 0x07e0ff00) + (y & 0x07c0f800);
-
-        // r3,b3
-        t |= ((((x & 0xf81f0000) >> 5) * a8) & 0xf81f0000)+ (y & 0xf81f0000);
-
-        dest32[2] = t;
-    }
-}
-
-template <>
-inline void madd_4(qargb8555 *dest, const quint32 a, const qargb8555 *src)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    const quint32 *src32 = reinterpret_cast<const quint32*>(src);
-    quint32 *dest32 = reinterpret_cast<quint32*>(dest);
-    quint32 x, y, t;
-    quint8 a8;
-
-    {
-        x = dest32[0];
-        y = src32[0];
-
-        a8 = a >> 24;
-
-        // a0,g0
-        t = ((((x & 0x0003e0ff) * a8) >> 5) & 0x0003e0ff) + (y & 0x0003e0f8);
-
-        // r0,b0
-        t |= ((((x & 0x007c1f00) * a8) >> 5) & 0x007c1f00) + (y & 0x007c1f00);
-
-        a8 = (a >> 16) & 0xff;
-
-        // a1
-        t |= ((((x & 0xff000000) >> 5) * a8) & 0xff000000) + (y & 0xf8000000);
-
-        dest32[0] = t;
-    }
-    {
-        x = dest32[1];
-        y = src32[1];
-
-        // r1,b1
-        t = ((((x & 0x00007c1f) * a8) >> 5) & 0x00007c1f) + (y & 0x00007c1f);
-
-        // g1
-        t |= ((((x & 0x000003e0) * a8) >> 5) & 0x000003e0) + (y & 0x000003e0);
-
-        a8 = (a >> 8) & 0xff;
-
-        // a2
-        t |= ((((x & 0x00ff0000) * a8) >> 5)  & 0x00ff0000) + (y & 0x00f80000);
-
-        {
-            // rgb2
-            quint16 x16 = (x >> 24) | ((dest32[2] & 0x000000ff) << 8);
-            quint16 y16 = (y >> 24) | ((src32[2] & 0x000000ff) << 8);
-            quint16 t16;
-
-            t16 = ((((x16 & 0x7c1f) * a8) >> 5) & 0x7c1f)  + (y16 & 0x7c1f);
-            t16 |= ((((x16 & 0x03e0) * a8) >> 5) & 0x03e0)  + (y16 & 0x03e0);
-
-            // rg2
-            t |= ((t16 & 0x00ff) << 24);
-
-            dest32[1] = t;
-
-            x = dest32[2];
-            y = src32[2];
-
-            // gb2
-            t = (t16 >> 8);
-        }
-    }
-    {
-        a8 = a & 0xff;
-
-        // g3,a3
-        t |= ((((x & 0x03e0ff00) * a8) >> 5) & 0x03e0ff00) + (y & 0x03e0f800);
-
-        // r3,b3
-        t |= ((((x & 0x7c1f0000) >> 5) * a8) & 0x7c1f0000)+ (y & 0x7c1f0000);
-
-        dest32[2] = t;
-    }
-}
-#endif // Q_BYTE_ORDER
-
-template <class T>
-inline quint16 alpha_2(const T *src)
-{
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    if (T::hasAlpha())
-        return (src[0].alpha() << 8) | src[1].alpha();
-    else
-        return 0xffff;
-}
-
-template <>
-inline quint16 alpha_2(const qargb4444 *src)
-{
-    const quint32 *src32 = reinterpret_cast<const quint32*>(src);
-    const quint32 t = (*src32 & 0xf000f000) |
-                      ((*src32 & 0xf000f000) >> 4);
-    return (t >> 24) | (t & 0xff00);
-}
-
-template <class T>
-inline quint32 alpha_4(const T *src)
-{
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    if (T::hasAlpha()) {
-        return (src[0].alpha() << 24) | (src[1].alpha() << 16)
-            | (src[2].alpha() << 8) | src[3].alpha();
-    } else {
-        return 0xffffffff;
-    }
-}
-
-template <>
-inline quint32 alpha_4(const qargb8565 *src)
-{
-    const quint8 *src8 = reinterpret_cast<const quint8*>(src);
-    return src8[0] << 24 | src8[3] << 16 | src8[6] << 8 | src8[9];
-}
-
-template <>
-inline quint32 alpha_4(const qargb6666 *src)
-{
-    const quint8 *src8 = reinterpret_cast<const quint8*>(src);
-    return ((src8[2] & 0xfc) | (src8[2] >> 6)) << 24
-        | ((src8[5] & 0xfc) | (src8[5] >> 6))  << 16
-        | ((src8[8] & 0xfc) | (src8[8] >> 6)) << 8
-        | ((src8[11] & 0xfc) | (src8[11] >> 6));
-}
-
-template <>
-inline quint32 alpha_4(const qargb8555 *src)
-{
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-    const quint8 *src8 = reinterpret_cast<const quint8*>(src);
-    return src8[0] << 24 | src8[3] << 16 | src8[6] << 8 | src8[9];
-}
-
-template <class T>
-inline quint16 eff_alpha_2(quint16 alpha, const T*)
-{
-    return (T::alpha((alpha >> 8) & 0xff) << 8)
-        | T::alpha(alpha & 0xff);
-}
-
-template <>
-inline quint16 eff_alpha_2(quint16 a, const qrgb565*)
-{
-    return ((((a & 0xff00) + 0x0100) >> 3) & 0xff00)
-        | ((((a & 0x00ff) + 0x0001) >> 3) & 0x00ff);
-}
-
-template <>
-inline quint16 eff_alpha_2(quint16 a, const qrgb444*)
-{
-    return (((a & 0x00ff) + 0x0001) >> 4)
-        | ((((a & 0xff00) + 0x0100) >> 4) & 0xff00);
-}
-
-template <>
-inline quint16 eff_alpha_2(quint16 a, const qargb4444*)
-{
-    return (((a & 0x00ff) + 0x0001) >> 4)
-        | ((((a & 0xff00) + 0x0100) >> 4) & 0xff00);
-}
-
-template <class T>
-inline quint16 eff_ialpha_2(quint16 alpha, const T*)
-{
-    return (T::ialpha((alpha >> 8) & 0xff) << 8)
-        | T::ialpha(alpha & 0xff);
-}
-
-template <>
-inline quint16 eff_ialpha_2(quint16 a, const qrgb565 *dummy)
-{
-    return 0x2020 - eff_alpha_2(a, dummy);
-}
-
-template <>
-inline quint16 eff_ialpha_2(quint16 a, const qargb4444 *dummy)
-{
-    return 0x1010 - eff_alpha_2(a, dummy);
-}
-
-template <>
-inline quint16 eff_ialpha_2(quint16 a, const qrgb444 *dummy)
-{
-    return 0x1010 - eff_alpha_2(a, dummy);
-}
-
-template <class T>
-inline quint32 eff_alpha_4(quint32 alpha, const T*)
-{
-    return (T::alpha(alpha >> 24) << 24)
-        | (T::alpha((alpha >> 16) & 0xff) << 16)
-        | (T::alpha((alpha >> 8) & 0xff) << 8)
-        | T::alpha(alpha & 0xff);
-}
-
-template <>
-inline quint32 eff_alpha_4(quint32 a, const qrgb888*)
-{
-    return a;
-}
-
-template <>
-inline quint32 eff_alpha_4(quint32 a, const qargb8565*)
-{
-    return ((((a & 0xff00ff00) + 0x01000100) >> 3) & 0xff00ff00)
-        | ((((a & 0x00ff00ff) + 0x00010001) >> 3) & 0x00ff00ff);
-}
-
-template <>
-inline quint32 eff_alpha_4(quint32 a, const qargb6666*)
-{
-    return ((((a & 0xff00ff00) >> 2) + 0x00400040) & 0xff00ff00)
-        | ((((a & 0x00ff00ff) + 0x00010001) >> 2) & 0x00ff00ff);
-}
-
-template <>
-inline quint32 eff_alpha_4(quint32 a, const qrgb666*)
-{
-    return ((((a & 0xff00ff00) >> 2) + 0x00400040) & 0xff00ff00)
-        | ((((a & 0x00ff00ff) + 0x00010001) >> 2) & 0x00ff00ff);
-}
-
-template <>
-inline quint32 eff_alpha_4(quint32 a, const qargb8555*)
-{
-    return ((((a & 0xff00ff00) + 0x01000100) >> 3) & 0xff00ff00)
-        | ((((a & 0x00ff00ff) + 0x00010001) >> 3) & 0x00ff00ff);
-}
-
-template <class T>
-inline quint32 eff_ialpha_4(quint32 alpha, const T*)
-{
-    return (T::ialpha(alpha >> 24) << 24)
-        | (T::ialpha((alpha >> 16) & 0xff) << 16)
-        | (T::ialpha((alpha >> 8) & 0xff) << 8)
-        | T::ialpha(alpha & 0xff);
-}
-
-template <>
-inline quint32 eff_ialpha_4(quint32 a, const qrgb888*)
-{
-    return ~a;
-}
-
-template <>
-inline quint32 eff_ialpha_4(quint32 a, const qargb8565 *dummy)
-{
-    return 0x20202020 - eff_alpha_4(a, dummy);
-}
-
-template <>
-inline quint32 eff_ialpha_4(quint32 a, const qargb6666 *dummy)
-{
-    return 0x40404040 - eff_alpha_4(a, dummy);
-}
-
-template <>
-inline quint32 eff_ialpha_4(quint32 a, const qrgb666 *dummy)
-{
-    return 0x40404040 - eff_alpha_4(a, dummy);
-}
-
-template <>
-inline quint32 eff_ialpha_4(quint32 a, const qargb8555 *dummy)
-{
-    return 0x20202020 - eff_alpha_4(a, dummy);
-}
-
-template <class DST, class SRC>
-inline void interpolate_pixel(DST &dest, quint8 a, const SRC &src, quint8 b)
-{
-    if (SRC::hasAlpha() && !DST::hasAlpha())
-        interpolate_pixel(dest, a, DST(src), b);
-    else
-        dest = dest.byte_mul(a) + DST(src).byte_mul(b);
-}
-
-template <>
-inline void interpolate_pixel(qargb8565 &dest, quint8 a,
-                              const qargb8565 &src, quint8 b)
-{
-    quint8 *d = reinterpret_cast<quint8*>(&dest);
-    const quint8 *s = reinterpret_cast<const quint8*>(&src);
-    d[0] = (d[0] * a + s[0] * b) >> 5;
-
-    const quint16 x = (d[2] << 8) | d[1];
-    const quint16 y = (s[2] << 8) | s[1];
-    quint16 t = (((x & 0x07e0) * a + (y & 0x07e0) * b) >> 5) & 0x07e0;
-    t |= (((x & 0xf81f) * a + (y & 0xf81f) * b) >> 5) & 0xf81f;
-
-    d[1] = t & 0xff;
-    d[2] = t >> 8;
-}
-
-template <>
-inline void interpolate_pixel(qrgb565 &dest, quint8 a,
-                              const qrgb565 &src, quint8 b)
+static inline void interpolate_pixel(qrgb565 &dest, quint8 a, const qrgb565 &src, quint8 b)
 {
     const quint16 x = dest.rawValue();
     const quint16 y = src.rawValue();
     quint16 t = (((x & 0x07e0) * a + (y & 0x07e0) * b) >> 5) & 0x07e0;
     t |= (((x & 0xf81f) * a + (y & 0xf81f) * b) >> 5) & 0xf81f;
     dest = t;
-}
-
-template <>
-inline void interpolate_pixel(qrgb555 &dest, quint8 a,
-                              const qrgb555 &src, quint8 b)
-{
-    const quint16 x = dest.rawValue();
-    const quint16 y = src.rawValue();
-    quint16 t = (((x & 0x03e0) * a + (y & 0x03e0) * b) >> 5) & 0x03e0;
-    t |= ((((x & 0x7c1f) * a) + ((y & 0x7c1f) * b)) >> 5) & 0x7c1f;
-    dest = t;
-}
-
-template <>
-inline void interpolate_pixel(qrgb444 &dest, quint8 a,
-                              const qrgb444 &src, quint8 b)
-{
-    const quint16 x = dest.rawValue();
-    const quint16 y = src.rawValue();
-    quint16 t = ((x & 0x00f0) * a + (y & 0x00f0) * b) & 0x0f00;
-    t |= ((x & 0x0f0f) * a + (y & 0x0f0f) * b) & 0xf0f0;
-    quint16 *d = reinterpret_cast<quint16*>(&dest);
-    *d = (t >> 4);
-}
-
-template <class DST, class SRC>
-inline void interpolate_pixel_2(DST *dest, const SRC *src, quint16 alpha)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    const quint16 a = eff_alpha_2(alpha, dest);
-    const quint16 ia = eff_ialpha_2(alpha, dest);
-
-    dest[0] = DST(src[0]).byte_mul(a >> 8) + dest[0].byte_mul(ia >> 8);
-    dest[1] = DST(src[1]).byte_mul(a & 0xff) + dest[1].byte_mul(ia & 0xff);
-}
-
-template <class DST, class SRC>
-inline void interpolate_pixel_2(DST *dest, quint8 a,
-                                const SRC *src, quint8 b)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    Q_ASSERT(!SRC::hasAlpha());
-
-    dest[0] = dest[0].byte_mul(a) + DST(src[0]).byte_mul(b);
-    dest[1] = dest[1].byte_mul(a) + DST(src[1]).byte_mul(b);
-}
-
-template <>
-inline void interpolate_pixel_2(qrgb565 *dest, quint8 a,
-                                const qrgb565 *src, quint8 b)
-{
-    quint32 *x = reinterpret_cast<quint32*>(dest);
-    const quint32 *y = reinterpret_cast<const quint32*>(src);
-    quint32 t = (((*x & 0xf81f07e0) >> 5) * a +
-                 ((*y & 0xf81f07e0) >> 5) * b) & 0xf81f07e0;
-    t |= (((*x & 0x07e0f81f) * a
-           + (*y & 0x07e0f81f) * b) >> 5) & 0x07e0f81f;
-    *x = t;
-}
-
-template <>
-inline void interpolate_pixel_2(qrgb555 *dest, quint8 a,
-                                const qrgb555 *src, quint8 b)
-{
-    quint32 *x = reinterpret_cast<quint32*>(dest);
-    const quint32 *y = reinterpret_cast<const quint32*>(src);
-    quint32 t = (((*x & 0x7c1f03e0) >> 5) * a +
-                 ((*y & 0x7c1f03e0) >> 5) * b) & 0x7c1f03e0;
-    t |= (((*x & 0x03e07c1f) * a
-           + (*y & 0x03e07c1f) * b) >> 5) & 0x03e07c1f;
-    *x = t;
-}
-
-template <>
-inline void interpolate_pixel_2(qrgb444 *dest, quint8 a,
-                                const qrgb444 *src, quint8 b)
-{
-    quint32 *x = reinterpret_cast<quint32*>(dest);
-    const quint32 *y = reinterpret_cast<const quint32*>(src);
-    quint32 t = ((*x & 0x0f0f0f0f) * a + (*y & 0x0f0f0f0f) * b) & 0xf0f0f0f0;
-    t |= ((*x & 0x00f000f0) * a + (*y & 0x00f000f0) * b) & 0x0f000f00;
-    *x = t >> 4;
-}
-
-template <class DST, class SRC>
-inline void interpolate_pixel_4(DST *dest, const SRC *src, quint32 alpha)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    const quint32 a = eff_alpha_4(alpha, dest);
-    const quint32 ia = eff_ialpha_4(alpha, dest);
-    dest[0] = DST(src[0]).byte_mul(a >> 24)
-              + dest[0].byte_mul(ia >> 24);
-    dest[1] = DST(src[1]).byte_mul((a >> 16) & 0xff)
-              + dest[1].byte_mul((ia >> 16) & 0xff);
-    dest[2] = DST(src[2]).byte_mul((a >> 8) & 0xff)
-              + dest[2].byte_mul((ia >> 8) & 0xff);
-    dest[3] = DST(src[3]).byte_mul(a & 0xff)
-              + dest[3].byte_mul(ia & 0xff);
-}
-
-#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-template <>
-inline void interpolate_pixel_4(qargb8565 *dest, const qargb8565 *src,
-                                quint32 alpha)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    const quint32 a = eff_alpha_4(alpha, dest);
-    const quint32 ia = eff_ialpha_4(alpha, dest);
-    const quint32 *src32 = reinterpret_cast<const quint32*>(src);
-    quint32 *dest32 = reinterpret_cast<quint32*>(dest);
-
-    quint32 x, y, t;
-    quint8 a8, ia8;
-    {
-        x = src32[0];
-        y = dest32[0];
-
-        a8 = a >> 24;
-        ia8 = ia >> 24;
-
-        // a0,g0
-        t = (((x & 0x0007e0ff) * a8 + (y & 0x0007e0ff) * ia8) >> 5)
-            & 0x0007e0ff;
-
-        // r0,b0
-        t |= (((x & 0x00f81f00) * a8 + (y & 0x00f81f00) * ia8) >> 5)
-             & 0x00f81f00;
-
-        a8 = (a >> 16) & 0xff;
-        ia8 = (ia >> 16) & 0xff;
-
-        // a1
-        t |= (((x & 0xff000000) >> 5) * a8 + ((y & 0xff000000) >> 5) * ia8)
-             & 0xff000000;
-
-        dest32[0] = t;
-    }
-    {
-        x = src32[1];
-        y = dest32[1];
-
-        // r1,b1
-        t = (((x & 0x0000f81f) * a8 + (y & 0x0000f81f) * ia8) >> 5)
-            & 0x0000f81f;
-
-        // g1
-        t |= (((x & 0x000007e0) * a8 + (y & 0x000007e0) * ia8) >> 5)
-             & 0x000007e0;
-
-        a8 = (a >> 8) & 0xff;
-        ia8 = (ia >> 8) & 0xff;
-
-        // a2
-        t |= (((x & 0x00ff0000) * a8 + (y & 0x00ff0000) * ia8) >> 5)
-             & 0x00ff0000;
-
-        {
-            // rgb2
-            quint16 x16 = (x >> 24) | ((src32[2] & 0x000000ff) << 8);
-            quint16 y16 = (y >> 24) | ((dest32[2] & 0x000000ff) << 8);
-            quint16 t16;
-
-            t16 = (((x16 & 0xf81f) * a8 + (y16 & 0xf81f) * ia8) >> 5) & 0xf81f;
-            t16 |= (((x16 & 0x07e0) * a8 + (y16 & 0x07e0) * ia8) >> 5) & 0x07e0;
-
-            // rg2
-            t |= ((t16 & 0x00ff) << 24);
-
-            dest32[1] = t;
-
-            x = src32[2];
-            y = dest32[2];
-
-            // gb2
-            t = (t16 >> 8);
-        }
-    }
-    {
-        a8 = a & 0xff;
-        ia8 = ia & 0xff;
-
-        // g3,a3
-        t |= (((x & 0x07e0ff00) * a8 + (y & 0x07e0ff00) * ia8) >> 5)
-             & 0x07e0ff00;
-
-        // r3,b3
-        t |= (((x & 0xf81f0000) >> 5) * a8 + ((y & 0xf81f0000) >> 5) * ia8)
-             & 0xf81f0000;
-
-        dest32[2] = t;
-    }
-}
-
-template <>
-inline void interpolate_pixel_4(qargb8555 *dest, const qargb8555 *src,
-                                quint32 alpha)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-
-    const quint32 a = eff_alpha_4(alpha, dest);
-    const quint32 ia = eff_ialpha_4(alpha, dest);
-    const quint32 *src32 = reinterpret_cast<const quint32*>(src);
-    quint32 *dest32 = reinterpret_cast<quint32*>(dest);
-
-    quint32 x, y, t;
-    quint8 a8, ia8;
-    {
-        x = src32[0];
-        y = dest32[0];
-
-        a8 = a >> 24;
-        ia8 = ia >> 24;
-
-        // a0,g0
-        t = (((x & 0x0003e0ff) * a8 + (y & 0x0003e0ff) * ia8) >> 5)
-            & 0x0003e0ff;
-
-        // r0,b0
-        t |= (((x & 0x007c1f00) * a8 + (y & 0x007c1f00) * ia8) >> 5)
-             & 0x007c1f00;
-
-        a8 = (a >> 16) & 0xff;
-        ia8 = (ia >> 16) & 0xff;
-
-        // a1
-        t |= (((x & 0xff000000) >> 5) * a8 + ((y & 0xff000000) >> 5) * ia8)
-             & 0xff000000;
-
-        dest32[0] = t;
-    }
-    {
-        x = src32[1];
-        y = dest32[1];
-
-        // r1,b1
-        t = (((x & 0x00007c1f) * a8 + (y & 0x00007c1f) * ia8) >> 5)
-            & 0x00007c1f;
-
-        // g1
-        t |= (((x & 0x000003e0) * a8 + (y & 0x000003e0) * ia8) >> 5)
-             & 0x000003e0;
-
-        a8 = (a >> 8) & 0xff;
-        ia8 = (ia >> 8) & 0xff;
-
-        // a2
-        t |= (((x & 0x00ff0000) * a8 + (y & 0x00ff0000) * ia8) >> 5)
-             & 0x00ff0000;
-
-        {
-            // rgb2
-            quint16 x16 = (x >> 24) | ((src32[2] & 0x000000ff) << 8);
-            quint16 y16 = (y >> 24) | ((dest32[2] & 0x000000ff) << 8);
-            quint16 t16;
-
-            t16 = (((x16 & 0x7c1f) * a8 + (y16 & 0x7c1f) * ia8) >> 5) & 0x7c1f;
-            t16 |= (((x16 & 0x03e0) * a8 + (y16 & 0x03e0) * ia8) >> 5) & 0x03e0;
-
-            // rg2
-            t |= ((t16 & 0x00ff) << 24);
-
-            dest32[1] = t;
-
-            x = src32[2];
-            y = dest32[2];
-
-            // gb2
-            t = (t16 >> 8);
-        }
-    }
-    {
-        a8 = a & 0xff;
-        ia8 = ia & 0xff;
-
-        // g3,a3
-        t |= (((x & 0x03e0ff00) * a8 + (y & 0x03e0ff00) * ia8) >> 5)
-             & 0x03e0ff00;
-
-        // r3,b3
-        t |= (((x & 0x7c1f0000) >> 5) * a8 + ((y & 0x7c1f0000) >> 5) * ia8)
-             & 0x7c1f0000;
-
-        dest32[2] = t;
-    }
-}
-#endif // Q_BYTE_ORDER
-
-template <>
-inline void interpolate_pixel_4(qrgb888 *dest, const qrgb888 *src,
-                                quint32 alpha)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    const quint32 a = eff_alpha_4(alpha, dest);
-    const quint32 ia = eff_ialpha_4(alpha, dest);
-    const quint32 *src32 = reinterpret_cast<const quint32*>(src);
-    quint32 *dest32 = reinterpret_cast<quint32*>(dest);
-
-    {
-        quint32 x = src32[0];
-        quint32 y = dest32[0];
-
-        quint32 t;
-        t = ((x >> 8) & 0xff00ff) * (a >> 24)
-            + ((y >> 8) & 0xff00ff) * (ia >> 24);
-        t = (t + ((t >> 8) & 0xff00ff) + 0x800080);
-        t &= 0xff00ff00;
-
-        x = (x & 0xff0000) * (a >> 24)
-            + (x & 0x0000ff) * ((a >> 16) & 0xff)
-            + (y & 0xff0000) * (ia >> 24)
-            + (y & 0x0000ff) * ((ia >> 16) & 0xff);
-        x = (x + ((x >> 8) & 0xff00ff) + 0x800080) >> 8;
-        x &= 0x00ff00ff;
-
-        dest32[0] = x | t;
-    }
-    {
-        quint32 x = src32[1];
-        quint32 y = dest32[1];
-
-        quint32 t;
-        t = ((x >> 8) & 0xff0000) * ((a >> 16) & 0xff)
-            + ((x >> 8) & 0x0000ff) * ((a >> 8) & 0xff)
-            + ((y >> 8) & 0xff0000) * ((ia >> 16) & 0xff)
-            + ((y >> 8) & 0x0000ff) * ((ia >> 8) & 0xff);
-        t = (t + ((t >> 8) & 0xff00ff) + 0x800080);
-        t &= 0xff00ff00;
-
-        x = (x & 0xff0000) * ((a >> 16) & 0xff)
-            + (x & 0x0000ff) * ((a >> 8) & 0xff)
-            + (y & 0xff0000) * ((ia >> 16) & 0xff)
-            + (y & 0x0000ff) * ((ia >> 8) & 0xff);
-        x = (x + ((x >> 8) & 0xff00ff) + 0x800080) >> 8;
-        x &= 0x00ff00ff;
-
-        dest32[1] = x | t;
-    }
-    {
-        quint32 x = src32[2];
-        quint32 y = dest32[2];
-
-        quint32 t;
-        t = ((x >> 8) & 0xff0000) * ((a >> 8) & 0xff)
-            + ((x >> 8) & 0x0000ff) * (a & 0xff)
-            + ((y >> 8) & 0xff0000) * ((ia >> 8) & 0xff)
-            + ((y >> 8) & 0x0000ff) * (ia & 0xff);
-        t = (t + ((t >> 8) & 0xff00ff) + 0x800080);
-        t &= 0xff00ff00;
-
-        x = (x & 0xff00ff) * (a & 0xff)
-            + (y & 0xff00ff) * (ia & 0xff);
-        x = (x + ((x >> 8) & 0xff00ff) + 0x800080) >> 8;
-        x &= 0x00ff00ff;
-
-        dest32[2] = x | t;
-    }
-}
-
-template <class DST, class SRC>
-inline void interpolate_pixel_4(DST *dest, quint8 a,
-                                const SRC *src, quint8 b)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    dest[0] = dest[0].byte_mul(a) + DST(src[0]).byte_mul(b);
-    dest[1] = dest[1].byte_mul(a) + DST(src[1]).byte_mul(b);
-    dest[2] = dest[2].byte_mul(a) + DST(src[2]).byte_mul(b);
-    dest[3] = dest[3].byte_mul(a) + DST(src[3]).byte_mul(b);
-}
-
-template <class DST, class SRC>
-inline void blend_sourceOver_4(DST *dest, const SRC *src)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    const quint32 a = alpha_4(src);
-    if (a == 0xffffffff) {
-        qt_memconvert(dest, src, 4);
-    } else if (a > 0) {
-        quint32 buf[3]; // array of quint32 to get correct alignment
-        qt_memconvert((DST*)buf, src, 4);
-        madd_4(dest, eff_ialpha_4(a, dest), (DST*)buf);
-    }
-}
-
-template <>
-inline void blend_sourceOver_4(qargb8565 *dest, const qargb8565 *src)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    const quint32 a = alpha_4(src);
-    if (a == 0xffffffff) {
-        qt_memconvert(dest, src, 4);
-    } else if (a > 0) {
-        madd_4(dest, eff_ialpha_4(a, dest), src);
-    }
-}
-
-template <>
-inline void blend_sourceOver_4(qargb8555 *dest, const qargb8555 *src)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    const quint32 a = alpha_4(src);
-    if (a == 0xffffffff) {
-        qt_memconvert(dest, src, 4);
-    } else if (a > 0) {
-        madd_4(dest, eff_ialpha_4(a, dest), src);
-    }
-}
-
-template <>
-inline void blend_sourceOver_4(qargb6666 *dest, const qargb6666 *src)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == 0);
-    Q_ASSERT((quintptr(src) & 0x3) == 0);
-
-    const quint32 a = alpha_4(src);
-    if (a == 0xffffffff) {
-        qt_memconvert(dest, src, 4);
-    } else if (a > 0) {
-        madd_4(dest, eff_ialpha_4(a, dest), src);
-    }
 }
 
 /*
@@ -3806,12 +2966,6 @@ static void blend_untransformed_generic(int count, const QSpan *spans, void *use
 static void blend_untransformed_argb(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    if (data->texture.format != QImage::Format_ARGB32_Premultiplied
-        && data->texture.format != QImage::Format_RGB32) {
-        blend_untransformed_generic(count, spans, userData);
-        return;
-    }
-
     Operator op = getOperator(data, spans, count);
 
     const int image_width = data->texture.width;
@@ -3844,252 +2998,23 @@ static void blend_untransformed_argb(int count, const QSpan *spans, void *userDa
 }
 
 template <class DST, class SRC>
-static void QT_FASTCALL blendUntransformed_unaligned(DST *dest, const SRC *src,
-                                              quint8 coverage, int length)
-{
-    Q_ASSERT(coverage > 0);
-
-    if (coverage < 255) {
-        if (SRC::hasAlpha()) {
-            for (int i = 0; i < length; ++i) {
-                if (src[i].alpha()) {
-                    const quint8 alpha = qt_div_255(int(src[i].alpha()) * int(coverage));
-                    interpolate_pixel(dest[i], DST::ialpha(alpha),
-                            src[i], DST::alpha(alpha));
-                }
-            }
-        } else {
-            const quint8 alpha = DST::alpha(coverage);
-            const quint8 ialpha = DST::ialpha(coverage);
-            if (alpha) {
-                for (int i = 0; i < length; ++i)
-                    interpolate_pixel(dest[i], ialpha, src[i], alpha);
-            }
-        }
-        return;
-    }
-
-    Q_ASSERT(coverage == 0xff);
-    Q_ASSERT(SRC::hasAlpha());
-
-    for (int i = 0; i < length; ++i) {
-        const quint8 a = src->alpha();
-        if (a == 0xff)
-            *dest = DST(*src);
-        else if (a > 0) {
-            if (DST::hasAlpha())
-                *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(a));
-            else
-                *dest = DST(SRC(*src).truncedAlpha()) + dest->byte_mul(DST::ialpha(a));
-        }
-        ++src;
-        ++dest;
-    }
-}
-
-template <class DST, class SRC>
-static void QT_FASTCALL blendUntransformed_dest16(DST *dest, const SRC *src,
+static void QT_FASTCALL blendUntransformed(DST *dest, const SRC *src,
                                            quint8 coverage, int length)
 {
-    Q_ASSERT(sizeof(DST) == 2);
-    Q_ASSERT(sizeof(SRC) == 2);
-    Q_ASSERT((quintptr(dest) & 0x3) == (quintptr(src) & 0x3));
     Q_ASSERT(coverage > 0);
 
-    const int align = quintptr(dest) & 0x3;
-
     if (coverage < 255) {
-        // align
-        if (align) {
-            const quint8 alpha = SRC::hasAlpha()
-                                 ? qt_div_255(int(src->alpha()) * int(coverage))
-                                 : coverage;
-            if (alpha) {
-                interpolate_pixel(*dest, DST::ialpha(alpha),
-                                  *src, DST::alpha(alpha));
-            }
-            ++dest;
-            ++src;
-            --length;
+        const quint8 alpha = DST::alpha(coverage);
+        const quint8 ialpha = DST::ialpha(coverage);
+        if (alpha) {
+            for (int i = 0; i < length; ++i)
+                interpolate_pixel(dest[i], ialpha, src[i], alpha);
         }
-
-        if (SRC::hasAlpha()) {
-            while (length >= 2) {
-                const quint16 alpha16 = BYTE_MUL(uint(alpha_2(src)), uint(coverage));
-                interpolate_pixel_2(dest, src, alpha16);
-                length -= 2;
-                src += 2;
-                dest += 2;
-            }
-        } else {
-            const quint8 alpha = DST::alpha(coverage);
-            const quint8 ialpha = DST::ialpha(coverage);
-
-            while (length >= 2) {
-                interpolate_pixel_2(dest, ialpha, src, alpha);
-                length -= 2;
-                src += 2;
-                dest += 2;
-            }
-        }
-
-        // tail
-        if (length) {
-            const quint8 alpha = SRC::hasAlpha()
-                                 ? qt_div_255(int(src->alpha()) * int(coverage))
-                                 : coverage;
-            if (alpha) {
-                interpolate_pixel(*dest, DST::ialpha(alpha),
-                                  *src, DST::alpha(alpha));
-            }
-        }
-
-        return;
-    }
-
-    Q_ASSERT(SRC::hasAlpha());
-    if (align) {
-        const quint8 alpha = src->alpha();
-        if (alpha == 0xff)
-            *dest = DST(*src);
-        else if (alpha > 0)
-            *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(alpha));
-        ++dest;
-        ++src;
-        --length;
-    }
-
-    while (length >= 2) {
-        Q_ASSERT((quintptr(dest) & 3) == 0);
-        Q_ASSERT((quintptr(src) & 3) == 0);
-
-        const quint16 a = alpha_2(src);
-        if (a == 0xffff) {
-            qt_memconvert(dest, src, 2);
-        } else if (a > 0) {
-            quint32 buf;
-            if (sizeof(DST) == 2)
-                qt_memconvert((DST*)(void*)&buf, src, 2);
-            madd_2(dest, eff_ialpha_2(a, dest), (DST*)(void*)&buf);
-        }
-
-        length -= 2;
-        src += 2;
-        dest += 2;
-    }
-
-    if (length) {
-        const quint8 alpha = src->alpha();
-        if (alpha == 0xff)
-            *dest = DST(*src);
-        else if (alpha > 0)
-            *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(alpha));
     }
 }
 
-template <class DST, class SRC>
-static void QT_FASTCALL blendUntransformed_dest24(DST *dest, const SRC *src,
-                                           quint8 coverage, int length)
-{
-    Q_ASSERT((quintptr(dest) & 0x3) == (quintptr(src) & 0x3));
-    Q_ASSERT(sizeof(DST) == 3);
-    Q_ASSERT(coverage > 0);
-
-    const int align = quintptr(dest) & 0x3;
-
-    if (coverage < 255) {
-        // align
-        for (int i = 0; i < align; ++i) {
-            if (SRC::hasAlpha()) {
-                const quint8 alpha = qt_div_255(int(src->alpha()) * int(coverage));
-                if (alpha)
-                    interpolate_pixel(*dest, DST::ialpha(alpha),
-                                      *src, DST::alpha(alpha));
-            } else {
-                interpolate_pixel(*dest, DST::ialpha(coverage),
-                                  *src, DST::alpha(coverage));
-            }
-            ++dest;
-            ++src;
-            --length;
-        }
-
-        if (SRC::hasAlpha()) {
-            while (length >= 4) {
-                const quint32 alpha = BYTE_MUL(uint(alpha_4(src)), uint(coverage));
-                if (alpha)
-                    interpolate_pixel_4(dest, src, alpha);
-                length -= 4;
-                src += 4;
-                dest += 4;
-            }
-        } else {
-            const quint8 alpha = DST::alpha(coverage);
-            const quint8 ialpha = DST::ialpha(coverage);
-            while (length >= 4) {
-                interpolate_pixel_4(dest, ialpha, src, alpha);
-                length -= 4;
-                src += 4;
-                dest += 4;
-            }
-        }
-
-        // tail
-        while (length--) {
-            if (SRC::hasAlpha()) {
-                const quint8 alpha = qt_div_255(int(src->alpha()) * int(coverage));
-                if (alpha)
-                    interpolate_pixel(*dest, DST::ialpha(alpha),
-                                      *src, DST::alpha(alpha));
-            } else {
-                interpolate_pixel(*dest, DST::ialpha(coverage),
-                                  *src, DST::alpha(coverage));
-            }
-            ++dest;
-            ++src;
-        }
-
-        return;
-    }
-
-    Q_ASSERT(coverage == 255);
-    Q_ASSERT(SRC::hasAlpha());
-
-    // align
-    for (int i = 0; i < align; ++i) {
-        const quint8 a = src->alpha();
-        if (a == 0xff) {
-            *dest = DST(*src);
-        } else if (a > 0) {
-            *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(a));
-        }
-        ++dest;
-        ++src;
-        --length;
-    }
-
-    while (length >= 4) {
-        blend_sourceOver_4(dest, src);
-        length -= 4;
-        src += 4;
-        dest += 4;
-    }
-
-    // tail
-    while (length--) {
-        const quint8 a = src->alpha();
-        if (a == 0xff) {
-            *dest = DST(*src);
-        } else if (a > 0) {
-            *dest = DST(*src).truncedAlpha() + dest->byte_mul(DST::ialpha(a));
-        }
-        ++dest;
-        ++src;
-    }
-}
-
-template <class DST, class SRC>
-static void QT_FASTCALL blendUntransformed(int count, const QSpan *spans, void *userData)
+static void blend_untransformed_rgb565(int count, const QSpan *spans,
+                                       void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData*>(userData);
     QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
@@ -4101,8 +3026,6 @@ static void QT_FASTCALL blendUntransformed(int count, const QSpan *spans, void *
         return;
     }
 
-    const bool modeSource = !SRC::hasAlpha() ||
-                            mode == QPainter::CompositionMode_Source;
     const int image_width = data->texture.width;
     const int image_height = data->texture.height;
     int xoff = -qRound(-data->dx);
@@ -4128,38 +3051,17 @@ static void QT_FASTCALL blendUntransformed(int count, const QSpan *spans, void *
             if (sx + length > image_width)
                 length = image_width - sx;
             if (length > 0) {
-                DST *dest = ((DST*)data->rasterBuffer->scanLine(spans->y)) + x;
-                const SRC *src = (const SRC*)data->texture.scanLine(sy) + sx;
-                if (modeSource && coverage == 255) {
-                    qt_memconvert<DST, SRC>(dest, src, length);
-                } else if (sizeof(DST) == 3 && sizeof(SRC) == 3 && length >= 3 &&
-                           (quintptr(dest) & 3) == (quintptr(src) & 3))
-                {
-                    blendUntransformed_dest24(dest, src, coverage, length);
-                } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && length >= 3 &&
-                           (quintptr(dest) & 3) == (quintptr(src) & 3))
-                {
-                    blendUntransformed_dest16(dest, src, coverage, length);
+                qrgb565 *dest = ((qrgb565*)data->rasterBuffer->scanLine(spans->y)) + x;
+                const qrgb565 *src = (const qrgb565*)data->texture.scanLine(sy) + sx;
+                if (coverage == 255) {
+                    qt_memconvert<qrgb565, qrgb565>(dest, src, length);
                 } else {
-                    blendUntransformed_unaligned(dest, src, coverage, length);
+                    blendUntransformed(dest, src, coverage, length);
                 }
             }
         }
         ++spans;
     }
-}
-
-static void blend_untransformed_rgb565(int count, const QSpan *spans,
-                                       void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-
-    if (data->texture.format == QImage::Format_ARGB8565_Premultiplied)
-        blendUntransformed<qrgb565, qargb8565>(count, spans, userData);
-    else if (data->texture.format == QImage::Format_RGB16)
-        blendUntransformed<qrgb565, qrgb565>(count, spans, userData);
-    else
-        blend_untransformed_generic(count, spans, userData);
 }
 
 static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
@@ -4213,12 +3115,6 @@ static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
 static void blend_tiled_argb(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    if (data->texture.format != QImage::Format_ARGB32_Premultiplied
-        && data->texture.format != QImage::Format_RGB32) {
-        blend_tiled_generic(count, spans, userData);
-        return;
-    }
-
     Operator op = getOperator(data, spans, count);
 
     int image_width = data->texture.width;
@@ -4257,8 +3153,7 @@ static void blend_tiled_argb(int count, const QSpan *spans, void *userData)
     }
 }
 
-template <class DST, class SRC>
-static void blendTiled(int count, const QSpan *spans, void *userData)
+static void blend_tiled_rgb565(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData*>(userData);
     QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
@@ -4270,8 +3165,6 @@ static void blendTiled(int count, const QSpan *spans, void *userData)
         return;
     }
 
-    const bool modeSource = !SRC::hasAlpha() ||
-                            mode == QPainter::CompositionMode_Source;
     const int image_width = data->texture.width;
     const int image_height = data->texture.height;
     int xoff = -qRound(-data->dx) % image_width;
@@ -4298,7 +3191,7 @@ static void blendTiled(int count, const QSpan *spans, void *userData)
         if (sy < 0)
             sy += image_height;
 
-        if (modeSource && coverage == 255) {
+        if (coverage == 255) {
             // Copy the first texture block
             length = qMin(image_width,length);
             int tx = x;
@@ -4306,10 +3199,10 @@ static void blendTiled(int count, const QSpan *spans, void *userData)
                 int l = qMin(image_width - sx, length);
                 if (buffer_size < l)
                     l = buffer_size;
-                DST *dest = ((DST*)data->rasterBuffer->scanLine(spans->y)) + tx;
-                const SRC *src = (const SRC*)data->texture.scanLine(sy) + sx;
+                qrgb565 *dest = ((qrgb565*)data->rasterBuffer->scanLine(spans->y)) + tx;
+                const qrgb565 *src = (const qrgb565*)data->texture.scanLine(sy) + sx;
 
-                qt_memconvert<DST, SRC>(dest, src, l);
+                qt_memconvert<qrgb565, qrgb565>(dest, src, l);
                 length -= l;
                 tx += l;
                 sx = 0;
@@ -4323,8 +3216,8 @@ static void blendTiled(int count, const QSpan *spans, void *userData)
             // - can use memcpy
             int copy_image_width = qMin(image_width, int(spans->len));
             length = spans->len - copy_image_width;
-            DST *src = ((DST*)data->rasterBuffer->scanLine(spans->y)) + x;
-            DST *dest = src + copy_image_width;
+            qrgb565 *src = ((qrgb565*)data->rasterBuffer->scanLine(spans->y)) + x;
+            qrgb565 *dest = src + copy_image_width;
             while (copy_image_width < length) {
                 qt_memconvert(dest, src, copy_image_width);
                 dest += copy_image_width;
@@ -4338,19 +3231,9 @@ static void blendTiled(int count, const QSpan *spans, void *userData)
                 int l = qMin(image_width - sx, length);
                 if (buffer_size < l)
                     l = buffer_size;
-                DST *dest = ((DST*)data->rasterBuffer->scanLine(spans->y)) + x;
-                const SRC *src = (const SRC*)data->texture.scanLine(sy) + sx;
-                if (sizeof(DST) == 3 && sizeof(SRC) == 3 && l >= 4 &&
-                           (quintptr(dest) & 3) == (quintptr(src) & 3))
-                {
-                    blendUntransformed_dest24(dest, src, coverage, l);
-                } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
-                           (quintptr(dest) & 3) == (quintptr(src) & 3))
-                {
-                    blendUntransformed_dest16(dest, src, coverage, l);
-                } else {
-                    blendUntransformed_unaligned(dest, src, coverage, l);
-                }
+                qrgb565 *dest = ((qrgb565*)data->rasterBuffer->scanLine(spans->y)) + x;
+                const qrgb565 *src = (const qrgb565*)data->texture.scanLine(sy) + sx;
+                blendUntransformed(dest, src, coverage, l);
 
                 x += l;
                 length -= l;
@@ -4361,21 +3244,8 @@ static void blendTiled(int count, const QSpan *spans, void *userData)
     }
 }
 
-static void blend_tiled_rgb565(int count, const QSpan *spans, void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-
-    if (data->texture.format == QImage::Format_ARGB8565_Premultiplied)
-        blendTiled<qrgb565, qargb8565>(count, spans, userData);
-    else if (data->texture.format == QImage::Format_RGB16)
-        blendTiled<qrgb565, qrgb565>(count, spans, userData);
-    else
-        blend_tiled_generic(count, spans, userData);
-}
-
-template <class DST, class SRC>
-static void blendTransformedBilinear(int count, const QSpan *spans,
-                                     void *userData)
+static void blend_transformed_bilinear_rgb565(int count, const QSpan *spans,
+                                              void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData*>(userData);
     QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
@@ -4386,7 +3256,7 @@ static void blendTransformedBilinear(int count, const QSpan *spans,
         return;
     }
 
-    SRC buffer[buffer_size];
+    qrgb565 buffer[buffer_size];
 
     const int src_minx = data->texture.x1;
     const int src_miny = data->texture.y1;
@@ -4403,7 +3273,7 @@ static void blendTransformedBilinear(int count, const QSpan *spans,
             continue;
         }
 
-        DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
+        qrgb565 *dest = (qrgb565*)data->rasterBuffer->scanLine(spans->y)
                     + spans->x;
 
         const qreal cx = spans->x + qreal(0.5);
@@ -4416,8 +3286,8 @@ static void blendTransformedBilinear(int count, const QSpan *spans,
         int length = spans->len;
         while (length) {
             const int l = qMin(length, buffer_size);
-            const SRC *end = buffer + l;
-            SRC *b = buffer;
+            const qrgb565 *end = buffer + l;
+            qrgb565 *b = buffer;
             while (b < end) {
                 const qreal iw = w == 0 ? 1 : 1 / w;
                 const qreal px = x * iw - qreal(0.5);
@@ -4446,19 +3316,19 @@ static void blendTransformedBilinear(int count, const QSpan *spans,
                     y2 = y1 + 1;
                 }
 
-                const SRC *src1 = (const SRC*)data->texture.scanLine(y1);
-                const SRC *src2 = (const SRC*)data->texture.scanLine(y2);
-                SRC tl = src1[x1];
-                const SRC tr = src1[x2];
-                SRC bl = src2[x1];
-                const SRC br = src2[x2];
-                const quint8 ax = SRC::alpha(distx);
-                const quint8 iax = SRC::ialpha(distx);
+                const qrgb565 *src1 = (const qrgb565*)data->texture.scanLine(y1);
+                const qrgb565 *src2 = (const qrgb565*)data->texture.scanLine(y2);
+                qrgb565 tl = src1[x1];
+                const qrgb565 tr = src1[x2];
+                qrgb565 bl = src2[x1];
+                const qrgb565 br = src2[x2];
+                const quint8 ax = qrgb565::alpha(distx);
+                const quint8 iax = qrgb565::ialpha(distx);
 
                 interpolate_pixel(tl, iax, tr, ax);
                 interpolate_pixel(bl, iax, br, ax);
-                interpolate_pixel(tl, SRC::ialpha(disty),
-                                    bl, SRC::alpha(disty));
+                interpolate_pixel(tl, qrgb565::ialpha(disty),
+                                    bl, qrgb565::alpha(disty));
                 *b = tl;
                 ++b;
 
@@ -4466,17 +3336,10 @@ static void blendTransformedBilinear(int count, const QSpan *spans,
                 y += fdy;
                 w += fdw;
             }
-            if (!SRC::hasAlpha() && coverage == 255) {
+            if (coverage == 255) {
                 qt_memconvert(dest, buffer, l);
-            } else if (sizeof(DST) == 3 && l >= 4 &&
-                        (quintptr(dest) & 3) == (quintptr(buffer) & 3))
-            {
-                blendUntransformed_dest24(dest, buffer, coverage, l);
-            } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
-                        (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
-                blendUntransformed_dest16(dest, buffer, coverage, l);
             } else {
-                blendUntransformed_unaligned(dest, buffer, coverage, l);
+                blendUntransformed(dest, buffer, coverage, l);
             }
 
             dest += l;
@@ -4486,28 +3349,9 @@ static void blendTransformedBilinear(int count, const QSpan *spans,
     }
 }
 
-static void blend_transformed_bilinear_rgb565(int count, const QSpan *spans,
-                                              void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-
-    if (data->texture.format == QImage::Format_RGB16)
-        blendTransformedBilinear<qrgb565, qrgb565>(count, spans, userData);
-    else if (data->texture.format == QImage::Format_ARGB8565_Premultiplied)
-        blendTransformedBilinear<qrgb565, qargb8565>(count, spans, userData);
-    else
-        blend_src_generic(count, spans, userData);
-}
-
 static void blend_transformed_argb(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    if (data->texture.format != QImage::Format_ARGB32_Premultiplied
-        && data->texture.format != QImage::Format_RGB32) {
-        blend_src_generic(count, spans, userData);
-        return;
-    }
-
     CompositionFunction func = functionForMode[data->rasterBuffer->compositionMode];
     uint buffer[buffer_size];
 
@@ -4563,8 +3407,8 @@ static void blend_transformed_argb(int count, const QSpan *spans, void *userData
     }
 }
 
-template <class DST, class SRC>
-static void blendTransformed(int count, const QSpan *spans, void *userData)
+static void blend_transformed_rgb565(int count, const QSpan *spans,
+                                       void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData*>(userData);
     QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
@@ -4574,7 +3418,7 @@ static void blendTransformed(int count, const QSpan *spans, void *userData)
         return;
     }
 
-    SRC buffer[buffer_size];
+    qrgb565 buffer[buffer_size];
     const int image_width = data->texture.width;
     const int image_height = data->texture.height;
     const qreal fdx = data->m11;
@@ -4588,7 +3432,7 @@ static void blendTransformed(int count, const QSpan *spans, void *userData)
             continue;
         }
 
-        DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
+        qrgb565 *dest = (qrgb565*)data->rasterBuffer->scanLine(spans->y)
                     + spans->x;
 
         const qreal cx = spans->x + qreal(0.5);
@@ -4601,8 +3445,8 @@ static void blendTransformed(int count, const QSpan *spans, void *userData)
         int length = spans->len;
         while (length) {
             const int l = qMin(length, buffer_size);
-            const SRC *end = buffer + l;
-            SRC *b = buffer;
+            const qrgb565 *end = buffer + l;
+            qrgb565 *b = buffer;
             while (b < end) {
                 const qreal iw = w == 0 ? 1 : 1 / w;
                 const qreal tx = x * iw;
@@ -4616,7 +3460,7 @@ static void blendTransformed(int count, const QSpan *spans, void *userData)
                 {
                     *b = 0;
                 } else {
-                    *b = ((const SRC*)data->texture.scanLine(py))[px];
+                    *b = ((const qrgb565*)data->texture.scanLine(py))[px];
                 }
                 ++b;
 
@@ -4624,17 +3468,10 @@ static void blendTransformed(int count, const QSpan *spans, void *userData)
                 y += fdy;
                 w += fdw;
             }
-            if (!SRC::hasAlpha() && coverage == 255) {
+            if (coverage == 255) {
                 qt_memconvert(dest, buffer, l);
-            } else if (sizeof(DST) == 3 && sizeof(SRC) == 3 && l >= 4 &&
-                        (quintptr(dest) & 3) == (quintptr(buffer) & 3))
-            {
-                blendUntransformed_dest24(dest, buffer, coverage, l);
-            } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
-                        (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
-                blendUntransformed_dest16(dest, buffer, coverage, l);
             } else {
-                blendUntransformed_unaligned(dest, buffer, coverage, l);
+                blendUntransformed(dest, buffer, coverage, l);
             }
 
             dest += l;
@@ -4644,28 +3481,9 @@ static void blendTransformed(int count, const QSpan *spans, void *userData)
     }
 }
 
-static void blend_transformed_rgb565(int count, const QSpan *spans,
-                                       void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-
-    if (data->texture.format == QImage::Format_ARGB8565_Premultiplied)
-        blendTransformed<qrgb565, qargb8565>(count, spans, userData);
-    else if (data->texture.format == QImage::Format_RGB16)
-        blendTransformed<qrgb565, qrgb565>(count, spans, userData);
-    else
-        blend_src_generic(count, spans, userData);
-}
-
 static void blend_transformed_tiled_argb(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    if (data->texture.format != QImage::Format_ARGB32_Premultiplied
-        && data->texture.format != QImage::Format_RGB32) {
-        blend_src_generic(count, spans, userData);
-        return;
-    }
-
     CompositionFunction func = functionForMode[data->rasterBuffer->compositionMode];
     uint buffer[buffer_size];
 
@@ -4729,8 +3547,8 @@ static void blend_transformed_tiled_argb(int count, const QSpan *spans, void *us
     }
 }
 
-template <class DST, class SRC>
-static void blendTransformedTiled(int count, const QSpan *spans, void *userData)
+static void blend_transformed_tiled_rgb565(int count, const QSpan *spans,
+                                           void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData*>(userData);
     QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
@@ -4740,7 +3558,7 @@ static void blendTransformedTiled(int count, const QSpan *spans, void *userData)
         return;
     }
 
-    SRC buffer[buffer_size];
+    qrgb565 buffer[buffer_size];
     const int image_width = data->texture.width;
     const int image_height = data->texture.height;
     const qreal fdx = data->m11;
@@ -4754,7 +3572,7 @@ static void blendTransformedTiled(int count, const QSpan *spans, void *userData)
             continue;
         }
 
-        DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
+        qrgb565 *dest = (qrgb565*)data->rasterBuffer->scanLine(spans->y)
                     + spans->x;
 
         const qreal cx = spans->x + qreal(0.5);
@@ -4767,8 +3585,8 @@ static void blendTransformedTiled(int count, const QSpan *spans, void *userData)
         int length = spans->len;
         while (length) {
             const int l = qMin(length, buffer_size);
-            const SRC *end = buffer + l;
-            SRC *b = buffer;
+            const qrgb565 *end = buffer + l;
+            qrgb565 *b = buffer;
             while (b < end) {
                 const qreal iw = w == 0 ? 1 : 1 / w;
                 const qreal tx = x * iw;
@@ -4784,7 +3602,7 @@ static void blendTransformedTiled(int count, const QSpan *spans, void *userData)
                 if (py < 0)
                     py += image_height;
 
-                *b = ((const SRC*)data->texture.scanLine(py))[px];
+                *b = ((const qrgb565*)data->texture.scanLine(py))[px];
                 ++b;
 
                 x += fdx;
@@ -4794,17 +3612,10 @@ static void blendTransformedTiled(int count, const QSpan *spans, void *userData)
                 if (!w)
                     w += fdw;
             }
-            if (!SRC::hasAlpha() && coverage == 255) {
+            if (coverage == 255) {
                 qt_memconvert(dest, buffer, l);
-            } else if (sizeof(DST) == 3 && sizeof(SRC) == 3 && l >= 4 &&
-                        (quintptr(dest) & 3) == (quintptr(buffer) & 3))
-            {
-                blendUntransformed_dest24(dest, buffer, coverage, l);
-            } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
-                        (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
-                blendUntransformed_dest16(dest, buffer, coverage, l);
             } else {
-                blendUntransformed_unaligned(dest, buffer, coverage, l);
+                blendUntransformed(dest, buffer, coverage, l);
             }
 
             dest += l;
@@ -4812,19 +3623,6 @@ static void blendTransformedTiled(int count, const QSpan *spans, void *userData)
         }
         ++spans;
     }
-}
-
-static void blend_transformed_tiled_rgb565(int count, const QSpan *spans,
-                                           void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-
-    if (data->texture.format == QImage::Format_ARGB8565_Premultiplied)
-        blendTransformedTiled<qrgb565, qargb8565>(count, spans, userData);
-    else if (data->texture.format == QImage::Format_RGB16)
-        blendTransformedTiled<qrgb565, qrgb565>(count, spans, userData);
-    else
-        blend_src_generic(count, spans, userData);
 }
 
 /* Image formats here are target formats */
@@ -4838,7 +3636,7 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_untransformed_generic, // RGB32
         blend_untransformed_generic, // ARGB32
         blend_untransformed_argb, // ARGB32_Premultiplied
-        blend_untransformed_rgb565,
+        blend_untransformed_rgb565, // RGB16
         blend_untransformed_generic, // argb8565
         blend_untransformed_generic, // rgb666
         blend_untransformed_generic, // argb6666
@@ -4857,7 +3655,7 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_tiled_generic, // RGB32
         blend_tiled_generic, // ARGB32
         blend_tiled_argb, // ARGB32_Premultiplied
-        blend_tiled_rgb565,
+        blend_tiled_rgb565, // RGB16
         blend_tiled_generic, // argb8565
         blend_tiled_generic, // rgb666
         blend_tiled_generic, // argb6666
@@ -4876,7 +3674,7 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_src_generic, // RGB32
         blend_src_generic, // ARGB32
         blend_transformed_argb, // ARGB32_Premultiplied
-        blend_transformed_rgb565,
+        blend_transformed_rgb565, // RGB16
         blend_src_generic, // argb8565
         blend_src_generic, // rgb666
         blend_src_generic, // argb6666
@@ -4895,7 +3693,7 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_src_generic, // RGB32
         blend_src_generic, // ARGB32
         blend_transformed_tiled_argb, // ARGB32_Premultiplied
-        blend_transformed_tiled_rgb565,
+        blend_transformed_tiled_rgb565, // RGB16
         blend_src_generic, // argb8565
         blend_src_generic, // rgb666
         blend_src_generic, // argb6666
@@ -4914,7 +3712,7 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_src_generic, // RGB32
         blend_src_generic, // ARGB32
         blend_src_generic, // ARGB32_Premultiplied
-        blend_transformed_bilinear_rgb565,
+        blend_transformed_bilinear_rgb565, // RGB16
         blend_src_generic, // argb8565
         blend_src_generic, // rgb666
         blend_src_generic, // argb6666

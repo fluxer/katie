@@ -1505,55 +1505,6 @@ QT_TRIVIAL_MEMCONVERT_IMPL(qargb4444)
 QT_TRIVIAL_MEMCONVERT_IMPL(qrgb444)
 #undef QT_TRIVIAL_MEMCONVERT_IMPL
 
-#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-template <>
-inline void qt_memconvert(qrgb666 *dest, const quint32 *src, int count)
-{
-    if (count < 3) {
-        switch (count) {
-        case 2: *dest++ = qrgb666(*src++);
-        case 1: *dest = qrgb666(*src);
-        }
-        return;
-    }
-
-    const int align = (quintptr(dest) & 3);
-    switch (align) {
-    case 1: *dest++ = qrgb666(*src++); --count;
-    case 2: *dest++ = qrgb666(*src++); --count;
-    case 3: *dest++ = qrgb666(*src++); --count;
-    }
-
-    quint32 *dest32 = reinterpret_cast<quint32*>(dest);
-    int sourceCount = count >> 2;
-    while (sourceCount--) {
-        dest32[0] = ((src[1] & 0x00000c00) << 20)
-                    | ((src[1] & 0x000000fc) << 22)
-                    | ((src[0] & 0x00fc0000) >> 6)
-                    | ((src[0] & 0x0000fc00) >> 4)
-                    |  ((src[0] & 0x000000fc) >> 2);
-        dest32[1] = ((src[2] & 0x003c0000) << 10)
-                    | ((src[2] & 0x0000fc00) << 12)
-                    | ((src[2] & 0x000000fc) << 14)
-                    | ((src[1] & 0x00fc0000) >> 14)
-                    | ((src[1] & 0x0000f000) >> 12);
-        dest32[2] = ((src[3] & 0x00fc0000) << 2)
-                    | ((src[3] & 0x0000fc00) << 4)
-                    | ((src[3] & 0x000000fc) << 6)
-                    | ((src[2] & 0x00c00000) >> 22);
-        dest32 += 3;
-        src += 4;
-    }
-
-    dest = reinterpret_cast<qrgb666*>(dest32);
-    switch (count & 3) {
-    case 3: *dest++ = qrgb666(*src++);
-    case 2: *dest++ = qrgb666(*src++);
-    case 1: *dest = qrgb666(*src);
-    }
-}
-#endif // Q_BYTE_ORDER
-
 template <class DST, class SRC>
 inline void qt_rectconvert(DST *dest, const SRC *src,
                            int width, int height,
