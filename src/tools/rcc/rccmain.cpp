@@ -31,8 +31,7 @@
 **
 ****************************************************************************/
 
-#include <rcc.h>
-#include "qcorecmdlineargs_p.h"
+#include "rcc.h"
 
 #include <QDebug>
 #include <QDir>
@@ -134,7 +133,9 @@ int runRcc(int argc, char *argv[])
     bool projectRequested = false;
     QStringList filenamesIn;
 
-    QStringList args = qCmdLineArgs(argc, argv);
+    QStringList args;
+    for (int i = 0; i != argc; ++i)
+        args += QString::fromLocal8Bit(argv[i]);
 
     RCCResourceLibrary library;
 

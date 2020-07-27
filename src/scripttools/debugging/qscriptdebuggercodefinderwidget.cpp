@@ -161,7 +161,7 @@ QScriptDebuggerCodeFinderWidget::QScriptDebuggerCodeFinderWidget(QWidget *parent
     d->labelWrapped->setMaximumSize(QSize(115, 20));
     d->labelWrapped->setTextFormat(Qt::RichText);
     d->labelWrapped->setScaledContents(true);
-    d->labelWrapped->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+    d->labelWrapped->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
     d->labelWrapped->setText(tr("<img src=\":/qt/scripttools/debugging/images/wrap.png\">&nbsp;Search wrapped"));
     hboxLayout->addWidget(d->labelWrapped);
 

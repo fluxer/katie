@@ -121,10 +121,8 @@ private:
 
 QT_END_NAMESPACE
 
-#ifndef QT_ALLINONE
 Q_DECLARE_METATYPE(QNetworkSession::State)
 Q_DECLARE_METATYPE(QNetworkSession::SessionError)
-#endif
 
 QT_END_HEADER
 

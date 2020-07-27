@@ -167,39 +167,36 @@ QMainWindowLayoutState::QMainWindowLayoutState(QMainWindow *win)
 
 QSize QMainWindowLayoutState::sizeHint() const
 {
-
-    QSize result(0, 0);
-
 #ifndef QT_NO_DOCKWIDGET
-    result = dockAreaLayout.sizeHint();
+    QSize result(dockAreaLayout.sizeHint());
 #else
+    QSize result(0, 0);
     if (centralWidgetItem != 0)
         result = centralWidgetItem->sizeHint();
 #endif
 
 #ifndef QT_NO_TOOLBAR
-    result = toolBarAreaLayout.sizeHint(result);
-#endif // QT_NO_TOOLBAR
-
+    return toolBarAreaLayout.sizeHint(result);
+#else
     return result;
+#endif // QT_NO_TOOLBAR
 }
 
 QSize QMainWindowLayoutState::minimumSize() const
 {
-    QSize result(0, 0);
-
 #ifndef QT_NO_DOCKWIDGET
-    result = dockAreaLayout.minimumSize();
+    QSize result(dockAreaLayout.minimumSize());
 #else
+    QSize result(0, 0);
     if (centralWidgetItem != 0)
         result = centralWidgetItem->minimumSize();
 #endif
 
 #ifndef QT_NO_TOOLBAR
-    result = toolBarAreaLayout.minimumSize(result);
-#endif // QT_NO_TOOLBAR
-
+    return toolBarAreaLayout.minimumSize(result);
+#else
     return result;
+#endif // QT_NO_TOOLBAR
 }
 
 void QMainWindowLayoutState::apply(bool animated)
@@ -222,12 +219,11 @@ void QMainWindowLayoutState::apply(bool animated)
 
 void QMainWindowLayoutState::fitLayout()
 {
-    QRect r;
 #ifdef QT_NO_TOOLBAR
-    r = rect;
+    QRect r(rect);
 #else
     toolBarAreaLayout.rect = rect;
-    r = toolBarAreaLayout.fitLayout();
+    QRect r(toolBarAreaLayout.fitLayout());
 #endif // QT_NO_TOOLBAR
 
 #ifndef QT_NO_DOCKWIDGET

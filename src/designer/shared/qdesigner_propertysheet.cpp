@@ -519,7 +519,6 @@ QDesignerPropertySheet::PropertyType QDesignerPropertySheet::propertyTypeFromNam
         propertyTypeHash.insert(QLatin1String("accessibleDescription"),   PropertyAccessibility);
         propertyTypeHash.insert(QLatin1String("windowTitle"),             PropertyWindowTitle);
         propertyTypeHash.insert(QLatin1String("windowIcon"),              PropertyWindowIcon);
-        propertyTypeHash.insert(QLatin1String("windowFilePath"),          PropertyWindowFilePath);
         propertyTypeHash.insert(QLatin1String("windowOpacity"),           PropertyWindowOpacity);
         propertyTypeHash.insert(QLatin1String("windowIconText"),          PropertyWindowIconText);
         propertyTypeHash.insert(QLatin1String("windowModality"),          PropertyWindowModality);
@@ -1435,7 +1434,6 @@ bool QDesignerPropertySheet::isVisible(int index) const
     switch (type) {
     case PropertyWindowTitle:
     case PropertyWindowIcon:
-    case PropertyWindowFilePath:
     case PropertyWindowOpacity:
     case PropertyWindowIconText:
     case PropertyWindowModified:

@@ -107,27 +107,6 @@ QT_BEGIN_NAMESPACE
 
     \endlist
 
-    \section1 Notes for Mac OS X Users
-
-    Mac OS X supports a separate find buffer that holds the current
-    search string in Find operations. This find clipboard can be accessed
-    by specifying the FindBuffer mode.
-
-    \section1 Notes for Windows and Mac OS X Users
-
-    \list
-
-    \i Windows and Mac OS X do not support the global mouse
-    selection; they only supports the global clipboard, i.e. they
-    only add text to the clipboard when an explicit copy or cut is
-    made.
-
-    \i Windows and Mac OS X does not have the concept of ownership;
-    the clipboard is a fully global resource so all applications are
-    notified of changes.
-
-    \endlist
-
     \sa QApplication
 */
 
@@ -225,9 +204,6 @@ QClipboard::~QClipboard()
     the global mouse selection. Support for \c Selection is provided only on 
     systems with a global mouse selection (e.g. X11).
 
-    \value FindBuffer indicates that data should be stored and retrieved from
-    the Find buffer. This mode is used for holding search strings on Mac OS X.
-
     \omitvalue LastMode
 
     \sa QClipboard::supportsSelection()
@@ -312,8 +288,7 @@ QString QClipboard::text(QString &subtype, Mode mode) const
     clipboard is used.  If \a mode is QClipboard::Clipboard, the
     text is retrieved from the global clipboard.  If \a mode is
     QClipboard::Selection, the text is retrieved from the global
-    mouse selection. If \a mode is QClipboard::FindBuffer, the
-    text is retrieved from the search string buffer.
+    mouse selection.
 
     \sa setText(), mimeData()
 */
@@ -330,8 +305,7 @@ QString QClipboard::text(Mode mode) const
     clipboard is used.  If \a mode is QClipboard::Clipboard, the
     text is stored in the global clipboard.  If \a mode is
     QClipboard::Selection, the text is stored in the global
-    mouse selection. If \a mode is QClipboard::FindBuffer, the
-    text is stored in the search string buffer.
+    mouse selection.
 
     \sa text(), setMimeData()
 */
@@ -437,8 +411,7 @@ void QClipboard::setPixmap(const QPixmap &pixmap, Mode mode)
     clipboard is used.  If \a mode is QClipboard::Clipboard, the
     data is retrieved from the global clipboard.  If \a mode is
     QClipboard::Selection, the data is retrieved from the global
-    mouse selection. If \a mode is QClipboard::FindBuffer, the
-    data is retrieved from the search string buffer.
+    mouse selection.
 
     The text(), image(), and pixmap() functions are simpler
     wrappers for retrieving text, image, and pixmap data.
@@ -457,8 +430,7 @@ void QClipboard::setPixmap(const QPixmap &pixmap, Mode mode)
     clipboard is used.  If \a mode is QClipboard::Clipboard, the
     data is stored in the global clipboard.  If \a mode is
     QClipboard::Selection, the data is stored in the global
-    mouse selection. If \a mode is QClipboard::FindBuffer, the
-    data is stored in the search string buffer.
+    mouse selection.
 
     The setText(), setImage() and setPixmap() functions are simpler
     wrappers for setting text, image and pixmap data respectively.
@@ -474,8 +446,7 @@ void QClipboard::setPixmap(const QPixmap &pixmap, Mode mode)
     clipboard is used.  If \a mode is QClipboard::Clipboard, this
     function clears the global clipboard contents.  If \a mode is
     QClipboard::Selection, this function clears the global mouse
-    selection contents. If \a mode is QClipboard::FindBuffer, this 
-    function clears the search string buffer.
+    selection contents.
 
     \sa QClipboard::Mode, supportsSelection()
 */
@@ -487,16 +458,13 @@ void QClipboard::setPixmap(const QPixmap &pixmap, Mode mode)
 */
 bool QClipboard::supportsSelection() const
 {
-    return supportsMode(Selection);
-}
-
-/*!
-    Returns true if the clipboard supports a separate search buffer; otherwise
-    returns false.
-*/
-bool QClipboard::supportsFindBuffer() const
-{
-    return supportsMode(FindBuffer);
+    // ### remove this method
+#ifdef Q_WS_X11
+    // X11 implementation supports both Clipboard and Selection modes
+    return true;
+#else
+    return false;
+#endif
 }
 
 /*!
@@ -515,17 +483,6 @@ bool QClipboard::ownsClipboard() const
 bool QClipboard::ownsSelection() const
 {
     return ownsMode(Selection);
-}
-
-/*!
-    \since 4.2
-
-    Returns true if this clipboard object owns the find buffer data;
-    otherwise returns false.
-*/
-bool QClipboard::ownsFindBuffer() const
-{
-    return ownsMode(FindBuffer);
 }
 
 /*! 
@@ -551,15 +508,10 @@ void QClipboard::emitChanged(Mode mode)
     switch (mode) {
         case Clipboard:
             emit dataChanged();
-        break;
+            break;
         case Selection:
             emit selectionChanged();
-        break;
-        case FindBuffer:
-            emit findBufferChanged();
-        break;
-        default:
-        break;
+            break;
     }
     emit changed(mode);
 }

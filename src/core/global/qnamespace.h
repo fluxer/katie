@@ -353,8 +353,7 @@ public:
         WA_AttributeCount
     };
 
-    enum ApplicationAttribute
-    {
+    enum ApplicationAttribute {
         AA_ImmediateWidgetCreation = 0,
         AA_DontShowIconsInMenus = 1,
         AA_NativeWindows = 2,
@@ -919,7 +918,7 @@ public:
         LinearGradientPattern,
         RadialGradientPattern,
         ConicalGradientPattern,
-        TexturePattern = 24
+        TexturePattern
     };
 
     enum SizeMode {
@@ -1150,7 +1149,6 @@ public:
         MoveAction = 0x2,
         LinkAction = 0x4,
         ActionMask = 0xff,
-        TargetMoveAction = 0x8002,
         IgnoreAction = 0x0
     };
     Q_DECLARE_FLAGS(DropActions, DropAction)
@@ -1288,8 +1286,7 @@ public:
     Q_DECLARE_FLAGS(TouchPointStates, TouchPointState)
 
 #ifndef QT_NO_GESTURES
-    enum GestureState
-    {
+    enum GestureState {
         NoGesture,
         GestureStarted  = 1,
         GestureUpdated  = 2,
@@ -1297,8 +1294,7 @@ public:
         GestureCanceled = 4
     };
 
-    enum GestureType
-    {
+    enum GestureType {
         TapGesture        = 1,
         TapAndHoldGesture = 2,
         PanGesture        = 3,
@@ -1306,12 +1302,9 @@ public:
         SwipeGesture      = 5,
 
         CustomGesture     = 0x0100,
-
-        LastGestureType   = ~0u
     };
 
-    enum GestureFlag
-    {
+    enum GestureFlag {
         DontStartGestureOnChildren = 0x01,
         ReceivePartialGestures     = 0x02,
         IgnoredGesturesPropagateToParent = 0x04
@@ -1358,11 +1351,6 @@ public:
         Printer           = 4
     };
 
-    enum Callback {
-        EventNotifyCallback,
-        LastCallback
-    };
-
     enum DockPosition {
         LeftDock,
         RightDock,
@@ -1371,10 +1359,10 @@ public:
         DockCount
     };
 
-    static bool registerCallback(Callback, qInternalCallback);
-    static bool unregisterCallback(Callback, qInternalCallback);
+    static void registerCallback(qInternalCallback);
+    static void unregisterCallback(qInternalCallback);
 
-    static bool activateCallbacks(Callback, void **);
+    static bool activateCallbacks(void **);
 };
 
 QT_END_NAMESPACE

@@ -37,7 +37,6 @@
 #include "qabstracteventdispatcher.h"
 #include "qcoreevent.h"
 #include "qeventloop.h"
-#include "qcorecmdlineargs_p.h"
 #include "qdatastream.h"
 #include "qdebug.h"
 #include "qdir.h"
@@ -517,11 +516,10 @@ bool QCoreApplication::testAttribute(Qt::ApplicationAttribute attribute)
 */
 bool QCoreApplication::notifyInternal(QObject *receiver, QEvent *event)
 {
-    // Make it possible for Qt Jambi and QSA to hook into events even
-    // though QApplication is subclassed...
+    // only script debugger uses the callbacks
     bool result = false;
     void *cbdata[] = { receiver, event, &result };
-    if (QInternal::activateCallbacks(QInternal::EventNotifyCallback, cbdata)) {
+    if (Q_UNLIKELY(QInternal::activateCallbacks(cbdata))) {
         return result;
     }
 

@@ -502,13 +502,13 @@ QBrush::QBrush(const QGradient &gradient)
                "QGradient should not be used directly, use the linear, radial\n"
                "or conical gradients instead");
 
-    const Qt::BrushStyle enum_table[] = {
+    static const Qt::BrushStyle enumTbl[] = {
         Qt::LinearGradientPattern,
         Qt::RadialGradientPattern,
         Qt::ConicalGradientPattern
     };
 
-    init(QColor(), enum_table[gradient.type()]);
+    init(QColor(), enumTbl[gradient.type()]);
     QGradientBrushData *grad = static_cast<QGradientBrushData *>(d.data());
     grad->gradient = gradient;
 }
@@ -758,23 +758,6 @@ const QGradient *QBrush::gradient() const
     return 0;
 }
 
-static bool qt_isExtendedRadialGradient(const QBrush &brush)
-{
-    if (brush.style() == Qt::RadialGradientPattern) {
-        const QGradient *g = brush.gradient();
-        const QRadialGradient *rg = static_cast<const QRadialGradient *>(g);
-
-        if (!qFuzzyIsNull(rg->focalRadius()))
-            return true;
-
-        QPointF delta = rg->focalPoint() - rg->center();
-        if (delta.x() * delta.x() + delta.y() * delta.y() > rg->radius() * rg->radius())
-            return true;
-    }
-
-    return false;
-}
-
 /*!
     Returns true if the brush is fully opaque otherwise false. A brush
     is considered opaque if:
@@ -789,22 +772,27 @@ static bool qt_isExtendedRadialGradient(const QBrush &brush)
 
 bool QBrush::isOpaque() const
 {
-    bool opaqueColor = d->color.alpha() == 255;
+    // Test awfully simple case first, opaque color
+    if (d->style == Qt::SolidPattern) {
+        return (d->color.alpha() == 255);
+    } else if (d->style == Qt::RadialGradientPattern) {
+        const QRadialGradient *rg = static_cast<const QRadialGradient *>(gradient());
 
-    // Test awfully simple case first
-    if (d->style == Qt::SolidPattern)
-        return opaqueColor;
+        if (!qFuzzyIsNull(rg->focalRadius()))
+            return false;
 
-    if (qt_isExtendedRadialGradient(*this))
-        return false;
+        QPointF delta = rg->focalPoint() - rg->center();
+        if (delta.x() * delta.x() + delta.y() * delta.y() > rg->radius() * rg->radius())
+            return false;
+    }
 
     if (d->style == Qt::LinearGradientPattern
         || d->style == Qt::RadialGradientPattern
         || d->style == Qt::ConicalGradientPattern) {
-        QGradientStops stops = gradient()->stops();
-        for (int i=0; i<stops.size(); ++i)
-            if (stops.at(i).second.alpha() != 255)
+        foreach (const QGradientStop &stop, gradient()->stops()) {
+            if (stop.second.alpha() != 255)
                 return false;
+        }
         return true;
     } else if (d->style == Qt::TexturePattern) {
         return qHasPixmapTexture(*this)
@@ -920,30 +908,29 @@ bool QBrush::operator==(const QBrush &b) const
 QDebug operator<<(QDebug dbg, const QBrush &b)
 {
 #ifndef Q_BROKEN_DEBUG_STREAM
-    static const char *BRUSH_STYLES[] = {
-     "NoBrush",
-     "SolidPattern",
-     "Dense1Pattern",
-     "Dense2Pattern",
-     "Dense3Pattern",
-     "Dense4Pattern",
-     "Dense5Pattern",
-     "Dense6Pattern",
-     "Dense7Pattern",
-     "HorPattern",
-     "VerPattern",
-     "CrossPattern",
-     "BDiagPattern",
-     "FDiagPattern",
-     "DiagCrossPattern",
-     "LinearGradientPattern",
-     "RadialGradientPattern",
-     "ConicalGradientPattern",
-     0, 0, 0, 0, 0, 0,
-     "TexturePattern" // 24
+    static const char *brushStylesTbl[] = {
+        "NoBrush",
+        "SolidPattern",
+        "Dense1Pattern",
+        "Dense2Pattern",
+        "Dense3Pattern",
+        "Dense4Pattern",
+        "Dense5Pattern",
+        "Dense6Pattern",
+        "Dense7Pattern",
+        "HorPattern",
+        "VerPattern",
+        "CrossPattern",
+        "BDiagPattern",
+        "FDiagPattern",
+        "DiagCrossPattern",
+        "LinearGradientPattern",
+        "RadialGradientPattern",
+        "ConicalGradientPattern",
+        "TexturePattern"
     };
 
-    dbg.nospace() << "QBrush(" << b.color() << ',' << BRUSH_STYLES[b.style()] << ')';
+    dbg.nospace() << "QBrush(" << b.color() << ',' << brushStylesTbl[b.style()] << ')';
     return dbg.space();
 #else
     qWarning("This compiler doesn't support streaming QBrush to QDebug");
@@ -970,16 +957,12 @@ QDebug operator<<(QDebug dbg, const QBrush &b)
 QDataStream &operator<<(QDataStream &s, const QBrush &b)
 {
     quint8 style = (quint8) b.style();
-    bool gradient_style = false;
-
-    if (style == Qt::LinearGradientPattern || style == Qt::RadialGradientPattern
-        || style == Qt::ConicalGradientPattern)
-        gradient_style = true;
 
     s << style << b.color();
     if (b.style() == Qt::TexturePattern) {
         s << b.texture();
-    } else if (gradient_style) {
+    } else if (style == Qt::LinearGradientPattern || style == Qt::RadialGradientPattern
+        || style == Qt::ConicalGradientPattern) {
         const QGradient *gradient = b.gradient();
         int type_as_int = int(gradient->type());
         s << type_as_int;
@@ -1340,9 +1323,10 @@ void QGradient::setStops(const QGradientStops &stops)
 QGradientStops QGradient::stops() const
 {
     if (m_stops.isEmpty()) {
-        QGradientStops tmp;
-        tmp << QGradientStop(0, Qt::black) << QGradientStop(1, Qt::white);
-        return tmp;
+        static const QGradientStops stops = QGradientStops()
+            << QGradientStop(0, Qt::black)
+            << QGradientStop(1, Qt::white);
+        return stops;
     }
     return m_stops;
 }

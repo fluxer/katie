@@ -77,10 +77,7 @@ public:
     enum Type {
         Box,
         Multi,
-
-        Freetype,
-
-        TestFontEngine = 0x1000
+        Freetype
     };
 
     enum GlyphFormat {
@@ -151,7 +148,7 @@ public:
                            QVarLengthArray<glyph_t> &glyphs_out, QVarLengthArray<QFixedPoint> &positions);
 
     virtual void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *, QTextItem::RenderFlags flags);
-    void addBitmapFontToPath(qreal x, qreal y, const QGlyphLayout &, QPainterPath *, QTextItem::RenderFlags);
+
     /**
      * Create a qimage with the alpha values for the glyph.
      * Returns an image indexed_8 with index values ranging from 0=fully transparent to 255=opaque
@@ -166,8 +163,6 @@ public:
     {
         return boundingBox(glyph, matrix);
     }
-
-    virtual void removeGlyphFromCache(glyph_t);
 
     virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs) const = 0;
     virtual glyph_metrics_t boundingBox(glyph_t glyph) const = 0;
@@ -350,13 +345,6 @@ protected:
     friend class QPSPrintEngineFontMulti;
     virtual void loadEngine(int at) = 0;
     QVector<QFontEngine *> engines;
-};
-
-class QTestFontEngine : public QFontEngineBox
-{
-public:
-    QTestFontEngine(int size) : QFontEngineBox(size) {}
-    virtual Type type() const { return TestFontEngine; }
 };
 
 QT_END_NAMESPACE

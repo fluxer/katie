@@ -7981,7 +7981,6 @@
  qcoreapplication_mac.cpp
  qcoreapplication_p.h
  qcoreapplication_win.cpp
- qcorecmdlineargs_p.h
  qcoreevent.cpp
  qcoreevent.h
  qcoreglobaldata.cpp

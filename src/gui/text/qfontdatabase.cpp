@@ -107,29 +107,9 @@ static int getFontWeight(const QString &weightString)
     return (int) QFont::Normal;
 }
 
-// convert 0 ~ 1000 integer to QFont::Weight
-QFont::Weight weightFromInteger(int weight)
-{
-    if (weight < 400)
-        return QFont::Light;
-    else if (weight < 600)
-        return QFont::Normal;
-    else if (weight < 700)
-        return QFont::DemiBold;
-    else if (weight < 800)
-        return QFont::Bold;
-    else
-        return QFont::Black;
-}
-
 struct QtFontEncoding
 {
     signed int encoding : 16;
-
-    uint xpoint   : 16;
-    uint xres     : 8;
-    uint yres     : 8;
-    uint avgwidth : 16;
     uchar pitch   : 8;
 };
 
@@ -137,8 +117,7 @@ struct  QtFontSize
 {
 #ifdef Q_WS_X11
     QtFontEncoding *encodings;
-    QtFontEncoding *encodingID(int id, uint xpoint = 0, uint xres = 0,
-                                uint yres = 0, uint avgwidth = 0, bool add = false);
+    QtFontEncoding *encodingID(int id, bool add = false);
     unsigned short count : 16;
 #endif // Q_WS_X11
 
@@ -147,10 +126,8 @@ struct  QtFontSize
 
 
 #ifdef Q_WS_X11
-QtFontEncoding *QtFontSize::encodingID(int id, uint xpoint, uint xres,
-                                        uint yres, uint avgwidth, bool add)
+QtFontEncoding *QtFontSize::encodingID(int id, bool add)
 {
-    // we don't match using the xpoint, xres and yres parameters, only the id
     for (int i = 0; i < count; ++i) {
         if (encodings[i].encoding == id)
             return encodings + i;
@@ -166,10 +143,6 @@ QtFontEncoding *QtFontSize::encodingID(int id, uint xpoint, uint xres,
         encodings = newEncodings;
     }
     encodings[count].encoding = id;
-    encodings[count].xpoint = xpoint;
-    encodings[count].xres = xres;
-    encodings[count].yres = yres;
-    encodings[count].avgwidth = avgwidth;
     encodings[count].pitch = '*';
     return encodings + count++;
 }
@@ -201,18 +174,13 @@ struct QtFontStyle
     };
 
     QtFontStyle(const Key &k)
-        : key(k), bitmapScalable(false), smoothScalable(false),
+        : key(k), smoothScalable(false),
           count(0), pixelSizes(0)
     {
-#if defined(Q_WS_X11)
-        weightName = setwidthName = 0;
-#endif // Q_WS_X11
     }
 
     ~QtFontStyle() {
 #ifdef Q_WS_X11
-        delete [] weightName;
-        delete [] setwidthName;
         while (count) {
             // bitfield count-- in while condition does not work correctly in mwccsym2
             count--;
@@ -223,16 +191,10 @@ struct QtFontStyle
     }
 
     Key key;
-    bool bitmapScalable : 1;
-    bool smoothScalable : 1;
-    signed int count    : 30;
+    bool smoothScalable;
+    int count;
     QtFontSize *pixelSizes;
     QString styleName;
-
-#ifdef Q_WS_X11
-    const char *weightName;
-    const char *setwidthName;
-#endif // Q_WS_X11
 
     QtFontSize *pixelSize(unsigned short size, bool = false);
 };
@@ -347,10 +309,6 @@ struct  QtFontFamily
 
     bool fixedPitch;
     QString name;
-#if defined(Q_WS_X11)
-    QByteArray fontFilename;
-    int fontFileIndex;
-#endif
     int count;
     QtFontFoundry **foundries;
 
@@ -521,9 +479,8 @@ struct QtFontDesc
     int familyIndex;
 };
 
-static void match(int script, const QFontDef &request,
-                  const QString &family_name, const QString &foundry_name, int force_encoding_id,
-                  QtFontDesc *desc, const QList<int> &blacklistedFamilies = QList<int>());
+static void match(int script, const QFontDef &request, const QString &family_name,
+                  const QString &foundry_name, QtFontDesc *desc);
 
 #if defined(Q_WS_X11)
 static void getEngineData(const QFontPrivate *d, const QFontCache::Key &key)
@@ -630,15 +587,8 @@ static QtFontStyle *bestStyle(QtFontFoundry *foundry, const QtFontStyle::Key &st
 }
 
 #if defined(Q_WS_X11)
-static QtFontEncoding *findEncoding(QtFontSize *size, int force_encoding_id)
+static inline QtFontEncoding *findEncoding(QtFontSize *size)
 {
-    if (force_encoding_id >= 0) {
-        QtFontEncoding *encoding = size->encodingID(force_encoding_id);
-        if (!encoding)
-            FM_DEBUG("            required encoding_id not available");
-        return encoding;
-    }
-
     return size->encodingID(-1); // -1 == prefer Freetype;
 }
 #endif // Q_WS_X11
@@ -647,7 +597,7 @@ static
 unsigned int bestFoundry(unsigned int score, int styleStrategy,
                          const QtFontFamily *family, const QString &foundry_name,
                          QtFontStyle::Key styleKey, int pixelSize, char pitch,
-                         QtFontDesc *desc, int force_encoding_id)
+                         QtFontDesc *desc)
 {
     desc->foundry = 0;
     desc->style = 0;
@@ -693,26 +643,16 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
             }
         }
 
-        // 3. see if we have a bitmap scalable font
-        if (!size && style->bitmapScalable && (styleStrategy & QFont::PreferMatch)) {
-            size = style->pixelSize(0);
-            if (size) {
-                FM_DEBUG("          found bitmap scalable font (%d pixels)", pixelSize);
-                px = pixelSize;
-            }
-        }
-
 #ifdef Q_WS_X11
         QtFontEncoding *encoding = 0;
 #endif
 
-        // 4. find closest size match
+        // 3. find closest size match
         if (! size) {
             unsigned int distance = ~0u;
             for (int x = 0; x < style->count; ++x) {
 #ifdef Q_WS_X11
-                encoding =
-                    findEncoding(style->pixelSizes + x, force_encoding_id);
+                encoding = findEncoding(style->pixelSizes + x);
                 if (!encoding) {
                     FM_DEBUG("          size %3d does not support the script we want",
                              style->pixelSizes[x].pixelSize);
@@ -742,20 +682,12 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
                 continue;
             }
 
-            if (style->bitmapScalable && ! (styleStrategy & QFont::PreferQuality) &&
-                (distance * 10 / pixelSize) >= 2) {
-                // the closest size is not close enough, go ahead and
-                // use a bitmap scaled font
-                size = style->pixelSize(0);
-                px = pixelSize;
-            } else {
-                px = size->pixelSize;
-            }
+            px = size->pixelSize;
         }
 
 #ifdef Q_WS_X11
         if (size) {
-            encoding = findEncoding(size, force_encoding_id);
+            encoding = findEncoding(size);
             if (!encoding) size = 0;
         }
         if (! encoding) {
@@ -820,12 +752,9 @@ unsigned int bestFoundry(unsigned int score, int styleStrategy,
 
     Tries to find the best match for a given request and family/foundry
 */
-static void match(int script, const QFontDef &request,
-                  const QString &family_name, const QString &foundry_name, int force_encoding_id,
-                  QtFontDesc *desc, const QList<int> &blacklistedFamilies)
+static void match(int script, const QFontDef &request, const QString &family_name,
+                  const QString &foundry_name, QtFontDesc *desc)
 {
-    Q_UNUSED(force_encoding_id);
-
     QtFontStyle::Key styleKey;
     styleKey.style = request.style;
     styleKey.weight = request.weight;
@@ -843,11 +772,6 @@ static void match(int script, const QFontDef &request,
              family_name.isEmpty() ? "-- first in script --" : family_name.toLatin1().constData(),
              foundry_name.isEmpty() ? "-- any --" : foundry_name.toLatin1().constData(),
              script, request.weight, request.style, request.stretch, request.pixelSize, pitch);
-#if defined(FONT_MATCH_DEBUG) && defined(Q_WS_X11)
-    if (force_encoding_id >= 0) {
-        FM_DEBUG("    required encoding: %d", force_encoding_id);
-    }
-#endif
 
     desc->family = 0;
     desc->foundry = 0;
@@ -864,8 +788,6 @@ static void match(int script, const QFontDef &request,
 
     QFontDatabasePrivate *db = privateDb();
     for (int x = 0; x < db->count; ++x) {
-        if (blacklistedFamilies.contains(x))
-            continue;
         QtFontDesc test;
         test.family = db->families[x];
         test.familyIndex = x;
@@ -874,22 +796,19 @@ static void match(int script, const QFontDef &request,
             && test.family->name.compare(family_name, Qt::CaseInsensitive) != 0)
             continue;
 
-        uint score_adjust = 0;
-
         // as we know the script is supported, we can be sure
         // to find a matching font here.
         unsigned int newscore =
             bestFoundry(score, request.styleStrategy,
                         test.family, foundry_name, styleKey, request.pixelSize, pitch,
-                        &test, force_encoding_id);
+                        &test);
         if (test.foundry == 0) {
             // the specific foundry was not found, so look for
             // any foundry matching our requirements
             newscore = bestFoundry(score, request.styleStrategy, test.family,
                                    QString(), styleKey, request.pixelSize,
-                                   pitch, &test, force_encoding_id);
+                                   pitch, &test);
         }
-        newscore += score_adjust;
 
         if (newscore < score) {
             score = newscore;
@@ -1117,30 +1036,6 @@ bool QFontDatabase::isFixedPitch(const QString &family,
 bool QFontDatabase::isBitmapScalable(const QString &family,
                                       const QString &style) const
 {
-    QString familyName, foundryName;
-    parseFontName(family, foundryName, familyName);
-
-    QMutexLocker locker(fontDatabaseMutex());
-
-    createDatabase();
-
-    QtFontStyle::Key styleKey(style);
-
-    QtFontFamily *f = d->family(familyName);
-    if (!f) return false;
-
-    for (int j = 0; j < f->count; j++) {
-        QtFontFoundry *foundry = f->foundries[j];
-        if (foundryName.isEmpty() || foundry->name.compare(foundryName, Qt::CaseInsensitive) == 0) {
-            for (int k = 0; k < foundry->count; k++)
-                if ((style.isEmpty() ||
-                     foundry->styles[k]->styleName == style ||
-                     foundry->styles[k]->key == styleKey)
-                    && foundry->styles[k]->bitmapScalable && !foundry->styles[k]->smoothScalable) {
-                    return true;
-                }
-        }
-    }
     return false;
 }
 
@@ -1361,12 +1256,26 @@ QList<int> QFontDatabase::smoothSizes(const QString &family,
 */
 QList<int> QFontDatabase::standardSizes()
 {
-    QList<int> ret;
-    static const unsigned short standard[] =
-        { 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72, 0 };
-    const unsigned short *sizes = standard;
-    while (*sizes) ret << *sizes++;
-    return ret;
+    static const QList<int> sizes = QList<int>()
+        << 6
+        << 7
+        << 8
+        << 9
+        << 10
+        << 11
+        << 12
+        << 14
+        << 16
+        << 18
+        << 20
+        << 22
+        << 24
+        << 26
+        << 28
+        << 36
+        << 48
+        << 72;
+    return sizes;
 }
 
 

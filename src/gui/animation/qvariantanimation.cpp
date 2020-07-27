@@ -159,22 +159,16 @@ static QVariant defaultInterpolator(const void *, const void *, qreal)
 
 template<> Q_INLINE_TEMPLATE QRect _q_interpolate(const QRect &f, const QRect &t, qreal progress)
 {
-    QRect ret;
-    ret.setCoords(_q_interpolate(f.left(), t.left(), progress),
-                  _q_interpolate(f.top(), t.top(), progress),
-                  _q_interpolate(f.right(), t.right(), progress),
-                  _q_interpolate(f.bottom(), t.bottom(), progress));
-    return ret;
+    return QRect(_q_interpolate(f.left(), t.left(), progress),
+                 _q_interpolate(f.top(), t.top(), progress),
+                 _q_interpolate(f.right(), t.right(), progress),
+                 _q_interpolate(f.bottom(), t.bottom(), progress));
 }
 
 template<> Q_INLINE_TEMPLATE QRectF _q_interpolate(const QRectF &f, const QRectF &t, qreal progress)
 {
-    qreal x1, y1, w1, h1;
-    f.getRect(&x1, &y1, &w1, &h1);
-    qreal x2, y2, w2, h2;
-    t.getRect(&x2, &y2, &w2, &h2);
-    return QRectF(_q_interpolate(x1, x2, progress), _q_interpolate(y1, y2, progress),
-                  _q_interpolate(w1, w2, progress), _q_interpolate(h1, h2, progress));
+    return QRectF(_q_interpolate(f.x(), t.x(), progress), _q_interpolate(f.y(), t.y(), progress),
+                  _q_interpolate(f.width(), t.width(), progress), _q_interpolate(f.height(), t.height(), progress));
 }
 
 template<> Q_INLINE_TEMPLATE QLine _q_interpolate(const QLine &f, const QLine &t, qreal progress)

@@ -252,32 +252,14 @@ QWidgetPrivate::~QWidgetPrivate()
 #endif //QT_NO_GRAPHICSEFFECT
 }
 
-class QDummyWindowSurface : public QWindowSurface
-{
-public:
-    QDummyWindowSurface(QWidget *window) : QWindowSurface(window) {}
-    QPaintDevice *paintDevice() { return window(); }
-    void flush(QWidget *, const QRegion &, const QPoint &) {}
-};
-
 QWindowSurface *QWidgetPrivate::createDefaultWindowSurface()
 {
     Q_Q(QWidget);
 
-    QWindowSurface *surface;
-#ifndef QT_NO_PROPERTIES
-    if (q->property("_q_DummyWindowSurface").toBool()) {
-        surface = new QDummyWindowSurface(q);
-    } else
-#endif
-    {
-        if (QApplicationPrivate::graphics_system)
-            surface = QApplicationPrivate::graphics_system->createWindowSurface(q);
-        else
-            surface = createDefaultWindowSurface_sys();
+    if (QApplicationPrivate::graphics_system) {
+        return QApplicationPrivate::graphics_system->createWindowSurface(q);
     }
-
-    return surface;
+    return createDefaultWindowSurface_sys();
 }
 
 /*!
@@ -4769,11 +4751,8 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
     }
 
     if (recursive && !children.isEmpty()) {
-        paintSiblingsRecursive(pdev, children, children.size() - 1, rgn, offset, flags & ~DrawAsRoot
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-                                , q->windowSurface()
-#endif
-                                , sharedPainter, backingStore);
+        paintSiblingsRecursive(pdev, children, children.size() - 1, rgn, offset, flags & ~DrawAsRoot,
+                               sharedPainter, backingStore);
     }
 }
 
@@ -4862,11 +4841,8 @@ void QWidgetPrivate::render(QPaintDevice *target, const QPoint &targetOffset,
 }
 
 void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectList& siblings, int index, const QRegion &rgn,
-                                            const QPoint &offset, int flags
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-                                            , const QWindowSurface *currentSurface
-#endif
-                                            , QPainter *sharedPainter, QWidgetBackingStore *backingStore)
+                                            const QPoint &offset, int flags,
+                                            QPainter *sharedPainter, QWidgetBackingStore *backingStore)
 {
     QWidget *w = 0;
     QRect boundingRect;
@@ -4882,13 +4858,8 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
             }
 
             if (qRectIntersects(boundingRect, x->d_func()->effectiveRectFor(x->data->crect))) {
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-                if (x->windowSurface() == currentSurface)
-#endif
-                {
-                    w = x;
-                    break;
-                }
+                w = x;
+                break;
             }
         }
         --index;
@@ -4904,11 +4875,8 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
         QRegion wr(rgn);
         if (wd->isOpaque)
             wr -= hasMask ? wd->extra->mask.translated(widgetPos) : w->data->crect;
-        paintSiblingsRecursive(pdev, siblings, --index, wr, offset, flags
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-                               , currentSurface
-#endif
-                               , sharedPainter, backingStore);
+        paintSiblingsRecursive(pdev, siblings, --index, wr, offset, flags,
+                               sharedPainter, backingStore);
     }
 
     if (w->updatesEnabled()
@@ -5092,25 +5060,13 @@ void QWidget::unsetLocale()
     d->resolveLocale();
 }
 
-static QString constructWindowTitleFromFilePath(const QString &filePath)
-{
-    const QFileInfo fi(filePath);
-    QString windowTitle = fi.fileName() + QLatin1String("[*]");
-    const QString appName = QApplication::applicationName();
-    if (!appName.isEmpty())
-        // 0x2014 is UTF-8 character 
-        windowTitle += QLatin1Char(' ') + QChar(0x2014) + QLatin1Char(' ') + appName;
-    return windowTitle;
-}
-
 /*!
     \property QWidget::windowTitle
     \brief the window title (caption)
 
     This property only makes sense for top-level widgets, such as
-    windows and dialogs. If no caption has been set, the title is based of the
-    \l windowFilePath. If neither of these is set, then the title is
-    an empty string.
+    windows and dialogs. If no caption has been set, the title is an
+    empty string.
 
     If you use the \l windowModified mechanism, the window title must
     contain a "[*]" placeholder, which indicates where the '*' should
@@ -5119,7 +5075,7 @@ static QString constructWindowTitleFromFilePath(const QString &filePath)
     windowModified property is false (the default), the placeholder
     is simply removed.
 
-    \sa windowIcon, windowIconText, windowModified, windowFilePath
+    \sa windowIcon, windowIconText, windowModified
 */
 QString QWidget::windowTitle() const
 {
@@ -5127,8 +5083,6 @@ QString QWidget::windowTitle() const
     if (d->extra && d->extra->topextra) {
         if (!d->extra->topextra->caption.isEmpty())
             return d->extra->topextra->caption;
-        if (!d->extra->topextra->filePath.isEmpty())
-            return constructWindowTitleFromFilePath(d->extra->topextra->filePath);
     }
     return QString();
 }
@@ -5291,63 +5245,6 @@ QString QWidget::windowIconText() const
 {
     Q_D(const QWidget);
     return (d->extra && d->extra->topextra) ? d->extra->topextra->iconText : QString();
-}
-
-/*!
-    \property QWidget::windowFilePath
-    \since 4.4
-    \brief the file path associated with a widget
-
-    This property only makes sense for windows. It associates a file path with
-    a window. If you set the file path, but have not set the window title, Qt
-    sets the window title to contain a string created using the following
-    components.
-
-    On Mac OS X:
-
-    \list
-    \o The file name of the specified path, obtained using QFileInfo::fileName().
-    \endlist
-
-    On Windows and X11:
-
-    \list
-    \o The file name of the specified path, obtained using QFileInfo::fileName().
-    \o An optional \c{*} character, if the \l windowModified property is set.
-    \o The \c{0x2014} unicode character, padded either side by spaces.
-    \o The application name, obtained from the application's
-    \l{QCoreApplication::}{applicationName} property.
-    \endlist
-
-    If the window title is set at any point, then the window title takes precedence and
-    will be shown instead of the file path string.
-
-    If no file path is set, this property contains an empty string.
-
-    By default, this property contains an empty string.
-
-    \sa windowTitle, windowIcon
-*/
-
-QString QWidget::windowFilePath() const
-{
-    Q_D(const QWidget);
-    return (d->extra && d->extra->topextra) ? d->extra->topextra->filePath : QString();
-}
-
-void QWidget::setWindowFilePath(const QString &filePath)
-{
-    if (filePath == windowFilePath())
-        return;
-
-    Q_D(QWidget);
-
-    d->createTLExtra();
-    d->extra->topextra->filePath = filePath;
-
-    if (d->extra->topextra->caption.isEmpty()) {
-        d->setWindowTitle_helper(windowTitle());
-    }
 }
 
 /*!
@@ -5699,7 +5596,7 @@ bool QWidget::focusNextPrevChild(bool next)
 
 QWidget *QWidget::focusWidget() const
 {
-    return const_cast<QWidget *>(d_func()->focus_child);
+    return d_func()->focus_child;
 }
 
 /*!
@@ -5709,7 +5606,7 @@ QWidget *QWidget::focusWidget() const
 */
 QWidget *QWidget::nextInFocusChain() const
 {
-    return const_cast<QWidget *>(d_func()->focus_next);
+    return d_func()->focus_next;
 }
 
 /*!
@@ -5722,7 +5619,7 @@ QWidget *QWidget::nextInFocusChain() const
 */
 QWidget *QWidget::previousInFocusChain() const
 {
-    return const_cast<QWidget *>(d_func()->focus_prev);
+    return d_func()->focus_prev;
 }
 
 /*!
@@ -8777,22 +8674,6 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
     if (desktopWidget)
         parent = 0;
 
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    QTLWExtra *extra = d->maybeTopData();
-    QWindowSurface *windowSurface = (extra ? extra->windowSurface : 0);
-    if (newParent && windowSurface) {
-        QWidgetBackingStore *oldBs = oldtlw->d_func()->maybeBackingStore();
-        if (oldBs)
-            oldBs->subSurfaces.removeAll(windowSurface);
-
-        if (parent) {
-            QWidgetBackingStore *newBs = parent->d_func()->maybeBackingStore();
-            if (newBs)
-                newBs->subSurfaces.append(windowSurface);
-        }
-    }
-#endif
-
     if (QWidgetBackingStore *oldBs = oldtlw->d_func()->maybeBackingStore()) {
         if (newParent)
             oldBs->removeDirtyWidget(this);
@@ -10212,10 +10093,8 @@ void QWidget::setWindowSurface(QWindowSurface *surface)
 {
     // ### createWinId() ??
 
-#ifndef Q_BACKINGSTORE_SUBSURFACES
     if (!isTopLevel())
         return;
-#endif
 
     Q_D(QWidget);
 
@@ -10236,12 +10115,6 @@ void QWidget::setWindowSurface(QWindowSurface *surface)
             delete bs->windowSurface;
         bs->windowSurface = surface;
     }
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    else {
-        bs->subSurfaces.append(surface);
-    }
-    bs->subSurfaces.removeOne(oldSurface);
-#endif
 }
 
 /*!
@@ -10258,23 +10131,6 @@ QWindowSurface *QWidget::windowSurface() const
         return extra->windowSurface;
 
     QWidgetBackingStore *bs = d->maybeBackingStore();
-
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    if (bs && bs->subSurfaces.isEmpty())
-        return bs->windowSurface;
-
-    if (!isTopLevel()) {
-        const QWidget *w = parentWidget();
-        while (w) {
-            QTLWExtra *extra = w->d_func()->maybeTopData();
-            if (extra && extra->windowSurface)
-                return extra->windowSurface;
-            if (w->isTopLevel())
-                break;
-            w = w->parentWidget();
-        }
-    }
-#endif // Q_BACKINGSTORE_SUBSURFACES
 
     return bs ? bs->windowSurface : 0;
 }

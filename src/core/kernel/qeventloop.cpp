@@ -85,11 +85,6 @@ public:
     \value WaitForMoreEvents Wait for events if no pending events are
     available.
 
-    \omitvalue X11ExcludeTimers
-    \omitvalue ExcludeUserInput
-    \omitvalue WaitForMore
-    \omitvalue EventLoopExec
-
     \sa processEvents()
 */
 
@@ -187,7 +182,7 @@ int QEventLoop::exec(ProcessEventsFlags flags)
 
     QT_TRY {
         while (!d->exit)
-            processEvents(flags | WaitForMoreEvents | EventLoopExec);
+            processEvents(flags | WaitForMoreEvents);
     } QT_CATCH (...) {
         qWarning("Qt has caught an exception thrown from an event handler. Throwing\n"
                  "exceptions from an event handler is not supported in Qt. You must\n"

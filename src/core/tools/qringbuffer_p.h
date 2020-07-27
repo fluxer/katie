@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
 class QRingBuffer
 {
 public:
-    inline QRingBuffer(int growth = QT_BUFFSIZE) : basicBlockSize(growth) {
+    inline QRingBuffer() {
         buffers << QByteArray();
         clear();
     }
@@ -128,8 +128,8 @@ public:
 
             bytes -= nextBlockSize;
             if (buffers.count() == 1) {
-                if (buffers.at(0).size() != basicBlockSize)
-                    buffers[0].resize(basicBlockSize);
+                if (buffers.at(0).size() != QT_BUFFSIZE)
+                    buffers[0].resize(QT_BUFFSIZE);
                 head = tail = 0;
                 tailBuffer = 0;
                 break;
@@ -147,7 +147,7 @@ public:
     inline char *reserve(int bytes) {
         // if this is a fresh empty QRingBuffer
         if (bufferSize == 0) {
-            buffers[0].resize(qMax(basicBlockSize, bytes));
+            buffers[0].resize(qMax(QT_BUFFSIZE, bytes));
             bufferSize += bytes;
             tail = bytes;
             return buffers[tailBuffer].data();
@@ -176,7 +176,7 @@ public:
         // create a new QByteArray with the right size
         buffers << QByteArray();
         ++tailBuffer;
-        buffers[tailBuffer].resize(qMax(basicBlockSize, bytes));
+        buffers[tailBuffer].resize(qMax(QT_BUFFSIZE, bytes));
         tail = bytes;
         return buffers[tailBuffer].data();
     }
@@ -237,8 +237,8 @@ public:
         --head;
         if (head < 0) {
             buffers.prepend(QByteArray());
-            buffers[0].resize(basicBlockSize);
-            head = basicBlockSize - 1;
+            buffers[0].resize(QT_BUFFSIZE);
+            head = QT_BUFFSIZE - 1;
             ++tailBuffer;
         }
         buffers[0][head] = c;
@@ -354,7 +354,7 @@ public:
         }
 
         // Bad case: We have to memcpy.
-        // We can avoid by initializing the QRingBuffer with basicBlockSize of 0
+        // We can avoid by initializing the QRingBuffer with QT_BUFFSIZE of 0
         // and only using this read() function.
         QByteArray qba(readPointer(), nextDataBlockSize());
         buffers.removeFirst();
@@ -442,7 +442,6 @@ private:
     QList<QByteArray> buffers;
     int head, tail;
     int tailBuffer; // always buffers.size() - 1
-    int basicBlockSize;
     int bufferSize;
 };
 

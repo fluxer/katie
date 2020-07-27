@@ -86,7 +86,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+891"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+886"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+662"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+641"/>
         <location line="+26"/>
@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1871"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1735,7 +1735,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+606"/>
+        <location filename="../src/core/io/qfile.cpp" line="+598"/>
         <source>Destination file exists</source>
         <translation>Le fichier destination existe</translation>
     </message>
@@ -1865,7 +1865,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Enregistrer sous</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+169"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+145"/>
         <source>Drive</source>
         <translation>Unité</translation>
     </message>
@@ -2544,7 +2544,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
         <source>Permission denied</source>
         <translation>Autorisation refusée</translation>
     </message>
@@ -2698,7 +2698,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1809"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1807"/>
         <source>Select All</source>
         <translation>Tout sélectionner</translation>
     </message>
@@ -6466,7 +6466,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1873"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1870"/>
         <source>&amp;Undo</source>
         <translation>&amp;Annuler</translation>
     </message>
@@ -6656,7 +6656,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5174"/>
         <source>*</source>
         <translation></translation>
     </message>

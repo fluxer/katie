@@ -1240,10 +1240,9 @@ void QObjectPrivate::_q_reregisterTimers(void *pointer)
 {
     Q_Q(QObject);
     QList<QPair<int, int> > *timerList = reinterpret_cast<QList<QPair<int, int> > *>(pointer);
-    QAbstractEventDispatcher *eventDispatcher = threadData->eventDispatcher;
     for (int i = 0; i < timerList->size(); ++i) {
         const QPair<int, int> &pair = timerList->at(i);
-        eventDispatcher->registerTimer(pair.first, pair.second, q);
+        threadData->eventDispatcher->registerTimer(pair.first, pair.second, q);
     }
     delete timerList;
 }

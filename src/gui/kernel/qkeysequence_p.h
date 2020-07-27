@@ -52,9 +52,8 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_SHORTCUT
 struct Q_AUTOTEST_EXPORT QKeyBinding
 {
-    QKeySequence::StandardKey standardKey;
-    short priority;
-    uint shortcut;
+    const QKeySequence::StandardKey standardKey;
+    const uint shortcut;
 };
 
 class Q_AUTOTEST_EXPORT QKeySequencePrivate

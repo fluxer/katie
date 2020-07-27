@@ -386,9 +386,6 @@
         return returnValue; \
     } } while (0)
 
-#ifndef QABSTRACTSOCKET_BUFFERSIZE
-#define QABSTRACTSOCKET_BUFFERSIZE 32768
-#endif
 #define QT_CONNECT_TIMEOUT 30000
 #define QT_TRANSFER_TIMEOUT 120000
 
@@ -464,8 +461,6 @@ QAbstractSocketPrivate::QAbstractSocketPrivate()
       socketEngine(0),
       cachedSocketDescriptor(-1),
       readBufferMaxSize(0),
-      readBuffer(QABSTRACTSOCKET_BUFFERSIZE),
-      writeBuffer(QABSTRACTSOCKET_BUFFERSIZE),
       isBuffered(false),
       blockingTimeout(30000),
       connectTimer(0),

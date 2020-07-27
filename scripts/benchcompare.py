@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# See https://github.com/fluxer/katie/wiki/Benchmarking-vs-Qt4
+
 import os, sys, subprocess
 import xml.etree.ElementTree as ET
 

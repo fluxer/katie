@@ -159,8 +159,7 @@ AbstractFindWidget::AbstractFindWidget(FindFlags flags, QWidget *parent)
 
     m_labelWrapped = new QLabel(this);
     m_labelWrapped->setTextFormat(Qt::RichText);
-    m_labelWrapped->setAlignment(
-            Qt::AlignLeading | Qt::AlignLeft | Qt::AlignVCenter);
+    m_labelWrapped->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     m_labelWrapped->setText(
             tr("<img src=\":/trolltech/shared/images/wrap.png\">"
                 "&nbsp;Search wrapped"));

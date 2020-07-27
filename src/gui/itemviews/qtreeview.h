@@ -201,8 +201,6 @@ protected:
     int indexRowSizeHint(const QModelIndex &index) const;
     int rowHeight(const QModelIndex &index) const;
 
-    void horizontalScrollbarAction(int action);
-
     bool isIndexHidden(const QModelIndex &index) const;
     void selectionChanged(const QItemSelection &selected,
                           const QItemSelection &deselected);

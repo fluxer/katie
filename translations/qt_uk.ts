@@ -86,7 +86,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1756"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1751"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+677"/>
         <source>Socket operation timed out</source>
         <translation>Час на операцію з сокетом вичерпано</translation>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Несумісна бібліотека Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1871"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1727,7 +1727,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+606"/>
+        <location filename="../src/core/io/qfile.cpp" line="+598"/>
         <source>Destination file exists</source>
         <translation>Файл-отримувач існує</translation>
     </message>
@@ -1895,7 +1895,7 @@ Do you want to delete it anyway?</source>
         <translation>Мій комп&apos;ютер</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+169"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+145"/>
         <source>Drive</source>
         <translation>Диск</translation>
     </message>
@@ -2537,7 +2537,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1376"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
         <source>Permission denied</source>
         <translation>Доступ заборонено</translation>
     </message>
@@ -2691,7 +2691,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1769"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1767"/>
         <source>&amp;Undo</source>
         <translation>&amp;Повернути</translation>
     </message>
@@ -2852,7 +2852,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+92"/>
         <source>Unable to execute next query</source>
-        <translation>Неможливо виконати наступний запит</translation>
+        <translation>Неможливо виконати наступни�� запит</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -3458,7 +3458,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+130"/>
         <source>Could not read image data</source>
-        <translation>Не вдалося прочитати дані зображення</translation>
+        <translation>Не вдалося ��рочитати дані зображення</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6458,7 +6458,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1873"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1870"/>
         <source>&amp;Undo</source>
         <translation>&amp;Повернути</translation>
     </message>
@@ -6648,7 +6648,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5174"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7044,7 +7044,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+114"/>
         <source>%1 is an invalid PUBLIC identifier.</source>
-        <translation>%1 не є правильним ідентифікатором PUBLIC.</translation>
+        <translation>%1 не є правильним ідентифікаторо�� PUBLIC.</translation>
     </message>
     <message>
         <location line="+118"/>

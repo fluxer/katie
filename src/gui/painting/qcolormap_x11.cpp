@@ -235,15 +235,14 @@ static void init_gray(QColormapPrivate *d, int screen)
 
     for (int g = 0; g < d->g_max; ++g) {
         const int gray = (g * 0xff + (d->r_max - 1) / 2) / (d->r_max - 1);
-        const QRgb rgb = qRgb(gray, gray, gray);
 
         d->pixels[g] = -1;
 
         if (d->visual->c_class & 1) {
             XColor xcolor;
-            xcolor.red   =   qRed(rgb) * 0x101;
-            xcolor.green = qGreen(rgb) * 0x101;
-            xcolor.blue  =  qBlue(rgb) * 0x101;
+            xcolor.red   = gray * 0x101;
+            xcolor.green = gray * 0x101;
+            xcolor.blue  = gray * 0x101;
             xcolor.pixel = 0ul;
 
             if (XAllocColor(QX11Info::display(), d->colormap, &xcolor))

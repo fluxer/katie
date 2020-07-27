@@ -61,7 +61,6 @@ public:
     void setPropertyName(const QByteArray &propertyName);
 
 protected:
-    bool event(QEvent *event);
     void updateCurrentValue(const QVariant &value);
     void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
 

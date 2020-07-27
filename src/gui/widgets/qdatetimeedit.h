@@ -171,9 +171,6 @@ public Q_SLOTS:
 
 protected:
     virtual void keyPressEvent(QKeyEvent *event);
-#ifndef QT_NO_WHEELEVENT
-    virtual void wheelEvent(QWheelEvent *event);
-#endif
     virtual void focusInEvent(QFocusEvent *event);
     virtual bool focusNextPrevChild(bool next);
     virtual QValidator::State validate(QString &input, int &pos) const;

@@ -1288,8 +1288,7 @@ QScriptDebugger::~QScriptDebugger()
     --scriptDebuggerCount;
     if ((scriptDebuggerCount == 0) && eventCallbackRegistered) {
         eventCallbackRegistered = false;
-        QInternal::unregisterCallback(QInternal::EventNotifyCallback,
-                                      scriptDebuggerEventCallback);
+        QInternal::unregisterCallback(scriptDebuggerEventCallback);
     }
 }
 
@@ -1317,8 +1316,7 @@ void QScriptDebugger::setFrontend(QScriptDebuggerFrontend *frontend)
         frontend->setEventHandler(d);
         if (!eventCallbackRegistered) {
             eventCallbackRegistered = true;
-            QInternal::registerCallback(QInternal::EventNotifyCallback,
-                                        scriptDebuggerEventCallback);
+            QInternal::registerCallback(scriptDebuggerEventCallback);
         }
     }
 }

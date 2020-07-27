@@ -774,8 +774,7 @@ QRect QFontMetrics::boundingRect(const QRect &rect, int flags, const QString &te
             tabArrayLen++;
 
     QRectF rb;
-    QRectF rr(rect);
-    qt_format_text(QFont(d.data()), rr, flags | Qt::TextDontPrint, text, &rb, tabStops, tabArray,
+    qt_format_text(QFont(d.data()), rect, flags | Qt::TextDontPrint, text, &rb, tabStops, tabArray,
                    tabArrayLen, 0);
 
     return rb.toAlignedRect();

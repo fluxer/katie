@@ -68,7 +68,7 @@ public:
     QLineEditPrivate()
         : control(0), frame(true), contextMenuEnabled(true), cursorVisible(false),
         dragEnabled(false), clickCausedFocus(false), hscroll(0), vscroll(0),
-        alignment(Qt::AlignLeading | Qt::AlignVCenter),
+        alignment(Qt::AlignLeft | Qt::AlignVCenter),
         leftTextMargin(0), topTextMargin(0), rightTextMargin(0), bottomTextMargin(0)
     {
     }

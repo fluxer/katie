@@ -75,7 +75,6 @@ public:
     void remove_sys();
     void updateIcon_sys();
     void updateToolTip_sys();
-    void updateMenu_sys();
     QRect geometry_sys() const;
     void showMessage_sys(const QString &msg, const QString &title, QSystemTrayIcon::MessageIcon icon, int secs);
 
@@ -131,7 +130,6 @@ public:
     };
 
     void addToTray();
-    void updateIcon();
     XVisualInfo* getSysTrayVisualInfo();
 
     // QObject::event is public but QWidget's ::event() re-implementation

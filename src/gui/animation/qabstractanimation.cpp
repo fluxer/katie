@@ -249,9 +249,7 @@ void QUnifiedTimer::timerEvent(QTimerEvent *event)
                 time.start();
             }
         }
-    }
-
-    if (event->timerId() == animationTimer.timerId()) {
+    } else if (event->timerId() == animationTimer.timerId()) {
         // update current time on all top level animations
         updateAnimationsTime();
         restartAnimationTimer();

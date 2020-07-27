@@ -1417,10 +1417,10 @@ int QX11PixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
     case QPaintDevice::PdmDpiY:
     case QPaintDevice::PdmPhysicalDpiY:
         return QX11Info::appDpiY(xinfo.screen());
-    default:
-        qWarning("QX11PixmapData::metric(): Invalid metric");
-        return 0;
     }
+
+    qWarning("QX11PixmapData::metric(): Invalid metric");
+    return 0;
 }
 
 struct QXImageWrapper

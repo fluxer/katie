@@ -67,10 +67,6 @@ public:
 
     static QKeyMapper *instance();
     static void changeKeyboard();
-    static bool sendKeyEvent(QWidget *widget,
-                             QEvent::Type type, int code, Qt::KeyboardModifiers modifiers,
-                             const QString &text, bool autorepeat, int count,
-                             quint32 nativeScanCode, quint32 nativeVirtualKey, quint32 nativeModifiers);
     static QList<int> possibleKeys(QKeyEvent *e);
 
 private:
@@ -106,15 +102,6 @@ public:
     Qt::LayoutDirection keyboardInputDirection;
 
 #if defined(Q_WS_X11)
-    bool translateKeyEventInternal(QWidget *keywidget,
-                                   const XEvent *,
-                                   KeySym &keysym,
-                                   int& count,
-                                   QString& text,
-                                   Qt::KeyboardModifiers& modifiers,
-                                   int &code,
-                                   QEvent::Type &type,
-                                   bool statefulTranslation = true);
     bool translateKeyEvent(QWidget *keywidget,
                            const XEvent *);
 

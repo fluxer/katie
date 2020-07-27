@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# See https://github.com/fluxer/katie/wiki/Unicode-support
+
 import os, sys
 
 def readlines(fromfile):

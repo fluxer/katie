@@ -185,23 +185,17 @@ QVariant QSvgIOHandler::option(ImageOption option) const
     switch(option) {
     case ImageFormat:
         return QImage::Format_ARGB32_Premultiplied;
-        break;
     case Size:
         d->load(device());
         return d->defaultSize;
-        break;
     case ClipRect:
         return d->clipRect;
-        break;
     case ScaledSize:
         return d->scaledSize;
-        break;
     case ScaledClipRect:
         return d->scaledClipRect;
-        break;
     case BackgroundColor:
         return d->backColor;
-        break;
     default:
         break;
     }

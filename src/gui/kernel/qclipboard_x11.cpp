@@ -85,10 +85,6 @@ static QWidget *requestor = 0;
 static bool timer_event_clear = false;
 static int timer_id = 0;
 
-static int pending_timer_id = 0;
-static bool pending_clipboard_changed = false;
-static bool pending_selection_changed = false;
-
 class QClipboardWatcher; // forward decl
 static QClipboardWatcher *selection_watcher = 0;
 static QClipboardWatcher *clipboard_watcher = 0;
@@ -442,20 +438,16 @@ void QClipboard::clear(Mode mode)
     setMimeData(0, mode);
 }
 
-
-bool QClipboard::supportsMode(Mode mode) const
-{
-    return (mode == Clipboard || mode == Selection);
-}
-
 bool QClipboard::ownsMode(Mode mode) const
 {
-    if (mode == Clipboard)
-        return clipboardData()->timestamp != CurrentTime;
-    else if(mode == Selection)
-        return selectionData()->timestamp != CurrentTime;
-    else
-        return false;
+    switch (mode) {
+        case QClipboard::Clipboard:
+            return clipboardData()->timestamp != CurrentTime;
+        case QClipboard::Selection:
+            return selectionData()->timestamp != CurrentTime;
+    }
+
+    Q_UNREACHABLE();
 }
 
 static Bool checkForClipboardEvents(Display *, XEvent *e, XPointer)
@@ -755,13 +747,6 @@ static Atom send_selection(QClipboardData *d, Atom target, Window window, Atom p
     return property;
 }
 
-/*! \internal
-    Internal optimization for Windows.
-*/
-void QClipboard::connectNotify(const char *)
-{ }
-
-
 bool QClipboard::event(QEvent *e)
 {
     if (e->type() == QEvent::Timer) {
@@ -777,23 +762,6 @@ bool QClipboard::event(QEvent *e)
             if (clipboard_watcher) // clear clipboard
                 clipboardData()->clear();
             timer_event_clear = false;
-
-            return true;
-        } else if (te->timerId() == pending_timer_id) {
-            // I hate klipper
-            killTimer(pending_timer_id);
-            pending_timer_id = 0;
-
-            if (pending_clipboard_changed) {
-                pending_clipboard_changed = false;
-                clipboardData()->clear();
-                emitChanged(QClipboard::Clipboard);
-            }
-            if (pending_selection_changed) {
-                pending_selection_changed = false;
-                selectionData()->clear();
-                emitChanged(QClipboard::Selection);
-            }
 
             return true;
         } else if (te->timerId() == incr_timer_id) {
@@ -1056,10 +1024,6 @@ QClipboardWatcher::QClipboardWatcher(QClipboard::Mode mode)
     case QClipboard::Clipboard:
         atom = ATOM(CLIPBOARD);
         break;
-
-    default:
-        qWarning("QClipboardWatcher: Internal error: Unsupported clipboard mode");
-        break;
     }
 
     setupOwner();
@@ -1201,15 +1165,12 @@ const QMimeData* QClipboard::mimeData(Mode mode) const
 {
     QClipboardData *d = 0;
     switch (mode) {
-    case Selection:
+    case QClipboard::Selection:
         d = selectionData();
         break;
-    case Clipboard:
+    case QClipboard::Clipboard:
         d = clipboardData();
         break;
-    default:
-        qWarning("QClipboard::mimeData: unsupported mode '%d'", mode);
-        return 0;
     }
 
     if (! d->source() && ! timer_event_clear) {
@@ -1229,7 +1190,7 @@ const QMimeData* QClipboard::mimeData(Mode mode) const
             // that way, the data is cached long enough for calls within a single
             // loop/function, but the data doesn't linger around in case the selection
             // changes
-            QClipboard *that = ((QClipboard *) this);
+            QClipboard *that = const_cast<QClipboard *>(this);
             timer_id = that->startTimer(0);
         }
     }
@@ -1243,21 +1204,17 @@ void QClipboard::setMimeData(QMimeData* src, Mode mode)
     Atom atom, sentinel_atom;
     QClipboardData *d;
     switch (mode) {
-    case Selection:
+    case QClipboard::Selection:
         atom = XA_PRIMARY;
         sentinel_atom = ATOM(_QT_SELECTION_SENTINEL);
         d = selectionData();
         break;
 
-    case Clipboard:
+    case QClipboard::Clipboard:
         atom = ATOM(CLIPBOARD);
         sentinel_atom = ATOM(_QT_CLIPBOARD_SENTINEL);
         d = clipboardData();
         break;
-
-    default:
-        qWarning("QClipboard::setMimeData: unsupported mode '%d'", mode);
-        return;
     }
 
     Display *dpy = qt_x11Data->display;
