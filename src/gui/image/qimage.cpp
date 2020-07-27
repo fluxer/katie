@@ -3827,85 +3827,6 @@ template<class T> inline void do_mirror_data(QImageData *dst, QImageData *src,
     }
 }
 
-inline void do_mirror(QImageData *dst, QImageData *src, bool horizontal, bool vertical)
-{
-    Q_ASSERT(src->width == dst->width && src->height == dst->height && src->depth == dst->depth);
-    int w = src->width;
-    int h = src->height;
-    int depth = src->depth;
-
-    if (src->depth == 1) {
-        w = (w + 7) / 8; // byte aligned width
-        depth = 8;
-    }
-
-    int dstX0 = 0, dstXIncr = 1;
-    int dstY0 = 0, dstYIncr = 1;
-    if (horizontal) {
-        // 0 -> w-1, 1 -> w-2, 2 -> w-3, ...
-        dstX0 = w - 1;
-        dstXIncr = -1;
-    }
-    if (vertical) {
-        // 0 -> h-1, 1 -> h-2, 2 -> h-3, ...
-        dstY0 = h - 1;
-        dstYIncr = -1;
-    }
-
-    switch (depth) {
-    case 32:
-        do_mirror_data<quint32>(dst, src, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
-        break;
-    case 24:
-        do_mirror_data<quint24>(dst, src, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
-        break;
-    case 16:
-        do_mirror_data<quint16>(dst, src, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
-        break;
-    case 8:
-        do_mirror_data<quint8>(dst, src, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
-        break;
-    default:
-        Q_ASSERT(false);
-        break;
-    }
-
-    // The bytes are now all in the correct place. In addition, the bits in the individual
-    // bytes have to be flipped too when horizontally mirroring a 1 bit-per-pixel image.
-    if (horizontal && dst->depth == 1) {
-        Q_ASSERT(dst->format == QImage::Format_Mono || dst->format == QImage::Format_MonoLSB);
-        const int shift = 8 - (dst->width % 8);
-        for (int y = 0; y < h; ++y) {
-            uchar *begin = dst->data + y * dst->bytes_per_line;
-            uchar *end = begin + dst->bytes_per_line;
-            for (uchar *p = begin; p < end; ++p) {
-                *p = bitflip[*p];
-                // When the data is non-byte aligned, an extra bit shift (of the number of
-                // unused bits at the end) is needed for the entire scanline.
-                if (shift != 8 && p != begin) {
-                    if (dst->format == QImage::Format_Mono) {
-                        for (int i = 0; i < shift; ++i) {
-                            p[-1] <<= 1;
-                            p[-1] |= (*p & (128 >> i)) >> (7 - i);
-                        }
-                    } else {
-                        for (int i = 0; i < shift; ++i) {
-                            p[-1] >>= 1;
-                            p[-1] |= (*p & (1 << i)) << (7 - i);
-                        }
-                    }
-                }
-            }
-            if (shift != 8) {
-                if (dst->format == QImage::Format_Mono)
-                    end[-1] <<= shift;
-                else
-                    end[-1] >>= shift;
-            }
-        }
-    }
-}
-
 /*!
     Returns a mirror of the image, mirrored in the horizontal and/or
     the vertical direction depending on whether \a horizontal and \a
@@ -3932,7 +3853,80 @@ QImage QImage::mirrored(bool horizontal, bool vertical) const
     result.d->dpmx = d->dpmx;
     result.d->dpmy = d->dpmy;
 
-    do_mirror(result.d, d, horizontal, vertical);
+    int w = d->width;
+    int h = d->height;
+    int depth = d->depth;
+
+    if (d->depth == 1) {
+        w = (w + 7) / 8; // byte aligned width
+        depth = 8;
+    }
+
+    int dstX0 = 0, dstXIncr = 1;
+    int dstY0 = 0, dstYIncr = 1;
+    if (horizontal) {
+        // 0 -> w-1, 1 -> w-2, 2 -> w-3, ...
+        dstX0 = w - 1;
+        dstXIncr = -1;
+    }
+    if (vertical) {
+        // 0 -> h-1, 1 -> h-2, 2 -> h-3, ...
+        dstY0 = h - 1;
+        dstYIncr = -1;
+    }
+
+    switch (depth) {
+    case 32:
+        do_mirror_data<quint32>(result.d, d, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
+        break;
+    case 24:
+        do_mirror_data<quint24>(result.d, d, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
+        break;
+    case 16:
+        do_mirror_data<quint16>(result.d, d, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
+        break;
+    case 8:
+        do_mirror_data<quint8>(result.d, d, dstX0, dstY0, dstXIncr, dstYIncr, w, h);
+        break;
+    default:
+        Q_ASSERT(false);
+        break;
+    }
+
+    // The bytes are now all in the correct place. In addition, the bits in the individual
+    // bytes have to be flipped too when horizontally mirroring a 1 bit-per-pixel image.
+    if (horizontal && result.d->depth == 1) {
+        Q_ASSERT(result.d->format == QImage::Format_Mono || result.d->format == QImage::Format_MonoLSB);
+        const int shift = 8 - (result.d->width % 8);
+        for (int y = 0; y < h; ++y) {
+            uchar *begin = result.d->data + y * result.d->bytes_per_line;
+            uchar *end = begin + result.d->bytes_per_line;
+            for (uchar *p = begin; p < end; ++p) {
+                *p = bitflip[*p];
+                // When the data is non-byte aligned, an extra bit shift (of the number of
+                // unused bits at the end) is needed for the entire scanline.
+                if (shift != 8 && p != begin) {
+                    if (result.d->format == QImage::Format_Mono) {
+                        for (int i = 0; i < shift; ++i) {
+                            p[-1] <<= 1;
+                            p[-1] |= (*p & (128 >> i)) >> (7 - i);
+                        }
+                    } else {
+                        for (int i = 0; i < shift; ++i) {
+                            p[-1] >>= 1;
+                            p[-1] |= (*p & (1 << i)) << (7 - i);
+                        }
+                    }
+                }
+            }
+            if (shift != 8) {
+                if (result.d->format == QImage::Format_Mono)
+                    end[-1] <<= shift;
+                else
+                    end[-1] >>= shift;
+            }
+        }
+    }
 
     return result;
 }
