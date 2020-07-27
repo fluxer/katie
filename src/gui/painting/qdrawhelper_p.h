@@ -57,11 +57,6 @@
 
 QT_BEGIN_NAMESPACE
 
-static const uint AMASK = 0xff000000;
-static const uint RMASK = 0x00ff0000;
-static const uint GMASK = 0x0000ff00;
-static const uint BMASK = 0x000000ff;
-
 /*******************************************************************************
  * QSpan
  *
@@ -270,18 +265,6 @@ struct QSpanData
     void adjustSpanMethods();
 };
 
-static inline uint INTERPOLATE_PIXEL_255(uint x, uint a, uint y, uint b) {
-    uint t = (x & 0xff00ff) * a + (y & 0xff00ff) * b;
-    t = (t + ((t >> 8) & 0xff00ff) + 0x800080) >> 8;
-    t &= 0xff00ff;
-
-    x = ((x >> 8) & 0xff00ff) * a + ((y >> 8) & 0xff00ff) * b;
-    x = (x + ((x >> 8) & 0xff00ff) + 0x800080);
-    x &= 0xff00ff00;
-    x |= t;
-    return x;
-}
-
 #if QT_POINTER_SIZE == 8 // 64-bit versions
 static inline uint INTERPOLATE_PIXEL_256(uint x, uint a, uint y, uint b) {
     quint64 t = (((quint64(x)) | ((quint64(x)) << 24)) & 0x00ff00ff00ff00ff) * a;
@@ -344,13 +327,6 @@ static inline uint PREMUL(uint x) {
     return x;
 }
 #endif // QT_POINTER_SIZE
-
-static inline uint BYTE_MUL_RGB16(uint x, uint a) {
-    a += 1;
-    uint t = (((x & 0x07e0)*a) >> 8) & 0x07e0;
-    t |= (((x & 0xf81f)*(a>>2)) >> 6) & 0xf81f;
-    return t;
-}
 
 #define INV_PREMUL(p)                                   \
     (qAlpha(p) == 0 ? 0 :                               \
