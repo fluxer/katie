@@ -56,17 +56,78 @@ QT_BEGIN_NAMESPACE
 #define QT_ROTATION_ALGORITHM QT_ROTATION_CACHEDREAD
 #endif
 
-#define QT_DECL_MEMROTATE(srctype, desttype)                            \
-    void qt_memrotate90(const srctype*, int, int, int, desttype*, int); \
-    void qt_memrotate180(const srctype*, int, int, int, desttype*, int); \
-    void qt_memrotate270(const srctype*, int, int, int, desttype*, int)
 
-QT_DECL_MEMROTATE(quint8, quint8);
-QT_DECL_MEMROTATE(quint16, quint16);
-QT_DECL_MEMROTATE(quint24, quint24);
-QT_DECL_MEMROTATE(quint32, quint32);
+template <class DST, class SRC>
+static inline void qt_memrotate90_template(const SRC *src,
+                                           int srcWidth, int srcHeight, int srcStride,
+                                           DST *dest, int dstStride)
+{
+#if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDREAD
+    const char *s = reinterpret_cast<const char*>(src);
+    char *d = reinterpret_cast<char*>(dest);
+    for (int y = 0; y < srcHeight; ++y) {
+        for (int x = srcWidth - 1; x >= 0; --x) {
+            DST *destline = reinterpret_cast<DST*>(d + (srcWidth - x - 1) * dstStride);
+            destline[y] = src[x];
+        }
+        s += srcStride;
+        src = reinterpret_cast<const SRC*>(s);
+    }
+#elif QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
+    for (int x = srcWidth - 1; x >= 0; --x) {
+        DST *d = dest + (srcWidth - x - 1) * dstStride;
+        for (int y = 0; y < srcHeight; ++y) {
+            *d++ = src[y * srcStride + x];
+        }
+    }
+#endif
+}
 
-#undef QT_DECL_MEMROTATE
+template <class DST, class SRC>
+static inline void qt_memrotate270_template(const SRC *src,
+                                            int srcWidth, int srcHeight, int srcStride,
+                                            DST *dest, int dstStride)
+{
+#if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDREAD
+    const char *s = reinterpret_cast<const char*>(src);
+    char *d = reinterpret_cast<char*>(dest);
+    s += (srcHeight - 1) * srcStride;
+    for (int y = srcHeight - 1; y >= 0; --y) {
+        src = reinterpret_cast<const SRC*>(s);
+        for (int x = 0; x < srcWidth; ++x) {
+            DST *destline = reinterpret_cast<DST*>(d + x * dstStride);
+            destline[srcHeight - y - 1] = src[x];
+        }
+        s -= srcStride;
+    }
+#elif QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
+    for (int x = 0; x < srcWidth; ++x) {
+        DST *d = dest + x * dstStride;
+        for (int y = srcHeight - 1; y >= 0; --y) {
+            *d++ = src[y * srcStride + x];
+        }
+    }
+#endif
+}
+
+#define QT_IMPL_MEMROTATE(srctype, desttype)                        \
+static inline void qt_memrotate90(const srctype *src, int w, int h, int sstride,  \
+                    desttype *dest, int dstride)                    \
+{                                                                   \
+    qt_memrotate90_template(src, w, h, sstride, dest, dstride);     \
+}                                                                   \
+static inline void qt_memrotate270(const srctype *src, int w, int h, int sstride, \
+                     desttype *dest, int dstride)                   \
+{                                                                   \
+    qt_memrotate270_template(src, w, h, sstride, dest, dstride);    \
+}
+
+QT_IMPL_MEMROTATE(quint8, quint8)
+QT_IMPL_MEMROTATE(quint16, quint16)
+QT_IMPL_MEMROTATE(quint24, quint24)
+QT_IMPL_MEMROTATE(quint32, quint32)
+
+#undef QT_IMPL_MEMROTATE
 
 QT_END_NAMESPACE
 

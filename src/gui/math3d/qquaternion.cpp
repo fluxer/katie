@@ -495,8 +495,7 @@ QQuaternion QQuaternion::slerp
 
     // Determine the angle between the two quaternions.
     QQuaternion q2b;
-    qreal dot;
-    dot = q1.xp * q2.xp + q1.yp * q2.yp + q1.zp * q2.zp + q1.wp * q2.wp;
+    qreal dot = q1.xp * q2.xp + q1.yp * q2.yp + q1.zp * q2.zp + q1.wp * q2.wp;
     if (dot >= 0.0f) {
         q2b = q2;
     } else {
@@ -547,8 +546,7 @@ QQuaternion QQuaternion::nlerp
 
     // Determine the angle between the two quaternions.
     QQuaternion q2b;
-    qreal dot;
-    dot = q1.xp * q2.xp + q1.yp * q2.yp + q1.zp * q2.zp + q1.wp * q2.wp;
+    qreal dot = q1.xp * q2.xp + q1.yp * q2.yp + q1.zp * q2.zp + q1.wp * q2.wp;
     if (dot >= 0.0f)
         q2b = q2;
     else

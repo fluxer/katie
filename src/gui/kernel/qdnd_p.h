@@ -69,8 +69,6 @@ public:
 
     bool hasFormat(const QString &mimeType) const;
     QStringList formats() const;
-    static bool canReadData(const QString &mimeType);
-
 
     static QStringList formatsHelper(const QMimeData *data);
     static bool hasFormatHelper(const QString &mimeType, const QMimeData *data);

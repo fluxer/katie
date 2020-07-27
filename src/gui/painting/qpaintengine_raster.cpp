@@ -31,12 +31,10 @@
 **
 ****************************************************************************/
 
-#include <QtCore/qglobal.h>
-#include <QtCore/qmutex.h>
-
 #define QT_FT_BEGIN_HEADER
 #define QT_FT_END_HEADER
 
+#include "qmutex.h"
 #include "qrasterdefs_p.h"
 #include "qpainterpath.h"
 #include "qdebug.h"
@@ -50,7 +48,6 @@
 #include "qpixmap_raster_p.h"
 #include "qimage_p.h"
 #include "qstatictext_p.h"
-#include "qmemrotate_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qoutlinemapper_p.h"
 #include "qguicommon_p.h"
@@ -65,11 +62,6 @@ Q_GUI_EXPORT extern bool qt_scaleForTransform(const QTransform &transform, qreal
 #ifdef QT_DEBUG_DRAW
 void dumpClip(int width, int height, const QClipData *clip);
 #endif
-
-// A little helper macro to get a better approximation of dimensions.
-// If we have a rect that starting at 0.5 of width 3.5 it should span
-// 4 pixels.
-#define int_dim(pos, dim) (int(pos+dim) - int(pos))
 
 /********************************************************************************
  * Span functions
@@ -238,21 +230,13 @@ void QRasterPaintEngine::init()
     d->mono_surface = false;
     gccaps &= ~PorterDuff;
 
-    QImage::Format format = QImage::Format_Invalid;
-
-    switch (d->device->devType()) {
-    case QInternal::Pixmap:
-        qWarning("QRasterPaintEngine: unsupported for pixmaps...");
-        break;
-    case QInternal::Image:
-        format = d->rasterBuffer->prepare(static_cast<QImage *>(d->device));
-        break;
-    default:
+    if (Q_UNLIKELY(d->device->devType() != QInternal::Image)) {
         qWarning("QRasterPaintEngine: unsupported target device %d\n", d->device->devType());
         d->device = 0;
         return;
     }
 
+    QImage::Format format = d->rasterBuffer->prepare(static_cast<QImage *>(d->device));
     switch (format) {
     case QImage::Format_MonoLSB:
     case QImage::Format_Mono:
@@ -353,15 +337,6 @@ bool QRasterPaintEngine::end()
 #endif
 
     return true;
-}
-
-/*!
-    \internal
-*/
-void QRasterPaintEngine::releaseBuffer()
-{
-    Q_D(QRasterPaintEngine);
-    d->rasterBuffer.reset(new QRasterBuffer);
 }
 
 /*!
@@ -896,7 +871,7 @@ void QRasterPaintEngine::clip(const QVectorPath &path, Qt::ClipOperation op)
         // intersect with, in which case we simplify the operation to
         // a replace...
         Qt::ClipOperation isectOp = Qt::IntersectClip;
-        if (base == 0)
+        if (!base)
             isectOp = Qt::ReplaceClip;
 
         QClipData *newClip = new QClipData(d->rasterBuffer->height());

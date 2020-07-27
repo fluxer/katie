@@ -55,11 +55,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-class QPaintEngineEx;
-
-typedef void (*qvectorpath_cache_cleanup)(QPaintEngineEx *engine, void *data);
-
 struct QRealRect {
     qreal x1, y1, x2, y2;
 };

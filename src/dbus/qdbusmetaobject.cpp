@@ -51,7 +51,7 @@
 QT_BEGIN_NAMESPACE
 
 // must be kept in sync with the moc
-static int qmetaobjectrevision = 6;
+static const int qmetaobjectrevision = 6;
 
 class QDBusMetaObjectGenerator
 {
@@ -316,10 +316,7 @@ void QDBusMetaObjectGenerator::parseSignals()
 
 void QDBusMetaObjectGenerator::parseProperties()
 {
-    QDBusIntrospection::Properties::ConstIterator prop_it = data->properties.constBegin();
-    QDBusIntrospection::Properties::ConstIterator prop_end = data->properties.constEnd();
-    for ( ; prop_it != prop_end; ++prop_it) {
-        const QDBusIntrospection::Property &p = *prop_it;
+    foreach (const QDBusIntrospection::Property &p, data->properties) {
         Property mp;
         Type type = findType(p.type.toLatin1(), p.annotations);
         if (type.id == QVariant::Invalid)
@@ -339,7 +336,7 @@ void QDBusMetaObjectGenerator::parseProperties()
 
         if (mp.typeName == "QDBusVariant")
             mp.flags |= 0xff << 24;
-        else if (mp.type < 0xff)
+        else if (mp.type < QVariant::Invalid)
             // encode the type in the flags
             mp.flags |= mp.type << 24;
 

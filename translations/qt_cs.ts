@@ -86,7 +86,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+891"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+886"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+662"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+641"/>
         <location line="+26"/>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Qt není slučitelná</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1871"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1727,7 +1727,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+621"/>
+        <location filename="../src/core/io/qfile.cpp" line="+613"/>
         <source>Will not rename sequential file using block copy</source>
         <translation>Nepřejmenuje posloupný soubor pomocí kopie bloku</translation>
     </message>
@@ -1750,7 +1750,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+172"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+148"/>
         <location line="+1"/>
         <source>File</source>
         <translation>Soubor</translation>
@@ -2537,7 +2537,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1380"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1375"/>
         <source>No such file or directory</source>
         <translation>Nepodařilo se najít žádný takový soubor nebo adresář</translation>
     </message>
@@ -2691,7 +2691,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1782"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1780"/>
         <source>Cu&amp;t</source>
         <translation>&amp;Vyjmout</translation>
     </message>
@@ -6458,7 +6458,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1879"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1876"/>
         <source>Cu&amp;t</source>
         <translation>Vyj&amp;mout</translation>
     </message>
@@ -6648,7 +6648,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5176"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5174"/>
         <source>*</source>
         <translation>*</translation>
     </message>

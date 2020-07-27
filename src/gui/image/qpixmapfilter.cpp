@@ -279,8 +279,7 @@ QRectF QPixmapBlurFilter::boundingRectFor(const QRectF &rect) const
     return rect.adjusted(-delta, -delta, delta, delta);
 }
 
-template <int shift>
-inline int qt_static_shift(int value)
+static inline int qt_static_shift(int shift, int value)
 {
     if (shift == 0)
         return value;
@@ -290,16 +289,19 @@ inline int qt_static_shift(int value)
         return value >> (uint(-shift) & 0x1f);
 }
 
-template<int aprec, int zprec>
-inline void qt_blurinner(uchar *bptr, int &zR, int &zG, int &zB, int &zA, int alpha)
+
+static const int aprec = 12;
+static const int zprec = 10;
+
+static inline void qt_blurinner(uchar *bptr, int &zR, int &zG, int &zB, int &zA, int alpha)
 {
     QRgb *pixel = (QRgb *)bptr;
 
 #define Z_MASK (0xff << zprec)
-    const int A_zprec = qt_static_shift<zprec - 24>(*pixel) & Z_MASK;
-    const int R_zprec = qt_static_shift<zprec - 16>(*pixel) & Z_MASK;
-    const int G_zprec = qt_static_shift<zprec - 8>(*pixel)  & Z_MASK;
-    const int B_zprec = qt_static_shift<zprec>(*pixel)      & Z_MASK;
+    const int A_zprec = qt_static_shift(zprec - 24, *pixel) & Z_MASK;
+    const int R_zprec = qt_static_shift(zprec - 16, *pixel) & Z_MASK;
+    const int G_zprec = qt_static_shift(zprec - 8, *pixel)  & Z_MASK;
+    const int B_zprec = qt_static_shift(zprec, *pixel)      & Z_MASK;
 #undef Z_MASK
 
     const int zR_zprec = zR >> aprec;
@@ -314,17 +316,14 @@ inline void qt_blurinner(uchar *bptr, int &zR, int &zG, int &zB, int &zA, int al
 
 #define ZA_MASK (0xff << (zprec + aprec))
     *pixel =
-        qt_static_shift<24 - zprec - aprec>(zA & ZA_MASK)
-        | qt_static_shift<16 - zprec - aprec>(zR & ZA_MASK)
-        | qt_static_shift<8 - zprec - aprec>(zG & ZA_MASK)
-        | qt_static_shift<-zprec - aprec>(zB & ZA_MASK);
+        qt_static_shift(24 - zprec - aprec, zA & ZA_MASK)
+        | qt_static_shift(16 - zprec - aprec, zR & ZA_MASK)
+        | qt_static_shift(8 - zprec - aprec, zG & ZA_MASK)
+        | qt_static_shift(-zprec - aprec, zB & ZA_MASK);
 #undef ZA_MASK
 }
 
-const int alphaIndex = (QSysInfo::ByteOrder == QSysInfo::BigEndian ? 0 : 3);
-
-template<int aprec, int zprec>
-inline void qt_blurinner_alphaOnly(uchar *bptr, int &z, int alpha)
+static inline void qt_blurinner_alphaOnly(uchar *bptr, int &z, int alpha)
 {
     const int A_zprec = int(*(bptr)) << zprec;
     const int z_zprec = z >> aprec;
@@ -332,8 +331,9 @@ inline void qt_blurinner_alphaOnly(uchar *bptr, int &z, int alpha)
     *(bptr) = z >> (zprec + aprec);
 }
 
-template<int aprec, int zprec, bool alphaOnly>
-inline void qt_blurrow(QImage & im, int line, int alpha)
+static const int alphaIndex = (QSysInfo::ByteOrder == QSysInfo::BigEndian ? 0 : 3);
+
+static inline void qt_blurrow(QImage & im, int line, int alpha, bool alphaOnly)
 {
     uchar *bptr = im.scanLine(line);
 
@@ -346,9 +346,9 @@ inline void qt_blurrow(QImage & im, int line, int alpha)
     const int im_width = im.width();
     for (int index = 0; index < im_width; ++index) {
         if (alphaOnly)
-            qt_blurinner_alphaOnly<aprec, zprec>(bptr, zA, alpha);
+            qt_blurinner_alphaOnly(bptr, zA, alpha);
         else
-            qt_blurinner<aprec, zprec>(bptr, zR, zG, zB, zA, alpha);
+            qt_blurinner(bptr, zR, zG, zB, zA, alpha);
         bptr += stride;
     }
 
@@ -357,9 +357,9 @@ inline void qt_blurrow(QImage & im, int line, int alpha)
     for (int index = im_width - 2; index >= 0; --index) {
         bptr -= stride;
         if (alphaOnly)
-            qt_blurinner_alphaOnly<aprec, zprec>(bptr, zA, alpha);
+            qt_blurinner_alphaOnly(bptr, zA, alpha);
         else
-            qt_blurinner<aprec, zprec>(bptr, zR, zG, zB, zA, alpha);
+            qt_blurinner(bptr, zR, zG, zB, zA, alpha);
     }
 }
 
@@ -380,8 +380,7 @@ inline void qt_blurrow(QImage & im, int line, int alpha)
 *  zprec = precision of state parameters
 *  zR,zG,zB and zA in fp format 8.zprec
 */
-template <int aprec, int zprec, bool alphaOnly>
-void expblur(QImage &img, qreal radius, bool improvedQuality = false, int transposed = 0)
+static void expblur(QImage &img, qreal radius, bool improvedQuality, bool alphaOnly)
 {
     // halve the radius if we're using two passes
     if (improvedQuality)
@@ -402,56 +401,38 @@ void expblur(QImage &img, qreal radius, bool improvedQuality = false, int transp
     int img_height = img.height();
     for (int row = 0; row < img_height; ++row) {
         for (int i = 0; i <= int(improvedQuality); ++i)
-            qt_blurrow<aprec, zprec, alphaOnly>(img, row, alpha);
+            qt_blurrow(img, row, alpha, alphaOnly);
     }
 
     QImage temp(img.height(), img.width(), img.format());
-    if (transposed >= 0) {
-        if (img.depth() == 8) {
-            qt_memrotate270(reinterpret_cast<const quint8*>(img.bits()),
-                            img.width(), img.height(), img.bytesPerLine(),
-                            reinterpret_cast<quint8*>(temp.bits()),
-                            temp.bytesPerLine());
-        } else {
-            qt_memrotate270(reinterpret_cast<const quint32*>(img.bits()),
-                            img.width(), img.height(), img.bytesPerLine(),
-                            reinterpret_cast<quint32*>(temp.bits()),
-                            temp.bytesPerLine());
-        }
+    if (img.depth() == 8) {
+        qt_memrotate270(reinterpret_cast<const quint8*>(img.bits()),
+                        img.width(), img.height(), img.bytesPerLine(),
+                        reinterpret_cast<quint8*>(temp.bits()),
+                        temp.bytesPerLine());
     } else {
-        if (img.depth() == 8) {
-            qt_memrotate90(reinterpret_cast<const quint8*>(img.bits()),
-                           img.width(), img.height(), img.bytesPerLine(),
-                           reinterpret_cast<quint8*>(temp.bits()),
-                           temp.bytesPerLine());
-        } else {
-            qt_memrotate90(reinterpret_cast<const quint32*>(img.bits()),
-                           img.width(), img.height(), img.bytesPerLine(),
-                           reinterpret_cast<quint32*>(temp.bits()),
-                           temp.bytesPerLine());
-        }
+        qt_memrotate270(reinterpret_cast<const quint32*>(img.bits()),
+                        img.width(), img.height(), img.bytesPerLine(),
+                        reinterpret_cast<quint32*>(temp.bits()),
+                        temp.bytesPerLine());
     }
 
     img_height = temp.height();
     for (int row = 0; row < img_height; ++row) {
         for (int i = 0; i <= int(improvedQuality); ++i)
-            qt_blurrow<aprec, zprec, alphaOnly>(temp, row, alpha);
+            qt_blurrow(temp, row, alpha, alphaOnly);
     }
 
-    if (transposed == 0) {
-        if (img.depth() == 8) {
-            qt_memrotate90(reinterpret_cast<const quint8*>(temp.bits()),
-                           temp.width(), temp.height(), temp.bytesPerLine(),
-                           reinterpret_cast<quint8*>(img.bits()),
-                           img.bytesPerLine());
-        } else {
-            qt_memrotate90(reinterpret_cast<const quint32*>(temp.bits()),
-                           temp.width(), temp.height(), temp.bytesPerLine(),
-                           reinterpret_cast<quint32*>(img.bits()),
-                           img.bytesPerLine());
-        }
+    if (img.depth() == 8) {
+        qt_memrotate90(reinterpret_cast<const quint8*>(temp.bits()),
+                        temp.width(), temp.height(), temp.bytesPerLine(),
+                        reinterpret_cast<quint8*>(img.bits()),
+                        img.bytesPerLine());
     } else {
-        img = temp;
+        qt_memrotate90(reinterpret_cast<const quint32*>(temp.bits()),
+                        temp.width(), temp.height(), temp.bytesPerLine(),
+                        reinterpret_cast<quint32*>(img.bits()),
+                        img.bytesPerLine());
     }
 }
 #define AVG(a,b)  ( ((((a)^(b)) & 0xfefefefeUL) >> 1) + ((a)&(b)) )
@@ -545,7 +526,7 @@ static QImage qt_halfScaled(const QImage &source)
     return dest;
 }
 
-static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0)
+static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly)
 {
     if (blurImage.format() != QImage::Format_ARGB32_Premultiplied
         && blurImage.format() != QImage::Format_RGB32)
@@ -561,9 +542,9 @@ static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool qual
     }
 
     if (alphaOnly)
-        expblur<12, 10, true>(blurImage, radius, quality, transposed);
+        expblur(blurImage, radius, quality, true);
     else
-        expblur<12, 10, false>(blurImage, radius, quality, transposed);
+        expblur(blurImage, radius, quality, false);
 
     if (p) {
         p->scale(scale, scale);
@@ -571,12 +552,12 @@ static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool qual
     }
 }
 
-static void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0)
+static void qt_blurImage(QImage &blurImage, qreal radius, bool quality)
 {
     if (blurImage.format() == QImage::Format_Indexed8)
-        expblur<12, 10, true>(blurImage, radius, quality, transposed);
+        expblur(blurImage, radius, quality, true);
     else
-        expblur<12, 10, false>(blurImage, radius, quality, transposed);
+        expblur(blurImage, radius, quality, false);
 }
 
 Q_GUI_EXPORT bool qt_scaleForTransform(const QTransform &transform, qreal *scale);
@@ -624,14 +605,13 @@ void QPixmapBlurFilter::draw(QPainter *painter, const QPointF &p, const QPixmap 
 // grayscales the image to dest (could be same). If rect isn't defined
 // destination image size is used to determine the dimension of grayscaling
 // process.
-Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest, const QRect& rect = QRect())
+Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest)
 {
-    QRect destRect = rect;
-    QRect srcRect = rect;
-    if (rect.isNull()) {
+    QRect srcRect =  image.rect();
+    if (srcRect.isNull()) {
         srcRect = dest.rect();
-        destRect = dest.rect();
     }
+    QRect destRect = srcRect;
     if (&image != &dest) {
         destRect.moveTo(QPoint(0, 0));
     }
@@ -787,7 +767,7 @@ void QPixmapColorizeFilter::draw(QPainter *painter, const QPointF &dest, const Q
 
     // do colorizing
     QPainter destPainter(&destImage);
-    qt_grayscale(srcImage, destImage, srcImage.rect());
+    qt_grayscale(srcImage, destImage);
     destPainter.setCompositionMode(QPainter::CompositionMode_Screen);
     destPainter.fillRect(srcImage.rect(), d->color);
     destPainter.end();

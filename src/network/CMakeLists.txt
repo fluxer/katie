@@ -37,6 +37,7 @@ set(NETWORK_PUBLIC_HEADERS
     QUdpSocket
     QUrlInfo
     QHttpMultiPart
+    QCryptographicHash
 )
 
 include_directories(
@@ -97,6 +98,7 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qsharednetworksession_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcryptographichash.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostaddress.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostaddress_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo.h
@@ -171,6 +173,7 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qbearerplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qsharednetworksession.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcryptographichash.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostaddress.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qurlinfo.cpp

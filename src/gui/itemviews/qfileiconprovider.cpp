@@ -61,28 +61,6 @@ QT_BEGIN_NAMESPACE
   \value File
 */
 
-static QIcon getFileIcon(QStyle::StandardPixmap name)
-{
-    switch (name) {
-        case QStyle::SP_FileIcon:
-        case QStyle::SP_FileLinkIcon:
-        case QStyle::SP_DirIcon:
-        case QStyle::SP_DirLinkIcon:
-        case QStyle::SP_DriveHDIcon:
-        case QStyle::SP_DriveFDIcon:
-        case QStyle::SP_DriveCDIcon:
-        case QStyle::SP_DriveNetIcon:
-        case QStyle::SP_ComputerIcon:
-        case QStyle::SP_DesktopIcon:
-        case QStyle::SP_TrashIcon:
-        case QStyle::SP_DirHomeIcon:
-            return QApplication::style()->standardIcon(name);
-        default:
-            return QIcon();
-    }
-    return QIcon();
-}
-
 /*!
   Constructs a file icon provider.
 */
@@ -108,21 +86,19 @@ QIcon QFileIconProvider::icon(IconType type) const
 {
     switch (type) {
         case Computer:
-            return getFileIcon(QStyle::SP_ComputerIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_ComputerIcon);
         case Desktop:
-            return getFileIcon(QStyle::SP_DesktopIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_DesktopIcon);
         case Trashcan:
-            return getFileIcon(QStyle::SP_TrashIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_TrashIcon);
         case Network:
-            return getFileIcon(QStyle::SP_DriveNetIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_DriveNetIcon);
         case Drive:
-            return getFileIcon(QStyle::SP_DriveHDIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_DriveHDIcon);
         case Folder:
-            return getFileIcon(QStyle::SP_DirIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_DirIcon);
         case File:
-            return getFileIcon(QStyle::SP_FileIcon);
-        default:
-            break;
+            return QApplication::style()->standardIcon(QStyle::SP_FileIcon);
     };
     return QIcon();
 }
@@ -138,22 +114,22 @@ QIcon QFileIconProvider::icon(const QFileInfo &info) const
         return platformIcon;
 
     if (info.isRoot()) {
-        return getFileIcon(QStyle::SP_DriveHDIcon);
+        return QApplication::style()->standardIcon(QStyle::SP_DriveHDIcon);
     } else if (info.isFile()) {
         if (info.isSymLink()) {
-            return getFileIcon(QStyle::SP_FileLinkIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_FileLinkIcon);
         } else {
-            return getFileIcon(QStyle::SP_FileIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_FileIcon);
         }
     } else if (info.isDir()) {
         static QString homePath = QDir::home().absolutePath();
 
         if (info.isSymLink()) {
-            return getFileIcon(QStyle::SP_DirLinkIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_DirLinkIcon);
         } else if (info.absoluteFilePath() == homePath) {
-            return getFileIcon(QStyle::SP_DirHomeIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_DirHomeIcon);
         } else {
-            return getFileIcon(QStyle::SP_DirIcon);
+            return QApplication::style()->standardIcon(QStyle::SP_DirIcon);
         }
     }
     return QIcon();

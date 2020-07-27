@@ -75,47 +75,6 @@ static inline bool nameMatch(const QByteArray &name, const QByteArray &name2)
     return (ucnv_compareNames(name.constData(), name2.constData()) == 0);
 }
 
-static QTextCodec *createForName(const QByteArray &name)
-{
-#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    const QFactoryLoader *l = codecsloader();
-    foreach (const QString &key, l->keys()) {
-        if (nameMatch(name, key.toLatin1())) {
-            if (QTextCodecFactoryInterface *factory
-                = qobject_cast<QTextCodecFactoryInterface*>(l->instance(key))) {
-                return factory->create(key);
-            }
-        }
-    }
-#endif
-
-    foreach(const QByteArray &codec, QIcuCodec::allCodecs()) {
-        if (nameMatch(name, codec)) {
-            return new QIcuCodec(name);
-        }
-    }
-
-    return Q_NULLPTR;
-}
-
-static QTextCodec *createForMib(int mib)
-{
-#ifndef QT_NO_TEXTCODECPLUGIN
-    QString name = QLatin1String("MIB: ") + QString::number(mib);
-    if (QTextCodecFactoryInterface *factory
-        = qobject_cast<QTextCodecFactoryInterface*>(codecsloader()->instance(name)))
-        return factory->create(name);
-#endif
-
-    foreach(const int codec, QIcuCodec::allMibs()) {
-        if (mib == codec) {
-            return new QIcuCodec(mib);
-        }
-    }
-
-    return Q_NULLPTR;
-}
-
 static QList<QTextCodec*> *all = Q_NULLPTR;
 #ifdef Q_DEBUG_TEXTCODEC
 static bool destroying_is_ok = false;
@@ -592,7 +551,25 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
         }
     }
 
-    return createForName(name);
+#if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
+    const QFactoryLoader *l = codecsloader();
+    foreach (const QString &key, l->keys()) {
+        if (nameMatch(name, key.toLatin1())) {
+            if (QTextCodecFactoryInterface *factory
+                = qobject_cast<QTextCodecFactoryInterface*>(l->instance(key))) {
+                return factory->create(key);
+            }
+        }
+    }
+#endif
+
+    foreach(const QByteArray &codec, QIcuCodec::allCodecs()) {
+        if (nameMatch(name, codec)) {
+            return new QIcuCodec(name);
+        }
+    }
+
+    return Q_NULLPTR;
 }
 
 
@@ -614,7 +591,20 @@ QTextCodec* QTextCodec::codecForMib(int mib)
         }
     }
 
-    return createForMib(mib);
+#ifndef QT_NO_TEXTCODECPLUGIN
+    QString name = QLatin1String("MIB: ") + QString::number(mib);
+    if (QTextCodecFactoryInterface *factory
+        = qobject_cast<QTextCodecFactoryInterface*>(codecsloader()->instance(name)))
+        return factory->create(name);
+#endif
+
+    foreach(const int codec, QIcuCodec::allMibs()) {
+        if (mib == codec) {
+            return new QIcuCodec(mib);
+        }
+    }
+
+    return Q_NULLPTR;
 }
 
 /*!

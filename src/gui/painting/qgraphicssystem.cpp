@@ -39,13 +39,4 @@ QGraphicsSystem::~QGraphicsSystem()
 {
 }
 
-QPixmapData *QGraphicsSystem::createPixmapData(QPixmapData *origin) const
-{
-    return createPixmapData(origin->pixelType());
-}
-
 QT_END_NAMESPACE
-
-
-
-

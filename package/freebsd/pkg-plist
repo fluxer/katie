@@ -38,7 +38,6 @@ include/katie/QtCore/QContiguousCache
 include/katie/QtCore/QContiguousCacheData
 include/katie/QtCore/QContiguousCacheTypedData
 include/katie/QtCore/QCoreApplication
-include/katie/QtCore/QCryptographicHash
 include/katie/QtCore/QDataStream
 include/katie/QtCore/QDate
 include/katie/QtCore/QDateTime
@@ -244,7 +243,6 @@ include/katie/QtCore/qcontainerfwd.h
 include/katie/QtCore/qcontiguouscache.h
 include/katie/QtCore/qcoreapplication.h
 include/katie/QtCore/qcoreevent.h
-include/katie/QtCore/qcryptographichash.h
 include/katie/QtCore/qdatastream.h
 include/katie/QtCore/qdatetime.h
 include/katie/QtCore/qdebug.h
@@ -1221,6 +1219,7 @@ include/katie/QtGui/qx11info_x11.h
 include/katie/QtNetwork/QAbstractNetworkCache
 include/katie/QtNetwork/QAbstractSocket
 include/katie/QtNetwork/QAuthenticator
+include/katie/QtNetwork/QCryptographicHash
 include/katie/QtNetwork/QFtp
 include/katie/QtNetwork/QHostAddress
 include/katie/QtNetwork/QHostInfo
@@ -1264,6 +1263,7 @@ include/katie/QtNetwork/QtNetwork
 include/katie/QtNetwork/qabstractnetworkcache.h
 include/katie/QtNetwork/qabstractsocket.h
 include/katie/QtNetwork/qauthenticator.h
+include/katie/QtNetwork/qcryptographichash.h
 include/katie/QtNetwork/qftp.h
 include/katie/QtNetwork/qhostaddress.h
 include/katie/QtNetwork/qhostinfo.h

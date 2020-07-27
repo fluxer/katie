@@ -1045,12 +1045,6 @@ void QDateTimeEdit::keyPressEvent(QKeyEvent *event)
         event->ignore();
         emit editingFinished();
         return;
-    default:
-        if (!d->isSeparatorKey(event)) {
-            inserted = select = !event->text().isEmpty() && event->text().at(0).isPrint()
-                       && !(event->modifiers() & ~(Qt::ShiftModifier|Qt::KeypadModifier));
-            break;
-        }
     case Qt::Key_Left:
     case Qt::Key_Right:
         if (event->key() == Qt::Key_Left || event->key() == Qt::Key_Right) {
@@ -1074,6 +1068,12 @@ void QDateTimeEdit::keyPressEvent(QKeyEvent *event)
             focusNextPrevChild(forward);
 
         return; }
+    default:
+        if (!d->isSeparatorKey(event)) {
+            inserted = select = !event->text().isEmpty() && event->text().at(0).isPrint()
+                       && !(event->modifiers() & ~(Qt::ShiftModifier|Qt::KeypadModifier));
+            break;
+        }
     }
     QAbstractSpinBox::keyPressEvent(event);
     if (select && !d->edit->hasSelectedText()) {
@@ -1100,17 +1100,6 @@ void QDateTimeEdit::keyPressEvent(QKeyEvent *event)
         d->edit->setSelection(d->edit->cursorPosition(), 0);
     }
 }
-
-/*!
-  \reimp
-*/
-
-#ifndef QT_NO_WHEELEVENT
-void QDateTimeEdit::wheelEvent(QWheelEvent *event)
-{
-    QAbstractSpinBox::wheelEvent(event);
-}
-#endif
 
 /*!
   \reimp
@@ -1908,8 +1897,7 @@ QDateTime QDateTimeEditPrivate::stepBy(int sectionIndex, int steps, bool test) c
         }
     }
 
-    const QDateTime ret = bound(v, value, steps).toDateTime().toTimeSpec(spec);
-    return ret;
+    return bound(v, value, steps).toDateTime().toTimeSpec(spec);
 }
 
 /*!

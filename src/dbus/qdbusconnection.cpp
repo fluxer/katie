@@ -454,11 +454,10 @@ void QDBusConnection::disconnectFromPeer(const QString &name)
 */
 bool QDBusConnection::send(const QDBusMessage &message) const
 {
-    if (!d || !d->connection) {
-        QDBusError err = QDBusError(QDBusError::Disconnected,
-                                    QLatin1String("Not connected to D-BUS server"));
+    if (Q_UNLIKELY(!d || !d->connection)) {
         if (d)
-            d->lastError = err;
+            d->lastError = QDBusError(QDBusError::Disconnected,
+                                    QLatin1String("Not connected to D-BUS server"));
         return false;
     }
     return d->send(message) != 0;
@@ -487,14 +486,13 @@ bool QDBusConnection::callWithCallback(const QDBusMessage &message, QObject *rec
                                        const char *returnMethod, const char *errorMethod,
                                        int timeout) const
 {
-    if (!d || !d->connection) {
-        QDBusError err = QDBusError(QDBusError::Disconnected,
-                                    QLatin1String("Not connected to D-BUS server"));
+    if (Q_UNLIKELY(!d || !d->connection)) {
         if (d)
-            d->lastError = err;
+            d->lastError = QDBusError(QDBusError::Disconnected,
+                                    QLatin1String("Not connected to D-BUS server"));
         return false;
     }
-    return d->sendWithReplyAsync(message, receiver, returnMethod, errorMethod, timeout) != 0;
+    return (d->sendWithReplyAsync(message, receiver, returnMethod, errorMethod, timeout) != 0);
 }
 
 /*!
@@ -545,7 +543,7 @@ bool QDBusConnection::callWithCallback(const QDBusMessage &message, QObject *rec
 */
 QDBusMessage QDBusConnection::call(const QDBusMessage &message, QDBus::CallMode mode, int timeout) const
 {
-    if (!d || !d->connection) {
+    if (Q_UNLIKELY(!d || !d->connection)) {
         QDBusError err = QDBusError(QDBusError::Disconnected,
                                     QLatin1String("Not connected to D-Bus server"));
         if (d)
@@ -576,7 +574,7 @@ QDBusMessage QDBusConnection::call(const QDBusMessage &message, QDBus::CallMode 
 */
 QDBusPendingCall QDBusConnection::asyncCall(const QDBusMessage &message, int timeout) const
 {
-    if (!d || !d->connection) {
+    if (Q_UNLIKELY(!d || !d->connection)) {
         return QDBusPendingCall(Q_NULLPTR); // null pointer -> disconnected
     }
 

@@ -61,7 +61,7 @@ class QDialogPrivate : public QWidgetPrivate
 public:
 
     QDialogPrivate()
-        : mainDef(0), orientation(Qt::Horizontal),extension(0), doShowExtension(false),
+        : mainDef(0),
 #ifndef QT_NO_SIZEGRIP
           resizer(0),
           sizeGripEnabled(false),
@@ -70,15 +70,11 @@ public:
         {}
 
     QPointer<QPushButton> mainDef;
-    Qt::Orientation orientation;
-    QWidget *extension;
-    bool doShowExtension;
     QSize size, min, max;
 #ifndef QT_NO_SIZEGRIP
     QSizeGrip *resizer;
     bool sizeGripEnabled;
 #endif
-    QPoint lastRMBPress;
 
     void setDefault(QPushButton *);
     void setMainDefault(QPushButton *);

@@ -50,8 +50,7 @@ QT_BEGIN_NAMESPACE
 //************* QFilePrivate
 QFilePrivate::QFilePrivate()
     : fileEngine(0), lastWasWrite(false),
-      writeBuffer(QT_BUFFSIZE), error(QFile::NoError),
-      cachedSize(0)
+      error(QFile::NoError)
 {
 }
 
@@ -1068,10 +1067,8 @@ bool QFile::resize(qint64 sz)
         seek(sz);
     if(d->fileEngine->setSize(sz)) {
         unsetError();
-        d->cachedSize = sz;
         return true;
     }
-    d->cachedSize = 0;
     d->setError(QFile::ResizeError, d->fileEngine->errorString());
     return false;
 }
@@ -1226,8 +1223,7 @@ qint64 QFile::size() const
     Q_D(const QFile);
     if (!d->ensureFlushed())
         return 0;
-    d->cachedSize = fileEngine()->size();
-    return d->cachedSize;
+    return fileEngine()->size();
 }
 
 /*!
@@ -1260,11 +1256,6 @@ bool QFile::atEnd() const
         // check if the file engine claims to be at the end.
         return d->fileEngine->atEnd();
     }
-
-    // if it looks like we are at the end, or if size is not cached,
-    // fall through to bytesAvailable() to make sure.
-    if (pos() < d->cachedSize)
-        return false;
 
     // Fall back to checking how much is available (will stat files).
     return bytesAvailable() == 0;
@@ -1329,11 +1320,6 @@ qint64 QFile::readLineData(char *data, qint64 maxlen)
         read = QIODevice::readLineData(data, maxlen);
     }
 
-    if (read < maxlen) {
-        // failed to read all requested, may be at the end of file, stop caching size so that it's rechecked
-        d->cachedSize = 0;
-    }
-
     return read;
 }
 
@@ -1353,11 +1339,6 @@ qint64 QFile::readData(char *data, qint64 len)
         if(err == QFile::UnspecifiedError)
             err = QFile::ReadError;
         d->setError(err, d->fileEngine->errorString());
-    }
-
-    if (read < len) {
-        // failed to read all requested, may be at the end of file, stop caching size so that it's rechecked
-        d->cachedSize = 0;
     }
 
     return read;

@@ -205,7 +205,6 @@ void drawDial(const QStyleOptionSlider *option, QPainter *painter)
     buttonColor.setHsv(buttonColor .hue(),
                        qMin(140, buttonColor .saturation()),
                        qMax(180, buttonColor.value()));
-    QColor shadowColor(0, 0, 0, 20);
 
     if (enabled) {
         // Drop shadow
@@ -281,61 +280,6 @@ void drawDial(const QStyleOptionSlider *option, QPainter *painter)
 }
 #endif //QT_NO_DIAL
 
-void drawBorderPixmap(const QPixmap &pixmap, QPainter *painter, const QRect &rect,
-                     int left, int top, int right,
-                     int bottom)
-{
-    QSize size = pixmap.size();
-
-    //top
-    if (top > 0) {
-        painter->drawPixmap(QRect(rect.left() + left, rect.top(), rect.width() -right - left, top), pixmap,
-                            QRect(left, 0, size.width() -right - left, top));
-
-        //top-left
-        if(left > 0)
-            painter->drawPixmap(QRect(rect.left(), rect.top(), left, top), pixmap,
-                                QRect(0, 0, left, top));
-
-        //top-right
-        if (right > 0)
-            painter->drawPixmap(QRect(rect.left() + rect.width() - right, rect.top(), right, top), pixmap,
-                                QRect(size.width() - right, 0, right, top));
-    }
-
-    //left
-    if (left > 0)
-        painter->drawPixmap(QRect(rect.left(), rect.top()+top, left, rect.height() - top - bottom), pixmap,
-                            QRect(0, top, left, size.height() - bottom - top));
-
-    //center
-    painter->drawPixmap(QRect(rect.left() + left, rect.top()+top, rect.width() -right - left,
-                             rect.height() - bottom - top), pixmap,
-                       QRect(left, top, size.width() -right -left,
-                             size.height() - bottom - top));
-    //right
-    if (right > 0)
-        painter->drawPixmap(QRect(rect.left() +rect.width() - right, rect.top()+top, right, rect.height() - top - bottom), pixmap,
-                            QRect(size.width() - right, top, right, size.height() - bottom - top));
-
-    //bottom
-    if (bottom > 0) {
-        painter->drawPixmap(QRect(rect.left() +left, rect.top() + rect.height() - bottom,
-                                 rect.width() - right - left, bottom), pixmap,
-                            QRect(left, size.height() - bottom,
-                                 size.width() - right - left, bottom));
-        //bottom-left
-        if (left > 0)
-            painter->drawPixmap(QRect(rect.left(), rect.top() + rect.height() - bottom, left, bottom), pixmap,
-                                QRect(0, size.height() - bottom, left, bottom));
-
-        //bottom-right
-        if (right > 0)
-            painter->drawPixmap(QRect(rect.left() + rect.width() - right, rect.top() + rect.height() - bottom, right, bottom), pixmap,
-                                QRect(size.width() - right, size.height() - bottom, right, bottom));
-
-    }
-}
 }
 QT_END_NAMESPACE
 

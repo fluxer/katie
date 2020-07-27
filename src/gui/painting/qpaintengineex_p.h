@@ -196,9 +196,6 @@ public:
     QPaintEngineExPrivate();
     ~QPaintEngineExPrivate();
 
-    void replayClipOperations();
-    bool hasClipOperations() const;
-
     QStroker stroker;
     QDashStroker dasher;
     StrokeHandler *strokeHandler;

@@ -58,12 +58,12 @@ static inline int hex2int(char s)
     return (h << 4) | h;
 }
 
-bool qt_get_hex_rgb(const char *name, QRgb *rgb)
+bool qt_get_hex_rgb(const char *name, const int length, QRgb *rgb)
 {
     if(name[0] != '#')
         return false;
     name++;
-    int len = qstrlen(name);
+    const int len = (length - 1);
     int r, g, b;
     if (len == 12) {
         r = hex2int(name);

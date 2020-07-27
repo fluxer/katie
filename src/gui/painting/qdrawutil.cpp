@@ -767,9 +767,6 @@ void qDrawBorderPixmap(QPainter *painter, const QRect &targetRect, const QMargin
     const int targetCenterWidth = targetCenterRight - targetCenterLeft;
     const int targetCenterHeight = targetCenterBottom - targetCenterTop;
 
-    QVarLengthArray<qreal, 16> xTarget; // x-coordinates of target rectangles
-    QVarLengthArray<qreal, 16> yTarget; // y-coordinates of target rectangles
-
     int columns = 3;
     int rows = 3;
     if (rules.horizontal != Qt::StretchTile && sourceCenterWidth != 0)
@@ -777,8 +774,9 @@ void qDrawBorderPixmap(QPainter *painter, const QRect &targetRect, const QMargin
     if (rules.vertical != Qt::StretchTile && sourceCenterHeight != 0)
         rows = qMax(3, 2 + qCeil(targetCenterHeight / qreal(sourceCenterHeight)));
 
-    xTarget.resize(columns + 1);
-    yTarget.resize(rows + 1);
+
+    qreal xTarget[columns + 1]; // x-coordinates of target rectangles
+    qreal yTarget[rows + 1]; // y-coordinates of target rectangles
 
     xTarget[0] = targetRect.left();
     xTarget[1] = targetCenterLeft;

@@ -3,7 +3,7 @@
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Copyright (C) 2016-2020 Ivailo Monev
 **
-** This file is part of the plugins of the Katie Toolkit.
+** This file is part of the QtCore module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 **
@@ -31,68 +31,52 @@
 **
 ****************************************************************************/
 
-#include "qimageiohandler.h"
-#include "qstringlist.h"
+#ifndef QCRYPTOGRAPHICSHASH_H
+#define QCRYPTOGRAPHICSHASH_H
 
-#ifndef QT_NO_IMAGEFORMATPLUGIN
+#include <QtCore/qbytearray.h>
 
-#include "qmnghandler_p.h"
+QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QMngPlugin : public QImageIOPlugin
+
+class QCryptographicHashPrivate;
+class QIODevice;
+
+class Q_NETWORK_EXPORT QCryptographicHash
 {
 public:
-    QMngPlugin();
-    ~QMngPlugin();
+    enum Algorithm {
+        Md4,
+        Md5,
+        Sha1,
+        Sha224,
+        Sha256,
+        Sha384,
+        Sha512
+    };
 
-    QStringList keys() const;
-    Capabilities capabilities(QIODevice *device, const QByteArray &format) const;
-    QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const;
+    explicit QCryptographicHash(Algorithm method);
+    ~QCryptographicHash();
+
+    void reset();
+
+    void addData(const char *data, int length);
+    inline void addData(const QByteArray &data)
+        { addData(data.constData(), data.length()); }
+    bool addData(QIODevice* device);
+
+    QByteArray result() const;
+
+    static QByteArray hash(const QByteArray &data, Algorithm method);
+private:
+    Q_DISABLE_COPY(QCryptographicHash)
+    QCryptographicHashPrivate *d;
 };
 
-QMngPlugin::QMngPlugin()
-{
-}
-
-QMngPlugin::~QMngPlugin()
-{
-}
-
-QStringList QMngPlugin::keys() const
-{
-    static const QStringList list = QStringList()
-        << QLatin1String("mng");
-    return list;
-}
-
-QImageIOPlugin::Capabilities QMngPlugin::capabilities(QIODevice *device, const QByteArray &format) const
-{
-    if (format == "mng")
-        return Capabilities(CanRead | CanWrite);
-    if (!format.isEmpty())
-        return 0;
-    if (!device->isOpen())
-        return 0;
-
-    Capabilities cap;
-    if (device->isReadable() && QMngHandler::canRead(device))
-        cap |= CanRead;
-    if (device->isWritable())
-        cap |= CanWrite;
-    return cap;
-}
-
-QImageIOHandler *QMngPlugin::create(QIODevice *device, const QByteArray &format) const
-{
-    QImageIOHandler *handler = new QMngHandler;
-    handler->setDevice(device);
-    handler->setFormat(format);
-    return handler;
-}
-
-Q_EXPORT_PLUGIN2(qmng, QMngPlugin)
-
-#endif // QT_NO_IMAGEFORMATPLUGIN
-
 QT_END_NAMESPACE
+
+QT_END_HEADER
+
+#endif // QCRYPTOGRAPHICSHASH_H

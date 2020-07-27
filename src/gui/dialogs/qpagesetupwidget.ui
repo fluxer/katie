@@ -195,7 +195,7 @@
            <string>top margin</string>
           </property>
           <property name="alignment" >
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignRight|Qt::AlignVCenter</set>
           </property>
           <property name="maximum" >
            <double>999.990000000000009</double>
@@ -226,7 +226,7 @@
              <string>left margin</string>
             </property>
             <property name="alignment" >
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignRight|Qt::AlignVCenter</set>
             </property>
             <property name="maximum" >
              <double>999.990000000000009</double>
@@ -258,7 +258,7 @@
              <string>right margin</string>
             </property>
             <property name="alignment" >
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignRight|Qt::AlignVCenter</set>
             </property>
             <property name="maximum" >
              <double>999.990000000000009</double>
@@ -289,7 +289,7 @@
            <string>bottom margin</string>
           </property>
           <property name="alignment" >
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignRight|Qt::AlignVCenter</set>
           </property>
           <property name="maximum" >
            <double>999.990000000000009</double>
