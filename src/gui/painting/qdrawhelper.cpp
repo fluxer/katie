@@ -1426,7 +1426,7 @@ template<TextureBlendType blendType, QImage::Format format> /* blendType = Blend
 static const uint * QT_FASTCALL fetchTransformedBilinear(uint *buffer, const Operator *, const QSpanData *data,
                                                   int y, int x, int length)
 {
-    FetchPixelProc fetch = (format != QImage::Format_Invalid) ? FetchPixelProc(qt_fetchPixel<format>) : fetchPixelProc[data->texture.format];
+    FetchPixelProc fetch = (format != QImage::Format_Invalid) ? fetchPixelProc[format] : fetchPixelProc[data->texture.format];
 
     int image_width = data->texture.width;
     int image_height = data->texture.height;
