@@ -41,6 +41,25 @@ QT_BEGIN_NAMESPACE
 // must be multiple of 4 for easier SIMD implementations
 static const int buffer_size = 2048;
 
+static inline uint INTERPOLATE_PIXEL_255(uint x, uint a, uint y, uint b) {
+    uint t = (x & 0xff00ff) * a + (y & 0xff00ff) * b;
+    t = (t + ((t >> 8) & 0xff00ff) + 0x800080) >> 8;
+    t &= 0xff00ff;
+
+    x = ((x >> 8) & 0xff00ff) * a + ((y >> 8) & 0xff00ff) * b;
+    x = (x + ((x >> 8) & 0xff00ff) + 0x800080);
+    x &= 0xff00ff00;
+    x |= t;
+    return x;
+}
+
+static inline uint BYTE_MUL_RGB16(uint x, uint a) {
+    a += 1;
+    uint t = (((x & 0x07e0)*a) >> 8) & 0x07e0;
+    t |= (((x & 0xf81f)*(a>>2)) >> 6) & 0xf81f;
+    return t;
+}
+
 static inline QRgb qConvertRgb16To32(uint c)
 {
     return 0xff000000
@@ -2305,6 +2324,11 @@ static inline int mix_alpha(int da, int sa)
 #define AMIX(mask) quint32(qMin(((qint64(s)&mask) + (qint64(d)&mask)), qint64(mask)))
 #define MIX(mask) (qMin(((quint32(s)&mask) + (quint32(d)&mask)), quint32(mask)))
 #endif
+
+static const uint AMASK = 0xff000000;
+static const uint RMASK = 0x00ff0000;
+static const uint GMASK = 0x0000ff00;
+static const uint BMASK = 0x000000ff;
 
 static inline int comp_func_Plus_one_pixel(uint d, const uint s)
 {
