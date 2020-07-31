@@ -297,11 +297,11 @@ void QPaintEngine::drawPolygon(const QPointF *points, int pointCount, PolygonDra
     Q_ASSERT_X(qt_polygon_recursion != this, "QPaintEngine::drawPolygon",
                "At least one drawPolygon function must be implemented");
     qt_polygon_recursion = this;
-    QVarLengthArray<QPoint> fp(pointCount);
+    QPoint fp[pointCount];
     for (int i = 0; i < pointCount; ++i) {
         fp[i] = points[i].toPoint();
     }
-    drawPolygon((QPoint*) fp.data(), pointCount, mode);
+    drawPolygon(fp, pointCount, mode);
     qt_polygon_recursion = 0;
 }
 
@@ -318,11 +318,11 @@ void QPaintEngine::drawPolygon(const QPoint *points, int pointCount, PolygonDraw
     Q_ASSERT_X(qt_polygon_recursion != this, "QPaintEngine::drawPolygon",
                "At least one drawPolygon function must be implemented");
     qt_polygon_recursion = this;
-    QVarLengthArray<QPointF> fp(pointCount);
+    QPointF fp[pointCount];
     for (int i=0; i<pointCount; ++i) {
         fp[i] = points[i];
     }
-    drawPolygon((QPointF*) fp.data(), pointCount, mode);
+    drawPolygon(fp, pointCount, mode);
     qt_polygon_recursion = 0;
 }
 
