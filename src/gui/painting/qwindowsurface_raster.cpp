@@ -55,9 +55,6 @@ public:
 
 #ifdef Q_WS_X11
     GC gc;
-#ifndef QT_NO_XSHM
-    bool needsSync;
-#endif
 #ifndef QT_NO_XRENDER
     bool translucentBackground;
 #endif
@@ -73,9 +70,6 @@ QRasterWindowSurface::QRasterWindowSurface(QWidget *window, bool setDefaultSurfa
 #ifndef QT_NO_XRENDER
     d_ptr->translucentBackground = qt_x11Data->use_xrender
         && window->x11Info().depth() == 32;
-#endif
-#ifndef QT_NO_XSHM
-    d_ptr->needsSync = false;
 #endif
 #endif
     d_ptr->image = 0;
@@ -97,23 +91,8 @@ QPaintDevice *QRasterWindowSurface::paintDevice()
     return d_ptr->image;
 }
 
-#if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
-void QRasterWindowSurface::syncX()
-{
-    // delay writing to the backbuffer until we know for sure X is done reading from it
-    if (d_ptr->needsSync) {
-        XSync(qt_x11Data->display, false);
-        d_ptr->needsSync = false;
-    }
-}
-#endif
-
 void QRasterWindowSurface::beginPaint(const QRegion &rgn)
 {
-#if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
-    syncX();
-#endif
-
 #if defined(Q_WS_X11) && !defined(QT_NO_XRENDER)
     if (!qt_widget_private(window())->isOpaque && window()->testAttribute(Qt::WA_TranslucentBackground)) {
         QPainter p(d_ptr->image);
@@ -208,10 +187,6 @@ bool QRasterWindowSurface::scroll(const QRegion &area, int dx, int dy)
 
     if (!d->image || d->image->isNull())
         return false;
-
-#if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
-    syncX();
-#endif
 
     qt_scrollRectInImage(d->image, area.boundingRect(), QPoint(dx, dy));
 
