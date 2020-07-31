@@ -435,7 +435,6 @@ public:
     inline bool operator==(const qargb8565 &v) const;
 
     inline quint32 rawValue() const;
-    inline quint16 rawValue16() const;
 
 private:
     friend class qrgb565;
@@ -554,11 +553,6 @@ bool qargb8565::operator==(const qargb8565 &v) const
 quint32 qargb8565::rawValue() const
 {
     return (data[2] << 16) | (data[1] << 8) | data[0];
-}
-
-quint16 qargb8565::rawValue16() const
-{
-    return (data[2] << 8) | data[1];
 }
 
 qrgb565::qrgb565(quint32p v)
