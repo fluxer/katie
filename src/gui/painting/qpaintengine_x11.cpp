@@ -1034,7 +1034,6 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
     if (flags & DirtyTransform) updateMatrix(state.transform());
     if (flags & DirtyPen) updatePen(state.pen());
     if (flags & (DirtyBrush | DirtyBrushOrigin)) updateBrush(state.brush(), state.brushOrigin());
-    if (flags & DirtyFont) updateFont(state.font());
 
     if (state.state() & DirtyClipEnabled) {
         if (state.isClipEnabled()) {
@@ -2037,18 +2036,6 @@ void QX11PaintEngine::updateClipRegion_dev(const QRegion &clipRegion, Qt::ClipOp
     }
     d->has_clipping = true;
     x11SetClipRegion(d->dpy, d->gc, d->gc_brush, d->picture, d->crgn);
-}
-
-void QX11PaintEngine::updateFont(const QFont &)
-{
-}
-
-Qt::HANDLE QX11PaintEngine::handle() const
-{
-    Q_D(const QX11PaintEngine);
-    Q_ASSERT(isActive());
-    Q_ASSERT(d->hd);
-    return d->hd;
 }
 
 extern void qt_draw_tile(QPaintEngine *, qreal, qreal, qreal, qreal, const QPixmap &,

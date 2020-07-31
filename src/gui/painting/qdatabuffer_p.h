@@ -88,11 +88,6 @@ public:
         ++siz;
     }
 
-    inline void pop_back() {
-        Q_ASSERT(siz > 0);
-        --siz;
-    }
-
     inline void resize(int size) {
         reserve(size);
         siz = size;
