@@ -54,8 +54,7 @@ bool QLocalServerPrivate::removeServer(const QString &name)
     if (name.startsWith(QLatin1Char('/'))) {
         fileName = name;
     } else {
-        fileName = QDir::cleanPath(QDir::tempPath());
-        fileName += QLatin1Char('/') + name;
+        fileName = QDir::tempPath() + QLatin1Char('/') + name;
     }
     if (QFile::exists(fileName))
         return QFile::remove(fileName);
@@ -71,8 +70,7 @@ bool QLocalServerPrivate::listen(const QString &requestedServerName)
     if (requestedServerName.startsWith(QLatin1Char('/'))) {
         fullServerName = requestedServerName;
     } else {
-        fullServerName = QDir::cleanPath(QDir::tempPath());
-        fullServerName += QLatin1Char('/') + requestedServerName;
+        fullServerName = QDir::tempPath() + QLatin1Char('/') + requestedServerName;
     }
     serverName = requestedServerName;
 
