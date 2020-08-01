@@ -3024,15 +3024,13 @@ static void blend_untransformed_argb(int count, const QSpan *spans, void *userDa
 static void QT_FASTCALL blendUntransformed(qrgb565 *dest, const qrgb565 *src,
                                            quint8 coverage, int length)
 {
-    Q_ASSERT(coverage > 0);
+    Q_ASSERT(coverage > 0 && coverage < 255);
 
-    if (coverage < 255) {
-        const quint8 alpha = qrgb565::alpha(coverage);
-        const quint8 ialpha = qrgb565::ialpha(coverage);
-        if (alpha) {
-            for (int i = 0; i < length; ++i)
-                interpolate_pixel(dest[i], ialpha, src[i], alpha);
-        }
+    const quint8 alpha = qrgb565::alpha(coverage);
+    const quint8 ialpha = qrgb565::ialpha(coverage);
+    if (alpha) {
+        for (int i = 0; i < length; ++i)
+            interpolate_pixel(dest[i], ialpha, src[i], alpha);
     }
 }
 
