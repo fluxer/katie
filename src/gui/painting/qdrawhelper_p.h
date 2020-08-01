@@ -335,6 +335,9 @@ static inline uint PREMUL(uint x) {
      | (((255*qGreen(p)) / qAlpha(p))  << 8)            \
      | ((255*qBlue(p)) / qAlpha(p))))
 
+#define ARGB_COMBINE_ALPHA(argb, alpha) \
+    ((((argb >> 24) * alpha) >> 8) << 24) | (argb & 0x00ffffff)
+
 class quint32p
 {
 public:
@@ -1225,9 +1228,6 @@ static const uint qt_bayer_matrix[16][16] = {
     { 0xaa, 0x6a, 0x9a, 0x5a, 0xa6, 0x66, 0x96, 0x56,
       0xa9, 0x69, 0x99, 0x59, 0xa5, 0x65, 0x95, 0x55}
 };
-
-#define ARGB_COMBINE_ALPHA(argb, alpha) \
-    ((((argb >> 24) * alpha) >> 8) << 24) | (argb & 0x00ffffff)
 
 QT_END_NAMESPACE
 
