@@ -373,11 +373,7 @@ public:
     inline quint32p(quint32 v) : data(PREMUL(v)) {}
 
     inline operator quint32() const { return data; }
-
-    inline operator quint16() const
-    {
-        return qt_colorConvert<quint16, quint32>(data, 0);
-    }
+    inline operator quint16() const { return data; }
 
     static inline quint32p fromRawData(quint32 v)
     {
@@ -994,20 +990,6 @@ bool qrgb888::operator==(qrgb888 v) const
             data[2] == v.data[2]);
 }
 
-template <>
-inline qrgb888 qt_colorConvert(const quint32 color, const qrgb888 dummy)
-{
-    Q_UNUSED(dummy);
-    return qrgb888(color);
-}
-
-template <>
-inline quint32 qt_colorConvert(const qrgb888 color, const quint32 dummy)
-{
-    Q_UNUSED(dummy);
-    return quint32(color);
-}
-
 // hw: endianess??
 class quint24
 {
@@ -1035,13 +1017,6 @@ private:
     uchar data[3];
 };
 
-template <>
-inline quint24 qt_colorConvert(const quint32 color, const quint24 dummy)
-{
-    Q_UNUSED(dummy);
-    return quint24(color);
-}
-
 // hw: endianess??
 class quint18
 {
@@ -1068,13 +1043,6 @@ public:
 private:
     uchar data[3];
 };
-
-template <>
-inline quint18 qt_colorConvert(const quint32 color, const quint18 dummy)
-{
-    Q_UNUSED(dummy);
-    return quint18(color);
-}
 
 class qrgb444;
 
@@ -1164,7 +1132,7 @@ qargb4444::operator quint32() const
 qargb4444::operator quint8() const
 {
     // hw: optimize!
-    return qt_colorConvert<quint8, quint32>(operator quint32(), 0);
+    return operator quint32();
 }
 
 qargb4444 qargb4444::operator+(qargb4444 v) const
@@ -1204,7 +1172,7 @@ qrgb444::operator quint32() const
 qrgb444::operator quint8() const
 {
     // hw: optimize!
-    return qt_colorConvert<quint8, quint32>(operator quint32(), 0);
+    return operator quint32();
 }
 
 qrgb444 qrgb444::operator+(qrgb444 v) const
