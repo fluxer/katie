@@ -1499,15 +1499,12 @@ QVector<QCss::StyleRule> QStyleSheetStyle::styleRules(const QWidget *w) const
 
     QStyleSheetStyleSelector styleSelector;
 
-    StyleSheet defaultSs;
-    QHash<const void *, StyleSheet>::const_iterator defaultCacheIt = styleSheetCaches->styleSheetCache.constFind(baseStyle());
+    QStyle *bs = baseStyle();
+    static StyleSheet defaultSs = getDefaultStyleSheet();
+    QHash<const void *, StyleSheet>::const_iterator defaultCacheIt = styleSheetCaches->styleSheetCache.constFind(bs);
     if (defaultCacheIt == styleSheetCaches->styleSheetCache.constEnd()) {
-        defaultSs = getDefaultStyleSheet();
-        QStyle *bs = baseStyle();
         styleSheetCaches->styleSheetCache.insert(bs, defaultSs);
         QObject::connect(bs, SIGNAL(destroyed(QObject*)), styleSheetCaches, SLOT(styleDestroyed(QObject*)), Qt::UniqueConnection);
-    } else {
-        defaultSs = defaultCacheIt.value();
     }
     styleSelector.styleSheets += defaultSs;
 
