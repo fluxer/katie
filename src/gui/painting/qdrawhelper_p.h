@@ -335,38 +335,6 @@ static inline uint PREMUL(uint x) {
      | (((255*qGreen(p)) / qAlpha(p))  << 8)            \
      | ((255*qBlue(p)) / qAlpha(p))))
 
-template <class DST, class SRC>
-inline DST qt_colorConvert(const SRC color, const DST dummy)
-{
-    Q_UNUSED(dummy);
-    return DST(color);
-}
-
-template <>
-inline quint32 qt_colorConvert(const quint16 color, const quint32 dummy)
-{
-    Q_UNUSED(dummy);
-    const int r = (color & 0xf800);
-    const int g = (color & 0x07e0);
-    const int b = (color & 0x001f);
-    const int tr = (r >> 8) | (r >> 13);
-    const int tg = (g >> 3) | (g >> 9);
-    const int tb = (b << 3) | (b >> 2);
-
-    return qRgb(tr, tg, tb);
-}
-
-template <>
-inline quint16 qt_colorConvert(const quint32 color, const quint16 dummy)
-{
-    Q_UNUSED(dummy);
-    const int r = qRed(color) << 8;
-    const int g = qGreen(color) << 3;
-    const int b = qBlue(color) >> 3;
-
-    return (r & 0xf800) | (g & 0x07e0)| (b & 0x001f);
-}
-
 class quint32p
 {
 public:
@@ -1063,10 +1031,44 @@ qrgb444 qrgb444::operator+(qrgb444 v) const
     return t;
 }
 
-template <class T>
-inline void qt_memfill(T *dest, const T value, int count)
+
+template <class DST, class SRC>
+inline DST qt_colorConvert(const SRC color, const DST dummy)
 {
-    ::memset(dest, value, count);
+    Q_UNUSED(dummy);
+    return DST(color);
+}
+
+template <>
+inline quint32 qt_colorConvert(const quint16 color, const quint32 dummy)
+{
+    Q_UNUSED(dummy);
+    const int r = (color & 0xf800);
+    const int g = (color & 0x07e0);
+    const int b = (color & 0x001f);
+    const int tr = (r >> 8) | (r >> 13);
+    const int tg = (g >> 3) | (g >> 9);
+    const int tb = (b << 3) | (b >> 2);
+
+    return qRgb(tr, tg, tb);
+}
+
+template <>
+inline quint16 qt_colorConvert(const quint32 color, const quint16 dummy)
+{
+    Q_UNUSED(dummy);
+    const int r = qRed(color) << 8;
+    const int g = qGreen(color) << 3;
+    const int b = qBlue(color) >> 3;
+
+    return (r & 0xf800) | (g & 0x07e0)| (b & 0x001f);
+}
+
+template <class T>
+inline void qt_memfill(T *dest, const T color, int count)
+{
+    while (count--)
+        *dest++ = color;
 }
 
 template <class DST, class SRC>
@@ -1075,24 +1077,6 @@ inline void qt_memfill(DST *dest, const SRC color, int count)
     const DST c = qt_colorConvert<DST, SRC>(color, 0);
     while (count--)
         *dest++ = c;
-}
-
-template<> inline void qt_memfill(quint32 *dest, const quint32 color, int count)
-{
-    while (count--)
-        *dest++ = color;
-}
-
-template<> inline void qt_memfill(quint16 *dest, const quint16 color, int count)
-{
-    while (count--)
-        *dest++ = color;
-}
-
-template<> inline void qt_memfill(quint8 *dest, const quint8 color, int count)
-{
-    while (count--)
-        *dest++ = color;
 }
 
 template <class T>
