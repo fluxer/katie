@@ -387,20 +387,6 @@ private:
     quint32 data;
 };
 
-class qabgr8888
-{
-public:
-    inline qabgr8888(quint32 v)
-    {
-        data = qRgba(qBlue(v), qGreen(v), qRed(v), qAlpha(v));
-    }
-
-    inline bool operator==(const qabgr8888 &v) const { return data == v.data; }
-
-private:
-    quint32 data;
-};
-
 class qrgb565;
 
 class qargb8565
@@ -576,25 +562,6 @@ bool qrgb565::operator==(const qrgb565 &v) const
     return data == v.data;
 }
 
-class qbgr565
-{
-public:
-    inline qbgr565(quint16 v)
-    {
-        data = ((v & 0x001f) << 11) |
-               (v & 0x07e0) |
-               ((v & 0xf800) >> 11);
-    }
-
-    inline bool operator==(const qbgr565 &v) const
-    {
-        return data == v.data;
-    }
-
-private:
-    quint16 data;
-};
-
 class qrgb555;
 
 class qargb8555
@@ -681,7 +648,6 @@ public:
 
 private:
     friend class qargb8555;
-    friend class qbgr555;
     quint16 data;
 };
 
@@ -696,27 +662,6 @@ qrgb555 qrgb555::operator+(qrgb555 v) const
     t.data = data + v.data;
     return t;
 }
-
-class qbgr555
-{
-public:
-    inline qbgr555(quint32 v) { *this = qbgr555(qrgb555(v)); }
-
-    inline qbgr555(qrgb555 v)
-    {
-        data = ((v.data & 0x001f) << 10) |
-               (v.data & 0x03e0) |
-               ((v.data & 0x7c00) >> 10);
-    }
-
-    inline bool operator==(const qbgr555 &v) const
-    {
-        return data == v.data;
-    }
-
-private:
-    quint16 data;
-};
 
 qargb8555::qargb8555(quint32 v)
 {
@@ -1011,33 +956,6 @@ public:
         return data[0] == v.data[0]
             && data[1] == v.data[1]
             && data[2] == v.data[2];
-    }
-
-private:
-    uchar data[3];
-};
-
-// hw: endianess??
-class quint18
-{
-public:
-    inline quint18(quint32 v)
-    {
-        uchar b = qBlue(v);
-        uchar g = qGreen(v);
-        uchar r = qRed(v);
-        uint p = (b >> 2) | ((g >> 2) << 6) | ((r >> 2) << 12);
-        data[0] = qBlue(p);
-        data[1] = qGreen(p);
-        data[2] = qRed(p);
-    }
-
-    inline operator quint32 ()
-    {
-        const uchar r = (data[2] << 6) | ((data[1] & 0xf0) >> 2) | (data[2] & 0x3);
-        const uchar g = (data[1] << 4) | ((data[0] & 0xc0) >> 4) | ((data[1] & 0x0f) >> 2);
-        const uchar b = (data[0] << 2) | ((data[0] & 0x3f) >> 4);
-        return qRgb(r, g, b);
     }
 
 private:
