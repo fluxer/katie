@@ -108,10 +108,7 @@ public:
 
     void setGamma(float);
 
-    bool writeImage(const QImage& img, int x, int y);
-    bool writeImage(const QImage& img, int quality, int x, int y);
-    bool writeImage(const QImage& img, int quality)
-        { return writeImage(img, quality, 0, 0); }
+    bool writeImage(const QImage& img, int quality);
 
     QIODevice* device() { return dev; }
 
@@ -528,13 +525,7 @@ void QPNGImageWriter::setGamma(float g)
     gamma = g;
 }
 
-bool QPNGImageWriter::writeImage(const QImage& image, int off_x, int off_y)
-{
-    return writeImage(image, -1, off_x, off_y);
-}
-
-bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
-                                 int off_x_in, int off_y_in)
+bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
 {
     png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,0,0,0);
     if (!png_ptr) {
@@ -629,8 +620,8 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
 #endif
 
     QPoint offset = image.offset();
-    int off_x = off_x_in + offset.x();
-    int off_y = off_y_in + offset.y();
+    int off_x = offset.x();
+    int off_y = offset.y();
     if (off_x || off_y) {
         png_set_oFFs(png_ptr, info_ptr, off_x, off_y, PNG_OFFSET_PIXEL);
     }
