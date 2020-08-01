@@ -403,10 +403,6 @@ public:
     inline operator quint32() const;
     inline operator quint16() const;
 
-    inline quint8 alpha() const { return data[0]; }
-    static inline quint8 alpha(quint8 a) { return (a + 1) >> 3; }
-    static inline quint8 ialpha(quint8 a) { return 0x20 - alpha(a); }
-
     inline qargb8565 operator+(qargb8565 v) const;
     inline bool operator==(const qargb8565 &v) const;
 
@@ -433,7 +429,6 @@ public:
 
     inline qrgb565 operator+(qrgb565 v) const;
 
-    inline quint8 alpha() const { return 0xff; }
     static inline quint8 alpha(quint8 a) { return (a + 1) >> 3; }
     static inline quint8 ialpha(quint8 a) { return 0x20 - alpha(a); }
 
@@ -577,10 +572,6 @@ public:
 
     inline operator quint32() const;
 
-    inline quint8 alpha() const { return data[0]; }
-    static inline quint8 alpha(quint8 a) { return (a + 1) >> 3; }
-    static inline quint8 ialpha(quint8 a) { return 0x20 - alpha(a); }
-
     inline qargb8555 operator+(qargb8555 v) const;
 
     inline bool operator==(const qargb8555 &v) const;
@@ -638,10 +629,6 @@ public:
     }
 
     inline qrgb555 operator+(qrgb555 v) const;
-
-    inline quint8 alpha() const { return 0xff; }
-    static inline quint8 alpha(quint8 a) { return (a + 1) >> 3; }
-    static inline quint8 ialpha(quint8 a) { return 0x20 - alpha(a); }
 
     inline bool operator==(const qrgb555 &v) const { return v.data == data; }
     inline bool operator!=(const qrgb555 &v) const { return v.data != data; }
@@ -745,10 +732,6 @@ public:
 
     inline operator quint32 () const;
 
-    inline quint8 alpha() const;
-    static inline quint8 alpha(quint8 a) { return (a + 1) >> 2; }
-    static inline quint8 ialpha(quint8 a) { return (255 - a + 1) >> 2; }
-
     inline qargb6666 operator+(qargb6666 v) const;
     inline bool operator==(const qargb6666 &v) const;
 
@@ -767,10 +750,6 @@ public:
     inline qrgb666(const qargb6666 &v);
 
     inline operator quint32 () const;
-
-    inline quint8 alpha() const { return 0xff; }
-    static inline quint8 alpha(quint8 a) { return (a + 1) >> 2; }
-    static inline quint8 ialpha(quint8 a) { return (255 - a + 1) >> 2; }
 
     inline qrgb666 operator+(qrgb666 v) const;
 
@@ -874,11 +853,6 @@ qargb6666 qargb6666::operator+(qargb6666 v) const
     return r;
 }
 
-quint8 qargb6666::alpha() const
-{
-    return (data[2] & 0xfc) | (data[2] >> 6);
-}
-
 bool qargb6666::operator==(const qargb6666 &v) const
 {
     return data[0] == v.data[0]
@@ -895,10 +869,6 @@ public:
     inline qrgb888(quint32 v);
 
     inline operator quint32() const;
-
-    inline quint8 alpha() const { return 0xff; }
-    static inline quint8 alpha(quint8 a) { return a; }
-    static inline quint8 ialpha(quint8 a) { return 255 - a; }
 
     inline qrgb888 operator+(qrgb888 v) const;
     inline bool operator==(qrgb888 v) const;
@@ -979,10 +949,6 @@ public:
 
     inline qargb4444 operator+(qargb4444 v) const;
 
-    inline quint8 alpha() const { return ((data & 0xf000) >> 8) | ((data & 0xf000) >> 12); }
-    static inline quint8 alpha(quint8 a) { return (a + 1) >> 4; }
-    static inline quint8 ialpha(quint8 a) { return 0x10 - alpha(a); }
-
     inline bool operator==(const qargb4444 &v) const { return data == v.data; }
 
 private:
@@ -1003,9 +969,6 @@ public:
     inline operator quint8() const;
 
     inline qrgb444 operator+(qrgb444 v) const;
-    inline quint8 alpha() const { return 0xff; }
-    static inline quint8 alpha(quint8 a) { return (a + 1) >> 4; }
-    static inline quint8 ialpha(quint8 a) { return 0x10 - alpha(a); }
 
     inline bool operator==(const qrgb444 &v) const { return data == v.data; }
     inline bool operator!=(const qrgb444 &v) const { return data != v.data; }
