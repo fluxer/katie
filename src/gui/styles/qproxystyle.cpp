@@ -38,7 +38,7 @@
 #include "qstylefactory.h"
 #include "qstyle_p.h"
 
-#if !defined(QT_NO_STYLE_PROXY) || defined(QT_PLUGIN)
+#if !defined(QT_NO_STYLE_PROXY)
 
 QT_BEGIN_NAMESPACE
 
