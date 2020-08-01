@@ -82,7 +82,7 @@ static inline void interpolate_pixel(qrgb565 &dest, quint8 a, const qrgb565 &src
   transformations
 */
 
-static uint * QT_FASTCALL destFetchMono(uint *buffer, QRasterBuffer *rasterBuffer, int x, int y, int length)
+static uint * QT_FASTCALL destFetchMono(uint *buffer, const QRasterBuffer *rasterBuffer, int x, int y, int length)
 {
     const uchar *data = (const uchar *)rasterBuffer->scanLine(y);
     uint *start = buffer;
@@ -95,7 +95,7 @@ static uint * QT_FASTCALL destFetchMono(uint *buffer, QRasterBuffer *rasterBuffe
     return start;
 }
 
-static uint * QT_FASTCALL destFetchMonoLsb(uint *buffer, QRasterBuffer *rasterBuffer, int x, int y, int length)
+static uint * QT_FASTCALL destFetchMonoLsb(uint *buffer, const QRasterBuffer *rasterBuffer, int x, int y, int length)
 {
     const uchar *data = (const uchar *)rasterBuffer->scanLine(y);
     uint *start = buffer;
@@ -108,7 +108,7 @@ static uint * QT_FASTCALL destFetchMonoLsb(uint *buffer, QRasterBuffer *rasterBu
     return start;
 }
 
-static uint * QT_FASTCALL destFetchARGB32(uint *buffer, QRasterBuffer *rasterBuffer, int x, int y, int length)
+static uint * QT_FASTCALL destFetchARGB32(uint *buffer, const QRasterBuffer *rasterBuffer, int x, int y, int length)
 {
     const uint *data = (const uint *)rasterBuffer->scanLine(y) + x;
     for (int i = 0; i < length; ++i)
@@ -116,12 +116,12 @@ static uint * QT_FASTCALL destFetchARGB32(uint *buffer, QRasterBuffer *rasterBuf
     return buffer;
 }
 
-static uint * QT_FASTCALL destFetchARGB32P(uint *, QRasterBuffer *rasterBuffer, int x, int y, int)
+static uint * QT_FASTCALL destFetchARGB32P(uint *, const QRasterBuffer *rasterBuffer, int x, int y, int)
 {
     return (uint *)rasterBuffer->scanLine(y) + x;
 }
 
-static uint * QT_FASTCALL destFetchRGB16(uint *buffer, QRasterBuffer *rasterBuffer, int x, int y, int length)
+static uint * QT_FASTCALL destFetchRGB16(uint *buffer, const QRasterBuffer *rasterBuffer, int x, int y, int length)
 {
     const ushort *data = (const ushort *)rasterBuffer->scanLine(y) + x;
     for (int i = 0; i < length; ++i)
@@ -130,7 +130,7 @@ static uint * QT_FASTCALL destFetchRGB16(uint *buffer, QRasterBuffer *rasterBuff
 }
 
 template <class DST>
-static uint * QT_FASTCALL destFetch(uint *buffer, QRasterBuffer *rasterBuffer,
+static uint * QT_FASTCALL destFetch(uint *buffer, const QRasterBuffer *rasterBuffer,
                                     int x, int y, int length)
 {
     const DST *src = reinterpret_cast<const DST*>(rasterBuffer->scanLine(y)) + x;
