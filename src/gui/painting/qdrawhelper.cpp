@@ -3027,8 +3027,8 @@ static void QT_FASTCALL blendUntransformed(qrgb565 *dest, const qrgb565 *src,
     Q_ASSERT(coverage > 0 && coverage < 255);
 
     const quint8 alpha = qrgb565::alpha(coverage);
-    const quint8 ialpha = qrgb565::ialpha(coverage);
     if (alpha) {
+        const quint8 ialpha = qrgb565::ialpha(coverage);
         for (int i = 0; i < length; ++i)
             interpolate_pixel(dest[i], ialpha, src[i], alpha);
     }
