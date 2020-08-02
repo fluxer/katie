@@ -928,26 +928,20 @@ void QX11PaintEngine::drawPoints(const QPoint *points, int pointCount)
         return;
     }
 
-    static const int BUF_SIZE = 1024;
-    XPoint xPoints[BUF_SIZE];
+    XPoint xPoints[pointCount];
     int i = 0, j = 0;
     while (i < pointCount) {
-        while (i < pointCount && j < BUF_SIZE) {
-            const QPoint &xformed = d->matrix.map(points[i]);
-            int x = xformed.x();
-            int y = xformed.y();
-            if (x >= SHRT_MIN && y >= SHRT_MIN && x < SHRT_MAX && y < SHRT_MAX) {
-                xPoints[j].x = x;
-                xPoints[j].y = y;
-                ++j;
-            }
-            ++i;
+        const QPoint &xformed = d->matrix.map(points[i]);
+        int x = xformed.x();
+        int y = xformed.y();
+        if (x >= SHRT_MIN && y >= SHRT_MIN && x < SHRT_MAX && y < SHRT_MAX) {
+            xPoints[j].x = x;
+            xPoints[j].y = y;
+            ++j;
         }
-        if (j)
-            XDrawPoints(d->dpy, d->hd, d->gc, xPoints, j, CoordModeOrigin);
-
-        j = 0;
+        ++i;
     }
+    XDrawPoints(d->dpy, d->hd, d->gc, xPoints, j, CoordModeOrigin);
 }
 
 void QX11PaintEngine::drawPoints(const QPointF *points, int pointCount)
@@ -986,27 +980,21 @@ void QX11PaintEngine::drawPoints(const QPointF *points, int pointCount)
         return;
     }
 
-    static const int BUF_SIZE = 1024;
-    XPoint xPoints[BUF_SIZE];
+    XPoint xPoints[pointCount];
     int i = 0, j = 0;
     while (i < pointCount) {
-        while (i < pointCount && j < BUF_SIZE) {
-            const QPointF &xformed = d->matrix.map(points[i]);
-            int x = qFloor(xformed.x());
-            int y = qFloor(xformed.y());
+        const QPointF &xformed = d->matrix.map(points[i]);
+        int x = qFloor(xformed.x());
+        int y = qFloor(xformed.y());
 
-            if (x >= SHRT_MIN && y >= SHRT_MIN && x < SHRT_MAX && y < SHRT_MAX) {
-                xPoints[j].x = x;
-                xPoints[j].y = y;
-                ++j;
-            }
-            ++i;
+        if (x >= SHRT_MIN && y >= SHRT_MIN && x < SHRT_MAX && y < SHRT_MAX) {
+            xPoints[j].x = x;
+            xPoints[j].y = y;
+            ++j;
         }
-        if (j)
-            XDrawPoints(d->dpy, d->hd, d->gc, xPoints, j, CoordModeOrigin);
-
-        j = 0;
+        ++i;
     }
+    XDrawPoints(d->dpy, d->hd, d->gc, xPoints, j, CoordModeOrigin);
 }
 
 QPainter::RenderHints QX11PaintEngine::supportedRenderHints() const
