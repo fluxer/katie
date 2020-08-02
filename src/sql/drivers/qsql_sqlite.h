@@ -40,12 +40,6 @@
 
 struct sqlite3;
 
-#ifdef QT_PLUGIN
-#define Q_EXPORT_SQLDRIVER_SQLITE
-#else
-#define Q_EXPORT_SQLDRIVER_SQLITE Q_SQL_EXPORT
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
@@ -77,7 +71,7 @@ private:
     QSQLiteResultPrivate* d;
 };
 
-class Q_EXPORT_SQLDRIVER_SQLITE QSQLiteDriver : public QSqlDriver
+class Q_SQL_EXPORT QSQLiteDriver : public QSqlDriver
 {
     Q_OBJECT
     friend class QSQLiteResult;
