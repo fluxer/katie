@@ -248,10 +248,6 @@ void QXRenderTessellator::addTrap(const Trapezoid &trap)
     ++size;
 }
 
-#endif // !defined(QT_NO_XRENDER)
-
-
-#ifndef QT_NO_XRENDER
 static Picture getPatternFill(int screen, const QBrush &b)
 {
     if (!qt_x11Data->use_xrender)
@@ -319,7 +315,7 @@ static void qt_render_bitmap(Display *dpy, int scrn, Picture src, Picture dst,
     XRenderComposite(dpy, PictOpOver,
                      fill_fg, src, dst, sx, sy, sx, sy, x, y, sw, sh);
 }
-#endif
+#endif // QT_NO_XRENDER
 
 void QX11PaintEnginePrivate::init()
 {
