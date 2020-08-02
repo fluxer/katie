@@ -252,7 +252,7 @@ void QPainterPrivate::detachPainterPrivate(QPainter *q)
 }
 
 
-void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperation op)
+void QPainterPrivate::draw_helper(const QPainterPath &originalPath)
 {
 #ifdef QT_DEBUG_DRAW
     printf("QPainter::drawHelper\n");
@@ -262,7 +262,7 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperatio
         return;
 
     if (!extended) {
-        drawStretchedGradient(originalPath, op);
+        drawStretchedGradient(originalPath);
         return;
     }
 
@@ -273,7 +273,7 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperatio
     QPainterPath path = originalPath * state->matrix;
     QRectF pathBounds = path.boundingRect();
     QRectF strokeBounds;
-    bool doStroke = (op & StrokeDraw) && (state->pen.style() != Qt::NoPen);
+    bool doStroke = (state->pen.style() != Qt::NoPen);
     if (doStroke) {
         qreal penWidth = state->pen.widthF();
         if (penWidth == 0) {
@@ -352,7 +352,7 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperatio
     p.translate(-absPathRect.x(), -absPathRect.y());
     p.setTransform(state->matrix, true);
     p.setPen(doStroke ? state->pen : QPen(Qt::NoPen));
-    p.setBrush((op & FillDraw) ? state->brush : QBrush(Qt::NoBrush));
+    p.setBrush(state->brush);
     p.setBackground(state->bgBrush);
     p.setBackgroundMode(state->bgMode);
     p.setBrushOrigin(state->brushOrigin);
@@ -395,18 +395,18 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperatio
     q->restore();
 }
 
-void QPainterPrivate::drawOpaqueBackground(const QPainterPath &path, DrawOperation op)
+void QPainterPrivate::drawOpaqueBackground(const QPainterPath &path)
 {
     Q_Q(QPainter);
 
     q->setBackgroundMode(Qt::TransparentMode);
 
-    if (op & FillDraw && state->brush.style() != Qt::NoBrush) {
+    if (state->brush.style() != Qt::NoBrush) {
         q->fillPath(path, state->bgBrush.color());
         q->fillPath(path, state->brush);
     }
 
-    if (op & StrokeDraw && state->pen.style() != Qt::NoPen) {
+    if (state->pen.style() != Qt::NoPen) {
         q->strokePath(path, QPen(state->bgBrush.color(), state->pen.width()));
         q->strokePath(path, state->pen);
     }
@@ -430,7 +430,7 @@ static inline QBrush stretchGradientToUserSpace(const QBrush &brush, const QRect
     return b;
 }
 
-void QPainterPrivate::drawStretchedGradient(const QPainterPath &path, DrawOperation op)
+void QPainterPrivate::drawStretchedGradient(const QPainterPath &path)
 {
     Q_Q(QPainter);
 
@@ -450,7 +450,7 @@ void QPainterPrivate::drawStretchedGradient(const QPainterPath &path, DrawOperat
     QRectF boundingRect;
 
     // Draw the xformed fill if the brush is a stretch gradient.
-    if ((op & FillDraw) && brush.style() != Qt::NoBrush) {
+    if (brush.style() != Qt::NoBrush) {
         if (brushMode == QGradient::StretchToDeviceMode) {
             q->setPen(Qt::NoPen);
             changedPen = pen.style() != Qt::NoPen;
@@ -474,7 +474,7 @@ void QPainterPrivate::drawStretchedGradient(const QPainterPath &path, DrawOperat
         }
     }
 
-    if ((op & StrokeDraw) && pen.style() != Qt::NoPen) {
+    if (pen.style() != Qt::NoPen) {
         // Draw the xformed outline if the pen is a stretch gradient.
         if (penMode == QGradient::StretchToDeviceMode) {
             q->setPen(Qt::NoPen);

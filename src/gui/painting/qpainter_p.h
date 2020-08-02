@@ -175,12 +175,6 @@ public:
     int d_ptrs_size;
     uint refcount;
 
-    enum DrawOperation {
-        StrokeDraw        = 0x1,
-        FillDraw          = 0x2,
-        StrokeAndFillDraw = 0x3
-    };
-
     QPainterDummyState *fakeState() const {
         if (!dummyState)
             dummyState = new QPainterDummyState();
@@ -190,9 +184,9 @@ public:
     void updateStateImpl(QPainterState *state);
     void updateState(QPainterState *state);
 
-    void draw_helper(const QPainterPath &path, DrawOperation operation = StrokeAndFillDraw);
-    void drawStretchedGradient(const QPainterPath &path, DrawOperation operation);
-    void drawOpaqueBackground(const QPainterPath &path, DrawOperation operation);
+    void draw_helper(const QPainterPath &path);
+    void drawStretchedGradient(const QPainterPath &path);
+    void drawOpaqueBackground(const QPainterPath &path);
 
     void updateMatrix();
     void updateInvMatrix();
