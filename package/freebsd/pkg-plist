@@ -1343,7 +1343,6 @@ include/katie/QtSql/QSqlResult
 include/katie/QtSql/QSqlTableModel
 include/katie/QtSql/QtSql
 include/katie/QtSql/qsql.h
-include/katie/QtSql/qsql_sqlite.h
 include/katie/QtSql/qsqldatabase.h
 include/katie/QtSql/qsqldriver.h
 include/katie/QtSql/qsqldriverplugin.h

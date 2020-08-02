@@ -45,7 +45,7 @@ set(SQL_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqltablemodel_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlrelationaldelegate.h
     ${CMAKE_CURRENT_SOURCE_DIR}/models/qsqlrelationaltablemodel.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/qsql_sqlite.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/qsql_sqlite_p.h
 )
 
 set(SQL_SOURCES
