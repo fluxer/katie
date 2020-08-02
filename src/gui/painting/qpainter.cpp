@@ -6082,14 +6082,7 @@ void QPainter::fillRect(const QRectF &r, const QBrush &brush)
     QPen oldPen = pen();
     QBrush oldBrush = this->brush();
     setPen(Qt::NoPen);
-    if (brush.style() == Qt::SolidPattern) {
-        d->colorBrush.setStyle(Qt::SolidPattern);
-        d->colorBrush.setColor(brush.color());
-        setBrush(d->colorBrush);
-    } else {
-        setBrush(brush);
-    }
-
+    setBrush(brush);
     drawRect(r);
     setBrush(oldBrush);
     setPen(oldPen);
@@ -6120,14 +6113,7 @@ void QPainter::fillRect(const QRect &r, const QBrush &brush)
     QPen oldPen = pen();
     QBrush oldBrush = this->brush();
     setPen(Qt::NoPen);
-    if (brush.style() == Qt::SolidPattern) {
-        d->colorBrush.setStyle(Qt::SolidPattern);
-        d->colorBrush.setColor(brush.color());
-        setBrush(d->colorBrush);
-    } else {
-        setBrush(brush);
-    }
-
+    setBrush(brush);
     drawRect(r);
     setBrush(oldBrush);
     setPen(oldPen);

@@ -210,7 +210,6 @@ public:
     QPaintDevice *helper_device;
     QPaintEngine *engine;
     QPaintEngineEx *extended;
-    QBrush colorBrush;          // for fill with solid color
 };
 
 QString qt_generate_brush_key(const QBrush &brush);
