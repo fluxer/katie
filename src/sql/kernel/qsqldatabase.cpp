@@ -45,7 +45,7 @@
 #include "qsqlnulldriver_p.h"
 #include "qmutex.h"
 #include "qhash.h"
-#include "qsql_sqlite.h"
+#include "qsql_sqlite_p.h"
 
 #include <stdlib.h>
 

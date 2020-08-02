@@ -248,10 +248,6 @@ void QXRenderTessellator::addTrap(const Trapezoid &trap)
     ++size;
 }
 
-#endif // !defined(QT_NO_XRENDER)
-
-
-#ifndef QT_NO_XRENDER
 static Picture getPatternFill(int screen, const QBrush &b)
 {
     if (!qt_x11Data->use_xrender)
@@ -319,7 +315,7 @@ static void qt_render_bitmap(Display *dpy, int scrn, Picture src, Picture dst,
     XRenderComposite(dpy, PictOpOver,
                      fill_fg, src, dst, sx, sy, sx, sy, x, y, sw, sh);
 }
-#endif
+#endif // QT_NO_XRENDER
 
 void QX11PaintEnginePrivate::init()
 {
@@ -928,26 +924,20 @@ void QX11PaintEngine::drawPoints(const QPoint *points, int pointCount)
         return;
     }
 
-    static const int BUF_SIZE = 1024;
-    XPoint xPoints[BUF_SIZE];
+    XPoint xPoints[pointCount];
     int i = 0, j = 0;
     while (i < pointCount) {
-        while (i < pointCount && j < BUF_SIZE) {
-            const QPoint &xformed = d->matrix.map(points[i]);
-            int x = xformed.x();
-            int y = xformed.y();
-            if (x >= SHRT_MIN && y >= SHRT_MIN && x < SHRT_MAX && y < SHRT_MAX) {
-                xPoints[j].x = x;
-                xPoints[j].y = y;
-                ++j;
-            }
-            ++i;
+        const QPoint &xformed = d->matrix.map(points[i]);
+        int x = xformed.x();
+        int y = xformed.y();
+        if (x >= SHRT_MIN && y >= SHRT_MIN && x < SHRT_MAX && y < SHRT_MAX) {
+            xPoints[j].x = x;
+            xPoints[j].y = y;
+            ++j;
         }
-        if (j)
-            XDrawPoints(d->dpy, d->hd, d->gc, xPoints, j, CoordModeOrigin);
-
-        j = 0;
+        ++i;
     }
+    XDrawPoints(d->dpy, d->hd, d->gc, xPoints, j, CoordModeOrigin);
 }
 
 void QX11PaintEngine::drawPoints(const QPointF *points, int pointCount)
@@ -986,27 +976,21 @@ void QX11PaintEngine::drawPoints(const QPointF *points, int pointCount)
         return;
     }
 
-    static const int BUF_SIZE = 1024;
-    XPoint xPoints[BUF_SIZE];
+    XPoint xPoints[pointCount];
     int i = 0, j = 0;
     while (i < pointCount) {
-        while (i < pointCount && j < BUF_SIZE) {
-            const QPointF &xformed = d->matrix.map(points[i]);
-            int x = qFloor(xformed.x());
-            int y = qFloor(xformed.y());
+        const QPointF &xformed = d->matrix.map(points[i]);
+        int x = qFloor(xformed.x());
+        int y = qFloor(xformed.y());
 
-            if (x >= SHRT_MIN && y >= SHRT_MIN && x < SHRT_MAX && y < SHRT_MAX) {
-                xPoints[j].x = x;
-                xPoints[j].y = y;
-                ++j;
-            }
-            ++i;
+        if (x >= SHRT_MIN && y >= SHRT_MIN && x < SHRT_MAX && y < SHRT_MAX) {
+            xPoints[j].x = x;
+            xPoints[j].y = y;
+            ++j;
         }
-        if (j)
-            XDrawPoints(d->dpy, d->hd, d->gc, xPoints, j, CoordModeOrigin);
-
-        j = 0;
+        ++i;
     }
+    XDrawPoints(d->dpy, d->hd, d->gc, xPoints, j, CoordModeOrigin);
 }
 
 QPainter::RenderHints QX11PaintEngine::supportedRenderHints() const
@@ -1034,7 +1018,6 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
     if (flags & DirtyTransform) updateMatrix(state.transform());
     if (flags & DirtyPen) updatePen(state.pen());
     if (flags & (DirtyBrush | DirtyBrushOrigin)) updateBrush(state.brush(), state.brushOrigin());
-    if (flags & DirtyFont) updateFont(state.font());
 
     if (state.state() & DirtyClipEnabled) {
         if (state.isClipEnabled()) {
@@ -2037,18 +2020,6 @@ void QX11PaintEngine::updateClipRegion_dev(const QRegion &clipRegion, Qt::ClipOp
     }
     d->has_clipping = true;
     x11SetClipRegion(d->dpy, d->gc, d->gc_brush, d->picture, d->crgn);
-}
-
-void QX11PaintEngine::updateFont(const QFont &)
-{
-}
-
-Qt::HANDLE QX11PaintEngine::handle() const
-{
-    Q_D(const QX11PaintEngine);
-    Q_ASSERT(isActive());
-    Q_ASSERT(d->hd);
-    return d->hd;
 }
 
 extern void qt_draw_tile(QPaintEngine *, qreal, qreal, qreal, qreal, const QPixmap &,

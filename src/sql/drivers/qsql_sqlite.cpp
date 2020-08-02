@@ -31,7 +31,7 @@
 **
 ****************************************************************************/
 
-#include "qsql_sqlite.h"
+#include "qsql_sqlite_p.h"
 #include "qcoreapplication.h"
 #include "qvariant.h"
 #include "qsqlerror.h"
@@ -762,7 +762,7 @@ QString QSQLiteDriver::escapeIdentifier(const QString &identifier, IdentifierTyp
     return _q_escapeIdentifier(identifier);
 }
 
-#include "moc_qsql_sqlite.h"
+#include "moc_qsql_sqlite_p.h"
 
 QT_END_NAMESPACE
 
