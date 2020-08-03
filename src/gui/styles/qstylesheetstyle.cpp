@@ -1470,8 +1470,8 @@ public:
     }
     bool hasAttributes(NodePtr) const
     { return true; }
-    QStringList nodeIds(NodePtr node) const
-    { return isNullNode(node) ? QStringList() : QStringList(WIDGET(node)->objectName()); }
+    QString nodeId(NodePtr node) const
+    { return isNullNode(node) ? QString() : WIDGET(node)->objectName(); }
     bool isNullNode(NodePtr node) const
     { return node.ptr == 0; }
     NodePtr parentNode(NodePtr node) const

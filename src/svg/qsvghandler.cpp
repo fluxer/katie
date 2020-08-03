@@ -403,14 +403,12 @@ public:
                 (!n->nodeId().isEmpty() || !n->xmlClass().isEmpty()));
     }
 
-    virtual QStringList nodeIds(NodePtr node) const
+    virtual QString nodeId(NodePtr node) const
     {
         QSvgNode *n = svgNode(node);
-        QString nid;
         if (n)
-            nid = n->nodeId();
-        QStringList lst; lst.append(nid);
-        return lst;
+            return n->nodeId();
+        return QString();
     }
 
     virtual QStringList nodeNames(NodePtr node) const

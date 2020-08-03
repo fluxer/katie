@@ -1783,9 +1783,9 @@ bool StyleSelector::nodeNameEquals(NodePtr node, const QString& nodeName) const
     return nodeNames(node).contains(nodeName, nameCaseSensitivity);
 }
 
-QStringList StyleSelector::nodeIds(NodePtr node) const
+QString StyleSelector::nodeId(NodePtr node) const
 {
-    return QStringList(attribute(node, QLatin1String("id")));
+    return attribute(node, QLatin1String("id"));
 }
 
 bool StyleSelector::selectorMatches(const Selector &selector, NodePtr node)
@@ -1876,9 +1876,8 @@ bool StyleSelector::basicSelectorMatches(const BasicSelector &sel, NodePtr node)
         && !nodeNameEquals(node, sel.elementName))
             return false;
 
-    if (!sel.ids.isEmpty()
-        && sel.ids != nodeIds(node))
-            return false;
+    if (!sel.ids.isEmpty() && sel.ids.at(0) != nodeId(node))
+        return false;
 
     return true;
 }
@@ -1921,14 +1920,11 @@ QVector<StyleRule> StyleSelector::styleRulesForNode(NodePtr node)
         }
 
         if (!styleSheet.idIndex.isEmpty()) {
-            QStringList ids = nodeIds(node);
-            for (int i = 0; i < ids.count(); i++) {
-                const QString &key = ids.at(i);
-                QMultiHash<QString, StyleRule>::const_iterator it = styleSheet.idIndex.constFind(key);
-                while (it != styleSheet.idIndex.constEnd() && it.key() == key) {
-                    matchRule(node, it.value(), styleSheet.origin, styleSheet.depth, &weightedRules);
-                    ++it;
-                }
+            QString key = nodeId(node);
+            QMultiHash<QString, StyleRule>::const_iterator it = styleSheet.idIndex.constFind(key);
+            while (it != styleSheet.idIndex.constEnd() && it.key() == key) {
+                matchRule(node, it.value(), styleSheet.origin, styleSheet.depth, &weightedRules);
+                ++it;
             }
         }
         if (!styleSheet.nameIndex.isEmpty()) {
