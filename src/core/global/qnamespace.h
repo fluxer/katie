@@ -359,7 +359,6 @@ public:
         AA_NativeWindows = 2,
         AA_DontCreateNativeWidgetSiblings = 3,
         AA_X11InitThreads = 4,
-        AA_CaptureMultimediaKeys = 5,
 
         // Add new attributes before this line
         AA_AttributeCount
