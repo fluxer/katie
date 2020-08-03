@@ -1587,35 +1587,6 @@ void qCritical(const char *msg, ...)
     va_end(ap);
 }
 
-
-void qErrnoWarning(const char *msg, ...)
-{
-    // qt_error_string() will allocate anyway, so we don't have
-    // to be careful here (like we do in plain qWarning())
-    QString buf;
-    va_list ap;
-    va_start(ap, msg);
-    if (Q_LIKELY(msg))
-        buf.vsprintf(msg, ap);
-    va_end(ap);
-
-    qCritical("%s (%s)", buf.toLocal8Bit().constData(), qt_error_string(-1).toLocal8Bit().constData());
-}
-
-void qErrnoWarning(int code, const char *msg, ...)
-{
-    // qt_error_string() will allocate anyway, so we don't have
-    // to be careful here (like we do in plain qWarning())
-    QString buf;
-    va_list ap;
-    va_start(ap, msg);
-    if (Q_LIKELY(msg))
-        buf.vsprintf(msg, ap);
-    va_end(ap);
-
-    qCritical("%s (%s)", buf.toLocal8Bit().constData(), qt_error_string(code).toLocal8Bit().constData());
-}
-
 /*!
     \relates <QtGlobal>
 

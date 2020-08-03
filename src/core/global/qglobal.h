@@ -603,9 +603,6 @@ Q_CORE_EXPORT void qFatal(const char *, ...) /* print fatal message and exit */
 #endif
 ;
 
-Q_CORE_EXPORT void qErrnoWarning(int code, const char *msg, ...);
-Q_CORE_EXPORT void qErrnoWarning(const char *msg, ...);
-
 Q_CORE_EXPORT void qt_assert(const char *assertion, const char *file, int line);
 Q_CORE_EXPORT void qt_assert_x(const char *where, const char *what, const char *file, int line);
 
