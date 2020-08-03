@@ -3714,7 +3714,6 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
         break;
 
     case Qt::NoBrush:
-    default:
         type = None;
         break;
     }
