@@ -152,12 +152,12 @@ public:
                 const QString &a7, const QString &a8, const QString &a9) const Q_REQUIRED_RESULT;
 
     QString    &vsprintf(const char *format, va_list ap)
-#if defined(Q_CC_GNU) && !defined(__INSURE__)
+#if !defined(__INSURE__)
         __attribute__ ((format (printf, 2, 0)))
 #endif
         ;
     QString    &sprintf(const char *format, ...)
-#if defined(Q_CC_GNU) && !defined(__INSURE__)
+#if !defined(__INSURE__)
         __attribute__ ((format (printf, 2, 3)))
 #endif
         ;

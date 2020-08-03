@@ -390,10 +390,8 @@ QT_END_INCLUDE_NAMESPACE
 */
 #if defined(Q_MOC_RUN)
 #  define Q_DECL_DEPRECATED Q_DECL_DEPRECATED
-#elif defined(Q_CC_GNU) || defined(Q_CC_CLANG)
-#  define Q_DECL_DEPRECATED __attribute__ ((__deprecated__))
 #else
-#  define Q_DECL_DEPRECATED
+#  define Q_DECL_DEPRECATED __attribute__ ((__deprecated__))
 #endif
 
 #if defined(Q_MOC_RUN)
@@ -434,7 +432,7 @@ QT_END_INCLUDE_NAMESPACE
 #  define QT_ASCII_CAST_WARN_CONSTRUCTOR
 #endif
 
-#if defined(QT_ARCH_I386) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG))
+#if defined(QT_ARCH_I386)
 #  define QT_FASTCALL __attribute__((regparm(3)))
 #else
 #  define QT_FASTCALL
@@ -450,20 +448,6 @@ typedef float qreal;
 #else
 typedef double qreal;
 #endif
-
-/*
-   Utility macros and inline functions
-*/
-template <typename T>
-Q_DECL_CONSTEXPR inline T qAbs(const T &t) { return t >= 0 ? t : -t; }
-
-template <typename T>
-Q_DECL_CONSTEXPR inline const T &qMin(const T &a, const T &b) { return (a < b) ? a : b; }
-template <typename T>
-Q_DECL_CONSTEXPR inline const T &qMax(const T &a, const T &b) { return (a < b) ? b : a; }
-template <typename T>
-Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max)
-{ return qMax(min, qMin(max, val)); }
 
 #if defined(QT_VISIBILITY_AVAILABLE)
 #  define Q_DECL_EXPORT __attribute__((visibility("default")))
@@ -580,25 +564,25 @@ class QString;
 #define qPrintable(string) QString(string).toLocal8Bit().constData()
 
 Q_CORE_EXPORT void qDebug(const char *, ...) /* print debug message */
-#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
+#if !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 
 Q_CORE_EXPORT void qWarning(const char *, ...) /* print warning message */
-#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
+#if !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 
 Q_CORE_EXPORT QString qt_error_string(int errorCode);
 Q_CORE_EXPORT void qCritical(const char *, ...) /* print critical message */
-#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
+#if !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 Q_CORE_EXPORT void qFatal(const char *, ...) /* print fatal message and exit */
-#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
+#if !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
@@ -757,6 +741,34 @@ public:
     }
 
 #endif // QT_NO_THREAD
+
+
+/*
+   Utility macros and inline functions
+*/
+template <typename T>
+Q_DECL_CONSTEXPR inline T qAbs(const T &t)
+{
+    return t >= 0 ? t : -t;
+}
+
+template <typename T>
+Q_DECL_CONSTEXPR inline const T &qMin(const T &a, const T &b)
+{
+    return (a < b) ? a : b;
+}
+
+template <typename T>
+Q_DECL_CONSTEXPR inline const T &qMax(const T &a, const T &b)
+{
+    return (a < b) ? b : a;
+}
+
+template <typename T>
+Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max)
+{
+    return qMax(min, qMin(max, val));
+}
 
 Q_DECL_CONSTEXPR static inline bool qFuzzyCompare(double p1, double p2)
 {
