@@ -225,7 +225,6 @@
     int     max_cells;
     int     num_cells;
 
-    TCoord  cx, cy;
     TPos    x,  y;
 
     TPos    last_ey;
@@ -767,8 +766,6 @@
         arc -= 3;
       }
     }
-
-    return;
   }
 
 
@@ -873,12 +870,9 @@
 
       if ( ras.num_gray_spans >= QT_FT_MAX_GRAY_SPANS )
       {
-        if ( ras.render_span )
-        {
-          ras.render_span( ras.num_gray_spans,
-                           ras.gray_spans,
-                           ras.render_span_data );
-        }
+        ras.render_span( ras.num_gray_spans,
+                         ras.gray_spans,
+                         ras.render_span_data );
 
         /* ras.render_span( span->y, ras.gray_spans, count ); */
 
@@ -989,7 +983,7 @@
 
       /* A contour cannot start with a cubic control point! */
       if ( tag == QT_FT_CURVE_TAG_CUBIC )
-        goto Invalid_Outline;
+        return ErrRaster_Invalid_Outline;
 
       gray_move_to( &v_start, user );
 
@@ -1020,7 +1014,7 @@
 
             if ( point + 1 > limit ||
                  QT_FT_CURVE_TAG( tags[1] ) != QT_FT_CURVE_TAG_CUBIC )
-              goto Invalid_Outline;
+              return ErrRaster_Invalid_Outline;
 
             point += 2;
             tags  += 2;
@@ -1057,9 +1051,6 @@
     }
 
     return 0;
-
-  Invalid_Outline:
-    return ErrRaster_Invalid_Outline;
   }
 
   typedef struct  TBand_
@@ -1076,7 +1067,6 @@
     TBand* volatile  band;
     int volatile     n, num_bands;
     TPos volatile    min, max, max_y;
-    QT_FT_BBox*      clip;
     int              yindex;
 
     ras.num_gray_spans = 0;
@@ -1115,17 +1105,15 @@
     }
 
     /* clip to target bitmap, exit if nothing to do */
-    clip = &ras.clip_box;
-
-    if ( ras.max_ex <= clip->xMin || ras.min_ex >= clip->xMax ||
-         ras.max_ey <= clip->yMin || ras.min_ey >= clip->yMax )
+    if ( ras.max_ex <= ras.clip_box.xMin || ras.min_ex >= ras.clip_box.xMax ||
+         ras.max_ey <= ras.clip_box.yMin || ras.min_ey >= ras.clip_box.yMax )
       return 0;
 
-    if ( ras.min_ex < clip->xMin ) ras.min_ex = clip->xMin;
-    if ( ras.min_ey < clip->yMin ) ras.min_ey = clip->yMin;
+    if ( ras.min_ex < ras.clip_box.xMin ) ras.min_ex = ras.clip_box.xMin;
+    if ( ras.min_ey < ras.clip_box.yMin ) ras.min_ey = ras.clip_box.yMin;
 
-    if ( ras.max_ex > clip->xMax ) ras.max_ex = clip->xMax;
-    if ( ras.max_ey > clip->yMax ) ras.max_ey = clip->yMax;
+    if ( ras.max_ex > ras.clip_box.xMax ) ras.max_ex = ras.clip_box.xMax;
+    if ( ras.max_ey > ras.clip_box.yMax ) ras.max_ey = ras.clip_box.yMax;
 
     ras.count_ex = ras.max_ex - ras.min_ex;
     ras.count_ey = ras.max_ey - ras.min_ey;
@@ -1283,12 +1271,9 @@
       }
     }
 
-    if ( ras.render_span )
-    {
-        ras.render_span( ras.num_gray_spans,
-                         ras.gray_spans,
-                         ras.render_span_data );
-    }
+    ras.render_span( ras.num_gray_spans,
+                     ras.gray_spans,
+                     ras.render_span_data );
 
     if ( ras.band_shoot > 8 && ras.band_size > 16 )
       ras.band_size = ras.band_size / 2;
