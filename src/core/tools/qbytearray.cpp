@@ -491,7 +491,7 @@ QByteArray qUncompress(const uchar* data, int nbytes)
             break;
         }
         case Z_DATA_ERROR: {
-             qWarning("qUncompress: Z_DATA_ERROR: Input data is corrupted");
+            qWarning("qUncompress: Z_DATA_ERROR: Input data is corrupted");
             baunzip.clear();
             break;
          }
