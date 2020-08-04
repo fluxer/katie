@@ -31,9 +31,6 @@
 **
 ****************************************************************************/
 
-#define QT_FT_BEGIN_HEADER
-#define QT_FT_END_HEADER
-
 #include "qmutex.h"
 #include "qrasterdefs_p.h"
 #include "qpainterpath.h"

@@ -121,18 +121,10 @@
   /*                                                                       */
   /*************************************************************************/
 
-#if defined(VXWORKS)
-#  include <vxWorksCommon.h>    /* needed for setjmp.h */
-#endif
-#include <string.h>             /* for qt_ft_memcpy() */
 #include <setjmp.h>
 #include <limits.h>
-
-#define QT_FT_UINT_MAX  UINT_MAX
-
-#define qt_ft_setjmp   setjmp
-#define qt_ft_longjmp  longjmp
-#define qt_ft_jmp_buf  jmp_buf
+#include <stdlib.h>
+#include <stdio.h>
 
 #define ErrRaster_Invalid_Outline   -1
 #define ErrRaster_Invalid_Mode      -2
@@ -140,13 +132,7 @@
 #define ErrRaster_Memory_Overflow   -4
 #define ErrRaster_OutOfMemory       -6
 
-#define QT_FT_BEGIN_HEADER
-#define QT_FT_END_HEADER
-
 #include <qrasterdefs_p.h>
-
-#include <stdlib.h>
-#include <stdio.h>
 
   /* define this to dump debugging information */
 #define xxxDEBUG_GRAYS
@@ -165,7 +151,6 @@
 #define PIXEL_BITS  8
 
 #define ONE_PIXEL       ( 1L << PIXEL_BITS )
-#define PIXEL_MASK      ( -1L << PIXEL_BITS )
 #define TRUNC( x )      ( (TCoord)( (x) >> PIXEL_BITS ) )
 #define SUBPIXELS( x )  ( (TPos)(x) << PIXEL_BITS )
 
@@ -200,7 +185,7 @@
 #else /* PIXEL_BITS >= 8 */
 
   /* approximately determine the size of integers using an ANSI-C header */
-#if QT_FT_UINT_MAX == 0xFFFFU
+#if UINT_MAX == 0xFFFFU
   typedef long  TArea;
 #else
   typedef int   TArea;
@@ -262,7 +247,7 @@
     int  conic_level;
     int  cubic_level;
 
-    qt_ft_jmp_buf  jump_buffer;
+    jmp_buf  jump_buffer;
 
     char*       buffer;
     int         buffer_size;
@@ -316,7 +301,7 @@
     }
 
     if ( ras.num_cells >= ras.max_cells )
-      qt_ft_longjmp( ras.jump_buffer, 1 );
+      longjmp( ras.jump_buffer, 1 );
 
     cell        = ras.cells + ras.num_cells++;
     cell->x     = x;
@@ -1223,7 +1208,7 @@
         ras.max_ey    = band->max;
         ras.count_ey  = band->max - band->min;
 
-        if ( qt_ft_setjmp( ras.jump_buffer ) == 0 )
+        if ( setjmp( ras.jump_buffer ) == 0 )
         {
           error = QT_FT_Outline_Decompose( &ras.outline, &ras );
           gray_record_cell( RAS_VAR );
