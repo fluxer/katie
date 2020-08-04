@@ -111,7 +111,7 @@ char* qstrdup(const char *src)
     if (!src)
         return Q_NULLPTR;
     char *dst = new char[strlen(src) + 1];
-    return qstrcpy(dst, src);
+    return strcpy(dst, src);
 }
 
 /*! \relates QByteArray
