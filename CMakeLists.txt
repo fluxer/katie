@@ -255,8 +255,8 @@ set_package_properties(ICU PROPERTIES
     TYPE REQUIRED
 )
 
-# v0.7.3+ required for ZSTD_getDecompressedSize()
-find_package(ZSTD 0.7.3)
+# v1.1.3+ required for exported ZSTD_getErrorString() and ZSTD_getErrorCode()
+find_package(ZSTD 1.1.3)
 set_package_properties(ZSTD PROPERTIES
     PURPOSE "Required for compression support"
     DESCRIPTION "Fast real-time compression algorithm"
