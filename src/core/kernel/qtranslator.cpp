@@ -739,10 +739,11 @@ end:
     if (!tn)
         return QString();
     QString str = QString((const QChar *)tn, tn_length/2);
-    if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) {
-        for (int i = 0; i < str.length(); ++i)
-            str[i] = QChar((str.at(i).unicode() >> 8) + ((str.at(i).unicode() << 8) & 0xff00));
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+    for (int i = 0; i < str.length(); ++i) {
+        str[i] = QChar((str.at(i).unicode() >> 8) + ((str.at(i).unicode() << 8) & 0xff00));
     }
+#endif
     return str;
 }
 

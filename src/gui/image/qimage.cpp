@@ -2403,7 +2403,6 @@ static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::
             pv[1] = lineBuffer.data() + src->width * 7;
             pv[2] = lineBuffer.data() + src->width * 8;
 
-            int endian = (QSysInfo::ByteOrder == QSysInfo::BigEndian);
             for (int y = 0; y < src->height; y++) {
                 const uchar* q = src_data;
                 const uchar* q2 = y < src->height - 1 ? q + src->bytes_per_line : src->data;
@@ -2412,12 +2411,22 @@ static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::
                     int *l1 = (y&1) ? line2[chan] : line1[chan];
                     int *l2 = (y&1) ? line1[chan] : line2[chan];
                     if (y == 0) {
-                        for (int i = 0; i < src->width; i++)
-                            l1[i] = q[i*4+chan+endian];
+                        for (int i = 0; i < src->width; i++) {
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+                            l1[i] = q[i*4+chan+1];
+#else
+                            l1[i] = q[i*4+chan];
+#endif
+                        }
                     }
                     if (y+1 < src->height) {
-                        for (int i = 0; i < src->width; i++)
+                        for (int i = 0; i < src->width; i++) {
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
                             l2[i] = q2[i*4+chan+endian];
+#else
+                            l2[i] = q2[i*4+chan];
+#endif
+                        }
                     }
                     // Bi-directional error diffusion
                     if (y&1) {
@@ -2452,14 +2461,12 @@ static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::
                         }
                     }
                 }
-                if (endian) {
-                    for (int x = 0; x < src->width; x++) {
-                        *b++ = INDEXOF(pv[0][x],pv[1][x],pv[2][x]);
-                    }
-                } else {
-                    for (int x = 0; x < src->width; x++) {
-                        *b++ = INDEXOF(pv[2][x],pv[1][x],pv[0][x]);
-                    }
+                for (int x = 0; x < src->width; x++) {
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+                    *b++ = INDEXOF(pv[0][x],pv[1][x],pv[2][x]);
+#else
+                    *b++ = INDEXOF(pv[2][x],pv[1][x],pv[0][x]);
+#endif
                 }
                 src_data += src->bytes_per_line;
                 dest_data += dst->bytes_per_line;
