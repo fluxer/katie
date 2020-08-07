@@ -167,25 +167,22 @@ QSvgAttributes::QSvgAttributes(const QXmlStreamAttributes &xmlAttributes, QSvgHa
                 break;
 
             case 's':
-                if (name.length() > 5 && QStringRef(name.string(), name.position() + 1, 5) == QLatin1String("troke")) {
-                    QStringRef strokeRef(name.string(), name.position() + 6, name.length() - 6);
-                    if (strokeRef.isEmpty())
-                        stroke = value;
-                    else if (strokeRef == QLatin1String("-dasharray"))
-                        strokeDashArray = value;
-                    else if (strokeRef == QLatin1String("-dashoffset"))
-                        strokeDashOffset = value;
-                    else if (strokeRef == QLatin1String("-linecap"))
-                        strokeLineCap = value;
-                    else if (strokeRef == QLatin1String("-linejoin"))
-                        strokeLineJoin = value;
-                    else if (strokeRef == QLatin1String("-miterlimit"))
-                        strokeMiterLimit = value;
-                    else if (strokeRef == QLatin1String("-opacity"))
-                        strokeOpacity = value;
-                    else if (strokeRef == QLatin1String("-width"))
-                        strokeWidth = value;
-                }
+                if (name == QLatin1String("stroke"))
+                    stroke = value;
+                else if (name == QLatin1String("stroke-dasharray"))
+                    strokeDashArray = value;
+                else if (name == QLatin1String("stroke-dashoffset"))
+                    strokeDashOffset = value;
+                else if (name == QLatin1String("stroke-linecap"))
+                    strokeLineCap = value;
+                else if (name == QLatin1String("stroke-linejoin"))
+                    strokeLineJoin = value;
+                else if (name == QLatin1String("stroke-miterlimit"))
+                    strokeMiterLimit = value;
+                else if (name == QLatin1String("stroke-opacity"))
+                    strokeOpacity = value;
+                else if (name == QLatin1String("stroke-width"))
+                    strokeWidth = value;
                 else if (name == QLatin1String("stop-color"))
                     stopColor = value;
                 else if (name == QLatin1String("stop-opacity"))
@@ -267,25 +264,22 @@ QSvgAttributes::QSvgAttributes(const QXmlStreamAttributes &xmlAttributes, QSvgHa
             break;
 
         case 's':
-            if (name.length() > 5 && QStringRef(name.string(), name.position() + 1, 5) == QLatin1String("troke")) {
-                QStringRef strokeRef(name.string(), name.position() + 6, name.length() - 6);
-                if (strokeRef.isEmpty())
-                    stroke = value;
-                else if (strokeRef == QLatin1String("-dasharray"))
-                    strokeDashArray = value;
-                else if (strokeRef == QLatin1String("-dashoffset"))
-                    strokeDashOffset = value;
-                else if (strokeRef == QLatin1String("-linecap"))
-                    strokeLineCap = value;
-                else if (strokeRef == QLatin1String("-linejoin"))
-                    strokeLineJoin = value;
-                else if (strokeRef == QLatin1String("-miterlimit"))
-                    strokeMiterLimit = value;
-                else if (strokeRef == QLatin1String("-opacity"))
-                    strokeOpacity = value;
-                else if (strokeRef == QLatin1String("-width"))
-                    strokeWidth = value;
-            }
+            if (name == QLatin1String("stroke"))
+                stroke = value;
+            else if (name == QLatin1String("stroke-dasharray"))
+                strokeDashArray = value;
+            else if (name == QLatin1String("stroke-dashoffset"))
+                strokeDashOffset = value;
+            else if (name == QLatin1String("stroke-linecap"))
+                strokeLineCap = value;
+            else if (name == QLatin1String("stroke-linejoin"))
+                strokeLineJoin = value;
+            else if (name == QLatin1String("stroke-miterlimit"))
+                strokeMiterLimit = value;
+            else if (name == QLatin1String("stroke-opacity"))
+                strokeOpacity = value;
+            else if (name == QLatin1String("stroke-width"))
+                strokeWidth = value;
             else if (name == QLatin1String("stop-color"))
                 stopColor = value;
             else if (name == QLatin1String("stop-opacity"))
