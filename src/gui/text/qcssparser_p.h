@@ -729,7 +729,7 @@ class Q_GUI_EXPORT Parser
 {
 public:
     Parser();
-    Parser(const QString &css, bool file = false);
+    Parser(const QString &css);
 
     void init(const QString &css, bool file = false);
     bool parse(StyleSheet *styleSheet, Qt::CaseSensitivity nameCaseSensitivity = Qt::CaseSensitive);

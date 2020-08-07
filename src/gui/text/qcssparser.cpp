@@ -2063,9 +2063,9 @@ QString Symbol::lexem() const
     return result;
 }
 
-Parser::Parser(const QString &css, bool isFile)
+Parser::Parser(const QString &css)
 {
-    init(css, isFile);
+    init(css);
 }
 
 Parser::Parser()
