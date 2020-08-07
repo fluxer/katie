@@ -696,10 +696,7 @@ int QWindowsStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWid
         break;
 #endif // QT_NO_RUBBERBAND
     case SH_LineEdit_PasswordCharacter:
-        {
-            if (!ret)
-                ret = '*';
-        }
+        ret = '*';
         break;
 #ifndef QT_NO_WIZARD
     case SH_WizardStyle:
