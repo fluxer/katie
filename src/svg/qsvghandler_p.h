@@ -161,7 +161,6 @@ private:
 
     QXmlStreamReader *const xml;
     QCss::Parser m_cssParser;
-    void parse();
     void resolveGradients(QSvgNode *node) const;
 
     QPen m_defaultPen;

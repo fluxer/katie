@@ -3426,11 +3426,7 @@ void QSvgHandler::init()
     m_defaultCoords = LT_PX;
     m_defaultPen = QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap, Qt::SvgMiterJoin);
     m_defaultPen.setMiterLimit(4);
-    parse();
-}
 
-void QSvgHandler::parse()
-{
     xml->setNamespaceProcessing(false);
     m_selector = new QSvgStyleSelector;
     m_inStyle = false;
