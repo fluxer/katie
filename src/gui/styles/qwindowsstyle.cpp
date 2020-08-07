@@ -663,7 +663,6 @@ int QWindowsStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWid
     case SH_ScrollBar_StopMouseOverSlider:
     case SH_MainWindow_SpaceBelowMenuBar:
         ret = 1;
-
         break;
     case SH_ItemView_ShowDecorationSelected:
 #ifndef QT_NO_LISTVIEW

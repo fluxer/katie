@@ -784,7 +784,7 @@ static qreal parseLength(const QString &str, QSvgHandler::LengthType &type,
         numStr.chop(2);
         type = QSvgHandler::LT_IN;
     } else {
-        type = handler->defaultCoordinateSystem();
+        type = QSvgHandler::LT_PX;
         //type = QSvgHandler::LT_OTHER;
     }
     qreal len = toDouble(numStr, ok);
@@ -3034,7 +3034,7 @@ static QSvgNode *createSvgNode(QSvgNode *parent,
                                const QXmlStreamAttributes &attributes,
                                QSvgHandler *handler)
 {
-    Q_UNUSED(parent); Q_UNUSED(attributes);
+    Q_UNUSED(parent);
 
     QString baseProfile = attributes.value(QLatin1String("baseProfile")).toString();
 #if 0
@@ -3094,7 +3094,6 @@ static QSvgNode *createSvgNode(QSvgNode *parent,
         }
         node->setViewBox(QRectF(0, 0, width, height));
     }
-    handler->setDefaultCoordinateSystem(QSvgHandler::LT_PX);
 
     return node;
 }
@@ -3109,9 +3108,10 @@ static QSvgNode *createSwitchNode(QSvgNode *parent,
 }
 
 static bool parseTbreakNode(QSvgNode *parent,
-                            const QXmlStreamAttributes &,
+                            const QXmlStreamAttributes &attributes,
                             QSvgHandler *)
 {
+    Q_UNUSED(attributes);
     if (parent->type() != QSvgNode::TEXTAREA)
         return false;
     static_cast<QSvgText*>(parent)->addLineBreak();
@@ -3423,7 +3423,6 @@ void QSvgHandler::init()
     m_doc = 0;
     m_style = 0;
     m_animEnd = 0;
-    m_defaultCoords = LT_PX;
     m_defaultPen = QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap, Qt::SvgMiterJoin);
     m_defaultPen.setMiterLimit(4);
 
@@ -3683,16 +3682,6 @@ bool QSvgHandler::characters(const QStringRef &str)
 QSvgTinyDocument * QSvgHandler::document() const
 {
     return m_doc;
-}
-
-QSvgHandler::LengthType QSvgHandler::defaultCoordinateSystem() const
-{
-    return m_defaultCoords;
-}
-
-void QSvgHandler::setDefaultCoordinateSystem(LengthType type)
-{
-    m_defaultCoords = type;
 }
 
 void QSvgHandler::pushColor(const QColor &color)
