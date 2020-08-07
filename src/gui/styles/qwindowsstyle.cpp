@@ -1022,7 +1022,6 @@ void QWindowsStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, 
             //### check for d->alt_down
             if (!(fropt->state & State_KeyboardFocusChange) && !proxy()->styleHint(SH_UnderlineShortcut, opt))
                 return;
-            QRect r = opt->rect;
             p->save();
             p->setBackgroundMode(Qt::TransparentMode);
             QColor bg_col = fropt->backgroundColor;
@@ -1033,12 +1032,12 @@ void QWindowsStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, 
                               (bg_col.green() ^ 0xff) & 0xff,
                               (bg_col.blue() ^ 0xff) & 0xff);
             p->setBrush(QBrush(patternCol, Qt::Dense4Pattern));
-            p->setBrushOrigin(r.topLeft());
+            p->setBrushOrigin(opt->rect.topLeft());
             p->setPen(Qt::NoPen);
-            p->drawRect(r.left(), r.top(), r.width(), 1);    // Top
-            p->drawRect(r.left(), r.bottom(), r.width(), 1); // Bottom
-            p->drawRect(r.left(), r.top(), 1, r.height());   // Left
-            p->drawRect(r.right(), r.top(), 1, r.height());  // Right
+            p->drawRect(opt->rect.left(), opt->rect.top(), opt->rect.width(), 1);    // Top
+            p->drawRect(opt->rect.left(), opt->rect.bottom(), opt->rect.width(), 1); // Bottom
+            p->drawRect(opt->rect.left(), opt->rect.top(), 1, opt->rect.height());   // Left
+            p->drawRect(opt->rect.right(), opt->rect.top(), 1, opt->rect.height());  // Right
             p->restore();
         }
         break;
