@@ -43,7 +43,7 @@ QT_BEGIN_NAMESPACE
 namespace QScript
 {
 
-const JSC::ClassInfo QScriptActivationObject::info = { "QScriptActivationObject", 0, 0, 0 };
+const JSC::ClassInfo QScriptActivationObject::info = { "QScriptActivationObject", 0, 0 };
 
 QScriptActivationObject::QScriptActivationObject(JSC::ExecState *callFrame, JSC::JSObject *delegate)
     : JSC::JSVariableObject(callFrame->globalData().activationStructure,

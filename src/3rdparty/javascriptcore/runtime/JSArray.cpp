@@ -86,7 +86,7 @@ ASSERT_CLASS_FITS_IN_CELL(JSArray);
 // as long as it is 1/8 full. If more sparse than that, we use a map.
 static const unsigned minDensityMultiplier = 8;
 
-const ClassInfo JSArray::info = {"Array", 0, 0, 0};
+const ClassInfo JSArray::info = { "Array", 0, 0 };
 
 static inline size_t storageSize(unsigned vectorLength)
 {
