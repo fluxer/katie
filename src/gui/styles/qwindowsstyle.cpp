@@ -222,7 +222,7 @@ QWindowsStyle::~QWindowsStyle()
 void QWindowsStyle::polish(QApplication *app)
 {
     QCommonStyle::polish(app);
-    QWindowsStylePrivate *d = const_cast<QWindowsStylePrivate*>(d_func());
+    QWindowsStylePrivate *d = d_func();
     // We only need the overhead when shortcuts are sometimes hidden
     if (!proxy()->styleHint(SH_UnderlineShortcut, 0) && app)
         app->installEventFilter(this);
