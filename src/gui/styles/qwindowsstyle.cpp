@@ -71,7 +71,7 @@ enum QSliderDirection { SlUp, SlDown, SlLeft, SlRight };
     \internal
 */
 QWindowsStylePrivate::QWindowsStylePrivate()
-    : alt_down(false), animationFps(10), animateTimer(0), animateStep(0)
+    : animationFps(10), animateTimer(0), animateStep(0)
 {
     startTime.start();
 }
@@ -94,13 +94,6 @@ void QWindowsStylePrivate::stopAnimation(QObject *o, QProgressBar *bar)
         o->killTimer(animateTimer);
         animateTimer = 0;
     }
-}
-
-// Returns true if the toplevel parent of \a widget has seen the Alt-key
-bool QWindowsStylePrivate::hasSeenAlt(const QWidget *widget) const
-{
-    widget = widget->window();
-    return seenAlt.contains(widget);
 }
 
 /*!
@@ -147,10 +140,6 @@ bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
                 }
                 pos++;
             }
-            // Update states before repainting
-            d->seenAlt.append(widget);
-            d->alt_down = true;
-
             // Repaint all relevant widgets
             for (int pos = 0; pos < l.size(); ++pos)
                 l.at(pos)->update();
@@ -160,19 +149,13 @@ bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
         if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Alt) {
             widget = widget->window();
 
-            // Update state and repaint the menu bars.
-            d->alt_down = false;
+            // Repaint the menu bars.
 #ifndef QT_NO_MENUBAR
             QList<QMenuBar *> l = widget->findChildren<QMenuBar *>();
             for (int i = 0; i < l.size(); ++i)
                 l.at(i)->update();
 #endif
         }
-        break;
-    case QEvent::Close:
-        // Reset widget when closing
-        d->seenAlt.removeAll(widget);
-        d->seenAlt.removeAll(widget->window());
         break;
 #ifndef QT_NO_PROGRESSBAR
     case QEvent::StyleChange:
@@ -1019,7 +1002,6 @@ void QWindowsStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, 
         break;
     case PE_FrameFocusRect:
         if (const QStyleOptionFocusRect *fropt = qstyleoption_cast<const QStyleOptionFocusRect *>(opt)) {
-            //### check for d->alt_down
             if (!(fropt->state & State_KeyboardFocusChange) && !proxy()->styleHint(SH_UnderlineShortcut, opt))
                 return;
             p->save();
