@@ -404,7 +404,7 @@ QRectF QSvgTinyDocument::boundsOnElement(const QString &id) const
 {
     const QSvgNode *node = scopeNode(id);
     if (!node)
-        node = this;
+        return transformedBounds();
     return node->transformedBounds();
 }
 
