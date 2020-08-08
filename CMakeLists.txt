@@ -307,20 +307,29 @@ set_package_properties(Threads PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(Resolv)
-set_package_properties(Resolv PROPERTIES
-    PURPOSE "Required for domain resolving support"
-    DESCRIPTION "Standard C library specific resolv implementation"
-    URL ""
-    TYPE RECOMMENDED
-)
-
 # v1.5.4+ required for png_longjmp_ptr() without noreturn attribute
 find_package(PNG 1.5.4)
 set_package_properties(PNG PROPERTIES
     PURPOSE "PNG format handler"
     DESCRIPTION "A collection of routines used to create PNG format graphics files"
     URL "http://www.libpng.org/pub/png/libpng.html"
+    TYPE REQUIRED
+)
+
+# v3.5.0+ required for sqlite3_open_v2()
+find_package(Sqlite 3.5.0)
+set_package_properties(Sqlite PROPERTIES
+    PURPOSE "Required for SQLite database support"
+    DESCRIPTION "Software library that implements SQL database engine"
+    URL "https://www.sqlite.org/"
+    TYPE REQUIRED
+)
+
+find_package(Resolv)
+set_package_properties(Resolv PROPERTIES
+    PURPOSE "Required for domain resolving support"
+    DESCRIPTION "Standard C library specific resolv implementation"
+    URL ""
     TYPE RECOMMENDED
 )
 
@@ -373,15 +382,6 @@ set_package_properties(DBus PROPERTIES
     PURPOSE "Required for D-Bus support"
     DESCRIPTION "Message bus system, a simple way for applications to talk to one another"
     URL "https://www.freedesktop.org/wiki/Software/dbus"
-    TYPE RECOMMENDED
-)
-
-# v3.5.0+ required for sqlite3_open_v2()
-find_package(Sqlite 3.5.0)
-set_package_properties(Sqlite PROPERTIES
-    PURPOSE "Required for SQLite database support"
-    DESCRIPTION "Software library that implements SQL database engine"
-    URL "https://www.sqlite.org/"
     TYPE RECOMMENDED
 )
 
@@ -439,15 +439,6 @@ foreach(script exec dbg)
         FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     )
 endforeach()
-
-# optional packages which if not found are build internally
-if(NOT PNG_FOUND)
-    message(WARNING "Using internal copy of libpng")
-endif()
-
-if(NOT SQLITE_FOUND)
-    message(WARNING "Using internal copy of sqlite")
-endif()
 
 # optional packages
 if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)

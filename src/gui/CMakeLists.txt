@@ -1,8 +1,9 @@
-# add_definitions()
+add_definitions(${PNG_DEFINITIONS})
 set(EXTRA_GUI_LIBS
     KtCore KtXml
     ${FREETYPE_LIBRARIES}
     ${X11_X11_LIB}
+    ${PNG_LIBRARIES}
 )
 
 set(GUI_PUBLIC_HEADERS
@@ -224,6 +225,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${FREETYPE_INCLUDE_DIRS}
     ${X11_INCLUDE_DIR}
+    ${PNG_INCLUDE_DIRS}
 )
 
 set(GUI_HEADERS
@@ -937,36 +939,6 @@ foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xext SM ICE)
         )
     endif()
 endforeach()
-
-if(PNG_FOUND)
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${PNG_LIBRARIES}
-    )
-    include_directories(${PNG_INCLUDE_DIRS})
-    add_definitions(${PNG_DEFINITIONS})
-else()
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/png.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngerror.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngget.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngmem.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngpread.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngread.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngrio.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngrtran.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngrutil.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngset.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngtest.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngtrans.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwio.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwrite.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwtran.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwutil.c
-    )
-    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/libpng)
-endif()
 
 if(WITH_CUPS AND CUPS_FOUND)
     set(GUI_HEADERS
