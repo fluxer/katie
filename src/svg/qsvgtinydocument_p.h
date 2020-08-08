@@ -91,8 +91,7 @@ public:
 
     void draw(QPainter *p);
     void draw(QPainter *p, const QRectF &bounds);
-    void draw(QPainter *p, const QString &id,
-              const QRectF &bounds=QRectF());
+    void draw(QPainter *p, const QString &id, const QRectF &bounds);
 
     QMatrix matrixForElement(const QString &id) const;
     QRectF boundsOnElement(const QString &id) const;
