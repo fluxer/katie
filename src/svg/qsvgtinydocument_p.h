@@ -89,7 +89,6 @@ public:
 
     virtual void draw(QPainter *p, QSvgExtraStates &);//from the QSvgNode
 
-    void draw(QPainter *p);
     void draw(QPainter *p, const QRectF &bounds);
     void draw(QPainter *p, const QString &id, const QRectF &bounds);
 
