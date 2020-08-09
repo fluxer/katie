@@ -132,9 +132,8 @@ bool QSystemTrayIconSys::sysTrayTracker(void *message, long *result)
         }
         retval = true;
     } else if (ev->type == ClientMessage && sysTrayWindow == XNone) {
-        static Atom manager_atom = XInternAtom(display, "MANAGER", False);
         XClientMessageEvent *cm = (XClientMessageEvent *)message;
-        if ((cm->message_type == manager_atom) && ((Atom)cm->data.l[1] == sysTraySelection)) {
+        if (cm->message_type == ATOM(MANAGER) && (Atom)cm->data.l[1] == sysTraySelection) {
             sysTrayWindow = cm->data.l[2];
             memset(&sysTrayVisual, 0, sizeof(sysTrayVisual));
             XSelectInput(display, sysTrayWindow, StructureNotifyMask);
@@ -231,13 +230,12 @@ void QSystemTrayIconSys::addToTray()
     }
 
     // GNOME, NET WM Specification
-    static Atom netwm_tray_atom = XInternAtom(display, "_NET_SYSTEM_TRAY_OPCODE", False);
     long l[5] = { CurrentTime, SYSTEM_TRAY_REQUEST_DOCK, static_cast<long>(winId()), 0, 0 };
     XEvent ev;
     memset(&ev, 0, sizeof(ev));
     ev.xclient.type = ClientMessage;
     ev.xclient.window = sysTrayWindow;
-    ev.xclient.message_type = netwm_tray_atom;
+    ev.xclient.message_type = ATOM(_NET_SYSTEM_TRAY_OPCODE);
     ev.xclient.format = 32;
     memcpy((char *)&ev.xclient.data, (const char *) l, sizeof(l));
     XSendEvent(display, sysTrayWindow, False, 0, &ev);

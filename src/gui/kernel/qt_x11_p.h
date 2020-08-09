@@ -388,6 +388,8 @@ struct QX11Data
         _NET_WM_CM_S0,
 
         _NET_SYSTEM_TRAY_VISUAL,
+        _NET_SYSTEM_TRAY_OPCODE,
+        MANAGER,
 
         _NET_ACTIVE_WINDOW,
 
