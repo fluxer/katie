@@ -2180,33 +2180,42 @@ static const char *eventClassName(QEvent::Type t)
     return "QEvent";
 }
 
-namespace {
-// Make protected QObject::staticQtMetaObject accessible for formatting enums.
-class DebugHelper : public QObject {
-public:
-    static const char *mouseButtonToString(Qt::MouseButton button)
-    {
-        static const int enumIdx = QObject::staticQtMetaObject.indexOfEnumerator("MouseButtons");
-        return QObject::staticQtMetaObject.enumerator(enumIdx).valueToKey(button);
+static const char *mouseButtonToString(Qt::MouseButton button)
+{
+    switch (button) {
+        case Qt::NoButton:
+            return "Qt::NoButton";
+        case Qt::LeftButton:
+            return "Qt::LeftButton";
+        case Qt::RightButton:
+            return "Qt::RightButton";
+        case Qt::MiddleButton:
+            return "Qt::MiddleButton";
+        case Qt::XButton1:
+            return "Qt::XButton1";
+        case Qt::XButton2:
+            return "Qt::XButton2";
+        default:
+            Q_ASSERT_X(false, "mouseButtonToString", "internal error");
     }
+    Q_UNREACHABLE();
+}
 
-    static QByteArray mouseButtonsToString(Qt::MouseButtons buttons)
-    {
-        QByteArray result;
-        for (int i = 0; (uint)(1 << i) <= Qt::MouseButtonMask; ++i) {
-            const Qt::MouseButton button = static_cast<Qt::MouseButton>(1 << i);
-            if (buttons.testFlag(button)) {
-                if (!result.isEmpty())
-                    result.append('|');
-                result.append(mouseButtonToString(button));
-            }
+static QByteArray mouseButtonsToString(Qt::MouseButtons buttons)
+{
+    QByteArray result;
+    for (int i = 0; (uint)(1 << i) <= Qt::MouseButtonMask; ++i) {
+        const Qt::MouseButton button = static_cast<Qt::MouseButton>(1 << i);
+        if (buttons.testFlag(button)) {
+            if (!result.isEmpty())
+                result.append('|');
+            result.append(mouseButtonToString(button));
         }
-        if (result.isEmpty())
-            result.append("NoButton");
-        return result;
     }
-};
-} // namespace
+    if (result.isEmpty())
+        result.append("NoButton");
+    return result;
+}
 
 #  ifndef QT_NO_DRAGANDDROP
 
@@ -2220,7 +2229,7 @@ static void formatDropEvent(QDebug d, const QDropEvent *e)
     d << ", formats=" << e->mimeData()->formats();
     if (const Qt::KeyboardModifiers mods = e->keyboardModifiers())
         d << ", keyboardModifiers=" << mods;
-    d << ", " << DebugHelper::mouseButtonsToString(e->mouseButtons()).constData();
+    d << ", " << mouseButtonsToString(e->mouseButtons()).constData();
 }
 
 #  endif // !QT_NO_DRAGANDDROP
@@ -2256,9 +2265,9 @@ QDebug operator<<(QDebug dbg, const QEvent *e) {
         const Qt::MouseButtons buttons = me->buttons();
         dbg << "QMouseEvent(" << eventTypeName(type);
         if (type != QEvent::MouseMove && type != QEvent::NonClientAreaMouseMove)
-            dbg << ", " << DebugHelper::mouseButtonToString(button);
+            dbg << ", " << mouseButtonToString(button);
         if (buttons && button != buttons)
-            dbg << ", buttons=" << DebugHelper::mouseButtonsToString(buttons).constData();
+            dbg << ", buttons=" << mouseButtonsToString(buttons).constData();
         if (const int mods = int(me->modifiers()))
             dbg << ", modifiers=0x" << hex << mods << dec;
         dbg << ')';
