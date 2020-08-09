@@ -1395,7 +1395,7 @@ QString qt_error_string(int errorCode)
 #endif
         }
     }
-    return QString();
+    Q_UNREACHABLE();
 }
 
 
