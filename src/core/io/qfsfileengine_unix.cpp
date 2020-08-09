@@ -300,11 +300,11 @@ int QFSFileEnginePrivate::nativeHandle() const
 bool QFSFileEngine::remove()
 {
     Q_D(QFSFileEngine);
-    QSystemError error;
-    bool ret = QFileSystemEngine::removeFile(d->fileEntry, error);
+    int error;
+    bool ret = QFileSystemEngine::removeFile(d->fileEntry, &error);
     d->metaData.clear();
     if (!ret) {
-        setError(QFile::RemoveError, error.toString());
+        setError(QFile::RemoveError, qt_error_string(error));
     }
     return ret;
 }
@@ -312,10 +312,10 @@ bool QFSFileEngine::remove()
 bool QFSFileEngine::copy(const QString &newName)
 {
     Q_D(QFSFileEngine);
-    QSystemError error;
-    bool ret = QFileSystemEngine::copyFile(d->fileEntry, QFileSystemEntry(newName), error);
+    int error;
+    bool ret = QFileSystemEngine::copyFile(d->fileEntry, QFileSystemEntry(newName), &error);
     if (!ret) {
-        setError(QFile::CopyError, error.toString());
+        setError(QFile::CopyError, qt_error_string(error));
     }
     return ret;
 }
@@ -323,11 +323,11 @@ bool QFSFileEngine::copy(const QString &newName)
 bool QFSFileEngine::rename(const QString &newName)
 {
     Q_D(QFSFileEngine);
-    QSystemError error;
-    bool ret = QFileSystemEngine::renameFile(d->fileEntry, QFileSystemEntry(newName), error);
+    int error;
+    bool ret = QFileSystemEngine::renameFile(d->fileEntry, QFileSystemEntry(newName), &error);
 
     if (!ret) {
-        setError(QFile::RenameError, error.toString());
+        setError(QFile::RenameError, qt_error_string(error));
     }
 
     return ret;
@@ -336,10 +336,10 @@ bool QFSFileEngine::rename(const QString &newName)
 bool QFSFileEngine::link(const QString &newName)
 {
     Q_D(QFSFileEngine);
-    QSystemError error;
-    bool ret = QFileSystemEngine::createLink(d->fileEntry, QFileSystemEntry(newName), error);
+    int error;
+    bool ret = QFileSystemEngine::createLink(d->fileEntry, QFileSystemEntry(newName), &error);
     if (!ret) {
-        setError(QFile::RenameError, error.toString());
+        setError(QFile::RenameError, qt_error_string(error));
     }
     return ret;
 }
@@ -531,9 +531,9 @@ QString QFSFileEngine::owner(FileOwner own) const
 bool QFSFileEngine::setPermissions(uint perms)
 {
     Q_D(QFSFileEngine);
-    QSystemError error;
-    if (!QFileSystemEngine::setPermissions(d->fileEntry, QFile::Permissions(perms), error)) {
-        setError(QFile::PermissionsError, error.toString());
+    int error;
+    if (!QFileSystemEngine::setPermissions(d->fileEntry, QFile::Permissions(perms), &error)) {
+        setError(QFile::PermissionsError, qt_error_string(error));
         return false;
     }
     return true;

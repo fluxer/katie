@@ -38,7 +38,6 @@
 #include "qplatformdefs.h"
 #include "qfile_p.h"
 #include "qfsfileengine_p.h"
-#include "qsystemerror_p.h"
 #include "qfilesystemengine_p.h"
 #include "qcore_unix_p.h"       // overrides QT_OPEN
 
