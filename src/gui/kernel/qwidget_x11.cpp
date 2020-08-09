@@ -2871,7 +2871,7 @@ Picture QX11Data::getSolidFill(int screen, const QColor &c)
         return XNone;
 
     XRenderColor color = preMultiply(c);
-    for (int i = 0; i < qt_x11Data->solid_fill_count; ++i) {
+    for (int i = 0; i < QX11Data::solid_fill_count; ++i) {
         if (qt_x11Data->solid_fills[i].screen == screen
             && qt_x11Data->solid_fills[i].color.alpha == color.alpha
             && qt_x11Data->solid_fills[i].color.red == color.red
@@ -2880,7 +2880,7 @@ Picture QX11Data::getSolidFill(int screen, const QColor &c)
             return qt_x11Data->solid_fills[i].picture;
     }
     // none found, replace one
-    int i = qrand() % 16;
+    int i = qrand() % QX11Data::solid_fill_count;
 
     if (qt_x11Data->solid_fills[i].screen != screen && qt_x11Data->solid_fills[i].picture) {
         XRenderFreePicture (qt_x11Data->display, qt_x11Data->solid_fills[i].picture);

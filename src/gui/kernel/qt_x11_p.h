@@ -271,13 +271,13 @@ struct QX11Data
     Colormap colormap;
 
 #ifndef QT_NO_XRENDER
-    enum { solid_fill_count = 16 };
+    enum { solid_fill_count = 20 };
     struct SolidFills {
         XRenderColor color;
         int screen;
         Picture picture;
     } solid_fills[solid_fill_count];
-    enum { pattern_fill_count = 16 };
+    enum { pattern_fill_count = 20 };
     struct PatternFills {
         XRenderColor color;
         XRenderColor bg_color;
