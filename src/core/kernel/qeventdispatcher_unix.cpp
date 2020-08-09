@@ -142,13 +142,8 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
             timeval tm;
             tm.tv_sec = tm.tv_usec = 0l;
 
-            for (int type = 0; type < 3; ++type) {
-                QSockNotType::List &list = sn_vec[type].list;
-                if (list.size() == 0)
-                    continue;
-
-                for (int i = 0; i < list.size(); ++i) {
-                    QSockNot *sn = list[i];
+            for (int type = 0; type < 3; type++) {
+                foreach (QSockNot *sn, sn_vec[type].list) {
 
                     FD_ZERO(&fdset);
                     FD_SET(sn->fd, &fdset);
@@ -190,11 +185,9 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
     if (! (flags & QEventLoop::ExcludeSocketNotifiers) && nsel > 0 && sn_highest >= 0) {
         // if select says data is ready on any socket, then set the socket notifier
         // to pending
-        for (int i=0; i<3; i++) {
-            QSockNotType::List &list = sn_vec[i].list;
-            for (int j = 0; j < list.size(); ++j) {
-                QSockNot *sn = list[j];
-                if (FD_ISSET(sn->fd, &sn_vec[i].select_fds))
+        for (int type = 0; type < 3; type++) {
+            foreach (QSockNot *sn, sn_vec[type].list) {
+                if (FD_ISSET(sn->fd, &sn_vec[type].select_fds))
                     q->setSocketNotifierPending(sn->obj);
             }
         }
