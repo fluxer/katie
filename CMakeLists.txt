@@ -264,7 +264,8 @@ set_package_properties(ZSTD PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(OpenSSL)
+# v0.9.8+ required for SHA-224 to SHA-512 support
+find_package(OpenSSL 0.9.8)
 set_package_properties(OpenSSL PROPERTIES
     PURPOSE "Required for HTTPS support"
     DESCRIPTION "Support for secure network communications (SSL and TLS)"
