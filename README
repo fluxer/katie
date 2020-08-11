@@ -19,9 +19,9 @@ There are several things you should be aware before considering Katie:
   - QKeyEventEx and QKeyEvent classes have been merged
   - QMouseEventEx and QMouseEvent classes have been merged
   - QGuiPlatformPlugin class is public
-  - zlib, zstd, OpenSSL, PCRE, Freetype, ICU and X11 are required for building
-  - OpenSSL, D-Bus, CUPS, resolv and NSL cannot be runtime dependencies, they
-    must be linked to during build
+  - zlib, zstd, OpenSSL, PCRE, Freetype, ICU, X11, libpng and SQLite are
+    required for building
+  - OpenSSL, D-Bus, CUPS and resolv must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, lrelease, lupdate, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
