@@ -377,7 +377,6 @@ public:
         ThresholdAlphaDither    = 0x00000000,
         OrderedAlphaDither      = 0x00000004,
         DiffuseAlphaDither      = 0x00000008,
-        NoAlpha                 = 0x0000000c, // Not supported
 
         Dither_Mask             = 0x00000030,
         DiffuseDither           = 0x00000000,
