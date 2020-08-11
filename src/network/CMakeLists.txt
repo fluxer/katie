@@ -179,7 +179,6 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qurlinfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkproxy.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkproxy_generic.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocketengine.cpp

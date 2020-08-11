@@ -1367,14 +1367,9 @@ void QNetworkProxyFactory::setApplicationProxyFactory(QNetworkProxyFactory *fact
     be used, in order of preference.
 
     This function can be used to determine the platform-specific proxy
-    settings. This function will use the libraries provided by the
-    operating system to determine the proxy for a given connection, if
-    such libraries exist. If they don't, this function will just return a
-    QNetworkProxy of type QNetworkProxy::NoProxy.
-
-    On other systems, this function will pick up proxy settings from
-    the "http_proxy" environment variable. This variable must be a URL
-    using one of the following schemes: "http", "socks5" or "socks5h".
+    settings. It will pick up proxy settings from the "http_proxy"
+    environment variable. This variable must be a URL using one of the
+    following schemes: "http", "socks5" or "socks5h".
 
     \section1 Limitations
 
@@ -1382,6 +1377,48 @@ void QNetworkProxyFactory::setApplicationProxyFactory(QNetworkProxyFactory *fact
     function. Future versions of Qt may lift some of the limitations
     listed here.
 */
+QList<QNetworkProxy> QNetworkProxyFactory::systemProxyForQuery(const QNetworkProxyQuery &query)
+{
+    QList<QNetworkProxy> proxyList;
+
+    const QString queryProtocol = query.protocolTag().toLower();
+    QByteArray proxy_env;
+
+    if (queryProtocol == QLatin1String("http"))
+        proxy_env = qgetenv("http_proxy");
+    else if (queryProtocol == QLatin1String("https"))
+        proxy_env = qgetenv("https_proxy");
+    else if (queryProtocol == QLatin1String("ftp"))
+        proxy_env = qgetenv("ftp_proxy");
+    else
+        proxy_env = qgetenv("all_proxy");
+
+    // Fallback to http_proxy is no protocol specific proxy was found
+    if (proxy_env.isEmpty())
+        proxy_env = qgetenv("http_proxy");
+
+    if (!proxy_env.isEmpty()) {
+        QUrl url = QUrl(QString::fromLocal8Bit(proxy_env));
+        if (url.scheme() == QLatin1String("socks5")) {
+            QNetworkProxy proxy(QNetworkProxy::Socks5Proxy, url.host(),
+                    url.port() ? url.port() : 1080, url.userName(), url.password());
+            proxyList << proxy;
+        } else if (url.scheme() == QLatin1String("socks5h")) {
+            QNetworkProxy proxy(QNetworkProxy::Socks5Proxy, url.host(),
+                    url.port() ? url.port() : 1080, url.userName(), url.password());
+            proxy.setCapabilities(QNetworkProxy::HostNameLookupCapability);
+            proxyList << proxy;
+        } else if (url.scheme() == QLatin1String("http") || url.scheme().isEmpty()) {
+            QNetworkProxy proxy(QNetworkProxy::HttpProxy, url.host(),
+                    url.port() ? url.port() : 8080, url.userName(), url.password());
+            proxyList << proxy;
+        }
+    }
+    if (proxyList.isEmpty())
+        proxyList << QNetworkProxy::NoProxy;
+
+    return proxyList;
+}
 
 /*!
     This function takes the query request, \a query,
