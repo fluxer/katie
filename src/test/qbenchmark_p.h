@@ -68,19 +68,9 @@ QT_BEGIN_NAMESPACE
 
 struct QBenchmarkContext
 {
-    // None of the strings below are assumed to contain commas (see toString() below)
+    // None of the strings below are assumed to contain commas
     QString slotName;
     QString tag; // from _data() function
-
-    int checkpointIndex;
-
-    QString toString() const
-    {
-        QString s = QString::fromLatin1("%1,%2,%3").arg(slotName).arg(tag).arg(checkpointIndex);
-        return s;
-    }
-
-    QBenchmarkContext() : checkpointIndex(-1) {}
 };
 
 class QBenchmarkResult

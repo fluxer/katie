@@ -1449,7 +1449,7 @@ static bool qInvokeTestMethod(const char *slotName, const char *data=0)
     QBenchmarkTestMethodData benchmarkData;
     QBenchmarkTestMethodData::current = &benchmarkData;
 
-    QBenchmarkGlobalData::current->context.slotName = QLatin1String(slotName);
+    QBenchmarkGlobalData::current->context.slotName = QString::fromLatin1(slotName);
 
     char member[512];
     QTestTable table;
