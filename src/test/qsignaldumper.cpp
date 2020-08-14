@@ -52,9 +52,7 @@ inline static void qPrintMessage(const QByteArray &ba)
     QTestLog::info(ba.constData(), 0, 0);
 }
 
-Q_GLOBAL_STATIC(QList<QByteArray>, ignoreClasses)
 static int iLevel = 0;
-static int ignoreLevel = 0;
 enum { IndentSpacesCount = 4 };
 
 static QByteArray memberName(const QMetaMethod &member)
@@ -70,11 +68,6 @@ static void qSignalDumperCallback(QObject *caller, int method_index, void **argv
     Q_ASSERT(mo);
     QMetaMethod member = mo->method(method_index);
     Q_ASSERT(member.signature());
-
-    if (QTest::ignoreClasses() && QTest::ignoreClasses()->contains(mo->className())) {
-        ++QTest::ignoreLevel;
-        return;
-    }
 
     QByteArray str;
     str.fill(' ', QTest::iLevel++ * QTest::IndentSpacesCount);
@@ -128,10 +121,6 @@ static void qSignalDumperCallbackSlot(QObject *caller, int method_index, void **
     if (!member.signature())
         return;
 
-    if (QTest::ignoreLevel ||
-            (QTest::ignoreClasses() && QTest::ignoreClasses()->contains(mo->className())))
-        return;
-
     QByteArray str;
     str.fill(' ', QTest::iLevel * QTest::IndentSpacesCount);
     str += "Slot: ";
@@ -152,12 +141,6 @@ static void qSignalDumperCallbackSlot(QObject *caller, int method_index, void **
 static void qSignalDumperCallbackEndSignal(QObject *caller, int /*method_index*/)
 {
     Q_ASSERT(caller); Q_ASSERT(caller->metaObject());
-    if (QTest::ignoreClasses()
-            && QTest::ignoreClasses()->contains(caller->metaObject()->className())) {
-        --QTest::ignoreLevel;
-        Q_ASSERT(QTest::ignoreLevel >= 0);
-        return;
-    }
     --QTest::iLevel;
     Q_ASSERT(QTest::iLevel >= 0);
 }
@@ -178,18 +161,6 @@ void QSignalDumper::endDump()
 {
     static QSignalSpyCallbackSet nset = { 0, 0, 0 };
     qt_register_signal_spy_callbacks(nset);
-}
-
-void QSignalDumper::ignoreClass(const QByteArray &klass)
-{
-    if (QTest::ignoreClasses())
-        QTest::ignoreClasses()->append(klass);
-}
-
-void QSignalDumper::clearIgnoredClasses()
-{
-    if (QTest::ignoreClasses())
-        QTest::ignoreClasses()->clear();
 }
 
 QT_END_NAMESPACE
