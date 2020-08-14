@@ -63,10 +63,8 @@ namespace QtSharedPointer { struct ExternalRefCountData; }
 struct QSignalSpyCallbackSet
 {
     typedef void (*BeginCallback)(QObject *caller, int method_index, void **argv);
-    typedef void (*EndCallback)(QObject *caller, int method_index);
-    BeginCallback signal_begin_callback,
-                    slot_begin_callback;
-    EndCallback signal_end_callback;
+    BeginCallback signal_begin_callback;
+    BeginCallback slot_begin_callback;
 };
 void Q_CORE_EXPORT qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet &callback_set);
 
@@ -200,8 +198,7 @@ inline bool QObjectPrivate::isSignalConnected(uint signal_index) const
 {
     return signal_index >= sizeof(connectedSignals) * 8
         || (connectedSignals[signal_index >> 5] & (1 << (signal_index & 0x1f))
-        || qt_signal_spy_callback_set.signal_begin_callback
-        || qt_signal_spy_callback_set.signal_end_callback);
+        || qt_signal_spy_callback_set.signal_begin_callback);
 }
 
 inline void QObjectPrivate::connectNotify(const char *signal)

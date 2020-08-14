@@ -58,7 +58,7 @@
 QT_BEGIN_NAMESPACE
 
 // Support for introspection
-QSignalSpyCallbackSet Q_CORE_EXPORT qt_signal_spy_callback_set = { 0, 0, 0 };
+QSignalSpyCallbackSet Q_CORE_EXPORT qt_signal_spy_callback_set = { 0, 0 };
 
 void qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet &callback_set)
 {
@@ -2917,9 +2917,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
     QMutexLocker locker(signalSlotLock(sender));
     QObjectConnectionListVector *connectionLists = sender->d_func()->connectionLists;
     if (!connectionLists) {
-        locker.unlock();
-        if (qt_signal_spy_callback_set.signal_end_callback)
-            qt_signal_spy_callback_set.signal_end_callback(sender, signal_absolute_index);
         return;
     }
     ++connectionLists->inUse;
@@ -3050,12 +3047,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
     } else if (connectionLists->dirty) {
         sender->d_func()->cleanConnectionLists();
     }
-
-    locker.unlock();
-
-    if (qt_signal_spy_callback_set.signal_end_callback)
-        qt_signal_spy_callback_set.signal_end_callback(sender, signal_absolute_index);
-
 }
 
 /*! \internal

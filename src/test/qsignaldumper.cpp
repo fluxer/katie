@@ -52,7 +52,6 @@ inline static void qPrintMessage(const QByteArray &ba)
     QTestLog::info(ba.constData(), 0, 0);
 }
 
-static int iLevel = 0;
 enum { IndentSpacesCount = 4 };
 
 static QByteArray memberName(const QMetaMethod &member)
@@ -70,7 +69,7 @@ static void qSignalDumperCallback(QObject *caller, int method_index, void **argv
     Q_ASSERT(member.signature());
 
     QByteArray str;
-    str.fill(' ', QTest::iLevel++ * QTest::IndentSpacesCount);
+    str.fill(' ', QTest::IndentSpacesCount);
     str += "Signal: ";
     str += mo->className();
     str += '(';
@@ -122,7 +121,7 @@ static void qSignalDumperCallbackSlot(QObject *caller, int method_index, void **
         return;
 
     QByteArray str;
-    str.fill(' ', QTest::iLevel * QTest::IndentSpacesCount);
+    str.fill(' ', QTest::IndentSpacesCount);
     str += "Slot: ";
     str += mo->className();
     str += '(';
@@ -138,28 +137,20 @@ static void qSignalDumperCallbackSlot(QObject *caller, int method_index, void **
     qPrintMessage(str);
 }
 
-static void qSignalDumperCallbackEndSignal(QObject *caller, int /*method_index*/)
-{
-    Q_ASSERT(caller); Q_ASSERT(caller->metaObject());
-    --QTest::iLevel;
-    Q_ASSERT(QTest::iLevel >= 0);
-}
-
 }
 
 void QSignalDumper::startDump()
 {
     static QSignalSpyCallbackSet set = {
         QTest::qSignalDumperCallback,
-        QTest::qSignalDumperCallbackSlot,
-        QTest::qSignalDumperCallbackEndSignal
+        QTest::qSignalDumperCallbackSlot
     };
     qt_register_signal_spy_callbacks(set);
 }
 
 void QSignalDumper::endDump()
 {
-    static QSignalSpyCallbackSet nset = { 0, 0, 0 };
+    static QSignalSpyCallbackSet nset = { 0, 0 };
     qt_register_signal_spy_callbacks(nset);
 }
 
