@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, os, re
+import os, re
 from collections import OrderedDict
 
 components = {
