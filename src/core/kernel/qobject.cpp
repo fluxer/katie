@@ -2994,9 +2994,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                         delete connectionLists;
                     QT_RETHROW;
                 }
-
-                if (qt_signal_spy_callback_set.slot_end_callback)
-                    qt_signal_spy_callback_set.slot_end_callback(receiver, c->method());
                 locker.relock();
             } else {
                 const int method = method_relative + c->method_offset;
@@ -3021,10 +3018,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                         delete connectionLists;
                     QT_RETHROW;
                 }
-
-                if (qt_signal_spy_callback_set.slot_end_callback)
-                    qt_signal_spy_callback_set.slot_end_callback(receiver, method);
-
                 locker.relock();
             }
 
