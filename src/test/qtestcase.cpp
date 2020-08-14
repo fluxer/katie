@@ -949,12 +949,6 @@ void seedRandom()
     }
 }
 
-int qTestRandomSeed()
-{
-    Q_ASSERT(QTest::seedSet);
-    return QTest::seed;
-}
-
 template<typename T>
 void swap(T * array, int pos, int otherPos)
 {
