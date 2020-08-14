@@ -950,19 +950,13 @@ void seedRandom()
 }
 
 template<typename T>
-void swap(T * array, int pos, int otherPos)
-{
-    T tmp = array[pos];
-    array[pos] = array[otherPos];
-    array[otherPos] = tmp;
-}
-
-template<typename T>
 static void randomizeList(T * array, int size)
 {
     for (int i = 0; i != size; i++) {
         int pos = qrand() % size;
-        swap(array, pos, i);
+        T tmp = array[pos];
+        array[pos] = array[i];
+        array[i] = tmp;
     }
 }
 
