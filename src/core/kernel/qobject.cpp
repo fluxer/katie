@@ -57,6 +57,14 @@
 
 QT_BEGIN_NAMESPACE
 
+// Support for introspection
+QSignalSpyCallbackSet Q_CORE_EXPORT qt_signal_spy_callback_set = { 0, 0, 0 };
+
+void qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet &callback_set)
+{
+    qt_signal_spy_callback_set = callback_set;
+}
+
 static int DIRECT_CONNECTION_ONLY = 0;
 
 static int *queuedConnectionTypes(const QList<QByteArray> &typeNames)

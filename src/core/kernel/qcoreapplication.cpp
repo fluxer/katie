@@ -103,15 +103,6 @@ void QCoreApplicationPrivate::processCommandLineArguments()
     }
 }
 
-// Support for introspection
-
-QSignalSpyCallbackSet Q_CORE_EXPORT qt_signal_spy_callback_set = { 0, 0, 0 };
-
-void qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet &callback_set)
-{
-    qt_signal_spy_callback_set = callback_set;
-}
-
 typedef QList<QtCleanUpFunction> QVFuncList;
 Q_GLOBAL_STATIC(QVFuncList, postRList)
 
