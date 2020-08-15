@@ -78,21 +78,21 @@ namespace QTest {
         static bool colored = (!qgetenv("QTEST_COLORED").isEmpty());
         switch (type) {
         case QAbstractTestLogger::Skip:
-            return COLORED_MSG(0, 37, "SKIP     "); //white
+            return COLORED_MSG(0, 37, "SKIP  "); //white
         case QAbstractTestLogger::Warn:
-            return COLORED_MSG(0, 33, "WARNING  "); // yellow
+            return COLORED_MSG(0, 33, "WARN  "); // yellow
         case QAbstractTestLogger::QWarning:
-            return COLORED_MSG(1, 33, "QWARNING ");
+            return COLORED_MSG(1, 33, "QWARN ");
         case QAbstractTestLogger::QDebug:
-            return COLORED_MSG(1, 33, "QDEBUG   ");
+            return COLORED_MSG(1, 33, "QDEBUG");
         case QAbstractTestLogger::QCritical:
-            return COLORED_MSG(1, 33, "QCRITICAL");
+            return COLORED_MSG(1, 33, "QCRIT ");
         case QAbstractTestLogger::QFatal:
-            return COLORED_MSG(0, 31, "QFATAL   "); // red
+            return COLORED_MSG(0, 31, "QFATAL"); // red
         case QAbstractTestLogger::Info:
-            return "INFO     "; // no coloring
+            return "INFO  "; // no coloring
         }
-        return "?????????";
+        return "??????";
     }
 
     static void printMessage(const char *type, const char *msg, const char *file = 0, int line = 0)
