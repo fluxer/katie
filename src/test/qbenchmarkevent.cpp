@@ -73,17 +73,6 @@ bool QBenchmarkEvent::isMeasurementAccepted(qint64 measurement)
     return true;
 }
 
-int QBenchmarkEvent::adjustIterationCount(int suggestion)
-{
-    return suggestion;
-}
-
-int QBenchmarkEvent::adjustMedianCount(int suggestion)
-{
-    Q_UNUSED(suggestion);
-    return 1;
-}
-
 QTest::QBenchmarkMetric QBenchmarkEvent::metricType()
 {
     return QTest::Events;

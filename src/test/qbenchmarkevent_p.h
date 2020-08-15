@@ -59,9 +59,6 @@ public:
     qint64 checkpoint();
     qint64 stop();
     bool isMeasurementAccepted(qint64 measurement);
-    int adjustIterationCount(int suggestion);
-    int adjustMedianCount(int suggestion);
-    bool repeatCount() { return 1; } 
     QTest::QBenchmarkMetric metricType();
     static bool eventCountingMechanism(void *message);
     static qint64 eventCounter;

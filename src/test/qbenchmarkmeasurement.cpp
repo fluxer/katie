@@ -62,19 +62,9 @@ bool QBenchmarkTimeMeasurer::isMeasurementAccepted(qint64 measurement)
     return (measurement > 50);
 }
 
-int QBenchmarkTimeMeasurer::adjustIterationCount(int suggestion)
-{ 
-    return suggestion; 
-}
-
 bool QBenchmarkTimeMeasurer::needsWarmupIteration()
 {
     return true;
-}
-
-int QBenchmarkTimeMeasurer::adjustMedianCount(int)
-{ 
-    return 1; 
 }
 
 QTest::QBenchmarkMetric QBenchmarkTimeMeasurer::metricType()
@@ -104,16 +94,6 @@ qint64 QBenchmarkTickMeasurer::stop()
 bool QBenchmarkTickMeasurer::isMeasurementAccepted(qint64)
 {
     return true;
-}
-
-int QBenchmarkTickMeasurer::adjustIterationCount(int)
-{ 
-    return 1; 
-}
-
-int QBenchmarkTickMeasurer::adjustMedianCount(int)
-{ 
-    return 1; 
 }
 
 bool QBenchmarkTickMeasurer::needsWarmupIteration()
