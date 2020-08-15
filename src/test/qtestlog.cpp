@@ -130,7 +130,7 @@ namespace QTest {
                 return;
 
             if (!counter.deref()) {
-                QTest::testLogger->addMessage(QAbstractTestLogger::QSystem,
+                QTest::testLogger->addMessage(QAbstractTestLogger::QCritical,
                         "Maximum amount of warnings exceeded. Use -maxwarnings to override.");
                 return;
             }
@@ -141,7 +141,7 @@ namespace QTest {
             QTest::testLogger->addMessage(QAbstractTestLogger::QDebug, msg);
             break;
         case QtCriticalMsg:
-            QTest::testLogger->addMessage(QAbstractTestLogger::QSystem, msg);
+            QTest::testLogger->addMessage(QAbstractTestLogger::QCritical, msg);
             break;
         case QtWarningMsg:
             QTest::testLogger->addMessage(QAbstractTestLogger::QWarning, msg);

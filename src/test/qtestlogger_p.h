@@ -88,9 +88,9 @@ class QTestLogger : public QAbstractTestLogger
         int errorCount() const;
         int warningCount() const;
         int skipCount() const;
-        int systemCount() const;
         int qdebugCount() const;
         int qwarnCount() const;
+        int qcriticalCount() const;
         int qfatalCount() const;
         int infoCount() const;
         void registerRandomSeed(unsigned int seed);
@@ -111,9 +111,9 @@ class QTestLogger : public QAbstractTestLogger
         int errorCounter;
         int warningCounter;
         int skipCounter;
-        int systemCounter;
         int qdebugCounter;
         int qwarnCounter;
+        int qcriticalCounter;
         int qfatalCounter;
         int infoCounter;
         unsigned int randomSeed_;

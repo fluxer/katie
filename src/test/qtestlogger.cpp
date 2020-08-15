@@ -52,7 +52,7 @@ QTestLogger::QTestLogger(int fm)
     testCounter(0), passCounter(0),
     failureCounter(0), errorCounter(0),
     warningCounter(0), skipCounter(0),
-    systemCounter(0), qdebugCounter(0),
+    qcriticalCounter(0), qdebugCounter(0),
     qwarnCounter(0), qfatalCounter(0),
     infoCounter(0), randomSeed_(0),
     hasRandomSeed_(false)
@@ -308,10 +308,6 @@ void QTestLogger::addMessage(MessageTypes type, const char *message, const char 
         ++warningCounter;
         typeBuf = "warn";
         break;
-    case QAbstractTestLogger::QSystem:
-        ++systemCounter;
-        typeBuf = "system";
-        break;
     case QAbstractTestLogger::QDebug:
         ++qdebugCounter;
         typeBuf = "qdebug";
@@ -319,6 +315,10 @@ void QTestLogger::addMessage(MessageTypes type, const char *message, const char 
     case QAbstractTestLogger::QWarning:
         ++qwarnCounter;
         typeBuf = "qwarn";
+        break;
+    case QAbstractTestLogger::QCritical:
+        ++qcriticalCounter;
+        typeBuf = "qcritical";
         break;
     case QAbstractTestLogger::QFatal:
         ++qfatalCounter;
@@ -396,9 +396,9 @@ int QTestLogger::skipCount() const
     return skipCounter;
 }
 
-int QTestLogger::systemCount() const
+int QTestLogger::qcriticalCount() const
 {
-    return systemCounter;
+    return qcriticalCounter;
 }
 
 int QTestLogger::qdebugCount() const
