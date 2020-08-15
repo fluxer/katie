@@ -21,6 +21,66 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 QT_USE_NAMESPACE
 
+static inline qreal sinProgress_helper(qreal value)
+{
+    return qSin((value * M_PI) - M_PI_2) / 2 + qreal(0.5);
+}
+
+static inline qreal smoothBeginEndMixFactor_helper(qreal value)
+{
+    return qMin(qMax(1 - value * 2 + qreal(0.3), qreal(0.0)), qreal(1.0));
+}
+
+static inline qreal easeOutBounce_helper(qreal t, qreal c, qreal a)
+{
+    if (t == 1.0) return c;
+    if (t < (4/11.0)) {
+        return c*(7.5625*t*t);
+    } else if (t < (8/11.0)) {
+        t -= (6/11.0);
+        return -a * (1. - (7.5625*t*t + .75)) + c;
+    } else if (t < (10/11.0)) {
+        t -= (9/11.0);
+        return -a * (1. - (7.5625*t*t + .9375)) + c;
+    } else {
+        t -= (21/22.0);
+        return -a * (1. - (7.5625*t*t + .984375)) + c;
+    }
+}
+
+static inline qreal easeOutElastic_helper(qreal t, qreal b, qreal a, qreal p)
+{
+    if (t==0) return 0;
+    if (t==1) return b;
+
+    qreal s;
+    if(a < b) {
+        a = b;
+        s = p / 4.0f;
+    } else {
+        s = p / (2 * M_PI) * ::qAsin(b / a);
+    }
+
+    return (a*::qPow(2.0f,-10*t) * ::qSin( (t-s)*(2*M_PI)/p ) + b);
+}
+
+static inline qreal easeInElastic_helper(qreal t, qreal b, qreal c, qreal a, qreal p)
+{
+    if (t==0) return b;
+    if (t==1) return b+c;
+
+    qreal s;
+    if(a < ::qFabs(c)) {
+        a = c;
+        s = p / 4.0f;
+    } else {
+        s = p / (2 * M_PI) * ::qAsin(c / a);
+    }
+
+    qreal t_adj = t - 1.0f;
+    return -(a*::qPow(2.0f,10*t_adj) * ::qSin( (t_adj-s)*(2*M_PI)/p )) + b;
+}
+
 /**
  * Easing equation function for a simple linear tweening, with no easing.
  *
@@ -383,23 +443,6 @@ static qreal easeOutInCirc(qreal t)
     return easeInCirc(2*t - 1)/2 + 0.5;
 }
 
-static qreal easeInElastic_helper(qreal t, qreal b, qreal c, qreal a, qreal p)
-{
-    if (t==0) return b;
-    if (t==1) return b+c;
-
-    qreal s;
-    if(a < ::qFabs(c)) {
-        a = c;
-        s = p / 4.0f;
-    } else {
-        s = p / (2 * M_PI) * ::qAsin(c / a);
-    }
-
-    qreal t_adj = t - 1.0f;
-    return -(a*::qPow(2.0f,10*t_adj) * ::qSin( (t_adj-s)*(2*M_PI)/p )) + b;
-}
-
 /**
  * Easing equation function for an elastic (exponentially decaying sine wave) easing in: accelerating from zero velocity.
  *
@@ -411,22 +454,6 @@ static qreal easeInElastic_helper(qreal t, qreal b, qreal c, qreal a, qreal p)
 static qreal easeInElastic(qreal t, qreal a, qreal p)
 {
     return easeInElastic_helper(t, 0, 1, a, p);
-}
-
-static qreal easeOutElastic_helper(qreal t, qreal b, qreal a, qreal p)
-{
-    if (t==0) return 0;
-    if (t==1) return b;
-
-    qreal s;
-    if(a < b) {
-        a = b;
-        s = p / 4.0f;
-    } else {
-        s = p / (2 * M_PI) * ::qAsin(b / a);
-    }
-
-    return (a*::qPow(2.0f,-10*t) * ::qSin( (t-s)*(2*M_PI)/p ) + b);
 }
 
 /**
@@ -540,23 +567,6 @@ static qreal easeOutInBack(qreal t, qreal s)
     return easeInBack(2*t - 1, s)/2 + 0.5;
 }
 
-static qreal easeOutBounce_helper(qreal t, qreal c, qreal a)
-{
-    if (t == 1.0) return c;
-    if (t < (4/11.0)) {
-        return c*(7.5625*t*t);
-    } else if (t < (8/11.0)) {
-        t -= (6/11.0);
-        return -a * (1. - (7.5625*t*t + .75)) + c;
-    } else if (t < (10/11.0)) {
-        t -= (9/11.0);
-        return -a * (1. - (7.5625*t*t + .9375)) + c;
-    } else {
-        t -= (21/22.0);
-        return -a * (1. - (7.5625*t*t + .984375)) + c;
-    }
-}
-
 /**
  * Easing equation function for a bounce (exponentially decaying parabolic bounce) easing out: decelerating from zero velocity.
  *
@@ -608,16 +618,6 @@ static qreal easeOutInBounce(qreal t, qreal a)
     return 1.0 - easeOutBounce_helper (2.0-2*t, 0.5, a);
 }
 
-static inline qreal qt_sinProgress(qreal value)
-{
-    return qSin((value * M_PI) - M_PI_2) / 2 + qreal(0.5);
-}
-
-static inline qreal qt_smoothBeginEndMixFactor(qreal value)
-{
-    return qMin(qMax(1 - value * 2 + qreal(0.3), qreal(0.0)), qreal(1.0));
-}
-
 // SmoothBegin blends Smooth and Linear Interpolation.
 // Progress 0 - 0.3      : Smooth only
 // Progress 0.3 - ~ 0.5  : Mix of Smooth and Linear
@@ -628,8 +628,8 @@ static inline qreal qt_smoothBeginEndMixFactor(qreal value)
  */
 static qreal easeInCurve(qreal t)
 {
-    const qreal sinProgress = qt_sinProgress(t);
-    const qreal mix = qt_smoothBeginEndMixFactor(t);
+    const qreal sinProgress = sinProgress_helper(t);
+    const qreal mix = smoothBeginEndMixFactor_helper(t);
     return sinProgress * mix + t * (1 - mix);
 }
 
@@ -638,8 +638,8 @@ static qreal easeInCurve(qreal t)
  */
 static qreal easeOutCurve(qreal t)
 {
-    const qreal sinProgress = qt_sinProgress(t);
-    const qreal mix = qt_smoothBeginEndMixFactor(1 - t);
+    const qreal sinProgress = sinProgress_helper(t);
+    const qreal mix = smoothBeginEndMixFactor_helper(1 - t);
     return sinProgress * mix + t * (1 - mix);
 }
 
