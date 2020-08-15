@@ -56,13 +56,13 @@ namespace QTest {
         static bool colored = (!qgetenv("QTEST_COLORED").isEmpty());
         switch (type) {
         case QAbstractTestLogger::Pass:
-            return COLORED_MSG(0, 32, "PASS   "); //green
+            return COLORED_MSG(0, 32, "PASS  "); //green
         case QAbstractTestLogger::XFail:
-            return COLORED_MSG(1, 32, "XFAIL  "); //light green
+            return COLORED_MSG(1, 32, "XFAIL "); //light green
         case QAbstractTestLogger::Fail:
-            return COLORED_MSG(0, 31, "FAIL!  "); //red
+            return COLORED_MSG(0, 31, "FAIL! "); //red
         case QAbstractTestLogger::XPass:
-            return COLORED_MSG(0, 31, "XPASS  "); //red, too
+            return COLORED_MSG(0, 31, "XPASS "); //red, too
         }
         return "??????";
     }
