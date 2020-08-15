@@ -414,20 +414,20 @@ static qreal easeInElastic(qreal t, qreal a, qreal p)
     return easeInElastic_helper(t, 0, 1, 1, a, p);
 }
 
-static qreal easeOutElastic_helper(qreal t, qreal /*b*/, qreal c, qreal /*d*/, qreal a, qreal p)
+static qreal easeOutElastic_helper(qreal t, qreal b, qreal a, qreal p)
 {
     if (t==0) return 0;
-    if (t==1) return c;
+    if (t==1) return b;
 
     qreal s;
-    if(a < c) {
-        a = c;
+    if(a < b) {
+        a = b;
         s = p / 4.0f;
     } else {
-        s = p / (2 * M_PI) * ::qAsin(c / a);
+        s = p / (2 * M_PI) * ::qAsin(b / a);
     }
 
-    return (a*::qPow(2.0f,-10*t) * ::qSin( (t-s)*(2*M_PI)/p ) + c);
+    return (a*::qPow(2.0f,-10*t) * ::qSin( (t-s)*(2*M_PI)/p ) + b);
 }
 
 /**
@@ -440,7 +440,7 @@ static qreal easeOutElastic_helper(qreal t, qreal /*b*/, qreal c, qreal /*d*/, q
  */
 static qreal easeOutElastic(qreal t, qreal a, qreal p)
 {
-    return easeOutElastic_helper(t, 0, 1, 1, a, p);
+    return easeOutElastic_helper(t, 1, a, p);
 }
 
 /**
@@ -479,7 +479,7 @@ static qreal easeInOutElastic(qreal t, qreal a, qreal p)
  */
 static qreal easeOutInElastic(qreal t, qreal a, qreal p)
 {
-    if (t < 0.5) return easeOutElastic_helper(t*2, 0, 0.5, 1.0, a, p);
+    if (t < 0.5) return easeOutElastic_helper(t*2, 0.5, a, p);
     return easeInElastic_helper(2*t - 1.0, 0.5, 0.5, 1.0, a, p);
 }
 
