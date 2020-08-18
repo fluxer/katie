@@ -533,17 +533,10 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
         return false;
     }
 
-    if (quality_in >= 0) {
-        if (Q_UNLIKELY(quality_in > 9)) {
-            qWarning("PNG: Quality %d out of range", quality_in);
-            png_set_compression_level(png_ptr, 9);
-        } else {
-            png_set_compression_level(png_ptr, quality_in);
-        }
-    }
+    Q_ASSERT(quality_in >= 0 && quality_in <= 9);
+    png_set_compression_level(png_ptr, quality_in);
 
     png_set_write_fn(png_ptr, (void*)this, qpiw_write_fn, qpiw_flush_fn);
-
 
     int color_type = 0;
     if (image.colorCount())
