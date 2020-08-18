@@ -472,7 +472,7 @@ localeiso4217map = {}
 localecurrencymap = {}
 localenumberingmap = {}
 # regular expressions
-localeregex = re.compile('([^_|-|\.|@]+)+')
+localeregex = re.compile('([^_|\-|\.|@]+)+')
 
 # artificial entries
 languagemap['AnyLanguage'] = {
