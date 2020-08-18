@@ -151,7 +151,7 @@ static void qpiw_flush_fn(png_structp /* png_ptr */)
 #endif
 
 static
-void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float screen_gamma=0.0)
+void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float screen_gamma)
 {
     if (screen_gamma != 0.0 && png_get_valid(png_ptr, info_ptr, PNG_INFO_gAMA)) {
         double file_gamma;
