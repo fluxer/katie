@@ -712,6 +712,8 @@ bool QPngHandler::write(const QImage &image)
     if (quality >= 0) {
         quality = qMin(quality, 100);
         quality = (100-quality) * 9 / 91; // map [0,100] -> [9,0]
+    } else {
+        quality = 2;
     }
     writer.setGamma(d->gamma);
     return writer.writeImage(image, quality);
