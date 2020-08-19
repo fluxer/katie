@@ -272,7 +272,7 @@ QT_BEGIN_NAMESPACE
 
 #define QCOLOR_INT_RANGE_CHECK(fn, var) \
     do { \
-        if (var < 0 || var > 255) { \
+        if (Q_UNLIKELY(var < 0 || var > 255)) { \
             qWarning(#fn": invalid value %d", var); \
             var = qMax(0, qMin(var, 255)); \
         } \
@@ -280,7 +280,7 @@ QT_BEGIN_NAMESPACE
 
 #define QCOLOR_REAL_RANGE_CHECK(fn, var) \
     do { \
-        if (var < qreal(0.0) || var > qreal(1.0)) { \
+        if (Q_UNLIKELY(var < qreal(0.0) || var > qreal(1.0))) { \
             qWarning(#fn": invalid value %g", var); \
             var = qMax(qreal(0.0), qMin(var, qreal(1.0)));      \
         } \
@@ -861,10 +861,10 @@ void QColor::getHsv(int *h, int *s, int *v, int *a) const
 */
 void QColor::setHsvF(qreal h, qreal s, qreal v, qreal a)
 {
-    if (((h < qreal(0.0) || h > qreal(1.0)) && h != qreal(-1.0))
+    if (Q_UNLIKELY(((h < qreal(0.0) || h > qreal(1.0)) && h != qreal(-1.0))
         || (s < qreal(0.0) || s > qreal(1.0))
         || (v < qreal(0.0) || v > qreal(1.0))
-        || (a < qreal(0.0) || a > qreal(1.0))) {
+        || (a < qreal(0.0) || a > qreal(1.0)))) {
         qWarning("QColor::setHsvF: HSV parameters out of range");
         return;
     }
@@ -889,7 +889,7 @@ void QColor::setHsvF(qreal h, qreal s, qreal v, qreal a)
 */
 void QColor::setHsv(int h, int s, int v, int a)
 {
-    if (h < -1 || (uint)s > 255 || (uint)v > 255 || (uint)a > 255) {
+    if (Q_UNLIKELY(h < -1 || (uint)s > 255 || (uint)v > 255 || (uint)a > 255)) {
         qWarning("QColor::setHsv: HSV parameters out of range");
         invalidate();
         return;
@@ -975,10 +975,10 @@ void QColor::getHsl(int *h, int *s, int *l, int *a) const
 */
 void QColor::setHslF(qreal h, qreal s, qreal l, qreal a)
 {
-    if (((h < qreal(0.0) || h > qreal(1.0)) && h != qreal(-1.0))
+    if (Q_UNLIKELY(((h < qreal(0.0) || h > qreal(1.0)) && h != qreal(-1.0))
         || (s < qreal(0.0) || s > qreal(1.0))
         || (l < qreal(0.0) || l > qreal(1.0))
-        || (a < qreal(0.0) || a > qreal(1.0))) {
+        || (a < qreal(0.0) || a > qreal(1.0)))) {
         qWarning("QColor::setHsvF: HSV parameters out of range");
         return;
     }
@@ -1004,7 +1004,7 @@ void QColor::setHslF(qreal h, qreal s, qreal l, qreal a)
 */
 void QColor::setHsl(int h, int s, int l, int a)
 {
-    if (h < -1 || (uint)s > 255 || (uint)l > 255 || (uint)a > 255) {
+    if (Q_UNLIKELY(h < -1 || (uint)s > 255 || (uint)l > 255 || (uint)a > 255)) {
         qWarning("QColor::setHsv: HSV parameters out of range");
         invalidate();
         return;
@@ -1094,10 +1094,10 @@ void QColor::getRgb(int *r, int *g, int *b, int *a) const
 */
 void QColor::setRgbF(qreal r, qreal g, qreal b, qreal a)
 {
-    if (r < qreal(0.0) || r > qreal(1.0)
+    if (Q_UNLIKELY(r < qreal(0.0) || r > qreal(1.0)
         || g < qreal(0.0) || g > qreal(1.0)
         || b < qreal(0.0) || b > qreal(1.0)
-        || a < qreal(0.0) || a > qreal(1.0)) {
+        || a < qreal(0.0) || a > qreal(1.0))) {
         qWarning("QColor::setRgbF: RGB parameters out of range");
         invalidate();
         return;
@@ -1120,7 +1120,7 @@ void QColor::setRgbF(qreal r, qreal g, qreal b, qreal a)
 */
 void QColor::setRgb(int r, int g, int b, int a)
 {
-    if ((uint)r > 255 || (uint)g > 255 || (uint)b > 255 || (uint)a > 255) {
+    if (Q_UNLIKELY((uint)r > 255 || (uint)g > 255 || (uint)b > 255 || (uint)a > 255)) {
         qWarning("QColor::setRgb: RGB parameters out of range");
         invalidate();
         return;
@@ -2066,10 +2066,10 @@ QColor QColor::fromRgba(QRgb rgba)
 */
 QColor QColor::fromRgb(int r, int g, int b, int a)
 {
-    if (r < 0 || r > 255
+    if (Q_UNLIKELY(r < 0 || r > 255
         || g < 0 || g > 255
         || b < 0 || b > 255
-        || a < 0 || a > 255) {
+        || a < 0 || a > 255)) {
         qWarning("QColor::fromRgb: RGB parameters out of range");
         return QColor();
     }
@@ -2095,10 +2095,10 @@ QColor QColor::fromRgb(int r, int g, int b, int a)
 */
 QColor QColor::fromRgbF(qreal r, qreal g, qreal b, qreal a)
 {
-    if (r < qreal(0.0) || r > qreal(1.0)
+    if (Q_UNLIKELY(r < qreal(0.0) || r > qreal(1.0)
         || g < qreal(0.0) || g > qreal(1.0)
         || b < qreal(0.0) || b > qreal(1.0)
-        || a < qreal(0.0) || a > qreal(1.0)) {
+        || a < qreal(0.0) || a > qreal(1.0))) {
         qWarning("QColor::fromRgbF: RGB parameters out of range");
         return QColor();
     }
@@ -2126,10 +2126,10 @@ QColor QColor::fromRgbF(qreal r, qreal g, qreal b, qreal a)
 */
 QColor QColor::fromHsv(int h, int s, int v, int a)
 {
-    if (((h < 0 || h >= 360) && h != -1)
+    if (Q_UNLIKELY(((h < 0 || h >= 360) && h != -1)
         || s < 0 || s > 255
         || v < 0 || v > 255
-        || a < 0 || a > 255) {
+        || a < 0 || a > 255)) {
         qWarning("QColor::fromHsv: HSV parameters out of range");
         return QColor();
     }
@@ -2158,10 +2158,10 @@ QColor QColor::fromHsv(int h, int s, int v, int a)
 */
 QColor QColor::fromHsvF(qreal h, qreal s, qreal v, qreal a)
 {
-    if (((h < qreal(0.0) || h > qreal(1.0)) && h != qreal(-1.0))
+    if (Q_UNLIKELY(((h < qreal(0.0) || h > qreal(1.0)) && h != qreal(-1.0))
         || (s < qreal(0.0) || s > qreal(1.0))
         || (v < qreal(0.0) || v > qreal(1.0))
-        || (a < qreal(0.0) || a > qreal(1.0))) {
+        || (a < qreal(0.0) || a > qreal(1.0)))) {
         qWarning("QColor::fromHsvF: HSV parameters out of range");
         return QColor();
     }
@@ -2190,10 +2190,10 @@ QColor QColor::fromHsvF(qreal h, qreal s, qreal v, qreal a)
 */
 QColor QColor::fromHsl(int h, int s, int l, int a)
 {
-    if (((h < 0 || h >= 360) && h != -1)
+    if (Q_UNLIKELY(((h < 0 || h >= 360) && h != -1)
         || s < 0 || s > 255
         || l < 0 || l > 255
-        || a < 0 || a > 255) {
+        || a < 0 || a > 255)) {
         qWarning("QColor::fromHsv: HSV parameters out of range");
         return QColor();
     }
@@ -2222,10 +2222,10 @@ QColor QColor::fromHsl(int h, int s, int l, int a)
 */
 QColor QColor::fromHslF(qreal h, qreal s, qreal l, qreal a)
 {
-    if (((h < qreal(0.0) || h > qreal(1.0)) && h != qreal(-1.0))
+    if (Q_UNLIKELY(((h < qreal(0.0) || h > qreal(1.0)) && h != qreal(-1.0))
         || (s < qreal(0.0) || s > qreal(1.0))
         || (l < qreal(0.0) || l > qreal(1.0))
-        || (a < qreal(0.0) || a > qreal(1.0))) {
+        || (a < qreal(0.0) || a > qreal(1.0)))) {
         qWarning("QColor::fromHsvF: HSV parameters out of range");
         return QColor();
     }
@@ -2312,11 +2312,11 @@ void QColor::getCmykF(qreal *c, qreal *m, qreal *y, qreal *k, qreal *a)
 */
 void QColor::setCmyk(int c, int m, int y, int k, int a)
 {
-    if (c < 0 || c > 255
+    if (Q_UNLIKELY(c < 0 || c > 255
         || m < 0 || m > 255
         || y < 0 || y > 255
         || k < 0 || k > 255
-        || a < 0 || a > 255) {
+        || a < 0 || a > 255)) {
         qWarning("QColor::setCmyk: CMYK parameters out of range");
         return;
     }
@@ -2342,11 +2342,11 @@ void QColor::setCmyk(int c, int m, int y, int k, int a)
 */
 void QColor::setCmykF(qreal c, qreal m, qreal y, qreal k, qreal a)
 {
-    if (c < qreal(0.0) || c > qreal(1.0)
+    if (Q_UNLIKELY(c < qreal(0.0) || c > qreal(1.0)
         || m < qreal(0.0) || m > qreal(1.0)
         || y < qreal(0.0) || y > qreal(1.0)
         || k < qreal(0.0) || k > qreal(1.0)
-        || a < qreal(0.0) || a > qreal(1.0)) {
+        || a < qreal(0.0) || a > qreal(1.0))) {
         qWarning("QColor::setCmykF: CMYK parameters out of range");
         return;
     }
@@ -2371,11 +2371,11 @@ void QColor::setCmykF(qreal c, qreal m, qreal y, qreal k, qreal a)
 */
 QColor QColor::fromCmyk(int c, int m, int y, int k, int a)
 {
-    if (c < 0 || c > 255
+    if (Q_UNLIKELY(c < 0 || c > 255
         || m < 0 || m > 255
         || y < 0 || y > 255
         || k < 0 || k > 255
-        || a < 0 || a > 255) {
+        || a < 0 || a > 255)) {
         qWarning("QColor::fromCmyk: CMYK parameters out of range");
         return QColor();
     }
@@ -2404,11 +2404,11 @@ QColor QColor::fromCmyk(int c, int m, int y, int k, int a)
 */
 QColor QColor::fromCmykF(qreal c, qreal m, qreal y, qreal k, qreal a)
 {
-    if (c < qreal(0.0) || c > qreal(1.0)
+    if (Q_UNLIKELY(c < qreal(0.0) || c > qreal(1.0)
         || m < qreal(0.0) || m > qreal(1.0)
         || y < qreal(0.0) || y > qreal(1.0)
         || k < qreal(0.0) || k > qreal(1.0)
-        || a < qreal(0.0) || a > qreal(1.0)) {
+        || a < qreal(0.0) || a > qreal(1.0))) {
         qWarning("QColor::fromCmykF: CMYK parameters out of range");
         return QColor();
     }
