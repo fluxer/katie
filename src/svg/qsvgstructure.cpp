@@ -260,11 +260,6 @@ inline static bool isSupportedSvgFeature(const QString &str)
 
 // ----- end of generated code -----
 
-static inline bool isSupportedSvgExtension(const QString &)
-{
-    return false;
-}
-
 
 QSvgSwitch::QSvgSwitch(QSvgNode *parent)
     : QSvgStructureNode(parent)
@@ -301,13 +296,7 @@ void QSvgSwitch::draw(QPainter *p, QSvgExtraStates &states)
             }
 
             if (okToRender && !extensions.isEmpty()) {
-                QStringList::const_iterator sitr = extensions.constBegin();
-                for (; sitr != extensions.constEnd(); ++sitr) {
-                    if (!isSupportedSvgExtension(*sitr)) {
-                        okToRender = false;
-                        break;
-                    }
-                }
+                okToRender = false;
             }
 
             if (okToRender && !languages.isEmpty()) {
