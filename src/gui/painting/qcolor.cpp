@@ -699,10 +699,9 @@ bool QColor::setNamedColor(const QString &name)
         if (qt_get_hex_rgb(latin.constData(), latin.length(), &rgb)) {
             setRgb(rgb);
             return true;
-        } else {
-            invalidate();
-            return false;
         }
+        invalidate();
+        return false;
     }
 
 #ifndef QT_NO_COLORNAMES
@@ -742,7 +741,38 @@ bool QColor::setNamedColor(const QString &name)
 */
 bool QColor::isValidColor(const QString &name)
 {
-    return !name.isEmpty() && QColor().setNamedColor(name);
+    if (name.isEmpty()) {
+        return false;
+    }
+
+    QByteArray latin = name.toLatin1();
+    if (name.startsWith(QLatin1Char('#'))) {
+        QRgb rgb;
+        if (qt_get_hex_rgb(latin.constData(), latin.length(), &rgb)) {
+            return true;
+        }
+        return false;
+    }
+
+#ifndef QT_NO_COLORNAMES
+    for (qint16 i = 0; i < rgbTblSize; i++) {
+        if (qstrnicmp(rgbTbl[i].name, latin.constData(), latin.length()) == 0) {
+            return true;
+        }
+    }
+#endif
+
+#ifdef Q_WS_X11
+    XColor result;
+    if (allowX11ColorNames()
+        && QApplication::instance()
+        && QX11Info::display()
+        && XParseColor(QX11Info::display(), QX11Info::appColormap(), latin.constData(), &result)) {
+        return true;
+    }
+#endif
+
+    return false;
 }
 
 /*!
