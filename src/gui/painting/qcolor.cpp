@@ -1246,8 +1246,7 @@ qreal QColor::alphaF() const
 void QColor::setAlphaF(qreal alpha)
 {
     QCOLOR_REAL_RANGE_CHECK("QColor::setAlphaF", alpha);
-    qreal tmp = alpha * USHRT_MAX;
-    ct.argb.alpha = qRound(tmp);
+    ct.argb.alpha = qRound(alpha * USHRT_MAX);
 }
 
 
