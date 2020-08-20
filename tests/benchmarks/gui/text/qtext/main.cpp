@@ -392,8 +392,6 @@ void tst_QText::paintLayoutToPixmap_painterFill()
 
 void tst_QText::document()
 {
-    QTextDocument *doc = new QTextDocument;
-
     QBENCHMARK {
         QTextDocument *doc = new QTextDocument;
         doc->setHtml(m_shortLorem);
@@ -434,8 +432,6 @@ void tst_QText::paintDocToPixmap_painterFill()
 
 void tst_QText::control()
 {
-    QTextControl *control = new QTextControl(m_shortLorem);
-
     QBENCHMARK {
         QTextControl *control = new QTextControl;
         QTextDocument *doc = control->document();
