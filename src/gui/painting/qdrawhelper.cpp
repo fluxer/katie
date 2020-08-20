@@ -1629,13 +1629,12 @@ static void QT_FASTCALL comp_func_solid_Screen(uint *dest, const int length, uin
     if (const_alpha == 255) {
         for (int i = 0; i < length; ++i) {
             uint d = dest[i];
-            int da = qAlpha(d);
 
 #define OP(a, b) 255 - qt_div_255((255-a) * (255-b))
             int r = OP(  qRed(d), sr);
             int b = OP( qBlue(d), sb);
             int g = OP(qGreen(d), sg);
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), sa);
 #undef OP
 
             dest[i] = qRgba(r, g, b, a);
@@ -1643,13 +1642,12 @@ static void QT_FASTCALL comp_func_solid_Screen(uint *dest, const int length, uin
     } else {
         for (int i = 0; i < length; ++i) {
             uint d = dest[i];
-            int da = qAlpha(d);
 
 #define OP(a, b) 255 - qt_div_255((255-a) * (255-b))
             int r = OP(  qRed(d), sr);
             int b = OP( qBlue(d), sb);
             int g = OP(qGreen(d), sg);
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), sa);
 #undef OP
 
             dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
@@ -1664,14 +1662,11 @@ static void QT_FASTCALL comp_func_Screen(uint *dest, const uint *src, const int 
             uint d = dest[i];
             uint s = src[i];
 
-            int da = qAlpha(d);
-            int sa = qAlpha(s);
-
 #define OP(a, b) 255 - (((255-a) * (255-b)) >> 8)
             int r = OP(  qRed(d),   qRed(s));
             int b = OP( qBlue(d),  qBlue(s));
             int g = OP(qGreen(d), qGreen(s));
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), qAlpha(s));
 #undef OP
 
             dest[i] = qRgba(r, g, b, a);
@@ -1681,14 +1676,11 @@ static void QT_FASTCALL comp_func_Screen(uint *dest, const uint *src, const int 
             uint d = dest[i];
             uint s = src[i];
 
-            int da = qAlpha(d);
-            int sa = qAlpha(s);
-
 #define OP(a, b) 255 - (((255-a) * (255-b)) >> 8)
             int r = OP(  qRed(d),   qRed(s));
             int b = OP( qBlue(d),  qBlue(s));
             int g = OP(qGreen(d), qGreen(s));
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), qAlpha(s));
 #undef OP
 
             dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
@@ -2444,13 +2436,12 @@ static void QT_FASTCALL comp_func_solid_Exclusion(uint *dest, const int length, 
     if (const_alpha == 255) {
         for (int i = 0; i < length; ++i) {
             uint d = dest[i];
-            int da = qAlpha(d);
 
 #define OP(a, b) (a + b - qt_div_255(2*(a*b)))
             int r =  OP(  qRed(d), sr);
             int b =  OP( qBlue(d), sb);
             int g =  OP(qGreen(d), sg);
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), sa);
 #undef OP
 
             dest[i] = qRgba(r, g, b, a);
@@ -2458,13 +2449,12 @@ static void QT_FASTCALL comp_func_solid_Exclusion(uint *dest, const int length, 
     } else {
         for (int i = 0; i < length; ++i) {
             uint d = dest[i];
-            int da = qAlpha(d);
 
 #define OP(a, b) (a + b - qt_div_255(2*(a*b)))
             int r =  OP(  qRed(d), sr);
             int b =  OP( qBlue(d), sb);
             int g =  OP(qGreen(d), sg);
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), sa);
 #undef OP
 
             dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
@@ -2479,14 +2469,11 @@ static void QT_FASTCALL comp_func_Exclusion(uint *dest, const uint *src, const i
             uint d = dest[i];
             uint s = src[i];
 
-            int da = qAlpha(d);
-            int sa = qAlpha(s);
-
 #define OP(a, b) (a + b - ((a*b) >> 7))
             int r = OP(  qRed(d),   qRed(s));
             int b = OP( qBlue(d),  qBlue(s));
             int g = OP(qGreen(d), qGreen(s));
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), qAlpha(s));
 #undef OP
 
             dest[i] = qRgba(r, g, b, a);
@@ -2495,14 +2482,11 @@ static void QT_FASTCALL comp_func_Exclusion(uint *dest, const uint *src, const i
             uint d = dest[i];
             uint s = src[i];
 
-            int da = qAlpha(d);
-            int sa = qAlpha(s);
-
 #define OP(a, b) (a + b - ((a*b) >> 7))
             int r = OP(  qRed(d),   qRed(s));
             int b = OP( qBlue(d),  qBlue(s));
             int g = OP(qGreen(d), qGreen(s));
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), qAlpha(s));
 #undef OP
 
             dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
