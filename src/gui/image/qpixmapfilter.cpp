@@ -541,23 +541,12 @@ static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool qual
         radius *= qreal(0.5);
     }
 
-    if (alphaOnly)
-        expblur(blurImage, radius, quality, true);
-    else
-        expblur(blurImage, radius, quality, false);
+    expblur(blurImage, radius, quality, alphaOnly);
 
     if (p) {
         p->scale(scale, scale);
         p->drawImage(QRect(0, 0, blurImage.width(), blurImage.height()), blurImage);
     }
-}
-
-static void qt_blurImage(QImage &blurImage, qreal radius, bool quality)
-{
-    if (blurImage.format() == QImage::Format_Indexed8)
-        expblur(blurImage, radius, quality, true);
-    else
-        expblur(blurImage, radius, quality, false);
 }
 
 Q_GUI_EXPORT bool qt_scaleForTransform(const QTransform &transform, qreal *scale);

@@ -172,7 +172,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
     static const char tmpnamechars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
     char *data = filename.data();
-    for (int i = 0; i < phLength; i++) {
+    for (uint i = 0; i < phLength; i++) {
         data[i + phPos] = tmpnamechars[qrand() % 52];
     }
 

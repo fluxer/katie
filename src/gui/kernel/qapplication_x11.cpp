@@ -958,17 +958,6 @@ static void getXDefault(const char *group, const char *key, int *val)
     }
 }
 
-static void getXDefault(const char *group, const char *key, double *val)
-{
-    char *str = XGetDefault(qt_x11Data->display, group, key);
-    if (str) {
-        bool ok;
-        double v = QByteArray(str).toDouble(&ok);
-        if (ok)
-            *val = v;
-    }
-}
-
 static void getXDefault(const char *group, const char *key, bool *val)
 {
     char *str = XGetDefault(qt_x11Data->display, group, key);
