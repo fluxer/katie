@@ -106,6 +106,7 @@
 #define QT_NO_LPR
 #define QT_NO_NIS
 #define QT_NO_NSL
+#define QT_NO_NAS
 #define QT_NO_IMAGEFORMAT_MNG
 
 // Not supported, used to bootstrap
@@ -229,7 +230,6 @@
 #cmakedefine QT_NO_MENUBAR
 #cmakedefine QT_NO_MESSAGEBOX
 #cmakedefine QT_NO_MOVIE
-#cmakedefine QT_NO_NAS
 #cmakedefine QT_NO_NATIVE_GESTURES
 #cmakedefine QT_NO_NETWORKDISKCACHE
 #cmakedefine QT_NO_NETWORKINTERFACE
