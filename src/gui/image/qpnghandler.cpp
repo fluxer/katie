@@ -595,9 +595,7 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
 
     // Qt==ARGB==Big(ARGB)==Little(BGRA). But RGB888 is RGB regardless
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-    if (image.format() != QImage::Format_RGB888) {
-        png_set_bgr(png_ptr);
-    }
+    png_set_bgr(png_ptr);
 #endif
 
     QPoint offset = image.offset();
@@ -621,7 +619,7 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
     if (image.depth() != 1)
         png_set_packing(png_ptr);
 
-    if (color_type == PNG_COLOR_TYPE_RGB && image.format() != QImage::Format_RGB888)
+    if (color_type == PNG_COLOR_TYPE_RGB)
         png_set_filler(png_ptr, 0, QFILLER_ORDER);
 
     int height = image.height();
@@ -632,7 +630,6 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
     case QImage::Format_Indexed8:
     case QImage::Format_RGB32:
     case QImage::Format_ARGB32:
-    case QImage::Format_RGB888:
         {
             png_bytep* row_pointers = new png_bytep[height];
             for (int y=0; y<height; y++)

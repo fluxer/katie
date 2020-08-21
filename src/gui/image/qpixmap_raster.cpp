@@ -114,11 +114,6 @@ void QRasterPixmapData::fromImage(const QImage &sourceImage,
             QImage::Format opaqueFormat = QImage::systemFormat();
             QImage::Format alphaFormat = QImage::Format_ARGB32_Premultiplied;
 
-            // We don't care about the others...
-            if (opaqueFormat == QImage::Format_RGB16) {
-                alphaFormat = QImage::Format_ARGB8565_Premultiplied;
-            }
-
             if (!sourceImage.hasAlphaChannel()) {
                 format = opaqueFormat;
             } else if ((flags & Qt::NoOpaqueDetection) == 0
@@ -173,20 +168,7 @@ bool QRasterPixmapData::scroll(int dx, int dy, const QRect &rect)
 void QRasterPixmapData::fill(const QColor &color)
 {
     if (color.alpha() != 255 && !image.hasAlphaChannel()) {
-        switch (image.format()) {
-            case QImage::Format_RGB666: {
-                image = image.convertToFormat(QImage::Format_ARGB6666_Premultiplied);
-                break;
-            }
-            case QImage::Format_RGB444: {
-                image = image.convertToFormat(QImage::Format_ARGB4444_Premultiplied);
-                break;
-            }
-            default: {
-                image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-                break;
-            }
-        }
+        image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
     }
 
     image.fill(color);

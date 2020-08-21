@@ -607,9 +607,6 @@ static bool write_jpeg_image(const QImage &image, QIODevice *device, int quality
                     }
                 }
                 break;
-            case QImage::Format_RGB888:
-                memcpy(row, image.constScanLine(cinfo.next_scanline), w * 3);
-                break;
             case QImage::Format_RGB32:
             case QImage::Format_ARGB32:
             case QImage::Format_ARGB32_Premultiplied:

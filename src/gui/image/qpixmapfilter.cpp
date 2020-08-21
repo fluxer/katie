@@ -467,40 +467,8 @@ static QImage qt_halfScaled(const QImage &source)
         }
 
         return dest;
-    } else if (source.format() == QImage::Format_ARGB8565_Premultiplied) {
-        QImage dest(source.width() / 2, source.height() / 2, srcImage.format());
-
-        const uchar *src = srcImage.constBits();
-        int sx = srcImage.bytesPerLine();
-        int sx2 = sx << 1;
-
-        uchar *dst = dest.bits();
-        int dx = dest.bytesPerLine();
-        int ww = dest.width();
-        int hh = dest.height();
-
-        for (int y = hh; y; --y, dst += dx, src += sx2) {
-            const uchar *p1 = src;
-            const uchar *p2 = src + sx;
-            uchar *q = dst;
-            for (int x = ww; x; --x, q += 3, p1 += 6, p2 += 6) {
-                // alpha
-                q[0] = AVG(AVG(p1[0], p1[3]), AVG(p2[0], p2[3]));
-                // rgb
-                const quint16 p16_1 = (p1[2] << 8) | p1[1];
-                const quint16 p16_2 = (p1[5] << 8) | p1[4];
-                const quint16 p16_3 = (p2[2] << 8) | p2[1];
-                const quint16 p16_4 = (p2[5] << 8) | p2[4];
-                const quint16 result = AVG16(AVG16(p16_1, p16_2), AVG16(p16_3, p16_4));
-                q[1] = result & 0xff;
-                q[2] = result >> 8;
-            }
-        }
-
-        return dest;
     } else if (source.format() != QImage::Format_ARGB32_Premultiplied
-               && source.format() != QImage::Format_RGB32)
-    {
+               && source.format() != QImage::Format_RGB32) {
         srcImage = source.convertToFormat(QImage::Format_ARGB32_Premultiplied);
     }
 
