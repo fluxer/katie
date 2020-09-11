@@ -313,14 +313,14 @@ qint64 RCCFileInfo::writeDataName(RCCResourceLibrary &lib, qint64 offset)
 //
 ///////////////////////////////////////////////////////////
 
-static const QString TAG_RCC = QLatin1String("RCC");
-static const QString TAG_RESOURCE = QLatin1String("qresource");
-static const QString TAG_FILE = QLatin1String("file");
-static const QString ATTRIBUTE_LANG = QLatin1String("lang");
-static const QString ATTRIBUTE_PREFIX = QLatin1String("prefix");
-static const QString ATTRIBUTE_ALIAS = QLatin1String("alias");
-static const QString ATTRIBUTE_THRESHOLD = QLatin1String("threshold");
-static const QString ATTRIBUTE_COMPRESS = QLatin1String("compress");
+static const QLatin1String TAG_RCC = QLatin1String("RCC");
+static const QLatin1String TAG_RESOURCE = QLatin1String("qresource");
+static const QLatin1String TAG_FILE = QLatin1String("file");
+static const QLatin1String ATTRIBUTE_LANG = QLatin1String("lang");
+static const QLatin1String ATTRIBUTE_PREFIX = QLatin1String("prefix");
+static const QLatin1String ATTRIBUTE_ALIAS = QLatin1String("alias");
+static const QLatin1String ATTRIBUTE_THRESHOLD = QLatin1String("threshold");
+static const QLatin1String ATTRIBUTE_COMPRESS = QLatin1String("compress");
 
 RCCResourceLibrary::RCCResourceLibrary()
   : m_root(0),
