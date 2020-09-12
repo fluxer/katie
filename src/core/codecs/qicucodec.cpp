@@ -961,6 +961,7 @@ QIcuCodec::QIcuCodec(const int mib)
 #ifdef QICUCODEC_DEBUG
     qWarning("QIcuCodec::QIcuCodec: internal error, could not find MIB for %d", mib);
 #endif
+    m_name = "latin1";
 }
 
 QIcuCodec::~QIcuCodec()
