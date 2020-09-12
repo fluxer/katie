@@ -67,7 +67,7 @@ elseif(CMAKE_HOST_SYSTEM_PROCESSOR)
     string(TOLOWER "${CMAKE_HOST_SYSTEM_PROCESSOR}" KATIE_PROCESSOR)
 endif()
 
-# used as shebang for profile, exec and dbg scripts
+# used as shebang for profile, exec, dbg and trace scripts
 find_program(KATIE_SHELL NAMES sh dash mksh ksh ash)
 if(NOT KATIE_SHELL)
     message(FATAL_ERROR "Could not detect shell, supported are: sh, dash, mksh, ksh and ash")
@@ -428,7 +428,7 @@ if(KATIE_TESTS OR KATIE_BENCHMARKS)
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
 
-foreach(script exec dbg)
+foreach(script exec dbg trace)
     configure_file(
         ${CMAKE_SOURCE_DIR}/cmake/${script}.sh.cmake
         ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/${script}.sh
