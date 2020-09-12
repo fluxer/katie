@@ -133,13 +133,16 @@ int runRcc(int argc, char *argv[])
     bool projectRequested = false;
     QStringList filenamesIn;
 
+    printf("args");
     QStringList args;
     for (int i = 0; i != argc; ++i)
         args += QString::fromLocal8Bit(argv[i]);
 
+    printf("lib");
     RCCResourceLibrary library;
 
-    //parse options
+    // parse options
+    printf("parse options");
     QString errorMsg;
     for (int i = 1; i < args.count() && errorMsg.isEmpty(); i++) {
         if (args[i].isEmpty())
@@ -217,18 +220,23 @@ int runRcc(int argc, char *argv[])
         showHelp(errorMsg);
         return 1;
     }
+
+    printf("errorDevice");
     QFile errorDevice;
     errorDevice.open(stderr, QIODevice::WriteOnly|QIODevice::Text);
     
     if (library.verbose())
         errorDevice.write("Katie resource compiler\n");
 
+    printf("setInputFiles");
     library.setInputFiles(filenamesIn);
 
+    printf("readFiles");
     if (!library.readFiles(list, errorDevice))
         return 1;
 
     // open output
+    printf("open output");
     QFile out;
     QIODevice::OpenMode mode = QIODevice::WriteOnly;
     if (library.format() == RCCResourceLibrary::C_Code)
@@ -253,8 +261,9 @@ int runRcc(int argc, char *argv[])
             out.write("\n");
         }
         return 0;
-    } 
+    }
 
+    printf("library output");
     return library.output(out, errorDevice) ? 0 : 1;
 }
 
