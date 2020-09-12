@@ -683,7 +683,7 @@ bool RCCResourceLibrary::output(QIODevice &outDevice, QIODevice &errorDevice)
 
 void RCCResourceLibrary::writeHex(quint8 tmp)
 {
-    const char * const digits = "0123456789abcdef";
+    static const char * const digits = "0123456789abcdef";
     writeChar('0');
     writeChar('x');
     if (tmp < 16) {
