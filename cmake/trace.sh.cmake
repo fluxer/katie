@@ -15,4 +15,4 @@ bin="$1"
 shift
 
 cd "$(dirname "$bin")"
-exec ltrace @KATIE_CROSS_EXEC@ "./$(basename "$bin")" $@
+exec ltrace -C @KATIE_CROSS_EXEC@ "./$(basename "$bin")" $@
