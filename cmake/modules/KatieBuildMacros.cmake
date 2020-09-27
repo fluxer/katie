@@ -235,7 +235,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} "${rscout}")
             make_directory("${rscpath}")
             add_custom_command(
-                COMMAND "${CMAKE_BINARY_DIR}/trace.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}" -name "${rscname}"
+                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_RCC}${KATIE_TOOLS_SUFFIX}" "${resource}" -o "${rscout}" -name "${rscname}"
                 DEPENDS "${KATIE_RCC}"
                 OUTPUT "${rscout}"
             )
