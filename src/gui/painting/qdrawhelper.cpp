@@ -241,7 +241,7 @@ static void QT_FASTCALL destStoreARGB32(QRasterBuffer *rasterBuffer, int x, int 
         else if (alpha == 0)
             data[i] = 0;
         else {
-            int inv_alpha = 0xff0000/qAlpha(buffer[i]);
+            int inv_alpha = 0xff0000/alpha;
             data[i] = (p & 0xff000000)
                       | ((qRed(p)*inv_alpha) & 0xff0000)
                       | (((qGreen(p)*inv_alpha) >> 8) & 0xff00)
