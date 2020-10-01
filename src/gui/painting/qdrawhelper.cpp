@@ -3289,19 +3289,22 @@ static void qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
     }
 }
 
-#define QT_RECTFILL(T)                                                  \
-    inline static void qt_rectfill_##T(QRasterBuffer *rasterBuffer,     \
-                                       int x, int y, int width, int height, \
-                                       quint32 color)                   \
-    {                                                                   \
-        qt_rectfill<T>(reinterpret_cast<T*>(rasterBuffer->buffer()),    \
-                    qt_colorConvert<T, quint32p>(quint32p::fromRawData(color), 0), \
-                    x, y, width, height, rasterBuffer->bytesPerLine()); \
-    }
+inline static void qt_rectfill_quint32(QRasterBuffer *rasterBuffer,
+                                    int x, int y, int width, int height,
+                                    quint32 color)
+{
+    qt_rectfill<quint32>(reinterpret_cast<quint32*>(rasterBuffer->buffer()),
+                color, x, y, width, height, rasterBuffer->bytesPerLine());
+}
 
-QT_RECTFILL(quint32)
-QT_RECTFILL(quint16)
-#undef QT_RECTFILL
+inline static void qt_rectfill_quint16(QRasterBuffer *rasterBuffer,
+                                    int x, int y, int width, int height,
+                                    quint32 color)
+{
+    qt_rectfill<quint16>(reinterpret_cast<quint16*>(rasterBuffer->buffer()),
+                qt_colorConvert<quint16, quint32p>(quint32p::fromRawData(color), 0),
+                x, y, width, height, rasterBuffer->bytesPerLine());
+}
 
 inline static void qt_rectfill_nonpremul_quint32(QRasterBuffer *rasterBuffer,
                                                  int x, int y, int width, int height,
