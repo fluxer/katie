@@ -789,7 +789,7 @@ static const uint * QT_FASTCALL qt_fetch_radial_gradient(uint *buffer, const Ope
 {
     // avoid division by zero
     if (qFuzzyIsNull(op->radial.a)) {
-        qt_memfill(buffer, 0, length);
+        qt_memfill(buffer, (uint)0, length);
         return buffer;
     }
 

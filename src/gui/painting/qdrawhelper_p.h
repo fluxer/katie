@@ -393,14 +393,6 @@ inline void qt_memfill(T *dest, const T color, int count)
         *dest++ = color;
 }
 
-template <class DST, class SRC>
-inline void qt_memfill(DST *dest, const SRC color, int count)
-{
-    const DST c = qt_colorConvert<DST, SRC>(color, 0);
-    while (count--)
-        *dest++ = c;
-}
-
 template <class T>
 inline void qt_rectfill(T *dest, const T value,
                         int x, int y, int width, int height, int stride)
