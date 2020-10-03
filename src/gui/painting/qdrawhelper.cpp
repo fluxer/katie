@@ -256,17 +256,6 @@ static void QT_FASTCALL destStoreRGB16(QRasterBuffer *rasterBuffer, int x, int y
     qt_memconvert<quint16, quint32>(data, buffer, length);
 }
 
-template <class DST>
-static void QT_FASTCALL destStore(QRasterBuffer *rasterBuffer,
-                                  int x, int y,
-                                  const uint *buffer, int length)
-{
-    DST *dest = reinterpret_cast<DST*>(rasterBuffer->scanLine(y)) + x;
-    const quint32p *src = reinterpret_cast<const quint32p*>(buffer);
-    while (length--)
-        *dest++ = DST(*src++);
-}
-
 static DestStoreProc destStoreProc[QImage::NImageFormats] =
 {
     0, // Format_Invalid
@@ -3302,7 +3291,7 @@ inline static void qt_rectfill_quint16(QRasterBuffer *rasterBuffer,
                                     quint32 color)
 {
     qt_rectfill<quint16>(reinterpret_cast<quint16*>(rasterBuffer->buffer()),
-                qt_colorConvert<quint16, quint32p>(quint32p::fromRawData(color), 0),
+                qt_colorConvert<quint16, quint32>(color, 0),
                 x, y, width, height, rasterBuffer->bytesPerLine());
 }
 

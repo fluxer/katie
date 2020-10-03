@@ -2946,7 +2946,7 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
         qWarning("setPixel: Out of memory");
         return;
     }
-    const quint32p p = quint32p::fromRawData(index_or_rgb);
+    const quint32 p = index_or_rgb;
     switch(d->format) {
     case Format_Mono:
     case Format_MonoLSB:
@@ -2981,7 +2981,7 @@ void QImage::setPixel(int x, int y, uint index_or_rgb)
         ((uint *)s)[x] = index_or_rgb;
         break;
     case Format_RGB16:
-        ((quint16 *)s)[x] = qt_colorConvert<quint16, quint32p>(p, 0);
+        ((quint16 *)s)[x] = qt_colorConvert<quint16, quint32>(p, 0);
         break;
     case Format_Invalid:
     case NImageFormats:

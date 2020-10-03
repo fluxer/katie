@@ -334,26 +334,6 @@ static inline uint PREMUL(uint x) {
 #define ARGB_COMBINE_ALPHA(argb, alpha) \
     ((((argb >> 24) * alpha) >> 8) << 24) | (argb & 0x00ffffff)
 
-class quint32p
-{
-public:
-    inline quint32p(quint32 v) : data(PREMUL(v)) {}
-
-    inline operator quint32() const { return data; }
-    inline operator quint16() const { return data; }
-
-    static inline quint32p fromRawData(quint32 v)
-    {
-        quint32p p;
-        p.data = v;
-        return p;
-    }
-
-private:
-    quint32p() {}
-    quint32 data;
-};
-
 template <class DST, class SRC>
 inline DST qt_colorConvert(const SRC color, const DST dummy)
 {
