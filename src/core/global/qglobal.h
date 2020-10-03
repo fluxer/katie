@@ -271,11 +271,9 @@ QT_USE_NAMESPACE
 #  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
 #  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
 #  define Q_FUNC_INFO       __PRETTY_FUNCTION__
-#  if !defined(QT_MOC_CPP)
-#    define Q_PACKED __attribute__ ((__packed__))
-#    ifndef __ARM_EABI__
-#      define QT_NO_ARM_EABI
-#    endif
+#  define Q_PACKED __attribute__ ((__packed__))
+#  ifndef __ARM_EABI__
+#    define QT_NO_ARM_EABI
 #  endif
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
      /* C++0x features supported in GCC 4.3: */
@@ -302,9 +300,7 @@ QT_USE_NAMESPACE
 #  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
 #  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
 #  define Q_FUNC_INFO       __PRETTY_FUNCTION__
-#  if !defined(QT_MOC_CPP)
-#    define Q_PACKED __attribute__ ((__packed__))
-#  endif
+#  define Q_PACKED __attribute__ ((__packed__))
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
     /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
 #    if __has_feature(cxx_generalized_initializers)
