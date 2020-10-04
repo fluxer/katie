@@ -511,10 +511,9 @@ static void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool qual
 
     expblur(blurImage, radius, quality, alphaOnly);
 
-    if (p) {
-        p->scale(scale, scale);
-        p->drawImage(QRect(0, 0, blurImage.width(), blurImage.height()), blurImage);
-    }
+    Q_ASSERT(p);
+    p->scale(scale, scale);
+    p->drawImage(QRect(0, 0, blurImage.width(), blurImage.height()), blurImage);
 }
 
 Q_GUI_EXPORT bool qt_scaleForTransform(const QTransform &transform, qreal *scale);
