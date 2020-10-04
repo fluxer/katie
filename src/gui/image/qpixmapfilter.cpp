@@ -406,12 +406,12 @@ static void expblur(QImage &img, qreal radius, bool improvedQuality, bool alphaO
 
     QImage temp(img.height(), img.width(), img.format());
     if (img.depth() == 8) {
-        qt_memrotate270(reinterpret_cast<const quint8*>(img.bits()),
+        qt_memrotate270(reinterpret_cast<const quint8*>(img.constBits()),
                         img.width(), img.height(), img.bytesPerLine(),
                         reinterpret_cast<quint8*>(temp.bits()),
                         temp.bytesPerLine());
     } else {
-        qt_memrotate270(reinterpret_cast<const quint32*>(img.bits()),
+        qt_memrotate270(reinterpret_cast<const quint32*>(img.constBits()),
                         img.width(), img.height(), img.bytesPerLine(),
                         reinterpret_cast<quint32*>(temp.bits()),
                         temp.bytesPerLine());
@@ -424,12 +424,12 @@ static void expblur(QImage &img, qreal radius, bool improvedQuality, bool alphaO
     }
 
     if (img.depth() == 8) {
-        qt_memrotate90(reinterpret_cast<const quint8*>(temp.bits()),
+        qt_memrotate90(reinterpret_cast<const quint8*>(temp.constBits()),
                         temp.width(), temp.height(), temp.bytesPerLine(),
                         reinterpret_cast<quint8*>(img.bits()),
                         img.bytesPerLine());
     } else {
-        qt_memrotate90(reinterpret_cast<const quint32*>(temp.bits()),
+        qt_memrotate90(reinterpret_cast<const quint32*>(temp.constBits()),
                         temp.width(), temp.height(), temp.bytesPerLine(),
                         reinterpret_cast<quint32*>(img.bits()),
                         img.bytesPerLine());
