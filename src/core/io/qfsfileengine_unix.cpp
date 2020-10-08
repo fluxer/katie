@@ -84,7 +84,7 @@ static inline QByteArray openModeToFopenMode(QIODevice::OpenMode flags, const QF
             mode += '+';
     }
 
-#if defined(__GLIBC__) && (__GLIBC__ * 0x100 + __GLIBC_MINOR__) >= 0x0207
+#if defined(__GLIBC__)
     // must be glibc >= 2.7
     mode += 'e';
 #endif
