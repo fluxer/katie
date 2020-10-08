@@ -225,7 +225,7 @@ bool QFSFileEnginePrivate::openFh(QIODevice::OpenMode openMode, FILE *fh)
 
     // Seek to the end when in Append mode.
     if (openMode & QIODevice::Append) {
-        int ret;
+        QT_OFF_T ret;
         do {
             ret = QT_FSEEK(fh, 0, SEEK_END);
         } while (ret != 0 && errno == EINTR);
@@ -482,7 +482,7 @@ bool QFSFileEnginePrivate::seekFdFh(qint64 pos)
 
     if (fh) {
         // Buffered stdlib mode.
-        int ret;
+        QT_OFF_T ret;
         do {
             ret = QT_FSEEK(fh, QT_OFF_T(pos), SEEK_SET);
         } while (ret != 0 && errno == EINTR);
