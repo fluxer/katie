@@ -1803,14 +1803,14 @@ QStringList QCoreApplication::libraryPaths()
         QStringList *app_libpaths = coreappdata()->app_libpaths = new QStringList;
 
         QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::PluginsPath);
-        if (QDir(installPathPlugins).exists()) {
-            if (!app_libpaths->contains(installPathPlugins))
-                app_libpaths->append(installPathPlugins);
+        if (QDir(installPathPlugins).exists()
+            && !app_libpaths->contains(installPathPlugins)) {
+            app_libpaths->append(installPathPlugins);
         }
 
         installPathPlugins = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
-        if (QDir(installPathPlugins).exists()) {
-            if (!app_libpaths->contains(installPathPlugins))
+        if (QDir(installPathPlugins).exists()
+            && !app_libpaths->contains(installPathPlugins)) {
                 app_libpaths->append(installPathPlugins);
         }
 
@@ -1819,8 +1819,7 @@ QStringList QCoreApplication::libraryPaths()
             const QStringList paths = QString::fromLatin1(libPathEnv.constData()).split(QLatin1Char(':'), QString::SkipEmptyParts);
             foreach (const QString &it, paths) {
                 QString canonicalPath = QDir(it).canonicalPath();
-                if (!canonicalPath.isEmpty()
-                    && !app_libpaths->contains(canonicalPath)) {
+                if (!app_libpaths->contains(canonicalPath)) {
                     app_libpaths->append(canonicalPath);
                 }
             }
@@ -1880,8 +1879,7 @@ void QCoreApplication::addLibraryPath(const QString &path)
     libraryPaths();
 
     QString canonicalPath = QDir(path).canonicalPath();
-    if (!canonicalPath.isEmpty()
-        && !coreappdata()->app_libpaths->contains(canonicalPath)) {
+    if (!coreappdata()->app_libpaths->contains(canonicalPath)) {
         coreappdata()->app_libpaths->prepend(canonicalPath);
         locker.unlock();
         QFactoryLoader::refreshAll();
