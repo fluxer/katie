@@ -167,10 +167,6 @@ add_definitions(
     # means source code adjustments!
     # -DQT_NO_CAST_FROM_ASCII
     # -DQT_NO_CAST_TO_ASCII
-
-    # both gui and svg components require harfbuzz
-    -DHB_EXPORT=Q_CORE_EXPORT
-    -DQT_NO_OPENTYPE
 )
 
 # for symbols mangling while unwinding in core component
