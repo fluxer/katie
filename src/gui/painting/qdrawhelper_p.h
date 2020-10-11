@@ -324,12 +324,17 @@ static inline uint PREMUL(uint x) {
 }
 #endif // QT_POINTER_SIZE
 
-#define INV_PREMUL(p)                                   \
-    (qAlpha(p) == 0 ? 0 :                               \
-    ((qAlpha(p) << 24)                                  \
-     | (((255*qRed(p))/ qAlpha(p)) << 16)               \
-     | (((255*qGreen(p)) / qAlpha(p))  << 8)            \
-     | ((255*qBlue(p)) / qAlpha(p))))
+static inline uint INV_PREMUL(uint x) {
+    int alpha = qAlpha(x);
+
+    if (alpha == 0)
+        return 0;
+
+    return ((alpha << 24)
+            | (((255*qRed(x))/ alpha) << 16)
+            | (((255*qGreen(x)) / alpha)  << 8)
+            | ((255*qBlue(x)) / alpha));
+}
 
 #define ARGB_COMBINE_ALPHA(argb, alpha) \
     ((((argb >> 24) * alpha) >> 8) << 24) | (argb & 0x00ffffff)
