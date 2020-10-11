@@ -238,7 +238,6 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 
     // discard 'struct', 'class', and 'enum'; they are optional
     // and we don't want them in the normalized signature
-    const char* resultdata = result.constData();
     if (arrayStartsWith(result, "struct ", 7)) {
         result.remove(0, 7);
     } else if (arrayStartsWith(result, "class ", 6)) {
