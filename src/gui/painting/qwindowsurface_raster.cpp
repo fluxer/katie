@@ -149,8 +149,7 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
         QX11PixmapData *data = new QX11PixmapData(QPixmapData::PixmapType);
         data->xinfo = widget->x11Info();
         data->fromImage(sub_src, Qt::NoOpaqueDetection);
-        QPixmap pm = QPixmap(data);
-        XCopyArea(qt_x11Data->display, pm.handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
+        XCopyArea(qt_x11Data->display, data->handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
     } else {
         // qpaintengine_x11.cpp
         extern void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage *image, Drawable hd, GC gc, Display *dpy, Visual *visual, int depth);
