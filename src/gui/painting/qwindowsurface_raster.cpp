@@ -229,29 +229,24 @@ void QRasterWindowSurface::prepareBuffer(QImage::Format format)
         QRegion staticRegion(staticContents());
         // Make sure we're inside the boundaries of the old image.
         staticRegion &= QRect(0, 0, oldImage->width(), oldImage->height());
-        const QVector<QRect> &rects = staticRegion.rects();
-        const QRect *srcRect = rects.constData();
 
         // Copy the static content of the old image into the new one.
-        int numRectsLeft = rects.size();
-        do {
-            const int bytesOffset = srcRect->x() * bytesPerPixel;
-            const int dy = srcRect->y();
+        foreach(const QRect &srcRect, staticRegion.rects()) {
+            const int bytesOffset = srcRect.x() * bytesPerPixel;
+            const int dy = srcRect.y();
 
             // Adjust src and dst to point to the right offset.
             const uchar *s = src + dy * srcBytesPerLine + bytesOffset;
             uchar *d = dst + dy * dstBytesPerLine + bytesOffset;
-            const int numBytes = srcRect->width() * bytesPerPixel;
+            const int numBytes = srcRect.width() * bytesPerPixel;
 
-            int numScanLinesLeft = srcRect->height();
+            int numScanLinesLeft = srcRect.height();
             do {
                 ::memcpy(d, s, numBytes);
                 d += dstBytesPerLine;
                 s += srcBytesPerLine;
             } while (--numScanLinesLeft);
-
-            ++srcRect;
-        } while (--numRectsLeft);
+        };
     }
 
     delete oldImage;
