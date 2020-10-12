@@ -76,27 +76,6 @@ extern QPixmap qt_pixmapForBrush(int brushStyle); //in qbrush.cpp
 extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap);
 
 #ifndef QT_NO_XRENDER
-static const int compositionModeToRenderOp[QPainter::CompositionMode_Xor + 1] = {
-    PictOpOver, //CompositionMode_SourceOver,
-    PictOpOverReverse, //CompositionMode_DestinationOver,
-    PictOpClear, //CompositionMode_Clear,
-    PictOpSrc, //CompositionMode_Source,
-    PictOpDst, //CompositionMode_Destination,
-    PictOpIn, //CompositionMode_SourceIn,
-    PictOpInReverse, //CompositionMode_DestinationIn,
-    PictOpOut, //CompositionMode_SourceOut,
-    PictOpOutReverse, //CompositionMode_DestinationOut,
-    PictOpAtop, //CompositionMode_SourceAtop,
-    PictOpAtopReverse, //CompositionMode_DestinationAtop,
-    PictOpXor //CompositionMode_Xor
-};
-
-static inline int qpainterOpToXrender(QPainter::CompositionMode mode)
-{
-    Q_ASSERT(mode <= QPainter::CompositionMode_Xor);
-    return compositionModeToRenderOp[mode];
-}
-
 static inline bool complexPictOp(int op)
 {
     return op != PictOpOver && op != PictOpSrc;
@@ -1047,8 +1026,46 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
     if (flags & DirtyHints) updateRenderHints(state.renderHints());
     if (flags & DirtyCompositionMode) {
         int function = GXcopy;
-        if (state.compositionMode() >= QPainter::RasterOp_SourceOrDestination) {
-            switch (state.compositionMode()) {
+        QPainter::CompositionMode mode = state.compositionMode();
+        switch (mode) {
+#if !defined(QT_NO_XRENDER)
+            case QPainter::CompositionMode_SourceOver:
+                d->composition_mode = PictOpOver;
+                break;
+            case QPainter::CompositionMode_DestinationOver:
+                d->composition_mode = PictOpOverReverse;
+                break;
+            case QPainter::CompositionMode_Clear:
+                d->composition_mode = PictOpClear;
+                break;
+            case QPainter::CompositionMode_Source:
+                d->composition_mode = PictOpSrc;
+                break;
+            case QPainter::CompositionMode_Destination:
+                d->composition_mode = PictOpDst;
+                break;
+            case QPainter::CompositionMode_SourceIn:
+                d->composition_mode = PictOpIn;
+                break;
+            case QPainter::CompositionMode_DestinationIn:
+                d->composition_mode = PictOpInReverse;
+                break;
+            case QPainter::CompositionMode_SourceOut:
+                d->composition_mode = PictOpOut;
+                break;
+            case QPainter::CompositionMode_DestinationOut:
+                d->composition_mode = PictOpOutReverse;
+                break;
+            case QPainter::CompositionMode_SourceAtop:
+                d->composition_mode = PictOpAtop;
+                break;
+            case QPainter::CompositionMode_DestinationAtop:
+                d->composition_mode = PictOpAtopReverse;
+                break;
+            case QPainter::CompositionMode_Xor:
+                d->composition_mode = PictOpXor;
+                break;
+#endif
             case QPainter::RasterOp_SourceOrDestination:
                 function = GXor;
                 break;
@@ -1076,15 +1093,7 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
             case QPainter::RasterOp_NotSourceAndDestination:
                 function = GXandInverted;
                 break;
-            default:
-                function = GXcopy;
-            }
         }
-#if !defined(QT_NO_XRENDER)
-        else {
-            d->composition_mode = qpainterOpToXrender(state.compositionMode());
-        }
-#endif
         XSetFunction(qt_x11Data->display, d->gc, function);
         XSetFunction(qt_x11Data->display, d->gc_brush, function);
     }
