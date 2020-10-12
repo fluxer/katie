@@ -1230,9 +1230,7 @@ void QWidgetPrivate::repaint_sys(const QRegion &rgn)
         extra->staticContentsSize = data.crect.size();
     }
 
-    QRegion toBePainted(rgn);
-
-    toBePainted &= clipRect();
+    QRegion toBePainted(rgn & clipRect());
     clipToEffectiveMask(toBePainted);
     if (toBePainted.isEmpty())
         return; // Nothing to repaint.
