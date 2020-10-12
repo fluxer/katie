@@ -288,10 +288,6 @@ QT_USE_NAMESPACE
 
 #elif defined(__clang__)
 #  define Q_CC_CLANG
-#  if !defined(__has_extension)
-#    /* Compatibility with older Clang versions */
-#    define __has_extension __has_feature
-#  endif
 #  define Q_C_CALLBACKS
 #  define Q_ALIGNOF(type)   __alignof__(type)
 #  define Q_TYPEOF(expr)    __typeof__(expr)
