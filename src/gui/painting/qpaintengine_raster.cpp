@@ -336,15 +336,6 @@ bool QRasterPaintEngine::end()
 /*!
     \internal
 */
-QSize QRasterPaintEngine::size() const
-{
-    Q_D(const QRasterPaintEngine);
-    return QSize(d->rasterBuffer->width(), d->rasterBuffer->height());
-}
-
-/*!
-    \internal
-*/
 #ifndef QT_NO_DEBUG
 void QRasterPaintEngine::saveBuffer(const QString &s) const
 {
@@ -2557,8 +2548,7 @@ bool QRasterPaintEngine::supportsTransformations(const QFontEngine *fontEngine) 
 {
     if (!state()->WxF)
         return false;
-    const QTransform &m = state()->matrix;
-    return supportsTransformations(fontEngine->fontDef.pixelSize, m);
+    return supportsTransformations(fontEngine->fontDef.pixelSize, state()->matrix);
 }
 
 bool QRasterPaintEngine::supportsTransformations(const qreal pixelSize, const QTransform &m) const
@@ -2656,48 +2646,6 @@ void QRasterPaintEngine::drawBitmap(const QPointF &pos, const QImage &image, QSp
         fg->blend(n, spans, fg);
         n = 0;
     }
-}
-
-/*!
-    \enum QRasterPaintEngine::ClipType
-    \internal
-
-    \value RectClip Indicates that the currently set clip is a single rectangle.
-    \value ComplexClip Indicates that the currently set clip is a combination of several shapes.
-*/
-
-/*!
-    \internal
-    Returns the type of the clip currently set.
-*/
-QRasterPaintEngine::ClipType QRasterPaintEngine::clipType() const
-{
-    Q_D(const QRasterPaintEngine);
-
-    const QClipData *clip = d->clip();
-    if (!clip || clip->hasRectClip)
-        return RectClip;
-    else
-        return ComplexClip;
-}
-
-/*!
-    \internal
-    Returns the bounding rect of the currently set clip.
-*/
-QRect QRasterPaintEngine::clipBoundingRect() const
-{
-    Q_D(const QRasterPaintEngine);
-
-    const QClipData *clip = d->clip();
-
-    if (!clip)
-        return d->deviceRect;
-
-    if (clip->hasRectClip)
-        return clip->clipRect;
-
-    return QRect(clip->xmin, clip->ymin, clip->xmax - clip->xmin, clip->ymax - clip->ymin);
 }
 
 static void qt_merge_clip(const QClipData *c1, const QClipData *c2, QClipData *result)
