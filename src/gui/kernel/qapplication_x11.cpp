@@ -1023,7 +1023,6 @@ void qt_init(QApplicationPrivate *priv, int,
     qt_x11Data->use_xrandr = false;
     qt_x11Data->xrandr_major = 0;
     qt_x11Data->xrandr_eventbase = 0;
-    qt_x11Data->xrandr_errorbase = 0;
 
     // RENDER
     qt_x11Data->use_xrender = false;
@@ -1032,14 +1031,14 @@ void qt_init(QApplicationPrivate *priv, int,
 
     // XFIXES
     qt_x11Data->use_xfixes = false;
-    qt_x11Data->xfixes_major = 0;
     qt_x11Data->xfixes_eventbase = 0;
-    qt_x11Data->xfixes_errorbase = 0;
 
     // MIT-SHM
     qt_x11Data->use_mitshm = false;
-    qt_x11Data->use_mitshm_pixmaps = false;
     qt_x11Data->mitshm_major = 0;
+
+    // XINERAMA
+    qt_x11Data->use_xinerama = false;
 
     qt_x11Data->sip_serial = 0;
     qt_x11Data->net_supported_list = 0;
@@ -1271,7 +1270,7 @@ void qt_init(QApplicationPrivate *priv, int,
         int mitshm_pixmaps;
         if (qgetenv("QT_X11_NO_MITSHM").isNull()
             && XQueryExtension(qt_x11Data->display, "MIT-SHM", &qt_x11Data->mitshm_major,
-                            &mitshm_eventbase, &mitshm_errorbase)
+                               &mitshm_eventbase, &mitshm_errorbase)
             && XShmQueryVersion(qt_x11Data->display, &mitshm_major, &mitshm_minor,
                                 &mitshm_pixmaps))
         {
@@ -1289,10 +1288,19 @@ void qt_init(QApplicationPrivate *priv, int,
                                        || defaultVisual->green_mask == 0x7e0)
                                    && (defaultVisual->blue_mask == 0xff
                                        || defaultVisual->blue_mask == 0x1f));
-                qt_x11Data->use_mitshm_pixmaps = qt_x11Data->use_mitshm && mitshm_pixmaps;
             }
         }
 #endif // QT_NO_XSHM
+
+#ifndef QT_NO_XINERAMA
+        int xinerama_eventbase;
+        int xinerama_errorbase;
+        if (qgetenv("QT_X11_NO_XINERAMA").isNull()) {
+            qt_x11Data->use_xinerama = (XineramaQueryExtension(qt_x11Data->display,
+                                                               &xinerama_eventbase, &xinerama_errorbase)
+                                        && XineramaIsActive(qt_x11Data->display));
+        }
+#endif
 
         // initialize the graphics system - order is imporant here - it must be done before
         // the QColormap::initialize() call
@@ -1311,11 +1319,12 @@ void qt_init(QApplicationPrivate *priv, int,
 
 #ifndef QT_NO_XRANDR
         // See if XRandR is supported on the connected display
+        int xrandr_errorbase;
         if (qgetenv("QT_X11_NO_XRANDR").isNull()
             && XQueryExtension(qt_x11Data->display, "RANDR", &qt_x11Data->xrandr_major,
-                            &qt_x11Data->xrandr_eventbase, &qt_x11Data->xrandr_errorbase)) {
+                            &qt_x11Data->xrandr_eventbase, &xrandr_errorbase)) {
 
-            if (XRRQueryExtension(qt_x11Data->display, &qt_x11Data->xrandr_eventbase, &qt_x11Data->xrandr_errorbase)) {
+            if (XRRQueryExtension(qt_x11Data->display, &qt_x11Data->xrandr_eventbase, &xrandr_errorbase)) {
                 // XRandR is supported
                 qt_x11Data->use_xrandr = true;
             }
@@ -1338,11 +1347,13 @@ void qt_init(QApplicationPrivate *priv, int,
 
 #ifndef QT_NO_XFIXES
         // See if Xfixes is supported on the connected display
+        int xfixes_major;
+        int xfixes_errorbase;
         if (qgetenv("QT_X11_NO_XFIXES").isNull()
-            && XQueryExtension(qt_x11Data->display, "XFIXES", &qt_x11Data->xfixes_major,
-                            &qt_x11Data->xfixes_eventbase, &qt_x11Data->xfixes_errorbase)) {
+            && XQueryExtension(qt_x11Data->display, "XFIXES", &xfixes_major,
+                            &qt_x11Data->xfixes_eventbase, &xfixes_errorbase)) {
             if(XFixesQueryExtension(qt_x11Data->display, &qt_x11Data->xfixes_eventbase,
-                                                  &qt_x11Data->xfixes_errorbase)) {
+                                    &xfixes_errorbase)) {
                 // Xfixes is supported.
                 // Note: the XFixes protocol version is negotiated using QueryVersion.
                 // We supply the highest version we support, the X server replies with
@@ -1350,20 +1361,21 @@ void qt_init(QApplicationPrivate *priv, int,
                 // asked for. The version sent back is the protocol version the X server
                 // will use to talk us. If this call is removed, the behavior of the
                 // X server when it receives an XFixes request is undefined.
-                int major = 3;
-                int minor = 0;
-                XFixesQueryVersion(qt_x11Data->display, &major, &minor);
-                qt_x11Data->use_xfixes = (major >= 1);
-                qt_x11Data->xfixes_major = major;
+                int xfixes_major = 3;
+                int xfixes_minor = 0;
+                XFixesQueryVersion(qt_x11Data->display, &xfixes_major, &xfixes_minor);
+                qt_x11Data->use_xfixes = (xfixes_major >= 1);
             }
         }
 #endif // QT_NO_XFIXES
 
 #ifndef QT_NO_XSYNC
-        int xsync_evbase, xsync_errbase;
-        int major, minor;
+        int xsync_evbase;
+        int xsync_errbase;
+        int xsync_major;
+        int xsync_minor;
         if (XSyncQueryExtension(qt_x11Data->display, &xsync_evbase, &xsync_errbase))
-            XSyncInitialize(qt_x11Data->display, &major, &minor);
+            XSyncInitialize(qt_x11Data->display, &xsync_major, &xsync_minor);
 #endif // QT_NO_XSYNC
 
 #if !defined(QT_NO_FONTCONFIG)

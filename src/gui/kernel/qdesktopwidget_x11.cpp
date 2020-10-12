@@ -125,9 +125,7 @@ void QDesktopWidgetPrivate::init()
     // we ignore the Xinerama extension when using the display is
     // using traditional multi-screen (with multiple root windows)
     if (newScreenCount == 1) {
-        int unused;
-        use_xinerama = (XineramaQueryExtension(qt_x11Data->display, &unused, &unused)
-                        && XineramaIsActive(qt_x11Data->display));
+        use_xinerama = qt_x11Data->use_xinerama;
     }
 
     if (use_xinerama) {
