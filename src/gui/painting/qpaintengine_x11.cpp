@@ -1995,7 +1995,8 @@ void QX11PaintEngine::updateClipRegion_dev(const QRegion &clipRegion, Qt::ClipOp
 {
     Q_D(QX11PaintEngine);
     QRegion sysClip = systemClip();
-    if (op == Qt::NoClip) {
+    switch (op) {
+    case Qt::NoClip:
         d->has_clipping = false;
         d->crgn = sysClip;
         if (!sysClip.isEmpty()) {
@@ -2004,9 +2005,6 @@ void QX11PaintEngine::updateClipRegion_dev(const QRegion &clipRegion, Qt::ClipOp
             x11ClearClipRegion(d->dpy, d->gc, d->gc_brush, d->picture);
         }
         return;
-    }
-
-    switch (op) {
     case Qt::IntersectClip:
         if (d->has_clipping) {
             d->crgn &= clipRegion;
@@ -2023,8 +2021,6 @@ void QX11PaintEngine::updateClipRegion_dev(const QRegion &clipRegion, Qt::ClipOp
         d->crgn |= clipRegion;
         if (!sysClip.isEmpty())
             d->crgn = d->crgn.intersected(sysClip);
-        break;
-    default:
         break;
     }
     d->has_clipping = true;
