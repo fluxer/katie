@@ -59,7 +59,6 @@ public:
     void        updateFrameWidth();
     void        updateStyledFrameWidths();
 
-    QRect       frect;
     int         frameStyle;
     short       lineWidth;
     short       midLineWidth;
