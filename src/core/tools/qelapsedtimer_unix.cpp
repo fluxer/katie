@@ -122,7 +122,7 @@ timeval qt_gettime()
     return tv;
 }
 
-static qint64 elapsedAndRestart(qint64 sec, qint64 frac,
+static inline qint64 elapsedAndRestart(qint64 sec, qint64 frac,
                                 qint64 *nowsec, qint64 *nowfrac)
 {
     do_gettime(nowsec, nowfrac);
