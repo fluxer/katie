@@ -1254,11 +1254,11 @@ void qt_init(QApplicationPrivate *priv, int,
             && XRenderQueryExtension(qt_x11Data->display, &xrender_eventbase,
                                      &xrender_errorbase)) {
             // Check the version as well - we need v0.4 or higher
-            int major = 0;
-            int minor = 0;
-            XRenderQueryVersion(qt_x11Data->display, &major, &minor);
-            qt_x11Data->use_xrender = (major >= 0 && minor >= 5);
-            qt_x11Data->xrender_minor = minor;
+            int xrender_major = 0;
+            int xrender_minor = 0;
+            XRenderQueryVersion(qt_x11Data->display, &xrender_major, &xrender_minor);
+            qt_x11Data->use_xrender = (xrender_major >= 0 && xrender_minor >= 5);
+            qt_x11Data->xrender_minor = xrender_minor;
         }
 #endif // QT_NO_XRENDER
 
