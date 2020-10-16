@@ -5635,7 +5635,7 @@ void QPainter::drawTextItem(const QPointF &p, const QTextItem &_ti)
                            QFontDatabase::supportsThreadedFontRendering());
 #endif
 
-    QTextItemInt &ti = const_cast<QTextItemInt &>(static_cast<const QTextItemInt &>(_ti));
+    const QTextItemInt &ti = static_cast<const QTextItemInt &>(_ti);
 
     if (!d->extended && d->state->bgMode == Qt::OpaqueMode) {
         QRectF rect(p.x(), p.y() - ti.ascent.toReal(), ti.width.toReal(), (ti.ascent + ti.descent + 1).toReal());
