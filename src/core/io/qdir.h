@@ -46,9 +46,6 @@ class QDirPrivate;
 
 class Q_CORE_EXPORT QDir
 {
-protected:
-    QSharedDataPointer<QDirPrivate> d_ptr;
-
 public:
     enum Filter { Dirs        = 0x001,
                   Files       = 0x002,
@@ -189,6 +186,10 @@ public:
     static QString cleanPath(const QString &path);
     void refresh();
 
+private:
+    QSharedDataPointer<QDirPrivate> d_ptr;
+
+    friend class QDirIterator;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QDir::Filters)
