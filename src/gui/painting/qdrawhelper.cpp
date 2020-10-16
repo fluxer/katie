@@ -366,7 +366,7 @@ enum TextureBlendType {
 };
 
 template <QImage::Format format>
-static const uint * QT_FASTCALL qt_fetchUntransformed(uint *buffer, const Operator *, const QSpanData *data,
+static const uint * QT_FASTCALL fetchUntransformed(uint *buffer, const Operator *, const QSpanData *data,
                                              int y, int x, int length)
 {
     const uchar *scanLine = data->texture.scanLine(y);
@@ -377,7 +377,7 @@ static const uint * QT_FASTCALL qt_fetchUntransformed(uint *buffer, const Operat
 
 template <>
 const uint * QT_FASTCALL
-qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>(uint *, const Operator *,
+fetchUntransformed<QImage::Format_ARGB32_Premultiplied>(uint *, const Operator *,
                                                          const QSpanData *data,
                                                          int y, int x, int)
 {
@@ -540,24 +540,24 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
     // Untransformed
     {
         0, // Invalid
-        qt_fetchUntransformed<QImage::Format_Mono>,   // Mono
-        qt_fetchUntransformed<QImage::Format_MonoLSB>,   // MonoLsb
-        qt_fetchUntransformed<QImage::Format_Indexed8>,   // Indexed8
-        qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // RGB32
-        qt_fetchUntransformed<QImage::Format_ARGB32>,   // ARGB32
-        qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
-        qt_fetchUntransformed<QImage::Format_RGB16>   // RGB16
+        fetchUntransformed<QImage::Format_Mono>,   // Mono
+        fetchUntransformed<QImage::Format_MonoLSB>,   // MonoLsb
+        fetchUntransformed<QImage::Format_Indexed8>,   // Indexed8
+        fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // RGB32
+        fetchUntransformed<QImage::Format_ARGB32>,   // ARGB32
+        fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
+        fetchUntransformed<QImage::Format_RGB16>   // RGB16
     },
     // Tiled
     {
         0, // Invalid
-        qt_fetchUntransformed<QImage::Format_Mono>,   // Mono
-        qt_fetchUntransformed<QImage::Format_MonoLSB>,   // MonoLsb
-        qt_fetchUntransformed<QImage::Format_Indexed8>,   // Indexed8
-        qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // RGB32
-        qt_fetchUntransformed<QImage::Format_ARGB32>,   // ARGB32
-        qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
-        qt_fetchUntransformed<QImage::Format_RGB16>   // RGB16
+        fetchUntransformed<QImage::Format_Mono>,   // Mono
+        fetchUntransformed<QImage::Format_MonoLSB>,   // MonoLsb
+        fetchUntransformed<QImage::Format_Indexed8>,   // Indexed8
+        fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // RGB32
+        fetchUntransformed<QImage::Format_ARGB32>,   // ARGB32
+        fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
+        fetchUntransformed<QImage::Format_RGB16>   // RGB16
     },
     // Transformed
     {
