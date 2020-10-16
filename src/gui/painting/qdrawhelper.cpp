@@ -444,8 +444,8 @@ static const uint * QT_FASTCALL fetchTransformed(uint *buffer, const Operator *,
     return buffer;
 }
 
-template<TextureBlendType blendType>
-static inline void fetchTransformedBilinear_pixelBounds(int max, int l1, int l2, int &v1, int &v2)
+static inline void fetchTransformedBilinear_pixelBounds(TextureBlendType blendType,
+                                                        int max, int l1, int l2, int &v1, int &v2)
 {
     if (blendType == BlendTransformedBilinearTiled) {
         v1 %= max;
@@ -508,8 +508,8 @@ static const uint * QT_FASTCALL fetchTransformedBilinear(uint *buffer, const Ope
         int idistx = 256 - distx;
         int idisty = 256 - disty;
 
-        fetchTransformedBilinear_pixelBounds<blendType>(image_width, image_x1, image_x2, x1, x2);
-        fetchTransformedBilinear_pixelBounds<blendType>(image_height, image_y1, image_y2, y1, y2);
+        fetchTransformedBilinear_pixelBounds(blendType, image_width, image_x1, image_x2, x1, x2);
+        fetchTransformedBilinear_pixelBounds(blendType, image_height, image_y1, image_y2, y1, y2);
 
         const uchar *s1 = data->texture.scanLine(y1);
         const uchar *s2 = data->texture.scanLine(y2);
