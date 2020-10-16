@@ -120,17 +120,6 @@ static uint * QT_FASTCALL destFetchRGB16(uint *buffer, const QRasterBuffer *rast
     return buffer;
 }
 
-template <class DST>
-static uint * QT_FASTCALL destFetch(uint *buffer, const QRasterBuffer *rasterBuffer,
-                                    int x, int y, int length)
-{
-    const DST *src = reinterpret_cast<const DST*>(rasterBuffer->scanLine(y)) + x;
-    quint32 *dest = reinterpret_cast<quint32*>(buffer);
-    while (length--)
-        *dest++ = *src++;
-    return buffer;
-}
-
 static DestFetchProc destFetchProc[QImage::NImageFormats] =
 {
     0, // Format_Invalid
