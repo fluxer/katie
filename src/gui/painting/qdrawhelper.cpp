@@ -1396,7 +1396,7 @@ static void QT_FASTCALL comp_func_solid_Multiply(uint *dest, const int length, u
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1435,7 +1435,7 @@ static void QT_FASTCALL comp_func_Multiply(uint *dest, const uint *src, const in
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1475,7 +1475,7 @@ static void QT_FASTCALL comp_func_solid_Screen(uint *dest, const int length, uin
             int a = mix_alpha(qAlpha(d), sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1508,7 +1508,7 @@ static void QT_FASTCALL comp_func_Screen(uint *dest, const uint *src, const int 
             int a = mix_alpha(qAlpha(d), qAlpha(s));
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1561,7 +1561,7 @@ static void QT_FASTCALL comp_func_solid_Overlay(uint *dest, const int length, ui
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1600,7 +1600,7 @@ static void QT_FASTCALL comp_func_Overlay(uint *dest, const uint *src, const int
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1647,7 +1647,7 @@ static void QT_FASTCALL comp_func_solid_Darken(uint *dest, const int length, uin
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1686,7 +1686,7 @@ static void QT_FASTCALL comp_func_Darken(uint *dest, const uint *src, const int 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1733,7 +1733,7 @@ static void QT_FASTCALL comp_func_solid_Lighten(uint *dest, const int length, ui
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1772,7 +1772,7 @@ static void QT_FASTCALL comp_func_Lighten(uint *dest, const uint *src, const int
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1829,7 +1829,7 @@ static void QT_FASTCALL comp_func_solid_ColorDodge(uint *dest, const int length,
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1868,7 +1868,7 @@ static void QT_FASTCALL comp_func_ColorDodge(uint *dest, const uint *src, const 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1925,7 +1925,7 @@ static void QT_FASTCALL comp_func_solid_ColorBurn(uint *dest, const int length, 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1964,7 +1964,7 @@ static void QT_FASTCALL comp_func_ColorBurn(uint *dest, const uint *src, const i
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2018,7 +2018,7 @@ static void QT_FASTCALL comp_func_solid_HardLight(uint *dest, const int length, 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2057,7 +2057,7 @@ static void QT_FASTCALL comp_func_HardLight(uint *dest, const uint *src, const i
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2118,7 +2118,7 @@ static void QT_FASTCALL comp_func_solid_SoftLight(uint *dest, const int length, 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2157,7 +2157,7 @@ static void QT_FASTCALL comp_func_SoftLight(uint *dest, const uint *src, const i
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2204,7 +2204,7 @@ static void QT_FASTCALL comp_func_solid_Difference(uint *dest, const int length,
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2243,7 +2243,7 @@ static void QT_FASTCALL comp_func_Difference(uint *dest, const uint *src, const 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2282,7 +2282,7 @@ static void QT_FASTCALL comp_func_solid_Exclusion(uint *dest, const int length, 
             int a = mix_alpha(qAlpha(d), sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2314,7 +2314,7 @@ static void QT_FASTCALL comp_func_Exclusion(uint *dest, const uint *src, const i
             int a = mix_alpha(qAlpha(d), qAlpha(s));
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
