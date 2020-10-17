@@ -1149,8 +1149,7 @@ void QRasterPaintEngine::drawRects(const QRect *rects, int rectCount)
             int offset_y = int(s->matrix.dy());
             while (r < lastRect) {
                 QRect rect = r->normalized();
-                QRect rr = rect.translated(offset_x, offset_y);
-                fillRect_normalized(rr, &s->brushData, d);
+                fillRect_normalized(rect.translated(offset_x, offset_y), &s->brushData, d);
                 ++r;
             }
         } else {
@@ -1826,8 +1825,7 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
         d->image_filler.dx = -(r.x() + s->matrix.dx()) + sr.x();
         d->image_filler.dy = -(r.y() + s->matrix.dy()) + sr.y();
 
-        QRectF rr = r;
-        rr.translate(s->matrix.dx(), s->matrix.dy());
+        QRectF rr = r.translated(s->matrix.dx(), s->matrix.dy());
 
         const int x1 = qRound(rr.x());
         const int y1 = qRound(rr.y());
@@ -1899,8 +1897,7 @@ void QRasterPaintEngine::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap,
         d->image_filler.dx = -(r.x() + s->matrix.dx()) + sr.x();
         d->image_filler.dy = -(r.y() + s->matrix.dy()) + sr.y();
 
-        QRectF rr = r;
-        rr.translate(s->matrix.dx(), s->matrix.dy());
+        QRectF rr = r.translated(s->matrix.dx(), s->matrix.dy());
         fillRect_normalized(rr.toRect().normalized(), &d->image_filler, d);
     }
 }
@@ -2479,9 +2476,8 @@ void QRasterPaintEnginePrivate::rasterizeLine_dashed(QLineF line,
     Q_Q(QRasterPaintEngine);
     QRasterPaintEngineState *s = q->state();
 
-    const QPen &pen = s->lastPen;
-    const bool squareCap = (pen.capStyle() == Qt::SquareCap);
-    const QVector<qreal> pattern = pen.dashPattern();
+    const bool squareCap = (s->lastPen.capStyle() == Qt::SquareCap);
+    const QVector<qreal> pattern = s->lastPen.dashPattern();
 
     qreal patternLength = 0;
     for (int i = 0; i < pattern.size(); ++i)
@@ -3698,11 +3694,11 @@ void QSpanData::adjustSpanMethods()
 
 void QSpanData::setupMatrix(const QTransform &matrix, bool bilin)
 {
-    QTransform delta;
     // make sure we round off correctly in qdrawhelper.cpp
-    delta.translate(1.0 / 65536, 1.0 / 65536);
+    static const qreal delta = 1.0 / 65536;
+    static const QTransform deltam = QTransform::fromTranslate(delta, delta);
 
-    QTransform inv = (delta * matrix).inverted();
+    QTransform inv = (deltam * matrix).inverted();
     m11 = inv.m11();
     m12 = inv.m12();
     m13 = inv.m13();
