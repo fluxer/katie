@@ -64,13 +64,6 @@ template <typename T> inline void qbswap(const T src, uchar *dest)
     qbswap_helper(reinterpret_cast<const uchar *>(&src), dest, sizeof(T));
 }
 
-// Used to implement a type-safe and alignment-safe copy operation
-// If you want to avoid the memcopy, you must write specializations for this function
-template <typename T> inline void qToUnaligned(const T src, uchar *dest)
-{
-    memcpy(dest, &src, sizeof(T));
-}
-
 /* T qFromLittleEndian(const uchar *src)
  * This function will read a little-endian encoded value from \a src
  * and return the value in host-endian encoding.
@@ -243,7 +236,7 @@ template <typename T> inline T qToLittleEndian(const T source)
 template <typename T> inline T qFromLittleEndian(const T source)
 { return qbswap<T>(source); }
 template <typename T> inline void qToBigEndian(const T src, uchar *dest)
-{ qToUnaligned<T>(src, dest); }
+{ ::memcpy(dest, &src, sizeof(T)); }
 template <typename T> inline void qToLittleEndian(const T src, uchar *dest)
 { qbswap<T>(src, dest); }
 #else // Q_LITTLE_ENDIAN
@@ -259,7 +252,7 @@ template <typename T> inline T qFromLittleEndian(const T source)
 template <typename T> inline void qToBigEndian(const T src, uchar *dest)
 { qbswap<T>(src, dest); }
 template <typename T> inline void qToLittleEndian(const T src, uchar *dest)
-{ qToUnaligned<T>(src, dest); }
+{ ::memcpy(dest, &src, sizeof(T)); }
 
 #endif // Q_BYTE_ORDER == Q_BIG_ENDIAN
 
