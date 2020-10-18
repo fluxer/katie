@@ -72,9 +72,9 @@ public:
     ~QShortcutMap();
 
     int addShortcut(QObject *owner, const QKeySequence &key, Qt::ShortcutContext context);
-    int removeShortcut(int id, QObject *owner, const QKeySequence &key = QKeySequence());
-    int setShortcutEnabled(bool enable, int id, QObject *owner, const QKeySequence &key = QKeySequence());
-    int setShortcutAutoRepeat(bool on, int id, QObject *owner, const QKeySequence &key = QKeySequence());
+    int removeShortcut(int id, QObject *owner);
+    int setShortcutEnabled(bool enable, int id, QObject *owner);
+    int setShortcutAutoRepeat(bool on, int id, QObject *owner);
 
     void resetState();
     QKeySequence::SequenceMatch nextState(QKeyEvent *e);

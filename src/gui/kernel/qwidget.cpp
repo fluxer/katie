@@ -1158,7 +1158,7 @@ QWidget::~QWidget()
     // Remove all shortcuts grabbed by this
     // widget, unless application is closing
     if (!QApplicationPrivate::is_app_closing && testAttribute(Qt::WA_GrabbedShortcut))
-        qApp->d_func()->shortcutMap.removeShortcut(0, this, QKeySequence());
+        qApp->d_func()->shortcutMap.removeShortcut(0, this);
 #endif
 
     // delete layout while we still are a valid widget
@@ -9493,7 +9493,7 @@ void QWidget::releaseShortcut(int id)
 {
     Q_ASSERT(qApp);
     if (id)
-        qApp->d_func()->shortcutMap.removeShortcut(id, this, 0);
+        qApp->d_func()->shortcutMap.removeShortcut(id, this);
 }
 
 /*!
@@ -9512,7 +9512,7 @@ void QWidget::setShortcutEnabled(int id, bool enable)
 {
     Q_ASSERT(qApp);
     if (id)
-        qApp->d_func()->shortcutMap.setShortcutEnabled(enable, id, this, 0);
+        qApp->d_func()->shortcutMap.setShortcutEnabled(enable, id, this);
 }
 
 /*!
@@ -9527,7 +9527,7 @@ void QWidget::setShortcutAutoRepeat(int id, bool enable)
 {
     Q_ASSERT(qApp);
     if (id)
-        qApp->d_func()->shortcutMap.setShortcutAutoRepeat(enable, id, this, 0);
+        qApp->d_func()->shortcutMap.setShortcutAutoRepeat(enable, id, this);
 }
 #endif // QT_NO_SHORTCUT
 

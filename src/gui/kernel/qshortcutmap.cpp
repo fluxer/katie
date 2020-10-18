@@ -171,21 +171,19 @@ int QShortcutMap::addShortcut(QObject *owner, const QKeySequence &key, Qt::Short
     Removes a shortcut from the global map.
     If \a owner is 0, all entries in the map with the key sequence specified
     is removed. If \a key is null, all sequences for \a owner is removed from
-    the map. If \a id is 0, any identical \a key sequences owned by \a owner
-    are removed.
+    the map. If \a id is 0, all sequences owned by \a owner are removed.
     Returns the number of sequences removed from the map.
 */
 
-int QShortcutMap::removeShortcut(int id, QObject *owner, const QKeySequence &key)
+int QShortcutMap::removeShortcut(int id, QObject *owner)
 {
     Q_D(QShortcutMap);
     int itemsRemoved = 0;
     bool allOwners = (owner == 0);
-    bool allKeys = key.isEmpty();
-    bool allIds = id == 0;
+    bool allIds = (id == 0);
 
     // Special case, remove everything
-    if (allOwners && allKeys && id == 0) {
+    if (allOwners && allIds) {
         itemsRemoved = d->sequences.size();
         d->sequences.clear();
         return itemsRemoved;
@@ -197,8 +195,7 @@ int QShortcutMap::removeShortcut(int id, QObject *owner, const QKeySequence &key
         const QShortcutEntry &entry = d->sequences.at(i);
         int entryId = entry.id;
         if ((allOwners || entry.owner == owner)
-            && (allIds || entry.id == id)
-            && (allKeys || entry.keyseq == key)) {
+            && (allIds || entry.id == id)) {
             d->sequences.removeAt(i);
             ++itemsRemoved;
         }
@@ -218,16 +215,14 @@ int QShortcutMap::removeShortcut(int id, QObject *owner, const QKeySequence &key
     Changes the enable state of a shortcut to \a enable.
     If \a owner is 0, all entries in the map with the key sequence specified
     is removed. If \a key is null, all sequences for \a owner is removed from
-    the map. If \a id is 0, any identical \a key sequences owned by \a owner
-    are changed.
+    the map. If \a id is 0, all key sequences owned by \a owner are changed.
     Returns the number of sequences which are matched in the map.
 */
-int QShortcutMap::setShortcutEnabled(bool enable, int id, QObject *owner, const QKeySequence &key)
+int QShortcutMap::setShortcutEnabled(bool enable, int id, QObject *owner)
 {
     Q_D(QShortcutMap);
     int itemsChanged = 0;
     bool allOwners = (owner == 0);
-    bool allKeys = key.isEmpty();
     bool allIds = id == 0;
 
     int i = d->sequences.size()-1;
@@ -235,8 +230,7 @@ int QShortcutMap::setShortcutEnabled(bool enable, int id, QObject *owner, const 
     {
         QShortcutEntry entry = d->sequences.at(i);
         if ((allOwners || entry.owner == owner)
-            && (allIds || entry.id == id)
-            && (allKeys || entry.keyseq == key)) {
+            && (allIds || entry.id == id)) {
             d->sequences[i].enabled = enable;
             ++itemsChanged;
         }
@@ -256,25 +250,22 @@ int QShortcutMap::setShortcutEnabled(bool enable, int id, QObject *owner, const 
     Changes the auto repeat state of a shortcut to \a enable.
     If \a owner is 0, all entries in the map with the key sequence specified
     is removed. If \a key is null, all sequences for \a owner is removed from
-    the map. If \a id is 0, any identical \a key sequences owned by \a owner
-    are changed.
+    the map. If \a id is 0, all key sequences owned by \a owner are changed.
     Returns the number of sequences which are matched in the map.
 */
-int QShortcutMap::setShortcutAutoRepeat(bool on, int id, QObject *owner, const QKeySequence &key)
+int QShortcutMap::setShortcutAutoRepeat(bool on, int id, QObject *owner)
 {
     Q_D(QShortcutMap);
     int itemsChanged = 0;
     bool allOwners = (owner == 0);
-    bool allKeys = key.isEmpty();
-    bool allIds = id == 0;
+    bool allIds = (id == 0);
 
     int i = d->sequences.size()-1;
     while (i>=0)
     {
         QShortcutEntry entry = d->sequences.at(i);
         if ((allOwners || entry.owner == owner)
-            && (allIds || entry.id == id)
-            && (allKeys || entry.keyseq == key)) {
+            && (allIds || entry.id == id)) {
                 d->sequences[i].autorepeat = on;
                 ++itemsChanged;
         }
