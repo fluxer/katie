@@ -220,10 +220,6 @@ katie_check_function64(mmap64 "sys/mman.h")
 katie_check_function64(readdir64 "dirent.h")
 katie_check_function64(readdir64_r "dirent.h")
 
-if(KATIE_COMPILER MATCHES "(gcc|clang)")
-    set(QT_VISIBILITY_AVAILABLE TRUE)
-endif()
-
 configure_file(
     ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
     ${CMAKE_BINARY_DIR}/include/QtCore/qconfig.h

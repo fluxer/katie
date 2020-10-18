@@ -441,13 +441,8 @@ typedef float qreal;
 typedef double qreal;
 #endif
 
-#if defined(QT_VISIBILITY_AVAILABLE)
-#  define Q_DECL_EXPORT __attribute__((visibility("default")))
-#  define Q_DECL_HIDDEN __attribute__((visibility("hidden")))
-#else
-#  define Q_DECL_EXPORT
-#  define Q_DECL_HIDDEN
-#endif
+#define Q_DECL_EXPORT __attribute__((visibility("default")))
+#define Q_DECL_HIDDEN __attribute__((visibility("hidden")))
 #define Q_DECL_IMPORT
 
 #if defined(QT_SHARED)

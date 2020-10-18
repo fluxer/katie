@@ -43,7 +43,6 @@
 #define QT_VERSION ${KATIE_HEX}
 
 #define QT_KATIE
-#cmakedefine QT_VISIBILITY_AVAILABLE
 #cmakedefine QT_LARGEFILE_SUPPORT
 #cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
 
