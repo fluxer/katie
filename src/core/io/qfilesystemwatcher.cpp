@@ -45,7 +45,7 @@
 
 #if defined(Q_OS_LINUX)
 #  include "qfilesystemwatcher_inotify_p.h"
-#elif defined(Q_OS_FREEBSD)
+#elif defined(Q_OS_FREEBSD) || defined(Q_OS_NETBSD)
 #  include "qfilesystemwatcher_kqueue_p.h"
 #endif
 
@@ -215,7 +215,7 @@ void QFileSystemWatcherPrivate::initNativeEngine()
 
 #if defined(Q_OS_LINUX)
     watcher = QInotifyFileSystemWatcherEngine::create();
-#elif defined(Q_OS_FREEBSD)
+#elif defined(Q_OS_FREEBSD) || defined(Q_OS_NETBSD)
     watcher = QKqueueFileSystemWatcherEngine::create();
 #endif
 
