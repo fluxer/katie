@@ -388,7 +388,7 @@ Script: %3</source>
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2105"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2093"/>
         <source>AM</source>
         <translation>오전</translation>
     </message>
@@ -2070,50 +2070,50 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
-        <location line="+844"/>
+        <location line="+763"/>
         <source>Normal</source>
         <translation>일반</translation>
     </message>
     <message>
-        <location line="-841"/>
+        <location line="-760"/>
         <location line="+12"/>
-        <location line="+817"/>
+        <location line="+736"/>
         <source>Bold</source>
         <translation>굵게</translation>
     </message>
     <message>
-        <location line="-826"/>
-        <location line="+828"/>
+        <location line="-745"/>
+        <location line="+747"/>
         <source>Demi Bold</source>
         <translation>데미볼드</translation>
     </message>
     <message>
-        <location line="-825"/>
+        <location line="-744"/>
         <location line="+18"/>
-        <location line="+803"/>
+        <location line="+722"/>
         <source>Black</source>
         <translation>블랙</translation>
     </message>
     <message>
-        <location line="-813"/>
+        <location line="-732"/>
         <source>Demi</source>
         <translation>데미</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+813"/>
+        <location line="+732"/>
         <source>Light</source>
         <translation>라이트</translation>
     </message>
     <message>
-        <location line="-667"/>
-        <location line="+670"/>
+        <location line="-624"/>
+        <location line="+627"/>
         <source>Italic</source>
         <translation>이탤릭</translation>
     </message>
     <message>
-        <location line="-667"/>
-        <location line="+669"/>
+        <location line="-624"/>
+        <location line="+626"/>
         <source>Oblique</source>
         <translation>기울임꼴</translation>
     </message>
@@ -2324,7 +2324,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QGroupBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+630"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+610"/>
         <source>Toggle</source>
         <translation type="unfinished">선택 반전</translation>
     </message>
@@ -2409,13 +2409,13 @@ Do you want to delete it anyway?</source>
         <translation>연결이 거부됨 (또는 시간 초과됨)</translation>
     </message>
     <message>
-        <location line="+3"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-9"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+3"/>
         <source>Host %1 not found</source>
         <translation>호스트 %1을(를) 찾을 수 없음</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+20"/>
         <source>HTTP request failed</source>
         <translation>HTTP 요청이 실패함</translation>
     </message>
@@ -2729,7 +2729,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+210"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: 이름 오류</translation>
@@ -4228,7 +4228,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QPushButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-638"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-618"/>
         <source>Open</source>
         <translation>열기</translation>
     </message>
@@ -4422,17 +4422,17 @@ Do you want to overwrite it?</source>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+872"/>
-        <location line="+1013"/>
+        <location line="+1011"/>
         <source>Go to Line</source>
         <translation>줄로 가기</translation>
     </message>
     <message>
-        <location line="-1012"/>
+        <location line="-1010"/>
         <source>Line:</source>
         <translation>줄:</translation>
     </message>
     <message>
-        <location line="+791"/>
+        <location line="+789"/>
         <source>Interrupt</source>
         <translation>인터럽트</translation>
     </message>
@@ -4808,13 +4808,13 @@ Do you want to overwrite it?</source>
         <translation>%1: 생성 크기가 0 미만임</translation>
     </message>
     <message>
+        <location line="+173"/>
         <location filename="../src/core/kernel/qsharedmemory_p.h" line="+137"/>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+173"/>
         <source>%1: unable to lock</source>
         <translation>%1: 잠글 수 없음</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+21"/>
+        <location line="+21"/>
         <source>%1: unable to unlock</source>
         <translation>%1: 잠금을 풀 수 없음</translation>
     </message>
@@ -5950,7 +5950,7 @@ Do you want to overwrite it?</source>
         <translation>한글 특수 기호</translation>
     </message>
     <message>
-        <location line="+458"/>
+        <location line="+453"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -6501,7 +6501,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QToolButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+321"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+301"/>
         <location line="+6"/>
         <source>Press</source>
         <translation>누름</translation>
@@ -6648,7 +6648,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5174"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5128"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -6897,13 +6897,13 @@ Do you want to overwrite it?</source>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+583"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1748"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+583"/>
         <source>Extra content at end of document.</source>
         <translation>문서의 끝에 내용이 더 있습니다.</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+237"/>
         <source>Invalid entity value.</source>
         <translation>엔티티 값이 잘못되었습니다.</translation>
     </message>
@@ -6918,26 +6918,26 @@ Do you want to overwrite it?</source>
         <translation>내용에 문자열 &apos;]]&gt;&apos;가 올 수 없습니다.</translation>
     </message>
     <message>
-        <location line="+210"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="-691"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+210"/>
         <source>Encountered incorrectly encoded content.</source>
         <translation>잘못 인코딩된 내용을 발견하였습니다.</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+30"/>
         <source>Namespace prefix &apos;%1&apos; not declared</source>
         <translation>네임스페이스 접두사 &apos;%1&apos;이(가) 선언되지 않았음</translation>
     </message>
     <message>
-        <location line="+33"/>
-        <location line="+12"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="+612"/>
         <location line="+53"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+33"/>
+        <location line="+12"/>
         <source>Illegal namespace declaration.</source>
         <translation>네임스페이스 선언이 잘못되었습니다.</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+32"/>
         <source>Attribute redefined.</source>
         <translation>속성이 재정의되었습니다.</translation>
     </message>

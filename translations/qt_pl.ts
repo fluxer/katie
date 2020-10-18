@@ -388,7 +388,7 @@ Script: %3</source>
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2105"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2093"/>
         <source>am</source>
         <translation>am</translation>
     </message>
@@ -2070,52 +2070,52 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
-        <location line="+844"/>
+        <location line="+763"/>
         <source>Normal</source>
         <translation>Normalny</translation>
     </message>
     <message>
-        <location line="-841"/>
+        <location line="-760"/>
         <location line="+12"/>
-        <location line="+817"/>
+        <location line="+736"/>
         <source>Bold</source>
         <translation>Pogrubiony</translation>
     </message>
     <message>
-        <location line="-826"/>
-        <location line="+828"/>
+        <location line="-745"/>
+        <location line="+747"/>
         <source>Demi Bold</source>
         <translation>Na wpół pogrubiony</translation>
     </message>
     <message>
-        <location line="-825"/>
+        <location line="-744"/>
         <location line="+18"/>
-        <location line="+803"/>
+        <location line="+722"/>
         <source>Black</source>
         <translatorcomment>it&apos;s about font weight</translatorcomment>
         <translation>Bardzo gruby</translation>
     </message>
     <message>
-        <location line="-813"/>
+        <location line="-732"/>
         <source>Demi</source>
         <translation>Na wpół</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+813"/>
+        <location line="+732"/>
         <source>Light</source>
         <translatorcomment>it&apos;s about font weight</translatorcomment>
         <translation>Cienki</translation>
     </message>
     <message>
-        <location line="-667"/>
-        <location line="+670"/>
+        <location line="-624"/>
+        <location line="+627"/>
         <source>Italic</source>
         <translation>Kursywa</translation>
     </message>
     <message>
-        <location line="-667"/>
-        <location line="+669"/>
+        <location line="-624"/>
+        <location line="+626"/>
         <source>Oblique</source>
         <translation>Pochyły</translation>
     </message>
@@ -2326,7 +2326,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QGroupBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+634"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+614"/>
         <source>Toggle</source>
         <translation>Przełącz</translation>
     </message>
@@ -2390,13 +2390,13 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Połączenie odrzucone</translation>
     </message>
     <message>
+        <location line="-3"/>
         <location filename="../src/network/access/qhttp.cpp" line="+2599"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-3"/>
         <source>Host %1 not found</source>
         <translation>Host %1 nie znaleziony</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+20"/>
         <source>HTTP request failed</source>
         <translation>Komenda HTTP zakończona błędem</translation>
     </message>
@@ -2731,7 +2731,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+210"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: Błąd nazwy</translation>
@@ -4230,7 +4230,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QPushButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-638"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-618"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
@@ -4424,17 +4424,17 @@ Proszę wybrać inną nazwę pliku.</translation>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+872"/>
-        <location line="+1013"/>
+        <location line="+1011"/>
         <source>Go to Line</source>
         <translation>Przejdź do linii</translation>
     </message>
     <message>
-        <location line="-1012"/>
+        <location line="-1010"/>
         <source>Line:</source>
         <translation>Linia:</translation>
     </message>
     <message>
-        <location line="+791"/>
+        <location line="+789"/>
         <source>Interrupt</source>
         <translation>Przerwij</translation>
     </message>
@@ -4805,13 +4805,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>%1: rozmiar przy tworzeniu mniejszy od 0</translation>
     </message>
     <message>
+        <location line="+173"/>
         <location filename="../src/core/kernel/qsharedmemory_p.h" line="+137"/>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+173"/>
         <source>%1: unable to lock</source>
         <translation>%1: nie można zablokować</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+21"/>
+        <location line="+21"/>
         <source>%1: unable to unlock</source>
         <translation>%1: nie można odblokować</translation>
     </message>
@@ -4881,7 +4881,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1060"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1055"/>
         <source>+</source>
         <translation>+</translation>
     </message>
@@ -4892,7 +4892,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-750"/>
+        <location line="-745"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
@@ -5595,13 +5595,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Hangul Special</translation>
     </message>
     <message>
-        <location line="+458"/>
+        <location line="+453"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-769"/>
+        <location line="-764"/>
         <source>Del</source>
         <translation>Del</translation>
     </message>
@@ -5636,12 +5636,12 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Escape</translation>
     </message>
     <message>
-        <location line="+620"/>
+        <location line="+615"/>
         <source>F%1</source>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-744"/>
+        <location line="-739"/>
         <source>Favorites</source>
         <translation>Ulubione</translation>
     </message>
@@ -5812,13 +5812,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Menu</translation>
     </message>
     <message>
-        <location line="+678"/>
+        <location line="+673"/>
         <location line="+74"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location line="-593"/>
+        <location line="-588"/>
         <source>No</source>
         <translation>Nie</translation>
     </message>
@@ -5914,13 +5914,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Wybierz</translation>
     </message>
     <message>
-        <location line="+519"/>
+        <location line="+514"/>
         <location line="+82"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-781"/>
+        <location line="-776"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Spacja</translation>
@@ -6503,7 +6503,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QToolButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+323"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+303"/>
         <location line="+8"/>
         <source>Open</source>
         <translation>Otwórz</translation>
@@ -6650,7 +6650,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5174"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5128"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -6899,13 +6899,13 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+583"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1748"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+583"/>
         <source>Extra content at end of document.</source>
         <translation>Dodatkowa treść na końcu dokumentu.</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+237"/>
         <source>Invalid entity value.</source>
         <translation>Niepoprawna wartość jednostki.</translation>
     </message>
@@ -7025,15 +7025,15 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Niepoprawna nazwa instrukcji przetwarzającej.</translation>
     </message>
     <message>
+        <location line="+164"/>
+        <location line="+53"/>
         <location filename="../src/xml/kernel/qxmlstream.cpp" line="-534"/>
         <location line="+12"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+164"/>
-        <location line="+53"/>
         <source>Illegal namespace declaration.</source>
         <translation>Niepoprawna deklaracja przestrzeni nazw.</translation>
     </message>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+15"/>
+        <location line="+15"/>
         <source>Invalid XML name.</source>
         <translation>Niepoprawna nazwa XML.</translation>
     </message>
@@ -7065,13 +7065,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Niepoprawny znak odwołania.</translation>
     </message>
     <message>
+        <location line="-823"/>
         <location filename="../src/xml/kernel/qxmlstream.cpp" line="-75"/>
-        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-823"/>
         <source>Encountered incorrectly encoded content.</source>
         <translation>Natrafiono na niepoprawnie zakodowaną treść.</translation>
     </message>
     <message>
-        <location line="+272"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+272"/>
         <source>The standalone pseudo attribute must appear after the encoding.</source>
         <translation>Pseudo atrybut &quot;standalone&quot; musi pojawić się po &quot;encoding&quot;.</translation>
     </message>

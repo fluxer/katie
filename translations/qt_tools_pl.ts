@@ -397,34 +397,34 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+104"/>
         <location filename="../src/tools/lupdate/qscript.cpp" line="+2496"/>
+        <location filename="../src/tools/lupdate/cpp.cpp" line="+104"/>
         <source>Unexpected character in meta string
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../src/tools/lupdate/qscript.cpp" line="+6"/>
+        <location filename="../src/tools/lupdate/cpp.cpp" line="+6"/>
         <source>Unterminated meta string
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location filename="../src/tools/lupdate/cpp.cpp" line="+53"/>
         <source>Cannot invoke tr() like this
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
         <location filename="../src/tools/lupdate/qscript.cpp" line="-126"/>
+        <location filename="../src/tools/lupdate/cpp.cpp" line="+33"/>
         <source>Discarding unconsumed meta data
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location filename="../src/tools/lupdate/cpp.cpp" line="+40"/>
         <source>Unbalanced opening brace in C++ code (or abuse of the C++ preprocessor)
 </source>
         <translation type="unfinished"></translation>
@@ -442,9 +442,9 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
-        <location filename="../src/tools/lupdate/ui.cpp" line="+172"/>
         <location filename="../src/tools/lupdate/qscript.cpp" line="+178"/>
+        <location filename="../src/tools/lupdate/cpp.cpp" line="+62"/>
+        <location filename="../src/tools/lupdate/ui.cpp" line="+172"/>
         <source>Cannot open %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
