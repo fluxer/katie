@@ -558,19 +558,6 @@ void tst_qfile::writeFileSequential_data()
     QTest::newRow("internal 4k") << 4096;
     QTest::newRow("internal 16k") << 16384;
     QTest::newRow("internal 64k") << 65536;
-
-    //slow media (e.g. SD card)
-    QString externalPath;
-#ifdef Q_OS_SYMBIAN
-    externalPath = "E:/";
-#endif
-    if (!externalPath.isEmpty()) {
-        QTest::newRow("external 16b") << 16 << externalPath;
-        QTest::newRow("external 512b") << 512 << externalPath;
-        QTest::newRow("external 4k") << 4096 << externalPath;
-        QTest::newRow("external 16k") << 16384 << externalPath;
-        QTest::newRow("external 64k") << 65536 << externalPath;
-    }
 }
 
 void tst_qfile::writeFileSequential()
