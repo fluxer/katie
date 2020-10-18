@@ -23,8 +23,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtSvg
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
-    ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtScript
     ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtScriptTools
