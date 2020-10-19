@@ -2802,10 +2802,8 @@ QRect QCommonStyle::subElementRect(SubElement sr, const QStyleOption *opt,
                 break;
             }
 
-            QRect textRect = QRect(left, rect.top(),
-                                    right - left, rect.height());
             if (sr == SE_DockWidgetTitleBarText) {
-                r = textRect;
+                r = QRect(left, rect.top(), right - left, rect.height());
                 break;
             }
 
@@ -2845,7 +2843,7 @@ QRect QCommonStyle::subElementRect(SubElement sr, const QStyleOption *opt,
                 r = d->decorationRect;
             else if (sr == SE_ItemViewItemText || sr == SE_ItemViewItemFocusRect)
                 r = d->displayRect;
-                               }
+        }
         break;
 #endif //QT_NO_ITEMVIEWS
 #ifndef QT_NO_TOOLBAR
