@@ -61,7 +61,11 @@ static inline QByteArray openModeToFopenMode(QIODevice::OpenMode flags, const QF
         QFileSystemMetaData &metaData)
 {
     QByteArray mode;
-    if ((flags & QIODevice::ReadOnly) && !(flags & QIODevice::Truncate)) {
+    if (flags & QIODevice::Append) {
+        mode = "ab";
+        if (flags & QIODevice::ReadOnly)
+            mode += '+';
+    } else if ((flags & QIODevice::ReadOnly) && !(flags & QIODevice::Truncate)) {
         mode = "rb";
         if (flags & QIODevice::WriteOnly) {
             metaData.clearFlags(QFileSystemMetaData::FileType);
@@ -75,11 +79,6 @@ static inline QByteArray openModeToFopenMode(QIODevice::OpenMode flags, const QF
         }
     } else if (flags & QIODevice::WriteOnly) {
         mode = "wb";
-        if (flags & QIODevice::ReadOnly)
-            mode += '+';
-    }
-    if (flags & QIODevice::Append) {
-        mode = "ab";
         if (flags & QIODevice::ReadOnly)
             mode += '+';
     }
@@ -99,9 +98,10 @@ static inline QByteArray openModeToFopenMode(QIODevice::OpenMode flags, const QF
 */
 static inline int openModeToOpenFlags(QIODevice::OpenMode mode)
 {
-    int oflags = QT_OPEN_RDONLY;
 #ifdef QT_LARGEFILE_SUPPORT
-    oflags |= QT_OPEN_LARGEFILE;
+    int oflags = QT_OPEN_RDONLY | QT_OPEN_LARGEFILE;
+#else
+    int oflags = QT_OPEN_RDONLY;
 #endif
 
     if ((mode & QFile::ReadWrite) == QFile::ReadWrite) {
