@@ -164,7 +164,7 @@ public:
     int elapsed() const;
 private:
     enum TimeFlag { NullTime = -1 };
-    inline int ds() const { return mds == -1 ? 0 : mds; }
+    inline int ds() const { return mds == NullTime ? 0 : mds; }
     int mds;
 
     friend class QDateTime;
