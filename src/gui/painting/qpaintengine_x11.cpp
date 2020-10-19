@@ -1026,8 +1026,7 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
     if (flags & DirtyHints) updateRenderHints(state.renderHints());
     if (flags & DirtyCompositionMode) {
         int function = GXcopy;
-        QPainter::CompositionMode mode = state.compositionMode();
-        switch (mode) {
+        switch (state.compositionMode()) {
 #if !defined(QT_NO_XRENDER)
             case QPainter::CompositionMode_SourceOver:
                 d->composition_mode = PictOpOver;
@@ -1092,6 +1091,8 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
                 break;
             case QPainter::RasterOp_NotSourceAndDestination:
                 function = GXandInverted;
+                break;
+            default:
                 break;
         }
         XSetFunction(qt_x11Data->display, d->gc, function);
