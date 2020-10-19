@@ -1233,7 +1233,7 @@ void QX11PaintEngine::updatePen(const QPen &pen)
     }
 
 
-    vals.line_width = qRound(pen.widthF());
+    vals.line_width = qRound(pen_width);
     vals.cap_style = cp;
     vals.join_style = jn;
     vals.line_style = xStyle;
