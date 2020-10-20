@@ -282,7 +282,7 @@ QT_BEGIN_INCLUDE_NAMESPACE
 QT_END_INCLUDE_NAMESPACE
 # endif
 
-# if defined(Q_OS_LINUX) && defined(__GLIBC__)
+# if defined(QT_HAVE_SOCKADDR_LL)
 #  include <netpacket/packet.h>
 
 static QList<QNetworkInterfacePrivate *> createInterfaces(ifaddrs *rawList)
@@ -326,7 +326,7 @@ static QList<QNetworkInterfacePrivate *> createInterfaces(ifaddrs *rawList)
     return interfaces;
 }
 
-# elif defined(Q_OS_BSD4)
+# elif defined(QT_HAVE_SOCKADDR_DL)
 QT_BEGIN_INCLUDE_NAMESPACE
 #  include <net/if_dl.h>
 QT_END_INCLUDE_NAMESPACE
