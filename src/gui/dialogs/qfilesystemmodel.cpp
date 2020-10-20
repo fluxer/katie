@@ -647,10 +647,10 @@ QString QFileSystemModelPrivate::size(qint64 bytes)
 {
     // According to the Si standard KB is 1000 bytes, KiB is 1024
     // but on windows sizes are calculated by dividing by 1024 so we do what they do.
-    const qint64 kb = 1024;
-    const qint64 mb = 1024 * kb;
-    const qint64 gb = 1024 * mb;
-    const qint64 tb = 1024 * gb;
+    static const qint64 kb = 1024;
+    static const qint64 mb = 1024 * kb;
+    static const qint64 gb = 1024 * mb;
+    static const qint64 tb = 1024 * gb;
     if (bytes >= tb)
         return QFileSystemModel::tr("%1 TB").arg(QLocale().toString(qreal(bytes) / tb, 'f', 3));
     if (bytes >= gb)
