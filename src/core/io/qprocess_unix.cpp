@@ -135,7 +135,6 @@ static inline void add_fd(int &nfds, int fd, fd_set *fdset)
 struct QProcessInfo {
     QProcess *process;
     int deathPipe;
-    pid_t pid;
 };
 
 class QProcessManager : public QThread
@@ -282,7 +281,6 @@ void QProcessManager::add(pid_t pid, QProcess *process)
     QProcessInfo *info = new QProcessInfo;
     info->process = process;
     info->deathPipe = process->d_func()->deathPipe[1];
-    info->pid = pid;
 
     children.insert(pid, info);
 }
@@ -291,11 +289,11 @@ void QProcessManager::remove(QProcess *process)
 {
     QMutexLocker locker(&mutex);
 
-    pid_t serial = process->d_func()->pid;
-    QProcessInfo *info = children.take(serial);
+    pid_t pid = process->d_func()->pid;
+    QProcessInfo *info = children.take(pid);
 #if defined (QPROCESS_DEBUG)
     if (info)
-        qDebug() << "QProcessManager::remove() removing pid" << info->pid << "process" << info->process;
+        qDebug() << "QProcessManager::remove() removing pid" << pid << "process" << info->process;
 #endif
     delete info;
 }
