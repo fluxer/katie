@@ -173,7 +173,6 @@ public:
             PipeSource = 1,
             PipeSink = 2,
             Redirect = 3
-            // if you add "= 4" here, increase the number of bits below
         };
 
         Channel() : process(0), notifier(0), type(Normal), closed(false), append(false)
@@ -211,9 +210,9 @@ public:
         QSocketNotifier *notifier;
         Q_PIPE pipe[2];
 
-        unsigned type : 2;
-        bool closed : 1;
-        bool append : 1;
+        ProcessChannelType type;
+        bool closed;
+        bool append;
     };
 
     QProcessPrivate();
