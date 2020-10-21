@@ -353,7 +353,6 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
     }
 
     QT_OFF_T tocopy = st.st_size;
-
 #ifdef Q_OS_LINUX
 // not in qplatformdefs.h since it is platform specific
 #if defined(QT_LARGEFILE_SUPPORT)
@@ -361,7 +360,6 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 #else
 #  define QT_SENDFILE ::sendfile
 #endif
-
     ssize_t sendresult = QT_SENDFILE(targetfd, sourcefd, Q_NULLPTR, tocopy);
     while (sendresult != tocopy) {
         if (sendresult == -1) {
@@ -374,7 +372,15 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
         sendresult = QT_SENDFILE(targetfd, sourcefd, &tocopy, tocopy);
     }
 #undef QT_SENDFILE
-// TODO: FreeBSD sendfile() support, signature is different
+#elif defined(Q_OS_FREEBSD)
+    QT_OFF_T totalwrite = 0;
+    int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), Q_NULLPTR, totalwrite, SF_SYNC);
+    if (QT_OFF_T(sendresult) != totalwrite) {
+        *error = errno;
+        ::close(sourcefd);
+        ::close(targetfd);
+        return false;
+    }
 #else
     size_t totalwrite = 0;
     char copybuffer[QT_BUFFSIZE];
