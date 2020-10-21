@@ -232,7 +232,6 @@ public:
     QProcess::ProcessState processState;
     QString workingDirectory;
     Q_PID pid;
-    int sequenceNumber;
 
     bool dying;
     bool emittedReadyRead;

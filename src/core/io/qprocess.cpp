@@ -723,7 +723,6 @@ QProcessPrivate::QProcessPrivate()
     processError = QProcess::UnknownError;
     processState = QProcess::NotRunning;
     pid = 0;
-    sequenceNumber = 0;
     exitCode = 0;
     exitStatus = QProcess::NormalExit;
     startupSocketNotifier = 0;
@@ -756,7 +755,6 @@ void QProcessPrivate::cleanup()
 {
     q_func()->setProcessState(QProcess::NotRunning);
     pid = 0;
-    sequenceNumber = 0;
     dying = false;
 
     if (stdoutChannel.notifier) {
