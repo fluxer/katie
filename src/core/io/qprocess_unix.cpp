@@ -135,7 +135,6 @@ static inline void add_fd(int &nfds, int fd, fd_set *fdset)
 struct QProcessInfo {
     QProcess *process;
     int deathPipe;
-    int exitResult;
     pid_t pid;
 };
 
@@ -283,7 +282,6 @@ void QProcessManager::add(pid_t pid, QProcess *process)
     QProcessInfo *info = new QProcessInfo;
     info->process = process;
     info->deathPipe = process->d_func()->deathPipe[1];
-    info->exitResult = 0;
     info->pid = pid;
 
     children.insert(pid, info);
