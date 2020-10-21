@@ -106,9 +106,7 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
 
 void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
 {
-#if defined(_DIRENT_HAVE_D_TYPE) || defined(Q_OS_BSD4)
-    // BSD4 includes Mac OS X
-
+#ifdef QT_HAVE_DIRENT_D_TYPE
     // ### This will clear all entry flags and knownFlagsMask
     switch (entry.d_type)
     {

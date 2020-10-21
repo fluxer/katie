@@ -83,8 +83,8 @@ function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
     cmake_pop_check_state()
 
     if(HAVE_${FORSTRUCT}_${FORMEMBER})
-        string(TOUPPER "${FORSTRUCT}" upperstruct)
-        add_definitions(-DQT_HAVE_${upperstruct})
+        string(TOUPPER "${FORSTRUCT}_${FORMEMBER}" upperstructmember)
+        add_definitions(-DQT_HAVE_${upperstructmember})
     endif()
 endfunction()
 

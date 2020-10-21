@@ -202,6 +202,7 @@ katie_check_function(feenableexcept "fenv.h")
 # none
 katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
 katie_check_struct(sockaddr_dl sdl_index "net/if_dl.h")
+katie_check_struct(dirent d_type "dirent.h")
 
 # 64-bit offset alternatives, if any of the functions is not found it will set
 # QT_LARGEFILE_SUPPORT to FALSE. QT_LARGEFILE_SUPPORT is used in qconfig.h
