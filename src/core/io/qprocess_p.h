@@ -279,7 +279,6 @@ public:
     bool waitForReadyRead(int msecs = 30000);
     bool waitForBytesWritten(int msecs = 30000);
     bool waitForFinished(int msecs = 30000);
-    bool waitForWrite(int msecs = 30000);
 
     qint64 bytesAvailableFromStdout() const;
     qint64 bytesAvailableFromStderr() const;

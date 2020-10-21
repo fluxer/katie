@@ -1067,14 +1067,6 @@ bool QProcessPrivate::waitForFinished(int msecs)
     return false;
 }
 
-bool QProcessPrivate::waitForWrite(int msecs)
-{
-    fd_set fdwrite;
-    FD_ZERO(&fdwrite);
-    FD_SET(stdinChannel.pipe[1], &fdwrite);
-    return select_msecs(stdinChannel.pipe[1] + 1, 0, &fdwrite, msecs < 0 ? 0 : msecs) == 1;
-}
-
 void QProcessPrivate::findExitCode()
 {
     Q_Q(QProcess);
