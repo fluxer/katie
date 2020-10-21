@@ -736,7 +736,6 @@ QProcessPrivate::QProcessPrivate()
     dying = false;
     emittedReadyRead = false;
     emittedBytesWritten = false;
-    serial = 0;
 }
 
 /*! \internal
@@ -787,7 +786,6 @@ void QProcessPrivate::cleanup()
     destroyPipe(stdinChannel.pipe);
     destroyPipe(childStartedPipe);
     destroyPipe(deathPipe);
-    serial = 0;
 }
 
 /*! \internal

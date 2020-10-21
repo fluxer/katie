@@ -271,7 +271,6 @@ public:
     int exitCode;
     QProcess::ExitStatus exitStatus;
     bool crashed;
-    int serial;
 
     bool waitForStarted(int msecs = 30000);
     bool waitForReadyRead(int msecs = 30000);

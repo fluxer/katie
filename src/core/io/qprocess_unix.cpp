@@ -137,7 +137,6 @@ struct QProcessInfo {
     int deathPipe;
     int exitResult;
     pid_t pid;
-    int serialNumber;
 };
 
 class QProcessManager : public QThread
@@ -156,7 +155,7 @@ public:
 
 private:
     QMutex mutex;
-    QHash<int, QProcessInfo *> children;
+    QHash<pid_t, QProcessInfo *> children;
 };
 
 
@@ -259,7 +258,7 @@ void QProcessManager::catchDeadChildren()
 
     // try to catch all children whose pid we have registered, and whose
     // deathPipe is still valid (i.e, we have not already notified it).
-    QHash<int, QProcessInfo *>::const_iterator it = children.constBegin();
+    QHash<pid_t, QProcessInfo *>::const_iterator it = children.constBegin();
     while (it != children.constEnd()) {
         // notify all children that they may have died. they need to run
         // waitpid() in their own thread.
@@ -272,8 +271,6 @@ void QProcessManager::catchDeadChildren()
         ++it;
     }
 }
-
-static QAtomicInt idCounter = QAtomicInt(1);
 
 void QProcessManager::add(pid_t pid, QProcess *process)
 {
@@ -289,16 +286,14 @@ void QProcessManager::add(pid_t pid, QProcess *process)
     info->exitResult = 0;
     info->pid = pid;
 
-    int serial = idCounter.fetchAndAddRelaxed(1);
-    process->d_func()->serial = serial;
-    children.insert(serial, info);
+    children.insert(pid, info);
 }
 
 void QProcessManager::remove(QProcess *process)
 {
     QMutexLocker locker(&mutex);
 
-    int serial = process->d_func()->serial;
+    pid_t serial = process->d_func()->pid;
     QProcessInfo *info = children.take(serial);
 #if defined (QPROCESS_DEBUG)
     if (info)
