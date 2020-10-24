@@ -237,17 +237,18 @@ qint64 QFSFileEnginePrivate::nativeRead(char *data, qint64 len)
 
     if (fh && isSequentialFdFh()) {
         size_t readBytes = 0;
-        int oldFlags = fcntl(QT_FILENO(fh), F_GETFL);
+        int fhn = QT_FILENO(fh);
+        int oldFlags = ::fcntl(fhn, F_GETFL);
         for (int i = 0; i < 2; ++i) {
             // Unix: Make the underlying file descriptor non-blocking
             if ((oldFlags & O_NONBLOCK) == 0)
-                fcntl(QT_FILENO(fh), F_SETFL, oldFlags | O_NONBLOCK);
+                ::fcntl(fhn, F_SETFL, oldFlags | O_NONBLOCK);
 
             // Cross platform stdlib read
             size_t read = 0;
             do {
-                read = fread(data + readBytes, 1, size_t(len - readBytes), fh);
-            } while (read == 0 && !feof(fh) && errno == EINTR);
+                read = ::fread(data + readBytes, 1, size_t(len - readBytes), fh);
+            } while (read == 0 && !::feof(fh) && errno == EINTR);
             if (read > 0) {
                 readBytes += read;
                 break;
@@ -259,11 +260,11 @@ qint64 QFSFileEnginePrivate::nativeRead(char *data, qint64 len)
 
             // Unix: Restore the blocking state of the underlying socket
             if ((oldFlags & O_NONBLOCK) == 0) {
-                fcntl(QT_FILENO(fh), F_SETFL, oldFlags);
+                ::fcntl(fhn, F_SETFL, oldFlags);
                 if (readBytes == 0) {
                     int readByte = 0;
                     do {
-                        readByte = fgetc(fh);
+                        readByte = ::fgetc(fh);
                     } while (readByte == -1 && errno == EINTR);
                     if (readByte != -1) {
                         *data = uchar(readByte);
@@ -276,9 +277,9 @@ qint64 QFSFileEnginePrivate::nativeRead(char *data, qint64 len)
         }
         // Unix: Restore the blocking state of the underlying socket
         if ((oldFlags & O_NONBLOCK) == 0) {
-            fcntl(QT_FILENO(fh), F_SETFL, oldFlags);
+            ::fcntl(fhn, F_SETFL, oldFlags);
         }
-        if (readBytes == 0 && !feof(fh)) {
+        if (readBytes == 0 && !::feof(fh)) {
             // if we didn't read anything and we're not at EOF, it must be an error
             q->setError(QFile::ReadError, qt_error_string(errno));
             return -1;
