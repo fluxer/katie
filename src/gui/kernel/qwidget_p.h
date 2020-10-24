@@ -507,7 +507,7 @@ public:
     }
 
     // Almost cross-platform :-)
-    void setWSGeometry(bool dontShow=false, const QRect &oldRect = QRect());
+    void setWSGeometry(bool dontShow=false);
 
     inline QPoint mapToWS(const QPoint &p) const
     { return p - data.wrect.topLeft(); }

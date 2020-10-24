@@ -2213,7 +2213,7 @@ static void do_size_hints(QWidget* widget, QWExtra *x)
   parentWRect is the geometry of the parent's X rect, measured in
   parent's coord sys
  */
-void QWidgetPrivate::setWSGeometry(bool dontShow, const QRect &)
+void QWidgetPrivate::setWSGeometry(bool dontShow)
 {
     Q_Q(QWidget);
     Q_ASSERT(q->testAttribute(Qt::WA_WState_Created));
