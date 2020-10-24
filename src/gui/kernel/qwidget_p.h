@@ -564,10 +564,10 @@ public:
     short topmargin;
     short rightmargin;
     short bottommargin;
-    signed char leftLayoutItemMargin;
-    signed char topLayoutItemMargin;
-    signed char rightLayoutItemMargin;
-    signed char bottomLayoutItemMargin;
+    int leftLayoutItemMargin;
+    int topLayoutItemMargin;
+    int rightLayoutItemMargin;
+    int bottomLayoutItemMargin;
     static int instanceCounter; // Current number of widget instances
     static int maxInstances; // Maximum number of widget instances
     Qt::HANDLE hd;

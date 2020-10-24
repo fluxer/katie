@@ -10138,13 +10138,13 @@ QWindowSurface *QWidget::windowSurface() const
 void QWidgetPrivate::getLayoutItemMargins(int *left, int *top, int *right, int *bottom) const
 {
     if (left)
-        *left = (int)leftLayoutItemMargin;
+        *left = leftLayoutItemMargin;
     if (top)
-        *top = (int)topLayoutItemMargin;
+        *top = topLayoutItemMargin;
     if (right)
-        *right = (int)rightLayoutItemMargin;
+        *right = rightLayoutItemMargin;
     if (bottom)
-        *bottom = (int)bottomLayoutItemMargin;
+        *bottom = bottomLayoutItemMargin;
 }
 
 void QWidgetPrivate::setLayoutItemMargins(int left, int top, int right, int bottom)
@@ -10156,10 +10156,10 @@ void QWidgetPrivate::setLayoutItemMargins(int left, int top, int right, int bott
         return;
 
     Q_Q(QWidget);
-    leftLayoutItemMargin = (signed char)left;
-    topLayoutItemMargin = (signed char)top;
-    rightLayoutItemMargin = (signed char)right;
-    bottomLayoutItemMargin = (signed char)bottom;
+    leftLayoutItemMargin = left;
+    topLayoutItemMargin = top;
+    rightLayoutItemMargin = right;
+    bottomLayoutItemMargin = bottom;
     q->updateGeometry();
 }
 
@@ -10175,10 +10175,10 @@ void QWidgetPrivate::setLayoutItemMargins(QStyle::SubElement element, const QSty
 
     QRect liRect = q->style()->subElementRect(element, opt, q);
     if (liRect.isValid()) {
-        leftLayoutItemMargin = (signed char)(opt->rect.left() - liRect.left());
-        topLayoutItemMargin = (signed char)(opt->rect.top() - liRect.top());
-        rightLayoutItemMargin = (signed char)(liRect.right() - opt->rect.right());
-        bottomLayoutItemMargin = (signed char)(liRect.bottom() - opt->rect.bottom());
+        leftLayoutItemMargin = (opt->rect.left() - liRect.left());
+        topLayoutItemMargin = (opt->rect.top() - liRect.top());
+        rightLayoutItemMargin = (liRect.right() - opt->rect.right());
+        bottomLayoutItemMargin = (liRect.bottom() - opt->rect.bottom());
     } else {
         leftLayoutItemMargin = 0;
         topLayoutItemMargin = 0;
