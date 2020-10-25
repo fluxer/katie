@@ -426,26 +426,21 @@ QAbstractFileEngine::FileFlags QFSFileEngine::fileFlags(FileFlags type) const
     if (type & FlagsMask)
         ret |= LocalDiskFlag;
 
-    bool exists;
-    {
-        QFileSystemMetaData::MetaDataFlags queryFlags = 0;
+    QFileSystemMetaData::MetaDataFlags queryFlags =
+            QFileSystemMetaData::MetaDataFlags(uint(type))
+            & QFileSystemMetaData::Permissions
+            | QFileSystemMetaData::LinkType;
 
-        queryFlags |= QFileSystemMetaData::MetaDataFlags(uint(type))
-                & QFileSystemMetaData::Permissions;
+    if (type & TypesMask)
+        queryFlags |= QFileSystemMetaData::LinkType
+                | QFileSystemMetaData::FileType
+                | QFileSystemMetaData::DirectoryType;
 
-        if (type & TypesMask)
-            queryFlags |= QFileSystemMetaData::LinkType
-                    | QFileSystemMetaData::FileType
-                    | QFileSystemMetaData::DirectoryType;
+    if (type & FlagsMask)
+        queryFlags |= QFileSystemMetaData::HiddenAttribute
+                | QFileSystemMetaData::ExistsAttribute;
 
-        if (type & FlagsMask)
-            queryFlags |= QFileSystemMetaData::HiddenAttribute
-                    | QFileSystemMetaData::ExistsAttribute;
-
-        queryFlags |= QFileSystemMetaData::LinkType;
-
-        exists = d->doStat(queryFlags);
-    }
+    bool exists = d->doStat(queryFlags);
 
     if (!exists && !d->metaData.isLink())
         return ret;
