@@ -808,7 +808,7 @@ QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const 
         }
 
         // hack for resources, should probably go away
-        if (resolvedPath.startsWith(QLatin1Char(':')))
+        if (resolvedPath.startsWith(QLatin1String(':/')))
             resolvedPath = QCoreApplication::applicationDirPath();
 
         QDir dir(resolvedPath);

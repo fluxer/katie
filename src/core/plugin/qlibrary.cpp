@@ -496,11 +496,7 @@ bool QLibraryPrivate::loadPlugin()
 
     \table
     \header \i Platform \i Valid suffixes
-    \row \i Windows     \i \c .dll, \c .DLL
     \row \i Unix/Linux  \i \c .so
-    \row \i AIX  \i \c .a
-    \row \i HP-UX       \i \c .sl, \c .so (HP-UXi)
-    \row \i Mac OS X    \i \c .dylib, \c .bundle, \c .so
     \endtable
 
     Trailing versioning numbers on Unix are ignored.
@@ -510,9 +506,6 @@ bool QLibrary::isLibrary(const QString &fileName)
     QString completeSuffix = QFileInfo(fileName).completeSuffix();
     if (completeSuffix.isEmpty())
         return false;
-    QStringList suffixes = completeSuffix.split(QLatin1Char('.'));
-    // Generic Unix
-    static QStringList validSuffixList = QStringList()  << QLatin1String("so");
 
     // Examples of valid library names:
     //  libfoo.so
@@ -521,16 +514,12 @@ bool QLibrary::isLibrary(const QString &fileName)
     //  libfoo-0.3.so
     //  libfoo-0.3.so.0.3.0
 
-    int suffix;
-    int suffixPos = -1;
-    for (suffix = 0; suffix < validSuffixList.count() && suffixPos == -1; ++suffix)
-        suffixPos = suffixes.indexOf(validSuffixList.at(suffix));
-
-    bool valid = suffixPos != -1;
-    for (int i = suffixPos + 1; i < suffixes.count() && valid; ++i)
-        if (i != suffixPos)
-            suffixes.at(i).toInt(&valid);
-    return valid;
+    foreach (const QString &suffix, completeSuffix.split(QLatin1Char('.'))) {
+        if (suffix == QLatin1String("so")) {
+            return true;
+        };
+    }
+    return false;
 }
 
 bool QLibraryPrivate::isPlugin()
