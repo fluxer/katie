@@ -80,11 +80,9 @@ QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
 
 QEventDispatcherUNIXPrivate::~QEventDispatcherUNIXPrivate()
 {
-#ifndef Q_OS_NACL
     // cleanup the common parts of the event loop
-    close(thread_pipe[0]);
-    close(thread_pipe[1]);
-#endif
+    ::close(thread_pipe[0]);
+    ::close(thread_pipe[1]);
 
     // cleanup timers
     qDeleteAll(timerList);
@@ -226,7 +224,6 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
 
 QTimerInfoList::QTimerInfoList()
 {
-#ifndef Q_OS_NACL
     if (Q_LIKELY(QElapsedTimer::isMonotonic())) {
         // detected monotonic timers
         previousTime.tv_sec = previousTime.tv_usec = 0;
@@ -243,7 +240,6 @@ QTimerInfoList::QTimerInfoList()
         ticksPerSecond = sysconf(_SC_CLK_TCK);
         msPerTick = 1000/ticksPerSecond;
     }
-#endif
 
     firstTimerInfo = Q_NULLPTR;
 }
@@ -275,10 +271,6 @@ timeval qAbsTimeval(const timeval &t)
 */
 bool QTimerInfoList::timeChanged(timeval *delta)
 {
-#ifdef Q_OS_NACL
-    Q_UNUSED(delta)
-    return false; // Calling "times" crashes.
-#else
     struct tms unused;
     clock_t currentTicks = times(&unused);
 
@@ -303,7 +295,6 @@ bool QTimerInfoList::timeChanged(timeval *delta)
     tickGranularity.tv_sec = 0;
     tickGranularity.tv_usec = msPerTick * 1000;
     return elapsedTimeTicks < ((qAbsTimeval(*delta) - tickGranularity) * 10);
-#endif // Q_OS_NACL
 }
 
 void QTimerInfoList::repairTimersIfNeeded()

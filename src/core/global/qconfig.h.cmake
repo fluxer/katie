@@ -168,7 +168,6 @@
 #cmakedefine QT_NO_DOM
 #cmakedefine QT_NO_DRAGANDDROP
 #cmakedefine QT_NO_DYNAMIC_CAST
-#cmakedefine QT_NO_DYNAMIC_LIBRARY
 #cmakedefine QT_NO_EFFECTS
 #cmakedefine QT_NO_EMIT
 #cmakedefine QT_NO_ERRORMESSAGE

@@ -58,7 +58,6 @@
      IA64      - ...
      M68K      - ...
      MIPS      - ...
-     NACL      - ...
      PARISC    - ...
      POWERPC   - ...
      S390      - ...
@@ -91,8 +90,6 @@
 #  define QT_ARCH_M68K
 #elif defined(__mips__)
 #  define QT_ARCH_MIPS
-#elif defined(__native_client__)
-#  define QT_ARCH_NACL
 #elif defined(__hppa__)
 #  define QT_ARCH_PARISC
 #elif defined(__powerpc__) || defined(__powerpc64__)
@@ -173,32 +170,16 @@ QT_USE_NAMESPACE
 /*
    The operating system, must be one of: (Q_OS_x)
 
-     SOLARIS  - Sun Solaris
-     HPUX     - HP-UX
      LINUX    - Linux
      FREEBSD  - FreeBSD
      NETBSD   - NetBSD
      OPENBSD  - OpenBSD
-     BSDI     - BSD/OS
-     OSF      - HP Tru64 UNIX
-     SCO      - SCO OpenServer 5
-     UNIXWARE - UnixWare 7, Open UNIX 8
-     AIX      - AIX
      HURD     - GNU Hurd
-     DGUX     - DG/UX
-     DYNIX    - DYNIX/ptx
-     LYNX     - LynxOS
+     SOLARIS  - Sun Solaris
      BSD4     - Any BSD 4.4 system
-     UNIX     - Any UNIX BSD/SYSV system
 */
 
-#if defined(__sun) || defined(sun)
-#  define Q_OS_SOLARIS
-#elif defined(hpux) || defined(__hpux)
-#  define Q_OS_HPUX
-#elif defined(__native_client__)
-#  define Q_OS_NACL
-#elif defined(__linux__) || defined(__linux)
+#if defined(__linux__) || defined(__linux)
 #  define Q_OS_LINUX
 #elif defined(__FreeBSD__) || defined(__DragonFly__)
 #  define Q_OS_FREEBSD
@@ -209,27 +190,10 @@ QT_USE_NAMESPACE
 #elif defined(__OpenBSD__)
 #  define Q_OS_OPENBSD
 #  define Q_OS_BSD4
-#elif defined(__bsdi__)
-#  define Q_OS_BSDI
-#  define Q_OS_BSD4
-#elif defined(__osf__)
-#  define Q_OS_OSF
-#elif defined(_AIX)
-#  define Q_OS_AIX
-#elif defined(__Lynx__)
-#  define Q_OS_LYNX
 #elif defined(__GNU__)
 #  define Q_OS_HURD
-#elif defined(__DGUX__)
-#  define Q_OS_DGUX
-#elif defined(_SEQUENT_)
-#  define Q_OS_DYNIX
-#elif defined(_SCO_DS) /* SCO OpenServer 5 + GCC */
-#  define Q_OS_SCO
-#elif defined(__USLC__) /* all SCO platforms + UDK or OUDK */
-#  define Q_OS_UNIXWARE
-#elif defined(__svr4__) && defined(i386) /* Open UNIX 8 + GCC */
-#  define Q_OS_UNIXWARE
+#elif defined(__sun) || defined(sun)
+#  define Q_OS_SOLARIS
 #else
 #  error "Katie has not been ported to this OS"
 #endif
@@ -280,7 +244,7 @@ QT_USE_NAMESPACE
 #    define Q_COMPILER_RVALUE_REFS
      /* C++0x features supported in GCC 4.4: */
 #    define Q_COMPILER_INITIALIZER_LISTS
-#    /* C++0x features supported in GCC 4.6: */
+     /* C++0x features supported in GCC 4.6: */
 #    ifdef __EXCEPTIONS
 #      define Q_COMPILER_EXCEPTIONS
 #    endif

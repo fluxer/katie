@@ -382,41 +382,11 @@ QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QS
         }
     }
 
-#if defined(Q_OS_HPUX)
-    // according to
-    // http://docs.hp.com/en/B2355-90968/linkerdifferencesiapa.htm
-
-    // In PA-RISC (PA-32 and PA-64) shared libraries are suffixed
-    // with .sl. In IPF (32-bit and 64-bit), the shared libraries
-    // are suffixed with .so. For compatibility, the IPF linker
-    // also supports the .sl suffix.
-
-    // But since we don't know if we are built on HPUX or HPUXi,
-    // we support both .sl (and .<version>) and .so suffixes but
-    // .so is preferred.
-# if defined(QT_ARCH_IA64)
     if (!version.isEmpty()) {
         suffixes << QString::fromLatin1(".so.%1").arg(version);
     } else {
         suffixes << QLatin1String(".so");
     }
-# endif
-    if (!version.isEmpty()) {
-        suffixes << QString::fromLatin1(".sl.%1").arg(version);
-        suffixes << QString::fromLatin1(".%1").arg(version);
-    } else {
-        suffixes << QLatin1String(".sl");
-    }
-#else
-#ifdef Q_OS_AIX
-    suffixes << ".a";
-#endif // Q_OS_AIX
-    if (!version.isEmpty()) {
-        suffixes << QString::fromLatin1(".so.%1").arg(version);
-    } else {
-        suffixes << QLatin1String(".so");
-    }
-#endif
 
     for(int prefix = 0; prefix < prefixes.size(); prefix++) {
         for(int suffix = 0; suffix < suffixes.size(); suffix++) {
@@ -542,23 +512,7 @@ bool QLibrary::isLibrary(const QString &fileName)
         return false;
     QStringList suffixes = completeSuffix.split(QLatin1Char('.'));
     // Generic Unix
-    QStringList validSuffixList;
-
-#  if defined(Q_OS_HPUX)
-/*
-    See "HP-UX Linker and Libraries User's Guide", section "Link-time Differences between PA-RISC and IPF":
-    "In PA-RISC (PA-32 and PA-64) shared libraries are suffixed with .sl. In IPF (32-bit and 64-bit),
-    the shared libraries are suffixed with .so. For compatibility, the IPF linker also supports the .sl suffix."
- */
-    validSuffixList << QLatin1String("sl");
-#   if defined QT_ARCH_IA64
-    validSuffixList << QLatin1String("so");
-#   endif
-#  elif defined(Q_OS_AIX)
-    validSuffixList << QLatin1String("a") << QLatin1String("so");
-#  elif defined(Q_OS_UNIX)
-    validSuffixList << QLatin1String("so");
-#  endif
+    static QStringList validSuffixList = QStringList()  << QLatin1String("so");
 
     // Examples of valid library names:
     //  libfoo.so

@@ -148,7 +148,6 @@ QT_USE_NAMESPACE
     - HP's aCC compiler only compiles big-endian (so HP-UXi is always big-endian)
     - GCC defines __BIG_ENDIAN__ for us (default on HP-UX)
     - Linux is usually little-endian
-    - I've never seen AIX or Windows on IA-64, but they should be little-endian too
 */
 #if defined(__BIG_ENDIAN__) || defined(__HP_aCC)
 # define WTF_CPU_BIG_ENDIAN 1
@@ -215,11 +214,6 @@ QT_USE_NAMESPACE
 #if   defined(__x86_64__) \
     || defined(_M_X64)
 #define WTF_CPU_X86_64 1
-#endif
-
-/* 64-bit mode on AIX */
-#ifdef __64BIT__
-#define WTF_CPU_AIX64 1
 #endif
 
 /* CPU(AARCH64) - AArch64 */
@@ -370,11 +364,6 @@ QT_USE_NAMESPACE
 #define WTF_OS_ANDROID 1
 #endif
 
-/* OS(AIX) - AIX */
-#ifdef _AIX
-#define WTF_OS_AIX 1
-#endif
-
 /* OS(FREEBSD) - FreeBSD */
 #ifdef __FreeBSD__
 #define WTF_OS_FREEBSD 1
@@ -383,14 +372,6 @@ QT_USE_NAMESPACE
 /* OS(HAIKU) - Haiku */
 #ifdef __HAIKU__
 #define WTF_OS_HAIKU 1
-#endif
-
-/* OS(HPUX) - HP-UX */
-#if defined(hpux) || defined(__hpux)
-#define WTF_OS_HPUX 1
-#ifndef MAP_ANON
-#define MAP_ANON MAP_ANONYMOUS
-#endif
 #endif
 
 /* OS(LINUX) - Linux */
@@ -414,11 +395,9 @@ QT_USE_NAMESPACE
 #endif
 
 /* OS(UNIX) - Any Unix-like system */
-#if   OS(AIX)              \
-    || OS(ANDROID)          \
+#if   OS(ANDROID)          \
     || OS(FREEBSD)          \
     || OS(HAIKU)            \
-    || OS(HPUX)             \
     || OS(LINUX)            \
     || OS(NETBSD)           \
     || OS(OPENBSD)          \
@@ -448,8 +427,7 @@ QT_USE_NAMESPACE
 #endif
 
 #if !OS(SOLARIS) \
-     && !OS(HAIKU) && !OS(ANDROID) \
-     && !OS(AIX) && !OS(HPUX)
+     && !OS(HAIKU) && !OS(ANDROID)
 #define HAVE_TM_GMTOFF 1
 #define HAVE_TM_ZONE 1
 #define HAVE_TIMEGM 1
@@ -498,7 +476,7 @@ QT_USE_NAMESPACE
 #endif
 
 #if !defined(WTF_USE_JSVALUE64) && !defined(WTF_USE_JSVALUE32) && !defined(WTF_USE_JSVALUE32_64)
-#if (CPU(X86_64) && (OS(UNIX) || OS(SOLARIS) || OS(HPUX))) || (CPU(IA64) && !CPU(IA64_32)) || CPU(ALPHA) || CPU(AIX64) || CPU(SPARC64) || CPU(MIPS64) || CPU(AARCH64)
+#if (CPU(X86_64) && (OS(UNIX) || OS(SOLARIS))) || (CPU(IA64) && !CPU(IA64_32)) || CPU(ALPHA) || CPU(SPARC64) || CPU(MIPS64) || CPU(AARCH64)
 #define WTF_USE_JSVALUE64 1
 #elif CPU(ARM) || CPU(PPC64)
 #define WTF_USE_JSVALUE32 1
