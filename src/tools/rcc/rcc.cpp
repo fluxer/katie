@@ -878,17 +878,6 @@ bool RCCResourceLibrary::writeDataStructure()
     return true;
 }
 
-void RCCResourceLibrary::writeMangleNamespaceFunction(const QByteArray &name)
-{
-    if (m_useNameSpace) {
-        writeString("QT_MANGLE_NAMESPACE(");
-        writeByteArray(name);
-        writeChar(')');
-    } else {
-        writeByteArray(name);
-    }
-}
-
 void RCCResourceLibrary::writeAddNamespaceFunction(const QByteArray &name)
 {
     if (m_useNameSpace) {
@@ -923,7 +912,7 @@ bool RCCResourceLibrary::writeInitializer()
             writeString("QT_END_NAMESPACE\n\n\n");
         QString initResources = QLatin1String("qInitResources") + m_initName;
         writeString("int ");
-        writeMangleNamespaceFunction(initResources.toLatin1());
+        writeByteArray(initResources.toLatin1());
         writeString("()\n{\n");
 
         if (m_root) {
@@ -934,13 +923,13 @@ bool RCCResourceLibrary::writeInitializer()
         writeString("    return 1;\n");
         writeString("}\n\n");
         writeString("Q_CONSTRUCTOR_FUNCTION(");
-        writeMangleNamespaceFunction(initResources.toLatin1());
+        writeByteArray(initResources.toLatin1());
         writeString(")\n\n");
 
         //cleanup
         QString cleanResources = QLatin1String("qCleanupResources") + m_initName;
         writeString("int ");
-        writeMangleNamespaceFunction(cleanResources.toLatin1());
+        writeByteArray(cleanResources.toLatin1());
         writeString("()\n{\n");
         if (m_root) {
             writeString("    ");
@@ -950,7 +939,7 @@ bool RCCResourceLibrary::writeInitializer()
         writeString("    return 1;\n");
         writeString("}\n\n");
         writeString("Q_DESTRUCTOR_FUNCTION(");
-        writeMangleNamespaceFunction(cleanResources.toLatin1());
+        writeByteArray(cleanResources.toLatin1());
         writeString(")\n\n");
     } else if (m_format == Binary) {
         int i = 4;

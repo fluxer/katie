@@ -134,7 +134,6 @@
 
 # define QT_NAMESPACE Katie
 # define QT_PREPEND_NAMESPACE(name) ::QT_NAMESPACE::name
-# define QT_MANGLE_NAMESPACE(x) x
 # define QT_USE_NAMESPACE using namespace ::QT_NAMESPACE;
 
 # define QT_BEGIN_NAMESPACE namespace QT_NAMESPACE {
@@ -152,7 +151,6 @@ QT_USE_NAMESPACE
 
 # define QT_NAMESPACE
 # define QT_PREPEND_NAMESPACE(name) ::name
-# define QT_MANGLE_NAMESPACE(x) x
 # define QT_USE_NAMESPACE
 
 # define QT_BEGIN_NAMESPACE
@@ -285,7 +283,7 @@ QT_USE_NAMESPACE
 #define Q_DECL_CONSTEXPR constexpr
 
 #define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
-   static const int AFUNC ## __init_variable__ = AFUNC();
+    static const int AFUNC ## __init_variable__ = AFUNC();
 #define Q_CONSTRUCTOR_FUNCTION(AFUNC) Q_CONSTRUCTOR_FUNCTION0(AFUNC)
 
 #define Q_DESTRUCTOR_FUNCTION0(AFUNC) \
@@ -318,15 +316,12 @@ typedef unsigned long long quint64; /* 64 bit unsigned */
 typedef qint64 qlonglong;
 typedef quint64 qulonglong;
 
-#define Q_INIT_RESOURCE_EXTERN(name) \
-    extern int QT_MANGLE_NAMESPACE(qInitResources_ ## name) ();
-
 #define Q_INIT_RESOURCE(name) \
-    do { extern int QT_MANGLE_NAMESPACE(qInitResources_ ## name) ();       \
-        QT_MANGLE_NAMESPACE(qInitResources_ ## name) (); } while (0)
+    extern int qInitResources_ ## name (); \
+    qInitResources_ ## name ();
 #define Q_CLEANUP_RESOURCE(name) \
-    do { extern int QT_MANGLE_NAMESPACE(qCleanupResources_ ## name) ();    \
-        QT_MANGLE_NAMESPACE(qCleanupResources_ ## name) (); } while (0)
+    extern int qCleanupResources_ ## name (); \
+    qCleanupResources_ ## name ();
 
 /*
    Useful type definitions for Qt
@@ -394,12 +389,9 @@ QT_END_INCLUDE_NAMESPACE
 #  define QT_FASTCALL
 #endif
 
+// This logic must match the one in qmetatype.h
 #if defined(QT_ARCH_ARM) || defined(QT_ARCH_ARMV6) || defined(QT_ARCH_AVR32) || defined(QT_ARCH_SH) || defined(QT_ARCH_SH4A)
 #  define QT_NO_FPU
-#endif
-
-// This logic must match the one in qmetatype.h
-#if defined(QT_NO_FPU)
 typedef float qreal;
 #else
 typedef double qreal;
@@ -461,9 +453,6 @@ inline void qt_noop(void) {}
 */
 #if !defined(QT_NO_EXCEPTIONS) && !defined(Q_COMPILER_EXCEPTIONS) && !defined(Q_MOC_RUN)
 #  define QT_NO_EXCEPTIONS
-#endif
-
-#ifdef QT_NO_EXCEPTIONS
 #  define QT_TRY if (true)
 #  define QT_CATCH(A) else if (false)
 #  define QT_THROW(A) qt_noop()
