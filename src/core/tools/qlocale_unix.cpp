@@ -176,11 +176,11 @@ QVariant QSystemLocale::query(QueryType type, QVariant in) const
         return QString();
     }
     case MeasurementSystem: {
+        if (qstrnicmp("Metric", d->lc_measurement_var.constData(), d->lc_measurement_var.size()) == 0
+            || qstrnicmp("Other", d->lc_measurement_var.constData(), d->lc_measurement_var.size()) == 0) {
+            return QLocale::MetricSystem;
+        }
         const QString meas_locale = QString::fromLatin1(d->lc_measurement_var.constData(), d->lc_measurement_var.size());
-        if (meas_locale.compare(QLatin1String("Metric"), Qt::CaseInsensitive) == 0)
-            return QLocale::MetricSystem;
-        if (meas_locale.compare(QLatin1String("Other"), Qt::CaseInsensitive) == 0)
-            return QLocale::MetricSystem;
         return QVariant((int)QLocale(meas_locale).measurementSystem());
     }
     case UILanguages: {
