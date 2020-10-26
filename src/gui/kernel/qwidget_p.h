@@ -568,8 +568,6 @@ public:
     int topLayoutItemMargin;
     int rightLayoutItemMargin;
     int bottomLayoutItemMargin;
-    static int instanceCounter; // Current number of widget instances
-    static int maxInstances; // Maximum number of widget instances
     Qt::HANDLE hd;
     QWidgetData data;
     QSizePolicy size_policy;

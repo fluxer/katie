@@ -373,7 +373,6 @@ bool QApplicationPrivate::animate_combo = false;
 bool QApplicationPrivate::animate_tooltip = false;
 bool QApplicationPrivate::fade_tooltip = false;
 bool QApplicationPrivate::animate_toolbox = false;
-bool QApplicationPrivate::widgetCount = false;
 
 static bool force_reverse = false;
 
@@ -444,8 +443,6 @@ void QApplicationPrivate::process_cmdline()
         } else if (qstrcmp(argv[i], "-reverse") == 0) {
             force_reverse = true;
             QApplication::setLayoutDirection(Qt::RightToLeft);
-        } else if (qstrcmp(argv[i], "-widgetcount") == 0) {
-            widgetCount = true;
         } else if (qstrcmp(argv[i], "-graphicssystem") == 0 && i < argc - 1) {
             graphics_system_name = QString::fromLocal8Bit(argv[++i]);
         } else {
@@ -512,9 +509,6 @@ void QApplicationPrivate::process_cmdline()
         \o  -session= \e session, restores the application from an earlier
             \l{Session Management}{session}.
         \o  -session \e session, is the same as listed above.
-        \o  -widgetcount, prints debug message at the end about number of
-            widgets left undestroyed and maximum number of widgets existed at
-            the same time
         \o  -reverse, sets the application's layout direction to
             Qt::RightToLeft
         \o  -graphicssystem, sets the backend to be used for on-screen widgets
@@ -844,8 +838,6 @@ QApplication::~QApplication()
 
     qt_cleanup();
 
-    if (QApplicationPrivate::widgetCount)
-        qDebug("Widgets left: %i    Max widgets: %i \n", QWidgetPrivate::instanceCounter, QWidgetPrivate::maxInstances);
 #ifndef QT_NO_SESSIONMANAGER
     delete d->session_manager;
     d->session_manager = 0;
@@ -866,7 +858,6 @@ QApplication::~QApplication()
     QApplicationPrivate::animate_combo = false;
     QApplicationPrivate::animate_tooltip = false;
     QApplicationPrivate::fade_tooltip = false;
-    QApplicationPrivate::widgetCount = false;
 
     // trigger unregistering of QVariant's GUI types
     qUnregisterGuiVariant();

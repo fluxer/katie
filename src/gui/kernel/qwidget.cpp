@@ -1000,9 +1000,6 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
     q->setAttribute(Qt::WA_PendingMoveEvent);
     q->setAttribute(Qt::WA_PendingResizeEvent);
 
-    if (++QWidgetPrivate::instanceCounter > QWidgetPrivate::maxInstances)
-        QWidgetPrivate::maxInstances = QWidgetPrivate::instanceCounter;
-
     if (QApplication::testAttribute(Qt::AA_ImmediateWidgetCreation))
         q->create();
 
@@ -1242,7 +1239,6 @@ QWidget::~QWidget()
     } QT_CATCH(...) {
         // if this fails we can't do anything about it but at least we are not allowed to throw.
     }
-    --QWidgetPrivate::instanceCounter;
 
     if (QWidgetPrivate::allWidgets) // might have been deleted by ~QApplication
         QWidgetPrivate::allWidgets->remove(this);
@@ -1254,9 +1250,6 @@ QWidget::~QWidget()
         // if this fails we can't do anything about it but at least we are not allowed to throw.
     }
 }
-
-int QWidgetPrivate::instanceCounter = 0;  // Current number of widget instances
-int QWidgetPrivate::maxInstances = 0;     // Maximum number of widget instances
 
 void QWidgetPrivate::setWinId(WId id)                // set widget identifier
 {
