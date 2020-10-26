@@ -10,10 +10,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 # Only MariaDB provides pkg-config files and only in recent versions
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_MYSQL QUIET libmariadb)
-endif()
+include(FindPkgConfig)
+pkg_check_modules(PC_MYSQL QUIET libmariadb)
 
 # However, both provide config program
 find_program(MYSQL_CONFIG

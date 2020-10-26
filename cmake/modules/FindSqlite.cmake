@@ -9,13 +9,11 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_SQLITE QUIET sqlite3)
+include(FindPkgConfig)
+pkg_check_modules(PC_SQLITE QUIET sqlite3)
 
-    set(SQLITE_INCLUDES ${PC_SQLITE_INCLUDE_DIRS})
-    set(SQLITE_LIBRARIES ${PC_SQLITE_LIBRARIES})
-endif()
+set(SQLITE_INCLUDES ${PC_SQLITE_INCLUDE_DIRS})
+set(SQLITE_LIBRARIES ${PC_SQLITE_LIBRARIES})
 
 if(NOT SQLITE_INCLUDES OR NOT SQLITE_LIBRARIES)
     find_path(SQLITE_INCLUDES

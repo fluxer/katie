@@ -9,13 +9,11 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_HARFBUZZ QUIET harfbuzz)
+include(FindPkgConfig)
+pkg_check_modules(PC_HARFBUZZ QUIET harfbuzz)
 
-    set(HARFBUZZ_INCLUDES ${PC_HARFBUZZ_INCLUDE_DIRS})
-    set(HARFBUZZ_LIBRARIES ${PC_HARFBUZZ_LIBRARIES})
-endif()
+set(HARFBUZZ_INCLUDES ${PC_HARFBUZZ_INCLUDE_DIRS})
+set(HARFBUZZ_LIBRARIES ${PC_HARFBUZZ_LIBRARIES})
 
 if(NOT HARFBUZZ_INCLUDES OR NOT HARFBUZZ_LIBRARIES)
     find_path(HARFBUZZ_INCLUDES

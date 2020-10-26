@@ -460,8 +460,8 @@ QT_BEGIN_NAMESPACE
     specified platforms. For example, the Q_CC_GNU macro is defined
     if the application is compiled using GNU Compiler Collection.
     The header file also declares a range of macros (Q_OS_*) that
-    are defined for the specified platforms. For example, Q_OS_WIN32
-    which is defined for Microsoft Windows.
+    are defined for the specified platforms. For example, Q_OS_LINUx
+    which is defined for Linux.
 
     The purpose of these macros is to enable programmers to add
     compiler or platform specific code to their application.

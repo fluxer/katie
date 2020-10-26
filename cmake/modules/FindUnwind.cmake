@@ -9,13 +9,11 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_UNWIND QUIET libunwind)
+include(FindPkgConfig)
+pkg_check_modules(PC_UNWIND QUIET libunwind)
 
-    set(UNWIND_INCLUDES ${PC_UNWIND_INCLUDE_DIRS})
-    set(UNWIND_LIBRARIES ${PC_UNWIND_LIBRARIES})
-endif()
+set(UNWIND_INCLUDES ${PC_UNWIND_INCLUDE_DIRS})
+set(UNWIND_LIBRARIES ${PC_UNWIND_LIBRARIES})
 
 if(NOT UNWIND_INCLUDES OR NOT UNWIND_LIBRARIES)
     find_path(UNWIND_INCLUDES

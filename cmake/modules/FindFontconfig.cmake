@@ -9,13 +9,11 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_FONTCONFIG QUIET fontconfig)
+include(FindPkgConfig)
+pkg_check_modules(PC_FONTCONFIG QUIET fontconfig)
 
-    set(FONTCONFIG_INCLUDES ${PC_FONTCONFIG_INCLUDE_DIRS})
-    set(FONTCONFIG_LIBRARIES ${PC_FONTCONFIG_LIBRARIES})
-endif()
+set(FONTCONFIG_INCLUDES ${PC_FONTCONFIG_INCLUDE_DIRS})
+set(FONTCONFIG_LIBRARIES ${PC_FONTCONFIG_LIBRARIES})
 
 if(NOT FONTCONFIG_INCLUDES OR NOT FONTCONFIG_LIBRARIES)
     find_path(FONTCONFIG_INCLUDES

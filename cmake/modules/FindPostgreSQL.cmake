@@ -9,13 +9,11 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_POSTGRESQL QUIET libpq)
+include(FindPkgConfig)
+pkg_check_modules(PC_POSTGRESQL QUIET libpq)
 
-    set(POSTGRESQL_INCLUDES ${PC_POSTGRESQL_INCLUDE_DIRS})
-    set(POSTGRESQL_LIBRARIES ${PC_POSTGRESQL_LIBRARIES})
-endif()
+set(POSTGRESQL_INCLUDES ${PC_POSTGRESQL_INCLUDE_DIRS})
+set(POSTGRESQL_LIBRARIES ${PC_POSTGRESQL_LIBRARIES})
 
 if(NOT POSTGRESQL_INCLUDES OR NOT POSTGRESQL_LIBRARIES)
     find_path(POSTGRESQL_INCLUDES
