@@ -122,17 +122,16 @@ namespace QDBusUtil
         return false;
     }
 
-    inline bool checkMemberName(const QString &name, AllowEmptyFlag empty, QDBusError *error, const char *nameType = 0)
+    inline bool checkMemberName(const QString &name, AllowEmptyFlag empty, QDBusError *error)
     {
-        if (!nameType) nameType = "member";
         if (name.isEmpty()) {
             if (empty == EmptyAllowed) return true;
-            *error = QDBusError(QDBusError::InvalidMember, QLatin1String(nameType) + QLatin1String(" name cannot be empty"));
+            *error = QDBusError(QDBusError::InvalidMember, QLatin1String("method name cannot be empty"));
             return false;
         }
         if (isValidMemberName(name)) return true;
-        *error = QDBusError(QDBusError::InvalidMember, QString::fromLatin1("Invalid %1 name: %2")
-                            .arg(QString::fromLatin1(nameType), name));
+        *error = QDBusError(QDBusError::InvalidMember, QString::fromLatin1("Invalid method name: %2")
+                            .arg(name));
         return false;
     }
 

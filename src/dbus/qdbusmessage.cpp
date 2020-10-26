@@ -109,7 +109,7 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
                 return 0;
             if (!QDBusUtil::checkInterfaceName(d_ptr->interface, QDBusUtil::EmptyAllowed, error))
                 return 0;
-            if (!QDBusUtil::checkMemberName(d_ptr->name, QDBusUtil::EmptyNotAllowed, error, "method"))
+            if (!QDBusUtil::checkMemberName(d_ptr->name, QDBusUtil::EmptyNotAllowed, error))
                 return 0;
         }
 
@@ -144,7 +144,7 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
                 return 0;
             if (!QDBusUtil::checkInterfaceName(d_ptr->interface, QDBusUtil::EmptyAllowed, error))
                 return 0;
-            if (!QDBusUtil::checkMemberName(d_ptr->name, QDBusUtil::EmptyNotAllowed, error, "method"))
+            if (!QDBusUtil::checkMemberName(d_ptr->name, QDBusUtil::EmptyNotAllowed, error))
                 return 0;
         }
 
