@@ -584,7 +584,7 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size)
     if (openMode & QIODevice::ReadOnly) access |= PROT_READ;
     if (openMode & QIODevice::WriteOnly) access |= PROT_WRITE;
 
-    const int pageSize = getpagesize();
+    static const int pageSize = ::getpagesize();
     const int extra = offset % pageSize;
 
     if (quint64(size + extra) > quint64((size_t)-1)) {
