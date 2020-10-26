@@ -374,7 +374,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 #undef QT_SENDFILE
 #elif defined(Q_OS_FREEBSD)
     QT_OFF_T totalwrite = 0;
-    int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), Q_NULLPTR, totalwrite, SF_SYNC);
+    int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), Q_NULLPTR, &totalwrite, SF_SYNC);
     if (QT_OFF_T(sendresult) != totalwrite) {
         *error = errno;
         ::close(sourcefd);
