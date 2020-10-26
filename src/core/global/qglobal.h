@@ -453,6 +453,9 @@ inline void qt_noop(void) {}
 */
 #if !defined(QT_NO_EXCEPTIONS) && !defined(Q_COMPILER_EXCEPTIONS) && !defined(Q_MOC_RUN)
 #  define QT_NO_EXCEPTIONS
+#endif
+
+#ifdef QT_NO_EXCEPTIONS
 #  define QT_TRY if (true)
 #  define QT_CATCH(A) else if (false)
 #  define QT_THROW(A) qt_noop()
