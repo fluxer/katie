@@ -95,7 +95,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>ホストが見つかりません</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+42"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+3"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+4"/>
         <source>Connection refused</source>
@@ -107,8 +107,8 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>接続がタイムアウトしました</translation>
     </message>
     <message>
-        <location line="-538"/>
-        <location line="+810"/>
+        <location line="-533"/>
+        <location line="+805"/>
         <location line="+213"/>
         <source>Operation on socket is not supported</source>
         <translatorcomment>抽象ソケットクラスでのソケットのエラー</translatorcomment>
@@ -190,7 +190,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>互換性のないQtライブラリエラー</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1843"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -804,7 +804,7 @@ Script: %3</source>
     <message>
         <location line="+6"/>
         <source>Can only assign one binding to lists</source>
-        <translation>リストへは一つのバインディングのみ割り当�������ることができます</translation>
+        <translation>リストへは一つのバインディングのみ割り当��������ることができます</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1083,7 +1083,7 @@ Script: %3</source>
         <translation>は型ではありません</translation>
     </message>
     <message>
-        <location line="+263"/>
+        <location line="+231"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation type="unfinished">ファイル名の大文字小文字が &quot;%2&quot; に合っていません {1&quot;?}</translation>
     </message>
@@ -1821,7 +1821,7 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translation>%1
 ディレクトリが見つかりません。
-正しいディレクトリ��������さ��たかどうか確認してください。</translation>
+正しいディレクト����������さ��たかどうか確認してください。</translation>
     </message>
     <message>
         <location line="-2246"/>
@@ -2347,7 +2347,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+119"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+86"/>
         <location line="+31"/>
@@ -2528,7 +2528,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+2"/>
         <source>Proxy server connection timed out</source>
-        <translation>��ロキシーとの接続がタイムアウトしました</translation>
+        <translation>�����キシーとの接続がタイムアウトしました</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2539,7 +2539,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1308"/>
         <source>Permission denied</source>
         <translation>許可されていません</translation>
     </message>
@@ -2653,7 +2653,7 @@ Do you want to delete it anyway?</source>
         <translation>&apos;%1&apos; でプラグイン検証データが一致しません</translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+251"/>
         <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2675,17 +2675,17 @@ Do you want to delete it anyway?</source>
         <translation>共有ライブラリがみつかりません。</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+80"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+68"/>
         <source>Cannot load library %1: %2</source>
         <translation>ライブラリ &apos;%1&apos; を読み込めません: %2</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Cannot unload library %1: %2</source>
         <translation>ライブラリ %1 を解放できません: %2</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+11"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>&apos;%2&apos;に含まれる識別子 &quot;%1&quot; を解決できません: %3</translation>
     </message>
@@ -3040,7 +3040,7 @@ Do you want to delete it anyway?</source>
         <translation>詳細を隠す...</translation>
     </message>
     <message>
-        <location line="+1351"/>
+        <location line="+1348"/>
         <source>&lt;h3&gt;About Katie&lt;/h3&gt;&lt;p&gt;This program uses Katie version %1.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4176,7 +4176,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+398"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+389"/>
         <source>Could not open input redirection for reading</source>
         <translation>標準入力リダイレクトを読み込みのために開けませんでした</translation>
     </message>
@@ -4199,7 +4199,7 @@ Please choose a different file name.</source>
         <translation>プロセス処理がタイムアウトしました</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+815"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+811"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>プロセスからの読み込みにおいてエラーが発生しました</translation>
@@ -6654,7 +6654,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5128"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5121"/>
         <source>*</source>
         <translation>*</translation>
     </message>

@@ -86,20 +86,20 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1751"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1746"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+677"/>
         <source>Socket operation timed out</source>
         <translation>소켓 작업 시간 초과</translation>
     </message>
     <message>
-        <location line="-1214"/>
-        <location line="+810"/>
+        <location line="-1209"/>
+        <location line="+805"/>
         <location line="+213"/>
         <source>Operation on socket is not supported</source>
         <translation>소켓 작업이 지원되지 않음</translation>
     </message>
     <message>
-        <location line="-674"/>
+        <location line="-669"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+662"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+641"/>
         <location line="+26"/>
@@ -107,7 +107,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>호스트를 찾을 수 없음</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+42"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+3"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+4"/>
         <source>Connection refused</source>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished">Qt 라이브러리 호환성 오류</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1843"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1081,7 +1081,7 @@ Script: %3</source>
         <translation>이(가) 형식이 아닙니다</translation>
     </message>
     <message>
-        <location line="+263"/>
+        <location line="+231"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation type="unfinished">파일 이름의 대소문자가 &quot;%2&quot;와(과) 일치하지 않습니다 {1&quot;?}</translation>
     </message>
@@ -2345,7 +2345,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+150"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+144"/>
         <source>No host name given</source>
         <translation>호스트 이름이 지정되지 않았음</translation>
     </message>
@@ -2537,7 +2537,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1308"/>
         <source>Permission denied</source>
         <translation>권한이 거부됨</translation>
     </message>
@@ -2651,7 +2651,7 @@ Do you want to delete it anyway?</source>
         <translation>&apos;%1&apos;의 플러그인 확인 데이터가 일치하지 않음</translation>
     </message>
     <message>
-        <location line="+270"/>
+        <location line="+213"/>
         <location line="+36"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+275"/>
         <source>The shared library was not found.</source>
@@ -2673,17 +2673,17 @@ Do you want to delete it anyway?</source>
         <translation>알 수 없는 오류</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+80"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+68"/>
         <source>Cannot load library %1: %2</source>
         <translation>라이브러리 %1을(를) 불러올 수 없음: %2</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Cannot unload library %1: %2</source>
         <translation>라이브러리 %1을(를) 닫을 수 없음: %2</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+11"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>%2의 심볼 &quot;%1&quot;을(를) 불러올 수 없음: %3</translation>
     </message>
@@ -3037,7 +3037,7 @@ Do you want to delete it anyway?</source>
         <translation>자세한 정보 숨기기...</translation>
     </message>
     <message>
-        <location line="+1351"/>
+        <location line="+1348"/>
         <source>&lt;h3&gt;About Katie&lt;/h3&gt;&lt;p&gt;This program uses Katie version %1.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4173,7 +4173,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+815"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+811"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>프로세스에서 읽을 수 없음</translation>
@@ -4194,7 +4194,7 @@ Do you want to overwrite it?</source>
         <translation>프로그램이 지정되지 않음</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+398"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+389"/>
         <source>Could not open input redirection for reading</source>
         <translation>읽기 위해 입력 리다이렉션을 열 수 없음</translation>
     </message>
@@ -4654,7 +4654,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+497"/>
         <source>Loaded Scripts</source>
-        <translation>불러온 스크립트</translation>
+        <translation>불러온 스크��트</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6042,7 +6042,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+1"/>
         <source>Proxy authentication failed: %1</source>
-        <translation>프록시 인증 실패: %1</translation>
+        <translation>프록��� 인증 실패: %1</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -6648,7 +6648,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5128"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5121"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -6741,7 +6741,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+2"/>
         <source>Mi&amp;nimize</source>
-        <translation>최소화(&amp;N)</translation>
+        <translation>최소��(&amp;N)</translation>
     </message>
     <message>
         <location line="+2"/>

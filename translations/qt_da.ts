@@ -94,7 +94,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Host blev ikke fundet</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+42"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+3"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+4"/>
         <source>Connection refused</source>
@@ -106,8 +106,8 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Forbindelsen timed out</translation>
     </message>
     <message>
-        <location line="-538"/>
-        <location line="+810"/>
+        <location line="-533"/>
+        <location line="+805"/>
         <location line="+213"/>
         <source>Operation on socket is not supported</source>
         <translation>Socket-operation ikke understøttet</translation>
@@ -183,7 +183,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Inkompatibel Qt Library fejl</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1843"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation></translation>
@@ -1081,7 +1081,7 @@ Script: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+263"/>
+        <location line="+231"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2345,7 +2345,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+119"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+86"/>
         <location line="+31"/>
@@ -2537,7 +2537,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1308"/>
         <source>Permission denied</source>
         <translation>Tilladelse nægtet</translation>
     </message>
@@ -2651,7 +2651,7 @@ Do you want to delete it anyway?</source>
         <translation>Plugin-verifikationsdata er sat forkert sammen i &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+251"/>
         <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2673,17 +2673,17 @@ Do you want to delete it anyway?</source>
         <translation>DSO blev ikke fundet.</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+80"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+68"/>
         <source>Cannot load library %1: %2</source>
         <translation>Kan ikke indlæse bibliotek %1: %2</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Kan ikke afregistrere bibliotek %1: %2</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+11"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Kan ikke løse symbol &quot;%1&quot; i %2: %3</translation>
     </message>
@@ -3037,7 +3037,7 @@ Do you want to delete it anyway?</source>
         <translation>Skjul detaljer...</translation>
     </message>
     <message>
-        <location line="+1351"/>
+        <location line="+1348"/>
         <source>&lt;h3&gt;About Katie&lt;/h3&gt;&lt;p&gt;This program uses Katie version %1.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3092,7 +3092,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+3"/>
         <source>Permission denied</source>
-        <translation>Tilladelse nægtet</translation>
+        <translation>Tilladelse n��gtet</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4173,7 +4173,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+398"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+389"/>
         <source>Could not open input redirection for reading</source>
         <translation>Kunne ikke åbne input redirection for læsning</translation>
     </message>
@@ -4196,7 +4196,7 @@ Vælg et andet filnavn.</translation>
         <translation>Proces-operation time out</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+815"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+811"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Fejl ved læsning fra proces</translation>
@@ -6648,7 +6648,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5128"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5121"/>
         <source>*</source>
         <translation></translation>
     </message>

@@ -94,7 +94,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Nepodařilo se najít počítač</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+42"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+3"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+4"/>
         <source>Connection refused</source>
@@ -122,8 +122,8 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Síť není dosažitelná</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="-1214"/>
-        <location line="+810"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="-1209"/>
+        <location line="+805"/>
         <location line="+213"/>
         <source>Operation on socket is not supported</source>
         <translation>Tato socket operace není podporována</translation>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Qt není slučitelná</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1843"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1081,7 +1081,7 @@ Script: %3</source>
         <translation>není typ</translation>
     </message>
     <message>
-        <location line="+263"/>
+        <location line="+231"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation>Velikost písmen v názvu souboru neodpovídá pro &quot;%1&quot;</translation>
     </message>
@@ -2345,7 +2345,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+119"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+86"/>
         <location line="+31"/>
@@ -2396,7 +2396,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     <message>
         <location line="+15"/>
         <source>Host requires authentication</source>
-        <translation>Hostitelský počítač požaduje autentizaci</translation>
+        <translation>Hostitelský počítač po��aduje autentizaci</translation>
     </message>
     <message>
         <location filename="../src/network/access/qhttp.cpp" line="+319"/>
@@ -2537,7 +2537,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1375"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1312"/>
         <source>No such file or directory</source>
         <translation>Nepodařilo se najít žádný takový soubor nebo adresář</translation>
     </message>
@@ -2646,17 +2646,17 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+92"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+79"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Knihovnu %1 nelze vyjmout: %2</translation>
     </message>
     <message>
-        <location line="-12"/>
+        <location line="-11"/>
         <source>Cannot load library %1: %2</source>
         <translation>Knihovnu %1 nelze nahrát: %2</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+22"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Symbol &quot;%1&quot; nelze v %2 vyřešit: %3</translation>
     </message>
@@ -2666,7 +2666,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Ověřovací data přídavného nesouhlasí v &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+270"/>
+        <location line="+213"/>
         <location line="+36"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+275"/>
         <source>The shared library was not found.</source>
@@ -3032,7 +3032,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Ukázat podrobnosti...</translation>
     </message>
     <message>
-        <location line="+1351"/>
+        <location line="+1348"/>
         <source>&lt;h3&gt;About Katie&lt;/h3&gt;&lt;p&gt;This program uses Katie version %1.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3047,7 +3047,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1374"/>
+        <location line="-1371"/>
         <source>Hide Details...</source>
         <translation>Skrýt podrobnosti...</translation>
     </message>
@@ -4173,7 +4173,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+914"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+910"/>
         <source>Error writing to process</source>
         <translation>Zápis do procesu se nezdařil</translation>
     </message>
@@ -4183,7 +4183,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Nestanoven žádný program</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+628"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+619"/>
         <source>Resource error (fork failure): %1</source>
         <translation>Potíže se zdroji (selhání rozcestí - &quot;fork failure&quot;): %1</translation>
     </message>
@@ -6648,7 +6648,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5128"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5121"/>
         <source>*</source>
         <translation>*</translation>
     </message>

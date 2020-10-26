@@ -94,7 +94,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Узел не найден</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+42"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+3"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+4"/>
         <source>Connection refused</source>
@@ -106,8 +106,8 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Время на соединение истекло</translation>
     </message>
     <message>
-        <location line="-538"/>
-        <location line="+810"/>
+        <location line="-533"/>
+        <location line="+805"/>
         <location line="+213"/>
         <source>Operation on socket is not supported</source>
         <translation>Операция с сокетом не поддерживается</translation>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Активирует главное окно программы</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1843"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1082,7 +1082,7 @@ Script: %3</source>
         <translation>не является типом</translation>
     </message>
     <message>
-        <location line="+263"/>
+        <location line="+231"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation>Регистр имени файла не соответствует «%1»</translation>
     </message>
@@ -1468,7 +1468,7 @@ Script: %3</source>
     <message>
         <location line="+441"/>
         <source>Cannot assign value %1 to property %2</source>
-        <translation>Невозможно присвоить значение «%1» свой������������тву «%2»</translation>
+        <translation>Невозможно присвоить значение «%1» свой��������������тву «%2»</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -1707,7 +1707,7 @@ Script: %3</source>
     <message>
         <location line="+1"/>
         <source>&amp;OK</source>
-        <translation>&amp;Закрыть</translation>
+        <translation>&amp;Закры��ь</translation>
     </message>
     <message>
         <location line="-199"/>
@@ -2346,7 +2346,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+119"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+86"/>
         <location line="+31"/>
@@ -2538,7 +2538,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1308"/>
         <source>Permission denied</source>
         <translation>Доступ запрещён</translation>
     </message>
@@ -2652,7 +2652,7 @@ Please verify the correct directory name was given.</source>
         <translation>Проверочная информация для модуля «%1» не совпадает</translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+251"/>
         <source>The file &apos;%1&apos; is not a valid Katie plugin.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2674,17 +2674,17 @@ Please verify the correct directory name was given.</source>
         <translation>Динамическая библиотека не найдена.</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+80"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+68"/>
         <source>Cannot load library %1: %2</source>
         <translation>Невозможно загрузить библиотеку %1: %2</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Невозможно выгрузить библиотеку %1: %2</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+11"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Невозможно разрешить символ «%1» в %2: %3</translation>
     </message>
@@ -3038,7 +3038,7 @@ Please verify the correct directory name was given.</source>
         <translation>Скрыть подробности...</translation>
     </message>
     <message>
-        <location line="+1351"/>
+        <location line="+1348"/>
         <source>&lt;h3&gt;About Katie&lt;/h3&gt;&lt;p&gt;This program uses Katie version %1.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3248,7 +3248,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location line="+21"/>
         <source>Read error reading from %1: %2</source>
-        <translation>Ош��бк�� чтения из %1: %2</translation>
+        <translation>Ош��бк��� чтения из %1: %2</translation>
     </message>
 </context>
 <context>
@@ -3938,7 +3938,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+1"/>
         <source>Last page</source>
-        <translation>Последняя страница</translation>
+        <translation>Последняя стран��ца</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -4174,7 +4174,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+398"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+389"/>
         <source>Could not open input redirection for reading</source>
         <translation>Не удалось открыть п��ренаправление ввода для чтения</translation>
     </message>
@@ -4197,7 +4197,7 @@ Please choose a different file name.</source>
         <translation>Время на операцию с процессом истекло</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+815"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+811"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Ош��бка получения данных от процесса</translation>
@@ -6280,7 +6280,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+2"/>
         <source>The host name did not match any of the valid hosts for this certificate</source>
-        <translation>Название узла не совпадает с допустимыми названиями узлов сертификата</translation>
+        <translation>Название узла не со��падает с допустимыми названиями узлов сертификата</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -6649,7 +6649,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5128"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5121"/>
         <source>*</source>
         <translation>*</translation>
     </message>
