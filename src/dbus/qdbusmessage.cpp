@@ -107,9 +107,9 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
                 return 0;
             if (!QDBusUtil::checkObjectPath(d_ptr->path, QDBusUtil::EmptyNotAllowed, error))
                 return 0;
-            if (!QDBusUtil::checkInterfaceName(d_ptr->interface, QDBusUtil::EmptyAllowed, error))
+            if (!QDBusUtil::checkInterfaceName(d_ptr->interface, error))
                 return 0;
-            if (!QDBusUtil::checkMemberName(d_ptr->name, QDBusUtil::EmptyNotAllowed, error))
+            if (!QDBusUtil::checkMemberName(d_ptr->name, error))
                 return 0;
         }
 
@@ -127,7 +127,7 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
     case DBUS_MESSAGE_TYPE_ERROR:
         // error name can't be empty
         if (!d_ptr->parametersValidated
-            && !QDBusUtil::checkErrorName(d_ptr->name, QDBusUtil::EmptyNotAllowed, error))
+            && !QDBusUtil::checkErrorName(d_ptr->name, error))
             return 0;
 
         msg = dbus_message_new(DBUS_MESSAGE_TYPE_ERROR);
@@ -142,9 +142,9 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
         if (!d_ptr->parametersValidated) {
             if (!QDBusUtil::checkObjectPath(d_ptr->path, QDBusUtil::EmptyNotAllowed, error))
                 return 0;
-            if (!QDBusUtil::checkInterfaceName(d_ptr->interface, QDBusUtil::EmptyAllowed, error))
+            if (!QDBusUtil::checkInterfaceName(d_ptr->interface, error))
                 return 0;
-            if (!QDBusUtil::checkMemberName(d_ptr->name, QDBusUtil::EmptyNotAllowed, error))
+            if (!QDBusUtil::checkMemberName(d_ptr->name, error))
                 return 0;
         }
 

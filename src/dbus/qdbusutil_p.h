@@ -86,12 +86,10 @@ namespace QDBusUtil
         EmptyNotAllowed
     };
 
-    inline bool checkInterfaceName(const QString &name, AllowEmptyFlag empty, QDBusError *error)
+    inline bool checkInterfaceName(const QString &name, QDBusError *error)
     {
         if (name.isEmpty()) {
-            if (empty == EmptyAllowed) return true;
-            *error = QDBusError(QDBusError::InvalidInterface, QLatin1String("Interface name cannot be empty"));
-            return false;
+            return true;
         }
         if (isValidInterfaceName(name)) return true;
         *error = QDBusError(QDBusError::InvalidInterface, QString::fromLatin1("Invalid interface class: %1").arg(name));
@@ -122,10 +120,9 @@ namespace QDBusUtil
         return false;
     }
 
-    inline bool checkMemberName(const QString &name, AllowEmptyFlag empty, QDBusError *error)
+    inline bool checkMemberName(const QString &name, QDBusError *error)
     {
         if (name.isEmpty()) {
-            if (empty == EmptyAllowed) return true;
             *error = QDBusError(QDBusError::InvalidMember, QLatin1String("method name cannot be empty"));
             return false;
         }
@@ -135,10 +132,9 @@ namespace QDBusUtil
         return false;
     }
 
-    inline bool checkErrorName(const QString &name, AllowEmptyFlag empty, QDBusError *error)
+    inline bool checkErrorName(const QString &name, QDBusError *error)
     {
         if (name.isEmpty()) {
-            if (empty == EmptyAllowed) return true;
             *error = QDBusError(QDBusError::InvalidInterface, QLatin1String("Error name cannot be empty"));
             return false;
         }
