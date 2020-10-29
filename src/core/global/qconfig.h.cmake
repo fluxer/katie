@@ -131,7 +131,6 @@
 #cmakedefine QT_NO_USING_NAMESPACE
 #cmakedefine QT_NO_ACCESSIBILITY
 #cmakedefine QT_NO_ACTION
-#cmakedefine QT_NO_ACTIONS
 #cmakedefine QT_NO_ANIMATION
 #cmakedefine QT_NO_BACKINGSTORE
 #cmakedefine QT_NO_BEARERMANAGEMENT
