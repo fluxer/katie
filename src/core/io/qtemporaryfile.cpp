@@ -82,11 +82,7 @@ QTemporaryFileEngine::~QTemporaryFileEngine()
 bool QTemporaryFileEngine::isReallyOpen()
 {
     Q_D(QFSFileEngine);
-
-    if (!((0 == d->fh) && (-1 == d->fd)))
-        return true;
-
-    return false;
+    return (d->fd != -1);
 
 }
 
@@ -191,7 +187,6 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
     filePathIsTemplate = false;
 
     d->openMode = openMode;
-    d->lastFlushFailed = false;
     d->tried_stat = false;
 
     return true;

@@ -51,253 +51,6 @@
 
 QT_BEGIN_NAMESPACE
 
-
-/*!
-    \internal
-
-    Returns the stdlib open string corresponding to a QIODevice::OpenMode.
-*/
-static inline QByteArray openModeToFopenMode(QIODevice::OpenMode flags, const QFileSystemEntry &fileEntry,
-        QFileSystemMetaData &metaData)
-{
-    QByteArray mode;
-    if (flags & QIODevice::Append) {
-        mode = "ab";
-        if (flags & QIODevice::ReadOnly)
-            mode += '+';
-    } else if ((flags & QIODevice::ReadOnly) && !(flags & QIODevice::Truncate)) {
-        mode = "rb";
-        if (flags & QIODevice::WriteOnly) {
-            metaData.clearFlags(QFileSystemMetaData::FileType);
-            if (!fileEntry.isEmpty()
-                    && QFileSystemEngine::fillMetaData(fileEntry, metaData, QFileSystemMetaData::FileType)
-                    && metaData.isFile()) {
-                mode += '+';
-            } else {
-                mode = "wb+";
-            }
-        }
-    } else if (flags & QIODevice::WriteOnly) {
-        mode = "wb";
-        if (flags & QIODevice::ReadOnly)
-            mode += '+';
-    }
-
-#if defined(__GLIBC__)
-    // must be glibc >= 2.7
-    mode += 'e';
-#endif
-
-    return mode;
-}
-
-/*!
-    \internal
-
-    Returns the stdio open flags corresponding to a QIODevice::OpenMode.
-*/
-static inline int openModeToOpenFlags(QIODevice::OpenMode mode)
-{
-#ifdef QT_LARGEFILE_SUPPORT
-    int oflags = QT_OPEN_RDONLY | QT_OPEN_LARGEFILE;
-#else
-    int oflags = QT_OPEN_RDONLY;
-#endif
-
-    if ((mode & QFile::ReadWrite) == QFile::ReadWrite) {
-        oflags = QT_OPEN_RDWR | QT_OPEN_CREAT;
-    } else if (mode & QFile::WriteOnly) {
-        oflags = QT_OPEN_WRONLY | QT_OPEN_CREAT;
-    }
-
-    if (mode & QFile::Append) {
-        oflags |= QT_OPEN_APPEND;
-    } else if (mode & QFile::WriteOnly) {
-        if ((mode & QFile::Truncate) || !(mode & QFile::ReadOnly))
-            oflags |= QT_OPEN_TRUNC;
-    }
-
-    return oflags;
-}
-
-/*!
-    \internal
-*/
-bool QFSFileEnginePrivate::nativeOpen(QIODevice::OpenMode mode)
-{
-    Q_Q(QFSFileEngine);
-
-    if (mode & QIODevice::Unbuffered) {
-        int flags = openModeToOpenFlags(mode);
-
-        // Try to open the file in unbuffered mode.
-        do {
-            fd = QT_OPEN(fileEntry.nativeFilePath().constData(), flags, 0666);
-        } while (fd == -1 && errno == EINTR);
-
-        // On failure, return and report the error.
-        if (fd == -1) {
-            q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                        qt_error_string(errno));
-            return false;
-        }
-
-        if (!(mode & QIODevice::WriteOnly)) {
-            // we don't need this check if we tried to open for writing because then
-            // we had received EISDIR anyway.
-            if (QFileSystemEngine::fillMetaData(fd, metaData)
-                    && metaData.isDirectory()) {
-                q->setError(QFile::OpenError, QLatin1String("file to open is a directory"));
-                QT_CLOSE(fd);
-                return false;
-            }
-        }
-
-        // Seek to the end when in Append mode.
-        if (flags & QFile::Append) {
-            int ret;
-            do {
-                ret = QT_LSEEK(fd, 0, SEEK_END);
-            } while (ret == -1 && errno == EINTR);
-
-            if (ret == -1) {
-                q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                            qt_error_string(errno));
-                return false;
-            }
-        }
-
-        fh = 0;
-    } else {
-        QByteArray fopenMode = openModeToFopenMode(mode, fileEntry, metaData);
-
-        // Try to open the file in buffered mode.
-        do {
-            fh = QT_FOPEN(fileEntry.nativeFilePath().constData(), fopenMode.constData());
-        } while (!fh && errno == EINTR);
-
-        // On failure, return and report the error.
-        if (!fh) {
-            q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                        qt_error_string(errno));
-            return false;
-        }
-
-        const int fhfd = QT_FILENO(fh);
-        if (!(mode & QIODevice::WriteOnly)) {
-            // we don't need this check if we tried to open for writing because then
-            // we had received EISDIR anyway.
-            if (QFileSystemEngine::fillMetaData(fhfd, metaData)
-                    && metaData.isDirectory()) {
-                q->setError(QFile::OpenError, QLatin1String("file to open is a directory"));
-                fclose(fh);
-                return false;
-            }
-        }
-
-        if (fhfd != -1)
-            ::fcntl(fhfd, F_SETFD, FD_CLOEXEC); // ignore failure
-
-        // Seek to the end when in Append mode.
-        if (mode & QIODevice::Append) {
-            int ret;
-            do {
-                ret = QT_FSEEK(fh, 0, SEEK_END);
-            } while (ret == -1 && errno == EINTR);
-
-            if (ret == -1) {
-                q->setError(errno == EMFILE ? QFile::ResourceError : QFile::OpenError,
-                            qt_error_string(errno));
-                return false;
-            }
-        }
-
-        fd = -1;
-    }
-
-    closeFileHandle = true;
-    return true;
-}
-
-/*!
-    \internal
-
-*/
-bool QFSFileEnginePrivate::nativeFlush()
-{
-    return fh ? flushFh() : fd != -1;
-}
-
-/*!
-    \internal
-*/
-qint64 QFSFileEnginePrivate::nativeRead(char *data, qint64 len)
-{
-    Q_Q(QFSFileEngine);
-
-    if (fh && isSequentialFdFh()) {
-        size_t readBytes = 0;
-        int fhn = QT_FILENO(fh);
-        int oldFlags = ::fcntl(fhn, F_GETFL);
-        for (int i = 0; i < 2; ++i) {
-            // Unix: Make the underlying file descriptor non-blocking
-            if ((oldFlags & O_NONBLOCK) == 0)
-                ::fcntl(fhn, F_SETFL, oldFlags | O_NONBLOCK);
-
-            // Cross platform stdlib read
-            size_t read = 0;
-            do {
-                read = ::fread(data + readBytes, 1, size_t(len - readBytes), fh);
-            } while (read == 0 && !::feof(fh) && errno == EINTR);
-            if (read > 0) {
-                readBytes += read;
-                break;
-            } else {
-                if (readBytes)
-                    break;
-                readBytes = read;
-            }
-
-            // Unix: Restore the blocking state of the underlying socket
-            if ((oldFlags & O_NONBLOCK) == 0) {
-                ::fcntl(fhn, F_SETFL, oldFlags);
-                if (readBytes == 0) {
-                    int readByte = 0;
-                    do {
-                        readByte = ::fgetc(fh);
-                    } while (readByte == -1 && errno == EINTR);
-                    if (readByte != -1) {
-                        *data = uchar(readByte);
-                        readBytes += 1;
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
-        // Unix: Restore the blocking state of the underlying socket
-        if ((oldFlags & O_NONBLOCK) == 0) {
-            ::fcntl(fhn, F_SETFL, oldFlags);
-        }
-        if (readBytes == 0 && !::feof(fh)) {
-            // if we didn't read anything and we're not at EOF, it must be an error
-            q->setError(QFile::ReadError, qt_error_string(errno));
-            return -1;
-        }
-        return readBytes;
-    }
-
-    return readFdFh(data, len);
-}
-
-/*!
-    \internal
-*/
-int QFSFileEnginePrivate::nativeHandle() const
-{
-    return fh ? fileno(fh) : fd;
-}
-
 bool QFSFileEngine::remove()
 {
     Q_D(QFSFileEngine);
@@ -390,25 +143,14 @@ bool QFSFileEnginePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) cons
     if (!tried_stat || !metaData.hasFlags(flags)) {
         tried_stat = true;
 
-        int localFd = fd;
-        if (fh && fileEntry.isEmpty())
-            localFd = QT_FILENO(fh);
-        if (localFd != -1)
-            QFileSystemEngine::fillMetaData(localFd, metaData);
+        if (fd != -1)
+            QFileSystemEngine::fillMetaData(fd, metaData);
 
         if (metaData.missingFlags(flags) && !fileEntry.isEmpty())
             QFileSystemEngine::fillMetaData(fileEntry, metaData, metaData.missingFlags(flags));
     }
 
     return metaData.exists();
-}
-
-bool QFSFileEnginePrivate::isSymlink() const
-{
-    if (!metaData.hasFlags(QFileSystemMetaData::LinkType))
-        QFileSystemEngine::fillMetaData(fileEntry, metaData, QFileSystemMetaData::LinkType);
-
-    return metaData.isLink();
 }
 
 /*!
@@ -491,7 +233,9 @@ QString QFSFileEngine::fileName(FileName file) const
             return entry.path();
         return entry.filePath();
     } else if (file == LinkName) {
-        if (d->isSymlink()) {
+        if (!d->metaData.hasFlags(QFileSystemMetaData::LinkType))
+            QFileSystemEngine::fillMetaData(d->fileEntry, d->metaData, QFileSystemMetaData::LinkType);
+        if (d->metaData.isLink()) {
             QFileSystemEntry entry = QFileSystemEngine::getLinkTarget(d->fileEntry, d->metaData);
             return entry.filePath();
         }
@@ -511,15 +255,18 @@ uint QFSFileEngine::ownerId(FileOwner own) const
     Q_D(const QFSFileEngine);
     static const uint nobodyID = (uint) -2;
 
-    if (d->doStat(QFileSystemMetaData::OwnerIds))
-        return d->metaData.ownerId(own);
+    if (d->doStat(QFileSystemMetaData::OwnerIds)) {
+        if (own == QAbstractFileEngine::OwnerUser)
+            return d->metaData.userId();
+        return d->metaData.groupId();
+    }
 
     return nobodyID;
 }
 
 QString QFSFileEngine::owner(FileOwner own) const
 {
-    if (own == OwnerUser)
+    if (own == QAbstractFileEngine::OwnerUser)
         return QFileSystemEngine::resolveUserName(ownerId(own));
     return QFileSystemEngine::resolveGroupName(ownerId(own));
 }
@@ -541,8 +288,6 @@ bool QFSFileEngine::setSize(qint64 size)
     bool ret = false;
     if (d->fd != -1)
         ret = QT_FTRUNCATE(d->fd, size) == 0;
-    else if (d->fh)
-        ret = QT_FTRUNCATE(QT_FILENO(d->fh), size) == 0;
     else
         ret = QT_TRUNCATE(d->fileEntry.nativeFilePath().constData(), size) == 0;
     if (!ret)
@@ -554,8 +299,16 @@ QDateTime QFSFileEngine::fileTime(FileTime time) const
 {
     Q_D(const QFSFileEngine);
 
-    if (d->doStat(QFileSystemMetaData::Times))
-        return d->metaData.fileTime(time);
+    if (d->doStat(QFileSystemMetaData::Times)) {
+        switch (time) {
+        case QAbstractFileEngine::ModificationTime:
+            return d->metaData.modificationTime();
+        case QAbstractFileEngine::AccessTime:
+            return d->metaData.accessTime();
+        case QAbstractFileEngine::CreationTime:
+            return d->metaData.creationTime();
+        }
+    }
 
     return QDateTime();
 }
@@ -597,7 +350,7 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size)
     realOffset &= ~(QT_OFF_T(pageSize - 1));
 
     void *mapAddress = QT_MMAP(Q_NULLPTR, realSize,
-                   access, MAP_SHARED, nativeHandle(), realOffset);
+                   access, MAP_SHARED, fd, realOffset);
     if (MAP_FAILED != mapAddress) {
         uchar *address = extra + static_cast<uchar*>(mapAddress);
         maps[address] = QPair<int,size_t>(extra, realSize);

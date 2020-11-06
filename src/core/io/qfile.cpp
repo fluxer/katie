@@ -1250,13 +1250,6 @@ bool QFile::atEnd() const
     if (!d->ensureFlushed())
         return false;
 
-    // If the file engine knows best, say what it says.
-    if (d->fileEngine->supportsExtension(QAbstractFileEngine::AtEndExtension)) {
-        // Check if the file engine supports AtEndExtension, and if it does,
-        // check if the file engine claims to be at the end.
-        return d->fileEngine->atEnd();
-    }
-
     // Fall back to checking how much is available (will stat files).
     return bytesAvailable() == 0;
 }

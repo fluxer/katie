@@ -235,7 +235,7 @@ void tst_qfile::readBigFile()
             QFSFileEngine fse(filename);
             fse.open(QIODevice::ReadOnly|textMode|bufferedMode);
             QBENCHMARK {
-               //qWarning() << fse.supportsExtension(QAbstractFileEngine::AtEndExtension);
+               //qWarning() << fse.supportsExtension(QAbstractFileEngine::MapExtension);
                while(fse.read(buffer, blockSize));
                fse.seek(0);
             }
