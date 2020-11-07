@@ -237,7 +237,6 @@
 #cmakedefine QT_NO_PRINTER
 #cmakedefine QT_NO_PRINTPREVIEWDIALOG
 #cmakedefine QT_NO_PRINTPREVIEWWIDGET
-#cmakedefine QT_NO_PROCESS
 #cmakedefine QT_NO_PROGRESSBAR
 #cmakedefine QT_NO_PROGRESSDIALOG
 #cmakedefine QT_NO_PROPERTIES
@@ -489,7 +488,7 @@
 
 // QPrinter
 #if !defined(QT_NO_PRINTER) && defined(QT_NO_TEMPORARYFILE)
-#define QT_NO_PRINTER
+#  define QT_NO_PRINTER
 #endif
 
 // QSpinBox
@@ -609,7 +608,7 @@
 
 // QTableView
 #if !defined(QT_NO_TABLEVIEW) && defined(QT_NO_ITEMVIEWS)
-#define QT_NO_TABLEVIEW
+#  define QT_NO_TABLEVIEW
 #endif
 
 // QTextBrowser
@@ -639,7 +638,7 @@
 
 // QCompleter
 #if !defined(QT_NO_COMPLETER) && defined(QT_NO_PROXYMODEL)
-#define QT_NO_COMPLETER
+#  define QT_NO_COMPLETER
 #endif
 
 // Common UNIX Printing System
