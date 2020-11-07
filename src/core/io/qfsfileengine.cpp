@@ -384,7 +384,6 @@ bool QFSFileEngine::seek(qint64 pos)
     if (pos < 0 || pos != qint64(QT_OFF_T(pos)))
         return false;
 
-    // Unbuffered stdio mode.
     if (Q_UNLIKELY(QT_LSEEK(d->fd, QT_OFF_T(pos), SEEK_SET) == -1)) {
         qWarning() << "QFile::at: Cannot set file position" << pos;
         setError(QFile::PositionError, qt_error_string(errno));
