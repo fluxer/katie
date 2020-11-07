@@ -272,10 +272,10 @@ public:
     QProcess::ExitStatus exitStatus;
     bool crashed;
 
-    bool waitForStarted(int msecs = 30000);
-    bool waitForReadyRead(int msecs = 30000);
-    bool waitForBytesWritten(int msecs = 30000);
-    bool waitForFinished(int msecs = 30000);
+    bool waitForStarted(int msecs);
+    bool waitForReadyRead(int msecs);
+    bool waitForBytesWritten(int msecs);
+    bool waitForFinished(int msecs);
 
     qint64 bytesAvailableFromStdout() const;
     qint64 bytesAvailableFromStderr() const;
