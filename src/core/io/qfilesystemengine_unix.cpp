@@ -256,9 +256,8 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
         data.knownFlagsMask |= (what & QFileSystemMetaData::UserPermissions);
     }
 
-    if (what & QFileSystemMetaData::HiddenAttribute
-            && !data.isHidden()) {
-        QString fileName = entry.fileName();
+    if (what & QFileSystemMetaData::HiddenAttribute && !data.isHidden()) {
+        const QString &fileName = entry.fileName();
         if (fileName.size() > 0 && fileName.at(0) == QLatin1Char('.'))
             data.entryFlags |= QFileSystemMetaData::HiddenAttribute;
         data.knownFlagsMask |= QFileSystemMetaData::HiddenAttribute;
