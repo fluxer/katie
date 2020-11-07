@@ -446,6 +446,12 @@ elseif(KATIE_PLATFORM MATCHES "(freebsd|openbsd)")
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue_p.h
     )
+elseif(KATIE_PLATFORM STREQUAL "hurd")
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        dl
+        rt
+    )
 endif()
 
 
