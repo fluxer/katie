@@ -1,5 +1,4 @@
 Source: katie
-Section: x11
 Priority: optional
 Maintainer: Ivailo Monev <xakepa10@gmail.com>
 Homepage: https://github.com/fluxer/katie
@@ -14,7 +13,8 @@ Build-Depends: debhelper (>= 9~), libssl-dev, zlib1g-dev, libzstd-dev,
  libpq-dev, libmariadbclient-dev, libmariadbd-dev, unifdef
 
 Package: katie-runtime
-Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x
+Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
+Section: x11
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: unixodbc, libpq5, libmariadbclient, xserver-xorg-core
 Description: C++ toolkit derived from the Qt 4.8 framework
@@ -22,7 +22,8 @@ Description: C++ toolkit derived from the Qt 4.8 framework
  imports, plugins and translations)
 
 Package: katie-tools
-Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x
+Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
+Section: x11
 Depends: ${shlibs:Depends}, ${misc:Depends}, katie-runtime
 Description: C++ toolkit derived from the Qt 4.8 framework
  This package is pre-release version of the Katie tookit (includes designer,
@@ -30,14 +31,16 @@ Description: C++ toolkit derived from the Qt 4.8 framework
  qdbusxml2cpp, qscript, qtconfig, rcc and uic)
 
 Package: katie-dev
-Architecture: any
+Architecture: all
+Section: devel
 Depends: ${misc:Depends}, katie-runtime, katie-tools
 Description: C++ toolkit derived from the Qt 4.8 framework
  This package is pre-release version of the Katie tookit (includes headers,
  pkg-config and CMake files)
 
 Package: katie-doc
-Architecture: any
+Architecture: all
+Section: doc
 Depends: ${misc:Depends}, man-db
 Description: C++ toolkit derived from the Qt 4.8 framework
  This package is pre-release version of the Katie tookit (includes manual
