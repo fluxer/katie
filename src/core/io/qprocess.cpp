@@ -183,12 +183,10 @@ void QProcessEnvironmentPrivate::insert(const QProcessEnvironmentPrivate &other)
     for ( ; it != end; ++it)
         hash.insert(it.key(), it.value());
 
-#ifdef Q_OS_UNIX
     QHash<QString, Key>::ConstIterator nit = other.nameMap.constBegin(),
                                       nend = other.nameMap.constEnd();
     for ( ; nit != nend; ++nit)
         nameMap.insert(nit.key(), nit.value());
-#endif
 }
 
 /*!
@@ -1014,11 +1012,9 @@ bool QProcessPrivate::_q_startupNotification()
     q->setProcessState(QProcess::NotRunning);
     processError = QProcess::FailedToStart;
     emit q->error(processError);
-#ifdef Q_OS_UNIX
     // make sure the process manager removes this entry
     waitForDeadChild();
     findExitCode();
-#endif
     cleanup();
     return false;
 }
@@ -1065,10 +1061,8 @@ QProcess::~QProcess()
         kill();
         waitForFinished();
     }
-#ifdef Q_OS_UNIX
     // make sure the process manager removes this entry
     d->findExitCode();
-#endif
     d->cleanup();
 }
 

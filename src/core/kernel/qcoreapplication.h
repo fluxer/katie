@@ -123,10 +123,6 @@ public:
 
     static void flush();
 
-#if defined(Q_OS_UNIX)
-    static void watchUnixSignal(int signal, bool watch);
-#endif
-
     typedef bool (*EventFilter)(void *message, long *result);
     EventFilter setEventFilter(EventFilter filter);
     bool filterEvent(void *message, long *result);
@@ -136,7 +132,6 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void aboutToQuit();
-    void unixSignal(int);
 
 protected:
     bool event(QEvent *);

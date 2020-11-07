@@ -43,9 +43,7 @@
 #define Q_EXPORT_SQLDRIVER_ODBC Q_SQL_EXPORT
 #endif
 
-#ifdef Q_OS_UNIX
 #define HAVE_LONG_LONG 1 // force UnixODBC NOT to fall back to a struct for BIGINTs
-#endif
 
 #include <sql.h>
 #include <sqlext.h>

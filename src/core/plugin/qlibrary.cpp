@@ -531,8 +531,7 @@ bool QLibraryPrivate::isPlugin()
 #ifndef QT_NO_PLUGIN_CHECK
     bool success = false;
 
-#if defined(Q_OS_UNIX)
-    if (fileName.endsWith(QLatin1String(".debug"))) {
+    if (Q_UNLIKELY(fileName.endsWith(QLatin1String(".debug")))) {
         // refuse to load a file that ends in .debug
         // these are the debug symbols from the libraries
         // the problem is that they are valid shared library files
@@ -543,7 +542,6 @@ bool QLibraryPrivate::isPlugin()
         pluginState = IsNotAPlugin;
         return false;
     }
-#endif
 
     QFileInfo fileinfo(fileName);
 

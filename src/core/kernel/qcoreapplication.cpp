@@ -160,10 +160,6 @@ QCoreApplication *QCoreApplication::self = 0;
 QAbstractEventDispatcher *QCoreApplicationPrivate::eventDispatcher = 0;
 std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 
-#ifdef Q_OS_UNIX
-Qt::HANDLE qt_application_thread_id = 0;
-#endif
-
 struct QCoreApplicationData {
     QCoreApplicationData() {
 #ifndef QT_NO_LIBRARY
@@ -204,8 +200,6 @@ QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
         argv = (char **)&empty; // ouch! careful with QCoreApplication::argv()!
     }
     QCoreApplicationPrivate::is_app_closing = false;
-
-    qt_application_thread_id = QThread::currentThreadId();
 
     // note: this call to QThread::currentThread() may end up setting theMainThread!
     if (Q_UNLIKELY(QThread::currentThread() != theMainThread))
@@ -396,9 +390,7 @@ void QCoreApplication::init()
 {
     Q_D(QCoreApplication);
 
-#ifdef Q_OS_UNIX
     setlocale(LC_ALL, "");                // use correct char set mapping
-#endif
 
     Q_ASSERT_X(!self, "QCoreApplication", "there should be only one application object");
     QCoreApplication::self = this;
@@ -423,12 +415,11 @@ void QCoreApplication::init()
     }
 #endif
 
-#if defined(Q_OS_UNIX) && !(defined(QT_NO_PROCESS))
+#if !defined(QT_NO_PROCESS)
     // Make sure the process manager thread object is created in the main
     // thread.
     QProcessPrivate::initializeProcessManager();
 #endif
-
 
     d->processCommandLineArguments();
 }
@@ -1997,20 +1988,6 @@ bool QCoreApplication::hasPendingEvents()
         return eventDispatcher->hasPendingEvents();
     return false;
 }
-
-
-/*
-    \fn void QCoreApplication::watchUnixSignal(int signal, bool watch)
-    \internal
-*/
-
-/*!
-    \fn void QCoreApplication::unixSignal(int number)
-    \internal
-
-    This signal is emitted whenever a Unix signal is received by the
-    application. The Unix signal received is specified by its \a number.
-*/
 
 /*!
     \fn void qAddPostRoutine(QtCleanUpFunction ptr)

@@ -39,9 +39,7 @@
 #include <qbasictimer.h>
 #include <qthread.h>
 
-#if defined Q_OS_UNIX
 #include <unistd.h>
-#endif
 
 #include "../../shared/util.h"
 

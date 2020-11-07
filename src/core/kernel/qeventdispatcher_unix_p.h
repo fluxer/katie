@@ -170,7 +170,6 @@ public:
     int initThreadWakeUp();
     int processThreadWakeUp(int nsel);
 
-    bool mainThread;
     int thread_pipe[2];
 
     // highest fd for all socket notifiers

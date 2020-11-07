@@ -597,8 +597,6 @@ void QPrintDialog::accept()
 }
 
 
-#if defined (Q_OS_UNIX)
-
 /*! \internal
 */
 QUnixPrintWidgetPrivate::QUnixPrintWidgetPrivate(QUnixPrintWidget *p)
@@ -970,7 +968,6 @@ QUnixPrintWidget::~QUnixPrintWidget()
 {
     delete d;
 }
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 #if !defined(QT_NO_CUPS)

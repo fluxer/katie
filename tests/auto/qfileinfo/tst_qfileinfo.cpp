@@ -47,14 +47,12 @@
 #include <qfileinfo_p.h>
 #include "../../shared/filesystem.h"
 
-#ifdef Q_OS_UNIX
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include <grp.h>
-#endif
 
 // #define NO_SYMLINKS
 
@@ -170,10 +168,8 @@ tst_QFileInfo::~tst_QFileInfo()
     QFile::remove("longFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileNamelongFileName.txt");
     QFile::remove("tempfile.txt");
 
-#if defined(Q_OS_UNIX)
     QDir().rmdir("./.hidden-directory");
     QFile::remove("link_to_tst_qfileinfo");
-#endif
 }
 
 // Testing get/set functions
@@ -413,15 +409,12 @@ void tst_QFileInfo::canonicalFilePath()
     QCOMPARE(fi.canonicalFilePath(), QDir::currentPath() + "/" + fileName);
     tempFile.remove();
 
-    // This used to crash on Mac, verify that it doesn't anymore.
+    // This used to crash, verify that it doesn't anymore.
     QFileInfo info("/tmp/../../../../../../../../../../../../../../../../../");
     info.canonicalFilePath();
 
-#if defined(Q_OS_UNIX)
-    // This used to crash on Mac
     QFileInfo dontCrash(QLatin1String("/"));
     QCOMPARE(dontCrash.canonicalFilePath(), QLatin1String("/"));
-#endif
 
     // test symlinks
     QFile::remove("link.lnk");
@@ -784,10 +777,6 @@ void tst_QFileInfo::fileTimes()
     QTest::qSleep(sleepTime);
     {
         QFileInfo fileInfo(fileName);
-// On unix created() returns the same as lastModified().
-#if !defined(Q_OS_UNIX)
-        QVERIFY(fileInfo.created() < beforeWrite);
-#endif
         QVERIFY(fileInfo.lastModified() > beforeWrite);
         QFile file(fileName);
         QVERIFY(file.open(QFile::ReadOnly | QFile::Text));
@@ -797,9 +786,6 @@ void tst_QFileInfo::fileTimes()
     }
 
     QFileInfo fileInfo(fileName);
-#if !defined(Q_OS_UNIX)
-    QVERIFY(fileInfo.created() < beforeWrite);
-#endif
     QVERIFY(fileInfo.lastRead() > beforeRead);
     QVERIFY(fileInfo.lastModified() > beforeWrite);
     QVERIFY(fileInfo.lastModified() < beforeRead);
@@ -850,12 +836,10 @@ void tst_QFileInfo::isHidden_data()
     QTest::addColumn<QString>("path");
     QTest::addColumn<bool>("isHidden");
 
-#if defined(Q_OS_UNIX)
     QVERIFY(QDir("./.hidden-directory").exists() || QDir().mkdir("./.hidden-directory"));
     QTest::newRow("/path/to/.hidden-directory") << QDir::currentPath() + QString("/.hidden-directory") << true;
     QTest::newRow("/path/to/.hidden-directory/.") << QDir::currentPath() + QString("/.hidden-directory/.") << true;
     QTest::newRow("/path/to/.hidden-directory/..") << QDir::currentPath() + QString("/.hidden-directory/..") << true;
-#endif
 
     QTest::newRow("/bin/") << QString::fromLatin1("/bin/") << false;
 }
@@ -933,12 +917,10 @@ void tst_QFileInfo::isWritable()
     QVERIFY(QFileInfo("tempfile.txt").isWritable());
     tempfile.remove();
 
-#if defined (Q_OS_UNIX)
     if (::getuid() == 0)
         QVERIFY(QFileInfo("/etc/passwd").isWritable());
     else
         QVERIFY(!QFileInfo("/etc/passwd").isWritable());
-#endif
 }
 
 void tst_QFileInfo::isExecutable()
@@ -964,32 +946,22 @@ void tst_QFileInfo::testDecomposedUnicodeNames_data()
 
 static void createFileNative(const QString &filePath)
 {
-#ifdef Q_OS_UNIX
     int fd = open(filePath.normalized(QString::NormalizationForm_D).toUtf8().constData(), O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
     if (fd < 0) {
         QFAIL("couldn't create file");
     } else {
         close(fd);
     }
-#else
-    Q_UNUSED(filePath);
-#endif
 }
 
 static void removeFileNative(const QString &filePath)
 {
-#ifdef Q_OS_UNIX
     unlink(filePath.normalized(QString::NormalizationForm_D).toUtf8().constData());
-#else
-    Q_UNUSED(filePath);
-#endif
 }
 
 void tst_QFileInfo::testDecomposedUnicodeNames()
 {
-#ifndef Q_OS_MAC
     QSKIP("This is a OS X only test (unless you know more about filesystems, then maybe you should try it ;)", SkipAll);
-#endif
     QFETCH(QString, filePath);
     createFileNative(filePath);
 
@@ -1068,14 +1040,12 @@ void tst_QFileInfo::detachingOperations()
 void tst_QFileInfo::owner()
 {
     QString userName;
-#if defined(Q_OS_UNIX)
     {
-        passwd *user = getpwuid(geteuid());
+        passwd *user = ::getpwuid(geteuid());
         QVERIFY(user);
         char *usernameBuf = user->pw_name;
         userName = QString::fromLocal8Bit(usernameBuf);
     }
-#endif
     if (userName.isEmpty())
         QSKIP("Can't retrieve the user name", SkipAll);
     QString fileName("ownertest.txt");
@@ -1096,12 +1066,10 @@ void tst_QFileInfo::owner()
 void tst_QFileInfo::group()
 {
     QString expected;
-#if defined(Q_OS_UNIX)
     struct group *gr;
-    gid_t gid = getegid();
-    gr = getgrgid(gid);
+    gid_t gid = ::getegid();
+    gr = ::getgrgid(gid);
     expected = QString::fromLocal8Bit(gr->gr_name);
-#endif
 
     QString fileName("ownertest.txt");
     if (QFile::exists(fileName))

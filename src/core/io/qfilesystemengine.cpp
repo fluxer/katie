@@ -42,9 +42,8 @@
 
 QT_BEGIN_NAMESPACE
 
-//these unix functions are in this file, because they are shared by symbian port
+//these unix functions are in this file, because they were shared by symbian port
 //for open C file handles.
-#ifdef Q_OS_UNIX
 //static
 bool QFileSystemEngine::fillMetaData(int fd, QFileSystemMetaData &data)
 {
@@ -163,8 +162,6 @@ void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
     Q_UNUSED(entry)
 #endif
 }
-
-#endif
 
 //static
 QString QFileSystemEngine::resolveUserName(const QFileSystemEntry &entry, QFileSystemMetaData &metaData)
