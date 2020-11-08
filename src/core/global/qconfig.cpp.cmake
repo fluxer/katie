@@ -46,4 +46,3 @@ static const char* qt_configure_plugins_path_str       = "${KATIE_PLUGINS_PATH}\
 static const char* qt_configure_imports_path_str       = "${KATIE_IMPORTS_PATH}\0";
 static const char* qt_configure_data_path_str          = "${KATIE_DATA_PATH}\0";
 static const char* qt_configure_translations_path_str  = "${KATIE_TRANSLATIONS_PATH}\0";
-static const char* qt_configure_settings_path_str      = "${KATIE_SETTINGS_PATH}\0";

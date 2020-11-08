@@ -251,8 +251,7 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
         }
     }
 
-    const QString fallback = QLibraryInfo::location(QLibraryInfo::SettingsPath);
-    return createLeadingDir(fallback + QDir::separator() + nameandext);
+    return createLeadingDir(locations.first() + QDir::separator() + nameandext);
 }
 
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)

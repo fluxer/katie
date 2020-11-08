@@ -52,7 +52,6 @@ public:
         PluginsPath,
         DataPath,
         TranslationsPath,
-        SettingsPath,
         ImportsPath
     };
 
