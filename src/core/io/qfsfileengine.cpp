@@ -197,17 +197,6 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
         return false;
     }
 
-    if (!(d->openMode & QIODevice::WriteOnly)) {
-        // we don't need this check if we tried to open for writing because then
-        // we had received EISDIR anyway.
-        if (QFileSystemEngine::fillMetaData(d->fd, d->metaData)
-                && d->metaData.isDirectory()) {
-            setError(QFile::OpenError, QLatin1String("file to open is a directory"));
-            QT_CLOSE(d->fd);
-            return false;
-        }
-    }
-
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
         int ret;
