@@ -181,10 +181,6 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
             flags |= QT_OPEN_TRUNC;
     }
 
-    if (d->openMode & QIODevice::Unbuffered) {
-        flags |= O_SYNC;
-    }
-
     // Try to open the file.
     do {
         d->fd = QT_OPEN(d->fileEntry.nativeFilePath().constData(), flags, 0666);
