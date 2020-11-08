@@ -9,6 +9,7 @@ set(KATIE_LRELEASE "lrelease")
 include(CMakePushCheckState)
 include(CheckSymbolExists)
 include(CheckFunctionExists)
+include(CheckStructHasMember)
 
 # a macro to print a dev warning but only when the build type is Debug
 macro(KATIE_WARNING MESSAGESTR)
@@ -70,6 +71,20 @@ function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
 
     if(NOT HAVE_${FORFUNCTION})
         set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
+    endif()
+endfunction()
+
+# a macro to check for C struct member presence in header, if member is found a
+# definition is added.
+function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
+    cmake_reset_check_state()
+    set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} ${ARGN})
+    check_struct_has_member("struct ${FORSTRUCT}" "${FORMEMBER}" "${FROMHEADER}" HAVE_${FORSTRUCT}_${FORMEMBER})
+    cmake_pop_check_state()
+
+    if(HAVE_${FORSTRUCT}_${FORMEMBER})
+        string(TOUPPER "${FORSTRUCT}_${FORMEMBER}" upperstructmember)
+        add_definitions(-DQT_HAVE_${upperstructmember})
     endif()
 endfunction()
 

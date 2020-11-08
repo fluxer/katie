@@ -809,9 +809,7 @@ void QTextDocument::setIndentWidth(qreal width)
 */
 void QTextDocument::adjustSize()
 {
-    // Pull this private function in from qglobal.cpp
-    QFont f = defaultFont();
-    QFontMetrics fm(f);
+    QFontMetrics fm(defaultFont());
     int mw =  fm.width(QLatin1Char('x')) * 80;
     int w = mw;
     setTextWidth(w);
@@ -1688,7 +1686,7 @@ static void printPage(int index, QPainter *painter, const QTextDocument *doc, co
 
     if (!pageNumberPos.isNull()) {
         painter->setClipping(false);
-        painter->setFont(QFont(doc->defaultFont()));
+        painter->setFont(doc->defaultFont());
         const QString pageString = QString::number(index);
 
         painter->drawText(qRound(pageNumberPos.x() - painter->fontMetrics().width(pageString)),
@@ -2059,8 +2057,7 @@ static QTextFormat formatDifference(const QTextFormat &from, const QTextFormat &
 QTextHtmlExporter::QTextHtmlExporter(const QTextDocument *_doc)
     : doc(_doc), fragmentMarkers(false)
 {
-    const QFont defaultFont = doc->defaultFont();
-    defaultCharFormat.setFont(defaultFont);
+    defaultCharFormat.setFont(doc->defaultFont());
     // don't export those for the default font since we cannot turn them off with CSS
     defaultCharFormat.clearProperty(QTextFormat::FontUnderline);
     defaultCharFormat.clearProperty(QTextFormat::FontOverline);

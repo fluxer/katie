@@ -9,13 +9,11 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_ZSTD QUIET libzstd)
+include(FindPkgConfig)
+pkg_check_modules(PC_ZSTD QUIET libzstd)
 
-    set(ZSTD_INCLUDES ${PC_ZSTD_INCLUDE_DIRS})
-    set(ZSTD_LIBRARIES ${PC_ZSTD_LIBRARIES})
-endif()
+set(ZSTD_INCLUDES ${PC_ZSTD_INCLUDE_DIRS})
+set(ZSTD_LIBRARIES ${PC_ZSTD_LIBRARIES})
 
 if(NOT ZSTD_INCLUDES OR NOT ZSTD_LIBRARIES)
     find_path(ZSTD_INCLUDES

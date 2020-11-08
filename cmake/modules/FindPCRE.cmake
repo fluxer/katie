@@ -9,13 +9,11 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_PCRE QUIET libpcre)
+include(FindPkgConfig)
+pkg_check_modules(PC_PCRE QUIET libpcre)
 
-    set(PCRE_INCLUDES ${PC_PCRE_INCLUDE_DIRS})
-    set(PCRE_LIBRARIES ${PC_PCRE_LIBRARIES})
-endif()
+set(PCRE_INCLUDES ${PC_PCRE_INCLUDE_DIRS})
+set(PCRE_LIBRARIES ${PC_PCRE_LIBRARIES})
 
 if(NOT PCRE_INCLUDES OR NOT PCRE_LIBRARIES)
     find_path(PCRE_INCLUDES

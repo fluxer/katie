@@ -171,14 +171,14 @@ void QInotifyFileSystemWatcherEngine::readFromInotify()
     // qDebug() << "QInotifyFileSystemWatcherEngine::readFromInotify";
 
     int buffSize = 0;
-    ioctl(inotifyFd, FIONREAD, (char *) &buffSize);
-    QVarLengthArray<char, 4096> buffer(buffSize);
-    buffSize = read(inotifyFd, buffer.data(), buffSize);
-    char *at = buffer.data();
+    ::ioctl(inotifyFd, FIONREAD, (char *) &buffSize);
+    char buffer[buffSize];
+    buffSize = ::read(inotifyFd, buffer, buffSize);
+    char *at = buffer;
     char * const end = at + buffSize;
 
     while (at < end) {
-        inotify_event *event = reinterpret_cast<inotify_event *>(at);
+        const inotify_event *event = reinterpret_cast<const inotify_event *>(at);
         at += sizeof(inotify_event) + event->len;
 
         // qDebug() << "inotify event, wd" << event->wd << "mask" << hex << event->mask;

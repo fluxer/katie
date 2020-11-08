@@ -64,54 +64,25 @@ public:
     QFileSystemEntry fileEntry;
     QIODevice::OpenMode openMode;
 
-    bool nativeOpen(QIODevice::OpenMode openMode);
-    bool openFh(QIODevice::OpenMode flags, FILE *fh);
-    bool openFd(QIODevice::OpenMode flags, int fd);
-    bool closeFdFh();
-    bool nativeFlush();
-    bool flushFh();
-    qint64 sizeFdFh() const;
-    qint64 posFdFh() const;
-    bool seekFdFh(qint64);
-    qint64 nativeRead(char *data, qint64 maxlen);
-    qint64 readFdFh(char *data, qint64 maxlen);
-    qint64 readLineFdFh(char *data, qint64 maxlen);
-    qint64 writeFdFh(const char *data, qint64 len);
-    int nativeHandle() const;
-    bool isSequentialFdFh() const;
-
     uchar *map(qint64 offset, qint64 size);
     bool unmap(uchar *ptr);
 
     mutable QFileSystemMetaData metaData;
 
-    FILE *fh;
-
     QHash<uchar *, QPair<int /*offset % PageSize*/, size_t /*length + offset % PageSize*/> > maps;
     int fd;
 
-    enum LastIOCommand
-    {
-        IOFlushCommand,
-        IOReadCommand,
-        IOWriteCommand
-    };
-    LastIOCommand  lastIOCommand;
-    bool lastFlushFailed;
     bool closeFileHandle;
 
     mutable uint is_sequential;
     mutable bool tried_stat;
 
-    bool doStat(QFileSystemMetaData::MetaDataFlags flags = QFileSystemMetaData::PosixStatFlags) const;
-    bool isSymlink() const;
+    bool doStat(QFileSystemMetaData::MetaDataFlags flags) const;
 
 protected:
     QFSFileEnginePrivate();
 
     void init();
-
-    QAbstractFileEngine::FileFlags getPermissions(QAbstractFileEngine::FileFlags type) const;
 };
 
 QT_END_NAMESPACE

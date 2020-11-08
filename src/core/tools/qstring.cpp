@@ -5657,65 +5657,6 @@ QStringList QString::split(const QRegExp &rx, SplitBehavior behavior) const
 */
 QString QString::normalized(QString::NormalizationForm mode) const
 {
-    return normalized(mode, QChar::Unicode_Last);
-}
-
-/*!
-    \since 4.5
-
-    Returns a copy of this string repeated the specified number of \a times.
-
-    If \a times is less than 1, an empty string is returned.
-
-    Example:
-
-    \code
-        QString str("ab");
-        str.repeated(4);            // returns "abababab"
-    \endcode
-*/
-QString QString::repeated(int times) const
-{
-    if (d->size == 0 || times == 1)
-        return *this;
-
-    if (times < 1) {
-        return QString();
-    }
-
-    const int resultSize = times * d->size;
-
-    QString result(resultSize, Qt::Uninitialized);
-    if (result.d->alloc != resultSize)
-        return QString(); // not enough memory
-
-    memcpy(result.d->data, d->data, d->size * sizeof(ushort));
-
-    int sizeSoFar = d->size;
-    ushort *end = result.d->data + sizeSoFar;
-
-    const int halfResultSize = resultSize >> 1;
-    while (sizeSoFar <= halfResultSize) {
-        memcpy(end, result.d->data, sizeSoFar * sizeof(ushort));
-        end += sizeSoFar;
-        sizeSoFar <<= 1;
-    }
-    memcpy(end, result.d->data, (resultSize - sizeSoFar) * sizeof(ushort));
-    result.d->data[resultSize] = '\0';
-    result.d->size = resultSize;
-    return result;
-}
-
-/*!
-    \overload
-    \fn QString QString::normalized(NormalizationForm mode, QChar::UnicodeVersion version) const
-
-    Returns the string in the given Unicode normalization \a mode,
-    according to the given \a version of the Unicode standard.
-*/
-QString QString::normalized(QString::NormalizationForm mode, QChar::UnicodeVersion version) const
-{
-    Q_UNUSED(version);
     UErrorCode error = U_ZERO_ERROR;
     const UNormalizer2 *normalizer = Q_NULLPTR;
     switch (mode) {
@@ -5763,6 +5704,52 @@ QString QString::normalized(QString::NormalizationForm mode, QChar::UnicodeVersi
     }
 
     result.resize(decresult);
+    return result;
+}
+
+/*!
+    \since 4.5
+
+    Returns a copy of this string repeated the specified number of \a times.
+
+    If \a times is less than 1, an empty string is returned.
+
+    Example:
+
+    \code
+        QString str("ab");
+        str.repeated(4);            // returns "abababab"
+    \endcode
+*/
+QString QString::repeated(int times) const
+{
+    if (d->size == 0 || times == 1)
+        return *this;
+
+    if (times < 1) {
+        return QString();
+    }
+
+    const int resultSize = times * d->size;
+
+    QString result(resultSize, Qt::Uninitialized);
+    if (result.d->alloc != resultSize)
+        return QString(); // not enough memory
+
+    memcpy(result.d->data, d->data, d->size * sizeof(ushort));
+
+    int sizeSoFar = d->size;
+    ushort *end = result.d->data + sizeSoFar;
+
+    const int halfResultSize = resultSize >> 1;
+    while (sizeSoFar <= halfResultSize) {
+        memcpy(end, result.d->data, sizeSoFar * sizeof(ushort));
+        end += sizeSoFar;
+        sizeSoFar <<= 1;
+    }
+    memcpy(end, result.d->data, (resultSize - sizeSoFar) * sizeof(ushort));
+    result.d->data[resultSize] = '\0';
+    result.d->size = resultSize;
     return result;
 }
 

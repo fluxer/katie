@@ -229,7 +229,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmath.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemerror_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/plugin/qfactoryinterface.h
@@ -375,7 +374,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qpointer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemerror.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_unix.cpp
@@ -447,6 +445,12 @@ elseif(KATIE_PLATFORM MATCHES "(freebsd|openbsd)")
         ${CORE_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue_p.h
+    )
+elseif(KATIE_PLATFORM STREQUAL "hurd")
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        dl
+        rt
     )
 endif()
 

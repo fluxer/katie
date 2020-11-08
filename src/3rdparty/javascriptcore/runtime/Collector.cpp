@@ -341,55 +341,9 @@ void Heap::shrinkBlocks(size_t neededBlocks)
         m_heap.blocks[i]->marked.set(HeapConstants::cellsPerBlock - 1);
 }
 
-#if OS(HPUX)
-struct hpux_get_stack_base_data
-{
-    pthread_t thread;
-    _pthread_stack_info info;
-};
-
-static void *hpux_get_stack_base_internal(void *d)
-{
-    hpux_get_stack_base_data *data = static_cast<hpux_get_stack_base_data *>(d);
-
-    // _pthread_stack_info_np requires the target thread to be suspended
-    // in order to get information about it
-    pthread_suspend(data->thread);
-
-    // _pthread_stack_info_np returns an errno code in case of failure
-    // or zero on success
-    if (_pthread_stack_info_np(data->thread, &data->info)) {
-        // failed
-        return 0;
-    }
-
-    pthread_continue(data->thread);
-    return data;
-}
-
-static void *hpux_get_stack_base()
-{
-    hpux_get_stack_base_data data;
-    data.thread = pthread_self();
-
-    // We cannot get the stack information for the current thread
-    // So we start a new thread to get that information and return it to us
-    pthread_t other;
-    pthread_create(&other, 0, hpux_get_stack_base_internal, &data);
-
-    void *result;
-    pthread_join(other, &result);
-    if (result)
-       return data.info.stk_stack_base;
-    return 0;
-}
-#endif
-
 static inline void* currentThreadStackBase()
 {
-#if OS(HPUX)
-    return hpux_get_stack_base();
-#elif OS(SOLARIS)
+#if OS(SOLARIS)
     stack_t s;
     thr_stksegment(&s);
     return s.ss_sp;

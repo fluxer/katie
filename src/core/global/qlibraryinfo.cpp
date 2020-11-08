@@ -81,7 +81,6 @@ QT_BEGIN_NAMESPACE
     \value ImportsPath The location of installed QML extensions to import.
     \value DataPath The location of general Qt data.
     \value TranslationsPath The location of translation information for Qt strings.
-    \value SettingsPath The location for Qt settings.
 
     \sa location()
 */
@@ -155,8 +154,6 @@ QString QLibraryInfo::location(LibraryLocation loc)
             return QString::fromLocal8Bit(qt_configure_data_path_str);
         case TranslationsPath:
             return QString::fromLocal8Bit(qt_configure_translations_path_str);
-        case SettingsPath:
-            return QString::fromLocal8Bit(qt_configure_settings_path_str);
         case ImportsPath:
             return QString::fromLocal8Bit(qt_configure_imports_path_str);
     }

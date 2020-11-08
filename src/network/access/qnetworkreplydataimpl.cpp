@@ -52,16 +52,16 @@ QNetworkReplyDataImpl::QNetworkReplyDataImpl(QObject *parent, const QNetworkRequ
 
     // FIXME qDecodeDataUrl should instead be rewritten to have the QByteArray
     // and the mime type as an output parameter and return a bool instead
-    d->decodeDataUrlResult = qDecodeDataUrl(url);
+    QPair<QString, QByteArray> decodeDataUrlResult = qDecodeDataUrl(url);
 
-    if (! d->decodeDataUrlResult.first.isNull()) {
-        QString &mimeType = d->decodeDataUrlResult.first;
-        qint64 size = d->decodeDataUrlResult.second.size();
+    if (! decodeDataUrlResult.first.isNull()) {
+        QString &mimeType = decodeDataUrlResult.first;
+        qint64 size = decodeDataUrlResult.second.size();
         setHeader(QNetworkRequest::ContentTypeHeader, mimeType);
         setHeader(QNetworkRequest::ContentLengthHeader, size);
         QMetaObject::invokeMethod(this, "metaDataChanged", Qt::QueuedConnection);
 
-        d->decodedData.setBuffer(&d->decodeDataUrlResult.second);
+        d->decodedData.setBuffer(&decodeDataUrlResult.second);
         d->decodedData.open(QIODevice::ReadOnly);
 
         QMetaObject::invokeMethod(this, "downloadProgress", Qt::QueuedConnection,

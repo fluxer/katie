@@ -74,13 +74,11 @@ static inline bool qIsZero(double d)
 {
     uchar *ch = (uchar *)&d;
 #ifdef QT_ARMFPA
-        return !(ch[3] & 0x7F || ch[2] || ch[1] || ch[0] || ch[7] || ch[6] || ch[5] || ch[4]);
+    return !(ch[3] & 0x7F || ch[2] || ch[1] || ch[0] || ch[7] || ch[6] || ch[5] || ch[4]);
+#elif Q_BYTE_ORDER == Q_BIG_ENDIAN
+    return !(ch[0] & 0x7F || ch[1] || ch[2] || ch[3] || ch[4] || ch[5] || ch[6] || ch[7]);
 #else
-    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
-        return !(ch[0] & 0x7F || ch[1] || ch[2] || ch[3] || ch[4] || ch[5] || ch[6] || ch[7]);
-    } else {
-        return !(ch[7] & 0x7F || ch[6] || ch[5] || ch[4] || ch[3] || ch[2] || ch[1] || ch[0]);
-    }
+    return !(ch[7] & 0x7F || ch[6] || ch[5] || ch[4] || ch[3] || ch[2] || ch[1] || ch[0]);
 #endif
 }
 

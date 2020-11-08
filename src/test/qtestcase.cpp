@@ -949,26 +949,14 @@ void seedRandom()
     }
 }
 
-int qTestRandomSeed()
-{
-    Q_ASSERT(QTest::seedSet);
-    return QTest::seed;
-}
-
-template<typename T>
-void swap(T * array, int pos, int otherPos)
-{
-    T tmp = array[pos];
-    array[pos] = array[otherPos];
-    array[otherPos] = tmp;
-}
-
 template<typename T>
 static void randomizeList(T * array, int size)
 {
     for (int i = 0; i != size; i++) {
         int pos = qrand() % size;
-        swap(array, pos, i);
+        T tmp = array[pos];
+        array[pos] = array[i];
+        array[i] = tmp;
     }
 }
 
@@ -1449,7 +1437,7 @@ static bool qInvokeTestMethod(const char *slotName, const char *data=0)
     QBenchmarkTestMethodData benchmarkData;
     QBenchmarkTestMethodData::current = &benchmarkData;
 
-    QBenchmarkGlobalData::current->context.slotName = QLatin1String(slotName);
+    QBenchmarkGlobalData::current->context.slotName = QString::fromLatin1(slotName);
 
     char member[512];
     QTestTable table;

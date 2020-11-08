@@ -60,8 +60,7 @@ static inline int hex2int(char s)
 
 bool qt_get_hex_rgb(const char *name, const int length, QRgb *rgb)
 {
-    if(name[0] != '#')
-        return false;
+    Q_ASSERT(name[0] == '#');
     name++;
     const int len = (length - 1);
     int r, g, b;

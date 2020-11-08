@@ -460,8 +460,8 @@ QT_BEGIN_NAMESPACE
     specified platforms. For example, the Q_CC_GNU macro is defined
     if the application is compiled using GNU Compiler Collection.
     The header file also declares a range of macros (Q_OS_*) that
-    are defined for the specified platforms. For example, Q_OS_WIN32
-    which is defined for Microsoft Windows.
+    are defined for the specified platforms. For example, Q_OS_LINUx
+    which is defined for Linux.
 
     The purpose of these macros is to enable programmers to add
     compiler or platform specific code to their application.
@@ -990,20 +990,6 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_OS_SOLARIS
-    \relates <QtGlobal>
-
-    Defined on Sun Solaris.
-*/
-
-/*!
-    \macro Q_OS_HPUX
-    \relates <QtGlobal>
-
-    Defined on HP-UX.
-*/
-
-/*!
     \macro Q_OS_LINUX
     \relates <QtGlobal>
 
@@ -1032,41 +1018,6 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_OS_BSDI
-    \relates <QtGlobal>
-
-    Defined on BSD/OS.
-*/
-
-/*!
-    \macro Q_OS_OSF
-    \relates <QtGlobal>
-
-    Defined on HP Tru64 UNIX.
-*/
-
-/*!
-    \macro Q_OS_SCO
-    \relates <QtGlobal>
-
-    Defined on SCO OpenServer 5.
-*/
-
-/*!
-    \macro Q_OS_UNIXWARE
-    \relates <QtGlobal>
-
-    Defined on UnixWare 7, Open UNIX 8.
-*/
-
-/*!
-    \macro Q_OS_AIX
-    \relates <QtGlobal>
-
-    Defined on AIX.
-*/
-
-/*!
     \macro Q_OS_HURD
     \relates <QtGlobal>
 
@@ -1074,24 +1025,10 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_OS_DGUX
+    \macro Q_OS_SOLARIS
     \relates <QtGlobal>
 
-    Defined on DG/UX.
-*/
-
-/*!
-    \macro Q_OS_DYNIX
-    \relates <QtGlobal>
-
-    Defined on DYNIX/ptx.
-*/
-
-/*!
-    \macro Q_OS_LYNX
-    \relates <QtGlobal>
-
-    Defined on LynxOS.
+    Defined on Sun Solaris.
 */
 
 /*!
@@ -1395,7 +1332,7 @@ QString qt_error_string(int errorCode)
 #endif
         }
     }
-    return QString();
+    Q_UNREACHABLE();
 }
 
 
@@ -1585,35 +1522,6 @@ void qCritical(const char *msg, ...)
     va_start(ap, msg); // use variable arg list
     qt_message(QtCriticalMsg, msg, ap);
     va_end(ap);
-}
-
-
-void qErrnoWarning(const char *msg, ...)
-{
-    // qt_error_string() will allocate anyway, so we don't have
-    // to be careful here (like we do in plain qWarning())
-    QString buf;
-    va_list ap;
-    va_start(ap, msg);
-    if (Q_LIKELY(msg))
-        buf.vsprintf(msg, ap);
-    va_end(ap);
-
-    qCritical("%s (%s)", buf.toLocal8Bit().constData(), qt_error_string(-1).toLocal8Bit().constData());
-}
-
-void qErrnoWarning(int code, const char *msg, ...)
-{
-    // qt_error_string() will allocate anyway, so we don't have
-    // to be careful here (like we do in plain qWarning())
-    QString buf;
-    va_list ap;
-    va_start(ap, msg);
-    if (Q_LIKELY(msg))
-        buf.vsprintf(msg, ap);
-    va_end(ap);
-
-    qCritical("%s (%s)", buf.toLocal8Bit().constData(), qt_error_string(code).toLocal8Bit().constData());
 }
 
 /*!

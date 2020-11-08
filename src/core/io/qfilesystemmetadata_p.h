@@ -142,26 +142,24 @@ public:
         knownFlagsMask &= ~flags;
     }
 
-    bool exists() const                     { return (entryFlags & ExistsAttribute); }
+    inline bool exists() const                    { return (entryFlags & ExistsAttribute); }
 
-    bool isLink() const                     { return  (entryFlags & LinkType); }
-    bool isFile() const                     { return (entryFlags & FileType); }
-    bool isDirectory() const                { return (entryFlags & DirectoryType); }
-    bool isSequential() const               { return (entryFlags & SequentialType); }
-    bool isHidden() const                   { return (entryFlags & HiddenAttribute); }
+    inline bool isLink() const                    { return  (entryFlags & LinkType); }
+    inline bool isFile() const                    { return (entryFlags & FileType); }
+    inline bool isDirectory() const               { return (entryFlags & DirectoryType); }
+    inline bool isSequential() const              { return (entryFlags & SequentialType); }
+    inline bool isHidden() const                  { return (entryFlags & HiddenAttribute); }
 
-    qint64 size() const                     { return size_; }
+    inline qint64 size() const                    { return size_; }
 
-    QFile::Permissions permissions() const  { return QFile::Permissions(Permissions & entryFlags); }
+    inline QFile::Permissions permissions() const { return QFile::Permissions(Permissions & entryFlags); }
 
-    QDateTime creationTime() const;
-    QDateTime modificationTime() const;
-    QDateTime accessTime() const;
+    inline QDateTime creationTime() const         { return QDateTime::fromTime_t(creationTime_); }
+    inline QDateTime modificationTime() const     { return QDateTime::fromTime_t(modificationTime_); }
+    inline QDateTime accessTime() const           { return QDateTime::fromTime_t(accessTime_); }
 
-    QDateTime fileTime(QAbstractFileEngine::FileTime time) const;
-    uint userId() const;
-    uint groupId() const;
-    uint ownerId(QAbstractFileEngine::FileOwner owner) const;
+    inline uint userId() const                    { return userId_; }
+    inline uint groupId() const                   { return groupId_; }
 
     void fillFromStatBuf(const QT_STATBUF &statBuffer);
     void fillFromDirEnt(const QT_DIRENT &statBuffer);
@@ -184,36 +182,6 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QFileSystemMetaData::MetaDataFlags)
-
-inline QDateTime QFileSystemMetaData::fileTime(QAbstractFileEngine::FileTime time) const
-{
-    switch (time) {
-    case QAbstractFileEngine::ModificationTime:
-        return modificationTime();
-
-    case QAbstractFileEngine::AccessTime:
-        return accessTime();
-
-    case QAbstractFileEngine::CreationTime:
-        return creationTime();
-    }
-
-    return QDateTime();
-}
-
-inline QDateTime QFileSystemMetaData::creationTime() const          { return QDateTime::fromTime_t(creationTime_); }
-inline QDateTime QFileSystemMetaData::modificationTime() const      { return QDateTime::fromTime_t(modificationTime_); }
-inline QDateTime QFileSystemMetaData::accessTime() const            { return QDateTime::fromTime_t(accessTime_); }
-
-inline uint QFileSystemMetaData::userId() const                     { return userId_; }
-inline uint QFileSystemMetaData::groupId() const                    { return groupId_; }
-
-inline uint QFileSystemMetaData::ownerId(QAbstractFileEngine::FileOwner owner) const
-{
-    if (owner == QAbstractFileEngine::OwnerUser)
-        return userId();
-    return groupId();
-}
 
 QT_END_NAMESPACE
 

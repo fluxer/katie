@@ -9,15 +9,13 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_ICU QUIET icu-i18n)
-    pkg_check_modules(PC_ICUUC QUIET icu-uc)
+include(FindPkgConfig)
+pkg_check_modules(PC_ICU QUIET icu-i18n)
+pkg_check_modules(PC_ICUUC QUIET icu-uc)
 
-    set(ICU_INCLUDES ${PC_ICU_INCLUDE_DIRS})
-    set(ICU_LIBRARIES ${PC_ICU_LIBRARIES})
-    set(ICUUC_LIBRARIES ${PC_ICUUC_LIBRARIES})
-endif()
+set(ICU_INCLUDES ${PC_ICU_INCLUDE_DIRS})
+set(ICU_LIBRARIES ${PC_ICU_LIBRARIES})
+set(ICUUC_LIBRARIES ${PC_ICUUC_LIBRARIES})
 
 if(NOT ICU_INCLUDES OR NOT ICU_LIBRARIES OR NOT ICUUC_LIBRARIES)
     find_path(ICU_INCLUDES

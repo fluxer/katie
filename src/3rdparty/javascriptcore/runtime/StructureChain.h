@@ -37,11 +37,7 @@ namespace JSC {
 
     class StructureChain : public RefCounted<StructureChain> {
     public:
-#if OS(HPUX)
-        static PassRefPtr<StructureChain> create(Structure* head);
-#else
         static PassRefPtr<StructureChain> create(Structure* head) { return adoptRef(new StructureChain(head)); }
-#endif
         RefPtr<Structure>* head() { return m_vector.get(); }
 
     private:

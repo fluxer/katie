@@ -245,14 +245,13 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
     }
 
     foreach (const QString &location, locations) {
-        QDir dir(location);
-        if (dir.exists(location)) {
+        QFileInfo info(location);
+        if (info.isWritable()) {
             return createLeadingDir(location + QDir::separator() + nameandext);
         }
     }
 
-    const QString fallback = QLibraryInfo::location(QLibraryInfo::SettingsPath);
-    return createLeadingDir(fallback + QDir::separator() + nameandext);
+    return createLeadingDir(locations.first() + QDir::separator() + nameandext);
 }
 
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)

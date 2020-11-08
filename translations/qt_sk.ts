@@ -86,20 +86,20 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1751"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1746"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+677"/>
         <source>Socket operation timed out</source>
         <translation>Prekročenie času pri práci so soketom</translation>
     </message>
     <message>
-        <location line="-1214"/>
-        <location line="+810"/>
+        <location line="-1209"/>
+        <location line="+805"/>
         <location line="+213"/>
         <source>Operation on socket is not supported</source>
         <translation>Operácia na sokete nie je podporovaná</translation>
     </message>
     <message>
-        <location line="-674"/>
+        <location line="-669"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+662"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+641"/>
         <location line="+26"/>
@@ -107,7 +107,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Hostiteľ nebol nájdený</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+42"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+3"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+4"/>
         <source>Connection refused</source>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Chyba kompatibility knižnice Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1843"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -388,7 +388,7 @@ Script: %3</source>
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2105"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2093"/>
         <source>AM</source>
         <translation>AM</translation>
     </message>
@@ -1081,7 +1081,7 @@ Script: %3</source>
         <translation>nie je typ</translation>
     </message>
     <message>
-        <location line="+263"/>
+        <location line="+231"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation>Veľkosť písmen v názve súboru sa nezhoduje pre &quot;%1&quot;</translation>
     </message>
@@ -2070,50 +2070,50 @@ Chcete ho aj tak zmazať?</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
-        <location line="+844"/>
+        <location line="+763"/>
         <source>Normal</source>
         <translation>Normálne</translation>
     </message>
     <message>
-        <location line="-841"/>
+        <location line="-760"/>
         <location line="+12"/>
-        <location line="+817"/>
+        <location line="+736"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location line="-826"/>
-        <location line="+828"/>
+        <location line="-745"/>
+        <location line="+747"/>
         <source>Demi Bold</source>
         <translation>Polotučné</translation>
     </message>
     <message>
-        <location line="-825"/>
+        <location line="-744"/>
         <location line="+18"/>
-        <location line="+803"/>
+        <location line="+722"/>
         <source>Black</source>
         <translation>Čierne</translation>
     </message>
     <message>
-        <location line="-813"/>
+        <location line="-732"/>
         <source>Demi</source>
         <translation>Polo</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+813"/>
+        <location line="+732"/>
         <source>Light</source>
         <translation>Svetlé</translation>
     </message>
     <message>
-        <location line="-667"/>
-        <location line="+670"/>
+        <location line="-624"/>
+        <location line="+627"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location line="-667"/>
-        <location line="+669"/>
+        <location line="-624"/>
+        <location line="+626"/>
         <source>Oblique</source>
         <translation>Sklonené</translation>
     </message>
@@ -2324,7 +2324,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QGroupBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+630"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+610"/>
         <source>Toggle</source>
         <translation>Prepnúť</translation>
     </message>
@@ -2345,7 +2345,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+150"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+144"/>
         <source>No host name given</source>
         <translation>Nezadaný názov hostiteľa</translation>
     </message>
@@ -2409,13 +2409,13 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Spojenie bolo odmietnuté (alebo vypršal čas)</translation>
     </message>
     <message>
-        <location line="+3"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-9"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+3"/>
         <source>Host %1 not found</source>
         <translation>Hostiteľ %1 nenájdený</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+20"/>
         <source>HTTP request failed</source>
         <translation>HTTP požiadavka zlyhala</translation>
     </message>
@@ -2537,7 +2537,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1308"/>
         <source>Permission denied</source>
         <translation>Prístup zamietnutý</translation>
     </message>
@@ -2651,7 +2651,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Overenie dát modulu nesúhlas�� v &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+270"/>
+        <location line="+213"/>
         <location line="+36"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+275"/>
         <source>The shared library was not found.</source>
@@ -2673,17 +2673,17 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Neznáma chyba</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+80"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+68"/>
         <source>Cannot load library %1: %2</source>
         <translation>Nie je možné načítať knižnicu %1: %2</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Nie je možné uvoľniť z pamäte knižnicu %1: %2</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+11"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Nie je možné vyriešiť symbol &quot;%1&quot; v %2: %3</translation>
     </message>
@@ -2729,7 +2729,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+210"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: Chyba názvu</translation>
@@ -3037,7 +3037,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Skryť detaily…</translation>
     </message>
     <message>
-        <location line="+1351"/>
+        <location line="+1348"/>
         <source>&lt;h3&gt;About Katie&lt;/h3&gt;&lt;p&gt;This program uses Katie version %1.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4173,7 +4173,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+815"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+811"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Chyba pri čítaní z procesu</translation>
@@ -4194,7 +4194,7 @@ Má sa prepísať?</translation>
         <translation>Žiadny program nie je definovaný</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+398"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+389"/>
         <source>Could not open input redirection for reading</source>
         <translation>Vstupné presmerovanie sa nepodarilo otvoriť na čítanie</translation>
     </message>
@@ -4228,7 +4228,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QPushButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-638"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-618"/>
         <source>Open</source>
         <translation>Otvoriť</translation>
     </message>
@@ -4422,17 +4422,17 @@ Má sa prepísať?</translation>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+872"/>
-        <location line="+1013"/>
+        <location line="+1011"/>
         <source>Go to Line</source>
         <translation>Prejsť na riadok</translation>
     </message>
     <message>
-        <location line="-1012"/>
+        <location line="-1010"/>
         <source>Line:</source>
         <translation>Riadok:</translation>
     </message>
     <message>
-        <location line="+791"/>
+        <location line="+789"/>
         <source>Interrupt</source>
         <translation>Prerušiť</translation>
     </message>
@@ -4808,13 +4808,13 @@ Má sa prepísať?</translation>
         <translation>%1: vytvorená veľkosť je menšia než 0</translation>
     </message>
     <message>
+        <location line="+173"/>
         <location filename="../src/core/kernel/qsharedmemory_p.h" line="+137"/>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+173"/>
         <source>%1: unable to lock</source>
         <translation>%1: nedá sa zamknúť</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+21"/>
+        <location line="+21"/>
         <source>%1: unable to unlock</source>
         <translation>%1: nedá sa odomknúť</translation>
     </message>
@@ -5950,7 +5950,7 @@ Má sa prepísať?</translation>
         <translation>Hangul špeciálny</translation>
     </message>
     <message>
-        <location line="+458"/>
+        <location line="+453"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -6501,7 +6501,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QToolButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+321"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+301"/>
         <location line="+6"/>
         <source>Press</source>
         <translation>Stlačiť</translation>
@@ -6648,7 +6648,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5174"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5121"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -6897,13 +6897,13 @@ Má sa prepísať?</translation>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+583"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1748"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+583"/>
         <source>Extra content at end of document.</source>
         <translation>Extra obsah na konci dokumentu.</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+237"/>
         <source>Invalid entity value.</source>
         <translation>Neplatná hodnota entity.</translation>
     </message>
@@ -6918,26 +6918,26 @@ Má sa prepísať?</translation>
         <translation>Sekvencia &apos;]]&gt;&apos; nie je povolená v obsahu.</translation>
     </message>
     <message>
-        <location line="+210"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="-691"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+210"/>
         <source>Encountered incorrectly encoded content.</source>
         <translation>Bol nájdený obsah s neplatným kódovaní.</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+30"/>
         <source>Namespace prefix &apos;%1&apos; not declared</source>
         <translation>Prefix oblasti mien &apos;%1&apos; nebol deklarovaný</translation>
     </message>
     <message>
-        <location line="+33"/>
-        <location line="+12"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="+612"/>
         <location line="+53"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+33"/>
+        <location line="+12"/>
         <source>Illegal namespace declaration.</source>
         <translation>Zlá deklarácia mennom priestore.</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+32"/>
         <source>Attribute redefined.</source>
         <translation>Atribút preddefinovaný.</translation>
     </message>

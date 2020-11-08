@@ -319,8 +319,6 @@ def printdoc(frommap, prefix):
     for key in sorted(frommap.keys()):
         if key in ('Any%s' % prefix, 'C'):
             continue
-        code = frommap[key]['code']
-        name = frommap[key]['name']
         print('    \\value %s' % key)
     print('')
 
@@ -474,7 +472,7 @@ localeiso4217map = {}
 localecurrencymap = {}
 localenumberingmap = {}
 # regular expressions
-localeregex = re.compile('([^_|-|\.|@]+)+')
+localeregex = re.compile('([^_|\-|\.|@]+)+')
 
 # artificial entries
 languagemap['AnyLanguage'] = {

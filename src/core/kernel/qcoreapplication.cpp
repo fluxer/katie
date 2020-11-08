@@ -103,15 +103,6 @@ void QCoreApplicationPrivate::processCommandLineArguments()
     }
 }
 
-// Support for introspection
-
-QSignalSpyCallbackSet Q_CORE_EXPORT qt_signal_spy_callback_set = { 0, 0, 0, 0 };
-
-void qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet &callback_set)
-{
-    qt_signal_spy_callback_set = callback_set;
-}
-
 typedef QList<QtCleanUpFunction> QVFuncList;
 Q_GLOBAL_STATIC(QVFuncList, postRList)
 
@@ -169,10 +160,6 @@ QCoreApplication *QCoreApplication::self = 0;
 QAbstractEventDispatcher *QCoreApplicationPrivate::eventDispatcher = 0;
 std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 
-#ifdef Q_OS_UNIX
-Qt::HANDLE qt_application_thread_id = 0;
-#endif
-
 struct QCoreApplicationData {
     QCoreApplicationData() {
 #ifndef QT_NO_LIBRARY
@@ -213,8 +200,6 @@ QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
         argv = (char **)&empty; // ouch! careful with QCoreApplication::argv()!
     }
     QCoreApplicationPrivate::is_app_closing = false;
-
-    qt_application_thread_id = QThread::currentThreadId();
 
     // note: this call to QThread::currentThread() may end up setting theMainThread!
     if (Q_UNLIKELY(QThread::currentThread() != theMainThread))
@@ -405,9 +390,7 @@ void QCoreApplication::init()
 {
     Q_D(QCoreApplication);
 
-#ifdef Q_OS_UNIX
     setlocale(LC_ALL, "");                // use correct char set mapping
-#endif
 
     Q_ASSERT_X(!self, "QCoreApplication", "there should be only one application object");
     QCoreApplication::self = this;
@@ -432,12 +415,11 @@ void QCoreApplication::init()
     }
 #endif
 
-#if defined(Q_OS_UNIX) && !(defined(QT_NO_PROCESS))
+#if !defined(QT_NO_PROCESS)
     // Make sure the process manager thread object is created in the main
     // thread.
     QProcessPrivate::initializeProcessManager();
 #endif
-
 
     d->processCommandLineArguments();
 }
@@ -1812,14 +1794,14 @@ QStringList QCoreApplication::libraryPaths()
         QStringList *app_libpaths = coreappdata()->app_libpaths = new QStringList;
 
         QString installPathPlugins = QLibraryInfo::location(QLibraryInfo::PluginsPath);
-        if (QDir(installPathPlugins).exists()) {
-            if (!app_libpaths->contains(installPathPlugins))
-                app_libpaths->append(installPathPlugins);
+        if (QDir(installPathPlugins).exists()
+            && !app_libpaths->contains(installPathPlugins)) {
+            app_libpaths->append(installPathPlugins);
         }
 
         installPathPlugins = QLibraryInfo::location(QLibraryInfo::LibrariesPath);
-        if (QDir(installPathPlugins).exists()) {
-            if (!app_libpaths->contains(installPathPlugins))
+        if (QDir(installPathPlugins).exists()
+            && !app_libpaths->contains(installPathPlugins)) {
                 app_libpaths->append(installPathPlugins);
         }
 
@@ -1828,8 +1810,7 @@ QStringList QCoreApplication::libraryPaths()
             const QStringList paths = QString::fromLatin1(libPathEnv.constData()).split(QLatin1Char(':'), QString::SkipEmptyParts);
             foreach (const QString &it, paths) {
                 QString canonicalPath = QDir(it).canonicalPath();
-                if (!canonicalPath.isEmpty()
-                    && !app_libpaths->contains(canonicalPath)) {
+                if (!app_libpaths->contains(canonicalPath)) {
                     app_libpaths->append(canonicalPath);
                 }
             }
@@ -1889,8 +1870,7 @@ void QCoreApplication::addLibraryPath(const QString &path)
     libraryPaths();
 
     QString canonicalPath = QDir(path).canonicalPath();
-    if (!canonicalPath.isEmpty()
-        && !coreappdata()->app_libpaths->contains(canonicalPath)) {
+    if (!coreappdata()->app_libpaths->contains(canonicalPath)) {
         coreappdata()->app_libpaths->prepend(canonicalPath);
         locker.unlock();
         QFactoryLoader::refreshAll();
@@ -2008,20 +1988,6 @@ bool QCoreApplication::hasPendingEvents()
         return eventDispatcher->hasPendingEvents();
     return false;
 }
-
-
-/*
-    \fn void QCoreApplication::watchUnixSignal(int signal, bool watch)
-    \internal
-*/
-
-/*!
-    \fn void QCoreApplication::unixSignal(int number)
-    \internal
-
-    This signal is emitted whenever a Unix signal is received by the
-    application. The Unix signal received is specified by its \a number.
-*/
 
 /*!
     \fn void qAddPostRoutine(QtCleanUpFunction ptr)

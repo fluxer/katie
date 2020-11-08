@@ -33,11 +33,8 @@
 
 
 #include "qdbusunixfiledescriptor.h"
-#include <QSharedData>
-
-#ifdef Q_OS_UNIX
-# include "qcore_unix_p.h"
-#endif
+#include "qshareddata.h"
+#include "qcore_unix_p.h"
 
 
 QT_BEGIN_NAMESPACE

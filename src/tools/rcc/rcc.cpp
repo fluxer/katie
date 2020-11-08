@@ -313,14 +313,14 @@ qint64 RCCFileInfo::writeDataName(RCCResourceLibrary &lib, qint64 offset)
 //
 ///////////////////////////////////////////////////////////
 
-static const QString TAG_RCC = QLatin1String("RCC");
-static const QString TAG_RESOURCE = QLatin1String("qresource");
-static const QString TAG_FILE = QLatin1String("file");
-static const QString ATTRIBUTE_LANG = QLatin1String("lang");
-static const QString ATTRIBUTE_PREFIX = QLatin1String("prefix");
-static const QString ATTRIBUTE_ALIAS = QLatin1String("alias");
-static const QString ATTRIBUTE_THRESHOLD = QLatin1String("threshold");
-static const QString ATTRIBUTE_COMPRESS = QLatin1String("compress");
+static const QLatin1String TAG_RCC = QLatin1String("RCC");
+static const QLatin1String TAG_RESOURCE = QLatin1String("qresource");
+static const QLatin1String TAG_FILE = QLatin1String("file");
+static const QLatin1String ATTRIBUTE_LANG = QLatin1String("lang");
+static const QLatin1String ATTRIBUTE_PREFIX = QLatin1String("prefix");
+static const QLatin1String ATTRIBUTE_ALIAS = QLatin1String("alias");
+static const QLatin1String ATTRIBUTE_THRESHOLD = QLatin1String("threshold");
+static const QLatin1String ATTRIBUTE_COMPRESS = QLatin1String("compress");
 
 RCCResourceLibrary::RCCResourceLibrary()
   : m_root(0),
@@ -683,7 +683,7 @@ bool RCCResourceLibrary::output(QIODevice &outDevice, QIODevice &errorDevice)
 
 void RCCResourceLibrary::writeHex(quint8 tmp)
 {
-    const char * const digits = "0123456789abcdef";
+    static const char * const digits = "0123456789abcdef";
     writeChar('0');
     writeChar('x');
     if (tmp < 16) {
@@ -878,17 +878,6 @@ bool RCCResourceLibrary::writeDataStructure()
     return true;
 }
 
-void RCCResourceLibrary::writeMangleNamespaceFunction(const QByteArray &name)
-{
-    if (m_useNameSpace) {
-        writeString("QT_MANGLE_NAMESPACE(");
-        writeByteArray(name);
-        writeChar(')');
-    } else {
-        writeByteArray(name);
-    }
-}
-
 void RCCResourceLibrary::writeAddNamespaceFunction(const QByteArray &name)
 {
     if (m_useNameSpace) {
@@ -923,7 +912,7 @@ bool RCCResourceLibrary::writeInitializer()
             writeString("QT_END_NAMESPACE\n\n\n");
         QString initResources = QLatin1String("qInitResources") + m_initName;
         writeString("int ");
-        writeMangleNamespaceFunction(initResources.toLatin1());
+        writeByteArray(initResources.toLatin1());
         writeString("()\n{\n");
 
         if (m_root) {
@@ -934,13 +923,13 @@ bool RCCResourceLibrary::writeInitializer()
         writeString("    return 1;\n");
         writeString("}\n\n");
         writeString("Q_CONSTRUCTOR_FUNCTION(");
-        writeMangleNamespaceFunction(initResources.toLatin1());
+        writeByteArray(initResources.toLatin1());
         writeString(")\n\n");
 
         //cleanup
         QString cleanResources = QLatin1String("qCleanupResources") + m_initName;
         writeString("int ");
-        writeMangleNamespaceFunction(cleanResources.toLatin1());
+        writeByteArray(cleanResources.toLatin1());
         writeString("()\n{\n");
         if (m_root) {
             writeString("    ");
@@ -950,7 +939,7 @@ bool RCCResourceLibrary::writeInitializer()
         writeString("    return 1;\n");
         writeString("}\n\n");
         writeString("Q_DESTRUCTOR_FUNCTION(");
-        writeMangleNamespaceFunction(cleanResources.toLatin1());
+        writeByteArray(cleanResources.toLatin1());
         writeString(")\n\n");
     } else if (m_format == Binary) {
         int i = 4;

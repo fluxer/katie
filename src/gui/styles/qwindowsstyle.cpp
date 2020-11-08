@@ -71,7 +71,7 @@ enum QSliderDirection { SlUp, SlDown, SlLeft, SlRight };
     \internal
 */
 QWindowsStylePrivate::QWindowsStylePrivate()
-    : alt_down(false), animationFps(10), animateTimer(0), animateStep(0)
+    : animationFps(10), animateTimer(0), animateStep(0)
 {
     startTime.start();
 }
@@ -94,13 +94,6 @@ void QWindowsStylePrivate::stopAnimation(QObject *o, QProgressBar *bar)
         o->killTimer(animateTimer);
         animateTimer = 0;
     }
-}
-
-// Returns true if the toplevel parent of \a widget has seen the Alt-key
-bool QWindowsStylePrivate::hasSeenAlt(const QWidget *widget) const
-{
-    widget = widget->window();
-    return seenAlt.contains(widget);
 }
 
 /*!
@@ -147,10 +140,6 @@ bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
                 }
                 pos++;
             }
-            // Update states before repainting
-            d->seenAlt.append(widget);
-            d->alt_down = true;
-
             // Repaint all relevant widgets
             for (int pos = 0; pos < l.size(); ++pos)
                 l.at(pos)->update();
@@ -160,19 +149,13 @@ bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
         if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Alt) {
             widget = widget->window();
 
-            // Update state and repaint the menu bars.
-            d->alt_down = false;
+            // Repaint the menu bars.
 #ifndef QT_NO_MENUBAR
             QList<QMenuBar *> l = widget->findChildren<QMenuBar *>();
             for (int i = 0; i < l.size(); ++i)
                 l.at(i)->update();
 #endif
         }
-        break;
-    case QEvent::Close:
-        // Reset widget when closing
-        d->seenAlt.removeAll(widget);
-        d->seenAlt.removeAll(widget->window());
         break;
 #ifndef QT_NO_PROGRESSBAR
     case QEvent::StyleChange:
@@ -239,7 +222,7 @@ QWindowsStyle::~QWindowsStyle()
 void QWindowsStyle::polish(QApplication *app)
 {
     QCommonStyle::polish(app);
-    QWindowsStylePrivate *d = const_cast<QWindowsStylePrivate*>(d_func());
+    QWindowsStylePrivate *d = d_func();
     // We only need the overhead when shortcuts are sometimes hidden
     if (!proxy()->styleHint(SH_UnderlineShortcut, 0) && app)
         app->installEventFilter(this);
@@ -680,7 +663,6 @@ int QWindowsStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWid
     case SH_ScrollBar_StopMouseOverSlider:
     case SH_MainWindow_SpaceBelowMenuBar:
         ret = 1;
-
         break;
     case SH_ItemView_ShowDecorationSelected:
 #ifndef QT_NO_LISTVIEW
@@ -713,10 +695,7 @@ int QWindowsStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWid
         break;
 #endif // QT_NO_RUBBERBAND
     case SH_LineEdit_PasswordCharacter:
-        {
-            if (!ret)
-                ret = '*';
-        }
+        ret = '*';
         break;
 #ifndef QT_NO_WIZARD
     case SH_WizardStyle:
@@ -1019,10 +998,8 @@ void QWindowsStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, 
         break;
     case PE_FrameFocusRect:
         if (const QStyleOptionFocusRect *fropt = qstyleoption_cast<const QStyleOptionFocusRect *>(opt)) {
-            //### check for d->alt_down
             if (!(fropt->state & State_KeyboardFocusChange) && !proxy()->styleHint(SH_UnderlineShortcut, opt))
                 return;
-            QRect r = opt->rect;
             p->save();
             p->setBackgroundMode(Qt::TransparentMode);
             QColor bg_col = fropt->backgroundColor;
@@ -1033,12 +1010,12 @@ void QWindowsStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, 
                               (bg_col.green() ^ 0xff) & 0xff,
                               (bg_col.blue() ^ 0xff) & 0xff);
             p->setBrush(QBrush(patternCol, Qt::Dense4Pattern));
-            p->setBrushOrigin(r.topLeft());
+            p->setBrushOrigin(opt->rect.topLeft());
             p->setPen(Qt::NoPen);
-            p->drawRect(r.left(), r.top(), r.width(), 1);    // Top
-            p->drawRect(r.left(), r.bottom(), r.width(), 1); // Bottom
-            p->drawRect(r.left(), r.top(), 1, r.height());   // Left
-            p->drawRect(r.right(), r.top(), 1, r.height());  // Right
+            p->drawRect(opt->rect.left(), opt->rect.top(), opt->rect.width(), 1);    // Top
+            p->drawRect(opt->rect.left(), opt->rect.bottom(), opt->rect.width(), 1); // Bottom
+            p->drawRect(opt->rect.left(), opt->rect.top(), 1, opt->rect.height());   // Left
+            p->drawRect(opt->rect.right(), opt->rect.top(), 1, opt->rect.height());  // Right
             p->restore();
         }
         break;

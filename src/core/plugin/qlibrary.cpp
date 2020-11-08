@@ -382,41 +382,11 @@ QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QS
         }
     }
 
-#if defined(Q_OS_HPUX)
-    // according to
-    // http://docs.hp.com/en/B2355-90968/linkerdifferencesiapa.htm
-
-    // In PA-RISC (PA-32 and PA-64) shared libraries are suffixed
-    // with .sl. In IPF (32-bit and 64-bit), the shared libraries
-    // are suffixed with .so. For compatibility, the IPF linker
-    // also supports the .sl suffix.
-
-    // But since we don't know if we are built on HPUX or HPUXi,
-    // we support both .sl (and .<version>) and .so suffixes but
-    // .so is preferred.
-# if defined(QT_ARCH_IA64)
     if (!version.isEmpty()) {
         suffixes << QString::fromLatin1(".so.%1").arg(version);
     } else {
         suffixes << QLatin1String(".so");
     }
-# endif
-    if (!version.isEmpty()) {
-        suffixes << QString::fromLatin1(".sl.%1").arg(version);
-        suffixes << QString::fromLatin1(".%1").arg(version);
-    } else {
-        suffixes << QLatin1String(".sl");
-    }
-#else
-#ifdef Q_OS_AIX
-    suffixes << ".a";
-#endif // Q_OS_AIX
-    if (!version.isEmpty()) {
-        suffixes << QString::fromLatin1(".so.%1").arg(version);
-    } else {
-        suffixes << QLatin1String(".so");
-    }
-#endif
 
     for(int prefix = 0; prefix < prefixes.size(); prefix++) {
         for(int suffix = 0; suffix < suffixes.size(); suffix++) {
@@ -526,11 +496,7 @@ bool QLibraryPrivate::loadPlugin()
 
     \table
     \header \i Platform \i Valid suffixes
-    \row \i Windows     \i \c .dll, \c .DLL
     \row \i Unix/Linux  \i \c .so
-    \row \i AIX  \i \c .a
-    \row \i HP-UX       \i \c .sl, \c .so (HP-UXi)
-    \row \i Mac OS X    \i \c .dylib, \c .bundle, \c .so
     \endtable
 
     Trailing versioning numbers on Unix are ignored.
@@ -540,25 +506,6 @@ bool QLibrary::isLibrary(const QString &fileName)
     QString completeSuffix = QFileInfo(fileName).completeSuffix();
     if (completeSuffix.isEmpty())
         return false;
-    QStringList suffixes = completeSuffix.split(QLatin1Char('.'));
-    // Generic Unix
-    QStringList validSuffixList;
-
-#  if defined(Q_OS_HPUX)
-/*
-    See "HP-UX Linker and Libraries User's Guide", section "Link-time Differences between PA-RISC and IPF":
-    "In PA-RISC (PA-32 and PA-64) shared libraries are suffixed with .sl. In IPF (32-bit and 64-bit),
-    the shared libraries are suffixed with .so. For compatibility, the IPF linker also supports the .sl suffix."
- */
-    validSuffixList << QLatin1String("sl");
-#   if defined QT_ARCH_IA64
-    validSuffixList << QLatin1String("so");
-#   endif
-#  elif defined(Q_OS_AIX)
-    validSuffixList << QLatin1String("a") << QLatin1String("so");
-#  elif defined(Q_OS_UNIX)
-    validSuffixList << QLatin1String("so");
-#  endif
 
     // Examples of valid library names:
     //  libfoo.so
@@ -567,16 +514,12 @@ bool QLibrary::isLibrary(const QString &fileName)
     //  libfoo-0.3.so
     //  libfoo-0.3.so.0.3.0
 
-    int suffix;
-    int suffixPos = -1;
-    for (suffix = 0; suffix < validSuffixList.count() && suffixPos == -1; ++suffix)
-        suffixPos = suffixes.indexOf(validSuffixList.at(suffix));
-
-    bool valid = suffixPos != -1;
-    for (int i = suffixPos + 1; i < suffixes.count() && valid; ++i)
-        if (i != suffixPos)
-            suffixes.at(i).toInt(&valid);
-    return valid;
+    foreach (const QString &suffix, completeSuffix.split(QLatin1Char('.'))) {
+        if (suffix == QLatin1String("so")) {
+            return true;
+        };
+    }
+    return false;
 }
 
 bool QLibraryPrivate::isPlugin()
@@ -588,8 +531,7 @@ bool QLibraryPrivate::isPlugin()
 #ifndef QT_NO_PLUGIN_CHECK
     bool success = false;
 
-#if defined(Q_OS_UNIX)
-    if (fileName.endsWith(QLatin1String(".debug"))) {
+    if (Q_UNLIKELY(fileName.endsWith(QLatin1String(".debug")))) {
         // refuse to load a file that ends in .debug
         // these are the debug symbols from the libraries
         // the problem is that they are valid shared library files
@@ -600,7 +542,6 @@ bool QLibraryPrivate::isPlugin()
         pluginState = IsNotAPlugin;
         return false;
     }
-#endif
 
     QFileInfo fileinfo(fileName);
 

@@ -149,11 +149,7 @@
 #define QT_OPENDIR              ::opendir
 #define QT_CLOSEDIR             ::closedir
 
-#if defined(__GLIBC__) && (__GLIBC__ < 2)
-#define QT_SOCKLEN_T            int
-#else
 #define QT_SOCKLEN_T            socklen_t
-#endif
 
 #define QT_SOCKET_CONNECT       ::connect
 #define QT_SOCKET_BIND          ::bind

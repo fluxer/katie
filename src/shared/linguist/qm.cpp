@@ -570,11 +570,12 @@ bool loadQM(Translator &translator, QIODevice &dev, ConversionData &cd)
                 }
                 m += 4;
                 QString str = QString((const QChar *)m, len/2);
-                if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) {
-                    for (int i = 0; i < str.length(); ++i)
-                        str[i] = QChar((str.at(i).unicode() >> 8) +
-                            ((str.at(i).unicode() << 8) & 0xff00));
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+                for (int i = 0; i < str.length(); ++i) {
+                    str[i] = QChar((str.at(i).unicode() >> 8) +
+                        ((str.at(i).unicode() << 8) & 0xff00));
                 }
+#endif
                 translations << str;
                 m += len;
                 break;

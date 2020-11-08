@@ -358,14 +358,9 @@ void QSvgTinyDocument::setAnimated(bool a)
     m_animated = a;
 }
 
-void QSvgTinyDocument::draw(QPainter *p)
-{
-    draw(p, QRectF());
-}
-
 void QSvgTinyDocument::draw(QPainter *p, QSvgExtraStates &)
 {
-    draw(p);
+    draw(p, QRectF());
 }
 
 void QSvgTinyDocument::mapSourceToTarget(QPainter *p, const QRectF &targetRect, const QRectF &sourceRect)
@@ -404,7 +399,7 @@ QRectF QSvgTinyDocument::boundsOnElement(const QString &id) const
 {
     const QSvgNode *node = scopeNode(id);
     if (!node)
-        node = this;
+        return transformedBounds();
     return node->transformedBounds();
 }
 

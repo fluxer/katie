@@ -52,8 +52,7 @@ QBenchmarkGlobalData::QBenchmarkGlobalData()
     : measurer(0)
     , walltimeMinimum(-1)
     , iterationCount(-1)
-    , medianIterationCount(-1)
-    , createChart(false)
+    , medianIterationCount(1)
     , verboseOutput(false)
     , mode_(WallTime)
 {
@@ -72,36 +71,25 @@ void QBenchmarkGlobalData::setMode(Mode mode)
 
     if (measurer)
         delete measurer;
-    measurer = createMeasurer();
-}
 
-QBenchmarkMeasurerBase * QBenchmarkGlobalData::createMeasurer()
-{
-    QBenchmarkMeasurerBase *m = 0;
-    if (0) {
+    if (mode_ == EventCounter) {
+        measurer = new QBenchmarkEvent;
 #ifdef QTESTLIB_USE_VALGRIND
     } else if (mode_ == CallgrindChildProcess || mode_ == CallgrindParentProcess) {
-        m = new QBenchmarkCallgrindMeasurer;
+        measurer = new QBenchmarkCallgrindMeasurer;
 #endif
 #ifdef HAVE_TICK_COUNTER
     } else if (mode_ == TickCounter) {
-        m = new QBenchmarkTickMeasurer;
+        measurer = new QBenchmarkTickMeasurer;
 #endif
-    } else if (mode_ == EventCounter) {
-        m = new QBenchmarkEvent;
     } else {
-        m =  new QBenchmarkTimeMeasurer;
+        measurer = new QBenchmarkTimeMeasurer;
     }
-    return m;
 }
 
 int QBenchmarkGlobalData::adjustMedianIterationCount()
 {
-    if (medianIterationCount != -1) {
-        return medianIterationCount;
-    } else {
-        return measurer->adjustMedianCount(1);
-    }
+    return medianIterationCount;
 }
 
 
@@ -120,24 +108,17 @@ QBenchmarkTestMethodData::~QBenchmarkTestMethodData()
 
 void QBenchmarkTestMethodData::beginDataRun()
 {
-    iterationCount = adjustIterationCount(1);
+    // Let the -iterations option override the measurer.
+    if (QBenchmarkGlobalData::current->iterationCount != -1) {
+        iterationCount = QBenchmarkGlobalData::current->iterationCount;
+    } else {
+        iterationCount = 1;
+    }
 }
 
 void QBenchmarkTestMethodData::endDataRun()
 {
 
-}
-
-int QBenchmarkTestMethodData::adjustIterationCount(int suggestion)
-{
-    // Let the -iterations option override the measurer.
-    if (QBenchmarkGlobalData::current->iterationCount != -1) {
-        iterationCount = QBenchmarkGlobalData::current->iterationCount;
-    } else {
-        iterationCount = QBenchmarkGlobalData::current->measurer->adjustIterationCount(suggestion);
-    }
-
-    return iterationCount;
 }
 
 void QBenchmarkTestMethodData::setResult(
@@ -188,20 +169,23 @@ QTest::QBenchmarkIterationController::QBenchmarkIterationController(RunMode runM
     i = 0;
     if (runMode == RunOnce)
         QBenchmarkTestMethodData::current->runOnce = true;
-    QTest::beginBenchmarkMeasurement();
+    QBenchmarkGlobalData::current->measurer->start();
+    // the clock is ticking after the line above, don't add code here.
 }
 
 QTest::QBenchmarkIterationController::QBenchmarkIterationController()
 {
     i = 0;
-    QTest::beginBenchmarkMeasurement();
+    QBenchmarkGlobalData::current->measurer->start();
+    // the clock is ticking after the line above, don't add code here.
 }
 
 /*! \internal
 */
 QTest::QBenchmarkIterationController::~QBenchmarkIterationController()
 {
-    const qreal result = QTest::endBenchmarkMeasurement();
+    // the clock is ticking before the line below, don't add code here.
+    const qreal result = QBenchmarkGlobalData::current->measurer->stop();
     QBenchmarkTestMethodData::current->setResult(result, QBenchmarkGlobalData::current->measurer->metricType());
 }
 
@@ -211,7 +195,7 @@ bool QTest::QBenchmarkIterationController::isDone()
 {
     if (QBenchmarkTestMethodData::current->runOnce)
         return i > 0;
-    return i >= QTest::iterationCount();
+    return i >= QBenchmarkTestMethodData::current->iterationCount;
 }
 
 /*! \internal
@@ -219,44 +203,6 @@ bool QTest::QBenchmarkIterationController::isDone()
 void QTest::QBenchmarkIterationController::next()
 {
     ++i;
-}
-
-/*! \internal
-*/
-int QTest::iterationCount()
-{
-    return QBenchmarkTestMethodData::current->iterationCount;
-}
-
-/*! \internal
-*/
-void QTest::setIterationCountHint(int count)
-{
-    QBenchmarkTestMethodData::current->adjustIterationCount(count);
-}
-
-/*! \internal
-*/
-void QTest::setIterationCount(int count)
-{
-    QBenchmarkTestMethodData::current->iterationCount = count;
-    QBenchmarkTestMethodData::current->resultAccepted = true;
-}
-
-/*! \internal
-*/
-void QTest::beginBenchmarkMeasurement()
-{
-    QBenchmarkGlobalData::current->measurer->start();
-    // the clock is ticking after the line above, don't add code here.
-}
-
-/*! \internal
-*/
-quint64 QTest::endBenchmarkMeasurement()
-{
-    // the clock is ticking before the line below, don't add code here.
-    return QBenchmarkGlobalData::current->measurer->stop();    
 }
 
 /*!
@@ -279,21 +225,6 @@ quint64 QTest::endBenchmarkMeasurement()
 void QTest::setBenchmarkResult(qreal result, QTest::QBenchmarkMetric metric)
 {
     QBenchmarkTestMethodData::current->setResult(result, metric, false);
-}
-
-template <typename T>
-Q_TYPENAME T::value_type qAverage(const T &container)
-{
-    Q_TYPENAME T::const_iterator it = container.constBegin();
-    Q_TYPENAME T::const_iterator end = container.constEnd();
-    Q_TYPENAME T::value_type acc = Q_TYPENAME T::value_type();
-    int count = 0;
-    while (it != end) {
-        acc += *it;
-        ++it;
-        ++count;
-    }
-    return acc / count;
 }
 
 QT_END_NAMESPACE

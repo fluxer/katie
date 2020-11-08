@@ -173,7 +173,6 @@ public:
             PipeSource = 1,
             PipeSink = 2,
             Redirect = 3
-            // if you add "= 4" here, increase the number of bits below
         };
 
         Channel() : process(0), notifier(0), type(Normal), closed(false), append(false)
@@ -211,9 +210,9 @@ public:
         QSocketNotifier *notifier;
         Q_PIPE pipe[2];
 
-        unsigned type : 2;
-        bool closed : 1;
-        bool append : 1;
+        ProcessChannelType type;
+        bool closed;
+        bool append;
     };
 
     QProcessPrivate();
@@ -232,7 +231,6 @@ public:
     QProcess::ProcessState processState;
     QString workingDirectory;
     Q_PID pid;
-    int sequenceNumber;
 
     bool dying;
     bool emittedReadyRead;
@@ -273,13 +271,11 @@ public:
     int exitCode;
     QProcess::ExitStatus exitStatus;
     bool crashed;
-    int serial;
 
-    bool waitForStarted(int msecs = 30000);
-    bool waitForReadyRead(int msecs = 30000);
-    bool waitForBytesWritten(int msecs = 30000);
-    bool waitForFinished(int msecs = 30000);
-    bool waitForWrite(int msecs = 30000);
+    bool waitForStarted(int msecs);
+    bool waitForReadyRead(int msecs);
+    bool waitForBytesWritten(int msecs);
+    bool waitForFinished(int msecs);
 
     qint64 bytesAvailableFromStdout() const;
     qint64 bytesAvailableFromStderr() const;

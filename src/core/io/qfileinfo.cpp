@@ -102,8 +102,6 @@ QString QFileInfoPrivate::getFileOwner(QAbstractFileEngine::FileOwner own) const
      } else {
         ret = fileEngine->owner(own);
     }
-    if (ret.isNull())
-        ret = QLatin1String("");
     if (cache_enabled)
         fileOwners[(int)own] = ret;
     return ret;

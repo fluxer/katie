@@ -922,13 +922,8 @@ void QAbstractSocketPrivate::_q_connectToNextAddress()
 #endif
             state = QAbstractSocket::UnconnectedState;
             if (socketEngine) {
-                if ((socketEngine->error() == QAbstractSocket::UnknownSocketError
-#ifdef Q_OS_AIX
-                     // On AIX, the second connect call will result in EINVAL and not
-                     // ECONNECTIONREFUSED; although the meaning is the same.
-                     || socketEngine->error() == QAbstractSocket::UnsupportedSocketOperationError
-#endif
-                    ) && socketEngine->state() == QAbstractSocket::ConnectingState) {
+                if (socketEngine->error() == QAbstractSocket::UnknownSocketError
+                    && socketEngine->state() == QAbstractSocket::ConnectingState) {
                     socketError = QAbstractSocket::ConnectionRefusedError;
                     q->setErrorString(QAbstractSocket::tr("Connection refused"));
                 } else {

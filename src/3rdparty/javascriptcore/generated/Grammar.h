@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.5.4.  */
+/* A Bison parser, made by GNU Bison 3.6.4.  */
 
 /* Bison interface for Yacc-like parsers in C
 
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_JSCYY_GRAMMAR_HPP_INCLUDED
 # define YY_JSCYY_GRAMMAR_HPP_INCLUDED
@@ -44,75 +45,80 @@
 extern int jscyydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    NULLTOKEN = 258,
-    TRUETOKEN = 259,
-    FALSETOKEN = 260,
-    BREAK = 261,
-    CASE = 262,
-    DEFAULT = 263,
-    FOR = 264,
-    NEW = 265,
-    VAR = 266,
-    CONSTTOKEN = 267,
-    CONTINUE = 268,
-    FUNCTION = 269,
-    RETURN = 270,
-    VOIDTOKEN = 271,
-    DELETETOKEN = 272,
-    IF = 273,
-    THISTOKEN = 274,
-    DO = 275,
-    WHILE = 276,
-    INTOKEN = 277,
-    INSTANCEOF = 278,
-    TYPEOF = 279,
-    SWITCH = 280,
-    WITH = 281,
-    RESERVED = 282,
-    THROW = 283,
-    TRY = 284,
-    CATCH = 285,
-    FINALLY = 286,
-    DEBUGGER = 287,
-    IF_WITHOUT_ELSE = 288,
-    ELSE = 289,
-    EQEQ = 290,
-    NE = 291,
-    STREQ = 292,
-    STRNEQ = 293,
-    LE = 294,
-    GE = 295,
-    OR = 296,
-    AND = 297,
-    PLUSPLUS = 298,
-    MINUSMINUS = 299,
-    LSHIFT = 300,
-    RSHIFT = 301,
-    URSHIFT = 302,
-    PLUSEQUAL = 303,
-    MINUSEQUAL = 304,
-    MULTEQUAL = 305,
-    DIVEQUAL = 306,
-    LSHIFTEQUAL = 307,
-    RSHIFTEQUAL = 308,
-    URSHIFTEQUAL = 309,
-    ANDEQUAL = 310,
-    MODEQUAL = 311,
-    XOREQUAL = 312,
-    OREQUAL = 313,
-    OPENBRACE = 314,
-    CLOSEBRACE = 315,
-    NUMBER = 316,
-    IDENT = 317,
-    STRING = 318,
-    AUTOPLUSPLUS = 319,
-    AUTOMINUSMINUS = 320
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    NULLTOKEN = 258,               /* NULLTOKEN  */
+    TRUETOKEN = 259,               /* TRUETOKEN  */
+    FALSETOKEN = 260,              /* FALSETOKEN  */
+    BREAK = 261,                   /* BREAK  */
+    CASE = 262,                    /* CASE  */
+    DEFAULT = 263,                 /* DEFAULT  */
+    FOR = 264,                     /* FOR  */
+    NEW = 265,                     /* NEW  */
+    VAR = 266,                     /* VAR  */
+    CONSTTOKEN = 267,              /* CONSTTOKEN  */
+    CONTINUE = 268,                /* CONTINUE  */
+    FUNCTION = 269,                /* FUNCTION  */
+    RETURN = 270,                  /* RETURN  */
+    VOIDTOKEN = 271,               /* VOIDTOKEN  */
+    DELETETOKEN = 272,             /* DELETETOKEN  */
+    IF = 273,                      /* IF  */
+    THISTOKEN = 274,               /* THISTOKEN  */
+    DO = 275,                      /* DO  */
+    WHILE = 276,                   /* WHILE  */
+    INTOKEN = 277,                 /* INTOKEN  */
+    INSTANCEOF = 278,              /* INSTANCEOF  */
+    TYPEOF = 279,                  /* TYPEOF  */
+    SWITCH = 280,                  /* SWITCH  */
+    WITH = 281,                    /* WITH  */
+    RESERVED = 282,                /* RESERVED  */
+    THROW = 283,                   /* THROW  */
+    TRY = 284,                     /* TRY  */
+    CATCH = 285,                   /* CATCH  */
+    FINALLY = 286,                 /* FINALLY  */
+    DEBUGGER = 287,                /* DEBUGGER  */
+    IF_WITHOUT_ELSE = 288,         /* IF_WITHOUT_ELSE  */
+    ELSE = 289,                    /* ELSE  */
+    EQEQ = 290,                    /* EQEQ  */
+    NE = 291,                      /* NE  */
+    STREQ = 292,                   /* STREQ  */
+    STRNEQ = 293,                  /* STRNEQ  */
+    LE = 294,                      /* LE  */
+    GE = 295,                      /* GE  */
+    OR = 296,                      /* OR  */
+    AND = 297,                     /* AND  */
+    PLUSPLUS = 298,                /* PLUSPLUS  */
+    MINUSMINUS = 299,              /* MINUSMINUS  */
+    LSHIFT = 300,                  /* LSHIFT  */
+    RSHIFT = 301,                  /* RSHIFT  */
+    URSHIFT = 302,                 /* URSHIFT  */
+    PLUSEQUAL = 303,               /* PLUSEQUAL  */
+    MINUSEQUAL = 304,              /* MINUSEQUAL  */
+    MULTEQUAL = 305,               /* MULTEQUAL  */
+    DIVEQUAL = 306,                /* DIVEQUAL  */
+    LSHIFTEQUAL = 307,             /* LSHIFTEQUAL  */
+    RSHIFTEQUAL = 308,             /* RSHIFTEQUAL  */
+    URSHIFTEQUAL = 309,            /* URSHIFTEQUAL  */
+    ANDEQUAL = 310,                /* ANDEQUAL  */
+    MODEQUAL = 311,                /* MODEQUAL  */
+    XOREQUAL = 312,                /* XOREQUAL  */
+    OREQUAL = 313,                 /* OREQUAL  */
+    OPENBRACE = 314,               /* OPENBRACE  */
+    CLOSEBRACE = 315,              /* CLOSEBRACE  */
+    NUMBER = 316,                  /* NUMBER  */
+    IDENT = 317,                   /* IDENT  */
+    STRING = 318,                  /* STRING  */
+    AUTOPLUSPLUS = 319,            /* AUTOPLUSPLUS  */
+    AUTOMINUSMINUS = 320           /* AUTOMINUSMINUS  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */

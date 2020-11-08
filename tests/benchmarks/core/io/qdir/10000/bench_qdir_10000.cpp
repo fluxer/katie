@@ -131,10 +131,7 @@ private slots:
         testdir.setSorting(QDir::Unsorted);
         testdir.setFilter(QDir::AllEntries | QDir::System | QDir::Hidden);
         QBENCHMARK {
-            QStringList fileList = testdir.entryList(QDir::NoFilter, QDir::Unsorted);
-            foreach (const QString &filename, fileList) {
-
-            }
+            testdir.entryList(QDir::NoFilter, QDir::Unsorted);
         }
     }
     void iDontWantAnyStatIterator() {

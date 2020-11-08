@@ -234,16 +234,6 @@ bool QBenchmarkCallgrindMeasurer::isMeasurementAccepted(qint64 measurement)
     return true;
 }
 
-int QBenchmarkCallgrindMeasurer::adjustIterationCount(int)
-{ 
-    return 1;
-}
-
-int QBenchmarkCallgrindMeasurer::adjustMedianCount(int)
-{ 
-    return 1;
-}
-
 bool QBenchmarkCallgrindMeasurer::needsWarmupIteration()
 { 
     return true;

@@ -93,14 +93,14 @@ void tst_QX11Info::staticFunctionsBeforeQApplication()
     unsigned long appTime = QX11Info::appTime();
     unsigned long appUserTime = QX11Info::appUserTime();
     QCOMPARE(appTime, 0ul);
-    QCOMPARE(appTime, 0ul);
+    QCOMPARE(appUserTime, 0ul);
     // setApp*Time do nothing without QApplication
     QX11Info::setAppTime(1234);
     QX11Info::setAppUserTime(5678);
     appTime = QX11Info::appTime();
     appUserTime = QX11Info::appUserTime();
     QCOMPARE(appTime, 0ul);
-    QCOMPARE(appTime, 0ul);
+    QCOMPARE(appUserTime, 0ul);
 }
 
 QTEST_APPLESS_MAIN(tst_QX11Info)

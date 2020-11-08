@@ -57,6 +57,14 @@
 
 QT_BEGIN_NAMESPACE
 
+// Support for introspection
+QSignalSpyCallbackSet Q_CORE_EXPORT qt_signal_spy_callback_set = { 0, 0 };
+
+void qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet &callback_set)
+{
+    qt_signal_spy_callback_set = callback_set;
+}
+
 static int DIRECT_CONNECTION_ONLY = 0;
 
 static int *queuedConnectionTypes(const QList<QByteArray> &typeNames)
@@ -2909,9 +2917,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
     QMutexLocker locker(signalSlotLock(sender));
     QObjectConnectionListVector *connectionLists = sender->d_func()->connectionLists;
     if (!connectionLists) {
-        locker.unlock();
-        if (qt_signal_spy_callback_set.signal_end_callback)
-            qt_signal_spy_callback_set.signal_end_callback(sender, signal_absolute_index);
         return;
     }
     ++connectionLists->inUse;
@@ -2994,9 +2999,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                         delete connectionLists;
                     QT_RETHROW;
                 }
-
-                if (qt_signal_spy_callback_set.slot_end_callback)
-                    qt_signal_spy_callback_set.slot_end_callback(receiver, c->method());
                 locker.relock();
             } else {
                 const int method = method_relative + c->method_offset;
@@ -3021,10 +3023,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
                         delete connectionLists;
                     QT_RETHROW;
                 }
-
-                if (qt_signal_spy_callback_set.slot_end_callback)
-                    qt_signal_spy_callback_set.slot_end_callback(receiver, method);
-
                 locker.relock();
             }
 
@@ -3049,12 +3047,6 @@ void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_sign
     } else if (connectionLists->dirty) {
         sender->d_func()->cleanConnectionLists();
     }
-
-    locker.unlock();
-
-    if (qt_signal_spy_callback_set.signal_end_callback)
-        qt_signal_spy_callback_set.signal_end_callback(sender, signal_absolute_index);
-
 }
 
 /*! \internal

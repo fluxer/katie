@@ -508,11 +508,11 @@ QQuaternion QQuaternion::slerp
     qreal factor1 = 1.0f - t;
     qreal factor2 = t;
     if ((1.0f - dot) > 0.0000001) {
-        qreal angle = qreal(qAcos(dot));
-        qreal sinOfAngle = qreal(qSin(angle));
+        qreal angle = qAcos(dot);
+        qreal sinOfAngle = qSin(angle);
         if (sinOfAngle > 0.0000001) {
-            factor1 = qreal(qSin((1.0f - t) * angle)) / sinOfAngle;
-            factor2 = qreal(qSin(t * angle)) / sinOfAngle;
+            factor1 = qSin((1.0f - t) * angle) / sinOfAngle;
+            factor2 = qSin(t * angle) / sinOfAngle;
         }
     }
 

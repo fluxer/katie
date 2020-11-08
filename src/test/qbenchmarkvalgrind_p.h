@@ -74,8 +74,6 @@ public:
     qint64 checkpoint();
     qint64 stop();
     bool isMeasurementAccepted(qint64 measurement);
-    int adjustIterationCount(int);
-    int adjustMedianCount(int);
     bool needsWarmupIteration();
     QTest::QBenchmarkMetric metricType();
 };

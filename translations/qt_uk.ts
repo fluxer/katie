@@ -86,20 +86,20 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1751"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1746"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+677"/>
         <source>Socket operation timed out</source>
         <translation>Час на операцію з сокетом вичерпано</translation>
     </message>
     <message>
-        <location line="-1214"/>
-        <location line="+810"/>
+        <location line="-1209"/>
+        <location line="+805"/>
         <location line="+213"/>
         <source>Operation on socket is not supported</source>
         <translation>Непідтримувана для сокета операція</translation>
     </message>
     <message>
-        <location line="-674"/>
+        <location line="-669"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+662"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+641"/>
         <location line="+26"/>
@@ -107,7 +107,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Вузол не знайдено</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+42"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+3"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+4"/>
         <source>Connection refused</source>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Несумісна бібліотека Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1855"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1843"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -388,7 +388,7 @@ Script: %3</source>
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2105"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2093"/>
         <source>AM</source>
         <translation>AM</translation>
     </message>
@@ -1081,7 +1081,7 @@ Script: %3</source>
         <translation>не є типом</translation>
     </message>
     <message>
-        <location line="+263"/>
+        <location line="+231"/>
         <source>File name case mismatch for &quot;%1&quot;</source>
         <translation>Регістр імені файлу не збігається для &quot;%1&quot;</translation>
     </message>
@@ -2070,50 +2070,50 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+77"/>
-        <location line="+844"/>
+        <location line="+763"/>
         <source>Normal</source>
         <translation>Звичайний</translation>
     </message>
     <message>
-        <location line="-841"/>
+        <location line="-760"/>
         <location line="+12"/>
-        <location line="+817"/>
+        <location line="+736"/>
         <source>Bold</source>
         <translation>Жирний</translation>
     </message>
     <message>
-        <location line="-826"/>
-        <location line="+828"/>
+        <location line="-745"/>
+        <location line="+747"/>
         <source>Demi Bold</source>
         <translation>Напівжирний</translation>
     </message>
     <message>
-        <location line="-825"/>
+        <location line="-744"/>
         <location line="+18"/>
-        <location line="+803"/>
+        <location line="+722"/>
         <source>Black</source>
         <translation>Чорний</translation>
     </message>
     <message>
-        <location line="-813"/>
+        <location line="-732"/>
         <source>Demi</source>
         <translation>Середній</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+813"/>
+        <location line="+732"/>
         <source>Light</source>
         <translation>Світлий</translation>
     </message>
     <message>
-        <location line="-667"/>
-        <location line="+670"/>
+        <location line="-624"/>
+        <location line="+627"/>
         <source>Italic</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location line="-667"/>
-        <location line="+669"/>
+        <location line="-624"/>
+        <location line="+626"/>
         <source>Oblique</source>
         <translation>Нахилений</translation>
     </message>
@@ -2324,7 +2324,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QGroupBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+630"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+610"/>
         <source>Toggle</source>
         <translation>Перемкнути</translation>
     </message>
@@ -2345,7 +2345,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+150"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+144"/>
         <source>No host name given</source>
         <translation>Ім&apos;я вузла не задано</translation>
     </message>
@@ -2409,13 +2409,13 @@ Do you want to delete it anyway?</source>
         <translation>У з’єднанні відмовлено (або час очікування вичерпано)</translation>
     </message>
     <message>
-        <location line="+3"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-9"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+3"/>
         <source>Host %1 not found</source>
         <translation>Вузол %1 не знайдено</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+20"/>
         <source>HTTP request failed</source>
         <translation>Збій запиту HTTP</translation>
     </message>
@@ -2537,7 +2537,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1371"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1308"/>
         <source>Permission denied</source>
         <translation>Доступ заборонено</translation>
     </message>
@@ -2651,7 +2651,7 @@ Do you want to delete it anyway?</source>
         <translation>Дані верифікації додатку не збігаються для ’%1’</translation>
     </message>
     <message>
-        <location line="+270"/>
+        <location line="+213"/>
         <location line="+36"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+275"/>
         <source>The shared library was not found.</source>
@@ -2673,17 +2673,17 @@ Do you want to delete it anyway?</source>
         <translation>Невідома помилка</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+80"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+68"/>
         <source>Cannot load library %1: %2</source>
         <translation>Неможливо завантажити бібліотеку %1: %2</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Неможливо вивантажити бібліотеку %1: %2</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+11"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Неможливо розв’язати символ &quot;%1&quot; в %2: %3</translation>
     </message>
@@ -2729,7 +2729,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+212"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+210"/>
         <location filename="../src/network/socket/qlocalserver.cpp" line="+214"/>
         <source>%1: Name error</source>
         <translation>%1: Помилка імені</translation>
@@ -2852,7 +2852,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+92"/>
         <source>Unable to execute next query</source>
-        <translation>Неможливо виконати наступни�� запит</translation>
+        <translation>Неможливо виконати наступни���� запит</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -3037,7 +3037,7 @@ Do you want to delete it anyway?</source>
         <translation>Приховати деталі...</translation>
     </message>
     <message>
-        <location line="+1351"/>
+        <location line="+1348"/>
         <source>&lt;h3&gt;About Katie&lt;/h3&gt;&lt;p&gt;This program uses Katie version %1.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4173,7 +4173,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+815"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+811"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Помилка читання з процесу</translation>
@@ -4194,7 +4194,7 @@ Do you want to overwrite it?</source>
         <translation>Програму не задано</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+398"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+389"/>
         <source>Could not open input redirection for reading</source>
         <translation>Не вдалося відкрити перенаправлення введення для читання</translation>
     </message>
@@ -4228,7 +4228,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QPushButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-638"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-618"/>
         <source>Open</source>
         <translation>Відкрити</translation>
     </message>
@@ -4422,17 +4422,17 @@ Do you want to overwrite it?</source>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+872"/>
-        <location line="+1013"/>
+        <location line="+1011"/>
         <source>Go to Line</source>
         <translation>Перей��и до рядка</translation>
     </message>
     <message>
-        <location line="-1012"/>
+        <location line="-1010"/>
         <source>Line:</source>
         <translation>Рядок:</translation>
     </message>
     <message>
-        <location line="+791"/>
+        <location line="+789"/>
         <source>Interrupt</source>
         <translation>Перервати</translation>
     </message>
@@ -4715,7 +4715,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../src/gui/widgets/qscrollbar.cpp" line="+394"/>
         <source>Scroll here</source>
-        <translation>Прокрутити сюди</translation>
+        <translation>Прокрутити сю��и</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -4808,13 +4808,13 @@ Do you want to overwrite it?</source>
         <translation>%1: розмір створення менший нуля</translation>
     </message>
     <message>
+        <location line="+173"/>
         <location filename="../src/core/kernel/qsharedmemory_p.h" line="+137"/>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+173"/>
         <source>%1: unable to lock</source>
         <translation>%1: неможливо заблокувати</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+21"/>
+        <location line="+21"/>
         <source>%1: unable to unlock</source>
         <translation>%1: неможливо розблокувати</translation>
     </message>
@@ -5950,7 +5950,7 @@ Do you want to overwrite it?</source>
         <translation>Хангиль спеціальний</translation>
     </message>
     <message>
-        <location line="+458"/>
+        <location line="+453"/>
         <location line="+79"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -6501,7 +6501,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QToolButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+321"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+301"/>
         <location line="+6"/>
         <source>Press</source>
         <translation>Натисніть</translation>
@@ -6648,7 +6648,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5174"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5121"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -6897,13 +6897,13 @@ Do you want to overwrite it?</source>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+583"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1748"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+583"/>
         <source>Extra content at end of document.</source>
         <translation>Зайві дані в кінці документу.</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+237"/>
         <source>Invalid entity value.</source>
         <translation>Неправильне значення сутності.</translation>
     </message>
@@ -6918,26 +6918,26 @@ Do you want to overwrite it?</source>
         <translation>Послідовність &apos;]]&gt;&apos; не дозволена в змісті.</translation>
     </message>
     <message>
-        <location line="+210"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="-691"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+210"/>
         <source>Encountered incorrectly encoded content.</source>
         <translation>Виявлено неправильно закодований вміст.</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+30"/>
         <source>Namespace prefix &apos;%1&apos; not declared</source>
         <translation>Префікс простору імен &apos;%1&apos; не оголошено</translation>
     </message>
     <message>
-        <location line="+33"/>
-        <location line="+12"/>
         <location filename="../src/xml/kernel/qxmlstream_p.h" line="+612"/>
         <location line="+53"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+33"/>
+        <location line="+12"/>
         <source>Illegal namespace declaration.</source>
         <translation>Неприпустиме оголошення простору імен.</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+32"/>
         <source>Attribute redefined.</source>
         <translation>Атрибути перевизначено.</translation>
     </message>
@@ -7044,7 +7044,7 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+114"/>
         <source>%1 is an invalid PUBLIC identifier.</source>
-        <translation>%1 не є правильним ідентифікаторо�� PUBLIC.</translation>
+        <translation>%1 не є правильним ідентифіка��оро�� PUBLIC.</translation>
     </message>
     <message>
         <location line="+118"/>

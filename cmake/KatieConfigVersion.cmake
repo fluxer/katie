@@ -6,3 +6,19 @@ set(KATIE_VERSION "@KATIE_MAJOR@.@KATIE_MINOR@.@KATIE_MICRO@")
 # purely for convenience, bug reports and the like
 set(KATIE_VERSION_HEX "@KATIE_HEX@")
 set(KATIE_VERSION_GIT "@KATIE_GIT@")
+
+# Compatibility with find_package() query and version requirement
+set(PACKAGE_VERSION "${KATIE_VERSION}")
+set(PACKAGE_VERSION_MAJOR "${KATIE_VERSION_MAJOR}")
+set(PACKAGE_VERSION_MINOR "${KATIE_VERSION_MINOR}")
+set(PACKAGE_VERSION_PATCH "${KATIE_VERSION_PATCH}")
+
+# Check whether the requested PACKAGE_FIND_VERSION is compatible
+if("${PACKAGE_VERSION}" VERSION_LESS "${PACKAGE_FIND_VERSION}")
+    set(PACKAGE_VERSION_COMPATIBLE FALSE)
+else()
+    set(PACKAGE_VERSION_COMPATIBLE TRUE)
+    if ("${PACKAGE_VERSION}" VERSION_EQUAL "${PACKAGE_FIND_VERSION}")
+        set(PACKAGE_VERSION_EXACT TRUE)
+    endif()
+endif()

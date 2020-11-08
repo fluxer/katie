@@ -49,7 +49,7 @@ target_include_directories(sharedbearer PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}/bearer
 )
 
-if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
+if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd|hurd)")
     add_subdirectory(bearer/generic)
     if(WITH_DBUS AND DBUS_FOUND)
         add_subdirectory(bearer/connman)

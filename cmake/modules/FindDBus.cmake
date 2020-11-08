@@ -10,14 +10,12 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_DBUS QUIET dbus-1)
+include(FindPkgConfig)
+pkg_check_modules(PC_DBUS QUIET dbus-1)
 
-    set(DBUS_INCLUDES ${PC_DBUS_INCLUDE_DIRS})
-    set(DBUS_ARCH_INCLUDES ${PC_DBUS_INCLUDE_DIRS})
-    set(DBUS_LIBRARIES ${PC_DBUS_LIBRARIES})
-endif()
+set(DBUS_INCLUDES ${PC_DBUS_INCLUDE_DIRS})
+set(DBUS_ARCH_INCLUDES ${PC_DBUS_INCLUDE_DIRS})
+set(DBUS_LIBRARIES ${PC_DBUS_LIBRARIES})
 
 if(NOT DBUS_INCLUDES OR NOT DBUS_ARCH_INCLUDES OR NOT DBUS_LIBRARIES)
     find_path(DBUS_INCLUDES

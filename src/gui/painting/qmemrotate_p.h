@@ -124,7 +124,6 @@ static inline void qt_memrotate270(const srctype *src, int w, int h, int sstride
 
 QT_IMPL_MEMROTATE(quint8, quint8)
 QT_IMPL_MEMROTATE(quint16, quint16)
-QT_IMPL_MEMROTATE(quint24, quint24)
 QT_IMPL_MEMROTATE(quint32, quint32)
 
 #undef QT_IMPL_MEMROTATE

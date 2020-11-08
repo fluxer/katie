@@ -600,7 +600,7 @@ bool Stringifier::Holder::appendNextProperty(Stringifier& stringifier, StringBui
 
 // ------------------------------ JSONObject --------------------------------
 
-const ClassInfo JSONObject::info = { "JSON", 0, 0, ExecState::jsonTable };
+const ClassInfo JSONObject::info = { "JSON", 0, ExecState::jsonTable };
 
 /* Source for JSONObject.lut.h
 @begin jsonTable

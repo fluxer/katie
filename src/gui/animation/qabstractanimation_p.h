@@ -132,7 +132,7 @@ private:
 
 public:
     //XXX this is needed by dui
-    static QUnifiedTimer *instance(bool create = true);
+    static QUnifiedTimer *instance();
 
     static void registerAnimation(QAbstractAnimation *animation, bool isTopLevel);
     static void unregisterAnimation(QAbstractAnimation *animation);
@@ -153,9 +153,6 @@ public:
 
     void restartAnimationTimer();
     void updateAnimationsTime();
-
-    //useful for profiling/debugging
-    int runningAnimationCount() { return animations.count(); }
 
 protected:
     void timerEvent(QTimerEvent *);

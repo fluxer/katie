@@ -44,8 +44,7 @@
 QT_BEGIN_NAMESPACE
 
 QFramePrivate::QFramePrivate()
-    : frect(QRect(0, 0, 0, 0)),
-      frameStyle(QFrame::NoFrame | QFrame::Plain),
+    : frameStyle(QFrame::NoFrame | QFrame::Plain),
       lineWidth(1),
       midLineWidth(0),
       frameWidth(0),
@@ -434,9 +433,7 @@ int QFrame::frameWidth() const
 QRect QFrame::frameRect() const
 {
     Q_D(const QFrame);
-    QRect fr = contentsRect();
-    fr.adjust(-d->leftFrameWidth, -d->topFrameWidth, d->rightFrameWidth, d->bottomFrameWidth);
-    return fr;
+    return contentsRect().adjusted(-d->leftFrameWidth, -d->topFrameWidth, d->rightFrameWidth, d->bottomFrameWidth);
 }
 
 void QFrame::setFrameRect(const QRect &r)

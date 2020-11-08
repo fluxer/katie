@@ -478,16 +478,13 @@ static QString find_translation(const QLocale & locale,
     QStringList fuzzyLocales;
 
     // see http://www.unicode.org/reports/tr35/#LanguageMatching for inspiration
-
     QStringList languages = locale.uiLanguages();
-#if defined(Q_OS_UNIX)
     for (int i = languages.size()-1; i >= 0; --i) {
         QString lang = languages.at(i);
         QString lowerLang = lang.toLower();
         if (lang != lowerLang)
             languages.insert(i+1, lowerLang);
     }
-#endif
 
     // try explicit locales names first
     foreach (QString localeName, languages) {
@@ -739,10 +736,11 @@ end:
     if (!tn)
         return QString();
     QString str = QString((const QChar *)tn, tn_length/2);
-    if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) {
-        for (int i = 0; i < str.length(); ++i)
-            str[i] = QChar((str.at(i).unicode() >> 8) + ((str.at(i).unicode() << 8) & 0xff00));
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+    for (int i = 0; i < str.length(); ++i) {
+        str[i] = QChar((str.at(i).unicode() >> 8) + ((str.at(i).unicode() << 8) & 0xff00));
     }
+#endif
     return str;
 }
 

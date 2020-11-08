@@ -288,7 +288,6 @@ void QSvgText::draw(QPainter *p, QSvgExtraStates &states)
     // Force the font to have a size of 100 pixels to avoid truncation problems
     // when the font is very small.
     qreal scale = 100.0 / p->font().pointSizeF();
-    Qt::Alignment alignment = states.textAnchor;
 
     QTransform oldTransform = p->worldTransform();
     p->scale(1 / scale, 1 / scale);
@@ -300,9 +299,9 @@ void QSvgText::draw(QPainter *p, QSvgExtraStates &states)
     QSizeF scaledSize = m_size * scale;
 
     if (m_type == TEXTAREA) {
-        if (alignment == Qt::AlignHCenter)
+        if (states.textAnchor == Qt::AlignHCenter)
             px += scaledSize.width() / 2;
-        else if (alignment == Qt::AlignRight)
+        else if (states.textAnchor == Qt::AlignRight)
             px += scaledSize.width();
     }
 
@@ -413,9 +412,9 @@ void QSvgText::draw(QPainter *p, QSvgExtraStates &states)
                 QTextLine line = tl.lineAt(i);
 
                 qreal x = 0;
-                if (alignment == Qt::AlignHCenter)
+                if (states.textAnchor == Qt::AlignHCenter)
                     x -= 0.5 * line.naturalTextWidth();
-                else if (alignment == Qt::AlignRight)
+                else if (states.textAnchor == Qt::AlignRight)
                     x -= line.naturalTextWidth();
 
                 if (initial && m_type == TEXT)

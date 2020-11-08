@@ -68,19 +68,9 @@ QT_BEGIN_NAMESPACE
 
 struct QBenchmarkContext
 {
-    // None of the strings below are assumed to contain commas (see toString() below)
+    // None of the strings below are assumed to contain commas
     QString slotName;
     QString tag; // from _data() function
-
-    int checkpointIndex;
-
-    QString toString() const
-    {
-        QString s = QString::fromLatin1("%1,%2,%3").arg(slotName).arg(tag).arg(checkpointIndex);
-        return s;
-    }
-
-    QBenchmarkContext() : checkpointIndex(-1) {}
 };
 
 class QBenchmarkResult
@@ -133,7 +123,6 @@ public:
     enum Mode { WallTime, CallgrindParentProcess, CallgrindChildProcess, TickCounter, EventCounter };
     void setMode(Mode mode);
     Mode mode() const { return mode_; }
-    QBenchmarkMeasurerBase *createMeasurer();
     int adjustMedianIterationCount();
 
     QBenchmarkMeasurerBase *measurer;
@@ -141,7 +130,6 @@ public:
     int walltimeMinimum;
     int iterationCount;
     int medianIterationCount;
-    bool createChart;
     bool verboseOutput;
     QString callgrindOutFileBase;
 private:
@@ -168,7 +156,6 @@ public:
 
     bool isBenchmark() const { return result.valid; }
     bool resultsAccepted() const { return resultAccepted; }
-    int adjustIterationCount(int suggestion);
     void setResult(qreal value, QTest::QBenchmarkMetric metric, bool setByMacro = true);
 
     QBenchmarkResult result;
@@ -176,17 +163,6 @@ public:
     bool runOnce;
     int iterationCount;
 };
-
-// low-level API:
-namespace QTest
-{
-    int iterationCount();
-    void setIterationCountHint(int count);
-    void setIterationCount(int count);
-
-    Q_TEST_EXPORT void beginBenchmarkMeasurement();
-    Q_TEST_EXPORT quint64 endBenchmarkMeasurement();
-}
 
 QT_END_NAMESPACE
 

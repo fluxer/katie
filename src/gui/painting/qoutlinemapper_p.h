@@ -45,14 +45,9 @@
 // We mean it.
 //
 
-#include <QtCore/qrect.h>
-
-#include <QtGui/qtransform.h>
-#include <QtGui/qpainterpath.h>
-
-#define QT_FT_BEGIN_HEADER
-#define QT_FT_END_HEADER
-
+#include "qrect.h"
+#include "qtransform.h"
+#include "qpainterpath.h"
 #include "qrasterdefs_p.h"
 #include "qdatabuffer_p.h"
 #include "qpaintengineex_p.h"

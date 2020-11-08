@@ -84,7 +84,6 @@ public:
 #endif
 
     qint64 read(char *data, qint64 maxlen);
-    qint64 readLine(char *data, qint64 maxlen);
     qint64 write(const char *data, qint64 len);
 
     bool extension(Extension extension, const ExtensionOption *option = Q_NULLPTR, ExtensionReturn *output = Q_NULLPTR);

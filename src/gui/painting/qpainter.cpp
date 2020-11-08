@@ -252,7 +252,7 @@ void QPainterPrivate::detachPainterPrivate(QPainter *q)
 }
 
 
-void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperation op)
+void QPainterPrivate::draw_helper(const QPainterPath &originalPath)
 {
 #ifdef QT_DEBUG_DRAW
     printf("QPainter::drawHelper\n");
@@ -262,7 +262,7 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperatio
         return;
 
     if (!extended) {
-        drawStretchedGradient(originalPath, op);
+        drawStretchedGradient(originalPath);
         return;
     }
 
@@ -273,7 +273,7 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperatio
     QPainterPath path = originalPath * state->matrix;
     QRectF pathBounds = path.boundingRect();
     QRectF strokeBounds;
-    bool doStroke = (op & StrokeDraw) && (state->pen.style() != Qt::NoPen);
+    bool doStroke = (state->pen.style() != Qt::NoPen);
     if (doStroke) {
         qreal penWidth = state->pen.widthF();
         if (penWidth == 0) {
@@ -352,7 +352,7 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperatio
     p.translate(-absPathRect.x(), -absPathRect.y());
     p.setTransform(state->matrix, true);
     p.setPen(doStroke ? state->pen : QPen(Qt::NoPen));
-    p.setBrush((op & FillDraw) ? state->brush : QBrush(Qt::NoBrush));
+    p.setBrush(state->brush);
     p.setBackground(state->bgBrush);
     p.setBackgroundMode(state->bgMode);
     p.setBrushOrigin(state->brushOrigin);
@@ -395,18 +395,18 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperatio
     q->restore();
 }
 
-void QPainterPrivate::drawOpaqueBackground(const QPainterPath &path, DrawOperation op)
+void QPainterPrivate::drawOpaqueBackground(const QPainterPath &path)
 {
     Q_Q(QPainter);
 
     q->setBackgroundMode(Qt::TransparentMode);
 
-    if (op & FillDraw && state->brush.style() != Qt::NoBrush) {
+    if (state->brush.style() != Qt::NoBrush) {
         q->fillPath(path, state->bgBrush.color());
         q->fillPath(path, state->brush);
     }
 
-    if (op & StrokeDraw && state->pen.style() != Qt::NoPen) {
+    if (state->pen.style() != Qt::NoPen) {
         q->strokePath(path, QPen(state->bgBrush.color(), state->pen.width()));
         q->strokePath(path, state->pen);
     }
@@ -430,7 +430,7 @@ static inline QBrush stretchGradientToUserSpace(const QBrush &brush, const QRect
     return b;
 }
 
-void QPainterPrivate::drawStretchedGradient(const QPainterPath &path, DrawOperation op)
+void QPainterPrivate::drawStretchedGradient(const QPainterPath &path)
 {
     Q_Q(QPainter);
 
@@ -450,7 +450,7 @@ void QPainterPrivate::drawStretchedGradient(const QPainterPath &path, DrawOperat
     QRectF boundingRect;
 
     // Draw the xformed fill if the brush is a stretch gradient.
-    if ((op & FillDraw) && brush.style() != Qt::NoBrush) {
+    if (brush.style() != Qt::NoBrush) {
         if (brushMode == QGradient::StretchToDeviceMode) {
             q->setPen(Qt::NoPen);
             changedPen = pen.style() != Qt::NoPen;
@@ -474,7 +474,7 @@ void QPainterPrivate::drawStretchedGradient(const QPainterPath &path, DrawOperat
         }
     }
 
-    if ((op & StrokeDraw) && pen.style() != Qt::NoPen) {
+    if (pen.style() != Qt::NoPen) {
         // Draw the xformed outline if the pen is a stretch gradient.
         if (penMode == QGradient::StretchToDeviceMode) {
             q->setPen(Qt::NoPen);
@@ -5635,7 +5635,7 @@ void QPainter::drawTextItem(const QPointF &p, const QTextItem &_ti)
                            QFontDatabase::supportsThreadedFontRendering());
 #endif
 
-    QTextItemInt &ti = const_cast<QTextItemInt &>(static_cast<const QTextItemInt &>(_ti));
+    const QTextItemInt &ti = static_cast<const QTextItemInt &>(_ti);
 
     if (!d->extended && d->state->bgMode == Qt::OpaqueMode) {
         QRectF rect(p.x(), p.y() - ti.ascent.toReal(), ti.width.toReal(), (ti.ascent + ti.descent + 1).toReal());
@@ -6082,14 +6082,7 @@ void QPainter::fillRect(const QRectF &r, const QBrush &brush)
     QPen oldPen = pen();
     QBrush oldBrush = this->brush();
     setPen(Qt::NoPen);
-    if (brush.style() == Qt::SolidPattern) {
-        d->colorBrush.setStyle(Qt::SolidPattern);
-        d->colorBrush.setColor(brush.color());
-        setBrush(d->colorBrush);
-    } else {
-        setBrush(brush);
-    }
-
+    setBrush(brush);
     drawRect(r);
     setBrush(oldBrush);
     setPen(oldPen);
@@ -6120,14 +6113,7 @@ void QPainter::fillRect(const QRect &r, const QBrush &brush)
     QPen oldPen = pen();
     QBrush oldBrush = this->brush();
     setPen(Qt::NoPen);
-    if (brush.style() == Qt::SolidPattern) {
-        d->colorBrush.setStyle(Qt::SolidPattern);
-        d->colorBrush.setColor(brush.color());
-        setBrush(d->colorBrush);
-    } else {
-        setBrush(brush);
-    }
-
+    setBrush(brush);
     drawRect(r);
     setBrush(oldBrush);
     setPen(oldPen);
@@ -7632,176 +7618,6 @@ QTransform QPainter::combinedTransform() const
     }
     return d->state->worldMatrix * d->viewTransform();
 }
-
-/*!
-    \since 4.7
-
-    This function is used to draw \a pixmap, or a sub-rectangle of \a pixmap,
-    at multiple positions with different scale, rotation and opacity. \a
-    fragments is an array of \a fragmentCount elements specifying the
-    parameters used to draw each pixmap fragment. The \a hints
-    parameter can be used to pass in drawing hints.
-
-    This function is potentially faster than multiple calls to drawPixmap(),
-    since the backend can optimize state changes.
-
-    \sa QPainter::PixmapFragment, QPainter::PixmapFragmentHint
-*/
-
-void QPainter::drawPixmapFragments(const PixmapFragment *fragments, int fragmentCount,
-                                   const QPixmap &pixmap, PixmapFragmentHints hints)
-{
-    Q_D(QPainter);
-
-    if (!d->engine || pixmap.isNull())
-        return;
-
-#ifndef QT_NO_DEBUG
-    for (int i = 0; i < fragmentCount; ++i) {
-        QRectF sourceRect(fragments[i].sourceLeft, fragments[i].sourceTop,
-                          fragments[i].width, fragments[i].height);
-        if (Q_UNLIKELY(!(QRectF(pixmap.rect()).contains(sourceRect))))
-            qWarning("QPainter::drawPixmapFragments - the source rect is not contained by the pixmap's rectangle");
-    }
-#endif
-
-    if (d->engine->isExtended()) {
-        d->extended->drawPixmapFragments(fragments, fragmentCount, pixmap, hints);
-    } else {
-        qreal oldOpacity = opacity();
-        QTransform oldTransform = transform();
-
-        for (int i = 0; i < fragmentCount; ++i) {
-            QTransform transform = oldTransform;
-            qreal xOffset = 0;
-            qreal yOffset = 0;
-            if (fragments[i].rotation == 0) {
-                xOffset = fragments[i].x;
-                yOffset = fragments[i].y;
-            } else {
-                transform.translate(fragments[i].x, fragments[i].y);
-                transform.rotate(fragments[i].rotation);
-            }
-            setOpacity(oldOpacity * fragments[i].opacity);
-            setTransform(transform);
-
-            qreal w = fragments[i].scaleX * fragments[i].width;
-            qreal h = fragments[i].scaleY * fragments[i].height;
-            QRectF sourceRect(fragments[i].sourceLeft, fragments[i].sourceTop,
-                              fragments[i].width, fragments[i].height);
-            drawPixmap(QRectF(qreal(-0.5) * w + xOffset, qreal(-0.5) * h + yOffset, w, h), pixmap, sourceRect);
-        }
-
-        setOpacity(oldOpacity);
-        setTransform(oldTransform);
-    }
-}
-
-/*!
-    \since 4.7
-    \class QPainter::PixmapFragment
-
-    \brief This class is used in conjunction with the
-    QPainter::drawPixmapFragments() function to specify how a pixmap, or
-    sub-rect of a pixmap, is drawn.
-
-    The \a sourceLeft, \a sourceTop, \a width and \a height variables are used
-    as a source rectangle within the pixmap passed into the
-    QPainter::drawPixmapFragments() function. The variables \a x, \a y, \a
-    width and \a height are used to calculate the target rectangle that is
-    drawn. \a x and \a y denotes the center of the target rectangle. The \a
-    width and \a height in the target rectangle is scaled by the \a scaleX and
-    \a scaleY values. The resulting target rectangle is then rotated \a
-    rotation degrees around the \a x, \a y center point.
-
-    \sa QPainter::drawPixmapFragments()
-*/
-
-/*!
-    \since 4.7
-
-    This is a convenience function that returns a QPainter::PixmapFragment that is
-    initialized with the \a pos, \a sourceRect, \a scaleX, \a scaleY, \a
-    rotation, \a opacity parameters.
-*/
-
-QPainter::PixmapFragment QPainter::PixmapFragment::create(const QPointF &pos, const QRectF &sourceRect,
-                                              qreal scaleX, qreal scaleY, qreal rotation,
-                                              qreal opacity)
-{
-    PixmapFragment fragment = {pos.x(), pos.y(), sourceRect.x(), sourceRect.y(), sourceRect.width(),
-                               sourceRect.height(), scaleX, scaleY, rotation, opacity};
-    return fragment;
-}
-
-/*!
-    \variable QPainter::PixmapFragment::x
-    \brief the x coordinate of center point in the target rectangle.
-*/
-
-/*!
-    \variable QPainter::PixmapFragment::y
-    \brief the y coordinate of the center point in the target rectangle.
-*/
-
-/*!
-    \variable QPainter::PixmapFragment::sourceLeft
-    \brief the left coordinate of the source rectangle.
-*/
-
-/*!
-    \variable QPainter::PixmapFragment::sourceTop
-    \brief the top coordinate of the source rectangle.
-*/
-
-/*!
-    \variable QPainter::PixmapFragment::width
-
-    \brief the width of the source rectangle and is used to calculate the width
-    of the target rectangle.
-*/
-
-/*!
-    \variable QPainter::PixmapFragment::height
-
-    \brief the height of the source rectangle and is used to calculate the
-    height of the target rectangle.
-*/
-
-/*!
-    \variable QPainter::PixmapFragment::scaleX
-    \brief the horizontal scale of the target rectangle.
-*/
-
-/*!
-    \variable QPainter::PixmapFragment::scaleY
-    \brief the vertical scale of the target rectangle.
-*/
-
-/*!
-    \variable QPainter::PixmapFragment::rotation
-
-    \brief the rotation of the target rectangle in degrees. The target
-    rectangle is rotated after it has been scaled.
-*/
-
-/*!
-    \variable QPainter::PixmapFragment::opacity
-
-    \brief the opacity of the target rectangle, where 0.0 is fully transparent
-    and 1.0 is fully opaque.
-*/
-
-/*!
-    \since 4.7
-
-    \enum QPainter::PixmapFragmentHint
-
-    \value OpaqueHint Indicates that the pixmap fragments to be drawn are
-    opaque. Opaque fragments are potentially faster to draw.
-
-    \sa QPainter::drawPixmapFragments(), QPainter::PixmapFragment
-*/
 
 /*! \fn Display *QPaintDevice::x11Display() const
     Use QX11Info::display() instead.

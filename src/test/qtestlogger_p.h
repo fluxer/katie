@@ -56,15 +56,16 @@ class QTestFileLogger;
 class QTestLogger : public QAbstractTestLogger
 {
     public:
-        QTestLogger(int fm = 0);
-        ~QTestLogger();
-
         enum TestLoggerFormat
         {
             TLF_XML = 0,
             TLF_LightXml = 1,
             TLF_XunitXml = 2
         };
+
+
+        QTestLogger(TestLoggerFormat fm = TestLoggerFormat::TLF_XML);
+        ~QTestLogger();
 
         void startLogging();
         void stopLogging();
@@ -80,19 +81,6 @@ class QTestLogger : public QAbstractTestLogger
         void addMessage(MessageTypes type, const char *message,
                     const char *file = 0, int line = 0);
 
-        void setLogFormat(TestLoggerFormat fm);
-        TestLoggerFormat logFormat();
-
-        int passCount() const;
-        int failureCount() const;
-        int errorCount() const;
-        int warningCount() const;
-        int skipCount() const;
-        int systemCount() const;
-        int qdebugCount() const;
-        int qwarnCount() const;
-        int qfatalCount() const;
-        int infoCount() const;
         void registerRandomSeed(unsigned int seed);
         unsigned int randomSeed() const;
         bool hasRandomSeed() const;
@@ -109,13 +97,7 @@ class QTestLogger : public QAbstractTestLogger
         int passCounter;
         int failureCounter;
         int errorCounter;
-        int warningCounter;
         int skipCounter;
-        int systemCounter;
-        int qdebugCounter;
-        int qwarnCounter;
-        int qfatalCounter;
-        int infoCounter;
         unsigned int randomSeed_;
         bool hasRandomSeed_;
 };

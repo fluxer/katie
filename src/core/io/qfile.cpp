@@ -1291,13 +1291,6 @@ bool QFile::atEnd() const
     if (!d->ensureFlushed())
         return false;
 
-    // If the file engine knows best, say what it says.
-    if (d->fileEngine->supportsExtension(QAbstractFileEngine::AtEndExtension)) {
-        // Check if the file engine supports AtEndExtension, and if it does,
-        // check if the file engine claims to be at the end.
-        return d->fileEngine->atEnd();
-    }
-
     // Fall back to checking how much is available (will stat files).
     return bytesAvailable() == 0;
 }
@@ -1352,16 +1345,12 @@ qint64 QFile::readLineData(char *data, qint64 maxlen)
     if (!d->ensureFlushed())
         return -1;
 
-    qint64 read;
     if (d->fileEngine->supportsExtension(QAbstractFileEngine::FastReadLineExtension)) {
-        read = d->fileEngine->readLine(data, maxlen);
-    } else {
-        // Fall back to QIODevice's readLine implementation if the engine
-        // cannot do it faster.
-        read = QIODevice::readLineData(data, maxlen);
+        return d->fileEngine->readLine(data, maxlen);
     }
-
-    return read;
+    // Fall back to QIODevice's readLine implementation if the engine
+    // cannot do it faster.
+    return QIODevice::readLineData(data, maxlen);
 }
 
 /*!

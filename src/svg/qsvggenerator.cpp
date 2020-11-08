@@ -922,43 +922,28 @@ void QSvgPaintEngine::drawImage(const QRectF &r, const QImage &image,
 void QSvgPaintEngine::updateState(const QPaintEngineState &state)
 {
     Q_D(QSvgPaintEngine);
-    QPaintEngine::DirtyFlags flags = state.state();
-
-    // always stream full gstate, which is not required, but...
-    flags |= QPaintEngine::AllDirty;
-
     // close old state and start a new one...
     if (d->afterFirstUpdate)
         *d->stream << "</g>\n\n";
 
     *d->stream << "<g ";
 
-    if (flags & QPaintEngine::DirtyBrush) {
-        qbrushToSvg(state.brush());
-    }
+    qbrushToSvg(state.brush());
 
-    if (flags & QPaintEngine::DirtyPen) {
-        qpenToSvg(state.pen());
-    }
+    qpenToSvg(state.pen());
 
-    if (flags & QPaintEngine::DirtyTransform) {
-        d->matrix = state.matrix();
-        *d->stream << "transform=\"matrix(" << d->matrix.m11() << ','
-                   << d->matrix.m12() << ','
-                   << d->matrix.m21() << ',' << d->matrix.m22() << ','
-                   << d->matrix.dx() << ',' << d->matrix.dy()
-                   << ")\""
-                   << endl;
-    }
+    d->matrix = state.matrix();
+    *d->stream << "transform=\"matrix(" << d->matrix.m11() << ','
+                << d->matrix.m12() << ','
+                << d->matrix.m21() << ',' << d->matrix.m22() << ','
+                << d->matrix.dx() << ',' << d->matrix.dy()
+                << ")\""
+                << endl;
 
-    if (flags & QPaintEngine::DirtyFont) {
-        qfontToSvg(state.font());
-    }
+    qfontToSvg(state.font());
 
-    if (flags & QPaintEngine::DirtyOpacity) {
-        if (!qFuzzyIsNull(state.opacity() - 1))
-            stream() << "opacity=\""<<state.opacity()<<"\" ";
-    }
+    if (!qFuzzyIsNull(state.opacity() - 1))
+        stream() << "opacity=\""<<state.opacity()<<"\" ";
 
     *d->stream << '>' << endl;
 

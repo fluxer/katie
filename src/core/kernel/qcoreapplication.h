@@ -123,10 +123,6 @@ public:
 
     static void flush();
 
-#if defined(Q_OS_UNIX)
-    static void watchUnixSignal(int signal, bool watch);
-#endif
-
     typedef bool (*EventFilter)(void *message, long *result);
     EventFilter setEventFilter(EventFilter filter);
     bool filterEvent(void *message, long *result);
@@ -136,7 +132,6 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void aboutToQuit();
-    void unixSignal(int);
 
 protected:
     bool event(QEvent *);
@@ -175,7 +170,7 @@ inline void QCoreApplication::sendPostedEvents() { sendPostedEvents(Q_NULLPTR, 0
 #ifdef QT_NO_TRANSLATION
 // Simple versions
 inline QString QCoreApplication::translate(const char *, const char *sourceText,
-                                           const char *, Encoding encoding = CodecForTr, int = -1)
+                                           const char *, Encoding encoding, int)
 {
 #ifndef QT_NO_TEXTCODEC
     if (encoding == UnicodeUTF8)

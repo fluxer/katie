@@ -83,7 +83,7 @@ static JSValue QT_FASTCALL stringProtoFuncTrimRight(ExecState*, JSObject*, JSVal
 
 namespace JSC {
 
-const ClassInfo StringPrototype::info = { "String", &StringObject::info, 0, ExecState::stringTable };
+const ClassInfo StringPrototype::info = { "String", &StringObject::info, ExecState::stringTable };
 
 /* Source for StringPrototype.lut.h
 @begin stringTable 26

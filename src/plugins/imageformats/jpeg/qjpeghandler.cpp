@@ -50,16 +50,13 @@
 extern "C" {
 
 #define XMD_H           // shut JPEGlib up
-#if defined(Q_OS_UNIXWARE)
-#  define HAVE_BOOLEAN  // libjpeg under Unixware seems to need this
-#endif
 #include <jpeglib.h>
 #ifdef const
 #  undef const          // remove crazy C hackery in jconfig.h
 #endif
 }
 
-#if defined(JPEG_TRUE) && !defined(HAVE_BOOLEAN)
+#if defined(JPEG_TRUE)
 // this jpeglib.h uses JPEG_boolean
 typedef JPEG_boolean boolean;
 #endif
@@ -249,14 +246,9 @@ static bool ensureValidImage(QImage *dest, struct jpeg_decompress_struct *info,
 
 static bool read_jpeg_image(QImage *outImage,
                             QSize scaledSize, QRect scaledClipRect,
-                            QRect clipRect, int inQuality, j_decompress_ptr info, struct my_error_mgr* err  )
+                            QRect clipRect, int quality, j_decompress_ptr info, struct my_error_mgr* err  )
 {
     if (!setjmp(err->setjmp_buffer)) {
-        // -1 means default quality.
-        int quality = inQuality;
-        if (quality < 0)
-            quality = 75;
-
         // If possible, merge the scaledClipRect into either scaledSize
         // or clipRect to avoid doing a separate scaled clipping pass.
         // Best results are achieved by clipping before scaling, not after.
@@ -492,7 +484,7 @@ inline my_jpeg_destination_mgr::my_jpeg_destination_mgr(QIODevice *device)
 }
 
 
-static bool write_jpeg_image(const QImage &image, QIODevice *device, int sourceQuality)
+static bool write_jpeg_image(const QImage &image, QIODevice *device, int quality)
 {
     bool success = false;
     const QVector<QRgb> cmap = image.colorTable();
@@ -553,8 +545,6 @@ static bool write_jpeg_image(const QImage &image, QIODevice *device, int sourceQ
             cinfo.Y_density = (image.dotsPerMeterY()+50) / 100;
         }
 
-
-        int quality = sourceQuality >= 0 ? qMin(sourceQuality,100) : 75;
         jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
         jpeg_start_compress(&cinfo, TRUE);
 
@@ -613,9 +603,6 @@ static bool write_jpeg_image(const QImage &image, QIODevice *device, int sourceQ
                         ++pix;
                     }
                 }
-                break;
-            case QImage::Format_RGB888:
-                memcpy(row, image.constScanLine(cinfo.next_scanline), w * 3);
                 break;
             case QImage::Format_RGB32:
             case QImage::Format_ARGB32:
@@ -838,9 +825,12 @@ QVariant QJpegHandler::option(ImageOption option) const
 void QJpegHandler::setOption(ImageOption option, const QVariant &value)
 {
     switch(option) {
-    case Quality:
-        d->quality = value.toInt();
+    case Quality: {
+        const int newquality = value.toInt();
+        // -1 means default quality.
+        d->quality = (newquality >= 0 ? qMin(newquality,100) : 75);
         break;
+    }
     case ScaledSize:
         d->scaledSize = value.toSize();
         break;

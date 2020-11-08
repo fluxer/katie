@@ -208,7 +208,7 @@ public:
         UnknownSocketErrorString = -1
     };
 
-    void setError(QAbstractSocket::SocketError error, ErrorString errorString) const;
+    void setError(QAbstractSocket::SocketError error, ErrorString errorString);
 
     // native functions
     int option(QNativeSocketEngine::SocketOption option) const;

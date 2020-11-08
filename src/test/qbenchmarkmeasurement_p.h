@@ -59,9 +59,6 @@ public:
     virtual qint64 checkpoint() = 0;
     virtual qint64 stop() = 0;
     virtual bool isMeasurementAccepted(qint64 measurement) = 0;
-    virtual int adjustIterationCount(int suggestion) = 0;
-    virtual int adjustMedianCount(int suggestion) = 0;
-    virtual bool repeatCount() { return 1; } 
     virtual bool needsWarmupIteration() { return false; } 
     virtual QTest::QBenchmarkMetric metricType() = 0;
 };
@@ -73,8 +70,6 @@ public:
     qint64 checkpoint();
     qint64 stop();
     bool isMeasurementAccepted(qint64 measurement);
-    int adjustIterationCount(int sugestion);
-    int adjustMedianCount(int suggestion);
     bool needsWarmupIteration();
     QTest::QBenchmarkMetric metricType();
 private:
@@ -90,8 +85,6 @@ public:
     qint64 checkpoint();
     qint64 stop();
     bool isMeasurementAccepted(qint64 measurement);
-    int adjustIterationCount(int);
-    int adjustMedianCount(int suggestion);
     bool needsWarmupIteration();
     QTest::QBenchmarkMetric metricType();
 private:

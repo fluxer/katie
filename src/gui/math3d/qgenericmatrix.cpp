@@ -60,7 +60,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QGenericMatrix::QGenericMatrix(const QGenericMatrix<N, M, T>& other)
+    \fn QGenericMatrix::QGenericMatrix(const QGenericMatrix<N, M>& other)
 
     Constructs a copy of \a other.
 */
@@ -118,50 +118,50 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QGenericMatrix<N, M, T>& QGenericMatrix::operator+=(const QGenericMatrix<N, M, T>& other)
+    \fn QGenericMatrix<N, M>& QGenericMatrix::operator+=(const QGenericMatrix<N, M>& other)
 
     Adds the contents of \a other to this matrix.
 */
 
 /*!
-    \fn QGenericMatrix<N, M, T>& QGenericMatrix::operator-=(const QGenericMatrix<N, M, T>& other)
+    \fn QGenericMatrix<N, M>& QGenericMatrix::operator-=(const QGenericMatrix<N, M>& other)
 
     Subtracts the contents of \a other from this matrix.
 */
 
 /*!
-    \fn QGenericMatrix<N, M, T>& QGenericMatrix::operator*=(T factor)
+    \fn QGenericMatrix<N, M>& QGenericMatrix::operator*=(T factor)
 
     Multiplies all elements of this matrix by \a factor.
 */
 
 /*!
-    \fn QGenericMatrix<N, M, T>& QGenericMatrix::operator/=(T divisor)
+    \fn QGenericMatrix<N, M>& QGenericMatrix::operator/=(T divisor)
 
     Divides all elements of this matrix by \a divisor.
 */
 
 /*!
-    \fn bool QGenericMatrix::operator==(const QGenericMatrix<N, M, T>& other) const
+    \fn bool QGenericMatrix::operator==(const QGenericMatrix<N, M>& other) const
 
     Returns true if this matrix is identical to \a other; false otherwise.
 */
 
 /*!
-    \fn bool QGenericMatrix::operator!=(const QGenericMatrix<N, M, T>& other) const
+    \fn bool QGenericMatrix::operator!=(const QGenericMatrix<N, M>& other) const
 
     Returns true if this matrix is not identical to \a other; false otherwise.
 */
 
 /*!
-    \fn QGenericMatrix<N, M, T> operator+(const QGenericMatrix<N, M, T>& m1, const QGenericMatrix<N, M, T>& m2)
+    \fn QGenericMatrix<N, M> operator+(const QGenericMatrix<N, M>& m1, const QGenericMatrix<N, M>& m2)
     \relates QGenericMatrix
 
     Returns the sum of \a m1 and \a m2.
 */
 
 /*!
-    \fn QGenericMatrix<N, M, T> operator-(const QGenericMatrix<N, M, T>& m1, const QGenericMatrix<N, M, T>& m2)
+    \fn QGenericMatrix<N, M> operator-(const QGenericMatrix<N, M>& m1, const QGenericMatrix<N, M>& m2)
     \relates QGenericMatrix
 
     Returns the difference of \a m1 and \a m2.
@@ -176,7 +176,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QGenericMatrix<N, M, T> operator-(const QGenericMatrix<N, M, T>& matrix)
+    \fn QGenericMatrix<N, M> operator-(const QGenericMatrix<N, M>& matrix)
     \overload
     \relates QGenericMatrix
 
@@ -184,21 +184,21 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QGenericMatrix<N, M, T> operator*(T factor, const QGenericMatrix<N, M, T>& matrix)
+    \fn QGenericMatrix<N, M> operator*(T factor, const QGenericMatrix<N, M>& matrix)
     \relates QGenericMatrix
 
     Returns the result of multiplying all elements of \a matrix by \a factor.
 */
 
 /*!
-    \fn QGenericMatrix<N, M, T> operator*(const QGenericMatrix<N, M, T>& matrix, T factor)
+    \fn QGenericMatrix<N, M> operator*(const QGenericMatrix<N, M>& matrix, T factor)
     \relates QGenericMatrix
 
     Returns the result of multiplying all elements of \a matrix by \a factor.
 */
 
 /*!
-    \fn QGenericMatrix<N, M, T> operator/(const QGenericMatrix<N, M, T>& matrix, T divisor)
+    \fn QGenericMatrix<N, M> operator/(const QGenericMatrix<N, M>& matrix, T divisor)
     \relates QGenericMatrix
 
     Returns the result of dividing all elements of \a matrix by \a divisor.
@@ -238,7 +238,7 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_DATASTREAM
 
 /*!
-    \fn QDataStream &operator<<(QDataStream &stream, const QGenericMatrix<N, M, T> &matrix)
+    \fn QDataStream &operator<<(QDataStream &stream, const QGenericMatrix<N, M> &matrix)
     \relates QGenericMatrix
 
     Writes the given \a matrix to the given \a stream and returns a
@@ -248,7 +248,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QDataStream &operator>>(QDataStream &stream, QGenericMatrix<N, M, T> &matrix)
+    \fn QDataStream &operator>>(QDataStream &stream, QGenericMatrix<N, M> &matrix)
     \relates QGenericMatrix
 
     Reads a NxM matrix from the given \a stream into the given \a matrix

@@ -1451,13 +1451,12 @@ QRectF QPainterPath::controlPointRect() const
 QPainterPath QPainterPath::toReversed() const
 {
     Q_D(const QPainterPath);
-    QPainterPath rev;
 
     if (isEmpty()) {
-        rev = *this;
-        return rev;
+        return *this;
     }
 
+    QPainterPath rev;
     rev.moveTo(d->elements.at(d->elements.size()-1).x, d->elements.at(d->elements.size()-1).y);
 
     for (int i=d->elements.size()-1; i>=1; --i) {

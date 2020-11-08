@@ -38,6 +38,12 @@ if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
     cmake_policy(SET CMP0063 NEW)
 endif()
 
+# LLVM linker does not have a default library search path and only library names are received
+# from pkg-config queries, add some directories known to contain system wide libraries
+if(CMAKE_SYSTEM_NAME MATCHES "BSD")
+    link_directories(/usr/local/lib /usr/lib /lib)
+endif()
+
 include(CheckIncludeFile)
 include(CheckIncludeFileCXX)
 include(CheckTypeSize)
@@ -61,7 +67,7 @@ elseif(CMAKE_HOST_SYSTEM_PROCESSOR)
     string(TOLOWER "${CMAKE_HOST_SYSTEM_PROCESSOR}" KATIE_PROCESSOR)
 endif()
 
-# used as shebang for profile, exec and dbg scripts
+# used as shebang for profile, exec, dbg and trace scripts
 find_program(KATIE_SHELL NAMES sh dash mksh ksh ash)
 if(NOT KATIE_SHELL)
     message(FATAL_ERROR "Could not detect shell, supported are: sh, dash, mksh, ksh and ash")
@@ -88,7 +94,6 @@ set(KATIE_PLUGINS_PATH "${KATIE_LIBRARIES_PATH}/katie/plugins" CACHE PATH "Plugi
 set(KATIE_IMPORTS_PATH "${KATIE_LIBRARIES_PATH}/katie/imports" CACHE PATH "Declarative imports installation path")
 set(KATIE_DATA_PATH "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
 set(KATIE_TRANSLATIONS_PATH "${KATIE_DATA_PATH}/katie/translations" CACHE PATH "Translations installation path")
-set(KATIE_SETTINGS_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg" CACHE PATH "Settings runtime path")
 set(KATIE_CMAKE_PATH "${KATIE_LIBRARIES_PATH}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
 set(KATIE_LDCONF_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
 set(KATIE_PROFILE_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/profile.d" CACHE PATH "Shell profile scripts installation path")
@@ -161,10 +166,6 @@ add_definitions(
     # means source code adjustments!
     # -DQT_NO_CAST_FROM_ASCII
     # -DQT_NO_CAST_TO_ASCII
-
-    # both gui and svg components require harfbuzz
-    -DHB_EXPORT=Q_CORE_EXPORT
-    -DQT_NO_OPENTYPE
 )
 
 # for symbols mangling while unwinding in core component
@@ -197,8 +198,11 @@ katie_check_function(fegetenv "fenv.h")
 katie_check_function(fesetenv "fenv.h")
 katie_check_function(feclearexcept "fenv.h")
 katie_check_function(feenableexcept "fenv.h")
-# non-standard
+# none
 katie_check_function(flock "sys/file.h")
+katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
+katie_check_struct(sockaddr_dl sdl_index "net/if_dl.h")
+katie_check_struct(dirent d_type "dirent.h")
 
 # 64-bit offset alternatives, if any of the functions is not found it will set
 # QT_LARGEFILE_SUPPORT to FALSE. QT_LARGEFILE_SUPPORT is used in qconfig.h
@@ -219,10 +223,6 @@ katie_check_function64(fsetpos64 "stdio.h")
 katie_check_function64(mmap64 "sys/mman.h")
 katie_check_function64(readdir64 "dirent.h")
 katie_check_function64(readdir64_r "dirent.h")
-
-if(KATIE_COMPILER MATCHES "(gcc|clang)")
-    set(QT_VISIBILITY_AVAILABLE TRUE)
-endif()
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
@@ -251,8 +251,8 @@ set_package_properties(ICU PROPERTIES
     TYPE REQUIRED
 )
 
-# v0.7.3+ required for ZSTD_getDecompressedSize()
-find_package(ZSTD 0.7.3)
+# v1.1.3+ required for exported ZSTD_getErrorString() and ZSTD_getErrorCode()
+find_package(ZSTD 1.1.3)
 set_package_properties(ZSTD PROPERTIES
     PURPOSE "Required for compression support"
     DESCRIPTION "Fast real-time compression algorithm"
@@ -260,7 +260,8 @@ set_package_properties(ZSTD PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(OpenSSL)
+# v0.9.8+ required for SHA-224...SHA-512 support
+find_package(OpenSSL 0.9.8)
 set_package_properties(OpenSSL PROPERTIES
     PURPOSE "Required for HTTPS support"
     DESCRIPTION "Support for secure network communications (SSL and TLS)"
@@ -303,20 +304,29 @@ set_package_properties(Threads PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(Resolv)
-set_package_properties(Resolv PROPERTIES
-    PURPOSE "Required for domain resolving support"
-    DESCRIPTION "Standard C library specific resolv implementation"
-    URL ""
-    TYPE RECOMMENDED
-)
-
 # v1.5.4+ required for png_longjmp_ptr() without noreturn attribute
 find_package(PNG 1.5.4)
 set_package_properties(PNG PROPERTIES
     PURPOSE "PNG format handler"
     DESCRIPTION "A collection of routines used to create PNG format graphics files"
     URL "http://www.libpng.org/pub/png/libpng.html"
+    TYPE REQUIRED
+)
+
+# v3.5.0+ required for sqlite3_open_v2()
+find_package(Sqlite 3.5.0)
+set_package_properties(Sqlite PROPERTIES
+    PURPOSE "Required for SQLite database support"
+    DESCRIPTION "Software library that implements SQL database engine"
+    URL "https://www.sqlite.org/"
+    TYPE REQUIRED
+)
+
+find_package(Resolv)
+set_package_properties(Resolv PROPERTIES
+    PURPOSE "Required for domain resolving support"
+    DESCRIPTION "Standard C library specific resolv implementation"
+    URL ""
     TYPE RECOMMENDED
 )
 
@@ -372,15 +382,6 @@ set_package_properties(DBus PROPERTIES
     TYPE RECOMMENDED
 )
 
-# v3.5.0+ required for sqlite3_open_v2()
-find_package(Sqlite 3.5.0)
-set_package_properties(Sqlite PROPERTIES
-    PURPOSE "Required for SQLite database support"
-    DESCRIPTION "Software library that implements SQL database engine"
-    URL "https://www.sqlite.org/"
-    TYPE RECOMMENDED
-)
-
 find_package(ODBC)
 set_package_properties(ODBC PROPERTIES
     PURPOSE "Required for ODBC database support"
@@ -423,7 +424,7 @@ if(KATIE_TESTS OR KATIE_BENCHMARKS)
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
 
-foreach(script exec dbg)
+foreach(script exec dbg trace)
     configure_file(
         ${CMAKE_SOURCE_DIR}/cmake/${script}.sh.cmake
         ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/${script}.sh
@@ -435,15 +436,6 @@ foreach(script exec dbg)
         FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     )
 endforeach()
-
-# optional packages which if not found are build internally
-if(NOT PNG_FOUND)
-    message(WARNING "Using internal copy of libpng")
-endif()
-
-if(NOT SQLITE_FOUND)
-    message(WARNING "Using internal copy of sqlite")
-endif()
 
 # optional packages
 if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)

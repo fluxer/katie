@@ -104,16 +104,10 @@ static inline int prepareNewValueWithSerialNumber(int oldId, int newId)
     return (newId & TimerIdMask) | ((oldId + TimerSerialCounter) & TimerSerialMask);
 }
 
-namespace {
-    template<bool> struct QStaticAssertType;
-    template<> struct QStaticAssertType<true> { enum { Value = 1 }; };
-}
-#define q_static_assert(expr)     (void)QStaticAssertType<expr>::Value
-
 static inline int bucketOffset(int timerId)
 {
-    q_static_assert(sizeof BucketSize == sizeof BucketOffset);
-    q_static_assert(sizeof(timerIds) / sizeof(timerIds[0]) == NumberOfBuckets);
+    Q_ASSERT(sizeof(BucketSize) == sizeof(BucketOffset));
+    Q_ASSERT(sizeof(timerIds) / sizeof(timerIds[0]) == NumberOfBuckets);
 
     for (int i = 0; i < NumberOfBuckets; ++i) {
         if (timerId < BucketSize[i])

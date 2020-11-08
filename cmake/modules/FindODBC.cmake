@@ -9,16 +9,14 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_ODBC QUIET odbc)
-    if(NOT PC_ODBC_FOUND)
-        pkg_check_modules(PC_ODBC QUIET libiodbc)
-    endif()
-
-    set(ODBC_INCLUDES ${PC_ODBC_INCLUDE_DIRS})
-    set(ODBC_LIBRARIES ${PC_ODBC_LIBRARIES})
+include(FindPkgConfig)
+pkg_check_modules(PC_ODBC QUIET odbc)
+if(NOT PC_ODBC_FOUND)
+    pkg_check_modules(PC_ODBC QUIET libiodbc)
 endif()
+
+set(ODBC_INCLUDES ${PC_ODBC_INCLUDE_DIRS})
+set(ODBC_LIBRARIES ${PC_ODBC_LIBRARIES})
 
 if(NOT ODBC_INCLUDES OR NOT ODBC_LIBRARIES)
     find_path(ODBC_INCLUDES

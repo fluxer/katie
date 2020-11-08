@@ -56,13 +56,13 @@ namespace QTest {
         static bool colored = (!qgetenv("QTEST_COLORED").isEmpty());
         switch (type) {
         case QAbstractTestLogger::Pass:
-            return COLORED_MSG(0, 32, "PASS   "); //green
+            return COLORED_MSG(0, 32, "PASS  "); //green
         case QAbstractTestLogger::XFail:
-            return COLORED_MSG(1, 32, "XFAIL  "); //light green
+            return COLORED_MSG(1, 32, "XFAIL "); //light green
         case QAbstractTestLogger::Fail:
-            return COLORED_MSG(0, 31, "FAIL!  "); //red
+            return COLORED_MSG(0, 31, "FAIL! "); //red
         case QAbstractTestLogger::XPass:
-            return COLORED_MSG(0, 31, "XPASS  "); //red, too
+            return COLORED_MSG(0, 31, "XPASS "); //red, too
         }
         return "??????";
     }
@@ -70,7 +70,7 @@ namespace QTest {
     static const char *benchmarkResult2String()
     {
         static bool colored = (!qgetenv("QTEST_COLORED").isEmpty());
-        return COLORED_MSG(0, 36, "RESULT "); // cyan
+        return COLORED_MSG(0, 36, "RESULT   "); // cyan
     }
 
     static const char *messageType2String(QAbstractTestLogger::MessageTypes type)
@@ -78,19 +78,19 @@ namespace QTest {
         static bool colored = (!qgetenv("QTEST_COLORED").isEmpty());
         switch (type) {
         case QAbstractTestLogger::Skip:
-            return COLORED_MSG(0, 37, "SKIP   "); //white
+            return COLORED_MSG(0, 37, "SKIP  "); //white
         case QAbstractTestLogger::Warn:
-            return COLORED_MSG(0, 33, "WARNING"); // yellow
+            return COLORED_MSG(0, 33, "WARN  "); // yellow
         case QAbstractTestLogger::QWarning:
-            return COLORED_MSG(1, 33, "QWARN  ");
+            return COLORED_MSG(1, 33, "QWARN ");
         case QAbstractTestLogger::QDebug:
-            return COLORED_MSG(1, 33, "QDEBUG ");
-        case QAbstractTestLogger::QSystem:
-            return COLORED_MSG(1, 33, "QSYSTEM");
+            return COLORED_MSG(1, 33, "QDEBUG");
+        case QAbstractTestLogger::QCritical:
+            return COLORED_MSG(1, 33, "QCRIT ");
         case QAbstractTestLogger::QFatal:
-            return COLORED_MSG(0, 31, "QFATAL "); // red
+            return COLORED_MSG(0, 31, "QFATAL"); // red
         case QAbstractTestLogger::Info:
-            return "INFO   "; // no coloring
+            return "INFO  "; // no coloring
         }
         return "??????";
     }
