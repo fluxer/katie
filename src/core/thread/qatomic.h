@@ -52,14 +52,11 @@ class Q_CORE_EXPORT QAtomicInt
       }
 
       inline QAtomicInt(const QAtomicInt &other) {
-         int data = other.load();
-         store(data);
+         store(other.load());
       }
 
       inline QAtomicInt &operator=(const QAtomicInt &other) {
-         int data = other.load();
-         store(data);
-
+         store(other.load());
          return *this;
       }
 
@@ -159,14 +156,11 @@ class Q_CORE_EXPORT QAtomicPointer
       }
 
       inline QAtomicPointer(const QAtomicPointer<T> &other) {
-         T *data = other.load();
-         store(data);
+         store(other.load());
       }
 
       inline QAtomicPointer<T> &operator=(const QAtomicPointer<T> &other) {
-         T *data = other.load();
-         store(data);
-
+         store(other.load());
          return *this;
       }
 
