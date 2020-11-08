@@ -3244,12 +3244,10 @@ bool QUrl::hasFragment() const
     URL does not contain a valid TLD, in which case the function returns
     an empty string.
 */
-#ifndef QT_BOOTSTRAPPED
 QString QUrl::topLevelDomain() const
 {
     return qTopLevelDomain(host());
 }
-#endif
 
 /*!
     Returns the result of the merge of this URL with \a relative. This
