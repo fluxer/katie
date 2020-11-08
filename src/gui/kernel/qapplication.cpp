@@ -1045,9 +1045,8 @@ QStyle *QApplication::style()
         QStyle *&app_style = QApplicationPrivate::app_style;
         app_style = QStyleFactory::create(style);
         if (!app_style) {
-            QStringList styles = QStyleFactory::keys();
-            for (int i = 0; i < styles.size(); ++i) {
-                if ((app_style = QStyleFactory::create(styles.at(i))))
+            foreach (const QString &style, QStyleFactory::keys()) {
+                if ((app_style = QStyleFactory::create(style)))
                     break;
             }
         }

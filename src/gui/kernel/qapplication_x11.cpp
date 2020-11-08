@@ -692,13 +692,11 @@ bool QApplicationPrivate::x11_apply_settings()
         stylename = qt_guiPlatformPlugin()->styleName();
     }
 
-    static QString currentStyleName = stylename;
     if (QCoreApplication::startingUp()) {
         if (!stylename.isEmpty() && QApplicationPrivate::styleOverride.isNull())
             QApplicationPrivate::styleOverride = stylename;
     } else {
-        if (currentStyleName != stylename) {
-            currentStyleName = stylename;
+        if (QApplication::style()->objectName() != stylename) {
             QApplication::setStyle(stylename);
         }
     }
