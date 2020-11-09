@@ -217,7 +217,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
 */
 bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh)
 {
-    return open(openMode, QT_FILENO(fh), QFile::DontCloseHandle);
+    return QFSFileEngine::open(openMode, QT_FILENO(fh), QFile::DontCloseHandle);
 }
 
 /*!
@@ -230,8 +230,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh)
 */
 bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh, QFile::FileHandleFlags handleFlags)
 {
-    Q_D(QFSFileEngine);
-    return open(openMode, QT_FILENO(fh), handleFlags);
+    return QFSFileEngine::open(openMode, QT_FILENO(fh), handleFlags);
 }
 
 /*!
@@ -240,7 +239,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh, QFile::FileHand
 */
 bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd)
 {
-    return open(openMode, fd, QFile::DontCloseHandle);
+    return QFSFileEngine::open(openMode, fd, QFile::DontCloseHandle);
 }
 
 /*!
