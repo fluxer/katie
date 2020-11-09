@@ -46,6 +46,7 @@
 //
 
 #include "qdatetime.h"
+#include "qfileinfo.h"
 #include "qstringlist.h"
 #include "qobject_p.h"
 
@@ -61,7 +62,7 @@ public:
     QSettingsPrivate(const QString &fileName, QSettings::Format format);
     ~QSettingsPrivate();
 
-    void read();
+    void read() const;
     void write();
     void notify();
 
@@ -73,15 +74,16 @@ public:
 
     QSettings::Format format;
     QSettings::Scope scope;
-    QSettings::SettingsStatus status;
+    mutable QSettings::SettingsStatus status;
     QString filename;
-    QSettings::SettingsMap map;
+    mutable QSettings::SettingsMap map;
     QSettings::SettingsMap pending;
     QString group;
 
     QSettings::ReadFunc readFunc;
     QSettings::WriteFunc writeFunc;
-    QDateTime timestamp;
+    mutable QDateTime timestamp;
+    mutable QFileInfo fileinfo;
 };
 
 QT_END_NAMESPACE

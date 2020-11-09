@@ -261,6 +261,8 @@ QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope sc
     filename = getSettingsPath(scope, QCoreApplication::applicationName(), handler.extension);
     readFunc = handler.readFunc;
     writeFunc = handler.writeFunc;
+    fileinfo.setFile(filename);
+    fileinfo.setCaching(false);
 }
 
 QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
@@ -270,18 +272,24 @@ QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format fo
     filename = getSettingsPath(scope, fileName, handler.extension);
     readFunc = handler.readFunc;
     writeFunc = handler.writeFunc;
+    fileinfo.setFile(filename);
+    fileinfo.setCaching(false);
 }
 
 QSettingsPrivate::~QSettingsPrivate()
 {
 }
 
-void QSettingsPrivate::read()
+void QSettingsPrivate::read() const
 {
-    QFileInfo info(filename);
-    if (!info.isReadable() || info.size() == 0) {
+    if (!fileinfo.isReadable() || fileinfo.size() == 0) {
         status = QSettings::AccessError;
-        // no warning, info.exists() may return false if not readable
+        // no warning, fileinfo.exists() may return false if not readable
+        return;
+    }
+
+    const QDateTime newstamp = fileinfo.lastModified();
+    if (timestamp == newstamp) {
         return;
     }
 
@@ -298,7 +306,7 @@ void QSettingsPrivate::read()
         return;
     }
 
-    timestamp = info.lastModified();
+    timestamp = newstamp;
 }
 
 void QSettingsPrivate::write()
@@ -307,12 +315,7 @@ void QSettingsPrivate::write()
         return;
     }
 
-    QFileInfo info(filename);
-    const QDateTime newstamp = info.lastModified();
-    if (timestamp < newstamp || !newstamp.isValid()) {
-        QSettingsPrivate::read();
-    }
-
+    QSettingsPrivate::read();
 
     foreach (const QString &key, map.keys()) {
         if (!pending.contains(key)) {
@@ -961,6 +964,7 @@ QSettings::SettingsStatus QSettings::status() const
 QSettings::SettingsMap QSettings::map() const
 {
     Q_D(const QSettings);
+    d->read();
     return d->map;
 }
 
@@ -976,6 +980,7 @@ QSettings::SettingsMap QSettings::map() const
 QStringList QSettings::keys() const
 {
     Q_D(const QSettings);
+    d->read();
     if (!d->pending.isEmpty()) {
         QStringList mapkeys = d->map.keys();
         foreach(const QString &key, d->pending.keys()) {
@@ -1091,12 +1096,11 @@ QStringList QSettings::groupKeys() const
 bool QSettings::isWritable() const
 {
     Q_D(const QSettings);
-    QFileInfo info(d->filename);
-    if (info.isWritable()) {
+    if (d->fileinfo.isWritable()) {
         return true;
     }
     // if the file does not exist, check if it can be created
-    QFileInfo dirinfo(info.absolutePath());
+    QFileInfo dirinfo(d->fileinfo.absolutePath());
     return dirinfo.isWritable();
 }
 
@@ -1122,6 +1126,7 @@ void QSettings::setValue(const QString &key, const QVariant &value)
 void QSettings::remove(const QString &key)
 {
     Q_D(QSettings);
+    d->read();
     const QString groupkey = d->toGroupKey(key);
     foreach(const QString &key, d->map.keys()) {
         if (key.startsWith(groupkey)) {
@@ -1145,6 +1150,7 @@ void QSettings::remove(const QString &key)
 bool QSettings::contains(const QString &key) const
 {
     Q_D(const QSettings);
+    d->read();
     const QString groupkey = d->toGroupKey(key);
     return (d->map.contains(groupkey) || d->pending.contains(groupkey));
 }
@@ -1161,6 +1167,7 @@ bool QSettings::contains(const QString &key) const
 QVariant QSettings::value(const QString &key, const QVariant &defaultValue) const
 {
     Q_D(const QSettings);
+    d->read();
     const QString groupkey = d->toGroupKey(key);
     if (d->pending.contains(groupkey)) {
         return d->pending.value(groupkey);
