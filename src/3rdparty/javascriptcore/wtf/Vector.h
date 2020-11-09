@@ -39,7 +39,7 @@ namespace WTF {
         #define WTF_ALIGN_OF(type)   0
     #endif
 
-    #if COMPILER(GCC) && !COMPILER(INTEL)
+    #if COMPILER(GCC)
         typedef char __attribute__((__may_alias__)) AlignedBufferChar; 
     #else
         typedef char AlignedBufferChar; 

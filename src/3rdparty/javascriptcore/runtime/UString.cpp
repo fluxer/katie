@@ -762,12 +762,7 @@ int compare(const UString& s1, const UString& s2)
     return (l1 > l2) ? 1 : -1;
 }
 
-#if OS(SOLARIS) && COMPILER(SUNCC)
-// Signature must match that of UStringImpl.h, otherwise the linker complains about undefined symbol.
-bool equal(const UStringImpl* r, const UStringImpl* b)
-#else
 bool equal(const UString::Rep* r, const UString::Rep* b)
-#endif
 {
     int length = r->size();
     if (length != b->size())

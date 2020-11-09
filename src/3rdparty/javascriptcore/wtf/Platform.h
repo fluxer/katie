@@ -31,12 +31,6 @@
 
 QT_USE_NAMESPACE
 
-/* ==== PLATFORM handles OS, operating environment, graphics API, and
-   CPU. This macro will be phased out in favor of platform adaptation
-   macros, policy decision macros, and top-level port definitions. ==== */
-#define PLATFORM(WTF_FEATURE) (defined WTF_PLATFORM_##WTF_FEATURE  && WTF_PLATFORM_##WTF_FEATURE)
-
-
 /* ==== Platform adaptation macros: these describe properties of the target environment. ==== */
 
 /* COMPILER() - the compiler being used to build the project */
@@ -95,37 +89,6 @@ QT_USE_NAMESPACE
 #endif
 #endif /* defined(__GXX_EXPERIMENTAL_CXX0X__) || (defined(__cplusplus) && __cplusplus >= 201103L) */
 #endif /* COMPILER(GCC) */
-
-/* COMPILER(MINGW) - MinGW GCC */
-/* COMPILER(MINGW64) - mingw-w64 GCC - only used as additional check to exclude mingw.org specific functions */
-#if defined(__MINGW32__)
-#define WTF_COMPILER_MINGW 1
-#include <_mingw.h> /* private MinGW header */
-    #if defined(__MINGW64_VERSION_MAJOR) /* best way to check for mingw-w64 vs mingw.org */
-        #define WTF_COMPILER_MINGW64 1
-    #endif /* __MINGW64_VERSION_MAJOR */
-#endif /* __MINGW32__ */
-
-/* COMPILER(SUNCC) - Sun CC compiler, also known as Sun Studio or Sun Pro */
-#if defined(__SUNPRO_CC) || defined(__SUNPRO_C)
-#define WTF_COMPILER_SUNCC 1
-#endif
-
-/* COMPILER(INTEL) - Intel C++ Compiler */
-#if defined(__INTEL_COMPILER)
-#define WTF_COMPILER_INTEL 1
-#endif
-
-/* COMPILER(ACC) - HP aCC */
-#if defined(__HP_aCC)
-#define WTF_COMPILER_ACC 1
-#endif
-
-/* COMPILER(XLC) - IBM XL */
-#if defined(__xlC__)
-#define WTF_COMPILER_XLC 1
-#endif
-
 
 /* ==== CPU() - the target CPU architecture ==== */
 
@@ -235,8 +198,7 @@ QT_USE_NAMESPACE
 
 #elif !defined(__ARM_EABI__) \
     && !defined(__EABI__) \
-    && !defined(__VFP_FP__) \
-    && !defined(ANDROID)
+    && !defined(__VFP_FP__)
 #define WTF_CPU_MIDDLE_ENDIAN 1
 
 #endif
@@ -359,19 +321,9 @@ QT_USE_NAMESPACE
 /* ==== OS() - underlying operating system; only to be used for mandated low-level services like 
    virtual memory, not to choose a GUI toolkit ==== */
 
-/* OS(ANDROID) - Android */
-#ifdef ANDROID
-#define WTF_OS_ANDROID 1
-#endif
-
 /* OS(FREEBSD) - FreeBSD */
 #ifdef __FreeBSD__
 #define WTF_OS_FREEBSD 1
-#endif
-
-/* OS(HAIKU) - Haiku */
-#ifdef __HAIKU__
-#define WTF_OS_HAIKU 1
 #endif
 
 /* OS(LINUX) - Linux */
@@ -381,7 +333,7 @@ QT_USE_NAMESPACE
 
 /* OS(NETBSD) - NetBSD */
 #if defined(__NetBSD__)
-#define WTF_PLATFORM_NETBSD 1
+#define WTF_OS_NETBSD 1
 #endif
 
 /* OS(OPENBSD) - OpenBSD */
@@ -394,69 +346,28 @@ QT_USE_NAMESPACE
 #define WTF_OS_SOLARIS 1
 #endif
 
-/* OS(UNIX) - Any Unix-like system */
-#if   OS(ANDROID)          \
-    || OS(FREEBSD)          \
-    || OS(HAIKU)            \
-    || OS(LINUX)            \
-    || OS(NETBSD)           \
-    || OS(OPENBSD)          \
-    || OS(SOLARIS)          \
-    || defined(unix)        \
-    || defined(__unix)      \
-    || defined(__unix__)
-#define WTF_OS_UNIX 1
-#endif
-
 /* Operating environments */
 
 /* FIXME: these are all mixes of OS, operating environment and policy choices. */
-/* PLATFORM(HAIKU) */
-/* PLATFORM(ANDROID) */
-
-#if defined(ANDROID)
-#define WTF_PLATFORM_ANDROID 1
-#endif
 
 #if OS(FREEBSD) || OS(OPENBSD)
 #define HAVE_PTHREAD_NP_H 1
 #endif
 
-#if OS(UNIX)
-#define HAVE_SIGNAL_H 1
-#endif
-
-#if !OS(SOLARIS) \
-     && !OS(HAIKU) && !OS(ANDROID)
+#if !OS(SOLARIS)
 #define HAVE_TM_GMTOFF 1
 #define HAVE_TM_ZONE 1
 #define HAVE_TIMEGM 1
 #endif
 
-#if OS(ANDROID)
-
 #define HAVE_ERRNO_H 1
-#define HAVE_LANGINFO_H 0
-#define HAVE_MMAP 1
-#define HAVE_SBRK 1
-#define HAVE_STRINGS_H 1
-#define HAVE_SYS_PARAM_H 1
-#define HAVE_SYS_TIME_H 1
-
-#else
-
-#define HAVE_ERRNO_H 1
-/* As long as Haiku doesn't have a complete support of locale this will be disabled. */
-#if !OS(HAIKU)
+#define HAVE_SIGNAL_H 1
 #define HAVE_LANGINFO_H 1
-#endif
 #define HAVE_MMAP 1
 #define HAVE_SBRK 1
 #define HAVE_STRINGS_H 1
 #define HAVE_SYS_PARAM_H 1
 #define HAVE_SYS_TIME_H 1
-
-#endif
 
 /* ENABLE macro defaults */
 
@@ -476,7 +387,7 @@ QT_USE_NAMESPACE
 #endif
 
 #if !defined(WTF_USE_JSVALUE64) && !defined(WTF_USE_JSVALUE32) && !defined(WTF_USE_JSVALUE32_64)
-#if (CPU(X86_64) && (OS(UNIX) || OS(SOLARIS))) || (CPU(IA64) && !CPU(IA64_32)) || CPU(ALPHA) || CPU(SPARC64) || CPU(MIPS64) || CPU(AARCH64)
+#if CPU(X86_64) || (CPU(IA64) && !CPU(IA64_32)) || CPU(ALPHA) || CPU(SPARC64) || CPU(MIPS64) || CPU(AARCH64)
 #define WTF_USE_JSVALUE64 1
 #elif CPU(ARM) || CPU(PPC64)
 #define WTF_USE_JSVALUE32 1

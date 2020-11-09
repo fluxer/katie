@@ -42,16 +42,7 @@
 #include <limits.h>
 #include <setjmp.h>
 #include <stdlib.h>
-
-#if OS(HAIKU)
-
-#include <OS.h>
-
-#elif OS(UNIX)
-
-#if !OS(HAIKU)
 #include <sys/mman.h>
-#endif
 #include <unistd.h>
 
 #if OS(SOLARIS)
@@ -62,8 +53,6 @@
 
 #if HAVE(PTHREAD_NP_H)
 #include <pthread_np.h>
-#endif
-
 #endif
 
 #define COLLECT_ON_EVERY_ALLOCATION 0
@@ -347,28 +336,12 @@ static inline void* currentThreadStackBase()
     stack_t s;
     thr_stksegment(&s);
     return s.ss_sp;
-#elif OS(AIX)
-    pthread_t thread = pthread_self();
-    struct __pthrdsinfo threadinfo;
-    char regbuf[256];
-    int regbufsize = sizeof regbuf;
-
-    if (pthread_getthrds_np(&thread, PTHRDSINFO_QUERY_ALL,
-                            &threadinfo, sizeof threadinfo,
-                            &regbuf, &regbufsize) == 0)
-        return threadinfo.__pi_stackaddr;
-
-    return 0;
 #elif OS(OPENBSD)
     pthread_t thread = pthread_self();
     stack_t stack;
     pthread_stackseg_np(thread, &stack);
     return stack.ss_sp;
-#elif OS(HAIKU)
-    thread_info threadInfo;
-    get_thread_info(find_thread(NULL), &threadInfo);
-    return threadInfo.stack_end;
-#elif OS(UNIX)
+#else
     AtomicallyInitializedStatic(QMutex*, mutex = new QMutex);
     QMutexLocker locker(mutex);
     static void* stackBase = 0;
@@ -378,7 +351,7 @@ static inline void* currentThreadStackBase()
     if (stackBase == 0 || thread != stackThread) {
         pthread_attr_t sattr;
         pthread_attr_init(&sattr);
-#if HAVE(PTHREAD_NP_H) || OS(NETBSD)
+#if HAVE(PTHREAD_NP_H)
         // e.g. on FreeBSD 5.4, neundorf@kde.org
         pthread_attr_get_np(thread, &sattr);
 #else
@@ -392,8 +365,6 @@ static inline void* currentThreadStackBase()
         stackThread = thread;
     }
     return static_cast<char*>(stackBase) + stackSize;
-#else
-#error Need a way to get the stack base on this platform
 #endif
 }
 
