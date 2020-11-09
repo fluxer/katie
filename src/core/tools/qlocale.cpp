@@ -208,7 +208,7 @@ const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLo
             script = subtagAliasTbl[i].toscript;
             country = subtagAliasTbl[i].tocountry;
             QLOCALEDEBUG << "to" << language << script << country;
-            return QLocalePrivate::findLocale(language, script, country);
+            break;
         }
     }
 
