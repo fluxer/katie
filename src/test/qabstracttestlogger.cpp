@@ -35,8 +35,8 @@
 #include "QtTest/qtestlog_p.h"
 #include "QtTest/qtestassert.h"
 #include "qtestcommon_p.h"
-
-#include "QtCore/qbytearray.h"
+#include "qplatformdefs.h"
+#include "qbytearray.h"
 
 #include <stdarg.h>
 #include <unistd.h>
@@ -69,7 +69,7 @@ void QAbstractTestLogger::startLogging()
         QTest::stream = stdout;
         return;
     }
-    QTest::stream = ::fopen(out, "wt");
+    QTest::stream = QT_FOPEN(out, "wt");
     if (!QTest::stream) {
         printf("Unable to open file for logging: %s", out);
         ::exit(1);
@@ -80,7 +80,7 @@ void QAbstractTestLogger::stopLogging()
 {
     QTEST_ASSERT(QTest::stream);
     if (QTest::stream != stdout) {
-        fclose(QTest::stream);
+        ::fclose(QTest::stream);
     } else {
     }
     QTest::stream = 0;

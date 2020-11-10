@@ -245,11 +245,11 @@ void tst_qfile::readBigFile()
         case(PosixBenchmark): {
             QByteArray data = filename.toLocal8Bit();
             const char* cfilename = data.constData();
-            FILE* cfile = ::fopen(cfilename, "rb");
+            FILE* cfile = QT_FOPEN(cfilename, "rb");
             QBENCHMARK {
                 while(!feof(cfile))
                     ::fread(buffer, blockSize, 1, cfile);
-                ::fseek(cfile, 0, SEEK_SET);
+                QT_FSEEK(cfile, 0, SEEK_SET);
             }
             ::fclose(cfile);
         }
@@ -304,10 +304,10 @@ void tst_qfile::seek()
         case(PosixBenchmark): {
             QByteArray data = filename.toLocal8Bit();
             const char* cfilename = data.constData();
-            FILE* cfile = ::fopen(cfilename, "rb");
+            FILE* cfile = QT_FOPEN(cfilename, "rb");
             QBENCHMARK {
                 i=(i+1)%sp_size;
-                ::fseek(cfile, seekpos[i], SEEK_SET);
+                QT_FSEEK(cfile, seekpos[i], SEEK_SET);
             }
             ::fclose(cfile);
         }
@@ -360,7 +360,7 @@ void tst_qfile::open()
             const char* cfilename = data.constData();
 
             QBENCHMARK {
-                FILE* cfile = ::fopen(cfilename, "rb");
+                FILE* cfile = QT_FOPEN(cfilename, "rb");
                 ::fclose(cfile);
             }
         }
@@ -369,7 +369,7 @@ void tst_qfile::open()
             // ensure we don't account toLocal8Bit()
             QByteArray data = filename.toLocal8Bit();
             const char* cfilename = data.constData();
-            FILE* cfile = ::fopen(cfilename, "rb");
+            FILE* cfile = QT_FOPEN(cfilename, "rb");
 
             QBENCHMARK {
                 QFile file;
@@ -519,14 +519,14 @@ void tst_qfile::readSmallFiles()
         case(PosixBenchmark): {
             QList<FILE*> fileList;
             Q_FOREACH(QString file, files) {
-                fileList.append(::fopen(QFile::encodeName(tmpDirName + QLatin1Char('/') + file).constData(), "rb"));
+                fileList.append(QT_FOPEN(QFile::encodeName(tmpDirName + QLatin1Char('/') + file).constData(), "rb"));
             }
 
             QBENCHMARK {
                 Q_FOREACH(FILE* cfile, fileList) {
                     while(!feof(cfile))
                         ::fread(buffer, blockSize, 1, cfile);
-                    ::fseek(cfile, 0, SEEK_SET);
+                    QT_FSEEK(cfile, 0, SEEK_SET);
                 }
             }
 

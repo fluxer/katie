@@ -33,11 +33,7 @@
 
 #include <QtTest/QtTest>
 #include <QtCore/QDirIterator>
-
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <unistd.h>
+#include "qplatformdefs.h"
 
 QT_USE_NAMESPACE
 
@@ -145,19 +141,19 @@ private slots:
 
     void sizeSpeedWithoutFilterLowLevel() {
         QDir testdir(QDir::tempPath() + QLatin1String("/test_speed"));
-        DIR *dir = opendir(qPrintable(testdir.absolutePath()));
+        DIR *dir = ::opendir(qPrintable(testdir.absolutePath()));
         QVERIFY(dir);
 
         QVERIFY(!chdir(qPrintable(testdir.absolutePath())));
         QBENCHMARK {
-            struct dirent *item = readdir(dir);
+            QT_DIRENT *item = QT_READDIR(dir);
             while (item) {
                 char *fileName = item->d_name;
 
-                struct stat fileStat;
-                QVERIFY(!stat(fileName, &fileStat));
+                QT_STATBUF fileStat;
+                QVERIFY(!QT_STAT(fileName, &fileStat));
 
-                item = readdir(dir);
+                item = QT_READDIR(dir);
             }
         }
         closedir(dir);

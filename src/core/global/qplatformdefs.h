@@ -142,7 +142,7 @@
 #define QT_OPEN_APPEND          O_APPEND
 
 // Posix extensions to C89
-#define QT_FILENO               ::fileno
+#define QT_FILENO               fileno // defined as macro on OpenBSD
 
 #define QT_DIR                  DIR
 

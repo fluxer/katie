@@ -36,7 +36,8 @@
 #include "qtestcommon_p.h"
 #include "QtTest/qtestlog_p.h"
 #include "QtTest/qtestresult_p.h"
-#include <QtCore/qdir.h>
+#include "qdir.h"
+#include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -47,7 +48,7 @@ QTestFileLogger::QTestFileLogger()
 QTestFileLogger::~QTestFileLogger()
 {
     if(QTest::stream)
-        fclose(QTest::stream);
+        ::fclose(QTest::stream);
 
     QTest::stream = 0;
 }
@@ -68,7 +69,7 @@ void QTestFileLogger::init()
         }
     }
 
-    QTest::stream = ::fopen(filename, "wt");
+    QTest::stream = QT_FOPEN(filename, "wt");
     if (!QTest::stream) {
         printf("Unable to open file for simple logging: %s", filename);
         ::exit(1);

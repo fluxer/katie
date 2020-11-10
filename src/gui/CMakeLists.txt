@@ -1021,7 +1021,7 @@ if(WITH_ACCESSIBILITY)
     )
 endif()
 
-if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd|hurd)")
+if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd|netbsd|hurd)")
     set(GUI_HEADERS
         ${GUI_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix_p.h

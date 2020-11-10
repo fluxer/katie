@@ -434,13 +434,23 @@ if(KATIE_PLATFORM STREQUAL "linux")
     )
     set(CORE_SOURCES
         ${CORE_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify.cpp
     )
     set(CORE_HEADERS
         ${CORE_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify_p.h
     )
 elseif(KATIE_PLATFORM MATCHES "(freebsd|openbsd)")
+    set(CORE_SOURCES
+        ${CORE_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue_p.h
+    )
+elseif(KATIE_PLATFORM STREQUAL "netbsd")
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        rt
+    )
     set(CORE_SOURCES
         ${CORE_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp

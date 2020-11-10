@@ -2,9 +2,7 @@
 
 set -e
 
-cwd="$(realpath $(dirname $0))"
-
-echo "$cwd"
+cwd="$(readlink -f $(dirname $0))"
 
 rm -rf "$cwd/../debug"
 mkdir -p "$cwd/../debug"

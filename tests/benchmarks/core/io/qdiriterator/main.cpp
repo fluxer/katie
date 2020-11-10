@@ -81,10 +81,10 @@ static int posix_helper(const char *dirpath)
     if (!dir)
         return 0;
 
-    dirent *entry = 0;
+    QT_DIRENT *entry = 0;
 
     int count = 0;
-    while ((entry = ::readdir(dir))) {
+    while ((entry = QT_READDIR(dir))) {
         if (qstrcmp(entry->d_name, ".") == 0)
             continue;
         if (qstrcmp(entry->d_name, "..") == 0)
@@ -93,8 +93,8 @@ static int posix_helper(const char *dirpath)
         QByteArray ba = dirpath;
         ba += '/';
         ba += entry->d_name;
-        struct stat st;
-        lstat(ba.constData(), &st);
+        QT_STATBUF st;
+        QT_LSTAT(ba.constData(), &st);
         if (S_ISDIR(st.st_mode))
             count += posix_helper(ba.constData());
     }
