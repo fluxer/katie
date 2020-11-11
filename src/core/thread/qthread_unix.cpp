@@ -176,16 +176,6 @@ void QThreadPrivate::createEventDispatcher(QThreadData *data)
 }
 
 #ifndef QT_NO_THREAD
-
-#if defined(Q_OS_LINUX)
-static inline void setCurrentThreadName(const char *name)
-{
-#if defined(Q_OS_LINUX) && !defined(QT_LINUXBASE)
-    prctl(PR_SET_NAME, (unsigned long)name, 0, 0, 0);
-#endif
-}
-#endif
-
 void *QThreadPrivate::start(void *arg)
 {
     pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, Q_NULLPTR);
