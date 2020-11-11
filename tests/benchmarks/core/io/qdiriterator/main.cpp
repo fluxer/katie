@@ -34,13 +34,7 @@
 #include <QDirIterator>
 #include <QString>
 #include <qtest.h>
-
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <errno.h>
-#include <string.h>
-
+#include "qplatformdefs.h"
 #include "qfilesystemiterator.h"
 
 QT_USE_NAMESPACE
