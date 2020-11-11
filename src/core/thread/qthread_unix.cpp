@@ -42,7 +42,7 @@
 #include <sched.h>
 #include <errno.h>
 
-#if defined(Q_OS_LINUX) && !defined(QT_LINUXBASE)
+#if defined(QT_HAVE_PRCTL)
 #include <sys/prctl.h>
 #endif
 
@@ -211,14 +211,17 @@ void *QThreadPrivate::start(void *arg)
     // ### TODO: allow the user to create a custom event dispatcher
     createEventDispatcher(data);
 
-#if defined(Q_OS_LINUX)
+#if defined(QT_HAVE_PRCTL) || defined(QT_HAVE_PTHREAD_SETNAME_NP)
     // sets the name of the current thread.
     QString objectName = thr->objectName();
 
     if (Q_LIKELY(objectName.isEmpty()))
-        setCurrentThreadName(thr->metaObject()->className());
-    else
-        setCurrentThreadName(objectName.toLocal8Bit().constData());
+        objectName = thr->metaObject()->className();
+#if defined(QT_HAVE_PRCTL)
+    ::prctl(PR_SET_NAME, (unsigned long)objectName.toLocal8Bit().constData(), 0, 0, 0);
+#elif defined(QT_HAVE_PTHREAD_SETNAME_NP)
+    pthread_setname_np(thr->d_func()->thread_id, objectName.toLocal8Bit().constData());
+#endif
 #endif
 
     emit thr->started();

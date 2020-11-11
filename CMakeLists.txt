@@ -50,6 +50,7 @@ include(CheckTypeSize)
 include(FeatureSummary)
 include(KatieMacros)
 include(KatieBuildMacros)
+include(mkspecs/mkspecs.cmake)
 
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
@@ -153,85 +154,6 @@ add_feature_info(allinone KATIE_ALLINONE "build targets from single source file"
 
 option(WITH_ACCESSIBILITY "Build accessibility support" ON)
 add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
-
-include(mkspecs/mkspecs.cmake)
-
-add_definitions(
-    # these conditionals are probably going to become default in the future
-    -DQT_POSIX_IPC
-    -DQT_USE_SYSTEM_PROXIES
-    # -DQT_STRICT_ITERATORS
-    # -DQT_ASCII_CAST_WARNINGS
-    # maybe one day, this forces it onto other projects which (most likely)
-    # means source code adjustments!
-    # -DQT_NO_CAST_FROM_ASCII
-    # -DQT_NO_CAST_TO_ASCII
-)
-
-# for symbols mangling while unwinding in core component
-check_include_file_cxx(cxxabi.h HAVE_CXXABI)
-
-# for 3rd party source used in test component
-check_include_file(sys/time.h HAVE_SYS_TIME_H)
-
-# stored in qconfig.h.cmake
-check_type_size(size_t QT_POINTER_SIZE)
-
-# POSIX.1-2001
-katie_check_function(getpwnam_r "pwd.h")
-katie_check_function(getpwuid_r "pwd.h")
-katie_check_function(getgrgid_r "grp.h")
-katie_check_function(nl_langinfo "langinfo.h")
-# XSI/POSIX.1-2001
-katie_check_function(strerror_r "string.h")
-# SUSv2
-katie_check_function(localtime_r "time.h")
-katie_check_function(gmtime_r "time.h")
-# SVr2, removed in POSIX.1-2008
-katie_check_function(fcvt "stdlib.h")
-katie_check_function(ecvt "stdlib.h")
-# NetBSD 1.6 and FreeBSD 4.4
-katie_check_function(getprogname "stdlib.h")
-# GNU
-katie_check_function(get_current_dir_name "unistd.h")
-# ISO/IEC 9899:1999
-katie_check_function(fegetenv "fenv.h")
-katie_check_function(fesetenv "fenv.h")
-katie_check_function(feclearexcept "fenv.h")
-katie_check_function(feenableexcept "fenv.h")
-# none
-katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
-katie_check_struct(sockaddr_dl sdl_index "net/if_dl.h")
-katie_check_struct(dirent d_type "dirent.h")
-
-# 64-bit offset alternatives, if any of the functions is not found it will set
-# QT_LARGEFILE_SUPPORT to FALSE. QT_LARGEFILE_SUPPORT is used in qconfig.h
-set(QT_LARGEFILE_SUPPORT TRUE)
-katie_check_function64(stat64 "sys/stat.h")
-katie_check_function64(lstat64 "sys/stat.h")
-katie_check_function64(fstat64 "sys/stat.h")
-katie_check_function64(open64 "fcntl.h")
-katie_check_function64(creat64 "fcntl.h")
-katie_check_function64(lseek64 "unistd.h")
-katie_check_function64(truncate64 "unistd.h")
-katie_check_function64(ftruncate64 "unistd.h")
-katie_check_function64(fopen64 "stdio.h")
-katie_check_function64(fseeko64 "stdio.h")
-katie_check_function64(ftello64 "stdio.h")
-katie_check_function64(fgetpos64 "stdio.h")
-katie_check_function64(fsetpos64 "stdio.h")
-katie_check_function64(mmap64 "sys/mman.h")
-katie_check_function64(readdir64 "dirent.h")
-katie_check_function64(readdir64_r "dirent.h")
-
-configure_file(
-    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
-    ${CMAKE_BINARY_DIR}/include/QtCore/qconfig.h
-)
-configure_file(
-    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.cpp.cmake
-    ${CMAKE_BINARY_DIR}/include/qconfig.cpp
-)
 
 # v1.2.0+ required for compressBound()
 find_package(ZLIB 1.2.0)
@@ -413,6 +335,85 @@ set_package_properties(Unwind PROPERTIES
     DESCRIPTION "A (mostly) platform-independent unwind API"
     URL "https://www.nongnu.org/libunwind/index.html"
     TYPE OPTIONAL
+)
+
+add_definitions(
+    # these conditionals are probably going to become default in the future
+    -DQT_POSIX_IPC
+    -DQT_USE_SYSTEM_PROXIES
+    # -DQT_STRICT_ITERATORS
+    # -DQT_ASCII_CAST_WARNINGS
+    # maybe one day, this forces it onto other projects which (most likely)
+    # means source code adjustments!
+    # -DQT_NO_CAST_FROM_ASCII
+    # -DQT_NO_CAST_TO_ASCII
+)
+
+# for symbols mangling while unwinding in core component
+check_include_file_cxx(cxxabi.h HAVE_CXXABI)
+
+# for 3rd party source used in test component
+check_include_file(sys/time.h HAVE_SYS_TIME_H)
+
+# stored in qconfig.h.cmake
+check_type_size(size_t QT_POINTER_SIZE)
+
+# POSIX.1-2001
+katie_check_function(getpwnam_r "pwd.h")
+katie_check_function(getpwuid_r "pwd.h")
+katie_check_function(getgrgid_r "grp.h")
+katie_check_function(nl_langinfo "langinfo.h")
+# XSI/POSIX.1-2001
+katie_check_function(strerror_r "string.h")
+# SUSv2
+katie_check_function(localtime_r "time.h")
+katie_check_function(gmtime_r "time.h")
+# SVr2, removed in POSIX.1-2008
+katie_check_function(fcvt "stdlib.h")
+katie_check_function(ecvt "stdlib.h")
+# NetBSD 1.6 and FreeBSD 4.4
+katie_check_function(getprogname "stdlib.h")
+# GNU
+katie_check_function(get_current_dir_name "unistd.h")
+katie_check_function(prctl "sys/prctl.h")
+katie_check_function(pthread_setname_np "pthread.h" "${CMAKE_THREAD_LIBS_INIT}")
+# ISO/IEC 9899:1999
+katie_check_function(fegetenv "fenv.h")
+katie_check_function(fesetenv "fenv.h")
+katie_check_function(feclearexcept "fenv.h")
+katie_check_function(feenableexcept "fenv.h")
+# none
+katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
+katie_check_struct(sockaddr_dl sdl_index "net/if_dl.h")
+katie_check_struct(dirent d_type "dirent.h")
+
+# 64-bit offset alternatives, if any of the functions is not found it will set
+# QT_LARGEFILE_SUPPORT to FALSE. QT_LARGEFILE_SUPPORT is used in qconfig.h
+set(QT_LARGEFILE_SUPPORT TRUE)
+katie_check_function64(stat64 "sys/stat.h")
+katie_check_function64(lstat64 "sys/stat.h")
+katie_check_function64(fstat64 "sys/stat.h")
+katie_check_function64(open64 "fcntl.h")
+katie_check_function64(creat64 "fcntl.h")
+katie_check_function64(lseek64 "unistd.h")
+katie_check_function64(truncate64 "unistd.h")
+katie_check_function64(ftruncate64 "unistd.h")
+katie_check_function64(fopen64 "stdio.h")
+katie_check_function64(fseeko64 "stdio.h")
+katie_check_function64(ftello64 "stdio.h")
+katie_check_function64(fgetpos64 "stdio.h")
+katie_check_function64(fsetpos64 "stdio.h")
+katie_check_function64(mmap64 "sys/mman.h")
+katie_check_function64(readdir64 "dirent.h")
+katie_check_function64(readdir64_r "dirent.h")
+
+configure_file(
+    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
+    ${CMAKE_BINARY_DIR}/include/QtCore/qconfig.h
+)
+configure_file(
+    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.cpp.cmake
+    ${CMAKE_BINARY_DIR}/include/qconfig.cpp
 )
 
 if(KATIE_TESTS OR KATIE_BENCHMARKS)

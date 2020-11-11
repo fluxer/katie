@@ -18,45 +18,33 @@ macro(KATIE_WARNING MESSAGESTR)
     endif()
 endmacro()
 
-# a function to check for C function/definition, works for external functions
-# too. note that check_symbol_exists() and check_function_exists() cache the
-# result variables so they can be used anywhere
+# a function to check for C function/definition, works for external functions.
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
-    cmake_reset_check_state()
-    set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} ${ARGN})
-    check_symbol_exists("${FORDEFINITION}" "${FROMHEADER}" HAVE_${FORDEFINITION})
-    if(NOT HAVE_${FORDEFINITION})
-        check_function_exists("${FORDEFINITION}" HAVE_${FORDEFINITION})
-    endif()
-    cmake_pop_check_state()
-
-    if(NOT HAVE_${FORDEFINITION})
-        set(compileout "${CMAKE_BINARY_DIR}/${FORDEFINITION}.cpp")
-        configure_file(
-            "${CMAKE_SOURCE_DIR}/cmake/modules/katie_check_defined.cpp.cmake"
-            "${compileout}"
-            @ONLY
-        )
-        try_compile(${FORDEFINITION}_test
-            "${CMAKE_BINARY_DIR}"
-            "${compileout}"
-            COMPILE_DEFINITIONS ${ARGN}
-            OUTPUT_VARIABLE ${FORDEFINITION}_test_output
-        )
-        if(${FORDEFINITION}_test)
-            message(STATUS "Found ${FORDEFINITION} in: <${FROMHEADER}>")
-            set(HAVE_${FORDEFINITION} TRUE PARENT_SCOPE)
-        else()
-            message(STATUS "Could not find ${FORDEFINITION} in: <${FROMHEADER}>")
-            set(HAVE_${FORDEFINITION} FALSE PARENT_SCOPE)
-        endif()
+    set(compileout "${CMAKE_BINARY_DIR}/${FORDEFINITION}.cpp")
+    configure_file(
+        "${CMAKE_SOURCE_DIR}/cmake/modules/katie_check_defined.cpp.cmake"
+        "${compileout}"
+        @ONLY
+    )
+    try_compile(${FORDEFINITION}_test
+        "${CMAKE_BINARY_DIR}"
+        "${compileout}"
+        COMPILE_DEFINITIONS ${ARGN}
+        OUTPUT_VARIABLE ${FORDEFINITION}_test_output
+    )
+    if(${FORDEFINITION}_test)
+        message(STATUS "Found ${FORDEFINITION} in: <${FROMHEADER}>")
+        set(HAVE_${FORDEFINITION} TRUE PARENT_SCOPE)
+    else()
+        message(STATUS "Could not find ${FORDEFINITION} in: <${FROMHEADER}>")
+        set(HAVE_${FORDEFINITION} FALSE PARENT_SCOPE)
     endif()
 endfunction()
 
 # a macro to check for C function presence in header, if function is found a
 # definition is added.
 macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
-    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}")
+    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" ${ARGN})
 
     if(HAVE_${FORFUNCTION})
         string(TOUPPER "${FORFUNCTION}" upperfunction)
@@ -67,7 +55,7 @@ endmacro()
 # a function to check for C function with 64-bit offset alternative, sets
 # QT_LARGEFILE_SUPPORT to FALSE if not available
 function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
-    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
+    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE ${ARGN})
 
     if(NOT HAVE_${FORFUNCTION})
         set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
