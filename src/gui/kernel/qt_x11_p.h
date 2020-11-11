@@ -327,8 +327,6 @@ struct QX11Data
         _QT_SELECTION_SENTINEL,
         CLIPBOARD_MANAGER,
 
-        _XSETROOT_ID,
-
         _QT_SCROLL_DONE,
 
         _MOTIF_WM_HINTS,

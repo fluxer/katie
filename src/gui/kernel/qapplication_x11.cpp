@@ -149,8 +149,6 @@ static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     "_QT_SELECTION_SENTINEL\0",
     "CLIPBOARD_MANAGER\0",
 
-    "_XSETROOT_ID\0",
-
     "_QT_SCROLL_DONE\0",
 
     "_MOTIF_WM_HINTS\0",
