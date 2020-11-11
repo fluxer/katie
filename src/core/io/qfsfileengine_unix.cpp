@@ -351,7 +351,7 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size)
 
     void *mapAddress = QT_MMAP(Q_NULLPTR, realSize,
                    access, MAP_SHARED, fd, realOffset);
-    if (MAP_FAILED != mapAddress) {
+    if (mapAddress != MAP_FAILED) {
         uchar *address = extra + static_cast<uchar*>(mapAddress);
         maps[address] = QPair<int,size_t>(extra, realSize);
         return address;
@@ -384,7 +384,7 @@ bool QFSFileEnginePrivate::unmap(uchar *ptr)
 
     uchar *start = ptr - maps[ptr].first;
     size_t len = maps[ptr].second;
-    if (-1 == munmap(start, len)) {
+    if (::munmap(start, len) == -1) {
         q->setError(QFile::UnspecifiedError, qt_error_string(errno));
         return false;
     }

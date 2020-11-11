@@ -485,8 +485,7 @@ bool QFSFileEngine::extension(Extension extension, const ExtensionOption *option
         MapExtensionReturn *returnValue = static_cast<MapExtensionReturn*>(output);
         returnValue->address = d->map(options->offset, options->size);
         return (returnValue->address != 0);
-    }
-    if (extension == UnMapExtension) {
+    } else if (extension == UnMapExtension) {
         UnMapExtensionOption *options = (UnMapExtensionOption*)option;
         return d->unmap(options->address);
     }
