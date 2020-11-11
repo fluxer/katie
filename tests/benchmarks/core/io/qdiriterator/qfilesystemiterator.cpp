@@ -87,11 +87,7 @@
 #include <QtCore/qset.h>
 #include <QtCore/qstack.h>
 #include <QtCore/qvariant.h>
-
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <errno.h>
+#include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE
 
