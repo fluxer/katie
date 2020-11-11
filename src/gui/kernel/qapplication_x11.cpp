@@ -820,16 +820,14 @@ bool QX11Data::isSupportedByWM(Atom atom)
     if (!qt_x11Data->net_supported_list)
         return false;
 
-    bool supported = false;
     int i = 0;
     while (qt_x11Data->net_supported_list[i] != 0) {
         if (qt_x11Data->net_supported_list[i++] == atom) {
-            supported = true;
-            break;
+            return true;
         }
     }
 
-    return supported;
+    return false;
 }
 
 
