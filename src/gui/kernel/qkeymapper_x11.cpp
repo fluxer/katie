@@ -543,7 +543,6 @@ static const struct KeyTblData {
     { XK_Zen_Koho,                Qt::Key_MultipleCandidate },
     { XK_Mae_Koho,                Qt::Key_PreviousCandidate },
 
-#ifdef XK_KOREAN
     // Korean keyboard support
     { XK_Hangul,                  Qt::Key_Hangul },
     { XK_Hangul_Start,            Qt::Key_Hangul_Start },
@@ -566,7 +565,6 @@ static const struct KeyTblData {
     { XK_Hangul_Special,          Qt::Key_Hangul_Special },
     // { XK_Hangul_switch,         Qt::Key_Hangul_switch },
     { XK_Hangul_switch,           Qt::Key_Mode_switch },
-#endif  // XK_KOREAN
 
     // dead keys
     { XK_dead_grave,              Qt::Key_Dead_Grave },

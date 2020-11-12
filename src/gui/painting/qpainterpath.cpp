@@ -33,7 +33,6 @@
 
 #include "qpainterpath.h"
 #include "qpainterpath_p.h"
-
 #include "qbitmap.h"
 #include "qdebug.h"
 #include "qiodevice.h"
@@ -44,7 +43,6 @@
 #include "qtextlayout.h"
 #include "qvarlengtharray.h"
 #include "qmath.h"
-
 #include "qbezier_p.h"
 #include "qfontengine_p.h"
 #include "qnumeric.h"
@@ -54,14 +52,6 @@
 #include "qtextengine_p.h"
 
 #include <limits.h>
-
-#if 0
-#include <performance.h>
-#else
-#define PM_INIT
-#define PM_MEASURE(x)
-#define PM_DISPLAY
-#endif
 
 QT_BEGIN_NAMESPACE
 

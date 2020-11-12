@@ -39,8 +39,6 @@
 
 #ifndef QT_NO_NETWORKINTERFACE
 
-#define IP_MULTICAST    // make AIX happy and define IFF_MULTICAST
-
 #include <sys/types.h>
 #include <sys/socket.h>
 
@@ -98,13 +96,8 @@ static QNetworkInterface::InterfaceFlags convertFlags(uint rawFlags)
     flags |= (rawFlags & IFF_RUNNING) ? QNetworkInterface::IsRunning : QNetworkInterface::InterfaceFlag(0);
     flags |= (rawFlags & IFF_BROADCAST) ? QNetworkInterface::CanBroadcast : QNetworkInterface::InterfaceFlag(0);
     flags |= (rawFlags & IFF_LOOPBACK) ? QNetworkInterface::IsLoopBack : QNetworkInterface::InterfaceFlag(0);
-#ifdef IFF_POINTOPOINT //cygwin doesn't define IFF_POINTOPOINT
     flags |= (rawFlags & IFF_POINTOPOINT) ? QNetworkInterface::IsPointToPoint : QNetworkInterface::InterfaceFlag(0);
-#endif
-
-#ifdef IFF_MULTICAST
     flags |= (rawFlags & IFF_MULTICAST) ? QNetworkInterface::CanMulticast : QNetworkInterface::InterfaceFlag(0);
-#endif
     return flags;
 }
 
@@ -195,7 +188,6 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
     iface->index = ifindex;
     interfaces << iface;
 
-#ifdef SIOCGIFNAME
     // Get the canonical name
     QByteArray oldName = req.ifr_name;
     if (qt_safe_ioctl(socket, SIOCGIFNAME, &req) >= 0) {
@@ -204,7 +196,6 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
         // reset the name:
         memcpy(req.ifr_name, oldName, qMin<int>(oldName.length() + 1, sizeof(req.ifr_name) - 1));
     } else
-#endif
     {
         // use this name anyways
         iface->name = QString::fromLatin1(req.ifr_name);
@@ -215,13 +206,11 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
         iface->flags = convertFlags(req.ifr_flags);
     }
 
-#ifdef SIOCGIFHWADDR
     // Get the HW address
     if (qt_safe_ioctl(socket, SIOCGIFHWADDR, &req) >= 0) {
         uchar *addr = (uchar *)req.ifr_addr.sa_data;
         iface->hardwareAddress = iface->makeHwAddress(6, addr);
     }
-#endif
 
     return iface;
 }
@@ -230,8 +219,8 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
 {
     QList<QNetworkInterfacePrivate *> interfaces;
 
-    int socket;
-    if ((socket = qt_safe_socket(AF_INET, SOCK_STREAM, IPPROTO_IP)) == -1)
+    int socket = qt_safe_socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
+    if (socket == -1)
         return interfaces;      // error
 
     QSet<QByteArray> names = interfaceNames(socket);
@@ -390,12 +379,12 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
 {
     QList<QNetworkInterfacePrivate *> interfaces;
 
-    int socket;
-    if ((socket = qt_safe_socket(AF_INET, SOCK_STREAM, IPPROTO_IP)) == -1)
+    int socket = qt_safe_socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
+    if (socket == -1)
         return interfaces;      // error
 
     ifaddrs *interfaceListing;
-    if (getifaddrs(&interfaceListing) == -1) {
+    if (::getifaddrs(&interfaceListing) == -1) {
         // error
         ::close(socket);
         return interfaces;
