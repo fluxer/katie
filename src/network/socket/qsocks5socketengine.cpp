@@ -109,9 +109,8 @@ static QString s5StateToString(QSocks5SocketEnginePrivate::Socks5State s)
         case QSocks5SocketEnginePrivate::ControlSocketError: return QLatin1String("ControlSocketError");
         case QSocks5SocketEnginePrivate::SocksError: return QLatin1String("SocksError");
         case QSocks5SocketEnginePrivate::HostNameLookupError: return QLatin1String("HostNameLookupError");
-        default: break;
     }
-    return QLatin1String("unknown state");
+    Q_UNREACHABLE();
 }
 
 static QString dump(const QByteArray &buf)
