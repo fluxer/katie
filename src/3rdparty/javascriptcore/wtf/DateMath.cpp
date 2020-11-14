@@ -74,8 +74,6 @@
 #include "Assertions.h"
 #include "ASCIICType.h"
 #include "CurrentTime.h"
-#include "MathExtras.h"
-#include "StringExtras.h"
 #include "CallFrame.h"
 
 #include <algorithm>

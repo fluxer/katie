@@ -31,7 +31,6 @@
 #include <wtf/AlwaysInline.h>
 #include <wtf/Assertions.h>
 #include <wtf/HashTraits.h>
-#include <wtf/MathExtras.h>
 
 namespace JSC {
 

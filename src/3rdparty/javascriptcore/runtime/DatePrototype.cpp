@@ -39,8 +39,6 @@
 #include <time.h>
 #include <wtf/Assertions.h>
 #include <wtf/DateMath.h>
-#include <wtf/MathExtras.h>
-#include <wtf/StringExtras.h>
 
 #if HAVE(SYS_PARAM_H)
 #include <sys/param.h>

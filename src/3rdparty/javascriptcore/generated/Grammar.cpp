@@ -104,7 +104,6 @@
 #include "NodeInfo.h"
 #include <stdlib.h>
 #include <string.h>
-#include <wtf/MathExtras.h>
 
 #define YYMALLOC fastMalloc
 #define YYFREE fastFree

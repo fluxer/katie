@@ -26,7 +26,6 @@
 #include "JSFunction.h"
 #include "JSString.h"
 #include "JSObject.h"
-#include <wtf/MathExtras.h>
 
 namespace JSC {
 

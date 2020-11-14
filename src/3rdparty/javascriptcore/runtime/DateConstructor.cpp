@@ -33,7 +33,6 @@
 #include <math.h>
 #include <time.h>
 #include <wtf/DateMath.h>
-#include <wtf/MathExtras.h>
 
 #if HAVE(SYS_TIME_H)
 #include <sys/time.h>

@@ -30,7 +30,6 @@
 #include "StringBuilder.h"
 #include "dtoa.h"
 #include <wtf/Assertions.h>
-#include <wtf/MathExtras.h>
 #include <wtf/Vector.h>
 
 namespace JSC {
