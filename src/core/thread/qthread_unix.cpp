@@ -209,6 +209,8 @@ void *QThreadPrivate::start(void *arg)
         objectName = thr->metaObject()->className();
 #if defined(QT_HAVE_PRCTL)
     ::prctl(PR_SET_NAME, (unsigned long)objectName.toLocal8Bit().constData(), 0, 0, 0);
+#elif defined(QT_HAVE_PTHREAD_SETNAME_NP) && defined(Q_OS_NETBSD)
+    pthread_setname_np(thr->d_func()->thread_id, objectName.toLocal8Bit().constData(), (char*)"%s");
 #elif defined(QT_HAVE_PTHREAD_SETNAME_NP)
     pthread_setname_np(thr->d_func()->thread_id, objectName.toLocal8Bit().constData());
 #endif
