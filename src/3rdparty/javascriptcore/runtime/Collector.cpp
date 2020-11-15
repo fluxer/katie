@@ -45,7 +45,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#if OS(SOLARIS)
+#if defined(Q_OS_SOLARIS)
 #include <thread.h>
 #else
 #include <pthread.h>
@@ -332,11 +332,11 @@ void Heap::shrinkBlocks(size_t neededBlocks)
 
 static inline void* currentThreadStackBase()
 {
-#if OS(SOLARIS)
+#if defined(Q_OS_SOLARIS)
     stack_t s;
     thr_stksegment(&s);
     return s.ss_sp;
-#elif OS(OPENBSD)
+#elif defined(Q_OS_OPENBSD)
     pthread_t thread = pthread_self();
     stack_t stack;
     pthread_stackseg_np(thread, &stack);

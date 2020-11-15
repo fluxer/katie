@@ -42,10 +42,6 @@ QT_USE_NAMESPACE
 #define CPU(WTF_FEATURE) (defined WTF_CPU_##WTF_FEATURE  && WTF_CPU_##WTF_FEATURE)
 /* HAVE() - specific system features (headers, functions or similar) that are present or not */
 #define HAVE(WTF_FEATURE) (defined HAVE_##WTF_FEATURE  && HAVE_##WTF_FEATURE)
-/* OS() - underlying operating system; only to be used for mandated low-level services like 
-   virtual memory, not to choose a GUI toolkit */
-#define OS(WTF_FEATURE) (defined WTF_OS_##WTF_FEATURE  && WTF_OS_##WTF_FEATURE)
-
 
 /* ==== Policy decision macros: these define policy choices for a particular port. ==== */
 
@@ -317,44 +313,13 @@ QT_USE_NAMESPACE
 #endif
 #endif /* __mips__ */
 
-
-/* ==== OS() - underlying operating system; only to be used for mandated low-level services like 
-   virtual memory, not to choose a GUI toolkit ==== */
-
-/* OS(FREEBSD) - FreeBSD */
-#ifdef __FreeBSD__
-#define WTF_OS_FREEBSD 1
-#endif
-
-/* OS(LINUX) - Linux */
-#ifdef __linux__
-#define WTF_OS_LINUX 1
-#endif
-
-/* OS(NETBSD) - NetBSD */
-#if defined(__NetBSD__)
-#define WTF_OS_NETBSD 1
-#endif
-
-/* OS(OPENBSD) - OpenBSD */
-#ifdef __OpenBSD__
-#define WTF_OS_OPENBSD 1
-#endif
-
-/* OS(SOLARIS) - Solaris */
-#if defined(sun) || defined(__sun)
-#define WTF_OS_SOLARIS 1
-#endif
-
 /* Operating environments */
 
-/* FIXME: these are all mixes of OS, operating environment and policy choices. */
-
-#if OS(FREEBSD) || OS(OPENBSD)
+#if defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD)
 #define HAVE_PTHREAD_NP_H 1
 #endif
 
-#if !OS(SOLARIS)
+#if !defined(Q_OS_SOLARIS)
 #define HAVE_TM_GMTOFF 1
 #define HAVE_TM_ZONE 1
 #define HAVE_TIMEGM 1
@@ -395,12 +360,6 @@ QT_USE_NAMESPACE
 #define WTF_USE_JSVALUE32_64 1
 #endif
 #endif /* !defined(WTF_USE_JSVALUE64) && !defined(WTF_USE_JSVALUE32) && !defined(WTF_USE_JSVALUE32_64) */
-
-#if COMPILER(GCC)
-#define WARN_UNUSED_RETURN __attribute__ ((warn_unused_result))
-#else
-#define WARN_UNUSED_RETURN
-#endif
 
 #define ENABLE_JSC_ZOMBIES 0
 
