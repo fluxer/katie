@@ -53,12 +53,15 @@ macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
 endmacro()
 
 # a function to check for C function with 64-bit offset alternative, sets
-# QT_LARGEFILE_SUPPORT to FALSE if not available
+# QT_LARGEFILE_SUPPORT to FALSE if not available and does not perform
+# additional checks if one fails
 function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
-    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE ${ARGN})
+    if(QT_LARGEFILE_SUPPORT)
+        katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE ${ARGN})
 
-    if(NOT HAVE_${FORFUNCTION})
-        set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
+        if(NOT HAVE_${FORFUNCTION})
+            set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
+        endif()
     endif()
 endfunction()
 
