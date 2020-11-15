@@ -39,23 +39,20 @@ class ThreadPrivate : public QThread {
 public:
     ThreadPrivate(ThreadFunction entryPoint, void* data);
     void run();
-    void* getReturnValue() { return m_returnValue; }
 private:
     void* m_data;
     ThreadFunction m_entryPoint;
-    void* m_returnValue;
 };
 
 ThreadPrivate::ThreadPrivate(ThreadFunction entryPoint, void* data) 
     : m_data(data)
     , m_entryPoint(entryPoint)
-    , m_returnValue(0)
 {
 }
 
 void ThreadPrivate::run()
 {
-    m_returnValue = m_entryPoint(m_data);
+    (void)m_entryPoint(m_data);
 }
 
 static QMutex* atomicallyInitializedStaticMutex;
@@ -158,7 +155,7 @@ ThreadIdentifier createThreadInternal(ThreadFunction entryPoint, void* data, con
     return establishIdentifierForThread(threadRef);
 }
 
-int waitForThreadCompletion(ThreadIdentifier threadID, void** result)
+int waitForThreadCompletion(ThreadIdentifier threadID)
 {
     Q_ASSERT(threadID);
 
@@ -167,16 +164,8 @@ int waitForThreadCompletion(ThreadIdentifier threadID, void** result)
     bool res = thread->wait();
 
     clearThreadForIdentifier(threadID);
-    if (result)
-        *result = static_cast<ThreadPrivate*>(thread)->getReturnValue();
 
     return !res;
-}
-
-void detachThread(ThreadIdentifier threadID)
-{
-    Q_ASSERT(threadID);
-    clearThreadForIdentifier(threadID);
 }
 
 ThreadIdentifier currentThread()

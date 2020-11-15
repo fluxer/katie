@@ -91,8 +91,7 @@ ThreadIdentifier createThreadInternal(ThreadFunction, void*, const char* threadN
 ThreadIdentifier currentThread();
 inline bool isMainThread()
 { return QThread::currentThread() == QCoreApplication::instance()->thread(); }
-int waitForThreadCompletion(ThreadIdentifier, void**);
-void detachThread(ThreadIdentifier);
+int waitForThreadCompletion(ThreadIdentifier);
 
 class ThreadSafeSharedBase : public Noncopyable {
 public:
@@ -160,7 +159,6 @@ using WTF::ThreadSafeShared;
 using WTF::createThread;
 using WTF::currentThread;
 using WTF::isMainThread;
-using WTF::detachThread;
 using WTF::waitForThreadCompletion;
 
 #endif // Threading_h
