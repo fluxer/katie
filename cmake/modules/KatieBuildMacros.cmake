@@ -7,8 +7,6 @@ set(KATIE_MOC "bootstrap_moc")
 set(KATIE_LRELEASE "lrelease")
 
 include(CMakePushCheckState)
-include(CheckSymbolExists)
-include(CheckFunctionExists)
 include(CheckStructHasMember)
 
 # a macro to print a dev warning but only when the build type is Debug
