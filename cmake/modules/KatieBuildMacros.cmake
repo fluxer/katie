@@ -69,7 +69,6 @@ endfunction()
 # definition is added.
 function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
     cmake_reset_check_state()
-    set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} ${ARGN})
     check_struct_has_member("struct ${FORSTRUCT}" "${FORMEMBER}" "${FROMHEADER}" HAVE_${FORSTRUCT}_${FORMEMBER})
     cmake_pop_check_state()
 

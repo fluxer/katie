@@ -228,7 +228,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/dtoa.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/FastMalloc.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/HashTable.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/qt/ThreadingQt.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/Threading.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/TypeTraits.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode/UTF8.cpp
