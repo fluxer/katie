@@ -113,11 +113,11 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
             results.setErrorString(tr("Host not found"));
         } else {
             results.setError(QHostInfo::UnknownError);
-            results.setErrorString(QString::fromLocal8Bit(gai_strerror(result)));
+            results.setErrorString(QString::fromLocal8Bit(::gai_strerror(result)));
         }
 #else
         in_addr_t inetaddr = ::inet_addr(hostName.toLatin1().constData());
-        struct hostent *ent = gethostbyaddr((const char *)&inetaddr, sizeof(inetaddr), AF_INET);
+        struct hostent *ent = ::gethostbyaddr((const char *)&inetaddr, sizeof(inetaddr), AF_INET);
         if (ent) {
             results.setHostName(QString::fromLatin1(ent->h_name));
         } else if (h_errno == HOST_NOT_FOUND || h_errno == NO_DATA || h_errno == NO_ADDRESS) {
@@ -157,12 +157,12 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
     hints.ai_flags = AI_ADDRCONFIG;
 #endif
 
-    int result = getaddrinfo(aceHostname.constData(), 0, &hints, &res);
+    int result = ::getaddrinfo(aceHostname.constData(), 0, &hints, &res);
 # ifdef AI_ADDRCONFIG
     if (result == EAI_BADFLAGS) {
         // if the lookup failed with AI_ADDRCONFIG set, try again without it
         hints.ai_flags = 0;
-        result = getaddrinfo(aceHostname.constData(), 0, &hints, &res);
+        result = ::getaddrinfo(aceHostname.constData(), 0, &hints, &res);
     }
 # endif
 
@@ -200,7 +200,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         }
 
         results.setAddresses(addresses);
-        freeaddrinfo(res);
+        ::freeaddrinfo(res);
     } else if (result == EAI_NONAME || result ==  EAI_FAIL
 #ifdef EAI_NODATA
                 // EAI_NODATA is deprecated in RFC 3493
@@ -211,7 +211,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         results.setErrorString(tr("Host not found"));
     } else {
         results.setError(QHostInfo::UnknownError);
-        results.setErrorString(QString::fromLocal8Bit(gai_strerror(result)));
+        results.setErrorString(QString::fromLocal8Bit(::gai_strerror(result)));
     }
 
 #else
@@ -221,7 +221,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
     // use one QHostInfoAgent, but if more agents are introduced, locking
     // must be provided.
     QMutexLocker locker(getHostByNameMutex());
-    hostent *result = gethostbyname(aceHostname.constData());
+    hostent *result = ::gethostbyname(aceHostname.constData());
     if (result) {
         if (result->h_addrtype == AF_INET) {
             QList<QHostAddress> addresses;
