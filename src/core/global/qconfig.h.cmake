@@ -187,7 +187,6 @@
 #cmakedefine QT_NO_FTP
 #cmakedefine QT_NO_GEOM_VARIANT
 #cmakedefine QT_NO_GESTURES
-#cmakedefine QT_NO_GETADDRINFO
 #cmakedefine QT_NO_GRAPHICSEFFECT
 #cmakedefine QT_NO_GRAPHICSSVGITEM
 #cmakedefine QT_NO_GRAPHICSVIEW

@@ -363,6 +363,7 @@ katie_check_function(getpwnam_r "pwd.h")
 katie_check_function(getpwuid_r "pwd.h")
 katie_check_function(getgrgid_r "grp.h")
 katie_check_function(nl_langinfo "langinfo.h")
+katie_check_function(getaddrinfo "netdb.h")
 # XSI/POSIX.1-2001
 katie_check_function(strerror_r "string.h")
 # SUSv2

@@ -53,7 +53,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#if defined (QT_NO_GETADDRINFO)
+#if !defined(QT_HAVE_GETADDRINFO)
 #include "qmutex.h"
 Q_GLOBAL_STATIC(QMutex, getHostByNameMutex)
 #endif
@@ -75,7 +75,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
     QHostAddress address;
     if (address.setAddress(hostName)) {
         // Reverse lookup
-#if !defined (QT_NO_GETADDRINFO)
+#if defined(QT_HAVE_GETADDRINFO)
         sockaddr_in sa4;
 #ifndef QT_NO_IPV6
         sockaddr_in6 sa6;
@@ -146,7 +146,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         return results;
     }
 
-#if !defined (QT_NO_GETADDRINFO)
+#if defined(QT_HAVE_GETADDRINFO)
     // Call getaddrinfo, and place all IPv4 addresses at the start and
     // the IPv6 addresses at the end of the address list in results.
     addrinfo *res = 0;
@@ -244,7 +244,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         results.setError(QHostInfo::UnknownError);
         results.setErrorString(tr("Unknown error"));
     }
-#endif //  !defined (QT_NO_GETADDRINFO)
+#endif //  defined(QT_HAVE_GETADDRINFO)
 
 #if defined(QHOSTINFO_DEBUG)
     if (results.error() != QHostInfo::NoError) {
@@ -294,7 +294,7 @@ QString QHostInfo::localDomainName()
 #elif !defined(QT_NO_RESOLV)
     // using thread-unsafe version
 
-#if defined(QT_NO_GETADDRINFO)
+#if !defined(QT_HAVE_GETADDRINFO)
     // We have to call res_init to be sure that _res was initialized
     // So, for systems without getaddrinfo (which is thread-safe), we lock the mutex too
     QMutexLocker locker(getHostByNameMutex());
