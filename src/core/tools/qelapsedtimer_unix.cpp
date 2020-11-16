@@ -39,19 +39,15 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_NO_CLOCK_MONOTONIC
-#  if defined(_SC_MONOTONIC_CLOCK)
+#if defined(QT_HAVE_CLOCK_GETTIME) && defined(_SC_MONOTONIC_CLOCK)
 static const bool monotonicClockAvailable = (sysconf(_SC_MONOTONIC_CLOCK) >= 200112L);
-#  elif (_POSIX_MONOTONIC_CLOCK-0 != 0)
+#elif defined(QT_HAVE_CLOCK_GETTIME)
 static const bool monotonicClockAvailable = (_POSIX_MONOTONIC_CLOCK > 0);
-#  else
-#    define QT_NO_CLOCK_MONOTONIC
-#  endif
 #endif
 
 static inline qint64 fractionAdjustment()
 {
-#ifndef QT_NO_CLOCK_MONOTONIC
+#ifdef QT_HAVE_CLOCK_GETTIME
     if (Q_LIKELY(monotonicClockAvailable)) {
         // the monotonic timer is measured in nanoseconds
         // 1 ms = 1000000 ns
@@ -65,7 +61,7 @@ static inline qint64 fractionAdjustment()
 
 bool QElapsedTimer::isMonotonic()
 {
-#ifndef QT_NO_CLOCK_MONOTONIC
+#ifdef QT_HAVE_CLOCK_GETTIME
     return monotonicClockAvailable;
 #else
     return false;
@@ -74,7 +70,7 @@ bool QElapsedTimer::isMonotonic()
 
 QElapsedTimer::ClockType QElapsedTimer::clockType()
 {
-#ifndef QT_NO_CLOCK_MONOTONIC
+#ifdef QT_HAVE_CLOCK_GETTIME
     if (Q_LIKELY(monotonicClockAvailable)) {
         return QElapsedTimer::MonotonicClock;
     }
@@ -84,13 +80,13 @@ QElapsedTimer::ClockType QElapsedTimer::clockType()
 
 static inline void do_gettime(qint64 *sec, qint64 *frac)
 {
-#ifndef QT_NO_CLOCK_MONOTONIC
+#ifdef QT_HAVE_CLOCK_GETTIME
     if (Q_LIKELY(monotonicClockAvailable)) {
         timespec ts;
 #ifdef CLOCK_MONOTONIC_COARSE // Linux specific
-        clock_gettime(CLOCK_MONOTONIC_COARSE, &ts);
+        ::clock_gettime(CLOCK_MONOTONIC_COARSE, &ts);
 #else
-        clock_gettime(CLOCK_MONOTONIC, &ts);
+        ::clock_gettime(CLOCK_MONOTONIC, &ts);
 #endif
         *sec = ts.tv_sec;
         *frac = ts.tv_nsec;
@@ -112,7 +108,7 @@ timeval qt_gettime()
 
     timeval tv;
     tv.tv_sec = sec;
-#ifndef QT_NO_CLOCK_MONOTONIC
+#ifdef QT_HAVE_CLOCK_GETTIME
     if (Q_LIKELY(monotonicClockAvailable))
         tv.tv_usec = frac / 1000;
     else
@@ -147,7 +143,7 @@ qint64 QElapsedTimer::nsecsElapsed() const
     do_gettime(&sec, &frac);
     sec = sec - t1;
     frac = frac - t2;
-#ifndef QT_NO_CLOCK_MONOTONIC
+#ifdef QT_HAVE_CLOCK_GETTIME
     if (Q_UNLIKELY(!monotonicClockAvailable))
         frac *= 1000;
 #endif

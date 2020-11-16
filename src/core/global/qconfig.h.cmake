@@ -140,7 +140,6 @@
 #cmakedefine QT_NO_CAST_FROM_BYTEARRAY
 #cmakedefine QT_NO_CAST_TO_ASCII
 #cmakedefine QT_NO_CLIPBOARD
-#cmakedefine QT_NO_CLOCK_MONOTONIC
 #cmakedefine QT_NO_CODEC_FOR_C_STRINGS
 #cmakedefine QT_NO_COLORDIALOG
 #cmakedefine QT_NO_COLORNAMES
