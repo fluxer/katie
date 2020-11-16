@@ -47,7 +47,7 @@
 #endif
 #include <net/if.h>
 
-#ifndef QT_NO_GETIFADDRS
+#ifdef QT_HAVE_GETIFADDRS
 # include <ifaddrs.h>
 #endif
 
@@ -101,7 +101,7 @@ static QNetworkInterface::InterfaceFlags convertFlags(uint rawFlags)
     return flags;
 }
 
-#ifdef QT_NO_GETIFADDRS
+#ifndef QT_HAVE_GETIFADDRS
 // getifaddrs not available
 
 static const int STORAGEBUFFER_GROWTH = 256;
@@ -164,7 +164,7 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
 
 #ifndef QT_NO_IPV6IFNAME
     // Get the interface index
-    ifindex = if_nametoindex(req.ifr_name);
+    ifindex = ::if_nametoindex(req.ifr_name);
 
     // find the interface data
     foreach (QNetworkInterfacePrivate *it, interfaces) {

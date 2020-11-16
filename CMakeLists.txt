@@ -383,6 +383,7 @@ katie_check_function(fesetenv "fenv.h")
 katie_check_function(feclearexcept "fenv.h")
 katie_check_function(feenableexcept "fenv.h")
 # none
+katie_check_function(getifaddrs "ifaddrs.h")
 katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
 katie_check_struct(sockaddr_dl sdl_index "net/if_dl.h")
 katie_check_struct(dirent d_type "dirent.h")
