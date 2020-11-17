@@ -184,13 +184,14 @@ bool QPainterPrivate::attachPainterPrivate(QPainter *q, QPaintDevice *pdev)
         // redirections within the same paintEvent(), which should be enough
         // in 99% of all cases). E.g: A renders B which renders C which renders D.
         sp->d_ptr->d_ptrs_size = 4;
-        sp->d_ptr->d_ptrs = (QPainterPrivate **)malloc(4 * sizeof(QPainterPrivate *));
+        sp->d_ptr->d_ptrs = (QPainterPrivate **)::malloc(4 * sizeof(QPainterPrivate *));
         Q_CHECK_PTR(sp->d_ptr->d_ptrs);
     } else if (sp->d_ptr->refcount - 1 == sp->d_ptr->d_ptrs_size) {
         // However, to support corner cases we grow the array dynamically if needed.
         sp->d_ptr->d_ptrs_size <<= 1;
         const int newSize = sp->d_ptr->d_ptrs_size * sizeof(QPainterPrivate *);
-        sp->d_ptr->d_ptrs = q_check_ptr((QPainterPrivate **)realloc(sp->d_ptr->d_ptrs, newSize));
+        sp->d_ptr->d_ptrs = (QPainterPrivate **)::realloc(sp->d_ptr->d_ptrs, newSize);
+        Q_CHECK_PTR(sp->d_ptr->d_ptrs);
     }
     sp->d_ptr->d_ptrs[++sp->d_ptr->refcount - 2] = q->d_ptr.data();
     q->d_ptr.take();

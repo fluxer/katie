@@ -554,9 +554,6 @@ Q_CORE_EXPORT void qBadAlloc();
 #  define Q_CHECK_PTR(p) do { if (!(p)) qBadAlloc(); } while (0)
 #endif
 
-template <typename T>
-inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
-
 enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg };
 
 Q_CORE_EXPORT void qt_message_output(QtMsgType, const char *buf);

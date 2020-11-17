@@ -437,7 +437,8 @@ void QTextTablePrivate::update() const
     nRows = (cells.size() + nCols-1)/nCols;
 //     qDebug(">>>> QTextTablePrivate::update, nRows=%d, nCols=%d", nRows, nCols);
 
-    grid = q_check_ptr((int *)realloc(grid, nRows*nCols*sizeof(int)));
+    grid = (int *)::realloc(grid, nRows*nCols*sizeof(int));
+    Q_CHECK_PTR(grid);
     memset(grid, 0, nRows*nCols*sizeof(int));
 
     QTextDocumentPrivate *p = pieceTable;
@@ -461,7 +462,8 @@ void QTextTablePrivate::update() const
         cellIndices[i] = cell;
 
         if (r + rowspan > nRows) {
-            grid = q_check_ptr((int *)realloc(grid, sizeof(int)*(r + rowspan)*nCols));
+            grid = (int *)::realloc(grid, sizeof(int)*(r + rowspan)*nCols);
+            Q_CHECK_PTR(grid);
             memset(grid + (nRows*nCols), 0, sizeof(int)*(r+rowspan-nRows)*nCols);
             nRows = r + rowspan;
         }

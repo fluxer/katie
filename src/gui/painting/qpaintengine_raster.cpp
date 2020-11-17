@@ -2908,7 +2908,8 @@ void QClipData::initialize()
                 { // resize
                     const int maxSpans = (ymax - ymin) * numRects;
                     if (maxSpans > allocated) {
-                        m_spans = q_check_ptr((QSpan *)realloc(m_spans, maxSpans * sizeof(QSpan)));
+                        m_spans = (QSpan *)::realloc(m_spans, maxSpans * sizeof(QSpan));
+                        Q_CHECK_PTR(m_spans);
                         allocated = maxSpans;
                     }
                 }
@@ -3244,7 +3245,8 @@ static void qt_span_clip(int count, const QSpan *spans, void *userData)
                                            &newspans, newClip->allocated - newClip->count);
                 newClip->count = newspans - newClip->m_spans;
                 if (spans < end) {
-                    newClip->m_spans = q_check_ptr((QSpan *)realloc(newClip->m_spans, newClip->allocated*2*sizeof(QSpan)));
+                    newClip->m_spans = (QSpan *)::realloc(newClip->m_spans, newClip->allocated*2*sizeof(QSpan));
+                    Q_CHECK_PTR(newClip->m_spans);
                     newClip->allocated *= 2;
                 }
             }

@@ -394,9 +394,12 @@ void QTessellatorPrivate::Scanline::init(int maxActiveEdges)
     if (!edges || maxActiveEdges > default_alloc) {
         max_edges = maxActiveEdges;
         int s = qMax(maxActiveEdges + 1, default_alloc + 1);
-        edges = q_check_ptr((Edge **)realloc(edges, s*sizeof(Edge *)));
-        edge_table = q_check_ptr((Edge *)realloc(edge_table, s*sizeof(Edge)));
-        old = q_check_ptr((Edge **)realloc(old, s*sizeof(Edge *)));
+        edges = (Edge **)::realloc(edges, s*sizeof(Edge *));
+        Q_CHECK_PTR(edges);
+        edge_table = (Edge *)::realloc(edge_table, s*sizeof(Edge));
+        Q_CHECK_PTR(edge_table);
+        old = (Edge **)::realloc(old, s*sizeof(Edge *));
+        Q_CHECK_PTR(old);
     }
     size = 0;
     old_size = 0;
@@ -554,8 +557,10 @@ void QTessellatorPrivate::Vertices::init(int maxVertices)
 {
     if (!storage || maxVertices > allocated) {
         int size = qMax((int)default_alloc, maxVertices);
-        storage = q_check_ptr((Vertex *)realloc(storage, size*sizeof(Vertex)));
-        sorted = q_check_ptr((Vertex **)realloc(sorted, size*sizeof(Vertex *)));
+        storage = (Vertex *)::realloc(storage, size*sizeof(Vertex));
+        Q_CHECK_PTR(storage);
+        sorted = (Vertex **)::realloc(sorted, size*sizeof(Vertex *));
+        Q_CHECK_PTR(sorted);
         allocated = maxVertices;
     }
 }
@@ -727,7 +732,8 @@ void QTessellatorPrivate::cancelCoincidingEdges()
 
             if (testListSize > tlSize - 2) {
                 tlSize = qMax(tlSize*2, 16);
-                tl = q_check_ptr((QCoincidingEdge *)realloc(tl, tlSize*sizeof(QCoincidingEdge)));
+                tl = (QCoincidingEdge *)::realloc(tl, tlSize*sizeof(QCoincidingEdge));
+                Q_CHECK_PTR(tl);
             }
             if (n->flags & (LineBeforeStarts|LineBeforeHorizontal)) {
                 tl[testListSize].start = n;
