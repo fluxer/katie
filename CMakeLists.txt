@@ -365,6 +365,7 @@ katie_check_function(getgrgid_r "grp.h")
 katie_check_function(nl_langinfo "langinfo.h")
 katie_check_function(getaddrinfo "netdb.h")
 katie_check_function(clock_gettime "time.h")
+katie_check_function(vsnprintf "stdio.h")
 # XSI/POSIX.1-2001
 katie_check_function(strerror_r "string.h")
 # SUSv2
