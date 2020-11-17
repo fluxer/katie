@@ -26,6 +26,8 @@
 #include "HashTraits.h"
 #include <wtf/Assertions.h>
 
+#include <QMutex>
+
 namespace WTF {
 
 #define DUMP_HASHTABLE_STATS 0
