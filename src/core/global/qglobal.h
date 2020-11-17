@@ -443,8 +443,6 @@ typedef double qreal;
 #    define Q_AUTOTEST_EXPORT
 #endif
 
-inline void qt_noop(void) {}
-
 /* These wrap try/catch so we can switch off exceptions later.
 
    Beware - do not use the exception instance in the catch block.
@@ -458,8 +456,8 @@ inline void qt_noop(void) {}
 #ifdef QT_NO_EXCEPTIONS
 #  define QT_TRY if (true)
 #  define QT_CATCH(A) else if (false)
-#  define QT_THROW(A) qt_noop()
-#  define QT_RETHROW qt_noop()
+#  define QT_THROW(A) {}
+#  define QT_RETHROW {}
 #else
 #  define QT_TRY try
 #  define QT_CATCH(A) catch (A)
@@ -534,11 +532,11 @@ Q_CORE_EXPORT void qt_assert(const char *assertion, const char *file, int line);
 Q_CORE_EXPORT void qt_assert_x(const char *where, const char *what, const char *file, int line);
 
 #ifndef QT_NO_DEBUG
-#  define Q_ASSERT(cond) ((!(cond)) ? qt_assert(#cond,__FILE__,__LINE__) : qt_noop())
-#  define Q_ASSERT_X(cond, where, what) ((!(cond)) ? qt_assert_x(where, what,__FILE__,__LINE__) : qt_noop())
+#  define Q_ASSERT(cond) do { if(!(cond)) qt_assert(#cond,__FILE__,__LINE__); } while (0)
+#  define Q_ASSERT_X(cond, where, what) do { if(!(cond)) qt_assert_x(where, what,__FILE__,__LINE__); } while (0)
 #else
-#  define Q_ASSERT(cond) qt_noop()
-#  define Q_ASSERT_X(cond, where, what) qt_noop()
+#  define Q_ASSERT(cond)
+#  define Q_ASSERT_X(cond, where, what)
 #endif
 
 Q_CORE_EXPORT void qt_check_pointer(const char *, int);
@@ -546,12 +544,12 @@ Q_CORE_EXPORT void qBadAlloc();
 
 #ifdef QT_NO_EXCEPTIONS
 #  if defined(QT_NO_DEBUG)
-#    define Q_CHECK_PTR(p) qt_noop()
+#    define Q_CHECK_PTR(p)
 #  else
-#    define Q_CHECK_PTR(p) do {if(!(p))qt_check_pointer(__FILE__,__LINE__);} while (0)
+#    define Q_CHECK_PTR(p) do { if(!p) qt_check_pointer(__FILE__,__LINE__); } while (0)
 #  endif
 #else
-#  define Q_CHECK_PTR(p) do { if (!(p)) qBadAlloc(); } while (0)
+#  define Q_CHECK_PTR(p) do { if(!p) qBadAlloc(); } while (0)
 #endif
 
 enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg };
