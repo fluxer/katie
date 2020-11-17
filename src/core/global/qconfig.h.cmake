@@ -34,7 +34,7 @@
 #ifndef QCONFIG_H
 #define QCONFIG_H
 
-/* Build specs */
+// Build specs
 #define QT_VERSION_MAJOR ${KATIE_MAJOR}
 #define QT_VERSION_MINOR ${KATIE_MINOR}
 #define QT_VERSION_MICRO ${KATIE_MICRO}
@@ -46,7 +46,7 @@
 #cmakedefine QT_LARGEFILE_SUPPORT
 #cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
 
-/* No longer supported */
+// No longer supported
 #define QT_NO_OPENVG
 #define QT_NO_PHONON
 #define QT_NO_WIN_ACTIVEQT
@@ -127,7 +127,31 @@
 #cmakedefine QT_NO_REGEXP_WILDCARD
 #cmakedefine QT_NO_STANDARDPATHS
 #cmakedefine QT_NO_SETTINGS
+#cmakedefine QT_NO_GEOM_VARIANT
 
+// Compiler and host dependant
+#cmakedefine QT_NO_EXCEPTIONS
+#cmakedefine QT_NO_FPU
+
+// External packages dependant
+#cmakedefine QT_NO_CUPS
+#cmakedefine QT_NO_DBUS
+#cmakedefine QT_NO_FONTCONFIG
+#cmakedefine QT_NO_IMAGEFORMAT_JPEG
+#cmakedefine QT_NO_IMAGEFORMAT_TIFF
+#cmakedefine QT_NO_RESOLV
+#cmakedefine QT_NO_SESSIONMANAGER
+#cmakedefine QT_NO_UNWIND
+#cmakedefine QT_NO_XCURSOR
+#cmakedefine QT_NO_XFIXES
+#cmakedefine QT_NO_XINERAMA
+#cmakedefine QT_NO_XRANDR
+#cmakedefine QT_NO_XRENDER
+#cmakedefine QT_NO_XSHAPE
+#cmakedefine QT_NO_XSHM
+#cmakedefine QT_NO_XSYNC
+
+// Misc
 #cmakedefine QT_NO_USING_NAMESPACE
 #cmakedefine QT_NO_ACCESSIBILITY
 #cmakedefine QT_NO_ACTION
@@ -149,12 +173,10 @@
 #cmakedefine QT_NO_CONCURRENT
 #cmakedefine QT_NO_CONTEXTMENU
 #cmakedefine QT_NO_CSSPARSER
-#cmakedefine QT_NO_CUPS
 #cmakedefine QT_NO_CURSOR
 #cmakedefine QT_NO_DATAWIDGETMAPPER
 #cmakedefine QT_NO_DATESTRING
 #cmakedefine QT_NO_DATETIMEEDIT
-#cmakedefine QT_NO_DBUS
 #cmakedefine QT_NO_DEBUG
 #cmakedefine QT_NO_DEBUG_PLUGIN_CHECK
 #cmakedefine QT_NO_DEBUG_STREAM
@@ -169,22 +191,18 @@
 #cmakedefine QT_NO_EFFECTS
 #cmakedefine QT_NO_EMIT
 #cmakedefine QT_NO_ERRORMESSAGE
-#cmakedefine QT_NO_EXCEPTIONS
 #cmakedefine QT_NO_FILEDIALOG
 #cmakedefine QT_NO_FILEICONPROVIDER
 #cmakedefine QT_NO_FILESYSTEMITERATOR
 #cmakedefine QT_NO_FILESYSTEMMODEL
 #cmakedefine QT_NO_FILESYSTEMWATCHER
 #cmakedefine QT_NO_FONTCOMBOBOX
-#cmakedefine QT_NO_FONTCONFIG
 #cmakedefine QT_NO_FONTDIALOG
 #cmakedefine QT_NO_FORMLAYOUT
-#cmakedefine QT_NO_FPU
 #cmakedefine QT_NO_FRAME
 #cmakedefine QT_NO_FSCOMPLETER
 #cmakedefine QT_NO_FSFILEENGINE
 #cmakedefine QT_NO_FTP
-#cmakedefine QT_NO_GEOM_VARIANT
 #cmakedefine QT_NO_GESTURES
 #cmakedefine QT_NO_GRAPHICSEFFECT
 #cmakedefine QT_NO_GRAPHICSSVGITEM
@@ -197,10 +215,8 @@
 #cmakedefine QT_NO_IMAGEFORMAT_BMP
 #cmakedefine QT_NO_IMAGEFORMAT_GIF
 #cmakedefine QT_NO_IMAGEFORMAT_ICO
-#cmakedefine QT_NO_IMAGEFORMAT_JPEG
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
 #cmakedefine QT_NO_IMAGEFORMAT_TGA
-#cmakedefine QT_NO_IMAGEFORMAT_TIFF
 #cmakedefine QT_NO_IMAGEFORMAT_XBM
 #cmakedefine QT_NO_IMAGEFORMAT_XPM
 #cmakedefine QT_NO_IMAGE_HEURISTIC_MASK
@@ -224,7 +240,6 @@
 #cmakedefine QT_NO_MENUBAR
 #cmakedefine QT_NO_MESSAGEBOX
 #cmakedefine QT_NO_MOVIE
-#cmakedefine QT_NO_NATIVE_GESTURES
 #cmakedefine QT_NO_NETWORKDISKCACHE
 #cmakedefine QT_NO_NETWORKINTERFACE
 #cmakedefine QT_NO_NETWORKPROXY
@@ -244,13 +259,10 @@
 #cmakedefine QT_NO_QUATERNION
 #cmakedefine QT_NO_QUUID_STRING
 #cmakedefine QT_NO_RESIZEHANDLER
-#cmakedefine QT_NO_RESOLV
 #cmakedefine QT_NO_RUBBERBAND
 #cmakedefine QT_NO_SCROLLAREA
 #cmakedefine QT_NO_SCROLLBAR
-#cmakedefine QT_NO_SESSIONMANAGER
 #cmakedefine QT_NO_SHAREDMEMORY
-#cmakedefine QT_NO_SHARED_EXPORT
 #cmakedefine QT_NO_SHORTCUT
 #cmakedefine QT_NO_SIGNALMAPPER
 #cmakedefine QT_NO_SIZEGRIP
@@ -309,7 +321,6 @@
 #cmakedefine QT_NO_UNDOSTACK
 #cmakedefine QT_NO_UNDOVIEW
 #cmakedefine QT_NO_UNSETENV
-#cmakedefine QT_NO_UNWIND
 #cmakedefine QT_NO_URLINFO
 #cmakedefine QT_NO_URL_CAST_FROM_STRING
 #cmakedefine QT_NO_VALIDATOR
@@ -321,17 +332,9 @@
 #cmakedefine QT_NO_WHEELEVENT
 #cmakedefine QT_NO_WIZARD
 #cmakedefine QT_NO_WORKSPACE
-#cmakedefine QT_NO_XCURSOR
-#cmakedefine QT_NO_XFIXES
-#cmakedefine QT_NO_XINERAMA
 #cmakedefine QT_NO_XMLSTREAM
 #cmakedefine QT_NO_XMLSTREAMREADER
 #cmakedefine QT_NO_XMLSTREAMWRITER
-#cmakedefine QT_NO_XRANDR
-#cmakedefine QT_NO_XRENDER
-#cmakedefine QT_NO_XSHAPE
-#cmakedefine QT_NO_XSHM
-#cmakedefine QT_NO_XSYNC
 
 // Future
 #if !defined(QT_NO_QFUTURE) && defined(QT_NO_CONCURRENT)
