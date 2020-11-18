@@ -46,7 +46,6 @@ set(BOOTSTRAP_DEFINITIONS
 set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/codecs/qicucodec.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/global/qnumeric.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qabstractfileengine.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qbuffer.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qdir.cpp

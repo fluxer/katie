@@ -48,6 +48,8 @@
 #include "qlocale_p.h"
 #include "qstring.h"
 
+#include <cmath>
+
 QT_BEGIN_NAMESPACE
 
 QString qulltoa(qulonglong l, int base, const QChar _zero);
@@ -72,14 +74,7 @@ QString &exponentForm(QChar zero, QChar decimal, QChar exponential,
 
 static inline bool qIsZero(double d)
 {
-    uchar *ch = (uchar *)&d;
-#ifdef QT_ARMFPA
-    return !(ch[3] & 0x7F || ch[2] || ch[1] || ch[0] || ch[7] || ch[6] || ch[5] || ch[4]);
-#elif Q_BYTE_ORDER == Q_BIG_ENDIAN
-    return !(ch[0] & 0x7F || ch[1] || ch[2] || ch[3] || ch[4] || ch[5] || ch[6] || ch[7]);
-#else
-    return !(ch[7] & 0x7F || ch[6] || ch[5] || ch[4] || ch[3] || ch[2] || ch[1] || ch[0]);
-#endif
+    return (std::fpclassify(d) == FP_ZERO);
 }
 
 static inline bool qIsUpper(char ch)

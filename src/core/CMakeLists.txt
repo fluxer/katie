@@ -317,7 +317,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qthreadpool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qglobal.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/global/qnumeric.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qabstractfileengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qbuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdatastream.cpp
