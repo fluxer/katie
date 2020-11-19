@@ -1,5 +1,3 @@
-set(SHAREDPROPERTYBROWSER_DEFINITIONS)
-
 set(SHAREDPROPERTYBROWSER_INCLUDES
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
@@ -37,5 +35,4 @@ set(SHAREDPROPERTYBROWSER_HEADERS
 katie_setup_target(sharedqtpropertybrowser ${SHAREDPROPERTYBROWSER_SOURCES} ${SHAREDPROPERTYBROWSER_HEADERS})
 
 add_library(sharedqtpropertybrowser OBJECT ${sharedqtpropertybrowser_SOURCES})
-target_compile_definitions(sharedqtpropertybrowser PUBLIC ${SHAREDPROPERTYBROWSER_DEFINITIONS})
 target_include_directories(sharedqtpropertybrowser PUBLIC ${SHAREDPROPERTYBROWSER_INCLUDES})

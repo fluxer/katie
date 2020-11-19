@@ -1,5 +1,3 @@
-set(SHAREDFINDWIDGET_DEFINITIONS)
-
 set(SHAREDFINDWIDGET_INCLUDES
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
@@ -27,5 +25,4 @@ set(SHAREDFINDWIDGET_HEADERS
 katie_setup_target(sharedfindwidget ${SHAREDFINDWIDGET_SOURCES} ${SHAREDFINDWIDGET_HEADERS})
 
 add_library(sharedfindwidget OBJECT ${sharedfindwidget_SOURCES})
-target_compile_definitions(sharedfindwidget PUBLIC ${SHAREDFINDWIDGET_DEFINITIONS})
 target_include_directories(sharedfindwidget PUBLIC ${SHAREDFINDWIDGET_INCLUDES})

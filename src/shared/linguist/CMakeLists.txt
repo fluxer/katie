@@ -1,6 +1,3 @@
-set(SHAREDLINGUIST_DEFINITIONS
-)
-
 set(SHAREDLINGUIST_INCLUDES
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
@@ -31,5 +28,4 @@ set(SHAREDLINGUIST_HEADERS
 katie_setup_target(sharedlinguist ${SHAREDLINGUIST_SOURCES} ${SHAREDLINGUIST_HEADERS})
 
 add_library(sharedlinguist OBJECT ${sharedlinguist_SOURCES})
-target_compile_definitions(sharedlinguist PUBLIC ${SHAREDLINGUIST_DEFINITIONS})
 target_include_directories(sharedlinguist PUBLIC ${SHAREDLINGUIST_INCLUDES})
