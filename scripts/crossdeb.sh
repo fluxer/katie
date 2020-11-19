@@ -42,7 +42,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 dpkg --add-architecture $crossarch
 apt-get update
-apt-get install git crossbuild-essential-$crossarch qemu-user-static
+apt-get install --yes git crossbuild-essential-$crossarch qemu-user-static
 
 git clone --depth=1 git://github.com/fluxer/katie
 cd katie
