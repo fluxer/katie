@@ -9,13 +9,6 @@ set(KATIE_LRELEASE "lrelease")
 include(CMakePushCheckState)
 include(CheckStructHasMember)
 
-# a macro to print a dev warning but only when the build type is Debug
-macro(KATIE_WARNING MESSAGESTR)
-    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        message(AUTHOR_WARNING "${MESSAGESTR} ${ARGN}")
-    endif()
-endmacro()
-
 # a function to check for C function/definition, works for external functions.
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     set(compileout "${CMAKE_BINARY_DIR}/${FORDEFINITION}.cpp")
@@ -185,7 +178,7 @@ endfunction()
 function(KATIE_GIT_CHECKOUT OUTSTR)
     find_program(git NAMES git)
     if(EXISTS "${CMAKE_SOURCE_DIR}/.git" AND NOT git)
-        message(WARNING "Git was not found, unable to obtain checkout.\n")
+        message(WARNING "Git is not installed, unable to obtain checkout.\n")
     else(EXISTS "${CMAKE_SOURCE_DIR}/.git")
         execute_process(
             COMMAND "${git}" rev-parse HEAD
@@ -299,7 +292,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
             get_filename_component(srcext "${srcstring}" EXT)
             get_source_file_property(skip "${srcstring}" ALLINONE_EXCLUDE)
             if(skip OR "${srcext}" STREQUAL ".c")
-                katie_warning("Source is excluded: ${srcstring}")
                 set(excludesources ${excludesources} "${srcstring}")
             elseif(NOT "${srcext}" MATCHES "(.h|.qrc|.ui)")
                 set(allinonedata "${allinonedata}#include \"${srcstring}\"\n")
