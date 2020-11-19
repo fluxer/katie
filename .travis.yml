@@ -6,6 +6,11 @@ compiler:
     - gcc
 os:
     - linux
+arch:
+    - amd64
+    - arm64
+    - ppc64le
+    - s390x
 cache:
     apt: true
     ccache: true
