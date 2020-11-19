@@ -127,7 +127,6 @@
 #cmakedefine QT_NO_REGEXP_WILDCARD
 #cmakedefine QT_NO_STANDARDPATHS
 #cmakedefine QT_NO_SETTINGS
-#cmakedefine QT_NO_GEOM_VARIANT
 
 // Compiler and host dependant
 #cmakedefine QT_NO_EXCEPTIONS

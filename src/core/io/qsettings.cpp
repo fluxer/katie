@@ -46,12 +46,9 @@
 #include "qsettings_p.h"
 #include "qfile.h"
 #include "qdir.h"
-
-#ifndef QT_NO_GEOM_VARIANT
 #include "qsize.h"
 #include "qpoint.h"
 #include "qrect.h"
-#endif // !QT_NO_GEOM_VARIANT
 
 QT_BEGIN_NAMESPACE
 
@@ -387,7 +384,6 @@ QString QSettingsPrivate::variantToString(const QVariant &v)
                 result.prepend(QLatin1Char('@'));
             return result;
         }
-#ifndef QT_NO_GEOM_VARIANT
         case QVariant::Rect: {
             QRect r = qvariant_cast<QRect>(v);
             QString result = QLatin1String("@Rect(");
@@ -419,7 +415,6 @@ QString QSettingsPrivate::variantToString(const QVariant &v)
             result += QLatin1Char(')');
             return result;
         }
-#endif // !QT_NO_GEOM_VARIANT
 
         default: {
 #ifndef QT_NO_DATASTREAM
@@ -459,7 +454,6 @@ QVariant QSettingsPrivate::stringToVariant(const QString &s)
 #else
                 Q_ASSERT(!"QSettings: Cannot load custom types without QDataStream support");
 #endif
-#ifndef QT_NO_GEOM_VARIANT
             } else if (s.startsWith(QLatin1String("@Rect("))) {
                 QStringList args = QSettingsPrivate::splitArgs(s, 5);
                 if (args.size() == 4)
@@ -472,7 +466,6 @@ QVariant QSettingsPrivate::stringToVariant(const QString &s)
                 QStringList args = QSettingsPrivate::splitArgs(s, 6);
                 if (args.size() == 2)
                     return QVariant(QPoint(args[0].toInt(), args[1].toInt()));
-#endif
             } else if (s == QLatin1String("@Invalid()")) {
                 return QVariant();
             }
