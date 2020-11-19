@@ -51,7 +51,7 @@
 
      ALPHA     - ...
      ARM       - ...
-     ARMV6     - ...
+     ARM64     - ...
      AVR32     - ...
      BFIN      - ...
      I386      - ...
@@ -75,9 +75,8 @@
 #  define QT_ARCH_ALPHA
 #elif defined(__arm__)
 #  define QT_ARCH_ARM
-#  if defined(__ARM_ARCH_6__)
-#    define QT_ARCH_ARMV6
-#  endif
+#elif defined(__aarch64__)
+#  define QT_ARCH_ARM64
 #elif defined(__avr__)
 #  define QT_ARCH_AVR32
 #elif defined(__bfin__)
@@ -100,9 +99,6 @@
 #  define QT_ARCH_SPARC
 #elif defined(__sh__)
 #  define QT_ARCH_SH
-#  if defined(__SH4__)
-#    define QT_ARCH_SH4A
-#  endif
 #elif defined(__x86_64__)
 #  define QT_ARCH_X86_64
 #else
@@ -390,8 +386,11 @@ QT_END_INCLUDE_NAMESPACE
 #endif
 
 // This logic must match the one in qmetatype.h
-#if defined(QT_ARCH_ARM) || defined(QT_ARCH_ARMV6) || defined(QT_ARCH_AVR32) || defined(QT_ARCH_SH) || defined(QT_ARCH_SH4A)
+#if !defined(QT_NO_FPU) && defined(QT_ARCH_ARM) || defined(QT_ARCH_AVR32) || defined(QT_ARCH_SH)
 #  define QT_NO_FPU
+#endif
+
+#if defined(QT_NO_FPU)
 typedef float qreal;
 #else
 typedef double qreal;
