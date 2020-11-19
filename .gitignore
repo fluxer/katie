@@ -17,6 +17,7 @@ apidocs/
 minsize/
 oldmake/
 debug/
+crossdeb/
 
 # symlink to package/debian
 debian
