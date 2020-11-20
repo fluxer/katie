@@ -44,7 +44,6 @@ if(CMAKE_SYSTEM_NAME MATCHES "BSD")
     link_directories(/usr/pkg/lib /usr/local/lib /usr/lib /lib)
 endif()
 
-include(CheckIncludeFile)
 include(CheckIncludeFileCXX)
 include(CheckTypeSize)
 include(FeatureSummary)
