@@ -352,9 +352,6 @@ add_definitions(
 # for symbols mangling while unwinding in core component
 check_include_file_cxx(cxxabi.h HAVE_CXXABI)
 
-# for 3rd party source used in test component
-check_include_file(sys/time.h HAVE_SYS_TIME_H)
-
 # stored in qconfig.h.cmake
 check_type_size(size_t QT_POINTER_SIZE)
 
