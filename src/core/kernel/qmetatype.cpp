@@ -42,14 +42,11 @@
 #include "qlocale.h"
 
 #ifndef QT_BOOTSTRAPPED
-#include "qeasingcurve.h"
-#include "qjsonvalue.h"
-#include "qjsonobject.h"
-#include "qjsonarray.h"
-#include "qjsondocument.h"
-#endif
-
-#ifndef QT_BOOTSTRAPPED
+#  include "qeasingcurve.h"
+#  include "qjsonvalue.h"
+#  include "qjsonobject.h"
+#  include "qjsonarray.h"
+#  include "qjsondocument.h"
 #  include "qbitarray.h"
 #  include "qurl.h"
 #  include "qvariant.h"
