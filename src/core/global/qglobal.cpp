@@ -1530,14 +1530,12 @@ void qsrand(uint seed)
 
     \sa qsrand()
 */
-thread_local int almostrandom = 0;
+thread_local time_t almostrandom = 0;
 int qrand()
 {
     // Seed the PRNG once per thread with a combination of current time and its address
     if (!almostrandom) {
-        struct timeval tv;
-        ::gettimeofday(&tv, Q_NULLPTR);
-        almostrandom = tv.tv_usec;
+        ::time(&almostrandom);
         std::srand(almostrandom + std::intptr_t(&almostrandom));
     }
     return std::rand();

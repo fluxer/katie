@@ -2770,7 +2770,7 @@ QDate QDate::currentDate()
     QDate d;
     // posix compliant system
     time_t ltime;
-    time(&ltime);
+    ::time(&ltime);
 
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available

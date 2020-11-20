@@ -3938,8 +3938,8 @@ static void sm_performSaveYourself(QSessionManagerPrivate* smd)
     QSessionManager* sm = smd->sm;
 
     // generate a new session key
-    timeval tv;
-    gettimeofday(&tv, 0);
+    struct timeval tv;
+    ::gettimeofday(&tv, Q_NULLPTR);
     smd->sessionKey  = QString::number(qulonglong(tv.tv_sec)) + QLatin1Char('_') + QString::number(qulonglong(tv.tv_usec));
 
     QStringList arguments = qApp->arguments();
