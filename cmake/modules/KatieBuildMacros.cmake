@@ -362,7 +362,7 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
 
     add_test(
         NAME ${TESTNAME}
-        COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}" -tickcounter
+        COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}"
     )
 endmacro()
 
