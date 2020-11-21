@@ -153,18 +153,16 @@
 #include <stdio.h>
 #include <float.h>
 
-#if CPU(BIG_ENDIAN)
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
 #define IEEE_MC68k
-#elif CPU(MIDDLE_ENDIAN)
-#define IEEE_ARM
 #else
 #define IEEE_8087
 #endif
 
 #define INFNAN_CHECK
 
-#if defined(IEEE_8087) + defined(IEEE_MC68k) + defined(IEEE_ARM) != 1
-Exactly one of IEEE_8087, IEEE_ARM or IEEE_MC68k should be defined.
+#if defined(IEEE_8087) + defined(IEEE_MC68k) != 1
+Exactly one of IEEE_8087 or IEEE_MC68k should be defined.
 #endif
 
 namespace WTF {
@@ -195,7 +193,7 @@ typedef union { double d; uint32_t L[2]; } U;
  * An alternative that might be better on some machines is
  * #define Storeinc(a,b,c) (*a++ = b << 16 | c & 0xffff)
  */
-#if defined(IEEE_8087) || defined(IEEE_ARM)
+#if defined(IEEE_8087)
 #define Storeinc(a,b,c) (((unsigned short*)a)[1] = (unsigned short)b, ((unsigned short*)a)[0] = (unsigned short)c, a++)
 #else
 #define Storeinc(a,b,c) (((unsigned short*)a)[0] = (unsigned short)b, ((unsigned short*)a)[1] = (unsigned short)c, a++)
@@ -252,7 +250,7 @@ typedef union { double d; uint32_t L[2]; } U;
 #define Pack_32
 #endif
 
-#if CPU(PPC64) || CPU(X86_64)
+#if defined(QT_ARCH_X86_64) || defined(QT_ARCH_POWERPC64)
 // FIXME: should we enable this on all 64-bit CPUs?
 // 64-bit emulation provided by the compiler is likely to be slower than dtoa own code on 32-bit hardware.
 #define USE_LONG_LONG

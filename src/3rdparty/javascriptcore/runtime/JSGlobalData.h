@@ -120,10 +120,6 @@ namespace JSC {
         RefPtr<Structure> apiWrapperStructure;
         RefPtr<Structure> dummyMarkableCellStructure;
 
-#if USE(JSVALUE32)
-        RefPtr<Structure> numberStructure;
-#endif
-
         static void storeVPtrs();
         static void* jsArrayVPtr;
         static void* jsByteArrayVPtr;

@@ -47,7 +47,7 @@ apt-get install --yes git crossbuild-essential-$crossarch qemu-user-static
 git clone --depth=1 git://github.com/fluxer/katie
 cd katie
 ln -sv package/debian .
-apt-get build-dep -a $crossarch .
+apt-get build-dep --yes -a $crossarch .
 dpkg-buildpackage -uc -nc -b --no-sign -a $crossarch
 EOF
 chmod -v +x "$crossdir/crossbuild.sh"

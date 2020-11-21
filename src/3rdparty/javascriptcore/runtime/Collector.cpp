@@ -376,19 +376,6 @@ inline bool isPointerAligned(void* p)
 // Cell size needs to be a power of two for isPossibleCell to be valid.
 COMPILE_ASSERT(sizeof(CollectorCell) % 2 == 0, Collector_cell_size_is_power_of_two);
 
-#if USE(JSVALUE32)
-static bool isHalfCellAligned(void *p)
-{
-    return (((intptr_t)(p) & (CELL_MASK >> 1)) == 0);
-}
-
-static inline bool isPossibleCell(void* p)
-{
-    return isHalfCellAligned(p) && p;
-}
-
-#else
-
 static inline bool isCellAligned(void *p)
 {
     return (((intptr_t)(p) & CELL_MASK) == 0);
@@ -398,7 +385,6 @@ static inline bool isPossibleCell(void* p)
 {
     return isCellAligned(p) && p;
 }
-#endif // USE(JSVALUE32)
 
 void Heap::markConservatively(MarkStack& markStack, void* start, void* end)
 {
@@ -448,7 +434,7 @@ void NEVER_INLINE Heap::markCurrentThreadConservativelyInternal(MarkStack& markS
     markConservatively(markStack, stackPointer, stackBase);
 }
 
-#if COMPILER(GCC)
+#if defined(Q_CC_GNU)
 #define REGISTER_BUFFER_ALIGNMENT __attribute__ ((aligned (sizeof(void*))))
 #else
 #define REGISTER_BUFFER_ALIGNMENT
@@ -653,10 +639,6 @@ static const char* typeName(JSCell* cell)
 {
     if (cell->isString())
         return "string";
-#if USE(JSVALUE32)
-    if (cell->isNumber())
-        return "number";
-#endif
     if (cell->isGetterSetter())
         return "gettersetter";
     if (cell->isAPIValueWrapper())
