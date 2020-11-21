@@ -33,13 +33,11 @@
 
 #include "qplatformdefs.h"
 #include "qstring.h"
-#include "qvector.h"
 #include "qlist.h"
 #include "qcorecommon_p.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 #include <stdarg.h>
 #include <string.h>
 #include <errno.h>
@@ -47,7 +45,6 @@
 #include <time.h>
 
 #ifndef QT_NO_EXCEPTIONS
-#  include <string>
 #  include <exception>
 #endif
 
