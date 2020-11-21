@@ -35,7 +35,6 @@
 #include "qstring.h"
 #include "qvector.h"
 #include "qlist.h"
-#include "qdatetime.h"
 #include "qcorecommon_p.h"
 
 #include <stdio.h>
@@ -44,6 +43,8 @@
 #include <stdarg.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/time.h>
+#include <time.h>
 
 #ifndef QT_NO_EXCEPTIONS
 #  include <string>
@@ -1537,7 +1538,9 @@ int qrand()
 {
     // Seed the PRNG once per thread with a combination of current time and its address
     if (!almostrandom) {
-        almostrandom = QTime::currentTime().msec();
+        struct timeval tv;
+        ::gettimeofday(&tv, Q_NULLPTR);
+        almostrandom = tv.tv_usec;
         std::srand(almostrandom + std::intptr_t(&almostrandom));
     }
     return std::rand();
