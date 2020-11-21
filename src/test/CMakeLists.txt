@@ -32,7 +32,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtTest
     ${CMAKE_BINARY_DIR}/privateinclude/QtTest
-    # for fftw and valgrind
+    # for fftw
     ${CMAKE_SOURCE_DIR}/src
 )
 
@@ -69,7 +69,6 @@ set(TEST_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qsignaldumper_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmark_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmeasurement_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkvalgrind_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmetric_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkevent_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qabstracttestlogger_p.h
@@ -91,7 +90,6 @@ set(TEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qabstracttestlogger.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmark.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmeasurement.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkvalgrind.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkevent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmetric.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestelement.cpp

@@ -74,10 +74,6 @@ void QBenchmarkGlobalData::setMode(Mode mode)
 
     if (mode_ == EventCounter) {
         measurer = new QBenchmarkEvent;
-#ifdef QTESTLIB_USE_VALGRIND
-    } else if (mode_ == CallgrindChildProcess || mode_ == CallgrindParentProcess) {
-        measurer = new QBenchmarkCallgrindMeasurer;
-#endif
 #ifdef HAVE_TICK_COUNTER
     } else if (mode_ == TickCounter) {
         measurer = new QBenchmarkTickMeasurer;

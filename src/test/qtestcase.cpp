@@ -1093,9 +1093,6 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
          "\n"
          " Benchmark related options:\n"
-#ifdef QTESTLIB_USE_VALGRIND
-        " -callgrind      : Use callgrind to time benchmarks\n"
-#endif
 #ifdef HAVE_TICK_COUNTER
         " -tickcounter    : Use CPU tick counters to time benchmarks\n"
 #endif
@@ -1184,23 +1181,6 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
         } else if (strcmp(argv[i], "-keyevent-verbose") == 0) {
             QTest::keyVerbose = 1;
-#ifdef QTESTLIB_USE_VALGRIND
-        } else if (strcmp(argv[i], "-callgrind") == 0) {
-            if (QBenchmarkValgrindUtils::haveValgrind())
-                if (QFileInfo(QDir::currentPath()).isWritable()) {
-                    QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::CallgrindParentProcess);
-                } else {
-                    printf("WARNING: Current directory not writable. Using the walltime measurer.\n");
-                }
-            else {
-                printf("WARNING: Valgrind not found or too old. Make sure it is installed and in your path. "
-                       "Using the walltime measurer.\n");
-            }
-        } else if (strcmp(argv[i], "-callgrindchild") == 0) { // "private" option
-            QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::CallgrindChildProcess);
-            QBenchmarkGlobalData::current->callgrindOutFileBase =
-                QBenchmarkValgrindUtils::outFileBase();
-#endif
 #ifdef HAVE_TICK_COUNTER
         } else if (strcmp(argv[i], "-tickcounter") == 0) {
             QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::TickCounter);
@@ -1795,10 +1775,6 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
     QBenchmarkGlobalData benchmarkData;
     QBenchmarkGlobalData::current = &benchmarkData;
 
-#ifdef QTESTLIB_USE_VALGRIND
-    int callgrindChildExitCode = 0;
-#endif
-
     QT_TRY {
         QTestResult::reset();
 
@@ -1817,16 +1793,6 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
         if (QTest::randomOrder) {
             seedRandom();
         }
-#ifdef QTESTLIB_USE_VALGRIND
-        if (QBenchmarkGlobalData::current->mode() == QBenchmarkGlobalData::CallgrindParentProcess) {
-            const QStringList origAppArgs(QCoreApplication::arguments());
-            if (!QBenchmarkValgrindUtils::rerunThroughCallgrind(origAppArgs, callgrindChildExitCode))
-                return -1;
-
-            QBenchmarkValgrindUtils::cleanup();
-
-        } else
-#endif
         {
 #if defined(Q_OS_UNIX)
             QScopedPointer<FatalSignalHandler> handler;
@@ -1856,15 +1822,9 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
 #if defined(QTEST_NOEXITCODE)
     return 0;
 #else
-
-#ifdef QTESTLIB_USE_VALGRIND
-    if (QBenchmarkGlobalData::current->mode() == QBenchmarkGlobalData::CallgrindParentProcess)
-        return callgrindChildExitCode;
-#endif
     // make sure our exit code is never going above 127
     // since that could wrap and indicate 0 test fails
     return qMin(QTestResult::failCount(), 127);
-
 #endif
 }
 

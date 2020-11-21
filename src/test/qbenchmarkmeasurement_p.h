@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <QtCore/qelapsedtimer.h>
+#include "qelapsedtimer.h"
 #include "qbenchmark.h"
 #include "3rdparty/fftw/cycle.h"
 

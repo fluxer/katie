@@ -49,18 +49,9 @@
 
 #include <QtCore/qglobal.h>
 
-#if defined(Q_OS_LINUX) && !defined(QT_NO_PROCESS)
-#define QTESTLIB_USE_VALGRIND 
-#else
-#undef QTESTLIB_USE_VALGRIND
-#endif
-
 #include "QtTest/qbenchmarkmeasurement_p.h"
 #include <QtCore/QMap>
 #include <QtTest/qtest_global.h>
-#ifdef QTESTLIB_USE_VALGRIND
-#include "QtTest/qbenchmarkvalgrind_p.h"
-#endif
 #include "QtTest/qbenchmarkevent_p.h"
 #include "QtTest/qbenchmarkmetric_p.h"
 
@@ -120,7 +111,7 @@ public:
 
     QBenchmarkGlobalData();
     ~QBenchmarkGlobalData();
-    enum Mode { WallTime, CallgrindParentProcess, CallgrindChildProcess, TickCounter, EventCounter };
+    enum Mode { WallTime, TickCounter, EventCounter };
     void setMode(Mode mode);
     Mode mode() const { return mode_; }
     int adjustMedianIterationCount();
