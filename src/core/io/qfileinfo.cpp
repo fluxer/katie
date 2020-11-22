@@ -390,7 +390,7 @@ bool QFileInfo::operator==(const QFileInfo &fileinfo) const
         if (d->fileEngine != fileinfo.d_ptr->fileEngine) // one is native, the other is a custom file-engine
             return false;
 
-        sensitive = QFileSystemEngine::isCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive;
+        sensitive = Qt::CaseSensitive;
     } else {
         if (d->fileEngine->caseSensitive() != fileinfo.d_ptr->fileEngine->caseSensitive())
             return false;
