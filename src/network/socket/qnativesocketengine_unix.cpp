@@ -45,11 +45,17 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <netinet/tcp.h>
+
 #ifndef QT_NO_IPV6IFNAME
 #include <net/if.h>
 #endif
+
 #ifdef QT_LINUXBASE
 #include <arpa/inet.h>
+#endif
+
+#ifdef Q_OS_SOLARIS
+#  include <sys/filio.h> // FIONREAD
 #endif
 
 #if defined QNATIVESOCKETENGINE_DEBUG

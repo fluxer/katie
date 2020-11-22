@@ -260,6 +260,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qmessagebox.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprogressdialog.h
@@ -654,6 +655,11 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpreviewdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupwidget.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintsettingsoutput.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintwidget.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qmessagebox.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/effects/qgraphicseffect.cpp
@@ -1018,21 +1024,6 @@ if(WITH_ACCESSIBILITY)
         ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessibleplugin.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblebridge.cpp
-    )
-endif()
-
-if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd|netbsd|hurd)")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintsettingsoutput.ui
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintwidget.ui
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui
     )
 endif()
 

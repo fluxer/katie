@@ -50,6 +50,10 @@
 #include <string.h>
 #include <sys/ioctl.h>
 
+#ifdef Q_OS_SOLARIS
+#  include <sys/filio.h> // FIONREAD
+#endif
+
 //#define QPROCESS_DEBUG
 
 extern char **environ;
