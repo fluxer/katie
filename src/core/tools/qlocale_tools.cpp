@@ -53,12 +53,12 @@
 
 QT_BEGIN_NAMESPACE
 
-QString qulltoa(qulonglong l, int base, const QChar _zero)
+QString qulltoa(qulonglong l, int base, const QChar zero)
 {
     ushort buff[65]; // length of MAX_ULLONG in base 2
     ushort *p = buff + 65;
 
-    if (base != 10 || _zero.unicode() == '0') {
+    if (base != 10 || zero.unicode() == '0') {
         while (l != 0) {
             int c = l % base;
 
@@ -76,7 +76,7 @@ QString qulltoa(qulonglong l, int base, const QChar _zero)
         while (l != 0) {
             int c = l % base;
 
-            *(--p) = _zero.unicode() + c;
+            *(--p) = zero.unicode() + c;
 
             l /= base;
         }

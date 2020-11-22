@@ -52,7 +52,7 @@
 
 QT_BEGIN_NAMESPACE
 
-QString qulltoa(qulonglong l, int base, const QChar _zero);
+QString qulltoa(qulonglong l, int base, const QChar zero);
 QString qlltoa(qlonglong l, int base, const QChar zero);
 
 enum PrecisionMode {
@@ -79,25 +79,19 @@ static inline bool qIsZero(double d)
 
 static inline bool qIsUpper(char ch)
 {
-    return ch >= 'A' && ch <= 'Z';
+    return (ch >= 'A' && ch <= 'Z');
 }
 
 static inline bool qIsDigit(char ch)
 {
-    return ch >= '0' && ch <= '9';
+    return (ch >= '0' && ch <= '9');
 }
 
 static inline char qToLower(char ch)
 {
     if (ch >= 'A' && ch <= 'Z')
-        return ch - 'A' + 'a';
-    else
-        return ch;
-}
-
-static inline bool qIsAlnum(char c)
-{
-    return (c >= '0' && c <= '9') || ((c | 0x20) >= 'a' && (c | 0x20) <= 'z');
+        return (ch - 'A' + 'a');
+    return ch;
 }
 
 // Removes thousand-group separators in "C" locale.
