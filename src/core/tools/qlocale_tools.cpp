@@ -237,39 +237,31 @@ bool removeGroupSeparators(QLocalePrivate::CharBuff *num)
 
 qulonglong qstrtoull(const char *nptr, const char **endptr, int base, bool *ok)
 {
-    qulonglong ret = std::strtoull(const_cast<char*>(nptr), const_cast<char**>(endptr), base);
-    if (ok) {
-      if(ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL))
+    qulonglong ret = std::strtoull(nptr, const_cast<char**>(endptr), base);
+    if (ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL))
         *ok = false;
-      else
+    else
         *ok = true;
-    }
     return ret;
 }
 
 qlonglong qstrtoll(const char *nptr, const char **endptr, int base, bool *ok)
 {
-    qlonglong ret = std::strtoll(const_cast<char*>(nptr), const_cast<char**>(endptr), base);
-    if (ok) {
-      if((ret == LLONG_MIN || ret == LLONG_MAX)
-         && (errno == ERANGE || errno == EINVAL))
+    qlonglong ret = std::strtoll(nptr, const_cast<char**>(endptr), base);
+    if ((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL))
         *ok = false;
-      else
+    else
         *ok = true;
-    }
     return ret;
 }
 
 double qstrtod(const char *s00, const char **se, bool *ok)
 {
-    double ret = std::strtod(const_cast<char*>(s00), const_cast<char**>(se));
-    if (ok) {
-      if((ret == 0.0l && errno == ERANGE)
-         || ret == HUGE_VAL || ret == -HUGE_VAL)
+    double ret = std::strtod(s00, const_cast<char**>(se));
+    if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL)
         *ok = false;
-      else
+    else
         *ok = true; // the result will be that we don't report underflow in this case
-    }
     return ret;
 }
 
