@@ -2372,7 +2372,7 @@ QFontCache::~QFontCache()
         EngineDataCache::ConstIterator it = engineDataCache.constBegin(),
                                  end = engineDataCache.constEnd();
         while (it != end) {
-            if (it.value()->ref.deref() == 0)
+            if (!it.value()->ref.deref())
                 delete it.value();
             else
                 FC_DEBUG("QFontCache::~QFontCache: engineData %p still has refcount %d",
@@ -2400,7 +2400,7 @@ void QFontCache::clear()
 
     for (EngineCache::Iterator it = engineCache.begin(), end = engineCache.end();
          it != end; ++it) {
-        if (it->data->ref.deref() == 0) {
+        if (!it->data->ref.deref()) {
             delete it->data;
             it->data = 0;
         }

@@ -158,7 +158,7 @@ void ExceptionHolder::operator=(const ExceptionHolder &other)
     if (base == other.base)
         return;
 
-    if (base->refCount.deref() == false)
+    if (!base->refCount.deref())
         delete base;
 
     base = other.base;
@@ -167,7 +167,7 @@ void ExceptionHolder::operator=(const ExceptionHolder &other)
 
 ExceptionHolder::~ExceptionHolder()
 {
-    if (base->refCount.deref() == 0)
+    if (!base->refCount.deref())
         delete base;
 }
 
