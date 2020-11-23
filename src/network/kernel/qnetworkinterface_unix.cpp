@@ -190,7 +190,7 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
 
     // Get the canonical name
     QByteArray oldName = req.ifr_name;
-    if (qt_safe_ioctl(socket, SIOCGIFNAME, &req) >= 0) {
+    if (::ioctl(socket, SIOCGIFNAME, &req) >= 0) {
         iface->name = QString::fromLatin1(req.ifr_name);
 
         // reset the name:
@@ -202,12 +202,12 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
     }
 
     // Get interface flags
-    if (qt_safe_ioctl(socket, SIOCGIFFLAGS, &req) >= 0) {
+    if (::ioctl(socket, SIOCGIFFLAGS, &req) >= 0) {
         iface->flags = convertFlags(req.ifr_flags);
     }
 
     // Get the HW address
-    if (qt_safe_ioctl(socket, SIOCGIFHWADDR, &req) >= 0) {
+    if (::ioctl(socket, SIOCGIFHWADDR, &req) >= 0) {
         uchar *addr = (uchar *)req.ifr_addr.sa_data;
         iface->hardwareAddress = iface->makeHwAddress(6, addr);
     }
@@ -235,7 +235,7 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
         // Get the interface broadcast address
         QNetworkAddressEntry entry;
         if (iface->flags & QNetworkInterface::CanBroadcast) {
-            if (qt_safe_ioctl(socket, SIOCGIFBRDADDR, &req) >= 0) {
+            if (::ioctl(socket, SIOCGIFBRDADDR, &req) >= 0) {
                 sockaddr *sa = &req.ifr_addr;
                 if (sa->sa_family == AF_INET)
                     entry.setBroadcast(addressFromSockaddr(sa));
@@ -243,13 +243,13 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
         }
 
         // Get the address of the interface
-        if (qt_safe_ioctl(socket, SIOCGIFADDR, &req) >= 0) {
+        if (::ioctl(socket, SIOCGIFADDR, &req) >= 0) {
             sockaddr *sa = &req.ifr_addr;
             entry.setIp(addressFromSockaddr(sa));
         }
 
         // Get the interface netmask
-        if (qt_safe_ioctl(socket, SIOCGIFNETMASK, &req) >= 0) {
+        if (::ioctl(socket, SIOCGIFNETMASK, &req) >= 0) {
             sockaddr *sa = &req.ifr_addr;
             entry.setNetmask(addressFromSockaddr(sa));
         }
