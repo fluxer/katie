@@ -31,8 +31,6 @@
 
 namespace WTF {
 
-
-
 QT_USE_NAMESPACE
 
 class ThreadPrivate : public QThread {
@@ -57,7 +55,7 @@ void ThreadPrivate::run()
 
 static bool threadInitialized = false;
 
-static QMutex* threadMapMutex = new QMutex();
+static QMutex threadMapMutex;
 
 static HashMap<ThreadIdentifier, QThread*>& threadMap()
 {
@@ -67,7 +65,7 @@ static HashMap<ThreadIdentifier, QThread*>& threadMap()
 
 static ThreadIdentifier identifierByQthreadHandle(QThread*& thread)
 {
-    QMutexLocker locker(threadMapMutex);
+    QMutexLocker locker(&threadMapMutex);
 
     HashMap<ThreadIdentifier, QThread*>::iterator i = threadMap().begin();
     for (; i != threadMap().end(); ++i) {
@@ -82,7 +80,7 @@ static ThreadIdentifier establishIdentifierForThread(QThread*& thread)
 {
     Q_ASSERT(!identifierByQthreadHandle(thread));
 
-    QMutexLocker locker(threadMapMutex);
+    QMutexLocker locker(&threadMapMutex);
 
     static ThreadIdentifier identifierCount = 1;
 
@@ -104,7 +102,7 @@ int waitForThreadCompletion(ThreadIdentifier threadID)
 {
     Q_ASSERT(threadID);
 
-    QMutexLocker locker(threadMapMutex);
+    QMutexLocker locker(&threadMapMutex);
     QThread* thread = threadMap().get(threadID);
     locker.unlock();
 

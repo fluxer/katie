@@ -34,7 +34,6 @@ int HashTableStats::numReinserts;
 
 static HashTableStats logger;
 
-static thread_local QMutex* hashTableStatsMutex = new QMutex();
 
 HashTableStats::~HashTableStats()
 {
@@ -53,7 +52,8 @@ HashTableStats::~HashTableStats()
 
 void HashTableStats::recordCollisionAtCount(int count)
 {
-    QMutexLocker lock(hashTableStatsMutex);
+    static thread_local QMutex hashTableStatsMutex;
+    QMutexLocker lock(&hashTableStatsMutex);
     if (count > maxCollisions)
         maxCollisions = count;
     numCollisions++;

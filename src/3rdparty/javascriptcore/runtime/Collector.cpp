@@ -342,8 +342,8 @@ static inline void* currentThreadStackBase()
     pthread_stackseg_np(thread, &stack);
     return stack.ss_sp;
 #else
-    static thread_local QMutex* currentThreadStackMutex = new QMutex();
-    QMutexLocker locker(currentThreadStackMutex);
+    static thread_local QMutex currentThreadStackMutex;
+    QMutexLocker locker(&currentThreadStackMutex);
     static void* stackBase = 0;
     static size_t stackSize = 0;
     static pthread_t stackThread;
