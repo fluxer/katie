@@ -152,7 +152,7 @@ static QSet<QByteArray> interfaceNames(int socket)
     for (struct if_nameindex *ptr = interfaceList; ptr && ptr->if_name; ++ptr)
         result << ptr->if_name;
 
-    if_freenameindex(interfaceList);
+    ::if_freenameindex(interfaceList);
     return result;
 #endif
 }
@@ -194,7 +194,7 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
         iface->name = QString::fromLatin1(req.ifr_name);
 
         // reset the name:
-        memcpy(req.ifr_name, oldName, qMin<int>(oldName.length() + 1, sizeof(req.ifr_name) - 1));
+        ::memcpy(req.ifr_name, oldName, qMin<int>(oldName.length() + 1, sizeof(req.ifr_name) - 1));
     } else
     {
         // use this name anyways
@@ -223,12 +223,10 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
     if (socket == -1)
         return interfaces;      // error
 
-    QSet<QByteArray> names = interfaceNames(socket);
-    QSet<QByteArray>::ConstIterator it = names.constBegin();
-    for ( ; it != names.constEnd(); ++it) {
+    foreach (const QByteArray &it, interfaceNames(socket)) {
         ifreq req;
-        memset(&req, 0, sizeof(ifreq));
-        memcpy(req.ifr_name, *it, qMin<int>(it->length() + 1, sizeof(req.ifr_name) - 1));
+        ::memset(&req, 0, sizeof(ifreq));
+        ::memcpy(req.ifr_name, *it, qMin<int>(it->length() + 1, sizeof(req.ifr_name) - 1));
 
         QNetworkInterfacePrivate *iface = findInterface(socket, interfaces, req);
 
@@ -350,7 +348,7 @@ static QList<QNetworkInterfacePrivate *> createInterfaces(ifaddrs *rawList)
     // make sure there's one entry for each interface
     for (ifaddrs *ptr = rawList; ptr; ptr = ptr->ifa_next) {
         // Get the interface index
-        int ifindex = if_nametoindex(ptr->ifa_name);
+        int ifindex = ::if_nametoindex(ptr->ifa_name);
 
         QList<QNetworkInterfacePrivate *>::Iterator if_it = interfaces.begin();
         for ( ; if_it != interfaces.end(); ++if_it)
@@ -420,7 +418,7 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
         iface->addressEntries << entry;
     }
 
-    freeifaddrs(interfaceListing);
+    ::freeifaddrs(interfaceListing);
     ::close(socket);
     return interfaces;
 }
