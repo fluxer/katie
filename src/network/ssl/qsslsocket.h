@@ -70,6 +70,9 @@ public:
     QSslSocket(QObject *parent = Q_NULLPTR);
     ~QSslSocket();
 
+    virtual void connectToHost(const QString &hostName, quint16 port, OpenMode mode = ReadWrite);
+    virtual void disconnectFromHost();
+
     // Autostarting the SSL client handshake.
     void connectToHostEncrypted(const QString &hostName, quint16 port, OpenMode mode = ReadWrite);
     void connectToHostEncrypted(const QString &hostName, quint16 port, const QString &sslPeerName, OpenMode mode = ReadWrite);
@@ -175,11 +178,6 @@ Q_SIGNALS:
     void sslErrors(const QList<QSslError> &errors);
     void modeChanged(QSslSocket::SslMode newMode);
     void encryptedBytesWritten(qint64 totalBytes);
-
-protected Q_SLOTS:
-    void connectToHostImplementation(const QString &hostName, quint16 port,
-                                     OpenMode openMode);
-    void disconnectFromHostImplementation();
 
 protected:
     qint64 readData(char *data, qint64 maxlen);

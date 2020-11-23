@@ -1285,24 +1285,6 @@ bool QAbstractSocket::isValid() const
 void QAbstractSocket::connectToHost(const QString &hostName, quint16 port,
                                     OpenMode openMode)
 {
-    QMetaObject::invokeMethod(this, "connectToHostImplementation",
-                              Qt::DirectConnection,
-                              Q_ARG(QString, hostName),
-                              Q_ARG(quint16, port),
-                              Q_ARG(OpenMode, openMode));
-}
-
-/*!
-    \since 4.1
-
-    Contains the implementation of connectToHost().
-
-    Attempts to make a connection to \a hostName on the given \a
-    port. The socket is opened in the given \a openMode.
-*/
-void QAbstractSocket::connectToHostImplementation(const QString &hostName, quint16 port,
-                                                  OpenMode openMode)
-{
     Q_D(QAbstractSocket);
 #if defined(QABSTRACTSOCKET_DEBUG)
     qDebug("QAbstractSocket::connectToHost(\"%s\", %i, %i)...", qPrintable(hostName), port,
@@ -1545,9 +1527,6 @@ bool QAbstractSocket::setSocketDescriptor(int socketDescriptor, SocketState sock
                                           OpenMode openMode)
 {
     Q_D(QAbstractSocket);
-    if (QSslSocket *socket = qobject_cast<QSslSocket *>(this))
-        return socket->setSocketDescriptor(socketDescriptor, socketState, openMode);
-
     d->resetSocketLayer();
     d->socketEngine = QAbstractSocketEngine::createSocketEngine(socketDescriptor, this);
     if (!d->socketEngine) {
@@ -1595,11 +1574,6 @@ bool QAbstractSocket::setSocketDescriptor(int socketDescriptor, SocketState sock
 */
 void QAbstractSocket::setSocketOption(QAbstractSocket::SocketOption option, const QVariant &value)
 {
-    if (QSslSocket *sslSocket = qobject_cast<QSslSocket*>(this)) {
-        sslSocket->setSocketOption(option, value);
-        return;
-    }
-
     if (!d_func()->socketEngine)
         return;
 
@@ -1630,10 +1604,6 @@ void QAbstractSocket::setSocketOption(QAbstractSocket::SocketOption option, cons
 */
 QVariant QAbstractSocket::socketOption(QAbstractSocket::SocketOption option)
 {
-    if (QSslSocket *sslSocket = qobject_cast<QSslSocket*>(this)) {
-        return sslSocket->socketOption(option);
-    }
-
     if (!d_func()->socketEngine)
         return QVariant();
 
@@ -1695,11 +1665,6 @@ bool QAbstractSocket::waitForConnected(int msecs)
 #endif
         return true;
     }
-
-    // Manual polymorphism; this function is not virtual, but has an overload
-    // in QSslSocket.
-    if (QSslSocket *socket = qobject_cast<QSslSocket *>(this))
-        return socket->waitForConnected(msecs);
 
     bool wasPendingClose = d->pendingClose;
     d->pendingClose = false;
@@ -1909,11 +1874,6 @@ bool QAbstractSocket::waitForBytesWritten(int msecs)
 bool QAbstractSocket::waitForDisconnected(int msecs)
 {
     Q_D(QAbstractSocket);
-    // Manual polymorphism; this function is not virtual, but has an overload
-    // in QSslSocket.
-    if (QSslSocket *socket = qobject_cast<QSslSocket *>(this))
-        return socket->waitForDisconnected(msecs);
-
     // require calling connectToHost() before waitForDisconnected()
     if (state() == UnconnectedState) {
         qWarning("QAbstractSocket::waitForDisconnected() is not allowed in UnconnectedState");
@@ -1971,10 +1931,6 @@ void QAbstractSocket::abort()
 #endif
     if (d->state == UnconnectedState)
         return;
-    if (QSslSocket *socket = qobject_cast<QSslSocket *>(this)) {
-        socket->abort();
-        return;
-    }
     if (d->connectTimer) {
         d->connectTimer->stop();
         delete d->connectTimer;
@@ -2028,10 +1984,6 @@ bool QAbstractSocket::atEnd() const
 bool QAbstractSocket::flush()
 {
     Q_D(QAbstractSocket);
-    // Manual polymorphism; flush() isn't virtual, but QSslSocket overloads
-    // it.
-    if (QSslSocket *socket = qobject_cast<QSslSocket *>(this))
-        return socket->flush();
     Q_CHECK_SOCKETENGINE(false);
     return d->flush();
 }
@@ -2364,17 +2316,6 @@ void QAbstractSocket::close()
 */
 void QAbstractSocket::disconnectFromHost()
 {
-    QMetaObject::invokeMethod(this, "disconnectFromHostImplementation",
-                              Qt::DirectConnection);
-}
-
-/*!
-    \since 4.1
-
-    Contains the implementation of disconnectFromHost().
-*/
-void QAbstractSocket::disconnectFromHostImplementation()
-{
     Q_D(QAbstractSocket);
 #if defined(QABSTRACTSOCKET_DEBUG)
     qDebug("QAbstractSocket::disconnectFromHost()");
@@ -2521,14 +2462,6 @@ qint64 QAbstractSocket::readBufferSize() const
 void QAbstractSocket::setReadBufferSize(qint64 size)
 {
     Q_D(QAbstractSocket);
-
-    // Manual polymorphism; setReadBufferSize() isn't virtual, but QSslSocket overloads
-    // it.
-    if (QSslSocket *socket = qobject_cast<QSslSocket *>(this)) {
-        socket->setReadBufferSize(size);
-        return;
-    }
-
     if (d->readBufferMaxSize == size)
         return;
     d->readBufferMaxSize = size;
