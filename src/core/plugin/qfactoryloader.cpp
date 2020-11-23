@@ -80,7 +80,6 @@ QFactoryLoader::QFactoryLoader(const char *iid,
                                Qt::CaseSensitivity cs)
     : QObject(*new QFactoryLoaderPrivate)
 {
-    moveToThread(QCoreApplicationPrivate::mainThread());
     Q_D(QFactoryLoader);
     d->iid = iid;
     d->cs = cs;
@@ -223,11 +222,7 @@ QObject *QFactoryLoader::instance(const QString &key) const
     QString lowered = d->cs ? key : key.toLower();
     if (QLibraryPrivate* library = d->keyMap.value(lowered)) {
         if (library->instance || library->loadPlugin()) {
-            if (QObject *obj = library->instance()) {
-                if (obj && !obj->parent())
-                    obj->moveToThread(QCoreApplicationPrivate::mainThread());
-                return obj;
-            }
+            return library->instance();
         }
     }
     return 0;

@@ -170,13 +170,6 @@ struct QCoreApplicationData {
 #ifndef QT_NO_LIBRARY
         delete app_libpaths;
 #endif
-#ifndef QT_NO_QOBJECT
-        // cleanup the QAdoptedThread created for the main() thread
-        if (QCoreApplicationPrivate::theMainThread) {
-            QThreadData *data = QThreadData::get2(QCoreApplicationPrivate::theMainThread);
-            data->deref(); // deletes the data and the adopted thread
-        }
-#endif
     }
 
     QString orgName, orgDomain, application;
@@ -200,10 +193,6 @@ QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
         argv = (char **)&empty; // ouch! careful with QCoreApplication::argv()!
     }
     QCoreApplicationPrivate::is_app_closing = false;
-
-    // note: this call to QThread::currentThread() may end up setting theMainThread!
-    if (Q_UNLIKELY(QThread::currentThread() != theMainThread))
-        qWarning("WARNING: QApplication was not created in the main() thread.");
 }
 
 QCoreApplicationPrivate::~QCoreApplicationPrivate()
@@ -230,8 +219,6 @@ void QCoreApplicationPrivate::createEventDispatcher()
     Q_Q(QCoreApplication);
     eventDispatcher = new QEventDispatcherUNIX(q);
 }
-
-QThread *QCoreApplicationPrivate::theMainThread = Q_NULLPTR;
 
 #if !defined (QT_NO_DEBUG)
 void QCoreApplicationPrivate::checkReceiverThread(QObject *receiver)

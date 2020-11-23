@@ -33,13 +33,10 @@
 
 #include "qnetworkconfigmanager_p.h"
 #include "qbearerplugin_p.h"
-
 #include <QtCore/qfactoryloader_p.h>
-
 #include <QtCore/qdebug.h>
 #include <QtCore/qtimer.h>
 #include <QtCore/qstringlist.h>
-#include <QtCore/qcoreapplication_p.h>
 
 #ifndef QT_NO_BEARERMANAGEMENT
 
@@ -59,7 +56,6 @@ QNetworkConfigurationManagerPrivate::QNetworkConfigurationManagerPrivate()
 
 void QNetworkConfigurationManagerPrivate::initialize()
 {
-    moveToThread(QCoreApplicationPrivate::mainThread()); // because cleanup() is called in main thread context.
     updateConfigurations();
 }
 
@@ -365,8 +361,6 @@ void QNetworkConfigurationManagerPrivate::updateConfigurations()
                     generic = engine;
                 else
                     sessionEngines.append(engine);
-
-                engine->moveToThread(QCoreApplicationPrivate::mainThread());
 
                 connect(engine, SIGNAL(updateCompleted()),
                         this, SLOT(updateConfigurations()),

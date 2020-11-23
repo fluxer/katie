@@ -148,8 +148,6 @@ QThreadData *QThreadData::current()
 
         data->isAdopted = true;
         data->threadId = (Qt::HANDLE)pthread_self();
-        if (!QCoreApplicationPrivate::theMainThread)
-            QCoreApplicationPrivate::theMainThread = data->thread;
     }
     return data;
 }

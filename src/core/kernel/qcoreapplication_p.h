@@ -78,9 +78,6 @@ public:
     virtual void createEventDispatcher();
     static void removePostedEvent(QEvent *);
 
-    static QThread *theMainThread;
-    static inline QThread *mainThread()
-        { Q_ASSERT(theMainThread != 0); return theMainThread; }
     static bool checkInstance(const char *method);
     static void sendPostedEvents(QObject *receiver, int event_type, QThreadData *data);
 
