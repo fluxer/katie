@@ -2321,7 +2321,7 @@ static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::
                     if (y+1 < src->height) {
                         for (int i = 0; i < src->width; i++) {
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
-                            l2[i] = q2[i*4+chan+endian];
+                            l2[i] = q2[i*4+chan+1];
 #else
                             l2[i] = q2[i*4+chan];
 #endif
