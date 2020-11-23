@@ -163,7 +163,6 @@ public:
 
     QThreadData *data;
 
-    static void setCurrentThread(QThread*) {}
     static void createEventDispatcher(QThreadData *data);
 
     Q_DECLARE_PUBLIC(QThread)
