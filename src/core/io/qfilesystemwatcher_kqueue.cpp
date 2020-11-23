@@ -61,7 +61,7 @@ QT_BEGIN_NAMESPACE
 QKqueueFileSystemWatcherEngine *QKqueueFileSystemWatcherEngine::create()
 {
     int kqfd = kqueue();
-    if (kqfd == -1)
+    if (Q_UNLIKELY(kqfd == -1))
         return 0;
     return new QKqueueFileSystemWatcherEngine(kqfd);
 }
@@ -72,7 +72,7 @@ QKqueueFileSystemWatcherEngine::QKqueueFileSystemWatcherEngine(int kqfd)
 {
     connect(&notifier, SIGNAL(activated(int)), SLOT(readFromKqueue()));
 
-    fcntl(kqfd, F_SETFD, FD_CLOEXEC);
+    ::fcntl(kqfd, F_SETFD, FD_CLOEXEC);
 }
 
 QKqueueFileSystemWatcherEngine::~QKqueueFileSystemWatcherEngine()
@@ -104,13 +104,13 @@ QStringList QKqueueFileSystemWatcherEngine::addPaths(const QStringList &paths,
             continue;
         }
         if (fd >= (int)FD_SETSIZE / 2 && fd < (int)FD_SETSIZE) {
-            int fddup = fcntl(fd, F_DUPFD, FD_SETSIZE);
+            int fddup = ::fcntl(fd, F_DUPFD, FD_SETSIZE);
             if (fddup != -1) {
                 ::close(fd);
                 fd = fddup;
             }
         }
-        fcntl(fd, F_SETFD, FD_CLOEXEC);
+        ::fcntl(fd, F_SETFD, FD_CLOEXEC);
 
         QT_STATBUF st;
         if (QT_FSTAT(fd, &st) == -1) {
@@ -165,30 +165,26 @@ QStringList QKqueueFileSystemWatcherEngine::removePaths(const QStringList &paths
                                                         QStringList *files,
                                                         QStringList *directories)
 {
-    bool isEmpty;
     QStringList p = paths;
-    {
-        QMutexLocker locker(&mutex);
-        if (pathToID.isEmpty())
-            return p;
+    QMutexLocker locker(&mutex);
+    if (pathToID.isEmpty())
+        return p;
 
-        QMutableListIterator<QString> it(p);
-        while (it.hasNext()) {
-            QString path = it.next();
-            int id = pathToID.take(path);
-            QString x = idToPath.take(id);
-            if (x.isEmpty() || x != path)
-                continue;
+    QMutableListIterator<QString> it(p);
+    while (it.hasNext()) {
+        QString path = it.next();
+        int id = pathToID.take(path);
+        QString x = idToPath.take(id);
+        if (x.isEmpty() || x != path)
+            continue;
 
-            ::close(id < 0 ? -id : id);
+        ::close(id < 0 ? -id : id);
 
-            it.remove();
-            if (id < 0)
-                directories->removeAll(path);
-            else
-                files->removeAll(path);
-        }
-        isEmpty = pathToID.isEmpty();
+        it.remove();
+        if (id < 0)
+            directories->removeAll(path);
+        else
+            files->removeAll(path);
     }
 
     return p;
