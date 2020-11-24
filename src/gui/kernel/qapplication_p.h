@@ -124,10 +124,6 @@ public:
                    );
     void process_cmdline();
 
-#if defined(Q_WS_X11)
-    static void x11_initialize_style();
-#endif
-
     bool inPopupMode() const;
     void closePopup(QWidget *popup);
     void openPopup(QWidget *popup);
