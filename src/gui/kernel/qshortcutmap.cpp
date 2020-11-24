@@ -644,7 +644,7 @@ bool QShortcutMap::correctWidgetContext(Qt::ShortcutContext context, QWidget *w,
         return false;
 
     if (context == Qt::ApplicationShortcut)
-        return QApplicationPrivate::tryModalHelper(w, 0); // true, unless w is shadowed by a modal dialog
+        return QApplicationPrivate::tryModalHelper(w); // true, unless w is shadowed by a modal dialog
 
     if (context == Qt::WidgetShortcut)
         return w == QApplication::focusWidget();
@@ -706,7 +706,7 @@ bool QShortcutMap::correctGraphicsWidgetContext(Qt::ShortcutContext context, QGr
         // must still check if all views are shadowed.
         QList<QGraphicsView *> views = w->scene()->views();
         for (int i = 0; i < views.size(); ++i) {
-            if (QApplicationPrivate::tryModalHelper(views.at(i), 0))
+            if (QApplicationPrivate::tryModalHelper(views.at(i)))
                 return true;
         }
         return false;

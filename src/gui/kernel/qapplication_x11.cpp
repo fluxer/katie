@@ -1932,7 +1932,7 @@ int QApplication::x11ClientMessage(QWidget* w, XEvent* event, bool passive_only)
                 QWidget *amw = activeModalWidget();
                 if (amw && amw->testAttribute(Qt::WA_X11DoNotAcceptFocus))
                     amw = 0;
-                if (amw && !QApplicationPrivate::tryModalHelper(widget, 0)) {
+                if (amw && !QApplicationPrivate::tryModalHelper(widget)) {
                     QWidget *p = amw->parentWidget();
                     while (p && p != widget)
                         p = p->parentWidget();
@@ -2430,7 +2430,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
         QApplicationPrivate::dispatchEnterLeave(enter, leave);
         qt_last_mouse_receiver = enter;
 
-        if (enter && QApplicationPrivate::tryModalHelper(enter, 0)) {
+        if (enter && QApplicationPrivate::tryModalHelper(enter)) {
             QWidget *nativeEnter = enter->internalWinId() ? enter : enter->nativeParentWidget();
             curWin = nativeEnter->internalWinId();
             static_cast<QETWidget *>(nativeEnter)->translateMouseEvent(&ev); //we don't get MotionNotify, emulate it

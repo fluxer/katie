@@ -2161,7 +2161,7 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
     QEvent leaveEvent(QEvent::Leave);
     for (int i = 0; i < leaveList.size(); ++i) {
         w = leaveList.at(i);
-        if (!QApplication::activeModalWidget() || QApplicationPrivate::tryModalHelper(w, 0)) {
+        if (!QApplication::activeModalWidget() || QApplicationPrivate::tryModalHelper(w)) {
 #if defined(Q_WS_X11)
             if (leaveAfterRelease == w)
                 leaveAfterRelease = 0;
@@ -2179,7 +2179,7 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
     QEvent enterEvent(QEvent::Enter);
     for (int i = 0; i < enterList.size(); ++i) {
         w = enterList.at(i);
-        if (!QApplication::activeModalWidget() || QApplicationPrivate::tryModalHelper(w, 0)) {
+        if (!QApplication::activeModalWidget() || QApplicationPrivate::tryModalHelper(w)) {
             QApplication::sendEvent(w, &enterEvent);
             if (w->testAttribute(Qt::WA_Hover) &&
                 (!QApplication::activePopupWidget() || QApplication::activePopupWidget() == w->window())) {
@@ -2384,12 +2384,8 @@ void QApplicationPrivate::leaveModal(QWidget *widget)
   Called from qapplication_\e{platform}.cpp, returns true
   if the widget should accept the event.
  */
-bool QApplicationPrivate::tryModalHelper(QWidget *widget, QWidget **rettop)
+bool QApplicationPrivate::tryModalHelper(QWidget *widget)
 {
-    QWidget *top = QApplication::activeModalWidget();
-    if (rettop)
-        *rettop = top;
-
     // the active popup widget always gets the input event
     if (QApplication::activePopupWidget())
         return true;
@@ -4627,7 +4623,7 @@ void QApplicationPrivate::translateRawTouchEvent(QWidget *window,
     const QHash<QWidget *, StatesAndTouchPoints>::ConstIterator end = widgetsNeedingEvents.constEnd();
     for (; it != end; ++it) {
         QWidget *widget = it.key();
-        if (!QApplicationPrivate::tryModalHelper(widget, 0))
+        if (!QApplicationPrivate::tryModalHelper(widget))
             continue;
 
         QEvent::Type eventType;

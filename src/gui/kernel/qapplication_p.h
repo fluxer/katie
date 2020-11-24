@@ -113,7 +113,7 @@ public:
     static void leaveModal_sys(QWidget*);
     static bool isBlockedByModal(QWidget *widget);
     static bool modalState();
-    static bool tryModalHelper(QWidget *widget, QWidget **rettop = 0);
+    static bool tryModalHelper(QWidget *widget);
 
     bool notify_helper(QObject *receiver, QEvent * e);
 
