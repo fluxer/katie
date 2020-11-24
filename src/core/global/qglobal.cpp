@@ -934,13 +934,6 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_OS_BSD4
-    \relates <QtGlobal>
-
-    Defined on Any BSD 4.4 system.
-*/
-
-/*!
     \macro Q_OS_UNIX
     \relates <QtGlobal>
 

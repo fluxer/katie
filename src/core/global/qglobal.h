@@ -173,20 +173,16 @@ QT_USE_NAMESPACE
      OPENBSD  - OpenBSD
      HURD     - GNU Hurd
      SOLARIS  - Sun Solaris
-     BSD4     - Any BSD 4.4 system
 */
 
 #if defined(__linux__) || defined(__linux)
 #  define Q_OS_LINUX
 #elif defined(__FreeBSD__) || defined(__DragonFly__)
 #  define Q_OS_FREEBSD
-#  define Q_OS_BSD4
 #elif defined(__NetBSD__)
 #  define Q_OS_NETBSD
-#  define Q_OS_BSD4
 #elif defined(__OpenBSD__)
 #  define Q_OS_OPENBSD
-#  define Q_OS_BSD4
 #elif defined(__GNU__)
 #  define Q_OS_HURD
 #elif defined(__sun) || defined(sun)
