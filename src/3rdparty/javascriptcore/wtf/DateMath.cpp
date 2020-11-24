@@ -91,10 +91,6 @@
 #include <sys/time.h>
 #endif
 
-#if HAVE(SYS_TIMEB_H)
-#include <sys/timeb.h>
-#endif
-
 #define NaN std::numeric_limits<double>::quiet_NaN()
 
 using namespace WTF;

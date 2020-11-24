@@ -34,7 +34,6 @@
 #include "JSZombie.h"
 #include "MarkStack.h"
 #include "Nodes.h"
-#include "Tracing.h"
 #include <wtf/FastMalloc.h>
 #include <wtf/HashCountedSet.h>
 
@@ -668,11 +667,7 @@ bool Heap::isBusy()
 
 void Heap::reset()
 {
-    JAVASCRIPTCORE_GC_BEGIN();
-
     markRoots();
-
-    JAVASCRIPTCORE_GC_MARKED();
 
     m_heap.nextCell = 0;
     m_heap.nextBlock = 0;
@@ -682,14 +677,10 @@ void Heap::reset()
     sweep();
 #endif
     resizeBlocks();
-
-    JAVASCRIPTCORE_GC_END();
 }
 
 void Heap::collectAllGarbage()
 {
-    JAVASCRIPTCORE_GC_BEGIN();
-
     // If the last iteration through the heap deallocated blocks, we need
     // to clean up remaining garbage before marking. Otherwise, the conservative
     // marking mechanism might follow a pointer to unmapped memory.
@@ -698,16 +689,12 @@ void Heap::collectAllGarbage()
 
     markRoots();
 
-    JAVASCRIPTCORE_GC_MARKED();
-
     m_heap.nextCell = 0;
     m_heap.nextBlock = 0;
     m_heap.nextNumber = 0;
     m_heap.extraCost = 0;
     sweep();
     resizeBlocks();
-
-    JAVASCRIPTCORE_GC_END();
 }
 
 LiveObjectIterator Heap::primaryHeapBegin()
