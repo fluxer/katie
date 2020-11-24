@@ -18,14 +18,13 @@ There are several things you should be aware before considering Katie:
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, lrelease, lupdate, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
-  - updated bundled FFTW and Valgrind from upstream
+  - updated bundled FFTW from upstream
   - versioned and extended classes have been merged into the base class,
     e.g. QIconEngineV2 into QIconEngine and QKeyEventEx into QKeyEvent
   - QGuiPlatformPlugin class is public
   - updated localizations data from Common Locale Data Repository v36.1
   - SQLite driver uses UTF-8 encoding instead of UTF-16
   - default text codec for C-strings is UTF-8
-  - Symbian, QWS, QPA, Mac and Windows are no longer supported platforms
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine
   - native graphics system is no more, rasterizer is just as fast as native
@@ -35,7 +34,7 @@ There are several things you should be aware before considering Katie:
   - state machine is no more
   - removed non-open source DB2, OCI, TDS and InterBase database drivers
   - removed 3rd party sources that are very common nowdays
-  - dropped non-open source platforms support
+  - dropped non-open source and discontinued platforms support
   - dropped dnotify filesystem watcher support
   - dropped Glib2 event dispatcher support
   - dropped support for a.out format
@@ -44,6 +43,7 @@ There are several things you should be aware before considering Katie:
   - dropped static plugins support
   - dropped MNG image format support
   - dropped obscure (24-bit) image formats support
+  - dropped Valgrind support
 
  - some additions have been made: 
   - JSON classes and types
@@ -56,6 +56,7 @@ There are several things you should be aware before considering Katie:
   - alternative libc implementations support
   - additional text codecs via ICU converter
   - Unicode v5.0+ characters and partial scripts support
+  - support for AArch64 architecture
   - support for locale aliases
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
   - support for generating CRC-32 checksums via qChecksum32() function
