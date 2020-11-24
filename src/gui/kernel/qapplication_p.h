@@ -189,7 +189,6 @@ public:
     static bool fade_menu;
     static bool fade_tooltip;
     static bool animate_toolbox;
-    static bool widgetCount; // Coupled with -widgetcount switch
 
     static void setSystemPalette(const QPalette &pal);
     static void setPalette_helper(const QPalette &palette, const char* className, bool clearWidgetPaletteHash);
