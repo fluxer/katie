@@ -211,20 +211,9 @@ QT_USE_NAMESPACE
   For full listing, see
    http://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
 */
+
 #if defined(__GNUC__)
 #  define Q_CC_GNU
-#  define Q_C_CALLBACKS
-#  define Q_ALIGNOF(type)   __alignof__(type)
-#  define Q_TYPEOF(expr)    __typeof__(expr)
-#  define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
-#  define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
-#  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
-#  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
-#  define Q_FUNC_INFO       __PRETTY_FUNCTION__
-#  define Q_PACKED __attribute__ ((__packed__))
-#  ifndef __ARM_EABI__
-#    define QT_NO_ARM_EABI
-#  endif
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
      /* C++0x features supported in GCC 4.3: */
 #    define Q_COMPILER_RVALUE_REFS
@@ -238,15 +227,6 @@ QT_USE_NAMESPACE
 
 #elif defined(__clang__)
 #  define Q_CC_CLANG
-#  define Q_C_CALLBACKS
-#  define Q_ALIGNOF(type)   __alignof__(type)
-#  define Q_TYPEOF(expr)    __typeof__(expr)
-#  define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
-#  define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
-#  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
-#  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
-#  define Q_FUNC_INFO       __PRETTY_FUNCTION__
-#  define Q_PACKED __attribute__ ((__packed__))
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
     /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
 #    if __has_feature(cxx_generalized_initializers)
@@ -264,6 +244,15 @@ QT_USE_NAMESPACE
 #  error "Katie has not been tested with this compiler"
 #endif
 
+#define Q_C_CALLBACKS
+#define Q_ALIGNOF(type)   __alignof__(type)
+#define Q_TYPEOF(expr)    __typeof__(expr)
+#define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
+#define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
+#define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
+#define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
+#define Q_FUNC_INFO       __PRETTY_FUNCTION__
+#define Q_PACKED          __attribute__ ((__packed__))
 #define Q_OUTOFLINE_TEMPLATE
 #define Q_INLINE_TEMPLATE inline
 #define Q_TYPENAME typename
