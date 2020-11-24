@@ -195,13 +195,6 @@ QT_USE_NAMESPACE
 #define Q_WS_X11
 #define Q_OS_UNIX
 
-#if defined(__LSB_VERSION__)
-#  if __LSB_VERSION__ < 40
-#    error "This version of the Linux Standard Base is unsupported"
-#  endif
-#  define QT_LINUXBASE
-#endif
-
 /*
    The compiler, must be one of: (Q_CC_x)
 

@@ -36,29 +36,26 @@
 #include "qnetworkinterface_p.h"
 #include "qalgorithms.h"
 #include "qnet_unix_p.h"
+#include "qplatformdefs.h"
 
 #ifndef QT_NO_NETWORKINTERFACE
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <net/if.h>
+#include <arpa/inet.h>
 
 #ifdef Q_OS_SOLARIS
 # include <sys/sockio.h>
 #endif
-#include <net/if.h>
 
 #ifdef QT_HAVE_GETIFADDRS
 # include <ifaddrs.h>
 #endif
 
-#ifdef QT_LINUXBASE
-#  include <arpa/inet.h>
-#  ifndef SIOCGIFBRDADDR
-#    define SIOCGIFBRDADDR 0x8919
-#  endif
-#endif // QT_LINUXBASE
-
-#include <qplatformdefs.h>
+#ifndef SIOCGIFBRDADDR
+#  define SIOCGIFBRDADDR 0x8919
+#endif
 
 QT_BEGIN_NAMESPACE
 

@@ -38,13 +38,12 @@
 #include "qstringlist.h"
 #include "qendian.h"
 #include "qnativesocketengine_p.h"
+
 #ifndef QT_NO_DATASTREAM
 #include "qdatastream.h"
 #endif
 
-#ifdef QT_LINUXBASE
-#  include <arpa/inet.h>
-#endif
+#include <arpa/inet.h>
 
 QT_BEGIN_NAMESPACE
 
