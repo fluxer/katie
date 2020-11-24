@@ -266,9 +266,6 @@ private:
                                                 Qt::FocusPolicy focusPolicy,
                                                 Qt::FocusReason focusReason);
     static bool shouldSetFocus(QWidget *w, Qt::FocusPolicy policy);
-
-
-    static bool isAlien(QWidget *);
 };
 
 Q_GUI_EXPORT void qt_translateRawTouchEvent(QWidget *window,
