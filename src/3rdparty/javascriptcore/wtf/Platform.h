@@ -53,6 +53,7 @@ QT_USE_NAMESPACE
 #define HAVE_TM_GMTOFF 1
 #define HAVE_TM_ZONE 1
 #define HAVE_TIMEGM 1
+#define HAVE_MADV_FREE 1
 #endif
 
 #define HAVE_ERRNO_H 1
@@ -62,7 +63,6 @@ QT_USE_NAMESPACE
 #define HAVE_SYS_PARAM_H 1
 #define HAVE_SYS_TIME_H 1
 #define HAVE_MMAP 1
-#define HAVE_MADV_FREE 1
 #define HAVE_POSIX_MEMALIGN 1
 
 /* ENABLE macro defaults */
