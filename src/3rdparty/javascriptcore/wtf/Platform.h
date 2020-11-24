@@ -53,6 +53,9 @@ QT_USE_NAMESPACE
 #define HAVE_TM_GMTOFF 1
 #define HAVE_TM_ZONE 1
 #define HAVE_TIMEGM 1
+#endif
+
+#if !defined(Q_OS_SOLARIS) && !defined(Q_OS_HURD)
 #define HAVE_MADV_FREE 1
 #endif
 
