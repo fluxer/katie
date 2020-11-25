@@ -29,6 +29,11 @@
 #include "dtoa.h"
 #include "Identifier.h"
 #include "Operations.h"
+#include <wtf/ASCIICType.h>
+#include <wtf/Assertions.h>
+#include <wtf/Vector.h>
+#include <wtf/unicode/UTF8.h>
+
 #include <ctype.h>
 #include <limits.h>
 #include <limits>
@@ -36,14 +41,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <wtf/ASCIICType.h>
-#include <wtf/Assertions.h>
-#include <wtf/Vector.h>
-#include <wtf/unicode/UTF8.h>
-
-#if HAVE(STRINGS_H)
-#include <strings.h>
-#endif
 
 #include <QTextCodec>
 

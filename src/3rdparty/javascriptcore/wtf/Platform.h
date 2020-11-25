@@ -45,28 +45,11 @@ QT_USE_NAMESPACE
 
 /* Operating environments */
 
-#if defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD)
-#define HAVE_PTHREAD_NP_H 1
-#endif
-
 #if !defined(Q_OS_SOLARIS)
 #define HAVE_TM_GMTOFF 1
 #define HAVE_TM_ZONE 1
 #define HAVE_TIMEGM 1
 #endif
-
-#if !defined(Q_OS_SOLARIS) && !defined(Q_OS_HURD)
-#define HAVE_MADV_FREE 1
-#endif
-
-#define HAVE_ERRNO_H 1
-#define HAVE_SIGNAL_H 1
-#define HAVE_LANGINFO_H 1
-#define HAVE_STRINGS_H 1
-#define HAVE_SYS_PARAM_H 1
-#define HAVE_SYS_TIME_H 1
-#define HAVE_MMAP 1
-#define HAVE_POSIX_MEMALIGN 1
 
 /* ENABLE macro defaults */
 

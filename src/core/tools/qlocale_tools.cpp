@@ -62,8 +62,7 @@ QString qulltoa(qulonglong l, int base, const QChar zero)
 
             l /= base;
         }
-    }
-    else {
+    } else {
         while (l != 0) {
             int c = l % base;
 

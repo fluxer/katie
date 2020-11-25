@@ -81,15 +81,8 @@
 #include <limits>
 #include <stdint.h>
 #include <time.h>
-
-
-#if HAVE(ERRNO_H)
 #include <errno.h>
-#endif
-
-#if HAVE(SYS_TIME_H)
 #include <sys/time.h>
-#endif
 
 #define NaN std::numeric_limits<double>::quiet_NaN()
 
@@ -360,7 +353,7 @@ int equivalentYearForDST(int year)
 
 static int32_t calculateUTCOffset()
 {
-    time_t localTime = time(0);
+    time_t localTime = ::time(0);
     tm localt;
     getLocalTime(&localTime, &localt);
 
@@ -382,11 +375,11 @@ static int32_t calculateUTCOffset()
 #endif
     
 #if HAVE(TIMEGM)
-    time_t utcOffset = timegm(&localt) - mktime(&localt);
+    time_t utcOffset = ::timegm(&localt) - ::mktime(&localt);
 #else
     // Using a canned date of 01/01/2009 on platforms with weaker date-handling foo.
     localt.tm_year = 109;
-    time_t utcOffset = 1230768000 - mktime(&localt);
+    time_t utcOffset = 1230768000 - ::mktime(&localt);
 #endif
 
     return static_cast<int32_t>(utcOffset * 1000);

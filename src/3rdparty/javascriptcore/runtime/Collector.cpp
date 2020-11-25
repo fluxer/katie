@@ -50,7 +50,7 @@
 #include <pthread.h>
 #endif
 
-#if HAVE(PTHREAD_NP_H)
+#if defined(QT_HAVE_PTHREAD_ATTR_GET_NP)
 #include <pthread_np.h>
 #endif
 
@@ -104,9 +104,9 @@ void Heap::destroy()
 
 NEVER_INLINE CollectorBlock* Heap::allocateBlock()
 {
-#if HAVE(POSIX_MEMALIGN)
+#if defined(QT_HAVE_POSIX_MEMALIGN)
     void* address;
-    posix_memalign(&address, BLOCK_SIZE, BLOCK_SIZE);
+    ::posix_memalign(&address, BLOCK_SIZE, BLOCK_SIZE);
 #else
 
     static size_t pagesize = getpagesize();
@@ -115,7 +115,7 @@ NEVER_INLINE CollectorBlock* Heap::allocateBlock()
     if (BLOCK_SIZE > pagesize)
         extra = BLOCK_SIZE - pagesize;
 
-    void* mmapResult = mmap(NULL, BLOCK_SIZE + extra, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+    void* mmapResult = QT_MMAP(NULL, BLOCK_SIZE + extra, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
     uintptr_t address = reinterpret_cast<uintptr_t>(mmapResult);
 
     size_t adjust = 0;
@@ -123,10 +123,10 @@ NEVER_INLINE CollectorBlock* Heap::allocateBlock()
         adjust = BLOCK_SIZE - (address & BLOCK_OFFSET_MASK);
 
     if (adjust > 0)
-        munmap(reinterpret_cast<char*>(address), adjust);
+        ::munmap(reinterpret_cast<char*>(address), adjust);
 
     if (adjust < extra)
-        munmap(reinterpret_cast<char*>(address + adjust + BLOCK_SIZE), extra - adjust);
+        ::munmap(reinterpret_cast<char*>(address + adjust + BLOCK_SIZE), extra - adjust);
 
     address += adjust;
 #endif
@@ -179,10 +179,10 @@ NEVER_INLINE void Heap::freeBlock(size_t block)
 
 NEVER_INLINE void Heap::freeBlockPtr(CollectorBlock* block)
 {
-#if HAVE(POSIX_MEMALIGN)
-    free(block);
+#if defined(QT_HAVE_POSIX_MEMALIGN)
+    ::free(block);
 #else
-    munmap(reinterpret_cast<char*>(block), BLOCK_SIZE);
+    ::munmap(reinterpret_cast<char*>(block), BLOCK_SIZE);
 #endif
 }
 
@@ -350,7 +350,7 @@ static inline void* currentThreadStackBase()
     if (stackBase == 0 || thread != stackThread) {
         pthread_attr_t sattr;
         pthread_attr_init(&sattr);
-#if HAVE(PTHREAD_NP_H)
+#if defined(QT_HAVE_PTHREAD_ATTR_GET_NP)
         // e.g. on FreeBSD 5.4, neundorf@kde.org
         pthread_attr_get_np(thread, &sattr);
 #else

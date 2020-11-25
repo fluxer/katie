@@ -36,7 +36,6 @@
 
 #include <sys/select.h>
 #include <sys/time.h>
-
 #include <stdlib.h>
 
 QT_BEGIN_NAMESPACE

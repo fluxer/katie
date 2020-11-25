@@ -128,18 +128,12 @@
  *    also does extra computations to set the underflow and overflow
  *    flags when appropriate (i.e., when the result is tiny and
  *    inexact or when it is a numeric value rounded to +-infinity).
- * #define NO_ERRNO if strtod should not assign errno = ERANGE when
- *    the result overflows to +-Infinity or underflows to 0.
  */
 
 #include "Platform.h"
 #include "dtoa.h"
 
-#if HAVE(ERRNO_H)
 #include <errno.h>
-#else
-#define NO_ERRNO
-#endif
 #include <cmath>
 #include <stdint.h>
 #include <stdlib.h>
@@ -1292,9 +1286,7 @@ ret0:
         if (e1 &= ~15) {
             if (e1 > DBL_MAX_10_EXP) {
 ovfl:
-#ifndef NO_ERRNO
                 errno = ERANGE;
-#endif
                 /* Can't trust HUGE_VAL */
                 word0(&rv) = Exp_mask;
                 word1(&rv) = 0;
@@ -1360,9 +1352,7 @@ ovfl:
                 if (!dval(&rv)) {
 undfl:
                     dval(&rv) = 0.;
-#ifndef NO_ERRNO
                     errno = ERANGE;
-#endif
                     goto ret;
                 }
 #ifndef Avoid_Underflow
@@ -1686,11 +1676,9 @@ cont:
         word0(&rv0) = Exp_1 - 2 * P * Exp_msk1;
         word1(&rv0) = 0;
         dval(&rv) *= dval(&rv0);
-#ifndef NO_ERRNO
         /* try to avoid the bug of testing an 8087 register value */
         if (word0(&rv) == 0 && word1(&rv) == 0)
             errno = ERANGE;
-#endif
     }
 #endif /* Avoid_Underflow */
 #ifdef SET_INEXACT

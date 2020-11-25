@@ -362,6 +362,7 @@ katie_check_function(nl_langinfo "langinfo.h")
 katie_check_function(getaddrinfo "netdb.h")
 katie_check_function(clock_gettime "time.h")
 katie_check_function(vsnprintf "stdio.h")
+katie_check_function(posix_memalign "stdlib.h")
 # XSI/POSIX.1-2001
 katie_check_function(strerror_r "string.h")
 # SUSv2
@@ -372,6 +373,8 @@ katie_check_function(fcvt "stdlib.h")
 katie_check_function(ecvt "stdlib.h")
 # NetBSD 1.6 and FreeBSD 4.4
 katie_check_function(getprogname "stdlib.h")
+# FreeBSD 5.4
+katie_check_function(pthread_attr_get_np "pthread_np.h")
 # GNU
 katie_check_function(get_current_dir_name "unistd.h")
 katie_check_function(prctl "sys/prctl.h")
@@ -382,6 +385,7 @@ katie_check_function(fesetenv "fenv.h")
 katie_check_function(feclearexcept "fenv.h")
 katie_check_function(feenableexcept "fenv.h")
 # none
+katie_check_function(madvise "sys/mman.h")
 katie_check_function(getifaddrs "ifaddrs.h")
 katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
 katie_check_struct(sockaddr_dl sdl_index "net/if_dl.h")
