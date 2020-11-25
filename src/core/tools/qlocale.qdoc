@@ -91,7 +91,7 @@
     \note For the current keyboard input locale take a look at
     QApplication::keyboardInputLocale().
 
-    QLocale's data is based on Common Locale Data Repository v36.1.
+    QLocale's data is based on Common Locale Data Repository v38.
 
     The double-to-string and string-to-double conversion functions are
     covered by the following licenses:
@@ -149,6 +149,7 @@
     \value Angika
     \value AoNaga
     \value Arabic
+    \value ArabicNajdi
     \value Aragonese
     \value Aramaic
     \value Araona
@@ -408,6 +409,8 @@
     \value Kuanyama
     \value Kumyk
     \value Kurdish
+    \value KurdishCentral
+    \value KurdishSorani
     \value Kurukh
     \value Kutenai
     \value Kwasio
@@ -810,6 +813,7 @@
     \value Bulgaria
     \value BurkinaFaso
     \value Burundi
+    \value CaboVerde
     \value Cambodia
     \value Cameroon
     \value Canada
@@ -1206,6 +1210,7 @@
     \value NKoScript
     \value NabataeanScript
     \value NandinagariScript
+    \value NastaliqScript
     \value NaxiGebaScript
     \value NewTaiLueScript
     \value NewaScript
