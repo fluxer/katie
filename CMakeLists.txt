@@ -339,7 +339,6 @@ set_package_properties(Unwind PROPERTIES
 add_definitions(
     # these conditionals are probably going to become default in the future
     -DQT_POSIX_IPC
-    -DQT_USE_SYSTEM_PROXIES
     # -DQT_STRICT_ITERATORS
     # -DQT_ASCII_CAST_WARNINGS
     # maybe one day, this forces it onto other projects which (most likely)
