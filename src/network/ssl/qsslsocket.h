@@ -44,7 +44,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QDir;
 class QSslCipher;
 class QSslCertificate;
 class QSslConfiguration;
@@ -79,7 +78,6 @@ public:
     bool setSocketDescriptor(int socketDescriptor, SocketState state = ConnectedState,
                              OpenMode openMode = ReadWrite);
 
-    // ### Qt 5: Make virtual
     void setSocketOption(QAbstractSocket::SocketOption option, const QVariant &value);
     QVariant socketOption(QAbstractSocket::SocketOption option);
 
@@ -104,6 +102,7 @@ public:
     bool canReadLine() const;
     void close();
     bool atEnd() const;
+
     bool flush();
     void abort();
 

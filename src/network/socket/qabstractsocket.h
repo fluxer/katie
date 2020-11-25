@@ -129,8 +129,6 @@ public:
     qint64 readBufferSize() const;
     virtual void setReadBufferSize(qint64 size);
 
-    virtual void abort();
-
     int socketDescriptor() const;
     virtual bool setSocketDescriptor(int socketDescriptor, SocketState state = ConnectedState,
                                      OpenMode openMode = ReadWrite);
@@ -148,6 +146,7 @@ public:
     bool atEnd() const;
 
     virtual bool flush();
+    virtual void abort();
 
     // for synchronous access
     virtual bool waitForConnected(int msecs = 30000);
