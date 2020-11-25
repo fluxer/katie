@@ -1026,31 +1026,21 @@ QStyle *QApplication::style()
     }
 
     if (!QApplicationPrivate::app_style) {
-        // Compile-time search for default style
-        //
         QString style;
-#ifdef QT_BUILD_INTERNAL
-        static const QString envStyle = QString::fromLocal8Bit(qgetenv("QT_STYLE_OVERRIDE"));
-#endif
         if (!QApplicationPrivate::styleOverride.isEmpty()) {
             style = QApplicationPrivate::styleOverride;
-#ifdef QT_BUILD_INTERNAL
-        } else if (!envStyle.isEmpty()) {
-            style = envStyle;
-#endif
         } else {
             style = QApplicationPrivate::desktopStyleKey();
         }
 
-        QStyle *&app_style = QApplicationPrivate::app_style;
-        app_style = QStyleFactory::create(style);
-        if (!app_style) {
+        QApplicationPrivate::app_style = QStyleFactory::create(style);
+        if (!QApplicationPrivate::app_style) {
             foreach (const QString &style, QStyleFactory::keys()) {
-                if ((app_style = QStyleFactory::create(style)))
+                if ((QApplicationPrivate::app_style = QStyleFactory::create(style)))
                     break;
             }
         }
-        if (!app_style) {
+        if (!QApplicationPrivate::app_style) {
             Q_ASSERT(!"No styles available!");
             return 0;
         }
