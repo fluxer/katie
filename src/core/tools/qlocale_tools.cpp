@@ -36,17 +36,8 @@
 #include "qstring.h"
 #include "qcorecommon_p.h"
 
-#include <ctype.h>
-#include <float.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <time.h>
-#include <errno.h>
-#include <cmath>
-
-#if defined(Q_OS_LINUX) && !defined(__UCLIBC__)
-#    include <fenv.h>
-#endif
+#include <stdio.h>
+#include <string.h>
 
 #include <unicode/ucol.h>
 #include <unicode/ustring.h>
@@ -234,37 +225,6 @@ bool removeGroupSeparators(QLocalePrivate::CharBuff *num)
 
     return true;
 }
-
-qulonglong qstrtoull(const char *nptr, const char **endptr, int base, bool *ok)
-{
-    qulonglong ret = std::strtoull(nptr, const_cast<char**>(endptr), base);
-    if (ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL))
-        *ok = false;
-    else
-        *ok = true;
-    return ret;
-}
-
-qlonglong qstrtoll(const char *nptr, const char **endptr, int base, bool *ok)
-{
-    qlonglong ret = std::strtoll(nptr, const_cast<char**>(endptr), base);
-    if ((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL))
-        *ok = false;
-    else
-        *ok = true;
-    return ret;
-}
-
-double qstrtod(const char *s00, const char **se, bool *ok)
-{
-    double ret = std::strtod(s00, const_cast<char**>(se));
-    if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL)
-        *ok = false;
-    else
-        *ok = true; // the result will be that we don't report underflow in this case
-    return ret;
-}
-
 
 /******************************************************************************
 ** Helpers for string casing and collation

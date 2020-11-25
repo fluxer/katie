@@ -47,6 +47,7 @@
 #include "qdebug.h"
 #include "qcorecommon_p.h"
 
+#include <errno.h>
 #include <unicode/ulocdata.h>
 
 // #define QLOCALE_DEBUG
@@ -2739,11 +2740,9 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overfl
     if (qstrcmp(num, "-inf") == 0)
         return -qInf();
 
-    bool _ok;
-    const char *endptr;
-    double d = qstrtod(num, &endptr, &_ok);
-
-    if (!_ok) {
+    char *endptr;
+    double ret = std::strtod(num, &endptr);
+    if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL) {
         // the only way strtod can fail with *endptr != '\0' on a non-empty
         // input string is overflow
         if (ok != Q_NULLPTR)
@@ -2766,14 +2765,11 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overfl
         *ok = true;
     if (overflow != Q_NULLPTR)
         *overflow = false;
-    return d;
+    return ret;
 }
 
 qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *ok, bool *overflow)
 {
-    bool _ok;
-    const char *endptr;
-
     if (*num == '\0') {
         if (ok != Q_NULLPTR)
             *ok = false;
@@ -2782,9 +2778,9 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
         return 0;
     }
 
-    qlonglong l = qstrtoll(num, &endptr, base, &_ok);
-
-    if (!_ok) {
+    char *endptr;
+    qlonglong ret = std::strtoll(num, &endptr, base);
+    if ((ret == LLONG_MIN || ret == LLONG_MAX) && (errno == ERANGE || errno == EINVAL)) {
         if (ok != Q_NULLPTR)
             *ok = false;
         if (overflow != Q_NULLPTR) {
@@ -2808,16 +2804,14 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
         *ok = true;
     if (overflow != Q_NULLPTR)
         *overflow = false;
-    return l;
+    return ret;
 }
 
 qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, bool *ok)
 {
-    bool _ok;
-    const char *endptr;
-    qulonglong l = qstrtoull(num, &endptr, base, &_ok);
-
-    if (!_ok || *endptr != '\0') {
+    char *endptr;
+    qulonglong ret = std::strtoull(num, &endptr, base);
+    if ((ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL)) || *endptr != '\0') {
         if (ok != Q_NULLPTR)
             *ok = false;
         return 0;
@@ -2825,7 +2819,7 @@ qulonglong QLocalePrivate::bytearrayToUnsLongLong(const char *num, int base, boo
 
     if (ok != Q_NULLPTR)
         *ok = true;
-    return l;
+    return ret;
 }
 
 /*!
