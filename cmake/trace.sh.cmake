@@ -7,7 +7,6 @@ if [ -z "$LD_LIBRARY_PATH" ];then
 else
     export LD_LIBRARY_PATH="@CMAKE_BINARY_DIR@/lib:$LD_LIBRARY_PATH"
 fi
-export QTDIR="@CMAKE_SOURCE_DIR@"
 export QT_PLUGIN_PATH="@CMAKE_BINARY_DIR@/plugins"
 export QML_IMPORT_PATH="@CMAKE_BINARY_DIR@/imports"
 
