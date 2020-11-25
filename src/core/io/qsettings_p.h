@@ -52,7 +52,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_AUTOTEST_EXPORT QSettingsPrivate
+class QSettingsPrivate
     : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QSettings)
