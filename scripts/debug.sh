@@ -17,4 +17,4 @@ export LDFLAGS="$LDFLAGS -Wall -fsanitize=$sanitizers"
 
 cmake ../ -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_INSTALL_PREFIX=/usr $@
-make -j$(nproc || echo 1)
+make -j $(nproc || sysctl -n hw.ncpu || echo 1)

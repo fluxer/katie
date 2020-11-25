@@ -13,4 +13,4 @@ export CXXFLAGS="$CXXFLAGS -flto -fno-exceptions"
 
 cmake ../ -DCMAKE_BUILD_TYPE=MinSizeRel \
     -DCMAKE_INSTALL_PREFIX=/usr $@
-make -j$(nproc || echo 1)
+make -j $(nproc || sysctl -n hw.ncpu || echo 1)
