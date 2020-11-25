@@ -23,7 +23,7 @@ trap unmount_pseudo EXIT INT TERM
 
 rm -rf "$crossdir"
 
-debootstrap stable "$crossdir"
+debootstrap $@ stable "$crossdir"
 
 for i in dev dev/pts proc sys tmp;do
     if ! mountpoint -q "$crossdir/$i" ;then
