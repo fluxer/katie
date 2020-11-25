@@ -349,12 +349,11 @@ int equivalentYearForDST(int year)
     return year;
 }
 
-#if !HAVE(TM_GMTOFF)
-
+#if !defined(QT_HAVE_TM_TM_GMTOFF)
 static int32_t calculateUTCOffset()
 {
     time_t localTime = ::time(0);
-    tm localt;
+    struct tm localt;
     getLocalTime(&localTime, &localt);
 
     // Get the difference between this time zone and UTC on the 1st of January of this year.
@@ -367,14 +366,14 @@ static int32_t calculateUTCOffset()
     localt.tm_wday = 0;
     localt.tm_yday = 0;
     localt.tm_isdst = 0;
-#if HAVE(TM_GMTOFF)
+#if defined(QT_HAVE_TM_TM_GMTOFF)
     localt.tm_gmtoff = 0;
 #endif
-#if HAVE(TM_ZONE)
+#if defined(QT_HAVE_TM_TM_ZONE)
     localt.tm_zone = 0;
 #endif
     
-#if HAVE(TIMEGM)
+#if defined(QT_HAVE_TIMEGM)
     time_t utcOffset = ::timegm(&localt) - ::mktime(&localt);
 #else
     // Using a canned date of 01/01/2009 on platforms with weaker date-handling foo.
@@ -397,7 +396,7 @@ static double calculateDSTOffset(time_t localTime, double utcOffset)
     int offsetHour =  msToHours(offsetTime);
     int offsetMinute =  msToMinutes(offsetTime);
 
-    tm localTM;
+    struct tm localTM;
     getLocalTime(&localTime, &localTM);
 
     double diff = ((localTM.tm_hour - offsetHour) * secondsPerHour) + ((localTM.tm_min - offsetMinute) * 60);
@@ -407,8 +406,7 @@ static double calculateDSTOffset(time_t localTime, double utcOffset)
 
     return (diff * msPerSecond);
 }
-
-#endif
+#endif // !QT_HAVE_TM_TM_GMTOFF
 
 // Returns combined offset in millisecond (UTC + DST).
 LocalTimeOffset calculateLocalTimeOffset(double ms)
@@ -437,8 +435,8 @@ LocalTimeOffset calculateLocalTimeOffset(double ms)
     // FIXME: time_t has a potential problem in 2038.
     time_t localTime = static_cast<time_t>(localTimeSeconds);
 
-#if HAVE(TM_GMTOFF)
-    tm localTM;
+#if defined(QT_HAVE_TM_TM_GMTOFF)
+    struct tm localTM;
     getLocalTime(&localTime, &localTM);
     return LocalTimeOffset(localTM.tm_isdst, localTM.tm_gmtoff * msPerSecond);
 #else

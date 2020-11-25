@@ -31,25 +31,12 @@
 
 QT_USE_NAMESPACE
 
-/* ==== Platform adaptation macros: these describe properties of the target environment. ==== */
-
-/* HAVE() - specific system features (headers, functions or similar) that are present or not */
-#define HAVE(WTF_FEATURE) (defined HAVE_##WTF_FEATURE  && HAVE_##WTF_FEATURE)
-
 /* ==== Policy decision macros: these define policy choices for a particular port. ==== */
 
 /* USE() - use a particular third-party library or optional OS service */
 #define USE(WTF_FEATURE) (defined WTF_USE_##WTF_FEATURE  && WTF_USE_##WTF_FEATURE)
 /* ENABLE() - turn on a specific feature of WebKit */
 #define ENABLE(WTF_FEATURE) (defined ENABLE_##WTF_FEATURE  && ENABLE_##WTF_FEATURE)
-
-/* Operating environments */
-
-#if !defined(Q_OS_SOLARIS)
-#define HAVE_TM_GMTOFF 1
-#define HAVE_TM_ZONE 1
-#define HAVE_TIMEGM 1
-#endif
 
 /* ENABLE macro defaults */
 

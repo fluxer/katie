@@ -161,8 +161,8 @@ struct GregorianDateTime : Noncopyable {
 
     operator tm() const
     {
-        tm ret;
-        memset(&ret, 0, sizeof(ret));
+        struct tm ret;
+        ::memset(&ret, 0, sizeof(ret));
 
         ret.tm_sec   =  second;
         ret.tm_min   =  minute;
@@ -174,10 +174,10 @@ struct GregorianDateTime : Noncopyable {
         ret.tm_year  =  year;
         ret.tm_isdst =  isDST;
 
-#if HAVE(TM_GMTOFF)
+#if defined(QT_HAVE_TM_TM_GMTOFF)
         ret.tm_gmtoff = static_cast<long>(utcOffset);
 #endif
-#if HAVE(TM_ZONE)
+#if defined(QT_HAVE_TM_TM_ZONE)
         ret.tm_zone = timeZone;
 #endif
 
