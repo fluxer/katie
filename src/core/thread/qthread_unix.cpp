@@ -111,23 +111,12 @@ static void destroy_current_thread_data_key()
 Q_DESTRUCTOR_FUNCTION(destroy_current_thread_data_key)
 
 
-// Utility functions for setting and clearing thread specific data.
+// Utility function for setting thread specific data.
 static void set_thread_data(QThreadData *data)
 {
     currentThreadData = data;
     pthread_once(&current_thread_data_once, create_current_thread_data_key);
     pthread_setspecific(current_thread_data_key, data);
-}
-
-static void clear_thread_data()
-{
-    currentThreadData = Q_NULLPTR;
-    pthread_setspecific(current_thread_data_key, Q_NULLPTR);
-}
-
-void QThreadData::clearCurrentThreadData()
-{
-    clear_thread_data();
 }
 
 QThreadData *QThreadData::current()
@@ -139,7 +128,8 @@ QThreadData *QThreadData::current()
             set_thread_data(data);
             data->thread = new QAdoptedThread(data);
         } QT_CATCH(...) {
-            clear_thread_data();
+            currentThreadData = Q_NULLPTR;
+            pthread_setspecific(current_thread_data_key, Q_NULLPTR);
             data->deref();
             data = Q_NULLPTR;
             QT_RETHROW;

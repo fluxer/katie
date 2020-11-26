@@ -706,11 +706,6 @@ QThreadData* QThreadData::current()
     return currentdata;
 }
 
-void QThreadData::clearCurrentThreadData()
-{
-    currentdata = Q_NULLPTR;
-}
-
 /*! \internal
  */
 QThread::QThread(QThreadPrivate &dd, QObject *parent)
