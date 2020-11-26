@@ -34,7 +34,7 @@
 #include "qcleanlooksstyle.h"
 #include "qcleanlooksstyle_p.h"
 
-#if !defined(QT_NO_STYLE_CLEANLOOKS) || defined(QT_PLUGIN)
+#if !defined(QT_NO_STYLE_CLEANLOOKS)
 
 #include "qwindowsstyle_p.h"
 #include "qcombobox.h"
@@ -4359,6 +4359,4 @@ QT_END_NAMESPACE
 
 #include "moc_qcleanlooksstyle.h"
 
-#endif // QT_NO_STYLE_CLEANLOOKS || QT_PLUGIN
-
-
+#endif // QT_NO_STYLE_CLEANLOOKS

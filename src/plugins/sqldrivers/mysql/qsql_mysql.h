@@ -39,12 +39,6 @@
 
 #include <mysql.h>
 
-#ifdef QT_PLUGIN
-#define Q_EXPORT_SQLDRIVER_MYSQL
-#else
-#define Q_EXPORT_SQLDRIVER_MYSQL Q_SQL_EXPORT
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
@@ -87,7 +81,7 @@ private:
     QMYSQLResultPrivate* d;
 };
 
-class Q_EXPORT_SQLDRIVER_MYSQL QMYSQLDriver : public QSqlDriver
+class QMYSQLDriver : public QSqlDriver
 {
     Q_OBJECT
     friend class QMYSQLResult;

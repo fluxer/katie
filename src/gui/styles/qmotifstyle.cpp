@@ -33,7 +33,7 @@
 
 #include "qmotifstyle.h"
 
-#if !defined(QT_NO_STYLE_MOTIF) || defined(QT_PLUGIN)
+#if !defined(QT_NO_STYLE_MOTIF)
 
 #include "qmenu.h"
 #include "qapplication.h"
@@ -2375,4 +2375,4 @@ QT_END_NAMESPACE
 
 #include "moc_qmotifstyle.h"
 
-#endif // !defined(QT_NO_STYLE_MOTIF) || defined(QT_PLUGIN)
+#endif // !defined(QT_NO_STYLE_MOTIF)

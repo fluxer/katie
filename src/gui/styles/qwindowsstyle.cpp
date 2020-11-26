@@ -34,7 +34,7 @@
 #include "qwindowsstyle.h"
 #include "qwindowsstyle_p.h"
 
-#if !defined(QT_NO_STYLE_WINDOWS) || defined(QT_PLUGIN)
+#if !defined(QT_NO_STYLE_WINDOWS)
 
 #include "qapplication.h"
 #include "qbitmap.h"

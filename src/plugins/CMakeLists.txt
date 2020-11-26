@@ -1,5 +1,3 @@
-add_definitions(-DQT_PLUGIN)
-
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude

@@ -298,8 +298,10 @@ void QSettingsPrivate::read()
 
 void QSettingsPrivate::write()
 {
-    if (!shouldwrite)
+    if (!shouldwrite) {
         return;
+    }
+
     QMutexLocker locker(qSettingsMutex());
     QFile file(filename);
     if (Q_UNLIKELY(!file.open(QFile::WriteOnly))) {

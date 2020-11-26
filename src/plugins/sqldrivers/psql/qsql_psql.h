@@ -37,12 +37,6 @@
 #include <QtSql/qsqlresult.h>
 #include <QtSql/qsqldriver.h>
 
-#ifdef QT_PLUGIN
-#define Q_EXPORT_SQLDRIVER_PSQL
-#else
-#define Q_EXPORT_SQLDRIVER_PSQL Q_SQL_EXPORT
-#endif
-
 QT_BEGIN_HEADER
 
 typedef struct pg_conn PGconn;
@@ -84,7 +78,7 @@ private:
     QPSQLResultPrivate *d;
 };
 
-class Q_EXPORT_SQLDRIVER_PSQL QPSQLDriver : public QSqlDriver
+class QPSQLDriver : public QSqlDriver
 {
     Q_OBJECT
 public:

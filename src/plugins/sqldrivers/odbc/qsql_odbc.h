@@ -37,12 +37,6 @@
 #include <QtSql/qsqldriver.h>
 #include <QtSql/qsqlresult.h>
 
-#ifdef QT_PLUGIN
-#define Q_EXPORT_SQLDRIVER_ODBC
-#else
-#define Q_EXPORT_SQLDRIVER_ODBC Q_SQL_EXPORT
-#endif
-
 #define HAVE_LONG_LONG 1 // force UnixODBC NOT to fall back to a struct for BIGINTs
 
 #include <sql.h>
@@ -88,7 +82,7 @@ private:
     QODBCPrivate *d;
 };
 
-class Q_EXPORT_SQLDRIVER_ODBC QODBCDriver : public QSqlDriver
+class QODBCDriver : public QSqlDriver
 {
     Q_OBJECT
 public:
