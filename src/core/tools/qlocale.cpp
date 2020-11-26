@@ -2731,15 +2731,6 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overfl
         return 0.0;
     }
 
-    if (qstrcmp(num, "nan") == 0)
-        return qSNaN();
-
-    if (qstrcmp(num, "+inf") == 0 || qstrcmp(num, "inf") == 0)
-        return qInf();
-
-    if (qstrcmp(num, "-inf") == 0)
-        return -qInf();
-
     char *endptr;
     double ret = std::strtod(num, &endptr);
     if ((ret == 0.0l && errno == ERANGE) || ret == HUGE_VAL || ret == -HUGE_VAL) {
