@@ -139,7 +139,6 @@ namespace JSC {
         void markProtectedObjects(MarkStack&);
         void markCurrentThreadConservatively(MarkStack&);
         void markCurrentThreadConservativelyInternal(MarkStack&);
-        void markOtherThreadConservatively(MarkStack&, Thread*);
 
         typedef HashCountedSet<JSCell*> ProtectCountSet;
 
