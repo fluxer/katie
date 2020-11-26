@@ -109,7 +109,7 @@ public:
         first.type = FirstSection;
         first.pos = -1;
         first.count = -1;
-        last.type = FirstSection;
+        last.type = LastSection;
         last.pos = -1;
         last.count = -1;
         none.type = NoSection;
