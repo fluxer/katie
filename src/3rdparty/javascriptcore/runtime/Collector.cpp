@@ -109,7 +109,7 @@ NEVER_INLINE CollectorBlock* Heap::allocateBlock()
     ::posix_memalign(&address, BLOCK_SIZE, BLOCK_SIZE);
 #else
 
-    static size_t pagesize = getpagesize();
+    static size_t pagesize = ::getpagesize();
 
     size_t extra = 0;
     if (BLOCK_SIZE > pagesize)
