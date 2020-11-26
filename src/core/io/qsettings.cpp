@@ -252,41 +252,33 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
 }
 
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)
-    : format(format), scope(scope), status(QSettings::NoError)
+    : format(format), scope(scope), status(QSettings::NoError), shouldwrite(false)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(scope, QCoreApplication::applicationName(), handler.extension);
     readFunc = handler.readFunc;
     writeFunc = handler.writeFunc;
-    fileinfo.setFile(filename);
-    fileinfo.setCaching(false);
 }
 
 QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
-    : format(format), scope(QSettings::UserScope), status(QSettings::NoError)
+    : format(format), scope(QSettings::UserScope), status(QSettings::NoError), shouldwrite(false)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(scope, fileName, handler.extension);
     readFunc = handler.readFunc;
     writeFunc = handler.writeFunc;
-    fileinfo.setFile(filename);
-    fileinfo.setCaching(false);
 }
 
 QSettingsPrivate::~QSettingsPrivate()
 {
 }
 
-void QSettingsPrivate::read() const
+void QSettingsPrivate::read()
 {
+    QFileInfo fileinfo(filename);
     if (!fileinfo.isReadable() || fileinfo.size() == 0) {
         status = QSettings::AccessError;
         // no warning, fileinfo.exists() may return false if not readable
-        return;
-    }
-
-    const QDateTime newstamp = fileinfo.lastModified();
-    if (timestamp == newstamp) {
         return;
     }
 
@@ -302,24 +294,12 @@ void QSettingsPrivate::read() const
         qWarning("QSettingsPrivate::read: could not read %s", filename.toLocal8Bit().constData());
         return;
     }
-
-    timestamp = newstamp;
 }
 
 void QSettingsPrivate::write()
 {
-    if (pending.isEmpty()) {
+    if (!shouldwrite)
         return;
-    }
-
-    QSettingsPrivate::read();
-
-    foreach (const QString &key, map.keys()) {
-        if (!pending.contains(key)) {
-            pending.insert(key, map.value(key));
-        }
-    }
-
     QMutexLocker locker(qSettingsMutex());
     QFile file(filename);
     if (Q_UNLIKELY(!file.open(QFile::WriteOnly))) {
@@ -328,24 +308,23 @@ void QSettingsPrivate::write()
         return;
     }
 
-    if (Q_UNLIKELY(!writeFunc(file, pending))) {
+    if (Q_UNLIKELY(!writeFunc(file, map))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::write: could not write %s", filename.toLocal8Bit().constData());
         return;
     }
-
-    pending.clear();
 }
 
 void QSettingsPrivate::notify()
 {
     Q_Q(QSettings);
     QMutexLocker locker(qSettingsMutex());
+    shouldwrite = true;
     for (int i = 0; i < qGlobalSettings()->size(); i++) {
         QSettings *setting = qGlobalSettings()->at(i);
         if (setting != q && setting->fileName() == q->fileName()) {
             setting->d_func()->map = map;
-            setting->d_func()->pending = pending;
+            setting->d_func()->shouldwrite = false;
         }
     }
 }
@@ -873,7 +852,6 @@ void QSettings::clear()
 {
     Q_D(QSettings);
     d->map.clear();
-    d->pending.clear();
     d->notify();
 }
 
@@ -957,7 +935,6 @@ QSettings::SettingsStatus QSettings::status() const
 QSettings::SettingsMap QSettings::map() const
 {
     Q_D(const QSettings);
-    d->read();
     return d->map;
 }
 
@@ -973,14 +950,6 @@ QSettings::SettingsMap QSettings::map() const
 QStringList QSettings::keys() const
 {
     Q_D(const QSettings);
-    d->read();
-    if (!d->pending.isEmpty()) {
-        QStringList mapkeys = d->map.keys();
-        foreach(const QString &key, d->pending.keys()) {
-            mapkeys.append(key);
-        }
-        return mapkeys;
-    }
     return d->map.keys();
 }
 
@@ -1089,11 +1058,12 @@ QStringList QSettings::groupKeys() const
 bool QSettings::isWritable() const
 {
     Q_D(const QSettings);
-    if (d->fileinfo.isWritable()) {
+    QFileInfo fileinfo(d->filename);
+    if (fileinfo.isWritable()) {
         return true;
     }
     // if the file does not exist, check if it can be created
-    QFileInfo dirinfo(d->fileinfo.absolutePath());
+    QFileInfo dirinfo(fileinfo.absolutePath());
     return dirinfo.isWritable();
 }
 
@@ -1107,7 +1077,7 @@ bool QSettings::isWritable() const
 void QSettings::setValue(const QString &key, const QVariant &value)
 {
     Q_D(QSettings);
-    d->pending.insert(d->toGroupKey(key), value);
+    d->map.insert(d->toGroupKey(key), value);
     d->notify();
 }
 
@@ -1119,16 +1089,10 @@ void QSettings::setValue(const QString &key, const QVariant &value)
 void QSettings::remove(const QString &key)
 {
     Q_D(QSettings);
-    d->read();
     const QString groupkey = d->toGroupKey(key);
     foreach(const QString &key, d->map.keys()) {
         if (key.startsWith(groupkey)) {
             d->map.remove(key);
-        }
-    }
-    foreach(const QString &key, d->pending.keys()) {
-        if (key.startsWith(groupkey)) {
-            d->pending.remove(key);
         }
     }
     d->notify();
@@ -1143,9 +1107,7 @@ void QSettings::remove(const QString &key)
 bool QSettings::contains(const QString &key) const
 {
     Q_D(const QSettings);
-    d->read();
-    const QString groupkey = d->toGroupKey(key);
-    return (d->map.contains(groupkey) || d->pending.contains(groupkey));
+    return d->map.contains(d->toGroupKey(key));
 }
 
 /*!
@@ -1160,12 +1122,7 @@ bool QSettings::contains(const QString &key) const
 QVariant QSettings::value(const QString &key, const QVariant &defaultValue) const
 {
     Q_D(const QSettings);
-    d->read();
-    const QString groupkey = d->toGroupKey(key);
-    if (d->pending.contains(groupkey)) {
-        return d->pending.value(groupkey);
-    }
-    return d->map.value(groupkey, defaultValue);
+    return d->map.value(d->toGroupKey(key), defaultValue);
 }
 
 /*!
