@@ -124,16 +124,10 @@ bool QFontDef::exactMatch(const QFontDef &other) const
 }
 
 QFontPrivate::QFontPrivate()
-    : engineData(0), dpi(QX11Info::appDpiY()), screen(0),
+    : engineData(0), dpi(QX11Info::appDpiY()), screen(QX11Info::appScreen()),
       underline(false), overline(false), strikeOut(false), kerning(true),
       capital(QFont::MixedCase), letterSpacingIsAbsolute(false), scFont(0)
 {
-#ifdef Q_WS_X11
-    if (QX11Info::display())
-        screen = QX11Info::appScreen();
-    else
-        screen = 0;
-#endif
 }
 
 QFontPrivate::QFontPrivate(const QFontPrivate &other)
