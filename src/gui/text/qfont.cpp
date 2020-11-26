@@ -1823,8 +1823,6 @@ static inline quint8 get_font_bits(int version, const QFontPrivate *f)
         bits |= 0x04;
     if (f->request.fixedPitch)
         bits |= 0x08;
-    // if (f.hintSetByUser)
-    // bits |= 0x10;
     if (f->kerning)
         bits |= 0x10;
     if (f->request.style == QFont::StyleOblique)
@@ -1849,7 +1847,7 @@ static inline quint8 get_extended_font_bits(const QFontPrivate *f)
     Internal function. Sets boolean font settings from an unsigned
     8-bit number. Used for serialization etc.
 */
-static void set_font_bits(int version, quint8 bits, QFontPrivate *f)
+static void set_font_bits(quint8 bits, QFontPrivate *f)
 {
     Q_ASSERT(f != 0);
     f->request.style         = (bits & 0x01) != 0 ? QFont::StyleItalic : QFont::StyleNormal;
@@ -1857,7 +1855,6 @@ static void set_font_bits(int version, quint8 bits, QFontPrivate *f)
     f->overline              = (bits & 0x40) != 0;
     f->strikeOut             = (bits & 0x04) != 0;
     f->request.fixedPitch    = (bits & 0x08) != 0;
-    // f->hintSetByUser      = (bits & 0x10) != 0;
     f->kerning               = (bits & 0x10) != 0;
     if ((bits & 0x80) != 0)
         f->request.style         = QFont::StyleOblique;
@@ -2012,7 +2009,7 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     font.d->request.styleStrategy = QFont::StyleStrategy(styleStrategy);
     font.d->request.weight = weight;
 
-    set_font_bits(s.version(), bits, font.d.data());
+    set_font_bits(bits, font.d.data());
 
     qint16 stretch;
     s >> stretch;
