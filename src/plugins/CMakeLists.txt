@@ -72,6 +72,7 @@ if(WITH_TIFF AND TIFF_FOUND)
     add_subdirectory(imageformats/tiff)
 endif()
 
+
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/script")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/script")
 if(WITH_DBUS AND DBUS_FOUND)
@@ -90,6 +91,7 @@ endif()
 if(WITH_PSQL AND PostgreSQL_FOUND)
     add_subdirectory(sqldrivers/psql)
 endif()
+
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/designer")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/designer")

@@ -3775,15 +3775,12 @@ int QDateTimeParser::absoluteMin(int s) const
 
 const QDateTimeParser::SectionNode &QDateTimeParser::sectionNode(int sectionIndex) const
 {
-    if (sectionIndex < 0) {
-        switch (sectionIndex) {
-        case FirstSectionIndex:
-            return first;
-        case LastSectionIndex:
-            return last;
-        case NoSectionIndex:
-            return none;
-        }
+    if (sectionIndex == FirstSectionIndex) {
+        return first;
+    } else if (sectionIndex == LastSectionIndex) {
+        return last;
+    } else if (sectionIndex == NoSectionIndex) {
+        return none;
     } else if (sectionIndex < sectionNodes.size()) {
         return sectionNodes.at(sectionIndex);
     }
@@ -4147,7 +4144,6 @@ int QDateTimeParser::sectionMaxSize(Section s, int count) const
     case NoSectionIndex:
     case FirstSectionIndex:
     case LastSectionIndex:
-    case CalendarPopupIndex:
         // these cases can't happen
         break;
     }
