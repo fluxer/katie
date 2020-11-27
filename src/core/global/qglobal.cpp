@@ -1523,14 +1523,18 @@ void qsrand(uint seed)
 
     \sa qsrand()
 */
-thread_local time_t almostrandom = 0;
 int qrand()
 {
+#if defined(QT_HAVE_ARC4RANDOM)
+    return ::arc4random();
+#else
     // Seed the PRNG once per thread with a combination of current time and its address
+    thread_local time_t almostrandom = 0;
     if (!almostrandom) {
         ::time(&almostrandom);
         std::srand(almostrandom + std::intptr_t(&almostrandom));
     }
+#endif
     return std::rand();
 }
 
