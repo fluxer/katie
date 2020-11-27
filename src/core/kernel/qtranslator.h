@@ -53,9 +53,9 @@ public:
     explicit QTranslator(QObject *parent = Q_NULLPTR);
     ~QTranslator();
 
-    QString translate(const char *context, const char *sourceText,
-                      const char *disambiguation = Q_NULLPTR,
-                      int n = -1) const;
+    virtual QString translate(const char *context, const char *sourceText,
+                              const char *disambiguation = Q_NULLPTR,
+                              int n = -1) const;
 
     virtual bool isEmpty() const;
 
