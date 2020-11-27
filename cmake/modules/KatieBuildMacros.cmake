@@ -11,31 +11,31 @@ include(CheckStructHasMember)
 
 # a function to check for C function/definition, works for external functions.
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
-    set(compileout "${CMAKE_BINARY_DIR}/${FORDEFINITION}.cpp")
-    configure_file(
-        "${CMAKE_SOURCE_DIR}/cmake/modules/katie_check_defined.cpp.cmake"
-        "${compileout}"
-        @ONLY
+    # see comment in top-level CMakeLists file
+    set(CMAKE_REQUIRED_FLAGS -I/usr/X11R7/include -I/usr/pkg/include -I/usr/local/include -I/usr/include -I/include)
+    set(CMAKE_REQUIRED_LINK_OPTIONS -I/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
+    check_cxx_source_compiles(
+        "
+#include <stdio.h>
+#include <${FROMHEADER}>
+
+static bool willprint = true; // bypass compiler/linker optimizations
+int main() {
+    willprint = false;
+    if (willprint) {
+        return printf(\"%p\", &${FORDEFINITION});
+    }
+    return 0;
+}
+"
+        HAVE_${FORDEFINITION}
     )
-    try_compile(${FORDEFINITION}_test
-        "${CMAKE_BINARY_DIR}"
-        "${compileout}"
-        COMPILE_DEFINITIONS ${ARGN}
-        OUTPUT_VARIABLE ${FORDEFINITION}_test_output
-    )
-    if(${FORDEFINITION}_test)
-        message(STATUS "Found ${FORDEFINITION} in: <${FROMHEADER}>")
-        set(HAVE_${FORDEFINITION} TRUE PARENT_SCOPE)
-    else()
-        message(STATUS "Could not find ${FORDEFINITION} in: <${FROMHEADER}>")
-        set(HAVE_${FORDEFINITION} FALSE PARENT_SCOPE)
-    endif()
 endfunction()
 
 # a macro to check for C function presence in header, if function is found a
 # definition is added.
 macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
-    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" ${ARGN})
+    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}")
 
     if(HAVE_${FORFUNCTION})
         string(TOUPPER "${FORFUNCTION}" upperfunction)
@@ -48,7 +48,10 @@ endmacro()
 # additional checks if one fails
 function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
     if(QT_LARGEFILE_SUPPORT)
-        katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE ${ARGN})
+        cmake_reset_check_state()
+        set(CMAKE_REQUIRED_DEFINITIONS -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
+        katie_check_defined("${FORFUNCTION}" "${FROMHEADER}")
+        cmake_reset_check_state()
 
         if(NOT HAVE_${FORFUNCTION})
             set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
@@ -59,9 +62,7 @@ endfunction()
 # a macro to check for C struct member presence in header, if member is found a
 # definition is added.
 function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
-    cmake_reset_check_state()
     check_struct_has_member("struct ${FORSTRUCT}" "${FORMEMBER}" "${FROMHEADER}" HAVE_${FORSTRUCT}_${FORMEMBER})
-    cmake_pop_check_state()
 
     if(HAVE_${FORSTRUCT}_${FORMEMBER})
         string(TOUPPER "${FORSTRUCT}_${FORMEMBER}" upperstructmember)

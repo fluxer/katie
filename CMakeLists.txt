@@ -39,9 +39,11 @@ if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
 endif()
 
 # LLVM linker does not have a default library search path and only library names are received
-# from pkg-config queries, add some directories known to contain system wide libraries
+# from pkg-config queries, add some directories known to contain system wide libraries. the
+# headers search path is also incomplete
 if(CMAKE_SYSTEM_NAME MATCHES "BSD")
-    link_directories(/usr/pkg/lib /usr/local/lib /usr/lib /lib)
+    include_directories(/usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include /include)
+    link_directories(/usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
 endif()
 
 include(CheckIncludeFileCXX)
@@ -353,7 +355,7 @@ check_include_file_cxx(cxxabi.h HAVE_CXXABI)
 # stored in qconfig.h.cmake
 check_type_size(size_t QT_POINTER_SIZE)
 
-# POSIX.1-2001
+# used in components, tests and JavaScriptCore
 katie_check_function(getpwnam_r "pwd.h")
 katie_check_function(getpwuid_r "pwd.h")
 katie_check_function(getgrgid_r "grp.h")
@@ -362,39 +364,34 @@ katie_check_function(getaddrinfo "netdb.h")
 katie_check_function(clock_gettime "time.h")
 katie_check_function(vsnprintf "stdio.h")
 katie_check_function(posix_memalign "stdlib.h")
-# XSI/POSIX.1-2001
 katie_check_function(strerror_r "string.h")
-# SUSv2
 katie_check_function(localtime_r "time.h")
 katie_check_function(gmtime_r "time.h")
-# SVr2, removed in POSIX.1-2008
 katie_check_function(fcvt "stdlib.h")
 katie_check_function(ecvt "stdlib.h")
-# NetBSD 1.6 and FreeBSD 4.4
 katie_check_function(getprogname "stdlib.h")
-# FreeBSD 5.4
-katie_check_function(pthread_attr_get_np "pthread_np.h" "${CMAKE_THREAD_LIBS_INIT}")
-# OpenBSD 2.1
 katie_check_function(arc4random "stdlib.h")
-# GNU
 katie_check_function(get_current_dir_name "unistd.h")
 katie_check_function(prctl "sys/prctl.h")
-katie_check_function(pthread_setname_np "pthread.h" "${CMAKE_THREAD_LIBS_INIT}")
-katie_check_function(timegm "time.h")
-katie_check_struct(tm tm_gmtoff "time.h")
-katie_check_struct(tm tm_zone "time.h")
-# ISO/IEC 9899:1999
 katie_check_function(fegetenv "fenv.h")
 katie_check_function(fesetenv "fenv.h")
 katie_check_function(feclearexcept "fenv.h")
 katie_check_function(feenableexcept "fenv.h")
-# none
-katie_check_function(pthread_stackseg_np  "pthread_np.h" "${CMAKE_THREAD_LIBS_INIT}")
 katie_check_function(madvise "sys/mman.h")
 katie_check_function(getifaddrs "ifaddrs.h")
+katie_check_function(timegm "time.h")
+katie_check_struct(tm tm_gmtoff "time.h")
+katie_check_struct(tm tm_zone "time.h")
 katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
 katie_check_struct(sockaddr_dl sdl_index "net/if_dl.h")
 katie_check_struct(dirent d_type "dirent.h")
+
+cmake_reset_check_state()
+set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
+katie_check_function(pthread_setname_np "pthread.h")
+katie_check_function(pthread_stackseg_np  "pthread_np.h")
+katie_check_function(pthread_attr_get_np "pthread_np.h")
+cmake_reset_check_state()
 
 # 64-bit offset alternatives, if any of the functions is not found it will set
 # QT_LARGEFILE_SUPPORT to FALSE. QT_LARGEFILE_SUPPORT is used in qconfig.h
