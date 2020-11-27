@@ -5044,8 +5044,7 @@ Veuillez choisir un nom de fichier différent.</translation>
     <message>
         <location line="+1"/>
         <source>Volume Up</source>
-        <translation>Volume haut
-</translation>
+        <translation>Volume haut</translation>
     </message>
     <message>
         <location line="+1"/>
