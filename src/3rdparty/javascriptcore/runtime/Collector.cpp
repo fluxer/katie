@@ -50,7 +50,7 @@
 #include <pthread.h>
 #endif
 
-#if defined(QT_HAVE_PTHREAD_ATTR_GET_NP)
+#if defined(Q_OS_OPENBSD) || defined(QT_HAVE_PTHREAD_ATTR_GET_NP)
 #include <pthread_np.h>
 #endif
 
