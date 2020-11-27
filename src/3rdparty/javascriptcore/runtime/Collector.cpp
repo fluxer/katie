@@ -50,7 +50,7 @@
 #include <pthread.h>
 #endif
 
-#if defined(Q_OS_OPENBSD) || defined(QT_HAVE_PTHREAD_ATTR_GET_NP)
+#if defined(QT_HAVE_PTHREAD_STACKSEG_NP) || defined(QT_HAVE_PTHREAD_ATTR_GET_NP)
 #include <pthread_np.h>
 #endif
 
@@ -335,7 +335,7 @@ static inline void* currentThreadStackBase()
     stack_t s;
     thr_stksegment(&s);
     return s.ss_sp;
-#elif defined(Q_OS_OPENBSD)
+#elif defined(QT_HAVE_PTHREAD_STACKSEG_NP)
     pthread_t thread = pthread_self();
     stack_t stack;
     pthread_stackseg_np(thread, &stack);
