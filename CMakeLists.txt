@@ -373,7 +373,7 @@ katie_check_function(ecvt "stdlib.h")
 # NetBSD 1.6 and FreeBSD 4.4
 katie_check_function(getprogname "stdlib.h")
 # FreeBSD 5.4
-katie_check_function(pthread_attr_get_np "pthread_np.h")
+katie_check_function(pthread_attr_get_np "pthread_np.h" "${CMAKE_THREAD_LIBS_INIT}")
 # GNU
 katie_check_function(get_current_dir_name "unistd.h")
 katie_check_function(prctl "sys/prctl.h")
