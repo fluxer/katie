@@ -108,7 +108,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
             return xdgConfigHome;
         }
         case RuntimeLocation: {
-            const uid_t myUid = geteuid();
+            const uid_t myUid = ::geteuid();
             // http://standards.freedesktop.org/basedir-spec/latest/
             static QString xdgRuntimeDir = QFile::decodeName(qgetenv("XDG_RUNTIME_DIR"));
             if (xdgRuntimeDir.isEmpty()) {

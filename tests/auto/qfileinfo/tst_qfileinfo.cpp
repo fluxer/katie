@@ -1041,10 +1041,9 @@ void tst_QFileInfo::owner()
 {
     QString userName;
     {
-        passwd *user = ::getpwuid(geteuid());
-        QVERIFY(user);
-        char *usernameBuf = user->pw_name;
-        userName = QString::fromLocal8Bit(usernameBuf);
+        struct passwd *pw = ::getpwuid(::geteuid());
+        QVERIFY(pw);
+        userName = QString::fromLocal8Bit(pw->pw_name);
     }
     if (userName.isEmpty())
         QSKIP("Can't retrieve the user name", SkipAll);
@@ -1065,11 +1064,8 @@ void tst_QFileInfo::owner()
 
 void tst_QFileInfo::group()
 {
-    QString expected;
-    struct group *gr;
-    gid_t gid = ::getegid();
-    gr = ::getgrgid(gid);
-    expected = QString::fromLocal8Bit(gr->gr_name);
+    struct group *gr = ::getgrgid(::getegid());
+    QString expected = QString::fromLocal8Bit(gr->gr_name);
 
     QString fileName("ownertest.txt");
     if (QFile::exists(fileName))

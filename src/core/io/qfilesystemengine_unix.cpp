@@ -141,8 +141,7 @@ QFileSystemEntry QFileSystemEngine::absoluteName(const QFileSystemEntry &entry)
     return QFileSystemEntry(stringVersion);
 }
 
-//static
-QString QFileSystemEngine::resolveUserName(uint userId)
+Q_CORE_EXPORT QString qt_resolveUserName(uint userId)
 {
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETPWUID_R)
     static int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
@@ -158,6 +157,12 @@ QString QFileSystemEngine::resolveUserName(uint userId)
     if (pw)
         return QFile::decodeName(QByteArray(pw->pw_name));
     return QString();
+}
+
+//static
+QString QFileSystemEngine::resolveUserName(uint userId)
+{
+    return qt_resolveUserName(userId);
 }
 
 //static

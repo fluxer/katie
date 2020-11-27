@@ -3930,6 +3930,8 @@ static void sm_saveYourselfCallback(SmcConn smcConn, SmPointer clientData,
         resetSmState();
 }
 
+Q_CORE_EXPORT QString qt_resolveUserName(uint userId);
+
 static void sm_performSaveYourself(QSessionManagerPrivate* smd)
 {
     if (sm_isshutdown)
@@ -3948,9 +3950,9 @@ static void sm_performSaveYourself(QSessionManagerPrivate* smd)
     // tell the session manager about our program in best POSIX style
     sm_setProperty(QString::fromLatin1(SmProgram), argument0);
     // tell the session manager about our user as well.
-    struct passwd *entryPtr = getpwuid(geteuid());
-    if (entryPtr)
-        sm_setProperty(QString::fromLatin1(SmUserID), QString::fromLatin1(entryPtr->pw_name));
+    QString username = qt_resolveUserName(::geteuid());
+    if (!username.isEmpty())
+        sm_setProperty(QString::fromLatin1(SmUserID), username);
 
     // generate a restart and discard command that makes sense
     QStringList restart;
