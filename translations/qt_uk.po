@@ -1,0 +1,2036 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-27 17:45+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Language: uk_UA\n"
+"X-Qt-Contexts: true\n"
+
+#: src/core/plugin/qlibrary.cpp:578
+msgid "The file '%1' is not a valid Katie plugin."
+msgstr ""
+
+#: src/core/plugin/qlibrary.cpp:591
+msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
+msgstr ""
+
+#: src/core/io/qstandardpaths.cpp:300 src/core/io/qstandardpaths.cpp:302
+#: src/core/io/qstandardpaths.cpp:304 src/core/io/qstandardpaths.cpp:306
+#: src/core/io/qstandardpaths.cpp:308 src/core/io/qstandardpaths.cpp:310
+#: src/core/io/qstandardpaths.cpp:312 src/core/io/qstandardpaths.cpp:314
+#: src/core/io/qstandardpaths.cpp:316 src/core/io/qstandardpaths.cpp:318
+#: src/core/io/qstandardpaths.cpp:320 src/core/io/qstandardpaths.cpp:322
+#: src/core/io/qstandardpaths.cpp:324 src/core/io/qstandardpaths.cpp:326
+#: src/core/io/qstandardpaths.cpp:328 src/core/io/qstandardpaths.cpp:330
+#: src/core/io/qstandardpaths.cpp:332
+msgid "QStandardPaths"
+msgstr ""
+
+#: src/core/kernel/qsystemsemaphore_unix.cpp:87
+#: src/core/kernel/qsystemsemaphore_unix.cpp:91
+#: src/core/kernel/qsystemsemaphore_unix.cpp:95
+#: src/core/kernel/qsystemsemaphore_unix.cpp:104
+#: src/core/kernel/qsystemsemaphore_unix.cpp:108
+#: src/core/kernel/qsystemsemaphore_unix.cpp:112
+msgid "QSystemSemaphore"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:57
+msgctxt "QRegExp"
+msgid "no error occurred"
+msgstr "без помилок"
+
+#: src/core/tools/qregexp.cpp:58
+msgctxt "QRegExp"
+msgid "disabled feature used"
+msgstr "використана вимкнена можливість"
+
+#: src/core/tools/qregexp.cpp:59
+msgctxt "QRegExp"
+msgid "bad char class syntax"
+msgstr "неправильний синтаксис класу символів"
+
+#: src/core/tools/qregexp.cpp:60
+msgctxt "QRegExp"
+msgid "bad lookahead syntax"
+msgstr "неправильний синтаксис \"lookahead\""
+
+#: src/core/tools/qregexp.cpp:61
+msgctxt "QRegExp"
+msgid "lookbehinds not supported, see QTBUG-2371"
+msgstr "lookbehinds не підтримується, див. QTBUG-2371"
+
+#: src/core/tools/qregexp.cpp:62
+msgctxt "QRegExp"
+msgid "bad repetition syntax"
+msgstr "неправильний синтаксис повторення"
+
+#: src/core/tools/qregexp.cpp:63
+msgctxt "QRegExp"
+msgid "invalid octal value"
+msgstr "неправильне вісімкове значення"
+
+#: src/core/tools/qregexp.cpp:64
+msgctxt "QRegExp"
+msgid "missing left delim"
+msgstr "відсутній лівий розділювач"
+
+#: src/core/tools/qregexp.cpp:65
+msgctxt "QRegExp"
+msgid "unexpected end"
+msgstr "неочікуваний кінець"
+
+#: src/core/tools/qregexp.cpp:66
+msgctxt "QRegExp"
+msgid "met internal limit"
+msgstr "досягнуто внутрішнього обмеження"
+
+#: src/core/tools/qregexp.cpp:67
+msgctxt "QRegExp"
+msgid "invalid interval"
+msgstr "неправильний інтервал"
+
+#: src/core/tools/qregexp.cpp:68
+msgctxt "QRegExp"
+msgid "invalid category"
+msgstr "неправильна категорія"
+
+#: src/core/tools/qcommandlineparser.cpp:274
+msgid "Displays version information."
+msgstr ""
+
+#: src/core/tools/qcommandlineparser.cpp:298
+msgid "Displays this help."
+msgstr ""
+
+#: src/core/tools/qcommandlineparser.cpp:488
+msgid "Missing value after '%1'."
+msgstr ""
+
+#: src/core/tools/qcommandlineparser.cpp:897
+msgid "Usage: %1"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:49
+msgctxt "QJsonParseError"
+msgid "unterminated object"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:50
+msgctxt "QJsonParseError"
+msgid "missing name separator"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:51
+msgctxt "QJsonParseError"
+msgid "unterminated array"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:52
+msgctxt "QJsonParseError"
+msgid "missing value separator"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:53
+msgctxt "QJsonParseError"
+msgid "illegal value"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:54
+msgctxt "QJsonParseError"
+msgid "invalid termination by number"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:55
+msgctxt "QJsonParseError"
+msgid "illegal number"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:56
+msgctxt "QJsonParseError"
+msgid "invalid escape sequence"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:57
+msgctxt "QJsonParseError"
+msgid "invalid UTF8 string"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:58
+msgctxt "QJsonParseError"
+msgid "unterminated string"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:59
+msgctxt "QJsonParseError"
+msgid "object is missing after a comma"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:60
+msgctxt "QJsonParseError"
+msgid "too deeply nested document"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:61
+msgctxt "QJsonParseError"
+msgid "too large document"
+msgstr ""
+
+#: src/core/global/qglobal.cpp:1194
+msgctxt "QIODevice"
+msgid "Permission denied"
+msgstr "Доступ заборонено"
+
+#: src/core/global/qglobal.cpp:1196
+msgctxt "QIODevice"
+msgid "Too many open files"
+msgstr "Забагато відкритих файлів"
+
+#: src/core/global/qglobal.cpp:1198
+msgctxt "QIODevice"
+msgid "No such file or directory"
+msgstr "Файл чи тека не існують"
+
+#: src/core/global/qglobal.cpp:1200
+msgctxt "QIODevice"
+msgid "No space left on device"
+msgstr "На пристрої немає вільного місця"
+
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:95
+msgid "QDeclarativeAnimatedImage"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativevme.cpp:212
+#: src/declarative/qml/qdeclarativevme.cpp:653
+#: src/declarative/qml/qdeclarativevme.cpp:675
+#: src/declarative/qml/qdeclarativevme.cpp:678
+#: src/declarative/qml/qdeclarativevme.cpp:683
+#: src/declarative/qml/qdeclarativevme.cpp:832
+#: src/declarative/qml/qdeclarativevme.cpp:875
+#: src/declarative/qml/qdeclarativevme.cpp:886
+#: src/declarative/qml/qdeclarativevme.cpp:918
+msgid "QDeclarativeVME"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:246
+#: src/declarative/qml/qdeclarativescriptparser.cpp:257
+#: src/declarative/qml/qdeclarativescriptparser.cpp:391
+#: src/declarative/qml/qdeclarativescriptparser.cpp:399
+#: src/declarative/qml/qdeclarativescriptparser.cpp:414
+#: src/declarative/qml/qdeclarativescriptparser.cpp:424
+#: src/declarative/qml/qdeclarativescriptparser.cpp:435
+#: src/declarative/qml/qdeclarativescriptparser.cpp:494
+#: src/declarative/qml/qdeclarativescriptparser.cpp:536
+#: src/declarative/qml/qdeclarativescriptparser.cpp:545
+#: src/declarative/qml/qdeclarativescriptparser.cpp:554
+#: src/declarative/qml/qdeclarativescriptparser.cpp:563
+#: src/declarative/qml/qdeclarativescriptparser.cpp:675
+#: src/declarative/qml/qdeclarativescriptparser.cpp:734
+#: src/declarative/qml/qdeclarativescriptparser.cpp:781
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1817
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1819
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1848
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1872
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1885
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:532
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:569
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:583
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:609
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:655
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:681
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:709
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:783
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:809
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1147
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1162
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1178
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1200
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1213
+msgid "QDeclarativeParser"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativecompiledbindings.cpp:337
+msgid "QDeclarativeCompiledBindings"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativetypeloader.cpp:1127
+msgid "%1 %2"
+msgstr ""
+
+#: src/declarative/util/qdeclarativeutilmodule.cpp:110
+#: src/declarative/util/qdeclarativeutilmodule.cpp:112
+msgid "QDeclarativeXmlListModel"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1466
+msgid "<h3>About Katie</h3><p>This program uses Katie version %1.</p>"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1470
+msgid ""
+"<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p><p>Katie is "
+"available under two different licensing options designed to accommodate the "
+"needs of our various users.</p><p>Katie licensed under the GNU LGPL version "
+"3 is appropriate for the development of Qt&nbsp;applications provided you "
+"can comply with the terms and conditions of the GNU LGPL version 3.</"
+"p><p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
+"development of applications provided you can comply with the terms and "
+"conditions of the GNU LGPL version 2.1.</p><p>Copyright (C) %1 The Qt "
+"Company Ltd and other contributors.</p><p>Copyright (C) %2 Ivailo Monev</"
+"p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p><p>See <a "
+"href=\"http://%3/\">%3</a> for more information.</p>"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1488
+msgid "About Katie"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:64
+msgid "A0"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:65
+msgid "A1"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:66
+msgid "A2"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:67
+msgid "A3"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:68
+msgid "A4"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:69
+msgid "A5"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:70
+msgid "A6"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:71
+msgid "A7"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:72
+msgid "A8"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:73
+msgid "A9"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:74
+msgid "B0"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:75
+msgid "B1"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:76
+msgid "B2"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:77
+msgid "B3"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:78
+msgid "B4"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:79
+msgid "B5"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:80
+msgid "B6"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:81
+msgid "B7"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:82
+msgid "B8"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:83
+msgid "B9"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:84
+msgid "B10"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:85
+msgid "C5E"
+msgstr ""
+
+#: src/gui/dialogs/qpagesetupdialog_unix.cpp:86
+msgid "DLE"
+msgstr ""
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:452
+msgctxt "QDialogButtonBox"
+msgid "OK"
+msgstr ""
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:455
+msgctxt "QDialogButtonBox"
+msgid "Save"
+msgstr "Зберегти"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:458
+msgctxt "QDialogButtonBox"
+msgid "Open"
+msgstr "Відкрити"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:461
+msgctxt "QDialogButtonBox"
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:464
+msgctxt "QDialogButtonBox"
+msgid "Close"
+msgstr "Закрити"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:467
+msgctxt "QDialogButtonBox"
+msgid "Apply"
+msgstr "Застосувати"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:470
+msgctxt "QDialogButtonBox"
+msgid "Reset"
+msgstr "Скинути"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:473
+msgctxt "QDialogButtonBox"
+msgid "Help"
+msgstr "Довідка"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:476
+msgctxt "QDialogButtonBox"
+msgid "Discard"
+msgstr "Відхилити"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:479
+msgctxt "QDialogButtonBox"
+msgid "&Yes"
+msgstr "Т&ак"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:482
+msgctxt "QDialogButtonBox"
+msgid "Yes to &All"
+msgstr "Так &для всіх"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:485
+msgctxt "QDialogButtonBox"
+msgid "&No"
+msgstr "&Ні"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:488
+msgctxt "QDialogButtonBox"
+msgid "N&o to All"
+msgstr "Ні для вс&іх"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:491
+msgctxt "QDialogButtonBox"
+msgid "Save All"
+msgstr "Зберегти все"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:494
+msgctxt "QDialogButtonBox"
+msgid "Abort"
+msgstr "Перервати"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:497
+msgctxt "QDialogButtonBox"
+msgid "Retry"
+msgstr "Повторити"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:500
+msgctxt "QDialogButtonBox"
+msgid "Ignore"
+msgstr "Ігнорувати"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:503
+msgctxt "QDialogButtonBox"
+msgid "Restore Defaults"
+msgstr "Відновити типово"
+
+#: src/gui/kernel/qkeysequence.cpp:296
+msgctxt "QShortcut"
+msgid "Space"
+msgstr "Пропуск"
+
+#: src/gui/kernel/qkeysequence.cpp:297
+msgctxt "QShortcut"
+msgid "Esc"
+msgstr "Esc"
+
+#: src/gui/kernel/qkeysequence.cpp:298
+msgctxt "QShortcut"
+msgid "Tab"
+msgstr "Tab"
+
+#: src/gui/kernel/qkeysequence.cpp:299
+msgctxt "QShortcut"
+msgid "Backtab"
+msgstr "Backtab"
+
+#: src/gui/kernel/qkeysequence.cpp:300
+msgctxt "QShortcut"
+msgid "Backspace"
+msgstr "Backspace"
+
+#: src/gui/kernel/qkeysequence.cpp:301
+msgctxt "QShortcut"
+msgid "Return"
+msgstr "Return"
+
+#: src/gui/kernel/qkeysequence.cpp:302
+msgctxt "QShortcut"
+msgid "Enter"
+msgstr "Enter"
+
+#: src/gui/kernel/qkeysequence.cpp:303
+msgctxt "QShortcut"
+msgid "Ins"
+msgstr "Ins"
+
+#: src/gui/kernel/qkeysequence.cpp:304
+msgctxt "QShortcut"
+msgid "Del"
+msgstr "Del"
+
+#: src/gui/kernel/qkeysequence.cpp:305
+msgctxt "QShortcut"
+msgid "Pause"
+msgstr "Pause"
+
+#: src/gui/kernel/qkeysequence.cpp:306
+msgctxt "QShortcut"
+msgid "Print"
+msgstr "Print"
+
+#: src/gui/kernel/qkeysequence.cpp:307
+msgctxt "QShortcut"
+msgid "SysReq"
+msgstr "SysReq"
+
+#: src/gui/kernel/qkeysequence.cpp:308
+msgctxt "QShortcut"
+msgid "Home"
+msgstr "Home"
+
+#: src/gui/kernel/qkeysequence.cpp:309
+msgctxt "QShortcut"
+msgid "End"
+msgstr "End"
+
+#: src/gui/kernel/qkeysequence.cpp:310
+msgctxt "QShortcut"
+msgid "Left"
+msgstr "Вліво"
+
+#: src/gui/kernel/qkeysequence.cpp:311
+msgctxt "QShortcut"
+msgid "Up"
+msgstr "Вгору"
+
+#: src/gui/kernel/qkeysequence.cpp:312
+msgctxt "QShortcut"
+msgid "Right"
+msgstr "Вправо"
+
+#: src/gui/kernel/qkeysequence.cpp:313
+msgctxt "QShortcut"
+msgid "Down"
+msgstr "Вниз"
+
+#: src/gui/kernel/qkeysequence.cpp:314
+msgctxt "QShortcut"
+msgid "PgUp"
+msgstr "PgUp"
+
+#: src/gui/kernel/qkeysequence.cpp:315
+msgctxt "QShortcut"
+msgid "PgDown"
+msgstr "PgDown"
+
+#: src/gui/kernel/qkeysequence.cpp:316
+msgctxt "QShortcut"
+msgid "CapsLock"
+msgstr "CapsLock"
+
+#: src/gui/kernel/qkeysequence.cpp:317
+msgctxt "QShortcut"
+msgid "NumLock"
+msgstr "NumLock"
+
+#: src/gui/kernel/qkeysequence.cpp:318
+msgctxt "QShortcut"
+msgid "ScrollLock"
+msgstr "ScrollLock"
+
+#: src/gui/kernel/qkeysequence.cpp:319
+msgctxt "QShortcut"
+msgid "Menu"
+msgstr "Меню"
+
+#: src/gui/kernel/qkeysequence.cpp:320
+msgctxt "QShortcut"
+msgid "Help"
+msgstr "Довідка"
+
+#: src/gui/kernel/qkeysequence.cpp:325
+msgctxt "QShortcut"
+msgid "Back"
+msgstr "Назад"
+
+#: src/gui/kernel/qkeysequence.cpp:326
+msgctxt "QShortcut"
+msgid "Forward"
+msgstr "Вперед"
+
+#: src/gui/kernel/qkeysequence.cpp:327
+msgctxt "QShortcut"
+msgid "Stop"
+msgstr "Стоп"
+
+#: src/gui/kernel/qkeysequence.cpp:328
+msgctxt "QShortcut"
+msgid "Refresh"
+msgstr "Оновити"
+
+#: src/gui/kernel/qkeysequence.cpp:329
+msgctxt "QShortcut"
+msgid "Volume Down"
+msgstr "Тихіше"
+
+#: src/gui/kernel/qkeysequence.cpp:330
+msgctxt "QShortcut"
+msgid "Volume Mute"
+msgstr "Вимкнути звук"
+
+#: src/gui/kernel/qkeysequence.cpp:331
+msgctxt "QShortcut"
+msgid "Volume Up"
+msgstr "Гучніше"
+
+#: src/gui/kernel/qkeysequence.cpp:332
+msgctxt "QShortcut"
+msgid "Bass Boost"
+msgstr "Посилення басів"
+
+#: src/gui/kernel/qkeysequence.cpp:333
+msgctxt "QShortcut"
+msgid "Bass Up"
+msgstr "Баси гучніше"
+
+#: src/gui/kernel/qkeysequence.cpp:334
+msgctxt "QShortcut"
+msgid "Bass Down"
+msgstr "Баси тихіше"
+
+#: src/gui/kernel/qkeysequence.cpp:335
+msgctxt "QShortcut"
+msgid "Treble Up"
+msgstr "ВЧ гучніше"
+
+#: src/gui/kernel/qkeysequence.cpp:336
+msgctxt "QShortcut"
+msgid "Treble Down"
+msgstr "ВЧ тихіше"
+
+#: src/gui/kernel/qkeysequence.cpp:337
+msgctxt "QShortcut"
+msgid "Media Play"
+msgstr "Відтворення"
+
+#: src/gui/kernel/qkeysequence.cpp:338
+msgctxt "QShortcut"
+msgid "Media Stop"
+msgstr "Зупинити відтворення"
+
+#: src/gui/kernel/qkeysequence.cpp:339
+msgctxt "QShortcut"
+msgid "Media Previous"
+msgstr "Відтворити попереднє"
+
+#: src/gui/kernel/qkeysequence.cpp:340
+msgctxt "QShortcut"
+msgid "Media Next"
+msgstr "Відтворити наступне"
+
+#: src/gui/kernel/qkeysequence.cpp:341
+msgctxt "QShortcut"
+msgid "Media Record"
+msgstr "Запис"
+
+#: src/gui/kernel/qkeysequence.cpp:343
+msgctxt "QShortcut"
+msgid "Media Pause"
+msgstr "Пауза"
+
+#: src/gui/kernel/qkeysequence.cpp:345
+msgctxt "QShortcut"
+msgid "Toggle Media Play/Pause"
+msgstr "Грати/Пауза"
+
+#: src/gui/kernel/qkeysequence.cpp:346
+msgctxt "QShortcut"
+msgid "Home Page"
+msgstr "Домашня сторінка"
+
+#: src/gui/kernel/qkeysequence.cpp:347
+msgctxt "QShortcut"
+msgid "Favorites"
+msgstr "Обране"
+
+#: src/gui/kernel/qkeysequence.cpp:348
+msgctxt "QShortcut"
+msgid "Search"
+msgstr "Пошук"
+
+#: src/gui/kernel/qkeysequence.cpp:349
+msgctxt "QShortcut"
+msgid "Standby"
+msgstr "Режим очікування"
+
+#: src/gui/kernel/qkeysequence.cpp:350
+msgctxt "QShortcut"
+msgid "Open URL"
+msgstr "Відкрити URL"
+
+#: src/gui/kernel/qkeysequence.cpp:351
+msgctxt "QShortcut"
+msgid "Launch Mail"
+msgstr "Пошта"
+
+#: src/gui/kernel/qkeysequence.cpp:352
+msgctxt "QShortcut"
+msgid "Launch Media"
+msgstr "Програвач"
+
+#: src/gui/kernel/qkeysequence.cpp:353
+msgctxt "QShortcut"
+msgid "Launch (0)"
+msgstr "Запустити (0)"
+
+#: src/gui/kernel/qkeysequence.cpp:354
+msgctxt "QShortcut"
+msgid "Launch (1)"
+msgstr "Запустити (1)"
+
+#: src/gui/kernel/qkeysequence.cpp:355
+msgctxt "QShortcut"
+msgid "Launch (2)"
+msgstr "Запустити (2)"
+
+#: src/gui/kernel/qkeysequence.cpp:356
+msgctxt "QShortcut"
+msgid "Launch (3)"
+msgstr "Запустити (3)"
+
+#: src/gui/kernel/qkeysequence.cpp:357
+msgctxt "QShortcut"
+msgid "Launch (4)"
+msgstr "Запустити (4)"
+
+#: src/gui/kernel/qkeysequence.cpp:358
+msgctxt "QShortcut"
+msgid "Launch (5)"
+msgstr "Запустити (5)"
+
+#: src/gui/kernel/qkeysequence.cpp:359
+msgctxt "QShortcut"
+msgid "Launch (6)"
+msgstr "Запустити (6)"
+
+#: src/gui/kernel/qkeysequence.cpp:360
+msgctxt "QShortcut"
+msgid "Launch (7)"
+msgstr "Запустити (7)"
+
+#: src/gui/kernel/qkeysequence.cpp:361
+msgctxt "QShortcut"
+msgid "Launch (8)"
+msgstr "Запустити (8)"
+
+#: src/gui/kernel/qkeysequence.cpp:362
+msgctxt "QShortcut"
+msgid "Launch (9)"
+msgstr "Запустити (9)"
+
+#: src/gui/kernel/qkeysequence.cpp:363
+msgctxt "QShortcut"
+msgid "Launch (A)"
+msgstr "Запустити (A)"
+
+#: src/gui/kernel/qkeysequence.cpp:364
+msgctxt "QShortcut"
+msgid "Launch (B)"
+msgstr "Запустити (B)"
+
+#: src/gui/kernel/qkeysequence.cpp:365
+msgctxt "QShortcut"
+msgid "Launch (C)"
+msgstr "Запустити (C)"
+
+#: src/gui/kernel/qkeysequence.cpp:366
+msgctxt "QShortcut"
+msgid "Launch (D)"
+msgstr "Запустити (D)"
+
+#: src/gui/kernel/qkeysequence.cpp:367
+msgctxt "QShortcut"
+msgid "Launch (E)"
+msgstr "Запустити (E)"
+
+#: src/gui/kernel/qkeysequence.cpp:368
+msgctxt "QShortcut"
+msgid "Launch (F)"
+msgstr "Запустити (F)"
+
+#: src/gui/kernel/qkeysequence.cpp:369
+msgctxt "QShortcut"
+msgid "Monitor Brightness Up"
+msgstr "Збільшити яскравість монітору"
+
+#: src/gui/kernel/qkeysequence.cpp:370
+msgctxt "QShortcut"
+msgid "Monitor Brightness Down"
+msgstr "Зменшити яскравість монітору"
+
+#: src/gui/kernel/qkeysequence.cpp:371
+msgctxt "QShortcut"
+msgid "Keyboard Light On/Off"
+msgstr "Вімк./Вимк. підсвітку клавіатури"
+
+#: src/gui/kernel/qkeysequence.cpp:372
+msgctxt "QShortcut"
+msgid "Keyboard Brightness Up"
+msgstr "Збільшити яскравість підсвітки клавіатури"
+
+#: src/gui/kernel/qkeysequence.cpp:373
+msgctxt "QShortcut"
+msgid "Keyboard Brightness Down"
+msgstr "Зменшити яскравість підсвітки клавіатури"
+
+#: src/gui/kernel/qkeysequence.cpp:374
+msgctxt "QShortcut"
+msgid "Power Off"
+msgstr "Вимкнути живлення"
+
+#: src/gui/kernel/qkeysequence.cpp:375
+msgctxt "QShortcut"
+msgid "Wake Up"
+msgstr "Прокинутись"
+
+#: src/gui/kernel/qkeysequence.cpp:376
+msgctxt "QShortcut"
+msgid "Eject"
+msgstr "Витягнути"
+
+#: src/gui/kernel/qkeysequence.cpp:377
+msgctxt "QShortcut"
+msgid "Screensaver"
+msgstr "Зберігач екрана"
+
+#: src/gui/kernel/qkeysequence.cpp:378
+msgctxt "QShortcut"
+msgid "WWW"
+msgstr "WWW"
+
+#: src/gui/kernel/qkeysequence.cpp:379
+msgctxt "QShortcut"
+msgid "Sleep"
+msgstr "Сплячий режим"
+
+#: src/gui/kernel/qkeysequence.cpp:380
+msgctxt "QShortcut"
+msgid "LightBulb"
+msgstr "Лампочка"
+
+#: src/gui/kernel/qkeysequence.cpp:381
+msgctxt "QShortcut"
+msgid "Shop"
+msgstr "Крамниця"
+
+#: src/gui/kernel/qkeysequence.cpp:382
+msgctxt "QShortcut"
+msgid "History"
+msgstr "Історія"
+
+#: src/gui/kernel/qkeysequence.cpp:383
+msgctxt "QShortcut"
+msgid "Add Favorite"
+msgstr "Додати до обраного"
+
+#: src/gui/kernel/qkeysequence.cpp:384
+msgctxt "QShortcut"
+msgid "Hot Links"
+msgstr "Гарячі посилання"
+
+#: src/gui/kernel/qkeysequence.cpp:385
+msgctxt "QShortcut"
+msgid "Adjust Brightness"
+msgstr "Налаштування яскравості"
+
+#: src/gui/kernel/qkeysequence.cpp:386
+msgctxt "QShortcut"
+msgid "Finance"
+msgstr "Фінанси"
+
+#: src/gui/kernel/qkeysequence.cpp:387
+msgctxt "QShortcut"
+msgid "Community"
+msgstr "Спільнота"
+
+#: src/gui/kernel/qkeysequence.cpp:388
+msgctxt "QShortcut"
+msgid "Audio Rewind"
+msgstr "Перемотка звуку на початок"
+
+#: src/gui/kernel/qkeysequence.cpp:389
+msgctxt "QShortcut"
+msgid "Back Forward"
+msgstr "Назад Вперед"
+
+#: src/gui/kernel/qkeysequence.cpp:390
+msgctxt "QShortcut"
+msgid "Application Left"
+msgstr "Додаток вліво"
+
+#: src/gui/kernel/qkeysequence.cpp:391
+msgctxt "QShortcut"
+msgid "Application Right"
+msgstr "Додаток вправо"
+
+#: src/gui/kernel/qkeysequence.cpp:392
+msgctxt "QShortcut"
+msgid "Book"
+msgstr "Книга"
+
+#: src/gui/kernel/qkeysequence.cpp:393
+msgctxt "QShortcut"
+msgid "CD"
+msgstr "CD"
+
+#: src/gui/kernel/qkeysequence.cpp:394
+msgctxt "QShortcut"
+msgid "Calculator"
+msgstr "Калькулятор"
+
+#: src/gui/kernel/qkeysequence.cpp:395
+msgctxt "QShortcut"
+msgid "Clear"
+msgstr "Очистити"
+
+#: src/gui/kernel/qkeysequence.cpp:396
+msgctxt "QShortcut"
+msgid "Clear Grab"
+msgstr ""
+
+#: src/gui/kernel/qkeysequence.cpp:397
+msgctxt "QShortcut"
+msgid "Close"
+msgstr "Закрити"
+
+#: src/gui/kernel/qkeysequence.cpp:398
+msgctxt "QShortcut"
+msgid "Copy"
+msgstr "Копіювати"
+
+#: src/gui/kernel/qkeysequence.cpp:399
+msgctxt "QShortcut"
+msgid "Cut"
+msgstr "Вирізати"
+
+#: src/gui/kernel/qkeysequence.cpp:400
+msgctxt "QShortcut"
+msgid "Display"
+msgstr "Дисплей"
+
+#: src/gui/kernel/qkeysequence.cpp:401
+msgctxt "QShortcut"
+msgid "DOS"
+msgstr "DOS"
+
+#: src/gui/kernel/qkeysequence.cpp:402
+msgctxt "QShortcut"
+msgid "Documents"
+msgstr "Документи"
+
+#: src/gui/kernel/qkeysequence.cpp:403
+msgctxt "QShortcut"
+msgid "Spreadsheet"
+msgstr "Електронна таблиця"
+
+#: src/gui/kernel/qkeysequence.cpp:404
+msgctxt "QShortcut"
+msgid "Browser"
+msgstr "Навігатор"
+
+#: src/gui/kernel/qkeysequence.cpp:405
+msgctxt "QShortcut"
+msgid "Game"
+msgstr "Гра"
+
+#: src/gui/kernel/qkeysequence.cpp:406
+msgctxt "QShortcut"
+msgid "Go"
+msgstr "Йти"
+
+#: src/gui/kernel/qkeysequence.cpp:407
+msgctxt "QShortcut"
+msgid "iTouch"
+msgstr "iTouch"
+
+#: src/gui/kernel/qkeysequence.cpp:408
+msgctxt "QShortcut"
+msgid "Logoff"
+msgstr "Вийти з системи"
+
+#: src/gui/kernel/qkeysequence.cpp:409
+msgctxt "QShortcut"
+msgid "Market"
+msgstr "Ринок"
+
+#: src/gui/kernel/qkeysequence.cpp:410
+msgctxt "QShortcut"
+msgid "Meeting"
+msgstr "Зустріч"
+
+#: src/gui/kernel/qkeysequence.cpp:411
+msgctxt "QShortcut"
+msgid "Keyboard Menu"
+msgstr "Клавіатурне меню"
+
+#: src/gui/kernel/qkeysequence.cpp:412
+msgctxt "QShortcut"
+msgid "Menu PB"
+msgstr "Меню PB"
+
+#: src/gui/kernel/qkeysequence.cpp:413
+msgctxt "QShortcut"
+msgid "My Sites"
+msgstr "Мої сайти"
+
+#: src/gui/kernel/qkeysequence.cpp:414
+msgctxt "QShortcut"
+msgid "News"
+msgstr "Новини"
+
+#: src/gui/kernel/qkeysequence.cpp:415
+msgctxt "QShortcut"
+msgid "Home Office"
+msgstr "Домашній офіс"
+
+#: src/gui/kernel/qkeysequence.cpp:416
+msgctxt "QShortcut"
+msgid "Option"
+msgstr "Опція"
+
+#: src/gui/kernel/qkeysequence.cpp:417
+msgctxt "QShortcut"
+msgid "Paste"
+msgstr "Вставити"
+
+#: src/gui/kernel/qkeysequence.cpp:418
+msgctxt "QShortcut"
+msgid "Phone"
+msgstr "Телефон"
+
+#: src/gui/kernel/qkeysequence.cpp:419
+msgctxt "QShortcut"
+msgid "Reply"
+msgstr "Відповісти"
+
+#: src/gui/kernel/qkeysequence.cpp:420
+msgctxt "QShortcut"
+msgid "Reload"
+msgstr "Перезавантажити"
+
+#: src/gui/kernel/qkeysequence.cpp:421
+msgctxt "QShortcut"
+msgid "Rotate Windows"
+msgstr "Обертати вікна"
+
+#: src/gui/kernel/qkeysequence.cpp:422
+msgctxt "QShortcut"
+msgid "Rotation PB"
+msgstr "Обертання PB"
+
+#: src/gui/kernel/qkeysequence.cpp:423
+msgctxt "QShortcut"
+msgid "Rotation KB"
+msgstr "Обертання KB"
+
+#: src/gui/kernel/qkeysequence.cpp:424
+msgctxt "QShortcut"
+msgid "Save"
+msgstr "Зберегти"
+
+#: src/gui/kernel/qkeysequence.cpp:425
+msgctxt "QShortcut"
+msgid "Send"
+msgstr "Надіслати"
+
+#: src/gui/kernel/qkeysequence.cpp:426
+msgctxt "QShortcut"
+msgid "Spellchecker"
+msgstr "Перевірка правопису"
+
+#: src/gui/kernel/qkeysequence.cpp:427
+msgctxt "QShortcut"
+msgid "Split Screen"
+msgstr "Розділити екран"
+
+#: src/gui/kernel/qkeysequence.cpp:428
+msgctxt "QShortcut"
+msgid "Support"
+msgstr "Підтримка"
+
+#: src/gui/kernel/qkeysequence.cpp:429
+msgctxt "QShortcut"
+msgid "Task Panel"
+msgstr "Панель задач"
+
+#: src/gui/kernel/qkeysequence.cpp:430
+msgctxt "QShortcut"
+msgid "Terminal"
+msgstr "Термінал"
+
+#: src/gui/kernel/qkeysequence.cpp:431
+msgctxt "QShortcut"
+msgid "Tools"
+msgstr "Інструменти"
+
+#: src/gui/kernel/qkeysequence.cpp:432
+msgctxt "QShortcut"
+msgid "Travel"
+msgstr "Подорож"
+
+#: src/gui/kernel/qkeysequence.cpp:433
+msgctxt "QShortcut"
+msgid "Video"
+msgstr "Відео"
+
+#: src/gui/kernel/qkeysequence.cpp:434
+msgctxt "QShortcut"
+msgid "Word Processor"
+msgstr "Текстовий процесор"
+
+#: src/gui/kernel/qkeysequence.cpp:435
+msgctxt "QShortcut"
+msgid "XFer"
+msgstr "XFer"
+
+#: src/gui/kernel/qkeysequence.cpp:436
+msgctxt "QShortcut"
+msgid "Zoom In"
+msgstr "Збільшити"
+
+#: src/gui/kernel/qkeysequence.cpp:437
+msgctxt "QShortcut"
+msgid "Zoom Out"
+msgstr "Зменшити"
+
+#: src/gui/kernel/qkeysequence.cpp:438
+msgctxt "QShortcut"
+msgid "Away"
+msgstr "Пішов"
+
+#: src/gui/kernel/qkeysequence.cpp:439
+msgctxt "QShortcut"
+msgid "Messenger"
+msgstr "Програма миттєвого зв'язку"
+
+#: src/gui/kernel/qkeysequence.cpp:440
+msgctxt "QShortcut"
+msgid "WebCam"
+msgstr "Веб-камера"
+
+#: src/gui/kernel/qkeysequence.cpp:441
+msgctxt "QShortcut"
+msgid "Mail Forward"
+msgstr "Переслати лист"
+
+#: src/gui/kernel/qkeysequence.cpp:442
+msgctxt "QShortcut"
+msgid "Pictures"
+msgstr "Зображення"
+
+#: src/gui/kernel/qkeysequence.cpp:443
+msgctxt "QShortcut"
+msgid "Music"
+msgstr "Музика"
+
+#: src/gui/kernel/qkeysequence.cpp:444
+msgctxt "QShortcut"
+msgid "Battery"
+msgstr "Батарея"
+
+#: src/gui/kernel/qkeysequence.cpp:445
+msgctxt "QShortcut"
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/gui/kernel/qkeysequence.cpp:446
+msgctxt "QShortcut"
+msgid "Wireless"
+msgstr "Бездротова мережа"
+
+#: src/gui/kernel/qkeysequence.cpp:447
+msgctxt "QShortcut"
+msgid "Ultra Wide Band"
+msgstr "Ultra Wide Band"
+
+#: src/gui/kernel/qkeysequence.cpp:448
+msgctxt "QShortcut"
+msgid "Audio Forward"
+msgstr "Послідовно"
+
+#: src/gui/kernel/qkeysequence.cpp:449
+msgctxt "QShortcut"
+msgid "Audio Repeat"
+msgstr "Повторювати"
+
+#: src/gui/kernel/qkeysequence.cpp:450
+msgctxt "QShortcut"
+msgid "Audio Random Play"
+msgstr "Випадкове відтворення"
+
+#: src/gui/kernel/qkeysequence.cpp:451
+msgctxt "QShortcut"
+msgid "Subtitle"
+msgstr "Субтитри"
+
+#: src/gui/kernel/qkeysequence.cpp:452
+msgctxt "QShortcut"
+msgid "Audio Cycle Track"
+msgstr "Зациклити трек"
+
+#: src/gui/kernel/qkeysequence.cpp:453
+msgctxt "QShortcut"
+msgid "Time"
+msgstr "Час"
+
+#: src/gui/kernel/qkeysequence.cpp:454 src/gui/kernel/qkeysequence.cpp:476
+msgctxt "QShortcut"
+msgid "Select"
+msgstr "Обрати"
+
+#: src/gui/kernel/qkeysequence.cpp:455
+msgctxt "QShortcut"
+msgid "View"
+msgstr "Вид"
+
+#: src/gui/kernel/qkeysequence.cpp:456
+msgctxt "QShortcut"
+msgid "Top Menu"
+msgstr "Головне меню"
+
+#: src/gui/kernel/qkeysequence.cpp:457
+msgctxt "QShortcut"
+msgid "Suspend"
+msgstr "Призупинити"
+
+#: src/gui/kernel/qkeysequence.cpp:458
+msgctxt "QShortcut"
+msgid "Hibernate"
+msgstr "Приспати"
+
+#: src/gui/kernel/qkeysequence.cpp:462
+msgctxt "QShortcut"
+msgid "Print Screen"
+msgstr "Друк екрану"
+
+#: src/gui/kernel/qkeysequence.cpp:463
+msgctxt "QShortcut"
+msgid "Page Up"
+msgstr "На сторінку вгору"
+
+#: src/gui/kernel/qkeysequence.cpp:464
+msgctxt "QShortcut"
+msgid "Page Down"
+msgstr "На сторінку вниз"
+
+#: src/gui/kernel/qkeysequence.cpp:465
+msgctxt "QShortcut"
+msgid "Caps Lock"
+msgstr "Верхній регістр"
+
+#: src/gui/kernel/qkeysequence.cpp:466
+msgctxt "QShortcut"
+msgid "Num Lock"
+msgstr "Цифрові клавіші"
+
+#: src/gui/kernel/qkeysequence.cpp:467
+msgctxt "QShortcut"
+msgid "Number Lock"
+msgstr "Цифрові клавіші"
+
+#: src/gui/kernel/qkeysequence.cpp:468
+msgctxt "QShortcut"
+msgid "Scroll Lock"
+msgstr "Scroll Lock"
+
+#: src/gui/kernel/qkeysequence.cpp:469
+msgctxt "QShortcut"
+msgid "Insert"
+msgstr "Вставити"
+
+#: src/gui/kernel/qkeysequence.cpp:470
+msgctxt "QShortcut"
+msgid "Delete"
+msgstr "Видалити"
+
+#: src/gui/kernel/qkeysequence.cpp:471
+msgctxt "QShortcut"
+msgid "Escape"
+msgstr "Escape"
+
+#: src/gui/kernel/qkeysequence.cpp:472
+msgctxt "QShortcut"
+msgid "System Request"
+msgstr "Системний запит"
+
+#: src/gui/kernel/qkeysequence.cpp:477
+msgctxt "QShortcut"
+msgid "Yes"
+msgstr "Так"
+
+#: src/gui/kernel/qkeysequence.cpp:478
+msgctxt "QShortcut"
+msgid "No"
+msgstr "Ні"
+
+#: src/gui/kernel/qkeysequence.cpp:482
+msgctxt "QShortcut"
+msgid "Context1"
+msgstr "Контекст 1"
+
+#: src/gui/kernel/qkeysequence.cpp:483
+msgctxt "QShortcut"
+msgid "Context2"
+msgstr "Контекст 2"
+
+#: src/gui/kernel/qkeysequence.cpp:484
+msgctxt "QShortcut"
+msgid "Context3"
+msgstr "Контекст 3"
+
+#: src/gui/kernel/qkeysequence.cpp:485
+msgctxt "QShortcut"
+msgid "Context4"
+msgstr "Контекст 4"
+
+#: src/gui/kernel/qkeysequence.cpp:487
+msgctxt "QShortcut"
+msgid "Call"
+msgstr "Дзвонити"
+
+#: src/gui/kernel/qkeysequence.cpp:489
+msgctxt "QShortcut"
+msgid "Hangup"
+msgstr "Покласти слухавку"
+
+#: src/gui/kernel/qkeysequence.cpp:491
+msgctxt "QShortcut"
+msgid "Toggle Call/Hangup"
+msgstr "Подзвонити/покласти слухавку"
+
+#: src/gui/kernel/qkeysequence.cpp:492
+msgctxt "QShortcut"
+msgid "Flip"
+msgstr "Фліп"
+
+#: src/gui/kernel/qkeysequence.cpp:494
+msgctxt "QShortcut"
+msgid "Voice Dial"
+msgstr "Голосовий набір"
+
+#: src/gui/kernel/qkeysequence.cpp:496
+msgctxt "QShortcut"
+msgid "Last Number Redial"
+msgstr "Повторний набір"
+
+#: src/gui/kernel/qkeysequence.cpp:498
+msgctxt "QShortcut"
+msgid "Camera Shutter"
+msgstr "Спуск камери"
+
+#: src/gui/kernel/qkeysequence.cpp:500
+msgctxt "QShortcut"
+msgid "Camera Focus"
+msgstr "Сфокусувати камеру"
+
+#: src/gui/kernel/qkeysequence.cpp:504
+msgctxt "QShortcut"
+msgid "Kanji"
+msgstr "Кандзі"
+
+#: src/gui/kernel/qkeysequence.cpp:505
+msgctxt "QShortcut"
+msgid "Muhenkan"
+msgstr "Muhenkan"
+
+#: src/gui/kernel/qkeysequence.cpp:506
+msgctxt "QShortcut"
+msgid "Henkan"
+msgstr "Henkan"
+
+#: src/gui/kernel/qkeysequence.cpp:507
+msgctxt "QShortcut"
+msgid "Romaji"
+msgstr "Ромадзі"
+
+#: src/gui/kernel/qkeysequence.cpp:508
+msgctxt "QShortcut"
+msgid "Hiragana"
+msgstr "Хірагана"
+
+#: src/gui/kernel/qkeysequence.cpp:509
+msgctxt "QShortcut"
+msgid "Katakana"
+msgstr "Катакана"
+
+#: src/gui/kernel/qkeysequence.cpp:510
+msgctxt "QShortcut"
+msgid "Hiragana Katakana"
+msgstr "Хірагана Катакана"
+
+#: src/gui/kernel/qkeysequence.cpp:511
+msgctxt "QShortcut"
+msgid "Zenkaku"
+msgstr "Zenkaku"
+
+#: src/gui/kernel/qkeysequence.cpp:512
+msgctxt "QShortcut"
+msgid "Hankaku"
+msgstr "Hankaku"
+
+#: src/gui/kernel/qkeysequence.cpp:513
+msgctxt "QShortcut"
+msgid "Zenkaku Hankaku"
+msgstr "Zenkaku Hankaku"
+
+#: src/gui/kernel/qkeysequence.cpp:514
+msgctxt "QShortcut"
+msgid "Touroku"
+msgstr "Touroku"
+
+#: src/gui/kernel/qkeysequence.cpp:515
+msgctxt "QShortcut"
+msgid "Massyo"
+msgstr "Massyo"
+
+#: src/gui/kernel/qkeysequence.cpp:516
+msgctxt "QShortcut"
+msgid "Kana Lock"
+msgstr "Замкнути кана"
+
+#: src/gui/kernel/qkeysequence.cpp:517
+msgctxt "QShortcut"
+msgid "Kana Shift"
+msgstr "Кана Shift"
+
+#: src/gui/kernel/qkeysequence.cpp:518
+msgctxt "QShortcut"
+msgid "Eisu Shift"
+msgstr "Eisu Shift"
+
+#: src/gui/kernel/qkeysequence.cpp:519
+msgctxt "QShortcut"
+msgid "Eisu toggle"
+msgstr "Eisu перемкнути"
+
+#: src/gui/kernel/qkeysequence.cpp:520
+msgctxt "QShortcut"
+msgid "Code input"
+msgstr "Ввести код"
+
+#: src/gui/kernel/qkeysequence.cpp:521
+msgctxt "QShortcut"
+msgid "Multiple Candidate"
+msgstr "Декілька кандидатів"
+
+#: src/gui/kernel/qkeysequence.cpp:522
+msgctxt "QShortcut"
+msgid "Previous Candidate"
+msgstr "Попередній кандидат"
+
+#: src/gui/kernel/qkeysequence.cpp:526
+msgctxt "QShortcut"
+msgid "Hangul"
+msgstr "Хангиль"
+
+#: src/gui/kernel/qkeysequence.cpp:527
+msgctxt "QShortcut"
+msgid "Hangul Start"
+msgstr "Початок хангиля"
+
+#: src/gui/kernel/qkeysequence.cpp:528
+msgctxt "QShortcut"
+msgid "Hangul End"
+msgstr "Кінець хангиля"
+
+#: src/gui/kernel/qkeysequence.cpp:529
+msgctxt "QShortcut"
+msgid "Hangul Hanja"
+msgstr "Хангиль Ханча"
+
+#: src/gui/kernel/qkeysequence.cpp:530
+msgctxt "QShortcut"
+msgid "Hangul Jamo"
+msgstr "Хангиль Чамо"
+
+#: src/gui/kernel/qkeysequence.cpp:531
+msgctxt "QShortcut"
+msgid "Hangul Romaja"
+msgstr "Хангиль Romaja"
+
+#: src/gui/kernel/qkeysequence.cpp:532
+msgctxt "QShortcut"
+msgid "Hangul Jeonja"
+msgstr "Хангиль Jeonja"
+
+#: src/gui/kernel/qkeysequence.cpp:533
+msgctxt "QShortcut"
+msgid "Hangul Banja"
+msgstr "Хангиль Banja"
+
+#: src/gui/kernel/qkeysequence.cpp:534
+msgctxt "QShortcut"
+msgid "Hangul PreHanja"
+msgstr "Хангиль преханча"
+
+#: src/gui/kernel/qkeysequence.cpp:535
+msgctxt "QShortcut"
+msgid "Hangul PostHanja"
+msgstr "Хангиль постханча"
+
+#: src/gui/kernel/qkeysequence.cpp:536
+msgctxt "QShortcut"
+msgid "Hangul Special"
+msgstr "Хангиль спеціальний"
+
+#: src/gui/itemviews/qdirmodel.cpp:806
+#: src/gui/itemviews/qfileiconprovider.cpp:145
+#: src/gui/itemviews/qfileiconprovider.cpp:148
+#: src/gui/itemviews/qfileiconprovider.cpp:149
+#: src/gui/itemviews/qfileiconprovider.cpp:153
+#: src/gui/itemviews/qfileiconprovider.cpp:158
+#: src/gui/itemviews/qfileiconprovider.cpp:162
+msgid "QFileDialog"
+msgstr ""
+
+#: src/gui/text/qfontdatabase.cpp:77 src/gui/text/qfontdatabase.cpp:80
+#: src/gui/text/qfontdatabase.cpp:83 src/gui/text/qfontdatabase.cpp:86
+#: src/gui/text/qfontdatabase.cpp:92 src/gui/text/qfontdatabase.cpp:94
+#: src/gui/text/qfontdatabase.cpp:100 src/gui/text/qfontdatabase.cpp:104
+#: src/gui/text/qfontdatabase.cpp:208 src/gui/text/qfontdatabase.cpp:211
+#: src/gui/text/qfontdatabase.cpp:826 src/gui/text/qfontdatabase.cpp:828
+#: src/gui/text/qfontdatabase.cpp:830 src/gui/text/qfontdatabase.cpp:832
+#: src/gui/text/qfontdatabase.cpp:835 src/gui/text/qfontdatabase.cpp:837
+#: src/gui/text/qfontdatabase.cpp:840
+msgid "QFontDatabase"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2804
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRM Left-to-right mark"
+msgstr "LRM Ознака зліва направо"
+
+#: src/gui/text/qtextcontrol.cpp:2805
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLM Right-to-left mark"
+msgstr "RLM Ознака справа наліво"
+
+#: src/gui/text/qtextcontrol.cpp:2806
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWJ Zero width joiner"
+msgstr "ZWJ Об’єднувач нульової ширини"
+
+#: src/gui/text/qtextcontrol.cpp:2807
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWNJ Zero width non-joiner"
+msgstr "ZWNJ Необ’єднувач нульової довжини"
+
+#: src/gui/text/qtextcontrol.cpp:2808
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWSP Zero width space"
+msgstr "ZWSP Пропуск нульової ширини"
+
+#: src/gui/text/qtextcontrol.cpp:2809
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRE Start of left-to-right embedding"
+msgstr "LRE Початок вбудованого напису зліва направо"
+
+#: src/gui/text/qtextcontrol.cpp:2810
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLE Start of right-to-left embedding"
+msgstr "RLE Початок вбудованого напису справа наліво"
+
+#: src/gui/text/qtextcontrol.cpp:2811
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRO Start of left-to-right override"
+msgstr "LRO Початок заміни напису зліва направо"
+
+#: src/gui/text/qtextcontrol.cpp:2812
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLO Start of right-to-left override"
+msgstr "RLO Початок заміни напису справа наліво"
+
+#: src/gui/text/qtextcontrol.cpp:2813
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "PDF Pop directional formatting"
+msgstr "PDF Забрати направлене форматування"
+
+#: src/network/ssl/qsslsocket_openssl.cpp:830
+msgid "The TLS/SSL connection has been closed"
+msgstr ""
+
+#: src/network/kernel/qhostinfo_p.h:92
+msgctxt "QHostInfo"
+msgid "Unknown error"
+msgstr "Невідома помилка"
+
+#: src/network/kernel/qhostinfo_unix.cpp:144
+#: src/network/kernel/qhostinfo_unix.cpp:145
+msgid "QHostInfoAgent"
+msgstr ""
+
+#: src/network/socket/qsocks5socketengine.cpp:1379
+msgctxt "QSocks5SocketEngine"
+msgid "Network operation timed out"
+msgstr "Час на мережеву операцію вичерпано"
+
+#: src/network/access/qhttpnetworkconnection.cpp:668
+#: src/network/access/qhttpnetworkconnection.cpp:671
+#: src/network/access/qhttpnetworkconnection.cpp:674
+#: src/network/access/qhttpnetworkconnection.cpp:680
+#: src/network/access/qhttpnetworkconnection.cpp:683
+#: src/network/access/qhttpnetworkconnection.cpp:686
+#: src/network/access/qhttpnetworkconnection.cpp:689
+#: src/network/access/qhttpnetworkconnection.cpp:692
+msgid "QHttp"
+msgstr ""
+
+#: src/network/access/qhttpnetworkconnection.cpp:677
+msgid "QAbstractSocket"
+msgstr ""
+
+#: src/network/access/qnetworkaccessdebugpipebackend.cpp:182
+msgid "QNetworkAccessDebugPipeBackend"
+msgstr ""
+
+#: src/network/access/qnetworkreplydataimpl.cpp:73
+msgid "QNetworkAccessDataBackend"
+msgstr ""
+
+#: src/network/access/qnetworkaccesscachebackend.cpp:58
+msgid "QNetworkAccessCacheBackend"
+msgstr ""
+
+#: src/network/access/qhttp.cpp:1554 src/network/access/qhttp.cpp:2370
+msgctxt "QHttp"
+msgid "Unknown error"
+msgstr "Невідома помилка"
+
+#: src/network/access/qhttp.cpp:2381
+msgctxt "QHttp"
+msgid "No server set to connect to"
+msgstr "Не встановлено сервер для з’єднання"
+
+#: src/network/access/qhttp.cpp:2537
+msgctxt "QHttp"
+msgid "Wrong content length"
+msgstr "Неправильна довжина вмісту"
+
+#: src/network/access/qhttp.cpp:2541
+msgctxt "QHttp"
+msgid "Server closed connection unexpectedly"
+msgstr "Сервер несподівано закрив з’єднання"
+
+#: src/network/access/qhttp.cpp:2596
+msgctxt "QHttp"
+msgid "Connection refused (or timed out)"
+msgstr "У з’єднанні відмовлено (або час очікування вичерпано)"
+
+#: src/network/access/qhttp.cpp:2599
+msgctxt "QHttp"
+msgid "Host %1 not found"
+msgstr "Вузол %1 не знайдено"
+
+#: src/network/access/qhttp.cpp:2619
+msgctxt "QHttp"
+msgid "HTTP request failed"
+msgstr "Збій запиту HTTP"
+
+#: src/network/access/qhttp.cpp:2707
+msgctxt "QHttp"
+msgid "Invalid HTTP response header"
+msgstr "Неправильний заголовок відповіді HTTP"
+
+#: src/network/access/qhttp.cpp:2735
+msgctxt "QHttp"
+msgid "Unknown authentication method"
+msgstr "Невідомий метод авторизації"
+
+#: src/network/access/qhttp.cpp:2745
+msgctxt "QHttp"
+msgid "Proxy authentication required"
+msgstr "Необхідна авторизація на проксі-сервері"
+
+#: src/network/access/qhttp.cpp:2749
+msgctxt "QHttp"
+msgid "Authentication required"
+msgstr "Необхідна авторизація"
+
+#: src/network/access/qhttp.cpp:2832 src/network/access/qhttp.cpp:2880
+msgctxt "QHttp"
+msgid "Invalid HTTP chunked body"
+msgstr "Неправильно фрагментовані дані HTTP"
+
+#: src/network/access/qhttp.cpp:2918
+msgctxt "QHttp"
+msgid "Error writing response to device"
+msgstr "Помилка запису відповіді до пристрою"
+
+#: src/network/access/qhttpthreaddelegate.cpp:419
+#: src/network/access/qhttpthreaddelegate.cpp:442
+msgctxt "QNetworkReply"
+msgid "Error downloading %1 - server replied: %2"
+msgstr "Помилка звантаження %1 - сервер відповів: %2"
+
+#: src/network/access/qftp.cpp:2340
+msgctxt "QFtp"
+msgid ""
+"Connecting to host failed:\n"
+"%1"
+msgstr ""
+"Відмова у з’єднанні з вузлом:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2344
+msgctxt "QFtp"
+msgid ""
+"Login failed:\n"
+"%1"
+msgstr ""
+"Збій входу:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2348
+msgctxt "QFtp"
+msgid ""
+"Listing directory failed:\n"
+"%1"
+msgstr ""
+"Збій перегляду теки:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2352
+msgctxt "QFtp"
+msgid ""
+"Changing directory failed:\n"
+"%1"
+msgstr ""
+"Збій зміни теки:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2356
+msgctxt "QFtp"
+msgid ""
+"Downloading file failed:\n"
+"%1"
+msgstr ""
+"Збій звантаження файлу:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2360
+msgctxt "QFtp"
+msgid ""
+"Uploading file failed:\n"
+"%1"
+msgstr ""
+"Збій вивантаження файлу:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2364
+msgctxt "QFtp"
+msgid ""
+"Removing file failed:\n"
+"%1"
+msgstr ""
+"Збій видалення файлу:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2368
+msgctxt "QFtp"
+msgid ""
+"Creating directory failed:\n"
+"%1"
+msgstr ""
+"Збій створення теки:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2372
+msgctxt "QFtp"
+msgid ""
+"Removing directory failed:\n"
+"%1"
+msgstr ""
+"Збій видалення теки:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2400
+msgctxt "QFtp"
+msgid "Connection closed"
+msgstr "З'єднання закрито"
+
+#: src/plugins/accessible/widgets/rangecontrols.cpp:924
+msgid "QDial"
+msgstr ""
+
+#: src/plugins/accessible/widgets/rangecontrols.cpp:926
+msgid "SpeedoMeter"
+msgstr ""
+
+#: src/plugins/accessible/widgets/rangecontrols.cpp:928
+msgid "SliderHandle"
+msgstr ""
+
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:226
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:592
+msgid "QPSQLResult"
+msgstr ""
+
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:908
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:918
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:972
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:994
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1016
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1035
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1066
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1247
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1258
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1531
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1539
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1643
+msgid "QODBCResult"
+msgstr ""
+
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:460
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:487
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:640
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:646
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:738
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:748
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:817
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:825
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:857
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:948
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:959
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:973
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:982
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:994
+msgid "QMYSQLResult"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:153
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:155
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:157
+msgid "QScriptDebuggerStackModel"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:888
+#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:890
+msgid "QScriptDebuggerLocalsModel"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptdebugger.cpp:1681
+msgid "F5"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptdebugger.cpp:1781
+msgid "F9"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptdebugger.cpp:1855
+msgid "F3"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:570
+msgid "Katie Script Debugger"
+msgstr ""
+
+#: src/sql/drivers/qsql_sqlite.cpp:223 src/sql/drivers/qsql_sqlite.cpp:224
+#: src/sql/drivers/qsql_sqlite.cpp:298 src/sql/drivers/qsql_sqlite.cpp:307
+#: src/sql/drivers/qsql_sqlite.cpp:370 src/sql/drivers/qsql_sqlite.cpp:375
+#: src/sql/drivers/qsql_sqlite.cpp:395 src/sql/drivers/qsql_sqlite.cpp:447
+#: src/sql/drivers/qsql_sqlite.cpp:454
+msgid "QSQLiteResult"
+msgstr ""
+
+#: src/uitools/formscriptrunner.cpp:80
+msgid "Exception at line %1: %2"
+msgstr ""
+
+#: src/uitools/formscriptrunner.cpp:166
+msgid ""
+"An error occurred while running the script for %1: %2\n"
+"Script: %3"
+msgstr ""
+
+#: src/uitools/abstractformbuilder.cpp:195
+#: src/uitools/abstractformbuilder.cpp:200
+#: src/uitools/abstractformbuilder.cpp:206
+#: src/uitools/abstractformbuilder.cpp:310
+#: src/uitools/abstractformbuilder.cpp:606
+#: src/uitools/abstractformbuilder.cpp:668
+#: src/uitools/abstractformbuilder.cpp:878
+#: src/uitools/abstractformbuilder.cpp:1624
+#: src/uitools/abstractformbuilder.cpp:1705
+#: src/uitools/abstractformbuilder.cpp:2451
+#: src/uitools/abstractformbuilder.cpp:2962
+msgid "QAbstractFormBuilder"
+msgstr ""
+
+#: src/xml/sax/qxml.cpp:48
+msgctxt "QXml"
+msgid "no error occurred"
+msgstr "без помилок"
+
+#: src/xml/sax/qxml.cpp:49
+msgctxt "QXml"
+msgid "error triggered by consumer"
+msgstr "помилка, викликана користувачем"
+
+#: src/xml/sax/qxml.cpp:50
+msgctxt "QXml"
+msgid "unexpected end of file"
+msgstr "несподіваний кінець файлу"
+
+#: src/xml/sax/qxml.cpp:51
+msgctxt "QXml"
+msgid "more than one document type definition"
+msgstr "більш ніж одне визначення типу документу"
+
+#: src/xml/sax/qxml.cpp:52
+msgctxt "QXml"
+msgid "error occurred while parsing element"
+msgstr "під час розбору елемента трапилась помилка"
+
+#: src/xml/sax/qxml.cpp:53
+msgctxt "QXml"
+msgid "tag mismatch"
+msgstr "тег не збігається"
+
+#: src/xml/sax/qxml.cpp:54
+msgctxt "QXml"
+msgid "error occurred while parsing content"
+msgstr "під час розбору вмісту трапилась помилка"
+
+#: src/xml/sax/qxml.cpp:55
+msgctxt "QXml"
+msgid "unexpected character"
+msgstr "несподіваний символ"
+
+#: src/xml/sax/qxml.cpp:56
+msgctxt "QXml"
+msgid "invalid name for processing instruction"
+msgstr "неправильна назва для інструкції обробки"
+
+#: src/xml/sax/qxml.cpp:57
+msgctxt "QXml"
+msgid "version expected while reading the XML declaration"
+msgstr "під час читання оголошення XML очікувалась версія"
+
+#: src/xml/sax/qxml.cpp:58
+msgctxt "QXml"
+msgid "wrong value for standalone declaration"
+msgstr "неправильне значення для самостійного оголошення"
+
+#: src/xml/sax/qxml.cpp:59
+msgctxt "QXml"
+msgid ""
+"encoding declaration or standalone declaration expected while reading the "
+"XML declaration"
+msgstr ""
+"під час читання оголошення XML очікувалось оголошення кодування або "
+"самостійне оголошення"
+
+#: src/xml/sax/qxml.cpp:60
+msgctxt "QXml"
+msgid "standalone declaration expected while reading the XML declaration"
+msgstr "під час читання оголошення XML очікувалось самостійне оголошення"
+
+#: src/xml/sax/qxml.cpp:61
+msgctxt "QXml"
+msgid "error occurred while parsing document type definition"
+msgstr "під час розбору визначення типу документа трапилась помилка"
+
+#: src/xml/sax/qxml.cpp:62
+msgctxt "QXml"
+msgid "letter is expected"
+msgstr "очікувалась літера"
+
+#: src/xml/sax/qxml.cpp:63
+msgctxt "QXml"
+msgid "error occurred while parsing comment"
+msgstr "під час розбору коментаря трапилась помилка"
+
+#: src/xml/sax/qxml.cpp:64
+msgctxt "QXml"
+msgid "error occurred while parsing reference"
+msgstr "під час розбору посилання трапилась помилка"
+
+#: src/xml/sax/qxml.cpp:65
+msgctxt "QXml"
+msgid "internal general entity reference not allowed in DTD"
+msgstr "внутрішнє посилання на загальну сутність не дозволене в DTD"
+
+#: src/xml/sax/qxml.cpp:66
+msgctxt "QXml"
+msgid "external parsed general entity reference not allowed in attribute value"
+msgstr ""
+"зовнішнє розібране посилання на загальну сутність не дозволене в значенні "
+"атрибуту"
+
+#: src/xml/sax/qxml.cpp:67
+msgctxt "QXml"
+msgid "external parsed general entity reference not allowed in DTD"
+msgstr "зовнішнє розібране посилання на загальну сутність не дозволене в DTD"
+
+#: src/xml/sax/qxml.cpp:68
+msgctxt "QXml"
+msgid "unparsed entity reference in wrong context"
+msgstr "нерозібране посилання на сутність в неправильному контексті"
+
+#: src/xml/sax/qxml.cpp:69
+msgctxt "QXml"
+msgid "recursive entities"
+msgstr "рекурсивні сутності"
+
+#: src/xml/sax/qxml.cpp:70
+msgctxt "QXml"
+msgid "error in the text declaration of an external entity"
+msgstr "помилка в тексті оголошення зовнішньої сутності"

@@ -216,7 +216,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsocketnotifier.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtimer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtranslator.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtranslator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qvariant.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstracteventdispatcher_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication_p.h
@@ -463,6 +462,13 @@ elseif(KATIE_PLATFORM STREQUAL "hurd")
     )
 endif()
 
+if(WITH_INTL AND INTL_FOUND)
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        ${INTL_LIBRARIES}
+    )
+    include_directories(${INTL_INCLUDES})
+endif()
 
 if(WITH_UNWIND AND UNWIND_FOUND AND HAVE_CXXABI)
     set(EXTRA_CORE_LIBS

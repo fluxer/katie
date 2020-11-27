@@ -1,0 +1,1903 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-27 17:45+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
+"X-Language: sk_SK\n"
+"X-Qt-Contexts: true\n"
+
+#: src/core/plugin/qlibrary.cpp:578
+msgid "The file '%1' is not a valid Katie plugin."
+msgstr ""
+
+#: src/core/plugin/qlibrary.cpp:591
+msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
+msgstr ""
+
+#: src/core/io/qstandardpaths.cpp:300 src/core/io/qstandardpaths.cpp:302
+#: src/core/io/qstandardpaths.cpp:304 src/core/io/qstandardpaths.cpp:306
+#: src/core/io/qstandardpaths.cpp:308 src/core/io/qstandardpaths.cpp:310
+#: src/core/io/qstandardpaths.cpp:312 src/core/io/qstandardpaths.cpp:314
+#: src/core/io/qstandardpaths.cpp:316 src/core/io/qstandardpaths.cpp:318
+#: src/core/io/qstandardpaths.cpp:320 src/core/io/qstandardpaths.cpp:322
+#: src/core/io/qstandardpaths.cpp:324 src/core/io/qstandardpaths.cpp:326
+#: src/core/io/qstandardpaths.cpp:328 src/core/io/qstandardpaths.cpp:330
+#: src/core/io/qstandardpaths.cpp:332
+msgid "QStandardPaths"
+msgstr ""
+
+#: src/core/kernel/qsystemsemaphore_unix.cpp:87
+#: src/core/kernel/qsystemsemaphore_unix.cpp:91
+#: src/core/kernel/qsystemsemaphore_unix.cpp:95
+#: src/core/kernel/qsystemsemaphore_unix.cpp:104
+#: src/core/kernel/qsystemsemaphore_unix.cpp:108
+#: src/core/kernel/qsystemsemaphore_unix.cpp:112
+msgid "QSystemSemaphore"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:57
+msgctxt "QRegExp"
+msgid "no error occurred"
+msgstr "bez chyby"
+
+#: src/core/tools/qregexp.cpp:58
+msgctxt "QRegExp"
+msgid "disabled feature used"
+msgstr "bola použitá zakázaná vlastnosť"
+
+#: src/core/tools/qregexp.cpp:59
+msgctxt "QRegExp"
+msgid "bad char class syntax"
+msgstr "nesprávna syntax pre triedu znakov"
+
+#: src/core/tools/qregexp.cpp:60
+msgctxt "QRegExp"
+msgid "bad lookahead syntax"
+msgstr "nesprávna syntax pre smerové vyhľadávanie (lookahead)"
+
+#: src/core/tools/qregexp.cpp:61
+msgctxt "QRegExp"
+msgid "lookbehinds not supported, see QTBUG-2371"
+msgstr "spätné vyhľadávanie (lookbehind) nie je podporované, pozri QTBUG-2371"
+
+#: src/core/tools/qregexp.cpp:62
+msgctxt "QRegExp"
+msgid "bad repetition syntax"
+msgstr "nesprávna syntax pre opakovanie"
+
+#: src/core/tools/qregexp.cpp:63
+msgctxt "QRegExp"
+msgid "invalid octal value"
+msgstr "neplatná oktálová hodnota"
+
+#: src/core/tools/qregexp.cpp:64
+msgctxt "QRegExp"
+msgid "missing left delim"
+msgstr "chýba ľavý oddeľovač"
+
+#: src/core/tools/qregexp.cpp:65
+msgctxt "QRegExp"
+msgid "unexpected end"
+msgstr "neočakávaný koniec"
+
+#: src/core/tools/qregexp.cpp:66
+msgctxt "QRegExp"
+msgid "met internal limit"
+msgstr "dosiahnutý vnútorný limit"
+
+#: src/core/tools/qregexp.cpp:67
+msgctxt "QRegExp"
+msgid "invalid interval"
+msgstr "neplatný interval"
+
+#: src/core/tools/qregexp.cpp:68
+msgctxt "QRegExp"
+msgid "invalid category"
+msgstr "neplatná kategória"
+
+#: src/core/tools/qcommandlineparser.cpp:274
+msgid "Displays version information."
+msgstr ""
+
+#: src/core/tools/qcommandlineparser.cpp:298
+msgid "Displays this help."
+msgstr ""
+
+#: src/core/tools/qcommandlineparser.cpp:488
+msgid "Missing value after '%1'."
+msgstr ""
+
+#: src/core/tools/qcommandlineparser.cpp:897
+msgid "Usage: %1"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:49
+msgctxt "QJsonParseError"
+msgid "unterminated object"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:50
+msgctxt "QJsonParseError"
+msgid "missing name separator"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:51
+msgctxt "QJsonParseError"
+msgid "unterminated array"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:52
+msgctxt "QJsonParseError"
+msgid "missing value separator"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:53
+msgctxt "QJsonParseError"
+msgid "illegal value"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:54
+msgctxt "QJsonParseError"
+msgid "invalid termination by number"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:55
+msgctxt "QJsonParseError"
+msgid "illegal number"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:56
+msgctxt "QJsonParseError"
+msgid "invalid escape sequence"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:57
+msgctxt "QJsonParseError"
+msgid "invalid UTF8 string"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:58
+msgctxt "QJsonParseError"
+msgid "unterminated string"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:59
+msgctxt "QJsonParseError"
+msgid "object is missing after a comma"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:60
+msgctxt "QJsonParseError"
+msgid "too deeply nested document"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:61
+msgctxt "QJsonParseError"
+msgid "too large document"
+msgstr ""
+
+#: src/core/global/qglobal.cpp:1194
+msgctxt "QIODevice"
+msgid "Permission denied"
+msgstr "Prístup zamietnutý"
+
+#: src/core/global/qglobal.cpp:1196
+msgctxt "QIODevice"
+msgid "Too many open files"
+msgstr "Príliš veľa otvorených súborov"
+
+#: src/core/global/qglobal.cpp:1198
+msgctxt "QIODevice"
+msgid "No such file or directory"
+msgstr "Neexistuje taký súbor alebo priečinok"
+
+#: src/core/global/qglobal.cpp:1200
+msgctxt "QIODevice"
+msgid "No space left on device"
+msgstr "Na zariadení už nie je voľné miesto"
+
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:95
+msgid "QDeclarativeAnimatedImage"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativevme.cpp:212
+#: src/declarative/qml/qdeclarativevme.cpp:653
+#: src/declarative/qml/qdeclarativevme.cpp:675
+#: src/declarative/qml/qdeclarativevme.cpp:678
+#: src/declarative/qml/qdeclarativevme.cpp:683
+#: src/declarative/qml/qdeclarativevme.cpp:832
+#: src/declarative/qml/qdeclarativevme.cpp:875
+#: src/declarative/qml/qdeclarativevme.cpp:886
+#: src/declarative/qml/qdeclarativevme.cpp:918
+msgid "QDeclarativeVME"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:246
+#: src/declarative/qml/qdeclarativescriptparser.cpp:257
+#: src/declarative/qml/qdeclarativescriptparser.cpp:391
+#: src/declarative/qml/qdeclarativescriptparser.cpp:399
+#: src/declarative/qml/qdeclarativescriptparser.cpp:414
+#: src/declarative/qml/qdeclarativescriptparser.cpp:424
+#: src/declarative/qml/qdeclarativescriptparser.cpp:435
+#: src/declarative/qml/qdeclarativescriptparser.cpp:494
+#: src/declarative/qml/qdeclarativescriptparser.cpp:536
+#: src/declarative/qml/qdeclarativescriptparser.cpp:545
+#: src/declarative/qml/qdeclarativescriptparser.cpp:554
+#: src/declarative/qml/qdeclarativescriptparser.cpp:563
+#: src/declarative/qml/qdeclarativescriptparser.cpp:675
+#: src/declarative/qml/qdeclarativescriptparser.cpp:734
+#: src/declarative/qml/qdeclarativescriptparser.cpp:781
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1817
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1819
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1848
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1872
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1885
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:532
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:569
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:583
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:609
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:655
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:681
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:709
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:783
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:809
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1147
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1162
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1178
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1200
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1213
+msgid "QDeclarativeParser"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativecompiledbindings.cpp:337
+msgid "QDeclarativeCompiledBindings"
+msgstr ""
+
+#: src/declarative/util/qdeclarativeutilmodule.cpp:110
+#: src/declarative/util/qdeclarativeutilmodule.cpp:112
+msgid "QDeclarativeXmlListModel"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1466
+msgid "<h3>About Katie</h3><p>This program uses Katie version %1.</p>"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1470
+msgid ""
+"<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p><p>Katie is "
+"available under two different licensing options designed to accommodate the "
+"needs of our various users.</p><p>Katie licensed under the GNU LGPL version "
+"3 is appropriate for the development of Qt&nbsp;applications provided you "
+"can comply with the terms and conditions of the GNU LGPL version 3.</"
+"p><p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
+"development of applications provided you can comply with the terms and "
+"conditions of the GNU LGPL version 2.1.</p><p>Copyright (C) %1 The Qt "
+"Company Ltd and other contributors.</p><p>Copyright (C) %2 Ivailo Monev</"
+"p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p><p>See <a "
+"href=\"http://%3/\">%3</a> for more information.</p>"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1488
+msgid "About Katie"
+msgstr ""
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:452
+msgctxt "QDialogButtonBox"
+msgid "OK"
+msgstr "OK"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:455
+msgctxt "QDialogButtonBox"
+msgid "Save"
+msgstr "Uložiť"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:458
+msgctxt "QDialogButtonBox"
+msgid "Open"
+msgstr "Otvoriť"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:461
+msgctxt "QDialogButtonBox"
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:464
+msgctxt "QDialogButtonBox"
+msgid "Close"
+msgstr "Zavrieť"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:467
+msgctxt "QDialogButtonBox"
+msgid "Apply"
+msgstr "Použiť"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:470
+msgctxt "QDialogButtonBox"
+msgid "Reset"
+msgstr "Nastaviť pôvodné"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:473
+msgctxt "QDialogButtonBox"
+msgid "Help"
+msgstr "Pomocník"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:476
+msgctxt "QDialogButtonBox"
+msgid "Discard"
+msgstr "Zahodiť"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:479
+msgctxt "QDialogButtonBox"
+msgid "&Yes"
+msgstr "Án&o"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:482
+msgctxt "QDialogButtonBox"
+msgid "Yes to &All"
+msgstr "Áno pre &všetko"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:485
+msgctxt "QDialogButtonBox"
+msgid "&No"
+msgstr "&Nie"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:488
+msgctxt "QDialogButtonBox"
+msgid "N&o to All"
+msgstr "Nie pre všetk&o"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:491
+msgctxt "QDialogButtonBox"
+msgid "Save All"
+msgstr "Uložiť všetko"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:494
+msgctxt "QDialogButtonBox"
+msgid "Abort"
+msgstr "Prerušiť"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:497
+msgctxt "QDialogButtonBox"
+msgid "Retry"
+msgstr "Skúsiť znova"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:500
+msgctxt "QDialogButtonBox"
+msgid "Ignore"
+msgstr "Ignorovať"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:503
+msgctxt "QDialogButtonBox"
+msgid "Restore Defaults"
+msgstr "Obnoviť štandardné"
+
+#: src/gui/kernel/qkeysequence.cpp:296
+msgctxt "QShortcut"
+msgid "Space"
+msgstr "Medzerník"
+
+#: src/gui/kernel/qkeysequence.cpp:297
+msgctxt "QShortcut"
+msgid "Esc"
+msgstr "Escape"
+
+#: src/gui/kernel/qkeysequence.cpp:298
+msgctxt "QShortcut"
+msgid "Tab"
+msgstr "Tabulátor"
+
+#: src/gui/kernel/qkeysequence.cpp:299
+msgctxt "QShortcut"
+msgid "Backtab"
+msgstr "Spätný tabulátor"
+
+#: src/gui/kernel/qkeysequence.cpp:300
+msgctxt "QShortcut"
+msgid "Backspace"
+msgstr "Backspace"
+
+#: src/gui/kernel/qkeysequence.cpp:301
+msgctxt "QShortcut"
+msgid "Return"
+msgstr "Return"
+
+#: src/gui/kernel/qkeysequence.cpp:302
+msgctxt "QShortcut"
+msgid "Enter"
+msgstr "Enter"
+
+#: src/gui/kernel/qkeysequence.cpp:303
+msgctxt "QShortcut"
+msgid "Ins"
+msgstr "Insert"
+
+#: src/gui/kernel/qkeysequence.cpp:304
+msgctxt "QShortcut"
+msgid "Del"
+msgstr "Delete"
+
+#: src/gui/kernel/qkeysequence.cpp:305
+msgctxt "QShortcut"
+msgid "Pause"
+msgstr "Pauza"
+
+#: src/gui/kernel/qkeysequence.cpp:306
+msgctxt "QShortcut"
+msgid "Print"
+msgstr "Tlačiť"
+
+#: src/gui/kernel/qkeysequence.cpp:307
+msgctxt "QShortcut"
+msgid "SysReq"
+msgstr "SysReq"
+
+#: src/gui/kernel/qkeysequence.cpp:308
+msgctxt "QShortcut"
+msgid "Home"
+msgstr "Home"
+
+#: src/gui/kernel/qkeysequence.cpp:309
+msgctxt "QShortcut"
+msgid "End"
+msgstr "End"
+
+#: src/gui/kernel/qkeysequence.cpp:310
+msgctxt "QShortcut"
+msgid "Left"
+msgstr "Vľavo"
+
+#: src/gui/kernel/qkeysequence.cpp:311
+msgctxt "QShortcut"
+msgid "Up"
+msgstr "Hore"
+
+#: src/gui/kernel/qkeysequence.cpp:312
+msgctxt "QShortcut"
+msgid "Right"
+msgstr "Vpravo"
+
+#: src/gui/kernel/qkeysequence.cpp:313
+msgctxt "QShortcut"
+msgid "Down"
+msgstr "Dole"
+
+#: src/gui/kernel/qkeysequence.cpp:314
+msgctxt "QShortcut"
+msgid "PgUp"
+msgstr "PgUp"
+
+#: src/gui/kernel/qkeysequence.cpp:315
+msgctxt "QShortcut"
+msgid "PgDown"
+msgstr "PgDown"
+
+#: src/gui/kernel/qkeysequence.cpp:316
+msgctxt "QShortcut"
+msgid "CapsLock"
+msgstr "CapsLock"
+
+#: src/gui/kernel/qkeysequence.cpp:317
+msgctxt "QShortcut"
+msgid "NumLock"
+msgstr "NumLock"
+
+#: src/gui/kernel/qkeysequence.cpp:318
+msgctxt "QShortcut"
+msgid "ScrollLock"
+msgstr "ScrollLock"
+
+#: src/gui/kernel/qkeysequence.cpp:319
+msgctxt "QShortcut"
+msgid "Menu"
+msgstr "Menu"
+
+#: src/gui/kernel/qkeysequence.cpp:320
+msgctxt "QShortcut"
+msgid "Help"
+msgstr "Pomocník"
+
+#: src/gui/kernel/qkeysequence.cpp:325
+msgctxt "QShortcut"
+msgid "Back"
+msgstr "Späť"
+
+#: src/gui/kernel/qkeysequence.cpp:326
+msgctxt "QShortcut"
+msgid "Forward"
+msgstr "Vpred"
+
+#: src/gui/kernel/qkeysequence.cpp:327
+msgctxt "QShortcut"
+msgid "Stop"
+msgstr "Stop"
+
+#: src/gui/kernel/qkeysequence.cpp:328
+msgctxt "QShortcut"
+msgid "Refresh"
+msgstr "Obnoviť"
+
+#: src/gui/kernel/qkeysequence.cpp:329
+msgctxt "QShortcut"
+msgid "Volume Down"
+msgstr "Znížiť hlasitosť"
+
+#: src/gui/kernel/qkeysequence.cpp:330
+msgctxt "QShortcut"
+msgid "Volume Mute"
+msgstr "Stlmiť hlasitosť"
+
+#: src/gui/kernel/qkeysequence.cpp:331
+msgctxt "QShortcut"
+msgid "Volume Up"
+msgstr "Zvýšiť hlasitosť"
+
+#: src/gui/kernel/qkeysequence.cpp:332
+msgctxt "QShortcut"
+msgid "Bass Boost"
+msgstr "Zosilnenie basov"
+
+#: src/gui/kernel/qkeysequence.cpp:333
+msgctxt "QShortcut"
+msgid "Bass Up"
+msgstr "Pridať basy"
+
+#: src/gui/kernel/qkeysequence.cpp:334
+msgctxt "QShortcut"
+msgid "Bass Down"
+msgstr "Ubrať basy"
+
+#: src/gui/kernel/qkeysequence.cpp:335
+msgctxt "QShortcut"
+msgid "Treble Up"
+msgstr "Pridať výšky"
+
+#: src/gui/kernel/qkeysequence.cpp:336
+msgctxt "QShortcut"
+msgid "Treble Down"
+msgstr "Ubrať výšky"
+
+#: src/gui/kernel/qkeysequence.cpp:337
+msgctxt "QShortcut"
+msgid "Media Play"
+msgstr "Prehrať"
+
+#: src/gui/kernel/qkeysequence.cpp:338
+msgctxt "QShortcut"
+msgid "Media Stop"
+msgstr "Zastaviť"
+
+#: src/gui/kernel/qkeysequence.cpp:339
+msgctxt "QShortcut"
+msgid "Media Previous"
+msgstr "Predchádzajúce"
+
+#: src/gui/kernel/qkeysequence.cpp:340
+msgctxt "QShortcut"
+msgid "Media Next"
+msgstr "Nasledujúce"
+
+#: src/gui/kernel/qkeysequence.cpp:341
+msgctxt "QShortcut"
+msgid "Media Record"
+msgstr "Zaznamenať"
+
+#: src/gui/kernel/qkeysequence.cpp:343
+msgctxt "QShortcut"
+msgid "Media Pause"
+msgstr "Pozastaviť média"
+
+#: src/gui/kernel/qkeysequence.cpp:345
+msgctxt "QShortcut"
+msgid "Toggle Media Play/Pause"
+msgstr "Prepnúť prehrávať/pozastaviť"
+
+#: src/gui/kernel/qkeysequence.cpp:346
+msgctxt "QShortcut"
+msgid "Home Page"
+msgstr "Domovská stránka"
+
+#: src/gui/kernel/qkeysequence.cpp:347
+msgctxt "QShortcut"
+msgid "Favorites"
+msgstr "Obľúbené"
+
+#: src/gui/kernel/qkeysequence.cpp:348
+msgctxt "QShortcut"
+msgid "Search"
+msgstr "Hľadať"
+
+#: src/gui/kernel/qkeysequence.cpp:349
+msgctxt "QShortcut"
+msgid "Standby"
+msgstr "Pohotovosť"
+
+#: src/gui/kernel/qkeysequence.cpp:350
+msgctxt "QShortcut"
+msgid "Open URL"
+msgstr "Otvoriť URL"
+
+#: src/gui/kernel/qkeysequence.cpp:351
+msgctxt "QShortcut"
+msgid "Launch Mail"
+msgstr "Spustiť e-mail"
+
+#: src/gui/kernel/qkeysequence.cpp:352
+msgctxt "QShortcut"
+msgid "Launch Media"
+msgstr "Spustiť médiá"
+
+#: src/gui/kernel/qkeysequence.cpp:353
+msgctxt "QShortcut"
+msgid "Launch (0)"
+msgstr "Spustiť (0)"
+
+#: src/gui/kernel/qkeysequence.cpp:354
+msgctxt "QShortcut"
+msgid "Launch (1)"
+msgstr "Spustiť (1)"
+
+#: src/gui/kernel/qkeysequence.cpp:355
+msgctxt "QShortcut"
+msgid "Launch (2)"
+msgstr "Spustiť (2)"
+
+#: src/gui/kernel/qkeysequence.cpp:356
+msgctxt "QShortcut"
+msgid "Launch (3)"
+msgstr "Spustiť (3)"
+
+#: src/gui/kernel/qkeysequence.cpp:357
+msgctxt "QShortcut"
+msgid "Launch (4)"
+msgstr "Spustiť (4)"
+
+#: src/gui/kernel/qkeysequence.cpp:358
+msgctxt "QShortcut"
+msgid "Launch (5)"
+msgstr "Spustiť (5)"
+
+#: src/gui/kernel/qkeysequence.cpp:359
+msgctxt "QShortcut"
+msgid "Launch (6)"
+msgstr "Spustiť (6)"
+
+#: src/gui/kernel/qkeysequence.cpp:360
+msgctxt "QShortcut"
+msgid "Launch (7)"
+msgstr "Spustiť (7)"
+
+#: src/gui/kernel/qkeysequence.cpp:361
+msgctxt "QShortcut"
+msgid "Launch (8)"
+msgstr "Spustiť (8)"
+
+#: src/gui/kernel/qkeysequence.cpp:362
+msgctxt "QShortcut"
+msgid "Launch (9)"
+msgstr "Spustiť (9)"
+
+#: src/gui/kernel/qkeysequence.cpp:363
+msgctxt "QShortcut"
+msgid "Launch (A)"
+msgstr "Spustiť (A)"
+
+#: src/gui/kernel/qkeysequence.cpp:364
+msgctxt "QShortcut"
+msgid "Launch (B)"
+msgstr "Spustiť (B)"
+
+#: src/gui/kernel/qkeysequence.cpp:365
+msgctxt "QShortcut"
+msgid "Launch (C)"
+msgstr "Spustiť (C)"
+
+#: src/gui/kernel/qkeysequence.cpp:366
+msgctxt "QShortcut"
+msgid "Launch (D)"
+msgstr "Spustiť (D)"
+
+#: src/gui/kernel/qkeysequence.cpp:367
+msgctxt "QShortcut"
+msgid "Launch (E)"
+msgstr "Spustiť (E)"
+
+#: src/gui/kernel/qkeysequence.cpp:368
+msgctxt "QShortcut"
+msgid "Launch (F)"
+msgstr "Spustiť (F)"
+
+#: src/gui/kernel/qkeysequence.cpp:369
+msgctxt "QShortcut"
+msgid "Monitor Brightness Up"
+msgstr "Zvýšiť jas obrazovky"
+
+#: src/gui/kernel/qkeysequence.cpp:370
+msgctxt "QShortcut"
+msgid "Monitor Brightness Down"
+msgstr "Stlmiť jas obrazovky"
+
+#: src/gui/kernel/qkeysequence.cpp:371
+msgctxt "QShortcut"
+msgid "Keyboard Light On/Off"
+msgstr "Zapnúť/vypnúť podsvietenie klávesnice"
+
+#: src/gui/kernel/qkeysequence.cpp:372
+msgctxt "QShortcut"
+msgid "Keyboard Brightness Up"
+msgstr "Zvýšiť jas klávesnice"
+
+#: src/gui/kernel/qkeysequence.cpp:373
+msgctxt "QShortcut"
+msgid "Keyboard Brightness Down"
+msgstr "Stlmiť jas klávesnice"
+
+#: src/gui/kernel/qkeysequence.cpp:374
+msgctxt "QShortcut"
+msgid "Power Off"
+msgstr "Vypnúť"
+
+#: src/gui/kernel/qkeysequence.cpp:375
+msgctxt "QShortcut"
+msgid "Wake Up"
+msgstr "Prebudiť"
+
+#: src/gui/kernel/qkeysequence.cpp:376
+msgctxt "QShortcut"
+msgid "Eject"
+msgstr "Vysunúť"
+
+#: src/gui/kernel/qkeysequence.cpp:377
+msgctxt "QShortcut"
+msgid "Screensaver"
+msgstr "Šetrič obrazovky"
+
+#: src/gui/kernel/qkeysequence.cpp:378
+msgctxt "QShortcut"
+msgid "WWW"
+msgstr "WWW"
+
+#: src/gui/kernel/qkeysequence.cpp:379
+msgctxt "QShortcut"
+msgid "Sleep"
+msgstr "Uspať"
+
+#: src/gui/kernel/qkeysequence.cpp:380
+msgctxt "QShortcut"
+msgid "LightBulb"
+msgstr "Žiarovka"
+
+#: src/gui/kernel/qkeysequence.cpp:381
+msgctxt "QShortcut"
+msgid "Shop"
+msgstr "Obchod"
+
+#: src/gui/kernel/qkeysequence.cpp:382
+msgctxt "QShortcut"
+msgid "History"
+msgstr "História"
+
+#: src/gui/kernel/qkeysequence.cpp:383
+msgctxt "QShortcut"
+msgid "Add Favorite"
+msgstr "Pridať k obľúbeným"
+
+#: src/gui/kernel/qkeysequence.cpp:384
+msgctxt "QShortcut"
+msgid "Hot Links"
+msgstr "Doporučené odkazy"
+
+#: src/gui/kernel/qkeysequence.cpp:385
+msgctxt "QShortcut"
+msgid "Adjust Brightness"
+msgstr "Upraviť jas"
+
+#: src/gui/kernel/qkeysequence.cpp:386
+msgctxt "QShortcut"
+msgid "Finance"
+msgstr "Financie"
+
+#: src/gui/kernel/qkeysequence.cpp:387
+msgctxt "QShortcut"
+msgid "Community"
+msgstr "Komunita"
+
+#: src/gui/kernel/qkeysequence.cpp:388
+msgctxt "QShortcut"
+msgid "Audio Rewind"
+msgstr "Pretočiť audio"
+
+#: src/gui/kernel/qkeysequence.cpp:389
+msgctxt "QShortcut"
+msgid "Back Forward"
+msgstr "Späť dopredu"
+
+#: src/gui/kernel/qkeysequence.cpp:390
+msgctxt "QShortcut"
+msgid "Application Left"
+msgstr "Aplikácia vľavo"
+
+#: src/gui/kernel/qkeysequence.cpp:391
+msgctxt "QShortcut"
+msgid "Application Right"
+msgstr "Aplikácia vpravo"
+
+#: src/gui/kernel/qkeysequence.cpp:392
+msgctxt "QShortcut"
+msgid "Book"
+msgstr "Kniha"
+
+#: src/gui/kernel/qkeysequence.cpp:393
+msgctxt "QShortcut"
+msgid "CD"
+msgstr "CD"
+
+#: src/gui/kernel/qkeysequence.cpp:394
+msgctxt "QShortcut"
+msgid "Calculator"
+msgstr "Kalkulačka"
+
+#: src/gui/kernel/qkeysequence.cpp:395
+msgctxt "QShortcut"
+msgid "Clear"
+msgstr "Vyčistiť"
+
+#: src/gui/kernel/qkeysequence.cpp:396
+msgctxt "QShortcut"
+msgid "Clear Grab"
+msgstr "Zmazať uchopenie"
+
+#: src/gui/kernel/qkeysequence.cpp:397
+msgctxt "QShortcut"
+msgid "Close"
+msgstr "Zavrieť"
+
+#: src/gui/kernel/qkeysequence.cpp:398
+msgctxt "QShortcut"
+msgid "Copy"
+msgstr "Kopírovať"
+
+#: src/gui/kernel/qkeysequence.cpp:399
+msgctxt "QShortcut"
+msgid "Cut"
+msgstr "Vystrihnúť"
+
+#: src/gui/kernel/qkeysequence.cpp:400
+msgctxt "QShortcut"
+msgid "Display"
+msgstr "Obrazovka"
+
+#: src/gui/kernel/qkeysequence.cpp:401
+msgctxt "QShortcut"
+msgid "DOS"
+msgstr "DOS"
+
+#: src/gui/kernel/qkeysequence.cpp:402
+msgctxt "QShortcut"
+msgid "Documents"
+msgstr "Dokumenty"
+
+#: src/gui/kernel/qkeysequence.cpp:403
+msgctxt "QShortcut"
+msgid "Spreadsheet"
+msgstr "Tabuľkový procesor"
+
+#: src/gui/kernel/qkeysequence.cpp:404
+msgctxt "QShortcut"
+msgid "Browser"
+msgstr "Prehliadač"
+
+#: src/gui/kernel/qkeysequence.cpp:405
+msgctxt "QShortcut"
+msgid "Game"
+msgstr "Hra"
+
+#: src/gui/kernel/qkeysequence.cpp:406
+msgctxt "QShortcut"
+msgid "Go"
+msgstr "Ísť"
+
+#: src/gui/kernel/qkeysequence.cpp:407
+msgctxt "QShortcut"
+msgid "iTouch"
+msgstr "iTouch"
+
+#: src/gui/kernel/qkeysequence.cpp:408
+msgctxt "QShortcut"
+msgid "Logoff"
+msgstr "Odhlásiť sa"
+
+#: src/gui/kernel/qkeysequence.cpp:409
+msgctxt "QShortcut"
+msgid "Market"
+msgstr "Obchod"
+
+#: src/gui/kernel/qkeysequence.cpp:410
+msgctxt "QShortcut"
+msgid "Meeting"
+msgstr "Stretnutie"
+
+#: src/gui/kernel/qkeysequence.cpp:411
+msgctxt "QShortcut"
+msgid "Keyboard Menu"
+msgstr "Menu klávesnice"
+
+#: src/gui/kernel/qkeysequence.cpp:412
+msgctxt "QShortcut"
+msgid "Menu PB"
+msgstr "Menu PB"
+
+#: src/gui/kernel/qkeysequence.cpp:413
+msgctxt "QShortcut"
+msgid "My Sites"
+msgstr "Moje miesta"
+
+#: src/gui/kernel/qkeysequence.cpp:414
+msgctxt "QShortcut"
+msgid "News"
+msgstr "Správy"
+
+#: src/gui/kernel/qkeysequence.cpp:415
+msgctxt "QShortcut"
+msgid "Home Office"
+msgstr "Domáca kancelária"
+
+#: src/gui/kernel/qkeysequence.cpp:416
+msgctxt "QShortcut"
+msgid "Option"
+msgstr "Voľba"
+
+#: src/gui/kernel/qkeysequence.cpp:417
+msgctxt "QShortcut"
+msgid "Paste"
+msgstr "Vložiť"
+
+#: src/gui/kernel/qkeysequence.cpp:418
+msgctxt "QShortcut"
+msgid "Phone"
+msgstr "Telefón"
+
+#: src/gui/kernel/qkeysequence.cpp:419
+msgctxt "QShortcut"
+msgid "Reply"
+msgstr "Odpovedať"
+
+#: src/gui/kernel/qkeysequence.cpp:420
+msgctxt "QShortcut"
+msgid "Reload"
+msgstr "Znovu načítať"
+
+#: src/gui/kernel/qkeysequence.cpp:421
+msgctxt "QShortcut"
+msgid "Rotate Windows"
+msgstr "Otáčať okná"
+
+#: src/gui/kernel/qkeysequence.cpp:422
+msgctxt "QShortcut"
+msgid "Rotation PB"
+msgstr "Otáčanie PB"
+
+#: src/gui/kernel/qkeysequence.cpp:423
+msgctxt "QShortcut"
+msgid "Rotation KB"
+msgstr "Otáčanie KB"
+
+#: src/gui/kernel/qkeysequence.cpp:424
+msgctxt "QShortcut"
+msgid "Save"
+msgstr "Uložiť"
+
+#: src/gui/kernel/qkeysequence.cpp:425
+msgctxt "QShortcut"
+msgid "Send"
+msgstr "Poslať"
+
+#: src/gui/kernel/qkeysequence.cpp:426
+msgctxt "QShortcut"
+msgid "Spellchecker"
+msgstr "Kontrola preklepov"
+
+#: src/gui/kernel/qkeysequence.cpp:427
+msgctxt "QShortcut"
+msgid "Split Screen"
+msgstr "Rozdeliť obrazovku"
+
+#: src/gui/kernel/qkeysequence.cpp:428
+msgctxt "QShortcut"
+msgid "Support"
+msgstr "Podpora"
+
+#: src/gui/kernel/qkeysequence.cpp:429
+msgctxt "QShortcut"
+msgid "Task Panel"
+msgstr "Panel úloh"
+
+#: src/gui/kernel/qkeysequence.cpp:430
+msgctxt "QShortcut"
+msgid "Terminal"
+msgstr "Terminál"
+
+#: src/gui/kernel/qkeysequence.cpp:431
+msgctxt "QShortcut"
+msgid "Tools"
+msgstr "Nástroje"
+
+#: src/gui/kernel/qkeysequence.cpp:432
+msgctxt "QShortcut"
+msgid "Travel"
+msgstr "Cestovanie"
+
+#: src/gui/kernel/qkeysequence.cpp:433
+msgctxt "QShortcut"
+msgid "Video"
+msgstr "Video"
+
+#: src/gui/kernel/qkeysequence.cpp:434
+msgctxt "QShortcut"
+msgid "Word Processor"
+msgstr "Textový procesor"
+
+#: src/gui/kernel/qkeysequence.cpp:435
+msgctxt "QShortcut"
+msgid "XFer"
+msgstr "XFer"
+
+#: src/gui/kernel/qkeysequence.cpp:436
+msgctxt "QShortcut"
+msgid "Zoom In"
+msgstr "Priblížiť"
+
+#: src/gui/kernel/qkeysequence.cpp:437
+msgctxt "QShortcut"
+msgid "Zoom Out"
+msgstr "Oddialiť"
+
+#: src/gui/kernel/qkeysequence.cpp:438
+msgctxt "QShortcut"
+msgid "Away"
+msgstr "Preč"
+
+#: src/gui/kernel/qkeysequence.cpp:439
+msgctxt "QShortcut"
+msgid "Messenger"
+msgstr "Posol"
+
+#: src/gui/kernel/qkeysequence.cpp:440
+msgctxt "QShortcut"
+msgid "WebCam"
+msgstr "Webkamera"
+
+#: src/gui/kernel/qkeysequence.cpp:441
+msgctxt "QShortcut"
+msgid "Mail Forward"
+msgstr "Preposlať ďalej"
+
+#: src/gui/kernel/qkeysequence.cpp:442
+msgctxt "QShortcut"
+msgid "Pictures"
+msgstr "Obrázky"
+
+#: src/gui/kernel/qkeysequence.cpp:443
+msgctxt "QShortcut"
+msgid "Music"
+msgstr "Hudba"
+
+#: src/gui/kernel/qkeysequence.cpp:444
+msgctxt "QShortcut"
+msgid "Battery"
+msgstr "Batéria"
+
+#: src/gui/kernel/qkeysequence.cpp:445
+msgctxt "QShortcut"
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/gui/kernel/qkeysequence.cpp:446
+msgctxt "QShortcut"
+msgid "Wireless"
+msgstr "Bezdrôtové"
+
+#: src/gui/kernel/qkeysequence.cpp:447
+msgctxt "QShortcut"
+msgid "Ultra Wide Band"
+msgstr "Ultra široké pásmo"
+
+#: src/gui/kernel/qkeysequence.cpp:448
+msgctxt "QShortcut"
+msgid "Audio Forward"
+msgstr "Audio dopredu"
+
+#: src/gui/kernel/qkeysequence.cpp:449
+msgctxt "QShortcut"
+msgid "Audio Repeat"
+msgstr "Audio opakovať"
+
+#: src/gui/kernel/qkeysequence.cpp:450
+msgctxt "QShortcut"
+msgid "Audio Random Play"
+msgstr "Audio náhodne hrať"
+
+#: src/gui/kernel/qkeysequence.cpp:451
+msgctxt "QShortcut"
+msgid "Subtitle"
+msgstr "Titulky"
+
+#: src/gui/kernel/qkeysequence.cpp:452
+msgctxt "QShortcut"
+msgid "Audio Cycle Track"
+msgstr "Audio opakovať skladbu"
+
+#: src/gui/kernel/qkeysequence.cpp:453
+msgctxt "QShortcut"
+msgid "Time"
+msgstr "Čas"
+
+#: src/gui/kernel/qkeysequence.cpp:454 src/gui/kernel/qkeysequence.cpp:476
+msgctxt "QShortcut"
+msgid "Select"
+msgstr "Vybrať"
+
+#: src/gui/kernel/qkeysequence.cpp:455
+msgctxt "QShortcut"
+msgid "View"
+msgstr "Zobraziť"
+
+#: src/gui/kernel/qkeysequence.cpp:456
+msgctxt "QShortcut"
+msgid "Top Menu"
+msgstr "Hlavné menu"
+
+#: src/gui/kernel/qkeysequence.cpp:457
+msgctxt "QShortcut"
+msgid "Suspend"
+msgstr "Uspať"
+
+#: src/gui/kernel/qkeysequence.cpp:458
+msgctxt "QShortcut"
+msgid "Hibernate"
+msgstr "Hibernovať"
+
+#: src/gui/kernel/qkeysequence.cpp:462
+msgctxt "QShortcut"
+msgid "Print Screen"
+msgstr "Print Screen"
+
+#: src/gui/kernel/qkeysequence.cpp:463
+msgctxt "QShortcut"
+msgid "Page Up"
+msgstr "Page Up"
+
+#: src/gui/kernel/qkeysequence.cpp:464
+msgctxt "QShortcut"
+msgid "Page Down"
+msgstr "Page Down"
+
+#: src/gui/kernel/qkeysequence.cpp:465
+msgctxt "QShortcut"
+msgid "Caps Lock"
+msgstr "Caps Lock"
+
+#: src/gui/kernel/qkeysequence.cpp:466
+msgctxt "QShortcut"
+msgid "Num Lock"
+msgstr "Num Lock"
+
+#: src/gui/kernel/qkeysequence.cpp:467
+msgctxt "QShortcut"
+msgid "Number Lock"
+msgstr "Number Lock"
+
+#: src/gui/kernel/qkeysequence.cpp:468
+msgctxt "QShortcut"
+msgid "Scroll Lock"
+msgstr "Scroll Lock"
+
+#: src/gui/kernel/qkeysequence.cpp:469
+msgctxt "QShortcut"
+msgid "Insert"
+msgstr "Vložiť"
+
+#: src/gui/kernel/qkeysequence.cpp:470
+msgctxt "QShortcut"
+msgid "Delete"
+msgstr "Zmazať"
+
+#: src/gui/kernel/qkeysequence.cpp:471
+msgctxt "QShortcut"
+msgid "Escape"
+msgstr "Escape"
+
+#: src/gui/kernel/qkeysequence.cpp:472
+msgctxt "QShortcut"
+msgid "System Request"
+msgstr "Žádost systému"
+
+#: src/gui/kernel/qkeysequence.cpp:477
+msgctxt "QShortcut"
+msgid "Yes"
+msgstr "Áno"
+
+#: src/gui/kernel/qkeysequence.cpp:478
+msgctxt "QShortcut"
+msgid "No"
+msgstr "Nie"
+
+#: src/gui/kernel/qkeysequence.cpp:482
+msgctxt "QShortcut"
+msgid "Context1"
+msgstr "Context1"
+
+#: src/gui/kernel/qkeysequence.cpp:483
+msgctxt "QShortcut"
+msgid "Context2"
+msgstr "Context2"
+
+#: src/gui/kernel/qkeysequence.cpp:484
+msgctxt "QShortcut"
+msgid "Context3"
+msgstr "Context3"
+
+#: src/gui/kernel/qkeysequence.cpp:485
+msgctxt "QShortcut"
+msgid "Context4"
+msgstr "Context4"
+
+#: src/gui/kernel/qkeysequence.cpp:487
+msgctxt "QShortcut"
+msgid "Call"
+msgstr "Zavolať"
+
+#: src/gui/kernel/qkeysequence.cpp:489
+msgctxt "QShortcut"
+msgid "Hangup"
+msgstr "Zavesiť"
+
+#: src/gui/kernel/qkeysequence.cpp:491
+msgctxt "QShortcut"
+msgid "Toggle Call/Hangup"
+msgstr "Prepnúť volať/zvesiť"
+
+#: src/gui/kernel/qkeysequence.cpp:492
+msgctxt "QShortcut"
+msgid "Flip"
+msgstr "Obrátiť"
+
+#: src/gui/kernel/qkeysequence.cpp:494
+msgctxt "QShortcut"
+msgid "Voice Dial"
+msgstr "Hlasové vytáčanie"
+
+#: src/gui/kernel/qkeysequence.cpp:496
+msgctxt "QShortcut"
+msgid "Last Number Redial"
+msgstr "Opakovať vytočenie posledného čísla"
+
+#: src/gui/kernel/qkeysequence.cpp:498
+msgctxt "QShortcut"
+msgid "Camera Shutter"
+msgstr "Uzávierka kamery"
+
+#: src/gui/kernel/qkeysequence.cpp:500
+msgctxt "QShortcut"
+msgid "Camera Focus"
+msgstr "Zaostrenie kamery"
+
+#: src/gui/kernel/qkeysequence.cpp:504
+msgctxt "QShortcut"
+msgid "Kanji"
+msgstr "Kandži"
+
+#: src/gui/kernel/qkeysequence.cpp:505
+msgctxt "QShortcut"
+msgid "Muhenkan"
+msgstr "Muhenkan"
+
+#: src/gui/kernel/qkeysequence.cpp:506
+msgctxt "QShortcut"
+msgid "Henkan"
+msgstr "Henkan"
+
+#: src/gui/kernel/qkeysequence.cpp:507
+msgctxt "QShortcut"
+msgid "Romaji"
+msgstr "Romadži"
+
+#: src/gui/kernel/qkeysequence.cpp:508
+msgctxt "QShortcut"
+msgid "Hiragana"
+msgstr "Hiragana"
+
+#: src/gui/kernel/qkeysequence.cpp:509
+msgctxt "QShortcut"
+msgid "Katakana"
+msgstr "Katakana"
+
+#: src/gui/kernel/qkeysequence.cpp:510
+msgctxt "QShortcut"
+msgid "Hiragana Katakana"
+msgstr "Hiragana Katakana"
+
+#: src/gui/kernel/qkeysequence.cpp:511
+msgctxt "QShortcut"
+msgid "Zenkaku"
+msgstr "Zenkaku"
+
+#: src/gui/kernel/qkeysequence.cpp:512
+msgctxt "QShortcut"
+msgid "Hankaku"
+msgstr "Hankaku"
+
+#: src/gui/kernel/qkeysequence.cpp:513
+msgctxt "QShortcut"
+msgid "Zenkaku Hankaku"
+msgstr "Zenkaku Hankaku"
+
+#: src/gui/kernel/qkeysequence.cpp:514
+msgctxt "QShortcut"
+msgid "Touroku"
+msgstr "Touroku"
+
+#: src/gui/kernel/qkeysequence.cpp:515
+msgctxt "QShortcut"
+msgid "Massyo"
+msgstr "Massyo"
+
+#: src/gui/kernel/qkeysequence.cpp:516
+msgctxt "QShortcut"
+msgid "Kana Lock"
+msgstr "Kana zámok"
+
+#: src/gui/kernel/qkeysequence.cpp:517
+msgctxt "QShortcut"
+msgid "Kana Shift"
+msgstr "Kana posun"
+
+#: src/gui/kernel/qkeysequence.cpp:518
+msgctxt "QShortcut"
+msgid "Eisu Shift"
+msgstr "Eisu posun"
+
+#: src/gui/kernel/qkeysequence.cpp:519
+msgctxt "QShortcut"
+msgid "Eisu toggle"
+msgstr "Eisu prepínač"
+
+#: src/gui/kernel/qkeysequence.cpp:520
+msgctxt "QShortcut"
+msgid "Code input"
+msgstr "Vstup pre kód"
+
+#: src/gui/kernel/qkeysequence.cpp:521
+msgctxt "QShortcut"
+msgid "Multiple Candidate"
+msgstr "Viacero kandidátov"
+
+#: src/gui/kernel/qkeysequence.cpp:522
+msgctxt "QShortcut"
+msgid "Previous Candidate"
+msgstr "Predchádzajúci kandidát"
+
+#: src/gui/kernel/qkeysequence.cpp:526
+msgctxt "QShortcut"
+msgid "Hangul"
+msgstr "Hangul"
+
+#: src/gui/kernel/qkeysequence.cpp:527
+msgctxt "QShortcut"
+msgid "Hangul Start"
+msgstr "Hangul začiatok"
+
+#: src/gui/kernel/qkeysequence.cpp:528
+msgctxt "QShortcut"
+msgid "Hangul End"
+msgstr "Hangul koniec"
+
+#: src/gui/kernel/qkeysequence.cpp:529
+msgctxt "QShortcut"
+msgid "Hangul Hanja"
+msgstr "Hangul Hanja"
+
+#: src/gui/kernel/qkeysequence.cpp:530
+msgctxt "QShortcut"
+msgid "Hangul Jamo"
+msgstr "Hangul Jamo"
+
+#: src/gui/kernel/qkeysequence.cpp:531
+msgctxt "QShortcut"
+msgid "Hangul Romaja"
+msgstr "Hangul Romaja"
+
+#: src/gui/kernel/qkeysequence.cpp:532
+msgctxt "QShortcut"
+msgid "Hangul Jeonja"
+msgstr "Hangul Jeonja"
+
+#: src/gui/kernel/qkeysequence.cpp:533
+msgctxt "QShortcut"
+msgid "Hangul Banja"
+msgstr "Hangul Banja"
+
+#: src/gui/kernel/qkeysequence.cpp:534
+msgctxt "QShortcut"
+msgid "Hangul PreHanja"
+msgstr "Hangul PreHanja"
+
+#: src/gui/kernel/qkeysequence.cpp:535
+msgctxt "QShortcut"
+msgid "Hangul PostHanja"
+msgstr "Hangul PostHanja"
+
+#: src/gui/kernel/qkeysequence.cpp:536
+msgctxt "QShortcut"
+msgid "Hangul Special"
+msgstr "Hangul špeciálny"
+
+#: src/gui/text/qfontdatabase.cpp:77 src/gui/text/qfontdatabase.cpp:80
+#: src/gui/text/qfontdatabase.cpp:83 src/gui/text/qfontdatabase.cpp:86
+#: src/gui/text/qfontdatabase.cpp:92 src/gui/text/qfontdatabase.cpp:94
+#: src/gui/text/qfontdatabase.cpp:100 src/gui/text/qfontdatabase.cpp:104
+#: src/gui/text/qfontdatabase.cpp:208 src/gui/text/qfontdatabase.cpp:211
+#: src/gui/text/qfontdatabase.cpp:826 src/gui/text/qfontdatabase.cpp:828
+#: src/gui/text/qfontdatabase.cpp:830 src/gui/text/qfontdatabase.cpp:832
+#: src/gui/text/qfontdatabase.cpp:835 src/gui/text/qfontdatabase.cpp:837
+#: src/gui/text/qfontdatabase.cpp:840
+msgid "QFontDatabase"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2804
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRM Left-to-right mark"
+msgstr "LRM značka zľava-doprava"
+
+#: src/gui/text/qtextcontrol.cpp:2805
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLM Right-to-left mark"
+msgstr "RLM značka sprava-doľava"
+
+#: src/gui/text/qtextcontrol.cpp:2806
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWJ Zero width joiner"
+msgstr "ZWJ Nulová spojovacia medzera"
+
+#: src/gui/text/qtextcontrol.cpp:2807
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWNJ Zero width non-joiner"
+msgstr "ZWNJ Nulová nespojovacia medzera"
+
+#: src/gui/text/qtextcontrol.cpp:2808
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWSP Zero width space"
+msgstr "ZWSP Nulová medzera"
+
+#: src/gui/text/qtextcontrol.cpp:2809
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRE Start of left-to-right embedding"
+msgstr "LRE Začiatok vkladania zľava-doprava"
+
+#: src/gui/text/qtextcontrol.cpp:2810
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLE Start of right-to-left embedding"
+msgstr "RLE Začiatok vkladania sprava-doľava"
+
+#: src/gui/text/qtextcontrol.cpp:2811
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRO Start of left-to-right override"
+msgstr "LRO Začiatok prepisovania zľava-doprava"
+
+#: src/gui/text/qtextcontrol.cpp:2812
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLO Start of right-to-left override"
+msgstr "RLO Začiatok prepisovania sprava-doľava"
+
+#: src/gui/text/qtextcontrol.cpp:2813
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "PDF Pop directional formatting"
+msgstr "PDF Pop directional formatting"
+
+#: src/network/ssl/qsslsocket_openssl.cpp:830
+msgid "The TLS/SSL connection has been closed"
+msgstr ""
+
+#: src/network/kernel/qhostinfo_p.h:92
+msgctxt "QHostInfo"
+msgid "Unknown error"
+msgstr "Neznáma chyba"
+
+#: src/network/kernel/qhostinfo_unix.cpp:144
+#: src/network/kernel/qhostinfo_unix.cpp:145
+msgid "QHostInfoAgent"
+msgstr ""
+
+#: src/network/socket/qsocks5socketengine.cpp:1379
+msgctxt "QSocks5SocketEngine"
+msgid "Network operation timed out"
+msgstr "Časový limit pre sieťovú operáciu bol prekročený"
+
+#: src/network/access/qhttpnetworkconnection.cpp:668
+#: src/network/access/qhttpnetworkconnection.cpp:671
+#: src/network/access/qhttpnetworkconnection.cpp:674
+#: src/network/access/qhttpnetworkconnection.cpp:680
+#: src/network/access/qhttpnetworkconnection.cpp:683
+#: src/network/access/qhttpnetworkconnection.cpp:686
+#: src/network/access/qhttpnetworkconnection.cpp:689
+#: src/network/access/qhttpnetworkconnection.cpp:692
+msgid "QHttp"
+msgstr ""
+
+#: src/network/access/qhttpnetworkconnection.cpp:677
+msgid "QAbstractSocket"
+msgstr ""
+
+#: src/network/access/qnetworkaccessdebugpipebackend.cpp:182
+msgid "QNetworkAccessDebugPipeBackend"
+msgstr ""
+
+#: src/network/access/qnetworkreplydataimpl.cpp:73
+msgid "QNetworkAccessDataBackend"
+msgstr ""
+
+#: src/network/access/qnetworkaccesscachebackend.cpp:58
+msgid "QNetworkAccessCacheBackend"
+msgstr ""
+
+#: src/network/access/qhttp.cpp:1554 src/network/access/qhttp.cpp:2370
+msgctxt "QHttp"
+msgid "Unknown error"
+msgstr "Neznáma chyba"
+
+#: src/network/access/qhttp.cpp:2381
+msgctxt "QHttp"
+msgid "No server set to connect to"
+msgstr "Nenastavený server na pripojenie"
+
+#: src/network/access/qhttp.cpp:2537
+msgctxt "QHttp"
+msgid "Wrong content length"
+msgstr "Neplatná dĺžka obsahu"
+
+#: src/network/access/qhttp.cpp:2541
+msgctxt "QHttp"
+msgid "Server closed connection unexpectedly"
+msgstr "Server neočakávane uzavrel spojenie"
+
+#: src/network/access/qhttp.cpp:2596
+msgctxt "QHttp"
+msgid "Connection refused (or timed out)"
+msgstr "Spojenie bolo odmietnuté (alebo vypršal čas)"
+
+#: src/network/access/qhttp.cpp:2599
+msgctxt "QHttp"
+msgid "Host %1 not found"
+msgstr "Hostiteľ %1 nenájdený"
+
+#: src/network/access/qhttp.cpp:2619
+msgctxt "QHttp"
+msgid "HTTP request failed"
+msgstr "HTTP požiadavka zlyhala"
+
+#: src/network/access/qhttp.cpp:2707
+msgctxt "QHttp"
+msgid "Invalid HTTP response header"
+msgstr "Neplatná hlavička HTTP odpovede"
+
+#: src/network/access/qhttp.cpp:2735
+msgctxt "QHttp"
+msgid "Unknown authentication method"
+msgstr "Neznáma metóda autentifikácie"
+
+#: src/network/access/qhttp.cpp:2745
+msgctxt "QHttp"
+msgid "Proxy authentication required"
+msgstr "Proxy vyžaduje autentifikáciu"
+
+#: src/network/access/qhttp.cpp:2749
+msgctxt "QHttp"
+msgid "Authentication required"
+msgstr "Požaduje sa autentifikácia"
+
+#: src/network/access/qhttp.cpp:2832 src/network/access/qhttp.cpp:2880
+msgctxt "QHttp"
+msgid "Invalid HTTP chunked body"
+msgstr "Neplatné časti tela HTTP"
+
+#: src/network/access/qhttp.cpp:2918
+msgctxt "QHttp"
+msgid "Error writing response to device"
+msgstr "Chyba pri zapisovaní odpovede zariadeniu"
+
+#: src/network/access/qhttpthreaddelegate.cpp:419
+#: src/network/access/qhttpthreaddelegate.cpp:442
+msgctxt "QNetworkReply"
+msgid "Error downloading %1 - server replied: %2"
+msgstr "Chyba pri sťahovaní %1 - server odpovedal: %2"
+
+#: src/network/access/qftp.cpp:2340
+msgctxt "QFtp"
+msgid ""
+"Connecting to host failed:\n"
+"%1"
+msgstr ""
+"Spojenie s hostiteľom zlyhalo:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2344
+msgctxt "QFtp"
+msgid ""
+"Login failed:\n"
+"%1"
+msgstr ""
+"Prihlásenie sa nepodarilo:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2348
+msgctxt "QFtp"
+msgid ""
+"Listing directory failed:\n"
+"%1"
+msgstr ""
+"Výpis priečinku zlyhal:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2352
+msgctxt "QFtp"
+msgid ""
+"Changing directory failed:\n"
+"%1"
+msgstr ""
+"Zmena priečinku zlyhala:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2356
+msgctxt "QFtp"
+msgid ""
+"Downloading file failed:\n"
+"%1"
+msgstr ""
+"Stiahnutie súboru sa nepodarilo:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2360
+msgctxt "QFtp"
+msgid ""
+"Uploading file failed:\n"
+"%1"
+msgstr ""
+"Poslanie súboru zlyhalo:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2364
+msgctxt "QFtp"
+msgid ""
+"Removing file failed:\n"
+"%1"
+msgstr ""
+"Odstránenie súboru zlyhalo:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2368
+msgctxt "QFtp"
+msgid ""
+"Creating directory failed:\n"
+"%1"
+msgstr ""
+"Vytvorenie priečinku zlyhalo:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2372
+msgctxt "QFtp"
+msgid ""
+"Removing directory failed:\n"
+"%1"
+msgstr ""
+"Odstránenie priečinku zlyhalo:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2400
+msgctxt "QFtp"
+msgid "Connection closed"
+msgstr "Spojenie ukončené"
+
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:226
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:592
+msgid "QPSQLResult"
+msgstr ""
+
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:908
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:918
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:972
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:994
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1016
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1035
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1066
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1247
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1258
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1531
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1539
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1643
+msgid "QODBCResult"
+msgstr ""
+
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:460
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:487
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:640
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:646
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:738
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:748
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:817
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:825
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:857
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:948
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:959
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:973
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:982
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:994
+msgid "QMYSQLResult"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:153
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:155
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:157
+msgid "QScriptDebuggerStackModel"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:888
+#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:890
+msgid "QScriptDebuggerLocalsModel"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:570
+msgid "Katie Script Debugger"
+msgstr ""
+
+#: src/sql/drivers/qsql_sqlite.cpp:223 src/sql/drivers/qsql_sqlite.cpp:224
+#: src/sql/drivers/qsql_sqlite.cpp:298 src/sql/drivers/qsql_sqlite.cpp:307
+#: src/sql/drivers/qsql_sqlite.cpp:370 src/sql/drivers/qsql_sqlite.cpp:375
+#: src/sql/drivers/qsql_sqlite.cpp:395 src/sql/drivers/qsql_sqlite.cpp:447
+#: src/sql/drivers/qsql_sqlite.cpp:454
+msgid "QSQLiteResult"
+msgstr ""
+
+#: src/uitools/formscriptrunner.cpp:80
+msgid "Exception at line %1: %2"
+msgstr ""
+
+#: src/uitools/formscriptrunner.cpp:166
+msgid ""
+"An error occurred while running the script for %1: %2\n"
+"Script: %3"
+msgstr ""
+
+#: src/uitools/abstractformbuilder.cpp:195
+#: src/uitools/abstractformbuilder.cpp:200
+#: src/uitools/abstractformbuilder.cpp:206
+#: src/uitools/abstractformbuilder.cpp:310
+#: src/uitools/abstractformbuilder.cpp:606
+#: src/uitools/abstractformbuilder.cpp:668
+#: src/uitools/abstractformbuilder.cpp:878
+#: src/uitools/abstractformbuilder.cpp:1624
+#: src/uitools/abstractformbuilder.cpp:1705
+#: src/uitools/abstractformbuilder.cpp:2451
+#: src/uitools/abstractformbuilder.cpp:2962
+msgid "QAbstractFormBuilder"
+msgstr ""
+
+#: src/xml/sax/qxml.cpp:48
+msgctxt "QXml"
+msgid "no error occurred"
+msgstr "bez chyby"
+
+#: src/xml/sax/qxml.cpp:49
+msgctxt "QXml"
+msgid "error triggered by consumer"
+msgstr "chyba spustená spotrebiteľom"
+
+#: src/xml/sax/qxml.cpp:50
+msgctxt "QXml"
+msgid "unexpected end of file"
+msgstr "neočakávaný koniec súboru"
+
+#: src/xml/sax/qxml.cpp:51
+msgctxt "QXml"
+msgid "more than one document type definition"
+msgstr "viac než jedna definícia typu dokumentu"
+
+#: src/xml/sax/qxml.cpp:52
+msgctxt "QXml"
+msgid "error occurred while parsing element"
+msgstr "vyskytla sa chyba pri analýze elementu"
+
+#: src/xml/sax/qxml.cpp:53
+msgctxt "QXml"
+msgid "tag mismatch"
+msgstr "nezhoda značky"
+
+#: src/xml/sax/qxml.cpp:54
+msgctxt "QXml"
+msgid "error occurred while parsing content"
+msgstr "vyskytla sa chyba pri analýze obsahu"
+
+#: src/xml/sax/qxml.cpp:55
+msgctxt "QXml"
+msgid "unexpected character"
+msgstr "neočakávaný znak"
+
+#: src/xml/sax/qxml.cpp:56
+msgctxt "QXml"
+msgid "invalid name for processing instruction"
+msgstr "neplatný názov pre pokyny na spracovanie"
+
+#: src/xml/sax/qxml.cpp:57
+msgctxt "QXml"
+msgid "version expected while reading the XML declaration"
+msgstr "bola očakávaná verzia pri čítaní XML deklarácie"
+
+#: src/xml/sax/qxml.cpp:58
+msgctxt "QXml"
+msgid "wrong value for standalone declaration"
+msgstr "chybná hodnota pre samostatnú deklarácia"
+
+#: src/xml/sax/qxml.cpp:59
+msgctxt "QXml"
+msgid ""
+"encoding declaration or standalone declaration expected while reading the "
+"XML declaration"
+msgstr ""
+"deklarácia kódovania alebo samostatná deklarácia bola očakávaná pri čítaní "
+"deklarácie XML"
+
+#: src/xml/sax/qxml.cpp:60
+msgctxt "QXml"
+msgid "standalone declaration expected while reading the XML declaration"
+msgstr "samostatná deklarácia bola očakávaná pri čítaní deklarácie XML"
+
+#: src/xml/sax/qxml.cpp:61
+msgctxt "QXml"
+msgid "error occurred while parsing document type definition"
+msgstr "vyskytla sa chyba pri analýze definície typu dokumentu"
+
+#: src/xml/sax/qxml.cpp:62
+msgctxt "QXml"
+msgid "letter is expected"
+msgstr "očakáva sa písmeno"
+
+#: src/xml/sax/qxml.cpp:63
+msgctxt "QXml"
+msgid "error occurred while parsing comment"
+msgstr "vyskytla sa chyba pri analýze komentára"
+
+#: src/xml/sax/qxml.cpp:64
+msgctxt "QXml"
+msgid "error occurred while parsing reference"
+msgstr "vyskytla sa chyba pri analýze odkazu"
+
+#: src/xml/sax/qxml.cpp:65
+msgctxt "QXml"
+msgid "internal general entity reference not allowed in DTD"
+msgstr "v DTD nie je povolený odkaz na vnútornú štandardnú entitu"
+
+#: src/xml/sax/qxml.cpp:66
+msgctxt "QXml"
+msgid "external parsed general entity reference not allowed in attribute value"
+msgstr "v hodnote atribútu nie je povolený odkaz na externú všeobecnú entitu"
+
+#: src/xml/sax/qxml.cpp:67
+msgctxt "QXml"
+msgid "external parsed general entity reference not allowed in DTD"
+msgstr "v DTD nie je povolený odkaz na externú všeobecnú entitu"
+
+#: src/xml/sax/qxml.cpp:68
+msgctxt "QXml"
+msgid "unparsed entity reference in wrong context"
+msgstr "neanalyzovaný odkaz na entitu v zlom kontexte"
+
+#: src/xml/sax/qxml.cpp:69
+msgctxt "QXml"
+msgid "recursive entities"
+msgstr "rekurzívne entity"
+
+#: src/xml/sax/qxml.cpp:70
+msgctxt "QXml"
+msgid "error in the text declaration of an external entity"
+msgstr "chyba v textovej deklarácii externej entity"

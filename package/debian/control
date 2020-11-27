@@ -27,8 +27,8 @@ Section: x11
 Depends: ${shlibs:Depends}, ${misc:Depends}, katie-runtime
 Description: C++ toolkit derived from the Qt 4.8 framework
  This package is pre-release version of the Katie tookit (includes designer,
- lconvert, lrelease, lupdate, moc, qdbus, qdbuscpp2xml, qdbusviewer,
- qdbusxml2cpp, qscript, qtconfig, rcc and uic)
+ moc, qdbus, qdbuscpp2xml, qdbusviewer, qdbusxml2cpp, qscript, qtconfig, rcc
+ and uic)
 
 Package: katie-dev
 Architecture: all

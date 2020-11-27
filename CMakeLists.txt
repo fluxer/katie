@@ -80,7 +80,7 @@ endif()
 # used by the the designer tool. if it is ever needed for something it can just be added here
 # and that's it - the rest of the build system has everything in place.
 set(KATIE_COMPONENTS "Core Gui Declarative Designer Network Sql Svg Xml Script ScriptTools Test UiTools")
-set(KATIE_TOOLS "moc uic rcc lupdate lrelease lconvert designer qscript qtconfig")
+set(KATIE_TOOLS "moc uic rcc designer qscript qtconfig")
 
 # for config.cpp.cmake
 string(TIMESTAMP KATIE_DATE "%Y-%m-%d")
@@ -95,7 +95,7 @@ set(KATIE_BINARIES_PATH "${CMAKE_INSTALL_FULL_BINDIR}" CACHE PATH "Binaries inst
 set(KATIE_PLUGINS_PATH "${KATIE_LIBRARIES_PATH}/katie/plugins" CACHE PATH "Plugins installation path")
 set(KATIE_IMPORTS_PATH "${KATIE_LIBRARIES_PATH}/katie/imports" CACHE PATH "Declarative imports installation path")
 set(KATIE_DATA_PATH "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
-set(KATIE_TRANSLATIONS_PATH "${KATIE_DATA_PATH}/katie/translations" CACHE PATH "Translations installation path")
+set(KATIE_TRANSLATIONS_PATH "${CMAKE_INSTALL_FULL_LOCALEDIR}" CACHE PATH "Translations installation path")
 set(KATIE_CMAKE_PATH "${KATIE_LIBRARIES_PATH}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
 set(KATIE_LDCONF_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
 set(KATIE_PROFILE_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/profile.d" CACHE PATH "Shell profile scripts installation path")
@@ -136,6 +136,9 @@ add_feature_info(mysql WITH_MYSQL "build MySQL support")
 
 option(WITH_RESOLV "Build resolv support" ON)
 add_feature_info(resolv WITH_RESOLV "build resolv support")
+
+option(WITH_INTL "Build Intl support" ON)
+add_feature_info(intl WITH_INTL "build Intl support")
 
 option(WITH_UNWIND "Build Unwind support" OFF)
 add_feature_info(unwind WITH_UNWIND "build Unwind support")
@@ -330,6 +333,14 @@ set_package_properties(MySQL PROPERTIES
     TYPE OPTIONAL
 )
 
+find_package(Intl)
+set_package_properties(Intl PROPERTIES
+    PURPOSE "Required for translations support"
+    DESCRIPTION "GNU gettext runtime library"
+    URL "https://www.gnu.org/software/gettext/gettext.html"
+    TYPE OPTIONAL
+)
+
 find_package(Unwind)
 set_package_properties(Unwind PROPERTIES
     PURPOSE "Required for stack traces on assert and crash"
@@ -470,6 +481,10 @@ endif()
 
 if(NOT WITH_TIFF OR NOT TIFF_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
+endif()
+
+if(NOT WITH_INTL OR NOT INTL_FOUND)
+    katie_definition(-DQT_NO_TRANSLATION)
 endif()
 
 if(NOT WITH_UNWIND OR NOT UNWIND_FOUND OR NOT HAVE_CXXABI)

@@ -8046,7 +8046,6 @@
  qtimer.h
  qtranslator.cpp
  qtranslator.h
- qtranslator_p.h
  qvariant.cpp
  qvariant.h
  qvariant_p.h

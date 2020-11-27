@@ -46,8 +46,6 @@
 #include <QtGui/QErrorMessage>
 #include <QtCore/QMetaObject>
 #include <QtCore/QFile>
-#include <QtCore/QLibraryInfo>
-#include <QtCore/QLocale>
 #include <QtCore/QTimer>
 #include <QtCore/QTranslator>
 #include <QtCore/QFileInfo>
@@ -134,7 +132,7 @@ QDesignerWorkbench *QDesigner::workbench() const
     return m_workbench;
 }
 
-bool QDesigner::parseCommandLineArgs(QStringList &fileNames, QString &resourceDir)
+bool QDesigner::parseCommandLineArgs(QStringList &fileNames)
 {
     const QStringList args = arguments();
     const QStringList::const_iterator acend = args.constEnd();
@@ -146,15 +144,6 @@ bool QDesigner::parseCommandLineArgs(QStringList &fileNames, QString &resourceDi
             if (!argument.startsWith(QLatin1Char('-'))) {
                 if (!fileNames.contains(argument))
                     fileNames.append(argument);
-                break;
-            }
-            // Options
-            if (argument == QLatin1String("-resourcedir")) {
-                if (++it == acend) {
-                    qWarning("** WARNING The option -resourcedir requires an argument");
-                    return false;
-                }
-                resourceDir = QFile::decodeName(it->toLocal8Bit());
                 break;
             }
             if (argument == QLatin1String("-enableinternaldynamicproperties")) {
@@ -172,22 +161,16 @@ void QDesigner::initialize()
 {
     // initialize the sub components
     QStringList files;
-    QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
-    parseCommandLineArgs(files, resourceDir);
+    parseCommandLineArgs(files);
 
+#ifndef QT_NO_TRANSLATION
     QTranslator *translator = new QTranslator(this);
     QTranslator *qtTranslator = new QTranslator(this);
-
-    const QString localSysName = QLocale::system().name();
-    QString  translatorFileName = QLatin1String("qt_tools_");
-    translatorFileName += localSysName;
-    translator->load(translatorFileName, resourceDir);
-
-    translatorFileName = QLatin1String("qt_");
-    translatorFileName += localSysName;
-    qtTranslator->load(translatorFileName, resourceDir);
+    translator->load(QLatin1String("qt_tools"));
+    qtTranslator->load(QLatin1String("qt"));
     installTranslator(translator);
     installTranslator(qtTranslator);
+#endif
 
     m_workbench = new QDesignerWorkbench();
 

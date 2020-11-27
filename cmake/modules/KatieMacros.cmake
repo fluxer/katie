@@ -80,25 +80,6 @@ macro(KATIE_DBUS_INTERFACE SRCIN)
     set_property(SOURCE "${SRCIN}" APPEND PROPERTY OBJECT_DEPENDS "${rscout}")
 endmacro()
 
-macro(KATIE_TRANSLATIONS TRANSLATIONS)
-    if(NOT KATIE_TRANSLATIONS_PATH)
-        message(SEND_ERROR "Directory where the translation should be installed is not set")
-    endif()
-    foreach(translation ${TRANSLATIONS} ${ARGN})
-        get_filename_component(trname "${translation}" NAME_WE)
-        get_filename_component(trdir "${translation}" DIRECTORY)
-        string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" trdir ${trdir})
-        make_directory("${trdir}")
-        set(trout "${trdir}/${trname}.qm")
-        add_custom_target(
-            ${trname}_translation ALL
-            COMMAND "${KATIE_LRELEASE}" "${translation}" -qm "${trout}"
-        )
-        set_source_files_properties(${trout} PROPERTIES GENERATED TRUE)
-        install(FILES "${trout}" DESTINATION "${KATIE_TRANSLATIONS_PATH}")
-    endforeach()
-endmacro()
-
 macro(KATIE_DEFINITION DEF)
     set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} ${DEF} ${ARGN})
     add_definitions(${DEF} ${ARGN})

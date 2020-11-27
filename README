@@ -16,7 +16,7 @@ There are several things you should be aware before considering Katie:
     required for building
   - OpenSSL, D-Bus, CUPS and resolv must be linked to during build
   - QtUiTools is build as shared library by default
-  - moc, uic, rcc, lrelease, lupdate, etc. are linked to components
+  - moc, uic, rcc, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
   - updated bundled FFTW from upstream
   - versioned and extended classes have been merged into the base class,

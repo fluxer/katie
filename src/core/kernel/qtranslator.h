@@ -35,6 +35,7 @@
 #define QTRANSLATOR_H
 
 #include <QtCore/qobject.h>
+#include <QtCore/qlocale.h>
 
 QT_BEGIN_HEADER
 
@@ -43,7 +44,6 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_TRANSLATION
 
-class QLocale;
 class QTranslatorPrivate;
 
 class Q_CORE_EXPORT QTranslator : public QObject
@@ -59,16 +59,7 @@ public:
 
     virtual bool isEmpty() const;
 
-    bool load(const QString & filename,
-              const QString & directory = QString(),
-              const QString & search_delimiters = QString(),
-              const QString & suffix = QString());
-    bool load(const QLocale & locale,
-              const QString & filename,
-              const QString & prefix = QString(),
-              const QString & directory = QString(),
-              const QString & suffix = QString());
-    bool load(const uchar *data, int len);
+    bool load(const QString &domain, const QLocale &locale = QLocale::system());
 
 
 private:

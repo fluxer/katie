@@ -1,0 +1,1922 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-27 17:45+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Language: ja\n"
+"X-Qt-Contexts: true\n"
+
+#: src/core/plugin/qlibrary.cpp:578
+msgid "The file '%1' is not a valid Katie plugin."
+msgstr ""
+
+#: src/core/plugin/qlibrary.cpp:591
+msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
+msgstr ""
+
+#: src/core/io/qstandardpaths.cpp:300 src/core/io/qstandardpaths.cpp:302
+#: src/core/io/qstandardpaths.cpp:304 src/core/io/qstandardpaths.cpp:306
+#: src/core/io/qstandardpaths.cpp:308 src/core/io/qstandardpaths.cpp:310
+#: src/core/io/qstandardpaths.cpp:312 src/core/io/qstandardpaths.cpp:314
+#: src/core/io/qstandardpaths.cpp:316 src/core/io/qstandardpaths.cpp:318
+#: src/core/io/qstandardpaths.cpp:320 src/core/io/qstandardpaths.cpp:322
+#: src/core/io/qstandardpaths.cpp:324 src/core/io/qstandardpaths.cpp:326
+#: src/core/io/qstandardpaths.cpp:328 src/core/io/qstandardpaths.cpp:330
+#: src/core/io/qstandardpaths.cpp:332
+msgid "QStandardPaths"
+msgstr ""
+
+#: src/core/kernel/qsystemsemaphore_unix.cpp:87
+#: src/core/kernel/qsystemsemaphore_unix.cpp:91
+#: src/core/kernel/qsystemsemaphore_unix.cpp:95
+#: src/core/kernel/qsystemsemaphore_unix.cpp:104
+#: src/core/kernel/qsystemsemaphore_unix.cpp:108
+#: src/core/kernel/qsystemsemaphore_unix.cpp:112
+msgid "QSystemSemaphore"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:57
+msgctxt "QRegExp"
+msgid "no error occurred"
+msgstr "エラーは発生しませんでした"
+
+#: src/core/tools/qregexp.cpp:58
+msgctxt "QRegExp"
+msgid "disabled feature used"
+msgstr "無効な機能が使用されました"
+
+#: src/core/tools/qregexp.cpp:59
+msgctxt "QRegExp"
+msgid "bad char class syntax"
+msgstr "不正なcharクラス構文"
+
+#: src/core/tools/qregexp.cpp:60
+msgctxt "QRegExp"
+msgid "bad lookahead syntax"
+msgstr "不正なlookahead構文"
+
+#: src/core/tools/qregexp.cpp:61
+msgctxt "QRegExp"
+msgid "lookbehinds not supported, see QTBUG-2371"
+msgstr ""
+
+#: src/core/tools/qregexp.cpp:62
+msgctxt "QRegExp"
+msgid "bad repetition syntax"
+msgstr "不正なrepetition構文"
+
+#: src/core/tools/qregexp.cpp:63
+msgctxt "QRegExp"
+msgid "invalid octal value"
+msgstr "無効な8進値"
+
+#: src/core/tools/qregexp.cpp:64
+msgctxt "QRegExp"
+msgid "missing left delim"
+msgstr "左の区切り文字がありません"
+
+#: src/core/tools/qregexp.cpp:65
+msgctxt "QRegExp"
+msgid "unexpected end"
+msgstr "予期しない末尾です"
+
+#: src/core/tools/qregexp.cpp:66
+msgctxt "QRegExp"
+msgid "met internal limit"
+msgstr "内部制限を満たしました"
+
+#: src/core/tools/qregexp.cpp:67
+msgctxt "QRegExp"
+msgid "invalid interval"
+msgstr "無効な間隔"
+
+#: src/core/tools/qregexp.cpp:68
+msgctxt "QRegExp"
+msgid "invalid category"
+msgstr "無効なカテゴリー"
+
+#: src/core/tools/qcommandlineparser.cpp:274
+msgid "Displays version information."
+msgstr ""
+
+#: src/core/tools/qcommandlineparser.cpp:298
+msgid "Displays this help."
+msgstr ""
+
+#: src/core/tools/qcommandlineparser.cpp:488
+msgid "Missing value after '%1'."
+msgstr ""
+
+#: src/core/tools/qcommandlineparser.cpp:897
+msgid "Usage: %1"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:49
+msgctxt "QJsonParseError"
+msgid "unterminated object"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:50
+msgctxt "QJsonParseError"
+msgid "missing name separator"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:51
+msgctxt "QJsonParseError"
+msgid "unterminated array"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:52
+msgctxt "QJsonParseError"
+msgid "missing value separator"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:53
+msgctxt "QJsonParseError"
+msgid "illegal value"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:54
+msgctxt "QJsonParseError"
+msgid "invalid termination by number"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:55
+msgctxt "QJsonParseError"
+msgid "illegal number"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:56
+msgctxt "QJsonParseError"
+msgid "invalid escape sequence"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:57
+msgctxt "QJsonParseError"
+msgid "invalid UTF8 string"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:58
+msgctxt "QJsonParseError"
+msgid "unterminated string"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:59
+msgctxt "QJsonParseError"
+msgid "object is missing after a comma"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:60
+msgctxt "QJsonParseError"
+msgid "too deeply nested document"
+msgstr ""
+
+#: src/core/json/qjsonparser.cpp:61
+msgctxt "QJsonParseError"
+msgid "too large document"
+msgstr ""
+
+#: src/core/global/qglobal.cpp:1194
+msgctxt "QIODevice"
+msgid "Permission denied"
+msgstr "許可されていません"
+
+#: src/core/global/qglobal.cpp:1196
+msgctxt "QIODevice"
+msgid "Too many open files"
+msgstr "開かれたファイルが多すぎます"
+
+#: src/core/global/qglobal.cpp:1198
+msgctxt "QIODevice"
+msgid "No such file or directory"
+msgstr "そのようなファイルやディレクトリはありません"
+
+#: src/core/global/qglobal.cpp:1200
+msgctxt "QIODevice"
+msgid "No space left on device"
+msgstr "デバイスの残り容量がありません"
+
+#: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:95
+msgid "QDeclarativeAnimatedImage"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativevme.cpp:212
+#: src/declarative/qml/qdeclarativevme.cpp:653
+#: src/declarative/qml/qdeclarativevme.cpp:675
+#: src/declarative/qml/qdeclarativevme.cpp:678
+#: src/declarative/qml/qdeclarativevme.cpp:683
+#: src/declarative/qml/qdeclarativevme.cpp:832
+#: src/declarative/qml/qdeclarativevme.cpp:875
+#: src/declarative/qml/qdeclarativevme.cpp:886
+#: src/declarative/qml/qdeclarativevme.cpp:918
+msgid "QDeclarativeVME"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativescriptparser.cpp:246
+#: src/declarative/qml/qdeclarativescriptparser.cpp:257
+#: src/declarative/qml/qdeclarativescriptparser.cpp:391
+#: src/declarative/qml/qdeclarativescriptparser.cpp:399
+#: src/declarative/qml/qdeclarativescriptparser.cpp:414
+#: src/declarative/qml/qdeclarativescriptparser.cpp:424
+#: src/declarative/qml/qdeclarativescriptparser.cpp:435
+#: src/declarative/qml/qdeclarativescriptparser.cpp:494
+#: src/declarative/qml/qdeclarativescriptparser.cpp:536
+#: src/declarative/qml/qdeclarativescriptparser.cpp:545
+#: src/declarative/qml/qdeclarativescriptparser.cpp:554
+#: src/declarative/qml/qdeclarativescriptparser.cpp:563
+#: src/declarative/qml/qdeclarativescriptparser.cpp:675
+#: src/declarative/qml/qdeclarativescriptparser.cpp:734
+#: src/declarative/qml/qdeclarativescriptparser.cpp:781
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1817
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1819
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1848
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1872
+#: src/declarative/qml/parser/qdeclarativejsparser.cpp:1885
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:532
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:569
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:583
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:609
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:655
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:681
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:709
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:783
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:809
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1147
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1162
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1178
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1200
+#: src/declarative/qml/parser/qdeclarativejslexer.cpp:1213
+msgid "QDeclarativeParser"
+msgstr ""
+
+#: src/declarative/qml/qdeclarativecompiledbindings.cpp:337
+msgid "QDeclarativeCompiledBindings"
+msgstr ""
+
+#: src/declarative/util/qdeclarativeutilmodule.cpp:110
+#: src/declarative/util/qdeclarativeutilmodule.cpp:112
+msgid "QDeclarativeXmlListModel"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1466
+msgid "<h3>About Katie</h3><p>This program uses Katie version %1.</p>"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1470
+msgid ""
+"<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p><p>Katie is "
+"available under two different licensing options designed to accommodate the "
+"needs of our various users.</p><p>Katie licensed under the GNU LGPL version "
+"3 is appropriate for the development of Qt&nbsp;applications provided you "
+"can comply with the terms and conditions of the GNU LGPL version 3.</"
+"p><p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
+"development of applications provided you can comply with the terms and "
+"conditions of the GNU LGPL version 2.1.</p><p>Copyright (C) %1 The Qt "
+"Company Ltd and other contributors.</p><p>Copyright (C) %2 Ivailo Monev</"
+"p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p><p>See <a "
+"href=\"http://%3/\">%3</a> for more information.</p>"
+msgstr ""
+
+#: src/gui/dialogs/qmessagebox.cpp:1488
+msgid "About Katie"
+msgstr ""
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:452
+msgctxt "QDialogButtonBox"
+msgid "OK"
+msgstr "OK"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:455
+msgctxt "QDialogButtonBox"
+msgid "Save"
+msgstr "保存"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:458
+msgctxt "QDialogButtonBox"
+msgid "Open"
+msgstr "開く"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:461
+msgctxt "QDialogButtonBox"
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:464
+msgctxt "QDialogButtonBox"
+msgid "Close"
+msgstr "閉じる"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:467
+msgctxt "QDialogButtonBox"
+msgid "Apply"
+msgstr "適用"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:470
+msgctxt "QDialogButtonBox"
+msgid "Reset"
+msgstr "リセット"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:473
+msgctxt "QDialogButtonBox"
+msgid "Help"
+msgstr "ヘルプ"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:476
+msgctxt "QDialogButtonBox"
+msgid "Discard"
+msgstr "変更を破棄"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:479
+msgctxt "QDialogButtonBox"
+msgid "&Yes"
+msgstr "はい(&Y)"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:482
+msgctxt "QDialogButtonBox"
+msgid "Yes to &All"
+msgstr "全てにはい(&A)"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:485
+msgctxt "QDialogButtonBox"
+msgid "&No"
+msgstr "いいえ(&N)"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:488
+msgctxt "QDialogButtonBox"
+msgid "N&o to All"
+msgstr "全てにいいえ(&O)"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:491
+msgctxt "QDialogButtonBox"
+msgid "Save All"
+msgstr "すべて保存"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:494
+msgctxt "QDialogButtonBox"
+msgid "Abort"
+msgstr "中止"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:497
+msgctxt "QDialogButtonBox"
+msgid "Retry"
+msgstr "再試行"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:500
+msgctxt "QDialogButtonBox"
+msgid "Ignore"
+msgstr "無視"
+
+#: src/gui/widgets/qdialogbuttonbox.cpp:503
+msgctxt "QDialogButtonBox"
+msgid "Restore Defaults"
+msgstr "デフォルトに戻す"
+
+#: src/gui/kernel/qkeysequence.cpp:296
+msgctxt "QShortcut"
+msgid "Space"
+msgstr "Space"
+
+#: src/gui/kernel/qkeysequence.cpp:297
+msgctxt "QShortcut"
+msgid "Esc"
+msgstr "Esc"
+
+#: src/gui/kernel/qkeysequence.cpp:298
+msgctxt "QShortcut"
+msgid "Tab"
+msgstr "Tab"
+
+#: src/gui/kernel/qkeysequence.cpp:299
+msgctxt "QShortcut"
+msgid "Backtab"
+msgstr "Backtab"
+
+#: src/gui/kernel/qkeysequence.cpp:300
+msgctxt "QShortcut"
+msgid "Backspace"
+msgstr "Backspace"
+
+#: src/gui/kernel/qkeysequence.cpp:301
+msgctxt "QShortcut"
+msgid "Return"
+msgstr "Return"
+
+#: src/gui/kernel/qkeysequence.cpp:302
+msgctxt "QShortcut"
+msgid "Enter"
+msgstr "Enter"
+
+#: src/gui/kernel/qkeysequence.cpp:303
+msgctxt "QShortcut"
+msgid "Ins"
+msgstr "Ins"
+
+#: src/gui/kernel/qkeysequence.cpp:304
+msgctxt "QShortcut"
+msgid "Del"
+msgstr "Del"
+
+#: src/gui/kernel/qkeysequence.cpp:305
+msgctxt "QShortcut"
+msgid "Pause"
+msgstr "一時停止"
+
+#: src/gui/kernel/qkeysequence.cpp:306
+msgctxt "QShortcut"
+msgid "Print"
+msgstr "印刷"
+
+#: src/gui/kernel/qkeysequence.cpp:307
+msgctxt "QShortcut"
+msgid "SysReq"
+msgstr "SysReq"
+
+#: src/gui/kernel/qkeysequence.cpp:308
+msgctxt "QShortcut"
+msgid "Home"
+msgstr "Home"
+
+#: src/gui/kernel/qkeysequence.cpp:309
+msgctxt "QShortcut"
+msgid "End"
+msgstr "End"
+
+#: src/gui/kernel/qkeysequence.cpp:310
+msgctxt "QShortcut"
+msgid "Left"
+msgstr "←"
+
+#: src/gui/kernel/qkeysequence.cpp:311
+msgctxt "QShortcut"
+msgid "Up"
+msgstr "↑"
+
+#: src/gui/kernel/qkeysequence.cpp:312
+msgctxt "QShortcut"
+msgid "Right"
+msgstr "→"
+
+#: src/gui/kernel/qkeysequence.cpp:313
+msgctxt "QShortcut"
+msgid "Down"
+msgstr "↓"
+
+#: src/gui/kernel/qkeysequence.cpp:314
+msgctxt "QShortcut"
+msgid "PgUp"
+msgstr "PgUp"
+
+#: src/gui/kernel/qkeysequence.cpp:315
+msgctxt "QShortcut"
+msgid "PgDown"
+msgstr "PgDown"
+
+#: src/gui/kernel/qkeysequence.cpp:316
+msgctxt "QShortcut"
+msgid "CapsLock"
+msgstr "CapsLock"
+
+#: src/gui/kernel/qkeysequence.cpp:317
+msgctxt "QShortcut"
+msgid "NumLock"
+msgstr "NumLock"
+
+#: src/gui/kernel/qkeysequence.cpp:318
+msgctxt "QShortcut"
+msgid "ScrollLock"
+msgstr "ScrollLock"
+
+#: src/gui/kernel/qkeysequence.cpp:319
+msgctxt "QShortcut"
+msgid "Menu"
+msgstr "メニュー"
+
+#: src/gui/kernel/qkeysequence.cpp:320
+msgctxt "QShortcut"
+msgid "Help"
+msgstr "ヘルプ"
+
+#: src/gui/kernel/qkeysequence.cpp:325
+msgctxt "QShortcut"
+msgid "Back"
+msgstr "戻る"
+
+#: src/gui/kernel/qkeysequence.cpp:326
+msgctxt "QShortcut"
+msgid "Forward"
+msgstr "進む"
+
+#: src/gui/kernel/qkeysequence.cpp:327
+msgctxt "QShortcut"
+msgid "Stop"
+msgstr "停止"
+
+#: src/gui/kernel/qkeysequence.cpp:328
+msgctxt "QShortcut"
+msgid "Refresh"
+msgstr "更新間隔"
+
+#: src/gui/kernel/qkeysequence.cpp:329
+msgctxt "QShortcut"
+msgid "Volume Down"
+msgstr "音量を下げる"
+
+#: src/gui/kernel/qkeysequence.cpp:330
+msgctxt "QShortcut"
+msgid "Volume Mute"
+msgstr "消音"
+
+#: src/gui/kernel/qkeysequence.cpp:331
+msgctxt "QShortcut"
+msgid "Volume Up"
+msgstr "音量を上げる"
+
+#: src/gui/kernel/qkeysequence.cpp:332
+msgctxt "QShortcut"
+msgid "Bass Boost"
+msgstr "低音ブースト"
+
+#: src/gui/kernel/qkeysequence.cpp:333
+msgctxt "QShortcut"
+msgid "Bass Up"
+msgstr "低音を上げる"
+
+#: src/gui/kernel/qkeysequence.cpp:334
+msgctxt "QShortcut"
+msgid "Bass Down"
+msgstr "低音を下げる"
+
+#: src/gui/kernel/qkeysequence.cpp:335
+msgctxt "QShortcut"
+msgid "Treble Up"
+msgstr "高音を上げる"
+
+#: src/gui/kernel/qkeysequence.cpp:336
+msgctxt "QShortcut"
+msgid "Treble Down"
+msgstr "高音を下げる"
+
+#: src/gui/kernel/qkeysequence.cpp:337
+msgctxt "QShortcut"
+msgid "Media Play"
+msgstr "メディアの再生"
+
+#: src/gui/kernel/qkeysequence.cpp:338
+msgctxt "QShortcut"
+msgid "Media Stop"
+msgstr "メディアの停止"
+
+#: src/gui/kernel/qkeysequence.cpp:339
+msgctxt "QShortcut"
+msgid "Media Previous"
+msgstr "前のメディア"
+
+#: src/gui/kernel/qkeysequence.cpp:340
+msgctxt "QShortcut"
+msgid "Media Next"
+msgstr "次のメディア"
+
+#: src/gui/kernel/qkeysequence.cpp:341
+msgctxt "QShortcut"
+msgid "Media Record"
+msgstr "メディアの録音"
+
+#: src/gui/kernel/qkeysequence.cpp:343
+msgctxt "QShortcut"
+msgid "Media Pause"
+msgstr "メディアの一時停止"
+
+#: src/gui/kernel/qkeysequence.cpp:345
+msgctxt "QShortcut"
+msgid "Toggle Media Play/Pause"
+msgstr "メディアの再生と一時停止の切り替え"
+
+#: src/gui/kernel/qkeysequence.cpp:346
+msgctxt "QShortcut"
+msgid "Home Page"
+msgstr "ホームページ"
+
+#: src/gui/kernel/qkeysequence.cpp:347
+msgctxt "QShortcut"
+msgid "Favorites"
+msgstr "お気に入り"
+
+#: src/gui/kernel/qkeysequence.cpp:348
+msgctxt "QShortcut"
+msgid "Search"
+msgstr "検索"
+
+#: src/gui/kernel/qkeysequence.cpp:349
+msgctxt "QShortcut"
+msgid "Standby"
+msgstr "スタンバイ"
+
+#: src/gui/kernel/qkeysequence.cpp:350
+msgctxt "QShortcut"
+msgid "Open URL"
+msgstr "URLを開く"
+
+#: src/gui/kernel/qkeysequence.cpp:351
+msgctxt "QShortcut"
+msgid "Launch Mail"
+msgstr "メールの起動"
+
+#: src/gui/kernel/qkeysequence.cpp:352
+msgctxt "QShortcut"
+msgid "Launch Media"
+msgstr "メディアの起動"
+
+#: src/gui/kernel/qkeysequence.cpp:353
+msgctxt "QShortcut"
+msgid "Launch (0)"
+msgstr "(0)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:354
+msgctxt "QShortcut"
+msgid "Launch (1)"
+msgstr "(1)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:355
+msgctxt "QShortcut"
+msgid "Launch (2)"
+msgstr "(2)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:356
+msgctxt "QShortcut"
+msgid "Launch (3)"
+msgstr "(3)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:357
+msgctxt "QShortcut"
+msgid "Launch (4)"
+msgstr "(4)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:358
+msgctxt "QShortcut"
+msgid "Launch (5)"
+msgstr "(5)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:359
+msgctxt "QShortcut"
+msgid "Launch (6)"
+msgstr "(6)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:360
+msgctxt "QShortcut"
+msgid "Launch (7)"
+msgstr "(7)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:361
+msgctxt "QShortcut"
+msgid "Launch (8)"
+msgstr "(8)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:362
+msgctxt "QShortcut"
+msgid "Launch (9)"
+msgstr "(9)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:363
+msgctxt "QShortcut"
+msgid "Launch (A)"
+msgstr "(A)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:364
+msgctxt "QShortcut"
+msgid "Launch (B)"
+msgstr "(B)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:365
+msgctxt "QShortcut"
+msgid "Launch (C)"
+msgstr "(C)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:366
+msgctxt "QShortcut"
+msgid "Launch (D)"
+msgstr "(D)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:367
+msgctxt "QShortcut"
+msgid "Launch (E)"
+msgstr "(E)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:368
+msgctxt "QShortcut"
+msgid "Launch (F)"
+msgstr "(F)の起動"
+
+#: src/gui/kernel/qkeysequence.cpp:369
+msgctxt "QShortcut"
+msgid "Monitor Brightness Up"
+msgstr "モニタの輝度を上げる"
+
+#: src/gui/kernel/qkeysequence.cpp:370
+msgctxt "QShortcut"
+msgid "Monitor Brightness Down"
+msgstr "モニタの輝度を下げる"
+
+#: src/gui/kernel/qkeysequence.cpp:371
+msgctxt "QShortcut"
+msgid "Keyboard Light On/Off"
+msgstr "キーボードライトのオン・オフ"
+
+#: src/gui/kernel/qkeysequence.cpp:372
+msgctxt "QShortcut"
+msgid "Keyboard Brightness Up"
+msgstr "キーボードの輝度を上げる"
+
+#: src/gui/kernel/qkeysequence.cpp:373
+msgctxt "QShortcut"
+msgid "Keyboard Brightness Down"
+msgstr "キーボードの輝度を下げる"
+
+#: src/gui/kernel/qkeysequence.cpp:374
+msgctxt "QShortcut"
+msgid "Power Off"
+msgstr "電源オフ"
+
+#: src/gui/kernel/qkeysequence.cpp:375
+msgctxt "QShortcut"
+msgid "Wake Up"
+msgstr "起動"
+
+#: src/gui/kernel/qkeysequence.cpp:376
+msgctxt "QShortcut"
+msgid "Eject"
+msgstr "取り出し"
+
+#: src/gui/kernel/qkeysequence.cpp:377
+msgctxt "QShortcut"
+msgid "Screensaver"
+msgstr "スクリーンセーバ"
+
+#: src/gui/kernel/qkeysequence.cpp:378
+msgctxt "QShortcut"
+msgid "WWW"
+msgstr "WWW"
+
+#: src/gui/kernel/qkeysequence.cpp:379
+msgctxt "QShortcut"
+msgid "Sleep"
+msgstr "スリープ"
+
+#: src/gui/kernel/qkeysequence.cpp:380
+msgctxt "QShortcut"
+msgid "LightBulb"
+msgstr "ライト"
+
+#: src/gui/kernel/qkeysequence.cpp:381
+msgctxt "QShortcut"
+msgid "Shop"
+msgstr "ショップ"
+
+#: src/gui/kernel/qkeysequence.cpp:382
+msgctxt "QShortcut"
+msgid "History"
+msgstr "履歴"
+
+#: src/gui/kernel/qkeysequence.cpp:383
+msgctxt "QShortcut"
+msgid "Add Favorite"
+msgstr "お気に入りに追加"
+
+#: src/gui/kernel/qkeysequence.cpp:384
+msgctxt "QShortcut"
+msgid "Hot Links"
+msgstr "人気のリンク"
+
+#: src/gui/kernel/qkeysequence.cpp:385
+msgctxt "QShortcut"
+msgid "Adjust Brightness"
+msgstr "輝度の調整"
+
+#: src/gui/kernel/qkeysequence.cpp:386
+msgctxt "QShortcut"
+msgid "Finance"
+msgstr "ファイナンス"
+
+#: src/gui/kernel/qkeysequence.cpp:387
+msgctxt "QShortcut"
+msgid "Community"
+msgstr "コミュニティ"
+
+#: src/gui/kernel/qkeysequence.cpp:388
+msgctxt "QShortcut"
+msgid "Audio Rewind"
+msgstr "オーディオの巻き戻し"
+
+#: src/gui/kernel/qkeysequence.cpp:389
+msgctxt "QShortcut"
+msgid "Back Forward"
+msgstr "戻る"
+
+#: src/gui/kernel/qkeysequence.cpp:390
+msgctxt "QShortcut"
+msgid "Application Left"
+msgstr "Application Left"
+
+#: src/gui/kernel/qkeysequence.cpp:391
+msgctxt "QShortcut"
+msgid "Application Right"
+msgstr "Application Right"
+
+#: src/gui/kernel/qkeysequence.cpp:392
+msgctxt "QShortcut"
+msgid "Book"
+msgstr "書籍"
+
+#: src/gui/kernel/qkeysequence.cpp:393
+msgctxt "QShortcut"
+msgid "CD"
+msgstr "CD"
+
+#: src/gui/kernel/qkeysequence.cpp:394
+msgctxt "QShortcut"
+msgid "Calculator"
+msgstr "電卓"
+
+#: src/gui/kernel/qkeysequence.cpp:395
+msgctxt "QShortcut"
+msgid "Clear"
+msgstr "クリア"
+
+#: src/gui/kernel/qkeysequence.cpp:396
+msgctxt "QShortcut"
+msgid "Clear Grab"
+msgstr "Clear Grab"
+
+#: src/gui/kernel/qkeysequence.cpp:397
+msgctxt "QShortcut"
+msgid "Close"
+msgstr "閉じる"
+
+#: src/gui/kernel/qkeysequence.cpp:398
+msgctxt "QShortcut"
+msgid "Copy"
+msgstr "コピー"
+
+#: src/gui/kernel/qkeysequence.cpp:399
+msgctxt "QShortcut"
+msgid "Cut"
+msgstr "切り取り"
+
+#: src/gui/kernel/qkeysequence.cpp:400
+msgctxt "QShortcut"
+msgid "Display"
+msgstr "ディスプレイ"
+
+#: src/gui/kernel/qkeysequence.cpp:401
+msgctxt "QShortcut"
+msgid "DOS"
+msgstr "DOS"
+
+#: src/gui/kernel/qkeysequence.cpp:402
+msgctxt "QShortcut"
+msgid "Documents"
+msgstr "ドキュメント"
+
+#: src/gui/kernel/qkeysequence.cpp:403
+msgctxt "QShortcut"
+msgid "Spreadsheet"
+msgstr "スプレッドシート"
+
+#: src/gui/kernel/qkeysequence.cpp:404
+msgctxt "QShortcut"
+msgid "Browser"
+msgstr "ブラウザ"
+
+#: src/gui/kernel/qkeysequence.cpp:405
+msgctxt "QShortcut"
+msgid "Game"
+msgstr "ゲーム"
+
+#: src/gui/kernel/qkeysequence.cpp:406
+msgctxt "QShortcut"
+msgid "Go"
+msgstr "Go"
+
+#: src/gui/kernel/qkeysequence.cpp:407
+msgctxt "QShortcut"
+msgid "iTouch"
+msgstr "iTouch"
+
+#: src/gui/kernel/qkeysequence.cpp:408
+msgctxt "QShortcut"
+msgid "Logoff"
+msgstr "ログオフ"
+
+#: src/gui/kernel/qkeysequence.cpp:409
+msgctxt "QShortcut"
+msgid "Market"
+msgstr "マーケット"
+
+#: src/gui/kernel/qkeysequence.cpp:410
+msgctxt "QShortcut"
+msgid "Meeting"
+msgstr "会議"
+
+#: src/gui/kernel/qkeysequence.cpp:411
+msgctxt "QShortcut"
+msgid "Keyboard Menu"
+msgstr "キーボードメニュー"
+
+#: src/gui/kernel/qkeysequence.cpp:412
+msgctxt "QShortcut"
+msgid "Menu PB"
+msgstr "Menu PB"
+
+#: src/gui/kernel/qkeysequence.cpp:413
+msgctxt "QShortcut"
+msgid "My Sites"
+msgstr "マイサイト"
+
+#: src/gui/kernel/qkeysequence.cpp:414
+msgctxt "QShortcut"
+msgid "News"
+msgstr "ニュース"
+
+#: src/gui/kernel/qkeysequence.cpp:415
+msgctxt "QShortcut"
+msgid "Home Office"
+msgstr "ホームオフィス"
+
+#: src/gui/kernel/qkeysequence.cpp:416
+msgctxt "QShortcut"
+msgid "Option"
+msgstr "オプション"
+
+#: src/gui/kernel/qkeysequence.cpp:417
+msgctxt "QShortcut"
+msgid "Paste"
+msgstr "貼り付け"
+
+#: src/gui/kernel/qkeysequence.cpp:418
+msgctxt "QShortcut"
+msgid "Phone"
+msgstr "電話"
+
+#: src/gui/kernel/qkeysequence.cpp:419
+msgctxt "QShortcut"
+msgid "Reply"
+msgstr "返信"
+
+#: src/gui/kernel/qkeysequence.cpp:420
+msgctxt "QShortcut"
+msgid "Reload"
+msgstr "リロード"
+
+#: src/gui/kernel/qkeysequence.cpp:421
+msgctxt "QShortcut"
+msgid "Rotate Windows"
+msgstr "Rotate Windows"
+
+#: src/gui/kernel/qkeysequence.cpp:422
+msgctxt "QShortcut"
+msgid "Rotation PB"
+msgstr "Rotation PB"
+
+#: src/gui/kernel/qkeysequence.cpp:423
+msgctxt "QShortcut"
+msgid "Rotation KB"
+msgstr "Rotation KB"
+
+#: src/gui/kernel/qkeysequence.cpp:424
+msgctxt "QShortcut"
+msgid "Save"
+msgstr "保存"
+
+#: src/gui/kernel/qkeysequence.cpp:425
+msgctxt "QShortcut"
+msgid "Send"
+msgstr "送信"
+
+#: src/gui/kernel/qkeysequence.cpp:426
+msgctxt "QShortcut"
+msgid "Spellchecker"
+msgstr "スペルチェッカー"
+
+#: src/gui/kernel/qkeysequence.cpp:427
+msgctxt "QShortcut"
+msgid "Split Screen"
+msgstr "画面の分割"
+
+#: src/gui/kernel/qkeysequence.cpp:428
+msgctxt "QShortcut"
+msgid "Support"
+msgstr "サポート"
+
+#: src/gui/kernel/qkeysequence.cpp:429
+msgctxt "QShortcut"
+msgid "Task Panel"
+msgstr "タスクパネル"
+
+#: src/gui/kernel/qkeysequence.cpp:430
+msgctxt "QShortcut"
+msgid "Terminal"
+msgstr "端末"
+
+#: src/gui/kernel/qkeysequence.cpp:431
+msgctxt "QShortcut"
+msgid "Tools"
+msgstr "ツール"
+
+#: src/gui/kernel/qkeysequence.cpp:432
+msgctxt "QShortcut"
+msgid "Travel"
+msgstr "旅行"
+
+#: src/gui/kernel/qkeysequence.cpp:433
+msgctxt "QShortcut"
+msgid "Video"
+msgstr "動画"
+
+#: src/gui/kernel/qkeysequence.cpp:434
+msgctxt "QShortcut"
+msgid "Word Processor"
+msgstr "ワードプロセッサ"
+
+#: src/gui/kernel/qkeysequence.cpp:435
+msgctxt "QShortcut"
+msgid "XFer"
+msgstr "変換"
+
+#: src/gui/kernel/qkeysequence.cpp:436
+msgctxt "QShortcut"
+msgid "Zoom In"
+msgstr "拡大"
+
+#: src/gui/kernel/qkeysequence.cpp:437
+msgctxt "QShortcut"
+msgid "Zoom Out"
+msgstr "縮小"
+
+#: src/gui/kernel/qkeysequence.cpp:438
+msgctxt "QShortcut"
+msgid "Away"
+msgstr "離席"
+
+#: src/gui/kernel/qkeysequence.cpp:439
+msgctxt "QShortcut"
+msgid "Messenger"
+msgstr "メッセンジャー"
+
+#: src/gui/kernel/qkeysequence.cpp:440
+msgctxt "QShortcut"
+msgid "WebCam"
+msgstr "Webカメラ"
+
+#: src/gui/kernel/qkeysequence.cpp:441
+msgctxt "QShortcut"
+msgid "Mail Forward"
+msgstr "メールの転送"
+
+#: src/gui/kernel/qkeysequence.cpp:442
+msgctxt "QShortcut"
+msgid "Pictures"
+msgstr "画像"
+
+#: src/gui/kernel/qkeysequence.cpp:443
+msgctxt "QShortcut"
+msgid "Music"
+msgstr "音楽"
+
+#: src/gui/kernel/qkeysequence.cpp:444
+msgctxt "QShortcut"
+msgid "Battery"
+msgstr "バッテリ"
+
+#: src/gui/kernel/qkeysequence.cpp:445
+msgctxt "QShortcut"
+msgid "Bluetooth"
+msgstr "ブルートゥース"
+
+#: src/gui/kernel/qkeysequence.cpp:446
+msgctxt "QShortcut"
+msgid "Wireless"
+msgstr "無線"
+
+#: src/gui/kernel/qkeysequence.cpp:447
+msgctxt "QShortcut"
+msgid "Ultra Wide Band"
+msgstr "超広帯域無線(UWB)"
+
+#: src/gui/kernel/qkeysequence.cpp:448
+msgctxt "QShortcut"
+msgid "Audio Forward"
+msgstr "オーディオの早送り"
+
+#: src/gui/kernel/qkeysequence.cpp:449
+msgctxt "QShortcut"
+msgid "Audio Repeat"
+msgstr "オーディオの繰り返し"
+
+#: src/gui/kernel/qkeysequence.cpp:450
+msgctxt "QShortcut"
+msgid "Audio Random Play"
+msgstr "オーディオのランダム再生"
+
+#: src/gui/kernel/qkeysequence.cpp:451
+msgctxt "QShortcut"
+msgid "Subtitle"
+msgstr "字幕"
+
+#: src/gui/kernel/qkeysequence.cpp:452
+msgctxt "QShortcut"
+msgid "Audio Cycle Track"
+msgstr "Audio Cycle Track"
+
+#: src/gui/kernel/qkeysequence.cpp:453
+msgctxt "QShortcut"
+msgid "Time"
+msgstr "時間"
+
+#: src/gui/kernel/qkeysequence.cpp:454 src/gui/kernel/qkeysequence.cpp:476
+msgctxt "QShortcut"
+msgid "Select"
+msgstr "選択"
+
+#: src/gui/kernel/qkeysequence.cpp:455
+msgctxt "QShortcut"
+msgid "View"
+msgstr "表示"
+
+#: src/gui/kernel/qkeysequence.cpp:456
+msgctxt "QShortcut"
+msgid "Top Menu"
+msgstr "トップメニュー"
+
+#: src/gui/kernel/qkeysequence.cpp:457
+msgctxt "QShortcut"
+msgid "Suspend"
+msgstr "サスペンド"
+
+#: src/gui/kernel/qkeysequence.cpp:458
+msgctxt "QShortcut"
+msgid "Hibernate"
+msgstr "休止"
+
+#: src/gui/kernel/qkeysequence.cpp:462
+msgctxt "QShortcut"
+msgid "Print Screen"
+msgstr "Print Screen"
+
+#: src/gui/kernel/qkeysequence.cpp:463
+msgctxt "QShortcut"
+msgid "Page Up"
+msgstr "Page Up"
+
+#: src/gui/kernel/qkeysequence.cpp:464
+msgctxt "QShortcut"
+msgid "Page Down"
+msgstr "Page Down"
+
+#: src/gui/kernel/qkeysequence.cpp:465
+msgctxt "QShortcut"
+msgid "Caps Lock"
+msgstr "Caps Lock"
+
+#: src/gui/kernel/qkeysequence.cpp:466
+msgctxt "QShortcut"
+msgid "Num Lock"
+msgstr "Num Lock"
+
+#: src/gui/kernel/qkeysequence.cpp:467
+msgctxt "QShortcut"
+msgid "Number Lock"
+msgstr "Number Lock"
+
+#: src/gui/kernel/qkeysequence.cpp:468
+msgctxt "QShortcut"
+msgid "Scroll Lock"
+msgstr "Scroll Lock"
+
+#: src/gui/kernel/qkeysequence.cpp:469
+msgctxt "QShortcut"
+msgid "Insert"
+msgstr "挿入"
+
+#: src/gui/kernel/qkeysequence.cpp:470
+msgctxt "QShortcut"
+msgid "Delete"
+msgstr "削除"
+
+#: src/gui/kernel/qkeysequence.cpp:471
+msgctxt "QShortcut"
+msgid "Escape"
+msgstr "Escape"
+
+#: src/gui/kernel/qkeysequence.cpp:472
+msgctxt "QShortcut"
+msgid "System Request"
+msgstr "System Request"
+
+#: src/gui/kernel/qkeysequence.cpp:477
+msgctxt "QShortcut"
+msgid "Yes"
+msgstr "はい"
+
+#: src/gui/kernel/qkeysequence.cpp:478
+msgctxt "QShortcut"
+msgid "No"
+msgstr "いいえ"
+
+#: src/gui/kernel/qkeysequence.cpp:482
+msgctxt "QShortcut"
+msgid "Context1"
+msgstr "Context1"
+
+#: src/gui/kernel/qkeysequence.cpp:483
+msgctxt "QShortcut"
+msgid "Context2"
+msgstr "Context2"
+
+#: src/gui/kernel/qkeysequence.cpp:484
+msgctxt "QShortcut"
+msgid "Context3"
+msgstr "Context3"
+
+#: src/gui/kernel/qkeysequence.cpp:485
+msgctxt "QShortcut"
+msgid "Context4"
+msgstr "Context4"
+
+#: src/gui/kernel/qkeysequence.cpp:487
+msgctxt "QShortcut"
+msgid "Call"
+msgstr "Call"
+
+#: src/gui/kernel/qkeysequence.cpp:489
+msgctxt "QShortcut"
+msgid "Hangup"
+msgstr "Hangup"
+
+#: src/gui/kernel/qkeysequence.cpp:491
+msgctxt "QShortcut"
+msgid "Toggle Call/Hangup"
+msgstr "通話/終話の切替"
+
+#: src/gui/kernel/qkeysequence.cpp:492
+msgctxt "QShortcut"
+msgid "Flip"
+msgstr "Flip"
+
+#: src/gui/kernel/qkeysequence.cpp:494
+msgctxt "QShortcut"
+msgid "Voice Dial"
+msgstr "ボイスダイアル"
+
+#: src/gui/kernel/qkeysequence.cpp:496
+msgctxt "QShortcut"
+msgid "Last Number Redial"
+msgstr "直前の番号にリダイヤル"
+
+#: src/gui/kernel/qkeysequence.cpp:498
+msgctxt "QShortcut"
+msgid "Camera Shutter"
+msgstr "カメラシャッター"
+
+#: src/gui/kernel/qkeysequence.cpp:500
+msgctxt "QShortcut"
+msgid "Camera Focus"
+msgstr "カメラフォーカス"
+
+#: src/gui/kernel/qkeysequence.cpp:504
+msgctxt "QShortcut"
+msgid "Kanji"
+msgstr "漢字"
+
+#: src/gui/kernel/qkeysequence.cpp:505
+msgctxt "QShortcut"
+msgid "Muhenkan"
+msgstr "無変換"
+
+#: src/gui/kernel/qkeysequence.cpp:506
+msgctxt "QShortcut"
+msgid "Henkan"
+msgstr "変換"
+
+#: src/gui/kernel/qkeysequence.cpp:507
+msgctxt "QShortcut"
+msgid "Romaji"
+msgstr "ローマ字"
+
+#: src/gui/kernel/qkeysequence.cpp:508
+msgctxt "QShortcut"
+msgid "Hiragana"
+msgstr "ひらがな"
+
+#: src/gui/kernel/qkeysequence.cpp:509
+msgctxt "QShortcut"
+msgid "Katakana"
+msgstr "カタカナ"
+
+#: src/gui/kernel/qkeysequence.cpp:510
+msgctxt "QShortcut"
+msgid "Hiragana Katakana"
+msgstr "ひらがな/カタカナ"
+
+#: src/gui/kernel/qkeysequence.cpp:511
+msgctxt "QShortcut"
+msgid "Zenkaku"
+msgstr "全角"
+
+#: src/gui/kernel/qkeysequence.cpp:512
+msgctxt "QShortcut"
+msgid "Hankaku"
+msgstr "半角"
+
+#: src/gui/kernel/qkeysequence.cpp:513
+msgctxt "QShortcut"
+msgid "Zenkaku Hankaku"
+msgstr "全角/半角"
+
+#: src/gui/kernel/qkeysequence.cpp:514
+msgctxt "QShortcut"
+msgid "Touroku"
+msgstr "単語登録"
+
+#: src/gui/kernel/qkeysequence.cpp:515
+msgctxt "QShortcut"
+msgid "Massyo"
+msgstr "単語抹消"
+
+#: src/gui/kernel/qkeysequence.cpp:516
+msgctxt "QShortcut"
+msgid "Kana Lock"
+msgstr "カナロック"
+
+#: src/gui/kernel/qkeysequence.cpp:517
+msgctxt "QShortcut"
+msgid "Kana Shift"
+msgstr "カナシフト"
+
+#: src/gui/kernel/qkeysequence.cpp:518
+msgctxt "QShortcut"
+msgid "Eisu Shift"
+msgstr "英数シフト"
+
+#: src/gui/kernel/qkeysequence.cpp:519
+msgctxt "QShortcut"
+msgid "Eisu toggle"
+msgstr "英数"
+
+#: src/gui/kernel/qkeysequence.cpp:520
+msgctxt "QShortcut"
+msgid "Code input"
+msgstr "コード入力"
+
+#: src/gui/kernel/qkeysequence.cpp:521
+msgctxt "QShortcut"
+msgid "Multiple Candidate"
+msgstr "全候補"
+
+#: src/gui/kernel/qkeysequence.cpp:522
+msgctxt "QShortcut"
+msgid "Previous Candidate"
+msgstr "前候補"
+
+#: src/gui/kernel/qkeysequence.cpp:526
+msgctxt "QShortcut"
+msgid "Hangul"
+msgstr "ハングル"
+
+#: src/gui/kernel/qkeysequence.cpp:527
+msgctxt "QShortcut"
+msgid "Hangul Start"
+msgstr "Hangul Start"
+
+#: src/gui/kernel/qkeysequence.cpp:528
+msgctxt "QShortcut"
+msgid "Hangul End"
+msgstr "Hangul End"
+
+#: src/gui/kernel/qkeysequence.cpp:529
+msgctxt "QShortcut"
+msgid "Hangul Hanja"
+msgstr "ハングル 漢字"
+
+#: src/gui/kernel/qkeysequence.cpp:530
+msgctxt "QShortcut"
+msgid "Hangul Jamo"
+msgstr "ハングル 字母"
+
+#: src/gui/kernel/qkeysequence.cpp:531
+msgctxt "QShortcut"
+msgid "Hangul Romaja"
+msgstr "ハングル ローマ字入力"
+
+#: src/gui/kernel/qkeysequence.cpp:532
+msgctxt "QShortcut"
+msgid "Hangul Jeonja"
+msgstr "Hangul Jeonja"
+
+#: src/gui/kernel/qkeysequence.cpp:533
+msgctxt "QShortcut"
+msgid "Hangul Banja"
+msgstr "Hangul Banja"
+
+#: src/gui/kernel/qkeysequence.cpp:534
+msgctxt "QShortcut"
+msgid "Hangul PreHanja"
+msgstr "Hangul PreHanja"
+
+#: src/gui/kernel/qkeysequence.cpp:535
+msgctxt "QShortcut"
+msgid "Hangul PostHanja"
+msgstr "Hangul PostHanja"
+
+#: src/gui/kernel/qkeysequence.cpp:536
+msgctxt "QShortcut"
+msgid "Hangul Special"
+msgstr "Hangul Special"
+
+#: src/gui/text/qfontdatabase.cpp:77 src/gui/text/qfontdatabase.cpp:80
+#: src/gui/text/qfontdatabase.cpp:83 src/gui/text/qfontdatabase.cpp:86
+#: src/gui/text/qfontdatabase.cpp:92 src/gui/text/qfontdatabase.cpp:94
+#: src/gui/text/qfontdatabase.cpp:100 src/gui/text/qfontdatabase.cpp:104
+#: src/gui/text/qfontdatabase.cpp:208 src/gui/text/qfontdatabase.cpp:211
+#: src/gui/text/qfontdatabase.cpp:826 src/gui/text/qfontdatabase.cpp:828
+#: src/gui/text/qfontdatabase.cpp:830 src/gui/text/qfontdatabase.cpp:832
+#: src/gui/text/qfontdatabase.cpp:835 src/gui/text/qfontdatabase.cpp:837
+#: src/gui/text/qfontdatabase.cpp:840
+msgid "QFontDatabase"
+msgstr ""
+
+#: src/gui/text/qtextcontrol.cpp:2804
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRM Left-to-right mark"
+msgstr "LRM (左横書き指定)"
+
+#: src/gui/text/qtextcontrol.cpp:2805
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLM Right-to-left mark"
+msgstr "RLM (右横書き指定)"
+
+#: src/gui/text/qtextcontrol.cpp:2806
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWJ Zero width joiner"
+msgstr "ZWJ (幅のない接続文字)"
+
+#: src/gui/text/qtextcontrol.cpp:2807
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWNJ Zero width non-joiner"
+msgstr "ZWNJ (幅のない非接続文字)"
+
+#: src/gui/text/qtextcontrol.cpp:2808
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "ZWSP Zero width space"
+msgstr "ZWSP (幅の無い空白)"
+
+#: src/gui/text/qtextcontrol.cpp:2809
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRE Start of left-to-right embedding"
+msgstr "LRE (左横書き開始指定)"
+
+#: src/gui/text/qtextcontrol.cpp:2810
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLE Start of right-to-left embedding"
+msgstr "RLE (右横書き開始指定)"
+
+#: src/gui/text/qtextcontrol.cpp:2811
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "LRO Start of left-to-right override"
+msgstr "LRO (左横書き上書き開始指定)"
+
+#: src/gui/text/qtextcontrol.cpp:2812
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "RLO Start of right-to-left override"
+msgstr "RLO (右横書き上書き開始指定)"
+
+#: src/gui/text/qtextcontrol.cpp:2813
+msgctxt "QUnicodeControlCharacterMenu"
+msgid "PDF Pop directional formatting"
+msgstr "PDF (方向上書きの終了指定)"
+
+#: src/network/ssl/qsslsocket_openssl.cpp:830
+msgid "The TLS/SSL connection has been closed"
+msgstr ""
+
+#: src/network/kernel/qhostinfo_p.h:92
+msgctxt "QHostInfo"
+msgid "Unknown error"
+msgstr "未知のエラー"
+
+#: src/network/kernel/qhostinfo_unix.cpp:144
+#: src/network/kernel/qhostinfo_unix.cpp:145
+msgid "QHostInfoAgent"
+msgstr ""
+
+#: src/network/socket/qsocks5socketengine.cpp:1379
+msgctxt "QSocks5SocketEngine"
+msgid "Network operation timed out"
+msgstr "ネットワーク操作がタイムアウトしました"
+
+#: src/network/access/qhttpnetworkconnection.cpp:668
+#: src/network/access/qhttpnetworkconnection.cpp:671
+#: src/network/access/qhttpnetworkconnection.cpp:674
+#: src/network/access/qhttpnetworkconnection.cpp:680
+#: src/network/access/qhttpnetworkconnection.cpp:683
+#: src/network/access/qhttpnetworkconnection.cpp:686
+#: src/network/access/qhttpnetworkconnection.cpp:689
+#: src/network/access/qhttpnetworkconnection.cpp:692
+msgid "QHttp"
+msgstr ""
+
+#: src/network/access/qhttpnetworkconnection.cpp:677
+msgid "QAbstractSocket"
+msgstr ""
+
+#: src/network/access/qnetworkaccessdebugpipebackend.cpp:182
+msgid "QNetworkAccessDebugPipeBackend"
+msgstr ""
+
+#: src/network/access/qnetworkreplydataimpl.cpp:73
+msgid "QNetworkAccessDataBackend"
+msgstr ""
+
+#: src/network/access/qnetworkaccesscachebackend.cpp:58
+msgid "QNetworkAccessCacheBackend"
+msgstr ""
+
+#: src/network/access/qhttp.cpp:1554 src/network/access/qhttp.cpp:2370
+msgctxt "QHttp"
+msgid "Unknown error"
+msgstr "未知のエラー"
+
+#: src/network/access/qhttp.cpp:2381
+msgctxt "QHttp"
+msgid "No server set to connect to"
+msgstr "接続が設定されているサーバがありません"
+
+#: src/network/access/qhttp.cpp:2537
+msgctxt "QHttp"
+msgid "Wrong content length"
+msgstr "コンテンツの長さが正しくありません"
+
+#: src/network/access/qhttp.cpp:2541
+msgctxt "QHttp"
+msgid "Server closed connection unexpectedly"
+msgstr "サーバの接続が予期せず閉じられました"
+
+#: src/network/access/qhttp.cpp:2596
+msgctxt "QHttp"
+msgid "Connection refused (or timed out)"
+msgstr "接続が拒否されたか、タイムアウトしました"
+
+#: src/network/access/qhttp.cpp:2599
+msgctxt "QHttp"
+msgid "Host %1 not found"
+msgstr "ホスト %1 が見つかりません"
+
+#: src/network/access/qhttp.cpp:2619
+msgctxt "QHttp"
+msgid "HTTP request failed"
+msgstr "HTTP要求に失敗しました"
+
+#: src/network/access/qhttp.cpp:2707
+msgctxt "QHttp"
+msgid "Invalid HTTP response header"
+msgstr "無効なHTTP応答ヘッダです"
+
+#: src/network/access/qhttp.cpp:2735
+msgctxt "QHttp"
+msgid "Unknown authentication method"
+msgstr "非対応の認証方法が要求されました"
+
+#: src/network/access/qhttp.cpp:2745
+msgctxt "QHttp"
+msgid "Proxy authentication required"
+msgstr "プロキシーの認証が必要です"
+
+#: src/network/access/qhttp.cpp:2749
+msgctxt "QHttp"
+msgid "Authentication required"
+msgstr "認証が必要です"
+
+#: src/network/access/qhttp.cpp:2832 src/network/access/qhttp.cpp:2880
+msgctxt "QHttp"
+msgid "Invalid HTTP chunked body"
+msgstr "無効なHTTPチャンクドボディです"
+
+#: src/network/access/qhttp.cpp:2918
+msgctxt "QHttp"
+msgid "Error writing response to device"
+msgstr "デバイスへの書き込み時にエラーが発生しました"
+
+#: src/network/access/qhttpthreaddelegate.cpp:419
+#: src/network/access/qhttpthreaddelegate.cpp:442
+msgctxt "QNetworkReply"
+msgid "Error downloading %1 - server replied: %2"
+msgstr "%1 をダウンロード中にエラーが発生しました。サーバの返答: %2"
+
+#: src/network/access/qftp.cpp:2340
+msgctxt "QFtp"
+msgid ""
+"Connecting to host failed:\n"
+"%1"
+msgstr ""
+"ホストへの接続に失敗しました:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2344
+msgctxt "QFtp"
+msgid ""
+"Login failed:\n"
+"%1"
+msgstr ""
+"ログインに失敗しました:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2348
+msgctxt "QFtp"
+msgid ""
+"Listing directory failed:\n"
+"%1"
+msgstr ""
+"ディレクトリのリストに失敗しました:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2352
+msgctxt "QFtp"
+msgid ""
+"Changing directory failed:\n"
+"%1"
+msgstr ""
+"ディレクトリの変更に失敗しました:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2356
+msgctxt "QFtp"
+msgid ""
+"Downloading file failed:\n"
+"%1"
+msgstr ""
+"ファイルのダウンロードに失敗しました:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2360
+msgctxt "QFtp"
+msgid ""
+"Uploading file failed:\n"
+"%1"
+msgstr ""
+"ファイルのアップロードに失敗しました:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2364
+msgctxt "QFtp"
+msgid ""
+"Removing file failed:\n"
+"%1"
+msgstr ""
+"ファイルの削除に失敗しました:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2368
+msgctxt "QFtp"
+msgid ""
+"Creating directory failed:\n"
+"%1"
+msgstr ""
+"ディレクトリの作成に失敗しました:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2372
+msgctxt "QFtp"
+msgid ""
+"Removing directory failed:\n"
+"%1"
+msgstr ""
+"ディレクトリの削除に失敗しました:\n"
+"%1"
+
+#: src/network/access/qftp.cpp:2400
+msgctxt "QFtp"
+msgid "Connection closed"
+msgstr "接続が閉じられました"
+
+#: src/plugins/imageformats/tga/qtgafile.cpp:135
+msgid "Sequential device (eg socket) for image read not supported"
+msgstr ""
+
+#: src/plugins/imageformats/tga/qtgafile.cpp:140
+msgid "Seek file/device for image read failed"
+msgstr ""
+
+#: src/plugins/imageformats/tga/qtgafile.cpp:146
+msgid "Image mHeader read failed"
+msgstr ""
+
+#: src/plugins/imageformats/tga/qtgafile.cpp:161
+msgid "Image depth not valid"
+msgstr ""
+
+#: src/plugins/imageformats/tga/qtgafile.cpp:178
+msgid "Image type (non-TrueVision 2.0) not supported"
+msgstr ""
+
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:226
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:592
+msgid "QPSQLResult"
+msgstr ""
+
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:908
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:918
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:972
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:994
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1016
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1035
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1066
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1247
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1258
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1531
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1539
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1643
+msgid "QODBCResult"
+msgstr ""
+
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:460
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:487
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:640
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:646
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:738
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:748
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:817
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:825
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:857
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:948
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:959
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:973
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:982
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:994
+msgid "QMYSQLResult"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:153
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:155
+#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:157
+msgid "QScriptDebuggerStackModel"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:888
+#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:890
+msgid "QScriptDebuggerLocalsModel"
+msgstr ""
+
+#: src/scripttools/debugging/qscriptenginedebugger.cpp:570
+msgid "Katie Script Debugger"
+msgstr ""
+
+#: src/sql/drivers/qsql_sqlite.cpp:223 src/sql/drivers/qsql_sqlite.cpp:224
+#: src/sql/drivers/qsql_sqlite.cpp:298 src/sql/drivers/qsql_sqlite.cpp:307
+#: src/sql/drivers/qsql_sqlite.cpp:370 src/sql/drivers/qsql_sqlite.cpp:375
+#: src/sql/drivers/qsql_sqlite.cpp:395 src/sql/drivers/qsql_sqlite.cpp:447
+#: src/sql/drivers/qsql_sqlite.cpp:454
+msgid "QSQLiteResult"
+msgstr ""
+
+#: src/uitools/formscriptrunner.cpp:80
+msgid "Exception at line %1: %2"
+msgstr ""
+
+#: src/uitools/formscriptrunner.cpp:166
+msgid ""
+"An error occurred while running the script for %1: %2\n"
+"Script: %3"
+msgstr ""
+
+#: src/uitools/abstractformbuilder.cpp:195
+#: src/uitools/abstractformbuilder.cpp:200
+#: src/uitools/abstractformbuilder.cpp:206
+#: src/uitools/abstractformbuilder.cpp:310
+#: src/uitools/abstractformbuilder.cpp:606
+#: src/uitools/abstractformbuilder.cpp:668
+#: src/uitools/abstractformbuilder.cpp:878
+#: src/uitools/abstractformbuilder.cpp:1624
+#: src/uitools/abstractformbuilder.cpp:1705
+#: src/uitools/abstractformbuilder.cpp:2451
+#: src/uitools/abstractformbuilder.cpp:2962
+msgid "QAbstractFormBuilder"
+msgstr ""
+
+#: src/xml/sax/qxml.cpp:48
+msgctxt "QXml"
+msgid "no error occurred"
+msgstr "エラーは発生しませんでした"
+
+#: src/xml/sax/qxml.cpp:49
+msgctxt "QXml"
+msgid "error triggered by consumer"
+msgstr "消費者によってエラーが誘発されました"
+
+#: src/xml/sax/qxml.cpp:50
+msgctxt "QXml"
+msgid "unexpected end of file"
+msgstr "予期しないファイルの終りです"
+
+#: src/xml/sax/qxml.cpp:51
+msgctxt "QXml"
+msgid "more than one document type definition"
+msgstr "ドキュメントタイプの定義が複数あります"
+
+#: src/xml/sax/qxml.cpp:52
+msgctxt "QXml"
+msgid "error occurred while parsing element"
+msgstr "要素の解析中にエラーが発生しました"
+
+#: src/xml/sax/qxml.cpp:53
+msgctxt "QXml"
+msgid "tag mismatch"
+msgstr "タグが一致しません"
+
+#: src/xml/sax/qxml.cpp:54
+msgctxt "QXml"
+msgid "error occurred while parsing content"
+msgstr "コンテンツの解析中にエラーが発生しました"
+
+#: src/xml/sax/qxml.cpp:55
+msgctxt "QXml"
+msgid "unexpected character"
+msgstr "予期しない文字です"
+
+#: src/xml/sax/qxml.cpp:56
+msgctxt "QXml"
+msgid "invalid name for processing instruction"
+msgstr "処理の指示に無効な名前です"
+
+#: src/xml/sax/qxml.cpp:57
+msgctxt "QXml"
+msgid "version expected while reading the XML declaration"
+msgstr "XML宣言を読み込むにはバージョンが必要です"
+
+#: src/xml/sax/qxml.cpp:58
+msgctxt "QXml"
+msgid "wrong value for standalone declaration"
+msgstr "スタンドアロン宣言として正しくない値です"
+
+#: src/xml/sax/qxml.cpp:59
+msgctxt "QXml"
+msgid ""
+"encoding declaration or standalone declaration expected while reading the "
+"XML declaration"
+msgstr ""
+"XML宣言を読み込むにはエンコーディング宣言かスタンドアローン宣言が必要です"
+
+#: src/xml/sax/qxml.cpp:60
+msgctxt "QXml"
+msgid "standalone declaration expected while reading the XML declaration"
+msgstr "XML宣言を読み込むにはスタンドアローン宣言が必要です"
+
+#: src/xml/sax/qxml.cpp:61
+msgctxt "QXml"
+msgid "error occurred while parsing document type definition"
+msgstr "ドキュメントタイプの定義を解析中にエラーが発生しました"
+
+#: src/xml/sax/qxml.cpp:62
+msgctxt "QXml"
+msgid "letter is expected"
+msgstr "文字が必要です"
+
+#: src/xml/sax/qxml.cpp:63
+msgctxt "QXml"
+msgid "error occurred while parsing comment"
+msgstr "コメントの解析中にエラーが発生しました"
+
+#: src/xml/sax/qxml.cpp:64
+msgctxt "QXml"
+msgid "error occurred while parsing reference"
+msgstr "参照の解析中にエラーが発生しました"
+
+#: src/xml/sax/qxml.cpp:65
+msgctxt "QXml"
+msgid "internal general entity reference not allowed in DTD"
+msgstr "内部一般エンティティ参照はDTDで許可されていません"
+
+#: src/xml/sax/qxml.cpp:66
+msgctxt "QXml"
+msgid "external parsed general entity reference not allowed in attribute value"
+msgstr "解析された外部一般エンティティ参照は属性値で許されていません"
+
+#: src/xml/sax/qxml.cpp:67
+msgctxt "QXml"
+msgid "external parsed general entity reference not allowed in DTD"
+msgstr "解析された外部一般エンティティ参照はDTDで許されていません"
+
+#: src/xml/sax/qxml.cpp:68
+msgctxt "QXml"
+msgid "unparsed entity reference in wrong context"
+msgstr "不正な文脈で解析されないエンティティ参照です"
+
+#: src/xml/sax/qxml.cpp:69
+msgctxt "QXml"
+msgid "recursive entities"
+msgstr "再帰的エンティティ"
+
+#: src/xml/sax/qxml.cpp:70
+msgctxt "QXml"
+msgid "error in the text declaration of an external entity"
+msgstr "外部エンティティのテキスト宣言にエラーがあります"

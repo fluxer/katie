@@ -4,7 +4,6 @@
 set(KATIE_UIC "uic")
 set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
-set(KATIE_LRELEASE "lrelease")
 
 include(CMakePushCheckState)
 include(CheckStructHasMember)
@@ -258,18 +257,27 @@ function(KATIE_SETUP_TARGET FORTARGET)
                     OUTPUT "${rscout}"
                 )
             endif()
-        elseif("${rscext}" MATCHES ".ts")
+        elseif("${rscext}" MATCHES ".po" AND WITH_INTL AND INTL_FOUND)
             make_directory("${CMAKE_CURRENT_BINARY_DIR}")
-            set(rscout "${CMAKE_CURRENT_BINARY_DIR}/${rscname}.qm")
+            set(rscout "${CMAKE_CURRENT_BINARY_DIR}/${rscname}.mo")
+            if(rscout MATCHES "qt_tools")
+                set(rsbase "qt_tools")
+                string(REPLACE "qt_tools_" "" rslocale "${rscname}")
+            else()
+                set(rsbase "qt")
+                string(REPLACE "qt_" "" rslocale "${rscname}")
+            endif()
             add_custom_target(
                 ${FORTARGET}_${rscname} ALL
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}${KATIE_TOOLS_SUFFIX}" "${resource}" -qm "${rscout}"
+                COMMAND ${INTL_MSGFMT} -v "${resource}" -o "${rscout}"
                 DEPENDS "${KATIE_LRELEASE}"
+                COMMENT "Generating ${rscname}.mo"
             )
             set_source_files_properties("${rscout}" PROPERTIES GENERATED TRUE)
             install(
                 FILES "${rscout}"
-                DESTINATION "${KATIE_TRANSLATIONS_PATH}"
+                DESTINATION "${KATIE_TRANSLATIONS_PATH}/${rslocale}/LC_MESSAGES"
+                RENAME "${rsbase}.mo"
                 COMPONENT Runtime
             )
         endif()
