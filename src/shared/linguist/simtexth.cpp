@@ -38,10 +38,7 @@
 #include <QtCore/QString>
 #include <QtCore/QList>
 
-
 QT_BEGIN_NAMESPACE
-
-typedef QList<TranslatorMessage> TML;
 
 /*
   How similar are two texts?  The approach used here relies on co-occurrence
@@ -185,32 +182,11 @@ static inline CoMatrix intersection(const CoMatrix &m, const CoMatrix &n)
     return p;
 }
 
-StringSimilarityMatcher::StringSimilarityMatcher(const QString &stringToMatch)
-{
-    m_cm = new CoMatrix(stringToMatch);
-    m_length = stringToMatch.length();
-}
-
-int StringSimilarityMatcher::getSimilarityScore(const QString &strCandidate)
-{
-    CoMatrix cmTarget(strCandidate);
-    int delta = qAbs(m_length - strCandidate.size());
-    int score = ( (intersection(*m_cm, cmTarget).worth() + 1) << 10 ) /
-        ( reunion(*m_cm, cmTarget).worth() + (delta << 1) + 1 );
-    return score;
-}
-
-StringSimilarityMatcher::~StringSimilarityMatcher()
-{
-    delete m_cm;
-}
-
 /**
  * Checks how similar two strings are.
  * The return value is the score, and a higher score is more similar
  * than one with a low score.
  * Linguist considers a score over 190 to be a good match.
- * \sa StringSimilarityMatcher
  */
 int getSimilarityScore(const QString &str1, const QString &str2)
 {
@@ -222,46 +198,6 @@ int getSimilarityScore(const QString &str1, const QString &str2)
         / ( reunion(cm, cmTarget).worth() + (delta << 1) + 1 );
 
     return score;
-}
-
-CandidateList similarTextHeuristicCandidates(const Translator *tor,
-    const QString &text, int maxCandidates)
-{
-    QList<int> scores;
-    CandidateList candidates;
-
-    foreach (const TranslatorMessage &mtm, tor->messages()) {
-        if (mtm.type() == TranslatorMessage::Unfinished
-            || mtm.translation().isEmpty())
-            continue;
-
-        QString s = mtm.sourceText();
-        int score = getSimilarityScore(s, text);
-
-        if (candidates.size() == maxCandidates && score > scores[maxCandidates - 1] )
-            candidates.removeLast();
-
-        if (candidates.size() < maxCandidates && score >= textSimilarityThreshold) {
-            Candidate cand( s, mtm.translation() );
-
-            int i;
-            for (i = 0; i < candidates.size(); i++) {
-                if (score >= scores.at(i)) {
-                    if (score == scores.at(i)) {
-                        if (candidates.at(i) == cand)
-                            goto continue_outer_loop;
-                    } else {
-                        break;
-                    }
-                }
-            }
-            scores.insert(i, score);
-            candidates.insert(i, cand);
-        }
-        continue_outer_loop:
-        ;
-    }
-    return candidates;
 }
 
 QT_END_NAMESPACE
