@@ -311,7 +311,6 @@
 #cmakedefine QT_NO_TOOLBUTTON
 #cmakedefine QT_NO_TOOLTIP
 #cmakedefine QT_NO_TRANSLATION
-#cmakedefine QT_NO_TRANSLATION_BUILDER
 #cmakedefine QT_NO_TREEVIEW
 #cmakedefine QT_NO_TREEWIDGET
 #cmakedefine QT_NO_UDPSOCKET

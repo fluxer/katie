@@ -1339,7 +1339,7 @@ void QCoreApplication::installTranslator(QTranslator *translationFile)
     QCoreApplicationPrivate *d = self->d_func();
     d->translators.prepend(translationFile);
 
-#ifndef QT_NO_TRANSLATION_BUILDER
+#ifndef QT_NO_TRANSLATION
     if (translationFile->isEmpty())
         return;
 #endif
