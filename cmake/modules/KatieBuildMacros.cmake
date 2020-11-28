@@ -260,12 +260,12 @@ function(KATIE_SETUP_TARGET FORTARGET)
         elseif("${rscext}" MATCHES ".po" AND WITH_INTL AND INTL_FOUND)
             make_directory("${CMAKE_CURRENT_BINARY_DIR}")
             set(rscout "${CMAKE_CURRENT_BINARY_DIR}/${rscname}.mo")
-            if(rscout MATCHES "qt_tools")
-                set(rsbase "qt_tools")
-                string(REPLACE "qt_tools_" "" rslocale "${rscname}")
+            if("${rscname}" MATCHES "qt_tools")
+                set(rscbase "qt_tools")
+                string(REPLACE "qt_tools_" "" rsclocale "${rscname}")
             else()
-                set(rsbase "qt")
-                string(REPLACE "qt_" "" rslocale "${rscname}")
+                set(rscbase "qt")
+                string(REPLACE "qt_" "" rsclocale "${rscname}")
             endif()
             add_custom_target(
                 ${FORTARGET}_${rscname} ALL
@@ -276,8 +276,8 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set_source_files_properties("${rscout}" PROPERTIES GENERATED TRUE)
             install(
                 FILES "${rscout}"
-                DESTINATION "${KATIE_TRANSLATIONS_PATH}/${rslocale}/LC_MESSAGES"
-                RENAME "${rsbase}.mo"
+                DESTINATION "${KATIE_TRANSLATIONS_PATH}/${rsclocale}/LC_MESSAGES"
+                RENAME "${rscbase}.mo"
                 COMPONENT Runtime
             )
         endif()
