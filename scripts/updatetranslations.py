@@ -25,7 +25,7 @@ qtcommand = ['xgettext', '--from-code=UTF-8', '-o', 'translations/qt.pot',
     '-kQT_TR_NOOP:1', '-kQT_TR_NOOP_UTF8:1',
     '-kQT_TRANSLATE_NOOP:1c,2','-kQT_TRANSLATE_NOOP_UTF8:1c,2',
     '-kQT_TRANSLATE_NOOP3:1c,2,3', '-kQT_TRANSLATE_NOOP3_UTF8:1c,2,3',
-    '-ktranslate', '-ktr', '-ktrUtf8']
+    '-ktranslate:1c,2', '-ktr:1', '-ktrUtf8:1']
 qtcommand.extend(cfiles)
 subprocess.check_call(qtcommand)
 
@@ -33,13 +33,13 @@ qttoolscommand = ['xgettext', '--from-code=UTF-8', '-o', 'translations/qt_tools.
     '-kQT_TR_NOOP:1', '-kQT_TR_NOOP_UTF8:1',
     '-kQT_TRANSLATE_NOOP:1c,2','-kQT_TRANSLATE_NOOP_UTF8:1c,2',
     '-kQT_TRANSLATE_NOOP3:1c,2,3', '-kQT_TRANSLATE_NOOP3_UTF8:1c,2,3',
-    '-ktranslate', '-ktr', '-ktrUtf8']
+    '-ktranslate:1c,2', '-ktr:1', '-ktrUtf8:1']
 qttoolscommand.extend(tfiles)
 subprocess.check_call(qttoolscommand)
 
 for t in glob.glob('translations/*.po'):
     potfile = 'translations/qt.pot'
-    if t.startswith('qt_tools'):
+    if 'qt_tools' in t:
         potfile = 'translations/qt_tools.pot'
     subprocess.check_call(['msgmerge', '--verbose', '--update', t, potfile])
     subprocess.check_call(['msgattrib', '--no-fuzzy', '--no-obsolete', t, '-o', t])

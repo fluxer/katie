@@ -34,6 +34,3 @@ package/debian/katie-*/
 # tarballs from tarball.sh and oldmake.sh
 *.tar.xz
 scripts/cmake-*.tar.gz
-
-# temporary files used to update the translations
-translations/*.pot

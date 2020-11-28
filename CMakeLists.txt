@@ -535,7 +535,9 @@ add_subdirectory(src/uitools)
 
 add_subdirectory(src/tools)
 
-add_subdirectory(translations)
+if(WITH_INTL AND INTL_FOUND)
+    add_subdirectory(translations)
+endif()
 
 if(KATIE_TESTS OR KATIE_BENCHMARKS)
     add_subdirectory(tests)

@@ -257,29 +257,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
                     OUTPUT "${rscout}"
                 )
             endif()
-        elseif("${rscext}" MATCHES ".po" AND WITH_INTL AND INTL_FOUND)
-            make_directory("${CMAKE_CURRENT_BINARY_DIR}")
-            set(rscout "${CMAKE_CURRENT_BINARY_DIR}/${rscname}.mo")
-            if("${rscname}" MATCHES "qt_tools")
-                set(rscbase "qt_tools")
-                string(REPLACE "qt_tools_" "" rsclocale "${rscname}")
-            else()
-                set(rscbase "qt")
-                string(REPLACE "qt_" "" rsclocale "${rscname}")
-            endif()
-            add_custom_target(
-                ${FORTARGET}_${rscname} ALL
-                COMMAND ${INTL_MSGFMT} -v "${resource}" -o "${rscout}"
-                DEPENDS "${KATIE_LRELEASE}"
-                COMMENT "Generating ${rscname}.mo"
-            )
-            set_source_files_properties("${rscout}" PROPERTIES GENERATED TRUE)
-            install(
-                FILES "${rscout}"
-                DESTINATION "${KATIE_TRANSLATIONS_PATH}/${rsclocale}/LC_MESSAGES"
-                RENAME "${rscbase}.mo"
-                COMPONENT Runtime
-            )
         endif()
     endforeach()
     set_property(SOURCE "${resourcesdep}" APPEND PROPERTY OBJECT_DEPENDS "${targetresources}")
