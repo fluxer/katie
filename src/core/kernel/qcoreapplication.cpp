@@ -1470,13 +1470,6 @@ QString QCoreApplication::translate(const char *context, const char *sourceText,
     replacePercentN(&result, n);
     return result;
 }
-
-bool QCoreApplicationPrivate::isTranslatorInstalled(QTranslator *translator)
-{
-    return QCoreApplication::self
-           && QCoreApplication::self->d_func()->translators.contains(translator);
-}
-
 #endif //QT_NO_TRANSLATE
 
 /*!

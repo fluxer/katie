@@ -99,8 +99,6 @@ public:
     QString cachedApplicationDirPath;
     QString cachedApplicationFilePath;
 
-    static bool isTranslatorInstalled(QTranslator *translator);
-
     static QAbstractEventDispatcher *eventDispatcher;
     static bool is_app_running;
     static bool is_app_closing;
