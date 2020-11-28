@@ -11,8 +11,8 @@ include(CheckStructHasMember)
 # a function to check for C function/definition, works for external functions.
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     # see comment in top-level CMakeLists file
-    set(CMAKE_REQUIRED_FLAGS -I/usr/X11R7/include -I/usr/pkg/include -I/usr/local/include -I/usr/include -I/include)
-    set(CMAKE_REQUIRED_LINK_OPTIONS -I/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
+    set(CMAKE_REQUIRED_FLAGS "-I/usr/X11R7/include -I/usr/pkg/include -I/usr/local/include -I/usr/include -I/include")
+    set(CMAKE_REQUIRED_LINK_OPTIONS -L/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
     check_cxx_source_compiles(
         "
 #include <stdio.h>
