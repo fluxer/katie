@@ -37,6 +37,7 @@
 #include "qvariant.h"
 #include "qwidget_p.h"
 #include "qx11info_x11.h"
+
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE

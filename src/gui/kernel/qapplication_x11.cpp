@@ -1656,8 +1656,7 @@ void QApplication::setOverrideCursor(const QCursor &cursor)
 {
     qApp->d_func()->cursor_list.prepend(cursor);
 
-    QWidgetList all = allWidgets();
-    foreach (QWidget *it, all) {
+    foreach (QWidget *it, allWidgets()) {
         if ((it->testAttribute(Qt::WA_SetCursor) || it->isWindow()) && (it->windowType() != Qt::Desktop))
             qt_x11_enforce_cursor(it, false);
     }
