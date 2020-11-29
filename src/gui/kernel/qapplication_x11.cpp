@@ -1799,8 +1799,7 @@ void QApplication::alert(QWidget *widget, int msec)
         windowsToMark.append(widget->window());
     }
 
-    for (int i = 0; i < windowsToMark.size(); ++i) {
-        QWidget *window = windowsToMark.at(i);
+    foreach (QWidget *window, windowsToMark) {
         if (!window->isActiveWindow()) {
             qt_change_net_wm_state(window, true, ATOM(_NET_WM_STATE_DEMANDS_ATTENTION), 0);
             if (msec != 0) {
