@@ -1744,9 +1744,7 @@ QWidget *QApplication::topLevelAt(const QPoint &p)
         if (!w) {
             // Perhaps the widget at (x,y) is inside a foreign application?
             // Search all toplevel widgets to see if one is within target
-            QWidgetList list = QApplication::topLevelWidgets();
-            for (int i = 0; i < list.count(); ++i) {
-                QWidget *widget = list.at(i);
+            foreach (QWidget *widget, QApplication::topLevelWidgets()) {
                 Window ctarget = target;
                 if (widget->isVisible() && !(widget->windowType() == Qt::Desktop)) {
                     Q_ASSERT(widget->testAttribute(Qt::WA_WState_Created));
