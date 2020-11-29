@@ -2246,13 +2246,12 @@ void WriteInitialization::initializeTableWidget(DomWidget *w)
     enableSorting(w, varName, tempName);
 }
 
-QString WriteInitialization::trCall(const QString &str, const QString &commentHint) const
+QString WriteInitialization::trCall(const QString &str) const
 {
     if (str.isEmpty())
         return QLatin1String("QString()");
 
     QString result;
-    const QString comment = commentHint.isEmpty() ? QString(QLatin1Char('0')) : fixString(commentHint, m_dindent);
 
     if (m_option.translateFunction.isEmpty()) {
         result = QLatin1String("QApplication::translate(\"");
@@ -2265,8 +2264,6 @@ QString WriteInitialization::trCall(const QString &str, const QString &commentHi
     }
 
     result += fixString(str, m_dindent);
-    result += QLatin1String(", ");
-    result += comment;
 
     if (m_option.translateFunction.isEmpty()) {
         result += QLatin1String(", ");
@@ -2290,13 +2287,8 @@ void WriteInitialization::initializeMenu(DomWidget *w, const QString &/*parentWi
 
 QString WriteInitialization::trCall(DomString *str, const QString &defaultString) const
 {
-    QString value = defaultString;
-    QString comment;
-    if (str) {
-        value = toString(str);
-        comment = str->attributeComment();
-    }
-    return trCall(value, comment);
+    Q_UNUSED(str);
+    return trCall(defaultString);
 }
 
 QString WriteInitialization::noTrCall(DomString *str, const QString &defaultString) const

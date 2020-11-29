@@ -115,11 +115,9 @@ public:
     static void removeTranslator(QTranslator * messageFile);
 #endif
     enum Encoding { CodecForTr, UnicodeUTF8, DefaultCodec = CodecForTr };
-    static QString translate(const char * context,
-                             const char * sourceText,
-                             const char * disambiguation = Q_NULLPTR,
-                             Encoding encoding = CodecForTr,
-                             int n = -1);
+    static QString translate(const char *context,
+                             const char *sourceText,
+                             Encoding encoding = CodecForTr);
 
     static void flush();
 
@@ -169,8 +167,7 @@ inline void QCoreApplication::sendPostedEvents() { sendPostedEvents(Q_NULLPTR, 0
 
 #ifdef QT_NO_TRANSLATION
 // Simple versions
-inline QString QCoreApplication::translate(const char *, const char *sourceText,
-                                           const char *, Encoding encoding, int)
+inline QString QCoreApplication::translate(const char *, const char *sourceText, Encoding encoding)
 {
 #ifndef QT_NO_TEXTCODEC
     if (encoding == UnicodeUTF8)
@@ -184,12 +181,10 @@ inline QString QCoreApplication::translate(const char *, const char *sourceText,
 
 #define Q_DECLARE_TR_FUNCTIONS(context) \
 public: \
-    static inline QString tr(const char *sourceText, const char *disambiguation = Q_NULLPTR, int n = -1) \
-        { return QCoreApplication::translate(#context, sourceText, disambiguation, \
-                                             QCoreApplication::CodecForTr, n); } \
-    static inline QString trUtf8(const char *sourceText, const char *disambiguation = Q_NULLPTR, int n = -1) \
-        { return QCoreApplication::translate(#context, sourceText, disambiguation, \
-                                             QCoreApplication::UnicodeUTF8, n); } \
+    static inline QString tr(const char *sourceText) \
+        { return QCoreApplication::translate(#context, sourceText, QCoreApplication::CodecForTr); } \
+    static inline QString trUtf8(const char *sourceText) \
+        { return QCoreApplication::translate(#context, sourceText, QCoreApplication::UnicodeUTF8); } \
 private:
 
 typedef void (*QtCleanUpFunction)();

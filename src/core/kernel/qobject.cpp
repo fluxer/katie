@@ -1656,32 +1656,11 @@ void QObject::deleteLater()
 }
 
 /*!
-    \fn QString QObject::tr(const char *sourceText, const char *disambiguation, int n)
+    \fn QString QObject::tr(const char *sourceText)
     \reentrant
 
-    Returns a translated version of \a sourceText, optionally based on a
-    \a disambiguation string and value of \a n for strings containing plurals;
-    otherwise returns \a sourceText itself if no appropriate translated string
-    is available.
-
-    Example:
-    \snippet mainwindows/sdi/mainwindow.cpp implicit tr context
-    \dots
-
-    If the same \a sourceText is used in different roles within the
-    same context, an additional identifying string may be passed in
-    \a disambiguation (0 by default). In Qt 4.4 and earlier, this was
-    the preferred way to pass comments to translators.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_kernel_qobject.cpp 17
-    \dots
-
-    See \l{Writing Source Code for Translation} for a detailed description of
-    Qt's translation mechanisms in general, and the
-    \l{Writing Source Code for Translation#Disambiguation}{Disambiguation}
-    section for information on disambiguation.
+    Returns a translated version of \a sourceText. Returns \a sourceText
+    itself if no appropriate translated string is available.
 
     \warning This method is reentrant only if all translators are
     installed \e before calling this method. Installing or removing
@@ -1692,18 +1671,11 @@ void QObject::deleteLater()
 */
 
 /*!
-    \fn QString QObject::trUtf8(const char *sourceText, const char *disambiguation, int n)
+    \fn QString QObject::trUtf8(const char *sourceText)
     \reentrant
 
-    Returns a translated version of \a sourceText, or
-    QString::fromUtf8(\a sourceText) if there is no appropriate
-    version. It is otherwise identical to tr(\a sourceText, \a
-    disambiguation, \a n).
-
-    Note that using the Utf8 variants of the translation functions
-    is not required if \c CODECFORTR is already set to UTF-8 in the
-    qmake project file and QTextCodec::setCodecForTr("UTF-8") is
-    used.
+    Returns a translated version of \a sourceText. Returns \a sourceText
+    itself if no appropriate translated string is available.
 
     \warning This method is reentrant only if all translators are
     installed \e before calling this method. Installing or removing
@@ -1718,9 +1690,17 @@ void QObject::deleteLater()
 
     \sa tr(), QApplication::translate(), {Internationalization with Qt}
 */
+#ifndef QT_NO_TRANSLATION
+QString QObject::tr(const char *sourceText)
+{
+    return QCoreApplication::translate(Q_NULLPTR, sourceText, QCoreApplication::CodecForTr);
+}
 
-
-
+QString QObject::trUtf8(const char *sourceText)
+{
+    return QCoreApplication::translate(Q_NULLPTR, sourceText, QCoreApplication::UnicodeUTF8);
+}
+#endif
 
 /*****************************************************************************
   Signals and slots

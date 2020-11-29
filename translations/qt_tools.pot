@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-28 19:47+0000\n"
+"POT-Creation-Date: 2020-11-29 02:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,39 +142,39 @@ msgstr ""
 msgid "Choose a color for the selected effect color role."
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:51
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:63
 msgctxt "QtDBusViewer"
 msgid "Katie D-Bus Viewer"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:58
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:70
 msgid "Session Bus"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:59
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:71
 msgid "System Bus"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:61
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:73
 #: src/tools/designer/qdesigner_workbench.cpp:191
 msgid "&File"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:62
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:74
 #: src/tools/designer/qdesigner_actions.cpp:182
 msgid "&Quit"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:65
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:77
 #: src/tools/designer/qdesigner_workbench.cpp:208
 msgid "&Help"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:66
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:78
 msgid "&About"
 msgstr ""
 
-#: src/tools/qdbusviewer/qdbusviewermain.cpp:70
+#: src/tools/qdbusviewer/qdbusviewermain.cpp:82
 msgid "About &Katie"
 msgstr ""
 
@@ -754,9 +754,8 @@ msgid "Save Forms?"
 msgstr ""
 
 #: src/tools/designer/qdesigner_workbench.cpp:687
-#, c-format
 msgid ""
-"There are %n forms with unsaved changes. Do you want to review these changes "
+"There are %1 forms with unsaved changes. Do you want to review these changes "
 "before quitting?"
 msgstr ""
 

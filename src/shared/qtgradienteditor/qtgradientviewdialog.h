@@ -51,7 +51,7 @@ public:
     void setGradientManager(QtGradientManager *manager);
     QtGradientManager *gradientManager() const;
 
-    static QGradient getGradient(bool *ok, QtGradientManager *manager, QWidget *parent = Q_NULLPTR, const QString &caption = tr("Select Gradient", 0));
+    static QGradient getGradient(bool *ok, QtGradientManager *manager, QWidget *parent = Q_NULLPTR, const QString &caption = tr("Select Gradient"));
 
 private slots:
     void slotGradientSelected(const QString &id);

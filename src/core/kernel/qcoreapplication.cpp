@@ -1369,30 +1369,6 @@ void QCoreApplication::removeTranslator(QTranslator *translationFile)
     }
 }
 
-static void replacePercentN(QString *result, int n)
-{
-    if (n >= 0) {
-        int percentPos = 0;
-        int len = 0;
-        while ((percentPos = result->indexOf(QLatin1Char('%'), percentPos + len)) != -1) {
-            len = 1;
-            QString fmt;
-            if (result->at(percentPos + len) == QLatin1Char('L')) {
-                ++len;
-                fmt = QLatin1String("%L1");
-            } else {
-                fmt = QLatin1String("%1");
-            }
-            if (result->at(percentPos + len) == QLatin1Char('n')) {
-                fmt = fmt.arg(n);
-                ++len;
-                result->replace(percentPos, len, fmt);
-                len = fmt.length();
-            }
-        }
-    }
-}
-
 /*!
     \reentrant
     \since 4.5
@@ -1408,17 +1384,10 @@ static void replacePercentN(QString *result, int n)
     \a context is typically a class name (e.g., "MyDialog") and \a
     sourceText is either English text or a short identifying text.
 
-    \a disambiguation is an identifying string, for when the same \a
-    sourceText is used in different roles within the same context. By
-    default, it is null.
-
     See the \l QTranslator and \l QObject::tr() documentation for
-    more information about contexts, disambiguations and comments.
+    more information.
 
     \a encoding indicates the 8-bit encoding of character strings.
-
-    \a n is used in conjunction with \c %n to support plural forms.
-    See QObject::tr() for details.
 
     If none of the translation files contain a translation for \a
     sourceText in \a context, this function returns a QString
@@ -1438,8 +1407,7 @@ static void replacePercentN(QString *result, int n)
 */
 
 
-QString QCoreApplication::translate(const char *context, const char *sourceText,
-                                    const char *disambiguation, Encoding encoding, int n)
+QString QCoreApplication::translate(const char *context, const char *sourceText, Encoding encoding)
 {
     QString result;
 
@@ -1448,7 +1416,7 @@ QString QCoreApplication::translate(const char *context, const char *sourceText,
 
     if (self && !self->d_func()->translators.isEmpty()) {
         foreach (const QTranslator *translationFile, self->d_func()->translators) {
-            result = translationFile->translate(context, sourceText, disambiguation, n);
+            result = translationFile->translate(context, sourceText);
             if (!result.isEmpty())
                 break;
         }
@@ -1467,7 +1435,6 @@ QString QCoreApplication::translate(const char *context, const char *sourceText,
             result = QString::fromLatin1(sourceText);
     }
 
-    replacePercentN(&result, n);
     return result;
 }
 #endif //QT_NO_TRANSLATE

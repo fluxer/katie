@@ -762,19 +762,12 @@ JSC::JSValue QT_FASTCALL functionQsTranslate(JSC::ExecState *exec, JSC::JSObject
     if (!args.at(1).isString())
         return JSC::throwError(exec, JSC::GeneralError, "qsTranslate(): second argument (text) must be a string");
     if ((args.size() > 2) && !args.at(2).isString())
-        return JSC::throwError(exec, JSC::GeneralError, "qsTranslate(): third argument (comment) must be a string");
-    if ((args.size() > 3) && !args.at(3).isString())
         return JSC::throwError(exec, JSC::GeneralError, "qsTranslate(): fourth argument (encoding) must be a string");
-    if ((args.size() > 4) && !args.at(4).isNumber())
-        return JSC::throwError(exec, JSC::GeneralError, "qsTranslate(): fifth argument (n) must be a number");
     JSC::UString context = args.at(0).toString(exec);
     JSC::UString text = args.at(1).toString(exec);
-    JSC::UString comment;
-    if (args.size() > 2)
-        comment = args.at(2).toString(exec);
     QCoreApplication::Encoding encoding = QCoreApplication::UnicodeUTF8;
-    if (args.size() > 3) {
-        JSC::UString encStr = args.at(3).toString(exec);
+    if (args.size() > 2) {
+        JSC::UString encStr = args.at(2).toString(exec);
         if (encStr == "CodecForTr")
             encoding = QCoreApplication::CodecForTr;
         else if (encStr == "UnicodeUTF8")
@@ -782,13 +775,9 @@ JSC::JSValue QT_FASTCALL functionQsTranslate(JSC::ExecState *exec, JSC::JSObject
         else
             return JSC::throwError(exec, JSC::GeneralError, QString::fromLatin1("qsTranslate(): invalid encoding '%0'").arg(encStr));
     }
-    int n = -1;
-    if (args.size() > 4)
-        n = args.at(4).toInt32(exec);
     JSC::UString result = QCoreApplication::translate(context.UTF8String(),
                                                       text.UTF8String(),
-                                                      comment.UTF8String(),
-                                                      encoding, n);
+                                                      encoding);
     return JSC::jsString(exec, result);
 }
 
@@ -805,10 +794,6 @@ JSC::JSValue QT_FASTCALL functionQsTr(JSC::ExecState *exec, JSC::JSObject*, JSC:
         return JSC::throwError(exec, JSC::GeneralError, "qsTr() requires at least one argument");
     if (!args.at(0).isString())
         return JSC::throwError(exec, JSC::GeneralError, "qsTr(): first argument (text) must be a string");
-    if ((args.size() > 1) && !args.at(1).isString())
-        return JSC::throwError(exec, JSC::GeneralError, "qsTr(): second argument (comment) must be a string");
-    if ((args.size() > 2) && !args.at(2).isNumber())
-        return JSC::throwError(exec, JSC::GeneralError, "qsTr(): third argument (n) must be a number");
     QScriptEnginePrivate *engine = scriptEngineFromExec(exec);
     JSC::UString context;
     // The first non-empty source URL in the call stack determines the translation context.
@@ -824,16 +809,9 @@ JSC::JSValue QT_FASTCALL functionQsTr(JSC::ExecState *exec, JSC::JSObject*, JSC:
         }
     }
     JSC::UString text = args.at(0).toString(exec);
-    JSC::UString comment;
-    if (args.size() > 1)
-        comment = args.at(1).toString(exec);
-    int n = -1;
-    if (args.size() > 2)
-        n = args.at(2).toInt32(exec);
     JSC::UString result = QCoreApplication::translate(context.UTF8String(),
                                                       text.UTF8String(),
-                                                      comment.UTF8String(),
-                                                      QCoreApplication::UnicodeUTF8, n);
+                                                      QCoreApplication::UnicodeUTF8);
     return JSC::jsString(exec, result);
 }
 

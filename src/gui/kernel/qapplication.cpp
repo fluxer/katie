@@ -1828,11 +1828,9 @@ void QApplication::aboutQt()
 #ifndef QT_NO_TRANSLATION
 static bool qt_detectRTLLanguage()
 {
+    // Translate this string to the string 'LTR' in left-to-right languages or to 'RTL' in right to left languages
     return force_reverse ^
-        (QApplication::tr("QT_LAYOUT_DIRECTION",
-                         "Translate this string to the string 'LTR' in left-to-right"
-                         " languages or to 'RTL' in right-to-left languages (such as Hebrew"
-                         " and Arabic) to get proper widget layout.") == QLatin1String("RTL"));
+        (QApplication::tr("QT_LAYOUT_DIRECTION") == QLatin1String("RTL"));
 }
 #endif
 

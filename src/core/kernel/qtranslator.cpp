@@ -47,9 +47,9 @@ class QTranslatorPrivate : public QObjectPrivate
     Q_DECLARE_PUBLIC(QTranslator)
 public:
 
-    QTranslatorPrivate() : didload(false) {}
+    QTranslatorPrivate() {}
 
-    bool didload;
+    QByteArray domain;
 };
 
 /*!
@@ -88,8 +88,6 @@ public:
     \list
     \o The \e context - usually the class name for the tr() caller.
     \o The \e {source text} - usually the argument to tr().
-    \o The \e disambiguation - an optional string that helps disambiguate
-       different uses of the same text in the same context.
     \endlist
 
     For example, the "Cancel" in a dialog might have "Anuluj" when the
@@ -97,16 +95,6 @@ public:
     "Cancel"). The context would (normally) be the dialog's class
     name; there would normally be no comment, and the translated text
     would be "Anuluj".
-
-    But it's not always so simple. The Spanish version of a printer
-    dialog with settings for two-sided printing and binding would
-    probably require both "Activado" and "Activada" as translations
-    for "Enabled". In this case the source text would be "Enabled" in
-    both cases, and the context would be the dialog's class name, but
-    the two items would have disambiguations such as "two-sided printing"
-    for one and "binding" for the other. The disambiguation enables the
-    translator to choose the appropriate gender for the Spanish version,
-    and enables Qt to distinguish between translations.
 
     \section1 Using Multiple Translations
 
@@ -158,37 +146,30 @@ QTranslator::~QTranslator()
 
     The previous contents of this translator object are discarded.
 
-    For example, an application running in the fr_CA locale
-    (French-speaking Canada) might call load("foo", "fr_ca".
-
     \sa QLibraryInfo
 */
 
-bool QTranslator::load(const QString &domain, const QLocale &locale)
+bool QTranslator::load(const QString &domain)
 {
+    if (domain.isEmpty()) {
+        return false;
+    }
     Q_D(QTranslator);
-    Q_UNUSED(locale);
-    QByteArray latindomain(domain.toLatin1());
-    bind_textdomain_codeset(latindomain.constData(), "UTF-8");
-    d->didload = true;
+    d->domain = domain.toLatin1();
     return true;
 }
 
 /*!
-    Returns the translation for the key (\a context, \a sourceText,
-    \a disambiguation). If none is found, also tries (\a context, \a
-    sourceText, ""). If that still fails, returns an empty string.
-
-    If \a n is not -1, it is used to choose an appropriate form for
-    the translation (e.g. "%n file found" vs. "%n files found").
+    Returns the translation for the key (\a context, \a sourceText).
+    The text will be translated depending on the system locale.
 
     \sa load()
 */
-QString QTranslator::translate(const char *context, const char *sourceText, const char *disambiguation,
-                               int n) const
+QString QTranslator::translate(const char *context, const char *sourceText) const
 {
-    Q_UNUSED(disambiguation);
-    return QString::fromUtf8(ngettext(context, sourceText, n));
+    Q_UNUSED(context);
+    Q_D(const QTranslator);
+    return QString::fromUtf8(dgettext(d->domain.constData(), sourceText));
 }
 
 /*!
@@ -198,14 +179,8 @@ QString QTranslator::translate(const char *context, const char *sourceText, cons
 bool QTranslator::isEmpty() const
 {
     Q_D(const QTranslator);
-    return d->didload;
+    return d->domain.isEmpty();
 }
-
-/*!
-    \fn QString QTranslator::find(const char *context, const char *sourceText, const char * comment = 0) const
-
-    Use translate(\a context, \a sourceText, \a comment) instead.
-*/
 
 #include "moc_qtranslator.h"
 

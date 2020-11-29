@@ -162,21 +162,21 @@ void QtGradientStopsControllerPrivate::updateZoom(double zoom)
 
 void QtGradientStopsControllerPrivate::slotHsvClicked()
 {
-    QString h = QApplication::translate("qdesigner_internal::QtGradientStopsController", "H", 0, QApplication::UnicodeUTF8);
-    QString s = QApplication::translate("qdesigner_internal::QtGradientStopsController", "S", 0, QApplication::UnicodeUTF8);
-    QString v = QApplication::translate("qdesigner_internal::QtGradientStopsController", "V", 0, QApplication::UnicodeUTF8);
+    QString h = QApplication::translate("qdesigner_internal::QtGradientStopsController", "H", QApplication::UnicodeUTF8);
+    QString s = QApplication::translate("qdesigner_internal::QtGradientStopsController", "S", QApplication::UnicodeUTF8);
+    QString v = QApplication::translate("qdesigner_internal::QtGradientStopsController", "V", QApplication::UnicodeUTF8);
 
     m_ui->hLabel->setText(h);
     m_ui->sLabel->setText(s);
     m_ui->vLabel->setText(v);
 
-    h = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Hue", 0, QApplication::UnicodeUTF8);
-    s = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Sat", 0, QApplication::UnicodeUTF8);
-    v = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Val", 0, QApplication::UnicodeUTF8);
+    h = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Hue", QApplication::UnicodeUTF8);
+    s = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Sat", QApplication::UnicodeUTF8);
+    v = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Val", QApplication::UnicodeUTF8);
 
-    const QString hue = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Hue", 0, QApplication::UnicodeUTF8);
-    const QString saturation = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Saturation", 0, QApplication::UnicodeUTF8);
-    const QString value = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Value", 0, QApplication::UnicodeUTF8);
+    const QString hue = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Hue", QApplication::UnicodeUTF8);
+    const QString saturation = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Saturation", QApplication::UnicodeUTF8);
+    const QString value = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Value", QApplication::UnicodeUTF8);
 
     m_ui->hLabel->setToolTip(hue);
     m_ui->hueLabel->setText(h);
@@ -198,17 +198,17 @@ void QtGradientStopsControllerPrivate::slotHsvClicked()
 
 void QtGradientStopsControllerPrivate::slotRgbClicked()
 {
-    QString r = QApplication::translate("qdesigner_internal::QtGradientStopsController", "R", 0, QApplication::UnicodeUTF8);
-    QString g = QApplication::translate("qdesigner_internal::QtGradientStopsController", "G", 0, QApplication::UnicodeUTF8);
-    QString b = QApplication::translate("qdesigner_internal::QtGradientStopsController", "B", 0, QApplication::UnicodeUTF8);
+    QString r = QApplication::translate("qdesigner_internal::QtGradientStopsController", "R", QApplication::UnicodeUTF8);
+    QString g = QApplication::translate("qdesigner_internal::QtGradientStopsController", "G", QApplication::UnicodeUTF8);
+    QString b = QApplication::translate("qdesigner_internal::QtGradientStopsController", "B", QApplication::UnicodeUTF8);
 
     m_ui->hLabel->setText(r);
     m_ui->sLabel->setText(g);
     m_ui->vLabel->setText(b);
 
-    QString red = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Red", 0, QApplication::UnicodeUTF8);
-    QString green = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Green", 0, QApplication::UnicodeUTF8);
-    QString blue = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Blue", 0, QApplication::UnicodeUTF8);
+    QString red = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Red", QApplication::UnicodeUTF8);
+    QString green = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Green", QApplication::UnicodeUTF8);
+    QString blue = QApplication::translate("qdesigner_internal::QtGradientStopsController", "Blue", QApplication::UnicodeUTF8);
 
     m_ui->hLabel->setToolTip(red);
     m_ui->hueLabel->setText(red);

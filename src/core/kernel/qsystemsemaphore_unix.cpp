@@ -130,7 +130,7 @@ key_t QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
         return unix_key;
 
     if (key.isEmpty()) {
-        errorString = QCoreApplication::tr("%1: key is empty", "QSystemSemaphore").arg(QLatin1String("QSystemSemaphore::handle"));
+        errorString = QCoreApplication::tr("%1: key is empty").arg(QLatin1String("QSystemSemaphore::handle"));
         error = QSystemSemaphore::KeyError;
         return -1;
     }
@@ -138,7 +138,7 @@ key_t QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
     // ftok requires that an actual file exists somewhere
     int built = QSharedMemoryPrivate::createUnixKeyFile(fileName);
     if (-1 == built) {
-        errorString = QCoreApplication::tr("%1: unable to make key", "QSystemSemaphore").arg(QLatin1String("QSystemSemaphore::handle"));
+        errorString = QCoreApplication::tr("%1: unable to make key").arg(QLatin1String("QSystemSemaphore::handle"));
         error = QSystemSemaphore::KeyError;
         return -1;
     }
@@ -147,7 +147,7 @@ key_t QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
     // Get the unix key for the created file
     unix_key = ftok(QFile::encodeName(fileName).constData(), 'Q');
     if (-1 == unix_key) {
-        errorString = QCoreApplication::tr("%1: ftok failed", "QSystemSemaphore").arg(QLatin1String("QSystemSemaphore::handle"));
+        errorString = QCoreApplication::tr("%1: ftok failed").arg(QLatin1String("QSystemSemaphore::handle"));
         error = QSystemSemaphore::KeyError;
         return -1;
     }
@@ -192,7 +192,7 @@ bool QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
         return true;  // we already have a semaphore
 
     if (fileName.isEmpty()) {
-        errorString = QCoreApplication::tr("%1: key is empty", "QSystemSemaphore").arg(QLatin1String("QSystemSemaphore::handle"));
+        errorString = QCoreApplication::tr("%1: key is empty").arg(QLatin1String("QSystemSemaphore::handle"));
         error = QSystemSemaphore::KeyError;
         return false;
     }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-28 19:47+0000\n"
+"POT-Creation-Date: 2020-11-29 02:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1923,22 +1923,22 @@ msgid "Recent Places"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:655
-#: src/gui/itemviews/qdirmodel.cpp:1218
+#: src/gui/itemviews/qdirmodel.cpp:1217
 msgid "%1 TB"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:657
-#: src/gui/itemviews/qdirmodel.cpp:1220
+#: src/gui/itemviews/qdirmodel.cpp:1219
 msgid "%1 GB"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:659
-#: src/gui/itemviews/qdirmodel.cpp:1222
+#: src/gui/itemviews/qdirmodel.cpp:1221
 msgid "%1 MB"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:661
-#: src/gui/itemviews/qdirmodel.cpp:1224
+#: src/gui/itemviews/qdirmodel.cpp:1223
 msgid "%1 KB"
 msgstr ""
 
@@ -1964,11 +1964,11 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:801 src/gui/itemviews/qdirmodel.cpp:410
+#: src/gui/dialogs/qfilesystemmodel.cpp:801 src/gui/itemviews/qdirmodel.cpp:409
 msgid "Type"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:807 src/gui/itemviews/qdirmodel.cpp:413
+#: src/gui/dialogs/qfilesystemmodel.cpp:807 src/gui/itemviews/qdirmodel.cpp:412
 msgid "Date Modified"
 msgstr ""
 
@@ -2294,7 +2294,7 @@ msgstr ""
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1832
+#: src/gui/kernel/qapplication.cpp:1833
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -3382,12 +3382,12 @@ msgstr ""
 msgid "F%1"
 msgstr ""
 
-#: src/gui/itemviews/qdirmodel.cpp:806
+#: src/gui/itemviews/qdirmodel.cpp:805
 msgctxt "QFileDialog"
 msgid "My Computer"
 msgstr ""
 
-#: src/gui/itemviews/qdirmodel.cpp:1225
+#: src/gui/itemviews/qdirmodel.cpp:1224
 msgid "%1 byte(s)"
 msgstr ""
 

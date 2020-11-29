@@ -798,7 +798,7 @@ QVariant QFileSystemModel::headerData(int section, Qt::Orientation orientation, 
             break;
     case 1: returnValue = tr("Size");
             break;
-    case 2: returnValue = tr("Type", "All other platforms");
+    case 2: returnValue = tr("Type");
             break;
     // Windows   - Type
     // OS X      - Kind

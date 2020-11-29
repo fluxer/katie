@@ -35,7 +35,6 @@
 #define QTRANSLATOR_H
 
 #include <QtCore/qobject.h>
-#include <QtCore/qlocale.h>
 
 QT_BEGIN_HEADER
 
@@ -53,13 +52,11 @@ public:
     explicit QTranslator(QObject *parent = Q_NULLPTR);
     ~QTranslator();
 
-    virtual QString translate(const char *context, const char *sourceText,
-                              const char *disambiguation = Q_NULLPTR,
-                              int n = -1) const;
+    virtual QString translate(const char *context, const char *sourceText) const;
 
     virtual bool isEmpty() const;
 
-    bool load(const QString &domain, const QLocale &locale = QLocale::system());
+    bool load(const QString &domain);
 
 
 private:
