@@ -1339,10 +1339,8 @@ void QCoreApplication::installTranslator(QTranslator *translationFile)
     QCoreApplicationPrivate *d = self->d_func();
     d->translators.prepend(translationFile);
 
-#ifndef QT_NO_TRANSLATION
     if (translationFile->isEmpty())
         return;
-#endif
 
     QEvent ev(QEvent::LanguageChange);
     QCoreApplication::sendEvent(self, &ev);
@@ -1409,35 +1407,28 @@ void QCoreApplication::removeTranslator(QTranslator *translationFile)
 
 QString QCoreApplication::translate(const char *context, const char *sourceText, Encoding encoding)
 {
-    QString result;
-
-    if (!sourceText)
-        return result;
+    if (Q_UNLIKELY(!sourceText))
+        return QString();
 
     if (self && !self->d_func()->translators.isEmpty()) {
         foreach (const QTranslator *translationFile, self->d_func()->translators) {
-            result = translationFile->translate(context, sourceText);
+            QString result = translationFile->translate(context, sourceText);
             if (!result.isEmpty())
-                break;
+                return result;
         }
     }
 
-    if (result.isEmpty()) {
 #ifdef QT_NO_TEXTCODEC
-        Q_UNUSED(encoding)
+    Q_UNUSED(encoding)
 #else
-        if (encoding == UnicodeUTF8)
-            result = QString::fromUtf8(sourceText);
-        else if (QTextCodec::codecForTr() != 0)
-            result = QTextCodec::codecForTr()->toUnicode(sourceText);
-        else
+    if (encoding == UnicodeUTF8)
+        return QString::fromUtf8(sourceText);
+    else if (QTextCodec::codecForTr())
+        return QTextCodec::codecForTr()->toUnicode(sourceText);
 #endif
-            result = QString::fromLatin1(sourceText);
-    }
-
-    return result;
+    return QString::fromLatin1(sourceText);
 }
-#endif //QT_NO_TRANSLATE
+#endif // QT_NO_TRANSLATION
 
 /*!
     Returns the directory that contains the application executable.
@@ -1445,10 +1436,6 @@ QString QCoreApplication::translate(const char *context, const char *sourceText,
     For example, if you have installed Qt in the \c{C:\Trolltech\Qt}
     directory, and you run the \c{regexp} example, this function will
     return "C:/Trolltech/Qt/examples/tools/regexp".
-
-    On Mac OS X this will point to the directory actually containing the
-    executable, which may be inside of an application bundle (if the
-    application is bundled).
 
     \warning On Linux, this function will try to get the path from the
     \c {/proc} file system. If that fails, it assumes that \c
