@@ -97,25 +97,6 @@
 
 QT_BEGIN_NAMESPACE
 
-//#define X_NOT_BROKEN
-#ifdef X_NOT_BROKEN
-// Some X libraries are built with setlocale #defined to _Xsetlocale,
-// even though library users are then built WITHOUT such a definition.
-// This creates a problem - Qt might setlocale() one value, but then
-// X looks and doesn't see the value Qt set. The solution here is to
-// implement _Xsetlocale just in case X calls it - redirecting it to
-// the real libC version.
-//
-# ifndef setlocale
-extern "C" char *_Xsetlocale(int category, const char *locale);
-char *_Xsetlocale(int category, const char *locale)
-{
-    //qDebug("_Xsetlocale(%d,%s),category,locale");
-    return setlocale(category,locale);
-}
-# endif // setlocale
-#endif // X_NOT_BROKEN
-
 /* Warning: if you modify this string, modify the list of atoms in qt_x11_p.h as well! */
 static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     // window-manager <-> client protocols
