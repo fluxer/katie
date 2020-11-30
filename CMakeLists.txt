@@ -128,8 +128,8 @@ add_feature_info(harfbuzz WITH_HARFBUZZ "build Harfbuzz support")
 option(WITH_ODBC "Build ODBC database plugin" ON)
 add_feature_info(odbc WITH_ODBC "build ODBC support")
 
-option(WITH_PSQL "Build PostgreSQL database plugin" ON)
-add_feature_info(postgresql WITH_PSQL "build PostgreSQL support")
+option(WITH_POSTGRESQL "Build PostgreSQL database plugin" ON)
+add_feature_info(postgresql WITH_POSTGRESQL "build PostgreSQL support")
 
 option(WITH_MYSQL "Build MySQL database plugin" ON)
 add_feature_info(mysql WITH_MYSQL "build MySQL support")
@@ -1076,4 +1076,7 @@ add_custom_target(install-doc
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
 )
 
-feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES) 
+feature_summary(
+    WHAT ALL
+    FATAL_ON_MISSING_REQUIRED_PACKAGES
+)

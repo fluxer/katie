@@ -88,7 +88,7 @@ endif()
 if(WITH_ODBC AND ODBC_FOUND)
     add_subdirectory(sqldrivers/odbc)
 endif()
-if(WITH_PSQL AND PostgreSQL_FOUND)
+if(WITH_POSTGRESQL AND POSTGRESQL_FOUND)
     add_subdirectory(sqldrivers/psql)
 endif()
 
