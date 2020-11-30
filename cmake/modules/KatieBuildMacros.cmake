@@ -138,9 +138,13 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
         katie_string_wrap("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
         set(PACKAGE_FLAGS "${PACKAGE_FLAGS} ${KATIE_DEFINITIONS}")
     endif()
+    set(PACKAGE_PREFIXDIR "${CMAKE_INSTALL_PREFIX}")
+    string(REPLACE "${PACKAGE_PREFIXDIR}" "\${prefix}" PACKAGE_INCLUDEDIR "${KATIE_HEADERS_PATH}")
+    string(REPLACE "${PACKAGE_PREFIXDIR}" "\${exec_prefix}" PACKAGE_LIBDIR "${KATIE_LIBRARIES_PATH}")
     configure_file(
         "${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake"
         "${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc"
+        @ONLY
     )
     install(
         FILES "${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc"

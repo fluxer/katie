@@ -73,13 +73,11 @@ QT_BEGIN_NAMESPACE
     This enum type is used to specify a specific location
     specifier:
 
-    \value PrefixPath The default prefix for all paths.
     \value HeadersPath The location for all headers.
     \value LibrariesPath The location of installed libraries.
     \value BinariesPath The location of installed Qt binaries (tools and applications).
     \value PluginsPath The location of installed Qt plugins.
     \value ImportsPath The location of installed QML extensions to import.
-    \value DataPath The location of general Qt data.
     \value TranslationsPath The location of translation information for Qt strings.
 
     \sa location()
@@ -140,8 +138,6 @@ QDate QLibraryInfo::buildDate()
 QString QLibraryInfo::location(LibraryLocation loc)
 {
     switch (loc) {
-        case PrefixPath:
-            return QString::fromLocal8Bit(qt_configure_prefix_path_str);
         case HeadersPath:
             return QString::fromLocal8Bit(qt_configure_headers_path_str);
         case LibrariesPath:
@@ -150,8 +146,6 @@ QString QLibraryInfo::location(LibraryLocation loc)
             return QString::fromLocal8Bit(qt_configure_binaries_path_str);
         case PluginsPath:
             return QString::fromLocal8Bit(qt_configure_plugins_path_str);
-        case DataPath:
-            return QString::fromLocal8Bit(qt_configure_data_path_str);
         case TranslationsPath:
             return QString::fromLocal8Bit(qt_configure_translations_path_str);
         case ImportsPath:

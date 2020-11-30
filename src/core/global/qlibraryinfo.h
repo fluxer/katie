@@ -45,12 +45,10 @@ class Q_CORE_EXPORT QLibraryInfo
 {
 public:
     enum LibraryLocation {
-        PrefixPath,
         HeadersPath,
         LibrariesPath,
         BinariesPath,
         PluginsPath,
-        DataPath,
         TranslationsPath,
         ImportsPath
     };

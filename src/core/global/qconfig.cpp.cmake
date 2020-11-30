@@ -38,11 +38,9 @@ static const char* qt_configure_licensee_str           = "${KATIE_LICENSE}\0";
 static const char* qt_configure_licensed_products_str  = "${KATIE_PRODUCT}\0";
 
 /* Runtime paths */
-static const char* qt_configure_prefix_path_str        = "${KATIE_PREFIX_PATH}\0";
 static const char* qt_configure_headers_path_str       = "${KATIE_HEADERS_PATH}\0";
 static const char* qt_configure_libraries_path_str     = "${KATIE_LIBRARIES_PATH}\0";
 static const char* qt_configure_binaries_path_str      = "${KATIE_BINARIES_PATH}\0";
 static const char* qt_configure_plugins_path_str       = "${KATIE_PLUGINS_PATH}\0";
 static const char* qt_configure_imports_path_str       = "${KATIE_IMPORTS_PATH}\0";
-static const char* qt_configure_data_path_str          = "${KATIE_DATA_PATH}\0";
 static const char* qt_configure_translations_path_str  = "${KATIE_TRANSLATIONS_PATH}\0";
