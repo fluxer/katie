@@ -156,6 +156,7 @@ bool QTranslator::load(const QString &domain)
     }
     Q_D(QTranslator);
     d->domain = domain.toLatin1();
+    bind_textdomain_codeset(d->domain.constData(), "UTF-8");
     return true;
 }
 
