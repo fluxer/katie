@@ -140,7 +140,7 @@
 #cmakedefine QT_NO_IMAGEFORMAT_TIFF
 #cmakedefine QT_NO_RESOLV
 #cmakedefine QT_NO_SESSIONMANAGER
-#cmakedefine QT_NO_UNWIND
+#cmakedefine QT_NO_EXECINFO
 #cmakedefine QT_NO_XCURSOR
 #cmakedefine QT_NO_XFIXES
 #cmakedefine QT_NO_XINERAMA

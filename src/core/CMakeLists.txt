@@ -470,12 +470,12 @@ if(WITH_INTL AND INTL_FOUND)
     include_directories(${INTL_INCLUDES})
 endif()
 
-if(WITH_UNWIND AND UNWIND_FOUND AND HAVE_CXXABI)
+if(WITH_EXECINFO AND EXECINFO_FOUND AND HAVE_CXXABI)
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
-        ${UNWIND_LIBRARIES}
+        ${EXECINFO_LIBRARIES}
     )
-    include_directories(${UNWIND_INCLUDES})
+    include_directories(${EXECINFO_INCLUDES})
 endif()
 
 katie_generate_misc("${CORE_HEADERS}" QtCore)

@@ -21,8 +21,8 @@ find_path(INTL_INCLUDES
 
 set(INTL_LIBRARIES)
 foreach(name ${INTL_NAMES})
-    unset(HAVE_bind_textdomain_codeset CACHE)
     if(NOT INTL_LIBRARIES)
+        unset(HAVE_bind_textdomain_codeset CACHE)
         cmake_reset_check_state()
         set(CMAKE_REQUIRED_LIBRARIES ${name})
         katie_check_defined(bind_textdomain_codeset "libintl.h")

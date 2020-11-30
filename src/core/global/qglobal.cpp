@@ -48,10 +48,9 @@
 #  include <exception>
 #endif
 
-#ifndef QT_NO_UNWIND
+#ifndef QT_NO_EXECINFO
 #  include "qcoreapplication.h"
-#  define UNW_LOCAL_ONLY
-#  include <libunwind.h>
+#  include <execinfo.h>
 #  include <cxxabi.h>
 #endif
 
@@ -1057,38 +1056,29 @@ void qBadAlloc()
     QT_THROW(std::bad_alloc());
 }
 
-#ifndef QT_NO_UNWIND
+#ifndef QT_NO_EXECINFO
 static void qt_print_backtrace()
 {
-    unw_cursor_t cursor;
-    unw_context_t context;
-
-    if (unw_getcontext(&context) != 0) {
-        ::fprintf(stderr, "qt_print_backtrace: unable to get context\n");
+    void *buffer[256];
+    int  nptrs = backtrace(buffer, sizeof(buffer));
+    char **strings = backtrace_symbols(buffer, nptrs);
+    if (!strings) {
+        ::fprintf(stderr, "qt_print_backtrace: unable to get backtrace\n");
         return;
     }
 
-    if (unw_init_local(&cursor, &context) != 0) {
-        ::fprintf(stderr, "qt_print_backtrace: unable to initialize\n");
-        return;
-    }
-
-    while (unw_step(&cursor) > 0) {
-        unw_word_t offset;
-        char sym[256];
-        if (unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0) {
-            int status;
-            char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
-            if (status == 0) {
-                ::printf(" %s\n", demangled);
-                ::free(demangled);
-            } else {
-                ::printf(" %s\n", sym);
-            }
+    for (int i = 0; i < nptrs; i++) {
+        int status;
+        char* demangled = abi::__cxa_demangle(strings[i], nullptr, nullptr, &status);
+        if (status == 0) {
+            ::printf(" %s\n", demangled);
+            ::free(demangled);
         } else {
-            ::fprintf(stderr, "qt_print_backtrace: unable to obtain symbol name for this frame\n");
+            ::printf(" %s\n", strings[i]);
         }
     }
+
+    ::free(strings);
 }
 
 typedef void (*QCrashHandler)(int);
@@ -1164,7 +1154,7 @@ Q_CONSTRUCTOR_FUNCTION(qt_install_crash_handler);
 */
 void qt_assert(const char *assertion, const char *file, int line)
 {
-#ifndef QT_NO_UNWIND
+#ifndef QT_NO_EXECINFO
     // don't print backtrace twice if abort() will be called in qt_message_output()
     if (qgetenv("QT_FATAL_WARNINGS").isNull())
         qt_print_backtrace();
@@ -1177,7 +1167,7 @@ void qt_assert(const char *assertion, const char *file, int line)
 */
 void qt_assert_x(const char *where, const char *what, const char *file, int line)
 {
-#ifndef QT_NO_UNWIND
+#ifndef QT_NO_EXECINFO
     // don't print backtrace twice if abort() will be called in qt_message_output()
     if (qgetenv("QT_FATAL_WARNINGS").isNull())
         qt_print_backtrace();

@@ -140,8 +140,8 @@ add_feature_info(resolv WITH_RESOLV "build resolv support")
 option(WITH_INTL "Build Intl support" ON)
 add_feature_info(intl WITH_INTL "build Intl support")
 
-option(WITH_UNWIND "Build Unwind support" OFF)
-add_feature_info(unwind WITH_UNWIND "build Unwind support")
+option(WITH_EXECINFO "Build ExecInfo support" OFF)
+add_feature_info(execinfo WITH_EXECINFO "build ExecInfo support")
 
 # optional features
 option(KATIE_TESTS "Build automatic tests" OFF)
@@ -341,11 +341,11 @@ set_package_properties(Intl PROPERTIES
     TYPE OPTIONAL
 )
 
-find_package(Unwind)
-set_package_properties(Unwind PROPERTIES
+find_package(ExecInfo)
+set_package_properties(ExecInfo PROPERTIES
     PURPOSE "Required for stack traces on assert and crash"
-    DESCRIPTION "A (mostly) platform-independent unwind API"
-    URL "https://www.nongnu.org/libunwind/index.html"
+    DESCRIPTION "Standard C library specific execinfo implementation"
+    URL ""
     TYPE OPTIONAL
 )
 
@@ -360,7 +360,7 @@ add_definitions(
     # -DQT_NO_CAST_TO_ASCII
 )
 
-# for symbols mangling while unwinding in core component
+# for symbols mangling while backtracing in core component
 check_include_file_cxx(cxxabi.h HAVE_CXXABI)
 
 # stored in qconfig.h.cmake
@@ -487,8 +487,8 @@ if(NOT WITH_INTL OR NOT INTL_FOUND)
     katie_definition(-DQT_NO_TRANSLATION)
 endif()
 
-if(NOT WITH_UNWIND OR NOT UNWIND_FOUND OR NOT HAVE_CXXABI)
-    katie_definition(-DQT_NO_UNWIND)
+if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND OR NOT HAVE_CXXABI)
+    katie_definition(-DQT_NO_EXECINFO)
 endif()
 
 # conditional features
