@@ -990,13 +990,13 @@ configure_file(
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
-    ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.conf
+    ${CMAKE_BINARY_DIR}/ld.so.conf.conf
     @ONLY
 )
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/profile.sh.cmake
-    ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.sh
+    ${CMAKE_BINARY_DIR}/profile.sh
     @ONLY
 )
 
@@ -1033,14 +1033,16 @@ install(
 )
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.conf
+    FILES ${CMAKE_BINARY_DIR}/ld.so.conf
     DESTINATION ${KATIE_LDCONF_PATH}
+    RENAME katie-${KATIE_PROCESSOR}.conf
     COMPONENT Runtime
 )
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.sh
+    FILES ${CMAKE_BINARY_DIR}/profile.sh
     DESTINATION ${KATIE_PROFILE_PATH}
+    RENAME katie-${KATIE_PROCESSOR}.sh
     COMPONENT Runtime
 )
 
