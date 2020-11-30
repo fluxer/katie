@@ -55,7 +55,7 @@ bool QAbstractTestLogger::isTtyOutput()
 {
     QTEST_ASSERT(QTest::stream);
 
-    static bool ttyoutput = isatty(fileno(QTest::stream));
+    static bool ttyoutput = ::isatty(QT_FILENO(QTest::stream));
     return ttyoutput;
 }
 
