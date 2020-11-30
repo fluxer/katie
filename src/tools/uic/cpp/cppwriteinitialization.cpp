@@ -2287,8 +2287,11 @@ void WriteInitialization::initializeMenu(DomWidget *w, const QString &/*parentWi
 
 QString WriteInitialization::trCall(DomString *str, const QString &defaultString) const
 {
-    Q_UNUSED(str);
-    return trCall(defaultString);
+    QString value = defaultString;
+    if (str) {
+        value = toString(str);
+    }
+    return trCall(value);
 }
 
 QString WriteInitialization::noTrCall(DomString *str, const QString &defaultString) const
