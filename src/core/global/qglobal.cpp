@@ -1616,28 +1616,7 @@ int qrand()
 
     \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 35
 
-    \sa QT_TR_NOOP(), QT_TRANSLATE_NOOP3(), {Internationalization with Qt}
-*/
-
-/*!
-    \macro QT_TRANSLATE_NOOP3(context, sourceText, comment)
-    \relates <QtGlobal>
-    \since 4.4
-
-    Marks the string literal \a sourceText for dynamic translation in the
-    given \a context and with \a comment, i.e the stored \a sourceText will
-    not be altered. The \a context is typically a class and also needs to
-    be specified as string literal. The string literal \a comment
-    will be available for translators using e.g. Qt Linguist.
-
-    The macro expands to anonymous struct of the two string
-    literals passed as \a sourceText and \a comment.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 36
-
-    \sa QT_TR_NOOP(), QT_TRANSLATE_NOOP(), {Internationalization with Qt}
+    \sa QT_TR_NOOP(), {Internationalization with Qt}
 */
 
 /*!

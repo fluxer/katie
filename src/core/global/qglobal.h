@@ -1011,8 +1011,6 @@ template <typename Wrapper> static inline typename Wrapper::pointer qGetPtrHelpe
 #define QT_TR_NOOP_UTF8(x) (x)
 #define QT_TRANSLATE_NOOP(scope, x) (x)
 #define QT_TRANSLATE_NOOP_UTF8(scope, x) (x)
-#define QT_TRANSLATE_NOOP3(scope, x, comment) {x, comment}
-#define QT_TRANSLATE_NOOP3_UTF8(scope, x, comment) {x, comment}
 
 #define QDOC_PROPERTY(text)
 
