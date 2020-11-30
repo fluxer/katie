@@ -10,9 +10,9 @@
 cmake_minimum_required(VERSION 2.8.12.2 FATAL_ERROR)
 
 if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
-    message(FATAL_ERROR "\nThe project should not be build in the source directory")
+    message(FATAL_ERROR "The project should not be build in the source directory")
 elseif(CMAKE_CROSSCOMPILING AND NOT KATIE_CROSS_EXEC)
-    message(FATAL_ERROR "\nCross-compiling requires KATIE_CROSS_EXEC to be set to QEMU executable, e.g. qemu-arm-static")
+    message(FATAL_ERROR "Cross-compiling requires KATIE_CROSS_EXEC to be set to QEMU executable, e.g. qemu-arm-static")
 endif()
 
 project(Katie C CXX)
@@ -65,6 +65,12 @@ if(CMAKE_SYSTEM_PROCESSOR)
     string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" KATIE_PROCESSOR)
 elseif(CMAKE_HOST_SYSTEM_PROCESSOR)
     string(TOLOWER "${CMAKE_HOST_SYSTEM_PROCESSOR}" KATIE_PROCESSOR)
+endif()
+
+# used in katie_optimize_headers()
+find_program(KATIE_UNIFDEF NAMES unifdef)
+if(NOT KATIE_UNIFDEF)
+    message(WARNING "Could not find unifdef, headers will not be optimized")
 endif()
 
 # used as shebang for profile, exec, dbg and trace scripts
@@ -425,10 +431,7 @@ configure_file(
 )
 
 if(KATIE_TESTS OR KATIE_BENCHMARKS)
-    message(WARNING
-        "\nUnless it is intentionall you should not enable testing, deploying tests builds"
-        " is a bad idea."
-    )
+    message(WARNING "Deploying tests builds is a bad idea")
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()

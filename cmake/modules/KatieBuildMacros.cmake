@@ -297,17 +297,13 @@ endmacro()
 # a macro to remove conditional code from headers which is only relevant to the
 # process of building Katie itself
 macro(KATIE_OPTIMIZE_HEADERS DIR)
-    find_program(unifdef NAMES unifdef)
-    if(unifdef)
+    if(KATIE_UNIFDEF)
         install(
             CODE "set(UNIFDEF_EXECUTABLE \"${unifdef}\")"
             CODE "set(HEADERS_DIRECTORY \"${DIR}\")"
             CODE "set(HEADERS_DEFINITIONS \"${ARGN}\")"
             SCRIPT "${CMAKE_SOURCE_DIR}/cmake/modules/OptimizeHeaders.cmake"
         )
-    else()
-        get_filename_component(basename "${DIR}" NAME)
-        message(WARNING "unifdef not installed, cannot optimize headers for: ${basename}")
     endif()
 endmacro()
 
