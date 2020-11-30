@@ -59,8 +59,6 @@ set(KATIE_MINOR "9")
 set(KATIE_MICRO "0")
 set(KATIE_HEX "0x040900")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
-# this one is set via macro later, if possible. also used in config.cpp.cmake
-set(KATIE_GIT "unstable-${KATIE_VERSION}")
 
 # only for the build process
 if(CMAKE_SYSTEM_PROCESSOR)
@@ -81,11 +79,6 @@ endif()
 # and that's it - the rest of the build system has everything in place.
 set(KATIE_COMPONENTS "Core Gui Declarative Designer Network Sql Svg Xml Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc designer qscript qtconfig")
-
-# for config.cpp.cmake
-string(TIMESTAMP KATIE_DATE "%Y-%m-%d")
-set(KATIE_LICENSE "Open Source")
-set(KATIE_PRODUCT "AwesomeSauce")
 
 include(GNUInstallDirs)
 set(KATIE_HEADERS_PATH "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
@@ -979,7 +972,6 @@ katie_generate_obsolete(customwidget.h QtDesigner ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
 
 katie_string_wrap("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
-katie_git_checkout(KATIE_GIT)
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/KatieConfig.cmake

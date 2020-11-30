@@ -178,29 +178,6 @@ function(KATIE_STRING_UNWRAP INSTR OUTLST)
     endif()
 endfunction()
 
-# a function to get the Git checkout hash and store it in a variable
-function(KATIE_GIT_CHECKOUT OUTSTR)
-    find_program(git NAMES git)
-    if(EXISTS "${CMAKE_SOURCE_DIR}/.git" AND NOT git)
-        message(WARNING "Git is not installed, unable to obtain checkout.\n")
-    else(EXISTS "${CMAKE_SOURCE_DIR}/.git")
-        execute_process(
-            COMMAND "${git}" rev-parse HEAD
-            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-            RESULT_VARIABLE git_result
-            ERROR_VARIABLE git_output
-            OUTPUT_VARIABLE git_output
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-
-        if(NOT git_result STREQUAL 0)
-            message(WARNING "Git command failed, unable to obtain checkout:\n${git_output}")
-        else()
-            set(${OUTSTR} "${git_output}" PARENT_SCOPE)
-        endif()
-    endif()
-endfunction()
-
 # a macro to instruct katie_setup_target() which sources to exclude from the
 # all-in-one source file
 macro(KATIE_ALLINONE_EXCLUDE ARG1)
