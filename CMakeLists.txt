@@ -990,7 +990,7 @@ configure_file(
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
-    ${CMAKE_BINARY_DIR}/ld.so.conf.conf
+    ${CMAKE_BINARY_DIR}/ld.so.conf
     @ONLY
 )
 
