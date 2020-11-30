@@ -135,12 +135,13 @@
 // External packages dependant
 #cmakedefine QT_NO_CUPS
 #cmakedefine QT_NO_DBUS
+#cmakedefine QT_NO_EXECINFO
 #cmakedefine QT_NO_FONTCONFIG
 #cmakedefine QT_NO_IMAGEFORMAT_JPEG
 #cmakedefine QT_NO_IMAGEFORMAT_TIFF
 #cmakedefine QT_NO_RESOLV
 #cmakedefine QT_NO_SESSIONMANAGER
-#cmakedefine QT_NO_EXECINFO
+#cmakedefine QT_NO_TRANSLATION
 #cmakedefine QT_NO_XCURSOR
 #cmakedefine QT_NO_XFIXES
 #cmakedefine QT_NO_XINERAMA
@@ -310,7 +311,6 @@
 #cmakedefine QT_NO_TOOLBOX
 #cmakedefine QT_NO_TOOLBUTTON
 #cmakedefine QT_NO_TOOLTIP
-#cmakedefine QT_NO_TRANSLATION
 #cmakedefine QT_NO_TREEVIEW
 #cmakedefine QT_NO_TREEWIDGET
 #cmakedefine QT_NO_UDPSOCKET
