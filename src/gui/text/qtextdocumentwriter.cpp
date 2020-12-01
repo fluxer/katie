@@ -40,16 +40,14 @@
 #include <QtCore/qdebug.h>
 #include "qtextdocument.h"
 #include "qtextdocumentfragment.h"
-
 #include "qtextdocumentfragment_p.h"
-#include "qtextodfwriter_p.h"
 
 QT_BEGIN_NAMESPACE
 
 class QTextDocumentWriterPrivate
 {
 public:
-    QTextDocumentWriterPrivate(QTextDocumentWriter* qq);
+    QTextDocumentWriterPrivate();
 
     // device
     QByteArray format;
@@ -58,8 +56,6 @@ public:
 #ifndef QT_NO_TEXTCODEC
     QTextCodec *codec;
 #endif
-
-    QTextDocumentWriter *q;
 };
 
 /*!
@@ -92,13 +88,12 @@ public:
 /*!
     \internal
 */
-QTextDocumentWriterPrivate::QTextDocumentWriterPrivate(QTextDocumentWriter *qq)
+QTextDocumentWriterPrivate::QTextDocumentWriterPrivate()
     : device(0),
     deleteDevice(false),
 #ifndef QT_NO_TEXTCODEC
-    codec(QTextCodec::codecForName("utf-8")),
+    codec(QTextCodec::codecForName("utf-8"))
 #endif
-    q(qq)
 {
 }
 
@@ -108,7 +103,7 @@ QTextDocumentWriterPrivate::QTextDocumentWriterPrivate(QTextDocumentWriter *qq)
     setFileName().
 */
 QTextDocumentWriter::QTextDocumentWriter()
-    : d(new QTextDocumentWriterPrivate(this))
+    : d(new QTextDocumentWriterPrivate())
 {
 }
 
@@ -117,7 +112,7 @@ QTextDocumentWriter::QTextDocumentWriter()
     in the document format specified by \a format.
 */
 QTextDocumentWriter::QTextDocumentWriter(QIODevice *device, const QByteArray &format)
-    : d(new QTextDocumentWriterPrivate(this))
+    : d(new QTextDocumentWriterPrivate())
 {
     d->device = device;
     d->format = format;
@@ -130,7 +125,7 @@ QTextDocumentWriter::QTextDocumentWriter(QIODevice *device, const QByteArray &fo
     format by inspecting the extension of \a fileName.
 */
 QTextDocumentWriter::QTextDocumentWriter(const QString &fileName, const QByteArray &format)
-    : d(new QTextDocumentWriterPrivate(this))
+    : d(new QTextDocumentWriterPrivate())
 {
     QFile *file = new QFile(fileName);
     d->device = file;
@@ -249,16 +244,6 @@ bool QTextDocumentWriter::write(const QTextDocument *document)
 
     QByteArray format = !d->format.isEmpty() ? d->format.toLower() : suffix;
 
-#ifndef QT_NO_TEXTODFWRITER
-    if (format == "odf" || format == "opendocumentformat" || format == "odt") {
-        QTextOdfWriter writer(*document, d->device);
-#ifndef QT_NO_TEXTCODEC
-        writer.setCodec(d->codec);
-#endif
-        return writer.writeAll();
-    }
-#endif // QT_NO_TEXTODFWRITER
-
 #ifndef QT_NO_TEXTHTMLPARSER
     if (format == "html" || format == "htm") {
         if (!d->device->isWritable() && ! d->device->open(QIODevice::WriteOnly)) {
@@ -340,24 +325,17 @@ QTextCodec *QTextDocumentWriter::codec() const
     \header \o Format    \o Description
     \row    \o plaintext \o Plain text
     \row    \o HTML      \o HyperText Markup Language
-    \row    \o ODF       \o OpenDocument Format
     \endtable
 
     \sa setFormat()
 */
 QList<QByteArray> QTextDocumentWriter::supportedDocumentFormats()
 {
-    QList<QByteArray> answer;
-    answer << "plaintext";
-
+    static QList<QByteArray> answer = QList<QByteArray>()
 #ifndef QT_NO_TEXTHTMLPARSER
-    answer << "HTML";
+        << "HTML"
 #endif
-#ifndef QT_NO_TEXTODFWRITER
-    answer << "ODF";
-#endif // QT_NO_TEXTODFWRITER
-
-    qSort(answer);
+        << "plaintext";
     return answer;
 }
 

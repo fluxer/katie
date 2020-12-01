@@ -107,6 +107,7 @@
 #define QT_NO_NSL
 #define QT_NO_NAS
 #define QT_NO_IMAGEFORMAT_MNG
+#define QT_NO_TEXTODFWRITER
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -306,7 +307,6 @@
 #cmakedefine QT_NO_TEXTDATE
 #cmakedefine QT_NO_TEXTEDIT
 #cmakedefine QT_NO_TEXTHTMLPARSER
-#cmakedefine QT_NO_TEXTODFWRITER
 #cmakedefine QT_NO_TOOLBAR
 #cmakedefine QT_NO_TOOLBOX
 #cmakedefine QT_NO_TOOLBUTTON
@@ -447,11 +447,6 @@
 // QTabBar
 #if !defined(QT_NO_TABBAR) && defined(QT_NO_TOOLBUTTON)
 #  define QT_NO_TABBAR
-#endif
-
-// OdfWriter
-#if !defined(QT_NO_TEXTODFWRITER) && defined(QT_NO_XMLSTREAMWRITER)
-#  define QT_NO_TEXTODFWRITER
 #endif
 
 // QUndoGroup
