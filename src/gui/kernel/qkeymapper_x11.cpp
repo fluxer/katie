@@ -468,10 +468,51 @@ static const struct KeyTblData {
     { XK_KP_Space,                Qt::Key_Space },
     { XK_KP_Tab,                  Qt::Key_Tab },
     { XK_KP_Enter,                Qt::Key_Enter },
-    // { XK_KP_F1,                 Qt::Key_F1 },
-    // { XK_KP_F2,                 Qt::Key_F2 },
-    // { XK_KP_F3,                 Qt::Key_F3 },
-    // { XK_KP_F4,                 Qt::Key_F4 },
+    { XK_KP_0,                    Qt::Key_0 },
+    { XK_KP_1,                    Qt::Key_1 },
+    { XK_KP_2,                    Qt::Key_2 },
+    { XK_KP_3,                    Qt::Key_3 },
+    { XK_KP_4,                    Qt::Key_4 },
+    { XK_KP_5,                    Qt::Key_5 },
+    { XK_KP_6,                    Qt::Key_6 },
+    { XK_KP_7,                    Qt::Key_7 },
+    { XK_KP_8,                    Qt::Key_8 },
+    { XK_KP_9,                    Qt::Key_9 },
+    { XK_F1,                      Qt::Key_F1 },
+    { XK_F2,                      Qt::Key_F2 },
+    { XK_F3,                      Qt::Key_F3 },
+    { XK_F4,                      Qt::Key_F4 },
+    { XK_F5,                      Qt::Key_F5 },
+    { XK_F6,                      Qt::Key_F6 },
+    { XK_F7,                      Qt::Key_F7 },
+    { XK_F8,                      Qt::Key_F8 },
+    { XK_F9,                      Qt::Key_F9 },
+    { XK_F10,                     Qt::Key_F10 },
+    { XK_F11,                     Qt::Key_F11 },
+    { XK_F12,                     Qt::Key_F12 },
+    { XK_F13,                     Qt::Key_F13 },
+    { XK_F14,                     Qt::Key_F14 },
+    { XK_F15,                     Qt::Key_F15 },
+    { XK_F16,                     Qt::Key_F16 },
+    { XK_F17,                     Qt::Key_F17 },
+    { XK_F18,                     Qt::Key_F18 },
+    { XK_F19,                     Qt::Key_F19 },
+    { XK_F20,                     Qt::Key_F20 },
+    { XK_F21,                     Qt::Key_F21 },
+    { XK_F22,                     Qt::Key_F22 },
+    { XK_F23,                     Qt::Key_F23 },
+    { XK_F24,                     Qt::Key_F24 },
+    { XK_F25,                     Qt::Key_F25 },
+    { XK_F26,                     Qt::Key_F26 },
+    { XK_F27,                     Qt::Key_F27 },
+    { XK_F28,                     Qt::Key_F28 },
+    { XK_F29,                     Qt::Key_F29 },
+    { XK_F30,                     Qt::Key_F30 },
+    { XK_F31,                     Qt::Key_F31 },
+    { XK_F32,                     Qt::Key_F32 },
+    { XK_F33,                     Qt::Key_F33 },
+    { XK_F34,                     Qt::Key_F34 },
+    { XK_F35,                     Qt::Key_F35 },
     { XK_KP_Home,                 Qt::Key_Home },
     { XK_KP_Left,                 Qt::Key_Left },
     { XK_KP_Up,                   Qt::Key_Up },
@@ -823,16 +864,8 @@ static QString translateKeySym(KeySym keysym, uint xmodifiers,
     if (keysym < 128 || (keysym < 256 && (!qt_input_mapper || qt_input_mapper->mibEnum()==4))) {
         // upper-case key, if known
         code = isprint((int)keysym) ? toupper((int)keysym) : 0;
-    } else if (keysym >= XK_F1 && keysym <= XK_F35) {
-        // function keys
-        code = Qt::Key_F1 + ((int)keysym - XK_F1);
     } else if (keysym >= XK_KP_Space && keysym <= XK_KP_9) {
-        if (keysym >= XK_KP_0) {
-            // numeric keypad keys
-            code = Qt::Key_0 + ((int)keysym - XK_KP_0);
-        } else {
-            code = translateKeySym(keysym);
-        }
+        code = translateKeySym(keysym);
         modifiers |= Qt::KeypadModifier;
     } else if (text.length() == 1 && text.unicode()->unicode() > 0x1f && text.unicode()->unicode() != 0x7f && !(keysym >= XK_dead_grave && keysym <= XK_dead_horn)) {
         code = text.unicode()->toUpper().unicode();
