@@ -494,7 +494,6 @@ include/katie/QtDesigner/customwidget.h
 include/katie/QtDesigner/default_extensionfactory.h
 include/katie/QtDesigner/dynamicpropertysheet.h
 include/katie/QtDesigner/extension.h
-include/katie/QtDesigner/extension_global.h
 include/katie/QtDesigner/extrainfo.h
 include/katie/QtDesigner/formbuilder.h
 include/katie/QtDesigner/layoutdecoration.h
@@ -505,7 +504,6 @@ include/katie/QtDesigner/qdesigner_components_global.h
 include/katie/QtDesigner/qdesignercustomwidgetinterface.h
 include/katie/QtDesigner/qdesignerexportwidget.h
 include/katie/QtDesigner/qextensionmanager.h
-include/katie/QtDesigner/sdk_global.h
 include/katie/QtDesigner/taskmenu.h
 include/katie/QtDesignerComponents/QtDesignerComponents
 include/katie/QtDesignerComponents/brushmanagerproxy.h
