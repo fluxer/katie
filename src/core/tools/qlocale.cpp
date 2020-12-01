@@ -472,15 +472,19 @@ QDataStream &operator>>(QDataStream &ds, QLocale &l)
 
 static quint16 localePrivateIndex(const QLocalePrivate *p)
 {
+    if (Q_LIKELY(p)) {
 #ifndef QT_NO_SYSTEMLOCALE
-    if (p && p == system_lp)
-        return systemLocaleIndex;
+        if (p == system_lp) {
+            return systemLocaleIndex;
+        }
 #endif
-    for (qint16 i = 0; i < localeTblSize; i++) {
-        if (p->m_language == localeTbl[i].m_language
-            && p->m_country == localeTbl[i].m_country
-            && p->m_script == localeTbl[i].m_script)
-            return i;
+        for (qint16 i = 0; i < localeTblSize; i++) {
+            if (p->m_language == localeTbl[i].m_language
+                && p->m_country == localeTbl[i].m_country
+                && p->m_script == localeTbl[i].m_script) {
+                return i;
+            }
+        }
     }
     return 0;
 }

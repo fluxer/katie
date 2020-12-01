@@ -36,10 +36,6 @@
 #include "qset.h"
 #include "qabstractfileengine_p.h"
 
-#ifndef QT_BOOTSTRAPPED
-#  include "qresource_p.h"
-#endif
-
 QT_BEGIN_NAMESPACE
 
 //these unix functions are in this file, because they were shared by symbian port

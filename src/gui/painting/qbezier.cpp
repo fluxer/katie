@@ -477,10 +477,8 @@ qreal QBezier::tForY(qreal t0, qreal t1, qreal y) const
 
         if (yt < y) {
             t0 = t;
-            py0 = yt;
         } else {
             t1 = t;
-            py1 = yt;
         }
         dt = lt - t;
         lt = t;

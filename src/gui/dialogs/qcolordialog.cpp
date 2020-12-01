@@ -227,7 +227,7 @@ QSize QWellArray::sizeHint() const
 
 void QWellArray::paintCell(QPainter* p, int row, int col, const QRect &rect)
 {
-    int b = 3; //margin
+    static const int b = 3; //margin
 
     const QPalette & g = palette();
     QStyleOptionFrame opt;
@@ -238,7 +238,6 @@ void QWellArray::paintCell(QPainter* p, int row, int col, const QRect &rect)
     opt.palette = g;
     opt.state = QStyle::State_Enabled | QStyle::State_Sunken;
     style()->drawPrimitive(QStyle::PE_Frame, &opt, p, this);
-    b += dfw;
 
     if ((row == curRow) && (col == curCol)) {
         if (hasFocus()) {

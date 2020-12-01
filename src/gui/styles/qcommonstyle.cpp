@@ -4539,7 +4539,7 @@ QSize QCommonStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt,
         if (const QStyleOptionMenuItem *mi = qstyleoption_cast<const QStyleOptionMenuItem *>(opt)) {
             bool checkable = mi->menuHasCheckableItems;
             int maxpmw = mi->maxIconWidth;
-            int w = sz.width(), h = sz.height();
+            int w = sz.width(), h = 0;
             if (mi->menuItemType == QStyleOptionMenuItem::Separator) {
                 w = 10;
                 h = 2;
@@ -4714,7 +4714,6 @@ int QCommonStyle::styleHint(StyleHint sh, const QStyleOption *opt, const QWidget
     case SH_LineEdit_PasswordCharacter: {
         const QFontMetrics &fm = opt ? opt->fontMetrics
                                      : (widget ? widget->fontMetrics() : QFontMetrics(QFont()));
-        ret = 0;
         if (fm.inFont(QChar(0x25CF))) {
             ret = 0x25CF;
         } else if (fm.inFont(QChar(0x2022))) {

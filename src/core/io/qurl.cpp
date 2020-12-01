@@ -681,11 +681,9 @@ static bool QT_FASTCALL _IPv6Address(const char **ptr)
     int canBeCase = -1;
     bool ls32WasRead = false;
 
-    const char *tmpBackup = *ptr;
-
     // count the number of (h16 ":") on the right of ::
     for (;;) {
-        tmpBackup = *ptr;
+        const char *tmpBackup = *ptr;
         if (!_h16(ptr)) {
             if (!_ls32(ptr)) {
                 if (rightHexColons != 0) {

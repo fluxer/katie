@@ -380,7 +380,7 @@ bool QShortcut::event(QEvent *e)
             if (QWhatsThis::inWhatsThisMode()) {
                 QWhatsThis::showText(QCursor::pos(), d->sc_whatsthis);
                 handled = true;
-            } else
+            }
 #endif
             if (se->isAmbiguous())
                 emit activatedAmbiguously();

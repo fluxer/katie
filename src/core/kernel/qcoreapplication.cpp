@@ -1787,10 +1787,6 @@ void QCoreApplication::setLibraryPaths(const QStringList &paths)
   is \c INSTALL/plugins, where \c INSTALL is the directory where Qt was
   installed.
 
-  In Symbian this function is only useful for adding paths for
-  finding Qt extension plugin stubs, since the OS can only
-  load libraries from the \c{/sys/bin} directory.
-
   \sa removeLibraryPath(), libraryPaths(), setLibraryPaths()
  */
 void QCoreApplication::addLibraryPath(const QString &path)

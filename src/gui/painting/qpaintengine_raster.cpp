@@ -2640,7 +2640,6 @@ void QRasterPaintEngine::drawBitmap(const QPointF &pos, const QImage &image, QSp
     }
     if (n) {
         fg->blend(n, spans, fg);
-        n = 0;
     }
 }
 

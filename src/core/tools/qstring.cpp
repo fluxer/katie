@@ -1249,11 +1249,11 @@ QString& QString::insert(int i, const QChar *unicode, int size)
     const ushort *s = (const ushort *)unicode;
     if (s >= d->data && s < d->data + d->alloc) {
         // Part of me - take a copy
-        ushort *tmp = static_cast<ushort *>(malloc(size * sizeof(QChar)));
+        QChar *tmp = static_cast<QChar *>(::malloc(size * sizeof(QChar)));
         Q_CHECK_PTR(tmp);
-        memcpy(tmp, s, size * sizeof(QChar));
-        insert(i, reinterpret_cast<const QChar *>(tmp), size);
-        free(tmp);
+        ::memcpy(tmp, s, size * sizeof(QChar));
+        insert(i, tmp, size);
+        ::free(tmp);
         return *this;
     }
 

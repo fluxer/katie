@@ -80,12 +80,10 @@ void WriteIconData::writeImage(QTextStream &output, const QString &indent, const
 {
     QString img = image->attributeName() + QLatin1String("_data");
     QString data = image->elementData()->text();
-    QString fmt = image->elementData()->attributeFormat();
-    int size = image->elementData()->attributeLength();
 
     output << indent << "static const unsigned char " << img << "[] = { \n";
     output << indent;
-    int a ;
+    int a;
     for (a = 0; a < (int) (data.length()/2)-1; a++) {
         output << "0x" << QString(data[2*a]) << QString(data[2*a+1]) << ',';
         if (a % 12 == 11)

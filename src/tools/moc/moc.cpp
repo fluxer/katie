@@ -601,7 +601,8 @@ void Moc::parse()
                 if (inNamespace(&namespaceList.at(i)))
                     def.qualified.prepend(namespaceList.at(i).name + "::");
             while (inClass(&def) && hasNext()) {
-                switch ((t = next())) {
+                t = next();
+                switch (t) {
                 case PRIVATE:
                     access = FunctionDef::Private;
                     if (test(Q_SIGNALS_TOKEN))

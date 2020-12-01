@@ -90,7 +90,7 @@ namespace QTest {
         IgnoreResultList *last = 0;
         IgnoreResultList *list = ignoreResultList;
         while (list) {
-            if (list->type == type && strcmp(msg, list->msg) == 0) {
+            if (list->type == type && qstrcmp(msg, list->msg) == 0) {
                 // remove the item from the list
                 if (last)
                     last->next = list->next;

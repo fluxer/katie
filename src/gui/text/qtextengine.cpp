@@ -434,8 +434,6 @@ static bool bidiItemize(QTextEngine *engine, QScriptAnalysis *analysis, QBidiCon
                     status.last = control.direction();
                     if (control.override)
                         dir = control.direction();
-                    else
-                        dir = QChar::DirON;
                     status.lastStrong = control.direction();
                 }
                 break;
@@ -593,8 +591,7 @@ static bool bidiItemize(QTextEngine *engine, QScriptAnalysis *analysis, QBidiCon
                             // neutrals go to R
                             eor = current - 1;
                             appendItems(analysis, sor, eor, control, dir);
-                            dir = QChar::DirON; status.eor = QChar::DirEN;
-                            dir = QChar::DirAN;
+                            dir = QChar::DirAN; status.eor = QChar::DirEN;
                         }
                         else if(status.eor == QChar::DirL ||
                                  (status.eor == QChar::DirEN && status.lastStrong == QChar::DirL)) {
@@ -607,8 +604,7 @@ static bool bidiItemize(QTextEngine *engine, QScriptAnalysis *analysis, QBidiCon
                                 eor = current - 1;
                                 dir = QChar::DirR;
                                 appendItems(analysis, sor, eor, control, dir);
-                                dir = QChar::DirON; status.eor = QChar::DirON;
-                                dir = QChar::DirAN;
+                                dir = QChar::DirAN; status.eor = QChar::DirON;
                             } else {
                                 eor = current; status.eor = dirCurrent;
                             }
