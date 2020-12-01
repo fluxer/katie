@@ -154,7 +154,7 @@ QTextDocumentWriter::~QTextDocumentWriter()
 
     \sa format()
 */
-void QTextDocumentWriter::setFormat (const QByteArray &format)
+void QTextDocumentWriter::setFormat(const QByteArray &format)
 {
     d->format = format;
 }
@@ -164,7 +164,7 @@ void QTextDocumentWriter::setFormat (const QByteArray &format)
 
     \sa setFormat()
 */
-QByteArray QTextDocumentWriter::format () const
+QByteArray QTextDocumentWriter::format() const
 {
     return d->format;
 }
@@ -183,7 +183,7 @@ QByteArray QTextDocumentWriter::format () const
 
     \sa device(), setFileName()
 */
-void QTextDocumentWriter::setDevice (QIODevice *device)
+void QTextDocumentWriter::setDevice(QIODevice *device)
 {
     if (d->device && d->deleteDevice)
         delete d->device;
@@ -196,7 +196,7 @@ void QTextDocumentWriter::setDevice (QIODevice *device)
     Returns the device currently assigned, or 0 if no device has been
     assigned.
 */
-QIODevice *QTextDocumentWriter::device () const
+QIODevice *QTextDocumentWriter::device() const
 {
     return d->device;
 }
@@ -208,7 +208,7 @@ QIODevice *QTextDocumentWriter::device () const
 
     \sa fileName(), setDevice()
 */
-void QTextDocumentWriter::setFileName (const QString &fileName)
+void QTextDocumentWriter::setFileName(const QString &fileName)
 {
     setDevice(new QFile(fileName));
     d->deleteDevice = true;
@@ -221,7 +221,7 @@ void QTextDocumentWriter::setFileName (const QString &fileName)
 
     \sa setFileName(), setDevice()
 */
-QString QTextDocumentWriter::fileName () const
+QString QTextDocumentWriter::fileName() const
 {
     QFile *file = qobject_cast<QFile *>(d->device);
     return file ? file->fileName() : QString();
@@ -282,7 +282,7 @@ bool QTextDocumentWriter::write(const QTextDocument *document)
 */
 bool QTextDocumentWriter::write(const QTextDocumentFragment &fragment)
 {
-    if (fragment.d == 0)
+    if (!fragment.d)
         return false; // invalid fragment.
     QTextDocument *doc = fragment.d->doc;
     if (doc)
@@ -299,7 +299,7 @@ bool QTextDocumentWriter::write(const QTextDocumentFragment &fragment)
 #ifndef QT_NO_TEXTCODEC
 void QTextDocumentWriter::setCodec(QTextCodec *codec)
 {
-    if (codec == 0)
+    if (!codec)
         codec = QTextCodec::codecForName("UTF-8");
     Q_ASSERT(codec);
     d->codec = codec;
@@ -323,8 +323,8 @@ QTextCodec *QTextDocumentWriter::codec() const
 
     \table
     \header \o Format    \o Description
-    \row    \o plaintext \o Plain text
     \row    \o HTML      \o HyperText Markup Language
+    \row    \o plaintext \o Plain text
     \endtable
 
     \sa setFormat()
