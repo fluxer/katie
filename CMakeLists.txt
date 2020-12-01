@@ -79,10 +79,14 @@ if(NOT KATIE_SHELL)
     message(FATAL_ERROR "Could not detect shell, supported are: sh, dash, mksh, ksh and ash")
 endif()
 
+# should be either STATIC or SHARED
+set(KATIE_TYPE SHARED CACHE STRING "Build type")
+
 # components and tools that will be build, changed depending on the requirements availability
 # NOTE: excluding DesignerComponents as it was never used as public component, currently only
-# used by the the designer tool. if it is ever needed for something it can just be added here
-# and that's it - the rest of the build system has everything in place.
+# used by the the designer tool. if it is ever needed for something it can just be added here,
+# Q_DESIGNER_COMPONENTS_EXPORT must be introduced and genmap.py adjusted - the rest of the
+# build system has everything in place.
 set(KATIE_COMPONENTS "Core Gui Declarative Designer Network Sql Svg Xml Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc designer qscript qtconfig")
 

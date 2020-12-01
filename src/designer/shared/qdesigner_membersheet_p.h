@@ -45,8 +45,6 @@
 #ifndef QDESIGNER_MEMBERSHEET_H
 #define QDESIGNER_MEMBERSHEET_H
 
-#include "shared_global_p.h"
-
 #include <QtDesigner/membersheet.h>
 #include <QtDesigner/default_extensionfactory.h>
 #include <QtCore/QStringList>
@@ -55,7 +53,7 @@ QT_BEGIN_NAMESPACE
 
 class QDesignerMemberSheetPrivate;
 
-class QDESIGNER_SHARED_EXPORT QDesignerMemberSheet: public QObject, public QDesignerMemberSheetExtension
+class Q_DESIGNER_EXPORT QDesignerMemberSheet: public QObject, public QDesignerMemberSheetExtension
 {
     Q_OBJECT
     Q_INTERFACES(QDesignerMemberSheetExtension)
@@ -92,7 +90,7 @@ private:
     QDesignerMemberSheetPrivate *d;
 };
 
-class QDESIGNER_SHARED_EXPORT QDesignerMemberSheetFactory: public QExtensionFactory
+class Q_DESIGNER_EXPORT QDesignerMemberSheetFactory: public QExtensionFactory
 {
     Q_OBJECT
     Q_INTERFACES(QAbstractExtensionFactory)

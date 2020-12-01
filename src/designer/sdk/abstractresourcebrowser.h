@@ -34,8 +34,6 @@
 #ifndef ABSTRACTRESOURCEBROWSER_H
 #define ABSTRACTRESOURCEBROWSER_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtGui/QWidget>
 
 QT_BEGIN_HEADER
@@ -44,7 +42,7 @@ QT_BEGIN_NAMESPACE
 
 class QWidget;
 
-class QDESIGNER_SDK_EXPORT QDesignerResourceBrowserInterface: public QWidget
+class Q_DESIGNER_EXPORT QDesignerResourceBrowserInterface: public QWidget
 {
     Q_OBJECT
 public:

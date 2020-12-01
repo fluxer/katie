@@ -34,8 +34,6 @@
 #ifndef ABSTRACTBRUSHMANAGER_H
 #define ABSTRACTBRUSHMANAGER_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtCore/qobject.h>
 #include <QtCore/qmap.h>
 #include <QtGui/qbrush.h>
@@ -46,7 +44,7 @@ QT_BEGIN_NAMESPACE
 
 class QObject;
 
-class QDESIGNER_SDK_EXPORT QDesignerBrushManagerInterface : public QObject
+class Q_DESIGNER_EXPORT QDesignerBrushManagerInterface : public QObject
 {
     Q_OBJECT
 public:

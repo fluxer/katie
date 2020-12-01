@@ -37,7 +37,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/extension/default_extensionfactory.h
     ${CMAKE_CURRENT_SOURCE_DIR}/extension/extension.h
     ${CMAKE_CURRENT_SOURCE_DIR}/extension/qextensionmanager.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/extension/extension_global.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractformeditor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractintrospection_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractsettings_p.h
@@ -70,8 +69,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractdialoggui_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/script_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractnewformwidget_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/sdk/sdk_global.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/shared_global_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/spacer_widget_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/layoutinfo_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/layout_p.h
@@ -279,17 +276,6 @@ set(DESIGNER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/plugindialog.ui
     ${CMAKE_SOURCE_DIR}/src/tools/rcc/rcc.cpp
 )
-
-if(KATIE_TYPE STREQUAL SHARED)
-    add_definitions(
-        -DQDESIGNER_SDK_LIBRARY
-        -DQDESIGNER_EXTENSION_LIBRARY
-        -DQDESIGNER_SHARED_LIBRARY
-        
-    )
-else()
-    add_definitions(-DQT_DESIGNER_STATIC)
-endif()
 
 add_subdirectory(components)
 

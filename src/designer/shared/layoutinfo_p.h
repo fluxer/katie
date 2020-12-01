@@ -45,7 +45,7 @@
 #ifndef LAYOUTINFO_H
 #define LAYOUTINFO_H
 
-#include "shared_global_p.h"
+#include "qglobal.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -59,7 +59,7 @@ class QString;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT LayoutInfo
+class Q_DESIGNER_EXPORT LayoutInfo
 {
 public:
     enum Type
@@ -96,8 +96,8 @@ public:
     static bool isEmptyItem(QLayoutItem *item);
 };
 
-QDESIGNER_SHARED_EXPORT void getFormLayoutItemPosition(const QFormLayout *formLayout, int index, int *rowPtr, int *columnPtr = 0, int *rowspanPtr = 0, int *colspanPtr = 0);
-QDESIGNER_SHARED_EXPORT void formLayoutAddWidget(QFormLayout *formLayout, QWidget *w, const QRect &r, bool insert);
+Q_DESIGNER_EXPORT void getFormLayoutItemPosition(const QFormLayout *formLayout, int index, int *rowPtr, int *columnPtr = 0, int *rowspanPtr = 0, int *colspanPtr = 0);
+Q_DESIGNER_EXPORT void formLayoutAddWidget(QFormLayout *formLayout, QWidget *w, const QRect &r, bool insert);
 } // namespace qdesigner_internal
 
 QT_END_NAMESPACE

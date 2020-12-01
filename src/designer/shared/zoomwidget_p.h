@@ -45,8 +45,6 @@
 #ifndef ZOOMWIDGET_H
 #define ZOOMWIDGET_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QGraphicsView>
 #include <QtGui/QGraphicsProxyWidget>
 #include <QtCore/QList>
@@ -62,7 +60,7 @@ namespace qdesigner_internal {
 
 // A checkable zoom menu action group. Operates in percent.
 
-class QDESIGNER_SHARED_EXPORT ZoomMenu : public QObject {
+class Q_DESIGNER_EXPORT ZoomMenu : public QObject {
     Q_OBJECT
     Q_DISABLE_COPY(ZoomMenu)
 
@@ -92,7 +90,7 @@ private:
 
 /* Zoom view: A QGraphicsView with a zoom menu */
 
-class QDESIGNER_SHARED_EXPORT ZoomView : public QGraphicsView
+class Q_DESIGNER_EXPORT ZoomView : public QGraphicsView
 {
     Q_PROPERTY(int zoom READ zoom WRITE setZoom DESIGNABLE true SCRIPTABLE true)
     Q_PROPERTY(bool zoomContextMenuEnabled READ isZoomContextMenuEnabled WRITE setZoomContextMenuEnabled DESIGNABLE true SCRIPTABLE true)
@@ -143,7 +141,7 @@ private:
 /* The proxy widget used in  ZoomWidget. It  refuses to move away from 0,0,
  * This behaviour is required for Windows only. */
 
-class  QDESIGNER_SHARED_EXPORT ZoomProxyWidget : public QGraphicsProxyWidget {
+class  Q_DESIGNER_EXPORT ZoomProxyWidget : public QGraphicsProxyWidget {
     Q_DISABLE_COPY(ZoomProxyWidget)
 public:
     explicit ZoomProxyWidget(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
@@ -161,7 +159,7 @@ protected:
  *    Pass the scaled change on to the embedded widget.
  * Provides helper functions for a zoom context menu on the widget. */
 
-class QDESIGNER_SHARED_EXPORT ZoomWidget : public ZoomView
+class Q_DESIGNER_EXPORT ZoomWidget : public ZoomView
 {
     Q_PROPERTY(bool widgetZoomContextMenuEnabled READ isWidgetZoomContextMenuEnabled WRITE setWidgetZoomContextMenuEnabled DESIGNABLE true SCRIPTABLE true)
     Q_PROPERTY(bool itemAcceptDrops READ itemAcceptDrops WRITE setItemAcceptDrops DESIGNABLE true SCRIPTABLE true)

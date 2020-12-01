@@ -45,15 +45,13 @@
 #ifndef INVISIBLE_WIDGET_H
 #define INVISIBLE_WIDGET_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT InvisibleWidget: public QWidget
+class Q_DESIGNER_EXPORT InvisibleWidget: public QWidget
 {
     Q_OBJECT
 public:

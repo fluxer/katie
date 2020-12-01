@@ -46,8 +46,6 @@
 #ifndef SHEET_DELEGATE_H
 #define SHEET_DELEGATE_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QItemDelegate>
 #include <QtGui/QTreeView>
 
@@ -57,7 +55,7 @@ class QTreeView;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT SheetDelegate: public QItemDelegate
+class Q_DESIGNER_EXPORT SheetDelegate: public QItemDelegate
 {
     Q_OBJECT
 public:

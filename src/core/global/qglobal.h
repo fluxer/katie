@@ -381,33 +381,19 @@ typedef double qreal;
 #define Q_DECL_HIDDEN __attribute__((visibility("hidden")))
 #define Q_DECL_IMPORT
 
-#if defined(QT_SHARED)
-#  define Q_CORE_EXPORT Q_DECL_EXPORT
-#  define Q_GUI_EXPORT Q_DECL_EXPORT
-#  define Q_SQL_EXPORT Q_DECL_EXPORT
-#  define Q_NETWORK_EXPORT Q_DECL_EXPORT
-#  define Q_SVG_EXPORT Q_DECL_EXPORT
-#  define Q_TEST_EXPORT Q_DECL_EXPORT
-#  define Q_DECLARATIVE_EXPORT Q_DECL_EXPORT
-#  define Q_XML_EXPORT Q_DECL_EXPORT
-#  define Q_SCRIPT_EXPORT Q_DECL_EXPORT
-#  define Q_SCRIPTTOOLS_EXPORT Q_DECL_EXPORT
-#  define Q_DBUS_EXPORT Q_DECL_EXPORT
-#  define Q_UITOOLS_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_CORE_EXPORT
-#  define Q_GUI_EXPORT
-#  define Q_SQL_EXPORT
-#  define Q_NETWORK_EXPORT
-#  define Q_SVG_EXPORT
-#  define Q_TEST_EXPORT
-#  define Q_DECLARATIVE_EXPORT
-#  define Q_XML_EXPORT
-#  define Q_SCRIPT_EXPORT
-#  define Q_SCRIPTTOOLS_EXPORT
-#  define Q_DBUS_EXPORT
-#  define Q_UITOOLS_EXPORT
-#endif
+#define Q_CORE_EXPORT Q_DECL_EXPORT
+#define Q_GUI_EXPORT Q_DECL_EXPORT
+#define Q_SQL_EXPORT Q_DECL_EXPORT
+#define Q_NETWORK_EXPORT Q_DECL_EXPORT
+#define Q_SVG_EXPORT Q_DECL_EXPORT
+#define Q_TEST_EXPORT Q_DECL_EXPORT
+#define Q_DECLARATIVE_EXPORT Q_DECL_EXPORT
+#define Q_XML_EXPORT Q_DECL_EXPORT
+#define Q_SCRIPT_EXPORT Q_DECL_EXPORT
+#define Q_SCRIPTTOOLS_EXPORT Q_DECL_EXPORT
+#define Q_DBUS_EXPORT Q_DECL_EXPORT
+#define Q_UITOOLS_EXPORT Q_DECL_EXPORT
+#define Q_DESIGNER_EXPORT Q_DECL_EXPORT
 
 #define Q_CORE_EXPORT_INLINE Q_CORE_EXPORT inline
 #define Q_GUI_EXPORT_INLINE Q_GUI_EXPORT inline
@@ -417,7 +403,7 @@ typedef double qreal;
    for Qt's internal unit tests. If you want slower loading times and more
    symbols that can vanish from version to version, feel free to define QT_BUILD_INTERNAL.
 */
-#if defined(QT_BUILD_INTERNAL) && defined(QT_SHARED)
+#if defined(QT_BUILD_INTERNAL)
 #    define Q_AUTOTEST_EXPORT Q_DECL_EXPORT
 #else
 #    define Q_AUTOTEST_EXPORT
@@ -467,7 +453,6 @@ public:
 };
 
 Q_CORE_EXPORT const char *qVersion();
-Q_CORE_EXPORT bool qSharedBuild();
 
 /*
    Avoid "unused parameter" warnings

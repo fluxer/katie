@@ -34,8 +34,6 @@
 #ifndef ABSTRACTPROMOTIONINTERFACE_H
 #define ABSTRACTPROMOTIONINTERFACE_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtCore/QPair>
 #include <QtCore/QList>
 #include <QtCore/QSet>
@@ -46,7 +44,7 @@ QT_BEGIN_NAMESPACE
 
 class QDesignerWidgetDataBaseItemInterface;
 
-class QDESIGNER_SDK_EXPORT QDesignerPromotionInterface
+class Q_DESIGNER_EXPORT QDesignerPromotionInterface
 {
 public:
     virtual ~QDesignerPromotionInterface();

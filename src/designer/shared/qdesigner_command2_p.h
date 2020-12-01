@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_COMMAND2_H
 #define QDESIGNER_COMMAND2_H
 
-#include "shared_global_p.h"
 #include "qdesigner_formwindowcommand_p.h"
 
 #include <QtGui/QWidget>
@@ -63,7 +62,7 @@ class BreakLayoutCommand;
  * LayoutCommand, parametrizing them not to actually delete/reparent
  * QLayoutWidget's. */
 
-class QDESIGNER_SHARED_EXPORT MorphLayoutCommand : public QDesignerFormWindowCommand {
+class Q_DESIGNER_EXPORT MorphLayoutCommand : public QDesignerFormWindowCommand {
     Q_DISABLE_COPY(MorphLayoutCommand)
 public:
     explicit MorphLayoutCommand(QDesignerFormWindowInterface *formWindow);

@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_FORMBUILDER_H
 #define QDESIGNER_FORMBUILDER_H
 
-#include "shared_global_p.h"
 #include "deviceprofile_p.h"
 
 #include <QtUiTools/formscriptrunner_p.h>
@@ -70,7 +69,7 @@ class DesignerIconCache;
 /* Form builder used for previewing forms and widget box.
  * It applies the system settings to its toplevel window. */
 
-class QDESIGNER_SHARED_EXPORT QDesignerFormBuilder: public QFormBuilder
+class Q_DESIGNER_EXPORT QDesignerFormBuilder: public QFormBuilder
 {
 public:
     enum Mode {
@@ -155,7 +154,7 @@ private:
 // widgets in the template, it implements the handling of custom widgets
 // (adding of them to the widget database).
 
-class QDESIGNER_SHARED_EXPORT NewFormWidgetFormBuilder: public QDesignerFormBuilder {
+class Q_DESIGNER_EXPORT NewFormWidgetFormBuilder: public QDesignerFormBuilder {
 public:
     NewFormWidgetFormBuilder(QDesignerFormEditorInterface *core,
                              Mode mode,

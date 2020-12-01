@@ -184,7 +184,6 @@ void QFactoryLoader::updateDir(const QString &pluginDir)
 
 void QFactoryLoader::update()
 {
-#ifdef QT_SHARED
     Q_D(QFactoryLoader);
     foreach (const QString &pluginDir, QCoreApplication::libraryPaths()) {
         // Already loaded, skip it...
@@ -193,13 +192,6 @@ void QFactoryLoader::update()
         d->loadedPaths << pluginDir;
         updateDir(pluginDir);
     }
-#else
-    Q_D(QFactoryLoader);
-    if (qt_debug_component()) {
-        qDebug() << "QFactoryLoader::QFactoryLoader() ignoring" << d->iid
-                 << "since plugins are disabled in static builds";
-    }
-#endif
 }
 
 QFactoryLoader::~QFactoryLoader()

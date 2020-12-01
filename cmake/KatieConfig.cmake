@@ -116,8 +116,6 @@ if(NOT KATIE_FOUND)
 
         if(KATIE_TYPE STREQUAL SHARED)
             set(_libsuffix "${CMAKE_SHARED_LIBRARY_SUFFIX}")
-        elseif(KATIE_TYPE STREQUAL MODULE)
-            set(_libsuffix "${CMAKE_SHARED_MODULE_SUFFIX}")
         else()
             set(_libsuffix "${CMAKE_STATIC_LIBRARY_SUFFIX}")
         endif()

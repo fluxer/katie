@@ -54,13 +54,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#if defined(QT_DESIGNER_STATIC)
-#  define QUI_EXPORT
-#elif defined(QT_UITOOLS_LIB)
-#  define QUI_EXPORT Q_DECL_EXPORT
-#else
-#  define QUI_EXPORT Q_DECL_IMPORT
-#endif
+#define QUI_EXPORT Q_DECL_EXPORT
 
 #ifdef QFORMINTERNAL_NAMESPACE
 namespace QFormInternal

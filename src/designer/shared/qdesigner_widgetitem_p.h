@@ -45,8 +45,6 @@
 #ifndef DESIGNERWIDGETITEM_H
 #define DESIGNERWIDGETITEM_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QLayoutItem>
 #include <QtCore/QObject>
 
@@ -71,7 +69,7 @@ namespace qdesigner_internal {
 // and destroyed slots as Designer will for example re-create grid layouts to
 // shrink them.
 
-class QDESIGNER_SHARED_EXPORT QDesignerWidgetItem : public QObject, public QWidgetItemV2  {
+class Q_DESIGNER_EXPORT QDesignerWidgetItem : public QObject, public QWidgetItemV2  {
     Q_DISABLE_COPY(QDesignerWidgetItem)
     Q_OBJECT
 public:
@@ -121,7 +119,7 @@ private:
 // Helper class that ensures QDesignerWidgetItem is installed while an
 // instance is in scope.
 
-class QDESIGNER_SHARED_EXPORT QDesignerWidgetItemInstaller {
+class Q_DESIGNER_EXPORT QDesignerWidgetItemInstaller {
     Q_DISABLE_COPY(QDesignerWidgetItemInstaller)
 
 public:

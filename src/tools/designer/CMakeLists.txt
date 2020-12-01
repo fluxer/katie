@@ -68,10 +68,6 @@ set(DESIGNERBIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/designer.qrc
 )
 
-if(NOT KATIE_TYPE STREQUAL SHARED)
-    add_definitions(-DQT_DESIGNER_STATIC)
-endif()
-
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/designer.desktop.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/designer.desktop

@@ -1,10 +1,3 @@
-# KatieConfig overrides KATIE_TYPE
-
-if(NOT KATIE_TYPE)
-    set(KATIE_TYPE SHARED)
-    katie_definition(-DQT_SHARED)
-endif()
-
 # https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
 # https://github.com/Kitware/CMake/blob/master/Modules/CMakeDetermineSystem.cmake
 if(NOT KATIE_PLATFORM)
