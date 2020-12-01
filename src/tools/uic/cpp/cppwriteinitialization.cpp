@@ -1843,18 +1843,6 @@ QString WriteInitialization::pixCall(const QString &t, const QString &text) cons
         return type;
     }
     if (const DomImage *image = findImage(text)) {
-        if (m_option.extractImages) {
-            const QString format = image->elementData()->attributeFormat();
-            const QString extension = format.left(format.indexOf(QLatin1Char('.'))).toLower();
-            QString rc = QLatin1String("QPixmap(QString::fromUtf8(\":/");
-            rc += m_generatedClass;
-            rc += QLatin1String("/images/");
-            rc += text;
-            rc += QLatin1Char('.');
-            rc += extension;
-            rc += QLatin1String("\"))");
-            return rc;
-        }
         QString rc = WriteIconInitialization::iconFromDataFunction();
         rc += QLatin1Char('(');
         rc += text;
