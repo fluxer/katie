@@ -15,21 +15,16 @@ if(NOT PC_ODBC_FOUND)
     pkg_check_modules(PC_ODBC QUIET libiodbc)
 endif()
 
-set(ODBC_INCLUDES ${PC_ODBC_INCLUDE_DIRS})
-set(ODBC_LIBRARIES ${PC_ODBC_LIBRARIES})
+find_path(ODBC_INCLUDES
+    NAMES sql.h
+    PATH_SUFFIXES iodbc libiodbc
+    HINTS $ENV{ODBCDIR}/include ${PC_ODBC_INCLUDEDIR}
+)
 
-if(NOT ODBC_INCLUDES OR NOT ODBC_LIBRARIES)
-    find_path(ODBC_INCLUDES
-        NAMES sql.h
-        PATH_SUFFIXES iodbc libiodbc
-        HINTS $ENV{ODBCDIR}/include
-    )
-
-    find_library(ODBC_LIBRARIES
-        NAMES odbc iodbc
-        HINTS $ENV{ODBCDIR}/lib
-    )
-endif()
+find_library(ODBC_LIBRARIES
+    NAMES odbc iodbc
+    HINTS $ENV{ODBCDIR}/lib ${PC_ODBC_LIBDIR}
+)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ODBC

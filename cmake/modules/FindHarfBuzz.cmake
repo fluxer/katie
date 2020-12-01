@@ -12,21 +12,16 @@
 include(FindPkgConfig)
 pkg_check_modules(PC_HARFBUZZ QUIET harfbuzz)
 
-set(HARFBUZZ_INCLUDES ${PC_HARFBUZZ_INCLUDE_DIRS})
-set(HARFBUZZ_LIBRARIES ${PC_HARFBUZZ_LIBRARIES})
+find_path(HARFBUZZ_INCLUDES
+    NAMES hb.h
+    PATH_SUFFIXES harfbuzz
+    HINTS $ENV{HARFBUZZDIR}/include ${PC_HARFBUZZ_INCLUDEDIR}
+)
 
-if(NOT HARFBUZZ_INCLUDES OR NOT HARFBUZZ_LIBRARIES)
-    find_path(HARFBUZZ_INCLUDES
-        NAMES hb.h
-        PATH_SUFFIXES harfbuzz
-        HINTS $ENV{HARFBUZZDIR}/include
-    )
-
-    find_library(HARFBUZZ_LIBRARIES
-        NAMES harfbuzz
-        HINTS $ENV{HARFBUZZDIR}/lib
-    )
-endif()
+find_library(HARFBUZZ_LIBRARIES
+    NAMES harfbuzz
+    HINTS $ENV{HARFBUZZDIR}/lib ${PC_HARFBUZZ_LIBDIR}
+)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(HarfBuzz

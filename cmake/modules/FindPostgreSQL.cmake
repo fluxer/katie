@@ -12,21 +12,17 @@
 include(FindPkgConfig)
 pkg_check_modules(PC_POSTGRESQL QUIET libpq)
 
-set(POSTGRESQL_INCLUDES ${PC_POSTGRESQL_INCLUDE_DIRS})
-set(POSTGRESQL_LIBRARIES ${PC_POSTGRESQL_LIBRARIES})
 
-if(NOT POSTGRESQL_INCLUDES OR NOT POSTGRESQL_LIBRARIES)
-    find_path(POSTGRESQL_INCLUDES
-        NAMES libpq-fe.h
-        PATH_SUFFIXES postgresql
-        HINTS $ENV{POSTGRESQLDIR}/include
-    )
+find_path(POSTGRESQL_INCLUDES
+    NAMES libpq-fe.h
+    PATH_SUFFIXES postgresql
+    HINTS $ENV{POSTGRESQLDIR}/include ${PC_POSTGRESQL_INCLUDEDIR}
+)
 
-    find_library(POSTGRESQL_LIBRARIES
-        NAMES pq
-        HINTS $ENV{POSTGRESQLDIR}/lib
-    )
-endif()
+find_library(POSTGRESQL_LIBRARIES
+    NAMES pq
+    HINTS $ENV{POSTGRESQLDIR}/lib ${PC_POSTGRESQL_LIBDIR}
+)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(PostgreSQL

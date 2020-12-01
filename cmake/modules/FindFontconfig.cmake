@@ -12,20 +12,15 @@
 include(FindPkgConfig)
 pkg_check_modules(PC_FONTCONFIG QUIET fontconfig)
 
-set(FONTCONFIG_INCLUDES ${PC_FONTCONFIG_INCLUDE_DIRS})
-set(FONTCONFIG_LIBRARIES ${PC_FONTCONFIG_LIBRARIES})
+find_path(FONTCONFIG_INCLUDES
+    NAMES fontconfig/fontconfig.h
+    HINTS $ENV{FONTCONFIGDIR}/include ${PC_FONTCONFIG_INCLUDEDIR}
+)
 
-if(NOT FONTCONFIG_INCLUDES OR NOT FONTCONFIG_LIBRARIES)
-    find_path(FONTCONFIG_INCLUDES
-        NAMES fontconfig/fontconfig.h
-        HINTS $ENV{FONTCONFIGDIR}/include
-    )
-
-    find_library(FONTCONFIG_LIBRARIES
-        NAMES fontconfig
-        HINTS $ENV{FONTCONFIGDIR}/lib
-    )
-endif()
+find_library(FONTCONFIG_LIBRARIES
+    NAMES fontconfig
+    HINTS $ENV{FONTCONFIGDIR}/lib ${PC_FONTCONFIG_LIBDIR}
+)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Fontconfig

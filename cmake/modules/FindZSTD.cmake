@@ -12,20 +12,15 @@
 include(FindPkgConfig)
 pkg_check_modules(PC_ZSTD QUIET libzstd)
 
-set(ZSTD_INCLUDES ${PC_ZSTD_INCLUDE_DIRS})
-set(ZSTD_LIBRARIES ${PC_ZSTD_LIBRARIES})
+find_path(ZSTD_INCLUDES
+    NAMES zstd.h
+    HINTS $ENV{ZSTDDIR}/include ${PC_ZSTD_INCLUDEDIR}
+)
 
-if(NOT ZSTD_INCLUDES OR NOT ZSTD_LIBRARIES)
-    find_path(ZSTD_INCLUDES
-        NAMES zstd.h
-        HINTS $ENV{ZSTDDIR}/include
-    )
-
-    find_library(ZSTD_LIBRARIES
-        NAMES zstd
-        HINTS $ENV{ZSTDDIR}/lib
-    )
-endif()
+find_library(ZSTD_LIBRARIES
+    NAMES zstd
+    HINTS $ENV{ZSTDDIR}/lib ${PC_ZSTD_LIBDIR}
+)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ZSTD

@@ -12,21 +12,16 @@
 include(FindPkgConfig)
 pkg_check_modules(PC_SQLITE QUIET sqlite3)
 
-set(SQLITE_INCLUDES ${PC_SQLITE_INCLUDE_DIRS})
-set(SQLITE_LIBRARIES ${PC_SQLITE_LIBRARIES})
+find_path(SQLITE_INCLUDES
+    NAMES sqlite3.h
+    PATH_SUFFIXES sqlite3
+    HINTS $ENV{SQLITEDIR}/include ${PC_SQLITE_INCLUDEDIR}
+)
 
-if(NOT SQLITE_INCLUDES OR NOT SQLITE_LIBRARIES)
-    find_path(SQLITE_INCLUDES
-        NAMES sqlite3.h
-        PATH_SUFFIXES sqlite3
-        HINTS $ENV{SQLITEDIR}/include
-    )
-
-    find_library(SQLITE_LIBRARIES
-        NAMES sqlite3
-        HINTS $ENV{SQLITEDIR}/lib
-    )
-endif()
+find_library(SQLITE_LIBRARIES
+    NAMES sqlite3
+    HINTS $ENV{SQLITEDIR}/lib ${PC_SQLITE_LIBDIR}
+)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(SQLite

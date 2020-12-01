@@ -38,11 +38,10 @@ if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
     cmake_policy(SET CMP0063 NEW)
 endif()
 
-# LLVM linker does not have a default library search path and only library names are received
-# from pkg-config queries, add some directories known to contain system wide libraries. the
-# headers search path is also incomplete
+# LLVM linker does not have a default library search path, add some directories known to contain
+# system wide libraries. the headers search path is also incomplete
 if(CMAKE_SYSTEM_NAME MATCHES "BSD")
-    include_directories(/usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include /include)
+    include_directories(/usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
     link_directories(/usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
 endif()
 

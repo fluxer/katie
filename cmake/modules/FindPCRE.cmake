@@ -12,20 +12,15 @@
 include(FindPkgConfig)
 pkg_check_modules(PC_PCRE QUIET libpcre)
 
-set(PCRE_INCLUDES ${PC_PCRE_INCLUDE_DIRS})
-set(PCRE_LIBRARIES ${PC_PCRE_LIBRARIES})
+find_path(PCRE_INCLUDES
+    NAMES pcre.h
+    HINTS $ENV{PCREDIR}/include ${PC_PCRE_INCLUDEDIR}
+)
 
-if(NOT PCRE_INCLUDES OR NOT PCRE_LIBRARIES)
-    find_path(PCRE_INCLUDES
-        NAMES pcre.h
-        HINTS $ENV{PCREDIR}/include
-    )
-
-    find_library(PCRE_LIBRARIES
-        NAMES pcre
-        HINTS $ENV{PCREDIR}/lib
-    )
-endif()
+find_library(PCRE_LIBRARIES
+    NAMES pcre
+    HINTS $ENV{PCREDIR}/lib ${PC_PCRE_LIBDIR}
+)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(PCRE
