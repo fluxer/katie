@@ -34,9 +34,9 @@
 #ifndef QEVENT_P_H
 #define QEVENT_P_H
 
-#include <QtCore/qurl.h>
-#include <QtGui/qevent.h>
-#include <QtGui/qt_x11_p.h>
+#include "qurl.h"
+#include "qevent.h"
+#include "qt_x11_p.h"
 
 QT_BEGIN_NAMESPACE
 

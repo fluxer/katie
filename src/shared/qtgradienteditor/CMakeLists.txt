@@ -2,11 +2,8 @@ set(SHAREDGRADIENDEDITOR_INCLUDES
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor
     ${CMAKE_BINARY_DIR}/src/shared/qtgradienteditor
 )

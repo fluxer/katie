@@ -32,17 +32,14 @@
 ****************************************************************************/
 
 #include "qgenericengine.h"
+#include "qnetworkconfiguration_p.h"
+#include "qthread.h"
+#include "qmutex.h"
+#include "qcoreapplication.h"
+#include "qstringlist.h"
+#include "qdebug.h"
+#include "qcoreapplication_p.h"
 #include "../qnetworksession_impl.h"
-
-#include <QtNetwork/qnetworkconfiguration_p.h>
-
-#include <QtCore/qthread.h>
-#include <QtCore/qmutex.h>
-#include <QtCore/qcoreapplication.h>
-#include <QtCore/qstringlist.h>
-
-#include <QtCore/qdebug.h>
-#include <QtCore/qcoreapplication_p.h>
 
 #ifdef Q_OS_LINUX
 #include <sys/socket.h>
@@ -60,12 +57,12 @@ QT_BEGIN_NAMESPACE
 static QNetworkConfiguration::BearerType qGetInterfaceType(const QString &interface)
 {
 #if defined(Q_OS_LINUX)
-    int sock = socket(AF_INET, SOCK_DGRAM, 0);
+    int sock = ::socket(AF_INET, SOCK_DGRAM, 0);
 
-    ifreq request;
+    struct ifreq request;
     strncpy(request.ifr_name, interface.toLocal8Bit().data(), sizeof(request.ifr_name));
-    int result = ioctl(sock, SIOCGIFHWADDR, &request);
-    close(sock);
+    int result = ::ioctl(sock, SIOCGIFHWADDR, &request);
+    ::close(sock);
 
     if (result >= 0 && request.ifr_hwaddr.sa_family == ARPHRD_ETHER)
         return QNetworkConfiguration::BearerEthernet;

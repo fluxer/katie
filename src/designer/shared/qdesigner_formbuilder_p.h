@@ -46,12 +46,10 @@
 #define QDESIGNER_FORMBUILDER_H
 
 #include "deviceprofile_p.h"
-
-#include <QtUiTools/formscriptrunner_p.h>
-#include <QtUiTools/formbuilder.h>
-
-#include <QtCore/QMap>
-#include <QtCore/QSet>
+#include "formscriptrunner_p.h"
+#include "formbuilder.h"
+#include "qmap.h"
+#include "qset.h"
 
 QT_BEGIN_NAMESPACE
 

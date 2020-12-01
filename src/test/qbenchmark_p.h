@@ -47,13 +47,11 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
-
-#include "QtTest/qbenchmarkmeasurement_p.h"
-#include <QtCore/QMap>
-#include <QtTest/qtest_global.h>
-#include "QtTest/qbenchmarkevent_p.h"
-#include "QtTest/qbenchmarkmetric_p.h"
+#include "qbenchmarkmeasurement_p.h"
+#include "qmap.h"
+#include "qtest_global.h"
+#include "qbenchmarkevent_p.h"
+#include "qbenchmarkmetric_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -218,11 +218,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${FREETYPE_INCLUDE_DIRS}
     ${X11_INCLUDE_DIR}
     ${PNG_INCLUDE_DIRS}

@@ -44,9 +44,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtNetwork
-    ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
     ${OPENSSL_INCLUDE_DIR}
     ${ZLIB_INCLUDE_DIRS}
 )

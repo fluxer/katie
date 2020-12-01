@@ -45,16 +45,15 @@
 // We mean it.
 //
 
-#include "QtGui/qcombobox.h"
-#include "QtGui/qcalendarwidget.h"
-#include "QtGui/qspinbox.h"
-#include "QtGui/qtoolbutton.h"
-#include "QtGui/qmenu.h"
-#include "QtGui/qlabel.h"
-#include "QtGui/qdatetimeedit.h"
-#include "QtGui/qabstractspinbox_p.h"
-#include "QtCore/qdatetime_p.h"
-
+#include "qcombobox.h"
+#include "qcalendarwidget.h"
+#include "qspinbox.h"
+#include "qtoolbutton.h"
+#include "qmenu.h"
+#include "qlabel.h"
+#include "qdatetimeedit.h"
+#include "qabstractspinbox_p.h"
+#include "qdatetime_p.h"
 #include "qdebug.h"
 
 #ifndef QT_NO_DATETIMEEDIT

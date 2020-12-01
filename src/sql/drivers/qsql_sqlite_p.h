@@ -34,9 +34,9 @@
 #ifndef QSQL_SQLITE_H
 #define QSQL_SQLITE_H
 
-#include <QtSql/qsqldriver.h>
-#include <QtSql/qsqlresult.h>
-#include <QtSql/qsqlcachedresult_p.h>
+#include "qsqldriver.h"
+#include "qsqlresult.h"
+#include "qsqlcachedresult_p.h"
 
 struct sqlite3;
 

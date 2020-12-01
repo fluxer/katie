@@ -31,29 +31,27 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qtestcase.h"
-#include "QtTest/qtestassert.h"
-
-#include <QtCore/qbytearray.h>
-#include <QtCore/qmetaobject.h>
-#include <QtCore/qobject.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qvector.h>
-#include <QtCore/qvarlengtharray.h>
-#include <QtCore/qcoreapplication.h>
-#include <QtCore/qfile.h>
-#include <QtCore/qfileinfo.h>
-#include <QtCore/qdir.h>
-#include <QtCore/qprocess.h>
-#include <QtCore/qdebug.h>
-#include <QtCore/qscopedpointer.h>
-
-#include "QtTest/qtestlog_p.h"
-#include "QtTest/qtesttable_p.h"
-#include "QtTest/qtestdata.h"
-#include "QtTest/qtestresult_p.h"
-#include "QtTest/qsignaldumper_p.h"
-#include "QtTest/qbenchmark_p.h"
+#include "qtestcase.h"
+#include "qtestassert.h"
+#include "qbytearray.h"
+#include "qmetaobject.h"
+#include "qobject.h"
+#include "qstringlist.h"
+#include "qvector.h"
+#include "qvarlengtharray.h"
+#include "qcoreapplication.h"
+#include "qfile.h"
+#include "qfileinfo.h"
+#include "qdir.h"
+#include "qprocess.h"
+#include "qdebug.h"
+#include "qscopedpointer.h"
+#include "qtestlog_p.h"
+#include "qtesttable_p.h"
+#include "qtestdata.h"
+#include "qtestresult_p.h"
+#include "qsignaldumper_p.h"
+#include "qbenchmark_p.h"
 #include "3rdparty/fftw/cycle.h"
 
 #include <stdarg.h>

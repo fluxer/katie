@@ -59,8 +59,8 @@
 #include "QtGui/qfont.h"
 #include "QtGui/qcursor.h"
 #include "QtGui/qregion.h"
-#include "QtCore/qcoreapplication_p.h"
-#include "QtGui/qshortcutmap_p.h"
+#include "qcoreapplication_p.h"
+#include "qshortcutmap_p.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -35,13 +35,13 @@
 #include "grid_p.h"
 #include "previewmanager_p.h"
 #include "qdesigner_utils_p.h"
-#include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractsettings_p.h>
-#include <QtCore/QStringList>
-#include <QtCore/QDir>
-#include <QtCore/qvariant.h>
-#include <QtCore/QCoreApplication>
-#include <QtCore/QSize>
+#include "abstractformeditor.h"
+#include "abstractsettings_p.h"
+#include "qstringlist.h"
+#include "qdir.h"
+#include "qvariant.h"
+#include "qcoreapplication.h"
+#include "qsize.h"
 
 QT_BEGIN_NAMESPACE
 

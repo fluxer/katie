@@ -33,10 +33,10 @@
 
 #include "qnetworkconfigmanager_p.h"
 #include "qbearerplugin_p.h"
-#include <QtCore/qfactoryloader_p.h>
-#include <QtCore/qdebug.h>
-#include <QtCore/qtimer.h>
-#include <QtCore/qstringlist.h>
+#include "qfactoryloader_p.h"
+#include "qdebug.h"
+#include "qtimer.h"
+#include "qstringlist.h"
 
 #ifndef QT_NO_BEARERMANAGEMENT
 

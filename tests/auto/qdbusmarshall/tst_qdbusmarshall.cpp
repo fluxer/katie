@@ -31,11 +31,11 @@
 **
 ****************************************************************************/
 
-#include <QtCore/QtCore>
-#include <QtTest/QtTest>
-#include <QtDBus/QtDBus>
-#include <QtDBus/qdbusutil_p.h>
-#include <QtDBus/qdbusconnection_p.h>
+#include "QtCore/QtCore"
+#include "QtTest/QtTest"
+#include "QtDBus/QtDBus"
+#include "qdbusutil_p.h"
+#include "qdbusconnection_p.h"
 
 #include "common.h"
 #include <limits>

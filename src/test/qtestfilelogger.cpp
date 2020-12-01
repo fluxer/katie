@@ -34,8 +34,8 @@
 #include "qtestfilelogger.h"
 #include "qtestassert.h"
 #include "qtestcommon_p.h"
-#include "QtTest/qtestlog_p.h"
-#include "QtTest/qtestresult_p.h"
+#include "qtestlog_p.h"
+#include "qtestresult_p.h"
 #include "qdir.h"
 #include "qplatformdefs.h"
 

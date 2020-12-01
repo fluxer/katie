@@ -33,9 +33,8 @@
 
 #include "qnetworksession_impl.h"
 #include "qbearerengine_impl.h"
-
-#include <QtNetwork/qnetworksession.h>
-#include <QtNetwork/qnetworkconfigmanager_p.h>
+#include "qnetworksession.h"
+#include "qnetworkconfigmanager_p.h"
 
 #include <QtCore/qdatetime.h>
 #include <QtCore/qdebug.h>

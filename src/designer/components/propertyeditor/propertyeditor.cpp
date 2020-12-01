@@ -46,32 +46,32 @@
 #include "shared_enums_p.h"
 
 // sdk
-#include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractformwindowmanager.h>
-#include <QtDesigner/QExtensionManager>
-#include <QtDesigner/propertysheet.h>
-#include <QtDesigner/abstractwidgetdatabase.h>
-#include <QtDesigner/abstractsettings_p.h>
+#include "abstractformeditor.h"
+#include "abstractformwindowmanager.h"
+#include "QExtensionManager"
+#include "propertysheet.h"
+#include "abstractwidgetdatabase.h"
+#include "abstractsettings_p.h"
 // shared
 #include "qdesigner_utils_p.h"
 #include "qdesigner_propertycommand_p.h"
-#include <metadatabase_p.h>
-#include <iconloader_p.h>
-#include <QtGui/QAction>
-#include <QtGui/QLineEdit>
-#include <QtGui/QMenu>
-#include <QtGui/QApplication>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QScrollArea>
-#include <QtGui/QStackedWidget>
-#include <QtGui/QToolBar>
-#include <QtGui/QToolButton>
-#include <QtGui/QActionGroup>
-#include <QtGui/QLabel>
-#include <QtGui/QPainter>
+#include "metadatabase_p.h"
+#include "iconloader_p.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QTextStream>
+#include "qaction.h"
+#include "qlineedit.h"
+#include "qmenu.h"
+#include "qapplication.h"
+#include "qboxlayout.h"
+#include "qscrollarea.h"
+#include "qstackedwidget.h"
+#include "qtoolbar.h"
+#include "qtoolbutton.h"
+#include "qactiongroup.h"
+#include "qlabel.h"
+#include "qpainter.h"
+#include "qdebug.h"
+#include "qtextstream.h"
 
 static const char *SettingsGroupC = "PropertyEditor";
 static const char *ViewKeyC = "View";

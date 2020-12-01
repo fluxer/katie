@@ -45,9 +45,9 @@
 // We mean it.
 //
 
-#include "QtCore/qprocess.h"
-#include "QtCore/qiodevice_p.h"
-#include "QtCore/qringbuffer_p.h"
+#include "qprocess.h"
+#include "qiodevice_p.h"
+#include "qringbuffer_p.h"
 #include "qorderedmutexlocker_p.h"
 
 typedef int Q_PIPE;

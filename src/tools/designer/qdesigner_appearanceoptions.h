@@ -36,8 +36,8 @@
 
 #include "designer_enums.h"
 #include "qdesigner_toolwindow.h"
+#include "abstractoptionspage_p.h"
 
-#include <QtDesigner/abstractoptionspage_p.h>
 #include <QtCore/QObject>
 #include <QtCore/QPointer>
 #include <QtGui/QWidget>

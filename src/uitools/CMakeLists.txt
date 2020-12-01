@@ -9,15 +9,10 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtScript
-    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtUiTools
-    ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
     # for widgets.table
     ${CMAKE_SOURCE_DIR}/src/shared
     # for ui4.h

@@ -35,9 +35,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtScript
-    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/parser
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecompiler

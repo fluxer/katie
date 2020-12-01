@@ -35,16 +35,15 @@
 #include "qconnmanservice_linux_p.h"
 #include "qofonoservice_linux_p.h"
 #include "../qnetworksession_impl.h"
-
-#include <QtNetwork/qnetworkconfiguration_p.h>
-#include <QtNetwork/qnetworksession.h>
-#include <QtCore/qdebug.h>
-#include <QtCore/QFile>
-#include <QtCore/QTimer>
-#include <QtDBus/QDBusConnection>
-#include <QtDBus/QDBusInterface>
-#include <QtDBus/QDBusMessage>
-#include <QtDBus/QDBusReply>
+#include "qnetworkconfiguration_p.h"
+#include "qnetworksession.h"
+#include "qdebug.h"
+#include "qfile.h"
+#include "qtimer.h"
+#include "qdbusconnection.h"
+#include "qdbusinterface.h"
+#include "qdbusmessage.h"
+#include "qdbusreply.h"
 
 #ifndef QT_NO_BEARERMANAGEMENT
 #ifndef QT_NO_DBUS

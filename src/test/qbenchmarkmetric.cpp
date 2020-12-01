@@ -31,7 +31,7 @@
 **
 ****************************************************************************/
 
-#include <QtTest/qbenchmarkmetric_p.h>
+#include "qbenchmarkmetric_p.h"
 
 QT_BEGIN_NAMESPACE
 

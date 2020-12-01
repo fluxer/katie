@@ -31,9 +31,9 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qbenchmarkmeasurement_p.h"
-#include "QtTest/qbenchmark_p.h"
-#include "QtTest/qbenchmarkmetric_p.h"
+#include "qbenchmarkmeasurement_p.h"
+#include "qbenchmark_p.h"
+#include "qbenchmarkmetric_p.h"
 #include "qbenchmark.h"
 #include "qmath.h"
 #include "qdebug.h"

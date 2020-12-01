@@ -2,9 +2,7 @@ set(SHAREDPROPERTYBROWSER_INCLUDES
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_SOURCE_DIR}/src/shared/qtpropertybrowser
     ${CMAKE_BINARY_DIR}/src/shared/qtpropertybrowser
 )
