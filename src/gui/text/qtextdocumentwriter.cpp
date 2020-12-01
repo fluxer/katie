@@ -331,7 +331,7 @@ QTextCodec *QTextDocumentWriter::codec() const
 */
 QList<QByteArray> QTextDocumentWriter::supportedDocumentFormats()
 {
-    static QList<QByteArray> answer = QList<QByteArray>()
+    static const QList<QByteArray> answer = QList<QByteArray>()
 #ifndef QT_NO_TEXTHTMLPARSER
         << "HTML"
 #endif
