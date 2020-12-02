@@ -3615,19 +3615,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
     }
 
 #ifndef QT_NO_GESTURES
-    case QEvent::NativeGesture:
-    {
-        // only propagate the first gesture event (after the GID_BEGIN)
-        QWidget *w = static_cast<QWidget *>(receiver);
-        while (w) {
-            e->ignore();
-            res = d->notify_helper(w, e);
-            if ((res && e->isAccepted()) || w->isWindow())
-                break;
-            w = w->parentWidget();
-        }
-        break;
-    }
     case QEvent::Gesture:
     case QEvent::GestureOverride:
     {

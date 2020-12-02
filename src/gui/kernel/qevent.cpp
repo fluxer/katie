@@ -2096,8 +2096,6 @@ static const char *eventClassName(QEvent::Type t)
     case QEvent::Close:
         return "QCloseEvent";
 #ifndef QT_NO_GESTURES
-    case QEvent::NativeGesture:
-        return "QNativeGestureEvent";
     case QEvent::Gesture:
     case QEvent::GestureOverride:
         return "QGestureEvent";
@@ -2311,14 +2309,6 @@ QDebug operator<<(QDebug dbg, const QEvent *e) {
     case QEvent::ChildRemoved:
         dbg << "QChildEvent(" << eventTypeName(type) << ", " << (static_cast<const QChildEvent*>(e))->child() << ')';
         break;
-#  ifndef QT_NO_GESTURES
-    case QEvent::NativeGesture: {
-        const QNativeGestureEvent *ne = static_cast<const QNativeGestureEvent *>(e);
-        dbg << "QNativeGestureEvent(type=" << ne->type() << ", percentage=" << ne->percentage
-           << "position=" << ne->position << ", angle=" << ne->angle << ')';
-    }
-         break;
-#  endif // !QT_NO_GESTURES
     case QEvent::ContextMenu:
         dbg << "QContextMenuEvent(" << static_cast<const QContextMenuEvent *>(e)->pos() << ')';
         break;

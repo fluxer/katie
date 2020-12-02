@@ -205,16 +205,13 @@ public:
         TouchUpdate = 124,
         TouchEnd = 125,
 
-#ifndef QT_NO_GESTURES
-        NativeGesture = 126,                    // Internal for platform gesture support
-#endif
-        RequestSoftwareInputPanel = 127,
-        CloseSoftwareInputPanel = 128,
+        RequestSoftwareInputPanel = 126,
+        CloseSoftwareInputPanel = 127,
 
-        WinIdChange = 129,
+        WinIdChange = 128,
 #ifndef QT_NO_GESTURES
-        Gesture = 130,
-        GestureOverride = 131,
+        Gesture = 129,
+        GestureOverride = 130,
 #endif
 
         User = 1000,                            // first user event id

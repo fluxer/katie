@@ -80,33 +80,6 @@ public:
     qreal pressure;
 };
 
-#ifndef QT_NO_GESTURES
-class QNativeGestureEvent : public QEvent
-{
-public:
-    enum Type {
-        None,
-        GestureBegin,
-        GestureEnd,
-        Pan,
-        Zoom,
-        Rotate,
-        Swipe
-    };
-
-    QNativeGestureEvent()
-        : QEvent(QEvent::NativeGesture), gestureType(None), percentage(0)
-    {
-    }
-
-    Type gestureType;
-    float percentage;
-    QPoint position;
-    float angle;
-};
-#endif // QT_NO_GESTURES
-
-
 #ifndef QT_NO_CLIPBOARD
 class Q_GUI_EXPORT QClipboardEvent : public QEvent
 {
