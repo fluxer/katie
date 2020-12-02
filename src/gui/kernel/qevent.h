@@ -442,7 +442,7 @@ class Q_GUI_EXPORT QActionEvent : public QEvent
 {
     QAction *act, *bef;
 public:
-    QActionEvent(int type, QAction *action, QAction *before = 0);
+    QActionEvent(QEvent::Type type, QAction *action, QAction *before = 0);
     ~QActionEvent();
 
     inline QAction *action() const { return act; }
