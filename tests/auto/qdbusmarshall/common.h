@@ -31,7 +31,7 @@
 **
 ****************************************************************************/
 
-#include <math.h>               // isnan
+#include <qnumeric.h>
 #include <qvariant.h>
 #include <qdebug.h>
 #include <qline.h>
@@ -350,7 +350,7 @@ bool compare(const QVariant &v1, const QVariant &v2);
 
 bool compare(double d1, double d2)
 {
-    if (isnan(d1) && isnan(d2))
+    if (qIsNaN(d1) && qIsNaN(d2))
         return true;
     return d1 == d2;
 }
