@@ -5,5 +5,5 @@ if(WITH_DBUS AND DBUS_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/tst_qdbustype.cpp
     )
 
-    target_link_libraries(tst_qdbustype KtDBus ${DBUS_LIBRARIES})
+    target_link_libraries(tst_qdbustype ${DBUS_LIBRARIES})
 endif()

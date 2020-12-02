@@ -368,7 +368,7 @@ macro(KATIE_DBUS_TEST TESTNAME TESTSOURCES)
 
     add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
 
-    target_link_libraries(${TESTNAME} KtCore KtTest)
+    target_link_libraries(${TESTNAME} KtCore KtDBus KtTest)
     target_compile_definitions(
         ${TESTNAME} PRIVATE
         -DSRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/"

@@ -6,7 +6,7 @@ if(WITH_DBUS AND DBUS_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/common.h
     )
 
-    target_link_libraries(tst_qdbusmarshall KtDBus ${DBUS_LIBRARIES})
+    target_link_libraries(tst_qdbusmarshall ${DBUS_LIBRARIES})
 
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
     katie_setup_target(qpong
