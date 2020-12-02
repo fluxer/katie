@@ -216,7 +216,6 @@ protected:
     friend class QCoreApplication;
     QRect m_rect;
     QRegion m_region;
-    bool m_erased;
 };
 
 class QUpdateLaterEvent : public QEvent

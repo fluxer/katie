@@ -906,31 +906,11 @@ Qt::FocusReason QFocusEvent::reason() const
 */
 
 /*!
-    \fn bool QPaintEvent::erased() const
-    \compat
-
-    Returns true if the paint event region (or rectangle) has been
-    erased with the widget's background; otherwise returns false.
-
-    Qt 4 \e always erases regions that require painting. The exception
-    to this rule is if the widget sets the Qt::WA_OpaquePaintEvent or
-    Qt::WA_NoSystemBackground attributes. If either one of those
-    attributes is set \e and the window system does not make use of
-    subwidget alpha composition (currently X11 and Windows, but this
-    may change), then the region is not erased.
-*/
-
-/*!
-    \fn void QPaintEvent::setErased(bool b) { m_erased = b; }
-    \internal
-*/
-
-/*!
     Constructs a paint event object with the region that needs to
     be updated. The region is specified by \a paintRegion.
 */
 QPaintEvent::QPaintEvent(const QRegion& paintRegion)
-    : QEvent(Paint), m_rect(paintRegion.boundingRect()), m_region(paintRegion), m_erased(false)
+    : QEvent(Paint), m_rect(paintRegion.boundingRect()), m_region(paintRegion)
 {}
 
 /*!
@@ -938,7 +918,7 @@ QPaintEvent::QPaintEvent(const QRegion& paintRegion)
     to be updated. The region is specified by \a paintRect.
 */
 QPaintEvent::QPaintEvent(const QRect &paintRect)
-    : QEvent(Paint), m_rect(paintRect),m_region(paintRect), m_erased(false)
+    : QEvent(Paint), m_rect(paintRect),m_region(paintRect)
 {}
 
 
