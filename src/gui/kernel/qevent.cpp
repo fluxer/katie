@@ -2420,13 +2420,6 @@ QWindowStateChangeEvent::QWindowStateChangeEvent(Qt::WindowStates s, bool isOver
 }
 
 /*! \internal
- */
-bool QWindowStateChangeEvent::isOverride() const
-{
-    return m_override;
-}
-
-/*! \internal
 */
 QWindowStateChangeEvent::~QWindowStateChangeEvent()
 {

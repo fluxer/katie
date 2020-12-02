@@ -475,7 +475,7 @@ public:
     ~QWindowStateChangeEvent();
 
     inline Qt::WindowStates oldState() const { return ostate; }
-    bool isOverride() const;
+    inline bool isOverride() const { return m_override; };
 
 private:
     bool m_override;
