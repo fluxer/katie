@@ -386,12 +386,23 @@ endmacro()
 
 # a macro to add tests that require GUI easily by setting them up with the assumptions they make
 macro(KATIE_GUI_TEST TESTNAME TESTSOURCES)
-    katie_test(${TESTNAME} ${TESTSOURCES} ${ARGN})
+    katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
-    target_link_libraries(${TESTNAME} KtGui)
+    add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
+
+    target_link_libraries(${TESTNAME} KtCore KtGui KtTest)
     target_compile_definitions(
         ${TESTNAME} PRIVATE
         -DSRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/"
         -DQT_GUI_LIB
+    )
+    set_target_properties(
+        ${TESTNAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+    )
+
+    add_test(
+        NAME ${TESTNAME}
+        COMMAND "${CMAKE_BINARY_DIR}/xvfb.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}"
     )
 endmacro()
