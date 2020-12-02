@@ -673,7 +673,6 @@ include/katie/QtGui/QDrag
 include/katie/QtGui/QDragEnterEvent
 include/katie/QtGui/QDragLeaveEvent
 include/katie/QtGui/QDragMoveEvent
-include/katie/QtGui/QDragResponseEvent
 include/katie/QtGui/QDropEvent
 include/katie/QtGui/QErrorMessage
 include/katie/QtGui/QFileDialog

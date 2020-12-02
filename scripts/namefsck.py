@@ -221,7 +221,6 @@ classlist = [
     "QDragEnterEvent",
     "QDragLeaveEvent",
     "QDragMoveEvent",
-    "QDragResponseEvent",
     "QDropEvent",
     "QDynamicPropertyChangeEvent",
     "QEasingCurve",

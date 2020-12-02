@@ -263,7 +263,6 @@ static const struct ClassTblData {
     { QLatin1String("QDragEnterEvent"), QLatin1String("QtGui/qevent.h") },
     { QLatin1String("QDragLeaveEvent"), QLatin1String("QtGui/qevent.h") },
     { QLatin1String("QDragMoveEvent"), QLatin1String("QtGui/qevent.h") },
-    { QLatin1String("QDragResponseEvent"), QLatin1String("QtGui/qevent.h") },
     { QLatin1String("QDropEvent"), QLatin1String("QtGui/qevent.h") },
     { QLatin1String("QDynamicPropertyChangeEvent"), QLatin1String("QtCore/qcoreevent.h") },
     { QLatin1String("QEasingCurve"), QLatin1String("QtCore/qeasingcurve.h") },

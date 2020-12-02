@@ -3174,7 +3174,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
         case QEvent::DragMove:
         case QEvent::DragLeave:
         case QEvent::Drop:
-        case QEvent::DragResponse:
         case QEvent::ChildAdded:
         case QEvent::ChildPolished:
         case QEvent::ChildRemoved:
