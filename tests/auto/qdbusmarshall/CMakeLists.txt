@@ -1,7 +1,7 @@
 if(WITH_DBUS AND DBUS_FOUND)
     include_directories(${DBUS_INCLUDES})
 
-    katie_test(tst_qdbusmarshall
+    katie_dbus_test(tst_qdbusmarshall
         ${CMAKE_CURRENT_SOURCE_DIR}/tst_qdbusmarshall.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/common.h
     )

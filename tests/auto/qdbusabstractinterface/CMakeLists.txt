@@ -1,5 +1,5 @@
 if(WITH_DBUS AND DBUS_FOUND)
-    katie_test(tst_qdbusabstractinterface
+    katie_dbus_test(tst_qdbusabstractinterface
         ${CMAKE_CURRENT_SOURCE_DIR}/tst_qdbusabstractinterface.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/interface.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/interface.h
