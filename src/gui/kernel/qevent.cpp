@@ -3122,9 +3122,9 @@ QList<QGesture *> QGestureEvent::gestures() const
 */
 QGesture *QGestureEvent::gesture(Qt::GestureType type) const
 {
-    for(int i = 0; i < m_gestures.size(); ++i)
-        if (m_gestures.at(i)->gestureType() == type)
-            return m_gestures.at(i);
+    foreach (QGesture *gesture, m_gestures) {
+        if (gesture->gestureType() == type)
+            return gesture;
     return 0;
 }
 
