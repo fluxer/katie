@@ -7,8 +7,9 @@ set(KATIE_MOC "bootstrap_moc")
 
 include(CMakePushCheckState)
 include(CheckStructHasMember)
+include(CheckCXXSourceRuns)
 
-# a function to check for C function/definition, works for external functions.
+# a function to check for C function/definition, works for external functions
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     # see comment in top-level CMake file
     set(CMAKE_REQUIRED_INCLUDES /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
@@ -36,7 +37,7 @@ int main() {
 endfunction()
 
 # a macro to check for C function presence in header, if function is found a
-# definition is added.
+# definition is added
 macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
     katie_check_defined("${FORFUNCTION}" "${FROMHEADER}")
 
@@ -62,14 +63,42 @@ function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
     endif()
 endfunction()
 
-# a macro to check for C struct member presence in header, if member is found a
-# definition is added.
+# a function to check for C struct member presence in header, if member is found a
+# definition is added
 function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
     check_struct_has_member("struct ${FORSTRUCT}" "${FORMEMBER}" "${FROMHEADER}" HAVE_${FORSTRUCT}_${FORMEMBER})
 
     if(HAVE_${FORSTRUCT}_${FORMEMBER})
         string(TOUPPER "${FORSTRUCT}_${FORMEMBER}" upperstructmember)
         add_definitions(-DQT_HAVE_${upperstructmember})
+    endif()
+endfunction()
+
+# a function to check for file existence in /proc, if file exists a definition
+# is added
+function(KATIE_CHECK_PROC FORFILE)
+    check_cxx_source_runs(
+        "
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/stat.h>
+
+int main() {
+    char snprintfbuf[1024];
+    snprintf(snprintfbuf, sizeof(snprintfbuf), \"/proc/%d/${FORFILE}\", getpid());
+
+    struct stat statbuf;
+    if (lstat(snprintfbuf, &statbuf) == -1) {
+        return 1;
+    }
+    return 0;
+}
+"
+        HAVE_proc_${FORFILE}
+    )
+    if(HAVE_proc_${FORFILE})
+        string(TOUPPER "${FORFILE}" upperfile)
+        add_definitions(-DQT_HAVE_PROC_${upperfile})
     endif()
 endfunction()
 

@@ -957,12 +957,12 @@ static void getXDefault(const char *group, const char *key, bool *val)
 }
 #endif
 
-#if !defined(QT_NO_DEBUG) && defined(Q_OS_LINUX)
+#if !defined(QT_NO_DEBUG) && defined(QT_HAVE_PROC_CMDLINE) && defined(QT_HAVE_PROC_EXE)
 // Find out if our parent process is gdb by looking at the 'exe' symlink under /proc,.
 // or, for older Linuxes, read out 'cmdline'.
 bool runningUnderDebugger()
 {
-    const QString parentProc = QLatin1String("/proc/") + QString::number(getppid());
+    const QString parentProc = QString::fromLatin1("/proc/%1").arg(::getppid());
     const QFileInfo parentProcExe(parentProc + QLatin1String("/exe"));
     if (parentProcExe.isSymLink())
         return parentProcExe.readLink().endsWith(QLatin1String("/gdb"));
@@ -1157,7 +1157,7 @@ void qt_init(QApplicationPrivate *priv, int,
 
     priv->argc = j;
 
-#if !defined(QT_NO_DEBUG) && defined(Q_OS_LINUX)
+#if !defined(QT_NO_DEBUG) && defined(QT_HAVE_PROC_CMDLINE) && defined(QT_HAVE_PROC_EXE)
     if (!appNoGrab && !appDoGrab && runningUnderDebugger()) {
         appNoGrab = true;
         qDebug("Qt: gdb: -nograb added to command-line options.\n"

@@ -424,6 +424,9 @@ katie_check_function64(mmap64 "sys/mman.h")
 katie_check_function64(readdir64 "dirent.h")
 katie_check_function64(readdir64_r "dirent.h")
 
+katie_check_proc(exe)
+katie_check_proc(cmdline)
+
 configure_file(
     ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
     ${CMAKE_BINARY_DIR}/include/QtCore/qconfig.h
