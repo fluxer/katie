@@ -3125,6 +3125,7 @@ QGesture *QGestureEvent::gesture(Qt::GestureType type) const
     foreach (QGesture *gesture, m_gestures) {
         if (gesture->gestureType() == type)
             return gesture;
+    }
     return 0;
 }
 
