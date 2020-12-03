@@ -1,3 +1,8 @@
+macro(KATIE_DEFINITION DEF)
+    set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} ${DEF} ${ARGN})
+    add_definitions(${DEF} ${ARGN})
+endmacro()
+
 # https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
 # https://github.com/Kitware/CMake/blob/master/Modules/CMakeDetermineSystem.cmake
 if(NOT KATIE_PLATFORM)

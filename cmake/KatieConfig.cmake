@@ -74,9 +74,6 @@ if(NOT KATIE_FOUND)
         set(KATIE_${uppertool} Katie::${tool})
     endforeach()
 
-    # Include macros, tools variables must be set before that
-    include("${CMAKE_CURRENT_LIST_DIR}/KatieMacros.cmake")
-
     # Platform specific stuff and some tests
     include("${KATIE_MKSPECS_DIR}/mkspecs.cmake")
 

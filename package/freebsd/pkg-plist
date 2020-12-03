@@ -1468,7 +1468,6 @@ lib/cmake/Katie/KatieConfig.cmake
 lib/cmake/Katie/KatieConfigVersion.cmake
 lib/cmake/Katie/KatieLibraryTargets-%%CMAKE_BUILD_TYPE%%.cmake
 lib/cmake/Katie/KatieLibraryTargets.cmake
-lib/cmake/Katie/KatieMacros.cmake
 lib/cmake/Katie/Qt4UseFile.cmake
 lib/cmake/Katie/mkspecs/bsymbolic_functions.cpp
 lib/cmake/Katie/mkspecs/mkspecs.cmake

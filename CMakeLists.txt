@@ -48,7 +48,6 @@ endif()
 include(CheckIncludeFileCXX)
 include(CheckTypeSize)
 include(FeatureSummary)
-include(KatieMacros)
 include(KatieBuildMacros)
 include(mkspecs/mkspecs.cmake)
 
@@ -1016,7 +1015,6 @@ install(
     ${CMAKE_BINARY_DIR}/KatieConfig.cmake
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
     ${CMAKE_SOURCE_DIR}/cmake/Qt4UseFile.cmake
-    ${CMAKE_SOURCE_DIR}/cmake/modules/KatieMacros.cmake
     DESTINATION ${KATIE_CMAKE_PATH}
     COMPONENT Devel
 )
