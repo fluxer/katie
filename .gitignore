@@ -13,7 +13,6 @@
 *.swp
 
 # build directories
-apidocs/
 minsize/
 oldmake/
 debug/
