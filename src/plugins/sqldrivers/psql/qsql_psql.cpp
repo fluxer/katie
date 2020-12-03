@@ -45,33 +45,11 @@
 #include "qsocketnotifier.h"
 #include "qstringlist.h"
 #include "qmutex.h"
-
-#include <libpq-fe.h>
-#include <pg_config.h>
+#include "qnumeric.h"
 
 #include <stdlib.h>
-#include <math.h>
-// below code taken from an example at http://www.gnu.org/software/hello/manual/autoconf/Function-Portability.html
-#ifndef isnan
-    # define isnan(x) \
-        (sizeof (x) == sizeof (long double) ? isnan_ld (x) \
-        : sizeof (x) == sizeof (double) ? isnan_d (x) \
-        : isnan_f (x))
-    static inline int isnan_f  (float       x) { return x != x; }
-    static inline int isnan_d  (double      x) { return x != x; }
-    static inline int isnan_ld (long double x) { return x != x; }
-#endif
-
-#ifndef isinf
-    # define isinf(x) \
-        (sizeof (x) == sizeof (long double) ? isinf_ld (x) \
-        : sizeof (x) == sizeof (double) ? isinf_d (x) \
-        : isinf_f (x))
-    static inline int isinf_f  (float       x) { return isnan (x - x); }
-    static inline int isinf_d  (double      x) { return isnan (x - x); }
-    static inline int isinf_ld (long double x) { return isnan (x - x); }
-#endif
-
+#include <libpq-fe.h>
+#include <pg_config.h>
 
 // workaround for postgres defining their OIDs in a private header file
 #define QBOOLOID 16
@@ -354,18 +332,22 @@ QVariant QPSQLResult::data(int i)  const
     if (PQgetisnull(d->result, at(), i))
         return QVariant(type);
     switch (type) {
-    case QVariant::Bool:
+    case QVariant::Bool: {
         return QVariant((bool)(val[0] == 't'));
-    case QVariant::String:
+    }
+    case QVariant::String: {
         return d->driver->isUtf8 ? QString::fromUtf8(val) : QString::fromAscii(val);
-    case QVariant::LongLong:
+    }
+    case QVariant::LongLong: {
         if (val[0] == '-')
             return QString::fromLatin1(val).toLongLong();
         else
             return QString::fromLatin1(val).toULongLong();
-    case QVariant::Int:
+    }
+    case QVariant::Int: {
         return atoi(val);
-    case QVariant::Double:
+    }
+    case QVariant::Double: {
         if (ptype == QNUMERICOID) {
             if (numericalPrecisionPolicy() != QSql::HighPrecision) {
                 QVariant retval;
@@ -383,8 +365,13 @@ QVariant QPSQLResult::data(int i)  const
             }
             return QString::fromAscii(val);
         }
+        if (qstricmp(val, "Infinity") == 0)
+            return qInf();
+        if (qstricmp(val, "-Infinity") == 0)
+            return -qInf();
         return QString::fromAscii(val).toDouble();
-    case QVariant::Date:
+    }
+    case QVariant::Date: {
         if (val[0] == '\0') {
             return QVariant(QDate());
         } else {
@@ -394,6 +381,7 @@ QVariant QPSQLResult::data(int i)  const
             return QVariant(QString::fromLatin1(val));
 #endif
         }
+    }
     case QVariant::Time: {
         const QString str = QString::fromLatin1(val);
 #ifndef QT_NO_DATESTRING
@@ -1276,16 +1264,12 @@ QString QPSQLDriver::formatValue(const QSqlField &field, bool trimStrings) const
         }
         case QVariant::Double: {
             double val = field.value().toDouble();
-            if (isnan(val))
+            if (qIsNaN(val)) {
                 r = QLatin1String("'NaN'");
-            else {
-                int res = isinf(val);
-                if (res == 1)
-                    r = QLatin1String("'Infinity'");
-                else if (res == -1)
-                    r = QLatin1String("'-Infinity'");
-                else
-                    r = QSqlDriver::formatValue(field, trimStrings);
+            } else if (qIsInf(val)) {
+                r = (val < 0) ? QLatin1String("'-Infinity'") : QLatin1String("'Infinity'");
+            } else {
+                r = QSqlDriver::formatValue(field, trimStrings);
             }
             break;
         }
