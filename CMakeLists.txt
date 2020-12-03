@@ -71,7 +71,7 @@ if(NOT KATIE_UNIFDEF)
     message(WARNING "Could not find unifdef, headers will not be optimized")
 endif()
 
-# used as shebang for profile, exec, dbus, xvfb, dbg and trace scripts
+# used as shebang for profile, exec, dbus, xvfb and dbg scripts
 find_program(KATIE_SHELL NAMES sh dash mksh ksh ash)
 if(NOT KATIE_SHELL)
     message(FATAL_ERROR "Could not detect shell, supported are: sh, dash, mksh, ksh and ash")
