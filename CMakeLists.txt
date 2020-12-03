@@ -444,7 +444,7 @@ if(KATIE_TESTS OR KATIE_BENCHMARKS)
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
 
-foreach(script exec dbus xvfb dbg trace)
+foreach(script exec dbus xvfb dbg)
     configure_file(
         ${CMAKE_SOURCE_DIR}/cmake/${script}.sh.cmake
         ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/${script}.sh
