@@ -305,7 +305,8 @@ set_package_properties(ODBC PROPERTIES
     TYPE OPTIONAL
 )
 
-find_package(PostgreSQL)
+# v7.4+ required for PQresultErrorField()
+find_package(PostgreSQL 7.4)
 set_package_properties(PostgreSQL PROPERTIES
     PURPOSE "Required for PostgreSQL database support"
     DESCRIPTION "The world's most advanced open source database"
