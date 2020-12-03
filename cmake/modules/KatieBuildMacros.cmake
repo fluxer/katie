@@ -19,12 +19,8 @@ function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
 #include <stdio.h>
 ${includedata}
 
-static bool willprint = true; // bypass compiler/linker optimizations
 int main() {
-    willprint = false;
-    if (willprint) {
-        return printf(\"%p\", &${FORDEFINITION});
-    }
+    printf(\"%p\", &${FORDEFINITION});
     return 0;
 }
 "
