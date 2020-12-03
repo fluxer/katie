@@ -7,7 +7,7 @@ pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
 url='https://github.com/fluxer/katie'
-license=('LGPL' 'custom')
+license=('LGPL' 'BSD' 'custom')
 depends=('libsm' 'libxcursor' 'libxinerama' 'icu' 'libcups' 'libxrandr' 'sqlite' 'fontconfig')
 makedepends=('cmake' 'git' 'postgresql' 'libmariadbclient' 'unixodbc' 'unifdef')
 optdepends=('postgresql-libs: PostgreSQL driver'
@@ -44,6 +44,8 @@ package() {
     cd build
     make DESTDIR="${pkgdir}" install
 
+    install -vDm644 ../katie/LICENSE.BSD \
+        "${pkgdir}/usr/share/licenses/katie-git/BSD.txt"
     install -vDm644 ../katie/LGPL_EXCEPTION.txt \
         "${pkgdir}/usr/share/licenses/katie-git/LGPL_EXCEPTION.txt"
 }
