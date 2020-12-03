@@ -10,6 +10,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
 pkg_check_modules(PC_ODBC QUIET odbc)
 if(NOT PC_ODBC_FOUND)
     pkg_check_modules(PC_ODBC QUIET libiodbc)
@@ -26,7 +28,6 @@ find_library(ODBC_LIBRARIES
     HINTS $ENV{ODBCDIR}/lib ${PC_ODBC_LIBDIR}
 )
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ODBC
     VERSION_VAR PC_ODBC_VERSION
     REQUIRED_VARS ODBC_LIBRARIES ODBC_INCLUDES

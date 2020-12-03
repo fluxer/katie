@@ -12,6 +12,9 @@
 
 # intl does not provide pkg-config files
 
+include(CMakePushCheckState)
+include(FindPackageHandleStandardArgs)
+
 set(INTL_NAMES c intl)
 
 find_path(INTL_INCLUDES
@@ -41,7 +44,6 @@ find_program(INTL_MSGFMT
     HINTS $ENV{INTLDIR}/bin
 )
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Intl
     REQUIRED_VARS INTL_LIBRARIES INTL_INCLUDES INTL_MSGFMT
 )

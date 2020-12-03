@@ -10,6 +10,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
 pkg_check_modules(PC_SQLITE QUIET sqlite3)
 
 find_path(SQLITE_INCLUDES
@@ -23,7 +25,6 @@ find_library(SQLITE_LIBRARIES
     HINTS $ENV{SQLITEDIR}/lib ${PC_SQLITE_LIBDIR}
 )
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(SQLite
     VERSION_VAR PC_SQLITE_VERSION
     REQUIRED_VARS SQLITE_LIBRARIES SQLITE_INCLUDES

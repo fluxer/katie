@@ -10,6 +10,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
 pkg_check_modules(PC_HARFBUZZ QUIET harfbuzz)
 
 find_path(HARFBUZZ_INCLUDES
@@ -23,7 +25,6 @@ find_library(HARFBUZZ_LIBRARIES
     HINTS $ENV{HARFBUZZDIR}/lib ${PC_HARFBUZZ_LIBDIR}
 )
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(HarfBuzz
     VERSION_VAR PC_HARFBUZZ_VERSION
     REQUIRED_VARS HARFBUZZ_LIBRARIES HARFBUZZ_INCLUDES

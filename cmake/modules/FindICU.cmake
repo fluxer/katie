@@ -10,6 +10,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
 pkg_check_modules(PC_ICU QUIET icu-i18n)
 pkg_check_modules(PC_ICUUC QUIET icu-uc)
 
@@ -33,7 +35,6 @@ if(ICU_LIBRARIES AND ICUUC_LIBRARIES)
     set(ICU_LIBRARIES ${ICU_LIBRARIES} ${ICUUC_LIBRARIES})
 endif()
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ICU
     VERSION_VAR PC_ICU_VERSION
     REQUIRED_VARS ICU_LIBRARIES ICUUC_LIBRARIES ICU_INCLUDES

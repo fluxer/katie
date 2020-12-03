@@ -11,6 +11,9 @@
 
 # execinfo does not provide pkg-config files
 
+include(CMakePushCheckState)
+include(FindPackageHandleStandardArgs)
+
 set(EXECINFO_NAMES c execinfo)
 
 find_path(EXECINFO_INCLUDES
@@ -35,7 +38,6 @@ foreach(name ${EXECINFO_NAMES})
     endif()
 endforeach()
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ExecInfo
     REQUIRED_VARS EXECINFO_LIBRARIES EXECINFO_INCLUDES
 )

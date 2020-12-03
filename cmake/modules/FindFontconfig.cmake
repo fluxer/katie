@@ -10,6 +10,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
 pkg_check_modules(PC_FONTCONFIG QUIET fontconfig)
 
 find_path(FONTCONFIG_INCLUDES
@@ -22,7 +24,6 @@ find_library(FONTCONFIG_LIBRARIES
     HINTS $ENV{FONTCONFIGDIR}/lib ${PC_FONTCONFIG_LIBDIR}
 )
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Fontconfig
     VERSION_VAR PC_FONTCONFIG_VERSION
     REQUIRED_VARS FONTCONFIG_LIBRARIES FONTCONFIG_INCLUDES

@@ -12,6 +12,9 @@
 
 # resolv does not provide pkg-config files
 
+include(CMakePushCheckState)
+include(FindPackageHandleStandardArgs)
+
 set(RESOLV_NAMES c resolv)
 
 find_path(RESOLV_INCLUDES
@@ -43,7 +46,6 @@ foreach(name ${RESOLV_NAMES})
     endif()
 endforeach()
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Resolv
     REQUIRED_VARS RESOLV_LIBRARIES RESOLV_INCLUDES
 )

@@ -5,10 +5,6 @@ set(KATIE_UIC "uic")
 set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
 
-include(CMakePushCheckState)
-include(CheckStructHasMember)
-include(CheckCXXSourceRuns)
-
 # a function to check for C function/definition, works for external functions
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     # see comment in top-level CMake file

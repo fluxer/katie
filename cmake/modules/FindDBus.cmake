@@ -11,6 +11,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
 pkg_check_modules(PC_DBUS QUIET dbus-1)
 
 find_path(DBUS_INCLUDES
@@ -34,7 +36,6 @@ if(DBUS_INCLUDES AND DBUS_ARCH_INCLUDES)
     set(DBUS_INCLUDES ${DBUS_INCLUDES} ${DBUS_ARCH_INCLUDES})
 endif()
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(DBus
     VERSION_VAR PC_DBUS_VERSION
     REQUIRED_VARS DBUS_LIBRARIES DBUS_INCLUDES DBUS_ARCH_INCLUDES

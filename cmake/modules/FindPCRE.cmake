@@ -10,6 +10,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
 pkg_check_modules(PC_PCRE QUIET libpcre)
 
 find_path(PCRE_INCLUDES
@@ -22,7 +24,6 @@ find_library(PCRE_LIBRARIES
     HINTS $ENV{PCREDIR}/lib ${PC_PCRE_LIBDIR}
 )
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(PCRE
     VERSION_VAR PC_PCRE_VERSION
     REQUIRED_VARS PCRE_LIBRARIES PCRE_INCLUDES

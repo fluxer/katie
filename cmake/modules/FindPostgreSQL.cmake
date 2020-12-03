@@ -10,8 +10,9 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
-pkg_check_modules(PC_POSTGRESQL QUIET libpq)
+include(FindPackageHandleStandardArgs)
 
+pkg_check_modules(PC_POSTGRESQL QUIET libpq)
 
 find_path(POSTGRESQL_INCLUDES
     NAMES libpq-fe.h
@@ -24,7 +25,6 @@ find_library(POSTGRESQL_LIBRARIES
     HINTS $ENV{POSTGRESQLDIR}/lib ${PC_POSTGRESQL_LIBDIR}
 )
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(PostgreSQL
     VERSION_VAR PC_POSTGRESQL_VERSION
     REQUIRED_VARS POSTGRESQL_LIBRARIES POSTGRESQL_INCLUDES
