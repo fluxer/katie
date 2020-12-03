@@ -2,7 +2,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=katie-git
-pkgver=4.9.0.rc18.r16.gea38d0ce
+pkgver=4.9.0.r4681.8f22ea5f
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
@@ -20,8 +20,7 @@ conflicts=('katie')
 
 pkgver() {
     cd katie
-    #printf "4.9.0."r%s.%s "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+    printf "4.9.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 prepare() {
