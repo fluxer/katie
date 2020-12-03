@@ -123,10 +123,6 @@ add_feature_info(dbus WITH_DBUS "build D-Bus support")
 option(WITH_FONTCONFIG "Build Fontconfig support" ON)
 add_feature_info(fontconfig WITH_FONTCONFIG "build Fontconfig support")
 
-# TODO: enable when building against external harfbuzz works
-option(WITH_HARFBUZZ "Build Harfbuzz support" OFF)
-add_feature_info(harfbuzz WITH_HARFBUZZ "build Harfbuzz support")
-
 option(WITH_ODBC "Build ODBC database plugin" ON)
 add_feature_info(odbc WITH_ODBC "build ODBC support")
 
@@ -289,15 +285,6 @@ set_package_properties(Fontconfig PROPERTIES
     PURPOSE "Required for fonts configuration support"
     DESCRIPTION "Library for configuring and customizing font access"
     URL "https://www.freedesktop.org/wiki/Software/fontconfig/"
-    TYPE RECOMMENDED
-)
-
-# currently unused
-find_package(HarfBuzz)
-set_package_properties(HarfBuzz PROPERTIES
-    PURPOSE "Currently none"
-    DESCRIPTION "OpenType text shaping engine"
-    URL "https://www.freedesktop.org/wiki/Software/HarfBuzz/"
     TYPE RECOMMENDED
 )
 
