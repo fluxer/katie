@@ -40,8 +40,7 @@ if(MYSQL_CONFIG)
         OUTPUT_VARIABLE MYSQL_VERSION
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    # just in case, MYSQL_VERSION is not critical
-    if(NOT procerror1 STREQUAL "0" OR NOT proceerror2 STREQUAL "0")
+    if(NOT procerror1 STREQUAL "0" OR NOT proceerror2 STREQUAL "0" OR NOT proceerror3 STREQUAL "0")
         set(MYSQL_INCLUDES)
         set(MYSQL_LIBRARIES)
         set(MYSQL_VERSION)
