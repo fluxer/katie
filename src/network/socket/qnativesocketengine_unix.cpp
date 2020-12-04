@@ -617,7 +617,7 @@ static bool multicastMembershipHelper(QNativeSocketEnginePrivate *d,
         return false;
     }
 
-    int res = setsockopt(d->socketDescriptor, level, sockOpt, sockArg, sockArgSize);
+    int res = ::setsockopt(d->socketDescriptor, level, sockOpt, sockArg, sockArgSize);
     if (res == -1) {
         switch (errno) {
         case ENOPROTOOPT:
