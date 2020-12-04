@@ -78,7 +78,6 @@ public:
 
     void resetState();
     QKeySequence::SequenceMatch nextState(QKeyEvent *e);
-    QKeySequence::SequenceMatch state();
     void dispatchEvent(QKeyEvent *e);
     bool tryShortcutEvent(QObject *o, QKeyEvent *e);
 
@@ -101,11 +100,9 @@ private:
 
     QKeySequence::SequenceMatch find(QKeyEvent *e);
     QKeySequence::SequenceMatch matches(const QKeySequence &seq1, const QKeySequence &seq2) const;
-    QVector<const QShortcutEntry *> matches() const;
     void createNewSequences(QKeyEvent *e, QVector<QKeySequence> &ksl);
     void clearSequence(QVector<QKeySequence> &ksl);
     bool correctContext(const QShortcutEntry &item) const;
-    int translateModifiers(Qt::KeyboardModifiers modifiers);
 };
 
 #endif // QT_NO_SHORTCUT
