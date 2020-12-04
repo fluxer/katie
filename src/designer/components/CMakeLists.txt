@@ -1,4 +1,3 @@
-add_definitions(-DQDESIGNER_COMPONENTS_LIBRARY)
 set(EXTRA_DESIGNERCOMPONENTS_LIBS
     KtCore KtGui KtXml KtDesigner KtScript KtUiTools
 )
