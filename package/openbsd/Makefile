@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile.template,v 1.88 2020/05/15 01:32:48 abieber Exp $
+# $OpenBSD$
 
 # https://www.openbsd.org/faq/ports/
 
