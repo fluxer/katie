@@ -40,4 +40,4 @@ WANT_PGSQL = client
 PGSQL_CMAKE_ON = -DWITH_POSTGRESQL=TRUE
 PGSQL_CMAKE_OFF = -DWITH_POSTGRESQL=FALSE
 
-.include <bsd.port.mk> 
+.include <bsd.port.mk>

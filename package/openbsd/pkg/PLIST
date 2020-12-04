@@ -1520,6 +1520,8 @@ lib/katie/plugins/imageformats/
 @so lib/katie/plugins/imageformats/libqtiff.so
 lib/katie/plugins/script/
 @so lib/katie/plugins/script/libqtscriptdbus.so
+lib/katie/plugins/sqldrivers/
+@so lib/katie/plugins/sqldrivers/libqsqlodbc.so
 @lib lib/libKtCore.so.${LIBKtCore_VERSION}
 @lib lib/libKtDBus.so.${LIBKtDBus_VERSION}
 @lib lib/libKtDeclarative.so.${LIBKtDeclarative_VERSION}
