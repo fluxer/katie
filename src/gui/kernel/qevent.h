@@ -139,7 +139,7 @@ public:
     inline int globalY() const { return qRound(g.y()); }
 
     inline Qt::MouseButtons buttons() const { return mouseState; }
-    Qt::Orientation orientation() const { return o; }
+    inline Qt::Orientation orientation() const { return o; }
 
 protected:
     QPointF p, g;
