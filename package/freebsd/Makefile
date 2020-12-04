@@ -1,5 +1,7 @@
 # $FreeBSD$
 
+# https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/
+
 PORTNAME = katie
 DISTVERSION = 4.9.0.20200114
 CATEGORIES = devel x11 ftp net www
