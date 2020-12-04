@@ -9,9 +9,7 @@
 
 cmake_minimum_required(VERSION 2.8.12.2 FATAL_ERROR)
 
-if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
-    message(FATAL_ERROR "The project should not be build in the source directory")
-elseif(CMAKE_CROSSCOMPILING AND NOT KATIE_CROSS_EXEC)
+if(CMAKE_CROSSCOMPILING AND NOT KATIE_CROSS_EXEC)
     message(FATAL_ERROR "Cross-compiling requires KATIE_CROSS_EXEC to be set to QEMU executable, e.g. qemu-arm-static")
 endif()
 
