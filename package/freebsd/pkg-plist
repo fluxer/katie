@@ -1478,9 +1478,7 @@ lib/katie/imports/Qt/labs/gestures/qmldir
 lib/katie/imports/Qt/labs/particles/libqmlparticlesplugin.so
 lib/katie/imports/Qt/labs/particles/qmldir
 lib/katie/plugins/accessible/libqtaccessiblewidgets.so
-lib/katie/plugins/bearer/libqconnmanbearer.so
 lib/katie/plugins/bearer/libqgenericbearer.so
-lib/katie/plugins/bearer/libqnmbearer.so
 lib/katie/plugins/designer/libqdeclarativeview.so
 lib/katie/plugins/iconengines/libqsvgicon.so
 lib/katie/plugins/imageformats/libqgif.so
