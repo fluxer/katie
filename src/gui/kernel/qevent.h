@@ -187,13 +187,13 @@ protected:
 class Q_GUI_EXPORT QFocusEvent : public QEvent
 {
 public:
-    QFocusEvent(Type type, Qt::FocusReason reason=Qt::OtherFocusReason);
+    QFocusEvent(Type type, Qt::FocusReason reason = Qt::OtherFocusReason);
     ~QFocusEvent();
 
     inline bool gotFocus() const { return type() == FocusIn; }
     inline bool lostFocus() const { return type() == FocusOut; }
 
-    Qt::FocusReason reason() const;
+    inline Qt::FocusReason reason() const { return m_reason; }
 
 private:
     Qt::FocusReason m_reason;

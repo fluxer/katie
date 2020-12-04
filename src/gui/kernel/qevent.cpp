@@ -853,12 +853,10 @@ QFocusEvent::~QFocusEvent()
 }
 
 /*!
+    \fn bool QFocusEvent::reason() const
+
     Returns the reason for this focus event.
  */
-Qt::FocusReason QFocusEvent::reason() const
-{
-    return m_reason;
-}
 
 /*!
     \fn bool QFocusEvent::gotFocus() const
