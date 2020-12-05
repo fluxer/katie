@@ -625,6 +625,8 @@ private:
     friend class QGraphicsProxyWidget;
     friend class QGraphicsProxyWidgetPrivate;
     friend class QStyleSheetStyle;
+    friend class QX11EmbedWidgetPrivate;
+    friend class QX11EmbedContainerPrivate;
     friend struct QWidgetExceptionCleaner;
 #ifndef QT_NO_GESTURES
     friend class QGestureManager;
