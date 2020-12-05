@@ -222,7 +222,6 @@ QT_BEGIN_NAMESPACE
     \omitvalue Destroy
     \omitvalue Quit
     \omitvalue ShowWindowRequest
-    \omitvalue Speech
     \omitvalue Style
     \omitvalue ThreadChange
     \omitvalue NetworkReplyUpdated

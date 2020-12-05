@@ -916,7 +916,6 @@ bool QObject::event(QEvent *e)
         timerEvent((QTimerEvent*)e);
         break;
 
-
     case QEvent::ChildAdded:
     case QEvent::ChildPolished:
     case QEvent::ChildRemoved:
