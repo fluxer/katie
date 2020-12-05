@@ -15,21 +15,16 @@ MASTER_SITES = https://github.com/fluxer/katie/archive/
 DIST_SUBDIR = katie
 WRKSRC = ${WRKDIR}/katie-master
 
-CONFIGURE_DIRS = ${WRKDIR}/build
-CMAKE_ARG_PATH = ${WRKSRC}
 USE_CMAKE = yes
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 USE_LANGUAGES = c c++11
 USE_TOOLS = pkg-config msgfmt
 
-post-extract:
-	${MKDIR} ${WRKDIR}/build
-
 .include "../../archivers/zstd/buildlink3.mk"
 .include "../../textproc/icu/buildlink3.mk"
 .include "../../devel/pcre/buildlink3.mk"
 .include "../../devel/zlib/buildlink3.mk"
-# .include "../../security/openssl/buildlink3.mk"
+.include "../../security/openssl/buildlink3.mk"
 .include "../../x11/libXinerama/buildlink3.mk"
 .include "../../x11/libXcursor/buildlink3.mk"
 .include "../../x11/libXext/buildlink3.mk"
