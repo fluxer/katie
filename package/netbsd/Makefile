@@ -4,7 +4,7 @@
 # https://www.netbsd.org/docs/pkgsrc/
 
 DISTNAME = master
-PKGNAME = katie-4.9.0.20200114
+PKGNAME = katie-4.9.0.d20201205
 CATEGORIES = devel x11 net www
 MAINTAINER = xakepa10@gmail.com
 COMMENT = C++ toolkit deived from the Qt 4.8 framework
