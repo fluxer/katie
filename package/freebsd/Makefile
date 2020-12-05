@@ -18,7 +18,7 @@ DISTFILES = master.tar.gz
 DIST_SUBDIR = ${PORTNAME}
 WRKSRC = ${WRKDIR}/katie-master
 
-USES = compiler:c++11-lang pkgconfig cmake gettext ssl xorg sqlite:3 desktop-file-utils
+USES = compiler:c++11-lang pkgconfig cmake ssl xorg sqlite:3 desktop-file-utils
 USE_XORG = xinerama xrandr xrender xfixes xcursor xext sm ice
 USE_LDCONFIG = yes
 LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu libicui18n.so:devel/icu \
@@ -28,8 +28,12 @@ LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu libicui18n.so:deve
 	libiodbc.so:databases/libiodbc
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 
-OPTIONS_DEFINE = MYSQL PGSQL
+OPTIONS_DEFINE = NLS MYSQL PGSQL
 OPTIONS_SUB = yes
+NLS_DESC = Build translator and translations
+NLS_USES = gettext
+NLS_CMAKE_ON = -DWITH_INTL=TRUE
+NLS_CMAKE_OFF = -DWITH_INTL=FALSE
 MYSQL_DESC = Build MySQL database plugin
 MYSQL_USES = mysql
 MYSQL_CMAKE_ON = -DWITH_MYSQL=TRUE
