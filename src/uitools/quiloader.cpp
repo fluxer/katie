@@ -116,8 +116,7 @@ QVariant TranslatingTextBuilder::toNativeValue(const QVariant &value) const
     return value;
 }
 
-// This is "exported" to linguist
-const QUiItemRolePair qUiItemRoles[] = {
+static const QUiItemRolePair qUiItemRoles[] = {
     { Qt::DisplayRole, Qt::DisplayPropertyRole },
 #ifndef QT_NO_TOOLTIP
     { Qt::ToolTipRole, Qt::ToolTipPropertyRole },
