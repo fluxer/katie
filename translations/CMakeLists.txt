@@ -13,7 +13,7 @@ foreach(tmpres ${TRANSLATIONS})
         string(REPLACE "qt_" "" rsclocale "${rscname}")
     endif()
     add_custom_target(
-        ${FORTARGET}_${rscname} ALL
+        translations_${rscname} ALL
         COMMAND ${INTL_MSGFMT} -v "${resource}" -o "${rscout}"
         COMMENT "Generating ${rscname}.mo"
     )
