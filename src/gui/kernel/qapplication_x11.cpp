@@ -248,23 +248,15 @@ extern void qt_desktopwidget_update_workarea();
 // Function to change the window manager state (from qwidget_x11.cpp)
 extern void qt_change_net_wm_state(const QWidget *w, bool set, Atom one, Atom two);
 
-// modifier masks for alt, meta, super, hyper, and mode_switch - detected when the application starts
-// and/or keyboard layout changes
-uchar qt_alt_mask = 0;
-uchar qt_meta_mask = 0;
-uchar qt_super_mask = 0;
-uchar qt_hyper_mask = 0;
-uchar qt_mode_switch_mask = 0;
-
 // flags for extensions for special Languages, currently only for RTL languages
-bool         qt_use_rtl_extensions = false;
+bool qt_use_rtl_extensions = false;
 
-static Window        mouseActWindow             = 0;        // window where mouse is
+static Window           mouseActWindow       = 0;            // window where mouse is
 static Qt::MouseButton  mouseButtonPressed   = Qt::NoButton; // last mouse button pressed
 static Qt::MouseButtons mouseButtonState     = Qt::NoButton; // mouse button state
-static Time        mouseButtonPressTime = 0;        // when was a button pressed
-static short        mouseXPos, mouseYPos;                // mouse pres position in act window
-static short        mouseGlobalXPos, mouseGlobalYPos; // global mouse press position
+static Time             mouseButtonPressTime = 0;            // when was a button pressed
+static short            mouseXPos, mouseYPos;                // mouse pres position in act window
+static short            mouseGlobalXPos, mouseGlobalYPos;    // global mouse press position
 
 extern QWidgetList *qt_modal_stack;                // stack of modal widgets
 
@@ -284,8 +276,6 @@ static bool qt_x11EventFilter(XEvent* ev)
         return true;
     return qApp->x11EventFilter(ev);
 }
-
-QTextCodec * qt_input_mapper = 0;
 
 extern bool qt_check_clipboard_sentinel(); //def in qclipboard_x11.cpp
 extern bool qt_check_selection_sentinel(); //def in qclipboard_x11.cpp
@@ -608,7 +598,7 @@ bool QApplicationPrivate::x11_apply_settings()
       libraryPath                - QStringList
       style                      - QString
       doubleClickInterval        - int
-      keyboardInputInterval  - int
+      keyboardInputInterval      - int
       cursorFlashTime            - int
       wheelScrollLines           - int
       defaultCodec               - QString
@@ -1457,11 +1447,6 @@ void qt_init(QApplicationPrivate *priv, int,
         qt_x11Data->compositingManagerRunning = XGetSelectionOwner(qt_x11Data->display,
                                                             ATOM(_NET_WM_CM_S0));
 
-        // Always use the locale codec, since we have no examples of non-local
-        // XIMs, and since we cannot get a sensible answer about the encoding
-        // from the XIM.
-        qt_input_mapper = QTextCodec::codecForLocale();
-
         QApplicationPrivate::x11_apply_settings();
 
         // be smart about the size of the default font. most X servers have helvetica
@@ -1843,7 +1828,7 @@ Qt::KeyboardModifiers QApplication::queryKeyboardModifiers()
     for (int i = 0; i < ScreenCount(qt_x11Data->display); ++i) {
         if (XQueryPointer(qt_x11Data->display, QX11Info::appRootWindow(i), &root, &child,
                           &root_x, &root_y, &win_x, &win_y, &keybstate))
-            return qt_x11Data->translateModifiers(keybstate & 0x00ff);
+            return qt_keymapper_private()->translateModifiers(keybstate & 0x00ff);
     }
     return 0;
 
@@ -2840,22 +2825,6 @@ static Qt::MouseButtons translateMouseButtons(int s)
     return ret;
 }
 
-Qt::KeyboardModifiers QX11Data::translateModifiers(int s)
-{
-    Qt::KeyboardModifiers ret = 0;
-    if (s & ShiftMask)
-        ret |= Qt::ShiftModifier;
-    if (s & ControlMask)
-        ret |= Qt::ControlModifier;
-    if (s & qt_alt_mask)
-        ret |= Qt::AltModifier;
-    if (s & qt_meta_mask)
-        ret |= Qt::MetaModifier;
-    if (s & qt_mode_switch_mask)
-        ret |= Qt::GroupSwitchModifier;
-    return ret;
-}
-
 bool QETWidget::translateMouseEvent(const XEvent *event)
 {
     if (!isWindow() && testAttribute(Qt::WA_NativeWindow))
@@ -2917,7 +2886,7 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
         globalPos.rx() = lastMotion.x_root;
         globalPos.ry() = lastMotion.y_root;
         buttons = translateMouseButtons(lastMotion.state);
-        modifiers = qt_x11Data->translateModifiers(lastMotion.state);
+        modifiers = qt_keymapper_private()->translateModifiers(lastMotion.state);
         if (qt_button_down && !buttons)
             qt_button_down = 0;
     } else if (event->type == EnterNotify || event->type == LeaveNotify) {
@@ -2930,7 +2899,7 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
         globalPos.rx() = xevent->xcrossing.x_root;
         globalPos.ry() = xevent->xcrossing.y_root;
         buttons = translateMouseButtons(xevent->xcrossing.state);
-        modifiers = qt_x11Data->translateModifiers(xevent->xcrossing.state);
+        modifiers = qt_keymapper_private()->translateModifiers(xevent->xcrossing.state);
         if (qt_button_down && !buttons)
             qt_button_down = 0;
         if (qt_button_down)
@@ -2942,7 +2911,7 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
         globalPos.rx() = event->xbutton.x_root;
         globalPos.ry() = event->xbutton.y_root;
         buttons = translateMouseButtons(event->xbutton.state);
-        modifiers = qt_x11Data->translateModifiers(event->xbutton.state);
+        modifiers = qt_keymapper_private()->translateModifiers(event->xbutton.state);
         switch (event->xbutton.button) {
         case Button1: button = Qt::LeftButton; break;
         case Button2: button = Qt::MiddleButton; break;

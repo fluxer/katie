@@ -65,13 +65,8 @@
 
 #define XK_MISCELLANY
 #define XK_LATIN1
-#define XK_KOREAN
 #include <X11/keysymdef.h>
 #include <X11/XF86keysym.h>
-
-#ifndef XK_ISO_Left_Tab
-#define XK_ISO_Left_Tab 0xFE20
-#endif
 
 #ifdef index
 #  undef index
@@ -153,8 +148,6 @@ struct QXdndDropTransaction
 class QMimeData;
 struct QX11Data
 {
-    static Qt::KeyboardModifiers translateModifiers(int s);
-
     Window findClientWindow(Window, Atom, bool);
 
     // from qclipboard_x11.cpp

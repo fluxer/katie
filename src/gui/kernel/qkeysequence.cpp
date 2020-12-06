@@ -240,11 +240,6 @@ static const struct KeyNameTblData {
     { Qt::Key_VolumeDown,                 QT_TRANSLATE_NOOP("QShortcut", "Volume Down") },
     { Qt::Key_VolumeMute,                 QT_TRANSLATE_NOOP("QShortcut", "Volume Mute") },
     { Qt::Key_VolumeUp,                   QT_TRANSLATE_NOOP("QShortcut", "Volume Up") },
-    { Qt::Key_BassBoost,                  QT_TRANSLATE_NOOP("QShortcut", "Bass Boost") },
-    { Qt::Key_BassUp,                     QT_TRANSLATE_NOOP("QShortcut", "Bass Up") },
-    { Qt::Key_BassDown,                   QT_TRANSLATE_NOOP("QShortcut", "Bass Down") },
-    { Qt::Key_TrebleUp,                   QT_TRANSLATE_NOOP("QShortcut", "Treble Up") },
-    { Qt::Key_TrebleDown,                 QT_TRANSLATE_NOOP("QShortcut", "Treble Down") },
     { Qt::Key_MediaPlay,                  QT_TRANSLATE_NOOP("QShortcut", "Media Play") },
     { Qt::Key_MediaStop,                  QT_TRANSLATE_NOOP("QShortcut", "Media Stop") },
     { Qt::Key_MediaPrevious,              QT_TRANSLATE_NOOP("QShortcut", "Media Previous") },
@@ -253,7 +248,6 @@ static const struct KeyNameTblData {
     //: Media player pause button
     { Qt::Key_MediaPause,                 QT_TRANSLATE_NOOP("QShortcut", "Media Pause") },
     //: Media player button to toggle between playing and paused
-    { Qt::Key_MediaTogglePlayPause,       QT_TRANSLATE_NOOP("QShortcut", "Toggle Media Play/Pause") },
     { Qt::Key_HomePage,                   QT_TRANSLATE_NOOP("QShortcut", "Home Page") },
     { Qt::Key_Favorites,                  QT_TRANSLATE_NOOP("QShortcut", "Favorites") },
     { Qt::Key_Search,                     QT_TRANSLATE_NOOP("QShortcut", "Search") },
@@ -383,34 +377,6 @@ static const struct KeyNameTblData {
     { Qt::Key_SysReq,       QT_TRANSLATE_NOOP("QShortcut", "System Request") },
 
     // --------------------------------------------------------------
-    // Keypad navigation keys
-    { Qt::Key_Select,       QT_TRANSLATE_NOOP("QShortcut", "Select") },
-    { Qt::Key_Yes,          QT_TRANSLATE_NOOP("QShortcut", "Yes") },
-    { Qt::Key_No,           QT_TRANSLATE_NOOP("QShortcut", "No") },
-
-    // --------------------------------------------------------------
-    // Device keys
-    { Qt::Key_Context1,         QT_TRANSLATE_NOOP("QShortcut", "Context1") },
-    { Qt::Key_Context2,         QT_TRANSLATE_NOOP("QShortcut", "Context2") },
-    { Qt::Key_Context3,         QT_TRANSLATE_NOOP("QShortcut", "Context3") },
-    { Qt::Key_Context4,         QT_TRANSLATE_NOOP("QShortcut", "Context4") },
-    //: Button to start a call (note: a separate button is used to end the call)
-    { Qt::Key_Call,             QT_TRANSLATE_NOOP("QShortcut", "Call") },
-    //: Button to end a call (note: a separate button is used to start the call)
-    { Qt::Key_Hangup,           QT_TRANSLATE_NOOP("QShortcut", "Hangup") },
-    //: Button that will hang up if we're in call, or make a call if we're not.
-    { Qt::Key_ToggleCallHangup, QT_TRANSLATE_NOOP("QShortcut", "Toggle Call/Hangup") },
-    { Qt::Key_Flip,             QT_TRANSLATE_NOOP("QShortcut", "Flip") },
-    //: Button to trigger voice dialing
-    { Qt::Key_VoiceDial,        QT_TRANSLATE_NOOP("QShortcut", "Voice Dial") },
-    //: Button to redial the last number called
-    { Qt::Key_LastNumberRedial, QT_TRANSLATE_NOOP("QShortcut", "Last Number Redial") },
-    //: Button to trigger the camera shutter (take a picture)
-    { Qt::Key_Camera,           QT_TRANSLATE_NOOP("QShortcut", "Camera Shutter") },
-    //: Button to focus the camera
-    { Qt::Key_CameraFocus,      QT_TRANSLATE_NOOP("QShortcut", "Camera Focus") },
-
-    // --------------------------------------------------------------
     // Japanese keyboard support
     { Qt::Key_Kanji,            QT_TRANSLATE_NOOP("QShortcut", "Kanji") },
     { Qt::Key_Muhenkan,         QT_TRANSLATE_NOOP("QShortcut", "Muhenkan") },
@@ -431,20 +397,6 @@ static const struct KeyNameTblData {
     { Qt::Key_Codeinput,        QT_TRANSLATE_NOOP("QShortcut", "Code input") },
     { Qt::Key_MultipleCandidate,QT_TRANSLATE_NOOP("QShortcut", "Multiple Candidate") },
     { Qt::Key_PreviousCandidate,QT_TRANSLATE_NOOP("QShortcut", "Previous Candidate") },
-
-    // --------------------------------------------------------------
-    // Korean keyboard support
-    { Qt::Key_Hangul,          QT_TRANSLATE_NOOP("QShortcut", "Hangul") },
-    { Qt::Key_Hangul_Start,    QT_TRANSLATE_NOOP("QShortcut", "Hangul Start") },
-    { Qt::Key_Hangul_End,      QT_TRANSLATE_NOOP("QShortcut", "Hangul End") },
-    { Qt::Key_Hangul_Hanja,    QT_TRANSLATE_NOOP("QShortcut", "Hangul Hanja") },
-    { Qt::Key_Hangul_Jamo,     QT_TRANSLATE_NOOP("QShortcut", "Hangul Jamo") },
-    { Qt::Key_Hangul_Romaja,   QT_TRANSLATE_NOOP("QShortcut", "Hangul Romaja") },
-    { Qt::Key_Hangul_Jeonja,   QT_TRANSLATE_NOOP("QShortcut", "Hangul Jeonja") },
-    { Qt::Key_Hangul_Banja,    QT_TRANSLATE_NOOP("QShortcut", "Hangul Banja") },
-    { Qt::Key_Hangul_PreHanja, QT_TRANSLATE_NOOP("QShortcut", "Hangul PreHanja") },
-    { Qt::Key_Hangul_PostHanja,QT_TRANSLATE_NOOP("QShortcut", "Hangul PostHanja") },
-    { Qt::Key_Hangul_Special,  QT_TRANSLATE_NOOP("QShortcut", "Hangul Special") },
 };
 
 static const short KeyNameTblSize = sizeof(KeyNameTbl) / sizeof(KeyNameTblData);
