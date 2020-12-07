@@ -363,7 +363,7 @@ QT_END_INCLUDE_NAMESPACE
 #if defined(QT_ARCH_I386)
 #  define QT_FASTCALL __attribute__((regparm(3)))
 #else
-#  define QT_FASTCALL
+#  define QT_FASTCALL __attribute__((hot))
 #endif
 
 // This logic must match the one in qmetatype.h
