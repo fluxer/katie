@@ -187,6 +187,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_iterator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystementry_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemmetadata_p.h
@@ -338,6 +339,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_iterator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystementry.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_unix.cpp
@@ -423,41 +425,15 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
 )
 
-# TODO: check for inotify/kqueue support
-if(KATIE_PLATFORM STREQUAL "linux")
+if(KATIE_PLATFORM MATCHES "(linux|hurd)")
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
         dl
         rt
-    )
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify.cpp
-    )
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify_p.h
-    )
-elseif(KATIE_PLATFORM MATCHES "(freebsd|openbsd|dragonfly)")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue_p.h
     )
 elseif(KATIE_PLATFORM STREQUAL "netbsd")
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
-        rt
-    )
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue_p.h
-    )
-elseif(KATIE_PLATFORM STREQUAL "hurd")
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        dl
         rt
     )
 endif()

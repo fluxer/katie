@@ -39,10 +39,6 @@
 #include <QTimer>
 #include <QDebug>
 
-#ifdef Q_OS_LINUX
-#  include <sys/inotify.h>
-#endif
-
 //TESTED_CLASS=
 //TESTED_FILES=
 
@@ -75,31 +71,19 @@ private slots:
     void cleanup();
 
     void QTBUG15255_deadlock();
-private:
-    QStringList do_force_engines;
-    bool do_force_native;
 };
 
 tst_QFileSystemWatcher::tst_QFileSystemWatcher()
-    : do_force_native(false)
 {
-#ifdef Q_OS_LINUX
-    // the inotify implementation in the kernel is known to be buggy in certain versions of the linux kernel
-    do_force_engines << "native";
-
-    if (inotify_init() != -1)
-        do_force_engines << "inotify";
-#elif defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD) || defined(Q_OS_NETBSD) || defined(Q_OS_DRAGONFLY)
-    // we have native engines for freebsd, openbsd, netbsd and dragonfly
-    do_force_engines << "native";
-#endif
 }
 
 void tst_QFileSystemWatcher::basicTest_data()
 {
     QTest::addColumn<QString>("backend");
-    foreach(QString engine, do_force_engines)
-        QTest::newRow(engine.toLatin1().constData()) << engine;
+#if defined(QT_HAVE_INOTIFY_INIT1) || defined(QT_HAVE_KEVENT)
+    // we have native engines for linux, freebsd, openbsd, netbsd and dragonfly
+    QTest::newRow("native") << "native";
+#endif
     QTest::newRow("poller") << "poller";
 }
 

@@ -50,31 +50,37 @@
 #ifndef QT_NO_FILESYSTEMWATCHER
 
 #include <QtCore/qhash.h>
+#include <QtCore/qmutex.h>
 #include <QtCore/qsocketnotifier.h>
 
 QT_BEGIN_NAMESPACE
 
-class QInotifyFileSystemWatcherEngine : public QFileSystemWatcherEngine
+class QFileSystemWatcherEngineUnix : public QFileSystemWatcherEngine
 {
     Q_OBJECT
 
 public:
-    ~QInotifyFileSystemWatcherEngine();
+    ~QFileSystemWatcherEngineUnix();
 
-    static QInotifyFileSystemWatcherEngine *create();
+    static QFileSystemWatcherEngineUnix *create();
 
     QStringList addPaths(const QStringList &paths, QStringList *files, QStringList *directories);
     QStringList removePaths(const QStringList &paths, QStringList *files, QStringList *directories);
 
 private Q_SLOTS:
-    void readFromInotify();
+    void readFromFd();
 
 private:
-    QInotifyFileSystemWatcherEngine(int fd);
-    int inotifyFd;
+    QFileSystemWatcherEngineUnix(int fd);
+
+    int sockfd;
     QHash<QString, int> pathToID;
     QHash<int, QString> idToPath;
     QSocketNotifier notifier;
+
+#if defined(QT_HAVE_KEVENT)
+    QMutex mutex;
+#endif
 };
 
 
