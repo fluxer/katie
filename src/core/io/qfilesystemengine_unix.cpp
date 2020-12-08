@@ -371,7 +371,11 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
         sendresult = QT_SENDFILE(targetfd, sourcefd, &tocopy, tocopy);
     }
 #undef QT_SENDFILE
-#elif defined(Q_OS_FREEBSD)
+#elif defined(Q_OS_FREEBSD) || defined(Q_OS_DRAGONFLY)
+// DragonFly BSD does not have SF_SYNC defined
+#ifndef SF_SYNC
+#  define SF_SYNC 0
+#endif
     QT_OFF_T totalwrite = 0;
     int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), Q_NULLPTR, &totalwrite, SF_SYNC);
     if (QT_OFF_T(sendresult) != totalwrite) {

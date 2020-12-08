@@ -89,8 +89,8 @@ tst_QFileSystemWatcher::tst_QFileSystemWatcher()
 
     if (inotify_init() != -1)
         do_force_engines << "inotify";
-#elif defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD) || defined(Q_OS_NETBSD)
-    // we have native engines for freebsd, openbsd and netbsd
+#elif defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD) || defined(Q_OS_NETBSD) || defined(Q_OS_DRAGONFLY)
+    // we have native engines for freebsd, openbsd, netbsd and dragonfly
     do_force_engines << "native";
 #endif
 }

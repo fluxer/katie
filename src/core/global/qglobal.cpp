@@ -910,6 +910,13 @@ const char *qVersion()
 */
 
 /*!
+    \macro Q_OS_DRAGONFLY
+    \relates <QtGlobal>
+
+    Defined on DragonFly BSD.
+*/
+
+/*!
     \macro Q_OS_HURD
     \relates <QtGlobal>
 

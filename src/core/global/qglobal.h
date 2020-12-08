@@ -167,22 +167,25 @@ QT_USE_NAMESPACE
 /*
    The operating system, must be one of: (Q_OS_x)
 
-     LINUX    - Linux
-     FREEBSD  - FreeBSD
-     NETBSD   - NetBSD
-     OPENBSD  - OpenBSD
-     HURD     - GNU Hurd
-     SOLARIS  - Sun Solaris
+     LINUX     - Linux
+     FREEBSD   - FreeBSD
+     NETBSD    - NetBSD
+     OPENBSD   - OpenBSD
+     DRAGONFLY - DragonFly BSD
+     HURD      - GNU Hurd
+     SOLARIS   - Sun Solaris
 */
 
 #if defined(__linux__) || defined(__linux)
 #  define Q_OS_LINUX
-#elif defined(__FreeBSD__) || defined(__DragonFly__)
+#elif defined(__FreeBSD__)
 #  define Q_OS_FREEBSD
 #elif defined(__NetBSD__)
 #  define Q_OS_NETBSD
 #elif defined(__OpenBSD__)
 #  define Q_OS_OPENBSD
+#elif defined(__DragonFly__)
+#  define Q_OS_DRAGONFLY
 #elif defined(__GNU__)
 #  define Q_OS_HURD
 #elif defined(__sun) || defined(sun)

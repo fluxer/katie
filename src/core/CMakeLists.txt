@@ -423,6 +423,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
 )
 
+# TODO: check for inotify/kqueue support
 if(KATIE_PLATFORM STREQUAL "linux")
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
@@ -437,7 +438,7 @@ if(KATIE_PLATFORM STREQUAL "linux")
         ${CORE_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify_p.h
     )
-elseif(KATIE_PLATFORM MATCHES "(freebsd|openbsd)")
+elseif(KATIE_PLATFORM MATCHES "(freebsd|openbsd|dragonfly)")
     set(CORE_SOURCES
         ${CORE_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp
