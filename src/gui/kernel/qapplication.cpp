@@ -358,7 +358,9 @@ int QApplicationPrivate::cursor_flash_time = 1000;        // text caret flash ti
 int QApplicationPrivate::mouse_double_click_time = 400;        // mouse dbl click limit
 int QApplicationPrivate::keyboard_input_time = 400; // keyboard input interval
 #ifndef QT_NO_WHEELEVENT
-int QApplicationPrivate::wheel_scroll_lines;   // number of lines to scroll
+int QApplicationPrivate::wheel_scroll_lines = 3;         // number of lines to scroll
+#else
+int QApplicationPrivate::wheel_scroll_lines = 0;
 #endif
 bool qt_is_gui_used;
 bool qt_in_tab_key_event = false;
@@ -621,10 +623,6 @@ void QApplicationPrivate::construct(
 
     if (qgetenv("QT_USE_NATIVE_WINDOWS").toInt() > 0)
         q->setAttribute(Qt::AA_NativeWindows);
-
-#ifndef QT_NO_WHEELEVENT
-    QApplicationPrivate::wheel_scroll_lines = 3;
-#endif
 
     if (qt_is_gui_used)
         initializeMultitouch();
