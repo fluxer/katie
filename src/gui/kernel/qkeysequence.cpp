@@ -938,14 +938,7 @@ QString QKeySequencePrivate::encodeString(int key, QKeySequence::SequenceFormat 
     key &= ~(Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
     QString p;
 
-    if (key && key < Qt::Key_Escape && key != Qt::Key_Space) {
-        if (!QChar::requiresSurrogates(key)) {
-            p = QChar::toUpper(ushort(key));
-        } else {
-            p += QChar(QChar::highSurrogate(key));
-            p += QChar(QChar::lowSurrogate(key));
-        }
-    } else if (key >= Qt::Key_F1 && key <= Qt::Key_F35) {
+    if (key >= Qt::Key_F1 && key <= Qt::Key_F35) {
             p = nativeText ? QShortcut::tr("F%1").arg(key - Qt::Key_F1 + 1)
                            : QString::fromLatin1("F%1").arg(key - Qt::Key_F1 + 1);
     } else if (key) {

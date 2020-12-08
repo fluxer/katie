@@ -510,6 +510,7 @@ public:
         Key_Super_R                       = 0xffec,
         Key_Hyper_L                       = 0xffed,
         Key_Hyper_R                       = 0xffee,
+
         // latin
         Key_Space                         = 0x0020,
         Key_Exclam                        = 0x0021,
