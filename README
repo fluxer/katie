@@ -56,6 +56,7 @@ There are several things you should be aware before considering Katie:
   - additional text codecs via ICU converter
   - Unicode v5.0+ characters and partial scripts support
   - support for AArch64 architecture
+  - support for PostgreSQL v9.1+
   - support for locale aliases
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
   - support for generating CRC-32 checksums via qChecksum32() function
