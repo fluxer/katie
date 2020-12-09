@@ -1,18 +1,21 @@
 version: 4.9.0-{branch}-{build}
 image: Ubuntu
 clone_depth: 1
+
 build_script:
 - sh: >-
     sudo apt-get update -qq
 
-    sudo apt-get install -qq libpcre3-dev libssl-dev zlib1g-dev libzstd-dev libc6-dev libpng-dev libjpeg-dev libtiff-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libdbus-1-dev libicu-dev unixodbc-dev libpq-dev libmysqld-dev libsqlite3-dev xorg-dev
-
+    sudo apt-get install -qq libpcre3-dev libssl-dev zlib1g-dev libzstd-dev libc6-dev libpng-dev libjpeg-dev libtiff-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libdbus-1-dev libicu-dev unixodbc-dev libpq-dev libmysqld-dev liblz4-dev libsqlite3-dev xorg-dev
 
     export CFLAGS="$CFLAGS -w"
 
     export CXXFLAGS="$CXXFLAGS -w"
 
-
     cmake . -Wno-dev -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON
 
     make -j $(nproc || echo 1)
+
+test_script:
+- sh: >-
+    ctest -V
