@@ -1006,7 +1006,7 @@ static int qMySqlConnectionCount = 0;
 
 static inline void qLibraryInit()
 {
-#ifndef Q_NO_MYSQL_EMBEDDED
+#if !defined(Q_NO_MYSQL_EMBEDDED)
     if (qMySqlConnectionCount > 1)
         return;
 
@@ -1018,11 +1018,15 @@ static inline void qLibraryInit()
         qWarning("QMYSQLDriver::qServerInit: unable to start server.");
     }
 #endif // Q_NO_MYSQL_EMBEDDED
+
+#ifdef MARIADB_BASE_VERSION
+    qAddPostRoutine(mysql_server_end);
+#endif
 }
 
 static inline void qLibraryEnd()
 {
-#ifndef Q_NO_MYSQL_EMBEDDED
+#if !defined(Q_NO_MYSQL_EMBEDDED) && !defined(MARIADB_BASE_VERSION)
 # if MYSQL_VERSION_ID < 50000 || MYSQL_VERSION_ID >= 50003
     mysql_library_end();
 # else

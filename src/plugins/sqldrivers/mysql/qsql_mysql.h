@@ -73,10 +73,8 @@ protected:
     void virtual_hook(int id, void *data);
     bool nextResult();
 
-#if MYSQL_VERSION_ID >= 40108
     bool prepare(const QString& stmt);
     bool exec();
-#endif
 private:
     QMYSQLResultPrivate* d;
 };
