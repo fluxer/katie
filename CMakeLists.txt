@@ -186,7 +186,7 @@ set_package_properties(ZSTD PROPERTIES
 find_package(OpenSSL 0.9.8)
 set_package_properties(OpenSSL PROPERTIES
     PURPOSE "Required for HTTPS support"
-    DESCRIPTION "Support for secure network communications (SSL and TLS)"
+    DESCRIPTION "Robust, commercial-grade, and full-featured toolkit for SSL and TLS"
     URL "https://openssl.org"
     TYPE REQUIRED
 )
