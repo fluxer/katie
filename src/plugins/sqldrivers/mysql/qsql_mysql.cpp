@@ -54,8 +54,6 @@ Q_DECLARE_METATYPE(MYSQL_RES*)
 Q_DECLARE_METATYPE(MYSQL*)
 Q_DECLARE_METATYPE(MYSQL_STMT*)
 
-#define Q_CLIENT_MULTI_STATEMENTS CLIENT_MULTI_STATEMENTS
-
 QT_BEGIN_NAMESPACE
 
 class QMYSQLDriverPrivate
@@ -1147,7 +1145,7 @@ bool QMYSQLDriver::open(const QString& db,
        we have to enable CLIEN_MULTI_STATEMENTS here, otherwise _any_
        stored procedure call will fail.
     */
-    unsigned int optionFlags = Q_CLIENT_MULTI_STATEMENTS;
+    unsigned int optionFlags = CLIENT_MULTI_STATEMENTS;
     const QStringList opts(connOpts.split(QLatin1Char(';'), QString::SkipEmptyParts));
     QString unixSocket;
 #if MYSQL_VERSION_ID >= 50000
