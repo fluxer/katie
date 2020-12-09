@@ -84,10 +84,6 @@ class QPSQLDriver : public QSqlDriver
 public:
     enum Protocol {
         VersionUnknown = -1,
-        Version6 = 6,
-        Version7 = 7,
-        Version71 = 8,
-        Version73 = 9,
         Version74 = 10,
         Version8 = 11,
         Version81 = 12,
@@ -95,6 +91,16 @@ public:
         Version83 = 14,
         Version84 = 15,
         Version9 = 16,
+        Version91 = 17,
+        Version92 = 18,
+        Version93 = 19,
+        Version94 = 20,
+        Version95 = 21,
+        Version96 = 22,
+        Version10 = 23,
+        Version11 = 24,
+        Version12 = 25,
+        Version13 = 26,
     };
 
     explicit QPSQLDriver(QObject *parent=0);

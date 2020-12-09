@@ -92,7 +92,7 @@ public:
       : q(qq),
         connection(0),
         isUtf8(false),
-        pro(QPSQLDriver::Version6),
+        pro(QPSQLDriver::Version74),
         sn(0),
         pendingNotifyCheck(false),
         hasBackslashEscape(false)
@@ -118,18 +118,11 @@ public:
 
 void QPSQLDriverPrivate::appendTables(QStringList &tl, QSqlQuery &t, QChar type)
 {
-    QString query;
-    if (pro >= QPSQLDriver::Version73) {
-        query = QString::fromLatin1("select pg_class.relname, pg_namespace.nspname from pg_class "
+    QString query = QString::fromLatin1("select pg_class.relname, pg_namespace.nspname from pg_class "
                   "left join pg_namespace on (pg_class.relnamespace = pg_namespace.oid) "
                   "where (pg_class.relkind = '%1') and (pg_class.relname !~ '^Inv') "
                   "and (pg_class.relname !~ '^pg_') "
                   "and (pg_namespace.nspname != 'information_schema') ").arg(type);
-    } else {
-        query = QString::fromLatin1("select relname, null from pg_class where (relkind = '%1') "
-                  "and (relname !~ '^Inv') "
-                  "and (relname !~ '^pg_') ").arg(type);
-    }
     t.exec(query);
     while (t.next()) {
         QString schema = t.value(1).toString();
@@ -645,19 +638,13 @@ void QPSQLDriverPrivate::detectBackslashEscape()
 static QPSQLDriver::Protocol qMakePSQLVersion(int vMaj, int vMin)
 {
     switch (vMaj) {
-    case 6:
-        return QPSQLDriver::Version6;
     case 7:
     {
         switch (vMin) {
-        case 1:
-            return QPSQLDriver::Version71;
-        case 3:
-            return QPSQLDriver::Version73;
         case 4:
             return QPSQLDriver::Version74;
         default:
-            return QPSQLDriver::Version7;
+            return QPSQLDriver::VersionUnknown;
         }
         break;
     }
@@ -675,11 +662,30 @@ static QPSQLDriver::Protocol qMakePSQLVersion(int vMaj, int vMin)
         default:
             return QPSQLDriver::Version8;
         }
-        break;
     }
     case 9:
-        return QPSQLDriver::Version9;
-        break;
+    {
+        switch (vMin) {
+        case 1:
+            return QPSQLDriver::Version91;
+        case 2:
+            return QPSQLDriver::Version92;
+        case 3:
+            return QPSQLDriver::Version93;
+        case 4:
+            return QPSQLDriver::Version94;
+        default:
+            return QPSQLDriver::Version9;
+        }
+    }
+    case 10:
+        return QPSQLDriver::Version10;
+    case 11:
+        return QPSQLDriver::Version11;
+    case 12:
+        return QPSQLDriver::Version12;
+    case 13:
+        return QPSQLDriver::Version13;
     default:
         break;
     }
@@ -688,7 +694,7 @@ static QPSQLDriver::Protocol qMakePSQLVersion(int vMaj, int vMin)
 
 QPSQLDriver::Protocol QPSQLDriverPrivate::getPSQLVersion()
 {
-    QPSQLDriver::Protocol serverVersion = QPSQLDriver::Version6;
+    QPSQLDriver::Protocol serverVersion = QPSQLDriver::Version74;
     PGresult* result = exec("select version()");
     int status = PQresultStatus(result);
     if (status == PGRES_COMMAND_OK || status == PGRES_TUPLES_OK) {
@@ -726,9 +732,9 @@ QPSQLDriver::Protocol QPSQLDriverPrivate::getPSQLVersion()
 
     //keep the old behavior unchanged
     if (serverVersion == QPSQLDriver::VersionUnknown)
-        serverVersion = QPSQLDriver::Version6;
+        serverVersion = QPSQLDriver::Version74;
 
-    if (serverVersion < QPSQLDriver::Version71) {
+    if (serverVersion < QPSQLDriver::Version74) {
         qWarning("This version of PostgreSQL is not supported and may not work.");
     }
 
@@ -763,7 +769,7 @@ bool QPSQLDriver::hasFeature(DriverFeature f) const
         return true;
     case PreparedQueries:
     case PositionalPlaceholders:
-        return d->pro >= QPSQLDriver::Version82;
+        return (d->pro >= QPSQLDriver::Version82);
     case BatchOperations:
     case NamedPlaceholders:
     case SimpleLocking:
@@ -771,7 +777,7 @@ bool QPSQLDriver::hasFeature(DriverFeature f) const
     case MultipleResultSets:
         return false;
     case BLOB:
-        return d->pro >= QPSQLDriver::Version71;
+        return true;
     case Unicode:
         return d->isUtf8;
     }
@@ -894,12 +900,7 @@ bool QPSQLDriver::commitTransaction()
     // This hack is used to tell if the transaction has succeeded for the protocol versions of
     // PostgreSQL below. For 7.x and other protocol versions we are left in the dark.
     // This hack can dissapear once there is an API to query this sort of information.
-    if (d->pro == QPSQLDriver::Version8 ||
-        d->pro == QPSQLDriver::Version81 ||
-        d->pro == QPSQLDriver::Version82 ||
-        d->pro == QPSQLDriver::Version83 ||
-        d->pro == QPSQLDriver::Version84 ||
-        d->pro == QPSQLDriver::Version9) {
+    if (d->pro >= QPSQLDriver::Version8) {
         transaction_failed = qstrcmp(PQcmdStatus(res), "ROLLBACK") == 0;
     }
 
@@ -984,28 +985,6 @@ QSqlIndex QPSQLDriver::primaryIndex(const QString& tablename) const
         schema = schema.toLower();
 
     switch(d->pro) {
-    case QPSQLDriver::Version6:
-        stmt = QLatin1String("select pg_att1.attname, int(pg_att1.atttypid), pg_cl.relname "
-                "from pg_attribute pg_att1, pg_attribute pg_att2, pg_class pg_cl, pg_index pg_ind "
-                "where pg_cl.relname = '%1_pkey' "
-                "and pg_cl.oid = pg_ind.indexrelid "
-                "and pg_att2.attrelid = pg_ind.indexrelid "
-                "and pg_att1.attrelid = pg_ind.indrelid "
-                "and pg_att1.attnum = pg_ind.indkey[pg_att2.attnum-1] "
-                "order by pg_att2.attnum");
-        break;
-    case QPSQLDriver::Version7:
-    case QPSQLDriver::Version71:
-        stmt = QLatin1String("select pg_att1.attname, pg_att1.atttypid::int, pg_cl.relname "
-                "from pg_attribute pg_att1, pg_attribute pg_att2, pg_class pg_cl, pg_index pg_ind "
-                "where pg_cl.relname = '%1_pkey' "
-                "and pg_cl.oid = pg_ind.indexrelid "
-                "and pg_att2.attrelid = pg_ind.indexrelid "
-                "and pg_att1.attrelid = pg_ind.indrelid "
-                "and pg_att1.attnum = pg_ind.indkey[pg_att2.attnum-1] "
-                "order by pg_att2.attnum");
-        break;
-    case QPSQLDriver::Version73:
     case QPSQLDriver::Version74:
     case QPSQLDriver::Version8:
     case QPSQLDriver::Version81:
@@ -1013,6 +992,14 @@ QSqlIndex QPSQLDriver::primaryIndex(const QString& tablename) const
     case QPSQLDriver::Version83:
     case QPSQLDriver::Version84:
     case QPSQLDriver::Version9:
+    case QPSQLDriver::Version91:
+    case QPSQLDriver::Version92:
+    case QPSQLDriver::Version93:
+    case QPSQLDriver::Version94:
+    case QPSQLDriver::Version10:
+    case QPSQLDriver::Version11:
+    case QPSQLDriver::Version12:
+    case QPSQLDriver::Version13:
         stmt = QLatin1String("SELECT pg_attribute.attname, pg_attribute.atttypid::int, "
                 "pg_class.relname "
                 "FROM pg_attribute, pg_class "
@@ -1064,37 +1051,6 @@ QSqlRecord QPSQLDriver::record(const QString& tablename) const
 
     QString stmt;
     switch(d->pro) {
-    case QPSQLDriver::Version6:
-        stmt = QLatin1String("select pg_attribute.attname, int(pg_attribute.atttypid), "
-                "pg_attribute.attnotnull, pg_attribute.attlen, pg_attribute.atttypmod, "
-                "int(pg_attribute.attrelid), pg_attribute.attnum "
-                "from pg_class, pg_attribute "
-                "where pg_class.relname = '%1' "
-                "and pg_attribute.attnum > 0 "
-                "and pg_attribute.attrelid = pg_class.oid ");
-        break;
-    case QPSQLDriver::Version7:
-        stmt = QLatin1String("select pg_attribute.attname, pg_attribute.atttypid::int, "
-                "pg_attribute.attnotnull, pg_attribute.attlen, pg_attribute.atttypmod, "
-                "pg_attribute.attrelid::int, pg_attribute.attnum "
-                "from pg_class, pg_attribute "
-                "where pg_class.relname = '%1' "
-                "and pg_attribute.attnum > 0 "
-                "and pg_attribute.attrelid = pg_class.oid ");
-        break;
-    case QPSQLDriver::Version71:
-        stmt = QLatin1String("select pg_attribute.attname, pg_attribute.atttypid::int, "
-                "pg_attribute.attnotnull, pg_attribute.attlen, pg_attribute.atttypmod, "
-                "pg_attrdef.adsrc "
-                "from pg_class, pg_attribute "
-                "left join pg_attrdef on (pg_attrdef.adrelid = "
-                "pg_attribute.attrelid and pg_attrdef.adnum = pg_attribute.attnum) "
-                "where pg_class.relname = '%1' "
-                "and pg_attribute.attnum > 0 "
-                "and pg_attribute.attrelid = pg_class.oid "
-                "order by pg_attribute.attnum ");
-        break;
-    case QPSQLDriver::Version73:
     case QPSQLDriver::Version74:
     case QPSQLDriver::Version8:
     case QPSQLDriver::Version81:
@@ -1102,6 +1058,14 @@ QSqlRecord QPSQLDriver::record(const QString& tablename) const
     case QPSQLDriver::Version83:
     case QPSQLDriver::Version84:
     case QPSQLDriver::Version9:
+    case QPSQLDriver::Version91:
+    case QPSQLDriver::Version92:
+    case QPSQLDriver::Version93:
+    case QPSQLDriver::Version94:
+    case QPSQLDriver::Version10:
+    case QPSQLDriver::Version11:
+    case QPSQLDriver::Version12:
+    case QPSQLDriver::Version13:
         stmt = QLatin1String("select pg_attribute.attname, pg_attribute.atttypid::int, "
                 "pg_attribute.attnotnull, pg_attribute.attlen, pg_attribute.atttypmod, "
                 "pg_attrdef.adsrc "
@@ -1127,53 +1091,24 @@ QSqlRecord QPSQLDriver::record(const QString& tablename) const
 
     QSqlQuery query(createResult());
     query.exec(stmt.arg(tbl));
-    if (d->pro >= QPSQLDriver::Version71) {
-        while (query.next()) {
-            int len = query.value(3).toInt();
-            int precision = query.value(4).toInt();
-            // swap length and precision if length == -1
-            if (len == -1 && precision > -1) {
-                len = precision - 4;
-                precision = -1;
-            }
-            QString defVal = query.value(5).toString();
-            if (!defVal.isEmpty() && defVal.at(0) == QLatin1Char('\''))
-                defVal = defVal.mid(1, defVal.length() - 2);
-            QSqlField f(query.value(0).toString(), qDecodePSQLType(query.value(1).toInt()));
-            f.setRequired(query.value(2).toBool());
-            f.setLength(len);
-            f.setPrecision(precision);
-            f.setDefaultValue(defVal);
-            f.setSqlType(query.value(1).toInt());
-            info.append(f);
+    while (query.next()) {
+        int len = query.value(3).toInt();
+        int precision = query.value(4).toInt();
+        // swap length and precision if length == -1
+        if (len == -1 && precision > -1) {
+            len = precision - 4;
+            precision = -1;
         }
-    } else {
-        // Postgres < 7.1 cannot handle outer joins
-        while (query.next()) {
-            QString defVal;
-            QString stmt2 = QLatin1String("select pg_attrdef.adsrc from pg_attrdef where "
-                            "pg_attrdef.adrelid = %1 and pg_attrdef.adnum = %2 ");
-            QSqlQuery query2(createResult());
-            query2.exec(stmt2.arg(query.value(5).toInt()).arg(query.value(6).toInt()));
-            if (query2.isActive() && query2.next())
-                defVal = query2.value(0).toString();
-            if (!defVal.isEmpty() && defVal.at(0) == QLatin1Char('\''))
-                defVal = defVal.mid(1, defVal.length() - 2);
-            int len = query.value(3).toInt();
-            int precision = query.value(4).toInt();
-            // swap length and precision if length == -1
-            if (len == -1 && precision > -1) {
-                len = precision - 4;
-                precision = -1;
-            }
-            QSqlField f(query.value(0).toString(), qDecodePSQLType(query.value(1).toInt()));
-            f.setRequired(query.value(2).toBool());
-            f.setLength(len);
-            f.setPrecision(precision);
-            f.setDefaultValue(defVal);
-            f.setSqlType(query.value(1).toInt());
-            info.append(f);
-        }
+        QString defVal = query.value(5).toString();
+        if (!defVal.isEmpty() && defVal.at(0) == QLatin1Char('\''))
+            defVal = defVal.mid(1, defVal.length() - 2);
+        QSqlField f(query.value(0).toString(), qDecodePSQLType(query.value(1).toInt()));
+        f.setRequired(query.value(2).toBool());
+        f.setLength(len);
+        f.setPrecision(precision);
+        f.setDefaultValue(defVal);
+        f.setSqlType(query.value(1).toInt());
+        info.append(f);
     }
 
     return info;
