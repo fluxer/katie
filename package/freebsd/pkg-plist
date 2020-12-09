@@ -29,8 +29,6 @@ include/katie/QtCore/QCache
 include/katie/QtCore/QChar
 include/katie/QtCore/QCharRef
 include/katie/QtCore/QChildEvent
-include/katie/QtCore/QCommandLineOption
-include/katie/QtCore/QCommandLineParser
 include/katie/QtCore/QContiguousCache
 include/katie/QtCore/QContiguousCacheData
 include/katie/QtCore/QContiguousCacheTypedData
@@ -233,8 +231,6 @@ include/katie/QtCore/qbytearray.h
 include/katie/QtCore/qbytearraymatcher.h
 include/katie/QtCore/qcache.h
 include/katie/QtCore/qchar.h
-include/katie/QtCore/qcommandlineoption.h
-include/katie/QtCore/qcommandlineparser.h
 include/katie/QtCore/qconfig.h
 include/katie/QtCore/qcontainerfwd.h
 include/katie/QtCore/qcontiguouscache.h

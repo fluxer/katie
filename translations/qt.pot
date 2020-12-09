@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-29 04:02+0000\n"
+"POT-Creation-Date: 2020-12-09 01:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgid "Plugin verification data mismatch in '%1'"
 msgstr ""
 
 #: src/core/plugin/qlibrary.cpp:541 src/core/plugin/qlibrary.cpp:576
-#: src/core/plugin/qpluginloader.cpp:275
+#: src/core/plugin/qpluginloader.cpp:274
 msgid "The shared library was not found."
 msgstr ""
 
@@ -34,8 +34,8 @@ msgstr ""
 msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:924 src/core/plugin/qpluginloader.cpp:299
-#: src/core/io/qiodevice.cpp:1543 src/network/ssl/qsslerror.cpp:261
+#: src/core/plugin/qlibrary.cpp:924 src/core/plugin/qpluginloader.cpp:291
+#: src/core/io/qiodevice.cpp:1541 src/network/ssl/qsslerror.cpp:261
 #: src/network/kernel/qhostinfo_unix.cpp:128
 #: src/network/kernel/qhostinfo_unix.cpp:245
 #: src/network/socket/qnativesocketengine.cpp:268
@@ -350,46 +350,6 @@ msgstr ""
 #: src/core/tools/qregexp.cpp:68
 msgctxt "QRegExp"
 msgid "invalid category"
-msgstr ""
-
-#: src/core/tools/qcommandlineparser.cpp:274
-msgid "Displays version information."
-msgstr ""
-
-#: src/core/tools/qcommandlineparser.cpp:298
-msgid "Displays this help."
-msgstr ""
-
-#: src/core/tools/qcommandlineparser.cpp:393
-msgid "Unknown option '%1'."
-msgstr ""
-
-#: src/core/tools/qcommandlineparser.cpp:396
-msgid "Unknown options: %1."
-msgstr ""
-
-#: src/core/tools/qcommandlineparser.cpp:488
-msgid "Missing value after '%1'."
-msgstr ""
-
-#: src/core/tools/qcommandlineparser.cpp:497
-msgid "Unexpected value after '%1'."
-msgstr ""
-
-#: src/core/tools/qcommandlineparser.cpp:891
-msgid "[options]"
-msgstr ""
-
-#: src/core/tools/qcommandlineparser.cpp:897
-msgid "Usage: %1"
-msgstr ""
-
-#: src/core/tools/qcommandlineparser.cpp:903
-msgid "Options:"
-msgstr ""
-
-#: src/core/tools/qcommandlineparser.cpp:932
-msgid "Arguments:"
 msgstr ""
 
 #: src/core/json/qjsonparser.cpp:48
@@ -1532,47 +1492,47 @@ msgstr ""
 msgid "Sample"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1255
+#: src/gui/dialogs/qcolordialog.cpp:1215
 msgid "Hu&e:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1256
+#: src/gui/dialogs/qcolordialog.cpp:1216
 msgid "&Sat:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1257
+#: src/gui/dialogs/qcolordialog.cpp:1217
 msgid "&Val:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1258
+#: src/gui/dialogs/qcolordialog.cpp:1218
 msgid "&Red:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1259
+#: src/gui/dialogs/qcolordialog.cpp:1219
 msgid "&Green:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1260
+#: src/gui/dialogs/qcolordialog.cpp:1220
 msgid "Bl&ue:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1261
+#: src/gui/dialogs/qcolordialog.cpp:1221
 msgid "A&lpha channel:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1362
+#: src/gui/dialogs/qcolordialog.cpp:1322
 msgid "Select Color"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1489
+#: src/gui/dialogs/qcolordialog.cpp:1449
 msgid "&Basic colors"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1490
+#: src/gui/dialogs/qcolordialog.cpp:1450
 msgid "&Custom colors"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1491
+#: src/gui/dialogs/qcolordialog.cpp:1451
 msgid "&Add to Custom Colors"
 msgstr ""
 
@@ -1952,16 +1912,16 @@ msgstr ""
 msgid "Date Modified"
 msgstr ""
 
-#: src/gui/dialogs/qerrormessage.cpp:156
-msgid "Debug Message:"
-msgstr ""
-
-#: src/gui/dialogs/qerrormessage.cpp:159
+#: src/gui/dialogs/qerrormessage.cpp:155
 msgid "Warning:"
 msgstr ""
 
-#: src/gui/dialogs/qerrormessage.cpp:162
+#: src/gui/dialogs/qerrormessage.cpp:158
 msgid "Fatal Error:"
+msgstr ""
+
+#: src/gui/dialogs/qerrormessage.cpp:161
+msgid "Debug Message:"
 msgstr ""
 
 #: src/gui/dialogs/qerrormessage.cpp:354
@@ -2063,92 +2023,92 @@ msgstr ""
 msgid "Scroll down"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:452
+#: src/gui/widgets/qdialogbuttonbox.cpp:451
 msgctxt "QDialogButtonBox"
 msgid "OK"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:455
+#: src/gui/widgets/qdialogbuttonbox.cpp:454
 msgctxt "QDialogButtonBox"
 msgid "Save"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:458
+#: src/gui/widgets/qdialogbuttonbox.cpp:457
 msgctxt "QDialogButtonBox"
 msgid "Open"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:461
+#: src/gui/widgets/qdialogbuttonbox.cpp:460
 msgctxt "QDialogButtonBox"
 msgid "Cancel"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:464
+#: src/gui/widgets/qdialogbuttonbox.cpp:463
 msgctxt "QDialogButtonBox"
 msgid "Close"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:467
+#: src/gui/widgets/qdialogbuttonbox.cpp:466
 msgctxt "QDialogButtonBox"
 msgid "Apply"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:470
+#: src/gui/widgets/qdialogbuttonbox.cpp:469
 msgctxt "QDialogButtonBox"
 msgid "Reset"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:473
+#: src/gui/widgets/qdialogbuttonbox.cpp:472
 msgctxt "QDialogButtonBox"
 msgid "Help"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:476
+#: src/gui/widgets/qdialogbuttonbox.cpp:475
 msgctxt "QDialogButtonBox"
 msgid "Discard"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:479
+#: src/gui/widgets/qdialogbuttonbox.cpp:478
 msgctxt "QDialogButtonBox"
 msgid "&Yes"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:482
+#: src/gui/widgets/qdialogbuttonbox.cpp:481
 msgctxt "QDialogButtonBox"
 msgid "Yes to &All"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:485
+#: src/gui/widgets/qdialogbuttonbox.cpp:484
 msgctxt "QDialogButtonBox"
 msgid "&No"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:488
+#: src/gui/widgets/qdialogbuttonbox.cpp:487
 msgctxt "QDialogButtonBox"
 msgid "N&o to All"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:491
+#: src/gui/widgets/qdialogbuttonbox.cpp:490
 msgctxt "QDialogButtonBox"
 msgid "Save All"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:494
+#: src/gui/widgets/qdialogbuttonbox.cpp:493
 msgctxt "QDialogButtonBox"
 msgid "Abort"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:497
+#: src/gui/widgets/qdialogbuttonbox.cpp:496
 msgctxt "QDialogButtonBox"
 msgid "Retry"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:500
+#: src/gui/widgets/qdialogbuttonbox.cpp:499
 msgctxt "QDialogButtonBox"
 msgid "Ignore"
 msgstr ""
 
-#: src/gui/widgets/qdialogbuttonbox.cpp:503
+#: src/gui/widgets/qdialogbuttonbox.cpp:502
 msgctxt "QDialogButtonBox"
 msgid "Restore Defaults"
 msgstr ""
@@ -2274,7 +2234,7 @@ msgstr ""
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1833
+#: src/gui/kernel/qapplication.cpp:1804
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -2440,925 +2400,770 @@ msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:243
 msgctxt "QShortcut"
-msgid "Bass Boost"
+msgid "Media Play"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:244
 msgctxt "QShortcut"
-msgid "Bass Up"
+msgid "Media Stop"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:245
 msgctxt "QShortcut"
-msgid "Bass Down"
+msgid "Media Previous"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:246
 msgctxt "QShortcut"
-msgid "Treble Up"
+msgid "Media Next"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:247
 msgctxt "QShortcut"
-msgid "Treble Down"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:248
-msgctxt "QShortcut"
-msgid "Media Play"
+msgid "Media Record"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:249
 msgctxt "QShortcut"
-msgid "Media Stop"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:250
-msgctxt "QShortcut"
-msgid "Media Previous"
+msgid "Media Pause"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:251
 msgctxt "QShortcut"
-msgid "Media Next"
+msgid "Home Page"
 msgstr ""
 
 #: src/gui/kernel/qkeysequence.cpp:252
 msgctxt "QShortcut"
-msgid "Media Record"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:254
-msgctxt "QShortcut"
-msgid "Media Pause"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:256
-msgctxt "QShortcut"
-msgid "Toggle Media Play/Pause"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:257
-msgctxt "QShortcut"
-msgid "Home Page"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:258
-msgctxt "QShortcut"
 msgid "Favorites"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:259
+#: src/gui/kernel/qkeysequence.cpp:253
 msgctxt "QShortcut"
 msgid "Search"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:260
+#: src/gui/kernel/qkeysequence.cpp:254
 msgctxt "QShortcut"
 msgid "Standby"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:261
+#: src/gui/kernel/qkeysequence.cpp:255
 msgctxt "QShortcut"
 msgid "Open URL"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:262
+#: src/gui/kernel/qkeysequence.cpp:256
 msgctxt "QShortcut"
 msgid "Launch Mail"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:263
+#: src/gui/kernel/qkeysequence.cpp:257
 msgctxt "QShortcut"
 msgid "Launch Media"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:264
+#: src/gui/kernel/qkeysequence.cpp:258
 msgctxt "QShortcut"
 msgid "Launch (0)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:265
+#: src/gui/kernel/qkeysequence.cpp:259
 msgctxt "QShortcut"
 msgid "Launch (1)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:266
+#: src/gui/kernel/qkeysequence.cpp:260
 msgctxt "QShortcut"
 msgid "Launch (2)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:267
+#: src/gui/kernel/qkeysequence.cpp:261
 msgctxt "QShortcut"
 msgid "Launch (3)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:268
+#: src/gui/kernel/qkeysequence.cpp:262
 msgctxt "QShortcut"
 msgid "Launch (4)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:269
+#: src/gui/kernel/qkeysequence.cpp:263
 msgctxt "QShortcut"
 msgid "Launch (5)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:270
+#: src/gui/kernel/qkeysequence.cpp:264
 msgctxt "QShortcut"
 msgid "Launch (6)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:271
+#: src/gui/kernel/qkeysequence.cpp:265
 msgctxt "QShortcut"
 msgid "Launch (7)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:272
+#: src/gui/kernel/qkeysequence.cpp:266
 msgctxt "QShortcut"
 msgid "Launch (8)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:273
+#: src/gui/kernel/qkeysequence.cpp:267
 msgctxt "QShortcut"
 msgid "Launch (9)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:274
+#: src/gui/kernel/qkeysequence.cpp:268
 msgctxt "QShortcut"
 msgid "Launch (A)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:275
+#: src/gui/kernel/qkeysequence.cpp:269
 msgctxt "QShortcut"
 msgid "Launch (B)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:276
+#: src/gui/kernel/qkeysequence.cpp:270
 msgctxt "QShortcut"
 msgid "Launch (C)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:277
+#: src/gui/kernel/qkeysequence.cpp:271
 msgctxt "QShortcut"
 msgid "Launch (D)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:278
+#: src/gui/kernel/qkeysequence.cpp:272
 msgctxt "QShortcut"
 msgid "Launch (E)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:279
+#: src/gui/kernel/qkeysequence.cpp:273
 msgctxt "QShortcut"
 msgid "Launch (F)"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:280
+#: src/gui/kernel/qkeysequence.cpp:274
 msgctxt "QShortcut"
 msgid "Monitor Brightness Up"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:281
+#: src/gui/kernel/qkeysequence.cpp:275
 msgctxt "QShortcut"
 msgid "Monitor Brightness Down"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:282
+#: src/gui/kernel/qkeysequence.cpp:276
 msgctxt "QShortcut"
 msgid "Keyboard Light On/Off"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:283
+#: src/gui/kernel/qkeysequence.cpp:277
 msgctxt "QShortcut"
 msgid "Keyboard Brightness Up"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:284
+#: src/gui/kernel/qkeysequence.cpp:278
 msgctxt "QShortcut"
 msgid "Keyboard Brightness Down"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:285
+#: src/gui/kernel/qkeysequence.cpp:279
 msgctxt "QShortcut"
 msgid "Power Off"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:286
+#: src/gui/kernel/qkeysequence.cpp:280
 msgctxt "QShortcut"
 msgid "Wake Up"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:287
+#: src/gui/kernel/qkeysequence.cpp:281
 msgctxt "QShortcut"
 msgid "Eject"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:288
+#: src/gui/kernel/qkeysequence.cpp:282
 msgctxt "QShortcut"
 msgid "Screensaver"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:289
+#: src/gui/kernel/qkeysequence.cpp:283
 msgctxt "QShortcut"
 msgid "WWW"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:290
+#: src/gui/kernel/qkeysequence.cpp:284
 msgctxt "QShortcut"
 msgid "Sleep"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:291
+#: src/gui/kernel/qkeysequence.cpp:285
 msgctxt "QShortcut"
 msgid "LightBulb"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:292
+#: src/gui/kernel/qkeysequence.cpp:286
 msgctxt "QShortcut"
 msgid "Shop"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:293
+#: src/gui/kernel/qkeysequence.cpp:287
 msgctxt "QShortcut"
 msgid "History"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:294
+#: src/gui/kernel/qkeysequence.cpp:288
 msgctxt "QShortcut"
 msgid "Add Favorite"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:295
+#: src/gui/kernel/qkeysequence.cpp:289
 msgctxt "QShortcut"
 msgid "Hot Links"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:296
+#: src/gui/kernel/qkeysequence.cpp:290
 msgctxt "QShortcut"
 msgid "Adjust Brightness"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:297
+#: src/gui/kernel/qkeysequence.cpp:291
 msgctxt "QShortcut"
 msgid "Finance"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:298
+#: src/gui/kernel/qkeysequence.cpp:292
 msgctxt "QShortcut"
 msgid "Community"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:299
+#: src/gui/kernel/qkeysequence.cpp:293
 msgctxt "QShortcut"
 msgid "Audio Rewind"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:300
+#: src/gui/kernel/qkeysequence.cpp:294
 msgctxt "QShortcut"
 msgid "Back Forward"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:301
+#: src/gui/kernel/qkeysequence.cpp:295
 msgctxt "QShortcut"
 msgid "Application Left"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:302
+#: src/gui/kernel/qkeysequence.cpp:296
 msgctxt "QShortcut"
 msgid "Application Right"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:303
+#: src/gui/kernel/qkeysequence.cpp:297
 msgctxt "QShortcut"
 msgid "Book"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:304
+#: src/gui/kernel/qkeysequence.cpp:298
 msgctxt "QShortcut"
 msgid "CD"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:305
+#: src/gui/kernel/qkeysequence.cpp:299
 msgctxt "QShortcut"
 msgid "Calculator"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:306
+#: src/gui/kernel/qkeysequence.cpp:300
 msgctxt "QShortcut"
 msgid "Clear"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:307
+#: src/gui/kernel/qkeysequence.cpp:301
 msgctxt "QShortcut"
 msgid "Clear Grab"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:308
+#: src/gui/kernel/qkeysequence.cpp:302
 msgctxt "QShortcut"
 msgid "Close"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:309
+#: src/gui/kernel/qkeysequence.cpp:303
 msgctxt "QShortcut"
 msgid "Copy"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:310
+#: src/gui/kernel/qkeysequence.cpp:304
 msgctxt "QShortcut"
 msgid "Cut"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:311
+#: src/gui/kernel/qkeysequence.cpp:305
 msgctxt "QShortcut"
 msgid "Display"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:312
+#: src/gui/kernel/qkeysequence.cpp:306
 msgctxt "QShortcut"
 msgid "DOS"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:313
+#: src/gui/kernel/qkeysequence.cpp:307
 msgctxt "QShortcut"
 msgid "Documents"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:314
+#: src/gui/kernel/qkeysequence.cpp:308
 msgctxt "QShortcut"
 msgid "Spreadsheet"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:315
+#: src/gui/kernel/qkeysequence.cpp:309
 msgctxt "QShortcut"
 msgid "Browser"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:316
+#: src/gui/kernel/qkeysequence.cpp:310
 msgctxt "QShortcut"
 msgid "Game"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:317
+#: src/gui/kernel/qkeysequence.cpp:311
 msgctxt "QShortcut"
 msgid "Go"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:318
+#: src/gui/kernel/qkeysequence.cpp:312
 msgctxt "QShortcut"
 msgid "iTouch"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:319
+#: src/gui/kernel/qkeysequence.cpp:313
 msgctxt "QShortcut"
 msgid "Logoff"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:320
+#: src/gui/kernel/qkeysequence.cpp:314
 msgctxt "QShortcut"
 msgid "Market"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:321
+#: src/gui/kernel/qkeysequence.cpp:315
 msgctxt "QShortcut"
 msgid "Meeting"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:322
+#: src/gui/kernel/qkeysequence.cpp:316
 msgctxt "QShortcut"
 msgid "Keyboard Menu"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:323
+#: src/gui/kernel/qkeysequence.cpp:317
 msgctxt "QShortcut"
 msgid "Menu PB"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:324
+#: src/gui/kernel/qkeysequence.cpp:318
 msgctxt "QShortcut"
 msgid "My Sites"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:325
+#: src/gui/kernel/qkeysequence.cpp:319
 msgctxt "QShortcut"
 msgid "News"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:326
+#: src/gui/kernel/qkeysequence.cpp:320
 msgctxt "QShortcut"
 msgid "Home Office"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:327
+#: src/gui/kernel/qkeysequence.cpp:321
 msgctxt "QShortcut"
 msgid "Option"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:328
+#: src/gui/kernel/qkeysequence.cpp:322
 msgctxt "QShortcut"
 msgid "Paste"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:329
+#: src/gui/kernel/qkeysequence.cpp:323
 msgctxt "QShortcut"
 msgid "Phone"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:330
+#: src/gui/kernel/qkeysequence.cpp:324
 msgctxt "QShortcut"
 msgid "Reply"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:331
+#: src/gui/kernel/qkeysequence.cpp:325
 msgctxt "QShortcut"
 msgid "Reload"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:332
+#: src/gui/kernel/qkeysequence.cpp:326
 msgctxt "QShortcut"
 msgid "Rotate Windows"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:333
+#: src/gui/kernel/qkeysequence.cpp:327
 msgctxt "QShortcut"
 msgid "Rotation PB"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:334
+#: src/gui/kernel/qkeysequence.cpp:328
 msgctxt "QShortcut"
 msgid "Rotation KB"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:335
+#: src/gui/kernel/qkeysequence.cpp:329
 msgctxt "QShortcut"
 msgid "Save"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:336
+#: src/gui/kernel/qkeysequence.cpp:330
 msgctxt "QShortcut"
 msgid "Send"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:337
+#: src/gui/kernel/qkeysequence.cpp:331
 msgctxt "QShortcut"
 msgid "Spellchecker"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:338
+#: src/gui/kernel/qkeysequence.cpp:332
 msgctxt "QShortcut"
 msgid "Split Screen"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:339
+#: src/gui/kernel/qkeysequence.cpp:333
 msgctxt "QShortcut"
 msgid "Support"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:340
+#: src/gui/kernel/qkeysequence.cpp:334
 msgctxt "QShortcut"
 msgid "Task Panel"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:341
+#: src/gui/kernel/qkeysequence.cpp:335
 msgctxt "QShortcut"
 msgid "Terminal"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:342
+#: src/gui/kernel/qkeysequence.cpp:336
 msgctxt "QShortcut"
 msgid "Tools"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:343
+#: src/gui/kernel/qkeysequence.cpp:337
 msgctxt "QShortcut"
 msgid "Travel"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:344
+#: src/gui/kernel/qkeysequence.cpp:338
 msgctxt "QShortcut"
 msgid "Video"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:345
+#: src/gui/kernel/qkeysequence.cpp:339
 msgctxt "QShortcut"
 msgid "Word Processor"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:346
+#: src/gui/kernel/qkeysequence.cpp:340
 msgctxt "QShortcut"
 msgid "XFer"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:347
+#: src/gui/kernel/qkeysequence.cpp:341
 msgctxt "QShortcut"
 msgid "Zoom In"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:348
+#: src/gui/kernel/qkeysequence.cpp:342
 msgctxt "QShortcut"
 msgid "Zoom Out"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:349
+#: src/gui/kernel/qkeysequence.cpp:343
 msgctxt "QShortcut"
 msgid "Away"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:350
+#: src/gui/kernel/qkeysequence.cpp:344
 msgctxt "QShortcut"
 msgid "Messenger"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:351
+#: src/gui/kernel/qkeysequence.cpp:345
 msgctxt "QShortcut"
 msgid "WebCam"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:352
+#: src/gui/kernel/qkeysequence.cpp:346
 msgctxt "QShortcut"
 msgid "Mail Forward"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:353
+#: src/gui/kernel/qkeysequence.cpp:347
 msgctxt "QShortcut"
 msgid "Pictures"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:354
+#: src/gui/kernel/qkeysequence.cpp:348
 msgctxt "QShortcut"
 msgid "Music"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:355
+#: src/gui/kernel/qkeysequence.cpp:349
 msgctxt "QShortcut"
 msgid "Battery"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:356
+#: src/gui/kernel/qkeysequence.cpp:350
 msgctxt "QShortcut"
 msgid "Bluetooth"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:357
+#: src/gui/kernel/qkeysequence.cpp:351
 msgctxt "QShortcut"
 msgid "Wireless"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:358
+#: src/gui/kernel/qkeysequence.cpp:352
 msgctxt "QShortcut"
 msgid "Ultra Wide Band"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:359
+#: src/gui/kernel/qkeysequence.cpp:353
 msgctxt "QShortcut"
 msgid "Audio Forward"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:360
+#: src/gui/kernel/qkeysequence.cpp:354
 msgctxt "QShortcut"
 msgid "Audio Repeat"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:361
+#: src/gui/kernel/qkeysequence.cpp:355
 msgctxt "QShortcut"
 msgid "Audio Random Play"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:362
+#: src/gui/kernel/qkeysequence.cpp:356
 msgctxt "QShortcut"
 msgid "Subtitle"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:363
+#: src/gui/kernel/qkeysequence.cpp:357
 msgctxt "QShortcut"
 msgid "Audio Cycle Track"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:364
+#: src/gui/kernel/qkeysequence.cpp:358
 msgctxt "QShortcut"
 msgid "Time"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:365 src/gui/kernel/qkeysequence.cpp:387
+#: src/gui/kernel/qkeysequence.cpp:359
 msgctxt "QShortcut"
 msgid "Select"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:366
+#: src/gui/kernel/qkeysequence.cpp:360
 msgctxt "QShortcut"
 msgid "View"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:367
+#: src/gui/kernel/qkeysequence.cpp:361
 msgctxt "QShortcut"
 msgid "Top Menu"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:368
+#: src/gui/kernel/qkeysequence.cpp:362
 msgctxt "QShortcut"
 msgid "Suspend"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:369
+#: src/gui/kernel/qkeysequence.cpp:363
 msgctxt "QShortcut"
 msgid "Hibernate"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:373
+#: src/gui/kernel/qkeysequence.cpp:367
 msgctxt "QShortcut"
 msgid "Print Screen"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:374
+#: src/gui/kernel/qkeysequence.cpp:368
 msgctxt "QShortcut"
 msgid "Page Up"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:375
+#: src/gui/kernel/qkeysequence.cpp:369
 msgctxt "QShortcut"
 msgid "Page Down"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:376
+#: src/gui/kernel/qkeysequence.cpp:370
 msgctxt "QShortcut"
 msgid "Caps Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:377
+#: src/gui/kernel/qkeysequence.cpp:371
 msgctxt "QShortcut"
 msgid "Num Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:378
+#: src/gui/kernel/qkeysequence.cpp:372
 msgctxt "QShortcut"
 msgid "Number Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:379
+#: src/gui/kernel/qkeysequence.cpp:373
 msgctxt "QShortcut"
 msgid "Scroll Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:380
+#: src/gui/kernel/qkeysequence.cpp:374
 msgctxt "QShortcut"
 msgid "Insert"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:381
+#: src/gui/kernel/qkeysequence.cpp:375
 msgctxt "QShortcut"
 msgid "Delete"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:382
+#: src/gui/kernel/qkeysequence.cpp:376
 msgctxt "QShortcut"
 msgid "Escape"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:383
+#: src/gui/kernel/qkeysequence.cpp:377
 msgctxt "QShortcut"
 msgid "System Request"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:388
-msgctxt "QShortcut"
-msgid "Yes"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:389
-msgctxt "QShortcut"
-msgid "No"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:393
-msgctxt "QShortcut"
-msgid "Context1"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:394
-msgctxt "QShortcut"
-msgid "Context2"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:395
-msgctxt "QShortcut"
-msgid "Context3"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:396
-msgctxt "QShortcut"
-msgid "Context4"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:398
-msgctxt "QShortcut"
-msgid "Call"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:400
-msgctxt "QShortcut"
-msgid "Hangup"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:402
-msgctxt "QShortcut"
-msgid "Toggle Call/Hangup"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:403
-msgctxt "QShortcut"
-msgid "Flip"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:405
-msgctxt "QShortcut"
-msgid "Voice Dial"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:407
-msgctxt "QShortcut"
-msgid "Last Number Redial"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:409
-msgctxt "QShortcut"
-msgid "Camera Shutter"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:411
-msgctxt "QShortcut"
-msgid "Camera Focus"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:415
+#: src/gui/kernel/qkeysequence.cpp:381
 msgctxt "QShortcut"
 msgid "Kanji"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:416
+#: src/gui/kernel/qkeysequence.cpp:382
 msgctxt "QShortcut"
 msgid "Muhenkan"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:417
+#: src/gui/kernel/qkeysequence.cpp:383
 msgctxt "QShortcut"
 msgid "Henkan"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:418
+#: src/gui/kernel/qkeysequence.cpp:384
 msgctxt "QShortcut"
 msgid "Romaji"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:419
+#: src/gui/kernel/qkeysequence.cpp:385
 msgctxt "QShortcut"
 msgid "Hiragana"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:420
+#: src/gui/kernel/qkeysequence.cpp:386
 msgctxt "QShortcut"
 msgid "Katakana"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:421
+#: src/gui/kernel/qkeysequence.cpp:387
 msgctxt "QShortcut"
 msgid "Hiragana Katakana"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:422
+#: src/gui/kernel/qkeysequence.cpp:388
 msgctxt "QShortcut"
 msgid "Zenkaku"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:423
+#: src/gui/kernel/qkeysequence.cpp:389
 msgctxt "QShortcut"
 msgid "Hankaku"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:424
+#: src/gui/kernel/qkeysequence.cpp:390
 msgctxt "QShortcut"
 msgid "Zenkaku Hankaku"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:425
+#: src/gui/kernel/qkeysequence.cpp:391
 msgctxt "QShortcut"
 msgid "Touroku"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:426
+#: src/gui/kernel/qkeysequence.cpp:392
 msgctxt "QShortcut"
 msgid "Massyo"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:427
+#: src/gui/kernel/qkeysequence.cpp:393
 msgctxt "QShortcut"
 msgid "Kana Lock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:428
+#: src/gui/kernel/qkeysequence.cpp:394
 msgctxt "QShortcut"
 msgid "Kana Shift"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:429
+#: src/gui/kernel/qkeysequence.cpp:395
 msgctxt "QShortcut"
 msgid "Eisu Shift"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:430
+#: src/gui/kernel/qkeysequence.cpp:396
 msgctxt "QShortcut"
 msgid "Eisu toggle"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:431
+#: src/gui/kernel/qkeysequence.cpp:397
 msgctxt "QShortcut"
 msgid "Code input"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:432
+#: src/gui/kernel/qkeysequence.cpp:398
 msgctxt "QShortcut"
 msgid "Multiple Candidate"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:433
+#: src/gui/kernel/qkeysequence.cpp:399
 msgctxt "QShortcut"
 msgid "Previous Candidate"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:437
-msgctxt "QShortcut"
-msgid "Hangul"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:438
-msgctxt "QShortcut"
-msgid "Hangul Start"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:439
-msgctxt "QShortcut"
-msgid "Hangul End"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:440
-msgctxt "QShortcut"
-msgid "Hangul Hanja"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:441
-msgctxt "QShortcut"
-msgid "Hangul Jamo"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:442
-msgctxt "QShortcut"
-msgid "Hangul Romaja"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:443
-msgctxt "QShortcut"
-msgid "Hangul Jeonja"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:444
-msgctxt "QShortcut"
-msgid "Hangul Banja"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:445
-msgctxt "QShortcut"
-msgid "Hangul PreHanja"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:446
-msgctxt "QShortcut"
-msgid "Hangul PostHanja"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:447
-msgctxt "QShortcut"
-msgid "Hangul Special"
-msgstr ""
-
-#: src/gui/kernel/qkeysequence.cpp:900 src/gui/kernel/qkeysequence.cpp:979
+#: src/gui/kernel/qkeysequence.cpp:852 src/gui/kernel/qkeysequence.cpp:931
 msgid "Ctrl"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:901 src/gui/kernel/qkeysequence.cpp:983
+#: src/gui/kernel/qkeysequence.cpp:853 src/gui/kernel/qkeysequence.cpp:935
 msgid "Shift"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:902 src/gui/kernel/qkeysequence.cpp:981
+#: src/gui/kernel/qkeysequence.cpp:854 src/gui/kernel/qkeysequence.cpp:933
 msgid "Alt"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:903 src/gui/kernel/qkeysequence.cpp:977
+#: src/gui/kernel/qkeysequence.cpp:855 src/gui/kernel/qkeysequence.cpp:929
 msgid "Meta"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:966
+#: src/gui/kernel/qkeysequence.cpp:918
 msgid "+"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:997
+#: src/gui/kernel/qkeysequence.cpp:942
 msgid "F%1"
 msgstr ""
 
@@ -4426,59 +4231,59 @@ msgstr ""
 msgid "Could not reset to start position"
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:247
+#: src/plugins/bearer/qnetworksession_impl.cpp:246
 msgid "Unknown session error."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:249
+#: src/plugins/bearer/qnetworksession_impl.cpp:248
 msgid "The session was aborted by the user or system."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:251
+#: src/plugins/bearer/qnetworksession_impl.cpp:250
 msgid "The requested operation is not supported by the system."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:253
+#: src/plugins/bearer/qnetworksession_impl.cpp:252
 msgid "The specified configuration cannot be used."
 msgstr ""
 
-#: src/plugins/bearer/qnetworksession_impl.cpp:255
+#: src/plugins/bearer/qnetworksession_impl.cpp:254
 msgid "Roaming was aborted or is not possible."
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:227
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:205
 msgctxt "QPSQLResult"
 msgid "Unable to create query"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:593
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:581
 msgctxt "QPSQLResult"
 msgid "Unable to prepare statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:858
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:846
 #: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1826
 #: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1209
 msgid "Unable to connect"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:907
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:895
 msgid "Could not begin transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:940
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:928
 msgid "Could not commit transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:957
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:945
 msgid "Could not rollback transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1342
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1326
 msgid "Unable to subscribe"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1374
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1358
 msgid "Unable to unsubscribe"
 msgstr ""
 

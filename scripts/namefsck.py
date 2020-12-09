@@ -92,8 +92,6 @@ classlist = [
     "QColormap",
     "QColumnView",
     "QComboBox",
-    "QCommandLineOption",
-    "QCommandLineParser",
     "QCommandLinkButton",
     "QCommonStyle",
     "QCompleter",

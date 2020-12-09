@@ -150,8 +150,6 @@ static const struct ClassTblData {
     { QLatin1String("QColormap"), QLatin1String("QtGui/qcolormap.h") },
     { QLatin1String("QColumnView"), QLatin1String("QtGui/qcolumnview.h") },
     { QLatin1String("QComboBox"), QLatin1String("QtGui/qcombobox.h") },
-    { QLatin1String("QCommandLineOption"), QLatin1String("QtCore/qcommandlineoption.h") },
-    { QLatin1String("QCommandLineParser"), QLatin1String("QtCore/qcommandlineparser.h") },
     { QLatin1String("QCommandLinkButton"), QLatin1String("QtGui/qcommandlinkbutton.h") },
     { QLatin1String("QCommonStyle"), QLatin1String("QtGui/qcommonstyle.h") },
     { QLatin1String("QCompleter"), QLatin1String("QtGui/qcompleter.h") },

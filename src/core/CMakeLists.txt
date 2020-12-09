@@ -106,8 +106,6 @@ set(CORE_PUBLIC_HEADERS
     QJsonDocument
     QJsonObject
     QJsonValue
-    QCommandLineOption
-    QCommandLineParser
 )
 
 include_directories(
@@ -291,8 +289,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvarlengtharray.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineoption.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineparser.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qiterator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpair.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qcorecommon_p.h
@@ -419,8 +415,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtimeline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvsnprintf.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineoption.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineparser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
 )

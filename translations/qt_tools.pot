@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-29 04:02+0000\n"
+"POT-Creation-Date: 2020-12-09 01:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -156,17 +156,17 @@ msgid "System Bus"
 msgstr ""
 
 #: src/tools/qdbusviewer/qdbusviewermain.cpp:73
-#: src/tools/designer/qdesigner_workbench.cpp:191
+#: src/tools/designer/qdesigner_workbench.cpp:188
 msgid "&File"
 msgstr ""
 
 #: src/tools/qdbusviewer/qdbusviewermain.cpp:74
-#: src/tools/designer/qdesigner_actions.cpp:182
+#: src/tools/designer/qdesigner_actions.cpp:180
 msgid "&Quit"
 msgstr ""
 
 #: src/tools/qdbusviewer/qdbusviewermain.cpp:77
-#: src/tools/designer/qdesigner_workbench.cpp:208
+#: src/tools/designer/qdesigner_workbench.cpp:205
 msgid "&Help"
 msgstr ""
 
@@ -344,8 +344,8 @@ msgid "%1 - %2[*]"
 msgstr ""
 
 #: src/tools/designer/qdesigner_formwindow.cpp:219
-#: src/tools/designer/qdesigner_actions.cpp:833
-#: src/tools/designer/qdesigner_actions.cpp:873
+#: src/tools/designer/qdesigner_actions.cpp:831
+#: src/tools/designer/qdesigner_actions.cpp:871
 msgid "Save Form?"
 msgstr ""
 
@@ -386,12 +386,12 @@ msgid "&Open..."
 msgstr ""
 
 #: src/tools/designer/newform.cpp:106
-#: src/tools/designer/qdesigner_actions.cpp:490
+#: src/tools/designer/qdesigner_actions.cpp:488
 msgid "&Recent Forms"
 msgstr ""
 
 #: src/tools/designer/newform.cpp:170
-#: src/tools/designer/qdesigner_actions.cpp:751
+#: src/tools/designer/qdesigner_actions.cpp:749
 msgid "Read error"
 msgstr ""
 
@@ -403,217 +403,217 @@ msgstr ""
 msgid "The temporary form file %1 could not be written."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:122
+#: src/tools/designer/qdesigner_actions.cpp:120
 msgid "Saved %1."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:148
+#: src/tools/designer/qdesigner_actions.cpp:146
 msgid ""
 "%1 already exists.\n"
 "Do you want to replace it?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:172
+#: src/tools/designer/qdesigner_actions.cpp:170
 msgid "Edit Widgets"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:173
+#: src/tools/designer/qdesigner_actions.cpp:171
 msgid "&New..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:174
+#: src/tools/designer/qdesigner_actions.cpp:172
 msgid "&Open..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:175
+#: src/tools/designer/qdesigner_actions.cpp:173
 msgid "&Save"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:176
+#: src/tools/designer/qdesigner_actions.cpp:174
 msgid "Save &As..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:177
+#: src/tools/designer/qdesigner_actions.cpp:175
 msgid "Save A&ll"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:178
+#: src/tools/designer/qdesigner_actions.cpp:176
 msgid "Save As &Template..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:179
-#: src/tools/designer/qdesigner_actions.cpp:1032
+#: src/tools/designer/qdesigner_actions.cpp:177
+#: src/tools/designer/qdesigner_actions.cpp:1030
 msgid "&Close"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:180
+#: src/tools/designer/qdesigner_actions.cpp:178
 msgid "Save &Image..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:181
+#: src/tools/designer/qdesigner_actions.cpp:179
 msgid "&Print..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:184
+#: src/tools/designer/qdesigner_actions.cpp:182
 msgid "View &Code..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:185
+#: src/tools/designer/qdesigner_actions.cpp:183
 msgid "&Minimize"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:187
+#: src/tools/designer/qdesigner_actions.cpp:185
 msgid "Bring All to Front"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:189
+#: src/tools/designer/qdesigner_actions.cpp:187
 msgid "Preferences..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:190
+#: src/tools/designer/qdesigner_actions.cpp:188
 msgid "Additional Fonts..."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:262
+#: src/tools/designer/qdesigner_actions.cpp:260
 msgid "CTRL+SHIFT+S"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:387
+#: src/tools/designer/qdesigner_actions.cpp:385
 msgid "CTRL+R"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:405
+#: src/tools/designer/qdesigner_actions.cpp:403
 msgid "CTRL+M"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:436
+#: src/tools/designer/qdesigner_actions.cpp:434
 msgid "About Plugins"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:442
-#: src/tools/designer/qdesigner_actions.cpp:1013
+#: src/tools/designer/qdesigner_actions.cpp:440
+#: src/tools/designer/qdesigner_actions.cpp:1011
 msgid "About Katie Designer"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:448
+#: src/tools/designer/qdesigner_actions.cpp:446
 msgid "About Katie"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:484
+#: src/tools/designer/qdesigner_actions.cpp:482
 msgid "Clear &Menu"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:567
-#: src/tools/designer/qdesigner_actions.cpp:764
+#: src/tools/designer/qdesigner_actions.cpp:565
+#: src/tools/designer/qdesigner_actions.cpp:762
 msgid "Open Form"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:568
-#: src/tools/designer/qdesigner_actions.cpp:605
-#: src/tools/designer/qdesigner_actions.cpp:765
+#: src/tools/designer/qdesigner_actions.cpp:566
+#: src/tools/designer/qdesigner_actions.cpp:603
+#: src/tools/designer/qdesigner_actions.cpp:763
 msgid "Designer UI files (*.%1);;All Files (*)"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:605
-#: src/tools/designer/qdesigner_actions.cpp:853
+#: src/tools/designer/qdesigner_actions.cpp:603
+#: src/tools/designer/qdesigner_actions.cpp:851
 msgid "Save Form As"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:692
+#: src/tools/designer/qdesigner_actions.cpp:690
 msgid "Designer"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:692
+#: src/tools/designer/qdesigner_actions.cpp:690
 msgid "Feature not implemented yet!"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:707
+#: src/tools/designer/qdesigner_actions.cpp:705
 msgid "Code generation failed"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:752
+#: src/tools/designer/qdesigner_actions.cpp:750
 msgid ""
 "%1\n"
 "Do you want to update the file location or generate a new form?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:755
+#: src/tools/designer/qdesigner_actions.cpp:753
 msgid "&Update"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:756
+#: src/tools/designer/qdesigner_actions.cpp:754
 msgid "&New Form"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:834
+#: src/tools/designer/qdesigner_actions.cpp:832
 msgid "Could not open file"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:838
+#: src/tools/designer/qdesigner_actions.cpp:836
 msgid ""
 "The file %1 could not be opened.\n"
 "Reason: %2\n"
 "Would you like to retry or select a different file?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:844
+#: src/tools/designer/qdesigner_actions.cpp:842
 msgid "Select New File"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:874
+#: src/tools/designer/qdesigner_actions.cpp:872
 msgid "Could not write file"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:877
+#: src/tools/designer/qdesigner_actions.cpp:875
 msgid ""
 "It was not possible to write the entire file %1 to disk.\n"
 "Reason:%2\n"
 "Would you like to retry?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1030
+#: src/tools/designer/qdesigner_actions.cpp:1028
 msgid "&Close Preview"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1071
-#: src/tools/designer/qdesigner_actions.cpp:1094
+#: src/tools/designer/qdesigner_actions.cpp:1069
+#: src/tools/designer/qdesigner_actions.cpp:1092
 msgid "The backup file %1 could not be written."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1201
+#: src/tools/designer/qdesigner_actions.cpp:1199
 msgid "The backup directory %1 could not be created."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1207
+#: src/tools/designer/qdesigner_actions.cpp:1205
 msgid "The temporary backup directory %1 could not be created."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1237
+#: src/tools/designer/qdesigner_actions.cpp:1235
 msgid "Preview failed"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1261
+#: src/tools/designer/qdesigner_actions.cpp:1259
 msgid "Image files (*.%1)"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1270
-#: src/tools/designer/qdesigner_actions.cpp:1287
+#: src/tools/designer/qdesigner_actions.cpp:1268
+#: src/tools/designer/qdesigner_actions.cpp:1285
 msgid "Save Image"
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1283
+#: src/tools/designer/qdesigner_actions.cpp:1281
 msgid "Saved image %1."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1288
+#: src/tools/designer/qdesigner_actions.cpp:1286
 msgid "The file %1 could not be written."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1301
+#: src/tools/designer/qdesigner_actions.cpp:1299
 msgid "Please close all forms to enable the loading of additional fonts."
 msgstr ""
 
-#: src/tools/designer/qdesigner_actions.cpp:1352
+#: src/tools/designer/qdesigner_actions.cpp:1350
 msgid "Printed %1."
 msgstr ""
 
@@ -696,7 +696,7 @@ msgid "Dock views"
 msgstr ""
 
 #: src/tools/designer/mainwindow.cpp:263
-#: src/tools/designer/qdesigner_workbench.cpp:231
+#: src/tools/designer/qdesigner_workbench.cpp:228
 msgid "Toolbars"
 msgstr ""
 
@@ -721,71 +721,71 @@ msgid "Signal/Slot Editor"
 msgstr ""
 
 #: src/tools/designer/qdesigner_toolwindow.cpp:385
-#: src/tools/designer/qdesigner_workbench.cpp:397
+#: src/tools/designer/qdesigner_workbench.cpp:394
 msgid "Widget Box"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:193
+#: src/tools/designer/qdesigner_workbench.cpp:190
 msgid "&Edit"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:197
+#: src/tools/designer/qdesigner_workbench.cpp:194
 msgid "F&orm"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:198
+#: src/tools/designer/qdesigner_workbench.cpp:195
 msgid "Preview in"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:202
+#: src/tools/designer/qdesigner_workbench.cpp:199
 msgid "&View"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:204
+#: src/tools/designer/qdesigner_workbench.cpp:201
 msgid "&Settings"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:206
+#: src/tools/designer/qdesigner_workbench.cpp:203
 msgid "&Window"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:686
+#: src/tools/designer/qdesigner_workbench.cpp:683
 msgid "Save Forms?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:687
+#: src/tools/designer/qdesigner_workbench.cpp:684
 msgid ""
 "There are %1 forms with unsaved changes. Do you want to review these changes "
 "before quitting?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:690
+#: src/tools/designer/qdesigner_workbench.cpp:687
 msgid "If you do not review your documents, all your changes will be lost."
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:691
+#: src/tools/designer/qdesigner_workbench.cpp:688
 msgid "Discard Changes"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:693
+#: src/tools/designer/qdesigner_workbench.cpp:690
 msgid "Review Changes"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:788
+#: src/tools/designer/qdesigner_workbench.cpp:785
 msgid "Backup Information"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:789
+#: src/tools/designer/qdesigner_workbench.cpp:786
 msgid ""
 "The last session of Designer was not terminated correctly. Backup files were "
 "left behind. Do you want to load them?"
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:899
+#: src/tools/designer/qdesigner_workbench.cpp:896
 msgid "The file <b>%1</b> could not be opened."
 msgstr ""
 
-#: src/tools/designer/qdesigner_workbench.cpp:945
+#: src/tools/designer/qdesigner_workbench.cpp:942
 msgid "The file <b>%1</b> is not a valid Designer UI file."
 msgstr ""
 

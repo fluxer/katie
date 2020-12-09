@@ -47,7 +47,6 @@ There are several things you should be aware before considering Katie:
 
  - some additions have been made: 
   - JSON classes and types
-  - command line parser
   - standard directories handler
   - building with OpenSSL v1.1+ is possible
   - building with IODBC instead of unixODBC is possible
