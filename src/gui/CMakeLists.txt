@@ -1036,7 +1036,6 @@ katie_allinone_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextformat.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qsizegrip.cpp
