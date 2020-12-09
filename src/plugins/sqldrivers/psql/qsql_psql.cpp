@@ -646,7 +646,6 @@ static QPSQLDriver::Protocol qMakePSQLVersion(int vMaj, int vMin)
         default:
             return QPSQLDriver::VersionUnknown;
         }
-        break;
     }
     case 8:
     {
