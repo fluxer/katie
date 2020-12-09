@@ -61,7 +61,7 @@ class QMYSQLDriverPrivate
 public:
     QMYSQLDriverPrivate() : mysql(Q_NULLPTR),
 #ifndef QT_NO_TEXTCODEC
-        tc(QTextCodec::codecForLocale()),
+        tc(QTextCodec::codecForLocale())
 #else
         tc(Q_NULLPTR)
 #endif
