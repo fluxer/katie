@@ -1003,12 +1003,11 @@ bool QMYSQLResult::exec()
 /////////////////////////////////////////////////////////
 
 static int qMySqlConnectionCount = 0;
-static bool qMySqlInitHandledByUser = false;
 
 static inline void qLibraryInit()
 {
 #ifndef Q_NO_MYSQL_EMBEDDED
-    if (qMySqlInitHandledByUser || qMySqlConnectionCount > 1)
+    if (qMySqlConnectionCount > 1)
         return;
 
 # if MYSQL_VERSION_ID < 50000 || MYSQL_VERSION_ID >= 50003
@@ -1033,46 +1032,17 @@ static inline void qLibraryEnd()
 }
 
 QMYSQLDriver::QMYSQLDriver(QObject * parent)
-    : QSqlDriver(parent)
+    : QSqlDriver(parent), d(new QMYSQLDriverPrivate())
 {
-    init();
-    qLibraryInit();
-}
-
-/*!
-    Create a driver instance with the open connection handle, \a con.
-    The instance's parent (owner) is \a parent.
-*/
-
-QMYSQLDriver::QMYSQLDriver(MYSQL * con, QObject * parent)
-    : QSqlDriver(parent)
-{
-    init();
-    if (con) {
-        d->mysql = con;
-#ifndef QT_NO_TEXTCODEC
-        d->tc = codec(con);
-#endif
-        setOpen(true);
-        setOpenError(false);
-        if (qMySqlConnectionCount == 1)
-            qMySqlInitHandledByUser = true;
-    } else {
-        qLibraryInit();
-    }
-}
-
-void QMYSQLDriver::init()
-{
-    d = new QMYSQLDriverPrivate();
     d->mysql = Q_NULLPTR;
     qMySqlConnectionCount++;
+    qLibraryInit();
 }
 
 QMYSQLDriver::~QMYSQLDriver()
 {
     qMySqlConnectionCount--;
-    if (qMySqlConnectionCount == 0 && !qMySqlInitHandledByUser)
+    if (qMySqlConnectionCount == 0)
         qLibraryEnd();
     delete d;
 }

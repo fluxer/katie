@@ -48,8 +48,6 @@
 #include "qnumeric.h"
 
 #include <stdlib.h>
-#include <libpq-fe.h>
-#include <pg_config.h>
 
 // workaround for postgres defining their OIDs in a private header file
 #define QBOOLOID 16
@@ -738,27 +736,8 @@ QPSQLDriver::Protocol QPSQLDriverPrivate::getPSQLVersion()
 }
 
 QPSQLDriver::QPSQLDriver(QObject *parent)
-    : QSqlDriver(parent)
+    : QSqlDriver(parent), d(new QPSQLDriverPrivate(this))
 {
-    init();
-}
-
-QPSQLDriver::QPSQLDriver(PGconn *conn, QObject *parent)
-    : QSqlDriver(parent)
-{
-    init();
-    d->connection = conn;
-    if (conn) {
-        d->pro = d->getPSQLVersion();
-        d->detectBackslashEscape();
-        setOpen(true);
-        setOpenError(false);
-    }
-}
-
-void QPSQLDriver::init()
-{
-    d = new QPSQLDriverPrivate(this);
 }
 
 QPSQLDriver::~QPSQLDriver()

@@ -87,7 +87,6 @@ class QODBCDriver : public QSqlDriver
     Q_OBJECT
 public:
     explicit QODBCDriver(QObject *parent=0);
-    QODBCDriver(SQLHANDLE env, SQLHANDLE con, QObject * parent=0);
     virtual ~QODBCDriver();
     bool hasFeature(DriverFeature f) const;
     void close();
@@ -115,7 +114,6 @@ protected:
     bool rollbackTransaction();
 
 private:
-    void init();
     bool endTrans();
     void cleanup();
     QODBCDriverPrivate* d;

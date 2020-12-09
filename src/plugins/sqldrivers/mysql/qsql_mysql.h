@@ -87,7 +87,6 @@ class QMYSQLDriver : public QSqlDriver
     friend class QMYSQLResult;
 public:
     explicit QMYSQLDriver(QObject *parent=0);
-    explicit QMYSQLDriver(MYSQL *con, QObject * parent=0);
     ~QMYSQLDriver();
     bool hasFeature(DriverFeature f) const;
     bool open(const QString & db,
@@ -113,7 +112,6 @@ protected:
     bool commitTransaction();
     bool rollbackTransaction();
 private:
-    void init();
     QMYSQLDriverPrivate* d;
 };
 

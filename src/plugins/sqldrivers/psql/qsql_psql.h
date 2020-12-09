@@ -37,10 +37,10 @@
 #include <QtSql/qsqlresult.h>
 #include <QtSql/qsqldriver.h>
 
-QT_BEGIN_HEADER
+#include <libpq-fe.h>
+#include <pg_config.h>
 
-typedef struct pg_conn PGconn;
-typedef struct pg_result PGresult;
+QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -98,7 +98,6 @@ public:
     };
 
     explicit QPSQLDriver(QObject *parent=0);
-    explicit QPSQLDriver(PGconn *conn, QObject *parent=0);
     ~QPSQLDriver();
     bool hasFeature(DriverFeature f) const;
     bool open(const QString & db,
@@ -133,7 +132,6 @@ private Q_SLOTS:
     void _q_handleNotification(int);
 
 private:
-    void init();
     QPSQLDriverPrivate *d;
 };
 
