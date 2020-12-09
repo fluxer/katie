@@ -1303,16 +1303,12 @@ QString& QString::insert(int i, QChar ch)
 */
 QString &QString::append(const QString &str)
 {
-    if (str.d != &shared_null) {
-        if (d == &shared_null) {
-            operator=(str);
-        } else {
-            if (d->ref != 1 || d->size + str.d->size > d->alloc)
-                reallocData(grow(d->size + str.d->size));
-            memcpy(d->data + d->size, str.d->data, str.d->size * sizeof(QChar));
-            d->size += str.d->size;
-            d->data[d->size] = '\0';
-        }
+    if (str.d != &shared_null && str.d != &shared_empty) {
+        if (d->ref != 1 || d->size + str.d->size > d->alloc)
+            reallocData(grow(d->size + str.d->size));
+        memcpy(d->data + d->size, str.d->data, str.d->size * sizeof(QChar));
+        d->size += str.d->size;
+        d->data[d->size] = '\0';
     }
     return *this;
 }
@@ -3146,7 +3142,7 @@ QString QString::right(int n) const
 
 QString QString::mid(int position, int n) const
 {
-    if (d == &shared_null || position >= d->size)
+    if (d == &shared_null || d == &shared_empty || position >= d->size)
         return QString();
     if (n < 0)
         n = d->size - position;
@@ -7725,7 +7721,7 @@ QStringRef QString::rightRef(int n) const
 
 QStringRef QString::midRef(int position, int n) const
 {
-    if (d == &shared_null || position >= d->size)
+    if (d == &shared_null || d == &shared_empty || position >= d->size)
         return QStringRef();
     if (n < 0)
         n = d->size - position;
