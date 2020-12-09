@@ -469,7 +469,10 @@ namespace QDBusUtil
     bool isValidSignature(const QString &signature)
     {
         QByteArray ba = signature.toLatin1();
-        return dbus_signature_validate(ba.constData(), NULL);
+        const char* data = ba.constData();
+        while (*data == '\0')
+            data++;
+        return dbus_signature_validate(data, NULL);
     }
 
     /*!
