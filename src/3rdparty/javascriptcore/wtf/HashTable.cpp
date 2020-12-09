@@ -24,13 +24,13 @@ namespace WTF {
 
 #if DUMP_HASHTABLE_STATS
 
-int HashTableStats::numAccesses;
-int HashTableStats::numCollisions;
+int HashTableStats::numAccesses = 0;
+int HashTableStats::numCollisions = 0;
 int HashTableStats::collisionGraph[4096];
-int HashTableStats::maxCollisions;
-int HashTableStats::numRehashes;
-int HashTableStats::numRemoves;
-int HashTableStats::numReinserts;
+int HashTableStats::maxCollisions = 0;
+int HashTableStats::numRehashes = 0;
+int HashTableStats::numRemoves = 0;
+int HashTableStats::numReinserts = 0;
 
 static HashTableStats logger;
 

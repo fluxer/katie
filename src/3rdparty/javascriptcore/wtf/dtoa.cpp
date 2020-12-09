@@ -548,8 +548,8 @@ struct P5Node : Noncopyable {
     P5Node* next;
 };
     
-static P5Node* p5s;
-static int p5s_count;
+static P5Node* p5s = 0;
+static int p5s_count = 0;
 
 static ALWAYS_INLINE void pow5mult(BigInt& b, int k)
 {

@@ -3769,19 +3769,16 @@ public slots:
      void socketActivated(int);
 };
 
-
 static SmcConn smcConnection = 0;
-static bool sm_interactionActive;
-static bool sm_smActive;
-static int sm_interactStyle;
-static int sm_saveType;
-static bool sm_cancel;
-// static bool sm_waitingForPhase2;  ### never used?!?
-static bool sm_waitingForInteraction;
-static bool sm_isshutdown;
-// static bool sm_shouldbefast;  ### never used?!?
-static bool sm_phase2;
-static bool sm_in_phase2;
+static bool sm_interactionActive = false;
+static bool sm_smActive = false;
+static int sm_interactStyle = SmInteractStyleNone;
+static int sm_saveType = SmSaveLocal;
+static bool sm_cancel = false;
+static bool sm_waitingForInteraction = false;
+static bool sm_isshutdown = false;
+static bool sm_phase2 = false;
+static bool sm_in_phase2 = false;
 
 static QSmSocketReceiver* sm_receiver = 0;
 
@@ -3799,14 +3796,12 @@ static void sm_performSaveYourself(QSessionManagerPrivate*);
 
 static void resetSmState()
 {
-//    sm_waitingForPhase2 = false; ### never used?!?
     sm_waitingForInteraction = false;
     sm_interactionActive = false;
     sm_interactStyle = SmInteractStyleNone;
     sm_smActive = false;
     qt_sm_blockUserInput = false;
     sm_isshutdown = false;
-//    sm_shouldbefast = false; ### never used?!?
     sm_phase2 = false;
     sm_in_phase2 = false;
 }
@@ -3869,7 +3864,6 @@ static void sm_saveYourselfCallback(SmcConn smcConn, SmPointer clientData,
     sm_isshutdown = shutdown;
     sm_saveType = saveType;
     sm_interactStyle = interactStyle;
-//    sm_shouldbefast = fast; ### never used?!?
 
     sm_performSaveYourself((QSessionManagerPrivate*) clientData);
     if (!sm_isshutdown) // we cannot expect a confirmation message in that case
