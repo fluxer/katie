@@ -128,7 +128,7 @@ void tst_QDBusMarshall::initTestCase()
     QDBusConnection con = QDBusConnection::sessionBus();
     fileDescriptorPassing = con.connectionCapabilities() & QDBusConnection::UnixFileDescriptorPassing;
     QDir workingDirectory = QCoreApplication::applicationDirPath();
-    QString pongprogram = workingDirectory.absoluteFilePath(QLatin1String("qpong"));
+    QString pongprogram = workingDirectory.absoluteFilePath(QLatin1String("qdbusmarshall_qpong"));
     proc.start(pongprogram);
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName)) {
         QVERIFY(proc.waitForStarted());

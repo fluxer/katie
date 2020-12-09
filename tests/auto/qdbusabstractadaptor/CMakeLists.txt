@@ -5,11 +5,11 @@ if(WITH_DBUS AND DBUS_FOUND)
     )
 
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-    katie_setup_target(qmyserver
+    katie_setup_target(qdbusabstractadaptor_qmyserver
         ${CMAKE_CURRENT_SOURCE_DIR}/qmyserver/qmyserver.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/myobject.h
     )
-    add_executable(qmyserver ${qmyserver_SOURCES})
+    add_executable(qdbusabstractadaptor_qmyserver ${qdbusabstractadaptor_qmyserver_SOURCES})
 
-    target_link_libraries(qmyserver KtCore KtDBus)
+    target_link_libraries(qdbusabstractadaptor_qmyserver KtCore KtDBus)
 endif()

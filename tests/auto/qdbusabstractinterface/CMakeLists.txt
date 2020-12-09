@@ -8,12 +8,12 @@ if(WITH_DBUS AND DBUS_FOUND)
     )
 
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-    katie_setup_target(qpinger
+    katie_setup_target(qdbusabstractinterface_qpinger
         ${CMAKE_CURRENT_SOURCE_DIR}/qpinger/qpinger.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/interface.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/interface.h
     )
-    add_executable(qpinger ${qpinger_SOURCES})
+    add_executable(qdbusabstractinterface_qpinger ${qdbusabstractinterface_qpinger_SOURCES})
 
-    target_link_libraries(qpinger KtCore KtDBus)
+    target_link_libraries(qdbusabstractinterface_qpinger KtCore KtDBus)
 endif()

@@ -144,7 +144,7 @@ tst_QLocale::tst_QLocale()
 void tst_QLocale::initTestCase()
 {
     QDir workingDirectory = QCoreApplication::applicationDirPath();
-    m_sysLocaleApp = workingDirectory.absoluteFilePath(QLatin1String("syslocaleapp"));
+    m_sysLocaleApp = workingDirectory.absoluteFilePath(QLatin1String("qlocale_syslocaleapp"));
     QVERIFY2(QFileInfo(m_sysLocaleApp).exists(),
              qPrintable(QString::fromLatin1("SysLocalApp executable '%1' does not exist!")
                         .arg(QDir::toNativeSeparators(m_sysLocaleApp))));
