@@ -63,13 +63,11 @@ public:
 #ifndef QT_NO_TEXTCODEC
         tc(QTextCodec::codecForLocale()),
 #else
-        tc(Q_NULLPTR),
+        tc(Q_NULLPTR)
 #endif
-        preparedQuerysEnabled(false) {}
+        { }
     MYSQL *mysql;
     QTextCodec *tc;
-
-    bool preparedQuerysEnabled;
 };
 
 static inline QString toUnicode(QTextCodec *tc, const char *str)
@@ -803,8 +801,6 @@ bool QMYSQLResult::prepare(const QString& query)
     if(!d->driver)
         return false;
     cleanup();
-    if (!d->driver->d->preparedQuerysEnabled)
-        return QSqlResult::prepare(query);
 
     if (query.isEmpty())
         return false;
@@ -1038,7 +1034,6 @@ static inline void qLibraryEnd()
 QMYSQLDriver::QMYSQLDriver(QObject * parent)
     : QSqlDriver(parent), d(new QMYSQLDriverPrivate())
 {
-    d->mysql = Q_NULLPTR;
     qMySqlConnectionCount++;
     qLibraryInit();
 }
@@ -1077,7 +1072,7 @@ bool QMYSQLDriver::hasFeature(DriverFeature f) const
         return true;
     case PreparedQueries:
     case PositionalPlaceholders:
-        return d->preparedQuerysEnabled;
+        return true;
     case MultipleResultSets:
         return true;
     }
@@ -1193,9 +1188,6 @@ bool QMYSQLDriver::open(const QString& db,
 #ifndef QT_NO_TEXTCODEC
     d->tc = codec(d->mysql);
 #endif
-
-    d->preparedQuerysEnabled = mysql_get_client_version() >= 40108
-                        && mysql_get_server_version(d->mysql) >= 40100;
 
     mysql_thread_init();
 
