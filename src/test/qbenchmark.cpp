@@ -74,7 +74,7 @@ void QBenchmarkGlobalData::setMode(Mode mode)
 
     if (mode_ == EventCounter) {
         measurer = new QBenchmarkEvent;
-#ifdef HAVE_TICK_COUNTER
+#ifdef QT_HAVE_CLOCK_GETTIME
     } else if (mode_ == TickCounter) {
         measurer = new QBenchmarkTickMeasurer;
 #endif

@@ -72,7 +72,14 @@ QTest::QBenchmarkMetric QBenchmarkTimeMeasurer::metricType()
     return QTest::WalltimeMilliseconds;
 }
 
-#ifdef HAVE_TICK_COUNTER // defined in 3rdparty/cycle_p.h
+#ifdef QT_HAVE_CLOCK_GETTIME
+static qint64 getticks()
+{
+    struct timespec ts;
+    if (::clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts) == -1)
+        return 0;
+    return (ts.tv_sec * 1000000000) + ts.tv_nsec;
+}
 
 void QBenchmarkTickMeasurer::start()
 {
@@ -81,14 +88,12 @@ void QBenchmarkTickMeasurer::start()
 
 qint64 QBenchmarkTickMeasurer::checkpoint()
 {
-    ticks now = getticks();
-    return qRound64(elapsed(now, startTicks));
+    return (getticks() - startTicks);
 }
 
 qint64 QBenchmarkTickMeasurer::stop()
 {
-    ticks now = getticks();
-    return qRound64(elapsed(now, startTicks));
+    return (getticks() - startTicks);
 }
 
 bool QBenchmarkTickMeasurer::isMeasurementAccepted(qint64)
@@ -105,7 +110,6 @@ QTest::QBenchmarkMetric QBenchmarkTickMeasurer::metricType()
 {
     return QTest::CPUTicks;
 }
-
 #endif
 
 

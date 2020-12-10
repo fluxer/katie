@@ -2,9 +2,6 @@ add_definitions(
     -DQT_NO_CAST_TO_ASCII
     -DQT_NO_CAST_FROM_ASCII
     -DQT_NO_DATASTREAM
-    # for 3rd party source
-    -DTIME_WITH_SYS_TIME=1
-    -DHAVE_SYS_TIME_H
 )
 set(EXTRA_TEST_LIBS KtCore)
 
@@ -30,8 +27,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtTest
-    # for fftw
-    ${CMAKE_SOURCE_DIR}/src
 )
 
 set(TEST_HEADERS

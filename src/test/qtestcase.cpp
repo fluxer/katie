@@ -52,7 +52,6 @@
 #include "qtestresult_p.h"
 #include "qsignaldumper_p.h"
 #include "qbenchmark_p.h"
-#include "3rdparty/fftw/cycle.h"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -1091,7 +1090,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
          "\n"
          " Benchmark related options:\n"
-#ifdef HAVE_TICK_COUNTER
+#ifdef QT_HAVE_CLOCK_GETTIME
         " -tickcounter    : Use CPU tick counters to time benchmarks\n"
 #endif
         " -eventcounter   : Counts events received during benchmarks\n"
@@ -1179,7 +1178,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
         } else if (strcmp(argv[i], "-keyevent-verbose") == 0) {
             QTest::keyVerbose = 1;
-#ifdef HAVE_TICK_COUNTER
+#ifdef QT_HAVE_CLOCK_GETTIME
         } else if (strcmp(argv[i], "-tickcounter") == 0) {
             QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::TickCounter);
 #endif
