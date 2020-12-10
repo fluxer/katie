@@ -300,7 +300,7 @@ set_package_properties(ODBC PROPERTIES
     PURPOSE "Required for ODBC database support"
     DESCRIPTION "The definitive standard for ODBC on non MS Windows platforms"
     URL "http://www.unixodbc.org"
-    TYPE OPTIONAL
+    TYPE RECOMMENDED
 )
 
 # v7.4+ required for PQresultErrorField()
@@ -309,7 +309,7 @@ set_package_properties(PostgreSQL PROPERTIES
     PURPOSE "Required for PostgreSQL database support"
     DESCRIPTION "The world's most advanced open source database"
     URL "https://www.postgresql.org/"
-    TYPE OPTIONAL
+    TYPE RECOMMENDED
 )
 
 # v4.1.13+ required for multiple statements query and UTF-8 support
@@ -318,7 +318,7 @@ set_package_properties(MySQL PROPERTIES
     PURPOSE "Required for MySQL database support"
     DESCRIPTION "The world's most popular open source database"
     URL "https://www.mysql.com/"
-    TYPE OPTIONAL
+    TYPE RECOMMENDED
 )
 
 find_package(Intl)
@@ -326,7 +326,7 @@ set_package_properties(Intl PROPERTIES
     PURPOSE "Required for translations support"
     DESCRIPTION "GNU gettext runtime library"
     URL "https://www.gnu.org/software/gettext/gettext.html"
-    TYPE OPTIONAL
+    TYPE RECOMMENDED
 )
 
 find_package(ExecInfo)
@@ -334,7 +334,7 @@ set_package_properties(ExecInfo PROPERTIES
     PURPOSE "Required for stack traces on assert and crash"
     DESCRIPTION "Standard C library specific execinfo implementation"
     URL ""
-    TYPE OPTIONAL
+    TYPE RECOMMENDED
 )
 
 add_definitions(
