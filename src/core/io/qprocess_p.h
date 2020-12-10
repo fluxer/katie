@@ -230,7 +230,7 @@ public:
     QProcess::ProcessError processError;
     QProcess::ProcessState processState;
     QString workingDirectory;
-    Q_PID pid;
+    pid_t pid;
 
     bool dying;
     bool emittedReadyRead;

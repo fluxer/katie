@@ -1318,7 +1318,7 @@ void QProcess::setWorkingDirectory(const QString &dir)
 Q_PID QProcess::pid() const
 {
     Q_D(const QProcess);
-    return d->pid;
+    return Q_PID(d->pid);
 }
 
 /*! \reimp

@@ -820,7 +820,7 @@ void QProcessPrivate::terminateProcess()
     qDebug("QProcessPrivate::killProcess()");
 #endif
     if (pid)
-        ::kill(pid_t(pid), SIGTERM);
+        ::kill(pid, SIGTERM);
 }
 
 void QProcessPrivate::killProcess()
@@ -829,7 +829,7 @@ void QProcessPrivate::killProcess()
     qDebug("QProcessPrivate::killProcess()");
 #endif
     if (pid)
-        ::kill(pid_t(pid), SIGKILL);
+        ::kill(pid, SIGKILL);
 }
 
 static int select_msecs(int nfds, fd_set *fdread, fd_set *fdwrite, int timeout)
@@ -1078,7 +1078,7 @@ bool QProcessPrivate::waitForDeadChild()
 
     // check if our process is dead
     int status;
-    if (qt_safe_waitpid(pid_t(pid), &status, WNOHANG) > 0) {
+    if (qt_safe_waitpid(pid, &status, WNOHANG) > 0) {
         processManager()->remove(q);
         crashed = !WIFEXITED(status);
         exitCode = WEXITSTATUS(status);
