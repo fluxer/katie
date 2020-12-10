@@ -61,30 +61,25 @@ static inline int qt_safe_socket(int domain, int type, int protocol)
 {
 #if defined(SOCK_CLOEXEC)
     // since Linux 2.6.27
-    int newtype = type | SOCK_CLOEXEC;
-    return ::socket(domain, newtype, protocol);
+    return ::socket(domain, type | SOCK_CLOEXEC, protocol);
 #else
     int fd = ::socket(domain, type, protocol);
-    if (fd == -1)
-        return -1;
-
-    ::fcntl(fd, F_SETFD, FD_CLOEXEC);
+    if (fd != -1)
+        ::fcntl(fd, F_SETFD, FD_CLOEXEC);
     return fd;
 #endif
 }
 
 static inline int qt_safe_accept(int s, struct sockaddr *addr, QT_SOCKLEN_T *addrlen)
 {
-#if defined(Q_OS_LINUX) && defined(SOCK_CLOEXEC)
+#if defined(QT_HAVE_ACCEPT4) && defined(SOCK_CLOEXEC)
     return ::accept4(s, addr, addrlen, SOCK_CLOEXEC);
-#elif defined(Q_OS_NETBSD) && defined(SOCK_CLOEXEC)
+#elif defined(QT_HAVE_PACCEPT) && defined(SOCK_CLOEXEC)
     return ::paccept(s, addr, addrlen, NULL, SOCK_CLOEXEC);
 #else
     int fd = ::accept(s, addr, addrlen);
-    if (fd == -1)
-        return -1;
-
-    ::fcntl(fd, F_SETFD, FD_CLOEXEC);
+    if (fd != -1)
+        ::fcntl(fd, F_SETFD, FD_CLOEXEC);
     return fd;
 #endif
 }
