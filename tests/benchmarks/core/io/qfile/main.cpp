@@ -41,20 +41,22 @@
 
 QT_USE_NAMESPACE
 
-#define TF_SIZE QT_BUFFSIZE*81
+#define QFILE_BENCH_BUFSIZE 1024*512
+#define QFILE_BENCH_FACTOR 1024*512
+#define QFILE_BENCH_TF_SIZE QFILE_BENCH_FACTOR*81
 
 // 10 predefined (but random() seek positions
 // hardcoded to be comparable over several runs
-const int seekpos[] = {int(TF_SIZE*0.52),
-                       int(TF_SIZE*0.23),
-                       int(TF_SIZE*0.73),
-                       int(TF_SIZE*0.77),
-                       int(TF_SIZE*0.80),
-                       int(TF_SIZE*0.12),
-                       int(TF_SIZE*0.53),
-                       int(TF_SIZE*0.21),
-                       int(TF_SIZE*0.27),
-                       int(TF_SIZE*0.78)};
+const int seekpos[] = {int(QFILE_BENCH_TF_SIZE*0.52),
+                       int(QFILE_BENCH_TF_SIZE*0.23),
+                       int(QFILE_BENCH_TF_SIZE*0.73),
+                       int(QFILE_BENCH_TF_SIZE*0.77),
+                       int(QFILE_BENCH_TF_SIZE*0.80),
+                       int(QFILE_BENCH_TF_SIZE*0.12),
+                       int(QFILE_BENCH_TF_SIZE*0.53),
+                       int(QFILE_BENCH_TF_SIZE*0.21),
+                       int(QFILE_BENCH_TF_SIZE*0.27),
+                       int(QFILE_BENCH_TF_SIZE*0.78)};
 
 const int sp_size = sizeof(seekpos)/sizeof(int);
 
@@ -107,7 +109,7 @@ private:
     void readSmallFiles_data(BenchmarkType type, QIODevice::OpenModeFlag t, QIODevice::OpenModeFlag b);
     void readSmallFiles();
     void createFile();
-    void fillFile(int factor=QT_BUFFSIZE);
+    void fillFile(int factor=QFILE_BENCH_FACTOR);
     void removeFile();
     void createSmallFiles();
     void removeSmallFiles();
@@ -215,7 +217,7 @@ void tst_qfile::readBigFile()
     QFETCH(QFile::OpenModeFlag, textMode);
     QFETCH(QFile::OpenModeFlag, bufferedMode);
 
-    char *buffer = new char[QT_BUFFSIZE];
+    char *buffer = new char[QFILE_BENCH_BUFSIZE];
     createFile();
     fillFile();
 
@@ -235,9 +237,9 @@ void tst_qfile::readBigFile()
             QFSFileEngine fse(filename);
             fse.open(QIODevice::ReadOnly|textMode|bufferedMode);
             QBENCHMARK {
-               //qWarning() << fse.supportsExtension(QAbstractFileEngine::MapExtension);
-               while(fse.read(buffer, blockSize));
-               fse.seek(0);
+                //qWarning() << fse.supportsExtension(QAbstractFileEngine::MapExtension);
+                while(fse.read(buffer, blockSize));
+                fse.seek(0);
             }
             fse.close();
         }
@@ -471,7 +473,7 @@ void tst_qfile::readSmallFiles()
 
     QDir dir(tmpDirName);
     const QStringList files = dir.entryList(QDir::NoDotAndDotDot|QDir::NoSymLinks|QDir::Files);
-    char *buffer = new char[QT_BUFFSIZE];
+    char *buffer = new char[QFILE_BENCH_BUFSIZE];
 
     switch (testType) {
         case(QFileBenchmark): {
