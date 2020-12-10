@@ -51,7 +51,7 @@ set_target_properties(qtconfig PROPERTIES
 
 install(
     TARGETS qtconfig
-    EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )

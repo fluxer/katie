@@ -294,7 +294,7 @@ katie_setup_object(KtDesigner sharedqtgradienteditor sharedqtpropertybrowser sha
 
 install(
     TARGETS KtDesigner
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

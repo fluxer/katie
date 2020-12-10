@@ -39,7 +39,7 @@ set_target_properties(uic PROPERTIES
 
 install(
     TARGETS uic
-    EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )

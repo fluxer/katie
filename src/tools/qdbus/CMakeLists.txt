@@ -37,7 +37,7 @@ set_target_properties(qdbusxml2cpp PROPERTIES
 
 install(
     TARGETS qdbus qdbuscpp2xml qdbusxml2cpp
-    EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )

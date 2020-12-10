@@ -1014,18 +1014,10 @@ install(
 )
 
 install(
-    EXPORT KatieLibraryTargets
+    EXPORT KatieTargets
     NAMESPACE Katie::
     DESTINATION ${KATIE_CMAKE_PATH}
-    FILE KatieLibraryTargets.cmake
-    COMPONENT Devel
-)
-
-install(
-    EXPORT KatieBinaryTargets
-    NAMESPACE Katie::
-    DESTINATION ${KATIE_CMAKE_PATH}
-    FILE KatieBinaryTargets.cmake
+    FILE KatieTargets.cmake
     COMPONENT Devel
 )
 

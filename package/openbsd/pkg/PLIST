@@ -1475,12 +1475,10 @@ include/katie/QtXml/qdom.h
 include/katie/QtXml/qxml.h
 include/katie/QtXml/qxmlstream.h
 lib/cmake/Katie/
-lib/cmake/Katie/KatieBinaryTargets${MODCMAKE_BUILD_SUFFIX}
-lib/cmake/Katie/KatieBinaryTargets.cmake
 lib/cmake/Katie/KatieConfig.cmake
 lib/cmake/Katie/KatieConfigVersion.cmake
-lib/cmake/Katie/KatieLibraryTargets${MODCMAKE_BUILD_SUFFIX}
-lib/cmake/Katie/KatieLibraryTargets.cmake
+lib/cmake/Katie/KatieTargets${MODCMAKE_BUILD_SUFFIX}
+lib/cmake/Katie/KatieTargets.cmake
 lib/cmake/Katie/Qt4UseFile.cmake
 lib/cmake/Katie/mkspecs/
 lib/cmake/Katie/mkspecs/bsymbolic_functions.cpp

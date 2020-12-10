@@ -1458,12 +1458,10 @@ include/katie/QtXml/QtXml
 include/katie/QtXml/qdom.h
 include/katie/QtXml/qxml.h
 include/katie/QtXml/qxmlstream.h
-lib/cmake/Katie/KatieBinaryTargets-%%CMAKE_BUILD_TYPE%%.cmake
-lib/cmake/Katie/KatieBinaryTargets.cmake
 lib/cmake/Katie/KatieConfig.cmake
 lib/cmake/Katie/KatieConfigVersion.cmake
-lib/cmake/Katie/KatieLibraryTargets-%%CMAKE_BUILD_TYPE%%.cmake
-lib/cmake/Katie/KatieLibraryTargets.cmake
+lib/cmake/Katie/KatieTargets-%%CMAKE_BUILD_TYPE%%.cmake
+lib/cmake/Katie/KatieTargets.cmake
 lib/cmake/Katie/Qt4UseFile.cmake
 lib/cmake/Katie/mkspecs/bsymbolic_functions.cpp
 lib/cmake/Katie/mkspecs/mkspecs.cmake

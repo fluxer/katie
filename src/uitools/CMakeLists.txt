@@ -59,7 +59,7 @@ set_target_properties(KtUiTools PROPERTIES
 
 install(
     TARGETS KtUiTools
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

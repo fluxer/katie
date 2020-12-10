@@ -40,8 +40,7 @@ if(NOT KATIE_FOUND)
     set(KATIE_PIXMAPS_PATH "@KATIE_PIXMAPS_PATH@")
 
     # Include definitions for IMPORTED targets
-    include("${CMAKE_CURRENT_LIST_DIR}/KatieLibraryTargets.cmake")
-    include("${CMAKE_CURRENT_LIST_DIR}/KatieBinaryTargets.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/KatieTargets.cmake")
     # Include version info, required for the Qt4 compatibility setup
     include("${CMAKE_CURRENT_LIST_DIR}/KatieConfigVersion.cmake")
 
