@@ -59,7 +59,6 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, sqlloader,
 
 const char *QSqlDatabase::defaultConnection = "qt_sql_default_connection";
 
-
 typedef QHash<QString, QSqlDatabase> QConnectionDict;
 Q_GLOBAL_STATIC(QConnectionDict, dbDict)
 Q_GLOBAL_STATIC(QReadWriteLock, dbDictLock)
@@ -101,17 +100,17 @@ public:
 };
 
 QSqlDatabasePrivate::QSqlDatabasePrivate(const QSqlDatabasePrivate &other)
+    : ref(1),
+    dbname(other.dbname),
+    uname(other.uname),
+    pword(other.pword),
+    hname(other.hname),
+    drvName(other.drvName),
+    port(other.port),
+    connOptions(other.connOptions),
+    driver(other.driver),
+    precisionPolicy(other.precisionPolicy)
 {
-    ref = 1;
-    dbname = other.dbname;
-    uname = other.uname;
-    pword = other.pword;
-    hname = other.hname;
-    drvName = other.drvName;
-    port = other.port;
-    connOptions = other.connOptions;
-    driver = other.driver;
-    precisionPolicy = other.precisionPolicy;
 }
 
 QSqlDatabasePrivate::~QSqlDatabasePrivate()
@@ -176,6 +175,14 @@ void QSqlDatabasePrivate::addDatabase(const QSqlDatabase &db, const QString &nam
     }
     dict->insert(name, db);
     db.d->connName = name;
+}
+
+static bool qCleanConnectionsInit = false;
+
+static void qCleanDict()
+{
+    QSqlDatabasePrivate::cleanConnections();
+    qCleanConnectionsInit = false;
 }
 
 /*! \internal
@@ -404,6 +411,11 @@ void QSqlDatabase::removeDatabase(const QString& connectionName)
 
 QStringList QSqlDatabase::drivers()
 {
+    if (!qCleanConnectionsInit) {
+        qCleanConnectionsInit = true;
+        qAddPostRoutine(qCleanDict);
+    }
+
     QStringList list;
     list << QLatin1String("QSQLITE");
 
@@ -530,6 +542,11 @@ void QSqlDatabasePrivate::init(const QString &type)
         driver = new QSQLiteDriver();
     }
 
+    if (!driver && !qCleanConnectionsInit) {
+        qCleanConnectionsInit = true;
+        qAddPostRoutine(qCleanDict);
+    }
+
 #ifndef QT_NO_LIBRARY
     if (!driver && sqlloader()) {
         if (QSqlDriverFactoryInterface *factory = qobject_cast<QSqlDriverFactoryInterface*>(sqlloader()->instance(type)))
@@ -592,7 +609,7 @@ QSqlQuery QSqlDatabase::exec(const QString & query) const
 bool QSqlDatabase::open()
 {
     return d->driver->open(d->dbname, d->uname, d->pword, d->hname,
-                            d->port, d->connOptions);
+                           d->port, d->connOptions);
 }
 
 /*!
@@ -613,7 +630,7 @@ bool QSqlDatabase::open(const QString& user, const QString& password)
 {
     setUserName(user);
     return d->driver->open(d->dbname, user, password, d->hname,
-                            d->port, d->connOptions);
+                           d->port, d->connOptions);
 }
 
 /*!
