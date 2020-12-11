@@ -45,6 +45,6 @@ have strict requirements what they distribute and/or use. Debian for an example
 does not enable by default non-free software repository thus user interaction
 is required actions before non-free software can be installed.
 
-If you cannot contribute your changes with license that is less or equally
+If you cannot contribute your changes with license that is more or equally
 permisive than those already in use (3-clause BSD, FDL v1.3 and LGPL v2.1+)
 than your contribution may not be acceptable.
