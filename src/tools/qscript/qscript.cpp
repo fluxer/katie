@@ -46,6 +46,7 @@
 #include <QtScriptTools/QScriptEngineDebugger>
 
 #include <stdlib.h>
+#include <unistd.h>
 
 QT_USE_NAMESPACE
 
@@ -68,7 +69,8 @@ static void interactive(QScriptEngine *eng)
         global.setProperty(QLatin1String("quit"), quitFunction);
     wantsToQuit = false;
 
-    QTextStream qin(stdin, QFile::ReadOnly);
+    QFile qin;
+    qin.open(STDIN_FILENO, QFile::ReadOnly);
 
     const char *qscript_prompt = "qs> ";
     const char *dot_prompt = ".... ";
@@ -121,8 +123,7 @@ static QScriptValue loadScripts(QScriptContext *context, QScriptEngine *engine)
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly))
             return context->throwError(QString::fromLatin1("could not open %0 for reading").arg(fileName));
-        QTextStream ts(&file);
-        QString contents = ts.readAll();
+        QString contents = file.readAll();
         file.close();
         QScriptContext *pc = context->parentContext();
         context->setActivationObject(pc->activationObject());
@@ -174,16 +175,16 @@ int main(int argc, char *argv[])
         int lineNumber = 1;
 
         if (fn == QLatin1String("-")) {
-            QTextStream stream(stdin, QFile::ReadOnly);
-            contents = stream.readAll();
+            QFile file;
+            file.open(STDIN_FILENO, QFile::ReadOnly);
+            contents = file.readAll();
         }
 
         else {
             QFile file(fn);
 
             if (file.open(QFile::ReadOnly)) {
-                QTextStream stream(&file);
-                contents = stream.readAll();
+                contents = file.readAll();
                 file.close();
 
                 // strip off #!/usr/bin/env qscript line

@@ -76,23 +76,6 @@ QFilePrivate::openExternalFile(int flags, int fd, QFile::FileHandleFlags handleF
 #endif
 }
 
-bool
-QFilePrivate::openExternalFile(int flags, FILE *fh, QFile::FileHandleFlags handleFlags)
-{
-#ifdef QT_NO_FSFILEENGINE
-    Q_UNUSED(flags);
-    Q_UNUSED(fh);
-    return false;
-#else
-    delete fileEngine;
-    fileEngine = 0;
-    QFSFileEngine *fe = new QFSFileEngine;
-    fileEngine = fe;
-    return fe->open(QIODevice::OpenMode(flags), fh, handleFlags);
-#endif
-}
-
-
 inline bool QFilePrivate::ensureFlushed() const
 {
     // This function ensures that the write buffer has been flushed (const
@@ -835,72 +818,6 @@ bool QFile::open(OpenMode mode)
     if(err == QFile::UnspecifiedError)
         err = QFile::OpenError;
     d->setError(err, d->fileEngine->errorString());
-    return false;
-}
-
-/*! \fn QFile::open(OpenMode, FILE*)
-
-    Use open(FILE *, OpenMode) instead.
-*/
-
-/*!
-    \overload
-
-    Opens the existing file handle \a fh in the given \a mode.
-    Returns true if successful; otherwise returns false.
-
-    Example:
-    \snippet doc/src/snippets/code/src_corelib_io_qfile.cpp 3
-
-    When a QFile is opened using this function, behaviour of close() is
-    controlled by the AutoCloseHandle flag.
-    If AutoCloseHandle is specified, and this function succeeds,
-    then calling close() closes the adopted handle.
-    Otherwise, close() does not actually close the file, but only flushes it.
-
-    \bold{Warning:}
-    \list 1
-        \o If \a fh does not refer to a regular file, e.g., it is \c stdin,
-           \c stdout, or \c stderr, you may not be able to seek(). size()
-           returns \c 0 in those cases. See QIODevice::isSequential() for
-           more information.
-        \o Since this function opens the file without specifying the file name,
-           you cannot use this QFile with a QFileInfo.
-    \endlist
-
-    \sa close(), {qmake Variable Reference#CONFIG}{qmake Variable Reference}
-
-    You need to enable support for console applications in order to use the
-    stdin, stdout and stderr streams at the console. To do this, add the
-    following declaration to your application's project file:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qfile.cpp 4
-*/
-bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
-{
-    if (isOpen()) {
-        qWarning("QFile::open: File (%s) already open", qPrintable(fileName()));
-        return false;
-    }
-    if (mode & Append)
-        mode |= WriteOnly;
-    unsetError();
-    if ((mode & (ReadOnly | WriteOnly)) == 0) {
-        qWarning("QFile::open: File access not specified");
-        return false;
-    }
-    Q_D(QFile);
-    if (d->openExternalFile(mode, fh, handleFlags)) {
-        QIODevice::open(mode);
-        if (mode & Append) {
-            seek(size());
-        } else {
-            qint64 pos = (qint64)QT_FTELL(fh);
-            if (pos != -1)
-                seek(pos);
-        }
-        return true;
-    }
     return false;
 }
 

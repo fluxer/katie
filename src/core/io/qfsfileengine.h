@@ -54,7 +54,8 @@ public:
     ~QFSFileEngine();
 
     bool open(QIODevice::OpenMode openMode);
-    bool open(QIODevice::OpenMode flags, FILE *fh);
+    bool open(QIODevice::OpenMode flags, int fd);
+    bool open(QIODevice::OpenMode flags, int fd, QFile::FileHandleFlags handleFlags);
     bool close();
     bool flush();
     qint64 size() const;
@@ -84,15 +85,13 @@ public:
 #endif
 
     qint64 read(char *data, qint64 maxlen);
+    qint64 readLine(char *data, qint64 maxlen);
     qint64 write(const char *data, qint64 len);
 
     bool extension(Extension extension, const ExtensionOption *option = Q_NULLPTR, ExtensionReturn *output = Q_NULLPTR);
     bool supportsExtension(Extension extension) const;
 
     //FS only!!
-    bool open(QIODevice::OpenMode flags, int fd);
-    bool open(QIODevice::OpenMode flags, int fd, QFile::FileHandleFlags handleFlags);
-    bool open(QIODevice::OpenMode flags, FILE *fh, QFile::FileHandleFlags handleFlags);
     static bool setCurrentPath(const QString &path);
     static QString currentPath(const QString &path = QString());
     static QString homePath();

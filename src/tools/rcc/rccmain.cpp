@@ -39,6 +39,8 @@
 #include <QFileInfo>
 #include <QTextStream>
 
+#include <unistd.h>
+
 QT_BEGIN_NAMESPACE
 
 void showHelp( const QString &error)
@@ -100,7 +102,7 @@ int createProject(const QString &outFileName)
     QFile file;
     bool isOk = false;
     if (outFileName.isEmpty()) {
-        isOk = file.open(stdout, QFile::WriteOnly | QFile::Text);
+        isOk = file.open(STDOUT_FILENO, QFile::WriteOnly | QFile::Text);
     } else {
         file.setFileName(outFileName);
         isOk = file.open(QFile::WriteOnly | QFile::Text);
@@ -218,7 +220,7 @@ int runRcc(int argc, char *argv[])
         return 1;
     }
     QFile errorDevice;
-    errorDevice.open(stderr, QIODevice::WriteOnly|QIODevice::Text);
+    errorDevice.open(STDERR_FILENO, QIODevice::WriteOnly|QIODevice::Text);
     
     if (library.verbose())
         errorDevice.write("Katie resource compiler\n");
@@ -236,7 +238,7 @@ int runRcc(int argc, char *argv[])
 
     if (outFilename.isEmpty() || outFilename == QLatin1String("-")) {
         // using this overload close() only flushes.
-        out.open(stdout, mode);
+        out.open(STDOUT_FILENO, mode);
     } else {
         out.setFileName(outFilename);
         if (!out.open(mode)) {

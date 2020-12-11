@@ -40,11 +40,11 @@ QT_BEGIN_NAMESPACE
 
 class Generator
 {
-    FILE *out;
+    int out;
     ClassDef *cdef;
     QVector<uint> meta_data;
 public:
-    Generator(ClassDef *classDef, const QList<QByteArray> &metaTypes, FILE *outfile = Q_NULLPTR);
+    Generator(ClassDef *classDef, const QList<QByteArray> &metaTypes, int outfile);
     void generateCode();
 private:
     void generateClassInfos();

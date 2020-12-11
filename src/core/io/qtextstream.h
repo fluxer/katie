@@ -79,7 +79,7 @@ public:
 
     QTextStream();
     explicit QTextStream(QIODevice *device);
-    explicit QTextStream(FILE *fileHandle, QIODevice::OpenMode openMode = QIODevice::ReadWrite);
+    explicit QTextStream(int fileDescriptor, QIODevice::OpenMode openMode = QIODevice::ReadWrite);
     explicit QTextStream(QString *string, QIODevice::OpenMode openMode = QIODevice::ReadWrite);
     explicit QTextStream(QByteArray *array, QIODevice::OpenMode openMode = QIODevice::ReadWrite);
     explicit QTextStream(const QByteArray &array, QIODevice::OpenMode openMode = QIODevice::ReadOnly);

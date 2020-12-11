@@ -42,8 +42,9 @@
 #include <QtCore/QIODevice>
 #include <QtCore/QLocale>
 #include <QtCore/QStack>
-
 #include <QtXml/qdom.h>
+
+#include <unistd.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -568,7 +569,7 @@ bool RCCResourceLibrary::readFiles(bool ignoreErrors, QIODevice &errorDevice)
             fname = QLatin1String("(stdin)");
             pwd = QDir::currentPath();
             fileIn.setFileName(fname);
-            if (!fileIn.open(stdin, QIODevice::ReadOnly)) {
+            if (!fileIn.open(STDIN_FILENO, QIODevice::ReadOnly)) {
                 m_errorDevice->write(msgOpenReadFailed(fname, fileIn.errorString()).toUtf8());
                 return false;
             }

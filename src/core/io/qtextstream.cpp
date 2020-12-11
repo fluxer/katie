@@ -1014,15 +1014,15 @@ QTextStream::QTextStream(const QByteArray &array, QIODevice::OpenMode openMode)
     \snippet doc/src/snippets/code/src_corelib_io_qtextstream.cpp 4
 */
 
-QTextStream::QTextStream(FILE *fileHandle, QIODevice::OpenMode openMode)
+QTextStream::QTextStream(int fileDescriptor, QIODevice::OpenMode openMode)
     : d_ptr(new QTextStreamPrivate())
 {
 #if defined (QTEXTSTREAM_DEBUG)
-    qDebug("QTextStream::QTextStream(FILE *fileHandle = %p, openMode = %d)",
-           fileHandle, int(openMode));
+    qDebug("QTextStream::QTextStream(int fileDescriptor = %d, openMode = %d)",
+           fileDescriptor, int(openMode));
 #endif
     QFile *file = new QFile;
-    file->open(fileHandle, openMode);
+    file->open(fileDescriptor, openMode);
 
     Q_D(QTextStream);
     d->device = file;

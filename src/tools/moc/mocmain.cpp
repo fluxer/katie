@@ -165,8 +165,8 @@ int runMoc(int _argc, char **_argv)
 
     QByteArray filename;
     QByteArray output;
-    FILE *in = 0;
-    FILE *out = 0;
+    int in = 0;
+    int out = 0;
     bool ignoreConflictingOptions = false;
 
     QVector<QByteArray> argv;
@@ -345,9 +345,9 @@ int runMoc(int _argc, char **_argv)
 
     if (filename.isEmpty()) {
         filename = "standard input";
-        in = stdin;
+        in = STDIN_FILENO;
     } else {
-        in = QT_FOPEN(filename.data(), "rb");
+        in = QT_OPEN(filename.data(), QT_OPEN_RDONLY);
         if (!in) {
             fprintf(stderr, "moc: %s: No such file\n", filename.constData());
             return 1;
@@ -359,7 +359,7 @@ int runMoc(int _argc, char **_argv)
 
     // 1. preprocess
     moc.symbols = pp.preprocessed(moc.filename, in);
-    ::fclose(in);
+    QT_CLOSE(in);
 
     if (!pp.preprocessOnly) {
         // 2. parse
@@ -369,18 +369,18 @@ int runMoc(int _argc, char **_argv)
     // 3. and output meta object code
 
     if (output.size()) { // output file specified
-        out = QT_FOPEN(output.data(), "w"); // create output file
+        out = QT_OPEN(output.constData(), QT_OPEN_WRONLY | QT_OPEN_CREAT | QT_OPEN_TRUNC, 0600); // create output file
         if (!out)
         {
-            fprintf(stderr, "moc: Cannot create %s\n", output.constData());
+            dprintf(STDOUT_FILENO, "moc: Cannot create %s\n", output.constData());
             return 1;
         }
     } else { // use stdout
-        out = stdout;
+        out = STDOUT_FILENO;
     }
 
     if (pp.preprocessOnly) {
-        fprintf(out, "%s\n", composePreprocessorOutput(moc.symbols).constData());
+        dprintf(out, "%s\n", composePreprocessorOutput(moc.symbols).constData());
     } else {
         if (moc.classList.isEmpty())
             moc.note("No relevant classes found. No output generated.");
@@ -389,7 +389,7 @@ int runMoc(int _argc, char **_argv)
     }
 
     if (output.size())
-        ::fclose(out);
+        QT_CLOSE(out);
 
     return 0;
 }

@@ -82,6 +82,7 @@ void QFSFileEnginePrivate::init()
     openMode = QIODevice::NotOpen;
     fd = -1;
     closeFileHandle = false;
+    didwrite = false;
 }
 
 /*!
@@ -212,28 +213,6 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
 }
 
 /*!
-    Opens the file handle \a fh in \a openMode mode. Returns true on
-    success; otherwise returns false.
-*/
-bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh)
-{
-    return QFSFileEngine::open(openMode, QT_FILENO(fh), QFile::DontCloseHandle);
-}
-
-/*!
-    Opens the file handle \a fh in \a openMode mode. Returns true
-    on success; otherwise returns false.
-
-    The \a handleFlags argument specifies whether the file handle will be
-    closed by Qt. See the QFile::FileHandleFlags documentation for more
-    information.
-*/
-bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh, QFile::FileHandleFlags handleFlags)
-{
-    return QFSFileEngine::open(openMode, QT_FILENO(fh), handleFlags);
-}
-
-/*!
     Opens the file descriptor \a fd in \a openMode mode. Returns true
     on success; otherwise returns false.
 */
@@ -332,7 +311,12 @@ bool QFSFileEngine::close()
 bool QFSFileEngine::flush()
 {
     Q_D(const QFSFileEngine);
-    return (d->fd != -1);
+    if (d->fd == -1)
+        return false;
+    if (!d->didwrite)
+        return true;
+    // printf("%s\n", "QFSFileEngine::flush");
+    return (::fsync(d->fd) != -1);
 }
 
 /*!
@@ -368,6 +352,9 @@ bool QFSFileEngine::seek(qint64 pos)
     if (pos < 0 || pos != qint64(QT_OFF_T(pos)))
         return false;
 
+    if (!flush())
+        return false;
+
     if (Q_UNLIKELY(QT_LSEEK(d->fd, QT_OFF_T(pos), SEEK_SET) == -1)) {
         qWarning() << "QFile::at: Cannot set file position" << pos;
         setError(QFile::PositionError, qt_error_string(errno));
@@ -397,6 +384,8 @@ qint64 QFSFileEngine::read(char *data, qint64 maxlen)
         return -1;
     }
 
+    flush();
+
     qint64 readBytes = 0;
     bool eof = false;
 
@@ -421,6 +410,15 @@ qint64 QFSFileEngine::read(char *data, qint64 maxlen)
 /*!
     \reimp
 */
+qint64 QFSFileEngine::readLine(char *data, qint64 maxlen)
+{
+    flush();
+    return QAbstractFileEngine::readLine(data, maxlen);
+}
+
+/*!
+    \reimp
+*/
 qint64 QFSFileEngine::write(const char *data, qint64 len)
 {
     Q_D(QFSFileEngine);
@@ -429,6 +427,8 @@ qint64 QFSFileEngine::write(const char *data, qint64 len)
         setError(QFile::WriteError, qt_error_string(EINVAL));
         return -1;
     }
+
+    flush();
 
     qint64 writtenBytes = 0;
 
@@ -443,6 +443,8 @@ qint64 QFSFileEngine::write(const char *data, qint64 len)
     if (len &&  writtenBytes == 0) {
         writtenBytes = -1;
         setError(errno == ENOSPC ? QFile::ResourceError : QFile::WriteError, qt_error_string(errno));
+    } else {
+        d->didwrite = true;
     }
 
     return writtenBytes;

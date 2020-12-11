@@ -131,7 +131,6 @@ public:
     bool isSequential() const;
 
     bool open(OpenMode ioFlags);
-    bool open(FILE *f, OpenMode ioFlags, FileHandleFlags handleFlags = DontCloseHandle);
     bool open(int fd, OpenMode ioFlags, FileHandleFlags handleFlags = DontCloseHandle);
     virtual void close();
 

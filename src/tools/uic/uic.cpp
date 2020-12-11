@@ -45,6 +45,8 @@
 #include <QtCore/QDateTime>
 #include <QtXml/qxmlstream.h>
 
+#include <unistd.h>
+
 QT_BEGIN_NAMESPACE
 
 Uic::Uic(Driver *d)
@@ -66,7 +68,7 @@ bool Uic::printDependencies()
 
     QFile f;
     if (fileName.isEmpty())
-        f.open(stdin, QIODevice::ReadOnly);
+        f.open(STDIN_FILENO, QIODevice::ReadOnly);
     else {
         f.setFileName(fileName);
         if (!f.open(QIODevice::ReadOnly))
@@ -88,7 +90,7 @@ bool Uic::printDependencies()
             if (file.isEmpty())
                 continue;
 
-            fprintf(stdout, "%s\n", file.toLocal8Bit().constData());
+            dprintf(STDOUT_FILENO, "%s\n", file.toLocal8Bit().constData());
         }
     }
 
@@ -99,7 +101,7 @@ bool Uic::printDependencies()
                 if (file.isEmpty())
                     continue;
 
-                fprintf(stdout, "%s\n", file.toLocal8Bit().constData());
+                dprintf(STDOUT_FILENO, "%s\n", file.toLocal8Bit().constData());
             }
         }
     }

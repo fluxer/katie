@@ -760,7 +760,7 @@ void Moc::parse()
     }
 }
 
-void Moc::generate(FILE *out)
+void Moc::generate(int out)
 {
     QByteArray fn = filename;
     int i = filename.length()-1;
@@ -768,10 +768,10 @@ void Moc::generate(FILE *out)
         --i;                                // skip path
     if (i >= 0)
         fn = filename.mid(i);
-    fprintf(out, "/****************************************************************************\n"
+    dprintf(out, "/****************************************************************************\n"
             "** Meta object code from reading C++ file '%s'\n**\n" , fn.constData());
-    fprintf(out, "** Created by: The Katie Meta Object Compiler version %d (Katie %s)\n**\n" , Q_MOC_OUTPUT_REVISION, QT_VERSION_STR);
-    fprintf(out, "** WARNING! All changes made in this file will be lost!\n"
+    dprintf(out, "** Created by: The Katie Meta Object Compiler version %d (Katie %s)\n**\n" , Q_MOC_OUTPUT_REVISION, QT_VERSION_STR);
+    dprintf(out, "** WARNING! All changes made in this file will be lost!\n"
             "*****************************************************************************/\n\n");
 
 
@@ -785,25 +785,25 @@ void Moc::generate(FILE *out)
                     inc.prepend(includePath);
                 inc = '\"' + inc + '\"';
             }
-            fprintf(out, "#include %s\n", inc.constData());
+            dprintf(out, "#include %s\n", inc.constData());
         }
     }
     if (classList.size() && classList.first().classname == "Qt")
-        fprintf(out, "#include <QtCore/qobject.h>\n");
+        dprintf(out, "#include <QtCore/qobject.h>\n");
 
     if (mustIncludeQMetaTypeH)
-        fprintf(out, "#include <QtCore/qmetatype.h>\n");
+        dprintf(out, "#include <QtCore/qmetatype.h>\n");
 
-    fprintf(out, "#if !defined(Q_MOC_OUTPUT_REVISION)\n"
+    dprintf(out, "#if !defined(Q_MOC_OUTPUT_REVISION)\n"
             "#error \"The header file '%s' doesn't include <QObject>.\"\n", fn.constData());
-    fprintf(out, "#elif Q_MOC_OUTPUT_REVISION != %d\n", Q_MOC_OUTPUT_REVISION);
-    fprintf(out, "#error \"This file was generated using the moc from %s."
+    dprintf(out, "#elif Q_MOC_OUTPUT_REVISION != %d\n", Q_MOC_OUTPUT_REVISION);
+    dprintf(out, "#error \"This file was generated using the moc from %s."
             " It\"\n#error \"cannot be used with the include files from"
             " this version of Qt.\"\n#error \"(The moc has changed too"
             " much.)\"\n", QT_VERSION_STR);
-    fprintf(out, "#endif\n\n");
+    dprintf(out, "#endif\n\n");
 
-    fprintf(out, "QT_USE_NAMESPACE\n");
+    dprintf(out, "QT_USE_NAMESPACE\n");
 
     for (i = 0; i < classList.size(); ++i) {
         Generator generator(&classList[i], metaTypes, out);

@@ -73,6 +73,7 @@ public:
     int fd;
 
     bool closeFileHandle;
+    bool didwrite;
 
     mutable uint is_sequential;
     mutable bool tried_stat;

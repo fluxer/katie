@@ -45,6 +45,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "qdbusconnection.h"    // for the Export* flags
 
@@ -419,7 +420,7 @@ int main(int argc, char **argv)
 
     QFile output;
     if (outputFile.isEmpty()) {
-        output.open(stdout, QIODevice::WriteOnly);
+        output.open(STDOUT_FILENO, QIODevice::WriteOnly);
     } else {
         output.setFileName(outputFile);
         if (!output.open(QIODevice::WriteOnly)) {

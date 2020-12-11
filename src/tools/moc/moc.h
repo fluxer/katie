@@ -191,7 +191,7 @@ public:
     QSet<QByteArray> knownQObjectClasses;
 
     void parse();
-    void generate(FILE *out);
+    void generate(int out);
     QList<QMetaObject*> generate(bool ignoreProperties);
 
     bool parseClassHead(ClassDef *def);

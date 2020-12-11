@@ -53,6 +53,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define PROGRAMNAME     "qdbusxml2cpp"
 #define PROGRAMVERSION  "0.7"
@@ -210,7 +211,7 @@ static QDBusIntrospection::Interfaces readInput()
 {
     QFile input(inputFile);
     if (inputFile.isEmpty() || inputFile == QLatin1String("-"))
-        input.open(stdin, QIODevice::ReadOnly);
+        input.open(STDIN_FILENO, QIODevice::ReadOnly);
     else
         input.open(QIODevice::ReadOnly);
 
@@ -506,7 +507,7 @@ static void openFile(const QString &fileName, QFile &file)
 
     bool isOk = false;
     if (fileName == QLatin1String("-")) {
-        isOk = file.open(stdout, QIODevice::WriteOnly | QIODevice::Text);
+        isOk = file.open(STDOUT_FILENO, QIODevice::WriteOnly | QIODevice::Text);
     } else {
         file.setFileName(fileName);
         isOk = file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text);

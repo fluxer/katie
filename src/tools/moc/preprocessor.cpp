@@ -898,10 +898,10 @@ void Preprocessor::preprocess(const QByteArray &filename, Symbols &preprocessed)
     currentFilenames.pop();
 }
 
-Symbols Preprocessor::preprocessed(const QByteArray &filename, FILE *file)
+Symbols Preprocessor::preprocessed(const QByteArray &filename, int fd)
 {
     QFile qfile;
-    qfile.open(file, QFile::ReadOnly);
+    qfile.open(fd, QFile::ReadOnly);
     QByteArray input = qfile.readAll();
     if (input.isEmpty())
         return symbols;

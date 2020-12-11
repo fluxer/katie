@@ -60,7 +60,7 @@ public:
     QList<IncludePath> includes;
     QSet<QByteArray> preprocessedIncludes;
     Macros macros;
-    Symbols preprocessed(const QByteArray &filename, FILE *file);
+    Symbols preprocessed(const QByteArray &filename, int fd);
 
 
     void skipUntilEndif();

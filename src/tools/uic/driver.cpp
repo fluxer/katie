@@ -39,10 +39,12 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QDebug>
 
+#include <unistd.h>
+
 QT_BEGIN_NAMESPACE
 
 Driver::Driver()
-    : m_stdout(stdout, QFile::WriteOnly | QFile::Text)
+    : m_stdout(STDOUT_FILENO, QFile::WriteOnly | QFile::Text)
 {
     m_output = &m_stdout;
 }
@@ -270,7 +272,7 @@ bool Driver::uic(const QString &fileName, QTextStream *out)
 {
     QFile f;
     if (fileName.isEmpty())
-        f.open(stdin, QIODevice::ReadOnly);
+        f.open(STDIN_FILENO, QIODevice::ReadOnly);
     else {
         f.setFileName(fileName);
         if (!f.open(QIODevice::ReadOnly))
@@ -285,7 +287,7 @@ bool Driver::uic(const QString &fileName, QTextStream *out)
     if (out) {
         m_output = out;
     } else {
-        m_output = new QTextStream(stdout, QIODevice::WriteOnly | QFile::Text);
+        m_output = new QTextStream(STDOUT_FILENO, QIODevice::WriteOnly | QFile::Text);
         deleteOutput = true;
     }
 
