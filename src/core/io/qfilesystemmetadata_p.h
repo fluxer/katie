@@ -57,7 +57,14 @@ class QFileSystemMetaData
 {
 public:
     QFileSystemMetaData()
-        : knownFlagsMask(0)
+        : knownFlagsMask(0),
+        entryFlags(0),
+        size_(0),
+        creationTime_(-1),
+        modificationTime_(-1),
+        accessTime_(-1),
+        userId_(-1),
+        groupId_(-1)
     {
     }
 
