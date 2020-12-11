@@ -1,0 +1,50 @@
+## Code style
+The best thing you can do is follow the code style used in the files you are
+changing or look for files in format same as those you are adding and use that
+code style.
+
+## Static data
+In many cases using immutable static data rather than generating at runtime and
+caching it is more optimal. If you want to add code that uses data tables use
+naming such as `MIBTbl` which makes it easy to look for and Python script for
+generating the data tables if possible. Check out the existing scripts
+(https://github.com/fluxer/katie/tree/master/scripts) for examples.
+
+## Compatibility
+Neither source nor binary compatibility is guratneed between releases which
+means hacks for binary compatibility and such are not required. If there is
+breaking change, the changes that need to be applied to other projects should
+be kept to minimum with backwards compatiblity where possible and usually noted
+at the main wiki page (https://github.com/fluxer/katie/wiki). Note your changes
+there if neccessary once it is accepted, ask for write access if you cannot
+edit pages on the wiki.
+
+## Standards
+All standard requirements besides C++11 compatible runtime and compiler are
+should be checked for during build if they are newer than POSIX.1c
+(https://en.wikipedia.org/wiki/POSIX). Read any documentation that may be
+relevant to the changes you make such as manual pages for Linux
+(https://linux.die.net/man/), FreeBSD (https://www.freebsd.org/cgi/man.cgi)
+and OpenBSD (https://man.openbsd.org/).
+
+## Tests
+You can import tests and adjust them as needed from stock Qt4 copy
+(https://github.com/fluxer/qt) if there are no tests in place relevant to the
+changes you do. Adding regression tests is optional.
+
+## Translations
+To contribute translations either use the web interface at
+https://www.transifex.com/smil3y/katie or the .pot files provided as base and
+submit them as pull request.
+
+## Licensing
+Unless you make additions you do not have to worry about that. Otherwise use
+as liberal as possible, preferably public domain (no license) or 3-clause BSD.
+The reason for that is simple - many vendors (distributions) and consumers will
+have strict requirements what they distribute and/or use. Debian for an example
+does not enable by default non-free software repository thus user interaction
+is required actions before non-free software can be installed.
+
+If you cannot contribute your changes with license that is less or equally
+permisive than those already in use (3-clause BSD, FDL v1.3 and LGPL v2.1+)
+than your contribution may not be acceptable.
