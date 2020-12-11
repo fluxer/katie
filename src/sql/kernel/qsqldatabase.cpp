@@ -82,10 +82,10 @@ class QSqlDatabasePrivate
 public:
     QSqlDatabasePrivate(QSqlDriver *dr = Q_NULLPTR):
         driver(dr),
-        port(-1)
+        port(-1),
+        ref(1),
+        precisionPolicy(QSql::LowPrecisionDouble)
     {
-        ref = 1;
-        precisionPolicy= QSql::LowPrecisionDouble;
     }
     QSqlDatabasePrivate(const QSqlDatabasePrivate &other);
     ~QSqlDatabasePrivate();
