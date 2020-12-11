@@ -59,23 +59,10 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, sqlloader,
 
 const char *QSqlDatabase::defaultConnection = "qt_sql_default_connection";
 
-class QConnectionDict: public QHash<QString, QSqlDatabase>
-{
-public:
-    inline bool contains_ts(const QString &key)
-    {
-        QReadLocker locker(&lock);
-        return contains(key);
-    }
-    inline QStringList keys_ts()
-    {
-        QReadLocker locker(&lock);
-        return keys();
-    }
 
-    QReadWriteLock lock;
-};
+typedef QHash<QString, QSqlDatabase> QConnectionDict;
 Q_GLOBAL_STATIC(QConnectionDict, dbDict)
+Q_GLOBAL_STATIC(QReadWriteLock, dbDictLock)
 
 class QSqlDatabasePrivate
 {
@@ -135,9 +122,9 @@ QSqlDatabasePrivate::~QSqlDatabasePrivate()
 
 void QSqlDatabasePrivate::cleanConnections()
 {
+    QWriteLocker locker(dbDictLock());
     QConnectionDict *dict = dbDict();
     Q_ASSERT(dict);
-    QWriteLocker locker(&dict->lock);
 
     QConnectionDict::iterator it = dict->begin();
     while (it != dict->end()) {
@@ -166,9 +153,9 @@ void QSqlDatabasePrivate::invalidateDb(const QSqlDatabase &db, const QString &na
 
 void QSqlDatabasePrivate::removeDatabase(const QString &name)
 {
+    QWriteLocker locker(dbDictLock());
     QConnectionDict *dict = dbDict();
     Q_ASSERT(dict);
-    QWriteLocker locker(&dict->lock);
 
     if (!dict->contains(name))
         return;
@@ -178,9 +165,9 @@ void QSqlDatabasePrivate::removeDatabase(const QString &name)
 
 void QSqlDatabasePrivate::addDatabase(const QSqlDatabase &db, const QString &name)
 {
+    QWriteLocker locker(dbDictLock());
     QConnectionDict *dict = dbDict();
     Q_ASSERT(dict);
-    QWriteLocker locker(&dict->lock);
 
     if (dict->contains(name)) {
         invalidateDb(dict->take(name), name);
@@ -195,12 +182,12 @@ void QSqlDatabasePrivate::addDatabase(const QSqlDatabase &db, const QString &nam
 */
 QSqlDatabase QSqlDatabasePrivate::database(const QString& name, bool open)
 {
+    QReadLocker locker(dbDictLock());
     QConnectionDict *dict = dbDict();
     Q_ASSERT(dict);
 
-    dict->lock.lockForRead();
     QSqlDatabase db = dict->value(name);
-    dict->lock.unlock();
+    locker.unlock();
     if (db.isValid() && !db.isOpen() && open) {
         if (!db.open())
             qWarning() << "QSqlDatabasePrivate::database: unable to open database:" << db.lastError().text();
@@ -443,7 +430,8 @@ QStringList QSqlDatabase::drivers()
 
 bool QSqlDatabase::contains(const QString& connectionName)
 {
-    return dbDict()->contains_ts(connectionName);
+    QReadLocker locker(dbDictLock());
+    return dbDict()->contains(connectionName);
 }
 
 /*!
@@ -455,7 +443,8 @@ bool QSqlDatabase::contains(const QString& connectionName)
 */
 QStringList QSqlDatabase::connectionNames()
 {
-    return dbDict()->keys_ts();
+    QReadLocker locker(dbDictLock());
+    return dbDict()->keys();
 }
 
 /*!
