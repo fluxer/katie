@@ -42,6 +42,7 @@ class QTextBoundaryFinderPrivate
 public:
     QTextBoundaryFinderPrivate();
     QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other);
+    ~QTextBoundaryFinderPrivate();
 
     QTextBoundaryFinder::BoundaryType type;
     int pos;
@@ -93,6 +94,13 @@ QTextBoundaryFinderPrivate& QTextBoundaryFinderPrivate::operator=(const QTextBou
         breakiter = Q_NULLPTR;
     }
     return *this;
+}
+
+QTextBoundaryFinderPrivate::~QTextBoundaryFinderPrivate()
+{
+    if (breakiter) {
+        ubrk_close(breakiter);
+    }
 }
 
 /*! 
@@ -183,9 +191,6 @@ QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &o
 */
 QTextBoundaryFinder::~QTextBoundaryFinder()
 {
-    if (d->breakiter) {
-        ubrk_close(d->breakiter);
-    }
     delete d;
 }
 
