@@ -78,7 +78,7 @@ QFSFileEnginePrivate::QFSFileEnginePrivate() : QAbstractFileEnginePrivate()
 void QFSFileEnginePrivate::init()
 {
     is_sequential = 0;
-    tried_stat = false;
+    metaData.clear();
     openMode = QIODevice::NotOpen;
     fd = -1;
     closeFileHandle = false;
@@ -159,7 +159,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
         openMode |= QFile::Truncate;
 
     d->openMode = openMode;
-    d->tried_stat = false;
+    d->metaData.clear();
     d->fd = -1;
 
 #ifdef QT_LARGEFILE_SUPPORT
@@ -266,7 +266,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::FileHandle
     d->closeFileHandle = (handleFlags & QFile::AutoCloseHandle);
     d->fileEntry.clear();
     d->fd = fd;
-    d->tried_stat = false;
+    d->metaData.clear();
 
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
@@ -301,8 +301,7 @@ bool QFSFileEngine::close()
         return false;
 
     bool closed = true;
-    d->tried_stat = false;
-
+    d->metaData.clear();
 
     // Close the file if we created the handle.
     if (d->closeFileHandle) {
@@ -342,7 +341,6 @@ qint64 QFSFileEngine::size() const
 {
     Q_D(const QFSFileEngine);
 
-    d->tried_stat = false;
     d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
     if (!d->doStat(QFileSystemMetaData::SizeAttribute))
         return 0;

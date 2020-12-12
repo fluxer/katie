@@ -140,9 +140,7 @@ QString QFSFileEngine::tempPath()
 
 bool QFSFileEnginePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) const
 {
-    if (!tried_stat || !metaData.hasFlags(flags)) {
-        tried_stat = true;
-
+    if (!metaData.hasFlags(flags)) {
         if (fd != -1)
             QFileSystemEngine::fillMetaData(fd, metaData);
 

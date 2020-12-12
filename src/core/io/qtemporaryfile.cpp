@@ -187,7 +187,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
     filePathIsTemplate = false;
 
     d->openMode = openMode;
-    d->tried_stat = false;
+    d->metaData.clear();
 
     return true;
 }
