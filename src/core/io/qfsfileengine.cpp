@@ -193,6 +193,8 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
         return false;
     }
 
+    d->closeFileHandle = true;
+
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
         int ret;
@@ -207,7 +209,6 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
         }
     }
 
-    d->closeFileHandle = true;
     return true;
 }
 
