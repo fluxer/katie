@@ -300,7 +300,6 @@ bool QFSFileEngine::close()
     if (d->fd == -1)
         return false;
 
-    bool closed = true;
     d->metaData.clear();
 
     // Close the file if we created the handle.
@@ -313,13 +312,12 @@ bool QFSFileEngine::close()
         // We must reset these guys regardless; calling close again after a
         // failed close causes crashes on some systems.
         d->fd = -1;
-        closed = (ret == 0);
-    }
 
-    // Report errors.
-    if (!closed) {
-        setError(QFile::UnspecifiedError, qt_error_string(errno));
-        return false;
+        // Report errors.
+        if (ret != 0) {
+            setError(QFile::UnspecifiedError, qt_error_string(errno));
+            return false;
+        }
     }
 
     return true;
