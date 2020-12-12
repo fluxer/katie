@@ -71,7 +71,7 @@ void RCCResourceLibrary::writeByteArray(const QByteArray &other)
 
 static inline QString msgOpenReadFailed(const QString &fname, const QString &why)
 {
-    return QString::fromUtf8("Unable to open %1 for reading: %2\n").arg(fname).arg(why);
+    return QString::fromLatin1("Unable to open %1 for reading: %2\n").arg(fname).arg(why);
 }
 
 
@@ -358,7 +358,7 @@ bool RCCResourceLibrary::interpretResourceFile(QIODevice *inputDevice,
         if (!document.setContent(inputDevice, &errorMsg, &errorLine, &errorColumn)) {
             if (ignoreErrors)
                 return true;
-            const QString msg = QString::fromUtf8("RCC Parse Error: '%1' Line: %2 Column: %3 [%4]\n").arg(fname).arg(errorLine).arg(errorColumn).arg(errorMsg);
+            const QString msg = QString::fromLatin1("RCC Parse Error: '%1' Line: %2 Column: %3 [%4]\n").arg(fname).arg(errorLine).arg(errorColumn).arg(errorMsg);
             m_errorDevice->write(msg.toUtf8());
             return false;
         }
@@ -400,7 +400,7 @@ bool RCCResourceLibrary::interpretResourceFile(QIODevice *inputDevice,
 
                         QString fileName(res.firstChild().toText().data());
                         if (fileName.isEmpty()) {
-                            const QString msg = QString::fromUtf8("RCC: Warning: Null node in XML of '%1'\n").arg(fname);
+                            const QString msg = QString::fromLatin1("RCC: Warning: Null node in XML of '%1'\n").arg(fname);
                             m_errorDevice->write(msg.toUtf8());
                         }
                         QString alias;
@@ -431,7 +431,7 @@ bool RCCResourceLibrary::interpretResourceFile(QIODevice *inputDevice,
                         QFileInfo file(absFileName);
                         if (!file.exists()) {
                             m_failedResources.push_back(absFileName);
-                            const QString msg = QString::fromUtf8("RCC: Error in '%1': Cannot find file '%2'\n").arg(fname).arg(fileName);
+                            const QString msg = QString::fromLatin1("RCC: Error in '%1': Cannot find file '%2'\n").arg(fname).arg(fileName);
                             m_errorDevice->write(msg.toUtf8());
                             if (ignoreErrors)
                                 continue;
@@ -488,7 +488,7 @@ bool RCCResourceLibrary::interpretResourceFile(QIODevice *inputDevice,
         }
     }
     if (m_root == 0) {
-        const QString msg = QString::fromUtf8("RCC: Warning: No resources in '%1'.\n").arg(fname);
+        const QString msg = QString::fromLatin1("RCC: Warning: No resources in '%1'.\n").arg(fname);
         m_errorDevice->write(msg.toUtf8());
         if (!ignoreErrors && m_format == Binary) {
             // create dummy entry, otherwise loading qith QResource will crash
@@ -504,7 +504,7 @@ bool RCCResourceLibrary::addFile(const QString &alias, const RCCFileInfo &file)
 {
     Q_ASSERT(m_errorDevice);
     if (file.m_fileInfo.size() > 0xffffffff) {
-        const QString msg = QString::fromUtf8("File too big: %1\n").arg(file.m_fileInfo.absoluteFilePath());
+        const QString msg = QString::fromLatin1("File too big: %1\n").arg(file.m_fileInfo.absoluteFilePath());
         m_errorDevice->write(msg.toUtf8());
         return false;
     }
@@ -556,7 +556,7 @@ bool RCCResourceLibrary::readFiles(bool ignoreErrors, QIODevice &errorDevice)
     m_errorDevice = &errorDevice;
     //read in data
     if (m_verbose) {
-        const QString msg = QString::fromUtf8("Processing %1 files [%2]\n")
+        const QString msg = QString::fromLatin1("Processing %1 files [%2]\n")
             .arg(m_fileNames.size()).arg(static_cast<int>(ignoreErrors));
         m_errorDevice->write(msg.toUtf8());
     }
@@ -581,7 +581,7 @@ bool RCCResourceLibrary::readFiles(bool ignoreErrors, QIODevice &errorDevice)
             }
         }
         if (m_verbose) {
-            const QString msg = QString::fromUtf8("Interpreting %1\n").arg(fname);
+            const QString msg = QString::fromLatin1("Interpreting %1\n").arg(fname);
             m_errorDevice->write(msg.toUtf8());
         }
 
