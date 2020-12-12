@@ -197,7 +197,7 @@ struct qt_auto_repeat_data
     ulong serial;
     // anything else is guesswork, X11 events queue may be shuffled
     Window window;
-    KeyCode keycode;
+    unsigned int keycode;
     Time time;
 };
 
