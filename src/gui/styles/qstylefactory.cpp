@@ -106,8 +106,8 @@ QStyle *QStyleFactory::create(const QString& key)
     if (QStyleFactoryInterface *factory = qobject_cast<QStyleFactoryInterface*>(stylesloader()->instance(key))) {
         QStyle *ret = factory->create(key);
         if (ret) {
-            QString retObjName = ret->objectName();
-            if (retObjName.isEmpty()) {
+            // QApplicationPrivate::x11_apply_settings() relies on object name
+            if (ret->objectName().isEmpty()) {
                 ret->setObjectName(key);
             }
             return ret;
