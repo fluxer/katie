@@ -43,7 +43,7 @@ as liberal as possible, preferably public domain (no license) or 3-clause BSD.
 The reason for that is simple - many vendors (distributions) and consumers will
 have strict requirements what they distribute and/or use. Debian for an example
 does not enable by default non-free software repository thus user interaction
-is required actions before non-free software can be installed.
+is required before non-free software can be installed.
 
 If you cannot contribute your changes with license that is more or equally
 permisive than those already in use (3-clause BSD, FDL v1.3 and LGPL v2.1+)
