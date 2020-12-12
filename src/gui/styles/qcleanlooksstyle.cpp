@@ -573,7 +573,7 @@ static void qt_cleanlooks_draw_mdibutton(QPainter *painter, const QStyleOptionTi
 */
 QCleanlooksStyle::QCleanlooksStyle() : QWindowsStyle(*new QCleanlooksStylePrivate)
 {
-    setObjectName(QLatin1String("CleanLooks"));
+    setObjectName(QLatin1String("Cleanlooks"));
 }
 
 /*!
@@ -583,6 +583,7 @@ QCleanlooksStyle::QCleanlooksStyle() : QWindowsStyle(*new QCleanlooksStylePrivat
 */
 QCleanlooksStyle::QCleanlooksStyle(QCleanlooksStylePrivate &dd) : QWindowsStyle(dd)
 {
+    setObjectName(QLatin1String("Cleanlooks"));
 }
 
 /*!

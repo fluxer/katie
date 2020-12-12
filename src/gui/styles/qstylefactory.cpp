@@ -86,38 +86,35 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, stylesloader,
 */
 QStyle *QStyleFactory::create(const QString& key)
 {
-    QStyle *ret = Q_NULLPTR;
-    QString style = key.toLower();
 #ifndef QT_NO_STYLE_WINDOWS
-    if (style == QLatin1String("windows"))
-        ret = new QWindowsStyle;
-    else
+    if (key.compare(QLatin1String("Windows"), Qt::CaseInsensitive) == 0)
+        return new QWindowsStyle();
 #endif
 #ifndef QT_NO_STYLE_MOTIF
-    if (style == QLatin1String("motif"))
-        ret = new QMotifStyle;
-    else
+    if (key.compare(QLatin1String("Motif"), Qt::CaseInsensitive) == 0)
+        return new QMotifStyle();
 #endif
 #ifndef QT_NO_STYLE_PLASTIQUE
-    if (style == QLatin1String("plastique"))
-        ret = new QPlastiqueStyle;
-    else
+    if (key.compare(QLatin1String("Plastique"), Qt::CaseInsensitive) == 0)
+        return new QPlastiqueStyle();
 #endif
 #ifndef QT_NO_STYLE_CLEANLOOKS
-    if (style == QLatin1String("cleanlooks"))
-        ret = new QCleanlooksStyle;
-    else
+    if (key.compare(QLatin1String("Cleanlooks"), Qt::CaseInsensitive) == 0)
+        return new QCleanlooksStyle();
 #endif
-    { } // Keep these here - they make the #ifdefery above work
 #if !defined(QT_NO_LIBRARY)
-    if(!ret) {
-        if (QStyleFactoryInterface *factory = qobject_cast<QStyleFactoryInterface*>(stylesloader()->instance(style)))
-            ret = factory->create(style);
+    if (QStyleFactoryInterface *factory = qobject_cast<QStyleFactoryInterface*>(stylesloader()->instance(key))) {
+        QStyle *ret = factory->create(key);
+        if (ret) {
+            QString retObjName = ret->objectName();
+            if (retObjName.isEmpty()) {
+                ret->setObjectName(key);
+            }
+            return ret;
+        }
     }
 #endif
-    if(ret)
-        ret->setObjectName(style);
-    return ret;
+    return Q_NULLPTR;
 }
 
 /*!

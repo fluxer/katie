@@ -665,7 +665,7 @@ bool QApplicationPrivate::x11_apply_settings()
         if (!stylename.isEmpty() && QApplicationPrivate::styleOverride.isNull())
             QApplicationPrivate::styleOverride = stylename;
     } else {
-        if (QApplication::style()->objectName() != stylename) {
+        if (stylename.compare(QApplication::style()->objectName(), Qt::CaseInsensitive) != 0) {
             QApplication::setStyle(stylename);
         }
     }

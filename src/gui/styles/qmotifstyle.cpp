@@ -111,21 +111,23 @@ static const int motifCheckMarkSpace    = 16;
   text color.
 */
 QMotifStyle::QMotifStyle(bool useHighlightCols)
-    : QCommonStyle(*new QMotifStylePrivate)
+    : QCommonStyle(*new QMotifStylePrivate),
+    focus(0),
+    highlightCols(useHighlightCols)
 {
-    focus = 0;
-    highlightCols = useHighlightCols;
+    setObjectName(QLatin1String("Motif"));
 }
 
 
 /*!
     \internal
 */
-QMotifStyle::QMotifStyle(QMotifStylePrivate &dd, bool useHighlightColors)
-    : QCommonStyle(dd)
+QMotifStyle::QMotifStyle(QMotifStylePrivate &dd, bool useHighlightCols)
+    : QCommonStyle(dd),
+    focus(0),
+    highlightCols(useHighlightCols)
 {
-    focus = 0;
-    highlightCols = useHighlightColors;
+    setObjectName(QLatin1String("Motif"));
 }
 
 
