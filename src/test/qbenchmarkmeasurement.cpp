@@ -38,6 +38,10 @@
 #include "qmath.h"
 #include "qdebug.h"
 
+#ifdef QT_HAVE_CLOCK_GETTIME
+#  include <time.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 // QBenchmarkTimeMeasurer implementation
