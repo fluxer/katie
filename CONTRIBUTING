@@ -24,8 +24,8 @@ All standard requirements besides C++11 compatible runtime and compiler
 should be checked for during build if they are newer than POSIX.1c
 (https://en.wikipedia.org/wiki/POSIX). Read any documentation that may be
 relevant to the changes you make such as manual pages for Linux
-(https://linux.die.net/man/), FreeBSD (https://www.freebsd.org/cgi/man.cgi)
-and OpenBSD (https://man.openbsd.org/).
+(https://linux.die.net/man/), FreeBSD (https://www.freebsd.org/cgi/man.cgi),
+OpenBSD (https://man.openbsd.org/) and Solaris (https://docs.oracle.com/en/).
 
 ## Tests
 You can import tests and adjust them as needed from stock Qt4 copy
