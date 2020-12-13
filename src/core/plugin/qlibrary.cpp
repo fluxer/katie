@@ -178,9 +178,7 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
         filedata = data.constData();
     }
 
-    /*
-       ELF binaries build with GNU or Clang have .ktplugin sections.
-    */
+    // ELF binaries build with GNU or Clang have .ktplugin section
     bool ret = false;
     QT_ELF_EHDR_TYPE *ehdr = (QT_ELF_EHDR_TYPE*)(filedata);
     QT_ELF_SHDR_TYPE *shdr = (QT_ELF_SHDR_TYPE*)(filedata + ehdr->e_shoff);
@@ -192,11 +190,10 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
         const char* sectioname = sh_strtab_p + shdr[i].sh_name;
         if (qstrcmp(sectioname, ".ktplugin") == 0) {
             ret = true;
+            // compatiblity between releases is not guratneed thus no version matching is done
+            *version = QT_VERSION;
+            break;
         }
-        /*
-            compatiblity between releases is not guratneed thus no version matching is done
-        */
-        *version = QT_VERSION;
     }
 
 
