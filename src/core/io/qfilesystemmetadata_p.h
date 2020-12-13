@@ -60,11 +60,11 @@ public:
         : knownFlagsMask(0),
         entryFlags(0),
         size_(0),
-        creationTime_(-1),
-        modificationTime_(-1),
-        accessTime_(-1),
-        userId_(-1),
-        groupId_(-1)
+        creationTime_(0),
+        modificationTime_(0),
+        accessTime_(0),
+        userId_(-2),
+        groupId_(-2)
     {
     }
 
