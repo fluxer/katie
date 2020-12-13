@@ -733,6 +733,7 @@ QXmlStreamReaderPrivate::QXmlStreamReaderPrivate()
 #ifndef QT_NO_TEXTCODEC
     decoder = Q_NULLPTR;
 #endif
+    entityParser = Q_NULLPTR;
     stack_size = 64;
     sym_stack = Q_NULLPTR;
     state_stack = Q_NULLPTR;
@@ -778,6 +779,7 @@ void QXmlStreamReaderPrivate::init()
 #endif
     attributeStack.clear();
     attributeStack.reserve(16);
+    delete entityParser;
     entityParser = Q_NULLPTR;
     hasCheckedStartDocument = false;
     normalizeLiterals = false;
