@@ -212,12 +212,6 @@ QWindowsStyle::QWindowsStyle(QWindowsStylePrivate &dd) : QCommonStyle(dd)
     setObjectName(QLatin1String("Windows"));
 }
 
-
-/*! Destroys the QWindowsStyle object. */
-QWindowsStyle::~QWindowsStyle()
-{
-}
-
 /*! \reimp */
 void QWindowsStyle::polish(QApplication *app)
 {

@@ -50,7 +50,6 @@ class Q_GUI_EXPORT QWindowsStyle : public QCommonStyle
     Q_OBJECT
 public:
     QWindowsStyle();
-    ~QWindowsStyle();
 
     void polish(QApplication*);
     void unpolish(QApplication*);

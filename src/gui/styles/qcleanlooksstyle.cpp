@@ -587,13 +587,6 @@ QCleanlooksStyle::QCleanlooksStyle(QCleanlooksStylePrivate &dd) : QWindowsStyle(
 }
 
 /*!
-    Destroys the QCleanlooksStyle object.
-*/
-QCleanlooksStyle::~QCleanlooksStyle()
-{
-}
-
-/*!
     \fn void QCleanlooksStyle::drawItemText(QPainter *painter, const QRect &rectangle, int alignment, const QPalette &palette,
                                     bool enabled, const QString& text, QPalette::ColorRole textRole) const
 

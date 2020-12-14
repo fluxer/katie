@@ -1015,13 +1015,6 @@ QPlastiqueStyle::QPlastiqueStyle()
     setObjectName(QLatin1String("Plastique"));
 }
 
-/*!
-    Destructs the QPlastiqueStyle object.
-*/
-QPlastiqueStyle::~QPlastiqueStyle()
-{
-}
-
 /*
     Used by spin- and combo box.
     Draws a rounded frame around rect but omits the right hand edge

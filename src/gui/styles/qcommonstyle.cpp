@@ -110,13 +110,6 @@ QCommonStyle::QCommonStyle(QCommonStylePrivate &dd)
 { }
 
 /*!
-    Destroys the style.
-*/
-QCommonStyle::~QCommonStyle()
-{ }
-
-
-/*!
     \reimp
 */
 void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p,
