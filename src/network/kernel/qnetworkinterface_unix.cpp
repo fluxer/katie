@@ -185,6 +185,7 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
     iface->index = ifindex;
     interfaces << iface;
 
+#ifdef SIOCGIFNAME // not defined on Solaris
     // Get the canonical name
     QByteArray oldName = req.ifr_name;
     if (::ioctl(socket, SIOCGIFNAME, &req) >= 0) {
@@ -193,6 +194,7 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
         // reset the name:
         ::memcpy(req.ifr_name, oldName, qMin<int>(oldName.length() + 1, sizeof(req.ifr_name) - 1));
     } else
+#endif
     {
         // use this name anyways
         iface->name = QString::fromLatin1(req.ifr_name);
