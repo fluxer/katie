@@ -175,7 +175,7 @@ bool QMotifStyle::eventFilter(QObject *o, QEvent *e)
         break;
     }
 #endif // QT_NO_PROGRESSBAR
-    return QStyle::eventFilter(o, e);
+    return QCommonStyle::eventFilter(o, e);
 }
 
 /*!
@@ -194,7 +194,7 @@ void QMotifStyle::timerEvent(QTimerEvent *event)
         }
     }
 #endif // QT_NO_PROGRESSBAR
-    event->ignore();
+    QCommonStyle::timerEvent(event);
 }
 
 
@@ -268,7 +268,7 @@ void QMotifStyle::polish(QPalette& pal)
 */
 void QMotifStyle::polish(QWidget* widget)
 {
-    QStyle::polish(widget);
+    QCommonStyle::polish(widget);
 #ifndef QT_NO_PROGRESSBAR
     if (qobject_cast<QProgressBar *>(widget))
         widget->installEventFilter(this);
@@ -1564,7 +1564,7 @@ void QMotifStyle::drawComplexControl(ComplexControl cc, const QStyleOptionComple
                 tr.adjust(fw, fw, -fw, -fw);
                 get_combo_parameters(tr, ew, awh, ax, ay, sh, dh, sy);
 
-                QRect ar = QStyle::visualRect(opt->direction, opt->rect, QRect(ax,ay,awh,awh));
+                QRect ar = QCommonStyle::visualRect(opt->direction, opt->rect, QRect(ax,ay,awh,awh));
 
                 QStyleOption arrowOpt = *opt;
                 arrowOpt.rect = ar;
@@ -1888,9 +1888,10 @@ QMotifStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt,
         break;
 
     case CT_MenuBarItem: {
-        if(!sz.isEmpty())
+        if (!sz.isEmpty())
             sz += QSize(5*motifItemHMargin+1, 2*motifItemVMargin + motifItemFrame);
-        break; }
+        break;
+    }
 
     case CT_MenuItem:
         if (const QStyleOptionMenuItem *mi = qstyleoption_cast<const QStyleOptionMenuItem *>(opt)) {
@@ -2291,7 +2292,7 @@ bool QMotifStyle::event(QEvent *e)
         if(focus)
             focus->setWidget(0);
     }
-    return  QCommonStyle::event(e);
+    return QCommonStyle::event(e);
 }
 
 
