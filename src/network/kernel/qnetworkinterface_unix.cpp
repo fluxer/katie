@@ -225,7 +225,7 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
     foreach (const QByteArray &it, interfaceNames(socket)) {
         struct ifreq req;
         ::memset(&req, 0, sizeof(ifreq));
-        ::memcpy(req.ifr_name, *it, qMin<int>(it->length() + 1, sizeof(req.ifr_name) - 1));
+        ::memcpy(req.ifr_name, it.constData(), qMin<int>(it.length() + 1, sizeof(req.ifr_name) - 1));
 
         QNetworkInterfacePrivate *iface = findInterface(socket, interfaces, req);
 
