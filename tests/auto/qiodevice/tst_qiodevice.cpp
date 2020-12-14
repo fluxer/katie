@@ -113,9 +113,11 @@ void tst_QIODevice::constructing_QTcpSocket()
 
     QVERIFY(!device->isOpen());
 
+    QEXPECT_FAIL("", "Host may close connection or resolve address to unreachable", Abort);
     socket.connectToHost(QtNetworkSettings::serverName(), 80);
     QVERIFY(socket.waitForConnected(30000));
     QVERIFY(device->isOpen());
+    socket.setSocketOption(QAbstractSocket::KeepAliveOption, true);
 
     while (!device->canReadLine())
         QVERIFY(device->waitForReadyRead(30000));
@@ -130,6 +132,7 @@ void tst_QIODevice::constructing_QTcpSocket()
     socket.connectToHost(QtNetworkSettings::serverName(), 80);
     QVERIFY(socket.waitForConnected(30000));
     QVERIFY(device->isOpen());
+    socket.setSocketOption(QAbstractSocket::KeepAliveOption, true);
 
     while (!device->canReadLine())
         QVERIFY(device->waitForReadyRead(30000));
@@ -265,7 +268,10 @@ void tst_QIODevice::unget()
             result = QByteArray("ZXCV");
             lineResult = "ZXCV";
         } else {
+            QEXPECT_FAIL("", "Host may close connection or resolve address to unreachable", Abort);
             socket.connectToHost(QtNetworkSettings::serverName(), 80);
+            QVERIFY(socket.waitForConnected(30000));
+            socket.setSocketOption(QAbstractSocket::KeepAliveOption, true);
             socket.write("GET / HTTP/1.0\r\n\r\n");
             QVERIFY(socket.waitForReadyRead());
             dev = &socket;
