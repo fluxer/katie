@@ -225,7 +225,7 @@ void tst_QThreadPool::waitcomplete()
     QCOMPARE(testFunctionCount, runs);
 }
 
-volatile bool ran;
+QAtomicInt ran = QAtomicInt(false); // bool
 class TestTask : public QRunnable
 {
 public:
@@ -256,14 +256,14 @@ void tst_QThreadPool::singleton()
         QTest::qSleep(100); // no busy loop - this doesn't work with FIFO schedulers
 }
 
-int *value = 0;
+QAtomicInt *value = 0;
 class IntAccessor : public QRunnable
 {
 public:
     void run()
     {
         for (int i = 0; i < 100; ++i) {
-            ++(*value);
+            value->ref();
             QTest::qSleep(1);
         }
     }
@@ -275,13 +275,12 @@ public:
 */
 void tst_QThreadPool::destruction()
 {
-    value = new int;
+    value = new QAtomicInt(0);
     QThreadPool *threadManager = new QThreadPool();
     threadManager->start(new IntAccessor());
     threadManager->start(new IntAccessor());
     delete threadManager;
     delete value;
-    value = 0;
 }
 
 QSemaphore threadRecyclingSemaphore;
@@ -784,8 +783,8 @@ void tst_QThreadPool::tryStart()
 }
 
 QMutex mutex;
-int activeThreads = 0;
-int peakActiveThreads = 0;
+QAtomicInt activeThreads = QAtomicInt(0);
+QAtomicInt peakActiveThreads = QAtomicInt(0);
 void tst_QThreadPool::tryStartPeakThreadCount()
 {
     class CounterTask : public QRunnable
@@ -797,14 +796,14 @@ void tst_QThreadPool::tryStartPeakThreadCount()
         {
             {
                 QMutexLocker lock(&mutex);
-                ++activeThreads;
+                activeThreads.ref();
                 peakActiveThreads = qMax(peakActiveThreads, activeThreads);
             }
 
             QTest::qWait(100);
             {
                 QMutexLocker lock(&mutex);
-                --activeThreads;
+                activeThreads.deref();
             }
         }
     };
@@ -816,13 +815,13 @@ void tst_QThreadPool::tryStartPeakThreadCount()
         if (threadPool.tryStart(&task) == false)
             QTest::qWait(10);
     }
-    QCOMPARE(peakActiveThreads, QThread::idealThreadCount());
+    QCOMPARE(peakActiveThreads.load(), QThread::idealThreadCount());
 
     for (int i = 0; i < 20; ++i) {
         if (threadPool.tryStart(&task) == false)
             QTest::qWait(10);
     }
-    QCOMPARE(peakActiveThreads, QThread::idealThreadCount());
+    QCOMPARE(peakActiveThreads.load(), QThread::idealThreadCount());
 }
 
 void tst_QThreadPool::tryStartCount()
