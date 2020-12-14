@@ -284,9 +284,9 @@ void tst_QHostInfo::reverseLookup_data()
 
     QTest::newRow("gitorious.org") << QString("87.238.52.168") << QStringList(QString("gitorious.org")) << 0;
     if (!ipv6Available)
-        QTest::newRow("bogus-name") << QString("1.2.3.4") << QStringList() << 1;
+        QTest::newRow("bogus-name") << QString("1.2..4") << QStringList() << 1;
     else
-        QTest::newRow("bogus-name") << QString("1::2::3::4") << QStringList() << 1;
+        QTest::newRow("bogus-name") << QString("1::2::::4") << QStringList() << 1;
 }
 
 void tst_QHostInfo::reverseLookup()
