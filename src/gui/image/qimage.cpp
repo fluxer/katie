@@ -658,8 +658,7 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
         || INT_MAX/uint(bpl) < uint(height))
         return Q_NULLPTR;                                        // invalid parameter(s)
 
-    QImageData *d = new QImageData;
-    d->ref.ref();
+    QScopedPointer<QImageData> d(new QImageData);
 
     d->own_data = false;
     d->ro_data = readOnly;
@@ -672,7 +671,8 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
     d->bytes_per_line = bpl;
     d->nbytes = d->bytes_per_line * height;
 
-    return d;
+    d->ref.ref();
+    return d.take();
 }
 
 /*!
