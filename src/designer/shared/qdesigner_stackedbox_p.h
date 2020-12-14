@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_STACKEDBOX_H
 #define QDESIGNER_STACKEDBOX_H
 
-#include "shared_global_p.h"
 #include "qdesigner_propertysheet_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -63,7 +62,7 @@ namespace qdesigner_internal {
 // Event filter to be installed on a QStackedWidget in preview mode.
 // Create two buttons to switch pages.
 
-class QDESIGNER_SHARED_EXPORT QStackedWidgetPreviewEventFilter : public QObject
+class Q_DESIGNER_EXPORT QStackedWidgetPreviewEventFilter : public QObject
 {
     Q_OBJECT
 public:
@@ -97,7 +96,7 @@ private:
 // Event filter to be installed on a QStackedWidget in editing mode.
 //  In addition to the browse buttons, handles context menu and everything
 
-class QDESIGNER_SHARED_EXPORT QStackedWidgetEventFilter : public QStackedWidgetPreviewEventFilter
+class Q_DESIGNER_EXPORT QStackedWidgetEventFilter : public QStackedWidgetPreviewEventFilter
 {
     Q_OBJECT
 public:
@@ -132,7 +131,7 @@ private:
 };
 
 // PropertySheet to handle the "currentPageName" property
-class QDESIGNER_SHARED_EXPORT QStackedWidgetPropertySheet : public QDesignerPropertySheet {
+class Q_DESIGNER_EXPORT QStackedWidgetPropertySheet : public QDesignerPropertySheet {
 public:
     explicit QStackedWidgetPropertySheet(QStackedWidget *object, QObject *parent = Q_NULLPTR);
 

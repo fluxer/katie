@@ -39,9 +39,7 @@
 #include <qbasictimer.h>
 #include <qthread.h>
 
-#if defined Q_OS_UNIX
 #include <unistd.h>
-#endif
 
 #include "../../shared/util.h"
 
@@ -430,7 +428,6 @@ public:
 
         m_timer.stop();
 
-        QTime now = QTime::currentTime();
         int elapsed = m_startedTime.elapsed();
 
         if (elapsed < m_interval / 2) {

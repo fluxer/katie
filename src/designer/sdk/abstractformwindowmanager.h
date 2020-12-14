@@ -34,7 +34,6 @@
 #ifndef ABSTRACTFORMWINDOWMANAGER_H
 #define ABSTRACTFORMWINDOWMANAGER_H
 
-#include <QtDesigner/sdk_global.h>
 #include <QtDesigner/abstractformwindow.h>
 
 #include <QtCore/QObject>
@@ -50,7 +49,7 @@ class DomUI;
 class QWidget;
 class QDesignerDnDItemInterface;
 
-class QDESIGNER_SDK_EXPORT QDesignerFormWindowManagerInterface: public QObject
+class Q_DESIGNER_EXPORT QDesignerFormWindowManagerInterface: public QObject
 {
     Q_OBJECT
 public:

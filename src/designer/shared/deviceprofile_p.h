@@ -45,8 +45,6 @@
 #ifndef DEVICEPROFILE_H
 #define DEVICEPROFILE_H
 
-#include "shared_global_p.h"
-
 #include <QtCore/QString>
 #include <QtCore/qshareddata.h>
 
@@ -65,7 +63,7 @@ class DeviceProfileData;
  * style of the form. This class represents a device
  * profile. */
 
-class QDESIGNER_SHARED_EXPORT DeviceProfile {
+class Q_DESIGNER_EXPORT DeviceProfile {
 public:
     DeviceProfile();
 

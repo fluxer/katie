@@ -45,8 +45,6 @@
 #ifndef FILTERWIDGET_H
 #define FILTERWIDGET_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QWidget>
 #include <QtGui/QLineEdit>
 #include <QtGui/QColor>
@@ -67,7 +65,7 @@ namespace qdesigner_internal {
 
 #define ICONBUTTON_SIZE 16
 
-class QDESIGNER_SHARED_EXPORT HintLineEdit : public QLineEdit {
+class Q_DESIGNER_EXPORT HintLineEdit : public QLineEdit {
     Q_OBJECT
 public:
     explicit HintLineEdit(QWidget *parent = Q_NULLPTR);
@@ -103,7 +101,7 @@ private:
 
 // FilterWidget: For filtering item views, with reset button Uses HintLineEdit.
 
-class  QDESIGNER_SHARED_EXPORT FilterWidget : public QWidget
+class  Q_DESIGNER_EXPORT FilterWidget : public QWidget
 {
     Q_OBJECT
 public:

@@ -1688,26 +1688,8 @@ void QODBCResult::setForwardOnly(bool forward)
 
 
 QODBCDriver::QODBCDriver(QObject *parent)
-    : QSqlDriver(parent)
+    : QSqlDriver(parent), d(new QODBCDriverPrivate())
 {
-    init();
-}
-
-QODBCDriver::QODBCDriver(SQLHANDLE env, SQLHANDLE con, QObject * parent)
-    : QSqlDriver(parent)
-{
-    init();
-    d->hEnv = env;
-    d->hDbc = con;
-    if (env && con) {
-        setOpen(true);
-        setOpenError(false);
-    }
-}
-
-void QODBCDriver::init()
-{
-    d = new QODBCDriverPrivate();
 }
 
 QODBCDriver::~QODBCDriver()

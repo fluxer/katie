@@ -42,7 +42,7 @@
 #include <sched.h>
 #include <errno.h>
 
-#if defined(Q_OS_LINUX) && !defined(QT_LINUXBASE)
+#if defined(QT_HAVE_PRCTL)
 #include <sys/prctl.h>
 #endif
 
@@ -111,23 +111,12 @@ static void destroy_current_thread_data_key()
 Q_DESTRUCTOR_FUNCTION(destroy_current_thread_data_key)
 
 
-// Utility functions for setting and clearing thread specific data.
+// Utility function for setting thread specific data.
 static void set_thread_data(QThreadData *data)
 {
     currentThreadData = data;
     pthread_once(&current_thread_data_once, create_current_thread_data_key);
     pthread_setspecific(current_thread_data_key, data);
-}
-
-static void clear_thread_data()
-{
-    currentThreadData = Q_NULLPTR;
-    pthread_setspecific(current_thread_data_key, Q_NULLPTR);
-}
-
-void QThreadData::clearCurrentThreadData()
-{
-    clear_thread_data();
 }
 
 QThreadData *QThreadData::current()
@@ -139,7 +128,8 @@ QThreadData *QThreadData::current()
             set_thread_data(data);
             data->thread = new QAdoptedThread(data);
         } QT_CATCH(...) {
-            clear_thread_data();
+            currentThreadData = Q_NULLPTR;
+            pthread_setspecific(current_thread_data_key, Q_NULLPTR);
             data->deref();
             data = Q_NULLPTR;
             QT_RETHROW;
@@ -148,8 +138,6 @@ QThreadData *QThreadData::current()
 
         data->isAdopted = true;
         data->threadId = (Qt::HANDLE)pthread_self();
-        if (!QCoreApplicationPrivate::theMainThread)
-            QCoreApplicationPrivate::theMainThread = data->thread;
     }
     return data;
 }
@@ -176,16 +164,6 @@ void QThreadPrivate::createEventDispatcher(QThreadData *data)
 }
 
 #ifndef QT_NO_THREAD
-
-#if defined(Q_OS_LINUX)
-static inline void setCurrentThreadName(const char *name)
-{
-#if defined(Q_OS_LINUX) && !defined(QT_LINUXBASE)
-    prctl(PR_SET_NAME, (unsigned long)name, 0, 0, 0);
-#endif
-}
-#endif
-
 void *QThreadPrivate::start(void *arg)
 {
     pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, Q_NULLPTR);
@@ -211,14 +189,19 @@ void *QThreadPrivate::start(void *arg)
     // ### TODO: allow the user to create a custom event dispatcher
     createEventDispatcher(data);
 
-#if defined(Q_OS_LINUX)
+#if defined(QT_HAVE_PRCTL) || defined(QT_HAVE_PTHREAD_SETNAME_NP)
     // sets the name of the current thread.
     QString objectName = thr->objectName();
 
     if (Q_LIKELY(objectName.isEmpty()))
-        setCurrentThreadName(thr->metaObject()->className());
-    else
-        setCurrentThreadName(objectName.toLocal8Bit().constData());
+        objectName = thr->metaObject()->className();
+#if defined(QT_HAVE_PRCTL)
+    ::prctl(PR_SET_NAME, (unsigned long)objectName.toLocal8Bit().constData(), 0, 0, 0);
+#elif defined(QT_HAVE_PTHREAD_SETNAME_NP) && defined(Q_OS_NETBSD)
+    pthread_setname_np(thr->d_func()->thread_id, objectName.toLocal8Bit().constData(), (char*)"%s");
+#elif defined(QT_HAVE_PTHREAD_SETNAME_NP)
+    pthread_setname_np(thr->d_func()->thread_id, objectName.toLocal8Bit().constData());
+#endif
 #endif
 
     emit thr->started();

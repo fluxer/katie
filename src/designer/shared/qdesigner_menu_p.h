@@ -45,8 +45,6 @@
 #ifndef QDESIGNER_MENU_H
 #define QDESIGNER_MENU_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QAction>
 #include <QtGui/QMenu>
 #include <QtGui/QPixmap>
@@ -69,7 +67,7 @@ namespace qdesigner_internal {
     class ActionInsertionCommand;
 }
 
-class QDESIGNER_SHARED_EXPORT QDesignerMenu: public QMenu
+class Q_DESIGNER_EXPORT QDesignerMenu: public QMenu
 {
     Q_OBJECT
 public:

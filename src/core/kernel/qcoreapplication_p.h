@@ -78,9 +78,6 @@ public:
     virtual void createEventDispatcher();
     static void removePostedEvent(QEvent *);
 
-    static QThread *theMainThread;
-    static inline QThread *mainThread()
-        { Q_ASSERT(theMainThread != 0); return theMainThread; }
     static bool checkInstance(const char *method);
     static void sendPostedEvents(QObject *receiver, int event_type, QThreadData *data);
 
@@ -101,8 +98,6 @@ public:
     bool aboutToQuitEmitted;
     QString cachedApplicationDirPath;
     QString cachedApplicationFilePath;
-
-    static bool isTranslatorInstalled(QTranslator *translator);
 
     static QAbstractEventDispatcher *eventDispatcher;
     static bool is_app_running;

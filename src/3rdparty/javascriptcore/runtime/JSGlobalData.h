@@ -36,7 +36,6 @@
 #include "NumericStrings.h"
 #include "SmallStrings.h"
 #include "TimeoutChecker.h"
-#include "WeakRandom.h"
 #include <wtf/DateMath.h>
 #include <wtf/Forward.h>
 #include <wtf/HashMap.h>
@@ -120,10 +119,6 @@ namespace JSC {
         RefPtr<Structure> getterSetterStructure;
         RefPtr<Structure> apiWrapperStructure;
         RefPtr<Structure> dummyMarkableCellStructure;
-
-#if USE(JSVALUE32)
-        RefPtr<Structure> numberStructure;
-#endif
 
         static void storeVPtrs();
         static void* jsArrayVPtr;

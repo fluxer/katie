@@ -28,7 +28,6 @@
 
 #include <wtf/Assertions.h>
 #include <wtf/AlwaysInline.h>
-#include <wtf/MathExtras.h>
 #include <wtf/StdLibExtras.h>
 #include "JSValue.h"
 #include <limits>

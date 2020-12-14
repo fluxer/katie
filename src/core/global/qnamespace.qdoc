@@ -61,7 +61,6 @@
     \value AlignRight Aligns with the right edge.
     \value AlignHCenter Centers horizontally in the available space.
     \value AlignJustify Justifies the text in the available space.
-    \omitvalue AlignAuto
 
     The vertical flags are:
 
@@ -339,8 +338,6 @@
     \value RadialGradientPattern  Radial gradient (set using a dedicated QBrush constructor).
     \value TexturePattern  Custom pattern (see QBrush::setTexture()).
 
-    \omitvalue CustomPattern
-
     \sa QBrush
 */
 
@@ -374,15 +371,6 @@
     \omitvalue TextLongestVariant Ensures that the longest variant is always used
            when computing the size of a multi-variant string. (Internal)
     \omitvalue TextBypassShaping
-    \omitvalue BreakAnywhere
-    \omitvalue DontClip
-    \omitvalue DontPrint
-    \omitvalue ExpandTabs
-    \omitvalue IncludeTrailingSpaces
-    \omitvalue NoAccel
-    \omitvalue ShowPrefix
-    \omitvalue SingleLine
-    \omitvalue WordBreak
     \omitvalue TextForceLeftToRight
     \omitvalue TextForceRightToLeft
 
@@ -576,7 +564,6 @@
     \value ThresholdAlphaDither (default) - No dithering.
     \value OrderedAlphaDither A faster, more ordered dither.
     \value DiffuseAlphaDither A high-quality dither.
-    \omitvalue NoAlpha
 
     Color matching versus dithering preference:
 
@@ -647,10 +634,6 @@
                                        rectangle as small as possible
                                        outside a given rectangle,
                                        preserving the aspect ratio.
-
-    \omitvalue ScaleFree
-    \omitvalue ScaleMin
-    \omitvalue ScaleMax
 
     \sa QSize::scale(), QImage::scaled()
 */
@@ -1927,9 +1910,6 @@
 
     \value DescendingOrder The items are sorted descending e.g. starts with
     'ZZZ' ends with 'AAA' in Latin-1 locales
-
-    \omitvalue Ascending
-    \omitvalue Descending
 */
 
 /*!
@@ -2109,23 +2089,6 @@
     \value BitmapCursor
     \omitvalue LastCursor
     \omitvalue CustomCursor
-
-    \omitvalue arrowCursor
-    \omitvalue upArrowCursor
-    \omitvalue crossCursor
-    \omitvalue waitCursor
-    \omitvalue ibeamCursor
-    \omitvalue sizeVerCursor
-    \omitvalue sizeHorCursor
-    \omitvalue sizeBDiagCursor
-    \omitvalue sizeFDiagCursor
-    \omitvalue sizeAllCursor
-    \omitvalue blankCursor
-    \omitvalue splitVCursor
-    \omitvalue splitHCursor
-    \omitvalue pointingHandCursor
-    \omitvalue forbiddenCursor
-    \omitvalue whatsThisCursor
 */
 
 /*!

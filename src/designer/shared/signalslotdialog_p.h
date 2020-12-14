@@ -45,7 +45,6 @@
 #ifndef _SIGNALSLOTDIALOG_H
 #define _SIGNALSLOTDIALOG_H
 
-#include "shared_global_p.h"
 #include <QtCore/QStringList>
 #include <QtGui/QDialog>
 #include <QtGui/QStandardItemModel>
@@ -124,7 +123,7 @@ private:
 // Arguably, we could require the MainContainer to be promoted for that, too,
 // but that would require entering a header.
 
-class QDESIGNER_SHARED_EXPORT SignalSlotDialog : public QDialog {
+class Q_DESIGNER_EXPORT SignalSlotDialog : public QDialog {
     Q_OBJECT
 
 public:

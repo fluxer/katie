@@ -35,12 +35,12 @@
 #include "qdbusmodel.h"
 #include "propertydialog.h"
 
-#include <QtXml/QtXml>
-#include <QtDBus/qdbusutil_p.h>
-#include <QtDBus/QDBusArgument>
-#include <QtDBus/QDBusInterface>
-#include <QtDBus/QDBusConnectionInterface>
-#include <QtDBus/QDBusMetaType>
+#include "QtXml/QtXml"
+#include "qdbusutil_p.h"
+#include "qdbusargument.h"
+#include "qdbusinterface.h"
+#include "qdbusconnectioninterface.h"
+#include "qdbusmetatype.h"
 
 QT_BEGIN_NAMESPACE
 

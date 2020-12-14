@@ -684,8 +684,7 @@ bool QHttpNetworkReplyPrivate::isConnectionCloseEnabled()
 qint64 QHttpNetworkReplyPrivate::readBodyVeryFast(QAbstractSocket *socket, char *b)
 {
     // This first read is to flush the buffer inside the socket
-    qint64 haveRead = 0;
-    haveRead = socket->read(b, bodyLength - contentRead);
+    qint64 haveRead = socket->read(b, bodyLength - contentRead);
     if (haveRead == -1) {
         return 0; // ### error checking here;
     }

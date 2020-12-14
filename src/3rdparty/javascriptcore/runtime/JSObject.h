@@ -237,9 +237,6 @@ namespace JSC {
         void getString(ExecState* exec);
         void isObject();
         void isString();
-#if USE(JSVALUE32)
-        void isNumber();
-#endif
 
         ConstPropertyStorage propertyStorage() const { return (isUsingInlineStorage() ? m_inlineStorage : m_externalStorage); }
         PropertyStorage propertyStorage() { return (isUsingInlineStorage() ? m_inlineStorage : m_externalStorage); }
@@ -288,9 +285,7 @@ inline JSObject::JSObject(NonNullPassRefPtr<Structure> structure)
     Q_ASSERT(m_structure->propertyStorageCapacity() == inlineStorageCapacity);
     Q_ASSERT(m_structure->isEmpty());
     Q_ASSERT(prototype().isNull() || Heap::heap(this) == Heap::heap(prototype()));
-#if USE(JSVALUE64) || USE(JSVALUE32_64)
     Q_ASSERT(OBJECT_OFFSETOF(JSObject, m_inlineStorage) % sizeof(double) == 0);
-#endif
 }
 
 inline JSObject::~JSObject()

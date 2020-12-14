@@ -2,7 +2,7 @@
 
 set -e
 
-cwd="$(realpath $(dirname $0))"
+cwd="$(readlink -f $(dirname $0))"
 cmake="cmake-2.8.12.2-Linux-i386"
 
 cd "$cwd"

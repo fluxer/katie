@@ -48,9 +48,11 @@
 #include "qlocale_p.h"
 #include "qstring.h"
 
+#include <cmath>
+
 QT_BEGIN_NAMESPACE
 
-QString qulltoa(qulonglong l, int base, const QChar _zero);
+QString qulltoa(qulonglong l, int base, const QChar zero);
 QString qlltoa(qlonglong l, int base, const QChar zero);
 
 enum PrecisionMode {
@@ -72,45 +74,28 @@ QString &exponentForm(QChar zero, QChar decimal, QChar exponential,
 
 static inline bool qIsZero(double d)
 {
-    uchar *ch = (uchar *)&d;
-#ifdef QT_ARMFPA
-    return !(ch[3] & 0x7F || ch[2] || ch[1] || ch[0] || ch[7] || ch[6] || ch[5] || ch[4]);
-#elif Q_BYTE_ORDER == Q_BIG_ENDIAN
-    return !(ch[0] & 0x7F || ch[1] || ch[2] || ch[3] || ch[4] || ch[5] || ch[6] || ch[7]);
-#else
-    return !(ch[7] & 0x7F || ch[6] || ch[5] || ch[4] || ch[3] || ch[2] || ch[1] || ch[0]);
-#endif
+    return (std::fpclassify(d) == FP_ZERO);
 }
 
 static inline bool qIsUpper(char ch)
 {
-    return ch >= 'A' && ch <= 'Z';
+    return (ch >= 'A' && ch <= 'Z');
 }
 
 static inline bool qIsDigit(char ch)
 {
-    return ch >= '0' && ch <= '9';
+    return (ch >= '0' && ch <= '9');
 }
 
 static inline char qToLower(char ch)
 {
     if (ch >= 'A' && ch <= 'Z')
-        return ch - 'A' + 'a';
-    else
-        return ch;
-}
-
-static inline bool qIsAlnum(char c)
-{
-    return (c >= '0' && c <= '9') || ((c | 0x20) >= 'a' && (c | 0x20) <= 'z');
+        return (ch - 'A' + 'a');
+    return ch;
 }
 
 // Removes thousand-group separators in "C" locale.
 bool removeGroupSeparators(QLocalePrivate::CharBuff *num);
-
-double qstrtod(const char *s00, char const **se, bool *ok);
-qlonglong qstrtoll(const char *nptr, const char **endptr, int base, bool *ok);
-qulonglong qstrtoull(const char *nptr, const char **endptr, int base, bool *ok);
 
 bool qt_initLocale(const QString &locale);
 bool qt_ucol_strcoll(const QChar *source, int sourceLength, const QChar *target, int targetLength, int *result);

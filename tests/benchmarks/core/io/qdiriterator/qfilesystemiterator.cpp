@@ -87,11 +87,7 @@
 #include <QtCore/qset.h>
 #include <QtCore/qstack.h>
 #include <QtCore/qvariant.h>
-
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <errno.h>
+#include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -110,7 +106,7 @@ public:
     inline bool atEnd() const { return m_dirPaths.isEmpty(); }
 
     QStack<DIR *> m_dirStructs;
-    dirent *m_entry;
+    QT_DIRENT *m_entry;
 
     QSet<QString> visitedLinks;
     QStack<QByteArray> m_dirPaths;
@@ -192,9 +188,9 @@ void QFileSystemIteratorPrivate::pushSubDirectory(const QByteArray &path)
 */
 
     DIR *dir = ::opendir(path.constData());
-    //m_entry = ::readdir(dir);
+    //m_entry = QT_READDIR(dir);
     //while (m_entry && isDotOrDotDot(m_entry->d_name))
-    //    m_entry = ::readdir(m_dirStructs.top());
+    //    m_entry = QT_READDIR(m_dirStructs.top());
     m_dirStructs.append(dir);
     m_dirPaths.append(path);
     m_entry = 0;
@@ -262,9 +258,9 @@ bool QFileSystemIteratorPrivate::advanceHelper()
         m_currentDirShown = DontShowDir;
     }
 
-    m_entry = ::readdir(m_dirStructs.top());
+    m_entry = QT_READDIR(m_dirStructs.top());
     while (m_entry && isDotOrDotDot(m_entry->d_name))
-        m_entry = ::readdir(m_dirStructs.top());
+        m_entry = QT_READDIR(m_dirStructs.top());
         //return false; // further iteration possibly needed
     //printf("READ %p %s\n", m_entry, m_entry ? m_entry->d_name : "");
 
@@ -280,8 +276,8 @@ bool QFileSystemIteratorPrivate::advanceHelper()
     QByteArray ba = m_dirPaths.top();
     ba += '/';
     ba += name;
-    struct stat st;
-    lstat(ba.constData(), &st);
+    QT_STATBUF st;
+    QT_LSTAT(ba.constData(), &st);
 
     if (S_ISDIR(st.st_mode)) {
         pushSubDirectory(ba);

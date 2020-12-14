@@ -76,27 +76,6 @@ extern QPixmap qt_pixmapForBrush(int brushStyle); //in qbrush.cpp
 extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap);
 
 #ifndef QT_NO_XRENDER
-static const int compositionModeToRenderOp[QPainter::CompositionMode_Xor + 1] = {
-    PictOpOver, //CompositionMode_SourceOver,
-    PictOpOverReverse, //CompositionMode_DestinationOver,
-    PictOpClear, //CompositionMode_Clear,
-    PictOpSrc, //CompositionMode_Source,
-    PictOpDst, //CompositionMode_Destination,
-    PictOpIn, //CompositionMode_SourceIn,
-    PictOpInReverse, //CompositionMode_DestinationIn,
-    PictOpOut, //CompositionMode_SourceOut,
-    PictOpOutReverse, //CompositionMode_DestinationOut,
-    PictOpAtop, //CompositionMode_SourceAtop,
-    PictOpAtopReverse, //CompositionMode_DestinationAtop,
-    PictOpXor //CompositionMode_Xor
-};
-
-static inline int qpainterOpToXrender(QPainter::CompositionMode mode)
-{
-    Q_ASSERT(mode <= QPainter::CompositionMode_Xor);
-    return compositionModeToRenderOp[mode];
-}
-
 static inline bool complexPictOp(int op)
 {
     return op != PictOpOver && op != PictOpSrc;
@@ -233,7 +212,8 @@ void QXRenderTessellator::addTrap(const Trapezoid &trap)
 {
     if (size == allocated) {
         allocated = qMax(2*allocated, 64);
-        traps = q_check_ptr((XTrapezoid *)realloc(traps, allocated * sizeof(XTrapezoid)));
+        traps = (XTrapezoid *)::realloc(traps, allocated * sizeof(XTrapezoid));
+        Q_CHECK_PTR(traps);
     }
     traps[size].top = Q27Dot5ToXFixed(trap.top);
     traps[size].bottom = Q27Dot5ToXFixed(trap.bottom);
@@ -256,7 +236,7 @@ static Picture getPatternFill(int screen, const QBrush &b)
     XRenderColor color = qt_x11Data->preMultiply(b.color());
     XRenderColor bg_color = qt_x11Data->preMultiply(QColor(0, 0, 0, 0));
 
-    for (int i = 0; i < qt_x11Data->pattern_fill_count; ++i) {
+    for (int i = 0; i < QX11Data::pattern_fill_count; ++i) {
         if (qt_x11Data->pattern_fills[i].screen == screen
             && qt_x11Data->pattern_fills[i].style == b.style()
             && qt_x11Data->pattern_fills[i].color.alpha == color.alpha
@@ -270,7 +250,7 @@ static Picture getPatternFill(int screen, const QBrush &b)
             return qt_x11Data->pattern_fills[i].picture;
     }
     // none found, replace one
-    int i = qrand() % 16;
+    int i = qrand() % QX11Data::pattern_fill_count;
 
     if (qt_x11Data->pattern_fills[i].screen != screen && qt_x11Data->pattern_fills[i].picture) {
         XRenderFreePicture (qt_x11Data->display, qt_x11Data->pattern_fills[i].picture);
@@ -1047,8 +1027,45 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
     if (flags & DirtyHints) updateRenderHints(state.renderHints());
     if (flags & DirtyCompositionMode) {
         int function = GXcopy;
-        if (state.compositionMode() >= QPainter::RasterOp_SourceOrDestination) {
-            switch (state.compositionMode()) {
+        switch (state.compositionMode()) {
+#if !defined(QT_NO_XRENDER)
+            case QPainter::CompositionMode_SourceOver:
+                d->composition_mode = PictOpOver;
+                break;
+            case QPainter::CompositionMode_DestinationOver:
+                d->composition_mode = PictOpOverReverse;
+                break;
+            case QPainter::CompositionMode_Clear:
+                d->composition_mode = PictOpClear;
+                break;
+            case QPainter::CompositionMode_Source:
+                d->composition_mode = PictOpSrc;
+                break;
+            case QPainter::CompositionMode_Destination:
+                d->composition_mode = PictOpDst;
+                break;
+            case QPainter::CompositionMode_SourceIn:
+                d->composition_mode = PictOpIn;
+                break;
+            case QPainter::CompositionMode_DestinationIn:
+                d->composition_mode = PictOpInReverse;
+                break;
+            case QPainter::CompositionMode_SourceOut:
+                d->composition_mode = PictOpOut;
+                break;
+            case QPainter::CompositionMode_DestinationOut:
+                d->composition_mode = PictOpOutReverse;
+                break;
+            case QPainter::CompositionMode_SourceAtop:
+                d->composition_mode = PictOpAtop;
+                break;
+            case QPainter::CompositionMode_DestinationAtop:
+                d->composition_mode = PictOpAtopReverse;
+                break;
+            case QPainter::CompositionMode_Xor:
+                d->composition_mode = PictOpXor;
+                break;
+#endif
             case QPainter::RasterOp_SourceOrDestination:
                 function = GXor;
                 break;
@@ -1077,14 +1094,8 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
                 function = GXandInverted;
                 break;
             default:
-                function = GXcopy;
-            }
+                break;
         }
-#if !defined(QT_NO_XRENDER)
-        else {
-            d->composition_mode = qpainterOpToXrender(state.compositionMode());
-        }
-#endif
         XSetFunction(qt_x11Data->display, d->gc, function);
         XSetFunction(qt_x11Data->display, d->gc_brush, function);
     }
@@ -1223,7 +1234,7 @@ void QX11PaintEngine::updatePen(const QPen &pen)
     }
 
 
-    vals.line_width = qRound(pen.widthF());
+    vals.line_width = qRound(pen_width);
     vals.cap_style = cp;
     vals.join_style = jn;
     vals.line_style = xStyle;
@@ -1986,7 +1997,8 @@ void QX11PaintEngine::updateClipRegion_dev(const QRegion &clipRegion, Qt::ClipOp
 {
     Q_D(QX11PaintEngine);
     QRegion sysClip = systemClip();
-    if (op == Qt::NoClip) {
+    switch (op) {
+    case Qt::NoClip:
         d->has_clipping = false;
         d->crgn = sysClip;
         if (!sysClip.isEmpty()) {
@@ -1995,9 +2007,6 @@ void QX11PaintEngine::updateClipRegion_dev(const QRegion &clipRegion, Qt::ClipOp
             x11ClearClipRegion(d->dpy, d->gc, d->gc_brush, d->picture);
         }
         return;
-    }
-
-    switch (op) {
     case Qt::IntersectClip:
         if (d->has_clipping) {
             d->crgn &= clipRegion;
@@ -2014,8 +2023,6 @@ void QX11PaintEngine::updateClipRegion_dev(const QRegion &clipRegion, Qt::ClipOp
         d->crgn |= clipRegion;
         if (!sysClip.isEmpty())
             d->crgn = d->crgn.intersected(sysClip);
-        break;
-    default:
         break;
     }
     d->has_clipping = true;

@@ -34,8 +34,6 @@
 #ifndef ABSTRACTACTIONEDITOR_H
 #define ABSTRACTACTIONEDITOR_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtGui/QWidget>
 
 QT_BEGIN_HEADER
@@ -45,7 +43,7 @@ QT_BEGIN_NAMESPACE
 class QDesignerFormEditorInterface;
 class QDesignerFormWindowInterface;
 
-class QDESIGNER_SDK_EXPORT QDesignerActionEditorInterface: public QWidget
+class Q_DESIGNER_EXPORT QDesignerActionEditorInterface: public QWidget
 {
     Q_OBJECT
 public:

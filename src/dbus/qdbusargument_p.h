@@ -125,7 +125,6 @@ public:
     QDBusMarshaller *beginCommon(int code, const char *signature);
     QDBusMarshaller *endCommon();
     void open(QDBusMarshaller &sub, int code, const char *signature);
-    void close();
     void error(const QString &message);
 
     bool appendVariantInternal(const QVariant &arg);

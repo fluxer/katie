@@ -132,7 +132,6 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
     }
 
     QHash<GlyphAndSubPixelPosition, Coord> listItemCoordinates;
-    int rowHeight = 0;
 
     QFontEngine::GlyphFormat format;
     switch (m_type) {
@@ -189,12 +188,9 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
                     -metrics.y.truncate() }; // baseline for horizontal scripts
 
         listItemCoordinates.insert(key, c);
-        rowHeight = qMax(rowHeight, glyph_height);
     }
     if (listItemCoordinates.isEmpty())
         return true;
-
-    rowHeight += margin * 2;
 
     if (m_w == 0) {
         if (fontEngine->maxCharWidth() <= QT_DEFAULT_TEXTURE_GLYPH_CACHE_WIDTH)

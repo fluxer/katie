@@ -1843,18 +1843,6 @@ QString WriteInitialization::pixCall(const QString &t, const QString &text) cons
         return type;
     }
     if (const DomImage *image = findImage(text)) {
-        if (m_option.extractImages) {
-            const QString format = image->elementData()->attributeFormat();
-            const QString extension = format.left(format.indexOf(QLatin1Char('.'))).toLower();
-            QString rc = QLatin1String("QPixmap(QString::fromUtf8(\":/");
-            rc += m_generatedClass;
-            rc += QLatin1String("/images/");
-            rc += text;
-            rc += QLatin1Char('.');
-            rc += extension;
-            rc += QLatin1String("\"))");
-            return rc;
-        }
         QString rc = WriteIconInitialization::iconFromDataFunction();
         rc += QLatin1Char('(');
         rc += text;
@@ -2246,13 +2234,12 @@ void WriteInitialization::initializeTableWidget(DomWidget *w)
     enableSorting(w, varName, tempName);
 }
 
-QString WriteInitialization::trCall(const QString &str, const QString &commentHint) const
+QString WriteInitialization::trCall(const QString &str) const
 {
     if (str.isEmpty())
         return QLatin1String("QString()");
 
     QString result;
-    const QString comment = commentHint.isEmpty() ? QString(QLatin1Char('0')) : fixString(commentHint, m_dindent);
 
     if (m_option.translateFunction.isEmpty()) {
         result = QLatin1String("QApplication::translate(\"");
@@ -2265,8 +2252,6 @@ QString WriteInitialization::trCall(const QString &str, const QString &commentHi
     }
 
     result += fixString(str, m_dindent);
-    result += QLatin1String(", ");
-    result += comment;
 
     if (m_option.translateFunction.isEmpty()) {
         result += QLatin1String(", ");
@@ -2291,12 +2276,10 @@ void WriteInitialization::initializeMenu(DomWidget *w, const QString &/*parentWi
 QString WriteInitialization::trCall(DomString *str, const QString &defaultString) const
 {
     QString value = defaultString;
-    QString comment;
     if (str) {
         value = toString(str);
-        comment = str->attributeComment();
     }
-    return trCall(value, comment);
+    return trCall(value);
 }
 
 QString WriteInitialization::noTrCall(DomString *str, const QString &defaultString) const

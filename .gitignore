@@ -13,16 +13,16 @@
 *.swp
 
 # build directories
-apidocs/
 minsize/
 oldmake/
 debug/
+crossdeb/
 
 # symlink to package/debian
 debian
 
 # Debian build files and directories
-obj-*-linux-gnu/
+obj-*-gnu/
 package/debian/.debhelper/
 package/debian/debhelper-build-stamp
 package/debian/files

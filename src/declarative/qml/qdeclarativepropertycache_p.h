@@ -48,9 +48,8 @@
 #include "qdeclarativerefcount_p.h"
 #include "qdeclarativecleanup_p.h"
 #include "qdeclarativenotifier_p.h"
-
-#include <QtCore/qvector.h>
-#include <QtScript/qscriptdeclarativeclass_p.h>
+#include "qvector.h"
+#include "qscriptdeclarativeclass_p.h"
 
 QT_BEGIN_NAMESPACE
 

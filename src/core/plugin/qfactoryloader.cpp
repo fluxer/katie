@@ -80,7 +80,6 @@ QFactoryLoader::QFactoryLoader(const char *iid,
                                Qt::CaseSensitivity cs)
     : QObject(*new QFactoryLoaderPrivate)
 {
-    moveToThread(QCoreApplicationPrivate::mainThread());
     Q_D(QFactoryLoader);
     d->iid = iid;
     d->cs = cs;
@@ -185,7 +184,6 @@ void QFactoryLoader::updateDir(const QString &pluginDir)
 
 void QFactoryLoader::update()
 {
-#ifdef QT_SHARED
     Q_D(QFactoryLoader);
     foreach (const QString &pluginDir, QCoreApplication::libraryPaths()) {
         // Already loaded, skip it...
@@ -194,13 +192,6 @@ void QFactoryLoader::update()
         d->loadedPaths << pluginDir;
         updateDir(pluginDir);
     }
-#else
-    Q_D(QFactoryLoader);
-    if (qt_debug_component()) {
-        qDebug() << "QFactoryLoader::QFactoryLoader() ignoring" << d->iid
-                 << "since plugins are disabled in static builds";
-    }
-#endif
 }
 
 QFactoryLoader::~QFactoryLoader()
@@ -223,11 +214,7 @@ QObject *QFactoryLoader::instance(const QString &key) const
     QString lowered = d->cs ? key : key.toLower();
     if (QLibraryPrivate* library = d->keyMap.value(lowered)) {
         if (library->instance || library->loadPlugin()) {
-            if (QObject *obj = library->instance()) {
-                if (obj && !obj->parent())
-                    obj->moveToThread(QCoreApplicationPrivate::mainThread());
-                return obj;
-            }
+            return library->instance();
         }
     }
     return 0;

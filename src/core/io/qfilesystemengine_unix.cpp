@@ -52,11 +52,6 @@
 
 QT_BEGIN_NAMESPACE
 
-bool QFileSystemEngine::isCaseSensitive()
-{
-    return true;
-}
-
 //static
 QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, QFileSystemMetaData &data)
 {
@@ -146,8 +141,7 @@ QFileSystemEntry QFileSystemEngine::absoluteName(const QFileSystemEntry &entry)
     return QFileSystemEntry(stringVersion);
 }
 
-//static
-QString QFileSystemEngine::resolveUserName(uint userId)
+Q_CORE_EXPORT QString qt_resolveUserName(uint userId)
 {
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETPWUID_R)
     static int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
@@ -163,6 +157,12 @@ QString QFileSystemEngine::resolveUserName(uint userId)
     if (pw)
         return QFile::decodeName(QByteArray(pw->pw_name));
     return QString();
+}
+
+//static
+QString QFileSystemEngine::resolveUserName(uint userId)
+{
+    return qt_resolveUserName(userId);
 }
 
 //static
@@ -256,9 +256,8 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
         data.knownFlagsMask |= (what & QFileSystemMetaData::UserPermissions);
     }
 
-    if (what & QFileSystemMetaData::HiddenAttribute
-            && !data.isHidden()) {
-        QString fileName = entry.fileName();
+    if (what & QFileSystemMetaData::HiddenAttribute && !data.isHidden()) {
+        const QString &fileName = entry.fileName();
         if (fileName.size() > 0 && fileName.at(0) == QLatin1Char('.'))
             data.entryFlags |= QFileSystemMetaData::HiddenAttribute;
         data.knownFlagsMask |= QFileSystemMetaData::HiddenAttribute;
@@ -322,16 +321,16 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
 }
 
 //static
-bool QFileSystemEngine::createLink(const QFileSystemEntry &source, const QFileSystemEntry &target, QSystemError &error)
+bool QFileSystemEngine::createLink(const QFileSystemEntry &source, const QFileSystemEntry &target, int *error)
 {
     if (::symlink(source.nativeFilePath().constData(), target.nativeFilePath().constData()) == 0)
         return true;
-    error = QSystemError(errno, QSystemError::StandardLibraryError);
+    *error = errno;
     return false;
 }
 
 //static
-bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSystemEntry &target, QSystemError &error)
+bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSystemEntry &target, int *error)
 {
     QT_STATBUF st;
     if (QT_STAT(source.nativeFilePath().constData(), &st) == 0) {
@@ -341,19 +340,18 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 
     const int sourcefd = QT_OPEN(source.nativeFilePath().constData(), O_RDONLY);
     if (sourcefd == -1) {
-        error = QSystemError(errno, QSystemError::StandardLibraryError);
+        *error = errno;
         return false;
     }
 
     const int targetfd = QT_CREAT(target.nativeFilePath().constData(), st.st_mode);
     if (targetfd == -1) {
-        error = QSystemError(errno, QSystemError::StandardLibraryError);
+        *error = errno;
         ::close(sourcefd);
         return false;
     }
 
     QT_OFF_T tocopy = st.st_size;
-
 #ifdef Q_OS_LINUX
 // not in qplatformdefs.h since it is platform specific
 #if defined(QT_LARGEFILE_SUPPORT)
@@ -361,11 +359,10 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 #else
 #  define QT_SENDFILE ::sendfile
 #endif
-
     ssize_t sendresult = QT_SENDFILE(targetfd, sourcefd, Q_NULLPTR, tocopy);
     while (sendresult != tocopy) {
         if (sendresult == -1) {
-            error = QSystemError(errno, QSystemError::StandardLibraryError);
+            *error = errno;
             ::close(sourcefd);
             ::close(targetfd);
             return false;
@@ -374,14 +371,26 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
         sendresult = QT_SENDFILE(targetfd, sourcefd, &tocopy, tocopy);
     }
 #undef QT_SENDFILE
-// TODO: FreeBSD sendfile() support, signature is different
+#elif defined(Q_OS_FREEBSD) || defined(Q_OS_DRAGONFLY)
+// DragonFly BSD does not have SF_SYNC defined
+#ifndef SF_SYNC
+#  define SF_SYNC 0
+#endif
+    QT_OFF_T totalwrite = 0;
+    int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), Q_NULLPTR, &totalwrite, SF_SYNC);
+    if (QT_OFF_T(sendresult) != totalwrite) {
+        *error = errno;
+        ::close(sourcefd);
+        ::close(targetfd);
+        return false;
+    }
 #else
     size_t totalwrite = 0;
     char copybuffer[QT_BUFFSIZE];
     while (QT_OFF_T(totalwrite) != tocopy) {
         const size_t readresult = QT_READ(sourcefd, copybuffer, sizeof(copybuffer));
         if (readresult == -1) {
-            error = QSystemError(errno, QSystemError::StandardLibraryError);
+            *error = errno;
             ::close(sourcefd);
             ::close(targetfd);
             return false;
@@ -389,7 +398,7 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 
         const size_t writeresult = QT_WRITE(targetfd, copybuffer, readresult);
         if (writeresult != readresult) {
-            error = QSystemError(errno, QSystemError::StandardLibraryError);
+            *error = errno;
             ::close(sourcefd);
             ::close(targetfd);
             return false;
@@ -405,26 +414,26 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
 }
 
 //static
-bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSystemEntry &target, QSystemError &error)
+bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSystemEntry &target, int *error)
 {
     if (::rename(source.nativeFilePath().constData(), target.nativeFilePath().constData()) == 0)
         return true;
-    error = QSystemError(errno, QSystemError::StandardLibraryError);
+    *error = errno;
     return false;
 }
 
 //static
-bool QFileSystemEngine::removeFile(const QFileSystemEntry &entry, QSystemError &error)
+bool QFileSystemEngine::removeFile(const QFileSystemEntry &entry, int *error)
 {
     if (unlink(entry.nativeFilePath().constData()) == 0)
         return true;
-    error = QSystemError(errno, QSystemError::StandardLibraryError);
+    *error = errno;
     return false;
 
 }
 
 //static
-bool QFileSystemEngine::setPermissions(const QFileSystemEntry &entry, QFile::Permissions permissions, QSystemError &error)
+bool QFileSystemEngine::setPermissions(const QFileSystemEntry &entry, QFile::Permissions permissions, int *error)
 {
     mode_t mode = 0;
     if (permissions & QFile::ReadOwner)
@@ -454,7 +463,7 @@ bool QFileSystemEngine::setPermissions(const QFileSystemEntry &entry, QFile::Per
 
     if (::chmod(entry.nativeFilePath().constData(), mode) == 0)
         return true;
-    error = QSystemError(errno, QSystemError::StandardLibraryError);
+    *error = errno;
     return false;
 }
 

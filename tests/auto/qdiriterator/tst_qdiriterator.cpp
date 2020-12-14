@@ -104,10 +104,6 @@ private slots:
     void longPath();
     void task185502_dirorder();
     void relativePaths();
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    void uncPaths_data();
-    void uncPaths();
-#endif
     void qtbug15421_hiddenDirs_hiddenFiles();
 };
 

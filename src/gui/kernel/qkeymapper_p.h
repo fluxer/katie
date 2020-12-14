@@ -75,18 +75,6 @@ private:
     Q_DISABLE_COPY(QKeyMapper)
 };
 
-#if defined(Q_WS_X11)
-struct QXCoreDesc {
-    int min_keycode;
-    int max_keycode;
-    int keysyms_per_keycode;
-    KeySym *keysyms;
-    uchar mode_switch;
-    uchar num_lock;
-    KeySym lock_meaning;
-};
-#endif
-
 class QKeyEvent;
 class QKeyMapperPrivate : public QObjectPrivate
 {
@@ -102,10 +90,8 @@ public:
     Qt::LayoutDirection keyboardInputDirection;
 
 #if defined(Q_WS_X11)
-    bool translateKeyEvent(QWidget *keywidget,
-                           const XEvent *);
-
-    QXCoreDesc coreDesc;
+    bool translateKeyEvent(QWidget *keywidget, const XEvent *event);
+    Qt::KeyboardModifiers translateModifiers(int state);
 #endif
 };
 

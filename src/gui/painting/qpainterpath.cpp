@@ -33,7 +33,6 @@
 
 #include "qpainterpath.h"
 #include "qpainterpath_p.h"
-
 #include "qbitmap.h"
 #include "qdebug.h"
 #include "qiodevice.h"
@@ -44,7 +43,6 @@
 #include "qtextlayout.h"
 #include "qvarlengtharray.h"
 #include "qmath.h"
-
 #include "qbezier_p.h"
 #include "qfontengine_p.h"
 #include "qnumeric.h"
@@ -54,14 +52,6 @@
 #include "qtextengine_p.h"
 
 #include <limits.h>
-
-#if 0
-#include <performance.h>
-#else
-#define PM_INIT
-#define PM_MEASURE(x)
-#define PM_DISPLAY
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -2981,26 +2971,14 @@ qreal QPainterPath::slopeAtPercent(qreal t) const
 
     qreal m1 = slopeAt(realT, bez.x1, bez.x2, bez.x3, bez.x4);
     qreal m2 = slopeAt(realT, bez.y1, bez.y2, bez.y3, bez.y4);
+
     //tangent line
-    qreal slope = 0;
-
-#define SIGN(x) ((x < 0)?-1:1)
     if (m1)
-        slope = m2/m1;
-    else {
-        //windows doesn't define INFINITY :(
-#ifdef INFINITY
-        slope = INFINITY*SIGN(m2);
-#else
-        if (sizeof(qreal) == sizeof(double)) {
-            return 1.79769313486231570e+308;
-        } else {
-            return ((qreal)3.40282346638528860e+38);
-        }
-#endif
-    }
+        return (m2 / m1);
 
-    return slope;
+#define SLOPE_SIGN(x) ((x < 0)?-1:1)
+    return qreal(std::numeric_limits<qreal>::infinity() * SLOPE_SIGN(m2));
+#undef SLOPE_SIGN
 }
 
 /*!

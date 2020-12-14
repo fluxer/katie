@@ -79,7 +79,7 @@ void dumpRecursive(const QDir &dir, QTextStream &out)
 {
     QFileInfoList entries = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot
                                               | QDir::NoSymLinks);
-    foreach (QFileInfo entry, entries) {
+    foreach (const QFileInfo &entry, entries) {
         if (entry.isDir()) {
             dumpRecursive(entry.filePath(), out);
         } else {
@@ -139,7 +139,7 @@ int runRcc(int argc, char *argv[])
 
     RCCResourceLibrary library;
 
-    //parse options
+    // parse options
     QString errorMsg;
     for (int i = 1; i < args.count() && errorMsg.isEmpty(); i++) {
         if (args[i].isEmpty())
@@ -240,7 +240,7 @@ int runRcc(int argc, char *argv[])
     } else {
         out.setFileName(outFilename);
         if (!out.open(mode)) {
-            const QString msg = QString::fromUtf8("Unable to open %1 for writing: %2\n").arg(outFilename).arg(out.errorString());
+            const QString msg = QString::fromLatin1("Unable to open %1 for writing: %2\n").arg(outFilename).arg(out.errorString());
             errorDevice.write(msg.toUtf8());
             return 1;
         }
@@ -248,13 +248,12 @@ int runRcc(int argc, char *argv[])
 
     // do the task
     if (list) {
-        const QStringList data = library.dataFiles();
-        for (int i = 0; i < data.size(); ++i) {
-            out.write(qPrintable(QDir::cleanPath(data.at(i))));
+        foreach (const QString &path, library.dataFiles()) {
+            out.write(qPrintable(QDir::cleanPath(path)));
             out.write("\n");
         }
         return 0;
-    } 
+    }
 
     return library.output(out, errorDevice) ? 0 : 1;
 }

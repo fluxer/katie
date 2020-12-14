@@ -45,7 +45,6 @@
 #ifndef QTRESOURCEVIEW_H
 #define QTRESOURCEVIEW_H
 
-#include "shared_global_p.h"
 #include <QtGui/QWidget>
 #include <QtGui/QDialog>
 
@@ -56,7 +55,7 @@ class QtResourceSet;
 class QDesignerFormEditorInterface;
 class QMimeData;
 
-class QDESIGNER_SHARED_EXPORT QtResourceView : public QWidget
+class Q_DESIGNER_EXPORT QtResourceView : public QWidget
 {
     Q_OBJECT
 public:
@@ -108,7 +107,7 @@ private:
     Q_PRIVATE_SLOT(d_func(), void slotFilterChanged(const QString &pattern))
 };
 
-class QDESIGNER_SHARED_EXPORT  QtResourceViewDialog : public QDialog
+class Q_DESIGNER_EXPORT  QtResourceViewDialog : public QDialog
 {
     Q_OBJECT
 public:

@@ -1,6 +1,6 @@
 =head1 NAME
 
-qdbus - a communication-interface for Qt-based applications
+qdbus - a communication-interface for Katie-based applications
 
 =head1 SYNOPSIS
 
@@ -8,7 +8,9 @@ qdbus [options] [servicename] [path] [method] [args]
 
 =head1 DESCRIPTION
 
-TODO
+qdbus provides an interface to Katie-based applications communicating over D-Bus.
+See http://www.freedesktop.org/software/dbus/ for more information about the
+big picture.
 
 =head1 OPTIONS
 

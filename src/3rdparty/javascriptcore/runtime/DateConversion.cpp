@@ -46,7 +46,6 @@
 #include "CallFrame.h"
 #include "UString.h"
 #include <wtf/DateMath.h>
-#include <wtf/StringExtras.h>
 
 using namespace WTF;
 

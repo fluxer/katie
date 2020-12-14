@@ -64,7 +64,7 @@ private slots:
 static const int iterations = 10;
 
 // Note: some tests rely on ThreadCount being multiple of 2
-#if defined(Q_OS_SOLARIS) || ( defined(Q_OS_LINUX) && defined(QT_ARCH_ARMV6) )
+#if defined(Q_OS_SOLARIS) || (defined(Q_OS_LINUX) && defined(QT_ARCH_ARM))
 static const int ThreadCount = 4;
 #else
 static const int ThreadCount = 10;

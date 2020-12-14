@@ -296,7 +296,6 @@ public:
         NormalizationForm_KC
     };
     QString normalized(NormalizationForm mode) const Q_REQUIRED_RESULT;
-    QString normalized(NormalizationForm mode, QChar::UnicodeVersion version) const Q_REQUIRED_RESULT;
 
     QString repeated(int times) const;
 

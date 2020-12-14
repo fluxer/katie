@@ -1,4 +1,4 @@
-<RCC>
+<!DOCTYPE RCC><RCC version="1.0">
     <qresource prefix="/themes/blue">
         <file alias="background.svg">resources/blue_SVG/blue_background_360x640px.svg</file>
         <file alias="background_horisontal.svg">resources/blue_SVG/blue_background_horisontal_640x360px.svg</file>

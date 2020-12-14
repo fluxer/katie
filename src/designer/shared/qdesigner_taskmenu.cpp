@@ -836,7 +836,7 @@ void QDesignerTaskMenu::applySize(QAction *a)
 
     const int mask = a->data().toInt();
     const int size = selection.size();
-    fw->commandHistory()->beginMacro(tr("Set size constraint on %n widget(s)", 0, size));
+    fw->commandHistory()->beginMacro(tr("Set size constraint on %1 widget(s)").arg(size));
     for (int i = 0; i < size; i++)
         createSizeCommand(fw, selection.at(i), mask);
     fw->commandHistory()->endMacro();

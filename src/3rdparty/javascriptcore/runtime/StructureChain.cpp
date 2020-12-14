@@ -46,11 +46,4 @@ StructureChain::StructureChain(Structure* head)
     m_vector[i] = 0;
 }
 
-#if OS(HPUX)
-PassRefPtr<StructureChain> StructureChain::create(Structure* head)
-{
-    return adoptRef(new StructureChain(head));
-}
-#endif
-
 } // namespace JSC

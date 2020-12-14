@@ -45,8 +45,6 @@
 #ifndef SCRIPTDIALOG_H
 #define SCRIPTDIALOG_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QDialog>
 
 QT_BEGIN_NAMESPACE
@@ -58,7 +56,7 @@ class QTextEdit;
 namespace qdesigner_internal {
 
     // Dialog for showing script errors
-    class  QDESIGNER_SHARED_EXPORT ScriptDialog : public QDialog {
+    class  Q_DESIGNER_EXPORT ScriptDialog : public QDialog {
         Q_OBJECT
 
     public:

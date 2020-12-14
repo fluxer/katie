@@ -49,25 +49,12 @@ QBearerEngine::~QBearerEngine()
     QHash<QString, QNetworkConfigurationPrivatePointer>::Iterator it;
     QHash<QString, QNetworkConfigurationPrivatePointer>::Iterator end;
 
-    for (it = snapConfigurations.begin(), end = snapConfigurations.end(); it != end; ++it) {
-        it.value()->isValid = false;
-        it.value()->id.clear();
-    }
-    snapConfigurations.clear();
-
     for (it = accessPointConfigurations.begin(), end = accessPointConfigurations.end();
          it != end; ++it) {
         it.value()->isValid = false;
         it.value()->id.clear();
     }
     accessPointConfigurations.clear();
-
-    for (it = userChoiceConfigurations.begin(), end = userChoiceConfigurations.end();
-         it != end; ++it) {
-        it.value()->isValid = false;
-        it.value()->id.clear();
-    }
-    userChoiceConfigurations.clear();
 }
 
 bool QBearerEngine::requiresPolling() const
@@ -88,18 +75,6 @@ bool QBearerEngine::configurationsInUse() const
 
     for (it = accessPointConfigurations.constBegin(),
          end = accessPointConfigurations.constEnd(); it != end; ++it) {
-        if (it.value()->ref > 1)
-            return true;
-    }
-
-    for (it = snapConfigurations.constBegin(),
-         end = snapConfigurations.constEnd(); it != end; ++it) {
-        if (it.value()->ref > 1)
-            return true;
-    }
-
-    for (it = userChoiceConfigurations.constBegin(),
-         end = userChoiceConfigurations.constEnd(); it != end; ++it) {
         if (it.value()->ref > 1)
             return true;
     }

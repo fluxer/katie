@@ -50,38 +50,31 @@ enum {
 
 static qint64 getticks()
 {
-#if defined(_POSIX_TIMERS) && (_POSIX_TIMERS > 0)
-    clockid_t clockId;
+#ifdef QT_HAVE_CLOCK_GETTIME
+#ifdef CLOCK_REALTIME_COARSE // Linux specific
+    clockid_t clockId = CLOCK_REALTIME_COARSE;
+#else
+    clockid_t clockId = CLOCK_REALTIME;
+#endif
 
-#ifndef _POSIX_THREAD_CPUTIME
-    clockId = CLOCK_REALTIME;
-#elif (_POSIX_THREAD_CPUTIME-0 <= 0)
-    // if we don't have CLOCK_THREAD_CPUTIME_ID, we have to just use elapsed realtime instead
-    clockId = CLOCK_REALTIME;
-
-#  if (_POSIX_THREAD_CPUTIME-0 == 0)
+#if defined(_SC_THREAD_CPUTIME) && defined(CLOCK_THREAD_CPUTIME_ID)
     // detect availablility of CLOCK_THREAD_CPUTIME_ID,
     // sysconf() will return either -1 or _POSIX_VERSION (don't care about thread races here)
     static long useThreadCpuTime = sysconf(_SC_THREAD_CPUTIME);
     if (useThreadCpuTime != -1)
         clockId = CLOCK_THREAD_CPUTIME_ID;
-#  endif
-#else
-    clockId = CLOCK_THREAD_CPUTIME_ID;
 #endif
 
     struct timespec ts;
-    if (clock_gettime(clockId, &ts) == -1)
+    if (::clock_gettime(clockId, &ts) == -1)
         return 0;
     return (ts.tv_sec * 1000000000) + ts.tv_nsec;
 #else
-
     // no clock_gettime(), fall back to wall time
     struct timeval tv;
-    gettimeofday(&tv, Q_NULLPTR);
+    ::gettimeofday(&tv, Q_NULLPTR);
     return (tv.tv_sec * 1000000) + tv.tv_usec;
-
-#endif
+#endif // QT_HAVE_CLOCK_GETTIME
 }
 
 static inline double elapsed(qint64 after, qint64 before)

@@ -648,10 +648,8 @@ bool QIODevice::seek(qint64 pos)
 #endif
 
     qint64 offset = pos - d->pos;
-    if (!d->isSequential()) {
-        d->pos = pos;
-        d->devicePos = pos;
-    }
+    d->pos = pos;
+    d->devicePos = pos;
 
     if (offset < 0 || offset >= d->buffer.size())
         // When seeking backwards, an operation that is only allowed for

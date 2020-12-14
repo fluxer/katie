@@ -45,7 +45,6 @@
 #ifndef DESIGNEROBJECTINSPECTOR_H
 #define DESIGNEROBJECTINSPECTOR_H
 
-#include "shared_global_p.h"
 #include <QtDesigner/abstractobjectinspector.h>
 #include <QtCore/QList>
 
@@ -55,7 +54,7 @@ class QDesignerDnDItemInterface;
 
 namespace qdesigner_internal {
 
-struct QDESIGNER_SHARED_EXPORT Selection {
+struct Q_DESIGNER_EXPORT Selection {
     bool empty() const;
     void clear();
 
@@ -73,7 +72,7 @@ struct QDESIGNER_SHARED_EXPORT Selection {
 // Extends the QDesignerObjectInspectorInterface by functionality
 // to access the selection
 
-class QDESIGNER_SHARED_EXPORT QDesignerObjectInspector: public QDesignerObjectInspectorInterface
+class Q_DESIGNER_EXPORT QDesignerObjectInspector: public QDesignerObjectInspectorInterface
 {
     Q_OBJECT
 public:

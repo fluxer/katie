@@ -31,6 +31,7 @@
 **
 ****************************************************************************/
 
+#include "qplatformdefs.h"
 #include "qcryptographichash.h"
 #include "qiodevice.h"
 
@@ -190,11 +191,11 @@ bool QCryptographicHash::addData(QIODevice* device)
     if (!device->isOpen())
         return false;
 
-    char buffer[1024];
+    char buffer[QT_BUFFSIZE];
     int length;
 
-    while ((length = device->read(buffer,sizeof(buffer))) > 0)
-        addData(buffer,length);
+    while ((length = device->read(buffer, QT_BUFFSIZE)) > 0)
+        addData(buffer, length);
 
     return device->atEnd();
 }

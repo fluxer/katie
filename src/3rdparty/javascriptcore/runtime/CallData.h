@@ -61,7 +61,7 @@ namespace JSC {
         JSValue operator()(ExecState* exec, JSObject* jsobj, JSValue thisValue, const ArgList& argList) const;
     };
 
-#if OS(SOLARIS)
+#if defined(Q_OS_SOLARIS)
     struct
 #else
     union

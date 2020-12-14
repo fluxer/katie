@@ -9,27 +9,21 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_FONTCONFIG QUIET fontconfig)
-
-    set(FONTCONFIG_INCLUDES ${PC_FONTCONFIG_INCLUDE_DIRS})
-    set(FONTCONFIG_LIBRARIES ${PC_FONTCONFIG_LIBRARIES})
-endif()
-
-if(NOT FONTCONFIG_INCLUDES OR NOT FONTCONFIG_LIBRARIES)
-    find_path(FONTCONFIG_INCLUDES
-        NAMES fontconfig/fontconfig.h
-        HINTS $ENV{FONTCONFIGDIR}/include
-    )
-
-    find_library(FONTCONFIG_LIBRARIES
-        NAMES fontconfig
-        HINTS $ENV{FONTCONFIGDIR}/lib
-    )
-endif()
-
+include(FindPkgConfig)
 include(FindPackageHandleStandardArgs)
+
+pkg_check_modules(PC_FONTCONFIG QUIET fontconfig)
+
+find_path(FONTCONFIG_INCLUDES
+    NAMES fontconfig/fontconfig.h
+    HINTS $ENV{FONTCONFIGDIR}/include ${PC_FONTCONFIG_INCLUDEDIR}
+)
+
+find_library(FONTCONFIG_LIBRARIES
+    NAMES fontconfig
+    HINTS $ENV{FONTCONFIGDIR}/lib ${PC_FONTCONFIG_LIBDIR}
+)
+
 find_package_handle_standard_args(Fontconfig
     VERSION_VAR PC_FONTCONFIG_VERSION
     REQUIRED_VARS FONTCONFIG_LIBRARIES FONTCONFIG_INCLUDES

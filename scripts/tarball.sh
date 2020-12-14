@@ -2,7 +2,7 @@
 
 set -e
 
-cwd="$(realpath $(dirname $0))"
+cwd="$(readlink -f $(dirname $0))"
 
 tarball="Katie-4.9.0-Source"
 

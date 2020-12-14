@@ -149,8 +149,7 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
         QX11PixmapData *data = new QX11PixmapData(QPixmapData::PixmapType);
         data->xinfo = widget->x11Info();
         data->fromImage(sub_src, Qt::NoOpaqueDetection);
-        QPixmap pm = QPixmap(data);
-        XCopyArea(qt_x11Data->display, pm.handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
+        XCopyArea(qt_x11Data->display, data->handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
     } else {
         // qpaintengine_x11.cpp
         extern void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage *image, Drawable hd, GC gc, Display *dpy, Visual *visual, int depth);
@@ -230,29 +229,24 @@ void QRasterWindowSurface::prepareBuffer(QImage::Format format)
         QRegion staticRegion(staticContents());
         // Make sure we're inside the boundaries of the old image.
         staticRegion &= QRect(0, 0, oldImage->width(), oldImage->height());
-        const QVector<QRect> &rects = staticRegion.rects();
-        const QRect *srcRect = rects.constData();
 
         // Copy the static content of the old image into the new one.
-        int numRectsLeft = rects.size();
-        do {
-            const int bytesOffset = srcRect->x() * bytesPerPixel;
-            const int dy = srcRect->y();
+        foreach(const QRect &srcRect, staticRegion.rects()) {
+            const int bytesOffset = srcRect.x() * bytesPerPixel;
+            const int dy = srcRect.y();
 
             // Adjust src and dst to point to the right offset.
             const uchar *s = src + dy * srcBytesPerLine + bytesOffset;
             uchar *d = dst + dy * dstBytesPerLine + bytesOffset;
-            const int numBytes = srcRect->width() * bytesPerPixel;
+            const int numBytes = srcRect.width() * bytesPerPixel;
 
-            int numScanLinesLeft = srcRect->height();
+            int numScanLinesLeft = srcRect.height();
             do {
                 ::memcpy(d, s, numBytes);
                 d += dstBytesPerLine;
                 s += srcBytesPerLine;
             } while (--numScanLinesLeft);
-
-            ++srcRect;
-        } while (--numRectsLeft);
+        };
     }
 
     delete oldImage;

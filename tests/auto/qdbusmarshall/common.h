@@ -31,13 +31,12 @@
 **
 ****************************************************************************/
 
-#include <math.h>               // isnan
+#include <qnumeric.h>
 #include <qvariant.h>
 #include <qdebug.h>
 #include <qline.h>
 
-#ifdef Q_OS_UNIX
-# include <qcore_unix_p.h>
+#include "qcore_unix_p.h"
 
 static bool compareFileDescriptors(int fd1, int fd2)
 {
@@ -49,7 +48,6 @@ static bool compareFileDescriptors(int fd1, int fd2)
 
     return (st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino);
 }
-#endif
 
 Q_DECLARE_METATYPE(QVariant)
 Q_DECLARE_METATYPE(QList<bool>)
@@ -97,11 +95,7 @@ static bool compare(const QDBusUnixFileDescriptor &t1, const QDBusUnixFileDescri
         return false;
     }
 
-#ifdef Q_OS_UNIX
     return compareFileDescriptors(fd1, fd2);
-#else
-    return true;
-#endif
 }
 
 struct MyStruct
@@ -356,7 +350,7 @@ bool compare(const QVariant &v1, const QVariant &v2);
 
 bool compare(double d1, double d2)
 {
-    if (isnan(d1) && isnan(d2))
+    if (qIsNaN(d1) && qIsNaN(d2))
         return true;
     return d1 == d2;
 }

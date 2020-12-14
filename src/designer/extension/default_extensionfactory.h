@@ -34,7 +34,6 @@
 #ifndef DEFAULT_EXTENSIONFACTORY_H
 #define DEFAULT_EXTENSIONFACTORY_H
 
-#include <QtDesigner/extension_global.h>
 #include <QtDesigner/extension.h>
 
 #include <QtCore/QMap>
@@ -47,7 +46,7 @@ QT_BEGIN_NAMESPACE
 
 class QExtensionManager;
 
-class QDESIGNER_EXTENSION_EXPORT QExtensionFactory : public QObject, public QAbstractExtensionFactory
+class Q_DESIGNER_EXPORT QExtensionFactory : public QObject, public QAbstractExtensionFactory
 {
     Q_OBJECT
     Q_INTERFACES(QAbstractExtensionFactory)

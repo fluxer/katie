@@ -210,14 +210,6 @@ bool QWidgetAction::event(QEvent *event)
 }
 
 /*!
-    \reimp
- */
-bool QWidgetAction::eventFilter(QObject *obj, QEvent *event)
-{
-    return QAction::eventFilter(obj,event);
-}
-
-/*!
     This function is called whenever the action is added to a container widget
     that supports custom widgets. If you don't want a custom widget to be
     used as representation of the action in the specified \a parent widget then

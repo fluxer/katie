@@ -39,13 +39,10 @@
 #include <QtCore/QTimer>
 #include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
-#include <qnativesocketengine_p.h>
+#include "qnativesocketengine_p.h"
+#include "qnet_unix_p.h"
 
-#ifdef Q_OS_UNIX
-#include <qnet_unix_p.h>
 #include <sys/select.h>
-#endif
-
 #include <limits>
 
 class tst_QSocketNotifier : public QObject
@@ -244,10 +241,6 @@ void tst_QSocketNotifier::mixingWithTimers()
 
 void tst_QSocketNotifier::posixSockets()
 {
-#ifndef Q_OS_UNIX
-    QSKIP("test only for posix", SkipAll);
-#else
-
     QTcpServer server;
     QVERIFY(server.listen(QHostAddress::LocalHost, 0));
 
@@ -294,7 +287,6 @@ void tst_QSocketNotifier::posixSockets()
         QCOMPARE(passive->readAll(), QByteArray("goodbye",8));
     }
     qt_safe_close(posixSocket);
-#endif
 }
 
 QTEST_MAIN(tst_QSocketNotifier)

@@ -728,13 +728,9 @@ void JSArray::sort(ExecState* exec)
     // FIXME: Since we sort by string value, a fast algorithm might be to use a radix sort. That would be O(N) rather
     // than O(N log N).
 
-#if HAVE(MERGESORT)
-    mergesort(values.begin(), values.size(), sizeof(ValueStringPair), compareByStringPairForQSort);
-#else
     // FIXME: The qsort library function is likely to not be a stable sort.
     // ECMAScript-262 does not specify a stable sort, but in practice, browsers perform a stable sort.
     qsort(values.begin(), values.size(), sizeof(ValueStringPair), compareByStringPairForQSort);
-#endif
 
     // FIXME: If the toString function changed the length of the array, this might be
     // modifying the vector incorrectly.

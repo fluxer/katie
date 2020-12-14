@@ -35,8 +35,7 @@
 #define SIGNALSLOTEDITOR_H
 
 #include "signalsloteditor_global.h"
-
-#include <QtDesigner/connectionedit_p.h>
+#include "connectionedit_p.h"
 
 #include <QtXml/qdom.h>
 

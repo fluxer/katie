@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <QtGui/qpixmapdata_p.h>
+#include "qpixmapdata_p.h"
 
 QT_BEGIN_NAMESPACE
 

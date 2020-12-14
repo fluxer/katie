@@ -721,8 +721,7 @@ static Atom send_selection(QClipboardData *d, Atom target, Window window, Atom p
 
          // don't allow INCR transfers when using MULTIPLE or to
         // Motif clients (since Motif doesn't support INCR)
-        static Atom motif_clip_temporary = ATOM(CLIP_TEMPORARY);
-        bool allow_incr = property != motif_clip_temporary;
+        bool allow_incr = (property != ATOM(CLIP_TEMPORARY));
 
         // X_ChangeProperty protocol request is 24 bytes
         const int increment = (XMaxRequestSize(qt_x11Data->display) * 4) - 24;

@@ -66,24 +66,6 @@ public:
         Format_ARGB32,
         Format_ARGB32_Premultiplied,
         Format_RGB16,
-        Format_ARGB8565_Premultiplied,
-        Format_RGB666,
-        Format_ARGB6666_Premultiplied,
-        Format_RGB555,
-        Format_ARGB8555_Premultiplied,
-        Format_RGB888,
-        Format_RGB444,
-        Format_ARGB4444_Premultiplied,
-#if 0
-        // reserved for future use
-        Format_RGB15,
-        Format_Grayscale16,
-        Format_Grayscale8,
-        Format_Grayscale4,
-        Format_Grayscale4LSB,
-        Format_Grayscale2,
-        Format_Grayscale2LSB
-#endif
         NImageFormats
     };
 

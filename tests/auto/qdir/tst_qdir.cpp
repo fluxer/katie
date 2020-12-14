@@ -43,10 +43,8 @@
 
 #include "../../shared/filesystem.h"
 
-#if defined(Q_OS_UNIX)
-# include <unistd.h>
-# include <sys/stat.h>
-#endif
+#include <unistd.h>
+#include <sys/stat.h>
 
 // #define Q_NO_SYMLINKS
 // Q_NO_SYMLINKS_TO_DIRS
@@ -565,13 +563,11 @@ void tst_QDir::entryList()
         return;
     }
     bool doContentCheck = true;
-#if defined(Q_OS_UNIX)
     if (qstrcmp(QTest::currentDataTag(), "QDir::AllEntries | QDir::Writable") == 0) {
         // for root, everything is writeable
         if (::getuid() == 0)
             doContentCheck = false;
     }
-#endif
 
     if (doContentCheck) {
         for (int i=0; i<max; ++i)
@@ -769,6 +765,7 @@ void tst_QDir::cd()
 
     QDir d = startDir;
     bool notUsed = d.exists(); // make sure we cache this before so we can see if 'cd' fails to flush this
+    Q_UNUSED(notUsed);
     QCOMPARE(d.cd(cdDir), successExpected);
     if (successExpected)
         QCOMPARE(d.absolutePath(), newDir);
@@ -1071,7 +1068,6 @@ void tst_QDir::homePath()
     QCOMPARE(strHome, homeDir.absolutePath());
     QVERIFY(QDir::isAbsolutePath(strHome));
 
-#ifdef Q_OS_UNIX
     if (strHome.length() > 1)      // root dir = "/"
         QVERIFY(!strHome.endsWith('/'));
 
@@ -1079,7 +1075,6 @@ void tst_QDir::homePath()
     ::unsetenv("HOME");
     QCOMPARE(QDir::homePath(), QDir::rootPath());
     qputenv("HOME", envHome);
-#endif
 
     QStringList entries = homeDir.entryList();
     for (int i = 0; i < entries.count(); ++i) {
@@ -1097,10 +1092,8 @@ void tst_QDir::tempPath()
     QCOMPARE(path, dir.absolutePath());
     QVERIFY(QDir::isAbsolutePath(path));
 
-#ifdef Q_OS_UNIX
     if (path.length() > 1)      // root dir = "/"
         QVERIFY(!path.endsWith('/'));
-#endif
 }
 
 void tst_QDir::rootPath()
@@ -1112,9 +1105,7 @@ void tst_QDir::rootPath()
     QCOMPARE(path, dir.absolutePath());
     QVERIFY(QDir::isAbsolutePath(path));
 
-#if defined(Q_OS_UNIX)
     QCOMPARE(path, QString("/"));
-#endif
 }
 
 void tst_QDir::nativeSeparators()
@@ -1526,13 +1517,11 @@ void tst_QDir::isReadable()
     QDir dir;
 
     QVERIFY(dir.isReadable());
-#if defined (Q_OS_UNIX)
     QVERIFY(dir.mkdir("nonreadabledir"));
     QVERIFY(0 == ::chmod("nonreadabledir", 0));
     QVERIFY(!QDir("nonreadabledir").isReadable());
     QVERIFY(0 == ::chmod("nonreadabledir", S_IRUSR | S_IWUSR | S_IXUSR));
     QVERIFY(dir.rmdir("nonreadabledir"));
-#endif
 }
 
 QTEST_MAIN(tst_QDir)

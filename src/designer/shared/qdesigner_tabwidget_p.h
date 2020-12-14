@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_TABWIDGET_H
 #define QDESIGNER_TABWIDGET_H
 
-#include "shared_global_p.h"
 #include "qdesigner_propertysheet_p.h"
 #include "qdesigner_utils_p.h"
 
@@ -64,7 +63,7 @@ namespace qdesigner_internal {
     class PromotionTaskMenu;
 }
 
-class QDESIGNER_SHARED_EXPORT QTabWidgetEventFilter : public QObject
+class Q_DESIGNER_EXPORT QTabWidgetEventFilter : public QObject
 {
     Q_OBJECT
 public:
@@ -109,7 +108,7 @@ private:
 };
 
 // PropertySheet to handle the page properties
-class QDESIGNER_SHARED_EXPORT QTabWidgetPropertySheet : public QDesignerPropertySheet {
+class Q_DESIGNER_EXPORT QTabWidgetPropertySheet : public QDesignerPropertySheet {
 public:
     explicit QTabWidgetPropertySheet(QTabWidget *object, QObject *parent = Q_NULLPTR);
 

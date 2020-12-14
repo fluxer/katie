@@ -64,21 +64,6 @@ static inline bool is_ascii_number(uint ucs4)
     return (ucs4 >= '0' && ucs4 <= '9');
 }
 
-static inline bool is_ascii_lower(uint ucs4)
-{
-    return (ucs4 >= 'a' && ucs4 <= 'z');
-}
-
-static inline bool is_ascii_upper(uint ucs4)
-{
-    return (ucs4 >= 'A' && ucs4 <= 'Z');
-}
-
-static inline bool is_ascii_letterornumber(uint ucs4)
-{
-    return (ucs4 >= 'a' && ucs4 <= 'z') || (ucs4 >= 'A' && ucs4 <= 'Z') || (ucs4 >= '0' && ucs4 <= '9');
-}
-
 static inline uint to_ascii_lower(uint ucs4)
 {
     switch (ucs4) {
@@ -668,8 +653,8 @@ bool QChar::isLetter() const
 */
 bool QChar::isNumber() const
 {
-    if (is_ascii_char(ucs)) {
-        return is_ascii_number(ucs);
+    if (is_ascii_number(ucs)) {
+        return true;
     }
     return u_isxdigit(ucs);
 }
@@ -680,8 +665,8 @@ bool QChar::isNumber() const
 */
 bool QChar::isLetterOrNumber() const
 {
-    if (is_ascii_char(ucs)) {
-        return is_ascii_letterornumber(ucs);
+    if ((ucs >= 'a' && ucs <= 'z') || (ucs >= 'A' && ucs <= 'Z') || (ucs >= '0' && ucs <= '9')) {
+        return true;
     }
     const int8_t category = u_charType(ucs);
     switch (category) {
@@ -707,8 +692,8 @@ bool QChar::isLetterOrNumber() const
 */
 bool QChar::isDigit() const
 {
-    if (is_ascii_char(ucs)) {
-        return is_ascii_number(ucs);
+    if (is_ascii_number(ucs)) {
+        return true;
     }
     return u_isdigit(ucs);
 }
@@ -1077,8 +1062,8 @@ bool QChar::hasMirrored() const
 */
 bool QChar::isLower() const
 {
-    if (is_ascii_char(ucs)) {
-        return is_ascii_lower(ucs);
+    if (ucs >= 'a' && ucs <= 'z') {
+        return true;
     }
     return category() == Letter_Lowercase;
 }
@@ -1093,8 +1078,8 @@ bool QChar::isLower() const
 */
 bool QChar::isUpper() const
 {
-    if (is_ascii_char(ucs)) {
-        return is_ascii_upper(ucs);
+    if (ucs >= 'A' && ucs <= 'Z') {
+        return true;
     }
     return category() == Letter_Uppercase;
 }

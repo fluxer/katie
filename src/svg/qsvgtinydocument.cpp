@@ -182,7 +182,8 @@ QSvgTinyDocument * QSvgTinyDocument::load(const QByteArray &contents)
 {
     // Check for gzip magic number and inflate if appropriate
     if (contents.startsWith("\x1f\x8b")) {
-        QBuffer buffer(const_cast<QByteArray *>(&contents));
+        QBuffer buffer;
+        buffer.setData(contents.constData(), contents.size());
         return load(qt_inflateGZipDataFrom(&buffer));
     }
 
@@ -362,14 +363,9 @@ void QSvgTinyDocument::setAnimated(bool a)
     m_animated = a;
 }
 
-void QSvgTinyDocument::draw(QPainter *p)
-{
-    draw(p, QRectF());
-}
-
 void QSvgTinyDocument::draw(QPainter *p, QSvgExtraStates &)
 {
-    draw(p);
+    draw(p, QRectF());
 }
 
 void QSvgTinyDocument::mapSourceToTarget(QPainter *p, const QRectF &targetRect, const QRectF &sourceRect)
@@ -408,7 +404,7 @@ QRectF QSvgTinyDocument::boundsOnElement(const QString &id) const
 {
     const QSvgNode *node = scopeNode(id);
     if (!node)
-        node = this;
+        return transformedBounds();
     return node->transformedBounds();
 }
 

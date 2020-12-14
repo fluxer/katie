@@ -45,10 +45,10 @@
 // We mean it.
 //
 
-#include <QtCore/qobjectdefs.h>
-#include <QtCore/qlist.h>
-#include <QtCore/qscopedpointer_p.h>
-#include <QtScript/qscriptvalue.h>
+#include "qobjectdefs.h"
+#include "qlist.h"
+#include "qscopedpointer_p.h"
+#include "qscriptvalue.h"
 
 QT_BEGIN_NAMESPACE
 

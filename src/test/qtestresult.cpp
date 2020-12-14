@@ -31,10 +31,10 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qtestresult_p.h"
-#include "QtTest/qtestlog_p.h"
-#include "QtTest/qtestdata.h"
-#include "QtTest/qtestassert.h"
+#include "qtestresult_p.h"
+#include "qtestlog_p.h"
+#include "qtestdata.h"
+#include "qtestassert.h"
 
 #include <stdio.h>
 #include <string.h>

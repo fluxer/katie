@@ -254,7 +254,6 @@ protected:
     friend class QWidget;
     friend class QPainter;
     friend class QPainterPrivate;
-    friend class QMacPrintEnginePrivate;
 
     QPaintEngine::DirtyFlags dirtyFlags;
 };

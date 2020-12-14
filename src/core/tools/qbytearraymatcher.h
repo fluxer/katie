@@ -57,19 +57,12 @@ public:
     int indexIn(const char *str, int len, int from = 0) const;
     inline QByteArray pattern() const
     {
-        if (q_pattern.isNull())
-            return QByteArray(reinterpret_cast<const char*>(p.p), p.l);
         return q_pattern;
     }
 
 private:
     QByteArray q_pattern;
-    struct Data {
-        uchar q_skiptable[256];
-        const uchar *p;
-        int l;
-    };
-    Data p;
+    uchar q_skiptable[256];
 };
 
 QT_END_NAMESPACE

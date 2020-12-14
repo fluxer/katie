@@ -109,10 +109,9 @@ public:
     QAbstractSocket(SocketType socketType, QObject *parent);
     virtual ~QAbstractSocket();
 
-    // ### Qt 5: Make connectToHost() and disconnectFromHost() virtual.
-    void connectToHost(const QString &hostName, quint16 port, OpenMode mode = ReadWrite);
-    void connectToHost(const QHostAddress &address, quint16 port, OpenMode mode = ReadWrite);
-    void disconnectFromHost();
+    virtual void connectToHost(const QString &hostName, quint16 port, OpenMode mode = ReadWrite);
+    virtual void connectToHost(const QHostAddress &address, quint16 port, OpenMode mode = ReadWrite);
+    virtual void disconnectFromHost();
 
     bool isValid() const;
 
@@ -127,20 +126,15 @@ public:
     QHostAddress peerAddress() const;
     QString peerName() const;
 
-    // ### Qt 5: Make setReadBufferSize() virtual
     qint64 readBufferSize() const;
-    void setReadBufferSize(qint64 size);
+    virtual void setReadBufferSize(qint64 size);
 
-    void abort();
-
-    // ### Qt 5: Make socketDescriptor() and setSocketDescriptor() virtual.
     int socketDescriptor() const;
-    bool setSocketDescriptor(int socketDescriptor, SocketState state = ConnectedState,
-                             OpenMode openMode = ReadWrite);
+    virtual bool setSocketDescriptor(int socketDescriptor, SocketState state = ConnectedState,
+                                     OpenMode openMode = ReadWrite);
 
-    // ### Qt 5: Make virtual?
-    void setSocketOption(QAbstractSocket::SocketOption option, const QVariant &value);
-    QVariant socketOption(QAbstractSocket::SocketOption option);
+    virtual void setSocketOption(QAbstractSocket::SocketOption option, const QVariant &value);
+    virtual QVariant socketOption(QAbstractSocket::SocketOption option);
 
     SocketType socketType() const;
     SocketState state() const;
@@ -150,14 +144,15 @@ public:
     void close();
     bool isSequential() const;
     bool atEnd() const;
-    bool flush();
+
+    virtual bool flush();
+    virtual void abort();
 
     // for synchronous access
-    // ### Qt 5: Make waitForConnected() and waitForDisconnected() virtual.
-    bool waitForConnected(int msecs = 30000);
+    virtual bool waitForConnected(int msecs = 30000);
     bool waitForReadyRead(int msecs = 30000);
     bool waitForBytesWritten(int msecs = 30000);
-    bool waitForDisconnected(int msecs = 30000);
+    virtual bool waitForDisconnected(int msecs = 30000);
 
 #ifndef QT_NO_NETWORKPROXY
     void setProxy(const QNetworkProxy &networkProxy);
@@ -173,10 +168,6 @@ Q_SIGNALS:
 #ifndef QT_NO_NETWORKPROXY
     void proxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator);
 #endif
-
-protected Q_SLOTS:
-    void connectToHostImplementation(const QString &hostName, quint16 port, OpenMode mode = ReadWrite);
-    void disconnectFromHostImplementation();
 
 protected:
     qint64 readData(char *data, qint64 maxlen);

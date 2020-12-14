@@ -45,7 +45,7 @@
 // We mean it.
 //
 
-#include <QtTest/qabstracttestlogger_p.h>
+#include "qabstracttestlogger_p.h"
 
 QT_BEGIN_NAMESPACE
 

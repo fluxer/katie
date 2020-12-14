@@ -45,8 +45,6 @@
 #ifndef METADATABASE_H
 #define METADATABASE_H
 
-#include "shared_global_p.h"
-
 #include <QtDesigner/abstractmetadatabase.h>
 
 #include <QtCore/QHash>
@@ -57,7 +55,7 @@ QT_BEGIN_NAMESPACE
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT MetaDataBaseItem: public QDesignerMetaDataBaseItemInterface
+class Q_DESIGNER_EXPORT MetaDataBaseItem: public QDesignerMetaDataBaseItemInterface
 {
 public:
     explicit MetaDataBaseItem(QObject *object);
@@ -95,7 +93,7 @@ private:
     QStringList m_fakeSignals;
 };
 
-class QDESIGNER_SHARED_EXPORT MetaDataBase: public QDesignerMetaDataBaseInterface
+class Q_DESIGNER_EXPORT MetaDataBase: public QDesignerMetaDataBaseInterface
 {
     Q_OBJECT
 public:
@@ -121,11 +119,11 @@ private:
 };
 
     // promotion convenience
-    QDESIGNER_SHARED_EXPORT bool promoteWidget(QDesignerFormEditorInterface *core,QWidget *widget,const QString &customClassName);
-    QDESIGNER_SHARED_EXPORT void demoteWidget(QDesignerFormEditorInterface *core,QWidget *widget); 
-    QDESIGNER_SHARED_EXPORT bool isPromoted(QDesignerFormEditorInterface *core, QWidget* w);
-    QDESIGNER_SHARED_EXPORT QString promotedCustomClassName(QDesignerFormEditorInterface *core, QWidget* w);
-    QDESIGNER_SHARED_EXPORT QString promotedExtends(QDesignerFormEditorInterface *core, QWidget* w);
+    Q_DESIGNER_EXPORT bool promoteWidget(QDesignerFormEditorInterface *core,QWidget *widget,const QString &customClassName);
+    Q_DESIGNER_EXPORT void demoteWidget(QDesignerFormEditorInterface *core,QWidget *widget); 
+    Q_DESIGNER_EXPORT bool isPromoted(QDesignerFormEditorInterface *core, QWidget* w);
+    Q_DESIGNER_EXPORT QString promotedCustomClassName(QDesignerFormEditorInterface *core, QWidget* w);
+    Q_DESIGNER_EXPORT QString promotedExtends(QDesignerFormEditorInterface *core, QWidget* w);
 
 } // namespace qdesigner_internal
 

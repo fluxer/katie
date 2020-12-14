@@ -229,6 +229,9 @@ private:
 
     Type m_type;
     Spread m_spread;
+    CoordinateMode m_coordinate;
+    InterpolationMode m_interpolation;
+    qreal m_focal;
     QGradientStops m_stops;
     union {
         struct {
@@ -241,7 +244,6 @@ private:
             qreal cx, cy, angle;
         } conical;
     } m_data;
-    void *dummy;
 };
 
 inline void QGradient::setSpread(Spread aspread)

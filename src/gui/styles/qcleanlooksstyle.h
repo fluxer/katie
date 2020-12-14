@@ -51,7 +51,6 @@ class Q_GUI_EXPORT QCleanlooksStyle : public QWindowsStyle
 
 public:
     QCleanlooksStyle();
-    ~QCleanlooksStyle();
 
     QPalette standardPalette () const;
     void drawPrimitive(PrimitiveElement elem,
@@ -89,7 +88,6 @@ public:
 
 protected:
     QCleanlooksStyle(QCleanlooksStylePrivate &dd);
-
 };
 
 #endif // QT_NO_STYLE_CLEANLOOKS

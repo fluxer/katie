@@ -1,4 +1,3 @@
-add_definitions(-DQT_DESIGNER_STATIC)
 set(EXTRA_UIC_LIBS
     KtCore KtXml
 )
@@ -7,9 +6,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp
 )
@@ -22,7 +19,6 @@ set(UIC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/driver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/treewalker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ui4.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppextractimages.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwritedeclaration.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteicondata.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteicondeclaration.cpp
@@ -43,7 +39,7 @@ set_target_properties(uic PROPERTIES
 
 install(
     TARGETS uic
-    EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )

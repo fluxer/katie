@@ -40,28 +40,17 @@
 
 #ifndef QT_NO_LIBRARY
 
-#if defined (Q_OS_NACL)
-#define QT_NO_DYNAMIC_LIBRARY
-#endif
-
-#if !defined(QT_NO_DYNAMIC_LIBRARY)
 #include <dlfcn.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
 static inline QString qdlerror()
 {
-#if defined(QT_NO_DYNAMIC_LIBRARY)
-    return QLatin1String("This platform does not support dynamic libraries.");
-#else
     return QString::fromLatin1(::dlerror());
-#endif
 }
 
 bool QLibraryPrivate::load_sys()
 {
-#if !defined(QT_NO_DYNAMIC_LIBRARY)
     int dlFlags = 0;
     if (loadHints & QLibrary::ResolveAllSymbolsHint) {
         dlFlags |= RTLD_NOW;
@@ -75,7 +64,6 @@ bool QLibraryPrivate::load_sys()
     }
 
     pHnd = ::dlopen(QFile::encodeName(fileName).constData(), dlFlags);
-#endif // QT_NO_DYNAMIC_LIBRARY
     if (!pHnd) {
         errorString = QLibrary::tr("Cannot load library %1: %2").arg(fileName).arg(qdlerror());
     } else {
@@ -87,23 +75,17 @@ bool QLibraryPrivate::load_sys()
 
 bool QLibraryPrivate::unload_sys()
 {
-#if !defined(QT_NO_DYNAMIC_LIBRARY)
     if (::dlclose(pHnd)) {
         errorString = QLibrary::tr("Cannot unload library %1: %2").arg(fileName).arg(qdlerror());
         return false;
     }
-#endif
     errorString.clear();
     return true;
 }
 
 void* QLibraryPrivate::resolve_sys(const char* symbol)
 {
-#if defined (QT_NO_DYNAMIC_LIBRARY)
-    void *address = Q_NULLPTR;
-#else
     void* address = ::dlsym(pHnd, symbol);
-#endif
     if (!address) {
         errorString = QLibrary::tr("Cannot resolve symbol \"%1\" in %2: %3").arg(
             QString::fromAscii(symbol)).arg(fileName).arg(qdlerror());

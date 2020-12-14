@@ -46,7 +46,6 @@
 #ifndef WIDGETFACTORY_H
 #define WIDGETFACTORY_H
 
-#include "shared_global_p.h"
 #include "pluginmanager_p.h"
 
 #include <QtDesigner/abstractwidgetfactory.h>
@@ -68,7 +67,7 @@ class QStyle;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT WidgetFactory: public QDesignerWidgetFactoryInterface
+class Q_DESIGNER_EXPORT WidgetFactory: public QDesignerWidgetFactoryInterface
 {
     Q_OBJECT
 public:

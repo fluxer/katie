@@ -46,8 +46,6 @@
 #ifndef WIDGETDATABASE_H
 #define WIDGETDATABASE_H
 
-#include "shared_global_p.h"
-
 #include <QtDesigner/abstractwidgetdatabase.h>
 
 #include <QtGui/QIcon>
@@ -63,7 +61,7 @@ class QDesignerCustomWidgetInterface;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT WidgetDataBaseItem: public QDesignerWidgetDataBaseItemInterface
+class Q_DESIGNER_EXPORT WidgetDataBaseItem: public QDesignerWidgetDataBaseItemInterface
 {
 public:
     explicit WidgetDataBaseItem(const QString &name = QString(),
@@ -143,10 +141,10 @@ enum IncludeType { IncludeLocal, IncludeGlobal  };
 
 typedef  QPair<QString, IncludeType> IncludeSpecification;
 
-QDESIGNER_SHARED_EXPORT IncludeSpecification  includeSpecification(QString includeFile);
-QDESIGNER_SHARED_EXPORT QString buildIncludeFile(QString includeFile, IncludeType includeType);
+Q_DESIGNER_EXPORT IncludeSpecification  includeSpecification(QString includeFile);
+Q_DESIGNER_EXPORT QString buildIncludeFile(QString includeFile, IncludeType includeType);
 
-class QDESIGNER_SHARED_EXPORT WidgetDataBase: public QDesignerWidgetDataBaseInterface
+class Q_DESIGNER_EXPORT WidgetDataBase: public QDesignerWidgetDataBaseInterface
 {
     Q_OBJECT
 public:
@@ -180,7 +178,7 @@ private:
     QDesignerFormEditorInterface *m_core;
 };
 
-QDESIGNER_SHARED_EXPORT QDesignerWidgetDataBaseItemInterface
+Q_DESIGNER_EXPORT QDesignerWidgetDataBaseItemInterface
         *appendDerived(QDesignerWidgetDataBaseInterface *db,
                        const QString &className,
                        const QString &group,
@@ -191,7 +189,7 @@ QDESIGNER_SHARED_EXPORT QDesignerWidgetDataBaseItemInterface
 
 typedef  QList<QDesignerWidgetDataBaseItemInterface*> WidgetDataBaseItemList;
 
-QDESIGNER_SHARED_EXPORT WidgetDataBaseItemList
+Q_DESIGNER_EXPORT WidgetDataBaseItemList
         promotionCandidates(const QDesignerWidgetDataBaseInterface *db,
                             const QString &baseClassName);
 } // namespace qdesigner_internal

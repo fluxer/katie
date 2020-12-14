@@ -218,17 +218,7 @@ private:
         checkConsistency();
     }
 
-#if OS(SOLARIS) && COMPILER(SUNCC)
-public: // Otherwise the compiler complains about operator new not being accessible.
-#endif
-#if COMPILER(XLC)
-    void* operator new(size_t size) { return Noncopyable::operator new(size); }
-#else
     using Noncopyable::operator new;
-#endif
-#if OS(SOLARIS) && COMPILER(SUNCC)
-private:
-#endif
     void* operator new(size_t, void* p) { return p; }
 
     ~UStringImpl();

@@ -409,26 +409,6 @@ QString QAccessibleToolButton::text(Text t, int child) const
 /*!
     \internal
 
-    Returns the number of actions which is 0, 1, or 2, in part
-    depending on \a child.
-*/
-int QAccessibleToolButton::actionCount(int child) const
-{
-    // each subelement has one action
-    if (child)
-        return isSplitButton() ? 1 : 0;
-    int ac = widget()->focusPolicy() != Qt::NoFocus ? 1 : 0;
-    // button itself has two actions if a menu button
-#ifndef QT_NO_MENU
-    return ac + (toolButton()->menu() ? 2 : 1);
-#else
-    return ac + 1;
-#endif
-}
-
-/*!
-    \internal
-
     If \a text is \c Name, then depending on the \a child or the \a
     action, an action text is returned. This is a translated string
     which in English is one of "Press", "Open", or "Set Focus". If \a

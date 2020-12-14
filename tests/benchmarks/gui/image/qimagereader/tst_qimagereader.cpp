@@ -41,8 +41,6 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QSet>
-#include <QTcpSocket>
-#include <QTcpServer>
 #include <QTimer>
 
 typedef QMap<QString, QString> QStringMap;
@@ -107,10 +105,8 @@ tst_QImageReader::tst_QImageReader()
     images << QPair<QString, QByteArray>(QLatin1String("YCbCr_rgb.jpg"), QByteArray("jpeg"));
     images << QPair<QString, QByteArray>(QLatin1String("task210380.jpg"), QByteArray("jpeg"));
 #endif
-#if defined QTEST_HAVE_GIF
     images << QPair<QString, QByteArray>(QLatin1String("earth.gif"), QByteArray("gif"));
     images << QPair<QString, QByteArray>(QLatin1String("trolltech.gif"), QByteArray("gif"));
-#endif
 }
 
 tst_QImageReader::~tst_QImageReader()

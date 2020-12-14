@@ -45,7 +45,6 @@
 #ifndef ABSTRACTDIALOGGUI_H
 #define ABSTRACTDIALOGGUI_H
 
-#include <QtDesigner/sdk_global.h>
 #include <QtGui/QMessageBox>
 #include <QtGui/QFileDialog>
 
@@ -53,7 +52,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QDESIGNER_SDK_EXPORT QDesignerDialogGuiInterface
+class Q_DESIGNER_EXPORT QDesignerDialogGuiInterface
 {
     Q_DISABLE_COPY(QDesignerDialogGuiInterface)
 public:

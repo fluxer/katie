@@ -61,7 +61,7 @@
 #define QT_USE_FREETYPE_LCDFILTER
 #endif
 
-#ifdef QT_LINUXBASE
+#if defined(FT_ERRORS_H)
 #include FT_ERRORS_H
 #endif
 

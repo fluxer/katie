@@ -1,13 +1,14 @@
 add_definitions(-DQT_MOC)
 set(EXTRA_MOC_LIBS
     KtCore
+    # possible pthread reference from the global static mutex used in qmetaobject_p.h
+    ${CMAKE_THREAD_LIBS_INIT}
 )
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${ICU_INCLUDES}
 )
@@ -27,7 +28,6 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_CAST_FROM_ASCII
     -DQT_NO_CAST_TO_ASCII
     -DQT_NO_DATASTREAM
-    -DQT_NO_GEOM_VARIANT
     -DQT_NO_LIBRARY
     -DQT_NO_QOBJECT
     -DQT_NO_SYSTEMLOCALE
@@ -39,14 +39,13 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_COMPRESS
     -DQT_NO_EXCEPTIONS
     -DQT_NO_REGEXP
-    -DQT_NO_UNWIND
+    -DQT_NO_EXECINFO
     -DQT_NO_TEXTCODEC
 )
 
 set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/codecs/qicucodec.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/global/qnumeric.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qabstractfileengine.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qbuffer.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qdir.cpp
@@ -64,7 +63,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemiterator_unix.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine_unix.cpp
     ${CMAKE_SOURCE_DIR}/src/core/kernel/qmetatype.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/kernel/qsystemerror.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qbytearray.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qbytearraymatcher.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qchar.cpp
@@ -95,7 +93,7 @@ set_target_properties(moc PROPERTIES
 
 install(
     TARGETS moc
-    EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )

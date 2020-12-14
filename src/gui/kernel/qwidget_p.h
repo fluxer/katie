@@ -507,7 +507,7 @@ public:
     }
 
     // Almost cross-platform :-)
-    void setWSGeometry(bool dontShow=false, const QRect &oldRect = QRect());
+    void setWSGeometry(bool dontShow=false);
 
     inline QPoint mapToWS(const QPoint &p) const
     { return p - data.wrect.topLeft(); }
@@ -516,10 +516,10 @@ public:
     { return p + data.wrect.topLeft(); }
 
     inline QRect mapToWS(const QRect &r) const
-    { QRect rr(r); rr.translate(-data.wrect.topLeft()); return rr; }
+    { return r.translated(-data.wrect.topLeft()); }
 
     inline QRect mapFromWS(const QRect &r) const
-    { QRect rr(r); rr.translate(data.wrect.topLeft()); return rr; }
+    { return r.translated(data.wrect.topLeft()); }
 
     // Variables.
     // Regular pointers (keep them together to avoid gaps on 64 bit architectures).
@@ -564,12 +564,10 @@ public:
     short topmargin;
     short rightmargin;
     short bottommargin;
-    signed char leftLayoutItemMargin;
-    signed char topLayoutItemMargin;
-    signed char rightLayoutItemMargin;
-    signed char bottomLayoutItemMargin;
-    static int instanceCounter; // Current number of widget instances
-    static int maxInstances; // Maximum number of widget instances
+    int leftLayoutItemMargin;
+    int topLayoutItemMargin;
+    int rightLayoutItemMargin;
+    int bottomLayoutItemMargin;
     Qt::HANDLE hd;
     QWidgetData data;
     QSizePolicy size_policy;

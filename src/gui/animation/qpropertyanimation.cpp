@@ -83,12 +83,13 @@
 #include "qpropertyanimation.h"
 #include "qanimationgroup.h"
 #include "qpropertyanimation_p.h"
-
-#include "qmutexpool_p.h"
+#include "qmutex.h"
 
 #ifndef QT_NO_ANIMATION
 
 QT_BEGIN_NAMESPACE
+
+Q_GLOBAL_STATIC(QMutex, qPropertyAnimationMutex)
 
 void QPropertyAnimationPrivate::updateMetaProperty()
 {
@@ -253,7 +254,7 @@ void QPropertyAnimation::updateState(QAbstractAnimation::State newState,
 
     QPropertyAnimation *animToStop = 0;
     {
-        QMutexLocker locker(QMutexPool::globalInstanceGet(&staticMetaObject));
+        QMutexLocker locker(qPropertyAnimationMutex());
         typedef QPair<QObject *, QByteArray> QPropertyAnimationPair;
         typedef QHash<QPropertyAnimationPair, QPropertyAnimation*> QPropertyAnimationHash;
         static QPropertyAnimationHash hash;

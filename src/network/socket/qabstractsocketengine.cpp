@@ -130,9 +130,9 @@ QString QAbstractSocketEngine::errorString() const
     return d_func()->socketErrorString;
 }
 
-void QAbstractSocketEngine::setError(QAbstractSocket::SocketError error, const QString &errorString) const
+void QAbstractSocketEngine::setError(QAbstractSocket::SocketError error, const QString &errorString)
 {
-    Q_D(const QAbstractSocketEngine);
+    Q_D(QAbstractSocketEngine);
     d->socketError = error;
     d->socketErrorString = errorString;
 }

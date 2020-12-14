@@ -25,7 +25,6 @@
 #include "Operations.h"
 #include <time.h>
 #include <wtf/Assertions.h>
-#include <wtf/MathExtras.h>
 
 namespace JSC {
 
@@ -55,6 +54,12 @@ static JSValue QT_FASTCALL mathProtoFuncTan(ExecState*, JSObject*, JSValue, cons
 #include "MathObject.lut.h"
 
 namespace JSC {
+
+#ifndef M_PI
+static const double piDouble = 3.14159265358979323846;
+#else
+static const double piDouble = M_PI;
+#endif
 
 // ------------------------------ MathObject --------------------------------
 

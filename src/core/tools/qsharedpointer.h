@@ -51,7 +51,7 @@ QT_BEGIN_NAMESPACE
 //    X *ptr2 = ptr1;
 //
 #ifdef QT_NO_DEBUG
-# define QSHAREDPOINTER_VERIFY_AUTO_CAST(T, X)          qt_noop()
+# define QSHAREDPOINTER_VERIFY_AUTO_CAST(T, X)
 #else
 
 template<typename T> inline void qt_sharedpointer_cast_check(T *) { }

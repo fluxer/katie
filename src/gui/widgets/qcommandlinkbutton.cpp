@@ -104,7 +104,6 @@ public:
     int textOffset() const;
     int descriptionOffset() const;
     int descriptionHeight(int width) const;
-    QColor mergedColors(const QColor &a, const QColor &b, int value) const;
 
     int topMargin() const { return 10; }
     int leftMargin() const { return 7; }
@@ -114,18 +113,6 @@ public:
     QString description;
     QColor currentColor;
 };
-
-// Mix colors a and b with a ratio in the range [0-255]
-QColor QCommandLinkButtonPrivate::mergedColors(const QColor &a, const QColor &b, int value = 50) const
-{
-    Q_ASSERT(value >= 0);
-    Q_ASSERT(value <= 255);
-    QColor tmp = a;
-    tmp.setRed((tmp.red() * value) / 255 + (b.red() * (255 - value)) / 255);
-    tmp.setGreen((tmp.green() * value) / 255 + (b.green() * (255 - value)) / 255);
-    tmp.setBlue((tmp.blue() * value) / 255 + (b.blue() * (255 - value)) / 255);
-    return tmp;
-}
 
 QFont QCommandLinkButtonPrivate::titleFont() const
 {

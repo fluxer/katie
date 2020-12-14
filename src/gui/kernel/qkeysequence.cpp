@@ -98,105 +98,17 @@ QT_BEGIN_NAMESPACE
 
     QKeySequence objects can be cast to a QString to obtain a human-readable
     translated version of the sequence. Similarly, the toString() function
-    produces human-readable strings for use in menus. On Mac OS X, the
-    appropriate symbols are used to describe keyboard shortcuts using special
-    keys on the Macintosh keyboard.
+    produces human-readable strings for use in menus.
 
     An alternative way to specify hard-coded key codes is to use the Unicode
     code point of the character; for example, 'A' gives the same key sequence
     as Qt::Key_A.
 
-    \bold{Note:} On Mac OS X, references to "Ctrl", Qt::CTRL, Qt::Control
-    and Qt::ControlModifier correspond to the \key Command keys on the
-    Macintosh keyboard, and references to "Meta", Qt::META, Qt::Meta and
-    Qt::MetaModifier correspond to the \key Control keys. Developers on
-    Mac OS X can use the same shortcut descriptions across all platforms,
-    and their applications will automatically work as expected on Mac OS X.
-
     \section1 Standard Shortcuts
 
     QKeySequence defines many \l{QKeySequence::StandardKey} {standard
     keyboard shortcuts} to reduce the amount of effort required when
-    setting up actions in a typical application. The table below shows
-    some common key sequences that are often used for these standard
-    shortcuts by applications on four widely-used platforms.  Note
-    that on Mac OS X, the \key Ctrl value corresponds to the \key
-    Command keys on the Macintosh keyboard, and the \key Meta value
-    corresponds to the \key Control keys.
-
-    \table
-    \header \i StandardKey      \i Windows                              \i Mac OS X                 \i KDE          \i GNOME
-    \row    \i HelpContents     \i F1                                   \i Ctrl+?                   \i F1           \i F1
-    \row    \i WhatsThis        \i Shift+F1                             \i Shift+F1                 \i Shift+F1     \i Shift+F1
-    \row    \i Open             \i Ctrl+O                               \i Ctrl+O                   \i Ctrl+O       \i Ctrl+O
-    \row    \i Close            \i Ctrl+F4, Ctrl+W                      \i Ctrl+W, Ctrl+F4          \i Ctrl+W       \i Ctrl+W
-    \row    \i Save             \i Ctrl+S                               \i Ctrl+S                   \i Ctrl+S       \i Ctrl+S
-    \row    \i Quit             \i                                      \i Ctrl+Q                   \i Qtrl+Q       \i Qtrl+Q
-    \row    \i SaveAs           \i                                      \i Ctrl+Shift+S             \i              \i Ctrl+Shift+S
-    \row    \i New              \i Ctrl+N                               \i Ctrl+N                   \i Ctrl+N       \i Ctrl+N
-    \row    \i Delete           \i Del                                  \i Del, Meta+D              \i Del, Ctrl+D  \i Del, Ctrl+D
-    \row    \i Cut              \i Ctrl+X, Shift+Del                    \i Ctrl+X                   \i Ctrl+X, F20, Shift+Del \i Ctrl+X, F20, Shift+Del
-    \row    \i Copy             \i Ctrl+C, Ctrl+Ins                     \i Ctrl+C                   \i Ctrl+C, F16, Ctrl+Ins  \i Ctrl+C, F16, Ctrl+Ins
-    \row    \i Paste            \i Ctrl+V, Shift+Ins                    \i Ctrl+V                   \i Ctrl+V, F18, Shift+Ins \i Ctrl+V, F18, Shift+Ins
-    \row    \i Preferences      \i                                      \i Ctrl+,                   \i              \i
-    \row    \i Undo             \i Ctrl+Z, Alt+Backspace                \i Ctrl+Z                   \i Ctrl+Z, F14  \i Ctrl+Z, F14
-    \row    \i Redo             \i Ctrl+Y, Shift+Ctrl+Z, Alt+Shift+Backspace \i Ctrl+Shift+Z        \i Ctrl+Shift+Z \i Ctrl+Shift+Z
-    \row    \i Back             \i Alt+Left, Backspace                  \i Ctrl+[                   \i Alt+Left     \i Alt+Left
-    \row    \i Forward          \i Alt+Right, Shift+Backspace           \i Ctrl+]                   \i Alt+Right    \i Alt+Right
-    \row    \i Refresh          \i F5                                   \i F5                       \i F5           \i Ctrl+R, F5
-    \row    \i ZoomIn           \i Ctrl+Plus                            \i Ctrl+Plus                \i Ctrl+Plus    \i Ctrl+Plus
-    \row    \i ZoomOut          \i Ctrl+Minus                           \i Ctrl+Minus               \i Ctrl+Minus   \i Ctrl+Minus
-    \row    \i Print            \i Ctrl+P                               \i Ctrl+P                   \i Ctrl+P       \i Ctrl+P
-    \row    \i AddTab           \i Ctrl+T                               \i Ctrl+T                   \i Ctrl+Shift+N, Ctrl+T \i Ctrl+T
-    \row    \i NextChild        \i Ctrl+Tab, Forward, Ctrl+F6           \i Ctrl+}, Forward, Ctrl+Tab \i Ctrl+Tab, Forward, Ctrl+Comma \i Ctrl+Tab, Forward
-    \row    \i PreviousChild    \i Ctrl+Shift+Tab, Back, Ctrl+Shift+F6  \i Ctrl+{, Back, Ctrl+Shift+Tab \i Ctrl+Shift+Tab, Back, Ctrl+Period \i Ctrl+Shift+Tab, Back
-    \row    \i Find             \i Ctrl+F                               \i Ctrl+F                   \i Ctrl+F         \i Ctrl+F
-    \row    \i FindNext         \i F3, Ctrl+G                           \i Ctrl+G                   \i F3             \i Ctrl+G, F3
-    \row    \i FindPrevious     \i Shift+F3, Ctrl+Shift+G               \i Ctrl+Shift+G             \i Shift+F3       \i Ctrl+Shift+G, Shift+F3
-    \row    \i Replace          \i Ctrl+H                               \i (none)                   \i Ctrl+R         \i Ctrl+H
-    \row    \i SelectAll        \i Ctrl+A                               \i Ctrl+A                   \i Ctrl+A         \i Ctrl+A
-    \row    \i Bold             \i Ctrl+B                               \i Ctrl+B                   \i Ctrl+B         \i Ctrl+B
-    \row    \i Italic           \i Ctrl+I                               \i Ctrl+I                   \i Ctrl+I         \i Ctrl+I
-    \row    \i Underline        \i Ctrl+U                               \i Ctrl+U                   \i Ctrl+U         \i Ctrl+U
-    \row    \i MoveToNextChar       \i Right                            \i Right                    \i Right          \i Right
-    \row    \i MoveToPreviousChar   \i Left                             \i Left                     \i Left           \i Left
-    \row    \i MoveToNextWord       \i Ctrl+Right                       \i Alt+Right                \i Ctrl+Right     \i Ctrl+Right
-    \row    \i MoveToPreviousWord   \i Ctrl+Left                        \i Alt+Left                 \i Ctrl+Left      \i Ctrl+Left
-    \row    \i MoveToNextLine       \i Down                             \i Down                     \i Down           \i Down
-    \row    \i MoveToPreviousLine   \i Up                               \i Up                       \i Up             \i Up
-    \row    \i MoveToNextPage       \i PgDown                           \i PgDown, Alt+PgDown, Meta+Down, Meta+PgDown\i PgDown \i PgDown
-    \row    \i MoveToPreviousPage   \i PgUp                             \i PgUp, Alt+PgUp, Meta+Up, Meta+PgUp        \i PgUp   \i PgUp
-    \row    \i MoveToStartOfLine    \i Home                             \i Ctrl+Left, Meta+Left   \i Home            \i Home
-    \row    \i MoveToEndOfLine      \i End                              \i Ctrl+Right, Meta+Right \i End             \i End
-    \row    \i MoveToStartOfBlock   \i (none)                           \i Alt+Up, Meta+A         \i (none)          \i (none)
-    \row    \i MoveToEndOfBlock     \i (none)                           \i Alt+Down, Meta+E       \i (none)          \i (none)
-    \row    \i MoveToStartOfDocument\i Ctrl+Home                        \i Ctrl+Up, Home          \i Ctrl+Home       \i Ctrl+Home
-    \row    \i MoveToEndOfDocument  \i Ctrl+End                         \i Ctrl+Down, End         \i Ctrl+End        \i Ctrl+End
-    \row    \i SelectNextChar       \i Shift+Right                      \i Shift+Right            \i Shift+Right     \i Shift+Right
-    \row    \i SelectPreviousChar   \i Shift+Left                       \i Shift+Left             \i Shift+Left      \i Shift+Left
-    \row    \i SelectNextWord       \i Ctrl+Shift+Right                 \i Alt+Shift+Right        \i Ctrl+Shift+Right \i Ctrl+Shift+Right
-    \row    \i SelectPreviousWord   \i Ctrl+Shift+Left                  \i Alt+Shift+Left         \i Ctrl+Shift+Left \i Ctrl+Shift+Left
-    \row    \i SelectNextLine       \i Shift+Down                       \i Shift+Down             \i Shift+Down     \i Shift+Down
-    \row    \i SelectPreviousLine   \i Shift+Up                         \i Shift+Up               \i Shift+Up       \i Shift+Up
-    \row    \i SelectNextPage       \i Shift+PgDown                     \i Shift+PgDown           \i Shift+PgDown   \i Shift+PgDown
-    \row    \i SelectPreviousPage   \i Shift+PgUp                       \i Shift+PgUp             \i Shift+PgUp     \i Shift+PgUp
-    \row    \i SelectStartOfLine    \i Shift+Home                       \i Ctrl+Shift+Left        \i Shift+Home     \i Shift+Home
-    \row    \i SelectEndOfLine      \i Shift+End                        \i Ctrl+Shift+Right       \i Shift+End      \i Shift+End
-    \row    \i SelectStartOfBlock   \i (none)                           \i Alt+Shift+Up, Meta+Shift+A \i (none)     \i (none)
-    \row    \i SelectEndOfBlock     \i (none)                           \i Alt+Shift+Down, Meta+Shift+E \i (none)   \i (none)
-    \row    \i SelectStartOfDocument\i Ctrl+Shift+Home                  \i Ctrl+Shift+Up, Shift+Home          \i Ctrl+Shift+Home\i Ctrl+Shift+Home
-    \row    \i SelectEndOfDocument  \i Ctrl+Shift+End                   \i Ctrl+Shift+Down, Shift+End        \i Ctrl+Shift+End \i Ctrl+Shift+End
-    \row    \i DeleteStartOfWord    \i Ctrl+Backspace                   \i Alt+Backspace          \i Ctrl+Backspace \i Ctrl+Backspace
-    \row    \i DeleteEndOfWord      \i Ctrl+Del                         \i (none)                 \i Ctrl+Del       \i Ctrl+Del
-    \row    \i DeleteEndOfLine      \i (none)                           \i (none)                 \i Ctrl+K         \i Ctrl+K
-    \row    \i InsertParagraphSeparator     \i Enter                    \i Enter                  \i Enter          \i Enter
-    \row    \i InsertLineSeparator          \i Shift+Enter              \i Meta+Enter             \i Shift+Enter    \i Shift+Enter
-    \endtable
-
-    Note that, since the key sequences used for the standard shortcuts differ
-    between platforms, you still need to test your shortcuts on each platform
-    to ensure that you do not unintentionally assign the same key sequence to
-    many actions.
+    setting up actions in a typical application.
 
     \section1 Keyboard Layout Issues
 
@@ -277,13 +189,12 @@ QT_BEGIN_NAMESPACE
     \enum QKeySequence::SequenceFormat
 
     \value NativeText The key sequence as a platform specific string.
-    This means that it will be shown translated and on the Mac it will
-    resemble a key sequence from the menu bar. This enum is best used when you
-    want to display the string to the user.
+    This means that it will be shown translated. This enum is best
+    used when you want to display the string to the user.
 
     \value PortableText The key sequence is given in a "portable" format,
     suitable for reading and writing to a file. In many cases, it will look
-    similar to the native text on Windows and X11.
+    similar to the native text on X11.
 */
 
 static const struct KeyNameTblData {
@@ -329,11 +240,6 @@ static const struct KeyNameTblData {
     { Qt::Key_VolumeDown,                 QT_TRANSLATE_NOOP("QShortcut", "Volume Down") },
     { Qt::Key_VolumeMute,                 QT_TRANSLATE_NOOP("QShortcut", "Volume Mute") },
     { Qt::Key_VolumeUp,                   QT_TRANSLATE_NOOP("QShortcut", "Volume Up") },
-    { Qt::Key_BassBoost,                  QT_TRANSLATE_NOOP("QShortcut", "Bass Boost") },
-    { Qt::Key_BassUp,                     QT_TRANSLATE_NOOP("QShortcut", "Bass Up") },
-    { Qt::Key_BassDown,                   QT_TRANSLATE_NOOP("QShortcut", "Bass Down") },
-    { Qt::Key_TrebleUp,                   QT_TRANSLATE_NOOP("QShortcut", "Treble Up") },
-    { Qt::Key_TrebleDown,                 QT_TRANSLATE_NOOP("QShortcut", "Treble Down") },
     { Qt::Key_MediaPlay,                  QT_TRANSLATE_NOOP("QShortcut", "Media Play") },
     { Qt::Key_MediaStop,                  QT_TRANSLATE_NOOP("QShortcut", "Media Stop") },
     { Qt::Key_MediaPrevious,              QT_TRANSLATE_NOOP("QShortcut", "Media Previous") },
@@ -342,7 +248,6 @@ static const struct KeyNameTblData {
     //: Media player pause button
     { Qt::Key_MediaPause,                 QT_TRANSLATE_NOOP("QShortcut", "Media Pause") },
     //: Media player button to toggle between playing and paused
-    { Qt::Key_MediaTogglePlayPause,       QT_TRANSLATE_NOOP("QShortcut", "Toggle Media Play/Pause") },
     { Qt::Key_HomePage,                   QT_TRANSLATE_NOOP("QShortcut", "Home Page") },
     { Qt::Key_Favorites,                  QT_TRANSLATE_NOOP("QShortcut", "Favorites") },
     { Qt::Key_Search,                     QT_TRANSLATE_NOOP("QShortcut", "Search") },
@@ -472,34 +377,6 @@ static const struct KeyNameTblData {
     { Qt::Key_SysReq,       QT_TRANSLATE_NOOP("QShortcut", "System Request") },
 
     // --------------------------------------------------------------
-    // Keypad navigation keys
-    { Qt::Key_Select,       QT_TRANSLATE_NOOP("QShortcut", "Select") },
-    { Qt::Key_Yes,          QT_TRANSLATE_NOOP("QShortcut", "Yes") },
-    { Qt::Key_No,           QT_TRANSLATE_NOOP("QShortcut", "No") },
-
-    // --------------------------------------------------------------
-    // Device keys
-    { Qt::Key_Context1,         QT_TRANSLATE_NOOP("QShortcut", "Context1") },
-    { Qt::Key_Context2,         QT_TRANSLATE_NOOP("QShortcut", "Context2") },
-    { Qt::Key_Context3,         QT_TRANSLATE_NOOP("QShortcut", "Context3") },
-    { Qt::Key_Context4,         QT_TRANSLATE_NOOP("QShortcut", "Context4") },
-    //: Button to start a call (note: a separate button is used to end the call)
-    { Qt::Key_Call,             QT_TRANSLATE_NOOP("QShortcut", "Call") },
-    //: Button to end a call (note: a separate button is used to start the call)
-    { Qt::Key_Hangup,           QT_TRANSLATE_NOOP("QShortcut", "Hangup") },
-    //: Button that will hang up if we're in call, or make a call if we're not.
-    { Qt::Key_ToggleCallHangup, QT_TRANSLATE_NOOP("QShortcut", "Toggle Call/Hangup") },
-    { Qt::Key_Flip,             QT_TRANSLATE_NOOP("QShortcut", "Flip") },
-    //: Button to trigger voice dialing
-    { Qt::Key_VoiceDial,        QT_TRANSLATE_NOOP("QShortcut", "Voice Dial") },
-    //: Button to redial the last number called
-    { Qt::Key_LastNumberRedial, QT_TRANSLATE_NOOP("QShortcut", "Last Number Redial") },
-    //: Button to trigger the camera shutter (take a picture)
-    { Qt::Key_Camera,           QT_TRANSLATE_NOOP("QShortcut", "Camera Shutter") },
-    //: Button to focus the camera
-    { Qt::Key_CameraFocus,      QT_TRANSLATE_NOOP("QShortcut", "Camera Focus") },
-
-    // --------------------------------------------------------------
     // Japanese keyboard support
     { Qt::Key_Kanji,            QT_TRANSLATE_NOOP("QShortcut", "Kanji") },
     { Qt::Key_Muhenkan,         QT_TRANSLATE_NOOP("QShortcut", "Muhenkan") },
@@ -520,20 +397,6 @@ static const struct KeyNameTblData {
     { Qt::Key_Codeinput,        QT_TRANSLATE_NOOP("QShortcut", "Code input") },
     { Qt::Key_MultipleCandidate,QT_TRANSLATE_NOOP("QShortcut", "Multiple Candidate") },
     { Qt::Key_PreviousCandidate,QT_TRANSLATE_NOOP("QShortcut", "Previous Candidate") },
-
-    // --------------------------------------------------------------
-    // Korean keyboard support
-    { Qt::Key_Hangul,          QT_TRANSLATE_NOOP("QShortcut", "Hangul") },
-    { Qt::Key_Hangul_Start,    QT_TRANSLATE_NOOP("QShortcut", "Hangul Start") },
-    { Qt::Key_Hangul_End,      QT_TRANSLATE_NOOP("QShortcut", "Hangul End") },
-    { Qt::Key_Hangul_Hanja,    QT_TRANSLATE_NOOP("QShortcut", "Hangul Hanja") },
-    { Qt::Key_Hangul_Jamo,     QT_TRANSLATE_NOOP("QShortcut", "Hangul Jamo") },
-    { Qt::Key_Hangul_Romaja,   QT_TRANSLATE_NOOP("QShortcut", "Hangul Romaja") },
-    { Qt::Key_Hangul_Jeonja,   QT_TRANSLATE_NOOP("QShortcut", "Hangul Jeonja") },
-    { Qt::Key_Hangul_Banja,    QT_TRANSLATE_NOOP("QShortcut", "Hangul Banja") },
-    { Qt::Key_Hangul_PreHanja, QT_TRANSLATE_NOOP("QShortcut", "Hangul PreHanja") },
-    { Qt::Key_Hangul_PostHanja,QT_TRANSLATE_NOOP("QShortcut", "Hangul PostHanja") },
-    { Qt::Key_Hangul_Special,  QT_TRANSLATE_NOOP("QShortcut", "Hangul Special") },
 };
 
 static const short KeyNameTblSize = sizeof(KeyNameTbl) / sizeof(KeyNameTblData);
@@ -1075,14 +938,7 @@ QString QKeySequencePrivate::encodeString(int key, QKeySequence::SequenceFormat 
     key &= ~(Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier);
     QString p;
 
-    if (key && key < Qt::Key_Escape && key != Qt::Key_Space) {
-        if (!QChar::requiresSurrogates(key)) {
-            p = QChar::toUpper(ushort(key));
-        } else {
-            p += QChar(QChar::highSurrogate(key));
-            p += QChar(QChar::lowSurrogate(key));
-        }
-    } else if (key >= Qt::Key_F1 && key <= Qt::Key_F35) {
+    if (key >= Qt::Key_F1 && key <= Qt::Key_F35) {
             p = nativeText ? QShortcut::tr("F%1").arg(key - Qt::Key_F1 + 1)
                            : QString::fromLatin1("F%1").arg(key - Qt::Key_F1 + 1);
     } else if (key) {

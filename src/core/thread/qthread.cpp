@@ -61,17 +61,6 @@ QThreadData::~QThreadData()
 {
     Q_ASSERT(_ref == 0);
 
-    // In the odd case that Qt is running on a secondary thread, the main
-    // thread instance will have been dereffed asunder because of the deref in
-    // QThreadData::current() and the deref in the pthread_destroy. To avoid
-    // crashing during QCoreApplicationData's global static cleanup we need to
-    // safeguard the main thread here.. This fix is a bit crude, but it solves
-    // the problem...
-    if (this->thread == QCoreApplicationPrivate::theMainThread) {
-       QCoreApplicationPrivate::theMainThread = Q_NULLPTR;
-       QThreadData::clearCurrentThreadData();
-    }
-
     delete thread;
     thread = Q_NULLPTR;
 
@@ -715,11 +704,6 @@ QThreadData* QThreadData::current()
         currentdata->deref();
     }
     return currentdata;
-}
-
-void QThreadData::clearCurrentThreadData()
-{
-    currentdata = Q_NULLPTR;
 }
 
 /*! \internal

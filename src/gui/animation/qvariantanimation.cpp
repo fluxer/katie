@@ -37,7 +37,6 @@
 #include <QtCore/qrect.h>
 #include <QtCore/qline.h>
 #include <QtCore/qmutex.h>
-#include "qmutexpool_p.h"
 
 #ifndef QT_NO_ANIMATION
 
@@ -146,6 +145,8 @@ QT_BEGIN_NAMESPACE
 
     \sa currentValue
 */
+
+Q_GLOBAL_STATIC(QMutex, qVariantAnimationMutex)
 
 static bool animationValueLessThan(const QVariantAnimation::KeyValue &p1, const QVariantAnimation::KeyValue &p2)
 {
@@ -424,7 +425,7 @@ void QVariantAnimation::registerInterpolator(QVariantAnimation::Interpolator fun
     // in such an order that we get here with interpolators == NULL,
     // to continue causes the app to crash on exit with a SEGV
     if (interpolators) {
-        QMutexLocker locker(QMutexPool::globalInstanceGet(interpolators));
+        QMutexLocker locker(qVariantAnimationMutex());
         if (interpolationType >= interpolators->count())
             interpolators->resize(interpolationType + 1);
         interpolators->replace(interpolationType, func);
@@ -434,7 +435,7 @@ void QVariantAnimation::registerInterpolator(QVariantAnimation::Interpolator fun
 QVariantAnimation::Interpolator QVariantAnimationPrivate::getInterpolator(int interpolationType)
 {
     QInterpolatorVector *interpolators = registeredInterpolators();
-    QMutexLocker locker(QMutexPool::globalInstanceGet(interpolators));
+    QMutexLocker locker(qVariantAnimationMutex());
     if (interpolationType < interpolators->count()) {
         QVariantAnimation::Interpolator ret = interpolators->at(interpolationType);
         if (ret) return ret;

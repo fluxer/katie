@@ -383,7 +383,7 @@ Q_INLINE_TEMPLATE QList<T> &QList<T>::operator=(const QList<T> &l)
         if (!d->ref.deref()) {
             node_destruct(reinterpret_cast<Node *>(d->array + d->begin),
                           reinterpret_cast<Node *>(d->array + d->end));
-            free(d);
+            QListData::freeData(d);
         }
         d = o;
     }
@@ -620,7 +620,7 @@ Q_OUTOFLINE_TEMPLATE typename QList<T>::Node *QList<T>::detach_helper_grow(int i
         node_copy(reinterpret_cast<Node *>(p.begin()),
                   reinterpret_cast<Node *>(p.begin() + i), n);
     } QT_CATCH(...) {
-        free(d);
+        QListData::freeData(d);
         d = x;
         QT_RETHROW;
     }
@@ -630,13 +630,13 @@ Q_OUTOFLINE_TEMPLATE typename QList<T>::Node *QList<T>::detach_helper_grow(int i
     } QT_CATCH(...) {
         node_destruct(reinterpret_cast<Node *>(p.begin()),
                       reinterpret_cast<Node *>(p.begin() + i));
-        free(d);
+        QListData::freeData(d);
         d = x;
         QT_RETHROW;
     }
 
     if (!x->ref.deref())
-        free(x);
+        QListData::freeData(x);
 
     return reinterpret_cast<Node *>(p.begin() + i);
 }
@@ -649,13 +649,13 @@ Q_OUTOFLINE_TEMPLATE void QList<T>::detach_helper(int alloc)
     QT_TRY {
         node_copy(reinterpret_cast<Node *>(p.begin()), reinterpret_cast<Node *>(p.end()), n);
     } QT_CATCH(...) {
-        free(d);
+        QListData::freeData(d);
         d = x;
         QT_RETHROW;
     }
 
     if (!x->ref.deref())
-        free(x);
+        QListData::freeData(x);
 }
 
 template <typename T>

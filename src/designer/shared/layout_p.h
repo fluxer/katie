@@ -45,7 +45,6 @@
 #ifndef LAYOUT_H
 #define LAYOUT_H
 
-#include "shared_global_p.h"
 #include "layoutinfo_p.h"
 
 #include <QtCore/QPointer>
@@ -62,7 +61,7 @@ QT_BEGIN_NAMESPACE
 class QDesignerFormWindowInterface;
 
 namespace qdesigner_internal {
-class QDESIGNER_SHARED_EXPORT Layout : public QObject
+class Q_DESIGNER_EXPORT Layout : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(Layout)

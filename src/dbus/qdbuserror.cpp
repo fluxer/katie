@@ -226,7 +226,7 @@ QDBusError::QDBusError(ErrorType error, const QString &mess)
     Constructs a QDBusError from another QDBusError object
 */
 QDBusError::QDBusError(const QDBusError &other)
-        : code(other.code), msg(other.msg), nm(other.nm)
+    : code(other.code), msg(other.msg), nm(other.nm)
 {
 }
 

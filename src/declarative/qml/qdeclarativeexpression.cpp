@@ -568,9 +568,12 @@ void QDeclarativeQtScriptExpression::updateGuards(const QPODVector<QDeclarativeE
                 noChanges = false;
 
                 bool existing = false;
-                for (int jj = 0; !existing && jj < ii; ++jj) 
-                    if (guardList[jj].isConnected(property.notifier)) 
+                for (int jj = 0; jj < ii; ++jj) {
+                    if (guardList[jj].isConnected(property.notifier)) {
                         existing = true;
+                        break;
+                    }
+                }
 
                 if (existing) {
                     // duplicate
@@ -590,9 +593,12 @@ void QDeclarativeQtScriptExpression::updateGuards(const QPODVector<QDeclarativeE
                 noChanges = false;
 
                 bool existing = false;
-                for (int jj = 0; !existing && jj < ii; ++jj) 
-                    if (guardList[jj].isConnected(property.object, property.notifyIndex)) 
+                for (int jj = 0; jj < ii; ++jj) {
+                    if (guardList[jj].isConnected(property.object, property.notifyIndex)) {
                         existing = true;
+                        break;
+                    }
+                }
 
                 if (existing) {
                     // duplicate

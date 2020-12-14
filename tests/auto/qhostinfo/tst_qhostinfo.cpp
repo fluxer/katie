@@ -282,10 +282,11 @@ void tst_QHostInfo::reverseLookup_data()
 
     QTest::newRow("qt-project.org") << QString("87.238.53.172") << QStringList(QString("tufsla.qtproject.c.bitbit.net")) << 0;
 
-    // ### Use internal DNS instead. Discussed with Andreas.
-    //QTest::newRow("classical.hexago.com") << QString("2001:5c0:0:2::24") << QStringList(QString("classical.hexago.com")) << 0;
     QTest::newRow("gitorious.org") << QString("87.238.52.168") << QStringList(QString("gitorious.org")) << 0;
-    QTest::newRow("bogus-name") << QString("1::2::3::4") << QStringList() << 1;
+    if (!ipv6Available)
+        QTest::newRow("bogus-name") << QString("1.2.3.4") << QStringList() << 1;
+    else
+        QTest::newRow("bogus-name") << QString("1::2::3::4") << QStringList() << 1;
 }
 
 void tst_QHostInfo::reverseLookup()
@@ -293,14 +294,6 @@ void tst_QHostInfo::reverseLookup()
     QFETCH(QString, address);
     QFETCH(QStringList, hostNames);
     QFETCH(int, err);
-
-    if (!ipv6Available && hostNames.contains("classical.hexago.com")) {
-        QSKIP("IPv6 lookups are not supported on this platform", SkipSingle);
-    }
-#if defined(Q_OS_HPUX) && defined(QT_ARCH_IA64)
-    if (hostNames.contains("classical.hexago.com"))
-        QSKIP("HP-UX 11i does not support IPv6 reverse lookups.", SkipSingle);
-#endif
 
     QHostInfo info = QHostInfo::fromName(address);
 

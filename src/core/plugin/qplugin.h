@@ -47,9 +47,10 @@ typedef QObject *(*QtPluginInstanceFunction)();
 #define Q_EXPORT_PLUGIN(PLUGIN) \
           Q_EXPORT_PLUGIN2(PLUGIN, PLUGIN)
 
-#if defined(__ELF__)
+#if !defined(QT_NO_PLUGIN_CHECK)
 #  define Q_PLUGIN_VERIFICATION_SECTION \
-     __attribute__ ((section (".ktplugin"))) __attribute__((used))
+    __attribute__ ((section (".ktplugin"))) __attribute__((used)) \
+    static const char kt_plugin_verification_data[] = QT_VERSION_HEX_STR;
 #else
 #  define Q_PLUGIN_VERIFICATION_SECTION
 #endif
@@ -58,11 +59,7 @@ typedef QObject *(*QtPluginInstanceFunction)();
 // qlibrary.cpp as well.  changing the pattern will break all
 // backwards compatibility as well (no old plugins will be loaded).
 #define Q_EXPORT_PLUGIN2(PLUGIN, PLUGINCLASS) \
-  Q_PLUGIN_VERIFICATION_SECTION static const char kt_plugin_verification_data[] = \
-    "pattern=KT_PLUGIN_VERIFICATION_DATA\n" \
-    "version=" QT_VERSION_HEX_STR "\n"; \
-  Q_EXTERN_C Q_DECL_EXPORT const char * kt_plugin_query_verification_data() \
-  { return kt_plugin_verification_data; } \
+  Q_PLUGIN_VERIFICATION_SECTION \
   Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * kt_plugin_instance() \
   { \
     static QT_PREPEND_NAMESPACE(QPointer)<QT_PREPEND_NAMESPACE(QObject)> _instance; \

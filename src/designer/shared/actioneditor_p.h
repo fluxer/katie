@@ -45,7 +45,6 @@
 #ifndef ACTIONEDITOR_H
 #define ACTIONEDITOR_H
 
-#include "shared_global_p.h"
 #include <QtDesigner/abstractactioneditor.h>
 
 #include <QtCore/QPointer>
@@ -68,7 +67,7 @@ namespace qdesigner_internal {
 class ActionView;
 class ResourceMimeData;
 
-class QDESIGNER_SHARED_EXPORT ActionEditor: public QDesignerActionEditorInterface
+class Q_DESIGNER_EXPORT ActionEditor: public QDesignerActionEditorInterface
 {
     Q_OBJECT
 public:

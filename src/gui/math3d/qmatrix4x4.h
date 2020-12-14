@@ -62,7 +62,7 @@ public:
                       qreal m41, qreal m42, qreal m43, qreal m44);
 
     template <int N, int M>
-    explicit QMatrix4x4(const QGenericMatrix<N, M, qreal>& matrix);
+    explicit QMatrix4x4(const QGenericMatrix<N, M>& matrix);
 
     QMatrix4x4(const qreal *values, int cols, int rows);
     QMatrix4x4(const QTransform& transform);
@@ -161,7 +161,7 @@ public:
     QRectF mapRect(const QRectF& rect) const;
 
     template <int N, int M>
-    QGenericMatrix<N, M, qreal> toGenericMatrix() const;
+    QGenericMatrix<N, M> toGenericMatrix() const;
 
     inline qreal *data();
     inline const qreal *data() const { return *m; }
@@ -214,7 +214,7 @@ inline QMatrix4x4::QMatrix4x4
 
 template <int N, int M>
 Q_INLINE_TEMPLATE QMatrix4x4::QMatrix4x4
-    (const QGenericMatrix<N, M, qreal>& matrix)
+    (const QGenericMatrix<N, M>& matrix)
 {
     const qreal *values = matrix.constData();
     for (int matrixCol = 0; matrixCol < 4; ++matrixCol) {
@@ -231,9 +231,9 @@ Q_INLINE_TEMPLATE QMatrix4x4::QMatrix4x4
 }
 
 template <int N, int M>
-QGenericMatrix<N, M, qreal> QMatrix4x4::toGenericMatrix() const
+QGenericMatrix<N, M> QMatrix4x4::toGenericMatrix() const
 {
-    QGenericMatrix<N, M, qreal> result;
+    QGenericMatrix<N, M> result;
     qreal *values = result.data();
     for (int matrixCol = 0; matrixCol < N; ++matrixCol) {
         for (int matrixRow = 0; matrixRow < M; ++matrixRow) {

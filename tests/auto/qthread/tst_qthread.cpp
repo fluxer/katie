@@ -44,9 +44,7 @@
 #include <qmetaobject.h>
 #include <qsemaphore.h>
 
-#ifdef Q_OS_UNIX
 #include <pthread.h>
-#endif
 
 //TESTED_CLASS=
 //TESTED_FILES=
@@ -650,10 +648,6 @@ void tst_QThread::usleep()
 typedef void (*FunctionPointer)(void *);
 void noop(void*) { }
 
-#if defined Q_OS_UNIX
-    typedef pthread_t ThreadHandle;
-#endif
-
 class NativeThreadWrapper
 {
 public:
@@ -664,7 +658,7 @@ public:
     void setWaitForStop() { waitForStop = true; }
     void stop();
 
-    ThreadHandle nativeThreadHandle;
+    pthread_t nativeThreadHandle;
     QThread *qthread;
     QWaitCondition startCondition;
     QMutex mutex;
@@ -681,10 +675,8 @@ void NativeThreadWrapper::start(FunctionPointer functionPointer, void *data)
 {
     this->functionPointer = functionPointer;
     this->data = data;
-#if defined Q_OS_UNIX
     const int state = pthread_create(&nativeThreadHandle, 0, NativeThreadWrapper::runUnix, this);
     Q_UNUSED(state);
-#endif
 }
 
 void NativeThreadWrapper::startAndWait(FunctionPointer functionPointer, void *data)
@@ -696,9 +688,7 @@ void NativeThreadWrapper::startAndWait(FunctionPointer functionPointer, void *da
 
 void NativeThreadWrapper::join()
 {
-#if defined Q_OS_UNIX
     pthread_join(nativeThreadHandle, 0);
-#endif
 }
 
 void *NativeThreadWrapper::runUnix(void *that)

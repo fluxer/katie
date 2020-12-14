@@ -832,8 +832,8 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
         if (size_max == -1)
             size_max = 1024;
         char buf[size_max];
-        passwd pw;
-        passwd *tmpPw;
+        struct passwd pw;
+        struct passwd *tmpPw;
         int err = 0;
 #if defined(Q_OS_SOLARIS) && (_POSIX_C_SOURCE - 0 < 199506L)
         tmpPw = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max);
@@ -844,7 +844,7 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
             return ret;
         const QString homePath = QString::fromLocal8Bit(pw.pw_dir);
 #else
-        passwd *pw = ::getpwnam(userName.toLocal8Bit().constData());
+        struct passwd *pw = ::getpwnam(userName.toLocal8Bit().constData());
         if (!pw)
             return ret;
         const QString homePath = QString::fromLocal8Bit(pw->pw_dir);
@@ -2932,15 +2932,9 @@ bool QFileDialogPrivate::itemViewKeyboardEvent(QKeyEvent *event) {
 
 QString QFileDialogPrivate::getEnvironmentVariable(const QString &string)
 {
-#ifdef Q_OS_UNIX
     if (string.size() > 1 && string.startsWith(QLatin1Char('$'))) {
         return QString::fromLocal8Bit(getenv(string.mid(1).toLatin1().constData()));
     }
-#else
-    if (string.size() > 2 && string.startsWith(QLatin1Char('%')) && string.endsWith(QLatin1Char('%'))) {
-        return QString::fromLocal8Bit(qgetenv(string.mid(1, string.size() - 2).toLatin1().constData()));
-    }
-#endif
     return string;
 }
 

@@ -142,26 +142,17 @@
 #define QT_OPEN_APPEND          O_APPEND
 
 // Posix extensions to C89
-#define QT_FILENO               ::fileno
+#define QT_FILENO               fileno // defined as macro on OpenBSD
 
 #define QT_DIR                  DIR
 
 #define QT_OPENDIR              ::opendir
 #define QT_CLOSEDIR             ::closedir
 
-#if defined(__GLIBC__) && (__GLIBC__ < 2)
-#define QT_SOCKLEN_T            int
-#else
 #define QT_SOCKLEN_T            socklen_t
-#endif
 
 #define QT_SOCKET_CONNECT       ::connect
 #define QT_SOCKET_BIND          ::bind
-
-#if defined(_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
-#define QT_SNPRINTF             ::snprintf
-#define QT_VSNPRINTF            ::vsnprintf
-#endif
 
 #define QT_BUFFSIZE BUFSIZ
 

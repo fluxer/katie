@@ -187,7 +187,7 @@ class Q_CORE_EXPORT QVariant
     QVariant(const QList<QVariant> &list);
     QVariant(const QMap<QString,QVariant> &map);
     QVariant(const QHash<QString,QVariant> &hash);
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     QVariant(const QSize &size);
     QVariant(const QSizeF &size);
     QVariant(const QPoint &pt);
@@ -254,7 +254,7 @@ class Q_CORE_EXPORT QVariant
     QMap<QString, QVariant> toMap() const;
     QHash<QString, QVariant> toHash() const;
 
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     QPoint toPoint() const;
     QPointF toPointF() const;
     QRect toRect() const;
