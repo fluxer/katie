@@ -732,10 +732,10 @@ QXmlStreamReaderPrivate::QXmlStreamReaderPrivate()
 #ifndef QT_NO_TEXTCODEC
     decoder(Q_NULLPTR),
 #endif
-    entityParser(Q_NULLPTR),
     stack_size(64),
     sym_stack(Q_NULLPTR),
     state_stack(Q_NULLPTR),
+    entityParser(Q_NULLPTR),
     entityResolver(Q_NULLPTR)
 {
     reallocateStack();
