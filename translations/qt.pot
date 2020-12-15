@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-09 01:46+0000\n"
+"POT-Creation-Date: 2020-12-15 11:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/core/plugin/qlibrary.cpp:329
+#: src/core/plugin/qlibrary.cpp:201
 msgid "Plugin verification data mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:541 src/core/plugin/qlibrary.cpp:576
+#: src/core/plugin/qlibrary.cpp:413 src/core/plugin/qlibrary.cpp:448
 #: src/core/plugin/qpluginloader.cpp:274
 msgid "The shared library was not found."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:578
+#: src/core/plugin/qlibrary.cpp:450
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:591
+#: src/core/plugin/qlibrary.cpp:463
 msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:924 src/core/plugin/qpluginloader.cpp:291
+#: src/core/plugin/qlibrary.cpp:796 src/core/plugin/qpluginloader.cpp:291
 #: src/core/io/qiodevice.cpp:1541 src/network/ssl/qsslerror.cpp:261
 #: src/network/kernel/qhostinfo_unix.cpp:128
-#: src/network/kernel/qhostinfo_unix.cpp:245
+#: src/network/kernel/qhostinfo_unix.cpp:247
 #: src/network/socket/qnativesocketengine.cpp:268
 #: src/network/access/qftp.cpp:1439 src/uitools/formscriptrunner.cpp:116
 msgid "Unknown error"
@@ -59,87 +59,87 @@ msgstr ""
 msgid "The plugin was not loaded."
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:300
+#: src/core/io/qstandardpaths.cpp:311
 msgctxt "QStandardPaths"
 msgid "Desktop"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:302
+#: src/core/io/qstandardpaths.cpp:313
 msgctxt "QStandardPaths"
 msgid "Documents"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:304
+#: src/core/io/qstandardpaths.cpp:315
 msgctxt "QStandardPaths"
 msgid "Fonts"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:306
+#: src/core/io/qstandardpaths.cpp:317
 msgctxt "QStandardPaths"
 msgid "Applications"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:308
+#: src/core/io/qstandardpaths.cpp:319
 msgctxt "QStandardPaths"
 msgid "Music"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:310
+#: src/core/io/qstandardpaths.cpp:321
 msgctxt "QStandardPaths"
 msgid "Movies"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:312
+#: src/core/io/qstandardpaths.cpp:323
 msgctxt "QStandardPaths"
 msgid "Pictures"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:314
+#: src/core/io/qstandardpaths.cpp:325
 msgctxt "QStandardPaths"
 msgid "Temporary Directory"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:316
+#: src/core/io/qstandardpaths.cpp:327
 msgctxt "QStandardPaths"
 msgid "Home"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:318
+#: src/core/io/qstandardpaths.cpp:329
 msgctxt "QStandardPaths"
 msgid "Application Data"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:320
+#: src/core/io/qstandardpaths.cpp:331
 msgctxt "QStandardPaths"
 msgid "Cache"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:322
+#: src/core/io/qstandardpaths.cpp:333
 msgctxt "QStandardPaths"
 msgid "Shared Data"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:324
+#: src/core/io/qstandardpaths.cpp:335
 msgctxt "QStandardPaths"
 msgid "Runtime"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:326
+#: src/core/io/qstandardpaths.cpp:337
 msgctxt "QStandardPaths"
 msgid "Configuration"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:328
+#: src/core/io/qstandardpaths.cpp:339
 msgctxt "QStandardPaths"
 msgid "Shared Configuration"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:330
+#: src/core/io/qstandardpaths.cpp:341
 msgctxt "QStandardPaths"
 msgid "Shared Cache"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:332
+#: src/core/io/qstandardpaths.cpp:343
 msgctxt "QStandardPaths"
 msgid "Download"
 msgstr ""
@@ -352,72 +352,72 @@ msgctxt "QRegExp"
 msgid "invalid category"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:48
+#: src/core/json/qjsonparser.cpp:59
 msgctxt "QJsonParseError"
 msgid "no error occurred"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:49
+#: src/core/json/qjsonparser.cpp:60
 msgctxt "QJsonParseError"
 msgid "unterminated object"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:50
+#: src/core/json/qjsonparser.cpp:61
 msgctxt "QJsonParseError"
 msgid "missing name separator"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:51
+#: src/core/json/qjsonparser.cpp:62
 msgctxt "QJsonParseError"
 msgid "unterminated array"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:52
+#: src/core/json/qjsonparser.cpp:63
 msgctxt "QJsonParseError"
 msgid "missing value separator"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:53
+#: src/core/json/qjsonparser.cpp:64
 msgctxt "QJsonParseError"
 msgid "illegal value"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:54
+#: src/core/json/qjsonparser.cpp:65
 msgctxt "QJsonParseError"
 msgid "invalid termination by number"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:55
+#: src/core/json/qjsonparser.cpp:66
 msgctxt "QJsonParseError"
 msgid "illegal number"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:56
+#: src/core/json/qjsonparser.cpp:67
 msgctxt "QJsonParseError"
 msgid "invalid escape sequence"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:57
+#: src/core/json/qjsonparser.cpp:68
 msgctxt "QJsonParseError"
 msgid "invalid UTF8 string"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:58
+#: src/core/json/qjsonparser.cpp:69
 msgctxt "QJsonParseError"
 msgid "unterminated string"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:59
+#: src/core/json/qjsonparser.cpp:70
 msgctxt "QJsonParseError"
 msgid "object is missing after a comma"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:60
+#: src/core/json/qjsonparser.cpp:71
 msgctxt "QJsonParseError"
 msgid "too deeply nested document"
 msgstr ""
 
-#: src/core/json/qjsonparser.cpp:61
+#: src/core/json/qjsonparser.cpp:72
 msgctxt "QJsonParseError"
 msgid "too large document"
 msgstr ""
@@ -2234,7 +2234,7 @@ msgstr ""
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1804
+#: src/gui/kernel/qapplication.cpp:1803
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -3230,44 +3230,44 @@ msgstr ""
 msgid "<empty>"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:77 src/gui/text/qfontdatabase.cpp:840
+#: src/gui/text/qfontdatabase.cpp:74 src/gui/text/qfontdatabase.cpp:837
 msgctxt "QFontDatabase"
 msgid "Normal"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:80 src/gui/text/qfontdatabase.cpp:92
-#: src/gui/text/qfontdatabase.cpp:828
+#: src/gui/text/qfontdatabase.cpp:77 src/gui/text/qfontdatabase.cpp:89
+#: src/gui/text/qfontdatabase.cpp:825
 msgctxt "QFontDatabase"
 msgid "Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:83 src/gui/text/qfontdatabase.cpp:830
+#: src/gui/text/qfontdatabase.cpp:80 src/gui/text/qfontdatabase.cpp:827
 msgctxt "QFontDatabase"
 msgid "Demi Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:86 src/gui/text/qfontdatabase.cpp:104
-#: src/gui/text/qfontdatabase.cpp:826
+#: src/gui/text/qfontdatabase.cpp:83 src/gui/text/qfontdatabase.cpp:101
+#: src/gui/text/qfontdatabase.cpp:823
 msgctxt "QFontDatabase"
 msgid "Black"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:94
+#: src/gui/text/qfontdatabase.cpp:91
 msgctxt "QFontDatabase"
 msgid "Demi"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:100 src/gui/text/qfontdatabase.cpp:832
+#: src/gui/text/qfontdatabase.cpp:97 src/gui/text/qfontdatabase.cpp:829
 msgctxt "QFontDatabase"
 msgid "Light"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:208 src/gui/text/qfontdatabase.cpp:835
+#: src/gui/text/qfontdatabase.cpp:205 src/gui/text/qfontdatabase.cpp:832
 msgctxt "QFontDatabase"
 msgid "Italic"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:211 src/gui/text/qfontdatabase.cpp:837
+#: src/gui/text/qfontdatabase.cpp:208 src/gui/text/qfontdatabase.cpp:834
 msgctxt "QFontDatabase"
 msgid "Oblique"
 msgstr ""
@@ -3482,7 +3482,7 @@ msgstr ""
 msgid "Error during SSL handshake: %1"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_p.h:92
+#: src/network/kernel/qhostinfo_p.h:91
 msgctxt "QHostInfo"
 msgid "Unknown error"
 msgstr ""
@@ -3494,8 +3494,8 @@ msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:113
 #: src/network/kernel/qhostinfo_unix.cpp:125
-#: src/network/kernel/qhostinfo_unix.cpp:211
-#: src/network/kernel/qhostinfo_unix.cpp:242
+#: src/network/kernel/qhostinfo_unix.cpp:213
+#: src/network/kernel/qhostinfo_unix.cpp:244
 #: src/network/socket/qabstractsocket.cpp:886
 #: src/network/socket/qhttpsocketengine.cpp:662
 #: src/network/socket/qsocks5socketengine.cpp:640
@@ -3504,17 +3504,15 @@ msgid "Host not found"
 msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:144
-msgctxt "QHostInfoAgent"
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:145
-msgctxt "QHostInfoAgent"
+#: src/network/kernel/qhostinfo_unix.cpp:146
 msgid "Invalid hostname"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:199
-#: src/network/kernel/qhostinfo_unix.cpp:237
+#: src/network/kernel/qhostinfo_unix.cpp:201
+#: src/network/kernel/qhostinfo_unix.cpp:239
 msgid "Unknown address type"
 msgstr ""
 
@@ -4251,39 +4249,39 @@ msgstr ""
 msgid "Roaming was aborted or is not possible."
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:205
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:196
 msgctxt "QPSQLResult"
 msgid "Unable to create query"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:581
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:572
 msgctxt "QPSQLResult"
 msgid "Unable to prepare statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:846
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1826
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1209
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:829
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1808
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1176
 msgid "Unable to connect"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:895
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:878
 msgid "Could not begin transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:928
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:906
 msgid "Could not commit transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:945
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:923
 msgid "Could not rollback transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1326
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1238
 msgid "Unable to subscribe"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1358
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1270
 msgid "Unable to unsubscribe"
 msgstr ""
 
@@ -4337,93 +4335,93 @@ msgctxt "QODBCResult"
 msgid "Unable to bind variable"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1832
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1814
 msgid "Unable to connect - Driver doesn't support all functionality required"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2105
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2087
 msgid "Unable to disable autocommit"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2122
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1366
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2104
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1330
 #: src/sql/drivers/qsql_sqlite.cpp:645
 msgid "Unable to commit transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2139
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1383
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2121
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1347
 #: src/sql/drivers/qsql_sqlite.cpp:660
 msgid "Unable to rollback transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2154
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2136
 msgid "Unable to enable autocommit"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:461
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:488
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:457
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:484
 msgctxt "QMYSQLResult"
 msgid "Unable to fetch data"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:640
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:636
 msgctxt "QMYSQLResult"
 msgid "Unable to execute query"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:646
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:642
 msgctxt "QMYSQLResult"
 msgid "Unable to store result"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:738
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:734
 msgctxt "QMYSQLResult"
 msgid "Unable to execute next query"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:748
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:744
 msgctxt "QMYSQLResult"
 msgid "Unable to store next result"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:817
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:826
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:811
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:820
 msgctxt "QMYSQLResult"
 msgid "Unable to prepare statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:858
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:852
 msgctxt "QMYSQLResult"
 msgid "Unable to reset statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:949
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:943
 msgctxt "QMYSQLResult"
 msgid "Unable to bind value"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:960
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:954
 msgctxt "QMYSQLResult"
 msgid "Unable to execute statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:974
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:995
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:968
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:989
 msgctxt "QMYSQLResult"
 msgid "Unable to bind outvalues"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:983
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:977
 msgctxt "QMYSQLResult"
 msgid "Unable to store statement results"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1198
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1165
 msgid "Unable to open database '"
 msgstr ""
 
-#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1349
+#: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1313
 #: src/sql/drivers/qsql_sqlite.cpp:630
 msgid "Unable to begin transaction"
 msgstr ""
@@ -4968,7 +4966,7 @@ msgstr ""
 msgid "Recursive entity detected."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1057 src/xml/kernel/qxmlstream.cpp:1398
+#: src/xml/kernel/qxmlstream_p.h:1057 src/xml/kernel/qxmlstream.cpp:1400
 msgid "Encountered incorrectly encoded content."
 msgstr ""
 
@@ -4997,7 +4995,7 @@ msgid "%1 is an invalid PUBLIC identifier."
 msgstr ""
 
 #: src/xml/kernel/qxmlstream_p.h:1669 src/xml/kernel/qxmlstream_p.h:1722
-#: src/xml/kernel/qxmlstream.cpp:1461 src/xml/kernel/qxmlstream.cpp:1473
+#: src/xml/kernel/qxmlstream.cpp:1463 src/xml/kernel/qxmlstream.cpp:1475
 msgid "Illegal namespace declaration."
 msgstr ""
 
@@ -5030,78 +5028,78 @@ msgstr ""
 msgid "Invalid character reference."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:820
+#: src/xml/kernel/qxmlstream.cpp:822
 msgid "Invalid entity value."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:929
+#: src/xml/kernel/qxmlstream.cpp:931
 msgid "Invalid XML character."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1188
+#: src/xml/kernel/qxmlstream.cpp:1190
 msgid "Sequence ']]>' not allowed in content."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1428
+#: src/xml/kernel/qxmlstream.cpp:1430
 msgid "Namespace prefix '%1' not declared"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1505
+#: src/xml/kernel/qxmlstream.cpp:1507
 msgid "Attribute redefined."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1619
+#: src/xml/kernel/qxmlstream.cpp:1621
 msgid "Unexpected character '%1' in public id literal."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1647
+#: src/xml/kernel/qxmlstream.cpp:1649
 msgid "Invalid XML version string."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1649
+#: src/xml/kernel/qxmlstream.cpp:1651
 msgid "Unsupported XML version."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1670
+#: src/xml/kernel/qxmlstream.cpp:1672
 msgid "The standalone pseudo attribute must appear after the encoding."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1672
+#: src/xml/kernel/qxmlstream.cpp:1674
 msgid "%1 is an invalid encoding name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1679
+#: src/xml/kernel/qxmlstream.cpp:1681
 msgid "Encoding %1 is unsupported"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1695
+#: src/xml/kernel/qxmlstream.cpp:1697
 msgid "Standalone accepts only yes or no."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1697
+#: src/xml/kernel/qxmlstream.cpp:1699
 msgid "Invalid attribute in XML declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1713
+#: src/xml/kernel/qxmlstream.cpp:1715
 msgid "Premature end of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1715
+#: src/xml/kernel/qxmlstream.cpp:1717
 msgid "Invalid document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1755
+#: src/xml/kernel/qxmlstream.cpp:1757
 msgid "Expected "
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1766
+#: src/xml/kernel/qxmlstream.cpp:1768
 msgid ", but got '"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1770
+#: src/xml/kernel/qxmlstream.cpp:1772
 msgid "Unexpected '"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1995
+#: src/xml/kernel/qxmlstream.cpp:1997
 msgid "Expected character data."
 msgstr ""
