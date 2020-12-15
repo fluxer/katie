@@ -168,8 +168,8 @@ QAbstractFileEngine::FileFlags QFSFileEngine::fileFlags(FileFlags type) const
 
     QFileSystemMetaData::MetaDataFlags queryFlags =
             QFileSystemMetaData::MetaDataFlags(uint(type))
-            & QFileSystemMetaData::Permissions
-            | QFileSystemMetaData::LinkType;
+            & QFileSystemMetaData::Permissions;
+    queryFlags |= QFileSystemMetaData::LinkType;
 
     if (type & TypesMask)
         queryFlags |= QFileSystemMetaData::LinkType
