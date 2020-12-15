@@ -183,7 +183,7 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
     }
 
     // basic ELF checks to avoid crashing
-    if (datalen < EI_CLASS || qstrncmp(filedata, ELFMAG, SELFMAG) != 0) {
+    if (datalen < (EI_CLASS + 1) || qstrncmp(filedata, ELFMAG, SELFMAG) != 0) {
         lib->errorString = QLibrary::tr("'%1' is not ELF file").arg(library);
         return false;
     } else if (filedata[EI_CLASS] != QT_ELF_CLASS_TYPE) {
