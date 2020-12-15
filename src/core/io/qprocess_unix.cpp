@@ -1098,8 +1098,6 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
 {
     processManager()->start();
 
-    QByteArray encodedWorkingDirectory = QFile::encodeName(workingDirectory);
-
     // To catch the startup of the child
     int startedPipe[2];
     if (qt_safe_pipe(startedPipe) != 0)
@@ -1128,6 +1126,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
         if (doubleForkPid == 0) {
             qt_safe_close(pidPipe[1]);
 
+            QByteArray encodedWorkingDirectory = QFile::encodeName(workingDirectory);
             if (!encodedWorkingDirectory.isEmpty()
                 && QT_CHDIR(encodedWorkingDirectory.constData()) == -1) {
                 qWarning("QProcessPrivate::startDetached: failed to chdir to %s",
