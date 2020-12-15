@@ -102,7 +102,7 @@ public:
     static bool autoSipEnabled;
     static QString desktopStyleKey();
 
-    void createEventDispatcher();
+    QAbstractEventDispatcher* createEventDispatcher();
     QString appName() const;
     static void dispatchEnterLeave(QWidget *enter, QWidget *leave);
 

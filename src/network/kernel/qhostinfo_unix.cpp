@@ -100,7 +100,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 #endif
 
         char hbuf[NI_MAXHOST];
-        int result = (sa ? ::getnameinfo(sa, saSize, hbuf, sizeof(hbuf), 0, 0, 0) : EAI_NONAME);
+        int result = (sa ? ::getnameinfo(sa, saSize, hbuf, sizeof(hbuf), 0, 0, NI_NAMEREQD) : EAI_NONAME);
         if (result == 0) {
             results.setHostName(QString::fromLatin1(hbuf));
         } else if (result == EAI_NONAME || result == EAI_FAIL

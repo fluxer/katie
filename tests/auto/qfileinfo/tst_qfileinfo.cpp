@@ -893,7 +893,7 @@ void tst_QFileInfo::refresh()
 
     QCOMPARE(file.write("JOJOJO"), qint64(6));
     file.flush();
-    QVERIFY(info.lastModified() == lastModified);
+    QCOMPARE(info.lastModified(), lastModified);
 
     QCOMPARE(info.size(), qint64(7));
     info.refresh();

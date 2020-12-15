@@ -86,7 +86,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <locale.h>
 #include <pwd.h>
 
 #ifdef QT_RX71_MULTITOUCH
@@ -379,12 +378,12 @@ public:
 };
 
 
-void QApplicationPrivate::createEventDispatcher()
+QAbstractEventDispatcher* QApplicationPrivate::createEventDispatcher()
 {
     Q_Q(QApplication);
-    eventDispatcher = (q->type() != QApplication::Tty
-                       ? new QEventDispatcherX11(q)
-                       : new QEventDispatcherUNIX(q));
+    return (q->type() != QApplication::Tty
+                ? new QEventDispatcherX11(q)
+                : new QEventDispatcherUNIX(q));
 }
 
 /*****************************************************************************

@@ -192,7 +192,7 @@ void tst_QHostInfo::lookupIPv4_data()
 
     QTest::newRow("single_ip4") << "a-single" TEST_DOMAIN << "192.0.2.1" << int(QHostInfo::NoError);
     QTest::newRow("multiple_ip4") << "a-multi" TEST_DOMAIN << "192.0.2.1 192.0.2.2 192.0.2.3" << int(QHostInfo::NoError);
-    QTest::newRow("literal_ip4") << "192.0.2.1" << "192.0.2.1" << int(QHostInfo::NoError);
+    QTest::newRow("literal_ip4") << "128.30.52.100" << "128.30.52.100" << int(QHostInfo::NoError);
 
     QTest::newRow("notfound") << "invalid" TEST_DOMAIN << "" << int(QHostInfo::HostNotFound);
 
@@ -241,8 +241,8 @@ void tst_QHostInfo::lookupIPv6_data()
 
     // avoid using real IPv6 addresses here because this will do a DNS query
     // real addresses are between 2000:: and 3fff:ffff:ffff:ffff:ffff:ffff:ffff
-    QTest::newRow("literal_ip6") << "f001:6b0:1:ea:202:a5ff:fecd:13a6" << "f001:6b0:1:ea:202:a5ff:fecd:13a6" << int(QHostInfo::NoError);
-    QTest::newRow("literal_shortip6") << "f001:618:1401::4" << "f001:618:1401::4" << int(QHostInfo::NoError);
+    QTest::newRow("literal_ip6") << "2603:400A:FFFF:804:801E:34:0:64" << "2603:400A:FFFF:804:801E:34:0:64" << int(QHostInfo::NoError);
+    QTest::newRow("literal_shortip6") << "2a00:1450:4017:80c::200e" << "2a00:1450:4017:80c::200e" << int(QHostInfo::NoError);
 }
 
 void tst_QHostInfo::lookupIPv6()
@@ -284,9 +284,9 @@ void tst_QHostInfo::reverseLookup_data()
 
     QTest::newRow("gitorious.org") << QString("87.238.52.168") << QStringList(QString("gitorious.org")) << 0;
     if (!ipv6Available)
-        QTest::newRow("bogus-name") << QString("1.2.3.4") << QStringList() << 1;
+        QTest::newRow("bogus-name") << QString("1.2..4") << QStringList() << 1;
     else
-        QTest::newRow("bogus-name") << QString("1::2::3::4") << QStringList() << 1;
+        QTest::newRow("bogus-name") << QString("1::2::::4") << QStringList() << 1;
 }
 
 void tst_QHostInfo::reverseLookup()

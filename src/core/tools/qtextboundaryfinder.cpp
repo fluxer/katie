@@ -32,25 +32,11 @@
 ****************************************************************************/
 
 #include "qtextboundaryfinder.h"
+#include "qlocale.h"
 
 #include <unicode/ubrk.h>
 
 QT_BEGIN_NAMESPACE
-
-class QTextBoundaryFinderPrivate
-{
-public:
-    QTextBoundaryFinderPrivate();
-    QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other);
-    ~QTextBoundaryFinderPrivate();
-
-    QTextBoundaryFinder::BoundaryType type;
-    int pos;
-    QString string;
-    mutable UBreakIterator *breakiter; // ubrk_isBoundary() takes non-const argument
-
-    QTextBoundaryFinderPrivate& operator=(const QTextBoundaryFinderPrivate &other);
-};
 
 static inline UBreakIteratorType getBreakType(const QTextBoundaryFinder::BoundaryType type)
 {
@@ -66,6 +52,32 @@ static inline UBreakIteratorType getBreakType(const QTextBoundaryFinder::Boundar
     }
     return UBRK_CHARACTER;
 }
+
+static const char* getBreakLocale() {
+    QByteArray bcp = QLocale::system().bcp47Name().toLatin1();
+    for(int i = 0; i < ubrk_countAvailable(); i++) {
+        const char* locale = ubrk_getAvailable(i);
+        if (qstrcmp(locale, bcp.constData()) == 0) {
+            return locale;
+        }
+    }
+    return "en";
+}
+
+class QTextBoundaryFinderPrivate
+{
+public:
+    QTextBoundaryFinderPrivate();
+    QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other);
+    ~QTextBoundaryFinderPrivate();
+
+    QTextBoundaryFinder::BoundaryType type;
+    int pos;
+    QString string;
+    mutable UBreakIterator *breakiter; // ubrk_isBoundary() takes non-const argument
+
+    QTextBoundaryFinderPrivate& operator=(const QTextBoundaryFinderPrivate &other);
+};
 
 QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate()
     : type(QTextBoundaryFinder::Grapheme), pos(0), breakiter(Q_NULLPTR)
@@ -139,6 +151,8 @@ QTextBoundaryFinderPrivate::~QTextBoundaryFinderPrivate()
     refers to the position before the first character. The last
     position at the length of the string is also valid and refers
     to the position after the last character.
+
+    Boundaries are resolved based on the current locale.
 */
 
 /*!
@@ -204,7 +218,7 @@ QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &strin
     d->string = string;
 
     UErrorCode error = U_ZERO_ERROR;
-    d->breakiter = ubrk_open(getBreakType(type), "C",
+    d->breakiter = ubrk_open(getBreakType(type), getBreakLocale(),
         reinterpret_cast<const UChar*>(string.unicode()), string.size(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
@@ -223,7 +237,7 @@ QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, 
     d->string = QString::fromRawData(chars, length);
 
     UErrorCode error = U_ZERO_ERROR;
-    d->breakiter = ubrk_open(getBreakType(type), "C",
+    d->breakiter = ubrk_open(getBreakType(type), getBreakLocale(),
         reinterpret_cast<const UChar*>(d->string.unicode()), d->string.size(), &error);
     if (Q_UNLIKELY(U_FAILURE(error))) {
         qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
