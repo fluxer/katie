@@ -2003,7 +2003,7 @@ int QProcess::execute(const QString &program)
 bool QProcess::startDetached(const QString &program,
                              const QStringList &arguments,
                              const QString &workingDirectory,
-                             qint64 *pid)
+                             Q_PID *pid)
 {
     return QProcessPrivate::startDetached(program,  arguments,
                                           workingDirectory, pid);
