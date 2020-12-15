@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-15 11:23+0000\n"
+"POT-Creation-Date: 2020-12-15 15:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,24 +17,32 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/core/plugin/qlibrary.cpp:201
+#: src/core/plugin/qlibrary.cpp:187
+msgid "'%1' is not ELF file"
+msgstr ""
+
+#: src/core/plugin/qlibrary.cpp:190
+msgid "ELF class mismatch in '%1'"
+msgstr ""
+
+#: src/core/plugin/qlibrary.cpp:214
 msgid "Plugin verification data mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:413 src/core/plugin/qlibrary.cpp:448
+#: src/core/plugin/qlibrary.cpp:426 src/core/plugin/qlibrary.cpp:461
 #: src/core/plugin/qpluginloader.cpp:274
 msgid "The shared library was not found."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:450
+#: src/core/plugin/qlibrary.cpp:463
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:463
+#: src/core/plugin/qlibrary.cpp:476
 msgid "The plugin uses incompatible Katie library: %1 (%2, %3)"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:796 src/core/plugin/qpluginloader.cpp:291
+#: src/core/plugin/qlibrary.cpp:809 src/core/plugin/qpluginloader.cpp:291
 #: src/core/io/qiodevice.cpp:1541 src/network/ssl/qsslerror.cpp:261
 #: src/network/kernel/qhostinfo_unix.cpp:128
 #: src/network/kernel/qhostinfo_unix.cpp:247
