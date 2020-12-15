@@ -340,7 +340,6 @@ qint64 QFSFileEngine::size() const
 {
     Q_D(const QFSFileEngine);
 
-    d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
     if (!d->doStat(QFileSystemMetaData::SizeAttribute))
         return 0;
     return d->metaData.size();
