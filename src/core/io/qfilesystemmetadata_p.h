@@ -57,8 +57,7 @@ class QFileSystemMetaData
 {
 public:
     QFileSystemMetaData()
-        : knownFlagsMask(0),
-        entryFlags(0),
+        : entryFlags(0),
         size_(0),
         creationTime_(0),
         modificationTime_(0),
@@ -133,24 +132,24 @@ public:
     };
     Q_DECLARE_FLAGS(MetaDataFlags, MetaDataFlag)
 
-    bool hasFlags(MetaDataFlags flags) const
+    inline bool hasFlags(MetaDataFlags flags) const
     {
-        return ((knownFlagsMask & flags) == flags);
+        return ((entryFlags & flags) == flags);
     }
 
-    MetaDataFlags missingFlags(MetaDataFlags flags)
+    inline MetaDataFlags missingFlags(MetaDataFlags flags)
     {
-        return flags & ~knownFlagsMask;
+        return flags & ~entryFlags;
     }
 
-    void clear()
+    inline void clear()
     {
-        knownFlagsMask = 0;
+        entryFlags = 0;
     }
 
-    void clearFlags(MetaDataFlags flags = AllMetaDataFlags)
+    inline void clearFlags(MetaDataFlags flags = AllMetaDataFlags)
     {
-        knownFlagsMask &= ~flags;
+        entryFlags &= ~flags;
     }
 
     inline bool exists() const                    { return (entryFlags & ExistsAttribute); }
@@ -178,7 +177,6 @@ public:
 private:
     friend class QFileSystemEngine;
 
-    MetaDataFlags knownFlagsMask;
     MetaDataFlags entryFlags;
 
     qint64 size_;
