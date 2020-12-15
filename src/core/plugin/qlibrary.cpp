@@ -59,9 +59,11 @@
 #  if QT_POINTER_SIZE == 8
 #    define QT_ELF_EHDR_TYPE Elf64_Ehdr
 #    define QT_ELF_SHDR_TYPE Elf64_Shdr
+#    define QT_ELF_CLASS_TYPE ELFCLASS64
 #  else
 #    define QT_ELF_EHDR_TYPE Elf32_Ehdr
 #    define QT_ELF_SHDR_TYPE Elf32_Shdr
+#    define QT_ELF_CLASS_TYPE ELFCLASS32
 #  endif
 #endif
 
@@ -171,11 +173,22 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
         return false;
     }
 
+    qint64 datalen = file.size();
     const char *filedata = reinterpret_cast<char*>(file.map(0, file.size()));
     if (filedata == 0) {
         // try reading the data into memory instead
         const QByteArray data = file.readAll();
         filedata = data.constData();
+        datalen = data.size();
+    }
+
+    // basic ELF checks to avoid crashing
+    if (datalen < EI_CLASS || qstrncmp(filedata, ELFMAG, SELFMAG) != 0) {
+        lib->errorString = QLibrary::tr("'%1' is not ELF file").arg(library);
+        return false;
+    } else if (filedata[EI_CLASS] != QT_ELF_CLASS_TYPE) {
+        lib->errorString = QLibrary::tr("ELF class mismatch in '%1'").arg(library);
+        return false;
     }
 
     // ELF binaries build with GNU or Clang have .ktplugin section
