@@ -157,7 +157,6 @@ Q_CORE_EXPORT uint qGlobalPostedEventsCount()
 }
 
 QCoreApplication *QCoreApplication::self = 0;
-QAbstractEventDispatcher *QCoreApplicationPrivate::eventDispatcher = 0;
 std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 
 struct QCoreApplicationData {
@@ -214,10 +213,10 @@ QCoreApplicationPrivate::~QCoreApplicationPrivate()
     }
 }
 
-void QCoreApplicationPrivate::createEventDispatcher()
+QAbstractEventDispatcher* QCoreApplicationPrivate::createEventDispatcher()
 {
     Q_Q(QCoreApplication);
-    eventDispatcher = new QEventDispatcherUNIX(q);
+    return new QEventDispatcherUNIX(q);
 }
 
 #if !defined (QT_NO_DEBUG)
@@ -346,8 +345,9 @@ QCoreApplication::QCoreApplication(QCoreApplicationPrivate &p)
 */
 void QCoreApplication::flush()
 {
-    if (self && self->d_func()->eventDispatcher)
-        self->d_func()->eventDispatcher->flush();
+    if (self && self->d_func()->threadData->eventDispatcher) {
+        self->d_func()->threadData->eventDispatcher->flush();
+    }
 }
 
 /*!
@@ -368,7 +368,7 @@ QCoreApplication::QCoreApplication(int &argc, char **argv)
 : QObject(*new QCoreApplicationPrivate(argc, argv))
 {
     init();
-    QCoreApplicationPrivate::eventDispatcher->startingUp();
+    d_func()->threadData->eventDispatcher->startingUp();
 }
 
 
@@ -382,18 +382,14 @@ void QCoreApplication::init()
     Q_ASSERT_X(!self, "QCoreApplication", "there should be only one application object");
     QCoreApplication::self = this;
 
-    // use the event dispatcher created by the app programmer (if any)
-    if (!QCoreApplicationPrivate::eventDispatcher)
-        QCoreApplicationPrivate::eventDispatcher = d->threadData->eventDispatcher;
+    // use the event dispatcher created by the app programmer (if any),
     // otherwise we create one
-    if (!QCoreApplicationPrivate::eventDispatcher)
-        d->createEventDispatcher();
-    Q_ASSERT(QCoreApplicationPrivate::eventDispatcher != 0);
+    if (!d->threadData->eventDispatcher)
+        d->threadData->eventDispatcher = d->createEventDispatcher();
+    Q_ASSERT(d->threadData->eventDispatcher);
 
-    if (!QCoreApplicationPrivate::eventDispatcher->parent())
-        QCoreApplicationPrivate::eventDispatcher->moveToThread(d->threadData->thread);
-
-    d->threadData->eventDispatcher = QCoreApplicationPrivate::eventDispatcher;
+    if (!d->threadData->eventDispatcher->parent())
+        d->threadData->eventDispatcher->moveToThread(d->threadData->thread);
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
     if (!coreappdata()->app_libpaths) {
@@ -417,6 +413,8 @@ void QCoreApplication::init()
 */
 QCoreApplication::~QCoreApplication()
 {
+    Q_D(QCoreApplication);
+
     qt_call_post_routines();
 
     self = 0;
@@ -435,10 +433,8 @@ QCoreApplication::~QCoreApplication()
         globalThreadPool->waitForDone();
 #endif
 
-    d_func()->threadData->eventDispatcher = 0;
-    if (QCoreApplicationPrivate::eventDispatcher)
-        QCoreApplicationPrivate::eventDispatcher->closingDown();
-    QCoreApplicationPrivate::eventDispatcher = 0;
+    if (d->threadData->eventDispatcher)
+        d->threadData->eventDispatcher->closingDown();
 
 #ifndef QT_NO_LIBRARY
     delete coreappdata()->app_libpaths;

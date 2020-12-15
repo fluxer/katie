@@ -75,7 +75,7 @@ public:
     virtual QString appName() const;
     QString applicationName;
 
-    virtual void createEventDispatcher();
+    virtual QAbstractEventDispatcher* createEventDispatcher();
     static void removePostedEvent(QEvent *);
 
     static bool checkInstance(const char *method);
@@ -99,7 +99,6 @@ public:
     QString cachedApplicationDirPath;
     QString cachedApplicationFilePath;
 
-    static QAbstractEventDispatcher *eventDispatcher;
     static bool is_app_running;
     static bool is_app_closing;
 
