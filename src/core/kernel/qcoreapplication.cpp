@@ -58,7 +58,6 @@
 #include "qeventdispatcher_unix_p.h"
 
 #include <stdlib.h>
-#include <locale.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -376,8 +375,6 @@ QCoreApplication::QCoreApplication(int &argc, char **argv)
 void QCoreApplication::init()
 {
     Q_D(QCoreApplication);
-
-    setlocale(LC_ALL, "");                // use correct char set mapping
 
     Q_ASSERT_X(!self, "QCoreApplication", "there should be only one application object");
     QCoreApplication::self = this;

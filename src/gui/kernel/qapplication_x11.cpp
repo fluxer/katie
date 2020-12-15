@@ -86,7 +86,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <locale.h>
 #include <pwd.h>
 
 #ifdef QT_RX71_MULTITOUCH
