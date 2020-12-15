@@ -1514,6 +1514,9 @@ void tst_QDir::isRelative()
 
 void tst_QDir::isReadable()
 {
+    if (::getuid() == 0)
+        // root and Chuck Norris don't care for file permissions. Skip.
+        QSKIP("Running this test as root doesn't make sense", SkipAll);
     QDir dir;
 
     QVERIFY(dir.isReadable());
