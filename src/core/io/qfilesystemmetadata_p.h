@@ -70,19 +70,23 @@ public:
 
     enum MetaDataFlag {
         // Permissions, overlaps with QFile::Permissions
-        OtherReadPermission = 0x00000004,   OtherWritePermission = 0x00000002,  OtherExecutePermission = 0x00000001,
-        GroupReadPermission = 0x00000040,   GroupWritePermission = 0x00000020,  GroupExecutePermission = 0x00000010,
-        UserReadPermission  = 0x00000400,   UserWritePermission  = 0x00000200,  UserExecutePermission  = 0x00000100,
-        OwnerReadPermission = 0x00004000,   OwnerWritePermission = 0x00002000,  OwnerExecutePermission = 0x00001000,
+        OwnerReadPermission = QFile::ReadOwner,
+        OwnerWritePermission = QFile::WriteOwner,
+        OwnerExecutePermission = QFile::ExeOwner,
+        UserReadPermission  = QFile::ReadUser,
+        UserWritePermission  = QFile::WriteUser,
+        UserExecutePermission  = QFile::ExeUser,
+        GroupReadPermission = QFile::ReadGroup,
+        GroupWritePermission = QFile::WriteGroup,
+        GroupExecutePermission = QFile::ExeGroup,
+        OtherReadPermission = QFile::ReadOther,
+        OtherWritePermission = QFile::WriteOther,
+        OtherExecutePermission = QFile::ExeOther,
 
         OtherPermissions    = OtherReadPermission | OtherWritePermission | OtherExecutePermission,
         GroupPermissions    = GroupReadPermission | GroupWritePermission | GroupExecutePermission,
         UserPermissions     = UserReadPermission  | UserWritePermission  | UserExecutePermission,
         OwnerPermissions    = OwnerReadPermission | OwnerWritePermission | OwnerExecutePermission,
-
-        ReadPermissions     = OtherReadPermission | GroupReadPermission | UserReadPermission | OwnerReadPermission,
-        WritePermissions    = OtherWritePermission | GroupWritePermission | UserWritePermission | OwnerWritePermission,
-        ExecutePermissions  = OtherExecutePermission | GroupExecutePermission | UserExecutePermission | OwnerExecutePermission,
 
         Permissions         = OtherPermissions | GroupPermissions | UserPermissions | OwnerPermissions,
 
