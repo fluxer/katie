@@ -221,9 +221,9 @@ bool QSocketNotifier::event(QEvent *e)
 {
     if (e->type() == QEvent::ThreadChange) {
         if (snenabled) {
-            setEnabled(false);
             QMetaObject::invokeMethod(this, "setEnabled", Qt::QueuedConnection,
                                       Q_ARG(bool, snenabled));
+            setEnabled(false);
         }
         return true;
     } else if (e->type() == QEvent::SockAct) {
