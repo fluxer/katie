@@ -17,7 +17,7 @@ cd "$(dirname "$bin")"
 if [ -z "$DISPLAY" ];then
     Xvfb :123 &
     xvfbpid=$!
-    sleep 3
+    sleep 5
 
     DISPLAY=:123 @KATIE_CROSS_EXEC@ "./$(basename "$bin")" $@
     retval=$?
