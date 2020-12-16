@@ -441,6 +441,8 @@ qint64 QFSFileEngine::write(const char *data, qint64 len)
         setError(errno == ENOSPC ? QFile::ResourceError : QFile::WriteError, qt_error_string(errno));
     }
 
+    d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
+
     return writtenBytes;
 }
 
