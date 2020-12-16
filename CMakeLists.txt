@@ -36,6 +36,12 @@ if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
     cmake_policy(SET CMP0063 NEW)
 endif()
 
+# set CMAKE_CROSSCOMPILING_EMULATOR so that manually specifying cache variables for the tests done
+# via katie_check_proc() is not required, CMAKE_CROSSCOMPILING_EMULATOR is supported by CMake v3.3+
+if(KATIE_CROSS_EXEC AND NOT CMAKE_CROSSCOMPILING_EMULATOR)
+    set(CMAKE_CROSSCOMPILING_EMULATOR "${KATIE_CROSS_EXEC}")
+endif()
+
 # LLVM linker does not have a default library search path, add some directories known to contain
 # system wide libraries. the headers search path is also incomplete
 if(CMAKE_SYSTEM_NAME MATCHES "BSD")
