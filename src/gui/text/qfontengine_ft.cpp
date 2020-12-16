@@ -76,24 +76,6 @@ QT_BEGIN_NAMESPACE
 #define TRUNC(x)    ((x) >> 6)
 #define ROUND(x)    (((x)+32) & -64)
 
-static HB_Error hb_getSFntTableFt(void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length)
-{
-#if (FREETYPE_MAJOR*10000 + FREETYPE_MINOR*100 + FREETYPE_PATCH) > 20103
-    FT_Face face = (FT_Face)font;
-    FT_ULong ftlen = *length;
-    FT_Error error = 0;
-
-    if ( !FT_IS_SFNT(face) )
-        return HB_Err_Invalid_Argument;
-
-    error = FT_Load_Sfnt_Table(face, tableTag, 0, buffer, &ftlen);
-    *length = ftlen;
-    return (HB_Error)error;
-#else
-    return HB_Err_Invalid_Argument;
-#endif
-}
-
 // -------------------------- Freetype support ------------------------------
 
 class QtFreetypeData
@@ -205,9 +187,6 @@ QFreetypeFace *QFreetypeFace::getFace(const QFontEngine::FaceId &face_id,
             return 0;
         }
         newFreetype->face = face;
-
-        newFreetype->hbFace = qHBNewFace(face, hb_getSFntTableFt);
-        Q_CHECK_PTR(newFreetype->hbFace);
         newFreetype->ref = 1;
         newFreetype->xsize = 0;
         newFreetype->ysize = 0;
@@ -280,7 +259,6 @@ void QFreetypeFace::release(const QFontEngine::FaceId &face_id)
 {
     QtFreetypeData *freetypeData = qt_getFreetypeData();
     if (!ref.deref()) {
-        qHBFreeFace(hbFace);
         FT_Done_Face(face);
 #ifndef QT_NO_FONTCONFIG
         if (charset)
@@ -608,7 +586,6 @@ QFontEngineFT::~QFontEngineFT()
 {
     if (freetype)
         freetype->release(face_id);
-    hbFace = 0; // we share the face in QFreeTypeFace, don't let ~QFontEngine delete it
 }
 
 void QFontEngineFT::freeGlyphSets()
@@ -651,8 +628,6 @@ bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format,
     if (FT_Get_PS_Font_Info(freetype->face, &psrec) == FT_Err_Ok) {
         symbol = bool(fontDef.family.contains(QLatin1String("symbol"), Qt::CaseInsensitive));
     }
-    // #####
-    freetype->hbFace->isSymbolFont = symbol;
 
     lbearing = rbearing = SHRT_MIN;
     freetype->computeSize(fontDef, &xsize, &ysize, &defaultGlyphSet.outline_drawing);
@@ -689,8 +664,6 @@ bool QFontEngineFT::init(FaceId faceId, bool antialias, GlyphFormat format,
     hbFont.y_ppem  = face->size->metrics.y_ppem;
     hbFont.x_scale = face->size->metrics.x_scale;
     hbFont.y_scale = face->size->metrics.y_scale;
-
-    hbFace = freetype->hbFace;
 
     metrics = face->size->metrics;
 
