@@ -1100,6 +1100,8 @@ public slots:
 
 void tst_QThread::wait3_slowDestructor()
 {
+    QSKIP("Timer rounding", SkipAll);
+
     SlowSlotObject slow;
     QThread thread;
     QObject::connect(&thread, SIGNAL(finished()), &slow, SLOT(slowSlot()), Qt::DirectConnection);
@@ -1112,11 +1114,9 @@ void tst_QThread::wait3_slowDestructor()
     //the quit function will cause the thread to finish and enter the slowSlot that is blocking
 
     timer.start();
-    QEXPECT_FAIL("", "Timer rounding", Continue);
     QVERIFY(!thread.wait(Waiting_Thread::WaitTime));
     qint64 elapsed = timer.elapsed();
 
-    QEXPECT_FAIL("", "Timer rounding", Continue);
     QVERIFY(elapsed >= Waiting_Thread::WaitTime);
 
     slow.cond.wakeOne();
