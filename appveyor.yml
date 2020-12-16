@@ -24,6 +24,10 @@ build_script:
 
 test_script:
 - sh: >-
+    Xvfb :123 &
+
+    export DISPLAY=:123
+
     cd tests/auto
 
     ctest -V
