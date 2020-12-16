@@ -3,13 +3,14 @@
 set -e
 
 cwd="$(readlink -f $(dirname $0))"
-cmake="cmake-2.8.12.2-Linux-i386"
+cmake="cmake-3.3.0-Linux-x86_64.tar.gz"
+cmakesite="https://cmake.org/files/v3.3"
 
 cd "$cwd"
 if which curl; then
-    curl -C - -L "https://cmake.org/files/v2.8/$cmake.tar.gz" -o "$cmake.tar.gz"
+    curl -C - -L "$cmakesite/$cmake.tar.gz" -o "$cmake.tar.gz"
 else
-    wget -c "https://cmake.org/files/v2.8/$cmake.tar.gz"
+    wget -c "$cmakesite/$cmake.tar.gz"
 fi
 
 rm -rf "$cwd/../oldmake"

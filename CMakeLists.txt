@@ -7,10 +7,10 @@
 #     find -name '*.cmake' -exec grep -E 'TODO|FIXME' {} +
 #     find -name CMakeLists.txt -exec grep -E 'TODO|FIXME' {} +
 
-cmake_minimum_required(VERSION 2.8.12.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
-if(CMAKE_CROSSCOMPILING AND NOT KATIE_CROSS_EXEC)
-    message(FATAL_ERROR "Cross-compiling requires KATIE_CROSS_EXEC to be set to QEMU executable, e.g. qemu-arm-static")
+if(CMAKE_CROSSCOMPILING AND NOT CMAKE_CROSSCOMPILING_EMULATOR)
+    message(FATAL_ERROR "Cross-compiling requires CMAKE_CROSSCOMPILING_EMULATOR to be set to QEMU executable, e.g. qemu-arm-static")
 endif()
 
 project(Katie C CXX)
@@ -32,15 +32,7 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
 
 # enable symbols visibility preset for all targets
-if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
-    cmake_policy(SET CMP0063 NEW)
-endif()
-
-# set CMAKE_CROSSCOMPILING_EMULATOR so that manually specifying cache variables for the tests done
-# via katie_check_proc() is not required, CMAKE_CROSSCOMPILING_EMULATOR is supported by CMake v3.3+
-if(KATIE_CROSS_EXEC AND NOT CMAKE_CROSSCOMPILING_EMULATOR)
-    set(CMAKE_CROSSCOMPILING_EMULATOR "${KATIE_CROSS_EXEC}")
-endif()
+cmake_policy(SET CMP0063 NEW)
 
 # LLVM linker does not have a default library search path, add some directories known to contain
 # system wide libraries. the headers search path is also incomplete
