@@ -31,7 +31,7 @@ Description: C++ toolkit derived from the Qt 4.8 framework
  and uic)
 
 Package: katie-dev
-Architecture: all
+Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
 Section: devel
 Depends: ${misc:Depends}, katie-runtime, katie-tools
 Description: C++ toolkit derived from the Qt 4.8 framework
