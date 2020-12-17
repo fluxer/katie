@@ -10,7 +10,9 @@ URL: https://github.com/fluxer/katie
 BuildRequires: gcc-c++ cmake libicu-devel libzstd-devel zlib-devel libsq3-devel libpng-devel freetype-devel pcre-devel openssl-devel libX11-devel libXinerama-devel libXrandr-devel libXrender-devel libXfixes-devel libXcursor-devel libSM-devel libICE-devel dbus-devel libtiff-devel libjpeg-turbo-devel fontconfig-devel cups-devel libiodbc-devel libpq-devel mariadb-embedded-devel unifdef
 
 %description
-This package is pre-release version of the Katie toolkit
+Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+clean it up, fix some bugs and backport some features from Qt5. It is based
+on the latest Git revision of Qt v4.8.
 
 %build
 %cmake -DKATIE_TOOLS_SUFFIX="-katie"

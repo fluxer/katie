@@ -18,30 +18,42 @@ Section: x11
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: unixodbc, libpq5, libmariadbclient, xserver-xorg-core
 Description: C++ toolkit derived from the Qt 4.8 framework
- This package is pre-release version of the Katie tookit (includes libraries,
- imports, plugins and translations)
+ Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+ clean it up, fix some bugs and backport some features from Qt5. It is based
+ on the latest Git revision of Qt v4.8.
+ .
+ This package includes includes libraries, imports, plugins and translations
 
 Package: katie-tools
 Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
 Section: x11
 Depends: ${shlibs:Depends}, ${misc:Depends}, katie-runtime
 Description: C++ toolkit derived from the Qt 4.8 framework
- This package is pre-release version of the Katie tookit (includes designer,
- moc, qdbus, qdbuscpp2xml, qdbusviewer, qdbusxml2cpp, qscript, qtconfig, rcc
- and uic)
+ Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+ clean it up, fix some bugs and backport some features from Qt5. It is based
+ on the latest Git revision of Qt v4.8.
+ .
+ This package includes designer, moc, qdbus, qdbuscpp2xml, qdbusviewer,
+ qdbusxml2cpp, qscript, qtconfig, rcc, and uic
 
 Package: katie-dev
 Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
 Section: devel
 Depends: ${misc:Depends}, katie-runtime, katie-tools
 Description: C++ toolkit derived from the Qt 4.8 framework
- This package is pre-release version of the Katie tookit (includes headers,
- pkg-config and CMake files)
+ Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+ clean it up, fix some bugs and backport some features from Qt5. It is based
+ on the latest Git revision of Qt v4.8.
+ .
+ This package includes headers, pkg-config and CMake files
 
 Package: katie-doc
 Architecture: all
 Section: doc
 Depends: ${misc:Depends}, man-db
 Description: C++ toolkit derived from the Qt 4.8 framework
- This package is pre-release version of the Katie tookit (includes manual
- pages for the tools)
+ Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+ clean it up, fix some bugs and backport some features from Qt5. It is based
+ on the latest Git revision of Qt v4.8.
+ .
+ This package includes manual pages for the tools
