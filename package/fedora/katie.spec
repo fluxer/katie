@@ -1,7 +1,7 @@
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/
 
 Name: katie
-Version: 4.9.0
+Version: 4.9.1
 Release: 1%{?dist}
 Summary: C++ toolkit derived from the Qt 4.8 framework
 License: BSD and LGPLv2+
@@ -38,5 +38,8 @@ rm -v %{buildroot}/%{_sysconfdir}/profile.d/katie-*.sh
 %{_sysconfdir}/ld.so.conf.d/katie-*.conf
 
 %changelog
+* Wed Dec 17 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.1-1
+- initial package
+
 * Wed Dec 16 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.0-1
 - initial package
