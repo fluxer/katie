@@ -150,6 +150,9 @@ add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 option(KATIE_ALLINONE "Build targets from single source file" OFF)
 add_feature_info(allinone KATIE_ALLINONE "build targets from single source file")
 
+option(KATIE_PCH "Build components with pre-compiled header" OFF)
+add_feature_info(pch KATIE_PCH "build components with pre-compiled header")
+
 option(WITH_ACCESSIBILITY "Build accessibility support" ON)
 add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
 

@@ -109,6 +109,8 @@ set_target_properties(KtDBus PROPERTIES
     EXPORT_NAME DBus
 )
 
+katie_setup_pch(KtDBus)
+
 install(
     TARGETS KtDBus
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

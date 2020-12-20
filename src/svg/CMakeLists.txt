@@ -63,6 +63,8 @@ set_target_properties(KtSvg PROPERTIES
     EXPORT_NAME Svg
 )
 
+katie_setup_pch(KtSvg)
+
 install(
     TARGETS KtSvg
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
