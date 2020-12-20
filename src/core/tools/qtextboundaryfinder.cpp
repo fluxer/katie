@@ -50,7 +50,7 @@ static inline UBreakIteratorType getBreakType(const QTextBoundaryFinder::Boundar
         case QTextBoundaryFinder::Sentence:
             return UBRK_SENTENCE;
     }
-    return UBRK_CHARACTER;
+    Q_UNREACHABLE();
 }
 
 static const char* getBreakLocale() {
