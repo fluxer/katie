@@ -368,7 +368,7 @@ void QSvgRenderer::render(QPainter *painter)
 {
     Q_D(QSvgRenderer);
     if (d->render) {
-        d->render->draw(painter);
+        d->render->draw(painter, QRectF());
     }
 }
 

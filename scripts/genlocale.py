@@ -2,7 +2,7 @@
 #-*- coding: UTF-8 -*-
 
 # See https://github.com/fluxer/katie/wiki/Unicode-support
-# Data is from https://unicode.org/Public/cldr/36.1/core.zip
+# Data is from https://unicode.org/Public/cldr/38/core.zip
 
 import sys, re
 import xml.etree.ElementTree as ET
@@ -113,8 +113,6 @@ def printdoc(frommap, prefix):
     for key in sorted(frommap.keys()):
         if key in ('Any%s' % prefix, 'C'):
             continue
-        code = frommap[key]['code']
-        name = frommap[key]['name']
         print('    \\value %s' % key)
     print('')
 
@@ -174,7 +172,7 @@ languagealiasmap = {}
 countryaliasmap = {}
 scriptaliasmap = {}
 # regular expressions
-localeregex = re.compile('([^_|-|\.|@]+)+')
+localeregex = re.compile('([^_|\-|\.|@]+)+')
 
 # artificial entries
 languagemap['AnyLanguage'] = {

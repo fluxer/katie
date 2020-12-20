@@ -116,8 +116,8 @@ void testLookup(int size)
     QBENCHMARK {
         for (int i = 0; i < size; ++i)
             val = container.value(i);
-        
     }
+    Q_UNUSED(val);
 }
 
 void tst_associative_containers::lookup()

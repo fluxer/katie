@@ -42,12 +42,7 @@
 #include "qfileinfo.h"
 #include "qset.h"
 #include "qtimer.h"
-
-#if defined(Q_OS_LINUX)
-#  include "qfilesystemwatcher_inotify_p.h"
-#elif defined(Q_OS_FREEBSD)
-#  include "qfilesystemwatcher_kqueue_p.h"
-#endif
+#include "qfilesystemwatcher_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -206,17 +201,13 @@ void QPollingFileSystemWatcherEngine::timeout()
 }
 
 
-
-
 void QFileSystemWatcherPrivate::initNativeEngine()
 {
     Q_ASSERT(!watcher);
     Q_Q(const QFileSystemWatcher);
 
-#if defined(Q_OS_LINUX)
-    watcher = QInotifyFileSystemWatcherEngine::create();
-#elif defined(Q_OS_FREEBSD)
-    watcher = QKqueueFileSystemWatcherEngine::create();
+#if defined(QT_HAVE_INOTIFY_INIT1) || defined(QT_HAVE_KEVENT)
+    watcher = QFileSystemWatcherEngineUnix::create();
 #endif
 
     if (watcher) {
@@ -252,8 +243,8 @@ void QFileSystemWatcherPrivate::init()
             qDebug() << "QFileSystemWatcher: skipping polling engine, using only native engine";
             initNativeEngine();
         } else {
-            qDebug() << "QFileSystemWatcher: skipping polling and native engine, using only explicit" << forceName << "engine";
-            initForcedEngine(forceName);
+            qDebug() << "QFileSystemWatcher: unknown engine, using native engine";
+            initNativeEngine();
         }
     } else {
 #endif // QT_BUILD_INTERNAL
@@ -265,31 +256,6 @@ void QFileSystemWatcherPrivate::init()
 #ifdef QT_BUILD_INTERNAL
     }
 #endif // QT_BUILD_INTERNAL
-}
-
-void QFileSystemWatcherPrivate::initForcedEngine(const QString &forceName)
-{
-    Q_ASSERT(!watcher);
-    Q_Q(const QFileSystemWatcher);
-
-#if defined(Q_OS_LINUX)
-    if (forceName == QLatin1String("inotify")) {
-        watcher = QInotifyFileSystemWatcherEngine::create();
-    }
-#else
-    Q_UNUSED(forceName);
-#endif
-
-    if (watcher) {
-        QObject::connect(watcher,
-                         SIGNAL(fileChanged(QString,bool)),
-                         q,
-                         SLOT(_q_fileChanged(QString,bool)));
-        QObject::connect(watcher,
-                         SIGNAL(directoryChanged(QString,bool)),
-                         q,
-                         SLOT(_q_directoryChanged(QString,bool)));
-    }
 }
 
 void QFileSystemWatcherPrivate::initPollerEngine()

@@ -34,7 +34,6 @@
 #ifndef EXTRAINFO_H
 #define EXTRAINFO_H
 
-#include <QtDesigner/sdk_global.h>
 #include <QtDesigner/extension.h>
 
 QT_BEGIN_HEADER
@@ -47,7 +46,7 @@ class QWidget;
 
 class QDesignerFormEditorInterface;
 
-class QDESIGNER_SDK_EXPORT QDesignerExtraInfoExtension
+class Q_DESIGNER_EXPORT QDesignerExtraInfoExtension
 {
 public:
     virtual ~QDesignerExtraInfoExtension() {}

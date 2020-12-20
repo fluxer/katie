@@ -66,13 +66,11 @@
 #include "qbitarray.h"
 #include "qurl.h"
 #include "qvariant.h"
-#ifndef QT_NO_GEOM_VARIANT
-# include "qsize.h"
-# include "qpoint.h"
-# include "qrect.h"
-# include "qline.h"
-# include "qvector3d.h"
-#endif
+#include "qsize.h"
+#include "qpoint.h"
+#include "qrect.h"
+#include "qline.h"
+#include "qvector3d.h"
 #define NS(x) QT_PREPEND_NAMESPACE(x)
 
 QT_BEGIN_NAMESPACE

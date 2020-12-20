@@ -34,7 +34,6 @@
 #include "qunicodetables_p.h"
 #include "qlibrary.h"
 #include "qtextcodec.h"
-
 #include "qharfbuzz_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -94,7 +93,7 @@ void *HB_Library_Resolve(const char *library, int version, const char *symbol)
 #ifdef QT_NO_LIBRARY
     return 0;
 #else
-    return QLibrary::resolve(QLatin1String(library), version, symbol);
+    return QLibrary::resolve(QString::fromLatin1(library), version, symbol);
 #endif
 }
 

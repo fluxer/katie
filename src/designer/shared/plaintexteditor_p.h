@@ -46,7 +46,6 @@
 #define PLAINTEXTEDITOR_H
 
 #include <QtGui/QDialog>
-#include "shared_global_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -55,7 +54,7 @@ class QDesignerFormEditorInterface;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT PlainTextEditorDialog : public QDialog
+class Q_DESIGNER_EXPORT PlainTextEditorDialog : public QDialog
 {
     Q_OBJECT
 public:

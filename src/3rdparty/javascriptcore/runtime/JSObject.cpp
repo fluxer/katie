@@ -42,7 +42,7 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(JSObject);
 
-const ClassInfo JSObject::info = { "CallbackObject", 0, 0, 0 };
+const ClassInfo JSObject::info = { "CallbackObject", 0, 0 };
 
 static inline void getClassPropertyNames(ExecState* exec, const ClassInfo* classInfo, PropertyNameArray& propertyNames, EnumerationMode mode)
 {

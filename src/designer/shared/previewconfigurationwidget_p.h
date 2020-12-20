@@ -45,8 +45,6 @@
 #ifndef PREVIEWCONFIGURATIONWIDGET_H
 #define PREVIEWCONFIGURATIONWIDGET_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QGroupBox>
 #include <QtCore/qshareddata.h>
 
@@ -59,7 +57,7 @@ namespace qdesigner_internal {
 
 // ----------- PreviewConfigurationWidget: Widget to edit the preview configuration.
 
-class QDESIGNER_SHARED_EXPORT PreviewConfigurationWidget : public QGroupBox
+class Q_DESIGNER_EXPORT PreviewConfigurationWidget : public QGroupBox
 {
     Q_OBJECT
 public:

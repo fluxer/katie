@@ -49,7 +49,12 @@ static void qIterAppend(DBusMessageIter *it, QByteArray *ba, int type, const voi
 
 QDBusMarshaller::~QDBusMarshaller()
 {
-    close();
+    if (ba) {
+        if (closeCode)
+            *ba += closeCode;
+    } else if (parent) {
+        dbus_message_iter_close_container(&parent->iterator, &iterator);
+    }
 }
 
 inline QString QDBusMarshaller::currentSignature()
@@ -196,10 +201,7 @@ inline bool QDBusMarshaller::append(const QDBusVariant &arg)
 
     QDBusMarshaller sub(capabilities);
     open(sub, DBUS_TYPE_VARIANT, signature);
-    bool isOk = sub.appendVariantInternal(value);
-    // don't call sub.close(): it auto-closes
-
-    return isOk;
+    return sub.appendVariantInternal(value);
 }
 
 inline void QDBusMarshaller::append(const QStringList &arg)
@@ -215,7 +217,6 @@ inline void QDBusMarshaller::append(const QStringList &arg)
     QStringList::ConstIterator end = arg.constEnd();
     for ( ; it != end; ++it)
         sub.append(*it);
-    // don't call sub.close(): it auto-closes
 }
 
 inline QDBusMarshaller *QDBusMarshaller::beginStructure()
@@ -332,16 +333,6 @@ QDBusMarshaller *QDBusMarshaller::endCommon()
     QDBusMarshaller *retval = parent;
     delete this;
     return retval;
-}
-
-void QDBusMarshaller::close()
-{
-    if (ba) {
-        if (closeCode)
-            *ba += closeCode;
-    } else if (parent) {
-        dbus_message_iter_close_container(&parent->iterator, &iterator);
-    }
 }
 
 void QDBusMarshaller::error(const QString &msg)

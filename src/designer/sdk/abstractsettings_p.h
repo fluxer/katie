@@ -45,8 +45,6 @@
 #ifndef ABSTRACTSETTINGS_P_H
 #define ABSTRACTSETTINGS_P_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QVariant>
 
 QT_BEGIN_HEADER
@@ -58,7 +56,7 @@ class QString;
 /*!
  To be implemented by IDEs that want to control the way designer retrieves/stores its settings.
  */
-class QDESIGNER_SDK_EXPORT QDesignerSettingsInterface
+class Q_DESIGNER_EXPORT QDesignerSettingsInterface
 {
 public:
     virtual ~QDesignerSettingsInterface() {}

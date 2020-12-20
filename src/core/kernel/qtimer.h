@@ -53,12 +53,12 @@ public:
     ~QTimer();
 
     inline bool isActive() const { return id >= 0; }
-    int timerId() const { return id; }
+    inline int timerId() const { return id; }
 
     void setInterval(const int msec);
-    int interval() const { return inter; }
+    inline int interval() const { return inter; }
 
-    inline void setSingleShot(bool singleShot);
+    inline void setSingleShot(bool singleShot) { single = singleShot; }
     inline bool isSingleShot() const { return single; }
 
     static void singleShot(const int msec, QObject *receiver, const char *member);
@@ -85,8 +85,6 @@ private:
     int inter;
     bool single;
 };
-
-inline void QTimer::setSingleShot(bool asingleShot) { single = asingleShot; }
 
 QT_END_NAMESPACE
 

@@ -45,8 +45,6 @@
 #ifndef GRIDPANEL_H
 #define GRIDPANEL_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -56,7 +54,7 @@ namespace qdesigner_internal {
 class Grid;
 class Ui_GridPanel;
 
-class QDESIGNER_SHARED_EXPORT GridPanel : public QWidget
+class Q_DESIGNER_EXPORT GridPanel : public QWidget
 {
     Q_OBJECT
 public:

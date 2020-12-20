@@ -34,8 +34,6 @@
 #ifndef ABSTRACTICONCACHE_H
 #define ABSTRACTICONCACHE_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtCore/QObject>
 
 QT_BEGIN_HEADER
@@ -46,7 +44,7 @@ class QIcon;
 class QPixmap;
 class QString;
 
-class QDESIGNER_SDK_EXPORT QDesignerIconCacheInterface : public QObject
+class Q_DESIGNER_EXPORT QDesignerIconCacheInterface : public QObject
 {
     Q_OBJECT
 public:

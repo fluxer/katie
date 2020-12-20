@@ -32,10 +32,8 @@
 ****************************************************************************/
 
 #include "qnetworkmanagerengine.h"
-
-#include <QtNetwork/qbearerplugin_p.h>
-
-#include <QtCore/qdebug.h>
+#include "qbearerplugin_p.h"
+#include "qdebug.h"
 
 #ifndef QT_NO_BEARERMANAGEMENT
 #ifndef QT_NO_DBUS

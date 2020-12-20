@@ -34,8 +34,6 @@
 #ifndef ABSTRACTMETADATABASE_H
 #define ABSTRACTMETADATABASE_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtCore/QObject>
 #include <QtCore/QList>
 #include <QtCore/QHash>
@@ -65,7 +63,7 @@ public:
 };
 
 
-class QDESIGNER_SDK_EXPORT QDesignerMetaDataBaseInterface: public QObject
+class Q_DESIGNER_EXPORT QDesignerMetaDataBaseInterface: public QObject
 {
     Q_OBJECT
 public:

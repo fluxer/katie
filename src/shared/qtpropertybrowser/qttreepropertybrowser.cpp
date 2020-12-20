@@ -432,8 +432,8 @@ void QtTreePropertyBrowserPrivate::init(QWidget *parent)
 
     m_treeWidget->setColumnCount(2);
     QStringList labels;
-    labels.append(QApplication::translate("QtTreePropertyBrowser", "Property", 0, QApplication::UnicodeUTF8));
-    labels.append(QApplication::translate("QtTreePropertyBrowser", "Value", 0, QApplication::UnicodeUTF8));
+    labels.append(QApplication::translate("QtTreePropertyBrowser", "Property", QApplication::UnicodeUTF8));
+    labels.append(QApplication::translate("QtTreePropertyBrowser", "Value", QApplication::UnicodeUTF8));
     m_treeWidget->setHeaderLabels(labels);
     m_treeWidget->setAlternatingRowColors(true);
     m_treeWidget->setEditTriggers(QAbstractItemView::EditKeyPressed);

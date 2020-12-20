@@ -45,7 +45,6 @@
 #ifndef SCRIPT_H
 #define SCRIPT_H
 
-#include <QtDesigner/sdk_global.h>
 #include <QtDesigner/extension.h>
 #include <QtCore/QVariant>
 
@@ -55,7 +54,7 @@ QT_BEGIN_NAMESPACE
 
 class QString;
 
-class QDESIGNER_SDK_EXPORT QDesignerScriptExtension
+class Q_DESIGNER_EXPORT QDesignerScriptExtension
 {
 public:
     virtual ~QDesignerScriptExtension();

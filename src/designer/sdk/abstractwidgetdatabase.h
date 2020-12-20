@@ -34,8 +34,6 @@
 #ifndef ABSTRACTWIDGETDATABASE_H
 #define ABSTRACTWIDGETDATABASE_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtCore/QObject>
 #include <QtCore/QList>
 
@@ -93,7 +91,7 @@ public:
     virtual QList<QVariant> defaultPropertyValues() const = 0;
 };
 
-class QDESIGNER_SDK_EXPORT QDesignerWidgetDataBaseInterface: public QObject
+class Q_DESIGNER_EXPORT QDesignerWidgetDataBaseInterface: public QObject
 {
     Q_OBJECT
 public:

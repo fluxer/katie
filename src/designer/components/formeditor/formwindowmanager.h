@@ -35,8 +35,7 @@
 #define FORMWINDOWMANAGER_H
 
 #include "formeditor_global.h"
-
-#include <QtDesigner/qdesigner_formwindowmanager_p.h>
+#include "qdesigner_formwindowmanager_p.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QList>

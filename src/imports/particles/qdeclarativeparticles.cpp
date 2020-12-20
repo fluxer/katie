@@ -1239,28 +1239,25 @@ void QDeclarativeParticlesPainter::paint(QPainter *p, const QStyleOptionGraphics
     const int myX = x() + parentItem()->x();
     const int myY = y() + parentItem()->y();
 
-    QVarLengthArray<QPainter::PixmapFragment, 256> pixmapData;
-    pixmapData.resize(d->particles.count());
-
     const QRectF sourceRect = d->image.rect();
     qreal halfPWidth = sourceRect.width()/2.;
     qreal halfPHeight = sourceRect.height()/2.;
-    for (int i = 0; i < d->particles.count(); ++i) {
-        const QDeclarativeParticle &particle = d->particles.at(i);
-        pixmapData[i].x = particle.x - myX + halfPWidth;
-        pixmapData[i].y = particle.y - myY + halfPHeight;
-        pixmapData[i].opacity = particle.opacity;
 
-        //these never change
-        pixmapData[i].rotation = 0;
-        pixmapData[i].scaleX = 1;
-        pixmapData[i].scaleY = 1;
-        pixmapData[i].sourceLeft = sourceRect.left();
-        pixmapData[i].sourceTop = sourceRect.top();
-        pixmapData[i].width = sourceRect.width();
-        pixmapData[i].height = sourceRect.height();
+    qreal w = sourceRect.width();
+    qreal h = sourceRect.height();
+
+    qreal oldOpacity = p->opacity();
+
+    foreach(const QDeclarativeParticle &particle, d->particles) {
+        qreal xOffset = particle.x - myX + halfPWidth;
+        qreal yOffset = particle.y - myY + halfPHeight;
+
+        p->setOpacity(oldOpacity * particle.opacity);
+        p->drawPixmap(QRectF(qreal(-0.5) * w + xOffset, qreal(-0.5) * h + yOffset, w, h), d->image, sourceRect);
+
     }
-    p->drawPixmapFragments(pixmapData.data(), d->particles.count(), d->image);
+
+    p->setOpacity(oldOpacity);
 }
 
 void QDeclarativeParticles::componentComplete()

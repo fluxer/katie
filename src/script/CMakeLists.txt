@@ -35,9 +35,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtScript
-    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/parser
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecompiler
@@ -228,7 +226,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/dtoa.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/FastMalloc.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/HashTable.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/qt/ThreadingQt.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/Threading.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/TypeTraits.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode/UTF8.cpp
@@ -247,9 +244,11 @@ set_target_properties(KtScript PROPERTIES
     EXPORT_NAME Script
 )
 
+katie_setup_pch(KtScript)
+
 install(
     TARGETS KtScript
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

@@ -43,7 +43,7 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(JSFunction);
 
-const ClassInfo JSFunction::info = { "Function", &InternalFunction::info, 0, 0 };
+const ClassInfo JSFunction::info = { "Function", &InternalFunction::info, 0 };
 
 bool JSFunction::isHostFunctionNonInline() const
 {

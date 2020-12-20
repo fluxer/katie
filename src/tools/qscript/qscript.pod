@@ -36,4 +36,4 @@ The Qt Company Ltd.
 Copyright (C) 2015 The Qt Company Ltd.
 Copyright (C) 2016-2020 Ivailo Monev
 
-Licensed through GNU Lesser General Public License/GNU General Public License.
+Licensed through BSD License.

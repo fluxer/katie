@@ -183,12 +183,10 @@ void QProcessEnvironmentPrivate::insert(const QProcessEnvironmentPrivate &other)
     for ( ; it != end; ++it)
         hash.insert(it.key(), it.value());
 
-#ifdef Q_OS_UNIX
     QHash<QString, Key>::ConstIterator nit = other.nameMap.constBegin(),
                                       nend = other.nameMap.constEnd();
     for ( ; nit != nend; ++nit)
         nameMap.insert(nit.key(), nit.value());
-#endif
 }
 
 /*!
@@ -723,7 +721,6 @@ QProcessPrivate::QProcessPrivate()
     processError = QProcess::UnknownError;
     processState = QProcess::NotRunning;
     pid = 0;
-    sequenceNumber = 0;
     exitCode = 0;
     exitStatus = QProcess::NormalExit;
     startupSocketNotifier = 0;
@@ -737,7 +734,6 @@ QProcessPrivate::QProcessPrivate()
     dying = false;
     emittedReadyRead = false;
     emittedBytesWritten = false;
-    serial = 0;
 }
 
 /*! \internal
@@ -756,7 +752,6 @@ void QProcessPrivate::cleanup()
 {
     q_func()->setProcessState(QProcess::NotRunning);
     pid = 0;
-    sequenceNumber = 0;
     dying = false;
 
     if (stdoutChannel.notifier) {
@@ -789,7 +784,6 @@ void QProcessPrivate::cleanup()
     destroyPipe(stdinChannel.pipe);
     destroyPipe(childStartedPipe);
     destroyPipe(deathPipe);
-    serial = 0;
 }
 
 /*! \internal
@@ -1018,11 +1012,9 @@ bool QProcessPrivate::_q_startupNotification()
     q->setProcessState(QProcess::NotRunning);
     processError = QProcess::FailedToStart;
     emit q->error(processError);
-#ifdef Q_OS_UNIX
     // make sure the process manager removes this entry
     waitForDeadChild();
     findExitCode();
-#endif
     cleanup();
     return false;
 }
@@ -1069,10 +1061,8 @@ QProcess::~QProcess()
         kill();
         waitForFinished();
     }
-#ifdef Q_OS_UNIX
     // make sure the process manager removes this entry
     d->findExitCode();
-#endif
     d->cleanup();
 }
 
@@ -1328,7 +1318,7 @@ void QProcess::setWorkingDirectory(const QString &dir)
 Q_PID QProcess::pid() const
 {
     Q_D(const QProcess);
-    return d->pid;
+    return Q_PID(d->pid);
 }
 
 /*! \reimp
@@ -2013,7 +2003,7 @@ int QProcess::execute(const QString &program)
 bool QProcess::startDetached(const QString &program,
                              const QStringList &arguments,
                              const QString &workingDirectory,
-                             qint64 *pid)
+                             Q_PID *pid)
 {
     return QProcessPrivate::startDetached(program,  arguments,
                                           workingDirectory, pid);

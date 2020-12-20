@@ -31,19 +31,19 @@
 **
 ****************************************************************************/
 
+#include "qcoreapplication.h"
+#include "qstringlist.h"
+#include "qmetaobject.h"
+#include "qdom.h"
+#include "qdbusconnection.h"
+#include "qdbusargument.h"
+#include "qdbusreply.h"
+#include "qdbusinterface.h"
+#include "qdbusconnectioninterface.h"
+#include "qdbusutil_p.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-
-#include <QtCore/QCoreApplication>
-#include <QtCore/QStringList>
-#include <QtCore/qmetaobject.h>
-#include <QtXml/qdom.h>
-#include <QtDBus/QDBusConnection>
-#include <QtDBus/QDBusArgument>
-#include <QtDBus/QDBusReply>
-#include <QtDBus/QDBusInterface>
-#include <QtDBus/QDBusConnectionInterface>
-#include <QtDBus/qdbusutil_p.h>
 
 QT_BEGIN_NAMESPACE
 Q_DBUS_EXPORT extern bool qt_dbus_metaobject_skip_annotations;

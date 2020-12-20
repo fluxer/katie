@@ -57,8 +57,13 @@ class QDBusDemarshaller;
 class QDBusArgumentPrivate
 {
 public:
-    inline QDBusArgumentPrivate(int flags = 0)
-        : message(0), ref(1), capabilities(flags)
+    enum Direction {
+        Marshalling,
+        Demarshalling
+    };
+
+    inline QDBusArgumentPrivate(Direction direct, int cap)
+        : message(Q_NULLPTR), ref(1), direction(direct), capabilities(cap)
     { }
     ~QDBusArgumentPrivate();
 
@@ -81,18 +86,16 @@ public:
 public:
     DBusMessage *message;
     QAtomicInt ref;
+    Direction direction;
     int capabilities;
-    enum Direction {
-        Marshalling,
-        Demarshalling
-    } direction;
 };
 
 class QDBusMarshaller: public QDBusArgumentPrivate
 {
 public:
-    QDBusMarshaller(int flags) : QDBusArgumentPrivate(flags), parent(0), ba(0), closeCode(0), ok(true)
-    { direction = Marshalling; }
+    QDBusMarshaller(int flags) : QDBusArgumentPrivate(Marshalling, flags),
+        parent(Q_NULLPTR), ba(Q_NULLPTR), closeCode(0), ok(true)
+    { }
     ~QDBusMarshaller();
 
     QString currentSignature();
@@ -125,7 +128,6 @@ public:
     QDBusMarshaller *beginCommon(int code, const char *signature);
     QDBusMarshaller *endCommon();
     void open(QDBusMarshaller &sub, int code, const char *signature);
-    void close();
     void error(const QString &message);
 
     bool appendVariantInternal(const QVariant &arg);
@@ -147,8 +149,9 @@ private:
 class QDBusDemarshaller: public QDBusArgumentPrivate
 {
 public:
-    inline QDBusDemarshaller(int flags) : QDBusArgumentPrivate(flags), parent(0)
-    { direction = Demarshalling; }
+    inline QDBusDemarshaller(int flags) : QDBusArgumentPrivate(Demarshalling, flags),
+        parent(Q_NULLPTR)
+    { }
     ~QDBusDemarshaller();
 
     QString currentSignature();

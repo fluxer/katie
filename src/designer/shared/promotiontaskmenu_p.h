@@ -45,8 +45,6 @@
 #ifndef PROMOTIONTASKMENU_H
 #define PROMOTIONTASKMENU_H
 
-#include "shared_global_p.h"
-
 #include <QtCore/QObject>
 #include <QtCore/QPointer>
 #include <QtCore/QList>
@@ -65,7 +63,7 @@ namespace qdesigner_internal {
 
 // A helper class for creating promotion context menus and handling promotion actions.
 
-class QDESIGNER_SHARED_EXPORT PromotionTaskMenu: public QObject
+class Q_DESIGNER_EXPORT PromotionTaskMenu: public QObject
 {
     Q_OBJECT
 public:

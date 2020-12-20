@@ -64,8 +64,6 @@
 // We mean it.
 */
 
-QT_FT_BEGIN_HEADER
-
   /*************************************************************************/
   /*                                                                       */
   /* <Section>                                                             */
@@ -488,11 +486,6 @@ QT_FT_BEGIN_HEADER
   /* results.                                                              */
   /*                                                                       */
   #define RASTER_COORD_LIMIT 32767
-
-  /* */
-
-
-QT_FT_END_HEADER
 
 #endif /* __FTIMAGE_H__ */
 

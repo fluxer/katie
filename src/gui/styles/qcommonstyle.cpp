@@ -110,13 +110,6 @@ QCommonStyle::QCommonStyle(QCommonStylePrivate &dd)
 { }
 
 /*!
-    Destroys the style.
-*/
-QCommonStyle::~QCommonStyle()
-{ }
-
-
-/*!
     \reimp
 */
 void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p,
@@ -1086,9 +1079,8 @@ void QCommonStyle::drawControl(ControlElement element, const QStyleOption *opt,
             }
             if (btn->features & QStyleOptionButton::HasMenu) {
                 int mbi = proxy()->pixelMetric(PM_MenuButtonIndicator, btn, widget);
-                QRect ir = btn->rect;
                 QStyleOptionButton newBtn = *btn;
-                newBtn.rect = QRect(ir.right() - mbi + 2, ir.height()/2 - mbi/2 + 3, mbi - 6, mbi - 6);
+                newBtn.rect = QRect(btn->rect.right() - mbi + 2, btn->rect.height()/2 - mbi/2 + 3, mbi - 6, mbi - 6);
                 proxy()->drawPrimitive(PE_IndicatorArrowDown, &newBtn, p, widget);
             }
         }
@@ -1181,10 +1173,9 @@ void QCommonStyle::drawControl(ControlElement element, const QStyleOption *opt,
 
             if (!proxy()->styleHint(SH_UnderlineShortcut, btn, widget))
                 alignment |= Qt::TextHideMnemonic;
-            QPixmap pix;
             QRect textRect = btn->rect;
             if (!btn->icon.isNull()) {
-                pix = btn->icon.pixmap(btn->iconSize, btn->state & State_Enabled ? QIcon::Normal : QIcon::Disabled);
+                QPixmap pix = btn->icon.pixmap(btn->iconSize, btn->state & State_Enabled ? QIcon::Normal : QIcon::Disabled);
                 proxy()->drawItemPixmap(p, btn->rect, alignment, pix);
                 if (btn->direction == Qt::RightToLeft)
                     textRect.setRight(textRect.right() - btn->iconSize.width() - 4);
@@ -2804,10 +2795,8 @@ QRect QCommonStyle::subElementRect(SubElement sr, const QStyleOption *opt,
                 break;
             }
 
-            QRect textRect = QRect(left, rect.top(),
-                                    right - left, rect.height());
             if (sr == SE_DockWidgetTitleBarText) {
-                r = textRect;
+                r = QRect(left, rect.top(), right - left, rect.height());
                 break;
             }
 
@@ -2847,7 +2836,7 @@ QRect QCommonStyle::subElementRect(SubElement sr, const QStyleOption *opt,
                 r = d->decorationRect;
             else if (sr == SE_ItemViewItemText || sr == SE_ItemViewItemFocusRect)
                 r = d->displayRect;
-                               }
+        }
         break;
 #endif //QT_NO_ITEMVIEWS
 #ifndef QT_NO_TOOLBAR
@@ -4543,7 +4532,7 @@ QSize QCommonStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt,
         if (const QStyleOptionMenuItem *mi = qstyleoption_cast<const QStyleOptionMenuItem *>(opt)) {
             bool checkable = mi->menuHasCheckableItems;
             int maxpmw = mi->maxIconWidth;
-            int w = sz.width(), h = sz.height();
+            int w = sz.width(), h = 0;
             if (mi->menuItemType == QStyleOptionMenuItem::Separator) {
                 w = 10;
                 h = 2;
@@ -4718,7 +4707,6 @@ int QCommonStyle::styleHint(StyleHint sh, const QStyleOption *opt, const QWidget
     case SH_LineEdit_PasswordCharacter: {
         const QFontMetrics &fm = opt ? opt->fontMetrics
                                      : (widget ? widget->fontMetrics() : QFontMetrics(QFont()));
-        ret = 0;
         if (fm.inFont(QChar(0x25CF))) {
             ret = 0x25CF;
         } else if (fm.inFont(QChar(0x2022))) {

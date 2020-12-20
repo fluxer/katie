@@ -72,7 +72,7 @@ private slots:
     void callCreateForm();
 
 private:
-    bool parseCommandLineArgs(QStringList &fileNames, QString &resourceDir);
+    bool parseCommandLineArgs(QStringList &fileNames);
     void showErrorMessageBox(const QString &);
 
     QDesignerWorkbench *m_workbench;

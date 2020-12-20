@@ -80,17 +80,6 @@ struct QUiItemRolePair {
     int shadowRole;
 };
 
-#ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
-#endif
-
-extern const QUiItemRolePair qUiItemRoles[];
-
-#ifdef QFORMINTERNAL_NAMESPACE
-}
-#endif
-
 QT_END_NAMESPACE
 
 QT_END_HEADER

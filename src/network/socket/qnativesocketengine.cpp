@@ -171,7 +171,7 @@ QNativeSocketEnginePrivate::~QNativeSocketEnginePrivate()
     interesting error is the first one that occurred, and not the last
     one.
 */
-void QNativeSocketEnginePrivate::setError(QAbstractSocket::SocketError error, ErrorString errorString) const
+void QNativeSocketEnginePrivate::setError(QAbstractSocket::SocketError error, ErrorString errorString)
 {
     if (hasSetSocketError) {
         // Only set socket errors once for one engine; expect the
@@ -888,7 +888,7 @@ void QNativeSocketEngine::close()
 */
 bool QNativeSocketEngine::waitForRead(int msecs, bool *timedOut)
 {
-    Q_D(const QNativeSocketEngine);
+    Q_D(QNativeSocketEngine);
     Q_CHECK_VALID_SOCKETLAYER(QNativeSocketEngine::waitForRead(), false);
     Q_CHECK_NOT_STATE(QNativeSocketEngine::waitForRead(),
                       QAbstractSocket::UnconnectedState, false);

@@ -31,10 +31,9 @@
 **
 ****************************************************************************/
 
-#include <QtGui/qpropertyanimation.h>
-#include <QtGui/qwidget.h>
-#include <QtGui/qmainwindowlayout_p.h>
-
+#include "qpropertyanimation.h"
+#include "qwidget.h"
+#include "qmainwindowlayout_p.h"
 #include "qwidgetanimator_p.h"
 
 QT_BEGIN_NAMESPACE

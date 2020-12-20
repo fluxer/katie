@@ -44,7 +44,7 @@ static JSValue QT_FASTCALL regExpProtoFuncToString(ExecState*, JSObject*, JSValu
 
 // ECMA 15.10.5
 
-const ClassInfo RegExpPrototype::info = { "RegExpPrototype", 0, 0, 0 };
+const ClassInfo RegExpPrototype::info = { "RegExpPrototype", 0, 0 };
 
 RegExpPrototype::RegExpPrototype(ExecState* exec, NonNullPassRefPtr<Structure> structure, Structure* prototypeFunctionStructure)
     : JSObject(structure)

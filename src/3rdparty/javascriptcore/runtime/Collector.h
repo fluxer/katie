@@ -139,7 +139,6 @@ namespace JSC {
         void markProtectedObjects(MarkStack&);
         void markCurrentThreadConservatively(MarkStack&);
         void markCurrentThreadConservativelyInternal(MarkStack&);
-        void markOtherThreadConservatively(MarkStack&, Thread*);
 
         typedef HashCountedSet<JSCell*> ProtectCountSet;
 
@@ -158,11 +157,7 @@ namespace JSC {
     const size_t BLOCK_OFFSET_MASK = BLOCK_SIZE - 1;
     const size_t BLOCK_MASK = ~BLOCK_OFFSET_MASK;
     // cell size needs to be a power of two for certain optimizations in collector.cpp
-#if USE(JSVALUE32)
-    const size_t MINIMUM_CELL_SIZE = 32;
-#else
     const size_t MINIMUM_CELL_SIZE = 64;
-#endif
     const size_t CELL_ARRAY_LENGTH = (MINIMUM_CELL_SIZE / sizeof(double)) + (MINIMUM_CELL_SIZE % sizeof(double) != 0 ? sizeof(double) : 0);
     const size_t CELL_SIZE = CELL_ARRAY_LENGTH * sizeof(double);
     const size_t SMALL_CELL_SIZE = CELL_SIZE / 2;

@@ -214,7 +214,6 @@ QWidget *QDragManager::currentTarget()
 {
     return currentDropTarget;
 }
-
 #endif
 
 QDropData::QDropData()
@@ -228,14 +227,12 @@ QDropData::~QDropData()
 #endif // QT_NO_DRAGANDDROP
 
 #if !(defined(QT_NO_DRAGANDDROP) && defined(QT_NO_CLIPBOARD))
-
 static QStringList imageReadMimeFormats()
 {
     QStringList formats;
-    QList<QByteArray> imageFormats = QImageReader::supportedImageFormats();
-    for (int i = 0; i < imageFormats.size(); ++i) {
+    foreach (const QByteArray &it, QImageReader::supportedImageFormats()) {
         QString format = QLatin1String("image/");
-        format += QString::fromLatin1(imageFormats.at(i).toLower());
+        format += QString::fromLatin1(it.toLower());
         formats.append(format);
     }
 
@@ -251,10 +248,9 @@ static QStringList imageReadMimeFormats()
 static QStringList imageWriteMimeFormats()
 {
     QStringList formats;
-    QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
-    for (int i = 0; i < imageFormats.size(); ++i) {
+    foreach (const QByteArray &it, QImageWriter::supportedImageFormats()) {
         QString format = QLatin1String("image/");
-        format += QString::fromLatin1(imageFormats.at(i).toLower());
+        format += QString::fromLatin1(it.toLower());
         formats.append(format);
     }
 
@@ -279,9 +275,8 @@ bool QInternalMimeData::hasFormat(const QString &mimeType) const
 {
     bool foundFormat = hasFormat_sys(mimeType);
     if (!foundFormat && mimeType == QLatin1String("application/x-qt-image")) {
-        QStringList imageFormats = imageReadMimeFormats();
-        for (int i = 0; i < imageFormats.size(); ++i) {
-            if ((foundFormat = hasFormat_sys(imageFormats.at(i))))
+        foreach (const QString &it, imageReadMimeFormats()) {
+            if ((foundFormat = hasFormat_sys(it)))
                 break;
         }
     }
@@ -292,9 +287,8 @@ QStringList QInternalMimeData::formats() const
 {
     QStringList realFormats = formats_sys();
     if (!realFormats.contains(QLatin1String("application/x-qt-image"))) {
-        QStringList imageFormats = imageReadMimeFormats();
-        for (int i = 0; i < imageFormats.size(); ++i) {
-            if (realFormats.contains(imageFormats.at(i))) {
+        foreach (const QString &it, imageReadMimeFormats()) {
+            if (realFormats.contains(it)) {
                 realFormats += QLatin1String("application/x-qt-image");
                 break;
             }
@@ -309,9 +303,8 @@ QVariant QInternalMimeData::retrieveData(const QString &mimeType, QVariant::Type
     if (mimeType == QLatin1String("application/x-qt-image")) {
         if (data.isNull() || (data.type() == QVariant::ByteArray && data.toByteArray().isEmpty())) {
             // try to find an image
-            QStringList imageFormats = imageReadMimeFormats();
-            for (int i = 0; i < imageFormats.size(); ++i) {
-                data = retrieveData_sys(imageFormats.at(i), type);
+            foreach (const QString &it, imageReadMimeFormats()) {
+                data = retrieveData_sys(it, type);
                 if (data.isNull() || (data.type() == QVariant::ByteArray && data.toByteArray().isEmpty()))
                     continue;
                 break;
@@ -351,10 +344,9 @@ QStringList QInternalMimeData::formatsHelper(const QMimeData *data)
     QStringList realFormats = data->formats();
     if (realFormats.contains(QLatin1String("application/x-qt-image"))) {
         // add all supported image formats
-        QStringList imageFormats = imageWriteMimeFormats();
-        for (int i = 0; i < imageFormats.size(); ++i) {
-            if (!realFormats.contains(imageFormats.at(i)))
-                realFormats.append(imageFormats.at(i));
+        foreach (const QString &it, imageWriteMimeFormats()) {
+            if (!realFormats.contains(it))
+                realFormats.append(it);
         }
     }
     return realFormats;
@@ -365,15 +357,15 @@ bool QInternalMimeData::hasFormatHelper(const QString &mimeType, const QMimeData
 
     bool foundFormat = data->hasFormat(mimeType);
     if (!foundFormat) {
+        QStringList imageFormats = imageWriteMimeFormats();
         if (mimeType == QLatin1String("application/x-qt-image")) {
             // check all supported image formats
-            QStringList imageFormats = imageWriteMimeFormats();
-            for (int i = 0; i < imageFormats.size(); ++i) {
-                if ((foundFormat = data->hasFormat(imageFormats.at(i))))
+            foreach (const QString &it, imageFormats) {
+                if ((foundFormat = data->hasFormat(it)))
                     break;
             }
         } else if (mimeType.startsWith(QLatin1String("image/"))) {
-            return data->hasImage() && imageWriteMimeFormats().contains(mimeType);
+            return data->hasImage() && imageFormats.contains(mimeType);
         }
     }
     return foundFormat;

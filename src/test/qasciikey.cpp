@@ -115,7 +115,6 @@ Qt::Key QTest::asciiToKey(char ascii)
     case 0x5d: return Qt::Key_BracketRight;
     case 0x5e: return Qt::Key_AsciiCircum;
     case 0x5f: return Qt::Key_Underscore;
-    case 0x60: return Qt::Key_QuoteLeft;
     case 0x61: return Qt::Key_A;
     case 0x62: return Qt::Key_B;
     case 0x63: return Qt::Key_C;
@@ -301,7 +300,6 @@ char QTest::keyToAscii(Qt::Key key)
     case Qt::Key_BracketRight: return 0x5d;
     case Qt::Key_AsciiCircum: return 0x5e;
     case Qt::Key_Underscore: return 0x5f;
-    case Qt::Key_QuoteLeft: return 0x60;
 
     case Qt::Key_BraceLeft: return 0x7b;
     case Qt::Key_Bar: return 0x7c;
@@ -453,11 +451,6 @@ char QTest::keyToAscii(Qt::Key key)
     case Qt::Key_VolumeDown: return 0; // = 0x1070,
     case Qt::Key_VolumeMute : return 0; // = 0x1071,
     case Qt::Key_VolumeUp: return 0; // = 0x1072,
-    case Qt::Key_BassBoost: return 0; // = 0x1073,
-    case Qt::Key_BassUp: return 0; // = 0x1074,
-    case Qt::Key_BassDown: return 0; // = 0x1075,
-    case Qt::Key_TrebleUp: return 0; // = 0x1076,
-    case Qt::Key_TrebleDown: return 0; // = 0x1077,
 
     case Qt::Key_MediaPlay : return 0; // = 0x1080,
     case Qt::Key_MediaStop : return 0; // = 0x1081,

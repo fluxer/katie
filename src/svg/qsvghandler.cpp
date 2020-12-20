@@ -167,25 +167,22 @@ QSvgAttributes::QSvgAttributes(const QXmlStreamAttributes &xmlAttributes, QSvgHa
                 break;
 
             case 's':
-                if (name.length() > 5 && QStringRef(name.string(), name.position() + 1, 5) == QLatin1String("troke")) {
-                    QStringRef strokeRef(name.string(), name.position() + 6, name.length() - 6);
-                    if (strokeRef.isEmpty())
-                        stroke = value;
-                    else if (strokeRef == QLatin1String("-dasharray"))
-                        strokeDashArray = value;
-                    else if (strokeRef == QLatin1String("-dashoffset"))
-                        strokeDashOffset = value;
-                    else if (strokeRef == QLatin1String("-linecap"))
-                        strokeLineCap = value;
-                    else if (strokeRef == QLatin1String("-linejoin"))
-                        strokeLineJoin = value;
-                    else if (strokeRef == QLatin1String("-miterlimit"))
-                        strokeMiterLimit = value;
-                    else if (strokeRef == QLatin1String("-opacity"))
-                        strokeOpacity = value;
-                    else if (strokeRef == QLatin1String("-width"))
-                        strokeWidth = value;
-                }
+                if (name == QLatin1String("stroke"))
+                    stroke = value;
+                else if (name == QLatin1String("stroke-dasharray"))
+                    strokeDashArray = value;
+                else if (name == QLatin1String("stroke-dashoffset"))
+                    strokeDashOffset = value;
+                else if (name == QLatin1String("stroke-linecap"))
+                    strokeLineCap = value;
+                else if (name == QLatin1String("stroke-linejoin"))
+                    strokeLineJoin = value;
+                else if (name == QLatin1String("stroke-miterlimit"))
+                    strokeMiterLimit = value;
+                else if (name == QLatin1String("stroke-opacity"))
+                    strokeOpacity = value;
+                else if (name == QLatin1String("stroke-width"))
+                    strokeWidth = value;
                 else if (name == QLatin1String("stop-color"))
                     stopColor = value;
                 else if (name == QLatin1String("stop-opacity"))
@@ -267,25 +264,22 @@ QSvgAttributes::QSvgAttributes(const QXmlStreamAttributes &xmlAttributes, QSvgHa
             break;
 
         case 's':
-            if (name.length() > 5 && QStringRef(name.string(), name.position() + 1, 5) == QLatin1String("troke")) {
-                QStringRef strokeRef(name.string(), name.position() + 6, name.length() - 6);
-                if (strokeRef.isEmpty())
-                    stroke = value;
-                else if (strokeRef == QLatin1String("-dasharray"))
-                    strokeDashArray = value;
-                else if (strokeRef == QLatin1String("-dashoffset"))
-                    strokeDashOffset = value;
-                else if (strokeRef == QLatin1String("-linecap"))
-                    strokeLineCap = value;
-                else if (strokeRef == QLatin1String("-linejoin"))
-                    strokeLineJoin = value;
-                else if (strokeRef == QLatin1String("-miterlimit"))
-                    strokeMiterLimit = value;
-                else if (strokeRef == QLatin1String("-opacity"))
-                    strokeOpacity = value;
-                else if (strokeRef == QLatin1String("-width"))
-                    strokeWidth = value;
-            }
+            if (name == QLatin1String("stroke"))
+                stroke = value;
+            else if (name == QLatin1String("stroke-dasharray"))
+                strokeDashArray = value;
+            else if (name == QLatin1String("stroke-dashoffset"))
+                strokeDashOffset = value;
+            else if (name == QLatin1String("stroke-linecap"))
+                strokeLineCap = value;
+            else if (name == QLatin1String("stroke-linejoin"))
+                strokeLineJoin = value;
+            else if (name == QLatin1String("stroke-miterlimit"))
+                strokeMiterLimit = value;
+            else if (name == QLatin1String("stroke-opacity"))
+                strokeOpacity = value;
+            else if (name == QLatin1String("stroke-width"))
+                strokeWidth = value;
             else if (name == QLatin1String("stop-color"))
                 stopColor = value;
             else if (name == QLatin1String("stop-opacity"))
@@ -403,14 +397,12 @@ public:
                 (!n->nodeId().isEmpty() || !n->xmlClass().isEmpty()));
     }
 
-    virtual QStringList nodeIds(NodePtr node) const
+    virtual QString nodeId(NodePtr node) const
     {
         QSvgNode *n = svgNode(node);
-        QString nid;
         if (n)
-            nid = n->nodeId();
-        QStringList lst; lst.append(nid);
-        return lst;
+            return n->nodeId();
+        return QString();
     }
 
     virtual QStringList nodeNames(NodePtr node) const
@@ -792,7 +784,7 @@ static qreal parseLength(const QString &str, QSvgHandler::LengthType &type,
         numStr.chop(2);
         type = QSvgHandler::LT_IN;
     } else {
-        type = handler->defaultCoordinateSystem();
+        type = QSvgHandler::LT_PX;
         //type = QSvgHandler::LT_OTHER;
     }
     qreal len = toDouble(numStr, ok);
@@ -1979,7 +1971,6 @@ static void parseOpacity(QSvgNode *node,
 
 static QPainter::CompositionMode svgToQtCompositionMode(const QString &op)
 {
-#define NOOP qDebug()<<"Operation: "<<op<<" is not implemented"
     if (op == QLatin1String("clear")) {
         return QPainter::CompositionMode_Clear;
     } else if (op == QLatin1String("src")) {
@@ -2029,7 +2020,7 @@ static QPainter::CompositionMode svgToQtCompositionMode(const QString &op)
     } else if (op == QLatin1String("exclusion")) {
         return QPainter::CompositionMode_Exclusion;
     } else {
-        NOOP;
+        qDebug() <<"Operation: " << op << " is not implemented";
     }
 
     return QPainter::CompositionMode_SourceOver;
@@ -3043,7 +3034,7 @@ static QSvgNode *createSvgNode(QSvgNode *parent,
                                const QXmlStreamAttributes &attributes,
                                QSvgHandler *handler)
 {
-    Q_UNUSED(parent); Q_UNUSED(attributes);
+    Q_UNUSED(parent);
 
     QString baseProfile = attributes.value(QLatin1String("baseProfile")).toString();
 #if 0
@@ -3103,7 +3094,6 @@ static QSvgNode *createSvgNode(QSvgNode *parent,
         }
         node->setViewBox(QRectF(0, 0, width, height));
     }
-    handler->setDefaultCoordinateSystem(QSvgHandler::LT_PX);
 
     return node;
 }
@@ -3118,9 +3108,10 @@ static QSvgNode *createSwitchNode(QSvgNode *parent,
 }
 
 static bool parseTbreakNode(QSvgNode *parent,
-                            const QXmlStreamAttributes &,
+                            const QXmlStreamAttributes &attributes,
                             QSvgHandler *)
 {
+    Q_UNUSED(attributes);
     if (parent->type() != QSvgNode::TEXTAREA)
         return false;
     static_cast<QSvgText*>(parent)->addLineBreak();
@@ -3432,14 +3423,9 @@ void QSvgHandler::init()
     m_doc = 0;
     m_style = 0;
     m_animEnd = 0;
-    m_defaultCoords = LT_PX;
     m_defaultPen = QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap, Qt::SvgMiterJoin);
     m_defaultPen.setMiterLimit(4);
-    parse();
-}
 
-void QSvgHandler::parse()
-{
     xml->setNamespaceProcessing(false);
     m_selector = new QSvgStyleSelector;
     m_inStyle = false;
@@ -3696,16 +3682,6 @@ bool QSvgHandler::characters(const QStringRef &str)
 QSvgTinyDocument * QSvgHandler::document() const
 {
     return m_doc;
-}
-
-QSvgHandler::LengthType QSvgHandler::defaultCoordinateSystem() const
-{
-    return m_defaultCoords;
-}
-
-void QSvgHandler::setDefaultCoordinateSystem(LengthType type)
-{
-    m_defaultCoords = type;
 }
 
 void QSvgHandler::pushColor(const QColor &color)

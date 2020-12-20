@@ -62,7 +62,7 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(RegExpConstructor);
 
-const ClassInfo RegExpConstructor::info = { "Function", &InternalFunction::info, 0, ExecState::regExpConstructorTable };
+const ClassInfo RegExpConstructor::info = { "Function", &InternalFunction::info, ExecState::regExpConstructorTable };
 
 /* Source for RegExpConstructor.lut.h
 @begin regExpConstructorTable

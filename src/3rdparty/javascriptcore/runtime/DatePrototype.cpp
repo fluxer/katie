@@ -22,36 +22,21 @@
 
 #include "Platform.h"
 #include "DatePrototype.h"
-
 #include "DateConversion.h"
 #include "Error.h"
 #include "JSString.h"
 #include "ObjectPrototype.h"
 #include "DateInstance.h"
-
-#if HAVE(LANGINFO_H)
-#include <langinfo.h>
-#endif
-
-#include <limits.h>
-#include <locale.h>
-#include <math.h>
-#include <time.h>
 #include <wtf/Assertions.h>
 #include <wtf/DateMath.h>
-#include <wtf/MathExtras.h>
-#include <wtf/StringExtras.h>
 
-#if HAVE(SYS_PARAM_H)
-#include <sys/param.h>
-#endif
-
-#if HAVE(SYS_TIME_H)
+#include <limits.h>
+#include <math.h>
+#include <time.h>
 #include <sys/time.h>
-#endif
 
-#if HAVE(SYS_TIMEB_H)
-#include <sys/timeb.h>
+#if defined(QT_HAVE_NL_LANGINFO)
+#include <langinfo.h>
 #endif
 
 using namespace WTF;
@@ -117,7 +102,7 @@ enum LocaleDateTimeFormat { LocaleDateAndTime, LocaleDate, LocaleTime };
 
 static JSCell* formatLocaleDate(ExecState* exec, const GregorianDateTime& gdt, LocaleDateTimeFormat format)
 {
-#if HAVE(LANGINFO_H)
+#if defined(QT_HAVE_NL_LANGINFO)
     static const nl_item formats[] = { D_T_FMT, D_FMT, T_FMT };
 #else
     static const char* const formatStrings[] = { "%#c", "%#x", "%X" };
@@ -130,11 +115,11 @@ static JSCell* formatLocaleDate(ExecState* exec, const GregorianDateTime& gdt, L
     if (yearNeedsOffset)
         localTM.tm_year = equivalentYearForDST(year) - 1900;
  
-#if HAVE(LANGINFO_H)
+#if defined(QT_HAVE_NL_LANGINFO)
     // We do not allow strftime to generate dates with 2-digits years,
     // both to avoid ambiguity, and a crash in strncpy, for years that
     // need offset.
-    char* formatString = strdup(nl_langinfo(formats[format]));
+    char* formatString = ::strdup(::nl_langinfo(formats[format]));
     char* yPos = strchr(formatString, 'y');
     if (yPos)
         *yPos = 'Y';
@@ -144,11 +129,11 @@ static JSCell* formatLocaleDate(ExecState* exec, const GregorianDateTime& gdt, L
     const int bufsize = 128;
     char timebuffer[bufsize];
 
-#if HAVE(LANGINFO_H)
-    size_t ret = strftime(timebuffer, bufsize, formatString, &localTM);
-    free(formatString);
+#if defined(QT_HAVE_NL_LANGINFO)
+    size_t ret = ::strftime(timebuffer, bufsize, formatString, &localTM);
+    ::free(formatString);
 #else
-    size_t ret = strftime(timebuffer, bufsize, formatStrings[format], &localTM);
+    size_t ret = ::strftime(timebuffer, bufsize, formatStrings[format], &localTM);
 #endif
  
     if (ret == 0)
@@ -256,7 +241,7 @@ static bool fillStructuresUsingDateArgs(ExecState *exec, const ArgList& args, in
     return ok;
 }
 
-const ClassInfo DatePrototype::info = {"Date", &DateInstance::info, 0, ExecState::dateTable};
+const ClassInfo DatePrototype::info = { "Date", &DateInstance::info, ExecState::dateTable };
 
 /* Source for DatePrototype.lut.h
 @begin dateTable

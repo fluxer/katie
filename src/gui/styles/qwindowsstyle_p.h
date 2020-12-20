@@ -65,10 +65,6 @@ public:
     QWindowsStylePrivate();
     void startAnimation(QObject *o, QProgressBar *bar);
     void stopAnimation(QObject *o, QProgressBar *bar);
-    bool hasSeenAlt(const QWidget *widget) const;
-    bool altDown() const { return alt_down; }
-    bool alt_down;
-    QList<const QWidget *> seenAlt;
 
     QList<QProgressBar *> animatedProgressBars;
     int animationFps;

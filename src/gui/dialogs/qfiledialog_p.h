@@ -70,10 +70,7 @@
 #include "qfscompleter_p.h"
 #include "qguiplatformplugin.h"
 
-
-#if defined (Q_OS_UNIX)
 #include <unistd.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 

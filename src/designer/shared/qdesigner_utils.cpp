@@ -63,7 +63,7 @@ QT_BEGIN_NAMESPACE
 
 namespace qdesigner_internal
 {
-    QDESIGNER_SHARED_EXPORT void designerWarning(const QString &message)
+    Q_DESIGNER_EXPORT void designerWarning(const QString &message)
     {
         qWarning("Designer: %s", qPrintable(message));
     }
@@ -714,7 +714,7 @@ namespace qdesigner_internal
         return m_data->m_paths;
     }
 
-    QDESIGNER_SHARED_EXPORT QDebug operator<<(QDebug d, const PropertySheetIconValue &p)
+    Q_DESIGNER_EXPORT QDebug operator<<(QDebug d, const PropertySheetIconValue &p)
     {
         typedef PropertySheetIconValue::ModeStateToPixmapMap::const_iterator ModeStateToPixmapMapConstIt;
 
@@ -730,7 +730,7 @@ namespace qdesigner_internal
         return d;
     }
 
-    QDESIGNER_SHARED_EXPORT QDesignerFormWindowCommand *createTextPropertyCommand(const QString &propertyName, const QString &text, QObject *object, QDesignerFormWindowInterface *fw)
+    Q_DESIGNER_EXPORT QDesignerFormWindowCommand *createTextPropertyCommand(const QString &propertyName, const QString &text, QObject *object, QDesignerFormWindowInterface *fw)
     {
         if (text.isEmpty()) {
             ResetPropertyCommand *cmd = new ResetPropertyCommand(fw);
@@ -742,7 +742,7 @@ namespace qdesigner_internal
         return cmd;
     }
 
-    QDESIGNER_SHARED_EXPORT QAction *preferredEditAction(QDesignerFormEditorInterface *core, QWidget *managedWidget)
+    Q_DESIGNER_EXPORT QAction *preferredEditAction(QDesignerFormEditorInterface *core, QWidget *managedWidget)
     {
         QAction *action = 0;
         if (const QDesignerTaskMenuExtension *taskMenu = qt_extension<QDesignerTaskMenuExtension*>(core->extensionManager(), managedWidget)) {
@@ -767,7 +767,7 @@ namespace qdesigner_internal
         return action;
     }
 
-    QDESIGNER_SHARED_EXPORT bool runUIC(const QString &fileName, QByteArray& ba, QString &errorMessage)
+    Q_DESIGNER_EXPORT bool runUIC(const QString &fileName, QByteArray& ba, QString &errorMessage)
     {
         QStringList argv;
         QString binary = QLibraryInfo::location(QLibraryInfo::BinariesPath) + QDir::separator() + QLatin1String("uic" KATIE_TOOLS_SUFFIX);
@@ -790,7 +790,7 @@ namespace qdesigner_internal
         return true;
     }
 
-    QDESIGNER_SHARED_EXPORT QString qtify(const QString &name)
+    Q_DESIGNER_EXPORT QString qtify(const QString &name)
     {
         QString qname = name;
 

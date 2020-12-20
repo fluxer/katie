@@ -45,7 +45,7 @@
 #ifndef ICONLOADER_H
 #define ICONLOADER_H
 
-#include "shared_global_p.h"
+#include "qglobal.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -54,8 +54,8 @@ class QIcon;
 
 namespace qdesigner_internal {
 
-QDESIGNER_SHARED_EXPORT QIcon createIconSet(const QString &name);
-QDESIGNER_SHARED_EXPORT QIcon emptyIcon();
+Q_DESIGNER_EXPORT QIcon createIconSet(const QString &name);
+Q_DESIGNER_EXPORT QIcon emptyIcon();
 
 } // namespace qdesigner_internal
 

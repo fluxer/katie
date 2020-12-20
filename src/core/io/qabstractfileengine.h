@@ -89,7 +89,7 @@ public:
         LinkName,
         CanonicalName,
         CanonicalPathName,
-        NFileNames = 9
+        NFileNames
     };
     enum FileOwner {
         OwnerUser,
@@ -128,7 +128,6 @@ public:
     virtual QDateTime fileTime(FileTime time) const;
     virtual void setFileName(const QString &file);
     virtual int handle() const;
-    bool atEnd() const;
     uchar *map(qint64 offset, qint64 size);
     bool unmap(uchar *ptr);
 
@@ -144,7 +143,6 @@ public:
     QString errorString() const;
 
     enum Extension {
-        AtEndExtension,
         FastReadLineExtension,
         MapExtension,
         UnMapExtension

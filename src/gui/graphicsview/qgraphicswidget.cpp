@@ -1893,7 +1893,7 @@ void QGraphicsWidget::releaseShortcut(int id)
 {
     Q_ASSERT(qApp);
     if (id)
-        qApp->d_func()->shortcutMap.removeShortcut(id, this, 0);
+        qApp->d_func()->shortcutMap.removeShortcut(id, this);
 }
 
 /*!
@@ -1914,7 +1914,7 @@ void QGraphicsWidget::setShortcutEnabled(int id, bool enabled)
 {
     Q_ASSERT(qApp);
     if (id)
-        qApp->d_func()->shortcutMap.setShortcutEnabled(enabled, id, this, 0);
+        qApp->d_func()->shortcutMap.setShortcutEnabled(enabled, id, this);
 }
 
 /*!
@@ -1929,7 +1929,7 @@ void QGraphicsWidget::setShortcutAutoRepeat(int id, bool enabled)
 {
     Q_ASSERT(qApp);
     if (id)
-        qApp->d_func()->shortcutMap.setShortcutAutoRepeat(enabled, id, this, 0);
+        qApp->d_func()->shortcutMap.setShortcutAutoRepeat(enabled, id, this);
 }
 #endif
 

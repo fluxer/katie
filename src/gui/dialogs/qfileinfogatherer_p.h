@@ -181,9 +181,6 @@ private:
 #endif
     QFileIconProvider *m_iconProvider;
     QFileIconProvider defaultProvider;
-    uint userId;
-    uint groupId;
-
 };
 #endif // QT_NO_FILESYSTEMMODEL
 

@@ -125,7 +125,7 @@ void SamplingThread::stop()
 {
     Q_ASSERT(s_running);
     s_running = false;
-    waitForThreadCompletion(s_samplingThread, 0);
+    waitForThreadCompletion(s_samplingThread);
 }
 
 

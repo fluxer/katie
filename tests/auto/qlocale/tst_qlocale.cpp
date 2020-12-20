@@ -144,7 +144,7 @@ tst_QLocale::tst_QLocale()
 void tst_QLocale::initTestCase()
 {
     QDir workingDirectory = QCoreApplication::applicationDirPath();
-    m_sysLocaleApp = workingDirectory.absoluteFilePath(QLatin1String("syslocaleapp"));
+    m_sysLocaleApp = workingDirectory.absoluteFilePath(QLatin1String("qlocale_syslocaleapp"));
     QVERIFY2(QFileInfo(m_sysLocaleApp).exists(),
              qPrintable(QString::fromLatin1("SysLocalApp executable '%1' does not exist!")
                         .arg(QDir::toNativeSeparators(m_sysLocaleApp))));
@@ -798,11 +798,7 @@ void tst_QLocale::negativeZero()
 {
     double negativeZero( 0.0 ); // Initialise to zero.
     uchar *ptr = (uchar *)&negativeZero;
-#ifdef QT_ARMFPA
-    ptr[3] = 0x80;
-#else
     ptr[QSysInfo::ByteOrder == QSysInfo::BigEndian ? 0 : 7] = 0x80;
-#endif
     QString s = QString::number(negativeZero);
     QCOMPARE(s, QString("0"));
 }

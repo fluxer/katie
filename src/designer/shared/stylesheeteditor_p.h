@@ -48,7 +48,6 @@
 #include <QtGui/QTextEdit>
 #include <QtGui/QDialog>
 #include <QtGui/QLabel>
-#include "shared_global_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -59,7 +58,7 @@ class QDialogButtonBox;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT StyleSheetEditor : public QTextEdit
+class Q_DESIGNER_EXPORT StyleSheetEditor : public QTextEdit
 {
     Q_OBJECT
 public:
@@ -67,7 +66,7 @@ public:
 };
 
 // Edit a style sheet.
-class QDESIGNER_SHARED_EXPORT StyleSheetEditorDialog : public QDialog
+class Q_DESIGNER_EXPORT StyleSheetEditorDialog : public QDialog
 {
     Q_OBJECT
 public:
@@ -113,7 +112,7 @@ private:
 // Edit the style sheet property of the designer selection.
 // Provides an "Apply" button.
 
-class QDESIGNER_SHARED_EXPORT StyleSheetPropertyEditorDialog : public StyleSheetEditorDialog
+class Q_DESIGNER_EXPORT StyleSheetPropertyEditorDialog : public StyleSheetEditorDialog
 {
     Q_OBJECT
 public:

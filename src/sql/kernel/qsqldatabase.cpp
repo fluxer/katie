@@ -45,7 +45,7 @@
 #include "qsqlnulldriver_p.h"
 #include "qmutex.h"
 #include "qhash.h"
-#include "qsql_sqlite.h"
+#include "qsql_sqlite_p.h"
 
 #include <stdlib.h>
 
@@ -59,33 +59,19 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, sqlloader,
 
 const char *QSqlDatabase::defaultConnection = "qt_sql_default_connection";
 
-class QConnectionDict: public QHash<QString, QSqlDatabase>
-{
-public:
-    inline bool contains_ts(const QString &key)
-    {
-        QReadLocker locker(&lock);
-        return contains(key);
-    }
-    inline QStringList keys_ts()
-    {
-        QReadLocker locker(&lock);
-        return keys();
-    }
-
-    QReadWriteLock lock;
-};
+typedef QHash<QString, QSqlDatabase> QConnectionDict;
 Q_GLOBAL_STATIC(QConnectionDict, dbDict)
+Q_GLOBAL_STATIC(QReadWriteLock, dbDictLock)
 
 class QSqlDatabasePrivate
 {
 public:
     QSqlDatabasePrivate(QSqlDriver *dr = Q_NULLPTR):
         driver(dr),
-        port(-1)
+        port(-1),
+        ref(1),
+        precisionPolicy(QSql::LowPrecisionDouble)
     {
-        ref = 1;
-        precisionPolicy= QSql::LowPrecisionDouble;
     }
     QSqlDatabasePrivate(const QSqlDatabasePrivate &other);
     ~QSqlDatabasePrivate();
@@ -114,17 +100,17 @@ public:
 };
 
 QSqlDatabasePrivate::QSqlDatabasePrivate(const QSqlDatabasePrivate &other)
+    : ref(1),
+    dbname(other.dbname),
+    uname(other.uname),
+    pword(other.pword),
+    hname(other.hname),
+    drvName(other.drvName),
+    port(other.port),
+    connOptions(other.connOptions),
+    driver(other.driver),
+    precisionPolicy(other.precisionPolicy)
 {
-    ref = 1;
-    dbname = other.dbname;
-    uname = other.uname;
-    pword = other.pword;
-    hname = other.hname;
-    drvName = other.drvName;
-    port = other.port;
-    connOptions = other.connOptions;
-    driver = other.driver;
-    precisionPolicy = other.precisionPolicy;
 }
 
 QSqlDatabasePrivate::~QSqlDatabasePrivate()
@@ -135,9 +121,9 @@ QSqlDatabasePrivate::~QSqlDatabasePrivate()
 
 void QSqlDatabasePrivate::cleanConnections()
 {
+    QWriteLocker locker(dbDictLock());
     QConnectionDict *dict = dbDict();
     Q_ASSERT(dict);
-    QWriteLocker locker(&dict->lock);
 
     QConnectionDict::iterator it = dict->begin();
     while (it != dict->end()) {
@@ -166,9 +152,9 @@ void QSqlDatabasePrivate::invalidateDb(const QSqlDatabase &db, const QString &na
 
 void QSqlDatabasePrivate::removeDatabase(const QString &name)
 {
+    QWriteLocker locker(dbDictLock());
     QConnectionDict *dict = dbDict();
     Q_ASSERT(dict);
-    QWriteLocker locker(&dict->lock);
 
     if (!dict->contains(name))
         return;
@@ -178,9 +164,9 @@ void QSqlDatabasePrivate::removeDatabase(const QString &name)
 
 void QSqlDatabasePrivate::addDatabase(const QSqlDatabase &db, const QString &name)
 {
+    QWriteLocker locker(dbDictLock());
     QConnectionDict *dict = dbDict();
     Q_ASSERT(dict);
-    QWriteLocker locker(&dict->lock);
 
     if (dict->contains(name)) {
         invalidateDb(dict->take(name), name);
@@ -191,16 +177,24 @@ void QSqlDatabasePrivate::addDatabase(const QSqlDatabase &db, const QString &nam
     db.d->connName = name;
 }
 
+static bool qCleanConnectionsInit = false;
+
+static void qCleanDict()
+{
+    QSqlDatabasePrivate::cleanConnections();
+    qCleanConnectionsInit = false;
+}
+
 /*! \internal
 */
 QSqlDatabase QSqlDatabasePrivate::database(const QString& name, bool open)
 {
+    QReadLocker locker(dbDictLock());
     QConnectionDict *dict = dbDict();
     Q_ASSERT(dict);
 
-    dict->lock.lockForRead();
     QSqlDatabase db = dict->value(name);
-    dict->lock.unlock();
+    locker.unlock();
     if (db.isValid() && !db.isOpen() && open) {
         if (!db.open())
             qWarning() << "QSqlDatabasePrivate::database: unable to open database:" << db.lastError().text();
@@ -417,6 +411,11 @@ void QSqlDatabase::removeDatabase(const QString& connectionName)
 
 QStringList QSqlDatabase::drivers()
 {
+    if (!qCleanConnectionsInit) {
+        qCleanConnectionsInit = true;
+        qAddPostRoutine(qCleanDict);
+    }
+
     QStringList list;
     list << QLatin1String("QSQLITE");
 
@@ -443,7 +442,8 @@ QStringList QSqlDatabase::drivers()
 
 bool QSqlDatabase::contains(const QString& connectionName)
 {
-    return dbDict()->contains_ts(connectionName);
+    QReadLocker locker(dbDictLock());
+    return dbDict()->contains(connectionName);
 }
 
 /*!
@@ -455,7 +455,8 @@ bool QSqlDatabase::contains(const QString& connectionName)
 */
 QStringList QSqlDatabase::connectionNames()
 {
-    return dbDict()->keys_ts();
+    QReadLocker locker(dbDictLock());
+    return dbDict()->keys();
 }
 
 /*!
@@ -541,6 +542,11 @@ void QSqlDatabasePrivate::init(const QString &type)
         driver = new QSQLiteDriver();
     }
 
+    if (!driver && !qCleanConnectionsInit) {
+        qCleanConnectionsInit = true;
+        qAddPostRoutine(qCleanDict);
+    }
+
 #ifndef QT_NO_LIBRARY
     if (!driver && sqlloader()) {
         if (QSqlDriverFactoryInterface *factory = qobject_cast<QSqlDriverFactoryInterface*>(sqlloader()->instance(type)))
@@ -603,7 +609,7 @@ QSqlQuery QSqlDatabase::exec(const QString & query) const
 bool QSqlDatabase::open()
 {
     return d->driver->open(d->dbname, d->uname, d->pword, d->hname,
-                            d->port, d->connOptions);
+                           d->port, d->connOptions);
 }
 
 /*!
@@ -624,7 +630,7 @@ bool QSqlDatabase::open(const QString& user, const QString& password)
 {
     setUserName(user);
     return d->driver->open(d->dbname, user, password, d->hname,
-                            d->port, d->connOptions);
+                           d->port, d->connOptions);
 }
 
 /*!
@@ -978,7 +984,6 @@ QSqlRecord QSqlDatabase::record(const QString& tablename) const
     \i SQL_ATTR_TRACEFILE
     \i SQL_ATTR_TRACE
     \i SQL_ATTR_CONNECTION_POOLING
-    \i SQL_ATTR_ODBC_VERSION
     \endlist
 
     \i

@@ -47,9 +47,8 @@
 
 #include "qnetworkconfigmanager.h"
 #include "qnetworkconfiguration_p.h"
-
-#include <QtCore/qmutex.h>
-#include <QtCore/qset.h>
+#include "qmutex.h"
+#include "qset.h"
 
 #ifndef QT_NO_BEARERMANAGEMENT
 

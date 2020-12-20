@@ -34,7 +34,6 @@
 #include "RegExpConstructor.h"
 #include "RegExpObject.h"
 #include <wtf/ASCIICType.h>
-#include <wtf/MathExtras.h>
 
 using namespace WTF;
 
@@ -83,7 +82,7 @@ static JSValue QT_FASTCALL stringProtoFuncTrimRight(ExecState*, JSObject*, JSVal
 
 namespace JSC {
 
-const ClassInfo StringPrototype::info = { "String", &StringObject::info, 0, ExecState::stringTable };
+const ClassInfo StringPrototype::info = { "String", &StringObject::info, ExecState::stringTable };
 
 /* Source for StringPrototype.lut.h
 @begin stringTable 26

@@ -65,13 +65,8 @@
 
 #define XK_MISCELLANY
 #define XK_LATIN1
-#define XK_KOREAN
 #include <X11/keysymdef.h>
 #include <X11/XF86keysym.h>
-
-#ifndef XK_ISO_Left_Tab
-#define XK_ISO_Left_Tab 0xFE20
-#endif
 
 #ifdef index
 #  undef index
@@ -153,8 +148,6 @@ struct QXdndDropTransaction
 class QMimeData;
 struct QX11Data
 {
-    static Qt::KeyboardModifiers translateModifiers(int s);
-
     Window findClientWindow(Window, Atom, bool);
 
     // from qclipboard_x11.cpp
@@ -197,27 +190,26 @@ struct QX11Data
     };
     FocusModel focus_model;
 
-    // true if Qt is compiled w/ RANDR support and RANDR is supported on the connected Display
+    // true if compiled w/ RANDR support and RANDR is supported on the connected Display
     bool use_xrandr;
     int xrandr_major;
     int xrandr_eventbase;
-    int xrandr_errorbase;
 
-    // true if Qt is compiled w/ RENDER support and RENDER is supported on the connected Display
+    // true if compiled w/ RENDER support and RENDER is supported on the connected Display
     bool use_xrender;
     int xrender_major;
     int xrender_minor;
 
-    // true if Qt is compiled w/ XFIXES support and XFIXES is supported on the connected Display
+    // true if compiled w/ XFIXES support and XFIXES is supported on the connected Display
     bool use_xfixes;
-    int xfixes_major;
     int xfixes_eventbase;
-    int xfixes_errorbase;
 
-    // true if Qt is compiled w/ MIT-SHM support and MIT-SHM is supported on the connected Display
+    // true if compiled w/ MIT-SHM support and MIT-SHM is supported on the connected Display
     bool use_mitshm;
-    bool use_mitshm_pixmaps;
     int mitshm_major;
+
+    // true if compiled w/ XINERAMA support and XINERAMA is supported on the connected Display
+    bool use_xinerama;
 
     QList<QWidget *> deferred_map;
     struct ScrollInProgress {
@@ -271,13 +263,13 @@ struct QX11Data
     Colormap colormap;
 
 #ifndef QT_NO_XRENDER
-    enum { solid_fill_count = 16 };
+    enum { solid_fill_count = 20 };
     struct SolidFills {
         XRenderColor color;
         int screen;
         Picture picture;
     } solid_fills[solid_fill_count];
-    enum { pattern_fill_count = 16 };
+    enum { pattern_fill_count = 20 };
     struct PatternFills {
         XRenderColor color;
         XRenderColor bg_color;
@@ -327,8 +319,6 @@ struct QX11Data
         _QT_CLIPBOARD_SENTINEL,
         _QT_SELECTION_SENTINEL,
         CLIPBOARD_MANAGER,
-
-        _XSETROOT_ID,
 
         _QT_SCROLL_DONE,
 
@@ -388,6 +378,8 @@ struct QX11Data
         _NET_WM_CM_S0,
 
         _NET_SYSTEM_TRAY_VISUAL,
+        _NET_SYSTEM_TRAY_OPCODE,
+        MANAGER,
 
         _NET_ACTIVE_WINDOW,
 
@@ -461,7 +453,6 @@ enum {
 
 Q_DECLARE_TYPEINFO(XPoint, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(XRectangle, Q_PRIMITIVE_TYPE);
-Q_DECLARE_TYPEINFO(XChar2b, Q_PRIMITIVE_TYPE);
 #ifndef QT_NO_XRENDER
 Q_DECLARE_TYPEINFO(XGlyphElt32, Q_PRIMITIVE_TYPE);
 #endif

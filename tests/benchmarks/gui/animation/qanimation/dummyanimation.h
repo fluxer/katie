@@ -35,7 +35,8 @@
 #include <QPropertyAnimation>
 #include <QtGui>
 
-#ifndef _DUMMYANIMATION_H__
+#ifndef DUMMYANIMATION_H
+#define DUMMYANIMATION_H
 
 class DummyObject;
 

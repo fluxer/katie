@@ -45,8 +45,6 @@
 #ifndef QDESIGNER_TOOLBAR_H
 #define QDESIGNER_TOOLBAR_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QAction>
 #include <QtGui/QToolButton>
 
@@ -68,7 +66,7 @@ class PromotionTaskMenu;
 // Handles drag and drop to and from. Ensures that each
 // child widget is  WA_TransparentForMouseEvents to enable  drag and drop.
 
-class QDESIGNER_SHARED_EXPORT ToolBarEventFilter : public QObject {
+class Q_DESIGNER_EXPORT ToolBarEventFilter : public QObject {
     Q_OBJECT
 
 public:

@@ -31,7 +31,6 @@
 #include <wtf/AlwaysInline.h>
 #include <wtf/Assertions.h>
 #include <wtf/HashTraits.h>
-#include <wtf/MathExtras.h>
 
 namespace JSC {
 
@@ -234,7 +233,7 @@ namespace JSC {
         union {
             EncodedJSValue asEncodedJSValue;
             double asDouble;
-#if CPU(BIG_ENDIAN)
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
             struct {
                 int32_t tag;
                 int32_t payload;

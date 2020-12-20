@@ -34,13 +34,7 @@
 #include <QDirIterator>
 #include <QString>
 #include <qtest.h>
-
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <errno.h>
-#include <string.h>
-
+#include "qplatformdefs.h"
 #include "qfilesystemiterator.h"
 
 QT_USE_NAMESPACE
@@ -61,17 +55,9 @@ private slots:
 
 void tst_qdiriterator::data()
 {
-    const char *qtdir = ::getenv("QTDIR");
-    if (!qtdir) {
-        fprintf(stderr, "QTDIR not set\n");
-        exit(1);
-    }
-
-    QTest::addColumn<QByteArray>("dirpath");
-    QByteArray ba = QByteArray(qtdir) + "/src/core";
-    QByteArray ba1 = ba + "/io";
-    QTest::newRow(ba) << ba;
-    //QTest::newRow(ba1) << ba1;
+    QTest::addColumn<QString>("dirpath");
+    QString absolute = QDir::cleanPath(QString::fromLatin1(SRCDIR "/../.."));
+    QTest::newRow(absolute.toLatin1()) << absolute;
 }
 
 static int posix_helper(const char *dirpath)
@@ -81,10 +67,10 @@ static int posix_helper(const char *dirpath)
     if (!dir)
         return 0;
 
-    dirent *entry = 0;
+    QT_DIRENT *entry = 0;
 
     int count = 0;
-    while ((entry = ::readdir(dir))) {
+    while ((entry = QT_READDIR(dir))) {
         if (qstrcmp(entry->d_name, ".") == 0)
             continue;
         if (qstrcmp(entry->d_name, "..") == 0)
@@ -93,8 +79,8 @@ static int posix_helper(const char *dirpath)
         QByteArray ba = dirpath;
         ba += '/';
         ba += entry->d_name;
-        struct stat st;
-        lstat(ba.constData(), &st);
+        QT_STATBUF st;
+        QT_LSTAT(ba.constData(), &st);
         if (S_ISDIR(st.st_mode))
             count += posix_helper(ba.constData());
     }
@@ -106,26 +92,26 @@ static int posix_helper(const char *dirpath)
 
 void tst_qdiriterator::posix()
 {
-    QFETCH(QByteArray, dirpath);
+    QFETCH(QString, dirpath);
 
     int count = 0;
-    QString path = QString::fromLatin1(dirpath);
+    QByteArray path = dirpath.toLatin1();
     QBENCHMARK {
-        count = posix_helper(dirpath.constData());
+        count = posix_helper(path.constData());
     }
     qDebug() << count;
 }
 
 void tst_qdiriterator::diriterator()
 {
-    QFETCH(QByteArray, dirpath);
+    QFETCH(QString, dirpath);
 
     int count = 0;
 
     QBENCHMARK {
         int c = 0;
 
-        QDirIterator dir(QString::fromLatin1(dirpath),
+        QDirIterator dir(dirpath,
             //QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot,
             //QDir::AllEntries | QDir::Hidden,
             QDir::Files,
@@ -148,7 +134,7 @@ void tst_qdiriterator::diriterator()
 
 void tst_qdiriterator::fsiterator()
 {
-    QFETCH(QByteArray, dirpath);
+    QFETCH(QString, dirpath);
 
     int count = 0;
     int dump = 0;
@@ -157,7 +143,7 @@ void tst_qdiriterator::fsiterator()
         int c = 0;
 
         dump && printf("\n\n\n\n");
-        QFileSystemIterator dir(QString::fromLatin1(dirpath),
+        QFileSystemIterator dir(dirpath,
             //QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot,
             //QDir::AllEntries | QDir::Hidden,
             //QDir::Files | QDir::NoDotAndDotDot,

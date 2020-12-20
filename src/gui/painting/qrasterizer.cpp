@@ -426,7 +426,8 @@ inline void QScanConverter::allocate(int size)
 {
     if (m_alloc < size) {
         int newAlloc = qMax(size, 2 * m_alloc);
-        m_intersections = q_check_ptr((Intersection *)realloc(m_intersections, newAlloc * sizeof(Intersection)));
+        m_intersections = (Intersection *)::realloc(m_intersections, newAlloc * sizeof(Intersection));
+        Q_CHECK_PTR(m_intersections);
         m_alloc = newAlloc;
     }
 }

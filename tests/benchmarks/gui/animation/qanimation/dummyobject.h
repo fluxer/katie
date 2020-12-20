@@ -33,7 +33,8 @@
 
 #include <QtGui>
 
-#ifndef _DUMMYOBJECT_H__
+#ifndef DUMMYOBJECT_H
+#define DUMMYOBJECT_H
 
 class DummyObject : public QObject
 {
@@ -51,6 +52,5 @@ private:
     QRect m_rect;
     float m_opacity;
 };
-
 
 #endif

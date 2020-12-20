@@ -38,11 +38,9 @@
 #include "qnetworkreply_p.h"
 #include "qnetworkcookie.h"
 #include "qabstractnetworkcache.h"
-
-#include "QtNetwork/qnetworksession.h"
-#include "QtNetwork/qnetworkcookiejar.h"
-#include "QtNetwork/qsharednetworksession_p.h"
-
+#include "qnetworksession.h"
+#include "qnetworkcookiejar.h"
+#include "qsharednetworksession_p.h"
 #include "qnetworkaccesshttpbackend_p.h"
 #include "qnetworkaccessftpbackend_p.h"
 #include "qnetworkaccessfilebackend_p.h"
@@ -50,16 +48,14 @@
 #include "qnetworkaccesscachebackend_p.h"
 #include "qnetworkreplydataimpl_p.h"
 #include "qnetworkreplyfileimpl_p.h"
-
-#include "QtCore/qbuffer.h"
-#include "QtCore/qurl.h"
-#include "QtCore/qvector.h"
-#include "QtNetwork/qauthenticator_p.h"
-#include "QtNetwork/qsslconfiguration.h"
-#include "QtNetwork/qnetworkconfigmanager.h"
-#include "QtNetwork/qhttpmultipart.h"
+#include "qbuffer.h"
+#include "qurl.h"
+#include "qvector.h"
+#include "qauthenticator_p.h"
+#include "qsslconfiguration.h"
+#include "qnetworkconfigmanager.h"
+#include "qhttpmultipart.h"
 #include "qhttpmultipart_p.h"
-
 #include "qthread.h"
 
 QT_BEGIN_NAMESPACE

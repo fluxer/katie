@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_FORMEDITORCOMMAND_H
 #define QDESIGNER_FORMEDITORCOMMAND_H
 
-#include "shared_global_p.h"
 #include <QtCore/QPointer>
 #include <QtGui/qundostack.h>
 
@@ -55,7 +54,7 @@ class QDesignerFormEditorInterface;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT QDesignerFormEditorCommand: public QUndoCommand
+class Q_DESIGNER_EXPORT QDesignerFormEditorCommand: public QUndoCommand
 {
 
 public:

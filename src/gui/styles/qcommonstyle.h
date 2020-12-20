@@ -48,7 +48,6 @@ class Q_GUI_EXPORT QCommonStyle: public QStyle
     
 public:
     QCommonStyle();
-    ~QCommonStyle();
 
     void drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p,
                        const QWidget *w = Q_NULLPTR) const;

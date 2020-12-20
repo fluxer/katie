@@ -29,6 +29,8 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
+#include <qplatformdefs.h>
+
 namespace JSC {
 
 size_t MarkStack::s_pageSize = 0;
@@ -42,16 +44,16 @@ void MarkStack::compact()
 
 void MarkStack::initializePagesize()
 {
-    MarkStack::s_pageSize = getpagesize();
+    MarkStack::s_pageSize = ::getpagesize();
 }
 
 void* MarkStack::allocateStack(size_t size)
 {
-    return mmap(0, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+    return QT_MMAP(0, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
 }
 void MarkStack::releaseStack(void* addr, size_t size)
 {
-    munmap(reinterpret_cast<char*>(addr), size);
+    ::munmap(reinterpret_cast<char*>(addr), size);
 }
 
 }

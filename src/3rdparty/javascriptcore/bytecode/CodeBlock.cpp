@@ -36,7 +36,6 @@
 #include "JSStaticScopeObject.h"
 #include "BytecodeGenerator.h"
 #include <stdio.h>
-#include <wtf/StringExtras.h>
 
 #define DUMP_CODE_BLOCK_STATISTICS 0
 

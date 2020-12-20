@@ -54,8 +54,6 @@ Q_DECLARE_METATYPE(MYSQL_RES*)
 Q_DECLARE_METATYPE(MYSQL*)
 Q_DECLARE_METATYPE(MYSQL_STMT*)
 
-#define Q_CLIENT_MULTI_STATEMENTS CLIENT_MULTI_STATEMENTS
-
 QT_BEGIN_NAMESPACE
 
 class QMYSQLDriverPrivate
@@ -63,15 +61,13 @@ class QMYSQLDriverPrivate
 public:
     QMYSQLDriverPrivate() : mysql(Q_NULLPTR),
 #ifndef QT_NO_TEXTCODEC
-        tc(QTextCodec::codecForLocale()),
+        tc(QTextCodec::codecForLocale())
 #else
-        tc(Q_NULLPTR),
+        tc(Q_NULLPTR)
 #endif
-        preparedQuerysEnabled(false) {}
+        { }
     MYSQL *mysql;
     QTextCodec *tc;
-
-    bool preparedQuerysEnabled;
 };
 
 static inline QString toUnicode(QTextCodec *tc, const char *str)
@@ -805,8 +801,6 @@ bool QMYSQLResult::prepare(const QString& query)
     if(!d->driver)
         return false;
     cleanup();
-    if (!d->driver->d->preparedQuerysEnabled)
-        return QSqlResult::prepare(query);
 
     if (query.isEmpty())
         return false;
@@ -1005,12 +999,11 @@ bool QMYSQLResult::exec()
 /////////////////////////////////////////////////////////
 
 static int qMySqlConnectionCount = 0;
-static bool qMySqlInitHandledByUser = false;
 
 static inline void qLibraryInit()
 {
-#ifndef Q_NO_MYSQL_EMBEDDED
-    if (qMySqlInitHandledByUser || qMySqlConnectionCount > 1)
+#if !defined(Q_NO_MYSQL_EMBEDDED)
+    if (qMySqlConnectionCount > 1)
         return;
 
 # if MYSQL_VERSION_ID < 50000 || MYSQL_VERSION_ID >= 50003
@@ -1021,11 +1014,15 @@ static inline void qLibraryInit()
         qWarning("QMYSQLDriver::qServerInit: unable to start server.");
     }
 #endif // Q_NO_MYSQL_EMBEDDED
+
+#ifdef MARIADB_BASE_VERSION
+    qAddPostRoutine(mysql_server_end);
+#endif
 }
 
 static inline void qLibraryEnd()
 {
-#ifndef Q_NO_MYSQL_EMBEDDED
+#if !defined(Q_NO_MYSQL_EMBEDDED) && !defined(MARIADB_BASE_VERSION)
 # if MYSQL_VERSION_ID < 50000 || MYSQL_VERSION_ID >= 50003
     mysql_library_end();
 # else
@@ -1035,46 +1032,16 @@ static inline void qLibraryEnd()
 }
 
 QMYSQLDriver::QMYSQLDriver(QObject * parent)
-    : QSqlDriver(parent)
+    : QSqlDriver(parent), d(new QMYSQLDriverPrivate())
 {
-    init();
-    qLibraryInit();
-}
-
-/*!
-    Create a driver instance with the open connection handle, \a con.
-    The instance's parent (owner) is \a parent.
-*/
-
-QMYSQLDriver::QMYSQLDriver(MYSQL * con, QObject * parent)
-    : QSqlDriver(parent)
-{
-    init();
-    if (con) {
-        d->mysql = con;
-#ifndef QT_NO_TEXTCODEC
-        d->tc = codec(con);
-#endif
-        setOpen(true);
-        setOpenError(false);
-        if (qMySqlConnectionCount == 1)
-            qMySqlInitHandledByUser = true;
-    } else {
-        qLibraryInit();
-    }
-}
-
-void QMYSQLDriver::init()
-{
-    d = new QMYSQLDriverPrivate();
-    d->mysql = Q_NULLPTR;
     qMySqlConnectionCount++;
+    qLibraryInit();
 }
 
 QMYSQLDriver::~QMYSQLDriver()
 {
     qMySqlConnectionCount--;
-    if (qMySqlConnectionCount == 0 && !qMySqlInitHandledByUser)
+    if (qMySqlConnectionCount == 0)
         qLibraryEnd();
     delete d;
 }
@@ -1105,7 +1072,7 @@ bool QMYSQLDriver::hasFeature(DriverFeature f) const
         return true;
     case PreparedQueries:
     case PositionalPlaceholders:
-        return d->preparedQuerysEnabled;
+        return true;
     case MultipleResultSets:
         return true;
     }
@@ -1147,7 +1114,7 @@ bool QMYSQLDriver::open(const QString& db,
        we have to enable CLIEN_MULTI_STATEMENTS here, otherwise _any_
        stored procedure call will fail.
     */
-    unsigned int optionFlags = Q_CLIENT_MULTI_STATEMENTS;
+    unsigned int optionFlags = CLIENT_MULTI_STATEMENTS;
     const QStringList opts(connOpts.split(QLatin1Char(';'), QString::SkipEmptyParts));
     QString unixSocket;
 #if MYSQL_VERSION_ID >= 50000
@@ -1221,9 +1188,6 @@ bool QMYSQLDriver::open(const QString& db,
 #ifndef QT_NO_TEXTCODEC
     d->tc = codec(d->mysql);
 #endif
-
-    d->preparedQuerysEnabled = mysql_get_client_version() >= 40108
-                        && mysql_get_server_version(d->mysql) >= 40100;
 
     mysql_thread_init();
 

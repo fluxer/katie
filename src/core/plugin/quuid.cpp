@@ -726,6 +726,7 @@ bool QUuid::operator<(const QUuid &other) const
     }
     return false;
 }
+#undef ISLESS
 
 /*!
     \fn bool QUuid::operator>(const QUuid &other) const

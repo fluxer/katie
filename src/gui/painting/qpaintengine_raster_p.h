@@ -179,20 +179,11 @@ public:
 
     void drawStaticTextItem(QStaticTextItem *textItem);
 
-    enum ClipType {
-        RectClip,
-        ComplexClip
-    };
-    ClipType clipType() const;
-    QRect clipBoundingRect() const;
-
 #ifdef Q_NO_USING_KEYWORD
     inline void drawEllipse(const QRect &rect) { QPaintEngineEx::drawEllipse(rect); }
 #else
     using QPaintEngineEx::drawEllipse;
 #endif
-
-    QSize size() const;
 
 #ifndef QT_NO_DEBUG
     void saveBuffer(const QString &s) const;

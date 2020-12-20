@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_TASKMENU_H
 #define QDESIGNER_TASKMENU_H
 
-#include "shared_global_p.h"
 #include "extensionfactory_p.h"
 #include <QtDesigner/taskmenu.h>
 
@@ -64,7 +63,7 @@ class QSignalMapper;
 namespace qdesigner_internal {
 class QDesignerTaskMenuPrivate;
 
-class QDESIGNER_SHARED_EXPORT QDesignerTaskMenu: public QObject, public QDesignerTaskMenuExtension
+class Q_DESIGNER_EXPORT QDesignerTaskMenu: public QObject, public QDesignerTaskMenuExtension
 {
     Q_OBJECT
     Q_INTERFACES(QDesignerTaskMenuExtension)

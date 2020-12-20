@@ -2,7 +2,7 @@
 
 # See https://github.com/fluxer/katie/wiki/Unicode-support
 
-import os, sys
+import sys
 
 def readlines(fromfile):
     lines = []
@@ -106,7 +106,7 @@ elif 'grapheme' in sys.argv:
     supported = [
         'CR',
         'LF',
-        'Control'
+        'Control',
         'Extend',
         'L',
         'V',
@@ -128,7 +128,7 @@ elif 'word' in sys.argv:
     # only some are supported by harfbuzz
     supported = [
         'Format',
-        'Katakana'
+        'Katakana',
         'ALetter',
         'MidLetter',
         'MidNum',
@@ -150,7 +150,7 @@ elif 'sentence' in sys.argv:
     supported = [
         'Sep',
         'Format',
-        'Sp'
+        'Sp',
         'Lower',
         'Upper',
         'OLetter',
@@ -174,7 +174,7 @@ elif 'line' in sys.argv:
     supported = [
         'OP',
         'CL',
-        'QU'
+        'QU',
         'GL',
         'NS',
         'EX',

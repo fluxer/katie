@@ -78,13 +78,13 @@ inline static void registerHelper()
         reinterpret_cast<QDBusMetaType::DemarshallFunction>(df));
 }
 
-int QDBusMetaTypeId::message;
-int QDBusMetaTypeId::argument;
-int QDBusMetaTypeId::variant;
-int QDBusMetaTypeId::objectpath;
-int QDBusMetaTypeId::signature;
-int QDBusMetaTypeId::error;
-int QDBusMetaTypeId::unixfd;
+int QDBusMetaTypeId::message = qRegisterMetaType<QDBusMessage>("QDBusMessage");
+int QDBusMetaTypeId::argument = qRegisterMetaType<QDBusArgument>("QDBusArgument");
+int QDBusMetaTypeId::variant = qRegisterMetaType<QDBusVariant>("QDBusVariant");
+int QDBusMetaTypeId::objectpath = qRegisterMetaType<QDBusObjectPath>("QDBusObjectPath");
+int QDBusMetaTypeId::signature = qRegisterMetaType<QDBusSignature>("QDBusSignature");
+int QDBusMetaTypeId::error = qRegisterMetaType<QDBusError>("QDBusError");
+int QDBusMetaTypeId::unixfd = qRegisterMetaType<QDBusUnixFileDescriptor>("QDBusUnixFileDescriptor");
 
 void QDBusMetaTypeId::init()
 {
@@ -93,15 +93,6 @@ void QDBusMetaTypeId::init()
     // reentrancy is not a problem since everything else is locked on their own
     // set the guard variable at the end
     if (!initialized) {
-        // register our types with QtCore
-        message = qRegisterMetaType<QDBusMessage>("QDBusMessage");
-        argument = qRegisterMetaType<QDBusArgument>("QDBusArgument");
-        variant = qRegisterMetaType<QDBusVariant>("QDBusVariant");
-        objectpath = qRegisterMetaType<QDBusObjectPath>("QDBusObjectPath");
-        signature = qRegisterMetaType<QDBusSignature>("QDBusSignature");
-        error = qRegisterMetaType<QDBusError>("QDBusError");
-        unixfd = qRegisterMetaType<QDBusUnixFileDescriptor>("QDBusUnixFileDescriptor");
-
 #ifndef QDBUS_NO_SPECIALTYPES
         // and register QtCore's with us
         registerHelper<QDate>();

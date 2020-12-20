@@ -45,9 +45,9 @@
 // We mean it.
 //
 
-#include <QtCore/qobjectdefs.h>
-#include <QtCore/qscopedpointer_p.h>
-#include <QtCore/qlist.h>
+#include "qobjectdefs.h"
+#include "qscopedpointer_p.h"
+#include "qlist.h"
 
 QT_BEGIN_NAMESPACE
 

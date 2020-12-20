@@ -29,6 +29,11 @@
 #include "dtoa.h"
 #include "Identifier.h"
 #include "Operations.h"
+#include <wtf/ASCIICType.h>
+#include <wtf/Assertions.h>
+#include <wtf/Vector.h>
+#include <wtf/unicode/UTF8.h>
+
 #include <ctype.h>
 #include <limits.h>
 #include <limits>
@@ -36,16 +41,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <wtf/ASCIICType.h>
-#include <wtf/Assertions.h>
-#include <wtf/MathExtras.h>
-#include <wtf/StringExtras.h>
-#include <wtf/Vector.h>
-#include <wtf/unicode/UTF8.h>
-
-#if HAVE(STRINGS_H)
-#include <strings.h>
-#endif
 
 #include <QTextCodec>
 
@@ -762,12 +757,7 @@ int compare(const UString& s1, const UString& s2)
     return (l1 > l2) ? 1 : -1;
 }
 
-#if OS(SOLARIS) && COMPILER(SUNCC)
-// Signature must match that of UStringImpl.h, otherwise the linker complains about undefined symbol.
-bool equal(const UStringImpl* r, const UStringImpl* b)
-#else
 bool equal(const UString::Rep* r, const UString::Rep* b)
-#endif
 {
     int length = r->size();
     if (length != b->size())

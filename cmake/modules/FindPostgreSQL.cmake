@@ -9,28 +9,22 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_POSTGRESQL QUIET libpq)
-
-    set(POSTGRESQL_INCLUDES ${PC_POSTGRESQL_INCLUDE_DIRS})
-    set(POSTGRESQL_LIBRARIES ${PC_POSTGRESQL_LIBRARIES})
-endif()
-
-if(NOT POSTGRESQL_INCLUDES OR NOT POSTGRESQL_LIBRARIES)
-    find_path(POSTGRESQL_INCLUDES
-        NAMES libpq-fe.h
-        PATH_SUFFIXES postgresql
-        HINTS $ENV{POSTGRESQLDIR}/include
-    )
-
-    find_library(POSTGRESQL_LIBRARIES
-        NAMES pq
-        HINTS $ENV{POSTGRESQLDIR}/lib
-    )
-endif()
-
+include(FindPkgConfig)
 include(FindPackageHandleStandardArgs)
+
+pkg_check_modules(PC_POSTGRESQL QUIET libpq)
+
+find_path(POSTGRESQL_INCLUDES
+    NAMES libpq-fe.h
+    PATH_SUFFIXES postgresql
+    HINTS $ENV{POSTGRESQLDIR}/include ${PC_POSTGRESQL_INCLUDEDIR}
+)
+
+find_library(POSTGRESQL_LIBRARIES
+    NAMES pq
+    HINTS $ENV{POSTGRESQLDIR}/lib ${PC_POSTGRESQL_LIBDIR}
+)
+
 find_package_handle_standard_args(PostgreSQL
     VERSION_VAR PC_POSTGRESQL_VERSION
     REQUIRED_VARS POSTGRESQL_LIBRARIES POSTGRESQL_INCLUDES

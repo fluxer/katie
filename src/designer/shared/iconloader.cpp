@@ -41,7 +41,7 @@ QT_BEGIN_NAMESPACE
 
 namespace qdesigner_internal {
 
-QDESIGNER_SHARED_EXPORT QIcon createIconSet(const QString &name)
+Q_DESIGNER_EXPORT QIcon createIconSet(const QString &name)
 {
     const QStringList candidates = QStringList()
         << (QLatin1String(":/trolltech/formeditor/images/") + name)
@@ -56,7 +56,7 @@ QDESIGNER_SHARED_EXPORT QIcon createIconSet(const QString &name)
     return QIcon();
 }
 
-QDESIGNER_SHARED_EXPORT QIcon emptyIcon()
+Q_DESIGNER_EXPORT QIcon emptyIcon()
 {
     return QIcon(QLatin1String(":/trolltech/formeditor/images/emptyicon.png"));
 }

@@ -671,7 +671,7 @@ void FormWindowManager::slotActionGroupPreviewInStyle(const QString &style, int 
 
     QString errorMessage;
     if (!m_previewManager->showPreview(fw, style, deviceProfileIndex, &errorMessage)) {
-        const QString title = tr("Could not create form preview", "Title of warning message box");
+        const QString title = tr("Could not create form preview");
         core()->dialogGui()->message(fw, QDesignerDialogGuiInterface::FormEditorMessage, QMessageBox::Warning,
                                      title, errorMessage);
     }

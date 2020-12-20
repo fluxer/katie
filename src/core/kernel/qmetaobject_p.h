@@ -189,6 +189,11 @@ static const struct TypeTblData {
 };
 static const qint16 TypeTblSize = sizeof(TypeTbl) / sizeof(TypeTblData);
 
+static inline bool arrayStartsWith(const QByteArray &array, const char *array2, const int len) {
+    return (qstrncmp(array.constData(), array2, len) == 0);
+}
+
+
 // This code is shared with moc.cpp
 static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 {
@@ -215,7 +220,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
     while (searchindex > 0) {
         if (result.at(searchindex - 1) != '*') {
             result.remove(searchindex, 6);
-            if (!result.startsWith("const ")) {
+            if (!arrayStartsWith(result, "const ", 6)) {
                 result.prepend("const ");
             }
         }
@@ -224,7 +229,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 
     // convert const reference to value and const value to value
     char lastchar = result.at(result.size()-1);
-    if (result.startsWith("const ") && lastchar != '*') {
+    if (arrayStartsWith(result, "const ", 6) && lastchar != '*') {
         result.remove(0, 6);
         if (lastchar == '&') {
             result.chop(1);
@@ -233,11 +238,11 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 
     // discard 'struct', 'class', and 'enum'; they are optional
     // and we don't want them in the normalized signature
-    if (result.startsWith("struct ")) {
+    if (arrayStartsWith(result, "struct ", 7)) {
         result.remove(0, 7);
-    } else if (result.startsWith("class ")) {
+    } else if (arrayStartsWith(result, "class ", 6)) {
         result.remove(0, 6);
-    } else if (result.startsWith("enum ")) {
+    } else if (arrayStartsWith(result, "enum ", 5)) {
         result.remove(0, 5);
     }
 

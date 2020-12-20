@@ -91,7 +91,6 @@ public:
     void init();
     void initNativeEngine();
     void initPollerEngine();
-    void initForcedEngine(const QString &);
 
     QFileSystemWatcherEngine *watcher;
     QStringList files, directories;

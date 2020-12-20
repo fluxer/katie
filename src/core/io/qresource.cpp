@@ -791,15 +791,12 @@ public:
     virtual ResourceRootType type() const { return Resource_Buffer; }
 
     bool registerSelf(const uchar *b) {
-        //setup the data now
-        int offset = 0;
-
         //magic number
-        if(b[offset+0] != 'q' || b[offset+1] != 'r' ||
-           b[offset+2] != 'e' || b[offset+3] != 's') {
+        if(b[0] != 'q' || b[1] != 'r' || b[2] != 'e' || b[3] != 's') {
             return false;
         }
-        offset += 4;
+        //setup the data now
+        int offset = 4;
 
         const int version = (b[offset+0] << 24) + (b[offset+1] << 16) +
                          (b[offset+2] << 8) + (b[offset+3] << 0);
@@ -815,7 +812,6 @@ public:
 
         const int name_offset = (b[offset+0] << 24) + (b[offset+1] << 16) +
                                 (b[offset+2] << 8) + (b[offset+3] << 0);
-        offset += 4;
 
         if(version == Q_RCC_OUTPUT_REVISION) {
             buffer = b;
@@ -842,11 +838,10 @@ public:
     bool registerSelf(const QString &f) {
         QFile file(f);
         if (file.open(QIODevice::ReadOnly)) {
-            unsigned int data_len = file.size();
+            qint64 data_len = file.size();
             uchar *data = new uchar[data_len];
-            if (data_len != (uint)file.read((char*)data, data_len)) {
+            if (data_len != file.read((char*)data, data_len)) {
                 delete [] data;
-                data_len = 0;
                 return false;
             } else if (QDynamicBufferResourceRoot::registerSelf(data)) {
                 fileName = f;

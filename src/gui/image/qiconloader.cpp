@@ -130,10 +130,7 @@ QIconTheme::QIconTheme(const QString &themeName)
     }
     if (m_valid) {
         const QSettings indexReader(m_contentDir + QLatin1String("/index.theme"), QSettings::IniFormat);
-        QStringListIterator keyIterator(indexReader.keys());
-        while (keyIterator.hasNext()) {
-
-            const QString key = keyIterator.next();
+        foreach (const QString &key, indexReader.keys()) {
             if (key.endsWith(QLatin1String("/Size"))) {
                 // Note the QSettings ini-format does not accept
                 // slashes in key names, hence we have to cheat

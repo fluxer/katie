@@ -45,7 +45,6 @@
 // We mean it.
 //
 
-#include "shared_global_p.h"
 #include <QtCore/QObject>
 #include <QtCore/QList>
 #include <QtCore/QPointer>
@@ -61,7 +60,7 @@ namespace qdesigner_internal {
 
 // Task menu to be used for form layouts. Offers an options "Add row" which
 // pops up a dialog in which the user can specify label name, text and buddy.
-class QDESIGNER_SHARED_EXPORT FormLayoutMenu : public QObject
+class Q_DESIGNER_EXPORT FormLayoutMenu : public QObject
 {
     Q_DISABLE_COPY(FormLayoutMenu)
     Q_OBJECT

@@ -240,7 +240,7 @@ bool LayoutInfo::isEmptyItem(QLayoutItem *item)
     return item->spacerItem() != 0;
 }
 
-QDESIGNER_SHARED_EXPORT void getFormLayoutItemPosition(const QFormLayout *formLayout, int index, int *rowPtr, int *columnPtr, int *rowspanPtr, int *colspanPtr)
+Q_DESIGNER_EXPORT void getFormLayoutItemPosition(const QFormLayout *formLayout, int index, int *rowPtr, int *columnPtr, int *rowspanPtr, int *colspanPtr)
 {
     int row;
     QFormLayout::ItemRole role;
@@ -264,7 +264,7 @@ static inline QFormLayout::ItemRole formLayoutRole(int column, int colspan)
     return column == 0 ? QFormLayout::LabelRole : QFormLayout::FieldRole;
 }
 
-QDESIGNER_SHARED_EXPORT void formLayoutAddWidget(QFormLayout *formLayout, QWidget *w, const QRect &r, bool insert)
+Q_DESIGNER_EXPORT void formLayoutAddWidget(QFormLayout *formLayout, QWidget *w, const QRect &r, bool insert)
 {
     // Consistent API galore...
     if (insert) {

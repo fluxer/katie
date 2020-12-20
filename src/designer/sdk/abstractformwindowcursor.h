@@ -34,7 +34,7 @@
 #ifndef ABSTRACTFORMWINDOWCURSOR_H
 #define ABSTRACTFORMWINDOWCURSOR_H
 
-#include <QtDesigner/sdk_global.h>
+#include <QtCore/qglobal.h>
 
 QT_BEGIN_HEADER
 
@@ -45,7 +45,7 @@ class QWidget;
 class QVariant;
 class QString;
 
-class QDESIGNER_SDK_EXPORT QDesignerFormWindowCursorInterface
+class Q_DESIGNER_EXPORT QDesignerFormWindowCursorInterface
 {
 public:
     enum MoveOperation

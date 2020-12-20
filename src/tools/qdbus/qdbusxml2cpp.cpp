@@ -31,25 +31,25 @@
 **
 ****************************************************************************/
 
-#include <QtCore/qbytearray.h>
-#include <QtCore/qcoreapplication.h>
-#include <QtCore/qdatetime.h>
-#include <QtCore/qdebug.h>
-#include <QtCore/qfile.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qtextstream.h>
-#include <QtCore/qset.h>
-#include <QtCore/qvariant.h>
+#include "qbytearray.h"
+#include "qcoreapplication.h"
+#include "qdatetime.h"
+#include "qdebug.h"
+#include "qfile.h"
+#include "qstring.h"
+#include "qstringlist.h"
+#include "qtextstream.h"
+#include "qset.h"
+#include "qvariant.h"
 
-#include <QtDBus/qdbusconnection.h>
-#include <QtDBus/qdbusinterface.h>
-#include <QtDBus/qdbusconnectioninterface.h>
-#include <QtDBus/qdbusreply.h>
-#include <QtDBus/qdbusargument.h>
-#include <QtDBus/qdbusmetatype.h>
-#include <QtDBus/qdbusmetaobject_p.h>
-#include <QtDBus/qdbusintrospection_p.h>
+#include "qdbusconnection.h"
+#include "qdbusinterface.h"
+#include "qdbusconnectioninterface.h"
+#include "qdbusreply.h"
+#include "qdbusargument.h"
+#include "qdbusmetatype.h"
+#include "qdbusmetaobject_p.h"
+#include "qdbusintrospection_p.h"
 
 #include <stdio.h>
 #include <stdlib.h>

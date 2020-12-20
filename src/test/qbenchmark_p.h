@@ -47,40 +47,19 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
-
-#if defined(Q_OS_LINUX) && !defined(QT_NO_PROCESS)
-#define QTESTLIB_USE_VALGRIND 
-#else
-#undef QTESTLIB_USE_VALGRIND
-#endif
-
-#include "QtTest/qbenchmarkmeasurement_p.h"
-#include <QtCore/QMap>
-#include <QtTest/qtest_global.h>
-#ifdef QTESTLIB_USE_VALGRIND
-#include "QtTest/qbenchmarkvalgrind_p.h"
-#endif
-#include "QtTest/qbenchmarkevent_p.h"
-#include "QtTest/qbenchmarkmetric_p.h"
+#include "qbenchmarkmeasurement_p.h"
+#include "qmap.h"
+#include "qtest_global.h"
+#include "qbenchmarkevent_p.h"
+#include "qbenchmarkmetric_p.h"
 
 QT_BEGIN_NAMESPACE
 
 struct QBenchmarkContext
 {
-    // None of the strings below are assumed to contain commas (see toString() below)
+    // None of the strings below are assumed to contain commas
     QString slotName;
     QString tag; // from _data() function
-
-    int checkpointIndex;
-
-    QString toString() const
-    {
-        QString s = QString::fromLatin1("%1,%2,%3").arg(slotName).arg(tag).arg(checkpointIndex);
-        return s;
-    }
-
-    QBenchmarkContext() : checkpointIndex(-1) {}
 };
 
 class QBenchmarkResult
@@ -130,10 +109,9 @@ public:
 
     QBenchmarkGlobalData();
     ~QBenchmarkGlobalData();
-    enum Mode { WallTime, CallgrindParentProcess, CallgrindChildProcess, TickCounter, EventCounter };
+    enum Mode { WallTime, TickCounter, EventCounter };
     void setMode(Mode mode);
     Mode mode() const { return mode_; }
-    QBenchmarkMeasurerBase *createMeasurer();
     int adjustMedianIterationCount();
 
     QBenchmarkMeasurerBase *measurer;
@@ -141,7 +119,6 @@ public:
     int walltimeMinimum;
     int iterationCount;
     int medianIterationCount;
-    bool createChart;
     bool verboseOutput;
     QString callgrindOutFileBase;
 private:
@@ -168,7 +145,6 @@ public:
 
     bool isBenchmark() const { return result.valid; }
     bool resultsAccepted() const { return resultAccepted; }
-    int adjustIterationCount(int suggestion);
     void setResult(qreal value, QTest::QBenchmarkMetric metric, bool setByMacro = true);
 
     QBenchmarkResult result;
@@ -176,17 +152,6 @@ public:
     bool runOnce;
     int iterationCount;
 };
-
-// low-level API:
-namespace QTest
-{
-    int iterationCount();
-    void setIterationCountHint(int count);
-    void setIterationCount(int count);
-
-    Q_TEST_EXPORT void beginBenchmarkMeasurement();
-    Q_TEST_EXPORT quint64 endBenchmarkMeasurement();
-}
 
 QT_END_NAMESPACE
 

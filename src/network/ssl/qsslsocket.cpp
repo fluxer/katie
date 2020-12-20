@@ -1690,8 +1690,7 @@ void QSslSocket::ignoreSslErrors(const QList<QSslError> &errors)
 /*!
     \internal
 */
-void QSslSocket::connectToHostImplementation(const QString &hostName, quint16 port,
-                                             OpenMode openMode)
+void QSslSocket::connectToHost(const QString &hostName, quint16 port, OpenMode openMode)
 {
     Q_D(QSslSocket);
     if (!d->initialized)
@@ -1699,7 +1698,7 @@ void QSslSocket::connectToHostImplementation(const QString &hostName, quint16 po
     d->initialized = false;
 
 #ifdef QSSLSOCKET_DEBUG
-    qDebug() << "QSslSocket::connectToHostImplementation("
+    qDebug() << "QSslSocket::connectToHost("
              << hostName << ',' << port << ',' << openMode << ')';
 #endif
     if (!d->plainSocket) {
@@ -1721,11 +1720,11 @@ void QSslSocket::connectToHostImplementation(const QString &hostName, quint16 po
 /*!
     \internal
 */
-void QSslSocket::disconnectFromHostImplementation()
+void QSslSocket::disconnectFromHost()
 {
     Q_D(QSslSocket);
 #ifdef QSSLSOCKET_DEBUG
-    qDebug() << "QSslSocket::disconnectFromHostImplementation()";
+    qDebug() << "QSslSocket::disconnectFromHost()";
 #endif
     if (!d->plainSocket)
         return;

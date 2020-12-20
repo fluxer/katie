@@ -126,11 +126,7 @@ struct Large { // A "large" item type
     int x[1000];
 };
 
-#if defined(Q_WS_WINCE)
-#  define LARGE_MAX_SIZE 2000
-#else
-#  define LARGE_MAX_SIZE 20000
-#endif
+#define LARGE_MAX_SIZE 20000
 
 class tst_vector_vs_std : public QObject
 {

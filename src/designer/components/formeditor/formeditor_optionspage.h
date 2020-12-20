@@ -34,7 +34,8 @@
 #ifndef FORMEDITOR_OPTIONSPAGE_H
 #define FORMEDITOR_OPTIONSPAGE_H
 
-#include <QtDesigner/abstractoptionspage_p.h>
+#include "abstractoptionspage_p.h"
+
 #include <QtCore/QPointer>
 
 QT_BEGIN_NAMESPACE

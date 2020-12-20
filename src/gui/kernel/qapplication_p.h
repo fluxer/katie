@@ -59,8 +59,8 @@
 #include "QtGui/qfont.h"
 #include "QtGui/qcursor.h"
 #include "QtGui/qregion.h"
-#include "QtCore/qcoreapplication_p.h"
-#include "QtGui/qshortcutmap_p.h"
+#include "qcoreapplication_p.h"
+#include "qshortcutmap_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -102,7 +102,7 @@ public:
     static bool autoSipEnabled;
     static QString desktopStyleKey();
 
-    void createEventDispatcher();
+    QAbstractEventDispatcher* createEventDispatcher();
     QString appName() const;
     static void dispatchEnterLeave(QWidget *enter, QWidget *leave);
 
@@ -113,7 +113,7 @@ public:
     static void leaveModal_sys(QWidget*);
     static bool isBlockedByModal(QWidget *widget);
     static bool modalState();
-    static bool tryModalHelper(QWidget *widget, QWidget **rettop = 0);
+    static bool tryModalHelper(QWidget *widget);
 
     bool notify_helper(QObject *receiver, QEvent * e);
 
@@ -123,10 +123,6 @@ public:
 #endif
                    );
     void process_cmdline();
-
-#if defined(Q_WS_X11)
-    static void x11_initialize_style();
-#endif
 
     bool inPopupMode() const;
     void closePopup(QWidget *popup);
@@ -193,7 +189,6 @@ public:
     static bool fade_menu;
     static bool fade_tooltip;
     static bool animate_toolbox;
-    static bool widgetCount; // Coupled with -widgetcount switch
 
     static void setSystemPalette(const QPalette &pal);
     static void setPalette_helper(const QPalette &palette, const char* className, bool clearWidgetPaletteHash);
@@ -271,9 +266,6 @@ private:
                                                 Qt::FocusPolicy focusPolicy,
                                                 Qt::FocusReason focusReason);
     static bool shouldSetFocus(QWidget *w, Qt::FocusPolicy policy);
-
-
-    static bool isAlien(QWidget *);
 };
 
 Q_GUI_EXPORT void qt_translateRawTouchEvent(QWidget *window,

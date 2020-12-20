@@ -62,7 +62,6 @@ public:
 
 protected:
     virtual bool event(QEvent *);
-    virtual bool eventFilter(QObject *, QEvent *);
     virtual QWidget *createWidget(QWidget *parent);
     virtual void deleteWidget(QWidget *widget);
     QList<QWidget *> createdWidgets() const;

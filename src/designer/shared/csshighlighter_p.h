@@ -46,13 +46,12 @@
 #define CSSHIGHLIGHTER_H
 
 #include <QtGui/QSyntaxHighlighter>
-#include "shared_global_p.h"
 
 QT_BEGIN_NAMESPACE
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT CssHighlighter : public QSyntaxHighlighter
+class Q_DESIGNER_EXPORT CssHighlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
 public:

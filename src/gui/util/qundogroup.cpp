@@ -377,7 +377,7 @@ QAction *QUndoGroup::createUndoAction(QObject *parent, const QString &prefix) co
 {
     QUndoAction *result = new QUndoAction(prefix, parent);
     if (prefix.isEmpty())
-        result->setTextFormat(tr("Undo %1"), tr("Undo", "Default text for undo action"));
+        result->setTextFormat(tr("Undo %1"), tr("Undo"));
 
     result->setEnabled(canUndo());
     result->setPrefixedText(undoText());
@@ -408,7 +408,7 @@ QAction *QUndoGroup::createRedoAction(QObject *parent, const QString &prefix) co
 {
     QUndoAction *result = new QUndoAction(prefix, parent);
     if (prefix.isEmpty())
-        result->setTextFormat(tr("Redo %1"), tr("Redo", "Default text for redo action"));
+        result->setTextFormat(tr("Redo %1"), tr("Redo"));
 
     result->setEnabled(canRedo());
     result->setPrefixedText(redoText());

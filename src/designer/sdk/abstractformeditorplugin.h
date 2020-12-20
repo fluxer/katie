@@ -34,8 +34,6 @@
 #ifndef ABSTRACTFORMEDITORPLUGIN_H
 #define ABSTRACTFORMEDITORPLUGIN_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtCore/QObject>
 
 QT_BEGIN_HEADER
@@ -45,7 +43,7 @@ QT_BEGIN_NAMESPACE
 class QDesignerFormEditorInterface;
 class QAction;
 
-class QDESIGNER_SDK_EXPORT QDesignerFormEditorPluginInterface
+class Q_DESIGNER_EXPORT QDesignerFormEditorPluginInterface
 {
 public:
     virtual ~QDesignerFormEditorPluginInterface() {}

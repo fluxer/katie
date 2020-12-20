@@ -50,6 +50,8 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
+static const int N = 1000000;
+
 template <typename T>
 class QRawVector
 {

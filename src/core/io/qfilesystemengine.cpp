@@ -36,20 +36,14 @@
 #include "qset.h"
 #include "qabstractfileengine_p.h"
 
-#ifndef QT_BOOTSTRAPPED
-#  include "qresource_p.h"
-#endif
-
 QT_BEGIN_NAMESPACE
 
-//these unix functions are in this file, because they are shared by symbian port
+//these unix functions are in this file, because they were shared by symbian port
 //for open C file handles.
-#ifdef Q_OS_UNIX
 //static
 bool QFileSystemEngine::fillMetaData(int fd, QFileSystemMetaData &data)
 {
     data.entryFlags &= ~QFileSystemMetaData::PosixStatFlags;
-    data.knownFlagsMask |= QFileSystemMetaData::PosixStatFlags;
 
     QT_STATBUF statBuffer;
     if (QT_FSTAT(fd, &statBuffer) == 0) {
@@ -94,10 +88,12 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
 
     // Attributes
     entryFlags |= QFileSystemMetaData::ExistsAttribute;
+    entryFlags |= QFileSystemMetaData::SizeAttribute;
     size_ = statBuffer.st_size;
 
     // Times
-    creationTime_ = statBuffer.st_ctime ? statBuffer.st_ctime : statBuffer.st_mtime;
+    entryFlags |= QFileSystemMetaData::Times;
+    creationTime_ = statBuffer.st_ctime;
     modificationTime_ = statBuffer.st_mtime;
     accessTime_ = statBuffer.st_atime;
     userId_ = statBuffer.st_uid;
@@ -106,19 +102,11 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
 
 void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
 {
-#if defined(_DIRENT_HAVE_D_TYPE) || defined(Q_OS_BSD4)
-    // BSD4 includes Mac OS X
-
-    // ### This will clear all entry flags and knownFlagsMask
+#ifdef QT_HAVE_DIRENT_D_TYPE
+    // ### This will clear all entry flags
     switch (entry.d_type)
     {
     case DT_DIR:
-        knownFlagsMask = QFileSystemMetaData::LinkType
-            | QFileSystemMetaData::FileType
-            | QFileSystemMetaData::DirectoryType
-            | QFileSystemMetaData::SequentialType
-            | QFileSystemMetaData::ExistsAttribute;
-
         entryFlags = QFileSystemMetaData::DirectoryType
             | QFileSystemMetaData::ExistsAttribute;
 
@@ -128,30 +116,16 @@ void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
     case DT_CHR:
     case DT_FIFO:
     case DT_SOCK:
-        // ### System attribute
-        knownFlagsMask = QFileSystemMetaData::LinkType
-            | QFileSystemMetaData::FileType
-            | QFileSystemMetaData::DirectoryType
-            | QFileSystemMetaData::SequentialType
-            | QFileSystemMetaData::ExistsAttribute;
-
         entryFlags = QFileSystemMetaData::SequentialType
             | QFileSystemMetaData::ExistsAttribute;
 
         break;
 
     case DT_LNK:
-        knownFlagsMask = QFileSystemMetaData::LinkType;
         entryFlags = QFileSystemMetaData::LinkType;
         break;
 
     case DT_REG:
-        knownFlagsMask = QFileSystemMetaData::LinkType
-            | QFileSystemMetaData::FileType
-            | QFileSystemMetaData::DirectoryType
-            | QFileSystemMetaData::SequentialType
-            | QFileSystemMetaData::ExistsAttribute;
-
         entryFlags = QFileSystemMetaData::FileType
             | QFileSystemMetaData::ExistsAttribute;
 
@@ -165,8 +139,6 @@ void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
     Q_UNUSED(entry)
 #endif
 }
-
-#endif
 
 //static
 QString QFileSystemEngine::resolveUserName(const QFileSystemEntry &entry, QFileSystemMetaData &metaData)

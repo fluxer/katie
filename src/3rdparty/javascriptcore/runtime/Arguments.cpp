@@ -35,7 +35,7 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(Arguments);
 
-const ClassInfo Arguments::info = { "Arguments", 0, 0, 0 };
+const ClassInfo Arguments::info = { "Arguments", 0, 0 };
 
 Arguments::~Arguments()
 {
