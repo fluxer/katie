@@ -488,6 +488,12 @@ if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
 endif()
 
+add_library(pic_test ${KATIE_TYPE}  EXCLUDE_FROM_ALL "${CMAKE_SOURCE_DIR}/cmake/pic.cpp")
+get_target_property(HAVE_pic pic_test POSITION_INDEPENDENT_CODE)
+if(NOT HAVE_pic)
+    katie_definition(-DQ_NO_DATA_RELOCATION)
+endif()
+
 # keep in sync with the gui component CMake file, only definitions setup is needed here
 foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor)
     if(NOT X11_${x11ext}_FOUND)
