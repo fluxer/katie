@@ -169,9 +169,9 @@ private:
         streampos += data.size();
     }
 
-    int writeCompressed(const char *src, int len);
-    inline int writeCompressed(const QByteArray &data) { return writeCompressed(data.constData(), data.length()); }
-    int writeCompressed(QIODevice *dev);
+    int writeData(const char *src, int len);
+    inline int writeData(const QByteArray &data) { return writeData(data.constData(), data.length()); }
+    int writeData(QIODevice *dev);
 
     // various PDF objects
     int pageRoot, catalog, info, graphicsState, patternColorSpace;

@@ -100,17 +100,8 @@ static inline int qt_depthForFormat(QImage::Format format)
     case QImage::Format_ARGB32:
     case QImage::Format_ARGB32_Premultiplied:
         return 32;
-    case QImage::Format_RGB555:
     case QImage::Format_RGB16:
-    case QImage::Format_RGB444:
-    case QImage::Format_ARGB4444_Premultiplied:
         return 16;
-    case QImage::Format_RGB666:
-    case QImage::Format_ARGB6666_Premultiplied:
-    case QImage::Format_ARGB8565_Premultiplied:
-    case QImage::Format_ARGB8555_Premultiplied:
-    case QImage::Format_RGB888:
-        return 24;
     }
     return 0;
 }

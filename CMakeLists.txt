@@ -7,12 +7,10 @@
 #     find -name '*.cmake' -exec grep -E 'TODO|FIXME' {} +
 #     find -name CMakeLists.txt -exec grep -E 'TODO|FIXME' {} +
 
-cmake_minimum_required(VERSION 2.8.12.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
-if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
-    message(FATAL_ERROR "\nThe project should not be build in the source directory")
-elseif(CMAKE_CROSSCOMPILING AND NOT KATIE_CROSS_EXEC)
-    message(FATAL_ERROR "\nCross-compiling requires KATIE_CROSS_EXEC to be set to QEMU executable, e.g. qemu-arm-static")
+if(CMAKE_CROSSCOMPILING AND NOT CMAKE_CROSSCOMPILING_EMULATOR)
+    message(FATAL_ERROR "Cross-compiling requires CMAKE_CROSSCOMPILING_EMULATOR to be set to QEMU executable, e.g. qemu-arm-static")
 endif()
 
 project(Katie C CXX)
@@ -34,25 +32,31 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
 
 # enable symbols visibility preset for all targets
-if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
-    cmake_policy(SET CMP0063 NEW)
+cmake_policy(SET CMP0063 NEW)
+
+# LLVM linker does not have a default library search path, add some directories known to contain
+# system wide libraries. the headers search path is also incomplete
+if(CMAKE_SYSTEM_NAME MATCHES "BSD")
+    include_directories(/usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
+    link_directories(/usr/X11R7/lib /usr/pkg/lib /usr/local/lib /usr/lib /lib)
 endif()
 
-include(CheckIncludeFile)
+include(GNUInstallDirs)
 include(CheckIncludeFileCXX)
 include(CheckTypeSize)
+include(CMakePushCheckState)
+include(CheckStructHasMember)
+include(CheckCXXSourceRuns)
 include(FeatureSummary)
-include(KatieMacros)
 include(KatieBuildMacros)
+include(mkspecs/mkspecs.cmake)
 
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
 set(KATIE_MINOR "9")
-set(KATIE_MICRO "0")
-set(KATIE_HEX "0x040900")
+set(KATIE_MICRO "1")
+set(KATIE_HEX "0x040901")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
-# this one is set via macro later, if possible. also used in config.cpp.cmake
-set(KATIE_GIT "unstable-${KATIE_VERSION}")
 
 # only for the build process
 if(CMAKE_SYSTEM_PROCESSOR)
@@ -61,40 +65,41 @@ elseif(CMAKE_HOST_SYSTEM_PROCESSOR)
     string(TOLOWER "${CMAKE_HOST_SYSTEM_PROCESSOR}" KATIE_PROCESSOR)
 endif()
 
-# used as shebang for profile, exec and dbg scripts
+# used in katie_optimize_headers()
+find_program(KATIE_UNIFDEF NAMES unifdef)
+if(NOT KATIE_UNIFDEF)
+    message(WARNING "Could not find unifdef, headers will not be optimized")
+endif()
+
+# used as shebang for profile, exec, dbus, xvfb and dbg scripts
 find_program(KATIE_SHELL NAMES sh dash mksh ksh ash)
 if(NOT KATIE_SHELL)
     message(FATAL_ERROR "Could not detect shell, supported are: sh, dash, mksh, ksh and ash")
 endif()
 
+# should be either STATIC or SHARED
+set(KATIE_TYPE SHARED CACHE STRING "Build type")
+
 # components and tools that will be build, changed depending on the requirements availability
 # NOTE: excluding DesignerComponents as it was never used as public component, currently only
-# used by the the designer tool. if it is ever needed for something it can just be added here
-# and that's it - the rest of the build system has everything in place.
+# used by the the designer tool. if it is ever needed for something it can just be added here,
+# Q_DESIGNER_COMPONENTS_EXPORT must be introduced and genmap.py adjusted - the rest of the
+# build system has everything in place.
 set(KATIE_COMPONENTS "Core Gui Declarative Designer Network Sql Svg Xml Script ScriptTools Test UiTools")
-set(KATIE_TOOLS "moc uic rcc lupdate lrelease lconvert designer qscript qtconfig")
+set(KATIE_TOOLS "moc uic rcc designer qscript qtconfig")
 
-# for config.cpp.cmake
-string(TIMESTAMP KATIE_DATE "%Y-%m-%d")
-set(KATIE_LICENSE "Open Source")
-set(KATIE_PRODUCT "AwesomeSauce")
-
-include(GNUInstallDirs)
-set(KATIE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}" CACHE PATH "General installation prefix")
 set(KATIE_HEADERS_PATH "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
 set(KATIE_LIBRARIES_PATH "${CMAKE_INSTALL_FULL_LIBDIR}" CACHE PATH "Libraries installation path")
 set(KATIE_BINARIES_PATH "${CMAKE_INSTALL_FULL_BINDIR}" CACHE PATH "Binaries installation path")
 set(KATIE_PLUGINS_PATH "${KATIE_LIBRARIES_PATH}/katie/plugins" CACHE PATH "Plugins installation path")
 set(KATIE_IMPORTS_PATH "${KATIE_LIBRARIES_PATH}/katie/imports" CACHE PATH "Declarative imports installation path")
-set(KATIE_DATA_PATH "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
-set(KATIE_TRANSLATIONS_PATH "${KATIE_DATA_PATH}/katie/translations" CACHE PATH "Translations installation path")
-set(KATIE_SETTINGS_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg" CACHE PATH "Settings runtime path")
+set(KATIE_TRANSLATIONS_PATH "${CMAKE_INSTALL_FULL_LOCALEDIR}" CACHE PATH "Translations installation path")
 set(KATIE_CMAKE_PATH "${KATIE_LIBRARIES_PATH}/cmake/Katie" CACHE PATH "CMake aware modules installation path")
 set(KATIE_LDCONF_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs installation path")
 set(KATIE_PROFILE_PATH "${CMAKE_INSTALL_FULL_SYSCONFDIR}/profile.d" CACHE PATH "Shell profile scripts installation path")
 set(KATIE_MAN_PATH "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages installation path")
-set(KATIE_APPLICATIONS_PATH "${KATIE_DATA_PATH}/applications" CACHE PATH "Desktop applications register installation path")
-set(KATIE_PIXMAPS_PATH "${KATIE_DATA_PATH}/pixmaps" CACHE PATH "Desktop applications icon installation path")
+set(KATIE_APPLICATIONS_PATH "${CMAKE_INSTALL_FULL_DATADIR}/applications" CACHE PATH "Desktop applications register installation path")
+set(KATIE_PIXMAPS_PATH "${CMAKE_INSTALL_FULL_DATADIR}/pixmaps" CACHE PATH "Desktop applications icon installation path")
 set(KATIE_PKGCONFIG_PATH "${KATIE_LIBRARIES_PATH}/pkgconfig" CACHE PATH "pkg-config installation path")
 set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 
@@ -114,15 +119,11 @@ add_feature_info(dbus WITH_DBUS "build D-Bus support")
 option(WITH_FONTCONFIG "Build Fontconfig support" ON)
 add_feature_info(fontconfig WITH_FONTCONFIG "build Fontconfig support")
 
-# TODO: enable when building against external harfbuzz works
-option(WITH_HARFBUZZ "Build Harfbuzz support" OFF)
-add_feature_info(harfbuzz WITH_HARFBUZZ "build Harfbuzz support")
-
 option(WITH_ODBC "Build ODBC database plugin" ON)
 add_feature_info(odbc WITH_ODBC "build ODBC support")
 
-option(WITH_PSQL "Build PostgreSQL database plugin" ON)
-add_feature_info(postgresql WITH_PSQL "build PostgreSQL support")
+option(WITH_POSTGRESQL "Build PostgreSQL database plugin" ON)
+add_feature_info(postgresql WITH_POSTGRESQL "build PostgreSQL support")
 
 option(WITH_MYSQL "Build MySQL database plugin" ON)
 add_feature_info(mysql WITH_MYSQL "build MySQL support")
@@ -130,8 +131,11 @@ add_feature_info(mysql WITH_MYSQL "build MySQL support")
 option(WITH_RESOLV "Build resolv support" ON)
 add_feature_info(resolv WITH_RESOLV "build resolv support")
 
-option(WITH_UNWIND "Build Unwind support" OFF)
-add_feature_info(unwind WITH_UNWIND "build Unwind support")
+option(WITH_INTL "Build Intl support" ON)
+add_feature_info(intl WITH_INTL "build Intl support")
+
+option(WITH_EXECINFO "Build ExecInfo support" OFF)
+add_feature_info(execinfo WITH_EXECINFO "build ExecInfo support")
 
 # optional features
 option(KATIE_TESTS "Build automatic tests" OFF)
@@ -143,93 +147,11 @@ add_feature_info(benchmarks KATIE_BENCHMARKS "build automatic benchmarks")
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
-option(KATIE_ALLINONE "Build targets from single source file" OFF)
-add_feature_info(allinone KATIE_ALLINONE "build targets from single source file")
+option(KATIE_PCH "Build components with pre-compiled header" OFF)
+add_feature_info(pch KATIE_PCH "build components with pre-compiled header")
 
 option(WITH_ACCESSIBILITY "Build accessibility support" ON)
 add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
-
-include(mkspecs/mkspecs.cmake)
-
-add_definitions(
-    # these conditionals are probably going to become default in the future
-    -DQT_POSIX_IPC
-    -DQT_USE_SYSTEM_PROXIES
-    # -DQT_STRICT_ITERATORS
-    # -DQT_ASCII_CAST_WARNINGS
-    # maybe one day, this forces it onto other projects which (most likely)
-    # means source code adjustments!
-    # -DQT_NO_CAST_FROM_ASCII
-    # -DQT_NO_CAST_TO_ASCII
-
-    # both gui and svg components require harfbuzz
-    -DHB_EXPORT=Q_CORE_EXPORT
-    -DQT_NO_OPENTYPE
-)
-
-# for symbols mangling while unwinding in core component
-check_include_file_cxx(cxxabi.h HAVE_CXXABI)
-
-# for 3rd party source used in test component
-check_include_file(sys/time.h HAVE_SYS_TIME_H)
-
-# stored in qconfig.h.cmake
-check_type_size(size_t QT_POINTER_SIZE)
-
-# POSIX.1-2001
-katie_check_function(getpwnam_r "pwd.h")
-katie_check_function(getpwuid_r "pwd.h")
-katie_check_function(getgrgid_r "grp.h")
-# XSI/POSIX.1-2001
-katie_check_function(strerror_r "string.h")
-# SUSv2
-katie_check_function(localtime_r "time.h")
-katie_check_function(gmtime_r "time.h")
-# SVr2, removed in POSIX.1-2008
-katie_check_function(fcvt "stdlib.h")
-katie_check_function(ecvt "stdlib.h")
-# NetBSD 1.6 and FreeBSD 4.4
-katie_check_function(getprogname "stdlib.h")
-# GNU
-katie_check_function(get_current_dir_name "unistd.h")
-# ISO/IEC 9899:1999
-katie_check_function(fegetenv "fenv.h")
-katie_check_function(fesetenv "fenv.h")
-katie_check_function(feclearexcept "fenv.h")
-katie_check_function(feenableexcept "fenv.h")
-
-# 64-bit offset alternatives, if any of the functions is not found it will set
-# QT_LARGEFILE_SUPPORT to FALSE. QT_LARGEFILE_SUPPORT is used in qconfig.h
-set(QT_LARGEFILE_SUPPORT TRUE)
-katie_check_function64(stat64 "sys/stat.h")
-katie_check_function64(lstat64 "sys/stat.h")
-katie_check_function64(fstat64 "sys/stat.h")
-katie_check_function64(open64 "fcntl.h")
-katie_check_function64(creat64 "fcntl.h")
-katie_check_function64(lseek64 "unistd.h")
-katie_check_function64(truncate64 "unistd.h")
-katie_check_function64(ftruncate64 "unistd.h")
-katie_check_function64(fopen64 "stdio.h")
-katie_check_function64(fseeko64 "stdio.h")
-katie_check_function64(ftello64 "stdio.h")
-katie_check_function64(fgetpos64 "stdio.h")
-katie_check_function64(fsetpos64 "stdio.h")
-katie_check_function64(mmap64 "sys/mman.h")
-katie_check_function64(readdir64 "dirent.h")
-katie_check_function64(readdir64_r "dirent.h")
-
-if(KATIE_COMPILER MATCHES "(gcc|clang)")
-    set(QT_VISIBILITY_AVAILABLE TRUE)
-endif()
-
-configure_file(
-    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
-    ${CMAKE_BINARY_DIR}/include/QtCore/qconfig.h
-)
-configure_file(
-    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.cpp.cmake
-    ${CMAKE_BINARY_DIR}/include/qconfig.cpp
-)
 
 # v1.2.0+ required for compressBound()
 find_package(ZLIB 1.2.0)
@@ -249,8 +171,8 @@ set_package_properties(ICU PROPERTIES
     TYPE REQUIRED
 )
 
-# v0.7.3+ required for ZSTD_getDecompressedSize()
-find_package(ZSTD 0.7.3)
+# v1.1.3+ required for exported ZSTD_getErrorString() and ZSTD_getErrorCode()
+find_package(ZSTD 1.1.3)
 set_package_properties(ZSTD PROPERTIES
     PURPOSE "Required for compression support"
     DESCRIPTION "Fast real-time compression algorithm"
@@ -258,10 +180,11 @@ set_package_properties(ZSTD PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(OpenSSL)
+# v0.9.8+ required for SHA-224...SHA-512 support
+find_package(OpenSSL 0.9.8)
 set_package_properties(OpenSSL PROPERTIES
     PURPOSE "Required for HTTPS support"
-    DESCRIPTION "Support for secure network communications (SSL and TLS)"
+    DESCRIPTION "Robust, commercial-grade, and full-featured toolkit for SSL and TLS"
     URL "https://openssl.org"
     TYPE REQUIRED
 )
@@ -301,20 +224,29 @@ set_package_properties(Threads PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(Resolv)
-set_package_properties(Resolv PROPERTIES
-    PURPOSE "Required for domain resolving support"
-    DESCRIPTION "Standard C library specific resolv implementation"
-    URL ""
-    TYPE RECOMMENDED
-)
-
 # v1.5.4+ required for png_longjmp_ptr() without noreturn attribute
 find_package(PNG 1.5.4)
 set_package_properties(PNG PROPERTIES
     PURPOSE "PNG format handler"
     DESCRIPTION "A collection of routines used to create PNG format graphics files"
     URL "http://www.libpng.org/pub/png/libpng.html"
+    TYPE REQUIRED
+)
+
+# v3.5.0+ required for sqlite3_open_v2()
+find_package(Sqlite 3.5.0)
+set_package_properties(Sqlite PROPERTIES
+    PURPOSE "Required for SQLite database support"
+    DESCRIPTION "Software library that implements SQL database engine"
+    URL "https://www.sqlite.org/"
+    TYPE REQUIRED
+)
+
+find_package(Resolv)
+set_package_properties(Resolv PROPERTIES
+    PURPOSE "Required for domain resolving support"
+    DESCRIPTION "Standard C library specific resolv implementation"
+    URL ""
     TYPE RECOMMENDED
 )
 
@@ -352,15 +284,6 @@ set_package_properties(Fontconfig PROPERTIES
     TYPE RECOMMENDED
 )
 
-# currently unused
-find_package(HarfBuzz)
-set_package_properties(HarfBuzz PROPERTIES
-    PURPOSE "Currently none"
-    DESCRIPTION "OpenType text shaping engine"
-    URL "https://www.freedesktop.org/wiki/Software/HarfBuzz/"
-    TYPE RECOMMENDED
-)
-
 # v1.5.12+ required for DBusBasicValue type
 find_package(DBus 1.5.12)
 set_package_properties(DBus PROPERTIES
@@ -370,29 +293,22 @@ set_package_properties(DBus PROPERTIES
     TYPE RECOMMENDED
 )
 
-# v3.5.0+ required for sqlite3_open_v2()
-find_package(Sqlite 3.5.0)
-set_package_properties(Sqlite PROPERTIES
-    PURPOSE "Required for SQLite database support"
-    DESCRIPTION "Software library that implements SQL database engine"
-    URL "https://www.sqlite.org/"
-    TYPE RECOMMENDED
-)
-
+# v3.0+ required for SQLSetEnvAttr() and many other but unixODBC versioning is different
 find_package(ODBC)
 set_package_properties(ODBC PROPERTIES
     PURPOSE "Required for ODBC database support"
     DESCRIPTION "The definitive standard for ODBC on non MS Windows platforms"
     URL "http://www.unixodbc.org"
-    TYPE OPTIONAL
+    TYPE RECOMMENDED
 )
 
-find_package(PostgreSQL)
+# v7.4+ required for PQresultErrorField()
+find_package(PostgreSQL 7.4)
 set_package_properties(PostgreSQL PROPERTIES
     PURPOSE "Required for PostgreSQL database support"
     DESCRIPTION "The world's most advanced open source database"
     URL "https://www.postgresql.org/"
-    TYPE OPTIONAL
+    TYPE RECOMMENDED
 )
 
 # v4.1.13+ required for multiple statements query and UTF-8 support
@@ -401,27 +317,124 @@ set_package_properties(MySQL PROPERTIES
     PURPOSE "Required for MySQL database support"
     DESCRIPTION "The world's most popular open source database"
     URL "https://www.mysql.com/"
-    TYPE OPTIONAL
+    TYPE RECOMMENDED
 )
 
-find_package(Unwind)
-set_package_properties(Unwind PROPERTIES
+find_package(Intl)
+set_package_properties(Intl PROPERTIES
+    PURPOSE "Required for translations support"
+    DESCRIPTION "GNU gettext runtime library"
+    URL "https://www.gnu.org/software/gettext/gettext.html"
+    TYPE RECOMMENDED
+)
+
+find_package(ExecInfo)
+set_package_properties(ExecInfo PROPERTIES
     PURPOSE "Required for stack traces on assert and crash"
-    DESCRIPTION "A (mostly) platform-independent unwind API"
-    URL "https://www.nongnu.org/libunwind/index.html"
-    TYPE OPTIONAL
+    DESCRIPTION "Standard C library specific execinfo implementation"
+    URL ""
+    TYPE RECOMMENDED
+)
+
+add_definitions(
+    # these conditionals are probably going to become default in the future
+    -DQT_POSIX_IPC
+    # -DQT_STRICT_ITERATORS
+    # -DQT_ASCII_CAST_WARNINGS
+    # maybe one day, this forces it onto other projects which (most likely)
+    # means source code adjustments!
+    # -DQT_NO_CAST_FROM_ASCII
+    # -DQT_NO_CAST_TO_ASCII
+)
+
+# for symbols mangling while backtracing in core component
+check_include_file_cxx(cxxabi.h HAVE_CXXABI)
+
+# stored in qconfig.h.cmake
+check_type_size(size_t QT_POINTER_SIZE)
+
+# used in components, tests and JavaScriptCore
+katie_check_function(getpwnam_r "pwd.h")
+katie_check_function(getpwuid_r "pwd.h")
+katie_check_function(getgrgid_r "grp.h")
+katie_check_function(nl_langinfo "langinfo.h")
+katie_check_function(getaddrinfo "netdb.h")
+katie_check_function(clock_gettime "time.h")
+katie_check_function(vsnprintf "stdio.h")
+katie_check_function(posix_memalign "stdlib.h")
+katie_check_function(strerror_r "string.h")
+katie_check_function(localtime_r "time.h")
+katie_check_function(gmtime_r "time.h")
+katie_check_function(fcvt "stdlib.h")
+katie_check_function(ecvt "stdlib.h")
+katie_check_function(getprogname "stdlib.h")
+katie_check_function(arc4random "stdlib.h")
+katie_check_function(get_current_dir_name "unistd.h")
+katie_check_function(prctl "sys/prctl.h")
+katie_check_function(fegetenv "fenv.h")
+katie_check_function(fesetenv "fenv.h")
+katie_check_function(feclearexcept "fenv.h")
+katie_check_function(feenableexcept "fenv.h")
+katie_check_function(madvise "sys/mman.h")
+katie_check_function(getifaddrs "ifaddrs.h")
+katie_check_function(timegm "time.h")
+katie_check_function(inotify_init1 "sys/inotify.h")
+katie_check_function(kevent "sys/event.h")
+katie_check_function(pipe2 "unistd.h")
+katie_check_function(accept4 "sys/socket.h")
+katie_check_function(paccept "sys/socket.h")
+katie_check_struct(tm tm_gmtoff "time.h")
+katie_check_struct(tm tm_zone "time.h")
+katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
+katie_check_struct(sockaddr_dl sdl_index "net/if_dl.h")
+katie_check_struct(dirent d_type "dirent.h")
+
+cmake_reset_check_state()
+set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
+katie_check_function(pthread_setname_np "pthread.h")
+katie_check_function(pthread_stackseg_np  "pthread_np.h")
+katie_check_function(pthread_attr_get_np "pthread_np.h")
+cmake_reset_check_state()
+
+# 64-bit offset alternatives, if any of the functions is not found it will set
+# QT_LARGEFILE_SUPPORT to FALSE. QT_LARGEFILE_SUPPORT is used in qconfig.h
+set(QT_LARGEFILE_SUPPORT TRUE)
+katie_check_function64(stat64 "sys/stat.h")
+katie_check_function64(lstat64 "sys/stat.h")
+katie_check_function64(fstat64 "sys/stat.h")
+katie_check_function64(open64 "fcntl.h")
+katie_check_function64(creat64 "fcntl.h")
+katie_check_function64(lseek64 "unistd.h")
+katie_check_function64(truncate64 "unistd.h")
+katie_check_function64(ftruncate64 "unistd.h")
+katie_check_function64(fopen64 "stdio.h")
+katie_check_function64(fseeko64 "stdio.h")
+katie_check_function64(ftello64 "stdio.h")
+katie_check_function64(fgetpos64 "stdio.h")
+katie_check_function64(fsetpos64 "stdio.h")
+katie_check_function64(mmap64 "sys/mman.h")
+katie_check_function64(readdir64 "dirent.h")
+katie_check_function64(readdir64_r "dirent.h")
+
+katie_check_proc(exe)
+katie_check_proc(cmdline)
+
+configure_file(
+    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
+    ${CMAKE_BINARY_DIR}/include/QtCore/qconfig.h
+)
+configure_file(
+    ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.cpp.cmake
+    ${CMAKE_BINARY_DIR}/include/qconfig.cpp
 )
 
 if(KATIE_TESTS OR KATIE_BENCHMARKS)
-    message(WARNING
-        "\nUnless it is intentionall you should not enable testing, deploying tests builds"
-        " is a bad idea."
-    )
+    message(WARNING "Deploying tests/benchmarks build is a bad idea")
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
 
-foreach(script exec dbg)
+foreach(script exec dbus xvfb dbg)
     configure_file(
         ${CMAKE_SOURCE_DIR}/cmake/${script}.sh.cmake
         ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/${script}.sh
@@ -433,15 +446,6 @@ foreach(script exec dbg)
         FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     )
 endforeach()
-
-# optional packages which if not found are build internally
-if(NOT PNG_FOUND)
-    message(WARNING "Using internal copy of libpng")
-endif()
-
-if(NOT SQLITE_FOUND)
-    message(WARNING "Using internal copy of sqlite")
-endif()
 
 # optional packages
 if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)
@@ -471,13 +475,23 @@ if(NOT WITH_TIFF OR NOT TIFF_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
 endif()
 
-if(NOT WITH_UNWIND OR NOT UNWIND_FOUND OR NOT HAVE_CXXABI)
-    katie_definition(-DQT_NO_UNWIND)
+if(NOT WITH_INTL OR NOT INTL_FOUND)
+    katie_definition(-DQT_NO_TRANSLATION)
+endif()
+
+if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND OR NOT HAVE_CXXABI)
+    katie_definition(-DQT_NO_EXECINFO)
 endif()
 
 # conditional features
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
+endif()
+
+add_library(pic_test ${KATIE_TYPE}  EXCLUDE_FROM_ALL "${CMAKE_SOURCE_DIR}/cmake/pic.cpp")
+get_target_property(HAVE_pic pic_test POSITION_INDEPENDENT_CODE)
+if(NOT HAVE_pic)
+    katie_definition(-DQ_NO_DATA_RELOCATION)
 endif()
 
 # keep in sync with the gui component CMake file, only definitions setup is needed here
@@ -519,7 +533,9 @@ add_subdirectory(src/uitools)
 
 add_subdirectory(src/tools)
 
-add_subdirectory(translations)
+if(WITH_INTL AND INTL_FOUND)
+    add_subdirectory(translations)
+endif()
 
 if(KATIE_TESTS OR KATIE_BENCHMARKS)
     add_subdirectory(tests)
@@ -641,7 +657,6 @@ katie_generate_obsolete(QDoubleValidator QtGui qvalidator.h)
 katie_generate_obsolete(QDragEnterEvent QtGui qevent.h)
 katie_generate_obsolete(QDragLeaveEvent QtGui qevent.h)
 katie_generate_obsolete(QDragMoveEvent QtGui qevent.h)
-katie_generate_obsolete(QDragResponseEvent QtGui qevent.h)
 katie_generate_obsolete(QDropEvent QtGui qevent.h)
 katie_generate_obsolete(QDynamicPropertyChangeEvent QtCore qcoreevent.h)
 katie_generate_obsolete(QEvent QtCore qcoreevent.h)
@@ -963,7 +978,6 @@ katie_generate_obsolete(customwidget.h QtDesigner ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
 
 katie_string_wrap("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
-katie_git_checkout(KATIE_GIT)
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/KatieConfig.cmake
@@ -979,13 +993,13 @@ configure_file(
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
-    ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.conf
+    ${CMAKE_BINARY_DIR}/ld.so.conf
     @ONLY
 )
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/profile.sh.cmake
-    ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.sh
+    ${CMAKE_BINARY_DIR}/profile.sh
     @ONLY
 )
 
@@ -1000,36 +1014,29 @@ install(
     ${CMAKE_BINARY_DIR}/KatieConfig.cmake
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
     ${CMAKE_SOURCE_DIR}/cmake/Qt4UseFile.cmake
-    ${CMAKE_SOURCE_DIR}/cmake/modules/KatieMacros.cmake
     DESTINATION ${KATIE_CMAKE_PATH}
     COMPONENT Devel
 )
 
 install(
-    EXPORT KatieLibraryTargets
+    EXPORT KatieTargets
     NAMESPACE Katie::
     DESTINATION ${KATIE_CMAKE_PATH}
-    FILE KatieLibraryTargets.cmake
+    FILE KatieTargets.cmake
     COMPONENT Devel
 )
 
 install(
-    EXPORT KatieBinaryTargets
-    NAMESPACE Katie::
-    DESTINATION ${KATIE_CMAKE_PATH}
-    FILE KatieBinaryTargets.cmake
-    COMPONENT Devel
-)
-
-install(
-    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.conf
+    FILES ${CMAKE_BINARY_DIR}/ld.so.conf
     DESTINATION ${KATIE_LDCONF_PATH}
+    RENAME katie-${KATIE_PROCESSOR}.conf
     COMPONENT Runtime
 )
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_PROCESSOR}.sh
+    FILES ${CMAKE_BINARY_DIR}/profile.sh
     DESTINATION ${KATIE_PROFILE_PATH}
+    RENAME katie-${KATIE_PROCESSOR}.sh
     COMPONENT Runtime
 )
 
@@ -1058,4 +1065,7 @@ add_custom_target(install-doc
     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
 )
 
-feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES) 
+feature_summary(
+    WHAT ALL
+    FATAL_ON_MISSING_REQUIRED_PACKAGES
+)

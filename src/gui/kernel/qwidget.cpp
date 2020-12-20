@@ -1000,9 +1000,6 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
     q->setAttribute(Qt::WA_PendingMoveEvent);
     q->setAttribute(Qt::WA_PendingResizeEvent);
 
-    if (++QWidgetPrivate::instanceCounter > QWidgetPrivate::maxInstances)
-        QWidgetPrivate::maxInstances = QWidgetPrivate::instanceCounter;
-
     if (QApplication::testAttribute(Qt::AA_ImmediateWidgetCreation))
         q->create();
 
@@ -1158,7 +1155,7 @@ QWidget::~QWidget()
     // Remove all shortcuts grabbed by this
     // widget, unless application is closing
     if (!QApplicationPrivate::is_app_closing && testAttribute(Qt::WA_GrabbedShortcut))
-        qApp->d_func()->shortcutMap.removeShortcut(0, this, QKeySequence());
+        qApp->d_func()->shortcutMap.removeShortcut(0, this);
 #endif
 
     // delete layout while we still are a valid widget
@@ -1242,7 +1239,6 @@ QWidget::~QWidget()
     } QT_CATCH(...) {
         // if this fails we can't do anything about it but at least we are not allowed to throw.
     }
-    --QWidgetPrivate::instanceCounter;
 
     if (QWidgetPrivate::allWidgets) // might have been deleted by ~QApplication
         QWidgetPrivate::allWidgets->remove(this);
@@ -1254,9 +1250,6 @@ QWidget::~QWidget()
         // if this fails we can't do anything about it but at least we are not allowed to throw.
     }
 }
-
-int QWidgetPrivate::instanceCounter = 0;  // Current number of widget instances
-int QWidgetPrivate::maxInstances = 0;     // Maximum number of widget instances
 
 void QWidgetPrivate::setWinId(WId id)                // set widget identifier
 {
@@ -9493,7 +9486,7 @@ void QWidget::releaseShortcut(int id)
 {
     Q_ASSERT(qApp);
     if (id)
-        qApp->d_func()->shortcutMap.removeShortcut(id, this, 0);
+        qApp->d_func()->shortcutMap.removeShortcut(id, this);
 }
 
 /*!
@@ -9512,7 +9505,7 @@ void QWidget::setShortcutEnabled(int id, bool enable)
 {
     Q_ASSERT(qApp);
     if (id)
-        qApp->d_func()->shortcutMap.setShortcutEnabled(enable, id, this, 0);
+        qApp->d_func()->shortcutMap.setShortcutEnabled(enable, id, this);
 }
 
 /*!
@@ -9527,7 +9520,7 @@ void QWidget::setShortcutAutoRepeat(int id, bool enable)
 {
     Q_ASSERT(qApp);
     if (id)
-        qApp->d_func()->shortcutMap.setShortcutAutoRepeat(enable, id, this, 0);
+        qApp->d_func()->shortcutMap.setShortcutAutoRepeat(enable, id, this);
 }
 #endif // QT_NO_SHORTCUT
 
@@ -10138,13 +10131,13 @@ QWindowSurface *QWidget::windowSurface() const
 void QWidgetPrivate::getLayoutItemMargins(int *left, int *top, int *right, int *bottom) const
 {
     if (left)
-        *left = (int)leftLayoutItemMargin;
+        *left = leftLayoutItemMargin;
     if (top)
-        *top = (int)topLayoutItemMargin;
+        *top = topLayoutItemMargin;
     if (right)
-        *right = (int)rightLayoutItemMargin;
+        *right = rightLayoutItemMargin;
     if (bottom)
-        *bottom = (int)bottomLayoutItemMargin;
+        *bottom = bottomLayoutItemMargin;
 }
 
 void QWidgetPrivate::setLayoutItemMargins(int left, int top, int right, int bottom)
@@ -10156,10 +10149,10 @@ void QWidgetPrivate::setLayoutItemMargins(int left, int top, int right, int bott
         return;
 
     Q_Q(QWidget);
-    leftLayoutItemMargin = (signed char)left;
-    topLayoutItemMargin = (signed char)top;
-    rightLayoutItemMargin = (signed char)right;
-    bottomLayoutItemMargin = (signed char)bottom;
+    leftLayoutItemMargin = left;
+    topLayoutItemMargin = top;
+    rightLayoutItemMargin = right;
+    bottomLayoutItemMargin = bottom;
     q->updateGeometry();
 }
 
@@ -10175,10 +10168,10 @@ void QWidgetPrivate::setLayoutItemMargins(QStyle::SubElement element, const QSty
 
     QRect liRect = q->style()->subElementRect(element, opt, q);
     if (liRect.isValid()) {
-        leftLayoutItemMargin = (signed char)(opt->rect.left() - liRect.left());
-        topLayoutItemMargin = (signed char)(opt->rect.top() - liRect.top());
-        rightLayoutItemMargin = (signed char)(liRect.right() - opt->rect.right());
-        bottomLayoutItemMargin = (signed char)(liRect.bottom() - opt->rect.bottom());
+        leftLayoutItemMargin = (opt->rect.left() - liRect.left());
+        topLayoutItemMargin = (opt->rect.top() - liRect.top());
+        rightLayoutItemMargin = (liRect.right() - opt->rect.right());
+        bottomLayoutItemMargin = (liRect.bottom() - opt->rect.bottom());
     } else {
         leftLayoutItemMargin = 0;
         topLayoutItemMargin = 0;

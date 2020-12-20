@@ -31,6 +31,9 @@
 **
 ****************************************************************************/
 
+#ifndef QHASH_STRING_H
+#define QHASH_STRING_H
+
 #include <QString>
 
 QT_USE_NAMESPACE
@@ -44,3 +47,5 @@ struct String : QString
 QT_BEGIN_NAMESPACE
 uint qHash(const String &);
 QT_END_NAMESPACE
+
+#endif

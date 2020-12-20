@@ -45,7 +45,6 @@
 // We mean it.
 //
 
-#include "shared_global_p.h"
 #include "deviceprofile_p.h"
 
 #include <abstractnewformwidget_p.h>
@@ -66,7 +65,7 @@ namespace qdesigner_internal {
 
 class Ui_NewFormWidget;
 
-class QDESIGNER_SHARED_EXPORT NewFormWidget : public QDesignerNewFormWidgetInterface
+class Q_DESIGNER_EXPORT NewFormWidget : public QDesignerNewFormWidgetInterface
 {
     Q_OBJECT
     Q_DISABLE_COPY(NewFormWidget)

@@ -56,7 +56,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
-#if defined(_XOPEN_UNIX) && !defined(Q_OS_OSF)
+
+#if defined(QT_HAVE_NL_LANGINFO)
 #include <langinfo.h>
 #endif
 
@@ -191,9 +192,9 @@ static void setupLocaleMapper()
 
     }
 
-#if defined(_XOPEN_UNIX) && !defined(Q_OS_OSF)
+#if defined(QT_HAVE_NL_LANGINFO)
     if (!localeMapper) {
-        const char *charset = nl_langinfo(CODESET);
+        const char *charset = ::nl_langinfo(CODESET);
         if (charset)
             localeMapper = QTextCodec::codecForName(charset);
     }
@@ -266,7 +267,9 @@ QTextCodec::ConverterState& QTextCodec::ConverterState::operator=(const QTextCod
         UErrorCode error = U_ZERO_ERROR;
         d = ucnv_safeClone(static_cast<UConverter*>(other.d), Q_NULLPTR, Q_NULLPTR, &error);
         if (Q_UNLIKELY(U_FAILURE(error))) {
+#ifdef Q_DEBUG_TEXTCODEC
             qWarning("ConverterState: ucnv_safeClone() failed %s", u_errorName(error));
+#endif
             d = Q_NULLPTR;
         }
     }

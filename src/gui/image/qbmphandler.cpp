@@ -760,23 +760,9 @@ bool QBmpHandler::read(QImage *image)
 
 bool QBmpHandler::write(const QImage &img)
 {
-    QImage image;
-    switch (img.format()) {
-    case QImage::Format_ARGB8565_Premultiplied:
-    case QImage::Format_ARGB8555_Premultiplied:
-    case QImage::Format_ARGB6666_Premultiplied:
-    case QImage::Format_ARGB4444_Premultiplied:
-        image = img.convertToFormat(QImage::Format_ARGB32);
-        break;
-    case QImage::Format_RGB16:
-    case QImage::Format_RGB888:
-    case QImage::Format_RGB666:
-    case QImage::Format_RGB555:
-    case QImage::Format_RGB444:
+    QImage image(img);
+    if (image.format() == QImage::Format_RGB16) {
         image = img.convertToFormat(QImage::Format_RGB32);
-        break;
-    default:
-        image = img;
     }
 
     QIODevice *d = device();

@@ -89,12 +89,9 @@
 
 static void initResources()
 {
-    Q_INIT_RESOURCE_EXTERN(qstyle)
     Q_INIT_RESOURCE(qstyle);
-    Q_INIT_RESOURCE_EXTERN(qmessagebox)
     Q_INIT_RESOURCE(qmessagebox);
 #if !defined(QT_NO_PRINTDIALOG)
-    Q_INIT_RESOURCE_EXTERN(qprintdialog)
     Q_INIT_RESOURCE(qprintdialog);
 #endif
 }
@@ -361,7 +358,9 @@ int QApplicationPrivate::cursor_flash_time = 1000;        // text caret flash ti
 int QApplicationPrivate::mouse_double_click_time = 400;        // mouse dbl click limit
 int QApplicationPrivate::keyboard_input_time = 400; // keyboard input interval
 #ifndef QT_NO_WHEELEVENT
-int QApplicationPrivate::wheel_scroll_lines;   // number of lines to scroll
+int QApplicationPrivate::wheel_scroll_lines = 3;         // number of lines to scroll
+#else
+int QApplicationPrivate::wheel_scroll_lines = 0;
 #endif
 bool qt_is_gui_used;
 bool qt_in_tab_key_event = false;
@@ -376,7 +375,6 @@ bool QApplicationPrivate::animate_combo = false;
 bool QApplicationPrivate::animate_tooltip = false;
 bool QApplicationPrivate::fade_tooltip = false;
 bool QApplicationPrivate::animate_toolbox = false;
-bool QApplicationPrivate::widgetCount = false;
 
 static bool force_reverse = false;
 
@@ -447,8 +445,6 @@ void QApplicationPrivate::process_cmdline()
         } else if (qstrcmp(argv[i], "-reverse") == 0) {
             force_reverse = true;
             QApplication::setLayoutDirection(Qt::RightToLeft);
-        } else if (qstrcmp(argv[i], "-widgetcount") == 0) {
-            widgetCount = true;
         } else if (qstrcmp(argv[i], "-graphicssystem") == 0 && i < argc - 1) {
             graphics_system_name = QString::fromLocal8Bit(argv[++i]);
         } else {
@@ -515,9 +511,6 @@ void QApplicationPrivate::process_cmdline()
         \o  -session= \e session, restores the application from an earlier
             \l{Session Management}{session}.
         \o  -session \e session, is the same as listed above.
-        \o  -widgetcount, prints debug message at the end about number of
-            widgets left undestroyed and maximum number of widgets existed at
-            the same time
         \o  -reverse, sets the application's layout direction to
             Qt::RightToLeft
         \o  -graphicssystem, sets the backend to be used for on-screen widgets
@@ -631,14 +624,10 @@ void QApplicationPrivate::construct(
     if (qgetenv("QT_USE_NATIVE_WINDOWS").toInt() > 0)
         q->setAttribute(Qt::AA_NativeWindows);
 
-#ifndef QT_NO_WHEELEVENT
-    QApplicationPrivate::wheel_scroll_lines = 3;
-#endif
-
     if (qt_is_gui_used)
         initializeMultitouch();
 
-    eventDispatcher->startingUp();
+    threadData->eventDispatcher->startingUp();
 
 #ifndef QT_NO_LIBRARY
     //make sure the plugin is loaded
@@ -781,8 +770,7 @@ QApplication::~QApplication()
     d->toolTipWakeUp.stop();
     d->toolTipFallAsleep.stop();
 
-    d->eventDispatcher->closingDown();
-    d->eventDispatcher = 0;
+    d->threadData->eventDispatcher->closingDown();
     QApplicationPrivate::is_app_closing = true;
     QApplicationPrivate::is_app_running = false;
 
@@ -847,8 +835,6 @@ QApplication::~QApplication()
 
     qt_cleanup();
 
-    if (QApplicationPrivate::widgetCount)
-        qDebug("Widgets left: %i    Max widgets: %i \n", QWidgetPrivate::instanceCounter, QWidgetPrivate::maxInstances);
 #ifndef QT_NO_SESSIONMANAGER
     delete d->session_manager;
     d->session_manager = 0;
@@ -869,7 +855,6 @@ QApplication::~QApplication()
     QApplicationPrivate::animate_combo = false;
     QApplicationPrivate::animate_tooltip = false;
     QApplicationPrivate::fade_tooltip = false;
-    QApplicationPrivate::widgetCount = false;
 
     // trigger unregistering of QVariant's GUI types
     qUnregisterGuiVariant();
@@ -949,30 +934,6 @@ QWidget *QApplication::widgetAt(const QPoint &p)
 */
 
 /*!
-    \property QApplication::autoMaximizeThreshold
-    \since 4.4
-    \brief defines a threshold for auto maximizing widgets
-
-    \bold{The auto maximize threshold is only available as part of Qt for
-    Windows CE.}
-
-    This property defines a threshold for the size of a window as a percentage
-    of the screen size. If the minimum size hint of a window exceeds the
-    threshold, calling show() will cause the window to be maximized
-    automatically.
-
-    Setting the threshold to 100 or greater means that the widget will always
-    be maximized. Alternatively, setting the threshold to 50 means that the
-    widget will be maximized only if the vertical minimum size hint is at least
-    50% of the vertical screen size.
-
-    Setting the threshold to -1 disables the feature.
-
-    On Windows CE the default is -1 (i.e., it is disabled).
-    On Windows Mobile the default is 40.
-*/
-
-/*!
     \property QApplication::autoSipEnabled
     \since 4.5
     \brief toggles automatic SIP (software input panel) visibility
@@ -980,9 +941,6 @@ QWidget *QApplication::widgetAt(const QPoint &p)
     Set this property to \c true to automatically display the SIP when entering
     widgets that accept keyboard input. This property is typically used to
     launch a virtual keyboard on devices which have very few or no keys.
-
-    \bold{ The property only has an effect on platforms which use software input
-    panels, such as Windows CE and Symbian.}
 
     The default is platform dependent.
 */
@@ -1038,32 +996,21 @@ QStyle *QApplication::style()
     }
 
     if (!QApplicationPrivate::app_style) {
-        // Compile-time search for default style
-        //
         QString style;
-#ifdef QT_BUILD_INTERNAL
-        static const QString envStyle = QString::fromLocal8Bit(qgetenv("QT_STYLE_OVERRIDE"));
-#endif
         if (!QApplicationPrivate::styleOverride.isEmpty()) {
             style = QApplicationPrivate::styleOverride;
-#ifdef QT_BUILD_INTERNAL
-        } else if (!envStyle.isEmpty()) {
-            style = envStyle;
-#endif
         } else {
             style = QApplicationPrivate::desktopStyleKey();
         }
 
-        QStyle *&app_style = QApplicationPrivate::app_style;
-        app_style = QStyleFactory::create(style);
-        if (!app_style) {
-            QStringList styles = QStyleFactory::keys();
-            for (int i = 0; i < styles.size(); ++i) {
-                if ((app_style = QStyleFactory::create(styles.at(i))))
+        QApplicationPrivate::app_style = QStyleFactory::create(style);
+        if (!QApplicationPrivate::app_style) {
+            foreach (const QString &style, QStyleFactory::keys()) {
+                if ((QApplicationPrivate::app_style = QStyleFactory::create(style)))
                     break;
             }
         }
-        if (!app_style) {
+        if (!QApplicationPrivate::app_style) {
             Q_ASSERT(!"No styles available!");
             return 0;
         }
@@ -1851,11 +1798,9 @@ void QApplication::aboutQt()
 #ifndef QT_NO_TRANSLATION
 static bool qt_detectRTLLanguage()
 {
+    // Translate this string to the string 'LTR' in left-to-right languages or to 'RTL' in right to left languages
     return force_reverse ^
-        (QApplication::tr("QT_LAYOUT_DIRECTION",
-                         "Translate this string to the string 'LTR' in left-to-right"
-                         " languages or to 'RTL' in right-to-left languages (such as Hebrew"
-                         " and Arabic) to get proper widget layout.") == QLatin1String("RTL"));
+        (QApplication::tr("QT_LAYOUT_DIRECTION") == QLatin1String("RTL"));
 }
 #endif
 
@@ -2174,7 +2119,7 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
     QEvent leaveEvent(QEvent::Leave);
     for (int i = 0; i < leaveList.size(); ++i) {
         w = leaveList.at(i);
-        if (!QApplication::activeModalWidget() || QApplicationPrivate::tryModalHelper(w, 0)) {
+        if (!QApplication::activeModalWidget() || QApplicationPrivate::tryModalHelper(w)) {
 #if defined(Q_WS_X11)
             if (leaveAfterRelease == w)
                 leaveAfterRelease = 0;
@@ -2192,7 +2137,7 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
     QEvent enterEvent(QEvent::Enter);
     for (int i = 0; i < enterList.size(); ++i) {
         w = enterList.at(i);
-        if (!QApplication::activeModalWidget() || QApplicationPrivate::tryModalHelper(w, 0)) {
+        if (!QApplication::activeModalWidget() || QApplicationPrivate::tryModalHelper(w)) {
             QApplication::sendEvent(w, &enterEvent);
             if (w->testAttribute(Qt::WA_Hover) &&
                 (!QApplication::activePopupWidget() || QApplication::activePopupWidget() == w->window())) {
@@ -2256,12 +2201,6 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
         }
     }
 #endif
-}
-
-/* exported for the benefit of testing tools */
-Q_GUI_EXPORT bool qt_tryModalHelper(QWidget *widget, QWidget **rettop)
-{
-    return QApplicationPrivate::tryModalHelper(widget, rettop);
 }
 
 /*! \internal
@@ -2403,12 +2342,8 @@ void QApplicationPrivate::leaveModal(QWidget *widget)
   Called from qapplication_\e{platform}.cpp, returns true
   if the widget should accept the event.
  */
-bool QApplicationPrivate::tryModalHelper(QWidget *widget, QWidget **rettop)
+bool QApplicationPrivate::tryModalHelper(QWidget *widget)
 {
-    QWidget *top = QApplication::activeModalWidget();
-    if (rettop)
-        *rettop = top;
-
     // the active popup widget always gets the input event
     if (QApplication::activePopupWidget())
         return true;
@@ -3209,7 +3144,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
         case QEvent::DragMove:
         case QEvent::DragLeave:
         case QEvent::Drop:
-        case QEvent::DragResponse:
         case QEvent::ChildAdded:
         case QEvent::ChildPolished:
         case QEvent::ChildRemoved:
@@ -3651,19 +3585,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
     }
 
 #ifndef QT_NO_GESTURES
-    case QEvent::NativeGesture:
-    {
-        // only propagate the first gesture event (after the GID_BEGIN)
-        QWidget *w = static_cast<QWidget *>(receiver);
-        while (w) {
-            e->ignore();
-            res = d->notify_helper(w, e);
-            if ((res && e->isAccepted()) || w->isWindow())
-                break;
-            w = w->parentWidget();
-        }
-        break;
-    }
     case QEvent::Gesture:
     case QEvent::GestureOverride:
     {
@@ -4246,8 +4167,7 @@ void QApplicationPrivate::emitLastWindowClosed()
     from two consecutive key presses
     \since 4.2
 
-    The default value on X11 is 400 milliseconds. On Windows and Mac OS, the
-    operating system's value is used.
+    The default value on X11 is 400 milliseconds.
 */
 
 /*!
@@ -4646,7 +4566,7 @@ void QApplicationPrivate::translateRawTouchEvent(QWidget *window,
     const QHash<QWidget *, StatesAndTouchPoints>::ConstIterator end = widgetsNeedingEvents.constEnd();
     for (; it != end; ++it) {
         QWidget *widget = it.key();
-        if (!QApplicationPrivate::tryModalHelper(widget, 0))
+        if (!QApplicationPrivate::tryModalHelper(widget))
             continue;
 
         QEvent::Type eventType;

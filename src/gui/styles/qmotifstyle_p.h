@@ -57,9 +57,13 @@ class QMotifStylePrivate : public QCommonStylePrivate
 {
     Q_DECLARE_PUBLIC(QMotifStyle)
 public:
-    QMotifStylePrivate();
+    explicit QMotifStylePrivate(bool useHighlightCols = false);
+    ~QMotifStylePrivate();
 
 public:
+    QPointer<QFocusFrame> focus;
+    bool highlightCols;
+
 #ifndef QT_NO_PROGRESSBAR
     QList<QProgressBar *> bars;
     int animationFps;

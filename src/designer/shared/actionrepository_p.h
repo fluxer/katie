@@ -45,7 +45,6 @@
 #ifndef ACTIONREPOSITORY_H
 #define ACTIONREPOSITORY_H
 
-#include "shared_global_p.h"
 #include <QtCore/QMimeData>
 #include <QtGui/QStandardItemModel>
 #include <QtGui/QTreeView>
@@ -65,7 +64,7 @@ namespace qdesigner_internal {
 class PropertySheetKeySequenceValue;
 
 // Shared model of actions, to be used for several views (detailed/icon view).
-class QDESIGNER_SHARED_EXPORT ActionModel: public QStandardItemModel
+class Q_DESIGNER_EXPORT ActionModel: public QStandardItemModel
 {
     Q_OBJECT
 public:
@@ -233,7 +232,7 @@ private:
     ActionListView *m_actionListView;
 };
 
-class QDESIGNER_SHARED_EXPORT ActionRepositoryMimeData: public QMimeData
+class Q_DESIGNER_EXPORT ActionRepositoryMimeData: public QMimeData
 {
     Q_OBJECT
 public:

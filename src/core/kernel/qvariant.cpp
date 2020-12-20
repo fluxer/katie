@@ -47,18 +47,15 @@
 #include "qvariant_p.h"
 
 #ifndef QT_BOOTSTRAPPED
-#include "qeasingcurve.h"
-#include "qjsonvalue.h"
-#include "qjsonobject.h"
-#include "qjsonarray.h"
-#include "qjsondocument.h"
-#endif
-
-#ifndef QT_NO_GEOM_VARIANT
-#include "qsize.h"
-#include "qpoint.h"
-#include "qrect.h"
-#include "qline.h"
+#  include "qeasingcurve.h"
+#  include "qjsonvalue.h"
+#  include "qjsonobject.h"
+#  include "qjsonarray.h"
+#  include "qjsondocument.h"
+#  include "qsize.h"
+#  include "qpoint.h"
+#  include "qrect.h"
+#  include "qline.h"
 #endif
 
 #include <float.h>
@@ -112,7 +109,7 @@ static void construct(QVariant::Private *x, const void *copy)
     case QVariant::BitArray:
         v_construct<QBitArray>(x, copy);
         break;
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     case QVariant::Size:
         v_construct<QSize>(x, copy);
         break;
@@ -244,7 +241,7 @@ static void clear(QVariant::Private *d)
     case QVariant::BitArray:
         v_clear<QBitArray>(d);
         break;
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     case QVariant::Point:
         v_clear<QPoint>(d);
         break;
@@ -340,7 +337,7 @@ static bool isNull(const QVariant::Private *d)
         return v_cast<QByteArray>(d)->isNull();
     case QVariant::BitArray:
         return v_cast<QBitArray>(d)->isNull();
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     case QVariant::Size:
         return v_cast<QSize>(d)->isNull();
     case QVariant::SizeF:
@@ -357,8 +354,6 @@ static bool isNull(const QVariant::Private *d)
         return v_cast<QPoint>(d)->isNull();
     case QVariant::PointF:
         return v_cast<QPointF>(d)->isNull();
-#endif
-#ifndef QT_BOOTSTRAPPED
     case QVariant::JsonValue:
         return v_cast<QJsonValue>(d)->isNull();
     case QVariant::JsonDocument:
@@ -437,7 +432,7 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
         return *v_cast<QChar>(a) == *v_cast<QChar>(b);
     case QVariant::StringList:
         return *v_cast<QStringList>(a) == *v_cast<QStringList>(b);
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     case QVariant::Size:
         return *v_cast<QSize>(a) == *v_cast<QSize>(b);
     case QVariant::SizeF:
@@ -454,8 +449,6 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
         return *v_cast<QPoint>(a) == *v_cast<QPoint>(b);
     case QVariant::PointF:
         return *v_cast<QPointF>(a) == *v_cast<QPointF>(b);
-#endif
-#ifndef QT_BOOTSTRAPPED
     case QVariant::Url:
         return *v_cast<QUrl>(a) == *v_cast<QUrl>(b);
 #endif
@@ -781,7 +774,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
             return false;
         }
     }
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     case QVariant::Size: {
         switch (d->type) {
         case QVariant::SizeF:
@@ -1120,7 +1113,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
 #endif
         }
         return false;
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     case QVariant::Rect:
         if (d->type == QVariant::RectF) {
             *static_cast<QRect *>(result) = (v_cast<QRectF>(d))->toRect();
@@ -1236,8 +1229,6 @@ static void streamDebug(QDebug dbg, const QVariant &v)
     case QVariant::Url:
         dbg.nospace() << v.toUrl();
         break;
-#endif
-#ifndef QT_NO_GEOM_VARIANT
     case QVariant::Point:
         dbg.nospace() << v.toPoint();
         break;
@@ -1855,7 +1846,7 @@ QVariant::QVariant(const QMap<QString, QVariant> &map)
 { d.is_null = false; d.type = Map; v_construct<QVariantMap>(&d, map); }
 QVariant::QVariant(const QHash<QString, QVariant> &hash)
 { d.is_null = false; d.type = Hash; v_construct<QVariantHash>(&d, hash); }
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
 QVariant::QVariant(const QPoint &pt) { d.is_null = false; d.type = Point; v_construct<QPoint>(&d, pt); }
 QVariant::QVariant(const QPointF &pt) { d.is_null = false; d.type = PointF; v_construct<QPointF>(&d, pt); }
 QVariant::QVariant(const QRectF &r) { d.is_null = false; d.type = RectF; v_construct<QRectF>(&d, r); }
@@ -1864,8 +1855,6 @@ QVariant::QVariant(const QLine &l) { d.is_null = false; d.type = Line; v_constru
 QVariant::QVariant(const QRect &r) { d.is_null = false; d.type = Rect; v_construct<QRect>(&d, r); }
 QVariant::QVariant(const QSize &s) { d.is_null = false; d.type = Size; v_construct<QSize>(&d, s); }
 QVariant::QVariant(const QSizeF &s) { d.is_null = false; d.type = SizeF; v_construct<QSizeF>(&d, s); }
-#endif
-#ifndef QT_BOOTSTRAPPED
 QVariant::QVariant(const QUrl &u) { d.is_null = false; d.type = Url; v_construct<QUrl>(&d, u); }
 #endif
 QVariant::QVariant(const QLocale &l) { d.is_null = false; d.type = Locale; v_construct<QLocale>(&d, l); }
@@ -2352,7 +2341,7 @@ QByteArray QVariant::toByteArray() const
     return qVariantToHelper<QByteArray>(d, ByteArray, handler);
 }
 
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
 /*!
     \fn QPoint QVariant::toPoint() const
 
@@ -2457,9 +2446,6 @@ QPointF QVariant::toPointF() const
     return qVariantToHelper<QPointF>(d, PointF, handler);
 }
 
-#endif // QT_NO_GEOM_VARIANT
-
-#ifndef QT_BOOTSTRAPPED
 /*!
     \fn QUrl QVariant::toUrl() const
 
@@ -2472,7 +2458,7 @@ QUrl QVariant::toUrl() const
 {
     return qVariantToHelper<QUrl>(d, Url, handler);
 }
-#endif
+#endif // !QT_BOOTSTRAPPED
 
 /*!
     \fn QLocale QVariant::toLocale() const

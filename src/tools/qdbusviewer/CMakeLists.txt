@@ -7,13 +7,9 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtDBus
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDBus
 )
 
 set(QDBUSVIEWER_HEADERS
@@ -48,7 +44,7 @@ set_target_properties(qdbusviewer PROPERTIES
 
 install(
     TARGETS qdbusviewer
-    EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )

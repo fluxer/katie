@@ -55,9 +55,6 @@ namespace JSC {
         }
 
         // Querying the type.
-#if USE(JSVALUE32)
-        bool isNumber() const;
-#endif
         bool isString() const;
         bool isObject() const;
         virtual bool isGetterSetter() const;
@@ -129,13 +126,6 @@ namespace JSC {
     inline JSCell::~JSCell()
     {
     }
-
-#if USE(JSVALUE32)
-    inline bool JSCell::isNumber() const
-    {
-        return m_structure->typeInfo().type() == NumberType;
-    }
-#endif
 
     inline bool JSCell::isObject() const
     {

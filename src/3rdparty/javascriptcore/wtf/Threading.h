@@ -70,12 +70,6 @@
 
 #include <stdint.h>
 
-// For portability, we do not use thread-safe statics natively supported by some compilers (e.g. gcc).
-#define AtomicallyInitializedStatic(T, name) \
-    WTF::lockAtomicallyInitializedStaticMutex(); \
-    static T name; \
-    WTF::unlockAtomicallyInitializedStaticMutex();
-
 namespace WTF {
 
 typedef uint32_t ThreadIdentifier;
@@ -85,14 +79,10 @@ typedef void* (*ThreadFunction)(void* argument);
 // The thread name must be a literal since on some platforms it's passed in to the thread.
 ThreadIdentifier createThread(ThreadFunction, void*, const char* threadName);
 
-// Internal platform-specific createThread implementation.
-ThreadIdentifier createThreadInternal(ThreadFunction, void*, const char* threadName);
-
 ThreadIdentifier currentThread();
 inline bool isMainThread()
 { return QThread::currentThread() == QCoreApplication::instance()->thread(); }
-int waitForThreadCompletion(ThreadIdentifier, void**);
-void detachThread(ThreadIdentifier);
+int waitForThreadCompletion(ThreadIdentifier);
 
 class ThreadSafeSharedBase : public Noncopyable {
 public:
@@ -149,9 +139,6 @@ public:
 // Darwin is an exception to this rule: it is OK to call it from any thread, the only requirement is that the calls are not reentrant.
 void initializeThreading();
 
-void lockAtomicallyInitializedStaticMutex();
-void unlockAtomicallyInitializedStaticMutex();
-
 } // namespace WTF
 
 using WTF::ThreadIdentifier;
@@ -160,7 +147,6 @@ using WTF::ThreadSafeShared;
 using WTF::createThread;
 using WTF::currentThread;
 using WTF::isMainThread;
-using WTF::detachThread;
 using WTF::waitForThreadCompletion;
 
 #endif // Threading_h

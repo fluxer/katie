@@ -86,7 +86,7 @@ ASSERT_CLASS_FITS_IN_CELL(JSArray);
 // as long as it is 1/8 full. If more sparse than that, we use a map.
 static const unsigned minDensityMultiplier = 8;
 
-const ClassInfo JSArray::info = {"Array", 0, 0, 0};
+const ClassInfo JSArray::info = { "Array", 0, 0 };
 
 static inline size_t storageSize(unsigned vectorLength)
 {
@@ -728,13 +728,9 @@ void JSArray::sort(ExecState* exec)
     // FIXME: Since we sort by string value, a fast algorithm might be to use a radix sort. That would be O(N) rather
     // than O(N log N).
 
-#if HAVE(MERGESORT)
-    mergesort(values.begin(), values.size(), sizeof(ValueStringPair), compareByStringPairForQSort);
-#else
     // FIXME: The qsort library function is likely to not be a stable sort.
     // ECMAScript-262 does not specify a stable sort, but in practice, browsers perform a stable sort.
     qsort(values.begin(), values.size(), sizeof(ValueStringPair), compareByStringPairForQSort);
-#endif
 
     // FIXME: If the toString function changed the length of the array, this might be
     // modifying the vector incorrectly.

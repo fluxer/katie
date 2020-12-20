@@ -31,15 +31,14 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qtestassert.h"
-
-#include "QtTest/qtestlog_p.h"
-#include "QtTest/qtestresult_p.h"
-#include "QtTest/qabstracttestlogger_p.h"
-#include "QtTest/qplaintestlogger_p.h"
-#include "QtTest/qxmltestlogger_p.h"
-#include <QtCore/qatomic.h>
-#include <QtCore/qbytearray.h>
+#include "qtestassert.h"
+#include "qtestlog_p.h"
+#include "qtestresult_p.h"
+#include "qabstracttestlogger_p.h"
+#include "qplaintestlogger_p.h"
+#include "qxmltestlogger_p.h"
+#include "qatomic.h"
+#include "qbytearray.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -91,7 +90,7 @@ namespace QTest {
         IgnoreResultList *last = 0;
         IgnoreResultList *list = ignoreResultList;
         while (list) {
-            if (list->type == type && strcmp(msg, list->msg) == 0) {
+            if (list->type == type && qstrcmp(msg, list->msg) == 0) {
                 // remove the item from the list
                 if (last)
                     last->next = list->next;
@@ -130,7 +129,7 @@ namespace QTest {
                 return;
 
             if (!counter.deref()) {
-                QTest::testLogger->addMessage(QAbstractTestLogger::QSystem,
+                QTest::testLogger->addMessage(QAbstractTestLogger::QCritical,
                         "Maximum amount of warnings exceeded. Use -maxwarnings to override.");
                 return;
             }
@@ -141,7 +140,7 @@ namespace QTest {
             QTest::testLogger->addMessage(QAbstractTestLogger::QDebug, msg);
             break;
         case QtCriticalMsg:
-            QTest::testLogger->addMessage(QAbstractTestLogger::QSystem, msg);
+            QTest::testLogger->addMessage(QAbstractTestLogger::QCritical, msg);
             break;
         case QtWarningMsg:
             QTest::testLogger->addMessage(QAbstractTestLogger::QWarning, msg);

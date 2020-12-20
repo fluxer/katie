@@ -85,9 +85,7 @@ public:
     static QString makeHwAddress(int len, uchar *data);
 
 private:
-    // disallow copying -- avoid detaching
-    QNetworkInterfacePrivate &operator=(const QNetworkInterfacePrivate &other);
-    QNetworkInterfacePrivate(const QNetworkInterfacePrivate &other);
+    Q_DISABLE_COPY(QNetworkInterfacePrivate);
 };
 
 class QNetworkInterfaceManager

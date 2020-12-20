@@ -1385,7 +1385,7 @@ bool QDir::operator==(const QDir &dir) const
         if (d->fileEngine != other->fileEngine) // one is native, the other is a custom file-engine
             return false;
 
-        sensitive = QFileSystemEngine::isCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive;
+        sensitive = Qt::CaseSensitive;
     } else {
         if (d->fileEngine->caseSensitive() != other->fileEngine->caseSensitive())
             return false;

@@ -45,8 +45,6 @@
 #ifndef QLAYOUT_WIDGET_H
 #define QLAYOUT_WIDGET_H
 
-#include "shared_global_p.h"
-
 #include <QtDesigner/layoutdecoration.h>
 
 #include <QtCore/QPointer>
@@ -65,7 +63,7 @@ namespace qdesigner_internal {
 // ---- LayoutProperties: Helper struct that stores all layout-relevant properties
 //      with functions to retrieve and apply to property sheets. Can be used to store the state
 //      for undo commands and while rebuilding layouts.
-struct QDESIGNER_SHARED_EXPORT LayoutProperties
+struct Q_DESIGNER_EXPORT LayoutProperties
 {
     LayoutProperties();
     void clear();
@@ -164,7 +162,7 @@ public:
 };
 
 // Base class for layout decoration extensions.
-class QDESIGNER_SHARED_EXPORT QLayoutSupport: public QObject, public QDesignerLayoutDecorationExtension
+class Q_DESIGNER_EXPORT QLayoutSupport: public QObject, public QDesignerLayoutDecorationExtension
 {
     Q_OBJECT
     Q_INTERFACES(QDesignerLayoutDecorationExtension)
@@ -247,7 +245,7 @@ private:
 } // namespace qdesigner_internal
 
 // Red layout widget.
-class QDESIGNER_SHARED_EXPORT QLayoutWidget: public QWidget
+class Q_DESIGNER_EXPORT QLayoutWidget: public QWidget
 {
     Q_OBJECT
 public:

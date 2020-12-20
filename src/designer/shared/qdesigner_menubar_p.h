@@ -45,11 +45,8 @@
 #ifndef QDESIGNER_MENUBAR_H
 #define QDESIGNER_MENUBAR_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QAction>
 #include <QtGui/QMenuBar>
-
 #include <QtCore/QPointer>
 #include <QtCore/QMimeData>
 
@@ -74,7 +71,7 @@ public:
 
 } // namespace qdesigner_internal
 
-class QDESIGNER_SHARED_EXPORT QDesignerMenuBar: public QMenuBar
+class Q_DESIGNER_EXPORT QDesignerMenuBar: public QMenuBar
 {
     Q_OBJECT
 public:

@@ -34,8 +34,6 @@
 #ifndef ABSTRACTPROPERTYEDITOR_H
 #define ABSTRACTPROPERTYEDITOR_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtGui/QWidget>
 
 QT_BEGIN_HEADER
@@ -46,7 +44,7 @@ class QDesignerFormEditorInterface;
 class QString;
 class QVariant;
 
-class QDESIGNER_SDK_EXPORT QDesignerPropertyEditorInterface: public QWidget
+class Q_DESIGNER_EXPORT QDesignerPropertyEditorInterface: public QWidget
 {
     Q_OBJECT
 public:

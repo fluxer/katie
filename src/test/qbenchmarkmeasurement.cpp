@@ -31,12 +31,16 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qbenchmarkmeasurement_p.h"
-#include "QtTest/qbenchmark_p.h"
-#include "QtTest/qbenchmarkmetric_p.h"
+#include "qbenchmarkmeasurement_p.h"
+#include "qbenchmark_p.h"
+#include "qbenchmarkmetric_p.h"
 #include "qbenchmark.h"
 #include "qmath.h"
 #include "qdebug.h"
+
+#ifdef QT_HAVE_CLOCK_GETTIME
+#  include <time.h>
+#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -62,19 +66,9 @@ bool QBenchmarkTimeMeasurer::isMeasurementAccepted(qint64 measurement)
     return (measurement > 50);
 }
 
-int QBenchmarkTimeMeasurer::adjustIterationCount(int suggestion)
-{ 
-    return suggestion; 
-}
-
 bool QBenchmarkTimeMeasurer::needsWarmupIteration()
 {
     return true;
-}
-
-int QBenchmarkTimeMeasurer::adjustMedianCount(int)
-{ 
-    return 1; 
 }
 
 QTest::QBenchmarkMetric QBenchmarkTimeMeasurer::metricType()
@@ -82,7 +76,14 @@ QTest::QBenchmarkMetric QBenchmarkTimeMeasurer::metricType()
     return QTest::WalltimeMilliseconds;
 }
 
-#ifdef HAVE_TICK_COUNTER // defined in 3rdparty/cycle_p.h
+#ifdef QT_HAVE_CLOCK_GETTIME
+static qint64 getticks()
+{
+    struct timespec ts;
+    if (::clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts) == -1)
+        return 0;
+    return (ts.tv_sec * 1000000000) + ts.tv_nsec;
+}
 
 void QBenchmarkTickMeasurer::start()
 {
@@ -91,29 +92,17 @@ void QBenchmarkTickMeasurer::start()
 
 qint64 QBenchmarkTickMeasurer::checkpoint()
 {
-    ticks now = getticks();
-    return qRound64(elapsed(now, startTicks));
+    return (getticks() - startTicks);
 }
 
 qint64 QBenchmarkTickMeasurer::stop()
 {
-    ticks now = getticks();
-    return qRound64(elapsed(now, startTicks));
+    return (getticks() - startTicks);
 }
 
 bool QBenchmarkTickMeasurer::isMeasurementAccepted(qint64)
 {
     return true;
-}
-
-int QBenchmarkTickMeasurer::adjustIterationCount(int)
-{ 
-    return 1; 
-}
-
-int QBenchmarkTickMeasurer::adjustMedianCount(int)
-{ 
-    return 1; 
 }
 
 bool QBenchmarkTickMeasurer::needsWarmupIteration()
@@ -125,7 +114,6 @@ QTest::QBenchmarkMetric QBenchmarkTickMeasurer::metricType()
 {
     return QTest::CPUTicks;
 }
-
 #endif
 
 

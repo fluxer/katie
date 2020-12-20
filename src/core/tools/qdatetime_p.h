@@ -67,7 +67,7 @@ QT_BEGIN_NAMESPACE
 class QDateTimePrivate
 {
 public:
-    enum Spec { LocalUnknown = -1, LocalStandard = 0, LocalDST = 1, UTC = 2, OffsetFromUTC = 3};
+    enum Spec { LocalUnknown = -1, LocalStandard = 0, UTC = 1, OffsetFromUTC = 2 };
 
     QDateTimePrivate() : spec(LocalUnknown), utcOffset(0) {}
     QDateTimePrivate(const QDateTimePrivate &other)
@@ -109,7 +109,7 @@ public:
         first.type = FirstSection;
         first.pos = -1;
         first.count = -1;
-        last.type = FirstSection;
+        last.type = LastSection;
         last.pos = -1;
         last.count = -1;
         none.type = NoSection;
@@ -150,8 +150,7 @@ public:
 
         NoSectionIndex = -1,
         FirstSectionIndex = -2,
-        LastSectionIndex = -3,
-        CalendarPopupIndex = -4
+        LastSectionIndex = -3
     }; // duplicated from qdatetimeedit.h
     Q_DECLARE_FLAGS(Sections, Section)
 
@@ -249,7 +248,7 @@ public:
     mutable int cachedDay;
     mutable QString text;
     QVector<SectionNode> sectionNodes;
-    SectionNode first, last, none, popup;
+    SectionNode first, last, none;
     QStringList separators;
     QString displayFormat;
     QLocale defaultLocale;

@@ -193,11 +193,12 @@ QSvgStyleProperty * QSvgNode::styleProperty(QSvgStyleProperty::Type type) const
 
 QSvgFillStyleProperty * QSvgNode::styleProperty(const QString &id) const
 {
-    QString rid = id;
-    if (rid.startsWith(QLatin1Char('#')))
-        rid.remove(0, 1);
     QSvgTinyDocument *doc = document();
-    return doc ? doc->namedStyle(rid) : 0;
+    if (!doc)
+        return 0;
+    if (id.startsWith(QLatin1Char('#')))
+        return doc->namedStyle(id.right(id.size() - 1));
+    return doc->namedStyle(id);
 }
 
 QRectF QSvgNode::bounds(QPainter *, QSvgExtraStates &) const

@@ -111,10 +111,6 @@ Q_SIGNALS:
     void preferredConfigurationChanged(const QNetworkConfiguration &config, bool isSeamless);
     void newConfigurationActivated();
 
-protected:
-    virtual void connectNotify(const char *signal);
-    virtual void disconnectNotify(const char *signal);
-
 private:
     QNetworkSessionPrivate *d;
 };

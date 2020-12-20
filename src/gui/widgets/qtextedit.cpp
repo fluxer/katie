@@ -36,6 +36,7 @@
 #include "qtextbrowser.h"
 
 #ifndef QT_NO_TEXTEDIT
+
 #include "qfont.h"
 #include "qpainter.h"
 #include "qevent.h"
@@ -54,15 +55,13 @@
 #include "qtextformat.h"
 #include "qdatetime.h"
 #include "qapplication.h"
-#include <limits.h>
 #include "qtexttable.h"
 #include "qvariant.h"
-#endif
+
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 
-
-#ifndef QT_NO_TEXTEDIT
 class QTextEditControl : public QTextControl
 {
 public:
@@ -2462,11 +2461,9 @@ void QTextEdit::ensureCursorVisible()
 
     Use setTextColor() instead.
 */
-#endif // QT_NO_TEXTEDIT
 
 QT_END_NAMESPACE
 
-
 #include "moc_qtextedit.h"
 
-
+#endif // QT_NO_TEXTEDIT

@@ -181,9 +181,6 @@ public:
     bool autoAddOkButton;
     QAbstractButton *detectedEscapeButton;
     QLabel *informativeLabel;
-#if defined(Q_WS_MAEMO_5)
-    QTextBrowser *textBrowser;
-#endif
     QPointer<QObject> receiverToDisconnectOnClose;
     QByteArray memberToDisconnectOnClose;
     QByteArray signalToDisconnectOnClose;

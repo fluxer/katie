@@ -42,28 +42,18 @@
 #include "qlocale.h"
 
 #ifndef QT_BOOTSTRAPPED
-#include "qeasingcurve.h"
-#include "qjsonvalue.h"
-#include "qjsonobject.h"
-#include "qjsonarray.h"
-#include "qjsondocument.h"
-#endif
-
-#ifdef QT_BOOTSTRAPPED
-# ifndef QT_NO_GEOM_VARIANT
-#  define QT_NO_GEOM_VARIANT
-# endif
-#else
+#  include "qeasingcurve.h"
+#  include "qjsonvalue.h"
+#  include "qjsonobject.h"
+#  include "qjsonarray.h"
+#  include "qjsondocument.h"
 #  include "qbitarray.h"
 #  include "qurl.h"
 #  include "qvariant.h"
-#endif
-
-#ifndef QT_NO_GEOM_VARIANT
-# include "qsize.h"
-# include "qpoint.h"
-# include "qrect.h"
-# include "qline.h"
+#  include "qsize.h"
+#  include "qpoint.h"
+#  include "qrect.h"
+#  include "qline.h"
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -735,7 +725,7 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
     case QMetaType::QLocale:
         stream << *static_cast<const NS(QLocale)*>(data);
         break;
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     case QMetaType::QRect:
         stream << *static_cast<const NS(QRect)*>(data);
         break;
@@ -936,7 +926,7 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
     case QMetaType::QLocale:
         stream >> *static_cast< NS(QLocale)*>(data);
         break;
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     case QMetaType::QRect:
         stream >> *static_cast< NS(QRect)*>(data);
         break;
@@ -1090,7 +1080,7 @@ void *QMetaType::construct(int type, const void *copy)
 #endif
         case QMetaType::QLocale:
             return new NS(QLocale)(*static_cast<const NS(QLocale)*>(copy));
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
         case QMetaType::QRect:
             return new NS(QRect)(*static_cast<const NS(QRect)*>(copy));
         case QMetaType::QRectF:
@@ -1195,7 +1185,7 @@ void *QMetaType::construct(int type, const void *copy)
 #endif
         case QMetaType::QLocale:
             return new NS(QLocale);
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
         case QMetaType::QRect:
             return new NS(QRect);
         case QMetaType::QRectF:
@@ -1348,7 +1338,7 @@ void QMetaType::destroy(int type, void *data)
     case QMetaType::QLocale:
         delete static_cast< NS(QLocale)* >(data);
         break;
-#ifndef QT_NO_GEOM_VARIANT
+#ifndef QT_BOOTSTRAPPED
     case QMetaType::QRect:
         delete static_cast< NS(QRect)* >(data);
         break;

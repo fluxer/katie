@@ -788,7 +788,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
         setNetWmWindowTypes();
 
         // set _NET_WM_PID
-        long curr_pid = getpid();
+        long curr_pid = ::getpid();
         XChangeProperty(dpy, id, ATOM(_NET_WM_PID), XA_CARDINAL, 32, PropModeReplace,
                         (unsigned char *) &curr_pid, 1);
 
@@ -2213,7 +2213,7 @@ static void do_size_hints(QWidget* widget, QWExtra *x)
   parentWRect is the geometry of the parent's X rect, measured in
   parent's coord sys
  */
-void QWidgetPrivate::setWSGeometry(bool dontShow, const QRect &)
+void QWidgetPrivate::setWSGeometry(bool dontShow)
 {
     Q_Q(QWidget);
     Q_ASSERT(q->testAttribute(Qt::WA_WState_Created));
@@ -2871,7 +2871,7 @@ Picture QX11Data::getSolidFill(int screen, const QColor &c)
         return XNone;
 
     XRenderColor color = preMultiply(c);
-    for (int i = 0; i < qt_x11Data->solid_fill_count; ++i) {
+    for (int i = 0; i < QX11Data::solid_fill_count; ++i) {
         if (qt_x11Data->solid_fills[i].screen == screen
             && qt_x11Data->solid_fills[i].color.alpha == color.alpha
             && qt_x11Data->solid_fills[i].color.red == color.red
@@ -2880,7 +2880,7 @@ Picture QX11Data::getSolidFill(int screen, const QColor &c)
             return qt_x11Data->solid_fills[i].picture;
     }
     // none found, replace one
-    int i = qrand() % 16;
+    int i = qrand() % QX11Data::solid_fill_count;
 
     if (qt_x11Data->solid_fills[i].screen != screen && qt_x11Data->solid_fills[i].picture) {
         XRenderFreePicture (qt_x11Data->display, qt_x11Data->solid_fills[i].picture);

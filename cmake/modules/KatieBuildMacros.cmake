@@ -4,56 +4,32 @@
 set(KATIE_UIC "uic")
 set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
-set(KATIE_LRELEASE "lrelease")
-
-include(CMakePushCheckState)
-include(CheckSymbolExists)
-include(CheckFunctionExists)
-
-# a macro to print a dev warning but only when the build type is Debug
-macro(KATIE_WARNING MESSAGESTR)
-    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        message(AUTHOR_WARNING "${MESSAGESTR} ${ARGN}")
-    endif()
-endmacro()
 
 # a function to check for C function/definition, works for external functions
-# too. note that check_symbol_exists() and check_function_exists() cache the
-# result variables so they can be used anywhere
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
-    cmake_reset_check_state()
-    set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} ${ARGN})
-    check_symbol_exists("${FORDEFINITION}" "${FROMHEADER}" HAVE_${FORDEFINITION})
-    if(NOT HAVE_${FORDEFINITION})
-        check_function_exists("${FORDEFINITION}" HAVE_${FORDEFINITION})
-    endif()
-    cmake_pop_check_state()
+    # see comment in top-level CMake file
+    set(CMAKE_REQUIRED_INCLUDES /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
+    set(CMAKE_REQUIRED_LINK_OPTIONS -L/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
+    set(includedata)
+    foreach(inc ${FROMHEADER})
+        set(includedata "${includedata}#include <${inc}>\n")
+    endforeach()
+    check_cxx_source_compiles(
+        "
+#include <stdio.h>
+${includedata}
 
-    if(NOT HAVE_${FORDEFINITION})
-        set(compileout "${CMAKE_BINARY_DIR}/${FORDEFINITION}.cpp")
-        configure_file(
-            "${CMAKE_SOURCE_DIR}/cmake/modules/katie_check_defined.cpp.cmake"
-            "${compileout}"
-            @ONLY
-        )
-        try_compile(${FORDEFINITION}_test
-            "${CMAKE_BINARY_DIR}"
-            "${compileout}"
-            COMPILE_DEFINITIONS ${ARGN}
-            OUTPUT_VARIABLE ${FORDEFINITION}_test_output
-        )
-        if(${FORDEFINITION}_test)
-            message(STATUS "Found ${FORDEFINITION} in: <${FROMHEADER}>")
-            set(HAVE_${FORDEFINITION} TRUE PARENT_SCOPE)
-        else()
-            message(STATUS "Could not find ${FORDEFINITION} in: <${FROMHEADER}>")
-            set(HAVE_${FORDEFINITION} FALSE PARENT_SCOPE)
-        endif()
-    endif()
+int main() {
+    printf(\"%p\", &${FORDEFINITION});
+    return 0;
+}
+"
+        HAVE_${FORDEFINITION}
+    )
 endfunction()
 
 # a macro to check for C function presence in header, if function is found a
-# definition is added.
+# definition is added
 macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
     katie_check_defined("${FORFUNCTION}" "${FROMHEADER}")
 
@@ -64,12 +40,57 @@ macro(KATIE_CHECK_FUNCTION FORFUNCTION FROMHEADER)
 endmacro()
 
 # a function to check for C function with 64-bit offset alternative, sets
-# QT_LARGEFILE_SUPPORT to FALSE if not available
+# QT_LARGEFILE_SUPPORT to FALSE if not available and does not perform
+# additional checks if one fails
 function(KATIE_CHECK_FUNCTION64 FORFUNCTION FROMHEADER)
-    katie_check_defined("${FORFUNCTION}" "${FROMHEADER}" -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
+    if(QT_LARGEFILE_SUPPORT)
+        cmake_reset_check_state()
+        set(CMAKE_REQUIRED_DEFINITIONS -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE)
+        katie_check_defined("${FORFUNCTION}" "${FROMHEADER}")
+        cmake_reset_check_state()
 
-    if(NOT HAVE_${FORFUNCTION})
-        set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
+        if(NOT HAVE_${FORFUNCTION})
+            set(QT_LARGEFILE_SUPPORT FALSE PARENT_SCOPE)
+        endif()
+    endif()
+endfunction()
+
+# a function to check for C struct member presence in header, if member is found a
+# definition is added
+function(KATIE_CHECK_STRUCT FORSTRUCT FORMEMBER FROMHEADER)
+    check_struct_has_member("struct ${FORSTRUCT}" "${FORMEMBER}" "${FROMHEADER}" HAVE_${FORSTRUCT}_${FORMEMBER})
+
+    if(HAVE_${FORSTRUCT}_${FORMEMBER})
+        string(TOUPPER "${FORSTRUCT}_${FORMEMBER}" upperstructmember)
+        add_definitions(-DQT_HAVE_${upperstructmember})
+    endif()
+endfunction()
+
+# a function to check for file existence in /proc, if file exists a definition
+# is added
+function(KATIE_CHECK_PROC FORFILE)
+    check_cxx_source_runs(
+        "
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/stat.h>
+
+int main() {
+    char snprintfbuf[1024];
+    snprintf(snprintfbuf, sizeof(snprintfbuf), \"/proc/%d/${FORFILE}\", getpid());
+
+    struct stat statbuf;
+    if (lstat(snprintfbuf, &statbuf) == -1) {
+        return 1;
+    }
+    return 0;
+}
+"
+        HAVE_proc_${FORFILE}
+    )
+    if(HAVE_proc_${FORFILE})
+        string(TOUPPER "${FORFILE}" upperfile)
+        add_definitions(-DQT_HAVE_PROC_${upperfile})
     endif()
 endfunction()
 
@@ -115,7 +136,7 @@ macro(KATIE_GENERATE_MISC MISC_INCLUDES SUBDIR)
     foreach(mischeader ${MISC_INCLUDES})
         get_filename_component(headername ${mischeader} NAME)
         if("${headername}" MATCHES "(_p.h)")
-            set(headout "${CMAKE_BINARY_DIR}/privateinclude/${SUBDIR}/${headername}")
+            set(headout "${CMAKE_BINARY_DIR}/privateinclude/${headername}")
         else()
             set(headout "${CMAKE_BINARY_DIR}/include/${SUBDIR}/${headername}")
         endif()
@@ -142,9 +163,13 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
         katie_string_wrap("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
         set(PACKAGE_FLAGS "${PACKAGE_FLAGS} ${KATIE_DEFINITIONS}")
     endif()
+    set(PACKAGE_PREFIXDIR "${CMAKE_INSTALL_PREFIX}")
+    string(REPLACE "${PACKAGE_PREFIXDIR}" "\${prefix}" PACKAGE_INCLUDEDIR "${KATIE_HEADERS_PATH}")
+    string(REPLACE "${PACKAGE_PREFIXDIR}" "\${exec_prefix}" PACKAGE_LIBDIR "${KATIE_LIBRARIES_PATH}")
     configure_file(
         "${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake"
         "${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc"
+        @ONLY
     )
     install(
         FILES "${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc"
@@ -178,42 +203,30 @@ function(KATIE_STRING_UNWRAP INSTR OUTLST)
     endif()
 endfunction()
 
-# a function to get the Git checkout hash and store it in a variable
-function(KATIE_GIT_CHECKOUT OUTSTR)
-    find_program(git NAMES git)
-    if(EXISTS "${CMAKE_SOURCE_DIR}/.git" AND NOT git)
-        message(WARNING "Git was not found, unable to obtain checkout.\n")
-    else(EXISTS "${CMAKE_SOURCE_DIR}/.git")
-        execute_process(
-            COMMAND "${git}" rev-parse HEAD
-            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-            RESULT_VARIABLE git_result
-            ERROR_VARIABLE git_output
-            OUTPUT_VARIABLE git_output
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-
-        if(NOT git_result STREQUAL 0)
-            message(WARNING "Git command failed, unable to obtain checkout:\n${git_output}")
-        else()
-            set(${OUTSTR} "${git_output}" PARENT_SCOPE)
-        endif()
-    endif()
-endfunction()
-
-# a macro to instruct katie_setup_target() which sources to exclude from the
-# all-in-one source file
+# a macro to instruct CMake which sources to exclude from the unity source file
 macro(KATIE_ALLINONE_EXCLUDE ARG1)
-    set_source_files_properties(${ARG1} ${ARGN} PROPERTIES ALLINONE_EXCLUDE TRUE)
+    set_source_files_properties(${ARG1} ${ARGN} PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
 endmacro()
 
 # a function to create an array of source files for a target while taking into
 # account all-in-one target build setting up proper dependency for the
 # moc/uic/rcc generated resources
 function(KATIE_SETUP_TARGET FORTARGET)
+    get_directory_property(dirdefs COMPILE_DEFINITIONS)
+    get_directory_property(dirincs INCLUDE_DIRECTORIES)
+    set(mocargs)
+    # COMPILE_DEFINITIONS does not include undefine definitions
+    foreach(ddef ${dirdefs})
+        set(mocargs ${mocargs} -D${ddef})
+    endforeach()
+    foreach(incdir ${dirincs})
+        set(mocargs ${mocargs} -I${incdir})
+    endforeach()
+
     # this can be simpler if continue() was supported by old CMake versions
     set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
     katie_write_file("${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
+    set(filteredsources)
     set(targetresources)
     set(rscpath "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources")
     include_directories("${rscpath}")
@@ -239,21 +252,12 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 DEPENDS "${KATIE_RCC}"
                 OUTPUT "${rscout}"
             )
-        elseif("${rscext}" MATCHES "(.h|.hpp|.cc|.cpp)")
+        elseif("${rscext}" MATCHES "(.c|.h|.hpp|.cc|.cpp)")
+            set(filteredsources ${filteredsources} "${resource}")
             file(READ "${resource}" rsccontent)
             if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
                 set(rscout "${rscpath}/moc_${rscname}${rscext}")
                 set(targetresources ${targetresources} "${rscout}")
-                get_directory_property(dirdefs COMPILE_DEFINITIONS)
-                get_directory_property(dirincs INCLUDE_DIRECTORIES)
-                set(mocargs)
-                # COMPILE_DEFINITIONS does not include undefine definitions
-                foreach(ddef ${dirdefs})
-                    set(mocargs ${mocargs} -D${ddef})
-                endforeach()
-                foreach(incdir ${dirincs})
-                    set(mocargs ${mocargs} -I${incdir})
-                endforeach()
                 make_directory("${rscpath}")
                 add_custom_command(
                     COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
@@ -261,50 +265,11 @@ function(KATIE_SETUP_TARGET FORTARGET)
                     OUTPUT "${rscout}"
                 )
             endif()
-        elseif("${rscext}" MATCHES ".ts")
-            make_directory("${CMAKE_CURRENT_BINARY_DIR}")
-            set(rscout "${CMAKE_CURRENT_BINARY_DIR}/${rscname}.qm")
-            add_custom_target(
-                ${FORTARGET}_${rscname} ALL
-                COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_LRELEASE}${KATIE_TOOLS_SUFFIX}" "${resource}" -qm "${rscout}"
-                DEPENDS "${KATIE_LRELEASE}"
-            )
-            set_source_files_properties("${rscout}" PROPERTIES GENERATED TRUE)
-            install(
-                FILES "${rscout}"
-                DESTINATION "${KATIE_TRANSLATIONS_PATH}"
-                COMPONENT Runtime
-            )
         endif()
     endforeach()
     set_property(SOURCE "${resourcesdep}" APPEND PROPERTY OBJECT_DEPENDS "${targetresources}")
 
-    if(NOT KATIE_ALLINONE)
-        set(filteredsources)
-        foreach(srcstring ${ARGN})
-            get_filename_component(srcext "${srcstring}" EXT)
-            if(NOT "${srcext}" MATCHES "(.qrc|.ui)")
-                set(filteredsources ${filteredsources} "${srcstring}")
-            endif()
-        endforeach()
-        set(${FORTARGET}_SOURCES "${resourcesdep}" ${filteredsources} PARENT_SCOPE)
-    else()
-        set(allinonesource "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_allinone.cpp")
-        set(allinonedata)
-        set(excludesources)
-        foreach(srcstring ${ARGN})
-            get_filename_component(srcext "${srcstring}" EXT)
-            get_source_file_property(skip "${srcstring}" ALLINONE_EXCLUDE)
-            if(skip OR "${srcext}" STREQUAL ".c")
-                katie_warning("Source is excluded: ${srcstring}")
-                set(excludesources ${excludesources} "${srcstring}")
-            elseif(NOT "${srcext}" MATCHES "(.h|.qrc|.ui)")
-                set(allinonedata "${allinonedata}#include \"${srcstring}\"\n")
-            endif()
-        endforeach()
-        katie_write_file("${allinonesource}" "${allinonedata}")
-        set(${FORTARGET}_SOURCES ${resourcesdep} "${allinonesource}" ${excludesources} PARENT_SCOPE)
-    endif()
+    set(${FORTARGET}_SOURCES "${resourcesdep}" ${filteredsources} PARENT_SCOPE)
 endfunction()
 
 # a macro to ensure that object targets are build with PIC if the target they
@@ -332,20 +297,27 @@ macro(KATIE_SETUP_OBJECT FORTARGET)
     endforeach()
 endmacro()
 
+# a macro to setup pre-compiled header for target
+macro(KATIE_SETUP_PCH FORTARGET)
+    if(KATIE_PCH)
+        if (NOT CMAKE_VERSION VERSION_LESS "3.16.0")
+            target_precompile_headers(${FORTARGET} PRIVATE "${CMAKE_SOURCE_DIR}/src/core/qt_pch.h")
+        else()
+            message(FATAL_ERROR "Pre-compiled headers option requires CMake v3.16+")
+        endif()
+    endif()
+endmacro()
+
 # a macro to remove conditional code from headers which is only relevant to the
 # process of building Katie itself
 macro(KATIE_OPTIMIZE_HEADERS DIR)
-    find_program(unifdef NAMES unifdef)
-    if(unifdef)
+    if(KATIE_UNIFDEF)
         install(
             CODE "set(UNIFDEF_EXECUTABLE \"${unifdef}\")"
             CODE "set(HEADERS_DIRECTORY \"${DIR}\")"
             CODE "set(HEADERS_DEFINITIONS \"${ARGN}\")"
             SCRIPT "${CMAKE_SOURCE_DIR}/cmake/modules/OptimizeHeaders.cmake"
         )
-    else()
-        get_filename_component(basename "${DIR}" NAME)
-        message(WARNING "unifdef not installed, cannot optimize headers for: ${basename}")
     endif()
 endmacro()
 
@@ -367,18 +339,51 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
 
     add_test(
         NAME ${TESTNAME}
-        COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}" -tickcounter
+        COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}"
+    )
+endmacro()
+
+# a macro to add D-Bus tests easily by setting them up with the assumptions they make
+macro(KATIE_DBUS_TEST TESTNAME TESTSOURCES)
+    katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
+
+    add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
+
+    target_link_libraries(${TESTNAME} KtCore KtDBus KtTest)
+    target_compile_definitions(
+        ${TESTNAME} PRIVATE
+        -DSRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/"
+    )
+    set_target_properties(
+        ${TESTNAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+    )
+
+    add_test(
+        NAME ${TESTNAME}
+        COMMAND "${CMAKE_BINARY_DIR}/dbus.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}"
     )
 endmacro()
 
 # a macro to add tests that require GUI easily by setting them up with the assumptions they make
 macro(KATIE_GUI_TEST TESTNAME TESTSOURCES)
-    katie_test(${TESTNAME} ${TESTSOURCES} ${ARGN})
+    katie_setup_target(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
-    target_link_libraries(${TESTNAME} KtGui)
+    add_executable(${TESTNAME} ${${TESTNAME}_SOURCES})
+
+    target_link_libraries(${TESTNAME} KtCore KtGui KtTest)
     target_compile_definitions(
         ${TESTNAME} PRIVATE
         -DSRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/"
         -DQT_GUI_LIB
+    )
+    set_target_properties(
+        ${TESTNAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+    )
+
+    add_test(
+        NAME ${TESTNAME}
+        COMMAND "${CMAKE_BINARY_DIR}/xvfb.sh" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}"
     )
 endmacro()

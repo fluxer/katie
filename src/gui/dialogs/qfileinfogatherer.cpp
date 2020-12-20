@@ -36,9 +36,6 @@
 #include "qfsfileengine.h"
 #include "qdiriterator.h"
 
-#include <unistd.h>
-#include <sys/types.h>
-
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_FILESYSTEMMODEL
@@ -48,16 +45,13 @@ QT_BEGIN_NAMESPACE
 */
 QFileInfoGatherer::QFileInfoGatherer(QObject *parent)
     : QThread(parent),
-    abort(false),
+      abort(false),
 #ifndef QT_NO_FILESYSTEMWATCHER
-      watcher(0),
+      watcher(new QFileSystemWatcher(this)),
 #endif
       m_iconProvider(&defaultProvider)
 {
-    userId = getuid();
-    groupId = getgid();
 #ifndef QT_NO_FILESYSTEMWATCHER
-    watcher = new QFileSystemWatcher(this);
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(list(QString)));
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(updateFile(QString)));
 #endif

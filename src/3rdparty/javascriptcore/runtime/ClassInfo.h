@@ -27,7 +27,6 @@
 
 namespace JSC {
 
-    class HashEntry;
     struct HashTable;
 
     struct ClassInfo {
@@ -49,10 +48,9 @@ namespace JSC {
         {
             if (classPropHashTableGetterFunction)
                 return classPropHashTableGetterFunction(exec);
-            return staticPropHashTable;
+            return 0;
         }
 
-        const HashTable* staticPropHashTable;
         typedef const HashTable* (*ClassPropHashTableGetterFunction)(ExecState*);
         const ClassPropHashTableGetterFunction classPropHashTableGetterFunction;
     };

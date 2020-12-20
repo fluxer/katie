@@ -45,7 +45,6 @@
 // We mean it.
 //
 
-#include "shared_global_p.h"
 #include <abstractdialoggui_p.h>
 
 QT_BEGIN_NAMESPACE
@@ -54,7 +53,7 @@ class QFileIconProvider;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT DialogGui : public QDesignerDialogGuiInterface
+class Q_DESIGNER_EXPORT DialogGui : public QDesignerDialogGuiInterface
 {
 public:
     DialogGui();

@@ -654,54 +654,6 @@ quint64 QNetworkSession::activeTime() const
     return d ? d->activeTime() : Q_UINT64_C(0);
 }
 
-/*!
-    \internal
-
-    This function is required to detect whether the client wants to control 
-    the roaming process. If he connects to preferredConfigurationChanged() signal
-    he intends to influence it. Otherwise QNetworkSession always roams
-    without registering this session as a stakeholder in the roaming process.
-
-    For more details check the Forced vs ALR roaming section in the QNetworkSession 
-    class description.
-*/
-void QNetworkSession::connectNotify(const char *signal)
-{
-    QObject::connectNotify(signal);
-
-    if (!d)
-        return;
-
-    //check for preferredConfigurationChanged() signal connect notification
-    //This is not required on all platforms
-    if (qstrcmp(signal, SIGNAL(preferredConfigurationChanged(QNetworkConfiguration,bool))) == 0)
-        d->setALREnabled(true);
-}
-
-/*!
-    \internal
-
-    This function is called when the client disconnects from the
-    preferredConfigurationChanged() signal.
-
-    \sa connectNotify()
-*/
-void QNetworkSession::disconnectNotify(const char *signal)
-{
-    QObject::disconnectNotify(signal);
-
-    if (!d)
-        return;
-
-    //check for preferredConfigurationChanged() signal disconnect notification
-    //This is not required on all platforms
-    if (qstrcmp(signal, SIGNAL(preferredConfigurationChanged(QNetworkConfiguration,bool))) == 0)
-        d->setALREnabled(false);
-}
-
-
-
-
 QT_END_NAMESPACE
 
 #endif // QT_NO_BEARERMANAGEMENT

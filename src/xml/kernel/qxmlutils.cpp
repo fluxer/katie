@@ -31,7 +31,6 @@
 **
 ****************************************************************************/
 
-#include "qregexp.h"
 #include "qstring.h"
 
 #include "qxmlutils_p.h"
@@ -194,14 +193,24 @@ static inline bool isCombiningChar(const QChar c)
  */
 bool QXmlUtils::isEncName(const QString &encName)
 {
-    /* Right, we here have a dependency on QRegExp. Writing a manual parser to
-     * replace that regexp is probably a 70 lines so I prioritize this to when
-     * the dependency is considered alarming, or when the rest of the bugs
-     * are fixed. */
-    const QRegExp encNameRegExp(QLatin1String("[A-Za-z][A-Za-z0-9._\\-]*"));
-    Q_ASSERT(encNameRegExp.isValid());
+    if (encName.size() < 2)
+        return false;
 
-    return encNameRegExp.exactMatch(encName);
+    const ushort first = encName.at(0).unicode();
+    if ((first >= 'a' && first <= 'z')
+        || (first >= 'A' && first <= 'Z'))
+    {
+        const ushort second = encName.at(1).unicode();
+        if ((second >= 'a' && second <= 'z')
+            || (second >= 'A' && second <= 'Z')
+            || (second >= '0' && second <= '9')
+            || second == '.' || second == '_' || second == '-')
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /*!

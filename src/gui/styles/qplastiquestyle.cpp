@@ -33,7 +33,7 @@
 
 #include "qplastiquestyle.h"
 
-#if !defined(QT_NO_STYLE_PLASTIQUE) || defined(QT_PLUGIN)
+#if !defined(QT_NO_STYLE_PLASTIQUE)
 
 static const bool AnimateBusyProgressBar = true;
 static const bool AnimateProgressBar = false;
@@ -730,7 +730,7 @@ static void qt_plastique_draw_gradient(QPainter *painter, const QRect &rect, con
     QRect r = rect;
 
     bool doPixmapCache = painter->deviceTransform().isIdentity()
-	&& painter->worldMatrix().isIdentity();
+        && painter->worldMatrix().isIdentity();
     if (doPixmapCache && QPixmapCache::find(gradientName, cache)) {
         painter->drawPixmap(rect, cache);
     } else {
@@ -738,7 +738,7 @@ static void qt_plastique_draw_gradient(QPainter *painter, const QRect &rect, con
             cache = QPixmap(rect.size());
             cache.fill(Qt::transparent);
             p = new QPainter(&cache);
-	    r = QRect(0, 0, rect.width(), rect.height());
+            r = QRect(0, 0, rect.width(), rect.height());
         }
 
         int x = r.center().x();
@@ -748,11 +748,11 @@ static void qt_plastique_draw_gradient(QPainter *painter, const QRect &rect, con
         p->fillRect(r, gradient);
 
         if (doPixmapCache) {
-	    p->end();
-	    delete p;
-	    painter->drawPixmap(rect, cache);
+            p->end();
+            delete p;
+            painter->drawPixmap(rect, cache);
             QPixmapCache::insert(gradientName, cache);
-	}
+        }
     }
 }
 
@@ -1013,13 +1013,6 @@ QPlastiqueStyle::QPlastiqueStyle()
     : QWindowsStyle(*new QPlastiqueStylePrivate)
 {
     setObjectName(QLatin1String("Plastique"));
-}
-
-/*!
-    Destructs the QPlastiqueStyle object.
-*/
-QPlastiqueStyle::~QPlastiqueStyle()
-{
 }
 
 /*
@@ -5818,4 +5811,4 @@ QT_END_NAMESPACE
 
 #include "moc_qplastiquestyle.h"
 
-#endif // !defined(QT_NO_STYLE_PLASTIQUE) || defined(QT_PLUGIN)
+#endif // !defined(QT_NO_STYLE_PLASTIQUE)

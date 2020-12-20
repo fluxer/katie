@@ -37,6 +37,7 @@
 #include <QtCore/qglobal.h>
 
 #include <cmath>
+#include <limits>
 
 QT_BEGIN_HEADER
 
@@ -49,9 +50,9 @@ inline bool qIsInf(float f) { return std::isinf(f); }
 inline bool qIsNaN(float f) { return std::isnan(f); }
 inline bool qIsFinite(float f) { return std::isfinite(f); }
 
-Q_CORE_EXPORT double qSNaN();
-Q_CORE_EXPORT double qQNaN();
-Q_CORE_EXPORT double qInf();
+inline double qSNaN() { return std::numeric_limits<double>::signaling_NaN(); }
+inline double qQNaN() { return std::numeric_limits<double>::quiet_NaN(); }
+inline double qInf() { return std::numeric_limits<double>::infinity(); }
 
 QT_END_NAMESPACE
 

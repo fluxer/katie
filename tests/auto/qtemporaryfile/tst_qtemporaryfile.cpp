@@ -40,13 +40,11 @@
 #include <qdir.h>
 #include <qset.h>
 
-#if defined(Q_OS_UNIX)
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <errno.h>
-# include <fcntl.h>             // open(2)
-# include <unistd.h>            // close(2)
-#endif
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
+#include <fcntl.h>             // open(2)
+#include <unistd.h>            // close(2)
 
 //TESTED_CLASS=
 //TESTED_FILES=
@@ -306,9 +304,6 @@ void tst_QTemporaryFile::rename()
 
 void tst_QTemporaryFile::renameFdLeak()
 {
-#ifdef Q_OS_UNIX
-    // Test this on Unix only
-
     // Open a bunch of files to force the fd count to go up
     static const int count = 10;
     int bunch_of_files[count];
@@ -331,14 +326,13 @@ void tst_QTemporaryFile::renameFdLeak()
         fd = file.handle();
 
         // rename the file to something
-        QString newPath = QDir::tempPath() + "/tst_qtemporaryfile-renameFdLeak-" + QString::number(getpid());
+        QString newPath = QDir::tempPath() + "/tst_qtemporaryfile-renameFdLeak-" + QString::number(::getpid());
         file.rename(newPath);
         QFile::remove(newPath);
     }
 
     // check if QTemporaryFile closed the file
     QVERIFY(::close(fd) == -1 && errno == EBADF);
-#endif
 }
 
 void tst_QTemporaryFile::reOpenThroughQFile()

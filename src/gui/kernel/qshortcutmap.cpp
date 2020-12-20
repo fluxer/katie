@@ -171,21 +171,19 @@ int QShortcutMap::addShortcut(QObject *owner, const QKeySequence &key, Qt::Short
     Removes a shortcut from the global map.
     If \a owner is 0, all entries in the map with the key sequence specified
     is removed. If \a key is null, all sequences for \a owner is removed from
-    the map. If \a id is 0, any identical \a key sequences owned by \a owner
-    are removed.
+    the map. If \a id is 0, all sequences owned by \a owner are removed.
     Returns the number of sequences removed from the map.
 */
 
-int QShortcutMap::removeShortcut(int id, QObject *owner, const QKeySequence &key)
+int QShortcutMap::removeShortcut(int id, QObject *owner)
 {
     Q_D(QShortcutMap);
     int itemsRemoved = 0;
     bool allOwners = (owner == 0);
-    bool allKeys = key.isEmpty();
-    bool allIds = id == 0;
+    bool allIds = (id == 0);
 
     // Special case, remove everything
-    if (allOwners && allKeys && id == 0) {
+    if (allOwners && allIds) {
         itemsRemoved = d->sequences.size();
         d->sequences.clear();
         return itemsRemoved;
@@ -197,8 +195,7 @@ int QShortcutMap::removeShortcut(int id, QObject *owner, const QKeySequence &key
         const QShortcutEntry &entry = d->sequences.at(i);
         int entryId = entry.id;
         if ((allOwners || entry.owner == owner)
-            && (allIds || entry.id == id)
-            && (allKeys || entry.keyseq == key)) {
+            && (allIds || entry.id == id)) {
             d->sequences.removeAt(i);
             ++itemsRemoved;
         }
@@ -218,16 +215,14 @@ int QShortcutMap::removeShortcut(int id, QObject *owner, const QKeySequence &key
     Changes the enable state of a shortcut to \a enable.
     If \a owner is 0, all entries in the map with the key sequence specified
     is removed. If \a key is null, all sequences for \a owner is removed from
-    the map. If \a id is 0, any identical \a key sequences owned by \a owner
-    are changed.
+    the map. If \a id is 0, all key sequences owned by \a owner are changed.
     Returns the number of sequences which are matched in the map.
 */
-int QShortcutMap::setShortcutEnabled(bool enable, int id, QObject *owner, const QKeySequence &key)
+int QShortcutMap::setShortcutEnabled(bool enable, int id, QObject *owner)
 {
     Q_D(QShortcutMap);
     int itemsChanged = 0;
     bool allOwners = (owner == 0);
-    bool allKeys = key.isEmpty();
     bool allIds = id == 0;
 
     int i = d->sequences.size()-1;
@@ -235,8 +230,7 @@ int QShortcutMap::setShortcutEnabled(bool enable, int id, QObject *owner, const 
     {
         QShortcutEntry entry = d->sequences.at(i);
         if ((allOwners || entry.owner == owner)
-            && (allIds || entry.id == id)
-            && (allKeys || entry.keyseq == key)) {
+            && (allIds || entry.id == id)) {
             d->sequences[i].enabled = enable;
             ++itemsChanged;
         }
@@ -256,25 +250,22 @@ int QShortcutMap::setShortcutEnabled(bool enable, int id, QObject *owner, const 
     Changes the auto repeat state of a shortcut to \a enable.
     If \a owner is 0, all entries in the map with the key sequence specified
     is removed. If \a key is null, all sequences for \a owner is removed from
-    the map. If \a id is 0, any identical \a key sequences owned by \a owner
-    are changed.
+    the map. If \a id is 0, all key sequences owned by \a owner are changed.
     Returns the number of sequences which are matched in the map.
 */
-int QShortcutMap::setShortcutAutoRepeat(bool on, int id, QObject *owner, const QKeySequence &key)
+int QShortcutMap::setShortcutAutoRepeat(bool on, int id, QObject *owner)
 {
     Q_D(QShortcutMap);
     int itemsChanged = 0;
     bool allOwners = (owner == 0);
-    bool allKeys = key.isEmpty();
-    bool allIds = id == 0;
+    bool allIds = (id == 0);
 
     int i = d->sequences.size()-1;
     while (i>=0)
     {
         QShortcutEntry entry = d->sequences.at(i);
         if ((allOwners || entry.owner == owner)
-            && (allIds || entry.id == id)
-            && (allKeys || entry.keyseq == key)) {
+            && (allIds || entry.id == id)) {
                 d->sequences[i].autorepeat = on;
                 ++itemsChanged;
         }
@@ -298,15 +289,6 @@ void QShortcutMap::resetState()
     Q_D(QShortcutMap);
     d->currentState = QKeySequence::NoMatch;
     clearSequence(d->currentSequences);
-}
-
-/*! \internal
-    Returns the current state of the statemachine
-*/
-QKeySequence::SequenceMatch QShortcutMap::state()
-{
-    Q_D(QShortcutMap);
-    return d->currentState;
 }
 
 /*! \internal
@@ -653,7 +635,7 @@ bool QShortcutMap::correctWidgetContext(Qt::ShortcutContext context, QWidget *w,
         return false;
 
     if (context == Qt::ApplicationShortcut)
-        return QApplicationPrivate::tryModalHelper(w, 0); // true, unless w is shadowed by a modal dialog
+        return QApplicationPrivate::tryModalHelper(w); // true, unless w is shadowed by a modal dialog
 
     if (context == Qt::WidgetShortcut)
         return w == QApplication::focusWidget();
@@ -715,7 +697,7 @@ bool QShortcutMap::correctGraphicsWidgetContext(Qt::ShortcutContext context, QGr
         // must still check if all views are shadowed.
         QList<QGraphicsView *> views = w->scene()->views();
         for (int i = 0; i < views.size(); ++i) {
-            if (QApplicationPrivate::tryModalHelper(views.at(i), 0))
+            if (QApplicationPrivate::tryModalHelper(views.at(i)))
                 return true;
         }
         return false;
@@ -793,32 +775,6 @@ bool QShortcutMap::correctContext(Qt::ShortcutContext context, QAction *a, QWidg
     return false;
 }
 #endif // QT_NO_ACTION
-
-/*! \internal
-    Converts keyboard button states into modifier states
-*/
-int QShortcutMap::translateModifiers(Qt::KeyboardModifiers modifiers)
-{
-    int result = 0;
-    if (modifiers & Qt::ShiftModifier)
-        result |= Qt::SHIFT;
-    if (modifiers & Qt::ControlModifier)
-        result |= Qt::CTRL;
-    if (modifiers & Qt::MetaModifier)
-        result |= Qt::META;
-    if (modifiers & Qt::AltModifier)
-        result |= Qt::ALT;
-    return result;
-}
-
-/*! \internal
-    Returns the vector of QShortcutEntry's matching the last Identical state.
-*/
-QVector<const QShortcutEntry*> QShortcutMap::matches() const
-{
-    Q_D(const QShortcutMap);
-    return d->identicals;
-}
 
 /*! \internal
     Dispatches QShortcutEvents to widgets who grabbed the matched key sequence.

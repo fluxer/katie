@@ -12,6 +12,9 @@
 
 # resolv does not provide pkg-config files
 
+include(CMakePushCheckState)
+include(FindPackageHandleStandardArgs)
+
 set(RESOLV_NAMES c resolv)
 
 find_path(RESOLV_INCLUDES
@@ -21,16 +24,18 @@ find_path(RESOLV_INCLUDES
 
 set(RESOLV_LIBRARIES)
 foreach(name ${RESOLV_NAMES})
-    if(NOT HAVE_res_ninit AND NOT HAVE_res_init)
+    if(NOT RESOLV_LIBRARIES)
+        unset(HAVE_res_ninit CACHE)
         cmake_reset_check_state()
         set(CMAKE_REQUIRED_LIBRARIES ${name})
-        katie_check_function(res_ninit "resolv.h")
-        cmake_pop_check_state()
+        katie_check_defined(res_ninit "netinet/in.h;resolv.h")
+        cmake_reset_check_state()
         if(NOT HAVE_res_ninit)
+            unset(HAVE_res_init CACHE)
             cmake_reset_check_state()
             set(CMAKE_REQUIRED_LIBRARIES ${name})
-            katie_check_function(res_init "resolv.h")
-            cmake_pop_check_state()
+            katie_check_defined(res_init "netinet/in.h;resolv.h")
+            cmake_reset_check_state()
         endif()
         if(HAVE_res_ninit OR HAVE_res_init)
             find_library(RESOLV_LIBRARIES
@@ -41,7 +46,6 @@ foreach(name ${RESOLV_NAMES})
     endif()
 endforeach()
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Resolv
     REQUIRED_VARS RESOLV_LIBRARIES RESOLV_INCLUDES
 )

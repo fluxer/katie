@@ -50,7 +50,6 @@ class Q_GUI_EXPORT QPlastiqueStyle : public QWindowsStyle
     Q_DECLARE_PRIVATE(QPlastiqueStyle)
 public:
     QPlastiqueStyle();
-    ~QPlastiqueStyle();
 
     void drawPrimitive(PrimitiveElement element, const QStyleOption *option,
                        QPainter *painter, const QWidget *widget = Q_NULLPTR) const;

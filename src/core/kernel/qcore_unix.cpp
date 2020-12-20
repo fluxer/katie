@@ -34,11 +34,8 @@
 #include "qcore_unix_p.h"
 #include "qelapsedtimer.h"
 
-#if !defined(Q_OS_HPUX) || defined(QT_ARCH_IA64)
-# include <sys/select.h>
-#endif
+#include <sys/select.h>
 #include <sys/time.h>
-
 #include <stdlib.h>
 
 QT_BEGIN_NAMESPACE

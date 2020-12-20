@@ -35,7 +35,6 @@
 #define QMOTIFSTYLE_H
 
 #include <QtGui/qcommonstyle.h>
-#include <QtCore/qpointer.h>
 
 QT_BEGIN_HEADER
 
@@ -52,8 +51,7 @@ class Q_GUI_EXPORT QMotifStyle : public QCommonStyle
 {
     Q_OBJECT
 public:
-    explicit QMotifStyle(bool useHighlightCols=false);
-    virtual ~QMotifStyle();
+    explicit QMotifStyle(bool useHighlightCols = false);
 
     void setUseHighlightColors(bool);
     bool useHighlightColors() const;
@@ -94,16 +92,13 @@ public:
     QPalette standardPalette() const;
 
 protected:
-    QPointer<QFocusFrame> focus;
-    QMotifStyle(QMotifStylePrivate &dd, bool useHighlightCols = false);
+    QMotifStyle(QMotifStylePrivate &dd);
     void timerEvent(QTimerEvent *event);
     bool eventFilter(QObject *o, QEvent *e);
 
 private:
     Q_DECLARE_PRIVATE(QMotifStyle)
     Q_DISABLE_COPY(QMotifStyle)
-
-    bool highlightCols;
 };
 
 #endif // QT_NO_STYLE_MOTIF

@@ -1,3 +1,9 @@
+katie (4.9.1) unstable; urgency=medium
+
+  * Second package update
+
+ -- Ivailo Monev <xakepa10@gmail.com>  Thu, 17 Dec 2020 16:26:26 +0200
+
 katie (4.9.0) unstable; urgency=medium
 
   * First package update

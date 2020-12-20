@@ -24,21 +24,16 @@ namespace WTF {
 
 #if DUMP_HASHTABLE_STATS
 
-int HashTableStats::numAccesses;
-int HashTableStats::numCollisions;
+int HashTableStats::numAccesses = 0;
+int HashTableStats::numCollisions = 0;
 int HashTableStats::collisionGraph[4096];
-int HashTableStats::maxCollisions;
-int HashTableStats::numRehashes;
-int HashTableStats::numRemoves;
-int HashTableStats::numReinserts;
+int HashTableStats::maxCollisions = 0;
+int HashTableStats::numRehashes = 0;
+int HashTableStats::numRemoves = 0;
+int HashTableStats::numReinserts = 0;
 
 static HashTableStats logger;
 
-static QMutex& hashTableStatsMutex()
-{
-    AtomicallyInitializedStatic(QMutex&, mutex = *new QMutex);
-    return mutex;
-}
 
 HashTableStats::~HashTableStats()
 {
@@ -57,7 +52,8 @@ HashTableStats::~HashTableStats()
 
 void HashTableStats::recordCollisionAtCount(int count)
 {
-    QMutexLocker lock(hashTableStatsMutex());
+    static thread_local QMutex hashTableStatsMutex;
+    QMutexLocker lock(&hashTableStatsMutex);
     if (count > maxCollisions)
         maxCollisions = count;
     numCollisions++;

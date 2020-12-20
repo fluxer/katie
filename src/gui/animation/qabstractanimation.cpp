@@ -153,8 +153,7 @@ QT_BEGIN_NAMESPACE
 thread_local QUnifiedTimer* unifiedTimer = Q_NULLPTR;
 
 QUnifiedTimer::QUnifiedTimer() :
-    QObject(), defaultDriver(), lastTick(0),
-    currentAnimationIdx(0), insideTick(false),
+    QObject(), lastTick(0), currentAnimationIdx(0), insideTick(false),
     isPauseTimerActive(false), runningLeafAnimations(0)
 {
     time.invalidate();
@@ -162,9 +161,9 @@ QUnifiedTimer::QUnifiedTimer() :
 }
 
 
-QUnifiedTimer *QUnifiedTimer::instance(bool create)
+QUnifiedTimer *QUnifiedTimer::instance()
 {
-    if (create && !unifiedTimer) {
+    if (!unifiedTimer) {
         unifiedTimer = new QUnifiedTimer;
     }
     return unifiedTimer;
@@ -172,9 +171,8 @@ QUnifiedTimer *QUnifiedTimer::instance(bool create)
 
 void QUnifiedTimer::ensureTimerUpdate()
 {
-    QUnifiedTimer *inst = QUnifiedTimer::instance(false);
-    if (inst && inst->isPauseTimerActive)
-        inst->updateAnimationsTime();
+    if (unifiedTimer && unifiedTimer->isPauseTimerActive)
+        unifiedTimer->updateAnimationsTime();
 }
 
 void QUnifiedTimer::updateAnimationsTime()
@@ -206,9 +204,8 @@ void QUnifiedTimer::updateAnimationsTime()
 
 void QUnifiedTimer::updateAnimationTimer()
 {
-    QUnifiedTimer *inst = QUnifiedTimer::instance(false);
-    if (inst)
-        inst->restartAnimationTimer();
+    if (unifiedTimer)
+        unifiedTimer->restartAnimationTimer();
 }
 
 void QUnifiedTimer::restartAnimationTimer()
@@ -258,7 +255,7 @@ void QUnifiedTimer::timerEvent(QTimerEvent *event)
 
 void QUnifiedTimer::registerAnimation(QAbstractAnimation *animation, bool isTopLevel)
 {
-    QUnifiedTimer *inst = instance(true); //we create the instance if needed
+    QUnifiedTimer *inst = instance(); //we create the instance if needed
     inst->registerRunningAnimation(animation);
     if (isTopLevel) {
         Q_ASSERT(!QAbstractAnimationPrivate::get(animation)->hasRegisteredTimer);
@@ -271,27 +268,26 @@ void QUnifiedTimer::registerAnimation(QAbstractAnimation *animation, bool isTopL
 
 void QUnifiedTimer::unregisterAnimation(QAbstractAnimation *animation)
 {
-    QUnifiedTimer *inst = QUnifiedTimer::instance(false);
-    if (inst) {
+    if (unifiedTimer) {
         //at this point the unified timer should have been created
         //but it might also have been already destroyed in case the application is shutting down
 
-        inst->unregisterRunningAnimation(animation);
+        unifiedTimer->unregisterRunningAnimation(animation);
 
         if (!QAbstractAnimationPrivate::get(animation)->hasRegisteredTimer)
             return;
 
-        int idx = inst->animations.indexOf(animation);
+        int idx = unifiedTimer->animations.indexOf(animation);
         if (idx != -1) {
-            inst->animations.removeAt(idx);
+            unifiedTimer->animations.removeAt(idx);
             // this is needed if we unregister an animation while its running
-            if (idx <= inst->currentAnimationIdx)
-                --inst->currentAnimationIdx;
+            if (idx <= unifiedTimer->currentAnimationIdx)
+                --unifiedTimer->currentAnimationIdx;
 
-            if (inst->animations.isEmpty() && !inst->startStopAnimationTimer.isActive())
-                inst->startStopAnimationTimer.start(STARTSTOP_TIMER_DELAY, inst);
+            if (unifiedTimer->animations.isEmpty() && !unifiedTimer->startStopAnimationTimer.isActive())
+                unifiedTimer->startStopAnimationTimer.start(STARTSTOP_TIMER_DELAY, unifiedTimer);
         } else {
-            inst->animationsToStart.removeOne(animation);
+            unifiedTimer->animationsToStart.removeOne(animation);
         }
     }
     QAbstractAnimationPrivate::get(animation)->hasRegisteredTimer = false;
@@ -401,7 +397,7 @@ void QAnimationDriver::advance()
  */
 void QAnimationDriver::install()
 {
-    QUnifiedTimer *timer = QUnifiedTimer::instance(true);
+    QUnifiedTimer *timer = QUnifiedTimer::instance();
     timer->installAnimationDriver(this);
 }
 

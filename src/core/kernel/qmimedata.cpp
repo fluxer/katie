@@ -238,15 +238,6 @@ QVariant QMimeDataPrivate::retrieveTypedData(const QString &format, QVariant::Ty
         \snippet doc/src/snippets/code/src_corelib_kernel_qmimedata.cpp 2
     \endlist
 
-    \section1 Platform-Specific MIME Types
-
-    On Windows, formats() will also return custom formats available
-    in the MIME data, using the \c{x-qt-windows-mime} subtype to
-    indicate that they represent data in non-standard formats.
-    The formats will take the following form:
-
-    \snippet doc/src/snippets/code/src_corelib_kernel_qmimedata.cpp 3
-
     The following are examples of custom MIME types:
 
     \snippet doc/src/snippets/code/src_corelib_kernel_qmimedata.cpp 4
@@ -254,13 +245,8 @@ QVariant QMimeDataPrivate::retrieveTypedData(const QString &format, QVariant::Ty
     The \c value declaration of each format describes the way in which the
     data is encoded.
 
-    On Windows, the MIME format does not always map directly to the
-    clipboard formats. Qt provides QWindowsMime to map clipboard
-    formats to open-standard MIME formats. Similarly, the
-    QMacPasteboardMime maps MIME to Mac flavors.
-
     \sa QClipboard, QDragEnterEvent, QDragMoveEvent, QDropEvent, QDrag,
-        QWindowsMime, QMacPasteboardMime, {Drag and Drop}
+        {Drag and Drop}
 */
 
 /*!

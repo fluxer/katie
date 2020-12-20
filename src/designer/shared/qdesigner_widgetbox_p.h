@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_WIDGETBOX_H
 #define QDESIGNER_WIDGETBOX_H
 
-#include "shared_global_p.h"
 #include <QtDesigner/abstractwidgetbox.h>
 
 QT_BEGIN_NAMESPACE
@@ -56,7 +55,7 @@ namespace qdesigner_internal {
 
 // A widget box with a load mode that allows for updating custom widgets.
 
-class QDESIGNER_SHARED_EXPORT QDesignerWidgetBox : public QDesignerWidgetBoxInterface
+class Q_DESIGNER_EXPORT QDesignerWidgetBox : public QDesignerWidgetBoxInterface
 {
     Q_OBJECT
 public:

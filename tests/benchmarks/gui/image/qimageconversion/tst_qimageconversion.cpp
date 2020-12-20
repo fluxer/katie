@@ -40,35 +40,35 @@ class tst_QImageConversion : public QObject
 {
     Q_OBJECT
 private slots:
-    void convertRgb888ToRGB32_data();
-    void convertRgb888ToRGB32();
+    void convertRgb16ToRGB32_data();
+    void convertRgb16ToRGB32();
 
 private:
-    QImage generateImageRgb888(int width, int height);
+    QImage generateImage(int width, int height);
 };
 
-void tst_QImageConversion::convertRgb888ToRGB32_data()
+void tst_QImageConversion::convertRgb16ToRGB32_data()
 {
     QTest::addColumn<QImage>("inputImage");
     // height = 5000 to get interesting timing.
 
     // 3 pixels wide -> smaller than regular vector of 128bits
-    QTest::newRow("width: 3px; height: 5000px;") << generateImageRgb888(3, 5000);
+    QTest::newRow("width: 3px; height: 5000px;") << generateImage(3, 5000);
 
     // 8 pixels wide -> potential for 2 vectors
-    QTest::newRow("width: 8px; height: 5000px;") << generateImageRgb888(3, 5000);
+    QTest::newRow("width: 8px; height: 5000px;") << generateImage(3, 5000);
 
     // 16 pixels, minimum for the SSSE3 implementation
-    QTest::newRow("width: 16px; height: 5000px;") << generateImageRgb888(16, 5000);
+    QTest::newRow("width: 16px; height: 5000px;") << generateImage(16, 5000);
 
     // 50 pixels, more realistic use case
-    QTest::newRow("width: 50px; height: 5000px;") << generateImageRgb888(50, 5000);
+    QTest::newRow("width: 50px; height: 5000px;") << generateImage(50, 5000);
 
     // 2000 pixels -> typical values for pictures
-    QTest::newRow("width: 2000px; height: 5000px;") << generateImageRgb888(2000, 5000);
+    QTest::newRow("width: 2000px; height: 5000px;") << generateImage(2000, 5000);
 }
 
-void tst_QImageConversion::convertRgb888ToRGB32()
+void tst_QImageConversion::convertRgb16ToRGB32()
 {
     QFETCH(QImage, inputImage);
 
@@ -81,11 +81,11 @@ void tst_QImageConversion::convertRgb888ToRGB32()
 }
 
 /*
- Fill a RGB888 image with "random" pixel values.
+ Fill a RGB16 image with "random" pixel values.
  */
-QImage tst_QImageConversion::generateImageRgb888(int width, int height)
+QImage tst_QImageConversion::generateImage(int width, int height)
 {
-    QImage image(width, height, QImage::Format_RGB888);
+    QImage image(width, height, QImage::Format_RGB16);
     const int byteWidth = width * 3;
 
     for (int y = 0; y < image.height(); ++y) {

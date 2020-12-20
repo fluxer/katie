@@ -43,28 +43,27 @@
 #include "preferencesdialog.h"
 #include "appfontdialog.h"
 
-#include <pluginmanager_p.h>
+#include "pluginmanager_p.h"
 #include "qdesigner_formbuilder_p.h"
 #include "qdesigner_utils_p.h"
-#include <iconloader_p.h>
+#include "iconloader_p.h"
 #include "qsimpleresource_p.h"
-#include <previewmanager_p.h>
-#include <codedialog_p.h>
+#include "previewmanager_p.h"
+#include "codedialog_p.h"
 #include "qdesigner_formwindowmanager_p.h"
 #include "qdesigner_integration_p.h"
 
 // sdk
-#include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractformwindow.h>
-#include <QtDesigner/abstractlanguage.h>
-#include <QtDesigner/abstractmetadatabase.h>
-#include <QtDesigner/abstractformwindowmanager.h>
-#include <QtDesigner/abstractformwindowcursor.h>
-#include <QtDesigner/abstractformeditorplugin.h>
-#include <QtDesigner/QExtensionManager>
-
-#include <QtDesigner/shared_settings_p.h>
-#include <QtDesigner/formwindowbase_p.h>
+#include "abstractformeditor.h"
+#include "abstractformwindow.h"
+#include "abstractlanguage.h"
+#include "abstractmetadatabase.h"
+#include "abstractformwindowmanager.h"
+#include "abstractformwindowcursor.h"
+#include "abstractformeditorplugin.h"
+#include "QExtensionManager"
+#include "shared_settings_p.h"
+#include "formwindowbase_p.h"
 
 #include <QtGui/QAction>
 #include <QtGui/QActionGroup>
@@ -82,7 +81,6 @@
 #include <QtGui/QPainter>
 #include <QtGui/QTransform>
 #include <QtGui/QCursor>
-
 #include <QtCore/QSize>
 #include <QtCore/QLibraryInfo>
 #include <QtCore/QBuffer>

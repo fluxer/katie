@@ -217,7 +217,7 @@ HB_Bool HB_TibetanShape(HB_ShaperItem *item)
 
     assert(item->item.script == HB_Script_Tibetan);
 
-#ifndef QT_NO_OPENTYPE
+#ifndef NO_OPENTYPE
     openType = HB_SelectScript(item, tibetan_features);
 #endif
 

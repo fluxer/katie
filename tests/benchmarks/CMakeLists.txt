@@ -1,0 +1,5 @@
+file(GLOB_RECURSE AUTOCMAKEFILES "${CMAKE_CURRENT_SOURCE_DIR}/*/CMakeLists.txt")
+foreach(cmakefile ${AUTOCMAKEFILES})
+    get_filename_component(dirname ${cmakefile} PATH)
+    add_subdirectory(${dirname})
+endforeach()

@@ -31,9 +31,9 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qtesttable_p.h"
-#include "QtTest/qtestdata.h"
-#include "QtTest/qtestassert.h"
+#include "qtesttable_p.h"
+#include "qtestdata.h"
+#include "qtestassert.h"
 
 #include <string.h>
 

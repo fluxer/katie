@@ -45,10 +45,8 @@
 #ifndef SHARED_SETTINGS_H
 #define SHARED_SETTINGS_H
 
-#include "shared_global_p.h"
 #include "deviceprofile_p.h"
 
-#include <QtCore/qglobal.h>
 #include <QtCore/QList>
 
 QT_BEGIN_NAMESPACE
@@ -69,7 +67,7 @@ class PreviewConfiguration;
   */
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT QDesignerSharedSettings {
+class Q_DESIGNER_EXPORT QDesignerSharedSettings {
 public:
     typedef QList<DeviceProfile> DeviceProfileList;
 

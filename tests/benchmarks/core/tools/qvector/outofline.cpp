@@ -35,9 +35,6 @@
 #include <vector>
 #include "qrawvector.h"
 
-const int N = 1000000;
-double s = 0;
-
 QVector<double> qvector_fill_and_return_helper()
 {
     QVector<double> v(N);

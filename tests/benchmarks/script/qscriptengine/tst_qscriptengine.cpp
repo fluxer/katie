@@ -34,7 +34,7 @@
 #include <qtest.h>
 #include <QtScript>
 
-#include <QtScript/qscriptdeclarativeclass_p.h>
+#include <qscriptdeclarativeclass_p.h>
 
 Q_DECLARE_METATYPE(QScriptValue)
 

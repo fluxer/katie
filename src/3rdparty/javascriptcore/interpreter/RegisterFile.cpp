@@ -33,17 +33,14 @@ namespace JSC {
 
 RegisterFile::~RegisterFile()
 {
-#if HAVE(MMAP)
-    munmap(reinterpret_cast<char*>(m_buffer), ((m_max - m_start) + m_maxGlobals) * sizeof(Register));
-#else
-    fastFree(m_buffer);
-#endif
+    ::munmap(reinterpret_cast<char*>(m_buffer), ((m_max - m_start) + m_maxGlobals) * sizeof(Register));
 }
 
 void RegisterFile::releaseExcessCapacity()
 {
-#if HAVE(MMAP) && HAVE(MADV_FREE)
-    while (madvise(m_start, (m_max - m_start) * sizeof(Register), MADV_FREE) == -1 && errno == EAGAIN) { }
+// Hurd does not have MAD_FREE
+#if defined(QT_HAVE_MADVISE) && defined(MADV_FREE)
+    while (::madvise(m_start, (m_max - m_start) * sizeof(Register), MADV_FREE) == -1 && errno == EAGAIN) { }
 #endif
     m_maxUsed = m_start;
 }

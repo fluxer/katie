@@ -128,9 +128,9 @@ static Window findXdndAwareParent(Window window)
         unsigned char *data = 0;
         if (XGetWindowProperty(qt_x11Data->display, window, ATOM(XdndAware), 0, 0, False,
                                AnyPropertyType, &type, &f,&n,&a,&data) == Success) {
-	    if (data)
+            if (data)
                 XFree(data);
-	    if (type) {
+            if (type) {
                 target = window;
                 break;
             }
@@ -1377,7 +1377,8 @@ Window findRealWindow(const QPoint & pos, Window w, int md, bool ignoreNonXdndAw
 
                 XGetWindowProperty(qt_x11Data->display, w, ATOM(XdndAware), 0, 0, False,
                                    AnyPropertyType, &type, &f,&n,&a,&data);
-                if (data) XFree(data);
+                if (data)
+                    XFree(data);
                 if (type) {
 #ifdef QT_NO_XSHAPE
                     return w;

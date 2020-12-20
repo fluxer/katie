@@ -1,0 +1,3 @@
+Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+clean it up, fix some bugs and backport some features from Qt5. It is based
+on the latest Git revision of Qt v4.8.

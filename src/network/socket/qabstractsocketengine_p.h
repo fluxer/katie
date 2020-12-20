@@ -175,7 +175,7 @@ public:
 protected:
     QAbstractSocketEngine(QAbstractSocketEnginePrivate &dd, QObject *parent = Q_NULLPTR);
 
-    void setError(QAbstractSocket::SocketError error, const QString &errorString) const;
+    void setError(QAbstractSocket::SocketError error, const QString &errorString);
     void setState(QAbstractSocket::SocketState state);
     void setSocketType(QAbstractSocket::SocketType socketType);
     void setProtocol(QAbstractSocket::NetworkLayerProtocol protocol);
@@ -195,9 +195,9 @@ class QAbstractSocketEnginePrivate : public QObjectPrivate
 public:
     QAbstractSocketEnginePrivate();
 
-    mutable QAbstractSocket::SocketError socketError;
-    mutable bool hasSetSocketError;
-    mutable QString socketErrorString;
+    QAbstractSocket::SocketError socketError;
+    bool hasSetSocketError;
+    QString socketErrorString;
     QAbstractSocket::SocketState socketState;
     QAbstractSocket::SocketType socketType;
     QAbstractSocket::NetworkLayerProtocol socketProtocol;

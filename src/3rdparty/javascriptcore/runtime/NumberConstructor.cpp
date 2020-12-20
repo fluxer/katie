@@ -41,7 +41,7 @@ static JSValue numberConstructorMinValue(ExecState*, const Identifier&, const Pr
 
 namespace JSC {
 
-const ClassInfo NumberConstructor::info = { "Function", &InternalFunction::info, 0, ExecState::numberTable };
+const ClassInfo NumberConstructor::info = { "Function", &InternalFunction::info, ExecState::numberTable };
 
 /* Source for NumberConstructor.lut.h
 @begin numberTable

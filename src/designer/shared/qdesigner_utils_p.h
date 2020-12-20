@@ -45,8 +45,6 @@
 #ifndef QDESIGNER_UTILS_H
 #define QDESIGNER_UTILS_H
 
-#include "shared_global_p.h"
-
 #include <QtDesigner/abstractformwindow.h>
 
 #include <QtCore/QVariant>
@@ -66,9 +64,9 @@ class DesignerIconCache;
 class FormWindowBase;
 
 
-QDESIGNER_SHARED_EXPORT void designerWarning(const QString &message);
+Q_DESIGNER_EXPORT void designerWarning(const QString &message);
 
-QDESIGNER_SHARED_EXPORT void reloadIconResources(DesignerIconCache *iconCache, QObject *object);
+Q_DESIGNER_EXPORT void reloadIconResources(DesignerIconCache *iconCache, QObject *object);
 
 /* Flag/Enumeration helpers for the property sheet: Enumeration or flag values are returned by the property sheet
  * as a pair of meta type and integer value.
@@ -162,7 +160,7 @@ void MetaEnum<IntType>::appendQualifiedName(const QString &key, QString &target)
 
 // -------------- DesignerMetaEnum: Meta type for enumerations
 
-class QDESIGNER_SHARED_EXPORT DesignerMetaEnum : public MetaEnum<int>
+class Q_DESIGNER_EXPORT DesignerMetaEnum : public MetaEnum<int>
 {
 public:
     DesignerMetaEnum(const QString &name, const QString &scope, const QString &separator);
@@ -182,7 +180,7 @@ public:
 // Note that while the handling of flags is done using unsigned integers, the actual values returned
 // by the property system  are integers.
 
-class QDESIGNER_SHARED_EXPORT DesignerMetaFlags : public MetaEnum<uint>
+class Q_DESIGNER_EXPORT DesignerMetaFlags : public MetaEnum<uint>
 {
 public:
     DesignerMetaFlags(const QString &name, const QString &scope, const QString &separator);
@@ -199,7 +197,7 @@ public:
 
 // -------------- EnumValue: Returned by the property sheet for enumerations
 
-struct QDESIGNER_SHARED_EXPORT PropertySheetEnumValue
+struct Q_DESIGNER_EXPORT PropertySheetEnumValue
 {
     PropertySheetEnumValue(int v, const DesignerMetaEnum &me);
     PropertySheetEnumValue();
@@ -210,7 +208,7 @@ struct QDESIGNER_SHARED_EXPORT PropertySheetEnumValue
 
 // -------------- FlagValue: Returned by the property sheet for flags
 
-struct QDESIGNER_SHARED_EXPORT PropertySheetFlagValue
+struct Q_DESIGNER_EXPORT PropertySheetFlagValue
 {
     PropertySheetFlagValue(int v, const DesignerMetaFlags &mf);
     PropertySheetFlagValue();
@@ -220,7 +218,7 @@ struct QDESIGNER_SHARED_EXPORT PropertySheetFlagValue
 };
 
 // -------------- PixmapValue: Returned by the property sheet for pixmaps
-class QDESIGNER_SHARED_EXPORT PropertySheetPixmapValue
+class Q_DESIGNER_EXPORT PropertySheetPixmapValue
 {
 public:
     PropertySheetPixmapValue(const QString &path);
@@ -249,7 +247,7 @@ private:
 
 class PropertySheetIconValueData;
 
-class QDESIGNER_SHARED_EXPORT PropertySheetIconValue
+class Q_DESIGNER_EXPORT PropertySheetIconValue
 {
  public:
     PropertySheetIconValue(const PropertySheetPixmapValue &pixmap);
@@ -288,9 +286,9 @@ private:
     QSharedDataPointer<PropertySheetIconValueData> m_data;
 };
 
-QDESIGNER_SHARED_EXPORT QDebug operator<<(QDebug, const PropertySheetIconValue &);
+Q_DESIGNER_EXPORT QDebug operator<<(QDebug, const PropertySheetIconValue &);
 
-class QDESIGNER_SHARED_EXPORT DesignerPixmapCache : public QObject
+class Q_DESIGNER_EXPORT DesignerPixmapCache : public QObject
 {
     Q_OBJECT
 public:
@@ -304,7 +302,7 @@ private:
     friend class FormWindowBase;
 };
 
-class QDESIGNER_SHARED_EXPORT DesignerIconCache : public QObject
+class Q_DESIGNER_EXPORT DesignerIconCache : public QObject
 {
     Q_OBJECT
 public:
@@ -320,7 +318,7 @@ private:
 };
 
 // -------------- StringValue: Returned by the property sheet for strings
-class QDESIGNER_SHARED_EXPORT PropertySheetStringValue
+class Q_DESIGNER_EXPORT PropertySheetStringValue
 {
 public:
     explicit PropertySheetStringValue(const QString &value = QString(),
@@ -352,7 +350,7 @@ private:
 
 
 // -------------- StringValue: Returned by the property sheet for strings
-class QDESIGNER_SHARED_EXPORT PropertySheetKeySequenceValue
+class Q_DESIGNER_EXPORT PropertySheetKeySequenceValue
 {
 public:
     explicit PropertySheetKeySequenceValue(const QKeySequence &value = QKeySequence(),
@@ -410,22 +408,22 @@ namespace qdesigner_internal {
 
 
 // Create a command to change a text property (that is, create a reset property command if the text is empty)
-QDESIGNER_SHARED_EXPORT QDesignerFormWindowCommand *createTextPropertyCommand(const QString &propertyName, const QString &text, QObject *object, QDesignerFormWindowInterface *fw);
+Q_DESIGNER_EXPORT QDesignerFormWindowCommand *createTextPropertyCommand(const QString &propertyName, const QString &text, QObject *object, QDesignerFormWindowInterface *fw);
 
 // Returns preferred task menu action for managed widget
-QDESIGNER_SHARED_EXPORT QAction *preferredEditAction(QDesignerFormEditorInterface *core, QWidget *managedWidget);
+Q_DESIGNER_EXPORT QAction *preferredEditAction(QDesignerFormEditorInterface *core, QWidget *managedWidget);
 
 // Convenience to run UIC
-QDESIGNER_SHARED_EXPORT bool runUIC(const QString &fileName, QByteArray& ba, QString &errorMessage);
+Q_DESIGNER_EXPORT bool runUIC(const QString &fileName, QByteArray& ba, QString &errorMessage);
 
 // Find a suitable variable name for a class.
-QDESIGNER_SHARED_EXPORT QString qtify(const QString &name);
+Q_DESIGNER_EXPORT QString qtify(const QString &name);
 
 /* UpdateBlocker: Blocks the updates of the widget passed on while in scope.
  * Does nothing if the incoming widget already has updatesEnabled==false
  * which is important to avoid side-effects when putting it into QStackedLayout. */
 
-class QDESIGNER_SHARED_EXPORT UpdateBlocker {
+class Q_DESIGNER_EXPORT UpdateBlocker {
     Q_DISABLE_COPY(UpdateBlocker)
 
 public:

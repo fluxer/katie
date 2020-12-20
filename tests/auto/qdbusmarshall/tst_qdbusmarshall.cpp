@@ -31,11 +31,11 @@
 **
 ****************************************************************************/
 
-#include <QtCore/QtCore>
-#include <QtTest/QtTest>
-#include <QtDBus/QtDBus>
-#include <QtDBus/qdbusutil_p.h>
-#include <QtDBus/qdbusconnection_p.h>
+#include "QtCore/QtCore"
+#include "QtTest/QtTest"
+#include "QtDBus/QtDBus"
+#include "qdbusutil_p.h"
+#include "qdbusconnection_p.h"
 
 #include "common.h"
 #include <limits>
@@ -128,7 +128,7 @@ void tst_QDBusMarshall::initTestCase()
     QDBusConnection con = QDBusConnection::sessionBus();
     fileDescriptorPassing = con.connectionCapabilities() & QDBusConnection::UnixFileDescriptorPassing;
     QDir workingDirectory = QCoreApplication::applicationDirPath();
-    QString pongprogram = workingDirectory.absoluteFilePath(QLatin1String("qpong"));
+    QString pongprogram = workingDirectory.absoluteFilePath(QLatin1String("qdbusmarshall_qpong"));
     proc.start(pongprogram);
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName)) {
         QVERIFY(proc.waitForStarted());

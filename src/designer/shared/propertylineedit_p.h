@@ -45,8 +45,6 @@
 #ifndef PROPERTYLINEEDIT_H
 #define PROPERTYLINEEDIT_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QLineEdit>
 
 QT_BEGIN_NAMESPACE

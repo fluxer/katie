@@ -39,12 +39,6 @@
 
 #include <mysql.h>
 
-#ifdef QT_PLUGIN
-#define Q_EXPORT_SQLDRIVER_MYSQL
-#else
-#define Q_EXPORT_SQLDRIVER_MYSQL Q_SQL_EXPORT
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
@@ -79,21 +73,18 @@ protected:
     void virtual_hook(int id, void *data);
     bool nextResult();
 
-#if MYSQL_VERSION_ID >= 40108
     bool prepare(const QString& stmt);
     bool exec();
-#endif
 private:
     QMYSQLResultPrivate* d;
 };
 
-class Q_EXPORT_SQLDRIVER_MYSQL QMYSQLDriver : public QSqlDriver
+class QMYSQLDriver : public QSqlDriver
 {
     Q_OBJECT
     friend class QMYSQLResult;
 public:
     explicit QMYSQLDriver(QObject *parent=0);
-    explicit QMYSQLDriver(MYSQL *con, QObject * parent=0);
     ~QMYSQLDriver();
     bool hasFeature(DriverFeature f) const;
     bool open(const QString & db,
@@ -119,7 +110,6 @@ protected:
     bool commitTransaction();
     bool rollbackTransaction();
 private:
-    void init();
     QMYSQLDriverPrivate* d;
 };
 
