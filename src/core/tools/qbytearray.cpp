@@ -53,12 +53,6 @@
 #include <zlib.h>
 #include <zstd.h>
 #include <zstd_errors.h>
-
-// ZSTD_getErrorString and ZSTD_getErrorCode are not exported in versions prior to v1.1.3
-#if !defined(QT_VISIBILITY_AVAILABLE) || (ZSTD_VERSION_NUMBER >= 10103)
-#  define QT_USE_ZSTD_ERROR
-#endif
-
 #endif // QT_NO_COMPRESS
 
 #define IS_RAW_DATA(d) ((d)->data != (d)->array)
@@ -117,7 +111,7 @@ char* qstrdup(const char *src)
     if (!src)
         return Q_NULLPTR;
     char *dst = new char[strlen(src) + 1];
-    return qstrcpy(dst, src);
+    return strcpy(dst, src);
 }
 
 /*! \relates QByteArray
@@ -497,7 +491,7 @@ QByteArray qUncompress(const uchar* data, int nbytes)
             break;
         }
         case Z_DATA_ERROR: {
-             qWarning("qUncompress: Z_DATA_ERROR: Input data is corrupted");
+            qWarning("qUncompress: Z_DATA_ERROR: Input data is corrupted");
             baunzip.clear();
             break;
          }
@@ -559,11 +553,7 @@ QByteArray qFastCompress(const char* data, int nbytes, int compressionLevel)
     QByteArray result(bndresult, Qt::Uninitialized);
     const size_t cmpresult = ZSTD_compress(result.data(), result.size(), data, nbytes, compressionLevel);
     if (Q_UNLIKELY(ZSTD_isError(cmpresult))) {
-#ifdef QT_USE_ZSTD_ERROR
         qWarning("qFastCompress: Could not compress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(cmpresult)));
-#else
-        qWarning("qFastCompress: Could not compress data");
-#endif
         return QByteArray();
     }
     result.resize(cmpresult);
@@ -616,11 +606,7 @@ QByteArray qFastUncompress(const char* data, int nbytes)
     QByteArray result(uncompressedsize, Qt::Uninitialized);
     const size_t decresult = ZSTD_decompress(result.data(), result.size(), data, nbytes);
     if (Q_UNLIKELY(ZSTD_isError(decresult))) {
-#ifdef QT_USE_ZSTD_ERROR
         qWarning("qFastCompress: Could not uncompress data (%s)", ZSTD_getErrorString(ZSTD_getErrorCode(decresult)));
-#else
-        qWarning("qFastCompress: Could not uncompress data");
-#endif
         return QByteArray();
     }
 

@@ -30,18 +30,11 @@
 #include "JSString.h"
 #include "ObjectPrototype.h"
 #include "PrototypeFunction.h"
+#include <wtf/DateMath.h>
+
 #include <math.h>
 #include <time.h>
-#include <wtf/DateMath.h>
-#include <wtf/MathExtras.h>
-
-#if HAVE(SYS_TIME_H)
 #include <sys/time.h>
-#endif
-
-#if HAVE(SYS_TIMEB_H)
-#include <sys/timeb.h>
-#endif
 
 using namespace WTF;
 

@@ -31,10 +31,9 @@
 **
 ****************************************************************************/
 
-#include <QtTest/QtTest>
-#include <QtCore/QCoreApplication>
-
-#include <QtDBus/qdbusutil_p.h>
+#include "QtTest/QtTest"
+#include "qcoreapplication.h"
+#include "qdbusutil_p.h"
 
 #include <dbus/dbus.h>
 

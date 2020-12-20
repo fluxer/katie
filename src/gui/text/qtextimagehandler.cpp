@@ -203,7 +203,7 @@ QSizeF QTextImageHandler::intrinsicSize(QTextDocument *doc, int posInDocument, c
 void QTextImageHandler::drawObject(QPainter *p, const QRectF &rect, QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
     Q_UNUSED(posInDocument)
-        const QTextImageFormat imageFormat = format.toImageFormat();
+    const QTextImageFormat imageFormat = format.toImageFormat();
 
     if (qApp->thread() != QThread::currentThread()) {
         const QImage image = getImage(doc, imageFormat);

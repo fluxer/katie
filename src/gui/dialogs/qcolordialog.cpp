@@ -61,8 +61,6 @@ QT_BEGIN_NAMESPACE
 
 //////////// QWellArray BEGIN
 
-struct QWellArrayData;
-
 class QWellArray : public QWidget
 {
     Q_OBJECT
@@ -81,9 +79,6 @@ public:
     virtual void setSelected(int row, int col);
 
     QSize sizeHint() const;
-
-    virtual void setCellBrush(int row, int col, const QBrush &);
-    QBrush cellBrush(int row, int col);
 
     inline int cellWidth() const
         { return cellw; }
@@ -150,7 +145,6 @@ private:
     int curCol;
     int selRow;
     int selCol;
-    QWellArrayData *d;
 };
 
 void QWellArray::paintEvent(QPaintEvent *e)
@@ -200,15 +194,9 @@ void QWellArray::paintEvent(QPaintEvent *e)
     }
 }
 
-struct QWellArrayData {
-    QBrush *brush;
-};
-
 QWellArray::QWellArray(int rows, int cols, QWidget *parent)
-    : QWidget(parent)
-        ,nrows(rows), ncols(cols)
+    : QWidget(parent), nrows(rows), ncols(cols)
 {
-    d = 0;
     setFocusPolicy(Qt::StrongFocus);
     cellw = 28;
     cellh = 24;
@@ -227,7 +215,7 @@ QSize QWellArray::sizeHint() const
 
 void QWellArray::paintCell(QPainter* p, int row, int col, const QRect &rect)
 {
-    int b = 3; //margin
+    static const int b = 3; //margin
 
     const QPalette & g = palette();
     QStyleOptionFrame opt;
@@ -238,7 +226,6 @@ void QWellArray::paintCell(QPainter* p, int row, int col, const QRect &rect)
     opt.palette = g;
     opt.state = QStyle::State_Enabled | QStyle::State_Sunken;
     style()->drawPrimitive(QStyle::PE_Frame, &opt, p, this);
-    b += dfw;
 
     if ((row == curRow) && (col == curCol)) {
         if (hasFocus()) {
@@ -257,14 +244,12 @@ void QWellArray::paintCell(QPainter* p, int row, int col, const QRect &rect)
  */
 void QWellArray::paintCellContents(QPainter *p, int row, int col, const QRect &r)
 {
-    if (d) {
-        p->fillRect(r, d->brush[row*numCols()+col]);
-    } else {
-        p->fillRect(r, Qt::white);
-        p->setPen(Qt::black);
-        p->drawLine(r.topLeft(), r.bottomRight());
-        p->drawLine(r.topRight(), r.bottomLeft());
-    }
+    Q_UNUSED(row);
+    Q_UNUSED(col);
+    p->fillRect(r, Qt::white);
+    p->setPen(Qt::black);
+    p->drawLine(r.topLeft(), r.bottomRight());
+    p->drawLine(r.topRight(), r.bottomLeft());
 }
 
 void QWellArray::mousePressEvent(QMouseEvent *e)
@@ -336,31 +321,6 @@ void QWellArray::focusInEvent(QFocusEvent*)
 {
     updateCell(curRow, curCol);
 }
-
-void QWellArray::setCellBrush(int row, int col, const QBrush &b)
-{
-    if (!d) {
-        d = new QWellArrayData;
-        int i = numRows()*numCols();
-        d->brush = new QBrush[i];
-    }
-    if (row >= 0 && row < numRows() && col >= 0 && col < numCols())
-        d->brush[row*numCols()+col] = b;
-}
-
-/*
-  Returns the brush set for the cell at \a row, \a column. If no brush is
-  set, Qt::NoBrush is returned.
-*/
-
-QBrush QWellArray::cellBrush(int row, int col)
-{
-    if (d && row >= 0 && row < numRows() && col >= 0 && col < numCols())
-        return d->brush[row*numCols()+col];
-    return Qt::NoBrush;
-}
-
-
 
 /*!\reimp
 */

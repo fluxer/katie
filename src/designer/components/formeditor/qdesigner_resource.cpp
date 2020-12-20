@@ -2258,15 +2258,15 @@ void QDesignerResource::createResources(DomResources *resources)
             QString path = QDir::cleanPath(m_formWindow->absoluteDir().absoluteFilePath(res->attributeLocation()));
             while (!QFile::exists(path)) {
                 QWidget *dialogParent = m_formWindow->core()->topLevel();
-                const QString promptTitle = QApplication::translate("qdesigner_internal::QDesignerResource", "Loading qrc file", 0, QApplication::UnicodeUTF8);
-                const QString prompt = QApplication::translate("qdesigner_internal::QDesignerResource", "The specified qrc file <p><b>%1</b></p><p>could not be found. Do you want to update the file location?</p>", 0, QApplication::UnicodeUTF8).arg(path);
+                const QString promptTitle = QApplication::translate("qdesigner_internal::QDesignerResource", "Loading qrc file", QApplication::UnicodeUTF8);
+                const QString prompt = QApplication::translate("qdesigner_internal::QDesignerResource", "The specified qrc file <p><b>%1</b></p><p>could not be found. Do you want to update the file location?</p>", QApplication::UnicodeUTF8).arg(path);
 
                 const QMessageBox::StandardButton answer = core()->dialogGui()->message(dialogParent,  QDesignerDialogGuiInterface::ResourceLoadFailureMessage,
                         QMessageBox::Warning, promptTitle,  prompt, QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes);
                 if (answer == QMessageBox::Yes) {
                     const QFileInfo fi(path);
-                    const QString fileDialogTitle = QApplication::translate("qdesigner_internal::QDesignerResource", "New location for %1", 0, QApplication::UnicodeUTF8).arg(fi.fileName());
-                    const QString fileDialogPattern = QApplication::translate("qdesigner_internal::QDesignerResource", "Resource files (*.qrc)", 0, QApplication::UnicodeUTF8);
+                    const QString fileDialogTitle = QApplication::translate("qdesigner_internal::QDesignerResource", "New location for %1", QApplication::UnicodeUTF8).arg(fi.fileName());
+                    const QString fileDialogPattern = QApplication::translate("qdesigner_internal::QDesignerResource", "Resource files (*.qrc)", QApplication::UnicodeUTF8);
                     path = core()->dialogGui()->getOpenFileName(dialogParent, fileDialogTitle, fi.absolutePath(), fileDialogPattern);
                     if (path.isEmpty())
                         break;

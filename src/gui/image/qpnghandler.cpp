@@ -123,21 +123,9 @@ static void iod_read_fn(png_structp png_ptr, png_bytep data, png_size_t length)
     QPngHandlerPrivate *d = (QPngHandlerPrivate *)png_get_io_ptr(png_ptr);
     QIODevice *in = d->q->device();
 
-    if (d->state == QPngHandlerPrivate::ReadingEnd && !in->isSequential() && (in->size() - in->pos()) < 4 && length == 4) {
-        // Workaround for certain malformed PNGs that lack the final crc bytes
-        uchar endcrc[4] = { 0xae, 0x42, 0x60, 0x82 };
-        memcpy(data, endcrc, 4);
-        in->seek(in->size());
-        return;
-    }
-
-    while (length) {
-        int nr = in->read((char*)data, length);
-        if (nr <= 0) {
-            png_error(png_ptr, "Read Error");
-            break;
-        }
-        length -= nr;
+    int nr = in->read((char*)data, length);
+    if (nr != length) {
+        png_error(png_ptr, "Read Error");
     }
 }
 
@@ -163,7 +151,7 @@ static void qpiw_flush_fn(png_structp /* png_ptr */)
 #endif
 
 static
-void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float screen_gamma=0.0)
+void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float screen_gamma)
 {
     if (screen_gamma != 0.0 && png_get_valid(png_ptr, info_ptr, PNG_INFO_gAMA)) {
         double file_gamma;
@@ -545,17 +533,10 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
         return false;
     }
 
-    if (quality_in >= 0) {
-        if (Q_UNLIKELY(quality_in > 9)) {
-            qWarning("PNG: Quality %d out of range", quality_in);
-            png_set_compression_level(png_ptr, 9);
-        } else {
-            png_set_compression_level(png_ptr, quality_in);
-        }
-    }
+    Q_ASSERT(quality_in >= 0 && quality_in <= 9);
+    png_set_compression_level(png_ptr, quality_in);
 
     png_set_write_fn(png_ptr, (void*)this, qpiw_write_fn, qpiw_flush_fn);
-
 
     int color_type = 0;
     if (image.colorCount())
@@ -614,9 +595,7 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
 
     // Qt==ARGB==Big(ARGB)==Little(BGRA). But RGB888 is RGB regardless
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-    if (image.format() != QImage::Format_RGB888) {
-        png_set_bgr(png_ptr);
-    }
+    png_set_bgr(png_ptr);
 #endif
 
     QPoint offset = image.offset();
@@ -640,7 +619,7 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
     if (image.depth() != 1)
         png_set_packing(png_ptr);
 
-    if (color_type == PNG_COLOR_TYPE_RGB && image.format() != QImage::Format_RGB888)
+    if (color_type == PNG_COLOR_TYPE_RGB)
         png_set_filler(png_ptr, 0, QFILLER_ORDER);
 
     int height = image.height();
@@ -651,7 +630,6 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
     case QImage::Format_Indexed8:
     case QImage::Format_RGB32:
     case QImage::Format_ARGB32:
-    case QImage::Format_RGB888:
         {
             png_bytep* row_pointers = new png_bytep[height];
             for (int y=0; y<height; y++)
@@ -731,6 +709,8 @@ bool QPngHandler::write(const QImage &image)
     if (quality >= 0) {
         quality = qMin(quality, 100);
         quality = (100-quality) * 9 / 91; // map [0,100] -> [9,0]
+    } else {
+        quality = 2;
     }
     writer.setGamma(d->gamma);
     return writer.writeImage(image, quality);

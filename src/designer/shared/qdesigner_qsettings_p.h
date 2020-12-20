@@ -46,14 +46,13 @@
 #define QDESIGNER_QSETTINGS_H
 
 #include "abstractsettings_p.h"
-#include "shared_global_p.h"
 
 #include <QtCore/QSettings>
 
 QT_BEGIN_NAMESPACE
 
 //  Implements QDesignerSettingsInterface by calls to QSettings
-class QDESIGNER_SHARED_EXPORT QDesignerQSettings : public QDesignerSettingsInterface
+class Q_DESIGNER_EXPORT QDesignerQSettings : public QDesignerSettingsInterface
 {
 public:
     QDesignerQSettings();

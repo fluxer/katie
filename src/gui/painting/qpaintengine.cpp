@@ -573,12 +573,6 @@ void QPaintEngine::drawImage(const QRectF &r, const QImage &image, const QRectF 
 */
 
 /*!
-    \fn void QPaintEngine::fix_neg_rect(int *x, int *y, int *w, int *h);
-
-    \internal
-*/
-
-/*!
     \fn bool QPaintEngine::testDirty(DirtyFlags df)
 
     \internal

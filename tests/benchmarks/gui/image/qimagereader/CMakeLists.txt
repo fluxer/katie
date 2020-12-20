@@ -2,8 +2,6 @@ katie_gui_test(tst_bench_qimagereader
     ${CMAKE_CURRENT_SOURCE_DIR}/tst_qimagereader.cpp
 )
 
-# GIF is built-in supported
-target_compile_definitions(tst_bench_qimagereader PRIVATE -DQTEST_HAVE_GIF)
 if(WITH_JPEG AND JPEG_FOUND)
     target_compile_definitions(tst_bench_qimagereader PRIVATE -DQTEST_HAVE_JPEG)
 endif()

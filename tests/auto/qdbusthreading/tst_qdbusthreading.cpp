@@ -166,8 +166,8 @@ Q_SIGNALS:
 
 #if 0
 typedef void (*qdbusThreadDebugFunc)(int, int, QDBusConnectionPrivate *);
-QDBUS_EXPORT void qdbusDefaultThreadDebug(int, int, QDBusConnectionPrivate *);
-extern QDBUS_EXPORT qdbusThreadDebugFunc qdbusThreadDebug;
+Q_DBUS_EXPORT void qdbusDefaultThreadDebug(int, int, QDBusConnectionPrivate *);
+extern Q_DBUS_EXPORT qdbusThreadDebugFunc qdbusThreadDebug;
 
 static void threadDebug(int action, int condition, QDBusConnectionPrivate *p)
 {

@@ -41,20 +41,22 @@
 
 QT_USE_NAMESPACE
 
-#define TF_SIZE QT_BUFFSIZE*81
+#define QFILE_BENCH_BUFSIZE 1024*512
+#define QFILE_BENCH_FACTOR 1024*512
+#define QFILE_BENCH_TF_SIZE QFILE_BENCH_FACTOR*81
 
 // 10 predefined (but random() seek positions
 // hardcoded to be comparable over several runs
-const int seekpos[] = {int(TF_SIZE*0.52),
-                       int(TF_SIZE*0.23),
-                       int(TF_SIZE*0.73),
-                       int(TF_SIZE*0.77),
-                       int(TF_SIZE*0.80),
-                       int(TF_SIZE*0.12),
-                       int(TF_SIZE*0.53),
-                       int(TF_SIZE*0.21),
-                       int(TF_SIZE*0.27),
-                       int(TF_SIZE*0.78)};
+const int seekpos[] = {int(QFILE_BENCH_TF_SIZE*0.52),
+                       int(QFILE_BENCH_TF_SIZE*0.23),
+                       int(QFILE_BENCH_TF_SIZE*0.73),
+                       int(QFILE_BENCH_TF_SIZE*0.77),
+                       int(QFILE_BENCH_TF_SIZE*0.80),
+                       int(QFILE_BENCH_TF_SIZE*0.12),
+                       int(QFILE_BENCH_TF_SIZE*0.53),
+                       int(QFILE_BENCH_TF_SIZE*0.21),
+                       int(QFILE_BENCH_TF_SIZE*0.27),
+                       int(QFILE_BENCH_TF_SIZE*0.78)};
 
 const int sp_size = sizeof(seekpos)/sizeof(int);
 
@@ -107,7 +109,7 @@ private:
     void readSmallFiles_data(BenchmarkType type, QIODevice::OpenModeFlag t, QIODevice::OpenModeFlag b);
     void readSmallFiles();
     void createFile();
-    void fillFile(int factor=QT_BUFFSIZE);
+    void fillFile(int factor=QFILE_BENCH_FACTOR);
     void removeFile();
     void createSmallFiles();
     void removeSmallFiles();
@@ -215,7 +217,7 @@ void tst_qfile::readBigFile()
     QFETCH(QFile::OpenModeFlag, textMode);
     QFETCH(QFile::OpenModeFlag, bufferedMode);
 
-    char *buffer = new char[QT_BUFFSIZE];
+    char *buffer = new char[QFILE_BENCH_BUFSIZE];
     createFile();
     fillFile();
 
@@ -235,9 +237,9 @@ void tst_qfile::readBigFile()
             QFSFileEngine fse(filename);
             fse.open(QIODevice::ReadOnly|textMode|bufferedMode);
             QBENCHMARK {
-               //qWarning() << fse.supportsExtension(QAbstractFileEngine::AtEndExtension);
-               while(fse.read(buffer, blockSize));
-               fse.seek(0);
+                //qWarning() << fse.supportsExtension(QAbstractFileEngine::MapExtension);
+                while(fse.read(buffer, blockSize));
+                fse.seek(0);
             }
             fse.close();
         }
@@ -245,11 +247,11 @@ void tst_qfile::readBigFile()
         case(PosixBenchmark): {
             QByteArray data = filename.toLocal8Bit();
             const char* cfilename = data.constData();
-            FILE* cfile = ::fopen(cfilename, "rb");
+            FILE* cfile = QT_FOPEN(cfilename, "rb");
             QBENCHMARK {
                 while(!feof(cfile))
                     ::fread(buffer, blockSize, 1, cfile);
-                ::fseek(cfile, 0, SEEK_SET);
+                QT_FSEEK(cfile, 0, SEEK_SET);
             }
             ::fclose(cfile);
         }
@@ -304,10 +306,10 @@ void tst_qfile::seek()
         case(PosixBenchmark): {
             QByteArray data = filename.toLocal8Bit();
             const char* cfilename = data.constData();
-            FILE* cfile = ::fopen(cfilename, "rb");
+            FILE* cfile = QT_FOPEN(cfilename, "rb");
             QBENCHMARK {
                 i=(i+1)%sp_size;
-                ::fseek(cfile, seekpos[i], SEEK_SET);
+                QT_FSEEK(cfile, seekpos[i], SEEK_SET);
             }
             ::fclose(cfile);
         }
@@ -360,7 +362,7 @@ void tst_qfile::open()
             const char* cfilename = data.constData();
 
             QBENCHMARK {
-                FILE* cfile = ::fopen(cfilename, "rb");
+                FILE* cfile = QT_FOPEN(cfilename, "rb");
                 ::fclose(cfile);
             }
         }
@@ -369,7 +371,7 @@ void tst_qfile::open()
             // ensure we don't account toLocal8Bit()
             QByteArray data = filename.toLocal8Bit();
             const char* cfilename = data.constData();
-            FILE* cfile = ::fopen(cfilename, "rb");
+            FILE* cfile = QT_FOPEN(cfilename, "rb");
 
             QBENCHMARK {
                 QFile file;
@@ -441,11 +443,7 @@ void tst_qfile::createSmallFiles()
     dir.cd(QLatin1String("tst"));
     tmpDirName = dir.absolutePath();
 
-#if defined(Q_WS_WINCE)  
-    for (int i = 0; i < 100; ++i)
-#else
     for (int i = 0; i < 1000; ++i)
-#endif
     {
         QFile f(tmpDirName + QLatin1Char('/') + QString::number(i));
         f.open(QIODevice::WriteOnly);
@@ -475,7 +473,7 @@ void tst_qfile::readSmallFiles()
 
     QDir dir(tmpDirName);
     const QStringList files = dir.entryList(QDir::NoDotAndDotDot|QDir::NoSymLinks|QDir::Files);
-    char *buffer = new char[QT_BUFFSIZE];
+    char *buffer = new char[QFILE_BENCH_BUFSIZE];
 
     switch (testType) {
         case(QFileBenchmark): {
@@ -523,14 +521,14 @@ void tst_qfile::readSmallFiles()
         case(PosixBenchmark): {
             QList<FILE*> fileList;
             Q_FOREACH(QString file, files) {
-                fileList.append(::fopen(QFile::encodeName(tmpDirName + QLatin1Char('/') + file).constData(), "rb"));
+                fileList.append(QT_FOPEN(QFile::encodeName(tmpDirName + QLatin1Char('/') + file).constData(), "rb"));
             }
 
             QBENCHMARK {
                 Q_FOREACH(FILE* cfile, fileList) {
                     while(!feof(cfile))
                         ::fread(buffer, blockSize, 1, cfile);
-                    ::fseek(cfile, 0, SEEK_SET);
+                    QT_FSEEK(cfile, 0, SEEK_SET);
                 }
             }
 
@@ -558,19 +556,6 @@ void tst_qfile::writeFileSequential_data()
     QTest::newRow("internal 4k") << 4096;
     QTest::newRow("internal 16k") << 16384;
     QTest::newRow("internal 64k") << 65536;
-
-    //slow media (e.g. SD card)
-    QString externalPath;
-#ifdef Q_OS_SYMBIAN
-    externalPath = "E:/";
-#endif
-    if (!externalPath.isEmpty()) {
-        QTest::newRow("external 16b") << 16 << externalPath;
-        QTest::newRow("external 512b") << 512 << externalPath;
-        QTest::newRow("external 4k") << 4096 << externalPath;
-        QTest::newRow("external 16k") << 16384 << externalPath;
-        QTest::newRow("external 64k") << 65536 << externalPath;
-    }
 }
 
 void tst_qfile::writeFileSequential()

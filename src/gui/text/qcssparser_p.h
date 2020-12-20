@@ -643,7 +643,7 @@ public:
     virtual bool nodeNameEquals(NodePtr node, const QString& nodeName) const;
     virtual QString attribute(NodePtr node, const QString &name) const = 0;
     virtual bool hasAttributes(NodePtr node) const = 0;
-    virtual QStringList nodeIds(NodePtr node) const;
+    virtual QString nodeId(NodePtr node) const;
     virtual QStringList nodeNames(NodePtr node) const = 0;
     virtual bool isNullNode(NodePtr node) const = 0;
     virtual NodePtr parentNode(NodePtr node) const = 0;
@@ -729,7 +729,7 @@ class Q_GUI_EXPORT Parser
 {
 public:
     Parser();
-    Parser(const QString &css, bool file = false);
+    Parser(const QString &css);
 
     void init(const QString &css, bool file = false);
     bool parse(StyleSheet *styleSheet, Qt::CaseSensitivity nameCaseSensitivity = Qt::CaseSensitive);

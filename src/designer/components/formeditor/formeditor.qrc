@@ -1,4 +1,4 @@
-<RCC>
+<!DOCTYPE RCC><RCC version="1.0">
   <qresource prefix="/trolltech/formeditor">
     <file>images/submenu.png</file>
     <file>images/emptyicon.png</file>

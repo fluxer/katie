@@ -130,10 +130,12 @@ static inline int qt_safe_open(const char *pathname, int flags, mode_t mode = 07
     int fd;
     EINTR_LOOP(fd, QT_OPEN(pathname, flags, mode));
 
+#ifndef O_CLOEXEC
     // unknown flags are ignored, so we have no way of verifying if
     // O_CLOEXEC was accepted
     if (fd != -1)
         ::fcntl(fd, F_SETFD, FD_CLOEXEC);
+#endif
     return fd;
 }
 #undef QT_OPEN
@@ -149,16 +151,11 @@ static inline int qt_safe_pipe(int pipefd[2], int flags = 0)
     Q_ASSERT((flags & ~O_NONBLOCK) == 0);
 #endif
 
-    int ret;
-#if defined(Q_OS_LINUX) && defined(O_CLOEXEC)
-    // use pipe2
-    flags |= O_CLOEXEC;
-    ret = ::pipe2(pipefd, flags); // pipe2 is Linux-specific and is documented not to return EINTR
-    if (ret == 0 || errno != ENOSYS)
-        return ret;
-#endif
-
-    ret = ::pipe(pipefd);
+#if defined(QT_HAVE_PIPE2) && defined(O_CLOEXEC)
+    // since Linux 2.6.24 and glibc 2.9, FreeBSD also supports it
+    return ::pipe2(pipefd, flags | O_CLOEXEC);
+#else
+    int ret = ::pipe(pipefd);
     if (ret == -1)
         return -1;
 
@@ -172,25 +169,21 @@ static inline int qt_safe_pipe(int pipefd[2], int flags = 0)
     }
 
     return 0;
+#endif
 }
 
 // don't call dup or fcntl(F_DUPFD)
 static inline int qt_safe_dup(int oldfd)
 {
-    int ret;
 #ifdef F_DUPFD_CLOEXEC
-    // use this fcntl
-    ret = ::fcntl(oldfd, F_DUPFD_CLOEXEC, 0);
-    if (ret != -1 || errno != EINVAL)
-        return ret;
-#endif
-
-    // use F_DUPFD
-    ret = ::fcntl(oldfd, F_DUPFD, 0);
-
+    // since Linux 2.6.24
+    return ::fcntl(oldfd, F_DUPFD_CLOEXEC, 0);
+#else
+    int ret = ::fcntl(oldfd, F_DUPFD, 0);
     if (ret != -1)
         ::fcntl(ret, F_SETFD, FD_CLOEXEC);
     return ret;
+#endif
 }
 
 // don't call dup2

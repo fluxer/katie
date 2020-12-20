@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_INTEGRATION_H
 #define QDESIGNER_INTEGRATION_H
 
-#include "shared_global_p.h"
 #include <QtDesigner/abstractintegration.h>
 
 #include <QtCore/QObject>
@@ -64,7 +63,7 @@ namespace qdesigner_internal {
 struct Selection;
 class QDesignerIntegrationPrivate;
 
-class QDESIGNER_SHARED_EXPORT QDesignerIntegration: public QDesignerIntegrationInterface
+class Q_DESIGNER_EXPORT QDesignerIntegration: public QDesignerIntegrationInterface
 {
     Q_OBJECT
 public:

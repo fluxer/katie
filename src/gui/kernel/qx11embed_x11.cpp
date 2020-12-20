@@ -237,15 +237,6 @@ QT_BEGIN_NAMESPACE
     \omitvalue Internal
 */
 
-// This is a hack to move topData() out from QWidgetPrivate to public.  We
-// need to to inspect window()'s embedded state.
-class QHackWidget : public QWidget
-{
-    Q_DECLARE_PRIVATE(QWidget)
-public:
-    QTLWExtra* topData() { return d_func()->topData(); }
-};
-
 static quint32 XEMBED_VERSION = 0;
 
 enum QX11EmbedMessageType {
@@ -612,7 +603,7 @@ void QX11EmbedWidgetPrivate::clearFocus()
 void QX11EmbedWidgetPrivate::setEmbedded()
 {
     Q_Q(QX11EmbedWidget);
-    ((QHackWidget *)q->window())->topData()->embedded = 1;
+    q->window()->d_func()->topData()->embedded = 1;
 }
 
 /*! \internal
@@ -741,7 +732,7 @@ bool QX11EmbedWidget::x11Event(XEvent *event)
         // root window. We must also consider the case that we may be
         // reparented from one container to another.
         if (event->xreparent.parent == x11Info().appRootWindow(x11Info().screen())) {
-            if (((QHackWidget *)this)->topData()->embedded) {
+            if (d->topData()->embedded) {
                 d->container = 0;
                 emit containerClosed();
             }
@@ -1081,7 +1072,7 @@ void QX11EmbedContainer::paintEvent(QPaintEvent *)
 bool QX11EmbedContainerPrivate::isEmbedded() const
 {
     Q_Q(const QX11EmbedContainer);
-    return ((QHackWidget *)q->window())->topData()->embedded == 1;
+    return q->window()->d_func()->topData()->embedded == 1;
 }
 
 /*! \internal
@@ -1091,7 +1082,7 @@ bool QX11EmbedContainerPrivate::isEmbedded() const
 WId QX11EmbedContainerPrivate::topLevelParentWinId() const
 {
     Q_Q(const QX11EmbedContainer);
-    return ((QHackWidget *)q->window())->topData()->parentWinId;
+    return q->window()->d_func()->topData()->parentWinId;
 }
 
 /*!

@@ -1,8 +1,9 @@
-# add_definitions()
+add_definitions(${PNG_DEFINITIONS})
 set(EXTRA_GUI_LIBS
     KtCore KtXml
     ${FREETYPE_LIBRARIES}
     ${X11_X11_LIB}
+    ${PNG_LIBRARIES}
 )
 
 set(GUI_PUBLIC_HEADERS
@@ -217,13 +218,12 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
     ${FREETYPE_INCLUDE_DIRS}
     ${X11_INCLUDE_DIR}
+    ${PNG_INCLUDE_DIRS}
 )
 
 set(GUI_HEADERS
@@ -258,6 +258,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qmessagebox.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprogressdialog.h
@@ -522,9 +523,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocumentwriter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qcssparser_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtexttable_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qzipreader_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qzipwriter_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextodfwriter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz_p.h
@@ -651,6 +649,11 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpreviewdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupwidget.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintsettingsoutput.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintwidget.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qmessagebox.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/effects/qgraphicseffect.cpp
@@ -852,8 +855,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocumentwriter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qsyntaxhighlighter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qcssparser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qzip.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextodfwriter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11.cpp
@@ -924,6 +925,15 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbararealayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprintpreviewwidget.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-buffer.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gdef.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gsub.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gpos.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-impl.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-open.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-stream.c
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
+    ${CMAKE_SOURCE_DIR}/src/gui/text/qharfbuzz.cpp
 )
 
 # keep in sync with the top-level CMake file, only libraries setup is needed here
@@ -935,36 +945,6 @@ foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xext SM ICE)
         )
     endif()
 endforeach()
-
-if(PNG_FOUND)
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${PNG_LIBRARIES}
-    )
-    include_directories(${PNG_INCLUDE_DIRS})
-    add_definitions(${PNG_DEFINITIONS})
-else()
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/png.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngerror.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngget.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngmem.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngpread.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngread.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngrio.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngrtran.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngrutil.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngset.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngtest.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngtrans.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwio.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwrite.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwtran.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwutil.c
-    )
-    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/libpng)
-endif()
 
 if(WITH_CUPS AND CUPS_FOUND)
     set(GUI_HEADERS
@@ -1000,30 +980,6 @@ if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
     add_definitions(${FONTCONFIG_DEFINITIONS})
 endif()
 
-if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${HARFBUZZ_LIBRARIES}
-    )
-    include_directories(${HARFBUZZ_INCLUDES})
-else()
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-buffer.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gdef.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gsub.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gpos.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-impl.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-open.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-stream.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
-        ${CMAKE_SOURCE_DIR}/src/gui/text/qharfbuzz.cpp
-    )
-    include_directories(
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
-    )
-endif()
-
 if(WITH_ACCESSIBILITY)
     set(GUI_HEADERS
         ${GUI_HEADERS}
@@ -1044,21 +1000,6 @@ if(WITH_ACCESSIBILITY)
         ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessibleplugin.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessible_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblebridge.cpp
-    )
-endif()
-
-if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintsettingsoutput.ui
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintwidget.ui
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui
     )
 endif()
 
@@ -1093,7 +1034,6 @@ katie_allinone_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextformat.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qsizegrip.cpp
@@ -1114,9 +1054,11 @@ set_target_properties(KtGui PROPERTIES
     EXPORT_NAME Gui
 )
 
+katie_setup_pch(KtGui)
+
 install(
     TARGETS KtGui
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

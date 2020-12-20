@@ -31,6 +31,7 @@
 **
 ****************************************************************************/
 
+#include <QtCore/qtranslator.h>
 #include <QtGui/qapplication.h>
 #include <QtGui/qmainwindow.h>
 #include <QtGui/qtabwidget.h>
@@ -46,6 +47,17 @@ int main(int argc, char *argv[])
     Q_INIT_RESOURCE(qdbusviewer);
 
     QApplication app(argc, argv);
+
+#ifndef QT_NO_TRANSLATION
+    QTranslator translator;
+    QTranslator qtTranslator;
+    if (translator.load(QLatin1String("qt_tools"))
+        && qtTranslator.load(QLatin1String("qt"))) {
+        app.installTranslator(&translator);
+        app.installTranslator(&qtTranslator);
+    }
+#endif
+
     QMainWindow mw;
     app.setWindowIcon(QIcon(QLatin1String(":/trolltech/qdbusviewer/qdbusviewer.png")));
     mw.setWindowTitle(app.translate("QtDBusViewer", "Katie D-Bus Viewer"));

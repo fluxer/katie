@@ -50,7 +50,6 @@ class Q_GUI_EXPORT QWindowsStyle : public QCommonStyle
     Q_OBJECT
 public:
     QWindowsStyle();
-    ~QWindowsStyle();
 
     void polish(QApplication*);
     void unpolish(QApplication*);
@@ -86,7 +85,6 @@ protected:
 private:
     Q_DISABLE_COPY(QWindowsStyle)
     Q_DECLARE_PRIVATE(QWindowsStyle)
-    void *reserved;
 };
 
 #endif // QT_NO_STYLE_WINDOWS

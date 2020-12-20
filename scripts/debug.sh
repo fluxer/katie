@@ -2,9 +2,7 @@
 
 set -e
 
-cwd="$(realpath $(dirname $0))"
-
-echo "$cwd"
+cwd="$(readlink -f $(dirname $0))"
 
 rm -rf "$cwd/../debug"
 mkdir -p "$cwd/../debug"
@@ -19,4 +17,4 @@ export LDFLAGS="$LDFLAGS -Wall -fsanitize=$sanitizers"
 
 cmake ../ -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_INSTALL_PREFIX=/usr $@
-make -j$(nproc || echo 1)
+make -j $(nproc || sysctl -n hw.ncpu || echo 1)

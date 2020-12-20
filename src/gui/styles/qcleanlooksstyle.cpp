@@ -34,7 +34,7 @@
 #include "qcleanlooksstyle.h"
 #include "qcleanlooksstyle_p.h"
 
-#if !defined(QT_NO_STYLE_CLEANLOOKS) || defined(QT_PLUGIN)
+#if !defined(QT_NO_STYLE_CLEANLOOKS)
 
 #include "qwindowsstyle_p.h"
 #include "qcombobox.h"
@@ -573,7 +573,7 @@ static void qt_cleanlooks_draw_mdibutton(QPainter *painter, const QStyleOptionTi
 */
 QCleanlooksStyle::QCleanlooksStyle() : QWindowsStyle(*new QCleanlooksStylePrivate)
 {
-    setObjectName(QLatin1String("CleanLooks"));
+    setObjectName(QLatin1String("Cleanlooks"));
 }
 
 /*!
@@ -583,13 +583,7 @@ QCleanlooksStyle::QCleanlooksStyle() : QWindowsStyle(*new QCleanlooksStylePrivat
 */
 QCleanlooksStyle::QCleanlooksStyle(QCleanlooksStylePrivate &dd) : QWindowsStyle(dd)
 {
-}
-
-/*!
-    Destroys the QCleanlooksStyle object.
-*/
-QCleanlooksStyle::~QCleanlooksStyle()
-{
+    setObjectName(QLatin1String("Cleanlooks"));
 }
 
 /*!
@@ -4359,6 +4353,4 @@ QT_END_NAMESPACE
 
 #include "moc_qcleanlooksstyle.h"
 
-#endif // QT_NO_STYLE_CLEANLOOKS || QT_PLUGIN
-
-
+#endif // QT_NO_STYLE_CLEANLOOKS

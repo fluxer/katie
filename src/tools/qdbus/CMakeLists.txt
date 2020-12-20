@@ -7,11 +7,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtDBus
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDBus
 )
 
 add_executable(qdbus ${CMAKE_CURRENT_SOURCE_DIR}/qdbus.cpp)
@@ -40,7 +37,7 @@ set_target_properties(qdbusxml2cpp PROPERTIES
 
 install(
     TARGETS qdbus qdbuscpp2xml qdbusxml2cpp
-    EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     RUNTIME DESTINATION ${KATIE_BINARIES_PATH}
     COMPONENT Tools
 )

@@ -80,28 +80,6 @@
 #include "Assertions.h"
 #include <string.h>
 
-#ifndef QT_NO_DEBUG
-namespace WTF {
-
-static bool staticIsForbidden;
-static bool isForbidden()
-{
-    return staticIsForbidden;
-}
-
-void fastMallocForbid()
-{
-    staticIsForbidden = true;
-}
-
-void fastMallocAllow()
-{
-    staticIsForbidden = false;
-}
-
-} // namespace WTF
-#endif // QT_NO_DEBUG
-
 namespace WTF {
 
 void* fastZeroedMalloc(size_t n)
@@ -111,45 +89,16 @@ void* fastZeroedMalloc(size_t n)
     return result;
 }
 
-} // namespace WTF
-
-namespace WTF {
-
-void* tryFastMalloc(size_t n)
-{
-    Q_ASSERT(!isForbidden());
-
-    return malloc(n);
-}
-
 void* fastMalloc(size_t n)
 {
-    Q_ASSERT(!isForbidden());
-
     void* result = malloc(n);
     if (!result)
         CRASH();
     return result;
 }
 
-void fastFree(void* p)
-{
-    Q_ASSERT(!isForbidden());
-
-    free(p);
-}
-
-void* tryFastRealloc(void* p, size_t n)
-{
-    Q_ASSERT(!isForbidden());
-
-    return realloc(p, n);
-}
-
 void* fastRealloc(void* p, size_t n)
 {
-    Q_ASSERT(!isForbidden());
-
     void* result = realloc(p, n);
     if (!result)
         CRASH();

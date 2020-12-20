@@ -1,4 +1,3 @@
-add_definitions(-DQDESIGNER_COMPONENTS_LIBRARY)
 set(EXTRA_DESIGNERCOMPONENTS_LIBS
     KtCore KtGui KtXml KtDesigner KtScript KtUiTools
 )
@@ -7,19 +6,12 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtScript
-    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtUiTools
-    ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
     ${CMAKE_BINARY_DIR}/include/QtDesigner
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDesigner
     ${CMAKE_BINARY_DIR}/include/QtDesignerComponents
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDesignerComponents
 )
 
 set(DESIGNERCOMPONENTS_HEADERS
@@ -234,10 +226,11 @@ set_target_properties(KtDesignerComponents PROPERTIES
 )
 
 katie_setup_object(KtDesignerComponents sharedfindwidget sharedqtpropertybrowser sharedqtgradienteditor)
+katie_setup_pch(KtDesignerComponents)
 
 install(
     TARGETS KtDesignerComponents
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

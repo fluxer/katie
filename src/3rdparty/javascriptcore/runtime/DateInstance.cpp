@@ -26,13 +26,12 @@
 
 #include <math.h>
 #include <wtf/DateMath.h>
-#include <wtf/MathExtras.h>
 
 using namespace WTF;
 
 namespace JSC {
 
-const ClassInfo DateInstance::info = {"Date", 0, 0, 0};
+const ClassInfo DateInstance::info = { "Date", 0, 0 };
 
 DateInstance::DateInstance(ExecState* exec, NonNullPassRefPtr<Structure> structure)
     : JSWrapperObject(structure)

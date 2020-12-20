@@ -26,15 +26,12 @@ if(NOT KATIE_FOUND)
     set(KATIE_FOUND TRUE)
 
     # Stored configuration paths that vendors usually change
-    set(KATIE_PREFIX_PATH "@KATIE_PREFIX_PATH@")
     set(KATIE_HEADERS_PATH "@KATIE_HEADERS_PATH@")
     set(KATIE_LIBRARIES_PATH "@KATIE_LIBRARIES_PATH@")
     set(KATIE_BINARIES_PATH "@KATIE_BINARIES_PATH@")
     set(KATIE_PLUGINS_PATH "@KATIE_PLUGINS_PATH@")
     set(KATIE_IMPORTS_PATH "@KATIE_IMPORTS_PATH@")
-    set(KATIE_DATA_PATH "@KATIE_DATA_PATH@")
     set(KATIE_TRANSLATIONS_PATH "@KATIE_TRANSLATIONS_PATH@")
-    set(KATIE_SETTINGS_PATH "@KATIE_SETTINGS_PATH@")
     set(KATIE_LDCONF_PATH "@KATIE_LDCONF_PATH@")
     set(KATIE_PROFILE_PATH "@KATIE_PROFILE_PATH@")
     set(KATIE_MAN_PATH "@KATIE_MAN_PATH@")
@@ -43,8 +40,7 @@ if(NOT KATIE_FOUND)
     set(KATIE_PIXMAPS_PATH "@KATIE_PIXMAPS_PATH@")
 
     # Include definitions for IMPORTED targets
-    include("${CMAKE_CURRENT_LIST_DIR}/KatieLibraryTargets.cmake")
-    include("${CMAKE_CURRENT_LIST_DIR}/KatieBinaryTargets.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/KatieTargets.cmake")
     # Include version info, required for the Qt4 compatibility setup
     include("${CMAKE_CURRENT_LIST_DIR}/KatieConfigVersion.cmake")
 
@@ -76,9 +72,6 @@ if(NOT KATIE_FOUND)
         string(TOUPPER ${tool} uppertool)
         set(KATIE_${uppertool} Katie::${tool})
     endforeach()
-
-    # Include macros, tools variables must be set before that
-    include("${CMAKE_CURRENT_LIST_DIR}/KatieMacros.cmake")
 
     # Platform specific stuff and some tests
     include("${KATIE_MKSPECS_DIR}/mkspecs.cmake")
@@ -119,8 +112,6 @@ if(NOT KATIE_FOUND)
 
         if(KATIE_TYPE STREQUAL SHARED)
             set(_libsuffix "${CMAKE_SHARED_LIBRARY_SUFFIX}")
-        elseif(KATIE_TYPE STREQUAL MODULE)
-            set(_libsuffix "${CMAKE_SHARED_MODULE_SUFFIX}")
         else()
             set(_libsuffix "${CMAKE_STATIC_LIBRARY_SUFFIX}")
         endif()

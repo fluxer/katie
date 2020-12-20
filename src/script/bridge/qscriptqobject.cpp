@@ -1017,7 +1017,7 @@ JSC::JSValue QtFunction::execute(JSC::ExecState *exec, JSC::JSValue thisValue,
                         meta, data->initialIndex, data->maybeOverloaded);
 }
 
-const JSC::ClassInfo QtFunction::info = { "QtFunction", &InternalFunction::info, 0, 0 };
+const JSC::ClassInfo QtFunction::info = { "QtFunction", &InternalFunction::info, 0 };
 
 JSC::JSValue QT_FASTCALL QtFunction::call(JSC::ExecState *exec, JSC::JSObject *callee,
                                             JSC::JSValue thisValue, const JSC::ArgList &args)
@@ -1074,7 +1074,7 @@ int QtFunction::specificIndex(const QScriptContext *context) const
     return result.asInt32();
 }
 
-const JSC::ClassInfo QtPropertyFunction::info = { "QtPropertyFunction", &InternalFunction::info, 0, 0 };
+const JSC::ClassInfo QtPropertyFunction::info = { "QtPropertyFunction", &InternalFunction::info, 0 };
 
 QtPropertyFunction::QtPropertyFunction(const QMetaObject *meta, int index,
                                        JSC::JSGlobalData *data,
@@ -1801,7 +1801,7 @@ QObjectPrototype::QObjectPrototype(JSC::ExecState* exec, WTF::PassRefPtr<JSC::St
     this->structure()->setHasGetterSetterProperties(true);
 }
 
-const JSC::ClassInfo QMetaObjectWrapperObject::info = { "QMetaObject", 0, 0, 0 };
+const JSC::ClassInfo QMetaObjectWrapperObject::info = { "QMetaObject", 0, 0 };
 
 QMetaObjectWrapperObject::QMetaObjectWrapperObject(
     JSC::ExecState *exec, const QMetaObject *metaObject, JSC::JSValue ctor,

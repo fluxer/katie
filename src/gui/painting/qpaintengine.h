@@ -185,8 +185,6 @@ public:
     };
     virtual Type type() const = 0;
 
-    inline void fix_neg_rect(int *x, int *y, int *w, int *h);
-
     inline bool testDirty(DirtyFlags df);
     inline void setDirty(DirtyFlags df);
     inline void clearDirty(DirtyFlags df);
@@ -256,7 +254,6 @@ protected:
     friend class QWidget;
     friend class QPainter;
     friend class QPainterPrivate;
-    friend class QMacPrintEnginePrivate;
 
     QPaintEngine::DirtyFlags dirtyFlags;
 };
@@ -264,19 +261,6 @@ protected:
 //
 // inline functions
 //
-
-inline void QPaintEngine::fix_neg_rect(int *x, int *y, int *w, int *h)
-{
-    if (*w < 0) {
-        *w = -*w;
-        *x -= *w - 1;
-    }
-    if (*h < 0) {
-        *h = -*h;
-        *y -= *h - 1;
-    }
-}
-
 inline bool QPaintEngine::testDirty(DirtyFlags df) {
     Q_ASSERT(state);
     return ((state->dirtyFlags & df) != 0);

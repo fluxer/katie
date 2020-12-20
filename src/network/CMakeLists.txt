@@ -44,9 +44,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtNetwork
-    ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
     ${OPENSSL_INCLUDE_DIR}
     ${ZLIB_INCLUDE_DIRS}
 )
@@ -179,7 +177,6 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qurlinfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkproxy.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkproxy_generic.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qnetworkinterface_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocketengine.cpp
@@ -229,9 +226,11 @@ set_target_properties(KtNetwork PROPERTIES
     EXPORT_NAME Network
 )
 
+katie_setup_pch(KtNetwork)
+
 install(
     TARGETS KtNetwork
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

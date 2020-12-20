@@ -45,13 +45,13 @@
 // We mean it.
 //
 
-#include "qdatetime.h"
+#include "qfileinfo.h"
 #include "qstringlist.h"
 #include "qobject_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class Q_AUTOTEST_EXPORT QSettingsPrivate
+class QSettingsPrivate
     : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QSettings)
@@ -76,12 +76,11 @@ public:
     QSettings::SettingsStatus status;
     QString filename;
     QSettings::SettingsMap map;
-    QSettings::SettingsMap pending;
     QString group;
 
     QSettings::ReadFunc readFunc;
     QSettings::WriteFunc writeFunc;
-    QDateTime timestamp;
+    bool shouldwrite;
 };
 
 QT_END_NAMESPACE

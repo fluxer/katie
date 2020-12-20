@@ -52,8 +52,8 @@ QPersistentModelIndexData *QPersistentModelIndexData::create(const QModelIndex &
     QPersistentModelIndexData *d = Q_NULLPTR;
     QAbstractItemModel *model = const_cast<QAbstractItemModel *>(index.model());
     QHash<QModelIndex, QPersistentModelIndexData *> &indexes = model->d_func()->persistent.indexes;
-    const QHash<QModelIndex, QPersistentModelIndexData *>::iterator it = indexes.find(index);
-    if (it != indexes.end()) {
+    const QHash<QModelIndex, QPersistentModelIndexData *>::const_iterator it = indexes.constFind(index);
+    if (it != indexes.constEnd()) {
         d = (*it);
     } else {
         d = new QPersistentModelIndexData(index);

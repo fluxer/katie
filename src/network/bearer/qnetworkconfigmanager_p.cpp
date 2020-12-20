@@ -33,13 +33,10 @@
 
 #include "qnetworkconfigmanager_p.h"
 #include "qbearerplugin_p.h"
-
-#include <QtCore/qfactoryloader_p.h>
-
-#include <QtCore/qdebug.h>
-#include <QtCore/qtimer.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qcoreapplication_p.h>
+#include "qfactoryloader_p.h"
+#include "qdebug.h"
+#include "qtimer.h"
+#include "qstringlist.h"
 
 #ifndef QT_NO_BEARERMANAGEMENT
 
@@ -59,7 +56,6 @@ QNetworkConfigurationManagerPrivate::QNetworkConfigurationManagerPrivate()
 
 void QNetworkConfigurationManagerPrivate::initialize()
 {
-    moveToThread(QCoreApplicationPrivate::mainThread()); // because cleanup() is called in main thread context.
     updateConfigurations();
 }
 
@@ -89,43 +85,10 @@ QNetworkConfiguration QNetworkConfigurationManagerPrivate::defaultConfiguration(
     }
 
     // Engines don't have a default configuration.
-
-    // Return first active snap
     QNetworkConfigurationPrivatePointer defaultConfiguration;
 
-    foreach (QBearerEngine *engine, sessionEngines) {
-        QHash<QString, QNetworkConfigurationPrivatePointer>::Iterator it;
-        QHash<QString, QNetworkConfigurationPrivatePointer>::Iterator end;
-
-        QMutexLocker locker(&engine->mutex);
-
-        for (it = engine->snapConfigurations.begin(),
-             end = engine->snapConfigurations.end(); it != end; ++it) {
-            QNetworkConfigurationPrivatePointer ptr = it.value();
-
-            QMutexLocker configLocker(&ptr->mutex);
-
-            if ((ptr->state & QNetworkConfiguration::Active) == QNetworkConfiguration::Active) {
-                QNetworkConfiguration config;
-                config.d = ptr;
-                return config;
-            } else if (!defaultConfiguration) {
-                if ((ptr->state & QNetworkConfiguration::Discovered) == QNetworkConfiguration::Discovered)
-                    defaultConfiguration = ptr;
-            }
-        }
-    }
-
-    // No Active SNAPs return first Discovered SNAP.
-    if (defaultConfiguration) {
-        QNetworkConfiguration config;
-        config.d = defaultConfiguration;
-        return config;
-    }
-
     /*
-        No Active or Discovered SNAPs, find the perferred access point.
-        The following priority order is used:
+        Find the perferred access point. The following priority order is used:
 
             1. Active Ethernet
             2. Active WLAN
@@ -217,20 +180,6 @@ QList<QNetworkConfiguration> QNetworkConfigurationManagerPrivate::allConfigurati
                 result << pt;
             }
         }
-
-        //find all service networks
-        for (it = engine->snapConfigurations.begin(),
-             end = engine->snapConfigurations.end(); it != end; ++it) {
-            QNetworkConfigurationPrivatePointer ptr = it.value();
-
-            QMutexLocker configLocker(&ptr->mutex);
-
-            if ((ptr->state & filter) == filter) {
-                QNetworkConfiguration pt;
-                pt.d = ptr;
-                result << pt;
-            }
-        }
     }
 
     return result;
@@ -245,16 +194,10 @@ QNetworkConfiguration QNetworkConfigurationManagerPrivate::configurationFromIden
     foreach (QBearerEngine *engine, sessionEngines) {
         QMutexLocker locker(&engine->mutex);
 
-        if (engine->accessPointConfigurations.contains(identifier))
+        if (engine->accessPointConfigurations.contains(identifier)) {
             item.d = engine->accessPointConfigurations[identifier];
-        else if (engine->snapConfigurations.contains(identifier))
-            item.d = engine->snapConfigurations[identifier];
-        else if (engine->userChoiceConfigurations.contains(identifier))
-            item.d = engine->userChoiceConfigurations[identifier];
-        else
-            continue;
-
-        return item;
+            return item;
+        }
     }
 
     return item;
@@ -365,8 +308,6 @@ void QNetworkConfigurationManagerPrivate::updateConfigurations()
                     generic = engine;
                 else
                     sessionEngines.append(engine);
-
-                engine->moveToThread(QCoreApplicationPrivate::mainThread());
 
                 connect(engine, SIGNAL(updateCompleted()),
                         this, SLOT(updateConfigurations()),

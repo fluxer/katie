@@ -33,7 +33,7 @@
 
 #include "qmotifstyle.h"
 
-#if !defined(QT_NO_STYLE_MOTIF) || defined(QT_PLUGIN)
+#if !defined(QT_NO_STYLE_MOTIF)
 
 #include "qmenu.h"
 #include "qapplication.h"
@@ -111,32 +111,19 @@ static const int motifCheckMarkSpace    = 16;
   text color.
 */
 QMotifStyle::QMotifStyle(bool useHighlightCols)
-    : QCommonStyle(*new QMotifStylePrivate)
+    : QCommonStyle(*new QMotifStylePrivate(useHighlightCols))
 {
-    focus = 0;
-    highlightCols = useHighlightCols;
+    setObjectName(QLatin1String("Motif"));
 }
 
 
 /*!
     \internal
 */
-QMotifStyle::QMotifStyle(QMotifStylePrivate &dd, bool useHighlightColors)
+QMotifStyle::QMotifStyle(QMotifStylePrivate &dd)
     : QCommonStyle(dd)
 {
-    focus = 0;
-    highlightCols = useHighlightColors;
-}
-
-
-/*!
-  \overload
-
-  Destroys the style.
-*/
-QMotifStyle::~QMotifStyle()
-{
-    delete focus;
+    setObjectName(QLatin1String("Motif"));
 }
 
 /*!
@@ -173,7 +160,7 @@ bool QMotifStyle::eventFilter(QObject *o, QEvent *e)
         break;
     }
 #endif // QT_NO_PROGRESSBAR
-    return QStyle::eventFilter(o, e);
+    return QCommonStyle::eventFilter(o, e);
 }
 
 /*!
@@ -192,15 +179,22 @@ void QMotifStyle::timerEvent(QTimerEvent *event)
         }
     }
 #endif // QT_NO_PROGRESSBAR
-    event->ignore();
+    QCommonStyle::timerEvent(event);
 }
 
-
-QMotifStylePrivate::QMotifStylePrivate()
+QMotifStylePrivate::QMotifStylePrivate(bool useHighlightCols)
+    : QCommonStylePrivate(),
+    focus(Q_NULLPTR),
+    highlightCols(useHighlightCols),
 #ifndef QT_NO_PROGRESSBAR
-    : animationFps(25), animateTimer(0), animateStep(0)
+    animationFps(25), animateTimer(0), animateStep(0)
 #endif
 {
+}
+
+QMotifStylePrivate::~QMotifStylePrivate()
+{
+    delete focus;
 }
 
 /*!
@@ -216,7 +210,8 @@ QMotifStylePrivate::QMotifStylePrivate()
 */
 void QMotifStyle::setUseHighlightColors(bool arg)
 {
-    highlightCols = arg;
+    Q_D(QMotifStyle);
+    d->highlightCols = arg;
 }
 
 /*!
@@ -227,13 +222,15 @@ void QMotifStyle::setUseHighlightColors(bool arg)
 */
 bool QMotifStyle::useHighlightColors() const
 {
-    return highlightCols;
+    Q_D(const QMotifStyle);
+    return d->highlightCols;
 }
 
 /*! \reimp */
 
 void QMotifStyle::polish(QPalette& pal)
 {
+    Q_D(const QMotifStyle);
     if (pal.brush(QPalette::Active, QPalette::Light) == pal.brush(QPalette::Active, QPalette::Base)) {
         QColor nlight = pal.color(QPalette::Active, QPalette::Light).darker(108);
         pal.setColor(QPalette::Active, QPalette::Light, nlight) ;
@@ -241,7 +238,7 @@ void QMotifStyle::polish(QPalette& pal)
         pal.setColor(QPalette::Inactive, QPalette::Light, nlight) ;
     }
 
-    if (highlightCols)
+    if (d->highlightCols)
         return;
 
     // force the ugly motif way of highlighting *sigh*
@@ -266,7 +263,7 @@ void QMotifStyle::polish(QPalette& pal)
 */
 void QMotifStyle::polish(QWidget* widget)
 {
-    QStyle::polish(widget);
+    QCommonStyle::polish(widget);
 #ifndef QT_NO_PROGRESSBAR
     if (qobject_cast<QProgressBar *>(widget))
         widget->installEventFilter(this);
@@ -332,6 +329,7 @@ static void rot(QPolygon& a, int n)
 void QMotifStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p,
                                 const QWidget *w) const
 {
+    Q_D(const QMotifStyle);
     switch(pe) {
 
     case PE_FrameTabWidget:
@@ -340,7 +338,7 @@ void QMotifStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QP
         break;
     case PE_FrameFocusRect:
         if (const QStyleOptionFocusRect *fropt = qstyleoption_cast<const QStyleOptionFocusRect *>(opt)) {
-            if ((fropt->state & State_HasFocus) && focus && focus->isVisible()
+            if ((fropt->state & State_HasFocus) && d->focus && d->focus->isVisible()
                     && !(fropt->state & QStyle::State_Item))
                 break;
             QCommonStyle::drawPrimitive(pe, opt, p, w);
@@ -786,6 +784,7 @@ void QMotifStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QP
 void QMotifStyle::drawControl(ControlElement element, const QStyleOption *opt, QPainter *p,
                               const QWidget *widget) const
 {
+    Q_D(const QMotifStyle);
     switch(element) {
     case CE_Splitter: {
         QStyleOption handleOpt = *opt;
@@ -841,7 +840,7 @@ void QMotifStyle::drawControl(ControlElement element, const QStyleOption *opt, Q
             subopt.rect = subElementRect(isRadio ? SE_RadioButtonContents
                                          : SE_CheckBoxContents, btn, widget);
             proxy()->drawControl(isRadio ? CE_RadioButtonLabel : CE_CheckBoxLabel, &subopt, p, widget);
-            if ((btn->state & State_HasFocus) && (!focus || !focus->isVisible())) {
+            if ((btn->state & State_HasFocus) && (!d->focus || !d->focus->isVisible())) {
                 QStyleOptionFocusRect fropt;
                 fropt.QStyleOption::operator=(*btn);
                 fropt.rect = subElementRect(isRadio ? SE_RadioButtonFocusRect
@@ -856,7 +855,7 @@ void QMotifStyle::drawControl(ControlElement element, const QStyleOption *opt, Q
             QStyleOptionButton subopt = *btn;
             subopt.rect = subElementRect(SE_PushButtonContents, btn, widget);
             proxy()->drawControl(CE_PushButtonLabel, &subopt, p, widget);
-            if ((btn->state & State_HasFocus) && (!focus || !focus->isVisible())) {
+            if ((btn->state & State_HasFocus) && (!d->focus || !d->focus->isVisible())) {
                 QStyleOptionFocusRect fropt;
                 fropt.QStyleOption::operator=(*btn);
                 fropt.rect = subElementRect(SE_PushButtonFocusRect, btn, widget);
@@ -1366,6 +1365,7 @@ static void get_combo_parameters(const QRect &r,
 void QMotifStyle::drawComplexControl(ComplexControl cc, const QStyleOptionComplex *opt, QPainter *p,
                                      const QWidget *widget) const
 {
+    Q_D(const QMotifStyle);
     switch (cc) {
     case CC_ToolButton:
         if (const QStyleOptionToolButton *toolbutton
@@ -1397,7 +1397,7 @@ void QMotifStyle::drawComplexControl(ComplexControl cc, const QStyleOptionComple
                 }
             }
 
-            if ((toolbutton->state & State_HasFocus) && (!focus || !focus->isVisible())) {
+            if ((toolbutton->state & State_HasFocus) && (!d->focus || !d->focus->isVisible())) {
                 QStyleOptionFocusRect fr;
                 fr.QStyleOption::operator=(*toolbutton);
                 fr.rect = toolbutton->rect.adjusted(3, 3, -3, -3);
@@ -1504,7 +1504,7 @@ void QMotifStyle::drawComplexControl(ComplexControl cc, const QStyleOptionComple
             if ((opt->subControls & SC_SliderGroove) && groove.isValid()) {
                 qDrawShadePanel(p, groove, opt->palette, true, proxy()->pixelMetric(PM_DefaultFrameWidth),
                                 &opt->palette.brush((opt->state & State_Enabled) ? QPalette::Mid : QPalette::Window));
-                if ((opt->state & State_HasFocus) && (!focus || !focus->isVisible())) {
+                if ((opt->state & State_HasFocus) && (!d->focus || !d->focus->isVisible())) {
                     QStyleOption focusOpt = *opt;
                     focusOpt.rect = subElementRect(SE_SliderFocusRect, opt, widget);
                     proxy()->drawPrimitive(PE_FrameFocusRect, &focusOpt, p, widget);
@@ -1562,7 +1562,7 @@ void QMotifStyle::drawComplexControl(ComplexControl cc, const QStyleOptionComple
                 tr.adjust(fw, fw, -fw, -fw);
                 get_combo_parameters(tr, ew, awh, ax, ay, sh, dh, sy);
 
-                QRect ar = QStyle::visualRect(opt->direction, opt->rect, QRect(ax,ay,awh,awh));
+                QRect ar = QCommonStyle::visualRect(opt->direction, opt->rect, QRect(ax,ay,awh,awh));
 
                 QStyleOption arrowOpt = *opt;
                 arrowOpt.rect = ar;
@@ -1578,12 +1578,12 @@ void QMotifStyle::drawComplexControl(ComplexControl cc, const QStyleOptionComple
                 p->drawLine(ar.x()+1, sy+sh-1, ar.x()+awh-1, sy+sh-1);
                 p->drawLine(ar.x()+awh-1, sy+1, ar.x()+awh-1, sy+sh-1);
 
-                if ((cb->state & State_HasFocus) && (!focus || !focus->isVisible())) {
-                    QStyleOptionFocusRect focus;
-                    focus.QStyleOption::operator=(*opt);
-                    focus.rect = subElementRect(SE_ComboBoxFocusRect, opt, widget);
-                    focus.backgroundColor = opt->palette.button().color();
-                    proxy()->drawPrimitive(PE_FrameFocusRect, &focus, p, widget);
+                if ((cb->state & State_HasFocus) && (!d->focus || !d->focus->isVisible())) {
+                    QStyleOptionFocusRect focusRect;
+                    focusRect.QStyleOption::operator=(*opt);
+                    focusRect.rect = subElementRect(SE_ComboBoxFocusRect, opt, widget);
+                    focusRect.backgroundColor = opt->palette.button().color();
+                    proxy()->drawPrimitive(PE_FrameFocusRect, &focusRect, p, widget);
                 }
             }
 
@@ -1886,9 +1886,10 @@ QMotifStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt,
         break;
 
     case CT_MenuBarItem: {
-        if(!sz.isEmpty())
+        if (!sz.isEmpty())
             sz += QSize(5*motifItemHMargin+1, 2*motifItemVMargin + motifItemFrame);
-        break; }
+        break;
+    }
 
     case CT_MenuItem:
         if (const QStyleOptionMenuItem *mi = qstyleoption_cast<const QStyleOptionMenuItem *>(opt)) {
@@ -2266,6 +2267,7 @@ QMotifStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *o
 /*! \reimp */
 bool QMotifStyle::event(QEvent *e)
 {
+    Q_D(QMotifStyle);
     if(e->type() == QEvent::FocusIn) {
         if (QWidget *focusWidget = QApplication::focusWidget()) {
 #ifndef QT_NO_GRAPHICSVIEW
@@ -2278,18 +2280,17 @@ bool QMotifStyle::event(QEvent *e)
                 }
             }
 #endif
-            if(!focus)
-                focus = new QFocusFrame(focusWidget);
-            focus->setWidget(focusWidget);
+            if (!d->focus)
+                d->focus = new QFocusFrame(focusWidget);
+            d->focus->setWidget(focusWidget);
         } else {
-            if(focus)
-                focus->setWidget(0);
+            if (d->focus)
+                d->focus->setWidget(0);
         }
-    } else if(e->type() == QEvent::FocusOut) {
-        if(focus)
-            focus->setWidget(0);
+    } else if (e->type() == QEvent::FocusOut && d->focus) {
+        d->focus->setWidget(0);
     }
-    return  QCommonStyle::event(e);
+    return QCommonStyle::event(e);
 }
 
 
@@ -2375,4 +2376,4 @@ QT_END_NAMESPACE
 
 #include "moc_qmotifstyle.h"
 
-#endif // !defined(QT_NO_STYLE_MOTIF) || defined(QT_PLUGIN)
+#endif // !defined(QT_NO_STYLE_MOTIF)

@@ -104,19 +104,18 @@
 #include "qsslcertificate_p.h"
 #include "qsslkey.h"
 #include "qsslkey_p.h"
-
-#include <QtCore/qatomic.h>
-#include <QtCore/qdatetime.h>
-#include <QtCore/qdebug.h>
-#include <QtCore/qdir.h>
-#include <QtCore/qdiriterator.h>
-#include <QtCore/qfile.h>
-#include <QtCore/qfileinfo.h>
-#include <QtCore/qmap.h>
-#include <QtCore/qmutex.h>
-#include <QtCore/qmutexpool_p.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qstringlist.h>
+#include "qatomic.h"
+#include "qdatetime.h"
+#include "qdebug.h"
+#include "qdir.h"
+#include "qdiriterator.h"
+#include "qfile.h"
+#include "qfileinfo.h"
+#include "qmap.h"
+#include "qmutex.h"
+#include "qmutexpool_p.h"
+#include "qstring.h"
+#include "qstringlist.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -848,12 +847,7 @@ QList<QSslCertificate> QSslCertificatePrivate::certificatesFromPem(const QByteAr
 
         QByteArray decoded = QByteArray::fromBase64(
             QByteArray::fromRawData(pem.data() + startPos, endPos - startPos));
-#if OPENSSL_VERSION_NUMBER >= 0x00908000L
-        const unsigned char *data = (const unsigned char *)decoded.data();
-#else
-        unsigned char *data = (unsigned char *)decoded.data();
-#endif
-
+        const unsigned char *data = reinterpret_cast<const unsigned char *>(decoded.constData());
         if (X509 *x509 = d2i_X509(0, &data, decoded.size())) {
             certificates << QSslCertificate_from_X509(x509);
             X509_free(x509);
@@ -869,11 +863,7 @@ QList<QSslCertificate> QSslCertificatePrivate::certificatesFromDer(const QByteAr
     QSslSocketPrivate::ensureInitialized();
 
 
-#if OPENSSL_VERSION_NUMBER >= 0x00908000L
-        const unsigned char *data = (const unsigned char *)der.data();
-#else
-        unsigned char *data = (unsigned char *)der.data();
-#endif
+    const unsigned char *data = reinterpret_cast<const unsigned char *>(der.constData());
     int size = der.size();
 
     while (count == -1 || certificates.size() < count) {

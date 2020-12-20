@@ -33,27 +33,24 @@
 
 #include "qplatformdefs.h"
 #include "qstring.h"
-#include "qvector.h"
 #include "qlist.h"
-#include "qdatetime.h"
 #include "qcorecommon_p.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 #include <stdarg.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/time.h>
+#include <time.h>
 
 #ifndef QT_NO_EXCEPTIONS
-#  include <string>
 #  include <exception>
 #endif
 
-#ifndef QT_NO_UNWIND
+#ifndef QT_NO_EXECINFO
 #  include "qcoreapplication.h"
-#  define UNW_LOCAL_ONLY
-#  include <libunwind.h>
+#  include <execinfo.h>
 #  include <cxxabi.h>
 #endif
 
@@ -460,8 +457,8 @@ QT_BEGIN_NAMESPACE
     specified platforms. For example, the Q_CC_GNU macro is defined
     if the application is compiled using GNU Compiler Collection.
     The header file also declares a range of macros (Q_OS_*) that
-    are defined for the specified platforms. For example, Q_OS_WIN32
-    which is defined for Microsoft Windows.
+    are defined for the specified platforms. For example, Q_OS_LINUx
+    which is defined for Linux.
 
     The purpose of these macros is to enable programmers to add
     compiler or platform specific code to their application.
@@ -759,102 +756,6 @@ QT_BEGIN_NAMESPACE
     \sa qMin(), qMax()
 */
 
-/*!
-    \typedef Q_INT8
-    \relates <QtGlobal>
-    \compat
-
-    Use \l qint8 instead.
-*/
-
-/*!
-    \typedef Q_UINT8
-    \relates <QtGlobal>
-    \compat
-
-    Use \l quint8 instead.
-*/
-
-/*!
-    \typedef Q_INT16
-    \relates <QtGlobal>
-    \compat
-
-    Use \l qint16 instead.
-*/
-
-/*!
-    \typedef Q_UINT16
-    \relates <QtGlobal>
-    \compat
-
-    Use \l quint16 instead.
-*/
-
-/*!
-    \typedef Q_INT32
-    \relates <QtGlobal>
-    \compat
-
-    Use \l qint32 instead.
-*/
-
-/*!
-    \typedef Q_UINT32
-    \relates <QtGlobal>
-    \compat
-
-    Use \l quint32 instead.
-*/
-
-/*!
-    \typedef Q_INT64
-    \relates <QtGlobal>
-    \compat
-
-    Use \l qint64 instead.
-*/
-
-/*!
-    \typedef Q_UINT64
-    \relates <QtGlobal>
-    \compat
-
-    Use \l quint64 instead.
-*/
-
-/*!
-    \typedef Q_LLONG
-    \relates <QtGlobal>
-    \compat
-
-    Use \l qint64 instead.
-*/
-
-/*!
-    \typedef Q_ULLONG
-    \relates <QtGlobal>
-    \compat
-
-    Use \l quint64 instead.
-*/
-
-/*!
-    \typedef Q_LONG
-    \relates <QtGlobal>
-    \compat
-
-    Use \c{void *} instead.
-*/
-
-/*!
-    \typedef Q_ULONG
-    \relates <QtGlobal>
-    \compat
-
-    Use \c{void *} instead.
-*/
-
 /*! \fn bool qSysInfo(int *wordSize, bool *bigEndian)
     \relates <QtGlobal>
 
@@ -926,15 +827,6 @@ const char *qVersion()
     return QT_VERSION_STR;
 }
 
-bool qSharedBuild()
-{
-#ifdef QT_SHARED
-    return true;
-#else
-    return false;
-#endif
-}
-
 /*****************************************************************************
   System detection routines
  *****************************************************************************/
@@ -990,20 +882,6 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_OS_SOLARIS
-    \relates <QtGlobal>
-
-    Defined on Sun Solaris.
-*/
-
-/*!
-    \macro Q_OS_HPUX
-    \relates <QtGlobal>
-
-    Defined on HP-UX.
-*/
-
-/*!
     \macro Q_OS_LINUX
     \relates <QtGlobal>
 
@@ -1032,38 +910,10 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_OS_BSDI
+    \macro Q_OS_DRAGONFLY
     \relates <QtGlobal>
 
-    Defined on BSD/OS.
-*/
-
-/*!
-    \macro Q_OS_OSF
-    \relates <QtGlobal>
-
-    Defined on HP Tru64 UNIX.
-*/
-
-/*!
-    \macro Q_OS_SCO
-    \relates <QtGlobal>
-
-    Defined on SCO OpenServer 5.
-*/
-
-/*!
-    \macro Q_OS_UNIXWARE
-    \relates <QtGlobal>
-
-    Defined on UnixWare 7, Open UNIX 8.
-*/
-
-/*!
-    \macro Q_OS_AIX
-    \relates <QtGlobal>
-
-    Defined on AIX.
+    Defined on DragonFly BSD.
 */
 
 /*!
@@ -1074,31 +924,10 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_OS_DGUX
+    \macro Q_OS_SOLARIS
     \relates <QtGlobal>
 
-    Defined on DG/UX.
-*/
-
-/*!
-    \macro Q_OS_DYNIX
-    \relates <QtGlobal>
-
-    Defined on DYNIX/ptx.
-*/
-
-/*!
-    \macro Q_OS_LYNX
-    \relates <QtGlobal>
-
-    Defined on LynxOS.
-*/
-
-/*!
-    \macro Q_OS_BSD4
-    \relates <QtGlobal>
-
-    Defined on Any BSD 4.4 system.
+    Defined on Sun Solaris.
 */
 
 /*!
@@ -1189,15 +1018,6 @@ bool qSharedBuild()
 */
 
 /*!
-    \fn T *q_check_ptr(T *pointer)
-    \relates <QtGlobal>
-
-    Users Q_CHECK_PTR on \a pointer, then returns \a pointer.
-
-    This can be used as an inline version of Q_CHECK_PTR.
-*/
-
-/*!
     \macro const char* Q_FUNC_INFO()
     \relates <QtGlobal>
 
@@ -1234,38 +1054,29 @@ void qBadAlloc()
     QT_THROW(std::bad_alloc());
 }
 
-#ifndef QT_NO_UNWIND
+#ifndef QT_NO_EXECINFO
 static void qt_print_backtrace()
 {
-    unw_cursor_t cursor;
-    unw_context_t context;
-
-    if (unw_getcontext(&context) != 0) {
-        ::fprintf(stderr, "qt_print_backtrace: unable to get context\n");
+    void *buffer[256];
+    int  nptrs = backtrace(buffer, sizeof(buffer));
+    char **strings = backtrace_symbols(buffer, nptrs);
+    if (!strings) {
+        ::fprintf(stderr, "qt_print_backtrace: unable to get backtrace\n");
         return;
     }
 
-    if (unw_init_local(&cursor, &context) != 0) {
-        ::fprintf(stderr, "qt_print_backtrace: unable to initialize\n");
-        return;
-    }
-
-    while (unw_step(&cursor) > 0) {
-        unw_word_t offset;
-        char sym[256];
-        if (unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0) {
-            int status;
-            char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
-            if (status == 0) {
-                ::printf(" %s\n", demangled);
-                ::free(demangled);
-            } else {
-                ::printf(" %s\n", sym);
-            }
+    for (int i = 0; i < nptrs; i++) {
+        int status;
+        char* demangled = abi::__cxa_demangle(strings[i], nullptr, nullptr, &status);
+        if (status == 0) {
+            ::printf(" %s\n", demangled);
+            ::free(demangled);
         } else {
-            ::fprintf(stderr, "qt_print_backtrace: unable to obtain symbol name for this frame\n");
+            ::printf(" %s\n", strings[i]);
         }
     }
+
+    ::free(strings);
 }
 
 typedef void (*QCrashHandler)(int);
@@ -1341,7 +1152,7 @@ Q_CONSTRUCTOR_FUNCTION(qt_install_crash_handler);
 */
 void qt_assert(const char *assertion, const char *file, int line)
 {
-#ifndef QT_NO_UNWIND
+#ifndef QT_NO_EXECINFO
     // don't print backtrace twice if abort() will be called in qt_message_output()
     if (qgetenv("QT_FATAL_WARNINGS").isNull())
         qt_print_backtrace();
@@ -1354,7 +1165,7 @@ void qt_assert(const char *assertion, const char *file, int line)
 */
 void qt_assert_x(const char *where, const char *what, const char *file, int line)
 {
-#ifndef QT_NO_UNWIND
+#ifndef QT_NO_EXECINFO
     // don't print backtrace twice if abort() will be called in qt_message_output()
     if (qgetenv("QT_FATAL_WARNINGS").isNull())
         qt_print_backtrace();
@@ -1366,36 +1177,23 @@ static QtMsgHandler handler = 0;                // pointer to debug handler
 
 QString qt_error_string(int errorCode)
 {
-    switch (errorCode) {
-        case EACCES:
-            return QString::fromLatin1(QT_TRANSLATE_NOOP("QIODevice", "Permission denied"));
-        case EMFILE:
-            return QString::fromLatin1(QT_TRANSLATE_NOOP("QIODevice", "Too many open files"));
-        case ENOENT:
-            return QString::fromLatin1(QT_TRANSLATE_NOOP("QIODevice", "No such file or directory"));
-        case ENOSPC:
-            return QString::fromLatin1(QT_TRANSLATE_NOOP("QIODevice", "No space left on device"));
-        default: {
-            // There are two incompatible versions of strerror_r:
-            // a) the XSI/POSIX.1 version, which returns an int,
-            //    indicating success or not
-            // b) the GNU version, which returns a char*, which may or may not
-            //    be the beginning of the buffer we used
-            // The GNU libc manpage for strerror_r says you should use the the XSI
-            // version in portable code.
+    // There are two incompatible versions of strerror_r:
+    // a) the XSI/POSIX.1 version, which returns an int,
+    //    indicating success or not
+    // b) the GNU version, which returns a char*, which may or may not
+    //    be the beginning of the buffer we used
+    // The GNU libc manpage for strerror_r says you should use the the XSI
+    // version in portable code.
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_STRERROR_R)
-            char errbuf[1024];
-            ::memset(errbuf, '\0', sizeof(errbuf));
-            if (Q_LIKELY(::strerror_r(errorCode, errbuf, sizeof(errbuf)))) {
-                return QString::fromLocal8Bit(errbuf, sizeof(errbuf));
-            }
-            return QString();
-#else
-            return QString::fromLocal8Bit(::strerror(errorCode));
-#endif
-        }
+    char errbuf[1024];
+    ::memset(errbuf, '\0', sizeof(errbuf));
+    if (Q_LIKELY(::strerror_r(errorCode, errbuf, sizeof(errbuf)))) {
+        return QString::fromLocal8Bit(errbuf, sizeof(errbuf));
     }
     return QString();
+#else
+    return QString::fromLocal8Bit(::strerror(errorCode));
+#endif
 }
 
 
@@ -1587,35 +1385,6 @@ void qCritical(const char *msg, ...)
     va_end(ap);
 }
 
-
-void qErrnoWarning(const char *msg, ...)
-{
-    // qt_error_string() will allocate anyway, so we don't have
-    // to be careful here (like we do in plain qWarning())
-    QString buf;
-    va_list ap;
-    va_start(ap, msg);
-    if (Q_LIKELY(msg))
-        buf.vsprintf(msg, ap);
-    va_end(ap);
-
-    qCritical("%s (%s)", buf.toLocal8Bit().constData(), qt_error_string(-1).toLocal8Bit().constData());
-}
-
-void qErrnoWarning(int code, const char *msg, ...)
-{
-    // qt_error_string() will allocate anyway, so we don't have
-    // to be careful here (like we do in plain qWarning())
-    QString buf;
-    va_list ap;
-    va_start(ap, msg);
-    if (Q_LIKELY(msg))
-        buf.vsprintf(msg, ap);
-    va_end(ap);
-
-    qCritical("%s (%s)", buf.toLocal8Bit().constData(), qt_error_string(code).toLocal8Bit().constData());
-}
-
 /*!
     \relates <QtGlobal>
 
@@ -1729,14 +1498,18 @@ void qsrand(uint seed)
 
     \sa qsrand()
 */
-thread_local int almostrandom = 0;
 int qrand()
 {
+#ifdef QT_HAVE_ARC4RANDOM
+    return ::arc4random();
+#else
     // Seed the PRNG once per thread with a combination of current time and its address
+    thread_local time_t almostrandom = 0;
     if (!almostrandom) {
-        almostrandom = QTime::currentTime().msec();
+        ::time(&almostrandom);
         std::srand(almostrandom + std::intptr_t(&almostrandom));
     }
+#endif
     return std::rand();
 }
 
@@ -1817,11 +1590,11 @@ int qrand()
 
     \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 34
 
-    The macro QT_TR_NOOP_UTF8() is identical except that it tells lupdate
+    The macro QT_TR_NOOP_UTF8() is identical except that it notes
     that the source string is encoded in UTF-8. Corresponding variants
     exist in the QT_TRANSLATE_NOOP() family of macros, too. Note that
-    using these macros is not required if \c CODECFORTR is already set to
-    UTF-8 in the qmake project file.
+    using these macros is not required if UTF-8 codec is used for
+    translations.
 
     \sa QT_TRANSLATE_NOOP(), {Internationalization with Qt}
 */
@@ -1841,28 +1614,7 @@ int qrand()
 
     \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 35
 
-    \sa QT_TR_NOOP(), QT_TRANSLATE_NOOP3(), {Internationalization with Qt}
-*/
-
-/*!
-    \macro QT_TRANSLATE_NOOP3(context, sourceText, comment)
-    \relates <QtGlobal>
-    \since 4.4
-
-    Marks the string literal \a sourceText for dynamic translation in the
-    given \a context and with \a comment, i.e the stored \a sourceText will
-    not be altered. The \a context is typically a class and also needs to
-    be specified as string literal. The string literal \a comment
-    will be available for translators using e.g. Qt Linguist.
-
-    The macro expands to anonymous struct of the two string
-    literals passed as \a sourceText and \a comment.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 36
-
-    \sa QT_TR_NOOP(), QT_TRANSLATE_NOOP(), {Internationalization with Qt}
+    \sa QT_TR_NOOP(), {Internationalization with Qt}
 */
 
 /*!

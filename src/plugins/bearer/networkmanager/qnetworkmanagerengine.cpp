@@ -34,19 +34,16 @@
 #include "qnetworkmanagerengine.h"
 #include "qnetworkmanagerservice.h"
 #include "../qnetworksession_impl.h"
-
-#include <QtNetwork/qnetworkconfiguration_p.h>
-
-#include <QtNetwork/qnetworksession.h>
-
-#include <QtCore/qdebug.h>
-#include <QtCore/qfile.h>
-#include <QtDBus/qdbusmetatype.h>
-#include <QDBusConnection>
-#include <QDBusError>
-#include <QDBusInterface>
-#include <QDBusMessage>
-#include <QDBusReply>
+#include "qnetworkconfiguration_p.h"
+#include "qnetworksession.h"
+#include "qdebug.h"
+#include "qfile.h"
+#include "qdbusmetatype.h"
+#include "qdbusconnection.h"
+#include "qdbuserror.h"
+#include "qdbusinterface.h"
+#include "qdbusmessage.h"
+#include "qdbusreply.h"
 
 #ifndef QT_NO_BEARERMANAGEMENT
 #ifndef QT_NO_DBUS

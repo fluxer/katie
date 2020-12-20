@@ -46,9 +46,8 @@
 //
 
 #include "qbearerengine_impl.h"
-
-#include <QtNetwork/qnetworkconfigmanager_p.h>
-#include <QtNetwork/qnetworksession_p.h>
+#include "qnetworkconfigmanager_p.h"
+#include "qnetworksession_p.h"
 
 #ifndef QT_NO_BEARERMANAGEMENT
 

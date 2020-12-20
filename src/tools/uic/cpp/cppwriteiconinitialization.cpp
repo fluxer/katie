@@ -90,11 +90,7 @@ void WriteIconInitialization::acceptImage(DomImage *image)
 
     output << ind << "case " << imageId << ": ";
 
-    if (fmt == QLatin1String("XPM.GZ")) {
-        output << "return " << "QPixmap((const char**)" << imageData << ");\n";
-    } else {
-        output << " { QImage img = QImage::fromData(" << imageData << ", sizeof(" << imageData << "), " << fixString(fmt, ind) << "); return QPixmap::fromImage(img); }\n";
-    }
+    output << " { QImage img = QImage::fromData(" << imageData << ", sizeof(" << imageData << "), " << fixString(fmt, ind) << "); return QPixmap::fromImage(img); }\n";
 }
 
 } // namespace CPP

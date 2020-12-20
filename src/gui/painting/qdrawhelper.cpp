@@ -68,15 +68,6 @@ static inline QRgb qConvertRgb16To32(uint c)
         | ((((c) << 8) & 0xf80000) | (((c) << 3) & 0x70000));
 }
 
-static inline void interpolate_pixel(qrgb565 &dest, quint8 a, const qrgb565 &src, quint8 b)
-{
-    const quint16 x = dest.rawValue();
-    const quint16 y = src.rawValue();
-    quint16 t = (((x & 0x07e0) * a + (y & 0x07e0) * b) >> 5) & 0x07e0;
-    t |= (((x & 0xf81f) * a + (y & 0xf81f) * b) >> 5) & 0xf81f;
-    dest = t;
-}
-
 /*
   Destination fetch. This is simple as we don't have to do bounds checks or
   transformations
@@ -129,17 +120,6 @@ static uint * QT_FASTCALL destFetchRGB16(uint *buffer, const QRasterBuffer *rast
     return buffer;
 }
 
-template <class DST>
-static uint * QT_FASTCALL destFetch(uint *buffer, const QRasterBuffer *rasterBuffer,
-                                    int x, int y, int length)
-{
-    const DST *src = reinterpret_cast<const DST*>(rasterBuffer->scanLine(y)) + x;
-    quint32 *dest = reinterpret_cast<quint32*>(buffer);
-    while (length--)
-        *dest++ = *src++;
-    return buffer;
-}
-
 static DestFetchProc destFetchProc[QImage::NImageFormats] =
 {
     0, // Format_Invalid
@@ -150,14 +130,6 @@ static DestFetchProc destFetchProc[QImage::NImageFormats] =
     destFetchARGB32, // Format_ARGB32,
     destFetchARGB32P, // Format_ARGB32_Premultiplied
     destFetchRGB16,   // Format_RGB16
-    destFetch<qargb8565>, // Format_ARGB8565_Premultiplied
-    destFetch<qrgb666>,   // Format_RGB666
-    destFetch<qargb6666>, // Format_ARGB6666_Premultiplied
-    destFetch<qrgb555>,   // Format_RGB555
-    destFetch<qargb8555>, // Format_ARGB8555_Premultiplied
-    destFetch<qrgb888>,   // Format_RGB888
-    destFetch<qrgb444>,   // Format_RGB444
-    destFetch<qargb4444>  // Format_ARGB4444_Premultiplied
 };
 
 /*
@@ -258,7 +230,7 @@ static void QT_FASTCALL destStoreARGB32(QRasterBuffer *rasterBuffer, int x, int 
         else if (alpha == 0)
             data[i] = 0;
         else {
-            int inv_alpha = 0xff0000/qAlpha(buffer[i]);
+            int inv_alpha = 0xff0000/alpha;
             data[i] = (p & 0xff000000)
                       | ((qRed(p)*inv_alpha) & 0xff0000)
                       | (((qGreen(p)*inv_alpha) >> 8) & 0xff00)
@@ -273,17 +245,6 @@ static void QT_FASTCALL destStoreRGB16(QRasterBuffer *rasterBuffer, int x, int y
     qt_memconvert<quint16, quint32>(data, buffer, length);
 }
 
-template <class DST>
-static void QT_FASTCALL destStore(QRasterBuffer *rasterBuffer,
-                                  int x, int y,
-                                  const uint *buffer, int length)
-{
-    DST *dest = reinterpret_cast<DST*>(rasterBuffer->scanLine(y)) + x;
-    const quint32p *src = reinterpret_cast<const quint32p*>(buffer);
-    while (length--)
-        *dest++ = DST(*src++);
-}
-
 static DestStoreProc destStoreProc[QImage::NImageFormats] =
 {
     0, // Format_Invalid
@@ -294,14 +255,6 @@ static DestStoreProc destStoreProc[QImage::NImageFormats] =
     destStoreARGB32, // Format_ARGB32,
     0, // Format_ARGB32_Premultiplied
     destStoreRGB16, // Format_RGB16
-    destStore<qargb8565>, // Format_ARGB8565_Premultiplied
-    destStore<qrgb666>,   // Format_RGB666
-    destStore<qargb6666>, // Format_ARGB6666_Premultiplied
-    destStore<qrgb555>,   // Format_RGB555
-    destStore<qargb8555>, // Format_ARGB8555_Premultiplied
-    destStore<qrgb888>,   // Format_RGB888
-    destStore<qrgb444>,   // Format_RGB444
-    destStore<qargb4444>  // Format_ARGB4444_Premultiplied
 };
 
 /*
@@ -369,78 +322,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB16>(const uchar *scanLine,
 }
 
 template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB8565_Premultiplied>(const uchar *scanLine,
-                                                     int x,
-                                                     const QVector<QRgb> *)
-{
-    const qargb8565 color = reinterpret_cast<const qargb8565*>(scanLine)[x];
-    return qt_colorConvert<quint32, qargb8565>(color, 0);
-}
-
-template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB666>(const uchar *scanLine,
-                                                   int x,
-                                                   const QVector<QRgb> *)
-{
-    const qrgb666 color = reinterpret_cast<const qrgb666*>(scanLine)[x];
-    return qt_colorConvert<quint32, qrgb666>(color, 0);
-}
-
-template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB6666_Premultiplied>(const uchar *scanLine,
-                                                   int x,
-                                                   const QVector<QRgb> *)
-{
-    const qargb6666 color = reinterpret_cast<const qargb6666*>(scanLine)[x];
-    return qt_colorConvert<quint32, qargb6666>(color, 0);
-}
-
-template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB555>(const uchar *scanLine,
-                                                   int x,
-                                                   const QVector<QRgb> *)
-{
-    const qrgb555 color = reinterpret_cast<const qrgb555*>(scanLine)[x];
-    return qt_colorConvert<quint32, qrgb555>(color, 0);
-}
-
-template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB8555_Premultiplied>(const uchar *scanLine,
-                                                     int x,
-                                                     const QVector<QRgb> *)
-{
-    const qargb8555 color = reinterpret_cast<const qargb8555*>(scanLine)[x];
-    return qt_colorConvert<quint32, qargb8555>(color, 0);
-}
-
-template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB888>(const uchar *scanLine,
-                                                   int x,
-                                                   const QVector<QRgb> *)
-{
-    const qrgb888 color = reinterpret_cast<const qrgb888*>(scanLine)[x];
-    return qt_colorConvert<quint32, qrgb888>(color, 0);
-}
-
-template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB444>(const uchar *scanLine,
-                                                   int x,
-                                                   const QVector<QRgb> *)
-{
-    const qrgb444 color = reinterpret_cast<const qrgb444*>(scanLine)[x];
-    return qt_colorConvert<quint32, qrgb444>(color, 0);
-}
-
-template<>
-uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB4444_Premultiplied>(const uchar *scanLine,
-                                                     int x,
-                                                     const QVector<QRgb> *)
-{
-    const qargb4444 color = reinterpret_cast<const qargb4444*>(scanLine)[x];
-    return qt_colorConvert<quint32, qargb4444>(color, 0);
-}
-
-template<>
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_Invalid>(const uchar *,
                                                      int ,
                                                      const QVector<QRgb> *)
@@ -460,15 +341,7 @@ static const FetchPixelProc fetchPixelProc[QImage::NImageFormats] =
     qt_fetchPixel<QImage::Format_ARGB32_Premultiplied>,
     qt_fetchPixel<QImage::Format_ARGB32>,
     qt_fetchPixel<QImage::Format_ARGB32_Premultiplied>,
-    qt_fetchPixel<QImage::Format_RGB16>,
-    qt_fetchPixel<QImage::Format_ARGB8565_Premultiplied>,
-    qt_fetchPixel<QImage::Format_RGB666>,
-    qt_fetchPixel<QImage::Format_ARGB6666_Premultiplied>,
-    qt_fetchPixel<QImage::Format_RGB555>,
-    qt_fetchPixel<QImage::Format_ARGB8555_Premultiplied>,
-    qt_fetchPixel<QImage::Format_RGB888>,
-    qt_fetchPixel<QImage::Format_RGB444>,
-    qt_fetchPixel<QImage::Format_ARGB4444_Premultiplied>
+    qt_fetchPixel<QImage::Format_RGB16>
 };
 
 enum TextureBlendType {
@@ -482,7 +355,7 @@ enum TextureBlendType {
 };
 
 template <QImage::Format format>
-static const uint * QT_FASTCALL qt_fetchUntransformed(uint *buffer, const Operator *, const QSpanData *data,
+static const uint * QT_FASTCALL fetchUntransformed(uint *buffer, const Operator *, const QSpanData *data,
                                              int y, int x, int length)
 {
     const uchar *scanLine = data->texture.scanLine(y);
@@ -493,7 +366,7 @@ static const uint * QT_FASTCALL qt_fetchUntransformed(uint *buffer, const Operat
 
 template <>
 const uint * QT_FASTCALL
-qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>(uint *, const Operator *,
+fetchUntransformed<QImage::Format_ARGB32_Premultiplied>(uint *, const Operator *,
                                                          const QSpanData *data,
                                                          int y, int x, int)
 {
@@ -560,8 +433,8 @@ static const uint * QT_FASTCALL fetchTransformed(uint *buffer, const Operator *,
     return buffer;
 }
 
-template<TextureBlendType blendType>
-static inline void fetchTransformedBilinear_pixelBounds(int max, int l1, int l2, int &v1, int &v2)
+static inline void fetchTransformedBilinear_pixelBounds(TextureBlendType blendType,
+                                                        int max, int l1, int l2, int &v1, int &v2)
 {
     if (blendType == BlendTransformedBilinearTiled) {
         v1 %= max;
@@ -624,8 +497,8 @@ static const uint * QT_FASTCALL fetchTransformedBilinear(uint *buffer, const Ope
         int idistx = 256 - distx;
         int idisty = 256 - disty;
 
-        fetchTransformedBilinear_pixelBounds<blendType>(image_width, image_x1, image_x2, x1, x2);
-        fetchTransformedBilinear_pixelBounds<blendType>(image_height, image_y1, image_y2, y1, y2);
+        fetchTransformedBilinear_pixelBounds(blendType, image_width, image_x1, image_x2, x1, x2);
+        fetchTransformedBilinear_pixelBounds(blendType, image_height, image_y1, image_y2, y1, y2);
 
         const uchar *s1 = data->texture.scanLine(y1);
         const uchar *s2 = data->texture.scanLine(y2);
@@ -656,40 +529,24 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
     // Untransformed
     {
         0, // Invalid
-        qt_fetchUntransformed<QImage::Format_Mono>,   // Mono
-        qt_fetchUntransformed<QImage::Format_MonoLSB>,   // MonoLsb
-        qt_fetchUntransformed<QImage::Format_Indexed8>,   // Indexed8
-        qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // RGB32
-        qt_fetchUntransformed<QImage::Format_ARGB32>,   // ARGB32
-        qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
-        qt_fetchUntransformed<QImage::Format_RGB16>,   // RGB16
-        qt_fetchUntransformed<QImage::Format_ARGB8565_Premultiplied>,// ARGB8565_Premultiplied
-        qt_fetchUntransformed<QImage::Format_RGB666>,  // RGB666
-        qt_fetchUntransformed<QImage::Format_ARGB6666_Premultiplied>,// ARGB6666_Premultiplied
-        qt_fetchUntransformed<QImage::Format_RGB555>,  // RGB555
-        qt_fetchUntransformed<QImage::Format_ARGB8555_Premultiplied>,// ARGB8555_Premultiplied
-        qt_fetchUntransformed<QImage::Format_RGB888>,  // RGB888
-        qt_fetchUntransformed<QImage::Format_RGB444>,  // RGB444
-        qt_fetchUntransformed<QImage::Format_ARGB4444_Premultiplied> // ARGB4444_Premultiplied
+        fetchUntransformed<QImage::Format_Mono>,   // Mono
+        fetchUntransformed<QImage::Format_MonoLSB>,   // MonoLsb
+        fetchUntransformed<QImage::Format_Indexed8>,   // Indexed8
+        fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // RGB32
+        fetchUntransformed<QImage::Format_ARGB32>,   // ARGB32
+        fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
+        fetchUntransformed<QImage::Format_RGB16>   // RGB16
     },
     // Tiled
     {
         0, // Invalid
-        qt_fetchUntransformed<QImage::Format_Mono>,   // Mono
-        qt_fetchUntransformed<QImage::Format_MonoLSB>,   // MonoLsb
-        qt_fetchUntransformed<QImage::Format_Indexed8>,   // Indexed8
-        qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // RGB32
-        qt_fetchUntransformed<QImage::Format_ARGB32>,   // ARGB32
-        qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
-        qt_fetchUntransformed<QImage::Format_RGB16>,   // RGB16
-        qt_fetchUntransformed<QImage::Format_ARGB8565_Premultiplied>,// ARGB8565_Premultiplied
-        qt_fetchUntransformed<QImage::Format_RGB666>,  // RGB666
-        qt_fetchUntransformed<QImage::Format_ARGB6666_Premultiplied>,// ARGB6666_Premultiplied
-        qt_fetchUntransformed<QImage::Format_RGB555>,  // RGB555
-        qt_fetchUntransformed<QImage::Format_ARGB8555_Premultiplied>,// ARGB8555_Premultiplied
-        qt_fetchUntransformed<QImage::Format_RGB888>,  // RGB888
-        qt_fetchUntransformed<QImage::Format_RGB444>,  // RGB444
-        qt_fetchUntransformed<QImage::Format_ARGB4444_Premultiplied> // ARGB4444_Premultiplied
+        fetchUntransformed<QImage::Format_Mono>,   // Mono
+        fetchUntransformed<QImage::Format_MonoLSB>,   // MonoLsb
+        fetchUntransformed<QImage::Format_Indexed8>,   // Indexed8
+        fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // RGB32
+        fetchUntransformed<QImage::Format_ARGB32>,   // ARGB32
+        fetchUntransformed<QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
+        fetchUntransformed<QImage::Format_RGB16>   // RGB16
     },
     // Transformed
     {
@@ -700,15 +557,7 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
         fetchTransformed<BlendTransformed>,   // RGB32
         fetchTransformed<BlendTransformed>,   // ARGB32
         fetchTransformed<BlendTransformed>,   // ARGB32_Premultiplied
-        fetchTransformed<BlendTransformed>,   // RGB16
-        fetchTransformed<BlendTransformed>,   // ARGB8565_Premultiplied
-        fetchTransformed<BlendTransformed>,   // RGB666
-        fetchTransformed<BlendTransformed>,   // ARGB6666_Premultiplied
-        fetchTransformed<BlendTransformed>,   // RGB555
-        fetchTransformed<BlendTransformed>,   // ARGB8555_Premultiplied
-        fetchTransformed<BlendTransformed>,   // RGB888
-        fetchTransformed<BlendTransformed>,   // RGB444
-        fetchTransformed<BlendTransformed>,   // ARGB4444_Premultiplied
+        fetchTransformed<BlendTransformed>   // RGB16
     },
     {
         0, // TransformedTiled
@@ -718,15 +567,7 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
         fetchTransformed<BlendTransformedTiled>,   // RGB32
         fetchTransformed<BlendTransformedTiled>,   // ARGB32
         fetchTransformed<BlendTransformedTiled>,   // ARGB32_Premultiplied
-        fetchTransformed<BlendTransformedTiled>,   // RGB16
-        fetchTransformed<BlendTransformedTiled>,   // ARGB8565_Premultiplied
-        fetchTransformed<BlendTransformedTiled>,   // RGB666
-        fetchTransformed<BlendTransformedTiled>,   // ARGB6666_Premultiplied
-        fetchTransformed<BlendTransformedTiled>,   // RGB555
-        fetchTransformed<BlendTransformedTiled>,   // ARGB8555_Premultiplied
-        fetchTransformed<BlendTransformedTiled>,   // RGB888
-        fetchTransformed<BlendTransformedTiled>,   // RGB444
-        fetchTransformed<BlendTransformedTiled>,   // ARGB4444_Premultiplied
+        fetchTransformed<BlendTransformedTiled>   // RGB16
     },
     {
         0, // Bilinear
@@ -737,14 +578,6 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
         fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_ARGB32>,   // ARGB32
         fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
         fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // RGB16
-        fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // ARGB8565_Premultiplied
-        fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // RGB666
-        fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // ARGB6666_Premultiplied
-        fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // RGB555
-        fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // ARGB8555_Premultiplied
-        fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // RGB888
-        fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>,   // RGB444
-        fetchTransformedBilinear<BlendTransformedBilinear, QImage::Format_Invalid>    // ARGB4444_Premultiplied
     },
     {
         0, // BilinearTiled
@@ -754,15 +587,7 @@ static const SourceFetchProc sourceFetch[NBlendTypes][QImage::NImageFormats] = {
         fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_ARGB32_Premultiplied>,   // RGB32
         fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_ARGB32>,   // ARGB32
         fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_ARGB32_Premultiplied>,   // ARGB32_Premultiplied
-        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // RGB16
-        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // ARGB8565_Premultiplied
-        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // RGB666
-        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // ARGB6666_Premultiplied
-        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // RGB555
-        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // ARGB8555_Premultiplied
-        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // RGB888
-        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>,   // RGB444
-        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>    // ARGB4444_Premultiplied
+        fetchTransformedBilinear<BlendTransformedBilinearTiled, QImage::Format_Invalid>   // RGB16
     },
 };
 
@@ -942,7 +767,7 @@ static const uint * QT_FASTCALL qt_fetch_radial_gradient(uint *buffer, const Ope
 {
     // avoid division by zero
     if (qFuzzyIsNull(op->radial.a)) {
-        qt_memfill(buffer, 0, length);
+        qt_memfill(buffer, (uint)0, length);
         return buffer;
     }
 
@@ -1571,7 +1396,7 @@ static void QT_FASTCALL comp_func_solid_Multiply(uint *dest, const int length, u
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1610,7 +1435,7 @@ static void QT_FASTCALL comp_func_Multiply(uint *dest, const uint *src, const in
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1629,13 +1454,12 @@ static void QT_FASTCALL comp_func_solid_Screen(uint *dest, const int length, uin
     if (const_alpha == 255) {
         for (int i = 0; i < length; ++i) {
             uint d = dest[i];
-            int da = qAlpha(d);
 
 #define OP(a, b) 255 - qt_div_255((255-a) * (255-b))
             int r = OP(  qRed(d), sr);
             int b = OP( qBlue(d), sb);
             int g = OP(qGreen(d), sg);
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), sa);
 #undef OP
 
             dest[i] = qRgba(r, g, b, a);
@@ -1643,16 +1467,15 @@ static void QT_FASTCALL comp_func_solid_Screen(uint *dest, const int length, uin
     } else {
         for (int i = 0; i < length; ++i) {
             uint d = dest[i];
-            int da = qAlpha(d);
 
 #define OP(a, b) 255 - qt_div_255((255-a) * (255-b))
             int r = OP(  qRed(d), sr);
             int b = OP( qBlue(d), sb);
             int g = OP(qGreen(d), sg);
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1664,14 +1487,11 @@ static void QT_FASTCALL comp_func_Screen(uint *dest, const uint *src, const int 
             uint d = dest[i];
             uint s = src[i];
 
-            int da = qAlpha(d);
-            int sa = qAlpha(s);
-
 #define OP(a, b) 255 - (((255-a) * (255-b)) >> 8)
             int r = OP(  qRed(d),   qRed(s));
             int b = OP( qBlue(d),  qBlue(s));
             int g = OP(qGreen(d), qGreen(s));
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), qAlpha(s));
 #undef OP
 
             dest[i] = qRgba(r, g, b, a);
@@ -1681,17 +1501,14 @@ static void QT_FASTCALL comp_func_Screen(uint *dest, const uint *src, const int 
             uint d = dest[i];
             uint s = src[i];
 
-            int da = qAlpha(d);
-            int sa = qAlpha(s);
-
 #define OP(a, b) 255 - (((255-a) * (255-b)) >> 8)
             int r = OP(  qRed(d),   qRed(s));
             int b = OP( qBlue(d),  qBlue(s));
             int g = OP(qGreen(d), qGreen(s));
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), qAlpha(s));
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1744,7 +1561,7 @@ static void QT_FASTCALL comp_func_solid_Overlay(uint *dest, const int length, ui
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1783,7 +1600,7 @@ static void QT_FASTCALL comp_func_Overlay(uint *dest, const uint *src, const int
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1830,7 +1647,7 @@ static void QT_FASTCALL comp_func_solid_Darken(uint *dest, const int length, uin
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1869,7 +1686,7 @@ static void QT_FASTCALL comp_func_Darken(uint *dest, const uint *src, const int 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1916,7 +1733,7 @@ static void QT_FASTCALL comp_func_solid_Lighten(uint *dest, const int length, ui
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -1955,7 +1772,7 @@ static void QT_FASTCALL comp_func_Lighten(uint *dest, const uint *src, const int
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2012,7 +1829,7 @@ static void QT_FASTCALL comp_func_solid_ColorDodge(uint *dest, const int length,
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2051,7 +1868,7 @@ static void QT_FASTCALL comp_func_ColorDodge(uint *dest, const uint *src, const 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2108,7 +1925,7 @@ static void QT_FASTCALL comp_func_solid_ColorBurn(uint *dest, const int length, 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2147,7 +1964,7 @@ static void QT_FASTCALL comp_func_ColorBurn(uint *dest, const uint *src, const i
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2201,7 +2018,7 @@ static void QT_FASTCALL comp_func_solid_HardLight(uint *dest, const int length, 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2240,7 +2057,7 @@ static void QT_FASTCALL comp_func_HardLight(uint *dest, const uint *src, const i
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2301,7 +2118,7 @@ static void QT_FASTCALL comp_func_solid_SoftLight(uint *dest, const int length, 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2340,7 +2157,7 @@ static void QT_FASTCALL comp_func_SoftLight(uint *dest, const uint *src, const i
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2387,7 +2204,7 @@ static void QT_FASTCALL comp_func_solid_Difference(uint *dest, const int length,
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2426,7 +2243,7 @@ static void QT_FASTCALL comp_func_Difference(uint *dest, const uint *src, const 
             int a = mix_alpha(da, sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2444,13 +2261,12 @@ static void QT_FASTCALL comp_func_solid_Exclusion(uint *dest, const int length, 
     if (const_alpha == 255) {
         for (int i = 0; i < length; ++i) {
             uint d = dest[i];
-            int da = qAlpha(d);
 
 #define OP(a, b) (a + b - qt_div_255(2*(a*b)))
             int r =  OP(  qRed(d), sr);
             int b =  OP( qBlue(d), sb);
             int g =  OP(qGreen(d), sg);
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), sa);
 #undef OP
 
             dest[i] = qRgba(r, g, b, a);
@@ -2458,16 +2274,15 @@ static void QT_FASTCALL comp_func_solid_Exclusion(uint *dest, const int length, 
     } else {
         for (int i = 0; i < length; ++i) {
             uint d = dest[i];
-            int da = qAlpha(d);
 
 #define OP(a, b) (a + b - qt_div_255(2*(a*b)))
             int r =  OP(  qRed(d), sr);
             int b =  OP( qBlue(d), sb);
             int g =  OP(qGreen(d), sg);
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), sa);
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2479,14 +2294,11 @@ static void QT_FASTCALL comp_func_Exclusion(uint *dest, const uint *src, const i
             uint d = dest[i];
             uint s = src[i];
 
-            int da = qAlpha(d);
-            int sa = qAlpha(s);
-
 #define OP(a, b) (a + b - ((a*b) >> 7))
             int r = OP(  qRed(d),   qRed(s));
             int b = OP( qBlue(d),  qBlue(s));
             int g = OP(qGreen(d), qGreen(s));
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), qAlpha(s));
 #undef OP
 
             dest[i] = qRgba(r, g, b, a);
@@ -2495,17 +2307,14 @@ static void QT_FASTCALL comp_func_Exclusion(uint *dest, const uint *src, const i
             uint d = dest[i];
             uint s = src[i];
 
-            int da = qAlpha(d);
-            int sa = qAlpha(s);
-
 #define OP(a, b) (a + b - ((a*b) >> 7))
             int r = OP(  qRed(d),   qRed(s));
             int b = OP( qBlue(d),  qBlue(s));
             int g = OP(qGreen(d), qGreen(s));
-            int a = mix_alpha(da, sa);
+            int a = mix_alpha(qAlpha(d), qAlpha(s));
 #undef OP
 
-            dest[i] = partial_coverage_store(dest[i], qRgba(r, g, b, a), const_alpha);
+            dest[i] = partial_coverage_store(d, qRgba(r, g, b, a), const_alpha);
         }
     }
 }
@@ -2869,19 +2678,6 @@ static void blend_color_generic(int count, const QSpan *spans, void *userData)
     }
 }
 
-static void blend_color_argb(int count, const QSpan *spans, void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-
-    Operator op = getOperator(data, spans, count);
-
-    while (count--) {
-        uint *target = ((uint *)data->rasterBuffer->scanLine(spans->y)) + spans->x;
-        op.funcSolid(target, spans->len, data->solid.color, spans->coverage);
-        ++spans;
-    }
-}
-
 static void blend_src_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
@@ -2987,104 +2783,6 @@ static void blend_untransformed_generic(int count, const QSpan *spans, void *use
     }
 }
 
-static void blend_untransformed_argb(int count, const QSpan *spans, void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    Operator op = getOperator(data, spans, count);
-
-    const int image_width = data->texture.width;
-    const int image_height = data->texture.height;
-    int xoff = -qRound(-data->dx);
-    int yoff = -qRound(-data->dy);
-
-    while (count--) {
-        int x = spans->x;
-        int length = spans->len;
-        int sx = xoff + x;
-        int sy = yoff + spans->y;
-        if (sy >= 0 && sy < image_height && sx < image_width) {
-            if (sx < 0) {
-                x -= sx;
-                length += sx;
-                sx = 0;
-            }
-            if (sx + length > image_width)
-                length = image_width - sx;
-            if (length > 0) {
-                const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
-                const uint *src = (const uint *)data->texture.scanLine(sy) + sx;
-                uint *dest = ((uint *)data->rasterBuffer->scanLine(spans->y)) + x;
-                op.func(dest, src, length, coverage);
-            }
-        }
-        ++spans;
-    }
-}
-
-static void QT_FASTCALL blendUntransformed(qrgb565 *dest, const qrgb565 *src,
-                                           quint8 coverage, int length)
-{
-    Q_ASSERT(coverage > 0 && coverage < 255);
-
-    const quint8 alpha = qrgb565::alpha(coverage);
-    const quint8 ialpha = qrgb565::ialpha(coverage);
-    if (alpha) {
-        for (int i = 0; i < length; ++i)
-            interpolate_pixel(dest[i], ialpha, src[i], alpha);
-    }
-}
-
-static void blend_untransformed_rgb565(int count, const QSpan *spans,
-                                       void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData*>(userData);
-    QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
-
-    if (mode != QPainter::CompositionMode_SourceOver &&
-        mode != QPainter::CompositionMode_Source)
-    {
-        blend_src_generic(count, spans, userData);
-        return;
-    }
-
-    const int image_width = data->texture.width;
-    const int image_height = data->texture.height;
-    int xoff = -qRound(-data->dx);
-    int yoff = -qRound(-data->dy);
-
-    while (count--) {
-        const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-        if (coverage == 0) {
-            ++spans;
-            continue;
-        }
-
-        int x = spans->x;
-        int length = spans->len;
-        int sx = xoff + x;
-        int sy = yoff + spans->y;
-        if (sy >= 0 && sy < image_height && sx < image_width) {
-            if (sx < 0) {
-                x -= sx;
-                length += sx;
-                sx = 0;
-            }
-            if (sx + length > image_width)
-                length = image_width - sx;
-            if (length > 0) {
-                qrgb565 *dest = ((qrgb565*)data->rasterBuffer->scanLine(spans->y)) + x;
-                const qrgb565 *src = (const qrgb565*)data->texture.scanLine(sy) + sx;
-                if (coverage == 255) {
-                    qt_memconvert<qrgb565, qrgb565>(dest, src, length);
-                } else {
-                    blendUntransformed(dest, src, coverage, length);
-                }
-            }
-        }
-        ++spans;
-    }
-}
-
 static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
@@ -3133,519 +2831,6 @@ static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
     }
 }
 
-static void blend_tiled_argb(int count, const QSpan *spans, void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    Operator op = getOperator(data, spans, count);
-
-    int image_width = data->texture.width;
-    int image_height = data->texture.height;
-    int xoff = -qRound(-data->dx) % image_width;
-    int yoff = -qRound(-data->dy) % image_height;
-
-    if (xoff < 0)
-        xoff += image_width;
-    if (yoff < 0)
-        yoff += image_height;
-
-    while (count--) {
-        int x = spans->x;
-        int length = spans->len;
-        int sx = (xoff + spans->x) % image_width;
-        int sy = (spans->y + yoff) % image_height;
-        if (sx < 0)
-            sx += image_width;
-        if (sy < 0)
-            sy += image_height;
-
-        const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
-        while (length) {
-            int l = qMin(image_width - sx, length);
-            if (buffer_size < l)
-                l = buffer_size;
-            const uint *src = (const uint *)data->texture.scanLine(sy) + sx;
-            uint *dest = ((uint *)data->rasterBuffer->scanLine(spans->y)) + x;
-            op.func(dest, src, l, coverage);
-            x += l;
-            length -= l;
-            sx = 0;
-        }
-        ++spans;
-    }
-}
-
-static void blend_tiled_rgb565(int count, const QSpan *spans, void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData*>(userData);
-    QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
-
-    if (mode != QPainter::CompositionMode_SourceOver &&
-        mode != QPainter::CompositionMode_Source)
-    {
-        blend_src_generic(count, spans, userData);
-        return;
-    }
-
-    const int image_width = data->texture.width;
-    const int image_height = data->texture.height;
-    int xoff = -qRound(-data->dx) % image_width;
-    int yoff = -qRound(-data->dy) % image_height;
-
-    if (xoff < 0)
-        xoff += image_width;
-    if (yoff < 0)
-        yoff += image_height;
-
-    while (count--) {
-        const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-        if (coverage == 0) {
-            ++spans;
-            continue;
-        }
-
-        int x = spans->x;
-        int length = spans->len;
-        int sx = (xoff + spans->x) % image_width;
-        int sy = (spans->y + yoff) % image_height;
-        if (sx < 0)
-            sx += image_width;
-        if (sy < 0)
-            sy += image_height;
-
-        if (coverage == 255) {
-            // Copy the first texture block
-            length = qMin(image_width,length);
-            int tx = x;
-            while (length) {
-                int l = qMin(image_width - sx, length);
-                if (buffer_size < l)
-                    l = buffer_size;
-                qrgb565 *dest = ((qrgb565*)data->rasterBuffer->scanLine(spans->y)) + tx;
-                const qrgb565 *src = (const qrgb565*)data->texture.scanLine(sy) + sx;
-
-                qt_memconvert<qrgb565, qrgb565>(dest, src, l);
-                length -= l;
-                tx += l;
-                sx = 0;
-            }
-
-            // Now use the rasterBuffer as the source of the texture,
-            // We can now progressively copy larger blocks
-            // - Less cpu time in code figuring out what to copy
-            // We are dealing with one block of data
-            // - More likely to fit in the cache
-            // - can use memcpy
-            int copy_image_width = qMin(image_width, int(spans->len));
-            length = spans->len - copy_image_width;
-            qrgb565 *src = ((qrgb565*)data->rasterBuffer->scanLine(spans->y)) + x;
-            qrgb565 *dest = src + copy_image_width;
-            while (copy_image_width < length) {
-                qt_memconvert(dest, src, copy_image_width);
-                dest += copy_image_width;
-                length -= copy_image_width;
-                copy_image_width *= 2;
-            }
-            if (length > 0)
-                qt_memconvert(dest, src, length);
-        } else {
-            while (length) {
-                int l = qMin(image_width - sx, length);
-                if (buffer_size < l)
-                    l = buffer_size;
-                qrgb565 *dest = ((qrgb565*)data->rasterBuffer->scanLine(spans->y)) + x;
-                const qrgb565 *src = (const qrgb565*)data->texture.scanLine(sy) + sx;
-                blendUntransformed(dest, src, coverage, l);
-
-                x += l;
-                length -= l;
-                sx = 0;
-            }
-        }
-        ++spans;
-    }
-}
-
-static void blend_transformed_bilinear_rgb565(int count, const QSpan *spans,
-                                              void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData*>(userData);
-    QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
-
-
-    if (mode != QPainter::CompositionMode_SourceOver) {
-        blend_src_generic(count, spans, userData);
-        return;
-    }
-
-    qrgb565 buffer[buffer_size];
-
-    const int src_minx = data->texture.x1;
-    const int src_miny = data->texture.y1;
-    const int src_maxx = data->texture.x2 - 1;
-    const int src_maxy = data->texture.y2 - 1;
-    const qreal fdx = data->m11;
-    const qreal fdy = data->m12;
-    const qreal fdw = data->m13;
-
-    while (count--) {
-        const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-        if (coverage == 0) {
-            ++spans;
-            continue;
-        }
-
-        qrgb565 *dest = (qrgb565*)data->rasterBuffer->scanLine(spans->y)
-                    + spans->x;
-
-        const qreal cx = spans->x + qreal(0.5);
-        const qreal cy = spans->y + qreal(0.5);
-
-        qreal x = data->m21 * cy + data->m11 * cx + data->dx;
-        qreal y = data->m22 * cy + data->m12 * cx + data->dy;
-        qreal w = data->m23 * cy + data->m13 * cx + data->m33;
-
-        int length = spans->len;
-        while (length) {
-            const int l = qMin(length, buffer_size);
-            const qrgb565 *end = buffer + l;
-            qrgb565 *b = buffer;
-            while (b < end) {
-                const qreal iw = w == 0 ? 1 : 1 / w;
-                const qreal px = x * iw - qreal(0.5);
-                const qreal py = y * iw - qreal(0.5);
-
-                int x1 = int(px) - (px < 0);
-                int x2;
-                int y1 = int(py) - (py < 0);
-                int y2;
-
-                const int distx = int((px - x1) * 256);
-                const int disty = int((py - y1) * 256);
-
-                if (x1 < src_minx) {
-                    x2 = x1 = src_minx;
-                } else if (x1 >= src_maxx) {
-                    x2 = x1 = src_maxx;
-                } else {
-                    x2 = x1 + 1;
-                }
-                if (y1 < src_miny) {
-                    y2 = y1 = src_miny;
-                } else if (y1 >= src_maxy) {
-                    y2 = y1 = src_maxy;
-                } else {
-                    y2 = y1 + 1;
-                }
-
-                const qrgb565 *src1 = (const qrgb565*)data->texture.scanLine(y1);
-                const qrgb565 *src2 = (const qrgb565*)data->texture.scanLine(y2);
-                qrgb565 tl = src1[x1];
-                const qrgb565 tr = src1[x2];
-                qrgb565 bl = src2[x1];
-                const qrgb565 br = src2[x2];
-                const quint8 ax = qrgb565::alpha(distx);
-                const quint8 iax = qrgb565::ialpha(distx);
-
-                interpolate_pixel(tl, iax, tr, ax);
-                interpolate_pixel(bl, iax, br, ax);
-                interpolate_pixel(tl, qrgb565::ialpha(disty),
-                                    bl, qrgb565::alpha(disty));
-                *b = tl;
-                ++b;
-
-                x += fdx;
-                y += fdy;
-                w += fdw;
-            }
-            if (coverage == 255) {
-                qt_memconvert(dest, buffer, l);
-            } else {
-                blendUntransformed(dest, buffer, coverage, l);
-            }
-
-            dest += l;
-            length -= l;
-        }
-        ++spans;
-    }
-}
-
-static void blend_transformed_argb(int count, const QSpan *spans, void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    CompositionFunction func = functionForMode[data->rasterBuffer->compositionMode];
-    uint buffer[buffer_size];
-
-    int image_width = data->texture.width;
-    int image_height = data->texture.height;
-    const int scanline_offset = data->texture.bytesPerLine / 4;
-    const qreal fdx = data->m11;
-    const qreal fdy = data->m12;
-    const qreal fdw = data->m13;
-
-    while (count--) {
-        void *t = data->rasterBuffer->scanLine(spans->y);
-
-        uint *target = ((uint *)t) + spans->x;
-        uint *image_bits = (uint *)data->texture.imageData;
-
-        const qreal cx = spans->x + qreal(0.5);
-        const qreal cy = spans->y + qreal(0.5);
-
-        qreal x = data->m21 * cy + data->m11 * cx + data->dx;
-        qreal y = data->m22 * cy + data->m12 * cx + data->dy;
-        qreal w = data->m23 * cy + data->m13 * cx + data->m33;
-
-        int length = spans->len;
-        const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
-        while (length) {
-            int l = qMin(length, buffer_size);
-            const uint *end = buffer + l;
-            uint *b = buffer;
-            while (b < end) {
-                const qreal iw = w == 0 ? 1 : 1 / w;
-                const qreal tx = x * iw;
-                const qreal ty = y * iw;
-                const int px = int(tx) - (tx < 0);
-                const int py = int(ty) - (ty < 0);
-
-                bool out = (px < 0) || (px >= image_width)
-                            || (py < 0) || (py >= image_height);
-
-                int y_offset = py * scanline_offset;
-                *b = out ? uint(0) : image_bits[y_offset + px];
-                x += fdx;
-                y += fdy;
-                w += fdw;
-
-                ++b;
-            }
-            func(target, buffer, l, coverage);
-            target += l;
-            length -= l;
-        }
-        ++spans;
-    }
-}
-
-static void blend_transformed_rgb565(int count, const QSpan *spans,
-                                       void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData*>(userData);
-    QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
-
-    if (mode != QPainter::CompositionMode_SourceOver) {
-        blend_src_generic(count, spans, userData);
-        return;
-    }
-
-    qrgb565 buffer[buffer_size];
-    const int image_width = data->texture.width;
-    const int image_height = data->texture.height;
-    const qreal fdx = data->m11;
-    const qreal fdy = data->m12;
-    const qreal fdw = data->m13;
-
-    while (count--) {
-        const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-        if (coverage == 0) {
-            ++spans;
-            continue;
-        }
-
-        qrgb565 *dest = (qrgb565*)data->rasterBuffer->scanLine(spans->y)
-                    + spans->x;
-
-        const qreal cx = spans->x + qreal(0.5);
-        const qreal cy = spans->y + qreal(0.5);
-
-        qreal x = data->m21 * cy + data->m11 * cx + data->dx;
-        qreal y = data->m22 * cy + data->m12 * cx + data->dy;
-        qreal w = data->m23 * cy + data->m13 * cx + data->m33;
-
-        int length = spans->len;
-        while (length) {
-            const int l = qMin(length, buffer_size);
-            const qrgb565 *end = buffer + l;
-            qrgb565 *b = buffer;
-            while (b < end) {
-                const qreal iw = w == 0 ? 1 : 1 / w;
-                const qreal tx = x * iw;
-                const qreal ty = y * iw;
-
-                const int px = int(tx) - (tx < 0);
-                const int py = int(ty) - (ty < 0);
-
-                if ((px < 0) || (px >= image_width) ||
-                    (py < 0) || (py >= image_height))
-                {
-                    *b = 0;
-                } else {
-                    *b = ((const qrgb565*)data->texture.scanLine(py))[px];
-                }
-                ++b;
-
-                x += fdx;
-                y += fdy;
-                w += fdw;
-            }
-            if (coverage == 255) {
-                qt_memconvert(dest, buffer, l);
-            } else {
-                blendUntransformed(dest, buffer, coverage, l);
-            }
-
-            dest += l;
-            length -= l;
-        }
-        ++spans;
-    }
-}
-
-static void blend_transformed_tiled_argb(int count, const QSpan *spans, void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    CompositionFunction func = functionForMode[data->rasterBuffer->compositionMode];
-    uint buffer[buffer_size];
-
-    int image_width = data->texture.width;
-    int image_height = data->texture.height;
-    const int scanline_offset = data->texture.bytesPerLine / 4;
-    const qreal fdx = data->m11;
-    const qreal fdy = data->m12;
-    const qreal fdw = data->m13;
-
-    while (count--) {
-        void *t = data->rasterBuffer->scanLine(spans->y);
-
-        uint *target = ((uint *)t) + spans->x;
-        uint *image_bits = (uint *)data->texture.imageData;
-
-        const qreal cx = spans->x + qreal(0.5);
-        const qreal cy = spans->y + qreal(0.5);
-
-        qreal x = data->m21 * cy + data->m11 * cx + data->dx;
-        qreal y = data->m22 * cy + data->m12 * cx + data->dy;
-        qreal w = data->m23 * cy + data->m13 * cx + data->m33;
-
-        const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
-        int length = spans->len;
-        while (length) {
-            int l = qMin(length, buffer_size);
-            const uint *end = buffer + l;
-            uint *b = buffer;
-            while (b < end) {
-                const qreal iw = w == 0 ? 1 : 1 / w;
-                const qreal tx = x * iw;
-                const qreal ty = y * iw;
-                int px = int(tx) - (tx < 0);
-                int py = int(ty) - (ty < 0);
-
-                px %= image_width;
-                py %= image_height;
-                if (px < 0) px += image_width;
-                if (py < 0) py += image_height;
-                int y_offset = py * scanline_offset;
-
-                Q_ASSERT(px >= 0 && px < image_width);
-                Q_ASSERT(py >= 0 && py < image_height);
-
-                *b = image_bits[y_offset + px];
-                x += fdx;
-                y += fdy;
-                w += fdw;
-                //force increment to avoid /0
-                if (!w) {
-                    w += fdw;
-                }
-                ++b;
-            }
-            func(target, buffer, l, coverage);
-            target += l;
-            length -= l;
-        }
-        ++spans;
-    }
-}
-
-static void blend_transformed_tiled_rgb565(int count, const QSpan *spans,
-                                           void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData*>(userData);
-    QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
-
-    if (mode != QPainter::CompositionMode_SourceOver) {
-        blend_src_generic(count, spans, userData);
-        return;
-    }
-
-    qrgb565 buffer[buffer_size];
-    const int image_width = data->texture.width;
-    const int image_height = data->texture.height;
-    const qreal fdx = data->m11;
-    const qreal fdy = data->m12;
-    const qreal fdw = data->m13;
-
-    while (count--) {
-        const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-        if (coverage == 0) {
-            ++spans;
-            continue;
-        }
-
-        qrgb565 *dest = (qrgb565*)data->rasterBuffer->scanLine(spans->y)
-                    + spans->x;
-
-        const qreal cx = spans->x + qreal(0.5);
-        const qreal cy = spans->y + qreal(0.5);
-
-        qreal x = data->m21 * cy + data->m11 * cx + data->dx;
-        qreal y = data->m22 * cy + data->m12 * cx + data->dy;
-        qreal w = data->m23 * cy + data->m13 * cx + data->m33;
-
-        int length = spans->len;
-        while (length) {
-            const int l = qMin(length, buffer_size);
-            const qrgb565 *end = buffer + l;
-            qrgb565 *b = buffer;
-            while (b < end) {
-                const qreal iw = w == 0 ? 1 : 1 / w;
-                const qreal tx = x * iw;
-                const qreal ty = y * iw;
-
-                int px = int(tx) - (tx < 0);
-                int py = int(ty) - (ty < 0);
-
-                px %= image_width;
-                py %= image_height;
-                if (px < 0)
-                    px += image_width;
-                if (py < 0)
-                    py += image_height;
-
-                *b = ((const qrgb565*)data->texture.scanLine(py))[px];
-                ++b;
-
-                x += fdx;
-                y += fdy;
-                w += fdw;
-                // force increment to avoid /0
-                if (!w)
-                    w += fdw;
-            }
-            if (coverage == 255) {
-                qt_memconvert(dest, buffer, l);
-            } else {
-                blendUntransformed(dest, buffer, coverage, l);
-            }
-
-            dest += l;
-            length -= l;
-        }
-        ++spans;
-    }
-}
-
 /* Image formats here are target formats */
 static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats] = {
     // Untransformed
@@ -3656,16 +2841,8 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_untransformed_generic, // Indexed8
         blend_untransformed_generic, // RGB32
         blend_untransformed_generic, // ARGB32
-        blend_untransformed_argb, // ARGB32_Premultiplied
-        blend_untransformed_rgb565, // RGB16
-        blend_untransformed_generic, // argb8565
-        blend_untransformed_generic, // rgb666
-        blend_untransformed_generic, // argb6666
-        blend_untransformed_generic, // rgb555
-        blend_untransformed_generic, // argb8555
-        blend_untransformed_generic, // rgb888
-        blend_untransformed_generic, // rgb444
-        blend_untransformed_generic // argb4444
+        blend_untransformed_generic, // ARGB32_Premultiplied
+        blend_untransformed_generic // RGB16
     },
     // Tiled
     {
@@ -3675,16 +2852,8 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_tiled_generic, // Indexed8
         blend_tiled_generic, // RGB32
         blend_tiled_generic, // ARGB32
-        blend_tiled_argb, // ARGB32_Premultiplied
-        blend_tiled_rgb565, // RGB16
-        blend_tiled_generic, // argb8565
-        blend_tiled_generic, // rgb666
-        blend_tiled_generic, // argb6666
-        blend_tiled_generic, // rgb555
-        blend_tiled_generic, // argb8555
-        blend_tiled_generic, // rgb888
-        blend_tiled_generic, // rgb444
-        blend_tiled_generic, // argb4444
+        blend_tiled_generic, // ARGB32_Premultiplied
+        blend_tiled_generic // RGB16
     },
     // Transformed
     {
@@ -3694,16 +2863,8 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_src_generic, // Indexed8
         blend_src_generic, // RGB32
         blend_src_generic, // ARGB32
-        blend_transformed_argb, // ARGB32_Premultiplied
-        blend_transformed_rgb565, // RGB16
-        blend_src_generic, // argb8565
-        blend_src_generic, // rgb666
-        blend_src_generic, // argb6666
-        blend_src_generic, // rgb555
-        blend_src_generic, // argb8555
-        blend_src_generic, // rgb888
-        blend_src_generic, // rgb444
-        blend_src_generic // argb4444
+        blend_src_generic, // ARGB32_Premultiplied
+        blend_src_generic // RGB16
     },
      // TransformedTiled
     {
@@ -3713,16 +2874,8 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_src_generic, // Indexed8
         blend_src_generic, // RGB32
         blend_src_generic, // ARGB32
-        blend_transformed_tiled_argb, // ARGB32_Premultiplied
-        blend_transformed_tiled_rgb565, // RGB16
-        blend_src_generic, // argb8565
-        blend_src_generic, // rgb666
-        blend_src_generic, // argb6666
-        blend_src_generic, // rgb555
-        blend_src_generic, // argb8555
-        blend_src_generic, // rgb888
-        blend_src_generic, // rgb444
-        blend_src_generic // argb4444
+        blend_src_generic, // ARGB32_Premultiplied
+        blend_src_generic // RGB16
     },
     // Bilinear
     {
@@ -3733,15 +2886,7 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_src_generic, // RGB32
         blend_src_generic, // ARGB32
         blend_src_generic, // ARGB32_Premultiplied
-        blend_transformed_bilinear_rgb565, // RGB16
-        blend_src_generic, // argb8565
-        blend_src_generic, // rgb666
-        blend_src_generic, // argb6666
-        blend_src_generic, // rgb555
-        blend_src_generic, // argb8555
-        blend_src_generic, // rgb888
-        blend_src_generic, // rgb444
-        blend_src_generic, // argb4444
+        blend_src_generic // RGB16
     },
     // BilinearTiled
     {
@@ -3752,15 +2897,7 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
         blend_src_generic, // RGB32
         blend_src_generic, // ARGB32
         blend_src_generic, // ARGB32_Premultiplied
-        blend_src_generic, // RGB16
-        blend_src_generic, // ARGB8565_Premultiplied
-        blend_src_generic, // RGB666
-        blend_src_generic, // ARGB6666_Premultiplied
-        blend_src_generic, // RGB555
-        blend_src_generic, // ARGB8555_Premultiplied
-        blend_src_generic, // RGB888
-        blend_src_generic, // RGB444
-        blend_src_generic, // ARGB4444_Premultiplied
+        blend_src_generic // RGB16
     }
 };
 
@@ -4130,27 +3267,22 @@ static void qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
     }
 }
 
-#define QT_RECTFILL(T)                                                  \
-    inline static void qt_rectfill_##T(QRasterBuffer *rasterBuffer,     \
-                                       int x, int y, int width, int height, \
-                                       quint32 color)                   \
-    {                                                                   \
-        qt_rectfill<T>(reinterpret_cast<T*>(rasterBuffer->buffer()),    \
-                    qt_colorConvert<T, quint32p>(quint32p::fromRawData(color), 0), \
-                    x, y, width, height, rasterBuffer->bytesPerLine()); \
-    }
+inline static void qt_rectfill_quint32(QRasterBuffer *rasterBuffer,
+                                    int x, int y, int width, int height,
+                                    quint32 color)
+{
+    qt_rectfill<quint32>(reinterpret_cast<quint32*>(rasterBuffer->buffer()),
+                color, x, y, width, height, rasterBuffer->bytesPerLine());
+}
 
-QT_RECTFILL(quint32)
-QT_RECTFILL(quint16)
-QT_RECTFILL(qargb8565)
-QT_RECTFILL(qrgb666)
-QT_RECTFILL(qargb6666)
-QT_RECTFILL(qrgb555)
-QT_RECTFILL(qargb8555)
-QT_RECTFILL(qrgb888)
-QT_RECTFILL(qrgb444)
-QT_RECTFILL(qargb4444)
-#undef QT_RECTFILL
+inline static void qt_rectfill_quint16(QRasterBuffer *rasterBuffer,
+                                    int x, int y, int width, int height,
+                                    quint32 color)
+{
+    qt_rectfill<quint16>(reinterpret_cast<quint16*>(rasterBuffer->buffer()),
+                qt_colorConvert<quint16, quint32>(color, 0),
+                x, y, width, height, rasterBuffer->bytesPerLine());
+}
 
 inline static void qt_rectfill_nonpremul_quint32(QRasterBuffer *rasterBuffer,
                                                  int x, int y, int width, int height,
@@ -4188,7 +3320,7 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
     },
     // Format_RGB32,
     {
-        blend_color_argb,
+        blend_color_generic,
         qt_gradient_quint32,
         qt_bitmapblit_quint32,
         qt_alphamapblit_quint32,
@@ -4206,7 +3338,7 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
     },
     // Format_ARGB32_Premultiplied
     {
-        blend_color_argb,
+        blend_color_generic,
         qt_gradient_quint32,
         qt_bitmapblit_quint32,
         qt_alphamapblit_quint32,
@@ -4221,62 +3353,6 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
         qt_alphamapblit_quint16,
         0,
         qt_rectfill_quint16
-    },
-    // Format_ARGB8565_Premultiplied
-    {
-        blend_color_generic,
-        blend_src_generic,
-        0, 0, 0,
-        qt_rectfill_qargb8565
-    },
-    // Format_RGB666
-    {
-        blend_color_generic,
-        blend_src_generic,
-        0, 0, 0,
-        qt_rectfill_qrgb666
-    },
-    // Format_ARGB6666_Premultiplied
-    {
-        blend_color_generic,
-        blend_src_generic,
-        0, 0, 0,
-        qt_rectfill_qargb6666
-    },
-    // Format_RGB555
-    {
-        blend_color_generic,
-        blend_src_generic,
-        0, 0, 0,
-        qt_rectfill_qrgb555
-    },
-    // Format_ARGB8555_Premultiplied
-    {
-        blend_color_generic,
-        blend_src_generic,
-        0, 0, 0,
-        qt_rectfill_qargb8555
-    },
-    // Format_RGB888
-    {
-        blend_color_generic,
-        blend_src_generic,
-        0, 0, 0,
-        qt_rectfill_qrgb888
-    },
-    // Format_RGB444
-    {
-        blend_color_generic,
-        blend_src_generic,
-        0, 0, 0,
-        qt_rectfill_qrgb444
-    },
-    // Format_ARGB4444_Premultiplied
-    {
-        blend_color_generic,
-        blend_src_generic,
-        0, 0, 0,
-        qt_rectfill_qargb4444
     }
 };
 

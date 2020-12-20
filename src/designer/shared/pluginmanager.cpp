@@ -122,7 +122,7 @@ QStringList QDesignerPluginManager::defaultPluginPaths()
 
 static inline QString getDesignerLanguage(QDesignerFormEditorInterface *core)
 {
-    if (QDesignerLanguageExtension *lang = qt_extension<QDesignerLanguageExtension *>(core->extensionManager(), core)) {
+    if (qt_extension<QDesignerLanguageExtension *>(core->extensionManager(), core)) {
         return QLatin1String("unknown");
     }
     return QLatin1String("c++");

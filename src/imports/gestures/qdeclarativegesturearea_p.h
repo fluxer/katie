@@ -37,10 +37,9 @@
 #include "qdeclarativeitem.h"
 #include "qdeclarativescriptstring.h"
 #include "qdeclarativecustomparser_p.h"
-
-#include <QtCore/qobject.h>
-#include <QtCore/qstring.h>
-#include <QtGui/qgesture.h>
+#include "qobject.h"
+#include "qstring.h"
+#include "qgesture.h"
 
 #ifndef QT_NO_GESTURES
 

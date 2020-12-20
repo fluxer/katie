@@ -406,8 +406,7 @@ QVariant QDirModel::headerData(int section, Qt::Orientation orientation, int rol
 	switch (section) {
         case 0: return tr("Name");
         case 1: return tr("Size");
-        case 2: return
-                       tr("Type", "All other platforms");
+        case 2: return tr("Type");
         // Konqueror - File Type
         // Nautilus  - Type
         case 3: return tr("Date Modified");

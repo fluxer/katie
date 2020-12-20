@@ -45,8 +45,6 @@
 #ifndef FORMWINDOWBASE_H
 #define FORMWINDOWBASE_H
 
-#include "shared_global_p.h"
-
 #include <QtDesigner/abstractformwindow.h>
 
 #include <QtCore/qvariant.h>
@@ -69,7 +67,7 @@ class DesignerPixmapCache;
 class DesignerIconCache;
 class FormWindowBasePrivate;
 
-class QDESIGNER_SHARED_EXPORT FormWindowBase: public QDesignerFormWindowInterface
+class Q_DESIGNER_EXPORT FormWindowBase: public QDesignerFormWindowInterface
 {
     Q_OBJECT
 public:

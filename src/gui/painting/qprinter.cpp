@@ -145,9 +145,7 @@ void QPrinterPrivate::createDefaultEngines()
             printEngine = pdfEngine;
             break;
         }
-#if defined (Q_OS_UNIX)
         case QPrinter::NativeFormat: // falltrough
-#endif
         case QPrinter::PostScriptFormat: {
             QPSPrintEngine *psEngine = new QPSPrintEngine(printerMode);
             paintEngine = psEngine;
@@ -747,7 +745,7 @@ void QPrinter::setPrinterName(const QString &name)
     Q_D(QPrinter);
     ABORT_IF_ACTIVE("QPrinter::setPrinterName");
 
-#if defined(Q_OS_UNIX) && !defined(QT_NO_CUPS)
+#if !defined(QT_NO_CUPS)
     if(d->use_default_engine
         && d->outputFormat == QPrinter::NativeFormat) {
         if (QCUPSSupport::cupsVersion() >= 10200

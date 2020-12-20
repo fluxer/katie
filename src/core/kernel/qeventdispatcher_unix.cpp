@@ -49,24 +49,8 @@
 
 QT_BEGIN_NAMESPACE
 
-/*****************************************************************************
- UNIX signal handling
- *****************************************************************************/
-
-static sig_atomic_t signal_received;
-static sig_atomic_t signals_fired[NSIG];
-
-static void signalHandler(int sig)
-{
-    signals_fired[sig] = 1;
-    signal_received = 1;
-}
-
 QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
 {
-    extern Qt::HANDLE qt_application_thread_id;
-    mainThread = (QThread::currentThreadId() == qt_application_thread_id);
-
     // initialize the common parts of the event loop
     if (qt_safe_pipe(thread_pipe, O_NONBLOCK) == -1) {
         perror("QEventDispatcherUNIXPrivate(): Unable to create thread pipe");
@@ -80,11 +64,9 @@ QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
 
 QEventDispatcherUNIXPrivate::~QEventDispatcherUNIXPrivate()
 {
-#ifndef Q_OS_NACL
     // cleanup the common parts of the event loop
-    close(thread_pipe[0]);
-    close(thread_pipe[1]);
-#endif
+    ::close(thread_pipe[0]);
+    ::close(thread_pipe[1]);
 
     // cleanup timers
     qDeleteAll(timerList);
@@ -99,18 +81,6 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
 
     int nsel;
     do {
-        if (mainThread) {
-            while (signal_received) {
-                signal_received = 0;
-                for (int i = 0; i < NSIG; ++i) {
-                    if (signals_fired[i]) {
-                        signals_fired[i] = 0;
-                        emit QCoreApplication::instance()->unixSignal(i);
-                    }
-                }
-            }
-        }
-
         // Process timers and socket notifiers - the common UNIX stuff
         int highest = 0;
         if (! (flags & QEventLoop::ExcludeSocketNotifiers) && (sn_highest >= 0)) {
@@ -142,13 +112,8 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
             timeval tm;
             tm.tv_sec = tm.tv_usec = 0l;
 
-            for (int type = 0; type < 3; ++type) {
-                QSockNotType::List &list = sn_vec[type].list;
-                if (list.size() == 0)
-                    continue;
-
-                for (int i = 0; i < list.size(); ++i) {
-                    QSockNot *sn = list[i];
+            for (int type = 0; type < 3; type++) {
+                foreach (QSockNot *sn, sn_vec[type].list) {
 
                     FD_ZERO(&fdset);
                     FD_SET(sn->fd, &fdset);
@@ -157,13 +122,13 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
                     do {
                         switch (type) {
                         case 0: // read
-                            ret = select(sn->fd + 1, &fdset, 0, 0, &tm);
+                            ret = ::select(sn->fd + 1, &fdset, 0, 0, &tm);
                             break;
                         case 1: // write
-                            ret = select(sn->fd + 1, 0, &fdset, 0, &tm);
+                            ret = ::select(sn->fd + 1, 0, &fdset, 0, &tm);
                             break;
                         case 2: // except
-                            ret = select(sn->fd + 1, 0, 0, &fdset, &tm);
+                            ret = ::select(sn->fd + 1, 0, 0, &fdset, &tm);
                             break;
                         }
                     } while (ret == -1 && (errno == EINTR || errno == EAGAIN));
@@ -190,11 +155,9 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
     if (! (flags & QEventLoop::ExcludeSocketNotifiers) && nsel > 0 && sn_highest >= 0) {
         // if select says data is ready on any socket, then set the socket notifier
         // to pending
-        for (int i=0; i<3; i++) {
-            QSockNotType::List &list = sn_vec[i].list;
-            for (int j = 0; j < list.size(); ++j) {
-                QSockNot *sn = list[j];
-                if (FD_ISSET(sn->fd, &sn_vec[i].select_fds))
+        for (int type = 0; type < 3; type++) {
+            foreach (QSockNot *sn, sn_vec[type].list) {
+                if (FD_ISSET(sn->fd, &sn_vec[type].select_fds))
                     q->setSocketNotifierPending(sn->obj);
             }
         }
@@ -233,7 +196,6 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
 
 QTimerInfoList::QTimerInfoList()
 {
-#ifndef Q_OS_NACL
     if (Q_LIKELY(QElapsedTimer::isMonotonic())) {
         // detected monotonic timers
         previousTime.tv_sec = previousTime.tv_usec = 0;
@@ -244,13 +206,12 @@ QTimerInfoList::QTimerInfoList()
         // not using monotonic timers, initialize the timeChanged() machinery
         previousTime = qt_gettime();
 
-        tms unused;
-        previousTicks = times(&unused);
+        struct tms unused;
+        previousTicks = ::times(&unused);
 
         ticksPerSecond = sysconf(_SC_CLK_TCK);
         msPerTick = 1000/ticksPerSecond;
     }
-#endif
 
     firstTimerInfo = Q_NULLPTR;
 }
@@ -282,10 +243,6 @@ timeval qAbsTimeval(const timeval &t)
 */
 bool QTimerInfoList::timeChanged(timeval *delta)
 {
-#ifdef Q_OS_NACL
-    Q_UNUSED(delta)
-    return false; // Calling "times" crashes.
-#else
     struct tms unused;
     clock_t currentTicks = times(&unused);
 
@@ -310,7 +267,6 @@ bool QTimerInfoList::timeChanged(timeval *delta)
     tickGranularity.tv_sec = 0;
     tickGranularity.tv_usec = msPerTick * 1000;
     return elapsedTimeTicks < ((qAbsTimeval(*delta) - tickGranularity) * 10);
-#endif // Q_OS_NACL
 }
 
 void QTimerInfoList::repairTimersIfNeeded()
@@ -855,23 +811,6 @@ void QEventDispatcherUNIX::interrupt()
 
 void QEventDispatcherUNIX::flush()
 { }
-
-
-
-
-void QCoreApplication::watchUnixSignal(int sig, bool watch)
-{
-    if (sig < NSIG) {
-        struct sigaction sa;
-        sigemptyset(&(sa.sa_mask));
-        sa.sa_flags = 0;
-        if (watch)
-            sa.sa_handler = signalHandler;
-        else
-            sa.sa_handler = SIG_DFL;
-        sigaction(sig, &sa, 0);
-    }
-}
 
 QT_END_NAMESPACE
 

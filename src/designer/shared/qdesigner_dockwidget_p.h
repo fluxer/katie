@@ -45,14 +45,13 @@
 #ifndef QDESIGNER_DOCKWIDGET_H
 #define QDESIGNER_DOCKWIDGET_H
 
-#include "shared_global_p.h"
 #include <QtGui/QDockWidget>
 
 QT_BEGIN_NAMESPACE
 
 class QDesignerFormWindowInterface;
 
-class QDESIGNER_SHARED_EXPORT QDesignerDockWidget: public QDockWidget
+class Q_DESIGNER_EXPORT QDesignerDockWidget: public QDockWidget
 {
     Q_OBJECT
     Q_PROPERTY(Qt::DockWidgetArea dockWidgetArea READ dockWidgetArea WRITE setDockWidgetArea DESIGNABLE docked STORED false)

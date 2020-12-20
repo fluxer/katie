@@ -275,7 +275,6 @@ void QCursorData::update()
         pm  = XCreateBitmapFromData(dpy, QX11Info::appRootWindow(), x11_blank_cursor_bits, 16, 16);
         // reusing the pixmap as mask to create invisible cursor
         hcurs = XCreatePixmapCursor(dpy, pm, pm, &fg, &bg, 8, 8);
-        return;
     } else {
         hcurs = XCreateFontCursor(dpy, CursorTbl[cshape].font);
         if (Q_UNLIKELY(!hcurs)) {

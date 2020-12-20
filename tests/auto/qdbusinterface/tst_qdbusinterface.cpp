@@ -268,7 +268,7 @@ void tst_QDBusInterface::initTestCase()
 
     // start peer server
     QDir workingDirectory = QCoreApplication::applicationDirPath();
-    QString myserverprogram = workingDirectory.absoluteFilePath(QLatin1String("qmyserver2"));
+    QString myserverprogram = workingDirectory.absoluteFilePath(QLatin1String("qdbusinterface_qmyserver"));
     proc.start(myserverprogram);
     QVERIFY(proc.waitForStarted());
 

@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_WIDGET_H
 #define QDESIGNER_WIDGET_H
 
-#include "shared_global_p.h"
 #include <QtGui/QDialog>
 #include <QtGui/QLabel>
 
@@ -57,7 +56,7 @@ namespace qdesigner_internal {
     class FormWindowBase;
 }
 
-class QDESIGNER_SHARED_EXPORT QDesignerWidget : public QWidget
+class Q_DESIGNER_EXPORT QDesignerWidget : public QWidget
 {
     Q_OBJECT
 public:
@@ -76,7 +75,7 @@ private:
     qdesigner_internal::FormWindowBase* m_formWindow;
 };
 
-class QDESIGNER_SHARED_EXPORT QDesignerDialog : public QDialog
+class Q_DESIGNER_EXPORT QDesignerDialog : public QDialog
 {
     Q_OBJECT
 public:
@@ -92,7 +91,7 @@ private:
     qdesigner_internal::FormWindowBase* m_formWindow;
 };
 
-class QDESIGNER_SHARED_EXPORT Line : public QFrame
+class Q_DESIGNER_EXPORT Line : public QFrame
 {
     Q_OBJECT
     Q_PROPERTY(Qt::Orientation orientation READ orientation WRITE setOrientation)

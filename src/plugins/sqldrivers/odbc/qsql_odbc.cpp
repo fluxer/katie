@@ -625,13 +625,6 @@ static QSqlField qMakeFieldInfo(const QODBCPrivate* p, int i )
     return f;
 }
 
-static int qGetODBCVersion(const QString &connOpts)
-{
-    if (connOpts.contains(QLatin1String("SQL_ATTR_ODBC_VERSION=SQL_OV_ODBC3"), Qt::CaseInsensitive))
-        return SQL_OV_ODBC3;
-    return SQL_OV_ODBC2;
-}
-
 QChar QODBCDriverPrivate::quoteChar()
 {
     if (!isQuoteInitialized) {
@@ -744,9 +737,6 @@ bool QODBCDriverPrivate::setConnectionOptions(const QString& connOpts)
                 continue;
             }
             r = SQLSetConnectAttr(hDbc, SQL_ATTR_CP_MATCH, reinterpret_cast<SQLPOINTER>(v), 0);
-        } else if (opt.toUpper() == QLatin1String("SQL_ATTR_ODBC_VERSION")) {
-            // Already handled in QODBCDriver::open()
-            continue;
         } else {
                 qWarning() << "QODBCDriver::open: Unknown connection attribute '" << opt << '\'';
         }
@@ -1688,26 +1678,8 @@ void QODBCResult::setForwardOnly(bool forward)
 
 
 QODBCDriver::QODBCDriver(QObject *parent)
-    : QSqlDriver(parent)
+    : QSqlDriver(parent), d(new QODBCDriverPrivate())
 {
-    init();
-}
-
-QODBCDriver::QODBCDriver(SQLHANDLE env, SQLHANDLE con, QObject * parent)
-    : QSqlDriver(parent)
-{
-    init();
-    d->hEnv = env;
-    d->hDbc = con;
-    if (env && con) {
-        setOpen(true);
-        setOpenError(false);
-    }
-}
-
-void QODBCDriver::init()
-{
-    d = new QODBCDriverPrivate();
 }
 
 QODBCDriver::~QODBCDriver()
@@ -1780,7 +1752,7 @@ bool QODBCDriver::open(const QString & db,
     }
     r = SQLSetEnvAttr(d->hEnv,
                        SQL_ATTR_ODBC_VERSION,
-                       reinterpret_cast<SQLPOINTER>(qGetODBCVersion(connOpts)),
+                       reinterpret_cast<SQLPOINTER>(SQL_OV_ODBC3),
                        SQL_IS_UINTEGER);
     r = SQLAllocHandle(SQL_HANDLE_DBC,
                         d->hEnv,

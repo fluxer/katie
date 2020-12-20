@@ -36,29 +36,28 @@
 #include "qdesignercomponentscommon_p.h"
 
 // shared
-#include <iconloader_p.h>
-#include <sheet_delegate_p.h>
-#include <ui4.h>
+#include "iconloader_p.h"
+#include "sheet_delegate_p.h"
+#include "ui4.h"
 #include "qdesigner_utils_p.h"
-#include <pluginmanager_p.h>
+#include "pluginmanager_p.h"
 
 // sdk
-#include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractdnditem.h>
-#include <QtUiTools/customwidget.h>
-#include <QtDesigner/abstractsettings_p.h>
+#include "abstractformeditor.h"
+#include "abstractdnditem.h"
+#include "customwidget.h"
+#include "abstractsettings_p.h"
 
-#include <QtGui/QHeaderView>
-#include <QtGui/QApplication>
-#include <QtGui/qtreewidget.h>
-#include <QtGui/qevent.h>
-#include <QtGui/QAction>
-#include <QtGui/QActionGroup>
-#include <QtGui/QMenu>
-
-#include <QtCore/QFile>
-#include <QtCore/QTimer>
-#include <QtCore/QDebug>
+#include "qheaderview.h"
+#include "qapplication.h"
+#include "qtreewidget.h"
+#include "qevent.h"
+#include "qaction.h"
+#include "qactiongroup.h"
+#include "qmenu.h"
+#include "qfile.h"
+#include "qtimer.h"
+#include "qdebug.h"
 
 static const char *widgetBoxRootElementC = "widgetbox";
 static const char *uiElementC = "ui";

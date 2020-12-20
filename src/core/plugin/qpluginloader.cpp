@@ -260,7 +260,6 @@ bool QPluginLoader::isLoaded() const
 */
 void QPluginLoader::setFileName(const QString &fileName)
 {
-#if defined(QT_SHARED)
     QLibrary::LoadHints lh;
     if (d) {
         lh = d->loadHints;
@@ -273,13 +272,6 @@ void QPluginLoader::setFileName(const QString &fileName)
     d->loadHints = lh;
     if (!d->isPlugin())
         d->errorString = QLibrary::tr("The shared library was not found.");
-#else
-    if (qt_debug_component()) {
-        qWarning("Cannot load %s into a statically linked Qt library.",
-            QFile::encodeName(fileName).data());
-    }
-    Q_UNUSED(fileName);
-#endif
 }
 
 QString QPluginLoader::fileName() const

@@ -31,9 +31,6 @@
 **
 ****************************************************************************/
 
-#define QT_FT_BEGIN_HEADER
-#define QT_FT_END_HEADER
-
 #include "qmutex.h"
 #include "qrasterdefs_p.h"
 #include "qpainterpath.h"
@@ -242,19 +239,11 @@ void QRasterPaintEngine::init()
     case QImage::Format_Mono:
         d->mono_surface = true;
         break;
-    case QImage::Format_ARGB8565_Premultiplied:
-    case QImage::Format_ARGB8555_Premultiplied:
-    case QImage::Format_ARGB6666_Premultiplied:
-    case QImage::Format_ARGB4444_Premultiplied:
     case QImage::Format_ARGB32_Premultiplied:
     case QImage::Format_ARGB32:
         gccaps |= PorterDuff;
         break;
     case QImage::Format_RGB32:
-    case QImage::Format_RGB444:
-    case QImage::Format_RGB555:
-    case QImage::Format_RGB666:
-    case QImage::Format_RGB888:
     case QImage::Format_RGB16:
         break;
     default:
@@ -337,15 +326,6 @@ bool QRasterPaintEngine::end()
 #endif
 
     return true;
-}
-
-/*!
-    \internal
-*/
-QSize QRasterPaintEngine::size() const
-{
-    Q_D(const QRasterPaintEngine);
-    return QSize(d->rasterBuffer->width(), d->rasterBuffer->height());
 }
 
 /*!
@@ -1150,8 +1130,7 @@ void QRasterPaintEngine::drawRects(const QRect *rects, int rectCount)
             int offset_y = int(s->matrix.dy());
             while (r < lastRect) {
                 QRect rect = r->normalized();
-                QRect rr = rect.translated(offset_x, offset_y);
-                fillRect_normalized(rr, &s->brushData, d);
+                fillRect_normalized(rect.translated(offset_x, offset_y), &s->brushData, d);
                 ++r;
             }
         } else {
@@ -1601,10 +1580,6 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
         QRgb color = img.pixel(sr_l, sr_t);
         switch (img.format()) {
         case QImage::Format_ARGB32_Premultiplied:
-        case QImage::Format_ARGB8565_Premultiplied:
-        case QImage::Format_ARGB6666_Premultiplied:
-        case QImage::Format_ARGB8555_Premultiplied:
-        case QImage::Format_ARGB4444_Premultiplied:
             // Combine premultiplied color with the opacity set on the painter.
             d->solid_color_filler.solid.color =
                 ((((color & 0x00ff00ff) * s->intOpacity) >> 8) & 0x00ff00ff)
@@ -1680,8 +1655,7 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
         d->image_filler.dx = -(r.x() + s->matrix.dx()) + sr.x();
         d->image_filler.dy = -(r.y() + s->matrix.dy()) + sr.y();
 
-        QRectF rr = r;
-        rr.translate(s->matrix.dx(), s->matrix.dy());
+        QRectF rr = r.translated(s->matrix.dx(), s->matrix.dy());
 
         const int x1 = qRound(rr.x());
         const int y1 = qRound(rr.y());
@@ -1737,8 +1711,7 @@ void QRasterPaintEngine::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap,
         d->image_filler.dx = -(r.x() + s->matrix.dx()) + sr.x();
         d->image_filler.dy = -(r.y() + s->matrix.dy()) + sr.y();
 
-        QRectF rr = r;
-        rr.translate(s->matrix.dx(), s->matrix.dy());
+        QRectF rr = r.translated(s->matrix.dx(), s->matrix.dy());
         fillRect_normalized(rr.toRect().normalized(), &d->image_filler, d);
     }
 }
@@ -2340,8 +2313,7 @@ bool QRasterPaintEngine::supportsTransformations(const QFontEngine *fontEngine) 
 {
     if (!state()->WxF)
         return false;
-    const QTransform &m = state()->matrix;
-    return supportsTransformations(fontEngine->fontDef.pixelSize, m);
+    return supportsTransformations(fontEngine->fontDef.pixelSize, state()->matrix);
 }
 
 bool QRasterPaintEngine::supportsTransformations(const qreal pixelSize, const QTransform &m) const
@@ -2437,50 +2409,7 @@ void QRasterPaintEngine::drawBitmap(const QPointF &pos, const QImage &image, QSp
     }
     if (n) {
         fg->blend(n, spans, fg);
-        n = 0;
     }
-}
-
-/*!
-    \enum QRasterPaintEngine::ClipType
-    \internal
-
-    \value RectClip Indicates that the currently set clip is a single rectangle.
-    \value ComplexClip Indicates that the currently set clip is a combination of several shapes.
-*/
-
-/*!
-    \internal
-    Returns the type of the clip currently set.
-*/
-QRasterPaintEngine::ClipType QRasterPaintEngine::clipType() const
-{
-    Q_D(const QRasterPaintEngine);
-
-    const QClipData *clip = d->clip();
-    if (!clip || clip->hasRectClip)
-        return RectClip;
-    else
-        return ComplexClip;
-}
-
-/*!
-    \internal
-    Returns the bounding rect of the currently set clip.
-*/
-QRect QRasterPaintEngine::clipBoundingRect() const
-{
-    Q_D(const QRasterPaintEngine);
-
-    const QClipData *clip = d->clip();
-
-    if (!clip)
-        return d->deviceRect;
-
-    if (clip->hasRectClip)
-        return clip->clipRect;
-
-    return QRect(clip->xmin, clip->ymin, clip->xmax - clip->xmin, clip->ymax - clip->ymin);
 }
 
 static void qt_merge_clip(const QClipData *c1, const QClipData *c2, QClipData *result)
@@ -2706,7 +2635,8 @@ void QClipData::initialize()
                 { // resize
                     const int maxSpans = (ymax - ymin) * numRects;
                     if (maxSpans > allocated) {
-                        m_spans = q_check_ptr((QSpan *)realloc(m_spans, maxSpans * sizeof(QSpan)));
+                        m_spans = (QSpan *)::realloc(m_spans, maxSpans * sizeof(QSpan));
+                        Q_CHECK_PTR(m_spans);
                         allocated = maxSpans;
                     }
                 }
@@ -3042,7 +2972,8 @@ static void qt_span_clip(int count, const QSpan *spans, void *userData)
                                            &newspans, newClip->allocated - newClip->count);
                 newClip->count = newspans - newClip->m_spans;
                 if (spans < end) {
-                    newClip->m_spans = q_check_ptr((QSpan *)realloc(newClip->m_spans, newClip->allocated*2*sizeof(QSpan)));
+                    newClip->m_spans = (QSpan *)::realloc(newClip->m_spans, newClip->allocated*2*sizeof(QSpan));
+                    Q_CHECK_PTR(newClip->m_spans);
                     newClip->allocated *= 2;
                 }
             }
@@ -3441,7 +3372,6 @@ void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode 
         break;
 
     case Qt::NoBrush:
-    default:
         type = None;
         break;
     }
@@ -3493,11 +3423,11 @@ void QSpanData::adjustSpanMethods()
 
 void QSpanData::setupMatrix(const QTransform &matrix, bool bilin)
 {
-    QTransform delta;
     // make sure we round off correctly in qdrawhelper.cpp
-    delta.translate(1.0 / 65536, 1.0 / 65536);
+    static const qreal delta = 1.0 / 65536;
+    static const QTransform deltam = QTransform::fromTranslate(delta, delta);
 
-    QTransform inv = (delta * matrix).inverted();
+    QTransform inv = (deltam * matrix).inverted();
     m11 = inv.m11();
     m12 = inv.m12();
     m13 = inv.m13();

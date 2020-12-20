@@ -1392,7 +1392,7 @@ QString DesignerPropertyManager::valueText(const QtProperty *property) const
         const PaletteData data = m_paletteValues.value(const_cast<QtProperty *>(property));
         const uint mask = data.val.resolve();
         if (mask)
-            return tr("Customized (%n roles)", 0, bitCount(mask));
+            return tr("Customized (%1 roles)").arg(bitCount(mask));
         static const QString inherited = tr("Inherited");
         return inherited;
     }

@@ -1,8 +1,8 @@
 #!/usr/bin/make -f
 
-KATIE_CROSS_EXEC=""
+KATIE_CROSS_EMULATOR=""
 ifneq ($(DEB_HOST_ARCH_CPU),$(DEB_BUILD_ARCH_CPU))
-	KATIE_CROSS_EXEC="qemu-$(DEB_HOST_ARCH_CPU)-static"
+	KATIE_CROSS_EMULATOR="qemu-$(DEB_HOST_GNU_CPU)-static"
 endif
 
 KATIE_BUILD_DIR="$(shell pwd)/obj-$(DEB_HOST_GNU_TYPE)"
@@ -16,11 +16,7 @@ override_dh_shlibdeps:
 override_dh_auto_configure:
 	dh_auto_configure -- -Wno-dev \
 		-DKATIE_TOOLS_SUFFIX="-katie" \
-		-DKATIE_ALLINONE=OFF \
-		-DKATIE_CROSS_EXEC=$(KATIE_CROSS_EXEC)
-
-override_dh_auto_build:
-	dh_auto_build
+		-DCMAKE_CROSSCOMPILING_EMULATOR=$(KATIE_CROSS_EMULATOR)
 
 override_dh_auto_install:
 	$(MAKE) -C $(KATIE_BUILD_DIR) install-runtime DESTDIR=../debian/katie-runtime
@@ -29,6 +25,3 @@ override_dh_auto_install:
 	$(MAKE) -C $(KATIE_BUILD_DIR) install-devel DESTDIR=../debian/katie-dev
 	$(MAKE) -C $(KATIE_BUILD_DIR) install-doc DESTDIR=../debian/katie-doc
 	dpkg-gensymbols -q -Odebian/katie-runtime.symbols -Pdebian/katie-runtime -pkatie-runtime
-
-override_dh_auto_clean:
-	dh_auto_clean

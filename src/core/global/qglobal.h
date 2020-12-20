@@ -51,16 +51,16 @@
 
      ALPHA     - ...
      ARM       - ...
-     ARMV6     - ...
+     ARM64     - ...
      AVR32     - ...
      BFIN      - ...
      I386      - ...
      IA64      - ...
      M68K      - ...
      MIPS      - ...
-     NACL      - ...
      PARISC    - ...
      POWERPC   - ...
+     POWERPC64 - ...
      S390      - ...
      SPARC     - ...
      SH        - ...
@@ -76,9 +76,8 @@
 #  define QT_ARCH_ALPHA
 #elif defined(__arm__)
 #  define QT_ARCH_ARM
-#  if defined(__ARM_ARCH_6__)
-#    define QT_ARCH_ARMV6
-#  endif
+#elif defined(__aarch64__)
+#  define QT_ARCH_ARM64
 #elif defined(__avr__)
 #  define QT_ARCH_AVR32
 #elif defined(__bfin__)
@@ -91,21 +90,18 @@
 #  define QT_ARCH_M68K
 #elif defined(__mips__)
 #  define QT_ARCH_MIPS
-#elif defined(__native_client__)
-#  define QT_ARCH_NACL
 #elif defined(__hppa__)
 #  define QT_ARCH_PARISC
-#elif defined(__powerpc__) || defined(__powerpc64__)
+#elif defined(__powerpc__)
 #  define QT_ARCH_POWERPC
+#elif defined(__powerpc64__)
+#  define QT_ARCH_POWERPC64
 #elif defined(__s390__)
 #  define QT_ARCH_S390
 #elif defined(__sparc__)
 #  define QT_ARCH_SPARC
 #elif defined(__sh__)
 #  define QT_ARCH_SH
-#  if defined(__SH4__)
-#    define QT_ARCH_SH4A
-#  endif
 #elif defined(__x86_64__)
 #  define QT_ARCH_X86_64
 #else
@@ -137,7 +133,6 @@
 
 # define QT_NAMESPACE Katie
 # define QT_PREPEND_NAMESPACE(name) ::QT_NAMESPACE::name
-# define QT_MANGLE_NAMESPACE(x) x
 # define QT_USE_NAMESPACE using namespace ::QT_NAMESPACE;
 
 # define QT_BEGIN_NAMESPACE namespace QT_NAMESPACE {
@@ -155,7 +150,6 @@ QT_USE_NAMESPACE
 
 # define QT_NAMESPACE
 # define QT_PREPEND_NAMESPACE(name) ::name
-# define QT_MANGLE_NAMESPACE(x) x
 # define QT_USE_NAMESPACE
 
 # define QT_BEGIN_NAMESPACE
@@ -173,63 +167,29 @@ QT_USE_NAMESPACE
 /*
    The operating system, must be one of: (Q_OS_x)
 
-     SOLARIS  - Sun Solaris
-     HPUX     - HP-UX
-     LINUX    - Linux
-     FREEBSD  - FreeBSD
-     NETBSD   - NetBSD
-     OPENBSD  - OpenBSD
-     BSDI     - BSD/OS
-     OSF      - HP Tru64 UNIX
-     SCO      - SCO OpenServer 5
-     UNIXWARE - UnixWare 7, Open UNIX 8
-     AIX      - AIX
-     HURD     - GNU Hurd
-     DGUX     - DG/UX
-     DYNIX    - DYNIX/ptx
-     LYNX     - LynxOS
-     BSD4     - Any BSD 4.4 system
-     UNIX     - Any UNIX BSD/SYSV system
+     LINUX     - Linux
+     FREEBSD   - FreeBSD
+     NETBSD    - NetBSD
+     OPENBSD   - OpenBSD
+     DRAGONFLY - DragonFly BSD
+     HURD      - GNU Hurd
+     SOLARIS   - Sun Solaris
 */
 
-#if defined(__sun) || defined(sun)
-#  define Q_OS_SOLARIS
-#elif defined(hpux) || defined(__hpux)
-#  define Q_OS_HPUX
-#elif defined(__native_client__)
-#  define Q_OS_NACL
-#elif defined(__linux__) || defined(__linux)
+#if defined(__linux__) || defined(__linux)
 #  define Q_OS_LINUX
-#elif defined(__FreeBSD__) || defined(__DragonFly__)
+#elif defined(__FreeBSD__)
 #  define Q_OS_FREEBSD
-#  define Q_OS_BSD4
 #elif defined(__NetBSD__)
 #  define Q_OS_NETBSD
-#  define Q_OS_BSD4
 #elif defined(__OpenBSD__)
 #  define Q_OS_OPENBSD
-#  define Q_OS_BSD4
-#elif defined(__bsdi__)
-#  define Q_OS_BSDI
-#  define Q_OS_BSD4
-#elif defined(__osf__)
-#  define Q_OS_OSF
-#elif defined(_AIX)
-#  define Q_OS_AIX
-#elif defined(__Lynx__)
-#  define Q_OS_LYNX
+#elif defined(__DragonFly__)
+#  define Q_OS_DRAGONFLY
 #elif defined(__GNU__)
 #  define Q_OS_HURD
-#elif defined(__DGUX__)
-#  define Q_OS_DGUX
-#elif defined(_SEQUENT_)
-#  define Q_OS_DYNIX
-#elif defined(_SCO_DS) /* SCO OpenServer 5 + GCC */
-#  define Q_OS_SCO
-#elif defined(__USLC__) /* all SCO platforms + UDK or OUDK */
-#  define Q_OS_UNIXWARE
-#elif defined(__svr4__) && defined(i386) /* Open UNIX 8 + GCC */
-#  define Q_OS_UNIXWARE
+#elif defined(__sun) || defined(sun)
+#  define Q_OS_SOLARIS
 #else
 #  error "Katie has not been ported to this OS"
 #endif
@@ -237,13 +197,6 @@ QT_USE_NAMESPACE
 // Compatibility, used to be conditional
 #define Q_WS_X11
 #define Q_OS_UNIX
-
-#if defined(__LSB_VERSION__)
-#  if __LSB_VERSION__ < 40
-#    error "This version of the Linux Standard Base is unsupported"
-#  endif
-#  define QT_LINUXBASE
-#endif
 
 /*
    The compiler, must be one of: (Q_CC_x)
@@ -261,28 +214,15 @@ QT_USE_NAMESPACE
   For full listing, see
    http://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
 */
+
 #if defined(__GNUC__)
 #  define Q_CC_GNU
-#  define Q_C_CALLBACKS
-#  define Q_ALIGNOF(type)   __alignof__(type)
-#  define Q_TYPEOF(expr)    __typeof__(expr)
-#  define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
-#  define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
-#  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
-#  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
-#  define Q_FUNC_INFO       __PRETTY_FUNCTION__
-#  if !defined(QT_MOC_CPP)
-#    define Q_PACKED __attribute__ ((__packed__))
-#    ifndef __ARM_EABI__
-#      define QT_NO_ARM_EABI
-#    endif
-#  endif
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
      /* C++0x features supported in GCC 4.3: */
 #    define Q_COMPILER_RVALUE_REFS
      /* C++0x features supported in GCC 4.4: */
 #    define Q_COMPILER_INITIALIZER_LISTS
-#    /* C++0x features supported in GCC 4.6: */
+     /* C++0x features supported in GCC 4.6: */
 #    ifdef __EXCEPTIONS
 #      define Q_COMPILER_EXCEPTIONS
 #    endif
@@ -290,21 +230,6 @@ QT_USE_NAMESPACE
 
 #elif defined(__clang__)
 #  define Q_CC_CLANG
-#  if !defined(__has_extension)
-#    /* Compatibility with older Clang versions */
-#    define __has_extension __has_feature
-#  endif
-#  define Q_C_CALLBACKS
-#  define Q_ALIGNOF(type)   __alignof__(type)
-#  define Q_TYPEOF(expr)    __typeof__(expr)
-#  define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
-#  define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
-#  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
-#  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
-#  define Q_FUNC_INFO       __PRETTY_FUNCTION__
-#  if !defined(QT_MOC_CPP)
-#    define Q_PACKED __attribute__ ((__packed__))
-#  endif
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
     /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
 #    if __has_feature(cxx_generalized_initializers)
@@ -322,6 +247,15 @@ QT_USE_NAMESPACE
 #  error "Katie has not been tested with this compiler"
 #endif
 
+#define Q_C_CALLBACKS
+#define Q_ALIGNOF(type)   __alignof__(type)
+#define Q_TYPEOF(expr)    __typeof__(expr)
+#define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
+#define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
+#define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
+#define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
+#define Q_FUNC_INFO       __PRETTY_FUNCTION__
+#define Q_PACKED          __attribute__ ((__packed__))
 #define Q_OUTOFLINE_TEMPLATE
 #define Q_INLINE_TEMPLATE inline
 #define Q_TYPENAME typename
@@ -329,7 +263,7 @@ QT_USE_NAMESPACE
 #define Q_DECL_CONSTEXPR constexpr
 
 #define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
-   static const int AFUNC ## __init_variable__ = AFUNC();
+    static const int AFUNC ## __init_variable__ = AFUNC();
 #define Q_CONSTRUCTOR_FUNCTION(AFUNC) Q_CONSTRUCTOR_FUNCTION0(AFUNC)
 
 #define Q_DESTRUCTOR_FUNCTION0(AFUNC) \
@@ -362,15 +296,12 @@ typedef unsigned long long quint64; /* 64 bit unsigned */
 typedef qint64 qlonglong;
 typedef quint64 qulonglong;
 
-#define Q_INIT_RESOURCE_EXTERN(name) \
-    extern int QT_MANGLE_NAMESPACE(qInitResources_ ## name) ();
-
 #define Q_INIT_RESOURCE(name) \
-    do { extern int QT_MANGLE_NAMESPACE(qInitResources_ ## name) ();       \
-        QT_MANGLE_NAMESPACE(qInitResources_ ## name) (); } while (0)
+    extern int qInitResources_ ## name (); \
+    qInitResources_ ## name ();
 #define Q_CLEANUP_RESOURCE(name) \
-    do { extern int QT_MANGLE_NAMESPACE(qCleanupResources_ ## name) ();    \
-        QT_MANGLE_NAMESPACE(qCleanupResources_ ## name) (); } while (0)
+    extern int qCleanupResources_ ## name (); \
+    qCleanupResources_ ## name ();
 
 /*
    Useful type definitions for Qt
@@ -390,10 +321,8 @@ QT_END_INCLUDE_NAMESPACE
 */
 #if defined(Q_MOC_RUN)
 #  define Q_DECL_DEPRECATED Q_DECL_DEPRECATED
-#elif defined(Q_CC_GNU) || defined(Q_CC_CLANG)
-#  define Q_DECL_DEPRECATED __attribute__ ((__deprecated__))
 #else
-#  define Q_DECL_DEPRECATED
+#  define Q_DECL_DEPRECATED __attribute__ ((__deprecated__))
 #endif
 
 #if defined(Q_MOC_RUN)
@@ -434,73 +363,40 @@ QT_END_INCLUDE_NAMESPACE
 #  define QT_ASCII_CAST_WARN_CONSTRUCTOR
 #endif
 
-#if defined(QT_ARCH_I386) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG))
+#if defined(QT_ARCH_I386)
 #  define QT_FASTCALL __attribute__((regparm(3)))
 #else
-#  define QT_FASTCALL
-#endif
-
-#if defined(QT_ARCH_ARM) || defined(QT_ARCH_ARMV6) || defined(QT_ARCH_AVR32) || defined(QT_ARCH_SH) || defined(QT_ARCH_SH4A)
-#  define QT_NO_FPU
+#  define QT_FASTCALL __attribute__((hot))
 #endif
 
 // This logic must match the one in qmetatype.h
+#if !defined(QT_NO_FPU) && defined(QT_ARCH_ARM) || defined(QT_ARCH_AVR32) || defined(QT_ARCH_SH)
+#  define QT_NO_FPU
+#endif
+
 #if defined(QT_NO_FPU)
 typedef float qreal;
 #else
 typedef double qreal;
 #endif
 
-/*
-   Utility macros and inline functions
-*/
-template <typename T>
-Q_DECL_CONSTEXPR inline T qAbs(const T &t) { return t >= 0 ? t : -t; }
-
-template <typename T>
-Q_DECL_CONSTEXPR inline const T &qMin(const T &a, const T &b) { return (a < b) ? a : b; }
-template <typename T>
-Q_DECL_CONSTEXPR inline const T &qMax(const T &a, const T &b) { return (a < b) ? b : a; }
-template <typename T>
-Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max)
-{ return qMax(min, qMin(max, val)); }
-
-#if defined(QT_VISIBILITY_AVAILABLE)
-#  define Q_DECL_EXPORT __attribute__((visibility("default")))
-#  define Q_DECL_HIDDEN __attribute__((visibility("hidden")))
-#else
-#  define Q_DECL_EXPORT
-#  define Q_DECL_HIDDEN
-#endif
+#define Q_DECL_EXPORT __attribute__((visibility("default")))
+#define Q_DECL_HIDDEN __attribute__((visibility("hidden")))
 #define Q_DECL_IMPORT
 
-#if defined(QT_SHARED)
-#  define Q_CORE_EXPORT Q_DECL_EXPORT
-#  define Q_GUI_EXPORT Q_DECL_EXPORT
-#  define Q_SQL_EXPORT Q_DECL_EXPORT
-#  define Q_NETWORK_EXPORT Q_DECL_EXPORT
-#  define Q_SVG_EXPORT Q_DECL_EXPORT
-#  define Q_TEST_EXPORT Q_DECL_EXPORT
-#  define Q_DECLARATIVE_EXPORT Q_DECL_EXPORT
-#  define Q_XML_EXPORT Q_DECL_EXPORT
-#  define Q_SCRIPT_EXPORT Q_DECL_EXPORT
-#  define Q_SCRIPTTOOLS_EXPORT Q_DECL_EXPORT
-#  define Q_DBUS_EXPORT Q_DECL_EXPORT
-#  define Q_UITOOLS_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_CORE_EXPORT
-#  define Q_GUI_EXPORT
-#  define Q_SQL_EXPORT
-#  define Q_NETWORK_EXPORT
-#  define Q_SVG_EXPORT
-#  define Q_TEST_EXPORT
-#  define Q_DECLARATIVE_EXPORT
-#  define Q_XML_EXPORT
-#  define Q_SCRIPT_EXPORT
-#  define Q_SCRIPTTOOLS_EXPORT
-#  define Q_DBUS_EXPORT
-#  define Q_UITOOLS_EXPORT
-#endif
+#define Q_CORE_EXPORT Q_DECL_EXPORT
+#define Q_GUI_EXPORT Q_DECL_EXPORT
+#define Q_SQL_EXPORT Q_DECL_EXPORT
+#define Q_NETWORK_EXPORT Q_DECL_EXPORT
+#define Q_SVG_EXPORT Q_DECL_EXPORT
+#define Q_TEST_EXPORT Q_DECL_EXPORT
+#define Q_DECLARATIVE_EXPORT Q_DECL_EXPORT
+#define Q_XML_EXPORT Q_DECL_EXPORT
+#define Q_SCRIPT_EXPORT Q_DECL_EXPORT
+#define Q_SCRIPTTOOLS_EXPORT Q_DECL_EXPORT
+#define Q_DBUS_EXPORT Q_DECL_EXPORT
+#define Q_UITOOLS_EXPORT Q_DECL_EXPORT
+#define Q_DESIGNER_EXPORT Q_DECL_EXPORT
 
 #define Q_CORE_EXPORT_INLINE Q_CORE_EXPORT inline
 #define Q_GUI_EXPORT_INLINE Q_GUI_EXPORT inline
@@ -510,13 +406,11 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
    for Qt's internal unit tests. If you want slower loading times and more
    symbols that can vanish from version to version, feel free to define QT_BUILD_INTERNAL.
 */
-#if defined(QT_BUILD_INTERNAL) && defined(QT_SHARED)
+#if defined(QT_BUILD_INTERNAL)
 #    define Q_AUTOTEST_EXPORT Q_DECL_EXPORT
 #else
 #    define Q_AUTOTEST_EXPORT
 #endif
-
-inline void qt_noop(void) {}
 
 /* These wrap try/catch so we can switch off exceptions later.
 
@@ -531,8 +425,8 @@ inline void qt_noop(void) {}
 #ifdef QT_NO_EXCEPTIONS
 #  define QT_TRY if (true)
 #  define QT_CATCH(A) else if (false)
-#  define QT_THROW(A) qt_noop()
-#  define QT_RETHROW qt_noop()
+#  define QT_THROW(A) {}
+#  define QT_RETHROW {}
 #else
 #  define QT_TRY try
 #  define QT_CATCH(A) catch (A)
@@ -562,7 +456,6 @@ public:
 };
 
 Q_CORE_EXPORT const char *qVersion();
-Q_CORE_EXPORT bool qSharedBuild();
 
 /*
    Avoid "unused parameter" warnings
@@ -580,41 +473,38 @@ class QString;
 #define qPrintable(string) QString(string).toLocal8Bit().constData()
 
 Q_CORE_EXPORT void qDebug(const char *, ...) /* print debug message */
-#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
+#if !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 
 Q_CORE_EXPORT void qWarning(const char *, ...) /* print warning message */
-#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
+#if !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 
 Q_CORE_EXPORT QString qt_error_string(int errorCode);
 Q_CORE_EXPORT void qCritical(const char *, ...) /* print critical message */
-#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
+#if !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 Q_CORE_EXPORT void qFatal(const char *, ...) /* print fatal message and exit */
-#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
+#if !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
-
-Q_CORE_EXPORT void qErrnoWarning(int code, const char *msg, ...);
-Q_CORE_EXPORT void qErrnoWarning(const char *msg, ...);
 
 Q_CORE_EXPORT void qt_assert(const char *assertion, const char *file, int line);
 Q_CORE_EXPORT void qt_assert_x(const char *where, const char *what, const char *file, int line);
 
 #ifndef QT_NO_DEBUG
-#  define Q_ASSERT(cond) ((!(cond)) ? qt_assert(#cond,__FILE__,__LINE__) : qt_noop())
-#  define Q_ASSERT_X(cond, where, what) ((!(cond)) ? qt_assert_x(where, what,__FILE__,__LINE__) : qt_noop())
+#  define Q_ASSERT(cond) do { if(!(cond)) qt_assert(#cond,__FILE__,__LINE__); } while (0)
+#  define Q_ASSERT_X(cond, where, what) do { if(!(cond)) qt_assert_x(where, what,__FILE__,__LINE__); } while (0)
 #else
-#  define Q_ASSERT(cond) qt_noop()
-#  define Q_ASSERT_X(cond, where, what) qt_noop()
+#  define Q_ASSERT(cond)
+#  define Q_ASSERT_X(cond, where, what)
 #endif
 
 Q_CORE_EXPORT void qt_check_pointer(const char *, int);
@@ -622,16 +512,13 @@ Q_CORE_EXPORT void qBadAlloc();
 
 #ifdef QT_NO_EXCEPTIONS
 #  if defined(QT_NO_DEBUG)
-#    define Q_CHECK_PTR(p) qt_noop()
+#    define Q_CHECK_PTR(p)
 #  else
-#    define Q_CHECK_PTR(p) do {if(!(p))qt_check_pointer(__FILE__,__LINE__);} while (0)
+#    define Q_CHECK_PTR(p) do { if(!p) qt_check_pointer(__FILE__,__LINE__); } while (0)
 #  endif
 #else
-#  define Q_CHECK_PTR(p) do { if (!(p)) qBadAlloc(); } while (0)
+#  define Q_CHECK_PTR(p) do { if(!p) qBadAlloc(); } while (0)
 #endif
-
-template <typename T>
-inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 
 enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg };
 
@@ -760,6 +647,34 @@ public:
     }
 
 #endif // QT_NO_THREAD
+
+
+/*
+   Utility macros and inline functions
+*/
+template <typename T>
+Q_DECL_CONSTEXPR inline T qAbs(const T &t)
+{
+    return t >= 0 ? t : -t;
+}
+
+template <typename T>
+Q_DECL_CONSTEXPR inline const T &qMin(const T &a, const T &b)
+{
+    return (a < b) ? a : b;
+}
+
+template <typename T>
+Q_DECL_CONSTEXPR inline const T &qMax(const T &a, const T &b)
+{
+    return (a < b) ? b : a;
+}
+
+template <typename T>
+Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max)
+{
+    return qMax(min, qMin(max, val));
+}
 
 Q_DECL_CONSTEXPR static inline bool qFuzzyCompare(double p1, double p2)
 {
@@ -1084,8 +999,6 @@ template <typename Wrapper> static inline typename Wrapper::pointer qGetPtrHelpe
 #define QT_TR_NOOP_UTF8(x) (x)
 #define QT_TRANSLATE_NOOP(scope, x) (x)
 #define QT_TRANSLATE_NOOP_UTF8(scope, x) (x)
-#define QT_TRANSLATE_NOOP3(scope, x, comment) {x, comment}
-#define QT_TRANSLATE_NOOP3_UTF8(scope, x, comment) {x, comment}
 
 #define QDOC_PROPERTY(text)
 

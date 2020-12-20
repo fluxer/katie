@@ -225,7 +225,7 @@ void tst_QDBusAbstractInterface::init()
 
     // start peer server
     QDir workingDirectory = QCoreApplication::applicationDirPath();
-    QString pingerprogram = workingDirectory.absoluteFilePath(QLatin1String("qpinger"));
+    QString pingerprogram = workingDirectory.absoluteFilePath(QLatin1String("qdbusabstractinterface_qpinger"));
     proc.start(pingerprogram);
     QVERIFY(proc.waitForStarted());
 

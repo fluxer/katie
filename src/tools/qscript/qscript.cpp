@@ -39,7 +39,6 @@
 ****************************************************************************/
 
 #include <QtCore/QFile>
-#include <QtCore/QTextStream>
 #include <QtCore/QStringList>
 #include <QtGui/QApplication>
 #include <QtScript/QScriptEngine>
@@ -68,7 +67,8 @@ static void interactive(QScriptEngine *eng)
         global.setProperty(QLatin1String("quit"), quitFunction);
     wantsToQuit = false;
 
-    QTextStream qin(stdin, QFile::ReadOnly);
+    QFile qin;
+    qin.open(stdin, QFile::ReadOnly);
 
     const char *qscript_prompt = "qs> ";
     const char *dot_prompt = ".... ";
@@ -121,13 +121,12 @@ static QScriptValue loadScripts(QScriptContext *context, QScriptEngine *engine)
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly))
             return context->throwError(QString::fromLatin1("could not open %0 for reading").arg(fileName));
-        QTextStream ts(&file);
-        QString contents = ts.readAll();
+        QByteArray contents = file.readAll();
         file.close();
         QScriptContext *pc = context->parentContext();
         context->setActivationObject(pc->activationObject());
         context->setThisObject(pc->thisObject());
-        QScriptValue ret = engine->evaluate(contents);
+        QScriptValue ret = engine->evaluate(QString::fromLocal8Bit(contents));
         if (engine->hasUncaughtException())
             return ret;
     }
@@ -170,25 +169,25 @@ int main(int argc, char *argv[])
             break;
         }
 
-        QString contents;
+        QByteArray contents;
         int lineNumber = 1;
 
         if (fn == QLatin1String("-")) {
-            QTextStream stream(stdin, QFile::ReadOnly);
-            contents = stream.readAll();
+            QFile qin;
+            qin.open(stdin, QFile::ReadOnly);
+            contents = qin.readAll();
         }
 
         else {
             QFile file(fn);
 
             if (file.open(QFile::ReadOnly)) {
-                QTextStream stream(&file);
-                contents = stream.readAll();
+                contents = file.readAll();
                 file.close();
 
                 // strip off #!/usr/bin/env qscript line
-                if (contents.startsWith(QLatin1String("#!"))) {
-                    contents.remove(0, contents.indexOf(QLatin1String("\n")));
+                if (contents.startsWith("#!")) {
+                    contents.remove(0, contents.indexOf("\n"));
                     ++lineNumber;
                 }
             }
@@ -197,7 +196,7 @@ int main(int argc, char *argv[])
         if (contents.isEmpty())
             continue;
 
-        QScriptValue r = eng->evaluate(contents, fn, lineNumber);
+        QScriptValue r = eng->evaluate(QString::fromLocal8Bit(contents), fn, lineNumber);
         if (!debugger && eng->hasUncaughtException()) {
             QStringList backtrace = eng->uncaughtExceptionBacktrace();
             fprintf (stderr, "    %s\n%s\n\n", qPrintable(r.toString()),

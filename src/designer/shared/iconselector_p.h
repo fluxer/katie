@@ -46,8 +46,6 @@
 #ifndef ICONSELECTOR_H
 #define ICONSELECTOR_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QWidget>
 #include <QtGui/QDialog>
 
@@ -68,7 +66,7 @@ class PropertySheetIconValue;
 struct IconThemeEditorPrivate;
 
 // Resource Dialog that embeds the language-dependent resource widget as returned by the language extension
-class QDESIGNER_SHARED_EXPORT LanguageResourceDialog : public QDialog
+class Q_DESIGNER_EXPORT LanguageResourceDialog : public QDialog
 {
     Q_OBJECT
 
@@ -91,7 +89,7 @@ private:
 
 };
 
-class QDESIGNER_SHARED_EXPORT IconSelector: public QWidget
+class Q_DESIGNER_EXPORT IconSelector: public QWidget
 {
     Q_OBJECT
 public:
@@ -130,7 +128,7 @@ private:
 };
 
 // IconThemeEditor: Let's the user input theme icon names and shows a preview label.
-class QDESIGNER_SHARED_EXPORT IconThemeEditor : public QWidget
+class Q_DESIGNER_EXPORT IconThemeEditor : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(QString theme READ theme WRITE setTheme DESIGNABLE true)

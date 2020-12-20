@@ -1,5 +1,8 @@
 # add_definitions()
-set(EXTRA_SQL_LIBS KtCore)
+set(EXTRA_SQL_LIBS
+    KtCore
+    ${SQLITE_LIBRARIES}
+)
 
 set(SQL_PUBLIC_HEADERS
     QSqlDatabase
@@ -21,9 +24,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtSql
-    ${CMAKE_BINARY_DIR}/privateinclude/QtSql
+    ${SQLITE_INCLUDES}
 )
 
 set(SQL_HEADERS
@@ -66,32 +68,6 @@ set(SQL_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/drivers/qsql_sqlite.cpp
 )
 
-if(SQLITE_FOUND)
-    set(EXTRA_SQL_LIBS
-        ${EXTRA_SQL_LIBS}
-        ${SQLITE_LIBRARIES}
-    )
-    include_directories(${SQLITE_INCLUDES})
-else()
-    set(SQL_HEADERS
-        ${SQL_HEADERS}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite/sqlite3.h
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite/sqlite3ext.h
-    )
-
-    set(SQL_SOURCES
-        ${SQL_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite/sqlite3.c
-    )
-
-    add_definitions(
-        -DSQLITE_OMIT_LOAD_EXTENSION
-        -DSQLITE_OMIT_COMPLETE
-    )
-    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite)
-endif()
-
-
 katie_generate_misc("${SQL_HEADERS}" QtSql)
 katie_generate_public("${SQL_PUBLIC_HEADERS}" QtSql)
 katie_generate_package(KtSql "KtCore")
@@ -105,9 +81,11 @@ set_target_properties(KtSql PROPERTIES
     EXPORT_NAME Sql
 )
 
+katie_setup_pch(KtSql)
+
 install(
     TARGETS KtSql
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

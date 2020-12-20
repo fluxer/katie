@@ -83,10 +83,8 @@ void QLocalSocketPrivate::init()
 void QLocalSocketPrivate::_q_error(QAbstractSocket::SocketError socketError)
 {
     Q_Q(QLocalSocket);
-    QString function = QLatin1String("QLocalSocket");
     QLocalSocket::LocalSocketError error = (QLocalSocket::LocalSocketError)socketError;
-    QString errorString = generateErrorString(error, function);
-    q->setErrorString(errorString);
+    q->setErrorString(generateErrorString(error, QLatin1String("QLocalSocket")));
     emit q->error(error);
 }
 
@@ -193,8 +191,7 @@ void QLocalSocketPrivate::errorOccurred(QLocalSocket::LocalSocketError error, co
         unixSocket.setSocketError(QAbstractSocket::UnknownSocketError);
     }
 
-    QString errorString = generateErrorString(error, function);
-    q->setErrorString(errorString);
+    q->setErrorString(generateErrorString(error, function));
     emit q->error(error);
 
     // errors cause a disconnect

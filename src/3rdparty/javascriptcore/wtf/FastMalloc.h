@@ -32,15 +32,10 @@ namespace WTF {
     void* fastZeroedMalloc(size_t);
     void* fastRealloc(void*, size_t);
 
-    void* tryFastMalloc(size_t n);
-    void* tryFastRealloc(void* p, size_t n);
+    inline void* tryFastMalloc(size_t n) { return ::malloc(n); };
+    inline void* tryFastRealloc(void* p, size_t n) { return ::realloc(p, n); };
 
-    void fastFree(void*);
-
-#ifndef QT_NO_DEBUG
-    void fastMallocForbid();
-    void fastMallocAllow();
-#endif
+    inline void fastFree(void* p) { ::free(p); };
 } // namespace WTF
 
 using WTF::fastMalloc;
@@ -49,10 +44,5 @@ using WTF::fastRealloc;
 using WTF::tryFastMalloc;
 using WTF::tryFastRealloc;
 using WTF::fastFree;
-
-#ifndef QT_NO_DEBUG    
-using WTF::fastMallocForbid;
-using WTF::fastMallocAllow;
-#endif
 
 #endif /* WTF_FastMalloc_h */

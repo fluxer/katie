@@ -115,7 +115,7 @@ public:
 
     void advance();
 
-    bool entryMatches(const QString & fileName, const QFileInfo &fileInfo);
+    bool entryMatches(const QString &fileName, const QFileInfo &fileInfo);
     void pushDirectory(const QFileInfo &fileInfo);
     void checkAndPushDirectory(const QFileInfo &);
     bool matchesFilters(const QString &fileName, const QFileInfo &fi) const;
@@ -155,11 +155,12 @@ QDirIteratorPrivate::QDirIteratorPrivate(const QFileSystemEntry &entry, const QS
 {
 #ifndef QT_NO_REGEXP
     nameRegExps.reserve(nameFilters.size());
-    for (int i = 0; i < nameFilters.size(); ++i)
+    foreach (const QString &filter, nameFilters) {
         nameRegExps.append(
-            QRegExp(nameFilters.at(i),
+            QRegExp(filter,
                     (filters & QDir::CaseSensitive) ? Qt::CaseSensitive : Qt::CaseInsensitive,
                     QRegExp::Wildcard));
+    }
 #endif
     QFileSystemMetaData metaData;
     if (resolveEngine)
@@ -390,10 +391,8 @@ bool QDirIteratorPrivate::matchesFilters(const QString &fileName, const QFileInf
 QDirIterator::QDirIterator(const QDir &dir, IteratorFlags flags)
     : d(Q_NULLPTR)
 {
-    // little trick to get hold of the QDirPrivate while there is no API on QDir to give it to us
-    class MyQDir : public QDir { public: const QDirPrivate *priv() const { return d_ptr.constData(); } };
-    const QDirPrivate *other = static_cast<const MyQDir*>(&dir)->priv();
-    d = new QDirIteratorPrivate(other->dirEntry, other->nameFilters, other->filters, flags, other->fileEngine);
+    const QDirPrivate *priv = dir.d_ptr.constData();
+    d = new QDirIteratorPrivate(priv->dirEntry, priv->nameFilters, priv->filters, flags, priv->fileEngine);
 }
 
 /*!

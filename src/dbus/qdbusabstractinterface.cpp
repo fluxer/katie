@@ -64,7 +64,7 @@ static QDBusError checkIfValid(const QString &service, const QString &path,
         return error;
     if (!QDBusUtil::checkObjectPath(path, isDynamic ? QDBusUtil::EmptyNotAllowed : QDBusUtil::EmptyAllowed, &error))
         return error;
-    if (!QDBusUtil::checkInterfaceName(interface, QDBusUtil::EmptyAllowed, &error))
+    if (!QDBusUtil::checkInterfaceName(interface, &error))
         return error;
 
     // no error

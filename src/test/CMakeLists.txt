@@ -26,11 +26,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtTest
-    ${CMAKE_BINARY_DIR}/privateinclude/QtTest
-    # for fftw and valgrind
-    ${CMAKE_SOURCE_DIR}/src
 )
 
 set(TEST_HEADERS
@@ -66,7 +62,6 @@ set(TEST_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qsignaldumper_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmark_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmeasurement_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkvalgrind_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmetric_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkevent_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qabstracttestlogger_p.h
@@ -88,7 +83,6 @@ set(TEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qabstracttestlogger.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmark.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmeasurement.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkvalgrind.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkevent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmetric.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qtestelement.cpp
@@ -106,13 +100,6 @@ katie_generate_public("${TEST_PUBLIC_HEADERS}" QtTest)
 katie_generate_package(KtTest "KtCore")
 katie_setup_target(KtTest ${TEST_SOURCES} ${TEST_HEADERS})
 
-# for 3rd party source
-if(HAVE_SYS_TIME_H)
-    add_definitions(-DTIME_WITH_SYS_TIME=1 -DHAVE_SYS_TIME_H)
-else()
-    add_definitions(-DTIME_WITH_SYS_TIME=0)
-endif()
-
 add_library(KtTest ${KATIE_TYPE} ${KtTest_SOURCES})
 target_link_libraries(KtTest PRIVATE ${EXTRA_TEST_LIBS})
 set_target_properties(KtTest PROPERTIES
@@ -121,9 +108,11 @@ set_target_properties(KtTest PROPERTIES
     EXPORT_NAME Test
 )
 
+katie_setup_pch(KtTest)
+
 install(
     TARGETS KtTest
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

@@ -117,13 +117,6 @@ QProxyStyle::QProxyStyle(QStyle *style) :
 }
 
 /*!
-    Destroys the QProxyStyle object.
-*/
-QProxyStyle::~QProxyStyle()
-{
-}
-
-/*!
     Returns the proxy base style object. If no base style
     is set on the proxy style, QProxyStyle will create
     an instance of the application style instead.
