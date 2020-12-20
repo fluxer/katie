@@ -89,7 +89,6 @@ public:
     }
 
     FT_Face face;
-    HB_Face hbFace;
 #ifndef QT_NO_FONTCONFIG
     FcCharSet *charset;
 #endif

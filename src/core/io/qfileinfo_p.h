@@ -112,7 +112,7 @@ public:
     inline void clear() const {
         metaData.clear();
         clearFlags();
-        for (int i = QAbstractFileEngine::NFileNames - 1 ; i >= 0 ; --i)
+        for (int i = 0; i < QAbstractFileEngine::NFileNames; i++)
             fileNames[i].clear();
     }
 

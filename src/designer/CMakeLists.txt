@@ -291,6 +291,7 @@ set_target_properties(KtDesigner PROPERTIES
 )
 
 katie_setup_object(KtDesigner sharedqtgradienteditor sharedqtpropertybrowser sharedfindwidget)
+katie_setup_pch(KtDesigner)
 
 install(
     TARGETS KtDesigner

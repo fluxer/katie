@@ -1056,6 +1056,8 @@ set_target_properties(KtGui PROPERTIES
     EXPORT_NAME Gui
 )
 
+katie_setup_pch(KtGui)
+
 install(
     TARGETS KtGui
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

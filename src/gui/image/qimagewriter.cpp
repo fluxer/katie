@@ -595,11 +595,10 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
 
 #ifndef QT_NO_LIBRARY
     QFactoryLoader *l = imageloader();
-    QStringList keys = l->keys();
-    for (int i = 0; i < keys.count(); ++i) {
-        QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
-        if (plugin && (plugin->capabilities(0, keys.at(i).toLatin1()) & QImageIOPlugin::CanWrite) != 0)
-            formats << keys.at(i).toLatin1();
+    foreach (const QString &key, l->keys()) {
+        QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
+        if (plugin && (plugin->capabilities(0, key.toLatin1()) & QImageIOPlugin::CanWrite) != 0)
+            formats << key.toLatin1();
     }
 #endif // QT_NO_LIBRARY
 

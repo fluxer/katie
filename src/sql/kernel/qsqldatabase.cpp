@@ -984,7 +984,6 @@ QSqlRecord QSqlDatabase::record(const QString& tablename) const
     \i SQL_ATTR_TRACEFILE
     \i SQL_ATTR_TRACE
     \i SQL_ATTR_CONNECTION_POOLING
-    \i SQL_ATTR_ODBC_VERSION
     \endlist
 
     \i

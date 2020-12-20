@@ -89,7 +89,7 @@ public:
         LinkName,
         CanonicalName,
         CanonicalPathName,
-        NFileNames = 9
+        NFileNames
     };
     enum FileOwner {
         OwnerUser,

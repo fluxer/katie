@@ -108,6 +108,8 @@ set_target_properties(KtTest PROPERTIES
     EXPORT_NAME Test
 )
 
+katie_setup_pch(KtTest)
+
 install(
     TARGETS KtTest
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

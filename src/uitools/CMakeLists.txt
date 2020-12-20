@@ -57,6 +57,8 @@ set_target_properties(KtUiTools PROPERTIES
     EXPORT_NAME UiTools
 )
 
+katie_setup_pch(KtUiTools)
+
 install(
     TARGETS KtUiTools
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

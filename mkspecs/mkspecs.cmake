@@ -44,16 +44,6 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     katie_definition(-DQT_NO_DEBUG)
 endif()
 
-try_compile(bsymbolic_functions_test
-    ${CMAKE_BINARY_DIR}
-    ${CMAKE_CURRENT_LIST_DIR}/bsymbolic_functions.cpp
-    CMAKE_FLAGS -shared -Wl,-Bsymbolic-functions -fPIC
-    OUTPUT_VARIABLE bsymbolic_functions_test_output
-)
-if(NOT bsymbolic_functions_test OR NOT CMAKE_POSITION_INDEPENDENT_CODE)
-    katie_definition(-DQ_NO_DATA_RELOCATION)
-endif()
-
 # Set compiler standard to C++ 11, appending to CMAKE_CXX_FLAGS is done so that try_compile() is
 # also affected, which KDE uses for visibility check for an example
 if(NOT CMAKE_VERSION VERSION_LESS "3.8.0")
@@ -68,7 +58,5 @@ if(NOT trycompilestandardpolicy EQUAL NEW)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
     endif()
 endif()
-if(NOT CMAKE_VERSION VERSION_LESS "3.1.0")
-    set(CMAKE_CXX_STANDARD_REQUIRED ON)
-    set(CMAKE_CXX_STANDARD 11)
-endif()
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 11)

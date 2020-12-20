@@ -383,7 +383,7 @@ inline void qt_rectfill(T *dest, const T value,
                         int x, int y, int width, int height, int stride)
 {
     char *d = reinterpret_cast<char*>(dest + x) + y * stride;
-    if (uint(stride) == (width * sizeof(T))) {
+    if (stride == (width * sizeof(T))) {
         qt_memfill(reinterpret_cast<T*>(d), value, width * height);
     } else {
         for (int j = 0; j < height; ++j) {

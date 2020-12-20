@@ -1556,9 +1556,9 @@ static HB_Stream getTableStream(void *font, HB_GetFontTableFunc tableFunc, HB_Ta
     stream = (HB_Stream)malloc(sizeof(HB_StreamRec));
     if (!stream)
         return 0;
-    stream->base = (HB_Byte*)malloc(length);
+    stream->base = (HB_Byte*)malloc(length*sizeof(HB_Byte));
     if (!stream->base) {
-        free(stream);
+        _hb_close_stream(stream);
         return 0;
     }
     error = tableFunc(font, tag, stream->base, &length);

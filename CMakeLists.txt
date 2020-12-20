@@ -7,10 +7,10 @@
 #     find -name '*.cmake' -exec grep -E 'TODO|FIXME' {} +
 #     find -name CMakeLists.txt -exec grep -E 'TODO|FIXME' {} +
 
-cmake_minimum_required(VERSION 2.8.12.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
-if(CMAKE_CROSSCOMPILING AND NOT KATIE_CROSS_EXEC)
-    message(FATAL_ERROR "Cross-compiling requires KATIE_CROSS_EXEC to be set to QEMU executable, e.g. qemu-arm-static")
+if(CMAKE_CROSSCOMPILING AND NOT CMAKE_CROSSCOMPILING_EMULATOR)
+    message(FATAL_ERROR "Cross-compiling requires CMAKE_CROSSCOMPILING_EMULATOR to be set to QEMU executable, e.g. qemu-arm-static")
 endif()
 
 project(Katie C CXX)
@@ -32,9 +32,7 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
 
 # enable symbols visibility preset for all targets
-if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
-    cmake_policy(SET CMP0063 NEW)
-endif()
+cmake_policy(SET CMP0063 NEW)
 
 # LLVM linker does not have a default library search path, add some directories known to contain
 # system wide libraries. the headers search path is also incomplete
@@ -56,8 +54,8 @@ include(mkspecs/mkspecs.cmake)
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
 set(KATIE_MINOR "9")
-set(KATIE_MICRO "0")
-set(KATIE_HEX "0x040900")
+set(KATIE_MICRO "1")
+set(KATIE_HEX "0x040901")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 
 # only for the build process
@@ -149,8 +147,8 @@ add_feature_info(benchmarks KATIE_BENCHMARKS "build automatic benchmarks")
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
-option(KATIE_ALLINONE "Build targets from single source file" OFF)
-add_feature_info(allinone KATIE_ALLINONE "build targets from single source file")
+option(KATIE_PCH "Build components with pre-compiled header" OFF)
+add_feature_info(pch KATIE_PCH "build components with pre-compiled header")
 
 option(WITH_ACCESSIBILITY "Build accessibility support" ON)
 add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
@@ -295,6 +293,7 @@ set_package_properties(DBus PROPERTIES
     TYPE RECOMMENDED
 )
 
+# v3.0+ required for SQLSetEnvAttr() and many other but unixODBC versioning is different
 find_package(ODBC)
 set_package_properties(ODBC PROPERTIES
     PURPOSE "Required for ODBC database support"
@@ -487,6 +486,12 @@ endif()
 # conditional features
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
+endif()
+
+add_library(pic_test ${KATIE_TYPE}  EXCLUDE_FROM_ALL "${CMAKE_SOURCE_DIR}/cmake/pic.cpp")
+get_target_property(HAVE_pic pic_test POSITION_INDEPENDENT_CODE)
+if(NOT HAVE_pic)
+    katie_definition(-DQ_NO_DATA_RELOCATION)
 endif()
 
 # keep in sync with the gui component CMake file, only definitions setup is needed here

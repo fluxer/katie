@@ -386,6 +386,13 @@ static const QSystemLocale *systemLocale()
     return QSystemLocale_globalSystemLocale();
 }
 
+static int qFreeSystemLP() {
+    if (system_lp)
+        ::free(system_lp);
+    return 0;
+}
+Q_DESTRUCTOR_FUNCTION(qFreeSystemLP);
+
 void QLocalePrivate::updateSystemPrivate()
 {
     const QSystemLocale *sys_locale = systemLocale();
