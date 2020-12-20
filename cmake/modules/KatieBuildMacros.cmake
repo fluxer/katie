@@ -213,6 +213,17 @@ endmacro()
 # account all-in-one target build setting up proper dependency for the
 # moc/uic/rcc generated resources
 function(KATIE_SETUP_TARGET FORTARGET)
+    get_directory_property(dirdefs COMPILE_DEFINITIONS)
+    get_directory_property(dirincs INCLUDE_DIRECTORIES)
+    set(mocargs)
+    # COMPILE_DEFINITIONS does not include undefine definitions
+    foreach(ddef ${dirdefs})
+        set(mocargs ${mocargs} -D${ddef})
+    endforeach()
+    foreach(incdir ${dirincs})
+        set(mocargs ${mocargs} -I${incdir})
+    endforeach()
+
     # this can be simpler if continue() was supported by old CMake versions
     set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
     katie_write_file("${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
@@ -246,16 +257,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
             if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
                 set(rscout "${rscpath}/moc_${rscname}${rscext}")
                 set(targetresources ${targetresources} "${rscout}")
-                get_directory_property(dirdefs COMPILE_DEFINITIONS)
-                get_directory_property(dirincs INCLUDE_DIRECTORIES)
-                set(mocargs)
-                # COMPILE_DEFINITIONS does not include undefine definitions
-                foreach(ddef ${dirdefs})
-                    set(mocargs ${mocargs} -D${ddef})
-                endforeach()
-                foreach(incdir ${dirincs})
-                    set(mocargs ${mocargs} -I${incdir})
-                endforeach()
                 make_directory("${rscpath}")
                 add_custom_command(
                     COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
