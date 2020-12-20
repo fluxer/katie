@@ -67,15 +67,13 @@ QList<int> QKeyMapper::possibleKeys(QKeyEvent *e)
 {
     QList<int> result;
 
-    if (!e->nativeScanCode()) {
-        if (e->key() && (e->key() != Qt::Key_unknown))
-            result << int(e->key() + e->modifiers());
-        else if (!e->text().isEmpty())
-            result << int(e->text().at(0).unicode() + e->modifiers());
-        return result;
+    if (e->key() != Qt::Key_unknown) {
+        result << int(e->key() + e->modifiers());
+    } else if (!e->text().isEmpty()) {
+        result << int(e->text().at(0).unicode() + e->modifiers());
     }
 
-    return instance()->d_func()->possibleKeys(e);
+    return result;
 }
 
 extern bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event); // in qapplication_*.cpp
