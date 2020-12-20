@@ -603,8 +603,6 @@ protected:
     QWidget(QWidgetPrivate &d, QWidget* parent, Qt::WindowFlags f);
 
 private:
-    bool testAttribute_helper(Qt::WidgetAttribute) const;
-
     QLayout *takeLayout();
 
     friend class QBackingStoreDevice;
@@ -627,6 +625,8 @@ private:
     friend class QGraphicsProxyWidget;
     friend class QGraphicsProxyWidgetPrivate;
     friend class QStyleSheetStyle;
+    friend class QX11EmbedWidgetPrivate;
+    friend class QX11EmbedContainerPrivate;
     friend struct QWidgetExceptionCleaner;
 #ifndef QT_NO_GESTURES
     friend class QGestureManager;
@@ -636,7 +636,6 @@ private:
 #ifdef Q_WS_X11
     friend void qt_net_update_user_time(QWidget *tlw, unsigned long timestamp);
     friend void qt_net_remove_user_time(QWidget *tlw);
-    friend void qt_set_winid_on_widget(QWidget*, Qt::HANDLE);
 #endif
 
     friend Q_GUI_EXPORT QWidgetData *qt_qwidget_data(QWidget *widget);

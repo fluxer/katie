@@ -1,45 +1,59 @@
 Source: katie
-Section: x11
 Priority: optional
 Maintainer: Ivailo Monev <xakepa10@gmail.com>
 Homepage: https://github.com/fluxer/katie
 Vcs-Git: git://github.com/fluxer/katie.git
 Vcs-browser: https://github.com/fluxer/katie
-Standards-Version: 4.9.0
+Standards-Version: 4.9.1
 Build-Depends: debhelper (>= 9~), libssl-dev, zlib1g-dev, libzstd-dev,
  libc6-dev, libpng-dev, libjpeg-dev, libtiff5-dev, libcups2-dev,
  libfreetype6-dev, libfontconfig1-dev, libpcre3-dev, libdbus-1-dev,
  unixodbc-dev, libicu-dev, libsqlite3-dev, cmake, git, xserver-xorg-dev,
  libxinerama-dev, libxrandr-dev, libxrender-dev, libxcursor-dev, libsm-dev,
- libpq-dev, libpqtypes-dev, libmariadbclient-dev, libmariadbd-dev, libaio-dev,
- unifdef
+ libpq-dev, libmariadbclient-dev, libmariadbd-dev, unifdef | dpkg
 
 Package: katie-runtime
-Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x
+Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
+Section: x11
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: unixodbc, libpq5, libmariadbclient, xserver-xorg-core
 Description: C++ toolkit derived from the Qt 4.8 framework
- This package is pre-release version of the Katie tookit (includes libraries,
- imports, plugins and translations)
+ Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+ clean it up, fix some bugs and backport some features from Qt5. It is based
+ on the latest Git revision of Qt v4.8.
+ .
+ This package includes includes libraries, imports, plugins and translations
 
 Package: katie-tools
-Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x
+Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
+Section: x11
 Depends: ${shlibs:Depends}, ${misc:Depends}, katie-runtime
 Description: C++ toolkit derived from the Qt 4.8 framework
- This package is pre-release version of the Katie tookit (includes designer,
- lconvert, lrelease, lupdate, moc, qdbus, qdbuscpp2xml, qdbusviewer,
- qdbusxml2cpp, qscript, qtconfig, rcc and uic)
+ Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+ clean it up, fix some bugs and backport some features from Qt5. It is based
+ on the latest Git revision of Qt v4.8.
+ .
+ This package includes designer, moc, qdbus, qdbuscpp2xml, qdbusviewer,
+ qdbusxml2cpp, qscript, qtconfig, rcc, and uic
 
 Package: katie-dev
-Architecture: any
+Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386
+Section: devel
 Depends: ${misc:Depends}, katie-runtime, katie-tools
 Description: C++ toolkit derived from the Qt 4.8 framework
- This package is pre-release version of the Katie tookit (includes headers,
- pkg-config and CMake files)
+ Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+ clean it up, fix some bugs and backport some features from Qt5. It is based
+ on the latest Git revision of Qt v4.8.
+ .
+ This package includes headers, pkg-config and CMake files
 
 Package: katie-doc
-Architecture: any
+Architecture: all
+Section: doc
 Depends: ${misc:Depends}, man-db
 Description: C++ toolkit derived from the Qt 4.8 framework
- This package is pre-release version of the Katie tookit (includes manual
- pages for the tools)
+ Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+ clean it up, fix some bugs and backport some features from Qt5. It is based
+ on the latest Git revision of Qt v4.8.
+ .
+ This package includes manual pages for the tools

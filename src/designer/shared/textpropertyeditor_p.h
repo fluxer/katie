@@ -45,7 +45,6 @@
 #ifndef TEXTPROPERTYEDITOR_H
 #define TEXTPROPERTYEDITOR_H
 
-#include "shared_global_p.h"
 #include "shared_enums_p.h"
 
 #include <QtGui/QWidget>
@@ -59,7 +58,7 @@ namespace qdesigner_internal {
     // Inline-Editor for text properties. Does escaping of newline characters
     // to '\n' and back and provides validation modes. The interface
     // corresponds to that of QLineEdit.
-    class QDESIGNER_SHARED_EXPORT TextPropertyEditor : public QWidget
+    class Q_DESIGNER_EXPORT TextPropertyEditor : public QWidget
     {
         TextPropertyEditor(const TextPropertyEditor &);
         TextPropertyEditor& operator=(const TextPropertyEditor &);

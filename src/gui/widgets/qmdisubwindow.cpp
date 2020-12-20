@@ -1019,6 +1019,7 @@ void QMdiSubWindowPrivate::createSystemMenu()
     Q_ASSERT_X(q, "QMdiSubWindowPrivate::createSystemMenu",
                "You can NOT call this function before QMdiSubWindow's ctor");
     systemMenu = new QMenu(q);
+#ifndef QT_NO_ACTION
     const QStyle *style = q->style();
     addToSystemMenu(RestoreAction, QMdiSubWindow::tr("&Restore"), SLOT(showNormal()));
     actions[RestoreAction]->setIcon(style->standardIcon(QStyle::SP_TitleBarNormalButton, 0, q));
@@ -1037,6 +1038,7 @@ void QMdiSubWindowPrivate::createSystemMenu()
 #if !defined(QT_NO_SHORTCUT)
     actions[CloseAction]->setShortcuts(QKeySequence::Close);
 #endif
+#endif // QT_NO_ACTION
     updateActions();
 }
 #endif

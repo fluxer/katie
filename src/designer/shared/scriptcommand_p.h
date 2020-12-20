@@ -57,7 +57,7 @@ class QDesignerFormWindowInterface;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT ScriptCommand: public QDesignerFormWindowCommand
+class Q_DESIGNER_EXPORT ScriptCommand: public QDesignerFormWindowCommand
 {
     ScriptCommand(const ScriptCommand &);
     ScriptCommand& operator=(const ScriptCommand &);

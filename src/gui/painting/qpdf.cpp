@@ -39,10 +39,7 @@
 #include "qprinterinfo.h"
 #include "qnumeric.h"
 #include "qx11info_x11.h"
-
-#ifdef Q_OS_UNIX
 #include "qcore_unix_p.h" // overrides QT_OPEN
-#endif
 
 QT_BEGIN_NAMESPACE
 

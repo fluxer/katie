@@ -45,7 +45,6 @@
 #ifndef SCRIPTERRORDIALOG_H
 #define SCRIPTERRORDIALOG_H
 
-#include "shared_global_p.h"
 #include "formscriptrunner_p.h"
 
 #include <QtGui/QDialog>
@@ -57,7 +56,7 @@ class QTextEdit;
 namespace qdesigner_internal {
 
     // Dialog for showing script errors
-    class  QDESIGNER_SHARED_EXPORT ScriptErrorDialog : public QDialog {
+    class  Q_DESIGNER_EXPORT ScriptErrorDialog : public QDialog {
         Q_OBJECT
 
     public:

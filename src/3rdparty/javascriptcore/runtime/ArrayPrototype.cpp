@@ -78,7 +78,7 @@ static inline bool isNumericCompareFunction(ExecState* exec, CallType callType, 
 
 // ------------------------------ ArrayPrototype ----------------------------
 
-const ClassInfo ArrayPrototype::info = {"Array", &JSArray::info, 0, ExecState::arrayTable};
+const ClassInfo ArrayPrototype::info = { "Array", &JSArray::info, ExecState::arrayTable };
 
 /* Source for ArrayPrototype.lut.h
 @begin arrayTable 16

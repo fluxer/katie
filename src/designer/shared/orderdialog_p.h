@@ -45,8 +45,6 @@
 #ifndef ORDERDIALOG_P_H
 #define ORDERDIALOG_P_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QDialog>
 #include <QtCore/QMap>
 
@@ -58,7 +56,7 @@ namespace qdesigner_internal {
 
 class Ui_OrderDialog;
 
-class QDESIGNER_SHARED_EXPORT OrderDialog: public QDialog
+class Q_DESIGNER_EXPORT OrderDialog: public QDialog
 {
     Q_OBJECT
 public:

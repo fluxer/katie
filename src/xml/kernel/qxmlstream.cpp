@@ -727,17 +727,18 @@ QXmlStreamPrivateTagStack::QXmlStreamPrivateTagStack()
 #ifndef QT_NO_XMLSTREAMREADER
 
 QXmlStreamReaderPrivate::QXmlStreamReaderPrivate()
-{
-    device = Q_NULLPTR;
-    deleteDevice = false;
+    : device(Q_NULLPTR),
+    deleteDevice(false),
 #ifndef QT_NO_TEXTCODEC
-    decoder = Q_NULLPTR;
+    decoder(Q_NULLPTR),
 #endif
-    stack_size = 64;
-    sym_stack = Q_NULLPTR;
-    state_stack = Q_NULLPTR;
+    stack_size(64),
+    sym_stack(Q_NULLPTR),
+    state_stack(Q_NULLPTR),
+    entityParser(Q_NULLPTR),
+    entityResolver(Q_NULLPTR)
+{
     reallocateStack();
-    entityResolver = Q_NULLPTR;
     init();
     entityHash.insert(QLatin1String("lt"), Entity::createLiteral(QLatin1String("<")));
     entityHash.insert(QLatin1String("gt"), Entity::createLiteral(QLatin1String(">")));
@@ -778,6 +779,7 @@ void QXmlStreamReaderPrivate::init()
 #endif
     attributeStack.clear();
     attributeStack.reserve(16);
+    delete entityParser;
     entityParser = Q_NULLPTR;
     hasCheckedStartDocument = false;
     normalizeLiterals = false;

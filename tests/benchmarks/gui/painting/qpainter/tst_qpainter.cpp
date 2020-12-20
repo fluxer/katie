@@ -653,17 +653,6 @@ void tst_QPainter::drawPixmap_data()
     for (int tar=4; tar<QImage::NImageFormats; ++tar) {
         for (int src=4; src<QImage::NImageFormats; ++src) {
 
-            // skip the low-priority formats to keep resultset manageable...
-            if (tar == QImage::Format_RGB444 || src == QImage::Format_RGB444
-                || tar == QImage::Format_RGB555 || src == QImage::Format_RGB555
-                || tar == QImage::Format_RGB666 || src == QImage::Format_RGB666
-                || tar == QImage::Format_RGB888 || src == QImage::Format_RGB888
-                || tar == QImage::Format_ARGB4444_Premultiplied
-                || src == QImage::Format_ARGB4444_Premultiplied
-                || tar == QImage::Format_ARGB6666_Premultiplied
-                || src == QImage::Format_ARGB6666_Premultiplied)
-                continue;
-
             foreach (const QSize &s, sizes) {
                 for (int type=0; type<=3; ++type) {
                     QString name = QString::fromLatin1("%1 on %2, (%3x%4), %5")
@@ -1353,7 +1342,7 @@ void tst_QPainter::drawScaledImageRoundedRect_data()
     QTest::addColumn<int>("imageType");
 
     QTest::newRow("imagetype=ARGB32_Pre") << (int)QImage::Format_ARGB32_Premultiplied;
-    QTest::newRow("imagetype=ARGB8565_Pre") << (int)QImage::Format_ARGB8565_Premultiplied;
+    QTest::newRow("imagetype=RGB16") << (int)QImage::Format_RGB16;
 }
 
 void tst_QPainter::drawScaledImageRoundedRect()
@@ -1386,7 +1375,7 @@ void tst_QPainter::drawTransformedImageRoundedRect_data()
     QTest::addColumn<int>("imageType");
 
     QTest::newRow("imagetype=ARGB32_Pre") << (int)QImage::Format_ARGB32_Premultiplied;
-    QTest::newRow("imagetype=ARGB8565_Pre") << (int)QImage::Format_ARGB8565_Premultiplied;
+    QTest::newRow("imagetype=RGB16") << (int)QImage::Format_RGB16;
 }
 
 void tst_QPainter::drawTransformedImageRoundedRect()
@@ -1462,7 +1451,7 @@ void tst_QPainter::drawScaledBorderPixmapRoundedRect_data()
     for (float i = 0; i < 3; i += .1)
         QTest::newRow(QString(QLatin1String("scale=%1; imagetype=ARGB32_Pre")).arg(i).toLatin1()) << i << (int)QImage::Format_ARGB32_Premultiplied;
     //for (float i = 0; i < 3; i += .1)
-    //    QTest::newRow(QString(QLatin1String("scale=%1; imagetype=ARGB8565_Pre")).arg(i).toLatin1()) << i << (int)QImage::Format_ARGB8565_Premultiplied;
+    //    QTest::newRow(QString(QLatin1String("scale=%1; imagetype=RGB16")).arg(i).toLatin1()) << i << (int)QImage::Format_RGB16;
 }
 
 //code from QDeclarativeRectangle for drawing rounded rects
@@ -1517,7 +1506,7 @@ void tst_QPainter::drawTransformedBorderPixmapRoundedRect_data()
     for (float angle = 0; angle < 360; angle += 10)
         QTest::newRow(QString(QLatin1String("angle=%1; imagetype=ARGB32_Pre")).arg(angle).toLatin1()) << transformForAngle(angle) << (int)QImage::Format_ARGB32_Premultiplied;
     //for (float angle = 0; angle < 360; angle += 10)
-    //    QTest::newRow(QString(QLatin1String("angle=%1; imagetype=ARGB8565_Pre")).arg(angle).toLatin1()) << transformForAngle(angle) << (int)QImage::Format_ARGB8565_Premultiplied;
+    //    QTest::newRow(QString(QLatin1String("angle=%1; imagetype=RGB16")).arg(angle).toLatin1()) << transformForAngle(angle) << (int)QImage::Format_RGB16;
 
 }
 
@@ -1570,7 +1559,7 @@ void tst_QPainter::drawTransformedTransparentImage_data()
     QTest::addColumn<int>("imageType");
 
     QTest::newRow("imagetype=ARGB32_Pre") << (int)QImage::Format_ARGB32_Premultiplied;
-    QTest::newRow("imagetype=ARGB8565_Pre") << (int)QImage::Format_ARGB8565_Premultiplied;
+    QTest::newRow("imagetype=RGB16") << (int)QImage::Format_RGB16;
 }
 
 void tst_QPainter::drawTransformedTransparentImage()
@@ -1597,7 +1586,7 @@ void tst_QPainter::drawTransformedSemiTransparentImage_data()
     QTest::addColumn<int>("imageType");
 
     QTest::newRow("imagetype=ARGB32_Pre") << (int)QImage::Format_ARGB32_Premultiplied;
-    QTest::newRow("imagetype=ARGB8565_Pre") << (int)QImage::Format_ARGB8565_Premultiplied;
+    QTest::newRow("imagetype=RGB16") << (int)QImage::Format_RGB16;
 }
 
 void tst_QPainter::drawTransformedSemiTransparentImage()
@@ -1624,7 +1613,7 @@ void tst_QPainter::drawTransformedFilledImage_data()
     QTest::addColumn<int>("imageType");
 
     QTest::newRow("imagetype=ARGB32_Pre") << (int)QImage::Format_ARGB32_Premultiplied;
-    QTest::newRow("imagetype=ARGB8565_Pre") << (int)QImage::Format_ARGB8565_Premultiplied;
+    QTest::newRow("imagetype=RGB16") << (int)QImage::Format_RGB16;
 }
 
 void tst_QPainter::drawTransformedFilledImage()

@@ -33,13 +33,12 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <QtCore/qglobal.h>
 
-#include "QtTest/qxmltestlogger_p.h"
-#include "QtTest/qtestresult_p.h"
-#include "QtTest/qbenchmark_p.h"
-#include "QtTest/qbenchmarkmetric_p.h"
-#include "QtTest/qtestcase.h"
+#include "qxmltestlogger_p.h"
+#include "qtestresult_p.h"
+#include "qbenchmark_p.h"
+#include "qbenchmarkmetric_p.h"
+#include "qtestcase.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -50,12 +49,12 @@ namespace QTest {
         switch (type) {
         case QAbstractTestLogger::Warn:
             return "warn";
-        case QAbstractTestLogger::QSystem:
-            return "system";
         case QAbstractTestLogger::QDebug:
             return "qdebug";
         case QAbstractTestLogger::QWarning:
             return "qwarn";
+        case QAbstractTestLogger::QCritical:
+            return "qcritical";
         case QAbstractTestLogger::QFatal:
             return "qfatal";
         case QAbstractTestLogger::Skip:

@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_TOOLBOX_H
 #define QDESIGNER_TOOLBOX_H
 
-#include "shared_global_p.h"
 #include "qdesigner_propertysheet_p.h"
 #include "qdesigner_utils_p.h"
 #include <QtGui/QPalette>
@@ -61,7 +60,7 @@ class QToolBox;
 class QAction;
 class QMenu;
 
-class QDESIGNER_SHARED_EXPORT QToolBoxHelper : public QObject
+class Q_DESIGNER_EXPORT QToolBoxHelper : public QObject
 {
     Q_OBJECT
 
@@ -97,7 +96,7 @@ private:
 };
 
 // PropertySheet to handle the page properties
-class QDESIGNER_SHARED_EXPORT QToolBoxWidgetPropertySheet : public QDesignerPropertySheet {
+class Q_DESIGNER_EXPORT QToolBoxWidgetPropertySheet : public QDesignerPropertySheet {
 public:
     explicit QToolBoxWidgetPropertySheet(QToolBox *object, QObject *parent = Q_NULLPTR);
 

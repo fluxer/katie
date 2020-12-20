@@ -76,7 +76,6 @@ public:
     void updatePen(const QPen &pen);
     void updateBrush(const QBrush &brush, const QPointF &pt);
     void updateRenderHints(QPainter::RenderHints hints);
-    void updateFont(const QFont &font);
     void updateMatrix(const QTransform &matrix);
     void updateClipRegion_dev(const QRegion &region, Qt::ClipOperation op);
 
@@ -92,9 +91,7 @@ public:
     void drawEllipse(const QRect &r);
     void drawEllipse(const QRectF &r);
 
-    virtual void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
-    inline void drawPolygon(const QPoint *points, int pointCount, PolygonDrawMode mode)
-        { QPaintEngine::drawPolygon(points, pointCount, mode); }
+    void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode);
 
     void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
     void drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPointF &s);
@@ -103,7 +100,6 @@ public:
     void drawImage(const QRectF &r, const QImage &img, const QRectF &sr,
                    Qt::ImageConversionFlags flags = Qt::AutoColor);
 
-    virtual Qt::HANDLE handle() const;
     inline Type type() const { return QPaintEngine::X11; }
 
     QPainter::RenderHints supportedRenderHints() const;

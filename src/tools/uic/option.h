@@ -47,8 +47,6 @@ struct Option
     bool generateNamespace;
     bool autoConnection;
     bool dependencies;
-    bool extractImages;
-    bool limitXPM_LineLength;
     bool implicitIncludes;
 
     QString inputFile;
@@ -66,8 +64,6 @@ struct Option
           generateNamespace(true),
           autoConnection(true),
           dependencies(false),
-          extractImages(false),
-          limitXPM_LineLength(false),
           implicitIncludes(true),
           prefix(QLatin1String("Ui_"))
     { indent.fill(QLatin1Char(' '), 4); }

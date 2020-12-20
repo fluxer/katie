@@ -156,8 +156,7 @@ private slots:
     #endif
 };
 
-const int N = 1000000;
-extern double s;
+static double s;
 
 void tst_QVector::calibration()
 {

@@ -45,7 +45,6 @@
 #ifndef DESIGNERINTROSPECTION
 #define DESIGNERINTROSPECTION
 
-#include "shared_global_p.h"
 #include <abstractintrospection_p.h>
 #include <QtCore/QMap>
 
@@ -56,7 +55,7 @@ class QWidget;
 
 namespace qdesigner_internal {
     // Qt C++ introspection with helpers to find core and meta object for an object
-    class QDESIGNER_SHARED_EXPORT QDesignerIntrospection : public QDesignerIntrospectionInterface {
+    class Q_DESIGNER_EXPORT QDesignerIntrospection : public QDesignerIntrospectionInterface {
     public:
         QDesignerIntrospection();
         virtual ~QDesignerIntrospection();

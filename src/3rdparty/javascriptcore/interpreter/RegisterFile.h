@@ -31,13 +31,13 @@
 
 #include "Collector.h"
 #include "Register.h"
-#include <stdio.h>
 #include <wtf/Noncopyable.h>
 
-#if HAVE(MMAP)
+#include <stdio.h>
 #include <errno.h>
 #include <sys/mman.h>
-#endif
+
+#include <qplatformdefs.h>
 
 namespace JSC {
 
@@ -167,23 +167,11 @@ namespace JSC {
         Q_ASSERT(isPageAligned(capacity));
 
         size_t bufferLength = (capacity + maxGlobals) * sizeof(Register);
-    #if HAVE(MMAP)
-        m_buffer = reinterpret_cast<Register*>(mmap(0, bufferLength, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, -1, 0));
+        m_buffer = reinterpret_cast<Register*>(QT_MMAP(0, bufferLength, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, -1, 0));
         if (m_buffer == MAP_FAILED) {
             fprintf(stderr, "Could not allocate register file: %d\n", errno);
             CRASH();
         }
-    #else
-        /* 
-         * If MMAP is not available - use fastMalloc instead.
-         *
-         * Please note that this is the fallback case, which is non-optimal.
-         * If any possible, the platform should provide for a better memory
-         * allocation mechanism that allows for "lazy commit" or dynamic
-         * pre-allocation, similar to mmap, to avoid waste of memory.
-         */
-        m_buffer = static_cast<Register*>(fastMalloc(bufferLength));
-    #endif
         m_start = m_buffer + maxGlobals;
         m_end = m_start;
         m_maxUsed = m_end;

@@ -47,7 +47,6 @@
 
 #include <QtGui/QTextEdit>
 #include <QtGui/QDialog>
-#include "shared_global_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -60,7 +59,7 @@ namespace qdesigner_internal {
 
 class RichTextEditor;
 
-class QDESIGNER_SHARED_EXPORT RichTextEditorDialog : public QDialog
+class Q_DESIGNER_EXPORT RichTextEditorDialog : public QDialog
 {
     Q_OBJECT
 public:

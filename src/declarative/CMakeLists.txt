@@ -30,15 +30,10 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_BINARY_DIR}/include/QtNetwork
-    ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
     ${CMAKE_BINARY_DIR}/include/QtScript
-    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtDeclarative
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDeclarative
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
 )
 set(DECLARATIVE_HEADERS
@@ -340,9 +335,11 @@ set_target_properties(KtDeclarative PROPERTIES
     EXPORT_NAME Declarative
 )
 
+katie_setup_pch(KtDeclarative)
+
 install(
     TARGETS KtDeclarative
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

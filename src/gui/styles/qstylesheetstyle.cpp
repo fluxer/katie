@@ -1470,8 +1470,8 @@ public:
     }
     bool hasAttributes(NodePtr) const
     { return true; }
-    QStringList nodeIds(NodePtr node) const
-    { return isNullNode(node) ? QStringList() : QStringList(WIDGET(node)->objectName()); }
+    QString nodeId(NodePtr node) const
+    { return isNullNode(node) ? QString() : WIDGET(node)->objectName(); }
     bool isNullNode(NodePtr node) const
     { return node.ptr == 0; }
     NodePtr parentNode(NodePtr node) const
@@ -1499,15 +1499,12 @@ QVector<QCss::StyleRule> QStyleSheetStyle::styleRules(const QWidget *w) const
 
     QStyleSheetStyleSelector styleSelector;
 
-    StyleSheet defaultSs;
-    QHash<const void *, StyleSheet>::const_iterator defaultCacheIt = styleSheetCaches->styleSheetCache.constFind(baseStyle());
+    QStyle *bs = baseStyle();
+    static StyleSheet defaultSs = getDefaultStyleSheet();
+    QHash<const void *, StyleSheet>::const_iterator defaultCacheIt = styleSheetCaches->styleSheetCache.constFind(bs);
     if (defaultCacheIt == styleSheetCaches->styleSheetCache.constEnd()) {
-        defaultSs = getDefaultStyleSheet();
-        QStyle *bs = baseStyle();
         styleSheetCaches->styleSheetCache.insert(bs, defaultSs);
         QObject::connect(bs, SIGNAL(destroyed(QObject*)), styleSheetCaches, SLOT(styleDestroyed(QObject*)), Qt::UniqueConnection);
-    } else {
-        defaultSs = defaultCacheIt.value();
     }
     styleSelector.styleSheets += defaultSs;
 

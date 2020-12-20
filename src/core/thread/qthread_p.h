@@ -163,7 +163,6 @@ public:
 
     QThreadData *data;
 
-    static void setCurrentThread(QThread*) {}
     static void createEventDispatcher(QThreadData *data);
 
     Q_DECLARE_PUBLIC(QThread)
@@ -178,7 +177,6 @@ public:
     ~QThreadData();
 
     static QThreadData *current();
-    static void clearCurrentThreadData();
     static QThreadData *get2(QThread *thread)
     { Q_ASSERT_X(thread, "QThread", "internal error"); return thread->d_func()->data; }
 

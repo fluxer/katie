@@ -31,11 +31,10 @@
 **
 ****************************************************************************/
 
-#include <QtCore/qmetaobject.h>
-
-#include "QtTest/qtestassert.h"
-#include "QtTest/qtestdata.h"
-#include "QtTest/qtesttable_p.h"
+#include "qmetaobject.h"
+#include "qtestassert.h"
+#include "qtestdata.h"
+#include "qtesttable_p.h"
 
 #include <string.h>
 #include <stdlib.h>

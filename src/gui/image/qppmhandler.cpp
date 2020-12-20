@@ -260,24 +260,8 @@ static bool write_pbm_image(QIODevice *out, const QImage &sourceImage, const QBy
         image = image.convertToFormat(QImage::Format_Mono);
     } else if (image.depth() == 1) {
         image = image.convertToFormat(QImage::Format_Indexed8);
-    } else {
-        switch (image.format()) {
-        case QImage::Format_RGB16:
-        case QImage::Format_RGB666:
-        case QImage::Format_RGB555:
-        case QImage::Format_RGB888:
-        case QImage::Format_RGB444:
-            image = image.convertToFormat(QImage::Format_RGB32);
-            break;
-        case QImage::Format_ARGB8565_Premultiplied:
-        case QImage::Format_ARGB6666_Premultiplied:
-        case QImage::Format_ARGB8555_Premultiplied:
-        case QImage::Format_ARGB4444_Premultiplied:
-            image = image.convertToFormat(QImage::Format_ARGB32);
-            break;
-        default:
-            break;
-        }
+    } else if (image.format() == QImage::Format_RGB16) {
+        image = image.convertToFormat(QImage::Format_RGB32);
     }
 
     if (image.depth() == 1 && image.colorCount() == 2) {

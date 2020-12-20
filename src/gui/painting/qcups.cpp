@@ -35,9 +35,6 @@
 
 #ifndef QT_NO_CUPS
 
-#ifndef QT_LINUXBASE // LSB merges everything into cups.h
-# include <cups/language.h>
-#endif
 #include "qtextcodec.h"
 
 QT_BEGIN_NAMESPACE

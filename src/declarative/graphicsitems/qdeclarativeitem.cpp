@@ -1240,20 +1240,6 @@ void QDeclarativeItemPrivate::setLayoutMirror(bool mirror)
 */
 
 /*!
-    \qmlsignal Keys::onHangupPressed(KeyEvent event)
-
-    This handler is called when the Hangup key has been pressed. The \a event
-    parameter provides information about the event.
-*/
-
-/*!
-    \qmlsignal Keys::onFlipPressed(KeyEvent event)
-
-    This handler is called when the Flip key has been pressed. The \a event
-    parameter provides information about the event.
-*/
-
-/*!
     \qmlsignal Keys::onMenuPressed(KeyEvent event)
 
     This handler is called when the Menu key has been pressed. The \a event
@@ -1326,15 +1312,7 @@ static const struct KeySignalTblData {
     { Qt::Key_Back, "backPressed" },
     { Qt::Key_Cancel, "cancelPressed" },
     { Qt::Key_Select, "selectPressed" },
-    { Qt::Key_Yes, "yesPressed" },
-    { Qt::Key_No, "noPressed" },
-    { Qt::Key_Context1, "context1Pressed" },
-    { Qt::Key_Context2, "context2Pressed" },
-    { Qt::Key_Context3, "context3Pressed" },
-    { Qt::Key_Context4, "context4Pressed" },
     { Qt::Key_Call, "callPressed" },
-    { Qt::Key_Hangup, "hangupPressed" },
-    { Qt::Key_Flip, "flipPressed" },
     { Qt::Key_Menu, "menuPressed" },
     { Qt::Key_VolumeUp, "volumeUpPressed" },
     { Qt::Key_VolumeDown, "volumeDownPressed" }

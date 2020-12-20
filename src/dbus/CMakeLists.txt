@@ -29,11 +29,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtDBus
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDBus
     ${DBUS_INCLUDES}
 )
 
@@ -112,9 +109,11 @@ set_target_properties(KtDBus PROPERTIES
     EXPORT_NAME DBus
 )
 
+katie_setup_pch(KtDBus)
+
 install(
     TARGETS KtDBus
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

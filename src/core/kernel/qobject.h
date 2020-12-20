@@ -97,11 +97,14 @@ public:
     virtual bool event(QEvent *);
     virtual bool eventFilter(QObject *, QEvent *);
 
-#ifdef QT_NO_TRANSLATION
-    static QString tr(const char *sourceText, const char * = Q_NULLPTR, int = -1)
+#ifndef QT_NO_TRANSLATION
+    static QString tr(const char *sourceText);
+    static QString trUtf8(const char *sourceText);
+#else
+    static QString tr(const char *sourceText)
         { return QString::fromLatin1(sourceText); }
 #ifndef QT_NO_TEXTCODEC
-    static QString trUtf8(const char *sourceText, const char * = Q_NULLPTR, int = -1)
+    static QString trUtf8(const char *sourceText)
         { return QString::fromUtf8(sourceText); }
 #endif
 #endif //QT_NO_TRANSLATION

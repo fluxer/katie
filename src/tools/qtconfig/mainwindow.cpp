@@ -528,16 +528,15 @@ void MainWindow::updateStyleLayout()
     QString currentStyle = ui->guiStyleCombo->currentText();
     bool autoStyle = (currentStyle == desktopThemeName);
     ui->previewFrame->setPreviewVisible(!autoStyle);
-    ui->buildPaletteGroup->setEnabled(currentStyle.toLower() != QLatin1String("gtk") && !autoStyle);
+    ui->buildPaletteGroup->setEnabled(!autoStyle);
 }
 
 void MainWindow::styleSelected(const QString &stylename)
 {
-    QStyle *style = 0;
     if (stylename == desktopThemeName) {
         setModified(true);
     } else {
-        style = QStyleFactory::create(stylename);
+        QStyle *style = QStyleFactory::create(stylename);
         if (!style)
             return;
         setStyleHelper(ui->previewFrame, style);

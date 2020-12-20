@@ -44,7 +44,6 @@
 #endif
 
 #include "qfilesystementry_p.h"
-#include "qfilesystemmetadata_p.h"
 #include "qfilesystemengine_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -563,23 +562,6 @@ int QAbstractFileEngine::handle() const
 }
 
 /*!
-    \since 4.3
-
-    Returns true if the current position is at the end of the file; otherwise,
-    returns false.
-
-    This function bases its behavior on calling extension() with
-    AtEndExtension. If the engine does not support this extension, false is
-    returned.
-
-    \sa extension(), supportsExtension(), QFile::atEnd()
-*/
-bool QAbstractFileEngine::atEnd() const
-{
-    return const_cast<QAbstractFileEngine *>(this)->extension(AtEndExtension);
-}
-
-/*!
     \since 4.4
 
     Maps \a size bytes of the file into memory starting at \a offset.
@@ -907,14 +889,6 @@ qint64 QAbstractFileEngine::readLine(char *data, qint64 maxlen)
    This enum describes the types of extensions that the file engine can
    support. Before using these extensions, you must verify that the extension
    is supported (i.e., call supportsExtension()).
-
-   \value AtEndExtension Whether the current file position is at the end of
-   the file or not. This extension allows file engines that implement local
-   buffering to report end-of-file status without having to check the size of
-   the file. It is also useful for sequential files, where the size of the
-   file cannot be used to determine whether or not you have reached the end.
-   This extension returns true if the file is at the end; otherwise it returns
-   false. The input and output arguments to extension() are ignored.
 
    \value FastReadLineExtension Whether the file engine provides a
    fast implementation for readLine() or not. If readLine() remains

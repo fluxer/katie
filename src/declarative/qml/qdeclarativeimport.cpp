@@ -772,16 +772,24 @@ bool QDeclarativeImports::addImport(QDeclarativeImportDatabase *importDb,
 /*!
   \internal
 
-  Returns the result of the merge of \a baseName with \a path, \a suffixes, and \a prefix.
-  The \a prefix must contain the dot.
+  Returns the result of the merge of \a baseName with \a dir and the platform suffix.
 
-  \a qmldirPath is the location of the qmldir file.
- */
+  \table
+  \header \i Platform \i Valid suffixes
+  \row \i Unix/Linux  \i \c .so
+  \endtable
+
+  Version number on unix are ignored.
+*/
 QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const QString &qmldirPluginPath, 
-                                                  const QString &baseName, const QStringList &suffixes,
-                                                  const QString &prefix)
+                                                  const QString &baseName)
 {
-    QStringList searchPaths = filePluginPath;
+    static QStringList validSuffixList = QStringList()  << QLatin1String(".so");
+
+    // Examples of valid library names:
+    //  libfoo.so
+
+   QStringList searchPaths = filePluginPath;
     bool qmldirPluginPathIsRelative = QDir::isRelativePath(qmldirPluginPath);
     if (!qmldirPluginPathIsRelative)
         searchPaths.prepend(qmldirPluginPath);
@@ -800,12 +808,12 @@ QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const 
         }
 
         // hack for resources, should probably go away
-        if (resolvedPath.startsWith(QLatin1Char(':')))
+        if (resolvedPath.startsWith(QLatin1String(":/")))
             resolvedPath = QCoreApplication::applicationDirPath();
 
         QDir dir(resolvedPath);
-        foreach (const QString &suffix, suffixes) {
-            QString pluginFileName = prefix;
+        foreach (const QString &suffix, validSuffixList) {
+            QString pluginFileName = QLatin1String("lib");
 
             pluginFileName += baseName;
             pluginFileName += suffix;
@@ -822,46 +830,6 @@ QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const 
                  << "in" << qmldirPath.absolutePath();
 
     return QString();
-}
-
-/*!
-  \internal
-
-  Returns the result of the merge of \a baseName with \a dir and the platform suffix.
-
-  \table
-  \header \i Platform \i Valid suffixes
-  \row \i Unix/Linux  \i \c .so
-  \row \i AIX  \i \c .a
-  \row \i HP-UX       \i \c .sl, \c .so (HP-UXi)
-  \endtable
-
-  Version number on unix are ignored.
-*/
-QString QDeclarativeImportDatabase::resolvePlugin(const QDir &qmldirPath, const QString &qmldirPluginPath, 
-                                                  const QString &baseName)
-{
-    QStringList validSuffixList;
-#if defined(Q_OS_HPUX)
-/*
-    See "HP-UX Linker and Libraries User's Guide", section "Link-time Differences between PA-RISC and IPF":
-    "In PA-RISC (PA-32 and PA-64) shared libraries are suffixed with .sl. In IPF (32-bit and 64-bit),
-    the shared libraries are suffixed with .so. For compatibility, the IPF linker also supports the .sl suffix."
- */
-    validSuffixList << QLatin1String(".sl");
-# if defined QT_ARCH_IA64
-    validSuffixList << QLatin1String(".so");
-# endif
-#elif defined(Q_OS_AIX)
-    validSuffixList << QLatin1String(".a") << QLatin1String(".so");
-#elif defined(Q_OS_UNIX)
-    validSuffixList << QLatin1String(".so");
-#endif
-
-    // Examples of valid library names:
-    //  libfoo.so
-
-    return resolvePlugin(qmldirPath, qmldirPluginPath, baseName, validSuffixList, QLatin1String("lib"));
 }
 
 /*!

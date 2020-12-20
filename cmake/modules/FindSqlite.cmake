@@ -9,28 +9,22 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(NOT WIN32)
-    include(FindPkgConfig)
-    pkg_check_modules(PC_SQLITE QUIET sqlite3)
-
-    set(SQLITE_INCLUDES ${PC_SQLITE_INCLUDE_DIRS})
-    set(SQLITE_LIBRARIES ${PC_SQLITE_LIBRARIES})
-endif()
-
-if(NOT SQLITE_INCLUDES OR NOT SQLITE_LIBRARIES)
-    find_path(SQLITE_INCLUDES
-        NAMES sqlite3.h
-        PATH_SUFFIXES sqlite3
-        HINTS $ENV{SQLITEDIR}/include
-    )
-
-    find_library(SQLITE_LIBRARIES
-        NAMES sqlite3
-        HINTS $ENV{SQLITEDIR}/lib
-    )
-endif()
-
+include(FindPkgConfig)
 include(FindPackageHandleStandardArgs)
+
+pkg_check_modules(PC_SQLITE QUIET sqlite3)
+
+find_path(SQLITE_INCLUDES
+    NAMES sqlite3.h
+    PATH_SUFFIXES sqlite3
+    HINTS $ENV{SQLITEDIR}/include ${PC_SQLITE_INCLUDEDIR}
+)
+
+find_library(SQLITE_LIBRARIES
+    NAMES sqlite3
+    HINTS $ENV{SQLITEDIR}/lib ${PC_SQLITE_LIBDIR}
+)
+
 find_package_handle_standard_args(SQLite
     VERSION_VAR PC_SQLITE_VERSION
     REQUIRED_VARS SQLITE_LIBRARIES SQLITE_INCLUDES

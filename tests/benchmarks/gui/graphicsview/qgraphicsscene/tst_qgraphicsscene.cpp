@@ -226,6 +226,7 @@ void tst_QGraphicsScene::itemAt()
     QBENCHMARK {
         item = scene.itemAt(0, 0);
     }
+    Q_UNUSED(item);
 
     //let QGraphicsScene::_q_polishItems be called so ~QGraphicsItem doesn't spend all his time cleaning the unpolished list
     qApp->processEvents();

@@ -39,10 +39,6 @@
 #include <QTimer>
 #include <QDebug>
 
-#ifdef Q_OS_LINUX
-#  include <sys/inotify.h>
-#endif
-
 //TESTED_CLASS=
 //TESTED_FILES=
 
@@ -75,31 +71,19 @@ private slots:
     void cleanup();
 
     void QTBUG15255_deadlock();
-private:
-    QStringList do_force_engines;
-    bool do_force_native;
 };
 
 tst_QFileSystemWatcher::tst_QFileSystemWatcher()
-    : do_force_native(false)
 {
-#ifdef Q_OS_LINUX
-    // the inotify implementation in the kernel is known to be buggy in certain versions of the linux kernel
-    do_force_engines << "native";
-
-    if (inotify_init() != -1)
-        do_force_engines << "inotify";
-#elif defined(Q_OS_FREEBSD) || defined(Q_OS_NETBSD)
-    // we have native engines freebsd and openbsd
-    do_force_engines << "native";
-#endif
 }
 
 void tst_QFileSystemWatcher::basicTest_data()
 {
     QTest::addColumn<QString>("backend");
-    foreach(QString engine, do_force_engines)
-        QTest::newRow(engine.toLatin1().constData()) << engine;
+#if defined(QT_HAVE_INOTIFY_INIT1) || defined(QT_HAVE_KEVENT)
+    // we have native engines for linux, freebsd, openbsd, netbsd and dragonfly
+    QTest::newRow("native") << "native";
+#endif
     QTest::newRow("poller") << "poller";
 }
 
@@ -186,9 +170,6 @@ void tst_QFileSystemWatcher::basicTest()
     // change the permissions, should get a signal from the watcher
     testFile.setPermissions(QFile::ReadOwner);
 
-    // IN_ATTRIB doesn't work on QNX, so skip this test
-#if !defined(Q_OS_QNX)
-
     // qDebug() << "waiting max 5 seconds for notification for file permission modification to trigger(1)";
     timer.start(5000);
     eventLoop.exec();
@@ -198,8 +179,6 @@ void tst_QFileSystemWatcher::basicTest()
 
     fileName = changedSpy.at(0).at(0).toString();
     QCOMPARE(fileName, testFile.fileName());
-
-#endif
 
     changedSpy.clear();
 

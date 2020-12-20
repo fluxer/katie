@@ -43,16 +43,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static quint64 xpmHash(const QString &str)
-{
-    unsigned int hashValue = 0;
-    for (int i = 0; i < str.size(); ++i) {
-        hashValue <<= 8;
-        hashValue += (unsigned int)str.at(i).unicode();
-    }
-    return hashValue;
-}
-static quint64 xpmHash(char *str)
+static quint64 xpmHash(const char *str)
 {
     unsigned int hashValue = 0;
     while (*str != '\0') {
@@ -881,9 +872,9 @@ static bool read_xpm_body(
             int transparentColor = currentColor;
             if (ncols <= 256) {
                 image.setColor(transparentColor, 0);
-                colorMap.insert(xpmHash(QLatin1String(index.constData())), transparentColor);
+                colorMap.insert(xpmHash(index.constData()), transparentColor);
             } else {
-                colorMap.insert(xpmHash(QLatin1String(index.constData())), 0);
+                colorMap.insert(xpmHash(index.constData()), 0);
             }
         } else {
             QRgb c_rgb;
@@ -902,9 +893,9 @@ static bool read_xpm_body(
             }
             if (ncols <= 256) {
                 image.setColor(currentColor, 0xff000000 | c_rgb);
-                colorMap.insert(xpmHash(QLatin1String(index.constData())), currentColor);
+                colorMap.insert(xpmHash(index.constData()), currentColor);
             } else {
-                colorMap.insert(xpmHash(QLatin1String(index.constData())), 0xff000000 | c_rgb);
+                colorMap.insert(xpmHash(index.constData()), 0xff000000 | c_rgb);
             }
         }
     }

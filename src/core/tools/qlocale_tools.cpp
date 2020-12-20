@@ -36,29 +36,20 @@
 #include "qstring.h"
 #include "qcorecommon_p.h"
 
-#include <ctype.h>
-#include <float.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <time.h>
-#include <errno.h>
-#include <cmath>
-
-#if defined(Q_OS_LINUX) && !defined(__UCLIBC__)
-#    include <fenv.h>
-#endif
+#include <stdio.h>
+#include <string.h>
 
 #include <unicode/ucol.h>
 #include <unicode/ustring.h>
 
 QT_BEGIN_NAMESPACE
 
-QString qulltoa(qulonglong l, int base, const QChar _zero)
+QString qulltoa(qulonglong l, int base, const QChar zero)
 {
     ushort buff[65]; // length of MAX_ULLONG in base 2
     ushort *p = buff + 65;
 
-    if (base != 10 || _zero.unicode() == '0') {
+    if (base != 10 || zero.unicode() == '0') {
         while (l != 0) {
             int c = l % base;
 
@@ -71,12 +62,11 @@ QString qulltoa(qulonglong l, int base, const QChar _zero)
 
             l /= base;
         }
-    }
-    else {
+    } else {
         while (l != 0) {
             int c = l % base;
 
-            *(--p) = _zero.unicode() + c;
+            *(--p) = zero.unicode() + c;
 
             l /= base;
         }
@@ -234,45 +224,6 @@ bool removeGroupSeparators(QLocalePrivate::CharBuff *num)
 
     return true;
 }
-
-qulonglong qstrtoull(const char *nptr, const char **endptr, int base, bool *ok)
-{
-    qulonglong ret = std::strtoull(const_cast<char*>(nptr), const_cast<char**>(endptr), base);
-    if (ok) {
-      if(ret == ULLONG_MAX && (errno == ERANGE || errno == EINVAL))
-        *ok = false;
-      else
-        *ok = true;
-    }
-    return ret;
-}
-
-qlonglong qstrtoll(const char *nptr, const char **endptr, int base, bool *ok)
-{
-    qlonglong ret = std::strtoll(const_cast<char*>(nptr), const_cast<char**>(endptr), base);
-    if (ok) {
-      if((ret == LLONG_MIN || ret == LLONG_MAX)
-         && (errno == ERANGE || errno == EINVAL))
-        *ok = false;
-      else
-        *ok = true;
-    }
-    return ret;
-}
-
-double qstrtod(const char *s00, const char **se, bool *ok)
-{
-    double ret = std::strtod(const_cast<char*>(s00), const_cast<char**>(se));
-    if (ok) {
-      if((ret == 0.0l && errno == ERANGE)
-         || ret == HUGE_VAL || ret == -HUGE_VAL)
-        *ok = false;
-      else
-        *ok = true; // the result will be that we don't report underflow in this case
-    }
-    return ret;
-}
-
 
 /******************************************************************************
 ** Helpers for string casing and collation

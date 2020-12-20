@@ -104,10 +104,6 @@ public:
     void updateRemovedRows(int start, int end);
     void updateRemovedColumns(int start, int end);
 
-#ifdef QT_BUILD_INTERNAL
-    bool checkConsistency() const;
-#endif
-
     typedef QLinkedList<Span *> SpanList;
     SpanList spans; //lists of all spans
 private:

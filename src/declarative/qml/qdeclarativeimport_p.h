@@ -117,9 +117,6 @@ public:
 private:
     friend class QDeclarativeImportsPrivate;
     QString resolvePlugin(const QDir &qmldirPath, const QString &qmldirPluginPath, 
-                          const QString &baseName, const QStringList &suffixes,
-                          const QString &prefix = QString());
-    QString resolvePlugin(const QDir &qmldirPath, const QString &qmldirPluginPath, 
                           const QString &baseName);
 
 

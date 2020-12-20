@@ -38,13 +38,12 @@
 #include "qstringlist.h"
 #include "qendian.h"
 #include "qnativesocketengine_p.h"
+
 #ifndef QT_NO_DATASTREAM
 #include "qdatastream.h"
 #endif
 
-#ifdef QT_LINUXBASE
-#  include <arpa/inet.h>
-#endif
+#include <arpa/inet.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -470,7 +469,7 @@ QHostAddress::QHostAddress(const struct sockaddr *sockaddr)
         setAddress(htonl(((sockaddr_in *)sockaddr)->sin_addr.s_addr));
 #ifndef QT_NO_IPV6
     else if (sockaddr->sa_family == AF_INET6)
-        setAddress(((qt_sockaddr_in6 *)sockaddr)->sin6_addr.qt_s6_addr);
+        setAddress(((sockaddr_in6 *)sockaddr)->sin6_addr.s6_addr);
 #endif
 }
 
@@ -621,7 +620,7 @@ void QHostAddress::setAddress(const struct sockaddr *sockaddr)
         setAddress(htonl(((sockaddr_in *)sockaddr)->sin_addr.s_addr));
 #ifndef QT_NO_IPV6
     else if (sockaddr->sa_family == AF_INET6)
-        setAddress(((qt_sockaddr_in6 *)sockaddr)->sin6_addr.qt_s6_addr);
+        setAddress(((sockaddr_in6 *)sockaddr)->sin6_addr.s6_addr);
 #endif
 }
 

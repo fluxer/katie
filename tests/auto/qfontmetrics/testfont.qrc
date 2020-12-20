@@ -1,4 +1,4 @@
-<RCC>
+<!DOCTYPE RCC><RCC version="1.0">
     <qresource prefix="/fonts">
         <file>ucs4font.ttf</file>
     </qresource>

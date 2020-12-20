@@ -863,18 +863,16 @@ void QX11PixmapData::fromImage(const QImage &img,
                     break;
             case BPP24_888:
                 CYCLE(
-                    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
-                        for (int x=0; x<w; x++) {
-                            *dst++ = qRed  (*p);
-                            *dst++ = qGreen(*p);
-                            *dst++ = qBlue (*p++);
-                        }
-                    } else {
-                        for (int x=0; x<w; x++) {
-                            *dst++ = qBlue (*p);
-                            *dst++ = qGreen(*p);
-                            *dst++ = qRed  (*p++);
-                        }
+                    for (int x=0; x<w; x++) {
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+                        *dst++ = qRed  (*p);
+                        *dst++ = qGreen(*p);
+                        *dst++ = qBlue (*p++);
+#else
+                        *dst++ = qBlue (*p);
+                        *dst++ = qGreen(*p);
+                        *dst++ = qRed  (*p++);
+#endif
                     }
                     )
                     break;

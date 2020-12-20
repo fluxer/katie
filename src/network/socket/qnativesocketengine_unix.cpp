@@ -45,11 +45,14 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <netinet/tcp.h>
+#include <arpa/inet.h>
+
 #ifndef QT_NO_IPV6IFNAME
 #include <net/if.h>
 #endif
-#ifdef QT_LINUXBASE
-#include <arpa/inet.h>
+
+#ifdef Q_OS_SOLARIS
+#  include <sys/filio.h> // FIONREAD
 #endif
 
 #if defined QNATIVESOCKETENGINE_DEBUG
@@ -108,7 +111,7 @@ static inline void qt_socket_getPortAndAddress(const qt_sockaddr *s, quint16 *po
 #ifndef QT_NO_IPV6IFNAME
             char scopeid[IFNAMSIZ];
             if (::if_indextoname(s->a6.sin6_scope_id, scopeid)) {
-                addr->setScopeId(QLatin1String(scopeid));
+                addr->setScopeId(QString::fromLatin1(scopeid));
             } else
 #endif
             addr->setScopeId(QString::number(s->a6.sin6_scope_id));
@@ -614,7 +617,7 @@ static bool multicastMembershipHelper(QNativeSocketEnginePrivate *d,
         return false;
     }
 
-    int res = setsockopt(d->socketDescriptor, level, sockOpt, sockArg, sockArgSize);
+    int res = ::setsockopt(d->socketDescriptor, level, sockOpt, sockArg, sockArgSize);
     if (res == -1) {
         switch (errno) {
         case ENOPROTOOPT:

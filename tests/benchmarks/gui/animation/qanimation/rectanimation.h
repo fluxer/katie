@@ -33,7 +33,8 @@
 
 #include <QtGui>
 
-#ifndef _RECTANIMATION_H__
+#ifndef RECTANIMATION_H
+#define RECTANIMATION_H
 
 class DummyObject;
 

@@ -75,8 +75,7 @@ inline static QTabBar::Shape tabBarShapeFrom(QTabWidget::TabShape shape, QTabWid
 inline static int lowest_bit(uint v)
 {
     int i;
-    ulong lb;
-    lb = 1;
+    ulong lb = 1;
     for (i=0; ((v & lb) == 0) && i<32;  i++, lb<<=1) {}
     return i==32 ? -1 : i;
 }

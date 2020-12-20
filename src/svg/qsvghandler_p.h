@@ -59,7 +59,6 @@ QT_BEGIN_NAMESPACE
 
 class QSvgNode;
 class QSvgTinyDocument;
-class QSvgHandler;
 class QColor;
 class QSvgStyleSelector;
 class QXmlStreamReader;
@@ -84,7 +83,6 @@ public:
         LT_OTHER
     };
 
-public:
     QSvgHandler(QIODevice *device);
     QSvgHandler(const QByteArray &data);
     QSvgHandler(QXmlStreamReader *const data);
@@ -98,9 +96,6 @@ public:
 
     inline QString errorString() const { return xml->errorString(); }
     inline int lineNumber() const { return xml->lineNumber(); }
-
-    void setDefaultCoordinateSystem(LengthType type);
-    LengthType defaultCoordinateSystem() const;
 
     void pushColor(const QColor &color);
     void pushColorCopy();
@@ -120,7 +115,6 @@ public:
     inline QPen defaultPen() const
     { return m_defaultPen; }
 
-public:
     bool startElement(const QString &localName, const QXmlStreamAttributes &attributes);
     bool endElement(const QStringRef &localName);
     bool characters(const QStringRef &str);
@@ -148,8 +142,6 @@ private:
 
     QSvgRefCounter<QSvgStyleProperty> m_style;
 
-    LengthType m_defaultCoords;
-
     QStack<QColor> m_colorStack;
     QStack<int>    m_colorTagCount;
 
@@ -161,7 +153,6 @@ private:
 
     QXmlStreamReader *const xml;
     QCss::Parser m_cssParser;
-    void parse();
     void resolveGradients(QSvgNode *node) const;
 
     QPen m_defaultPen;

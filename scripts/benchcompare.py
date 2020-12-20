@@ -81,9 +81,8 @@ print(' Tag%s* Ticks Katie/Qt4 (Winner) *' % (' ' * infoalign))
 print('*' * infomax)
 ktotal = 0
 qtotal = 0
-for ktag in katiemap:
+for ktag in sorted(katiemap.keys()):
     if not ktag in qt4map:
-        # print('    filtering Katie tag: %s' % tag)
         continue
     kvalue = katiemap[ktag]
     ikvalue = float(kvalue)

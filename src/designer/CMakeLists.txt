@@ -14,17 +14,11 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtScript
-    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtUiTools
-    ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
     ${CMAKE_BINARY_DIR}/include/QtDesigner
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDesigner
     # for widgets.table
     ${CMAKE_SOURCE_DIR}/src/shared
     # for rcc.h
@@ -37,7 +31,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/extension/default_extensionfactory.h
     ${CMAKE_CURRENT_SOURCE_DIR}/extension/extension.h
     ${CMAKE_CURRENT_SOURCE_DIR}/extension/qextensionmanager.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/extension/extension_global.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractformeditor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractintrospection_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractsettings_p.h
@@ -70,8 +63,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractdialoggui_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/script_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sdk/abstractnewformwidget_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/sdk/sdk_global.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/shared/shared_global_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/spacer_widget_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/layoutinfo_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/layout_p.h
@@ -280,17 +271,6 @@ set(DESIGNER_SOURCES
     ${CMAKE_SOURCE_DIR}/src/tools/rcc/rcc.cpp
 )
 
-if(KATIE_TYPE STREQUAL SHARED)
-    add_definitions(
-        -DQDESIGNER_SDK_LIBRARY
-        -DQDESIGNER_EXTENSION_LIBRARY
-        -DQDESIGNER_SHARED_LIBRARY
-        
-    )
-else()
-    add_definitions(-DQT_DESIGNER_STATIC)
-endif()
-
 add_subdirectory(components)
 
 katie_generate_misc("${DESIGNER_HEADERS}" QtDesigner)
@@ -311,10 +291,11 @@ set_target_properties(KtDesigner PROPERTIES
 )
 
 katie_setup_object(KtDesigner sharedqtgradienteditor sharedqtpropertybrowser sharedfindwidget)
+katie_setup_pch(KtDesigner)
 
 install(
     TARGETS KtDesigner
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

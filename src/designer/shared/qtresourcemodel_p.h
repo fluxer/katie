@@ -45,7 +45,6 @@
 #ifndef QTRESOURCEMODEL_H
 #define QTRESOURCEMODEL_H
 
-#include "shared_global_p.h"
 #include <QtCore/QMap>
 #include <QtCore/QObject>
 #include <QtCore/QScopedPointer>
@@ -54,7 +53,7 @@ QT_BEGIN_NAMESPACE
 
 class QtResourceModel;
 
-class QDESIGNER_SHARED_EXPORT QtResourceSet // one instance per one form
+class Q_DESIGNER_EXPORT QtResourceSet // one instance per one form
 {
 public:
     QStringList activeQrcPaths() const;
@@ -85,7 +84,7 @@ private:
     Q_DISABLE_COPY(QtResourceSet)
 };
 
-class QDESIGNER_SHARED_EXPORT QtResourceModel : public QObject // one instance per whole designer
+class Q_DESIGNER_EXPORT QtResourceModel : public QObject // one instance per whole designer
 {
     Q_OBJECT
 public:

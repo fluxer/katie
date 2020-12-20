@@ -102,7 +102,6 @@ private:
     bool writeDataNames();
     bool writeDataStructure();
     bool writeInitializer();
-    void writeMangleNamespaceFunction(const QByteArray &name);
     void writeAddNamespaceFunction(const QByteArray &name);
     void writeHex(quint8 number);
     void writeNumber2(quint16 number);

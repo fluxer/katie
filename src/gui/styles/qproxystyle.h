@@ -50,7 +50,6 @@ class Q_GUI_EXPORT QProxyStyle : public QCommonStyle
 
 public:
     QProxyStyle(QStyle *baseStyle = Q_NULLPTR);
-    ~QProxyStyle();
 
     QStyle *baseStyle() const;
     void setBaseStyle(QStyle *style);

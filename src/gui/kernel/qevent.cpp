@@ -853,12 +853,10 @@ QFocusEvent::~QFocusEvent()
 }
 
 /*!
+    \fn bool QFocusEvent::reason() const
+
     Returns the reason for this focus event.
  */
-Qt::FocusReason QFocusEvent::reason() const
-{
-    return m_reason;
-}
 
 /*!
     \fn bool QFocusEvent::gotFocus() const
@@ -906,31 +904,11 @@ Qt::FocusReason QFocusEvent::reason() const
 */
 
 /*!
-    \fn bool QPaintEvent::erased() const
-    \compat
-
-    Returns true if the paint event region (or rectangle) has been
-    erased with the widget's background; otherwise returns false.
-
-    Qt 4 \e always erases regions that require painting. The exception
-    to this rule is if the widget sets the Qt::WA_OpaquePaintEvent or
-    Qt::WA_NoSystemBackground attributes. If either one of those
-    attributes is set \e and the window system does not make use of
-    subwidget alpha composition (currently X11 and Windows, but this
-    may change), then the region is not erased.
-*/
-
-/*!
-    \fn void QPaintEvent::setErased(bool b) { m_erased = b; }
-    \internal
-*/
-
-/*!
     Constructs a paint event object with the region that needs to
     be updated. The region is specified by \a paintRegion.
 */
 QPaintEvent::QPaintEvent(const QRegion& paintRegion)
-    : QEvent(Paint), m_rect(paintRegion.boundingRect()), m_region(paintRegion), m_erased(false)
+    : QEvent(Paint), m_rect(paintRegion.boundingRect()), m_region(paintRegion)
 {}
 
 /*!
@@ -938,7 +916,7 @@ QPaintEvent::QPaintEvent(const QRegion& paintRegion)
     to be updated. The region is specified by \a paintRect.
 */
 QPaintEvent::QPaintEvent(const QRect &paintRect)
-    : QEvent(Paint), m_rect(paintRect),m_region(paintRect), m_erased(false)
+    : QEvent(Paint), m_rect(paintRect),m_region(paintRect)
 {}
 
 
@@ -1634,21 +1612,6 @@ QDragEnterEvent::~QDragEnterEvent()
 }
 
 /*!
-    Constructs a drag response event containing the \a accepted value,
-    indicating whether the drag and drop operation was accepted by the
-    recipient.
-*/
-QDragResponseEvent::QDragResponseEvent(bool accepted)
-    : QEvent(DragResponse), a(accepted)
-{}
-
-/*! \internal
-*/
-QDragResponseEvent::~QDragResponseEvent()
-{
-}
-
-/*!
     \class QDragMoveEvent
     \brief The QDragMoveEvent class provides an event which is sent while a drag and drop action is in progress.
 
@@ -1922,8 +1885,8 @@ QWhatsThisClickedEvent::~QWhatsThisClickedEvent()
     type is ActionAdded, the action is to be inserted before the
     action \a before. If \a before is 0, the action is appended.
 */
-QActionEvent::QActionEvent(int type, QAction *action, QAction *before)
-    : QEvent(static_cast<QEvent::Type>(type)), act(action), bef(before)
+QActionEvent::QActionEvent(QEvent::Type type, QAction *action, QAction *before)
+    : QEvent(type), act(action), bef(before)
 {}
 
 /*! \internal
@@ -2131,8 +2094,6 @@ static const char *eventClassName(QEvent::Type t)
     case QEvent::Close:
         return "QCloseEvent";
 #ifndef QT_NO_GESTURES
-    case QEvent::NativeGesture:
-        return "QNativeGestureEvent";
     case QEvent::Gesture:
     case QEvent::GestureOverride:
         return "QGestureEvent";
@@ -2180,33 +2141,42 @@ static const char *eventClassName(QEvent::Type t)
     return "QEvent";
 }
 
-namespace {
-// Make protected QObject::staticQtMetaObject accessible for formatting enums.
-class DebugHelper : public QObject {
-public:
-    static const char *mouseButtonToString(Qt::MouseButton button)
-    {
-        static const int enumIdx = QObject::staticQtMetaObject.indexOfEnumerator("MouseButtons");
-        return QObject::staticQtMetaObject.enumerator(enumIdx).valueToKey(button);
+static const char *mouseButtonToString(Qt::MouseButton button)
+{
+    switch (button) {
+        case Qt::NoButton:
+            return "Qt::NoButton";
+        case Qt::LeftButton:
+            return "Qt::LeftButton";
+        case Qt::RightButton:
+            return "Qt::RightButton";
+        case Qt::MiddleButton:
+            return "Qt::MiddleButton";
+        case Qt::XButton1:
+            return "Qt::XButton1";
+        case Qt::XButton2:
+            return "Qt::XButton2";
+        default:
+            Q_ASSERT_X(false, "mouseButtonToString", "internal error");
     }
+    Q_UNREACHABLE();
+}
 
-    static QByteArray mouseButtonsToString(Qt::MouseButtons buttons)
-    {
-        QByteArray result;
-        for (int i = 0; (uint)(1 << i) <= Qt::MouseButtonMask; ++i) {
-            const Qt::MouseButton button = static_cast<Qt::MouseButton>(1 << i);
-            if (buttons.testFlag(button)) {
-                if (!result.isEmpty())
-                    result.append('|');
-                result.append(mouseButtonToString(button));
-            }
+static QByteArray mouseButtonsToString(Qt::MouseButtons buttons)
+{
+    QByteArray result;
+    for (int i = 0; (uint)(1 << i) <= Qt::MouseButtonMask; ++i) {
+        const Qt::MouseButton button = static_cast<Qt::MouseButton>(1 << i);
+        if (buttons.testFlag(button)) {
+            if (!result.isEmpty())
+                result.append('|');
+            result.append(mouseButtonToString(button));
         }
-        if (result.isEmpty())
-            result.append("NoButton");
-        return result;
     }
-};
-} // namespace
+    if (result.isEmpty())
+        result.append("NoButton");
+    return result;
+}
 
 #  ifndef QT_NO_DRAGANDDROP
 
@@ -2220,7 +2190,7 @@ static void formatDropEvent(QDebug d, const QDropEvent *e)
     d << ", formats=" << e->mimeData()->formats();
     if (const Qt::KeyboardModifiers mods = e->keyboardModifiers())
         d << ", keyboardModifiers=" << mods;
-    d << ", " << DebugHelper::mouseButtonsToString(e->mouseButtons()).constData();
+    d << ", " << mouseButtonsToString(e->mouseButtons()).constData();
 }
 
 #  endif // !QT_NO_DRAGANDDROP
@@ -2256,9 +2226,9 @@ QDebug operator<<(QDebug dbg, const QEvent *e) {
         const Qt::MouseButtons buttons = me->buttons();
         dbg << "QMouseEvent(" << eventTypeName(type);
         if (type != QEvent::MouseMove && type != QEvent::NonClientAreaMouseMove)
-            dbg << ", " << DebugHelper::mouseButtonToString(button);
+            dbg << ", " << mouseButtonToString(button);
         if (buttons && button != buttons)
-            dbg << ", buttons=" << DebugHelper::mouseButtonsToString(buttons).constData();
+            dbg << ", buttons=" << mouseButtonsToString(buttons).constData();
         if (const int mods = int(me->modifiers()))
             dbg << ", modifiers=0x" << hex << mods << dec;
         dbg << ')';
@@ -2337,14 +2307,6 @@ QDebug operator<<(QDebug dbg, const QEvent *e) {
     case QEvent::ChildRemoved:
         dbg << "QChildEvent(" << eventTypeName(type) << ", " << (static_cast<const QChildEvent*>(e))->child() << ')';
         break;
-#  ifndef QT_NO_GESTURES
-    case QEvent::NativeGesture: {
-        const QNativeGestureEvent *ne = static_cast<const QNativeGestureEvent *>(e);
-        dbg << "QNativeGestureEvent(type=" << ne->type() << ", percentage=" << ne->percentage
-           << "position=" << ne->position << ", angle=" << ne->angle << ')';
-    }
-         break;
-#  endif // !QT_NO_GESTURES
     case QEvent::ContextMenu:
         dbg << "QContextMenuEvent(" << static_cast<const QContextMenuEvent *>(e)->pos() << ')';
         break;
@@ -2453,13 +2415,6 @@ QWindowStateChangeEvent::QWindowStateChangeEvent(Qt::WindowStates s, bool isOver
     : QEvent(WindowStateChange), ostate(s)
 {
     m_override = isOverride;
-}
-
-/*! \internal
- */
-bool QWindowStateChangeEvent::isOverride() const
-{
-    return m_override;
 }
 
 /*! \internal
@@ -3165,9 +3120,10 @@ QList<QGesture *> QGestureEvent::gestures() const
 */
 QGesture *QGestureEvent::gesture(Qt::GestureType type) const
 {
-    for(int i = 0; i < m_gestures.size(); ++i)
-        if (m_gestures.at(i)->gestureType() == type)
-            return m_gestures.at(i);
+    foreach (QGesture *gesture, m_gestures) {
+        if (gesture->gestureType() == type)
+            return gesture;
+    }
     return 0;
 }
 

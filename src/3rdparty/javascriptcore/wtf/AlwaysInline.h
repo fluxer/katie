@@ -21,7 +21,7 @@
 #include "Platform.h"
 
 #ifndef ALWAYS_INLINE
-#if COMPILER(GCC) && defined(QT_NO_DEBUG) && !COMPILER(MINGW)
+#ifdef QT_NO_DEBUG
 #define ALWAYS_INLINE inline __attribute__((__always_inline__))
 #else
 #define ALWAYS_INLINE inline
@@ -29,17 +29,9 @@
 #endif
 
 #ifndef NEVER_INLINE
-#if COMPILER(GCC)
 #define NEVER_INLINE __attribute__((__noinline__))
-#else
-#define NEVER_INLINE
-#endif
 #endif
 
 #ifndef NO_RETURN
-#if COMPILER(GCC)
 #define NO_RETURN __attribute((__noreturn__))
-#else
-#define NO_RETURN
-#endif
 #endif

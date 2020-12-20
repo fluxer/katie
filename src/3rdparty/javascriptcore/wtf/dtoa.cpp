@@ -128,18 +128,12 @@
  *    also does extra computations to set the underflow and overflow
  *    flags when appropriate (i.e., when the result is tiny and
  *    inexact or when it is a numeric value rounded to +-infinity).
- * #define NO_ERRNO if strtod should not assign errno = ERANGE when
- *    the result overflows to +-Infinity or underflows to 0.
  */
 
 #include "Platform.h"
 #include "dtoa.h"
 
-#if HAVE(ERRNO_H)
 #include <errno.h>
-#else
-#define NO_ERRNO
-#endif
 #include <cmath>
 #include <stdint.h>
 #include <stdlib.h>
@@ -147,24 +141,22 @@
 #include <wtf/AlwaysInline.h>
 #include <wtf/Assertions.h>
 #include <wtf/FastMalloc.h>
-#include <wtf/MathExtras.h>
 #include <wtf/Vector.h>
 #include <wtf/Threading.h>
 
 #include <stdio.h>
+#include <float.h>
 
-#if CPU(BIG_ENDIAN)
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
 #define IEEE_MC68k
-#elif CPU(MIDDLE_ENDIAN)
-#define IEEE_ARM
 #else
 #define IEEE_8087
 #endif
 
 #define INFNAN_CHECK
 
-#if defined(IEEE_8087) + defined(IEEE_MC68k) + defined(IEEE_ARM) != 1
-Exactly one of IEEE_8087, IEEE_ARM or IEEE_MC68k should be defined.
+#if defined(IEEE_8087) + defined(IEEE_MC68k) != 1
+Exactly one of IEEE_8087 or IEEE_MC68k should be defined.
 #endif
 
 namespace WTF {
@@ -195,7 +187,7 @@ typedef union { double d; uint32_t L[2]; } U;
  * An alternative that might be better on some machines is
  * #define Storeinc(a,b,c) (*a++ = b << 16 | c & 0xffff)
  */
-#if defined(IEEE_8087) || defined(IEEE_ARM)
+#if defined(IEEE_8087)
 #define Storeinc(a,b,c) (((unsigned short*)a)[1] = (unsigned short)b, ((unsigned short*)a)[0] = (unsigned short)c, a++)
 #else
 #define Storeinc(a,b,c) (((unsigned short*)a)[0] = (unsigned short)b, ((unsigned short*)a)[1] = (unsigned short)c, a++)
@@ -252,7 +244,7 @@ typedef union { double d; uint32_t L[2]; } U;
 #define Pack_32
 #endif
 
-#if CPU(PPC64) || CPU(X86_64)
+#if defined(QT_ARCH_X86_64) || defined(QT_ARCH_POWERPC64)
 // FIXME: should we enable this on all 64-bit CPUs?
 // 64-bit emulation provided by the compiler is likely to be slower than dtoa own code on 32-bit hardware.
 #define USE_LONG_LONG
@@ -556,8 +548,8 @@ struct P5Node : Noncopyable {
     P5Node* next;
 };
     
-static P5Node* p5s;
-static int p5s_count;
+static P5Node* p5s = 0;
+static int p5s_count = 0;
 
 static ALWAYS_INLINE void pow5mult(BigInt& b, int k)
 {
@@ -1294,9 +1286,7 @@ ret0:
         if (e1 &= ~15) {
             if (e1 > DBL_MAX_10_EXP) {
 ovfl:
-#ifndef NO_ERRNO
                 errno = ERANGE;
-#endif
                 /* Can't trust HUGE_VAL */
                 word0(&rv) = Exp_mask;
                 word1(&rv) = 0;
@@ -1362,9 +1352,7 @@ ovfl:
                 if (!dval(&rv)) {
 undfl:
                     dval(&rv) = 0.;
-#ifndef NO_ERRNO
                     errno = ERANGE;
-#endif
                     goto ret;
                 }
 #ifndef Avoid_Underflow
@@ -1688,11 +1676,9 @@ cont:
         word0(&rv0) = Exp_1 - 2 * P * Exp_msk1;
         word1(&rv0) = 0;
         dval(&rv) *= dval(&rv0);
-#ifndef NO_ERRNO
         /* try to avoid the bug of testing an 8087 register value */
         if (word0(&rv) == 0 && word1(&rv) == 0)
             errno = ERANGE;
-#endif
     }
 #endif /* Avoid_Underflow */
 #ifdef SET_INEXACT

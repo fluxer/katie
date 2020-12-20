@@ -34,11 +34,10 @@
 #ifndef QDESIGNER_TEMPLATEOPTIONS_H
 #define QDESIGNER_TEMPLATEOPTIONS_H
 
-#include <QtDesigner/abstractoptionspage_p.h>
+#include "abstractoptionspage_p.h"
 
 #include <QtCore/QPointer>
 #include <QtCore/QStringList>
-
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE

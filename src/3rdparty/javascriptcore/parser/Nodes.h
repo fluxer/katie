@@ -32,7 +32,6 @@
 #include "ResultType.h"
 #include "SourceCode.h"
 #include "SymbolTable.h"
-#include <wtf/MathExtras.h>
 
 namespace JSC {
 

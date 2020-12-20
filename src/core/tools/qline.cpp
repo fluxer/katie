@@ -637,14 +637,15 @@ QLineF QLineF::unitVector() const
     qreal y = pt2.y() - pt1.y();
 
     qreal len = qSqrt(x*x + y*y);
-    QLineF f(p1(), QPointF(pt1.x() + x/len, pt1.y() + y/len));
 
 #ifndef QT_NO_DEBUG
+    QLineF f(p1(), QPointF(pt1.x() + x/len, pt1.y() + y/len));
     if (Q_UNLIKELY(qAbs(f.length() - 1) >= 0.001))
         qWarning("QLine::unitVector: New line does not have unit length");
-#endif
-
     return f;
+#else
+    return QLineF(p1(), QPointF(pt1.x() + x/len, pt1.y() + y/len));
+#endif
 }
 
 /*!
@@ -810,10 +811,10 @@ qreal QLineF::angle(const QLineF &l) const
     if (isNull() || l.isNull())
         return 0;
     qreal cos_line = (dx()*l.dx() + dy()*l.dy()) / (length()*l.length());
-    qreal rad = 0;
     // only accept cos_line in the range [-1,1], if it is outside, use 0 (we return 0 rather than PI for those cases)
-    if (cos_line >= qreal(-1.0) && cos_line <= qreal(1.0)) rad = qAcos( cos_line );
-    return q_rad2deg(rad);
+    if (cos_line >= qreal(-1.0) && cos_line <= qreal(1.0))
+        return q_rad2deg(qAcos(cos_line));
+    return 0;
 }
 
 

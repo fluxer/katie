@@ -45,15 +45,13 @@
 #ifndef ABSTRACTMETAOBJECT_H
 #define ABSTRACTMETAOBJECT_H
 
-#include <QtDesigner/sdk_global.h>
 #include <QtCore/QVariant>
-#include <QtCore/qglobal.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QDESIGNER_SDK_EXPORT QDesignerMetaEnumInterface
+class Q_DESIGNER_EXPORT QDesignerMetaEnumInterface
 {
 public:
     QDesignerMetaEnumInterface();
@@ -71,7 +69,7 @@ public:
     virtual QString valueToKeys(int value) const  = 0;
 };
 
-class QDESIGNER_SDK_EXPORT QDesignerMetaPropertyInterface
+class Q_DESIGNER_EXPORT QDesignerMetaPropertyInterface
 {
 public:
     enum Kind { EnumKind, FlagKind, OtherKind };
@@ -103,7 +101,7 @@ public:
 Q_DECLARE_OPERATORS_FOR_FLAGS(QDesignerMetaPropertyInterface::AccessFlags)
 Q_DECLARE_OPERATORS_FOR_FLAGS(QDesignerMetaPropertyInterface::Attributes)
 
-class QDESIGNER_SDK_EXPORT QDesignerMetaMethodInterface
+class Q_DESIGNER_EXPORT QDesignerMetaMethodInterface
 {
 public:
     QDesignerMetaMethodInterface();
@@ -122,7 +120,7 @@ public:
     virtual QString typeName() const  = 0;
 };
 
-class QDESIGNER_SDK_EXPORT QDesignerMetaObjectInterface {
+class Q_DESIGNER_EXPORT QDesignerMetaObjectInterface {
 public:
     QDesignerMetaObjectInterface();
     virtual ~QDesignerMetaObjectInterface();
@@ -151,7 +149,7 @@ public:
 };
 
 // To be obtained from core
-class QDESIGNER_SDK_EXPORT QDesignerIntrospectionInterface {
+class Q_DESIGNER_EXPORT QDesignerIntrospectionInterface {
 public:
     QDesignerIntrospectionInterface();
     virtual ~QDesignerIntrospectionInterface();

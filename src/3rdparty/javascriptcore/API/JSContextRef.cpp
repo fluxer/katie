@@ -35,12 +35,6 @@
 #include "JSObject.h"
 #include <wtf/Platform.h>
 
-#if OS(DARWIN)
-#include <mach-o/dyld.h>
-
-static const int32_t webkitFirstVersionWithConcurrentGlobalContexts = 0x2100500; // 528.5.0
-#endif
-
 using namespace JSC;
 
 JSContextGroupRef JSContextGroupCreate()
@@ -63,18 +57,6 @@ void JSContextGroupRelease(JSContextGroupRef group)
 JSGlobalContextRef JSGlobalContextCreate(JSClassRef globalObjectClass)
 {
     initializeThreading();
-#if OS(DARWIN)
-    // When running on Tiger or Leopard, or if the application was linked before JSGlobalContextCreate was changed
-    // to use a unique JSGlobalData, we use a shared one for compatibility.
-#if !defined(BUILDING_ON_TIGER) && !defined(BUILDING_ON_LEOPARD)
-    if (NSVersionOfLinkTimeLibrary("JavaScriptCore") <= webkitFirstVersionWithConcurrentGlobalContexts) {
-#else
-    {
-#endif
-        return JSGlobalContextCreateInGroup(toRef(&JSGlobalData::sharedInstance()), globalObjectClass);
-    }
-#endif // OS(DARWIN)
-
     return JSGlobalContextCreateInGroup(0, globalObjectClass);
 }
 

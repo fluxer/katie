@@ -65,12 +65,7 @@ public:
 private:
     QString q_pattern;
     Qt::CaseSensitivity q_cs;
-    struct Data {
-        uchar q_skiptable[256];
-        const QChar *uc;
-        int len;
-    };
-    Data p;
+    uchar q_skiptable[256];
 };
 
 QT_END_NAMESPACE

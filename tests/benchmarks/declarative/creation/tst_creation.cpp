@@ -251,6 +251,7 @@ void tst_creation::itemtree_notree_cpp()
         QDeclarativeItem *item = new QDeclarativeItem;
         for (int i = 0; i < 30; ++i) {
             QDeclarativeItem *child = new QDeclarativeItem;
+            Q_UNUSED(child);
         }
         delete item;
     }

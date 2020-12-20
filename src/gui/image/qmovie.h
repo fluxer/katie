@@ -109,7 +109,7 @@ public:
 
     int speed() const;
 
-    QSize scaledSize();
+    QSize scaledSize() const;
     void setScaledSize(const QSize &size);
 
     CacheMode cacheMode() const;

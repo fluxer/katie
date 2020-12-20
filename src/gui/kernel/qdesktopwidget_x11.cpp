@@ -37,6 +37,7 @@
 #include "qvariant.h"
 #include "qwidget_p.h"
 #include "qx11info_x11.h"
+
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE
@@ -125,9 +126,7 @@ void QDesktopWidgetPrivate::init()
     // we ignore the Xinerama extension when using the display is
     // using traditional multi-screen (with multiple root windows)
     if (newScreenCount == 1) {
-        int unused;
-        use_xinerama = (XineramaQueryExtension(qt_x11Data->display, &unused, &unused)
-                        && XineramaIsActive(qt_x11Data->display));
+        use_xinerama = qt_x11Data->use_xinerama;
     }
 
     if (use_xinerama) {
@@ -184,7 +183,8 @@ void QDesktopWidgetPrivate::init()
 
     if (screens) {
         // leaks QWidget* pointers on purpose, can't delete them as pointer escapes
-        screens = q_check_ptr((QWidget**) realloc(screens, j * sizeof(QWidget*)));
+        screens = (QWidget**)::realloc(screens, j * sizeof(QWidget*));
+        Q_CHECK_PTR(screens);
         if (j > screenCount)
             memset(&screens[screenCount], 0, (j-screenCount) * sizeof(QWidget*));
     }

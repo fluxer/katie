@@ -55,9 +55,6 @@ public:
 
 #ifdef Q_WS_X11
     GC gc;
-#ifndef QT_NO_XSHM
-    bool needsSync;
-#endif
 #ifndef QT_NO_XRENDER
     bool translucentBackground;
 #endif
@@ -73,9 +70,6 @@ QRasterWindowSurface::QRasterWindowSurface(QWidget *window, bool setDefaultSurfa
 #ifndef QT_NO_XRENDER
     d_ptr->translucentBackground = qt_x11Data->use_xrender
         && window->x11Info().depth() == 32;
-#endif
-#ifndef QT_NO_XSHM
-    d_ptr->needsSync = false;
 #endif
 #endif
     d_ptr->image = 0;
@@ -97,23 +91,8 @@ QPaintDevice *QRasterWindowSurface::paintDevice()
     return d_ptr->image;
 }
 
-#if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
-void QRasterWindowSurface::syncX()
-{
-    // delay writing to the backbuffer until we know for sure X is done reading from it
-    if (d_ptr->needsSync) {
-        XSync(qt_x11Data->display, false);
-        d_ptr->needsSync = false;
-    }
-}
-#endif
-
 void QRasterWindowSurface::beginPaint(const QRegion &rgn)
 {
-#if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
-    syncX();
-#endif
-
 #if defined(Q_WS_X11) && !defined(QT_NO_XRENDER)
     if (!qt_widget_private(window())->isOpaque && window()->testAttribute(Qt::WA_TranslucentBackground)) {
         QPainter p(d_ptr->image);
@@ -170,8 +149,7 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
         QX11PixmapData *data = new QX11PixmapData(QPixmapData::PixmapType);
         data->xinfo = widget->x11Info();
         data->fromImage(sub_src, Qt::NoOpaqueDetection);
-        QPixmap pm = QPixmap(data);
-        XCopyArea(qt_x11Data->display, pm.handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
+        XCopyArea(qt_x11Data->display, data->handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
     } else {
         // qpaintengine_x11.cpp
         extern void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage *image, Drawable hd, GC gc, Display *dpy, Visual *visual, int depth);
@@ -208,10 +186,6 @@ bool QRasterWindowSurface::scroll(const QRegion &area, int dx, int dy)
 
     if (!d->image || d->image->isNull())
         return false;
-
-#if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
-    syncX();
-#endif
 
     qt_scrollRectInImage(d->image, area.boundingRect(), QPoint(dx, dy));
 
@@ -255,29 +229,24 @@ void QRasterWindowSurface::prepareBuffer(QImage::Format format)
         QRegion staticRegion(staticContents());
         // Make sure we're inside the boundaries of the old image.
         staticRegion &= QRect(0, 0, oldImage->width(), oldImage->height());
-        const QVector<QRect> &rects = staticRegion.rects();
-        const QRect *srcRect = rects.constData();
 
         // Copy the static content of the old image into the new one.
-        int numRectsLeft = rects.size();
-        do {
-            const int bytesOffset = srcRect->x() * bytesPerPixel;
-            const int dy = srcRect->y();
+        foreach(const QRect &srcRect, staticRegion.rects()) {
+            const int bytesOffset = srcRect.x() * bytesPerPixel;
+            const int dy = srcRect.y();
 
             // Adjust src and dst to point to the right offset.
             const uchar *s = src + dy * srcBytesPerLine + bytesOffset;
             uchar *d = dst + dy * dstBytesPerLine + bytesOffset;
-            const int numBytes = srcRect->width() * bytesPerPixel;
+            const int numBytes = srcRect.width() * bytesPerPixel;
 
-            int numScanLinesLeft = srcRect->height();
+            int numScanLinesLeft = srcRect.height();
             do {
                 ::memcpy(d, s, numBytes);
                 d += dstBytesPerLine;
                 s += srcBytesPerLine;
             } while (--numScanLinesLeft);
-
-            ++srcRect;
-        } while (--numRectsLeft);
+        };
     }
 
     delete oldImage;

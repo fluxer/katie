@@ -34,8 +34,6 @@
 #ifndef ABSTRACTFORMWINDOWTOOL_H
 #define ABSTRACTFORMWINDOWTOOL_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtCore/QObject>
 
 QT_BEGIN_HEADER
@@ -48,7 +46,7 @@ class QWidget;
 class QAction;
 class DomUI;
 
-class QDESIGNER_SDK_EXPORT QDesignerFormWindowToolInterface: public QObject
+class Q_DESIGNER_EXPORT QDesignerFormWindowToolInterface: public QObject
 {
     Q_OBJECT
 public:

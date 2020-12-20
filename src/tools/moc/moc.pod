@@ -144,7 +144,7 @@ moc returns 0 on success and other on unexcepted failure.
     Since the moc does not expand #define, type macros that take an argument
     will not work in signals and slots. Here is an illegal example:
 
-        #ifdef ultrix
+        #ifdef Q_OS_LINUX
         #define SIGNEDNESS(a) unsigned a
         #else
         #define SIGNEDNESS(a) a

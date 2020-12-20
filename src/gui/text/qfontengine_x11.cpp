@@ -214,7 +214,7 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
         int subpixel = qt_x11Data->display ? qt_x11Data->screens[screen].subpixel : FC_RGBA_UNKNOWN;
         if (subpixel == FC_RGBA_UNKNOWN)
             (void) FcPatternGetInteger(pattern, FC_RGBA, 0, &subpixel);
-        if (!antialias || subpixel == FC_RGBA_UNKNOWN)
+        if (subpixel == FC_RGBA_UNKNOWN)
             subpixel = FC_RGBA_NONE;
 
         switch (subpixel) {

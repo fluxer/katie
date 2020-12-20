@@ -49,16 +49,11 @@
 
 QT_BEGIN_NAMESPACE
 
-class QByteArray;
-
 class QSignalDumper
 {
 public:
     static void startDump();
     static void endDump();
-
-    static void ignoreClass(const QByteArray &klass);
-    static void clearIgnoredClasses();
 };
 
 QT_END_NAMESPACE

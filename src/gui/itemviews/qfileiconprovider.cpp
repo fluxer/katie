@@ -150,12 +150,12 @@ QString QFileIconProvider::type(const QFileInfo &info) const
     }
 
     if (info.isDir())
-        return QApplication::translate("QFileDialog", "Folder", "All other platforms");
+        return QApplication::translate("QFileDialog", "Folder");
     // Konqueror - "Folder"
     // Nautilus  - "folder"
 
     if (info.isSymLink())
-        return QApplication::translate("QFileDialog", "Shortcut", "All other platforms");
+        return QApplication::translate("QFileDialog", "Shortcut");
     // Konqueror - "Folder" or "TXT File" i.e. what it is pointing to
     // Nautilus  - "link to folder" or "link to object file", same as Konqueror
 

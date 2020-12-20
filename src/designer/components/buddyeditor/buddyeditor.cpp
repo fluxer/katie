@@ -328,7 +328,7 @@ void BuddyEditor::deleteSelected()
     if (selectedConnections.isEmpty())
         return;
 
-    undoStack()->beginMacro(tr("Remove %n buddies", 0, selectedConnections.size()));
+    undoStack()->beginMacro(tr("Remove %1 buddies").arg(selectedConnections.size()));
     foreach (Connection *con, selectedConnections) {
         setSelected(con, false);
         con->update();
@@ -379,7 +379,7 @@ void BuddyEditor::autoBuddy()
         return;
     const int count = labelList.size();
     Q_ASSERT(count == buddies.size());
-    undoStack()->beginMacro(tr("Add %n buddies", 0, count));
+    undoStack()->beginMacro(tr("Add %1 buddies").arg(count));
     for (int i = 0; i < count; i++)
         undoStack()->push(createBuddyCommand(m_formWindow, labelList.at(i), buddies.at(i)));
     undoStack()->endMacro();

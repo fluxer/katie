@@ -243,7 +243,7 @@ bool QSharedMemoryPrivate::create(int size)
     QByteArray shmName = QFile::encodeName(makePlatformSafeKey(key));
 
     int fd;
-    EINTR_LOOP(fd, shm_open(shmName.constData(), O_RDWR | O_CREAT | O_EXCL, 0666));
+    EINTR_LOOP(fd, ::shm_open(shmName.constData(), O_RDWR | O_CREAT | O_EXCL, 0666));
     if (fd == -1) {
         QString function = QLatin1String("QSharedMemory::create");
         switch (errno) {
@@ -284,7 +284,7 @@ bool QSharedMemoryPrivate::attach(QSharedMemory::AccessMode mode)
     }
 
     // grab the memory
-    memory = shmat(id, 0, (mode == QSharedMemory::ReadOnly ? SHM_RDONLY : 0));
+    memory = ::shmat(id, 0, (mode == QSharedMemory::ReadOnly ? SHM_RDONLY : 0));
     if ((void*) - 1 == memory) {
         memory = Q_NULLPTR;
         setErrorString(QLatin1String("QSharedMemory::attach (shmat)"));
@@ -293,7 +293,7 @@ bool QSharedMemoryPrivate::attach(QSharedMemory::AccessMode mode)
 
     // grab the size
     shmid_ds shmid_ds;
-    if (!shmctl(id, IPC_STAT, &shmid_ds)) {
+    if (!::shmctl(id, IPC_STAT, &shmid_ds)) {
         size = (int)shmid_ds.shm_segsz;
     } else {
         setErrorString(QLatin1String("QSharedMemory::attach (shmctl)"));
@@ -305,7 +305,7 @@ bool QSharedMemoryPrivate::attach(QSharedMemory::AccessMode mode)
     int oflag = (mode == QSharedMemory::ReadOnly ? O_RDONLY : O_RDWR);
     mode_t omode = (mode == QSharedMemory::ReadOnly ? 0444 : 0660);
 
-    EINTR_LOOP(hand, shm_open(shmName.constData(), oflag, omode));
+    EINTR_LOOP(hand, ::shm_open(shmName.constData(), oflag, omode));
     if (hand == -1) {
         QString function = QLatin1String("QSharedMemory::attach (shm_open)");
         switch (errno) {
@@ -332,7 +332,7 @@ bool QSharedMemoryPrivate::attach(QSharedMemory::AccessMode mode)
 
     // grab the memory
     int mprot = (mode == QSharedMemory::ReadOnly ? PROT_READ : PROT_READ | PROT_WRITE);
-    memory = mmap(Q_NULLPTR, size, mprot, MAP_SHARED, hand, 0);
+    memory = QT_MMAP(Q_NULLPTR, size, mprot, MAP_SHARED, hand, 0);
     if (memory == MAP_FAILED || !memory) {
         setErrorString(QLatin1String("QSharedMemory::attach (mmap)"));
         cleanHandle();
@@ -414,7 +414,7 @@ bool QSharedMemoryPrivate::detach()
     // if there are no attachments then unlink the shared memory
     if (shm_nattch == 0) {
         QByteArray shmName = QFile::encodeName(makePlatformSafeKey(key));
-        if (shm_unlink(shmName.constData()) == -1 && errno != ENOENT)
+        if (::shm_unlink(shmName.constData()) == -1 && errno != ENOENT)
             setErrorString(QLatin1String("QSharedMemory::detach (shm_unlink)"));
     }
 #endif // QT_POSIX_IPC

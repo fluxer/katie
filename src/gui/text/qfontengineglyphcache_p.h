@@ -70,8 +70,6 @@ public:
     QTransform m_transform;
     QFontEngineGlyphCache::Type m_type;
 };
-typedef QHash<void *, QList<QFontEngineGlyphCache *> > GlyphPointerHash;
-typedef QHash<int, QList<QFontEngineGlyphCache *> > GlyphIntHash;
 
 QT_END_NAMESPACE
 

@@ -36,9 +36,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
+#include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -349,7 +347,7 @@ int runMoc(int _argc, char **_argv)
         filename = "standard input";
         in = stdin;
     } else {
-        in = fopen(filename.data(), "rb");
+        in = QT_FOPEN(filename.data(), "rb");
         if (!in) {
             fprintf(stderr, "moc: %s: No such file\n", filename.constData());
             return 1;
@@ -361,7 +359,7 @@ int runMoc(int _argc, char **_argv)
 
     // 1. preprocess
     moc.symbols = pp.preprocessed(moc.filename, in);
-    fclose(in);
+    ::fclose(in);
 
     if (!pp.preprocessOnly) {
         // 2. parse
@@ -371,7 +369,7 @@ int runMoc(int _argc, char **_argv)
     // 3. and output meta object code
 
     if (output.size()) { // output file specified
-        out = fopen(output.data(), "w"); // create output file
+        out = QT_FOPEN(output.data(), "w"); // create output file
         if (!out)
         {
             fprintf(stderr, "moc: Cannot create %s\n", output.constData());
@@ -391,7 +389,7 @@ int runMoc(int _argc, char **_argv)
     }
 
     if (output.size())
-        fclose(out);
+        ::fclose(out);
 
     return 0;
 }

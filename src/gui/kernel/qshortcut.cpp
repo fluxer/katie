@@ -297,9 +297,9 @@ void QShortcut::setContext(Qt::ShortcutContext context)
     d->redoGrab(qApp->d_func()->shortcutMap);
 }
 
-Qt::ShortcutContext QShortcut::context()
+Qt::ShortcutContext QShortcut::context() const
 {
-    Q_D(QShortcut);
+    Q_D(const QShortcut);
     return d->sc_context;
 }
 
@@ -380,7 +380,7 @@ bool QShortcut::event(QEvent *e)
             if (QWhatsThis::inWhatsThisMode()) {
                 QWhatsThis::showText(QCursor::pos(), d->sc_whatsthis);
                 handled = true;
-            } else
+            }
 #endif
             if (se->isAmbiguous())
                 emit activatedAmbiguously();

@@ -734,7 +734,7 @@ QString WidgetDataBase::scaleFormTemplate(const QString &xml, const QSize &size,
 }
 
 // ---- free functions
-QDESIGNER_SHARED_EXPORT IncludeSpecification  includeSpecification(QString includeFile)
+Q_DESIGNER_EXPORT IncludeSpecification  includeSpecification(QString includeFile)
 {
     const bool global = !includeFile.isEmpty() &&
                         includeFile[0] == QLatin1Char('<') &&
@@ -746,7 +746,7 @@ QDESIGNER_SHARED_EXPORT IncludeSpecification  includeSpecification(QString inclu
     return IncludeSpecification(includeFile, global ? IncludeGlobal : IncludeLocal);
 }
 
-QDESIGNER_SHARED_EXPORT QString buildIncludeFile(QString includeFile, IncludeType includeType) {
+Q_DESIGNER_EXPORT QString buildIncludeFile(QString includeFile, IncludeType includeType) {
     if (includeType == IncludeGlobal && !includeFile.isEmpty()) {
         includeFile.append(QLatin1Char('>'));
         includeFile.insert(0, QLatin1Char('<'));
@@ -761,7 +761,7 @@ QDESIGNER_SHARED_EXPORT QString buildIncludeFile(QString includeFile, IncludeTyp
    Depending on whether an entry exists, the existing or a newly created entry is
    returned. A return value of 0 indicates that the base class could not be found. */
 
-QDESIGNER_SHARED_EXPORT QDesignerWidgetDataBaseItemInterface *
+Q_DESIGNER_EXPORT QDesignerWidgetDataBaseItemInterface *
         appendDerived(QDesignerWidgetDataBaseInterface *db,
                       const QString &className, const QString &group,
                       const QString &baseClassName,
@@ -830,7 +830,7 @@ QDESIGNER_SHARED_EXPORT QDesignerWidgetDataBaseItemInterface *
 
 /* Return a list of database items to which a class can be promoted to. */
 
-QDESIGNER_SHARED_EXPORT WidgetDataBaseItemList
+Q_DESIGNER_EXPORT WidgetDataBaseItemList
         promotionCandidates(const QDesignerWidgetDataBaseInterface *db,
                             const QString &baseClassName)
 {

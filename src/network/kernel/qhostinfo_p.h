@@ -76,10 +76,9 @@ Q_SIGNALS:
     void resultsReady(const QHostInfo &info);
 };
 
-// needs to be QObject because fromName calls tr()
-class QHostInfoAgent : public QObject
+class QHostInfoAgent
 {
-    Q_OBJECT
+    Q_DECLARE_TR_FUNCTIONS(QHostInfoAgent)
 public:
     static QHostInfo fromName(const QString &hostName);
 };

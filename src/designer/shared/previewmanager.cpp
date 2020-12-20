@@ -237,17 +237,17 @@ void PreviewConfiguration::fromSettings(const QString &prefix, const QDesignerSe
 }
 
 
-QDESIGNER_SHARED_EXPORT bool operator<(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2)
+Q_DESIGNER_EXPORT bool operator<(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2)
 {
     return compare(pc1, pc2) < 0;
 }
 
-QDESIGNER_SHARED_EXPORT bool operator==(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2)
+Q_DESIGNER_EXPORT bool operator==(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2)
 {
     return compare(pc1, pc2) == 0;
 }
 
-QDESIGNER_SHARED_EXPORT bool operator!=(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2)
+Q_DESIGNER_EXPORT bool operator!=(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2)
 {
     return compare(pc1, pc2) != 0;
 }

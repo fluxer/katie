@@ -33,7 +33,6 @@
 #include "LiteralParser.h"
 #include "PropertyNameArray.h"
 #include "StringBuilder.h"
-#include <wtf/MathExtras.h>
 
 namespace JSC {
 
@@ -600,7 +599,7 @@ bool Stringifier::Holder::appendNextProperty(Stringifier& stringifier, StringBui
 
 // ------------------------------ JSONObject --------------------------------
 
-const ClassInfo JSONObject::info = { "JSON", 0, 0, ExecState::jsonTable };
+const ClassInfo JSONObject::info = { "JSON", 0, ExecState::jsonTable };
 
 /* Source for JSONObject.lut.h
 @begin jsonTable

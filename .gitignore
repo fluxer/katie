@@ -13,22 +13,24 @@
 *.swp
 
 # build directories
-apidocs/
 minsize/
 oldmake/
 debug/
+crossdeb/
 
 # symlink to package/debian
 debian
 
 # Debian build files and directories
-obj-*-linux-gnu/
+obj-*-gnu/
 package/debian/.debhelper/
 package/debian/debhelper-build-stamp
 package/debian/files
 package/debian/katie-*.log
 package/debian/katie-*.substvars
 package/debian/katie-*/
+# Fedora build files and directories
+*-linux-gnu/
 
 # tarballs from tarball.sh and oldmake.sh
 *.tar.xz

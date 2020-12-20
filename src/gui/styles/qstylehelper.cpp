@@ -175,8 +175,7 @@ QPolygonF calcLines(const QStyleOptionSlider *dial)
 
 void drawDial(const QStyleOptionSlider *option, QPainter *painter)
 {
-    QPalette pal = option->palette;
-    QColor buttonColor = pal.button().color();
+    QColor buttonColor = option->palette.button().color();
     const int width = option->rect.width();
     const int height = option->rect.height();
     const bool enabled = option->state & QStyle::State_Enabled;
@@ -242,7 +241,7 @@ void drawDial(const QStyleOptionSlider *option, QPainter *painter)
     p->drawEllipse(br.adjusted(1, 1, -1, -1));
 
     if (option->state & QStyle::State_HasFocus) {
-        QColor highlight = pal.highlight().color();
+        QColor highlight = option->palette.highlight().color();
         highlight.setHsv(highlight.hue(),
                          qMin(160, highlight.saturation()),
                          qMax(230, highlight.value()));

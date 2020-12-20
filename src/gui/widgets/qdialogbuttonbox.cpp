@@ -31,15 +31,14 @@
 **
 ****************************************************************************/
 
-#include <QtCore/qhash.h>
-#include <QtGui/qpushbutton.h>
-#include <QtGui/qstyle.h>
-#include <QtGui/qlayout.h>
-#include <QtGui/qdialog.h>
-#include <QtGui/qapplication.h>
-#include <QtGui/qwidget_p.h>
-#include <QtGui/qaction.h>
-
+#include "qhash.h"
+#include "qpushbutton.h"
+#include "qstyle.h"
+#include "qlayout.h"
+#include "qdialog.h"
+#include "qapplication.h"
+#include "qwidget_p.h"
+#include "qaction.h"
 #include "qdialogbuttonbox.h"
 
 

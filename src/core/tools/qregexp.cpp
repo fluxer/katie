@@ -1366,7 +1366,8 @@ void QRegExpMatchState::prepareForMatch(QRegExpEngine *eng)
 #endif
     int numCaptures = eng->captureCount();
     int newCapturedSize = 2 + 2 * numCaptures;
-    bigArray = q_check_ptr((int *)realloc(bigArray, ((3 + 4 * ncap) * ns + 4 * ncap + newSlideTabSize + newCapturedSize)*sizeof(int)));
+    bigArray = (int *)::realloc(bigArray, ((3 + 4 * ncap) * ns + 4 * ncap + newSlideTabSize + newCapturedSize)*sizeof(int));
+    Q_CHECK_PTR(bigArray);
 
     // set all internal variables only _after_ bigArray is realloc'ed
     // to prevent a broken regexp in oom case

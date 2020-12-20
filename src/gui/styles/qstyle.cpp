@@ -2134,10 +2134,8 @@ QPalette QStyle::standardPalette() const
 #else
     QColor background(0xd4, 0xd0, 0xc8); // win 2000 grey
 #endif
-    QColor light(background.lighter());
     QColor dark(background.darker());
-    QColor mid(Qt::gray);
-    QPalette palette(Qt::black, background, light, dark, mid, Qt::black, Qt::white);
+    QPalette palette(Qt::black, background, background.lighter(), dark, Qt::gray, Qt::black, Qt::white);
     palette.setBrush(QPalette::Disabled, QPalette::WindowText, dark);
     palette.setBrush(QPalette::Disabled, QPalette::Text, dark);
     palette.setBrush(QPalette::Disabled, QPalette::ButtonText, dark);

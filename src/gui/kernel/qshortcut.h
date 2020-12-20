@@ -68,7 +68,7 @@ public:
     bool isEnabled() const;
 
     void setContext(Qt::ShortcutContext context);
-    Qt::ShortcutContext context();
+    Qt::ShortcutContext context() const;
 
     void setWhatsThis(const QString &text);
     QString whatsThis() const;

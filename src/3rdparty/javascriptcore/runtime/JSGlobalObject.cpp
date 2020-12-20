@@ -72,7 +72,7 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(JSGlobalObject);
 
-const ClassInfo JSGlobalObject::info = { "CallbackGlobalObject", 0, 0, 0 };
+const ClassInfo JSGlobalObject::info = { "CallbackGlobalObject", 0, 0 };
 
 static inline void markIfNeeded(MarkStack& markStack, JSValue v)
 {

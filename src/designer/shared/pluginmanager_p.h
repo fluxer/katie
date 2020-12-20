@@ -45,7 +45,6 @@
 #ifndef PLUGINMANAGER_H
 #define PLUGINMANAGER_H
 
-#include "shared_global_p.h"
 #include "shared_enums_p.h"
 
 #include <QtCore/qshareddata.h>
@@ -62,7 +61,7 @@ class QDesignerPluginManagerPrivate;
 class QDesignerCustomWidgetSharedData;
 
 /* Information contained in the Dom XML of a custom widget. */
-class QDESIGNER_SHARED_EXPORT QDesignerCustomWidgetData {
+class Q_DESIGNER_EXPORT QDesignerCustomWidgetData {
 public:
     // StringPropertyType: validation mode and translatable flag.
     typedef QPair<qdesigner_internal::TextPropertyValidationMode, bool> StringPropertyType;
@@ -97,7 +96,7 @@ private:
     QSharedDataPointer<QDesignerCustomWidgetSharedData> m_d;
 };
 
-class QDESIGNER_SHARED_EXPORT QDesignerPluginManager: public QObject
+class Q_DESIGNER_EXPORT QDesignerPluginManager: public QObject
 {
     Q_OBJECT
 public:

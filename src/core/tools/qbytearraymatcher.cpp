@@ -110,9 +110,7 @@ static inline int bm_find(const uchar *cc, int l, int index, const uchar *puc, u
 */
 QByteArrayMatcher::QByteArrayMatcher()
 {
-    p.p = 0;
-    p.l = 0;
-    memset(p.q_skiptable, 0, sizeof(p.q_skiptable));
+    ::memset(q_skiptable, 0, sizeof(q_skiptable));
 }
 
 /*!
@@ -121,10 +119,9 @@ QByteArrayMatcher::QByteArrayMatcher()
   the destructor does not delete \a pattern.
  */
 QByteArrayMatcher::QByteArrayMatcher(const char *pattern, int length)
+    : q_pattern(QByteArray(pattern, length))
 {
-    p.p = reinterpret_cast<const uchar *>(pattern);
-    p.l = length;
-    bm_init_skiptable(p.p, p.l, p.q_skiptable);
+    bm_init_skiptable(reinterpret_cast<const uchar *>(pattern), length, q_skiptable);
 }
 
 /*!
@@ -134,9 +131,7 @@ QByteArrayMatcher::QByteArrayMatcher(const char *pattern, int length)
 QByteArrayMatcher::QByteArrayMatcher(const QByteArray &pattern)
     : q_pattern(pattern)
 {
-    p.p = reinterpret_cast<const uchar *>(pattern.constData());
-    p.l = pattern.size();
-    bm_init_skiptable(p.p, p.l, p.q_skiptable);
+    bm_init_skiptable(reinterpret_cast<const uchar *>(pattern.constData()), pattern.size(), q_skiptable);
 }
 
 /*!
@@ -159,8 +154,10 @@ QByteArrayMatcher::~QByteArrayMatcher()
 */
 QByteArrayMatcher &QByteArrayMatcher::operator=(const QByteArrayMatcher &other)
 {
-    q_pattern = other.q_pattern;
-    memcpy(&p, &other.p, sizeof(p));
+    if (this != &other) {
+        q_pattern = other.q_pattern;
+        ::memcpy(&q_skiptable, &other.q_skiptable, sizeof(q_skiptable));
+    }
     return *this;
 }
 
@@ -173,9 +170,7 @@ QByteArrayMatcher &QByteArrayMatcher::operator=(const QByteArrayMatcher &other)
 void QByteArrayMatcher::setPattern(const QByteArray &pattern)
 {
     q_pattern = pattern;
-    p.p = reinterpret_cast<const uchar *>(pattern.constData());
-    p.l = pattern.size();
-    bm_init_skiptable(p.p, p.l, p.q_skiptable);
+    bm_init_skiptable(reinterpret_cast<const uchar *>(pattern.constData()), pattern.size(), q_skiptable);
 }
 
 /*!
@@ -190,7 +185,7 @@ int QByteArrayMatcher::indexIn(const QByteArray &ba, int from) const
     if (from < 0)
         from = 0;
     return bm_find(reinterpret_cast<const uchar *>(ba.constData()), ba.size(), from,
-                   p.p, p.l, p.q_skiptable);
+                   reinterpret_cast<const uchar *>(q_pattern.constData()), q_pattern.size(), q_skiptable);
 }
 
 /*!
@@ -205,7 +200,7 @@ int QByteArrayMatcher::indexIn(const char *str, int len, int from) const
     if (from < 0)
         from = 0;
     return bm_find(reinterpret_cast<const uchar *>(str), len, from,
-                   p.p, p.l, p.q_skiptable);
+                   reinterpret_cast<const uchar *>(q_pattern.constData()), q_pattern.size(), q_skiptable);
 }
 
 /*!

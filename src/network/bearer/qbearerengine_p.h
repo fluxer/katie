@@ -95,8 +95,6 @@ protected:
     //it must be updated if configurations change, are added/removed or
     //the members of ServiceNetworks change
     QHash<QString, QNetworkConfigurationPrivatePointer> accessPointConfigurations;
-    QHash<QString, QNetworkConfigurationPrivatePointer> snapConfigurations;
-    QHash<QString, QNetworkConfigurationPrivatePointer> userChoiceConfigurations;
 
     QMutex mutex;
 };

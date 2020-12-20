@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_DNDITEM_H
 #define QDESIGNER_DNDITEM_H
 
-#include "shared_global_p.h"
 #include <QtDesigner/abstractdnditem.h>
 
 #include <QtCore/QPoint>
@@ -60,7 +59,7 @@ class QDropEvent;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT QDesignerDnDItem: public QDesignerDnDItemInterface
+class Q_DESIGNER_EXPORT QDesignerDnDItem: public QDesignerDnDItemInterface
 {
 public:
     explicit QDesignerDnDItem(DropType type, QWidget *source = 0);
@@ -92,7 +91,7 @@ private:
 
 // Mime data for use with designer drag and drop operations.
 
-class  QDESIGNER_SHARED_EXPORT QDesignerMimeData : public QMimeData {
+class  Q_DESIGNER_EXPORT QDesignerMimeData : public QMimeData {
     Q_OBJECT
 
 public:

@@ -479,7 +479,7 @@ void tst_QDBusAbstractAdaptor::initTestCase()
 
     // start peer server
     QDir workingDirectory = QCoreApplication::applicationDirPath();
-    QString myserverprogram = workingDirectory.absoluteFilePath(QLatin1String("qmyserver"));
+    QString myserverprogram = workingDirectory.absoluteFilePath(QLatin1String("qdbusabstractadaptor_qmyserver"));
     proc.start(myserverprogram);
     QVERIFY(proc.waitForStarted());
     QTest::qWait(2000);

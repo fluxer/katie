@@ -25,7 +25,8 @@
 #include "FastMalloc.h"
 #include "HashTraits.h"
 #include <wtf/Assertions.h>
-#include <wtf/Threading.h>
+
+#include <QMutex>
 
 namespace WTF {
 

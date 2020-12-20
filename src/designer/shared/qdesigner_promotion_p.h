@@ -45,8 +45,6 @@
 #ifndef QDESIGNERPROMOTION_H
 #define QDESIGNERPROMOTION_H
 
-#include "shared_global_p.h"
-
 #include <QtDesigner/abstractpromotioninterface.h>
 
 QT_BEGIN_NAMESPACE
@@ -55,7 +53,7 @@ class QDesignerFormEditorInterface;
 
 namespace qdesigner_internal {
 
-    class  QDESIGNER_SHARED_EXPORT  QDesignerPromotion : public QDesignerPromotionInterface
+    class  Q_DESIGNER_EXPORT  QDesignerPromotion : public QDesignerPromotionInterface
     {
     public:
         explicit QDesignerPromotion(QDesignerFormEditorInterface *core);

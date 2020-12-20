@@ -45,7 +45,6 @@
 #ifndef QDESIGNER_PROPERTYSHEET_H
 #define QDESIGNER_PROPERTYSHEET_H
 
-#include "shared_global_p.h"
 #include "dynamicpropertysheet.h"
 #include <QtDesigner/propertysheet.h>
 #include <QtDesigner/default_extensionfactory.h>
@@ -53,7 +52,6 @@
 
 #include <QtCore/QVariant>
 #include <QtCore/QPair>
-
 #include <QtCore/QPointer>
 
 QT_BEGIN_NAMESPACE
@@ -69,7 +67,7 @@ namespace qdesigner_internal
     class FormWindowBase;
 }
 
-class QDESIGNER_SHARED_EXPORT QDesignerPropertySheet: public QObject, public QDesignerPropertySheetExtension, public QDesignerDynamicPropertySheetExtension
+class Q_DESIGNER_EXPORT QDesignerPropertySheet: public QObject, public QDesignerPropertySheetExtension, public QDesignerDynamicPropertySheetExtension
 {
     Q_OBJECT
     Q_INTERFACES(QDesignerPropertySheetExtension QDesignerDynamicPropertySheetExtension)
@@ -189,7 +187,7 @@ private:
  * by multiple inheritance. The factory maintains ownership of
  * the extension and returns it for both id's. */
 
-class QDESIGNER_SHARED_EXPORT QDesignerAbstractPropertySheetFactory: public QExtensionFactory
+class Q_DESIGNER_EXPORT QDesignerAbstractPropertySheetFactory: public QExtensionFactory
 {
     Q_OBJECT
     Q_INTERFACES(QAbstractExtensionFactory)

@@ -34,8 +34,8 @@
 #ifndef QBENCHMARKMETRIC_P_H
 #define QBENCHMARKMETRIC_P_H
 
-#include <QtTest/qtest_global.h>
-#include <QtTest/qbenchmarkmetric.h>
+#include "qtest_global.h"
+#include "qbenchmarkmetric.h"
 
 QT_BEGIN_HEADER
 

@@ -115,7 +115,6 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
 
     m_current_fontengine = fontEngine;
     const int margin = glyphMargin();
-    const int paddingDoubled = glyphPadding() * 2;
 
     bool supportsSubPixelPositions = fontEngine->supportsSubPixelPositions();
     if (m_subPixelPositionCount == 0) {
@@ -133,7 +132,6 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
     }
 
     QHash<GlyphAndSubPixelPosition, Coord> listItemCoordinates;
-    int rowHeight = 0;
 
     QFontEngine::GlyphFormat format;
     switch (m_type) {
@@ -190,12 +188,9 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
                     -metrics.y.truncate() }; // baseline for horizontal scripts
 
         listItemCoordinates.insert(key, c);
-        rowHeight = qMax(rowHeight, glyph_height);
     }
     if (listItemCoordinates.isEmpty())
         return true;
-
-    rowHeight += margin * 2 + paddingDoubled;
 
     if (m_w == 0) {
         if (fontEngine->maxCharWidth() <= QT_DEFAULT_TEXTURE_GLYPH_CACHE_WIDTH)
@@ -221,7 +216,7 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
             } else {
                 // no room on the current line, start new glyph strip
                 m_cx = 0;
-                m_cy += m_currentRowHeight + paddingDoubled;
+                m_cy += m_currentRowHeight;
                 m_currentRowHeight = c.h + margin * 2; // New row
             }
         }
@@ -237,7 +232,7 @@ bool QTextureGlyphCache::populate(QFontEngine *fontEngine, int numGlyphs, const 
         coords.insert(iter.key(), c);
         m_pendingGlyphs.insert(iter.key(), c);
 
-        m_cx += c.w + paddingDoubled;
+        m_cx += c.w;
         ++iter;
     }
     return true;

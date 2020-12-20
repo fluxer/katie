@@ -47,9 +47,9 @@
 #include "qdrawhelper_p.h"
 
 #ifndef QT_NO_PRINTER
+
 #include <limits.h>
 #include <math.h>
-#include <zlib.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -58,8 +58,6 @@ QT_BEGIN_NAMESPACE
 // might be helpful for smooth transforms of images
 // Can't use it though, as gs generates completely wrong images if this is true.
 static const bool interpolateImages = false;
-
-static const bool do_compress = true;
 
 QPdfPage::QPdfPage()
     : QPdf::ByteStream(true) // Enable file backing
@@ -726,95 +724,22 @@ void QPdfEnginePrivate::xprintf(const char* fmt, ...)
     streampos += bufsize;
 }
 
-int QPdfEnginePrivate::writeCompressed(QIODevice *dev)
+int QPdfEnginePrivate::writeData(QIODevice *dev)
 {
-    if (do_compress) {
-        int size = QPdfPage::chunkSize();
-        int sum = 0;
-        ::z_stream zStruct;
-        zStruct.zalloc = Z_NULL;
-        zStruct.zfree = Z_NULL;
-        zStruct.opaque = Z_NULL;
-        if (::deflateInit(&zStruct, Z_DEFAULT_COMPRESSION) != Z_OK) {
-            qWarning("QPdfStream::writeCompressed: Error in deflateInit()");
-            return sum;
-        }
-        zStruct.avail_in = 0;
-        QByteArray in, out;
-        out.resize(size);
-        while (!dev->atEnd() || zStruct.avail_in != 0) {
-            if (zStruct.avail_in == 0) {
-                in = dev->read(size);
-                zStruct.avail_in = in.size();
-                zStruct.next_in = reinterpret_cast<unsigned char*>(in.data());
-                if (in.size() <= 0) {
-                    qWarning("QPdfStream::writeCompressed: Error in read()");
-                    ::deflateEnd(&zStruct);
-                    return sum;
-                }
-            }
-            zStruct.next_out = reinterpret_cast<unsigned char*>(out.data());
-            zStruct.avail_out = out.size();
-            if (::deflate(&zStruct, 0) != Z_OK) {
-                qWarning("QPdfStream::writeCompressed: Error in deflate()");
-                ::deflateEnd(&zStruct);
-                return sum;
-            }
-            int written = out.size() - zStruct.avail_out;
-            stream->writeRawData(out.constData(), written);
-            streampos += written;
-            sum += written;
-        }
-        int ret;
-        do {
-            zStruct.next_out = reinterpret_cast<unsigned char*>(out.data());
-            zStruct.avail_out = out.size();
-            ret = ::deflate(&zStruct, Z_FINISH);
-            if (ret != Z_OK && ret != Z_STREAM_END) {
-                qWarning("QPdfStream::writeCompressed: Error in deflate()");
-                ::deflateEnd(&zStruct);
-                return sum;
-            }
-            int written = out.size() - zStruct.avail_out;
-            stream->writeRawData(out.constData(), written);
-            streampos += written;
-            sum += written;
-        } while (ret == Z_OK);
-
-        ::deflateEnd(&zStruct);
-
-        return sum;
-    } else
-    {
-        QByteArray arr;
-        int sum = 0;
-        while (!dev->atEnd()) {
-            arr = dev->read(QPdfPage::chunkSize());
-            stream->writeRawData(arr.constData(), arr.size());
-            streampos += arr.size();
-            sum += arr.size();
-        }
-        return sum;
+    QByteArray arr;
+    int sum = 0;
+    while (!dev->atEnd()) {
+        arr = dev->read(QPdfPage::chunkSize());
+        stream->writeRawData(arr.constData(), arr.size());
+        streampos += arr.size();
+        sum += arr.size();
     }
+    return sum;
 }
 
-int QPdfEnginePrivate::writeCompressed(const char *src, int len)
+int QPdfEnginePrivate::writeData(const char *src, int len)
 {
-    if(do_compress) {
-        uLongf destLen = len + len/100 + 13; // zlib requirement
-        Bytef* dest = new Bytef[destLen];
-        if (Z_OK == ::compress(dest, &destLen, (const Bytef*) src, (uLongf)len)) {
-            stream->writeRawData((const char*)dest, destLen);
-        } else {
-            qWarning("QPdfStream::writeCompressed: Error in compress()");
-            destLen = 0;
-        }
-        delete [] dest;
-        len = destLen;
-    } else
-    {
-        stream->writeRawData(src,len);
-    }
+    stream->writeRawData(src,len);
     streampos += len;
     return len;
 }
@@ -852,11 +777,8 @@ int QPdfEnginePrivate::writeImage(const QByteArray &data, int width, int height,
         write(data);
         len = data.length();
     } else {
-        if (do_compress)
-            xprintf("/Filter /FlateDecode\n>>\nstream\n");
-        else
-            xprintf(">>\nstream\n");
-        len = writeCompressed(data);
+        xprintf(">>\nstream\n");
+        len = writeData(data);
     }
     xprintf("endstream\n"
             "endobj\n");
@@ -1005,13 +927,11 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
         int length_object = requestObject();
         s << "<<\n"
             "/Length1 " << fontData.size() << "\n"
-            "/Length " << length_object << "0 R\n";
-        if (do_compress)
-            s << "/Filter /FlateDecode\n";
-        s << ">>\n"
+            "/Length " << length_object << "0 R\n"
+          << ">>\n"
             "stream\n";
         write(header);
-        int len = writeCompressed(fontData);
+        int len = writeData(fontData);
         write("endstream\n"
               "endobj\n");
         addXrefEntry(length_object);
@@ -1138,13 +1058,10 @@ void QPdfEnginePrivate::writePage()
     addXrefEntry(pageStream);
     xprintf("<<\n"
             "/Length %d 0 R\n", pageStreamLength); // object number for stream length object
-    if (do_compress)
-        xprintf("/Filter /FlateDecode\n");
-
     xprintf(">>\n");
     xprintf("stream\n");
     QIODevice *content = currentPage->stream();
-    int len = writeCompressed(content);
+    int len = writeData(content);
     xprintf("endstream\n"
             "endobj\n");
 

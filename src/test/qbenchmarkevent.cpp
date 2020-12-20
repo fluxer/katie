@@ -31,9 +31,9 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qbenchmarkevent_p.h"
-#include "QtTest/qbenchmark_p.h"
-#include "QtTest/qbenchmarkmetric_p.h"
+#include "qbenchmarkevent_p.h"
+#include "qbenchmark_p.h"
+#include "qbenchmarkmetric_p.h"
 #include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
@@ -71,17 +71,6 @@ bool QBenchmarkEvent::isMeasurementAccepted(qint64 measurement)
 {
     Q_UNUSED(measurement);
     return true;
-}
-
-int QBenchmarkEvent::adjustIterationCount(int suggestion)
-{
-    return suggestion;
-}
-
-int QBenchmarkEvent::adjustMedianCount(int suggestion)
-{
-    Q_UNUSED(suggestion);
-    return 1;
 }
 
 QTest::QBenchmarkMetric QBenchmarkEvent::metricType()

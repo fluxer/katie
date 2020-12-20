@@ -51,9 +51,7 @@
 #include "qvarlengtharray.h"
 
 #include <sys/time.h>
-#if (!defined(Q_OS_HPUX) || defined(QT_ARCH_IA64)) && !defined(Q_OS_NACL)
-#  include <sys/select.h>
-#endif
+#include <sys/select.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -172,7 +170,6 @@ public:
     int initThreadWakeUp();
     int processThreadWakeUp(int nsel);
 
-    bool mainThread;
     int thread_pipe[2];
 
     // highest fd for all socket notifiers
