@@ -113,7 +113,7 @@ hb_buffer_duplicate_out_buffer( HB_Buffer buffer )
       HB_Error error;
 
       if ( ALLOC_ARRAY( buffer->alt_string, buffer->allocated, HB_GlyphItemRec ) )
-	return error;
+        return error;
     }
 
   buffer->out_string = buffer->alt_string;

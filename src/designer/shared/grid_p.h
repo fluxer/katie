@@ -45,8 +45,6 @@
 #ifndef QDESIGNER_GRID_H
 #define QDESIGNER_GRID_H
 
-#include "shared_global_p.h"
-
 #include <QtCore/qvariant.h>
 
 QT_BEGIN_NAMESPACE
@@ -58,7 +56,7 @@ class QPainter;
 namespace qdesigner_internal {
 
 // Designer grid which is able to serialize to QVariantMap
-class QDESIGNER_SHARED_EXPORT Grid
+class Q_DESIGNER_EXPORT Grid
 {
 public:
     Grid();

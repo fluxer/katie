@@ -45,7 +45,6 @@
 #ifndef CODEPREVIEWDIALOG_H
 #define CODEPREVIEWDIALOG_H
 
-#include "shared_global_p.h"
 #include <QtGui/QDialog>
 
 QT_BEGIN_NAMESPACE
@@ -54,7 +53,7 @@ class QDesignerFormWindowInterface;
 
 namespace qdesigner_internal {
 // Dialog for viewing code.
-class QDESIGNER_SHARED_EXPORT CodeDialog : public QDialog
+class Q_DESIGNER_EXPORT CodeDialog : public QDialog
 {
     Q_OBJECT
     explicit CodeDialog(QWidget *parent = Q_NULLPTR);

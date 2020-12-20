@@ -34,8 +34,6 @@
 #ifndef ABSTRACTOBJECTINSPECTOR_H
 #define ABSTRACTOBJECTINSPECTOR_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtGui/QWidget>
 
 QT_BEGIN_HEADER
@@ -45,7 +43,7 @@ QT_BEGIN_NAMESPACE
 class QDesignerFormEditorInterface;
 class QDesignerFormWindowInterface;
 
-class QDESIGNER_SDK_EXPORT QDesignerObjectInspectorInterface: public QWidget
+class Q_DESIGNER_EXPORT QDesignerObjectInspectorInterface: public QWidget
 {
     Q_OBJECT
 public:

@@ -2,16 +2,16 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=katie-git
-pkgver=4.9.0.rc18.r16.gea38d0ce
+pkgver=4.9.1.r4681.8f22ea5f
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
 url='https://github.com/fluxer/katie'
-license=('LGPL' 'FDL' 'custom')
+license=('LGPL' 'BSD' 'custom')
 depends=('libsm' 'libxcursor' 'libxinerama' 'icu' 'libcups' 'libxrandr' 'sqlite' 'fontconfig')
-makedepends=('cmake' 'git' 'postgresql' 'libmariadbclient' 'unixodbc' 'unifdef')
+makedepends=('cmake' 'git' 'postgresql' 'mariadb-libs' 'unixodbc' 'unifdef')
 optdepends=('postgresql-libs: PostgreSQL driver'
-        'libmariadbclient: MariaDB driver'
+        'mariadb-libs: MariaDB driver'
         'unixodbc: ODBC driver')
 source=("git+https://github.com/fluxer/katie")
 sha1sums=('SKIP')
@@ -20,8 +20,7 @@ conflicts=('katie')
 
 pkgver() {
     cd katie
-    #printf "4.9.0."r%s.%s "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+    printf "4.9.1.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 prepare() {
@@ -36,8 +35,7 @@ build() {
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DKATIE_LDCONF_PATH=/etc/ld.so.conf.d \
         -DKATIE_PROFILE_PATH=/etc/profile.d \
-        -DKATIE_TOOLS_SUFFIX="-katie" \
-        -DKATIE_ALLINONE=ON
+        -DKATIE_TOOLS_SUFFIX="-katie"
     make
 }
 
@@ -45,6 +43,8 @@ package() {
     cd build
     make DESTDIR="${pkgdir}" install
 
+    install -vDm644 ../katie/LICENSE.BSD \
+        "${pkgdir}/usr/share/licenses/katie-git/BSD.txt"
     install -vDm644 ../katie/LGPL_EXCEPTION.txt \
         "${pkgdir}/usr/share/licenses/katie-git/LGPL_EXCEPTION.txt"
 }

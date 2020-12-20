@@ -45,35 +45,32 @@
 #include "formwindowbase_p.h"
 #include "qdesigner_taskmenu_p.h"
 #include "qdesignercommon_p.h"
-
-#include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractpropertyeditor.h>
-#include <QtDesigner/propertysheet.h>
-#include <QtDesigner/QExtensionManager>
-#include <QtDesigner/abstractmetadatabase.h>
-#include <QtDesigner/abstracticoncache.h>
-#include <QtDesigner/abstractsettings_p.h>
-
-#include <QtGui/QMenu>
-#include <QtGui/QToolBar>
-#include <QtGui/QSplitter>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QClipboard>
-#include <QtGui/QItemDelegate>
-#include <QtGui/QPainter>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QLineEdit>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QToolButton>
-#include <QtGui/qevent.h>
-#include <QtGui/qitemselectionmodel.h>
-
-#include <QtCore/QRegExp>
-#include <QtCore/QDebug>
-#include <QtCore/QSignalMapper>
-#include <QtCore/QBuffer>
+#include "abstractformeditor.h"
+#include "abstractpropertyeditor.h"
+#include "propertysheet.h"
+#include "qextensionmanager.h"
+#include "abstractmetadatabase.h"
+#include "abstracticoncache.h"
+#include "abstractsettings_p.h"
+#include "qmenu.h"
+#include "qtoolbar.h"
+#include "qsplitter.h"
+#include "qaction.h"
+#include "qapplication.h"
+#include "qclipboard.h"
+#include "qitemdelegate.h"
+#include "qpainter.h"
+#include "qboxlayout.h"
+#include "qlineedit.h"
+#include "qlabel.h"
+#include "qpushbutton.h"
+#include "qtoolbutton.h"
+#include "qevent.h"
+#include "qitemselectionmodel.h"
+#include "qregexp.h"
+#include "qdebug.h"
+#include "qsignalmapper.h"
+#include "qbuffer.h"
 
 QT_BEGIN_NAMESPACE
 

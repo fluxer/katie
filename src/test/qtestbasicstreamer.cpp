@@ -35,9 +35,10 @@
 #include "qtestlogger_p.h"
 #include "qtestelement.h"
 #include "qtestelementattribute.h"
-#include "QtTest/qtestlog_p.h"
+#include "qtestlog_p.h"
 #include "qtestassert.h"
 #include "qtestcommon_p.h"
+#include "qplatformdefs.h"
 
 #include <unistd.h>
 
@@ -156,7 +157,7 @@ void QTestBasicStreamer::startStreaming()
         QTest::stream = stdout;
         return;
     }
-    QTest::stream = ::fopen(out, "wt");
+    QTest::stream = QT_FOPEN(out, "wt");
     if (!QTest::stream) {
         printf("Unable to open file for logging: %s", out);
         ::exit(1);
@@ -167,7 +168,7 @@ bool QTestBasicStreamer::isTtyOutput()
 {
     QTEST_ASSERT(QTest::stream);
 
-    static bool ttyoutput = isatty(fileno(QTest::stream));
+    static bool ttyoutput = ::isatty(QT_FILENO(QTest::stream));
     return ttyoutput;
 }
 
@@ -175,7 +176,7 @@ void QTestBasicStreamer::stopStreaming()
 {
     QTEST_ASSERT(QTest::stream);
     if (QTest::stream != stdout)
-        fclose(QTest::stream);
+        ::fclose(QTest::stream);
 
     QTest::stream = 0;
 }

@@ -39,19 +39,17 @@
 #include "qdesigner_toolwindow.h"
 #include "qdesigner_formwindow.h"
 #include "appfontdialog.h"
-
-#include <QtDesigner/abstractformeditor.h>
-#include <QtDesigner/abstractformwindow.h>
-#include <QtDesigner/abstractformwindowmanager.h>
-#include <QtDesigner/abstractformeditorplugin.h>
-#include <QtDesigner/abstractwidgetbox.h>
-#include <QtDesigner/abstractmetadatabase.h>
-
-#include <QtDesigner/qdesigner_components.h>
-#include <QtDesigner/qdesigner_integration_p.h>
-#include <QtDesigner/pluginmanager_p.h>
-#include <QtDesigner/formwindowbase_p.h>
-#include <QtDesigner/actioneditor_p.h>
+#include "abstractformeditor.h"
+#include "abstractformwindow.h"
+#include "abstractformwindowmanager.h"
+#include "abstractformeditorplugin.h"
+#include "abstractwidgetbox.h"
+#include "abstractmetadatabase.h"
+#include "qdesigner_components.h"
+#include "qdesigner_integration_p.h"
+#include "pluginmanager_p.h"
+#include "formwindowbase_p.h"
+#include "actioneditor_p.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -59,7 +57,6 @@
 #include <QtCore/QTimer>
 #include <QtCore/QPluginLoader>
 #include <QtCore/qdebug.h>
-
 #include <QtGui/QActionGroup>
 #include <QtGui/qevent.h>
 #include <QtGui/QDesktopWidget>
@@ -684,8 +681,8 @@ bool QDesignerWorkbench::handleClose()
         } else {
             int count = dirtyForms.size();
             QMessageBox box(QMessageBox::Warning, tr("Save Forms?"),
-                    tr("There are %n forms with unsaved changes."
-                        " Do you want to review these changes before quitting?", "", count),
+                    tr("There are %1 forms with unsaved changes."
+                        " Do you want to review these changes before quitting?").arg(count),
                     QMessageBox::Cancel | QMessageBox::Discard | QMessageBox::Save);
             box.setInformativeText(tr("If you do not review your documents, all your changes will be lost."));
             box.button(QMessageBox::Discard)->setText(tr("Discard Changes"));

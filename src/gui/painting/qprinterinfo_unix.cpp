@@ -54,10 +54,10 @@ QT_BEGIN_NAMESPACE
 
 #if !defined(QT_NO_CUPS)
 // preserver names in ascending order for the binary search
-static const struct NamedPaperSize {
+static const struct NamedPaperSizeData {
     const char *const name;
-    QPrinter::PaperSize size;
-} named_sizes_map[QPrinter::NPageSize] = {
+    const QPrinter::PaperSize size;
+} NamedPaperSizeTbl[QPrinter::NPageSize] = {
     { "A0", QPrinter::A0 },
     { "A1", QPrinter::A1 },
     { "A2", QPrinter::A2 },
@@ -89,17 +89,14 @@ static const struct NamedPaperSize {
     { "Letter", QPrinter::Letter },
     { "Tabloid", QPrinter::Tabloid }
 };
-
-inline bool operator<(const char *name, const NamedPaperSize &data)
-{ return qstrcmp(name, data.name) < 0; }
-inline bool operator<(const NamedPaperSize &data, const char *name)
-{ return qstrcmp(data.name, name) < 0; }
+static const qint16 NamedPaperSizeTblSize = sizeof(NamedPaperSizeTbl) / sizeof(NamedPaperSizeData);
 
 static inline QPrinter::PaperSize string2PaperSize(const char *name)
 {
-    const NamedPaperSize *r = qBinaryFind(named_sizes_map, named_sizes_map + QPrinter::NPageSize, name);
-    if (r - named_sizes_map != QPrinter::NPageSize)
-        return r->size;
+    for (qint16 i = 0; i < NamedPaperSizeTblSize; i++) {
+        if (qstrcmp(name, NamedPaperSizeTbl[i].name) == 0)
+            return NamedPaperSizeTbl[i].size;
+    }
     return QPrinter::Custom;
 }
 #endif

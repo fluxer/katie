@@ -34,8 +34,6 @@
 #ifndef ABSTRACTFORMEDITOR_H
 #define ABSTRACTFORMEDITOR_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtCore/QObject>
 #include <QtCore/QPointer>
 
@@ -69,7 +67,7 @@ class QExtensionManager;
 
 class  QDesignerFormEditorInterfacePrivate;
 
-class QDESIGNER_SDK_EXPORT QDesignerFormEditorInterface : public QObject
+class Q_DESIGNER_EXPORT QDesignerFormEditorInterface : public QObject
 {
     Q_OBJECT
 public:

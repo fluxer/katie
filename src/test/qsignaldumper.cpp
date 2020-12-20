@@ -31,16 +31,14 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qsignaldumper_p.h"
-
-#include <QtCore/qlist.h>
-#include <QtCore/qmetaobject.h>
-#include <QtCore/qmetatype.h>
-#include <QtCore/qobject.h>
-#include <QtCore/qvariant.h>
-#include <QtCore/qobject_p.h>
-
-#include "QtTest/qtestlog_p.h"
+#include "qsignaldumper_p.h"
+#include "qlist.h"
+#include "qmetaobject.h"
+#include "qmetatype.h"
+#include "qobject.h"
+#include "qvariant.h"
+#include "qobject_p.h"
+#include "qtestlog_p.h"
 
 QT_BEGIN_NAMESPACE
 

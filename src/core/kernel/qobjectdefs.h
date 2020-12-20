@@ -79,25 +79,6 @@ class QString;
 #define Q_SIGNAL
 #define Q_SLOT
 
-#ifndef QT_NO_TRANSLATION
-# ifndef QT_NO_TEXTCODEC
-// full set of tr functions
-#  define QT_TR_FUNCTIONS \
-    static inline QString tr(const char *s, const char *c = Q_NULLPTR, int n = -1) \
-        { return staticMetaObject.tr(s, c, n); } \
-    static inline QString trUtf8(const char *s, const char *c = Q_NULLPTR, int n = -1) \
-        { return staticMetaObject.trUtf8(s, c, n); }
-# else
-// no QTextCodec, no utf8
-#  define QT_TR_FUNCTIONS \
-    static inline QString tr(const char *s, const char *c = Q_NULLPTR, int n = -1) \
-        { return staticMetaObject.tr(s, c, n); }
-# endif
-#else
-// inherit the ones from QObject
-# define QT_TR_FUNCTIONS
-#endif
-
 #if defined(QT_NO_QOBJECT_CHECK)
 #define Q_OBJECT_CHECK
 #else
@@ -138,7 +119,6 @@ public: \
     Q_OBJECT_GETSTATICMETAOBJECT \
     virtual const QMetaObject *metaObject() const; \
     virtual void *qt_metacast(const char *); \
-    QT_TR_FUNCTIONS \
     virtual int qt_metacall(QMetaObject::Call, int, void **); \
 private: \
     Q_DECL_HIDDEN static void qt_static_metacall(QObject *, QMetaObject::Call, int, void **);
@@ -272,11 +252,6 @@ struct Q_CORE_EXPORT QMetaObject
 
     QObject *cast(QObject *obj) const;
     const QObject *cast(const QObject *obj) const;
-
-#ifndef QT_NO_TRANSLATION
-    QString tr(const char *s, const char *c, int n = -1) const;
-    QString trUtf8(const char *s, const char *c, int n = -1) const;
-#endif // QT_NO_TRANSLATION
 
     int methodOffset() const;
     int enumeratorOffset() const;

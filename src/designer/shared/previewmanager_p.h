@@ -45,8 +45,6 @@
 #ifndef PREVIEWMANAGER_H
 #define PREVIEWMANAGER_H
 
-#include "shared_global_p.h"
-
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/qshareddata.h>
@@ -68,7 +66,7 @@ namespace qdesigner_internal {
 
 class PreviewConfigurationData;
 
-class QDESIGNER_SHARED_EXPORT PreviewConfiguration {
+class Q_DESIGNER_EXPORT PreviewConfiguration {
 public:
     PreviewConfiguration();
     explicit PreviewConfiguration(const QString &style,
@@ -93,16 +91,16 @@ private:
     QSharedDataPointer<PreviewConfigurationData> m_d;
 };
 
-QDESIGNER_SHARED_EXPORT bool operator<(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2);
-QDESIGNER_SHARED_EXPORT bool operator==(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2);
-QDESIGNER_SHARED_EXPORT bool operator!=(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2);
+Q_DESIGNER_EXPORT bool operator<(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2);
+Q_DESIGNER_EXPORT bool operator==(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2);
+Q_DESIGNER_EXPORT bool operator!=(const PreviewConfiguration &pc1, const PreviewConfiguration &pc2);
 
 // ----------- Preview window manager.
 // Maintains a list of preview widgets with their associated form windows and configuration.
 
 class PreviewManagerPrivate;
 
-class QDESIGNER_SHARED_EXPORT PreviewManager : public QObject
+class Q_DESIGNER_EXPORT PreviewManager : public QObject
 {
     Q_OBJECT
 public:

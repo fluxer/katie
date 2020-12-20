@@ -31,18 +31,18 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qbenchmark.h"
-#include "QtTest/qbenchmark_p.h"
-#include "QtTest/qbenchmarkmetric_p.h"
+#include "qbenchmark.h"
+#include "qbenchmark_p.h"
+#include "qbenchmarkmetric_p.h"
 
 #ifdef QT_GUI_LIB
-#include <QtGui/qapplication.h>
+#include "qapplication.h"
 #endif
 
-#include <QtCore/qprocess.h>
-#include <QtCore/qdir.h>
-#include <QtCore/qset.h>
-#include <QtCore/qdebug.h>
+#include "qprocess.h"
+#include "qdir.h"
+#include "qset.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -74,11 +74,7 @@ void QBenchmarkGlobalData::setMode(Mode mode)
 
     if (mode_ == EventCounter) {
         measurer = new QBenchmarkEvent;
-#ifdef QTESTLIB_USE_VALGRIND
-    } else if (mode_ == CallgrindChildProcess || mode_ == CallgrindParentProcess) {
-        measurer = new QBenchmarkCallgrindMeasurer;
-#endif
-#ifdef HAVE_TICK_COUNTER
+#ifdef QT_HAVE_CLOCK_GETTIME
     } else if (mode_ == TickCounter) {
         measurer = new QBenchmarkTickMeasurer;
 #endif

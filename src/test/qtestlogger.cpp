@@ -37,10 +37,9 @@
 #include "qtestxmlstreamer.h"
 #include "qtestlightxmlstreamer.h"
 #include "qtestfilelogger.h"
-
-#include "QtTest/qtestcase.h"
-#include "QtTest/qtestresult_p.h"
-#include "QtTest/qbenchmark_p.h"
+#include "qtestcase.h"
+#include "qtestresult_p.h"
+#include "qbenchmark_p.h"
 
 #include <string.h>
 

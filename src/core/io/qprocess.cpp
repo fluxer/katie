@@ -1318,7 +1318,7 @@ void QProcess::setWorkingDirectory(const QString &dir)
 Q_PID QProcess::pid() const
 {
     Q_D(const QProcess);
-    return d->pid;
+    return Q_PID(d->pid);
 }
 
 /*! \reimp
@@ -2003,7 +2003,7 @@ int QProcess::execute(const QString &program)
 bool QProcess::startDetached(const QString &program,
                              const QStringList &arguments,
                              const QString &workingDirectory,
-                             qint64 *pid)
+                             Q_PID *pid)
 {
     return QProcessPrivate::startDetached(program,  arguments,
                                           workingDirectory, pid);

@@ -24,9 +24,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtSql
-    ${CMAKE_BINARY_DIR}/privateinclude/QtSql
     ${SQLITE_INCLUDES}
 )
 
@@ -83,9 +81,11 @@ set_target_properties(KtSql PROPERTIES
     EXPORT_NAME Sql
 )
 
+katie_setup_pch(KtSql)
+
 install(
     TARGETS KtSql
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

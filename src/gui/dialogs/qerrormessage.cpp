@@ -151,15 +151,15 @@ static void jump(QtMsgType t, const char * m)
     QString rich;
 
     switch (t) {
-    case QtDebugMsg:
-    default:
-        rich = QErrorMessage::tr("Debug Message:");
-        break;
     case QtWarningMsg:
         rich = QErrorMessage::tr("Warning:");
         break;
     case QtFatalMsg:
         rich = QErrorMessage::tr("Fatal Error:");
+    case QtDebugMsg:
+    default:
+        rich = QErrorMessage::tr("Debug Message:");
+        break;
     }
     rich = QString::fromLatin1("<p><b>%1</b></p>").arg(rich);
     rich += Qt::convertFromPlainText(QLatin1String(m), Qt::WhiteSpaceNormal);

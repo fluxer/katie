@@ -31,30 +31,27 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qtestcase.h"
-#include "QtTest/qtestassert.h"
-
-#include <QtCore/qbytearray.h>
-#include <QtCore/qmetaobject.h>
-#include <QtCore/qobject.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qvector.h>
-#include <QtCore/qvarlengtharray.h>
-#include <QtCore/qcoreapplication.h>
-#include <QtCore/qfile.h>
-#include <QtCore/qfileinfo.h>
-#include <QtCore/qdir.h>
-#include <QtCore/qprocess.h>
-#include <QtCore/qdebug.h>
-#include <QtCore/qscopedpointer.h>
-
-#include "QtTest/qtestlog_p.h"
-#include "QtTest/qtesttable_p.h"
-#include "QtTest/qtestdata.h"
-#include "QtTest/qtestresult_p.h"
-#include "QtTest/qsignaldumper_p.h"
-#include "QtTest/qbenchmark_p.h"
-#include "3rdparty/fftw/cycle.h"
+#include "qtestcase.h"
+#include "qtestassert.h"
+#include "qbytearray.h"
+#include "qmetaobject.h"
+#include "qobject.h"
+#include "qstringlist.h"
+#include "qvector.h"
+#include "qvarlengtharray.h"
+#include "qcoreapplication.h"
+#include "qfile.h"
+#include "qfileinfo.h"
+#include "qdir.h"
+#include "qprocess.h"
+#include "qdebug.h"
+#include "qscopedpointer.h"
+#include "qtestlog_p.h"
+#include "qtesttable_p.h"
+#include "qtestdata.h"
+#include "qtestresult_p.h"
+#include "qsignaldumper_p.h"
+#include "qbenchmark_p.h"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -1093,10 +1090,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
          "\n"
          " Benchmark related options:\n"
-#ifdef QTESTLIB_USE_VALGRIND
-        " -callgrind      : Use callgrind to time benchmarks\n"
-#endif
-#ifdef HAVE_TICK_COUNTER
+#ifdef QT_HAVE_CLOCK_GETTIME
         " -tickcounter    : Use CPU tick counters to time benchmarks\n"
 #endif
         " -eventcounter   : Counts events received during benchmarks\n"
@@ -1184,24 +1178,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 #endif
         } else if (strcmp(argv[i], "-keyevent-verbose") == 0) {
             QTest::keyVerbose = 1;
-#ifdef QTESTLIB_USE_VALGRIND
-        } else if (strcmp(argv[i], "-callgrind") == 0) {
-            if (QBenchmarkValgrindUtils::haveValgrind())
-                if (QFileInfo(QDir::currentPath()).isWritable()) {
-                    QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::CallgrindParentProcess);
-                } else {
-                    printf("WARNING: Current directory not writable. Using the walltime measurer.\n");
-                }
-            else {
-                printf("WARNING: Valgrind not found or too old. Make sure it is installed and in your path. "
-                       "Using the walltime measurer.\n");
-            }
-        } else if (strcmp(argv[i], "-callgrindchild") == 0) { // "private" option
-            QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::CallgrindChildProcess);
-            QBenchmarkGlobalData::current->callgrindOutFileBase =
-                QBenchmarkValgrindUtils::outFileBase();
-#endif
-#ifdef HAVE_TICK_COUNTER
+#ifdef QT_HAVE_CLOCK_GETTIME
         } else if (strcmp(argv[i], "-tickcounter") == 0) {
             QBenchmarkGlobalData::current->setMode(QBenchmarkGlobalData::TickCounter);
 #endif
@@ -1795,10 +1772,6 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
     QBenchmarkGlobalData benchmarkData;
     QBenchmarkGlobalData::current = &benchmarkData;
 
-#ifdef QTESTLIB_USE_VALGRIND
-    int callgrindChildExitCode = 0;
-#endif
-
     QT_TRY {
         QTestResult::reset();
 
@@ -1817,16 +1790,6 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
         if (QTest::randomOrder) {
             seedRandom();
         }
-#ifdef QTESTLIB_USE_VALGRIND
-        if (QBenchmarkGlobalData::current->mode() == QBenchmarkGlobalData::CallgrindParentProcess) {
-            const QStringList origAppArgs(QCoreApplication::arguments());
-            if (!QBenchmarkValgrindUtils::rerunThroughCallgrind(origAppArgs, callgrindChildExitCode))
-                return -1;
-
-            QBenchmarkValgrindUtils::cleanup();
-
-        } else
-#endif
         {
 #if defined(Q_OS_UNIX)
             QScopedPointer<FatalSignalHandler> handler;
@@ -1856,15 +1819,9 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
 #if defined(QTEST_NOEXITCODE)
     return 0;
 #else
-
-#ifdef QTESTLIB_USE_VALGRIND
-    if (QBenchmarkGlobalData::current->mode() == QBenchmarkGlobalData::CallgrindParentProcess)
-        return callgrindChildExitCode;
-#endif
     // make sure our exit code is never going above 127
     // since that could wrap and indicate 0 test fails
     return qMin(QTestResult::failCount(), 127);
-
 #endif
 }
 

@@ -991,9 +991,9 @@ void QMovie::stop()
 
     \sa QImageReader::scaledSize()
 */
-QSize QMovie::scaledSize()
+QSize QMovie::scaledSize() const
 {
-    Q_D(QMovie);
+    Q_D(const QMovie);
     return d->reader->scaledSize();
 }
 

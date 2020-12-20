@@ -55,10 +55,9 @@ QT_BEGIN_NAMESPACE
 class QWindowSurface;
 
 struct BeginPaintInfo {
-    inline BeginPaintInfo() : wasFlushed(false), nothingToPaint(false), windowSurfaceRecreated(false) {}
+    inline BeginPaintInfo() : wasFlushed(false), nothingToPaint(false) {}
     bool wasFlushed;
     bool nothingToPaint;
-    bool windowSurfaceRecreated;
 };
 
 class Q_AUTOTEST_EXPORT QWidgetBackingStore

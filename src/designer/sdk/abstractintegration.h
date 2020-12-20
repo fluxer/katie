@@ -34,8 +34,6 @@
 #ifndef ABSTRACTINTEGRATION_H
 #define ABSTRACTINTEGRATION_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
@@ -45,7 +43,7 @@ QT_BEGIN_NAMESPACE
 
 class QDesignerFormEditorInterface;
 
-class QDESIGNER_SDK_EXPORT QDesignerIntegrationInterface: public QObject
+class Q_DESIGNER_EXPORT QDesignerIntegrationInterface: public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString headerSuffix READ headerSuffix WRITE setHeaderSuffix)

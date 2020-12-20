@@ -75,7 +75,6 @@ public:
     bool closeFileHandle;
 
     mutable uint is_sequential;
-    mutable bool tried_stat;
 
     bool doStat(QFileSystemMetaData::MetaDataFlags flags) const;
 

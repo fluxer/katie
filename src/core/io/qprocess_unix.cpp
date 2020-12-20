@@ -50,6 +50,10 @@
 #include <string.h>
 #include <sys/ioctl.h>
 
+#ifdef Q_OS_SOLARIS
+#  include <sys/filio.h> // FIONREAD
+#endif
+
 //#define QPROCESS_DEBUG
 
 extern char **environ;
@@ -631,7 +635,7 @@ void QProcessPrivate::startProcess()
     // Register the child. In the mean time, we can get a SIGCHLD, so we need
     // to keep the lock held to avoid a race to catch the child.
     processManager()->add(childPid, q);
-    pid = Q_PID(childPid);
+    pid = childPid;
     processManager()->unlock();
 
     // parent
@@ -816,7 +820,7 @@ void QProcessPrivate::terminateProcess()
     qDebug("QProcessPrivate::killProcess()");
 #endif
     if (pid)
-        ::kill(pid_t(pid), SIGTERM);
+        ::kill(pid, SIGTERM);
 }
 
 void QProcessPrivate::killProcess()
@@ -825,7 +829,7 @@ void QProcessPrivate::killProcess()
     qDebug("QProcessPrivate::killProcess()");
 #endif
     if (pid)
-        ::kill(pid_t(pid), SIGKILL);
+        ::kill(pid, SIGKILL);
 }
 
 static int select_msecs(int nfds, fd_set *fdread, fd_set *fdwrite, int timeout)
@@ -1074,7 +1078,7 @@ bool QProcessPrivate::waitForDeadChild()
 
     // check if our process is dead
     int status;
-    if (qt_safe_waitpid(pid_t(pid), &status, WNOHANG) > 0) {
+    if (qt_safe_waitpid(pid, &status, WNOHANG) > 0) {
         processManager()->remove(q);
         crashed = !WIFEXITED(status);
         exitCode = WEXITSTATUS(status);
@@ -1090,11 +1094,9 @@ bool QProcessPrivate::waitForDeadChild()
     return false;
 }
 
-bool QProcessPrivate::startDetached(const QString &program, const QStringList &arguments, const QString &workingDirectory, qint64 *pid)
+bool QProcessPrivate::startDetached(const QString &program, const QStringList &arguments, const QString &workingDirectory, Q_PID *pid)
 {
     processManager()->start();
-
-    QByteArray encodedWorkingDirectory = QFile::encodeName(workingDirectory);
 
     // To catch the startup of the child
     int startedPipe[2];
@@ -1124,6 +1126,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
         if (doubleForkPid == 0) {
             qt_safe_close(pidPipe[1]);
 
+            QByteArray encodedWorkingDirectory = QFile::encodeName(workingDirectory);
             if (!encodedWorkingDirectory.isEmpty()
                 && QT_CHDIR(encodedWorkingDirectory.constData()) == -1) {
                 qWarning("QProcessPrivate::startDetached: failed to chdir to %s",
@@ -1196,7 +1199,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
     if (success && pid) {
         pid_t actualPid = 0;
         if (qt_safe_read(pidPipe[0], (char *)&actualPid, sizeof(pid_t)) == sizeof(pid_t)) {
-            *pid = actualPid;
+            *pid = Q_PID(actualPid);
         } else {
             *pid = 0;
         }

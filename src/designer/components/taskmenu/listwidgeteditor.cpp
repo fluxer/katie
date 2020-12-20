@@ -32,15 +32,13 @@
 ****************************************************************************/
 
 #include "listwidgeteditor.h"
-#include <designerpropertymanager.h>
-#include <abstractformbuilder.h>
-
-#include <QtDesigner/abstractsettings_p.h>
-#include <QtDesigner/abstractformeditor.h>
-
-#include <QtGui/QComboBox>
-#include <QtGui/QGroupBox>
-#include <QtGui/QDialogButtonBox>
+#include "designerpropertymanager.h"
+#include "abstractformbuilder.h"
+#include "abstractsettings_p.h"
+#include "abstractformeditor.h"
+#include "qcombobox.h"
+#include "qgroupbox.h"
+#include "qdialogbuttonbox.h"
 
 QT_BEGIN_NAMESPACE
 

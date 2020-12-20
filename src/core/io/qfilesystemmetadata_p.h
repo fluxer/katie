@@ -57,25 +57,35 @@ class QFileSystemMetaData
 {
 public:
     QFileSystemMetaData()
-        : knownFlagsMask(0)
+        : entryFlags(0),
+        size_(0),
+        creationTime_(0),
+        modificationTime_(0),
+        accessTime_(0),
+        userId_(-2),
+        groupId_(-2)
     {
     }
 
     enum MetaDataFlag {
         // Permissions, overlaps with QFile::Permissions
-        OtherReadPermission = 0x00000004,   OtherWritePermission = 0x00000002,  OtherExecutePermission = 0x00000001,
-        GroupReadPermission = 0x00000040,   GroupWritePermission = 0x00000020,  GroupExecutePermission = 0x00000010,
-        UserReadPermission  = 0x00000400,   UserWritePermission  = 0x00000200,  UserExecutePermission  = 0x00000100,
-        OwnerReadPermission = 0x00004000,   OwnerWritePermission = 0x00002000,  OwnerExecutePermission = 0x00001000,
+        OwnerReadPermission = QFile::ReadOwner,
+        OwnerWritePermission = QFile::WriteOwner,
+        OwnerExecutePermission = QFile::ExeOwner,
+        UserReadPermission  = QFile::ReadUser,
+        UserWritePermission  = QFile::WriteUser,
+        UserExecutePermission  = QFile::ExeUser,
+        GroupReadPermission = QFile::ReadGroup,
+        GroupWritePermission = QFile::WriteGroup,
+        GroupExecutePermission = QFile::ExeGroup,
+        OtherReadPermission = QFile::ReadOther,
+        OtherWritePermission = QFile::WriteOther,
+        OtherExecutePermission = QFile::ExeOther,
 
         OtherPermissions    = OtherReadPermission | OtherWritePermission | OtherExecutePermission,
         GroupPermissions    = GroupReadPermission | GroupWritePermission | GroupExecutePermission,
         UserPermissions     = UserReadPermission  | UserWritePermission  | UserExecutePermission,
         OwnerPermissions    = OwnerReadPermission | OwnerWritePermission | OwnerExecutePermission,
-
-        ReadPermissions     = OtherReadPermission | GroupReadPermission | UserReadPermission | OwnerReadPermission,
-        WritePermissions    = OtherWritePermission | GroupWritePermission | UserWritePermission | OwnerWritePermission,
-        ExecutePermissions  = OtherExecutePermission | GroupExecutePermission | UserExecutePermission | OwnerExecutePermission,
 
         Permissions         = OtherPermissions | GroupPermissions | UserPermissions | OwnerPermissions,
 
@@ -85,14 +95,10 @@ public:
         DirectoryType       = 0x00040000,
         SequentialType      = 0x00800000,   // Note: overlaps with QAbstractFileEngine::RootFlag
 
-        Type                = LinkType | FileType | DirectoryType | SequentialType,
-
         // Attributes
         HiddenAttribute     = 0x00100000,
         SizeAttribute       = 0x00200000,   // Note: overlaps with QAbstractFileEngine::LocalDiskFlag
         ExistsAttribute     = 0x00400000,
-
-        Attributes          = HiddenAttribute | SizeAttribute | ExistsAttribute,
 
         // Times
         CreationTime        = 0x01000000,   // Note: overlaps with QAbstractFileEngine::Refresh
@@ -122,24 +128,24 @@ public:
     };
     Q_DECLARE_FLAGS(MetaDataFlags, MetaDataFlag)
 
-    bool hasFlags(MetaDataFlags flags) const
+    inline bool hasFlags(MetaDataFlags flags) const
     {
-        return ((knownFlagsMask & flags) == flags);
+        return ((entryFlags & flags) == flags);
     }
 
-    MetaDataFlags missingFlags(MetaDataFlags flags)
+    inline MetaDataFlags missingFlags(MetaDataFlags flags)
     {
-        return flags & ~knownFlagsMask;
+        return flags & ~entryFlags;
     }
 
-    void clear()
+    inline void clear()
     {
-        knownFlagsMask = 0;
+        entryFlags = 0;
     }
 
-    void clearFlags(MetaDataFlags flags = AllMetaDataFlags)
+    inline void clearFlags(MetaDataFlags flags = AllMetaDataFlags)
     {
-        knownFlagsMask &= ~flags;
+        entryFlags &= ~flags;
     }
 
     inline bool exists() const                    { return (entryFlags & ExistsAttribute); }
@@ -167,7 +173,6 @@ public:
 private:
     friend class QFileSystemEngine;
 
-    MetaDataFlags knownFlagsMask;
     MetaDataFlags entryFlags;
 
     qint64 size_;

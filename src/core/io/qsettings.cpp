@@ -46,12 +46,9 @@
 #include "qsettings_p.h"
 #include "qfile.h"
 #include "qdir.h"
-
-#ifndef QT_NO_GEOM_VARIANT
 #include "qsize.h"
 #include "qpoint.h"
 #include "qrect.h"
-#endif // !QT_NO_GEOM_VARIANT
 
 QT_BEGIN_NAMESPACE
 
@@ -255,7 +252,7 @@ static QString getSettingsPath(QSettings::Scope scope, const QString &filename, 
 }
 
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope scope)
-    : format(format), scope(scope), status(QSettings::NoError)
+    : format(format), scope(scope), status(QSettings::NoError), shouldwrite(false)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(scope, QCoreApplication::applicationName(), handler.extension);
@@ -264,7 +261,7 @@ QSettingsPrivate::QSettingsPrivate(QSettings::Format format, QSettings::Scope sc
 }
 
 QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
-    : format(format), scope(QSettings::UserScope), status(QSettings::NoError)
+    : format(format), scope(QSettings::UserScope), status(QSettings::NoError), shouldwrite(false)
 {
     QSettingsCustomFormat handler = getSettingsFormat(format);
     filename = getSettingsPath(scope, fileName, handler.extension);
@@ -278,10 +275,10 @@ QSettingsPrivate::~QSettingsPrivate()
 
 void QSettingsPrivate::read()
 {
-    QFileInfo info(filename);
-    if (!info.isReadable() || info.size() == 0) {
+    QFileInfo fileinfo(filename);
+    if (!fileinfo.isReadable() || fileinfo.size() == 0) {
         status = QSettings::AccessError;
-        // no warning, info.exists() may return false if not readable
+        // no warning, fileinfo.exists() may return false if not readable
         return;
     }
 
@@ -298,26 +295,12 @@ void QSettingsPrivate::read()
         qWarning("QSettingsPrivate::read: could not read %s", filename.toLocal8Bit().constData());
         return;
     }
-
-    timestamp = info.lastModified();
 }
 
 void QSettingsPrivate::write()
 {
-    if (pending.isEmpty()) {
+    if (!shouldwrite) {
         return;
-    }
-
-    QFileInfo info(filename);
-    const QDateTime newstamp = info.lastModified();
-    if (timestamp < newstamp || !newstamp.isValid()) {
-        QSettingsPrivate::read();
-    }
-
-    foreach (const QString &key, map.keys()) {
-        if (!pending.contains(key)) {
-            pending.insert(key, map.value(key));
-        }
     }
 
     int fd = QT_OPEN(filename.toLocal8Bit().constData(), QT_OPEN_WRONLY | QT_OPEN_CREAT, 0666);
@@ -328,24 +311,23 @@ void QSettingsPrivate::write()
         return;
     }
 
-    if (Q_UNLIKELY(!writeFunc(file, pending))) {
+    if (Q_UNLIKELY(!writeFunc(file, map))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::write: could not write %s", filename.toLocal8Bit().constData());
         return;
     }
-
-    pending.clear();
 }
 
 void QSettingsPrivate::notify()
 {
     Q_Q(QSettings);
     QMutexLocker locker(qSettingsMutex());
+    shouldwrite = true;
     for (int i = 0; i < qGlobalSettings()->size(); i++) {
         QSettings *setting = qGlobalSettings()->at(i);
         if (setting != q && setting->fileName() == q->fileName()) {
             setting->d_func()->map = map;
-            setting->d_func()->pending = pending;
+            setting->d_func()->shouldwrite = false;
         }
     }
 }
@@ -384,7 +366,6 @@ QString QSettingsPrivate::variantToString(const QVariant &v)
                 result.prepend(QLatin1Char('@'));
             return result;
         }
-#ifndef QT_NO_GEOM_VARIANT
         case QVariant::Rect: {
             QRect r = qvariant_cast<QRect>(v);
             QString result = QLatin1String("@Rect(");
@@ -416,7 +397,6 @@ QString QSettingsPrivate::variantToString(const QVariant &v)
             result += QLatin1Char(')');
             return result;
         }
-#endif // !QT_NO_GEOM_VARIANT
 
         default: {
 #ifndef QT_NO_DATASTREAM
@@ -456,7 +436,6 @@ QVariant QSettingsPrivate::stringToVariant(const QString &s)
 #else
                 Q_ASSERT(!"QSettings: Cannot load custom types without QDataStream support");
 #endif
-#ifndef QT_NO_GEOM_VARIANT
             } else if (s.startsWith(QLatin1String("@Rect("))) {
                 QStringList args = QSettingsPrivate::splitArgs(s, 5);
                 if (args.size() == 4)
@@ -469,7 +448,6 @@ QVariant QSettingsPrivate::stringToVariant(const QString &s)
                 QStringList args = QSettingsPrivate::splitArgs(s, 6);
                 if (args.size() == 2)
                     return QVariant(QPoint(args[0].toInt(), args[1].toInt()));
-#endif
             } else if (s == QLatin1String("@Invalid()")) {
                 return QVariant();
             }
@@ -871,7 +849,6 @@ void QSettings::clear()
 {
     Q_D(QSettings);
     d->map.clear();
-    d->pending.clear();
     d->notify();
 }
 
@@ -970,13 +947,6 @@ QSettings::SettingsMap QSettings::map() const
 QStringList QSettings::keys() const
 {
     Q_D(const QSettings);
-    if (!d->pending.isEmpty()) {
-        QStringList mapkeys = d->map.keys();
-        foreach(const QString &key, d->pending.keys()) {
-            mapkeys.append(key);
-        }
-        return mapkeys;
-    }
     return d->map.keys();
 }
 
@@ -1085,12 +1055,12 @@ QStringList QSettings::groupKeys() const
 bool QSettings::isWritable() const
 {
     Q_D(const QSettings);
-    QFileInfo info(d->filename);
-    if (info.isWritable()) {
+    QFileInfo fileinfo(d->filename);
+    if (fileinfo.isWritable()) {
         return true;
     }
     // if the file does not exist, check if it can be created
-    QFileInfo dirinfo(info.absolutePath());
+    QFileInfo dirinfo(fileinfo.absolutePath());
     return dirinfo.isWritable();
 }
 
@@ -1104,7 +1074,7 @@ bool QSettings::isWritable() const
 void QSettings::setValue(const QString &key, const QVariant &value)
 {
     Q_D(QSettings);
-    d->pending.insert(d->toGroupKey(key), value);
+    d->map.insert(d->toGroupKey(key), value);
     d->notify();
 }
 
@@ -1122,11 +1092,6 @@ void QSettings::remove(const QString &key)
             d->map.remove(key);
         }
     }
-    foreach(const QString &key, d->pending.keys()) {
-        if (key.startsWith(groupkey)) {
-            d->pending.remove(key);
-        }
-    }
     d->notify();
 }
 
@@ -1139,8 +1104,7 @@ void QSettings::remove(const QString &key)
 bool QSettings::contains(const QString &key) const
 {
     Q_D(const QSettings);
-    const QString groupkey = d->toGroupKey(key);
-    return (d->map.contains(groupkey) || d->pending.contains(groupkey));
+    return d->map.contains(d->toGroupKey(key));
 }
 
 /*!
@@ -1155,11 +1119,7 @@ bool QSettings::contains(const QString &key) const
 QVariant QSettings::value(const QString &key, const QVariant &defaultValue) const
 {
     Q_D(const QSettings);
-    const QString groupkey = d->toGroupKey(key);
-    if (d->pending.contains(groupkey)) {
-        return d->pending.value(groupkey);
-    }
-    return d->map.value(groupkey, defaultValue);
+    return d->map.value(d->toGroupKey(key), defaultValue);
 }
 
 /*!

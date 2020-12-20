@@ -491,7 +491,6 @@ QHash<QByteArray, QByteArray> QAuthenticatorPrivate::parseDigestAuthenticationCh
             ++d;
         if (d >= end)
             break;
-        start = d;
         QByteArray value;
         while (d < end) {
             bool backslash = false;

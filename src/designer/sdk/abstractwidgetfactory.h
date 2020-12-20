@@ -34,7 +34,6 @@
 #ifndef ABSTRACTWIDGETFACTORY_H
 #define ABSTRACTWIDGETFACTORY_H
 
-#include <QtDesigner/sdk_global.h>
 #include <QtCore/QObject>
 
 QT_BEGIN_HEADER
@@ -45,7 +44,7 @@ class QDesignerFormEditorInterface;
 class QWidget;
 class QLayout;
 
-class QDESIGNER_SDK_EXPORT QDesignerWidgetFactoryInterface: public QObject
+class Q_DESIGNER_EXPORT QDesignerWidgetFactoryInterface: public QObject
 {
     Q_OBJECT
 public:

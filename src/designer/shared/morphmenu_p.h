@@ -45,7 +45,6 @@
 #ifndef MORPH_COMMAND_H
 #define MORPH_COMMAND_H
 
-#include "shared_global_p.h"
 #include "qdesigner_formwindowcommand_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -57,7 +56,7 @@ class QMenu;
 namespace qdesigner_internal {
 
 /* Conveniene morph menu that acts on a single widget. */
-class QDESIGNER_SHARED_EXPORT MorphMenu : public QObject {
+class Q_DESIGNER_EXPORT MorphMenu : public QObject {
     Q_DISABLE_COPY(MorphMenu)
     Q_OBJECT
 public:

@@ -34,7 +34,7 @@
 #ifndef ABSTRACTDNDITEM_H
 #define ABSTRACTDNDITEM_H
 
-#include <QtDesigner/sdk_global.h>
+#include <QtCore/qglobal.h>
 
 QT_BEGIN_HEADER
 
@@ -44,7 +44,7 @@ class DomUI;
 class QWidget;
 class QPoint;
 
-class QDESIGNER_SDK_EXPORT QDesignerDnDItemInterface
+class Q_DESIGNER_EXPORT QDesignerDnDItemInterface
 {
 public:
     enum DropType { MoveDrop, CopyDrop };

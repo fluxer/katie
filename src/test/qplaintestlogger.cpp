@@ -31,14 +31,14 @@
 **
 ****************************************************************************/
 
-#include "QtTest/qtestresult_p.h"
-#include "QtTest/qtestassert.h"
-#include "QtTest/qtestlog_p.h"
-#include "QtTest/qplaintestlogger_p.h"
-#include "QtTest/qbenchmark_p.h"
-#include "QtTest/qbenchmarkmetric_p.h"
-#include <QtCore/QByteArray>
-#include <QtCore/qmath.h>
+#include "qtestresult_p.h"
+#include "qtestassert.h"
+#include "qtestlog_p.h"
+#include "qplaintestlogger_p.h"
+#include "qbenchmark_p.h"
+#include "qbenchmarkmetric_p.h"
+#include "qbytearray.h"
+#include "qmath.h"
 
 #include <stdarg.h>
 #include <stdio.h>

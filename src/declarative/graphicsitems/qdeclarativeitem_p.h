@@ -549,15 +549,7 @@ Q_SIGNALS:
     void backPressed(QDeclarativeKeyEvent *event);
     void cancelPressed(QDeclarativeKeyEvent *event);
     void selectPressed(QDeclarativeKeyEvent *event);
-    void yesPressed(QDeclarativeKeyEvent *event);
-    void noPressed(QDeclarativeKeyEvent *event);
-    void context1Pressed(QDeclarativeKeyEvent *event);
-    void context2Pressed(QDeclarativeKeyEvent *event);
-    void context3Pressed(QDeclarativeKeyEvent *event);
-    void context4Pressed(QDeclarativeKeyEvent *event);
     void callPressed(QDeclarativeKeyEvent *event);
-    void hangupPressed(QDeclarativeKeyEvent *event);
-    void flipPressed(QDeclarativeKeyEvent *event);
     void menuPressed(QDeclarativeKeyEvent *event);
     void volumeUpPressed(QDeclarativeKeyEvent *event);
     void volumeDownPressed(QDeclarativeKeyEvent *event);

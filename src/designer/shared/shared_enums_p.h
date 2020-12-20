@@ -45,7 +45,7 @@
 #ifndef SHAREDENUMS_H
 #define SHAREDENUMS_H
 
-#include "shared_global_p.h"
+#include "qglobal.h"
 
 QT_BEGIN_NAMESPACE
 

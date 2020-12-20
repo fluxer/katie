@@ -226,7 +226,8 @@ static HB_Error  Load_SingleSubst( HB_GSUB_SubTable* st,
     break;
 
   default:
-    return ERR(HB_Err_Invalid_SubTable_Format);
+    error = ERR(HB_Err_Invalid_SubTable_Format);
+    goto Fail2;
   }
 
   return HB_Err_Ok;

@@ -122,13 +122,13 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
                     do {
                         switch (type) {
                         case 0: // read
-                            ret = select(sn->fd + 1, &fdset, 0, 0, &tm);
+                            ret = ::select(sn->fd + 1, &fdset, 0, 0, &tm);
                             break;
                         case 1: // write
-                            ret = select(sn->fd + 1, 0, &fdset, 0, &tm);
+                            ret = ::select(sn->fd + 1, 0, &fdset, 0, &tm);
                             break;
                         case 2: // except
-                            ret = select(sn->fd + 1, 0, 0, &fdset, &tm);
+                            ret = ::select(sn->fd + 1, 0, 0, &fdset, &tm);
                             break;
                         }
                     } while (ret == -1 && (errno == EINTR || errno == EAGAIN));
@@ -206,8 +206,8 @@ QTimerInfoList::QTimerInfoList()
         // not using monotonic timers, initialize the timeChanged() machinery
         previousTime = qt_gettime();
 
-        tms unused;
-        previousTicks = times(&unused);
+        struct tms unused;
+        previousTicks = ::times(&unused);
 
         ticksPerSecond = sysconf(_SC_CLK_TCK);
         msPerTick = 1000/ticksPerSecond;

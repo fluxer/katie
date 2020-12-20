@@ -1046,8 +1046,7 @@ int QMetaObjectBuilder::indexOfClassInfo(const QByteArray& name)
 
 // Build a string into a QMetaObject representation.  Returns the
 // position in the string table where the string was placed.
-static int buildString
-    (char *buf, char *str, int *offset, const QByteArray& value, int empty)
+static int buildString(char *buf, char *str, int *offset, const QByteArray& value, int empty)
 {
     if (value.size() == 0 && empty >= 0)
         return empty;

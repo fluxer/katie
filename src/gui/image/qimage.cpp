@@ -483,36 +483,6 @@ bool QImageData::checkForAlphaPixels() const
 
     \endtable
 
-    \section1 Legal Information
-
-    For smooth scaling, the transformed() functions use code based on
-    smooth scaling algorithm by Daniel M. Duley.
-
-    \legalese
-     Copyright (C) 2004, 2005 Daniel M. Duley
-
-     Redistribution and use in source and binary forms, with or without
-        modification, are permitted provided that the following conditions
-        are met:
-
-     1. Redistributions of source code must retain the above copyright
-        notice, this list of conditions and the following disclaimer.
-     2. Redistributions in binary form must reproduce the above copyright
-        notice, this list of conditions and the following disclaimer in the
-        documentation and/or other materials provided with the distribution.
-
-     THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
-     IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-     OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-     IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
-     INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-     DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-     THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-     THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-    \endlegalese
-
     \sa QImageReader, QImageWriter, QPixmap, QSvgRenderer, {Image Composition Example},
         {Image Viewer Example}, {Scribble Example}, {Pixelator Example}
 */
@@ -688,8 +658,7 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
         || INT_MAX/uint(bpl) < uint(height))
         return Q_NULLPTR;                                        // invalid parameter(s)
 
-    QImageData *d = new QImageData;
-    d->ref.ref();
+    QScopedPointer<QImageData> d(new QImageData);
 
     d->own_data = false;
     d->ro_data = readOnly;
@@ -702,7 +671,8 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
     d->bytes_per_line = bpl;
     d->nbytes = d->bytes_per_line * height;
 
-    return d;
+    d->ref.ref();
+    return d.take();
 }
 
 /*!
@@ -2321,7 +2291,7 @@ static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::
                     if (y+1 < src->height) {
                         for (int i = 0; i < src->width; i++) {
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
-                            l2[i] = q2[i*4+chan+endian];
+                            l2[i] = q2[i*4+chan+1];
 #else
                             l2[i] = q2[i*4+chan];
 #endif

@@ -34,7 +34,6 @@
 #ifndef QEXTENSIONMANAGER_H
 #define QEXTENSIONMANAGER_H
 
-#include <QtDesigner/extension_global.h>
 #include <QtDesigner/extension.h>
 #include <QtCore/QHash>
 
@@ -42,7 +41,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QDESIGNER_EXTENSION_EXPORT QExtensionManager: public QObject, public QAbstractExtensionManager
+class Q_DESIGNER_EXPORT QExtensionManager: public QObject, public QAbstractExtensionManager
 {
     Q_OBJECT
     Q_INTERFACES(QAbstractExtensionManager)

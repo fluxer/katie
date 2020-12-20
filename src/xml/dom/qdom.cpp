@@ -4812,20 +4812,20 @@ void QDomElement::setAttribute(const QString& name, const QString& value)
   \fn void QDomElement::setAttribute(const QString& name, int value)
 
     \overload
-    The number is formatted according to the current locale.
+    The number is formatted according to the C locale.
 */
 
 /*!
   \fn void QDomElement::setAttribute(const QString& name, uint value)
 
     \overload
-    The number is formatted according to the current locale.
+    The number is formatted according to the C locale.
 */
 
 /*!
     \overload
 
-    The number is formatted according to the current locale.
+    The number is formatted according to the C locale.
 */
 void QDomElement::setAttribute(const QString& name, qlonglong value)
 {
@@ -4837,7 +4837,7 @@ void QDomElement::setAttribute(const QString& name, qlonglong value)
 /*!
     \overload
 
-    The number is formatted according to the current locale.
+    The number is formatted according to the C locale.
 */
 void QDomElement::setAttribute(const QString& name, qulonglong value)
 {
@@ -4849,25 +4849,25 @@ void QDomElement::setAttribute(const QString& name, qulonglong value)
 /*!
     \overload
 
-    The number is formatted according to the current locale.
+    The number is formatted according to the C locale.
 */
 void QDomElement::setAttribute(const QString& name, float value)
 {
     if (!impl)
         return;
-    IMPL->setAttribute(name, QString::number(value));
+    IMPL->setAttribute(name, QString::number(value, 'e'));
 }
 
 /*!
     \overload
 
-    The number is formatted according to the current locale.
+    The number is formatted according to the C locale.
 */
 void QDomElement::setAttribute(const QString& name, double value)
 {
     if (!impl)
         return;
-    IMPL->setAttribute(name, QString::number(value));
+    IMPL->setAttribute(name, QString::number(value, 'e'));
 }
 
 /*!
@@ -5030,7 +5030,7 @@ void QDomElement::setAttributeNS(const QString& nsURI, const QString& qName, dou
 {
     if (!impl)
         return;
-    IMPL->setAttributeNS(nsURI, qName, QString::number(value));
+    IMPL->setAttributeNS(nsURI, qName, QString::number(value, 'e'));
 }
 
 /*!
@@ -6418,7 +6418,7 @@ void QDomDocumentPrivate::saveDocument(QTextStream& s, const int indent, QDomNod
             if (enc.isEmpty())
                 enc = encoding.cap(5);
             if (!enc.isEmpty())
-                codec = QTextCodec::codecForName(enc.toLatin1().data());
+                codec = QTextCodec::codecForName(enc.toLatin1());
         }
         if (!codec)
             codec = QTextCodec::codecForName("UTF-8");

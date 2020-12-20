@@ -788,7 +788,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
         setNetWmWindowTypes();
 
         // set _NET_WM_PID
-        long curr_pid = getpid();
+        long curr_pid = ::getpid();
         XChangeProperty(dpy, id, ATOM(_NET_WM_PID), XA_CARDINAL, 32, PropModeReplace,
                         (unsigned char *) &curr_pid, 1);
 

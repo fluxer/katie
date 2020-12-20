@@ -104,19 +104,18 @@
 #include "qsslcertificate_p.h"
 #include "qsslkey.h"
 #include "qsslkey_p.h"
-
-#include <QtCore/qatomic.h>
-#include <QtCore/qdatetime.h>
-#include <QtCore/qdebug.h>
-#include <QtCore/qdir.h>
-#include <QtCore/qdiriterator.h>
-#include <QtCore/qfile.h>
-#include <QtCore/qfileinfo.h>
-#include <QtCore/qmap.h>
-#include <QtCore/qmutex.h>
-#include <QtCore/qmutexpool_p.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qstringlist.h>
+#include "qatomic.h"
+#include "qdatetime.h"
+#include "qdebug.h"
+#include "qdir.h"
+#include "qdiriterator.h"
+#include "qfile.h"
+#include "qfileinfo.h"
+#include "qmap.h"
+#include "qmutex.h"
+#include "qmutexpool_p.h"
+#include "qstring.h"
+#include "qstringlist.h"
 
 QT_BEGIN_NAMESPACE
 

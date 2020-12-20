@@ -1,11 +1,13 @@
 # $FreeBSD$
 
+# https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/
+
 PORTNAME = katie
-DISTVERSION = 4.9.0.20200114
+DISTVERSION = 4.9.1.d20201217
 CATEGORIES = devel x11 ftp net www
 MAINTAINER = xakepa10@gmail.com
 COMMENT = C++ toolkit derived from the Qt 4.8 framework
-LICENSE = KATIE BSD3CLAUSE LGPL21+ GFDL
+LICENSE = KATIE BSD3CLAUSE LGPL21+
 LICENSE_COMB = multi
 LICENSE_NAME_KATIE = The Qt Company Qt LGPL Exception version 1.1
 LICENSE_FILE_KATIE = ${WRKDIR}/katie-master/LGPL_EXCEPTION.txt
@@ -26,8 +28,12 @@ LIB_DEPENDS = libzstd.so:archivers/zstd libicuuc.so:devel/icu libicui18n.so:deve
 	libiodbc.so:databases/libiodbc
 CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 
-OPTIONS_DEFINE = MYSQL PGSQL
+OPTIONS_DEFINE = NLS MYSQL PGSQL
 OPTIONS_SUB = yes
+NLS_DESC = Build translator and translations
+NLS_USES = gettext
+NLS_CMAKE_ON = -DWITH_INTL=TRUE
+NLS_CMAKE_OFF = -DWITH_INTL=FALSE
 MYSQL_DESC = Build MySQL database plugin
 MYSQL_USES = mysql
 MYSQL_CMAKE_ON = -DWITH_MYSQL=TRUE
@@ -35,7 +41,7 @@ MYSQL_CMAKE_OFF = -DWITH_MYSQL=FALSE
 PGSQL_DESC = Build PostgreSQL database plugin
 PGSQL_USES = pgsql
 WANT_PGSQL = client
-PGSQL_CMAKE_ON = -DWITH_PSQL=TRUE
-PGSQL_CMAKE_OFF = -DWITH_PSQL=FALSE
+PGSQL_CMAKE_ON = -DWITH_POSTGRESQL=TRUE
+PGSQL_CMAKE_OFF = -DWITH_POSTGRESQL=FALSE
 
-.include <bsd.port.mk> 
+.include <bsd.port.mk>

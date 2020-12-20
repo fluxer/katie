@@ -615,10 +615,10 @@ size_t Structure::removePropertyWithoutTransition(const Identifier& propertyName
 
 #if DUMP_PROPERTYMAP_STATS
 
-static int numProbes;
-static int numCollisions;
-static int numRehashes;
-static int numRemoves;
+static int numProbes = 0;
+static int numCollisions = 0;
+static int numRehashes = 0;
+static int numRemoves = 0;
 
 struct PropertyMapStatisticsExitLogger {
     ~PropertyMapStatisticsExitLogger();

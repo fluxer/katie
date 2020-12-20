@@ -31,21 +31,14 @@
 #include <QDataStream>
 
 namespace WTF {
-    // WTF_ALIGN_OF / WTF_ALIGNED
-    #if COMPILER(GCC)
-        #define WTF_ALIGN_OF(type) __alignof__(type)
-        #define WTF_ALIGNED(variable_type, variable, n) variable_type variable __attribute__((__aligned__(n)))
+    #define WTF_ALIGNED(variable_type, variable, n) variable_type variable Q_DECL_ALIGN(n)
+
+    #if defined(Q_CC_GNU)
+    typedef char __attribute__((__may_alias__)) AlignedBufferChar;
     #else
-        #define WTF_ALIGN_OF(type)   0
+    typedef char AlignedBufferChar;
     #endif
 
-    #if COMPILER(GCC) && !COMPILER(INTEL)
-        typedef char __attribute__((__may_alias__)) AlignedBufferChar; 
-    #else
-        typedef char AlignedBufferChar; 
-    #endif
-
-    #ifdef WTF_ALIGNED
     template <size_t size, size_t alignment> struct AlignedBuffer;
     template <size_t size> struct AlignedBuffer<size, 1> { AlignedBufferChar buffer[size]; };
     template <size_t size> struct AlignedBuffer<size, 2> { WTF_ALIGNED(AlignedBufferChar, buffer[size], 2);  };
@@ -54,18 +47,6 @@ namespace WTF {
     template <size_t size> struct AlignedBuffer<size, 16> { WTF_ALIGNED(AlignedBufferChar, buffer[size], 16); };
     template <size_t size> struct AlignedBuffer<size, 32> { WTF_ALIGNED(AlignedBufferChar, buffer[size], 32); };
     template <size_t size> struct AlignedBuffer<size, 64> { WTF_ALIGNED(AlignedBufferChar, buffer[size], 64); };
-    #else
-    template <size_t size, size_t> struct AlignedBuffer
-    {
-        AlignedBufferChar oversizebuffer[size + 64];
-        AlignedBufferChar *buffer()
-        {
-            AlignedBufferChar *ptr = oversizebuffer;
-            ptr += 64 - (reinterpret_cast<size_t>(ptr) & 0x3f);
-            return ptr;
-        }
-    };
-    #endif
 
     template <size_t size, size_t alignment>
     void swap(AlignedBuffer<size, alignment>& a, AlignedBuffer<size, alignment>& b)
@@ -466,7 +447,7 @@ namespace WTF {
         T* inlineBuffer() { return reinterpret_cast<T*>(m_inlineBuffer.buffer()); }
         #endif
 
-        AlignedBuffer<m_inlineBufferSize, WTF_ALIGN_OF(T)> m_inlineBuffer;
+        AlignedBuffer<m_inlineBufferSize, Q_ALIGNOF(T)> m_inlineBuffer;
     };
 
     template<typename T, size_t inlineCapacity = 0>

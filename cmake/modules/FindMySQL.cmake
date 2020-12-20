@@ -9,8 +9,10 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-# Only MariaDB provides pkg-config files and only in recent versions
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
+# Only MariaDB provides pkg-config files and only in recent versions
 pkg_check_modules(PC_MYSQL QUIET libmariadb)
 
 # However, both provide config program
@@ -38,8 +40,7 @@ if(MYSQL_CONFIG)
         OUTPUT_VARIABLE MYSQL_VERSION
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    # just in case, MYSQL_VERSION is not critical
-    if(NOT procerror1 STREQUAL "0" OR NOT proceerror2 STREQUAL "0")
+    if(NOT procerror1 STREQUAL "0" OR NOT proceerror2 STREQUAL "0" OR NOT proceerror3 STREQUAL "0")
         set(MYSQL_INCLUDES)
         set(MYSQL_LIBRARIES)
         set(MYSQL_VERSION)
@@ -59,7 +60,6 @@ if(NOT MYSQL_INCLUDES OR NOT MYSQL_LIBRARIES)
     )
 endif()
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(MySQL
     VERSION_VAR MYSQL_VERSION
     REQUIRED_VARS MYSQL_LIBRARIES MYSQL_INCLUDES

@@ -45,9 +45,8 @@
 // We mean it.
 //
 
-#include <QtCore/qelapsedtimer.h>
+#include "qelapsedtimer.h"
 #include "qbenchmark.h"
-#include "3rdparty/fftw/cycle.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -76,8 +75,7 @@ private:
     QElapsedTimer time;
 };
 
-#ifdef HAVE_TICK_COUNTER // defined in 3rdparty/cycle_p.h
-
+#ifdef QT_HAVE_CLOCK_GETTIME
 class QBenchmarkTickMeasurer : public QBenchmarkMeasurerBase
 {
 public:
@@ -88,9 +86,8 @@ public:
     bool needsWarmupIteration();
     QTest::QBenchmarkMetric metricType();
 private:
-    ticks startTicks;
+    qint64 startTicks;
 };
-
 #endif
 
 QT_END_NAMESPACE

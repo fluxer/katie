@@ -144,6 +144,7 @@ static inline int bm_find(const ushort *uc, uint l, int index, const ushort *puc
 QStringMatcher::QStringMatcher()
     : q_cs(Qt::CaseSensitive)
 {
+    ::memset(q_skiptable, 0, sizeof(q_skiptable));
 }
 
 /*!
@@ -155,9 +156,7 @@ QStringMatcher::QStringMatcher()
 QStringMatcher::QStringMatcher(const QString &pattern, Qt::CaseSensitivity cs)
     : q_pattern(pattern), q_cs(cs)
 {
-    p.uc = pattern.unicode();
-    p.len = pattern.size();
-    bm_init_skiptable((const ushort *)p.uc, p.len, p.q_skiptable, cs);
+    bm_init_skiptable((const ushort *)pattern.unicode(), pattern.size(), q_skiptable, cs);
 }
 
 /*!
@@ -168,11 +167,9 @@ QStringMatcher::QStringMatcher(const QString &pattern, Qt::CaseSensitivity cs)
     by \a uc with the given \a length and case sensitivity specified by \a cs.
 */
 QStringMatcher::QStringMatcher(const QChar *uc, int len, Qt::CaseSensitivity cs)
-    : q_cs(cs)
+    : q_pattern(QString(uc, len)), q_cs(cs)
 {
-    p.uc = uc;
-    p.len = len;
-    bm_init_skiptable((const ushort *)p.uc, len, p.q_skiptable, cs);
+    bm_init_skiptable((const ushort *)uc, len, q_skiptable, cs);
 }
 
 /*!
@@ -198,6 +195,7 @@ QStringMatcher &QStringMatcher::operator=(const QStringMatcher &other)
     if (this != &other) {
         q_pattern = other.q_pattern;
         q_cs = other.q_cs;
+        ::memcpy(&q_skiptable, &other.q_skiptable, sizeof(q_skiptable));
     }
     return *this;
 }
@@ -211,9 +209,7 @@ QStringMatcher &QStringMatcher::operator=(const QStringMatcher &other)
 void QStringMatcher::setPattern(const QString &pattern)
 {
     q_pattern = pattern;
-    p.uc = pattern.unicode();
-    p.len = pattern.size();
-    bm_init_skiptable((const ushort *)p.uc, pattern.size(), p.q_skiptable, q_cs);
+    bm_init_skiptable((const ushort *)pattern.unicode(), pattern.size(), q_skiptable, q_cs);
 }
 
 /*!
@@ -227,9 +223,7 @@ void QStringMatcher::setPattern(const QString &pattern)
 
 QString QStringMatcher::pattern() const
 {
-    if (!q_pattern.isEmpty())
-        return q_pattern;
-    return QString(p.uc, p.len);
+    return q_pattern;
 }
 
 /*!
@@ -242,7 +236,7 @@ void QStringMatcher::setCaseSensitivity(Qt::CaseSensitivity cs)
 {
     if (cs == q_cs)
         return;
-    bm_init_skiptable((const ushort *)q_pattern.unicode(), q_pattern.size(), p.q_skiptable, cs);
+    bm_init_skiptable((const ushort *)q_pattern.unicode(), q_pattern.size(), q_skiptable, cs);
     q_cs = cs;
 }
 
@@ -260,8 +254,8 @@ int QStringMatcher::indexIn(const QString &str, int from) const
     if (from < 0)
         from = 0;
     return bm_find((const ushort *)str.unicode(), str.size(), from,
-                   (const ushort *)p.uc, p.len,
-                   p.q_skiptable, q_cs);
+                   (const ushort *)q_pattern.unicode(), q_pattern.size(),
+                   q_skiptable, q_cs);
 }
 
 /*!
@@ -281,8 +275,8 @@ int QStringMatcher::indexIn(const QChar *str, int length, int from) const
     if (from < 0)
         from = 0;
     return bm_find((const ushort *)str, length, from,
-                   (const ushort *)p.uc, p.len,
-                   p.q_skiptable, q_cs);
+                   (const ushort *)q_pattern.unicode(), q_pattern.size(),
+                   q_skiptable, q_cs);
 }
 
 /*!

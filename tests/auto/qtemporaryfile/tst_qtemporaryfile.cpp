@@ -326,7 +326,7 @@ void tst_QTemporaryFile::renameFdLeak()
         fd = file.handle();
 
         // rename the file to something
-        QString newPath = QDir::tempPath() + "/tst_qtemporaryfile-renameFdLeak-" + QString::number(getpid());
+        QString newPath = QDir::tempPath() + "/tst_qtemporaryfile-renameFdLeak-" + QString::number(::getpid());
         file.rename(newPath);
         QFile::remove(newPath);
     }

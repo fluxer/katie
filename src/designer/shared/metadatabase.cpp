@@ -212,7 +212,7 @@ void MetaDataBase::slotDestroyed(QObject *object)
 }
 
 // promotion convenience
-QDESIGNER_SHARED_EXPORT bool promoteWidget(QDesignerFormEditorInterface *core,QWidget *widget,const QString &customClassName)
+Q_DESIGNER_EXPORT bool promoteWidget(QDesignerFormEditorInterface *core,QWidget *widget,const QString &customClassName)
 {
 
     MetaDataBase *db = qobject_cast<MetaDataBase *>(core->metaDataBase());
@@ -236,7 +236,7 @@ QDESIGNER_SHARED_EXPORT bool promoteWidget(QDesignerFormEditorInterface *core,QW
     return true;
 }
 
-QDESIGNER_SHARED_EXPORT void demoteWidget(QDesignerFormEditorInterface *core,QWidget *widget)
+Q_DESIGNER_EXPORT void demoteWidget(QDesignerFormEditorInterface *core,QWidget *widget)
 {
     MetaDataBase *db = qobject_cast<MetaDataBase *>(core->metaDataBase());
     if (!db)
@@ -248,7 +248,7 @@ QDESIGNER_SHARED_EXPORT void demoteWidget(QDesignerFormEditorInterface *core,QWi
     }
 }
 
-QDESIGNER_SHARED_EXPORT bool isPromoted(QDesignerFormEditorInterface *core, QWidget* widget)
+Q_DESIGNER_EXPORT bool isPromoted(QDesignerFormEditorInterface *core, QWidget* widget)
 {
     const MetaDataBase *db = qobject_cast<const MetaDataBase *>(core->metaDataBase());
     if (!db)
@@ -259,7 +259,7 @@ QDESIGNER_SHARED_EXPORT bool isPromoted(QDesignerFormEditorInterface *core, QWid
     return !item->customClassName().isEmpty();
 }
 
-QDESIGNER_SHARED_EXPORT QString promotedCustomClassName(QDesignerFormEditorInterface *core, QWidget* widget)
+Q_DESIGNER_EXPORT QString promotedCustomClassName(QDesignerFormEditorInterface *core, QWidget* widget)
 {
     const MetaDataBase *db = qobject_cast<const MetaDataBase *>(core->metaDataBase());
     if (!db)
@@ -270,7 +270,7 @@ QDESIGNER_SHARED_EXPORT QString promotedCustomClassName(QDesignerFormEditorInter
     return item->customClassName();
 }
  
-QDESIGNER_SHARED_EXPORT QString promotedExtends(QDesignerFormEditorInterface *core, QWidget* widget)
+Q_DESIGNER_EXPORT QString promotedExtends(QDesignerFormEditorInterface *core, QWidget* widget)
 {
     const QString customClassName = promotedCustomClassName(core,widget);
     if (customClassName.isEmpty())

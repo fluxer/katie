@@ -39,8 +39,6 @@
 #include <QtCore/qstringlist.h>
 #include <QtCore/qcoreapplication.h>
 #include <QtCore/qmutex.h>
-#include <QtCore/qthread.h>
-#include <QtCore/qcoreapplication_p.h>
 
 #ifndef QT_NO_BEARERMANAGEMENT
 
@@ -74,18 +72,8 @@ static QNetworkConfigurationManagerPrivate *connManager()
         if (!(ptr = connManager_ptr.fetchAndAddAcquire(0))) {
             ptr = new QNetworkConfigurationManagerPrivate;
 
-            if (QCoreApplicationPrivate::mainThread() == QThread::currentThread()) {
-                // right thread or no main thread yet
-                ptr->addPostRoutine();
-                ptr->initialize();
-            } else {
-                // wrong thread, we need to make the main thread do this
-                QObject *obj = new QObject;
-                QObject::connect(obj, SIGNAL(destroyed()), ptr, SLOT(addPostRoutine()), Qt::DirectConnection);
-                ptr->initialize(); // this moves us to the right thread
-                obj->moveToThread(QCoreApplicationPrivate::mainThread());
-                obj->deleteLater();
-            }
+            ptr->addPostRoutine();
+            ptr->initialize();
 
             connManager_ptr.fetchAndStoreRelease(ptr);
         }

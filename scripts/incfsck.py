@@ -207,7 +207,6 @@ incmap = {
         'QDragEnterEvent': 'qevent.h',
         'QDragLeaveEvent': 'qevent.h',
         'QDragMoveEvent': 'qevent.h',
-        'QDragResponseEvent': 'qevent.h',
         'QDropEvent': 'qevent.h',
         'QFocusEvent': 'qevent.h',
         'QFontMetricsF': 'qfontmetrics.h',

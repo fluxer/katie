@@ -37,6 +37,7 @@
 #include "qvariant.h"
 #include "qwidget_p.h"
 #include "qx11info_x11.h"
+
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE
@@ -182,7 +183,8 @@ void QDesktopWidgetPrivate::init()
 
     if (screens) {
         // leaks QWidget* pointers on purpose, can't delete them as pointer escapes
-        screens = q_check_ptr((QWidget**) realloc(screens, j * sizeof(QWidget*)));
+        screens = (QWidget**)::realloc(screens, j * sizeof(QWidget*));
+        Q_CHECK_PTR(screens);
         if (j > screenCount)
             memset(&screens[screenCount], 0, (j-screenCount) * sizeof(QWidget*));
     }

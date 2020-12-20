@@ -58,7 +58,6 @@
 #include "qeventdispatcher_unix_p.h"
 
 #include <stdlib.h>
-#include <locale.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -157,7 +156,6 @@ Q_CORE_EXPORT uint qGlobalPostedEventsCount()
 }
 
 QCoreApplication *QCoreApplication::self = 0;
-QAbstractEventDispatcher *QCoreApplicationPrivate::eventDispatcher = 0;
 std::bitset<Qt::AA_AttributeCount> QCoreApplicationPrivate::attribs;
 
 struct QCoreApplicationData {
@@ -169,13 +167,6 @@ struct QCoreApplicationData {
     ~QCoreApplicationData() {
 #ifndef QT_NO_LIBRARY
         delete app_libpaths;
-#endif
-#ifndef QT_NO_QOBJECT
-        // cleanup the QAdoptedThread created for the main() thread
-        if (QCoreApplicationPrivate::theMainThread) {
-            QThreadData *data = QThreadData::get2(QCoreApplicationPrivate::theMainThread);
-            data->deref(); // deletes the data and the adopted thread
-        }
 #endif
     }
 
@@ -200,10 +191,6 @@ QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
         argv = (char **)&empty; // ouch! careful with QCoreApplication::argv()!
     }
     QCoreApplicationPrivate::is_app_closing = false;
-
-    // note: this call to QThread::currentThread() may end up setting theMainThread!
-    if (Q_UNLIKELY(QThread::currentThread() != theMainThread))
-        qWarning("WARNING: QApplication was not created in the main() thread.");
 }
 
 QCoreApplicationPrivate::~QCoreApplicationPrivate()
@@ -225,13 +212,11 @@ QCoreApplicationPrivate::~QCoreApplicationPrivate()
     }
 }
 
-void QCoreApplicationPrivate::createEventDispatcher()
+QAbstractEventDispatcher* QCoreApplicationPrivate::createEventDispatcher()
 {
     Q_Q(QCoreApplication);
-    eventDispatcher = new QEventDispatcherUNIX(q);
+    return new QEventDispatcherUNIX(q);
 }
-
-QThread *QCoreApplicationPrivate::theMainThread = Q_NULLPTR;
 
 #if !defined (QT_NO_DEBUG)
 void QCoreApplicationPrivate::checkReceiverThread(QObject *receiver)
@@ -359,8 +344,9 @@ QCoreApplication::QCoreApplication(QCoreApplicationPrivate &p)
 */
 void QCoreApplication::flush()
 {
-    if (self && self->d_func()->eventDispatcher)
-        self->d_func()->eventDispatcher->flush();
+    if (self && self->d_func()->threadData->eventDispatcher) {
+        self->d_func()->threadData->eventDispatcher->flush();
+    }
 }
 
 /*!
@@ -381,7 +367,7 @@ QCoreApplication::QCoreApplication(int &argc, char **argv)
 : QObject(*new QCoreApplicationPrivate(argc, argv))
 {
     init();
-    QCoreApplicationPrivate::eventDispatcher->startingUp();
+    d_func()->threadData->eventDispatcher->startingUp();
 }
 
 
@@ -390,23 +376,17 @@ void QCoreApplication::init()
 {
     Q_D(QCoreApplication);
 
-    setlocale(LC_ALL, "");                // use correct char set mapping
-
     Q_ASSERT_X(!self, "QCoreApplication", "there should be only one application object");
     QCoreApplication::self = this;
 
-    // use the event dispatcher created by the app programmer (if any)
-    if (!QCoreApplicationPrivate::eventDispatcher)
-        QCoreApplicationPrivate::eventDispatcher = d->threadData->eventDispatcher;
+    // use the event dispatcher created by the app programmer (if any),
     // otherwise we create one
-    if (!QCoreApplicationPrivate::eventDispatcher)
-        d->createEventDispatcher();
-    Q_ASSERT(QCoreApplicationPrivate::eventDispatcher != 0);
+    if (!d->threadData->eventDispatcher)
+        d->threadData->eventDispatcher = d->createEventDispatcher();
+    Q_ASSERT(d->threadData->eventDispatcher);
 
-    if (!QCoreApplicationPrivate::eventDispatcher->parent())
-        QCoreApplicationPrivate::eventDispatcher->moveToThread(d->threadData->thread);
-
-    d->threadData->eventDispatcher = QCoreApplicationPrivate::eventDispatcher;
+    if (!d->threadData->eventDispatcher->parent())
+        d->threadData->eventDispatcher->moveToThread(d->threadData->thread);
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
     if (!coreappdata()->app_libpaths) {
@@ -430,6 +410,8 @@ void QCoreApplication::init()
 */
 QCoreApplication::~QCoreApplication()
 {
+    Q_D(QCoreApplication);
+
     qt_call_post_routines();
 
     self = 0;
@@ -448,10 +430,8 @@ QCoreApplication::~QCoreApplication()
         globalThreadPool->waitForDone();
 #endif
 
-    d_func()->threadData->eventDispatcher = 0;
-    if (QCoreApplicationPrivate::eventDispatcher)
-        QCoreApplicationPrivate::eventDispatcher->closingDown();
-    QCoreApplicationPrivate::eventDispatcher = 0;
+    if (d->threadData->eventDispatcher)
+        d->threadData->eventDispatcher->closingDown();
 
 #ifndef QT_NO_LIBRARY
     delete coreappdata()->app_libpaths;
@@ -1352,10 +1332,8 @@ void QCoreApplication::installTranslator(QTranslator *translationFile)
     QCoreApplicationPrivate *d = self->d_func();
     d->translators.prepend(translationFile);
 
-#ifndef QT_NO_TRANSLATION_BUILDER
     if (translationFile->isEmpty())
         return;
-#endif
 
     QEvent ev(QEvent::LanguageChange);
     QCoreApplication::sendEvent(self, &ev);
@@ -1382,30 +1360,6 @@ void QCoreApplication::removeTranslator(QTranslator *translationFile)
     }
 }
 
-static void replacePercentN(QString *result, int n)
-{
-    if (n >= 0) {
-        int percentPos = 0;
-        int len = 0;
-        while ((percentPos = result->indexOf(QLatin1Char('%'), percentPos + len)) != -1) {
-            len = 1;
-            QString fmt;
-            if (result->at(percentPos + len) == QLatin1Char('L')) {
-                ++len;
-                fmt = QLatin1String("%L1");
-            } else {
-                fmt = QLatin1String("%1");
-            }
-            if (result->at(percentPos + len) == QLatin1Char('n')) {
-                fmt = fmt.arg(n);
-                ++len;
-                result->replace(percentPos, len, fmt);
-                len = fmt.length();
-            }
-        }
-    }
-}
-
 /*!
     \reentrant
     \since 4.5
@@ -1421,17 +1375,10 @@ static void replacePercentN(QString *result, int n)
     \a context is typically a class name (e.g., "MyDialog") and \a
     sourceText is either English text or a short identifying text.
 
-    \a disambiguation is an identifying string, for when the same \a
-    sourceText is used in different roles within the same context. By
-    default, it is null.
-
     See the \l QTranslator and \l QObject::tr() documentation for
-    more information about contexts, disambiguations and comments.
+    more information.
 
     \a encoding indicates the 8-bit encoding of character strings.
-
-    \a n is used in conjunction with \c %n to support plural forms.
-    See QObject::tr() for details.
 
     If none of the translation files contain a translation for \a
     sourceText in \a context, this function returns a QString
@@ -1451,46 +1398,30 @@ static void replacePercentN(QString *result, int n)
 */
 
 
-QString QCoreApplication::translate(const char *context, const char *sourceText,
-                                    const char *disambiguation, Encoding encoding, int n)
+QString QCoreApplication::translate(const char *context, const char *sourceText, Encoding encoding)
 {
-    QString result;
-
-    if (!sourceText)
-        return result;
+    if (Q_UNLIKELY(!sourceText))
+        return QString();
 
     if (self && !self->d_func()->translators.isEmpty()) {
         foreach (const QTranslator *translationFile, self->d_func()->translators) {
-            result = translationFile->translate(context, sourceText, disambiguation, n);
+            QString result = translationFile->translate(context, sourceText);
             if (!result.isEmpty())
-                break;
+                return result;
         }
     }
 
-    if (result.isEmpty()) {
 #ifdef QT_NO_TEXTCODEC
-        Q_UNUSED(encoding)
+    Q_UNUSED(encoding)
 #else
-        if (encoding == UnicodeUTF8)
-            result = QString::fromUtf8(sourceText);
-        else if (QTextCodec::codecForTr() != 0)
-            result = QTextCodec::codecForTr()->toUnicode(sourceText);
-        else
+    if (encoding == UnicodeUTF8)
+        return QString::fromUtf8(sourceText);
+    else if (QTextCodec::codecForTr())
+        return QTextCodec::codecForTr()->toUnicode(sourceText);
 #endif
-            result = QString::fromLatin1(sourceText);
-    }
-
-    replacePercentN(&result, n);
-    return result;
+    return QString::fromLatin1(sourceText);
 }
-
-bool QCoreApplicationPrivate::isTranslatorInstalled(QTranslator *translator)
-{
-    return QCoreApplication::self
-           && QCoreApplication::self->d_func()->translators.contains(translator);
-}
-
-#endif //QT_NO_TRANSLATE
+#endif // QT_NO_TRANSLATION
 
 /*!
     Returns the directory that contains the application executable.
@@ -1498,10 +1429,6 @@ bool QCoreApplicationPrivate::isTranslatorInstalled(QTranslator *translator)
     For example, if you have installed Qt in the \c{C:\Trolltech\Qt}
     directory, and you run the \c{regexp} example, this function will
     return "C:/Trolltech/Qt/examples/tools/regexp".
-
-    On Mac OS X this will point to the directory actually containing the
-    executable, which may be inside of an application bundle (if the
-    application is bundled).
 
     \warning On Linux, this function will try to get the path from the
     \c {/proc} file system. If that fails, it assumes that \c
@@ -1555,10 +1482,10 @@ QString QCoreApplication::applicationFilePath()
     if (!d->cachedApplicationFilePath.isNull())
         return d->cachedApplicationFilePath;
 
-#ifdef Q_OS_LINUX
+#if defined(QT_HAVE_PROC_EXE)
     // Try looking for a /proc/<pid>/exe symlink first which points to
     // the absolute path of the executable
-    QFileInfo pfi(QString::fromLatin1("/proc/%1/exe").arg(getpid()));
+    QFileInfo pfi(QString::fromLatin1("/proc/%1/exe").arg(::getpid()));
     if (pfi.exists() && pfi.isSymLink()) {
         d->cachedApplicationFilePath = pfi.canonicalFilePath();
         return d->cachedApplicationFilePath;
@@ -1852,10 +1779,6 @@ void QCoreApplication::setLibraryPaths(const QStringList &paths)
   directory for plugins.  The default installation directory for plugins
   is \c INSTALL/plugins, where \c INSTALL is the directory where Qt was
   installed.
-
-  In Symbian this function is only useful for adding paths for
-  finding Qt extension plugin stubs, since the OS can only
-  load libraries from the \c{/sys/bin} directory.
 
   \sa removeLibraryPath(), libraryPaths(), setLibraryPaths()
  */

@@ -11,37 +11,31 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
 pkg_check_modules(PC_DBUS QUIET dbus-1)
 
-set(DBUS_INCLUDES ${PC_DBUS_INCLUDE_DIRS})
-set(DBUS_ARCH_INCLUDES ${PC_DBUS_INCLUDE_DIRS})
-set(DBUS_LIBRARIES ${PC_DBUS_LIBRARIES})
+find_path(DBUS_INCLUDES
+    NAMES dbus/dbus.h
+    PATH_SUFFIXES dbus-1.0
+    HINTS $ENV{DBUSDIR}/include ${PC_DBUS_INCLUDEDIR}
+)
 
-if(NOT DBUS_INCLUDES OR NOT DBUS_ARCH_INCLUDES OR NOT DBUS_LIBRARIES)
-    find_path(DBUS_INCLUDES
-        NAMES dbus/dbus.h
-        PATH_SUFFIXES dbus-1.0
-        HINTS $ENV{DBUSDIR}/include ${PC_DBUS_INCLUDEDIR}
-    )
+find_path(DBUS_ARCH_INCLUDES
+    NAMES dbus/dbus-arch-deps.h
+    PATH_SUFFIXES dbus-1.0/include
+    HINTS $ENV{DBUSDIR}/include $ENV{DBUSDIR}/lib ${PC_DBUS_INCLUDEDIR} ${PC_DBUS_LIBDIR}
+)
 
-    find_path(DBUS_ARCH_INCLUDES
-        NAMES dbus/dbus-arch-deps.h
-        PATH_SUFFIXES dbus-1.0/include
-        HINTS $ENV{DBUSDIR}/include $ENV{DBUSDIR}/lib ${PC_DBUS_INCLUDEDIR} ${PC_DBUS_LIBDIR}
-    )
-
-    find_library(DBUS_LIBRARIES
-        NAMES dbus-1
-        HINTS $ENV{DBUSDIR}/lib ${PC_DBUS_LIBDIR}
-    )
-endif()
-
+find_library(DBUS_LIBRARIES
+    NAMES dbus-1
+    HINTS $ENV{DBUSDIR}/lib ${PC_DBUS_LIBDIR}
+)
 
 if(DBUS_INCLUDES AND DBUS_ARCH_INCLUDES)
     set(DBUS_INCLUDES ${DBUS_INCLUDES} ${DBUS_ARCH_INCLUDES})
 endif()
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(DBus
     VERSION_VAR PC_DBUS_VERSION
     REQUIRED_VARS DBUS_LIBRARIES DBUS_INCLUDES DBUS_ARCH_INCLUDES

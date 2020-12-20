@@ -1436,8 +1436,8 @@ void tst_QDir::equalityOperator_data()
         << "." << "*.cpp" << int(QDir::Name) << int(QDir::Files)
         << true;
 
-    //need a path in the root directory that is unlikely to be a symbolic link.
-    QString pathinroot("/sbin/..");
+    // need a path in the root directory that is unlikely to be a symbolic link.
+    QString pathinroot("/boot/..");
     QTest::newRow("QTBUG-20495-root") << pathinroot << "*.cpp" << int(QDir::Name) << int(QDir::Files)
         << QDir::rootPath() << "*.cpp" << int(QDir::Name) << int(QDir::Files)
         << true;
@@ -1514,6 +1514,9 @@ void tst_QDir::isRelative()
 
 void tst_QDir::isReadable()
 {
+    if (::getuid() == 0)
+        // root and Chuck Norris don't care for file permissions. Skip.
+        QSKIP("Running this test as root doesn't make sense", SkipAll);
     QDir dir;
 
     QVERIFY(dir.isReadable());

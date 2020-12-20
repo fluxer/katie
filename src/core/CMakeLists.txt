@@ -106,15 +106,12 @@ set(CORE_PUBLIC_HEADERS
     QJsonDocument
     QJsonObject
     QJsonValue
-    QCommandLineOption
-    QCommandLineParser
 )
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${ZLIB_INCLUDE_DIRS}
     ${ICU_INCLUDES}
     ${ZSTD_INCLUDES}
@@ -188,6 +185,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_iterator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystementry_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemmetadata_p.h
@@ -216,7 +214,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsocketnotifier.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtimer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtranslator.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtranslator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qvariant.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstracteventdispatcher_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication_p.h
@@ -292,8 +289,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvarlengtharray.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineoption.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineparser.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qiterator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpair.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qcorecommon_p.h
@@ -317,7 +312,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent/qthreadpool.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qglobal.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/global/qnumeric.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qabstractfileengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qbuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qdatastream.cpp
@@ -341,6 +335,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_iterator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystementry.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_unix.cpp
@@ -420,47 +415,37 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtimeline.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvsnprintf.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineoption.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineparser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
 )
 
-if(KATIE_PLATFORM STREQUAL "linux")
+if(KATIE_PLATFORM MATCHES "(linux|hurd)")
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
         dl
         rt
     )
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify.cpp
-    )
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify_p.h
-    )
-elseif(KATIE_PLATFORM MATCHES "(freebsd|openbsd)")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue_p.h
-    )
-elseif(KATIE_PLATFORM STREQUAL "hurd")
+elseif(KATIE_PLATFORM STREQUAL "netbsd")
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
-        dl
         rt
     )
 endif()
 
-
-if(WITH_UNWIND AND UNWIND_FOUND AND HAVE_CXXABI)
+if(WITH_INTL AND INTL_FOUND)
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
-        ${UNWIND_LIBRARIES}
+        ${INTL_LIBRARIES}
     )
-    include_directories(${UNWIND_INCLUDES})
+    include_directories(${INTL_INCLUDES})
+endif()
+
+if(WITH_EXECINFO AND EXECINFO_FOUND AND HAVE_CXXABI)
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        ${EXECINFO_LIBRARIES}
+    )
+    include_directories(${EXECINFO_INCLUDES})
 endif()
 
 katie_generate_misc("${CORE_HEADERS}" QtCore)
@@ -476,9 +461,11 @@ set_target_properties(KtCore PROPERTIES
     EXPORT_NAME Core
 )
 
+katie_setup_pch(KtCore)
+
 install(
     TARGETS KtCore
-    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_PATH}
     COMPONENT Runtime
 )

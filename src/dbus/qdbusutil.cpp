@@ -228,68 +228,6 @@ bool argToString(const QDBusArgument &busArg, QString &out)
     return true;
 }
 
-//------- D-Bus Types --------
-static const char oneLetterTypes[] = "vsogybnqiuxtdh";
-static const char basicTypes[] =      "sogybnqiuxtdh";
-static const char fixedTypes[] =         "ybnqiuxtdh";
-
-static bool isBasicType(int c)
-{
-    return c != DBUS_TYPE_INVALID && strchr(basicTypes, c) != NULL;
-}
-
-static bool isFixedType(int c)
-{
-    return c != DBUS_TYPE_INVALID && strchr(fixedTypes, c) != NULL;
-}
-
-// Returns a pointer to one-past-end of this type if it's valid;
-// returns NULL if it isn't valid.
-static const char *validateSingleType(const char *signature)
-{
-    char c = *signature;
-    if (c == DBUS_TYPE_INVALID)
-        return 0;
-
-    // is it one of the one-letter types?
-    if (strchr(oneLetterTypes, c) != NULL)
-        return signature + 1;
-
-    // is it an array?
-    if (c == DBUS_TYPE_ARRAY) {
-        // then it's valid if the next type is valid
-        // or if it's a dict-entry
-        c = *++signature;
-        if (c == DBUS_DICT_ENTRY_BEGIN_CHAR) {
-            // beginning of a dictionary entry
-            // a dictionary entry has a key which is of basic types
-            // and a free value
-            c = *++signature;
-            if (!isBasicType(c))
-                return 0;
-            signature = validateSingleType(signature + 1);
-            return signature && *signature == DBUS_DICT_ENTRY_END_CHAR ? signature + 1 : 0;
-        }
-
-        return validateSingleType(signature);
-    }
-
-    if (c == DBUS_STRUCT_BEGIN_CHAR) {
-        // beginning of a struct
-        ++signature;
-        while (true) {
-            signature = validateSingleType(signature);
-            if (!signature)
-                return 0;
-            if (*signature == DBUS_STRUCT_END_CHAR)
-                return signature + 1;
-        }
-    }
-
-    // invalid/unknown type
-    return 0;
-}
-
 /*!
     \namespace QDBusUtil
     \inmodule QtDBus
@@ -504,7 +442,9 @@ namespace QDBusUtil
      */
     bool isValidBasicType(int c)
     {
-        return isBasicType(c);
+        // this one differs from dbus_type_is_basic()
+        static const char basicTypes[] = "sogybnqiuxtdh";
+        return (c != DBUS_TYPE_INVALID && strchr(basicTypes, c) != NULL);
     }
 
     /*!
@@ -513,7 +453,8 @@ namespace QDBusUtil
      */
     bool isValidFixedType(int c)
     {
-        return isFixedType(c);
+        static const char fixedTypes[] = "ybnqiuxtdh";
+        return (c != DBUS_TYPE_INVALID && strchr(fixedTypes, c) != NULL);
     }
 
 
@@ -528,14 +469,10 @@ namespace QDBusUtil
     bool isValidSignature(const QString &signature)
     {
         QByteArray ba = signature.toLatin1();
-        const char *data = ba.constData();
-        while (true) {
-            data = validateSingleType(data);
-            if (!data)
-                return false;
-            if (*data == '\0')
-                return true;
-        }
+        const char* data = ba.constData();
+        while (*data == '\0')
+            data++;
+        return dbus_signature_validate(data, NULL);
     }
 
     /*!
@@ -547,8 +484,7 @@ namespace QDBusUtil
     bool isValidSingleSignature(const QString &signature)
     {
         QByteArray ba = signature.toLatin1();
-        const char *data = validateSingleType(ba.constData());
-        return data && *data == '\0';
+        return dbus_signature_validate_single(ba.constData(), NULL);
     }
 
 } // namespace QDBusUtil

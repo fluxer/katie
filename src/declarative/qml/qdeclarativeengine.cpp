@@ -1134,8 +1134,8 @@ void QDeclarativeData::setBindingBit(QObject *obj, int bit)
         int arraySize = (props + 31) / 32;
         int oldArraySize = bindingBitsSize / 32;
 
-        bindingBits = (quint32 *)q_check_ptr(realloc(bindingBits,
-                                         arraySize * sizeof(quint32)));
+        bindingBits = (quint32 *)::realloc(bindingBits, arraySize * sizeof(quint32));
+        Q_CHECK_PTR(bindingBits);
 
         memset(bindingBits + oldArraySize,
                0x00,

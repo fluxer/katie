@@ -26,7 +26,6 @@
 
 #include <math.h>
 #include <wtf/DateMath.h>
-#include <wtf/MathExtras.h>
 
 using namespace WTF;
 

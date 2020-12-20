@@ -10,37 +10,31 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
 pkg_check_modules(PC_ICU QUIET icu-i18n)
 pkg_check_modules(PC_ICUUC QUIET icu-uc)
 
-set(ICU_INCLUDES ${PC_ICU_INCLUDE_DIRS})
-set(ICU_LIBRARIES ${PC_ICU_LIBRARIES})
-set(ICUUC_LIBRARIES ${PC_ICUUC_LIBRARIES})
+find_path(ICU_INCLUDES
+    NAMES
+    unicode/unistr.h
+    HINTS $ENV{ICUDIR}/include ${PC_ICU_INCLUDEDIR}
+)
 
-if(NOT ICU_INCLUDES OR NOT ICU_LIBRARIES OR NOT ICUUC_LIBRARIES)
-    find_path(ICU_INCLUDES
-        NAMES
-        unicode/unistr.h
-        HINTS $ENV{ICUDIR}/include
-    )
+find_library(ICU_LIBRARIES
+    NAME icui18n
+    HINTS $ENV{ICUDIR}/lib ${PC_ICU_LIBDIR}
+)
 
-    find_library(ICU_LIBRARIES
-        NAME icui18n
-        HINTS $ENV{ICUDIR}/lib
-    )
-
-    find_library(ICUUC_LIBRARIES
-        NAMES icuuc
-        HINTS $ENV{ICUDIR}/lib
-    )
-endif()
+find_library(ICUUC_LIBRARIES
+    NAMES icuuc
+    HINTS $ENV{ICUDIR}/lib ${PC_ICUUC_LIBDIR}
+)
 
 if(ICU_LIBRARIES AND ICUUC_LIBRARIES)
     set(ICU_LIBRARIES ${ICU_LIBRARIES} ${ICUUC_LIBRARIES})
-    list(REMOVE_ITEM ICU_LIBRARIES "icudata") # internal data, dont need it
 endif()
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ICU
     VERSION_VAR PC_ICU_VERSION
     REQUIRED_VARS ICU_LIBRARIES ICUUC_LIBRARIES ICU_INCLUDES

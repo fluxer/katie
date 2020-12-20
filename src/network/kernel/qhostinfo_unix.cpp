@@ -53,7 +53,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#if defined (QT_NO_GETADDRINFO)
+#if !defined(QT_HAVE_GETADDRINFO)
 #include "qmutex.h"
 Q_GLOBAL_STATIC(QMutex, getHostByNameMutex)
 #endif
@@ -75,7 +75,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
     QHostAddress address;
     if (address.setAddress(hostName)) {
         // Reverse lookup
-#if !defined (QT_NO_GETADDRINFO)
+#if defined(QT_HAVE_GETADDRINFO)
         sockaddr_in sa4;
 #ifndef QT_NO_IPV6
         sockaddr_in6 sa6;
@@ -100,7 +100,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 #endif
 
         char hbuf[NI_MAXHOST];
-        int result = (sa ? ::getnameinfo(sa, saSize, hbuf, sizeof(hbuf), 0, 0, 0) : EAI_NONAME);
+        int result = (sa ? ::getnameinfo(sa, saSize, hbuf, sizeof(hbuf), 0, 0, NI_NAMEREQD) : EAI_NONAME);
         if (result == 0) {
             results.setHostName(QString::fromLatin1(hbuf));
         } else if (result == EAI_NONAME || result == EAI_FAIL
@@ -113,11 +113,11 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
             results.setErrorString(tr("Host not found"));
         } else {
             results.setError(QHostInfo::UnknownError);
-            results.setErrorString(QString::fromLocal8Bit(gai_strerror(result)));
+            results.setErrorString(QString::fromLocal8Bit(::gai_strerror(result)));
         }
 #else
         in_addr_t inetaddr = ::inet_addr(hostName.toLatin1().constData());
-        struct hostent *ent = gethostbyaddr((const char *)&inetaddr, sizeof(inetaddr), AF_INET);
+        struct hostent *ent = ::gethostbyaddr((const char *)&inetaddr, sizeof(inetaddr), AF_INET);
         if (ent) {
             results.setHostName(QString::fromLatin1(ent->h_name));
         } else if (h_errno == HOST_NOT_FOUND || h_errno == NO_DATA || h_errno == NO_ADDRESS) {
@@ -140,13 +140,15 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
     results.setHostName(hostName);
     if (aceHostname.isEmpty()) {
         results.setError(QHostInfo::HostNotFound);
-        results.setErrorString(hostName.isEmpty() ?
-                               QCoreApplication::translate("QHostInfoAgent", "No host name given") :
-                               QCoreApplication::translate("QHostInfoAgent", "Invalid hostname"));
+        if (hostName.isEmpty()) {
+            results.setErrorString(tr("No host name given"));
+        } else {
+            results.setErrorString(tr("Invalid hostname"));
+        }
         return results;
     }
 
-#if !defined (QT_NO_GETADDRINFO)
+#if defined(QT_HAVE_GETADDRINFO)
     // Call getaddrinfo, and place all IPv4 addresses at the start and
     // the IPv6 addresses at the end of the address list in results.
     addrinfo *res = 0;
@@ -157,12 +159,12 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
     hints.ai_flags = AI_ADDRCONFIG;
 #endif
 
-    int result = getaddrinfo(aceHostname.constData(), 0, &hints, &res);
+    int result = ::getaddrinfo(aceHostname.constData(), 0, &hints, &res);
 # ifdef AI_ADDRCONFIG
     if (result == EAI_BADFLAGS) {
         // if the lookup failed with AI_ADDRCONFIG set, try again without it
         hints.ai_flags = 0;
-        result = getaddrinfo(aceHostname.constData(), 0, &hints, &res);
+        result = ::getaddrinfo(aceHostname.constData(), 0, &hints, &res);
     }
 # endif
 
@@ -200,7 +202,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         }
 
         results.setAddresses(addresses);
-        freeaddrinfo(res);
+        ::freeaddrinfo(res);
     } else if (result == EAI_NONAME || result ==  EAI_FAIL
 #ifdef EAI_NODATA
                 // EAI_NODATA is deprecated in RFC 3493
@@ -211,7 +213,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         results.setErrorString(tr("Host not found"));
     } else {
         results.setError(QHostInfo::UnknownError);
-        results.setErrorString(QString::fromLocal8Bit(gai_strerror(result)));
+        results.setErrorString(QString::fromLocal8Bit(::gai_strerror(result)));
     }
 
 #else
@@ -221,7 +223,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
     // use one QHostInfoAgent, but if more agents are introduced, locking
     // must be provided.
     QMutexLocker locker(getHostByNameMutex());
-    hostent *result = gethostbyname(aceHostname.constData());
+    hostent *result = ::gethostbyname(aceHostname.constData());
     if (result) {
         if (result->h_addrtype == AF_INET) {
             QList<QHostAddress> addresses;
@@ -244,7 +246,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         results.setError(QHostInfo::UnknownError);
         results.setErrorString(tr("Unknown error"));
     }
-#endif //  !defined (QT_NO_GETADDRINFO)
+#endif //  defined(QT_HAVE_GETADDRINFO)
 
 #if defined(QHOSTINFO_DEBUG)
     if (results.error() != QHostInfo::NoError) {
@@ -294,7 +296,7 @@ QString QHostInfo::localDomainName()
 #elif !defined(QT_NO_RESOLV)
     // using thread-unsafe version
 
-#if defined(QT_NO_GETADDRINFO)
+#if !defined(QT_HAVE_GETADDRINFO)
     // We have to call res_init to be sure that _res was initialized
     // So, for systems without getaddrinfo (which is thread-safe), we lock the mutex too
     QMutexLocker locker(getHostByNameMutex());

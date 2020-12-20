@@ -2770,15 +2770,15 @@ QDate QDate::currentDate()
     QDate d;
     // posix compliant system
     time_t ltime;
-    time(&ltime);
+    ::time(&ltime);
 
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
-    struct tm *t = localtime_r(&ltime, &res);
+    struct tm *t = ::localtime_r(&ltime, &res);
 #else
-    struct tm *t = localtime(&ltime);
+    struct tm *t = ::localtime(&ltime);
 #endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
 
     d.jd = julianDayFromDate(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday);
@@ -2790,16 +2790,15 @@ QTime QTime::currentTime()
     QTime ct;
     // posix compliant system
     struct timeval tv;
-    gettimeofday(&tv, Q_NULLPTR);
-    time_t ltime = tv.tv_sec;
+    ::gettimeofday(&tv, Q_NULLPTR);
 
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
-    struct tm *t = localtime_r(&ltime, &res);
+    struct tm *t = ::localtime_r(&tv.tv_sec, &res);
 #else
-    struct tm *t = localtime(&ltime);
+    struct tm *t = ::localtime(&tv.tv_sec);
 #endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
     Q_CHECK_PTR(t);
 
@@ -2812,16 +2811,15 @@ QDateTime QDateTime::currentDateTime()
     // posix compliant system
     // we have milliseconds
     struct timeval tv;
-    gettimeofday(&tv, Q_NULLPTR);
-    time_t ltime = tv.tv_sec;
+    ::gettimeofday(&tv, Q_NULLPTR);
 
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_LOCALTIME_R)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
-    struct tm *t = localtime_r(&ltime, &res);
+    struct tm *t = ::localtime_r(&tv.tv_sec, &res);
 #else
-    struct tm *t = localtime(&ltime);
+    struct tm *t = ::localtime(&tv.tv_sec);
 #endif // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
 
     QDateTime dt;
@@ -2838,15 +2836,14 @@ QDateTime QDateTime::currentDateTimeUtc()
     // posix compliant system
     // we have milliseconds
     struct timeval tv;
-    gettimeofday(&tv, Q_NULLPTR);
-    time_t ltime = tv.tv_sec;
+    ::gettimeofday(&tv, Q_NULLPTR);
 
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_GMTIME_R)
     // use the reentrant version of gmtime_r() where available
     struct tm res;
-    struct tm *t = gmtime_r(&ltime, &res);
+    struct tm *t = ::gmtime_r(&tv.tv_sec, &res);
 #else
-    struct tm *t = gmtime(&ltime);
+    struct tm *t = ::gmtime(&tv.tv_sec);
 #endif // !QT_NO_THREAD && QT_HAVE_GMTIME_R
 
     QDateTime dt;
@@ -3478,9 +3475,9 @@ static QDateTimePrivate::Spec utcToLocal(QDate &date, QTime &time)
     // use the reentrant version of localtime() where available
     tzset();
     tm res;
-    tm *brokenDown = localtime_r(&secsSince1Jan1970UTC, &res);
+    tm *brokenDown = ::localtime_r(&secsSince1Jan1970UTC, &res);
 #else
-    tm *brokenDown = localtime(&secsSince1Jan1970UTC);
+    tm *brokenDown = ::localtime(&secsSince1Jan1970UTC);
 #endif  // !QT_NO_THREAD && QT_HAVE_LOCALTIME_R
     if (!brokenDown) {
         date = QDate(1970, 1, 1);
@@ -3517,9 +3514,9 @@ static void localToUtc(QDate &date, QTime &time, int isdst)
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_GMTIME_R)
     // use the reentrant version of gmtime() where available
     tm res;
-    tm *brokenDown = gmtime_r(&secsSince1Jan1970UTC, &res);
+    tm *brokenDown = ::gmtime_r(&secsSince1Jan1970UTC, &res);
 #else
-    tm *brokenDown = gmtime(&secsSince1Jan1970UTC);
+    tm *brokenDown = ::gmtime(&secsSince1Jan1970UTC);
 #endif // !QT_NO_THREAD && QT_HAVE_GMTIME_R
     if (!brokenDown) {
         date = QDate(1970, 1, 1);
@@ -3778,15 +3775,12 @@ int QDateTimeParser::absoluteMin(int s) const
 
 const QDateTimeParser::SectionNode &QDateTimeParser::sectionNode(int sectionIndex) const
 {
-    if (sectionIndex < 0) {
-        switch (sectionIndex) {
-        case FirstSectionIndex:
-            return first;
-        case LastSectionIndex:
-            return last;
-        case NoSectionIndex:
-            return none;
-        }
+    if (sectionIndex == FirstSectionIndex) {
+        return first;
+    } else if (sectionIndex == LastSectionIndex) {
+        return last;
+    } else if (sectionIndex == NoSectionIndex) {
+        return none;
     } else if (sectionIndex < sectionNodes.size()) {
         return sectionNodes.at(sectionIndex);
     }
@@ -4150,7 +4144,6 @@ int QDateTimeParser::sectionMaxSize(Section s, int count) const
     case NoSectionIndex:
     case FirstSectionIndex:
     case LastSectionIndex:
-    case CalendarPopupIndex:
         // these cases can't happen
         break;
     }

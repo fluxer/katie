@@ -220,15 +220,12 @@ QT_BEGIN_NAMESPACE
     \omitvalue AcceptDropsChange
     \omitvalue Create
     \omitvalue Destroy
-    \omitvalue DragResponse
     \omitvalue Quit
     \omitvalue ShowWindowRequest
-    \omitvalue Speech
     \omitvalue Style
     \omitvalue ThreadChange
     \omitvalue NetworkReplyUpdated
     \omitvalue FutureCallOut
-    \omitvalue NativeGesture
 */
 
 /*!

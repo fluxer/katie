@@ -46,8 +46,6 @@
 #ifndef CONNECTIONEDIT_H
 #define CONNECTIONEDIT_H
 
-#include "shared_global_p.h"
-
 #include <QtCore/qmap.h>
 #include <QtCore/QList>
 #include <QtCore/QPointer>
@@ -69,7 +67,7 @@ namespace qdesigner_internal {
 class Connection;
 class ConnectionEdit;
 
-class QDESIGNER_SHARED_EXPORT CETypes
+class Q_DESIGNER_EXPORT CETypes
 {
 public:
     typedef QList<Connection*> ConnectionList;
@@ -89,7 +87,7 @@ public:
     enum LineDir { UpDir = 0, DownDir, RightDir, LeftDir };
 };
 
-class QDESIGNER_SHARED_EXPORT Connection : public CETypes
+class Q_DESIGNER_EXPORT Connection : public CETypes
 {
 public:
     explicit Connection(ConnectionEdit *edit);
@@ -155,7 +153,7 @@ private:
     QRect groundRect() const;
 };
 
-class QDESIGNER_SHARED_EXPORT ConnectionEdit : public QWidget, public CETypes
+class Q_DESIGNER_EXPORT ConnectionEdit : public QWidget, public CETypes
 {
     Q_OBJECT
 public:
@@ -275,7 +273,7 @@ private:
     friend class SetEndPointCommand;
 };
 
-class QDESIGNER_SHARED_EXPORT CECommand : public QUndoCommand, public CETypes
+class Q_DESIGNER_EXPORT CECommand : public QUndoCommand, public CETypes
 {
 public:
    explicit  CECommand(ConnectionEdit *edit)
@@ -289,7 +287,7 @@ private:
     ConnectionEdit *m_edit;
 };
 
-class QDESIGNER_SHARED_EXPORT AddConnectionCommand : public CECommand
+class Q_DESIGNER_EXPORT AddConnectionCommand : public CECommand
 {
 public:
     AddConnectionCommand(ConnectionEdit *edit, Connection *con);
@@ -299,7 +297,7 @@ private:
     Connection *m_con;
 };
 
-class QDESIGNER_SHARED_EXPORT DeleteConnectionsCommand : public CECommand
+class Q_DESIGNER_EXPORT DeleteConnectionsCommand : public CECommand
 {
 public:
     DeleteConnectionsCommand(ConnectionEdit *edit, const ConnectionList &con_list);

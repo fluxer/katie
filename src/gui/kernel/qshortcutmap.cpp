@@ -292,15 +292,6 @@ void QShortcutMap::resetState()
 }
 
 /*! \internal
-    Returns the current state of the statemachine
-*/
-QKeySequence::SequenceMatch QShortcutMap::state()
-{
-    Q_D(QShortcutMap);
-    return d->currentState;
-}
-
-/*! \internal
     Uses ShortcutOverride event to see if any widgets want to override
     the event. If not, uses nextState(QKeyEvent) to check for a grabbed
     Shortcut, and dispatchEvent() is found an identical.
@@ -644,7 +635,7 @@ bool QShortcutMap::correctWidgetContext(Qt::ShortcutContext context, QWidget *w,
         return false;
 
     if (context == Qt::ApplicationShortcut)
-        return QApplicationPrivate::tryModalHelper(w, 0); // true, unless w is shadowed by a modal dialog
+        return QApplicationPrivate::tryModalHelper(w); // true, unless w is shadowed by a modal dialog
 
     if (context == Qt::WidgetShortcut)
         return w == QApplication::focusWidget();
@@ -706,7 +697,7 @@ bool QShortcutMap::correctGraphicsWidgetContext(Qt::ShortcutContext context, QGr
         // must still check if all views are shadowed.
         QList<QGraphicsView *> views = w->scene()->views();
         for (int i = 0; i < views.size(); ++i) {
-            if (QApplicationPrivate::tryModalHelper(views.at(i), 0))
+            if (QApplicationPrivate::tryModalHelper(views.at(i)))
                 return true;
         }
         return false;
@@ -784,32 +775,6 @@ bool QShortcutMap::correctContext(Qt::ShortcutContext context, QAction *a, QWidg
     return false;
 }
 #endif // QT_NO_ACTION
-
-/*! \internal
-    Converts keyboard button states into modifier states
-*/
-int QShortcutMap::translateModifiers(Qt::KeyboardModifiers modifiers)
-{
-    int result = 0;
-    if (modifiers & Qt::ShiftModifier)
-        result |= Qt::SHIFT;
-    if (modifiers & Qt::ControlModifier)
-        result |= Qt::CTRL;
-    if (modifiers & Qt::MetaModifier)
-        result |= Qt::META;
-    if (modifiers & Qt::AltModifier)
-        result |= Qt::ALT;
-    return result;
-}
-
-/*! \internal
-    Returns the vector of QShortcutEntry's matching the last Identical state.
-*/
-QVector<const QShortcutEntry*> QShortcutMap::matches() const
-{
-    Q_D(const QShortcutMap);
-    return d->identicals;
-}
 
 /*! \internal
     Dispatches QShortcutEvents to widgets who grabbed the matched key sequence.

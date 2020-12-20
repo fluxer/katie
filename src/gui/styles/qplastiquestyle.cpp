@@ -33,7 +33,7 @@
 
 #include "qplastiquestyle.h"
 
-#if !defined(QT_NO_STYLE_PLASTIQUE) || defined(QT_PLUGIN)
+#if !defined(QT_NO_STYLE_PLASTIQUE)
 
 static const bool AnimateBusyProgressBar = true;
 static const bool AnimateProgressBar = false;
@@ -1013,13 +1013,6 @@ QPlastiqueStyle::QPlastiqueStyle()
     : QWindowsStyle(*new QPlastiqueStylePrivate)
 {
     setObjectName(QLatin1String("Plastique"));
-}
-
-/*!
-    Destructs the QPlastiqueStyle object.
-*/
-QPlastiqueStyle::~QPlastiqueStyle()
-{
 }
 
 /*
@@ -5818,4 +5811,4 @@ QT_END_NAMESPACE
 
 #include "moc_qplastiquestyle.h"
 
-#endif // !defined(QT_NO_STYLE_PLASTIQUE) || defined(QT_PLUGIN)
+#endif // !defined(QT_NO_STYLE_PLASTIQUE)

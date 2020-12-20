@@ -52,11 +52,6 @@
 
 QT_BEGIN_NAMESPACE
 
-bool QFileSystemEngine::isCaseSensitive()
-{
-    return true;
-}
-
 //static
 QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, QFileSystemMetaData &data)
 {
@@ -100,13 +95,11 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
 
     char *ret = ::realpath(entry.nativeFilePath().constData(), (char*)0);
     if (ret) {
-        data.knownFlagsMask |= QFileSystemMetaData::ExistsAttribute;
         data.entryFlags |= QFileSystemMetaData::ExistsAttribute;
         QString canonicalPath = QDir::cleanPath(QString::fromLocal8Bit(ret));
         ::free(ret);
         return QFileSystemEntry(canonicalPath);
     } else if (errno == ENOENT) { // file doesn't exist
-        data.knownFlagsMask |= QFileSystemMetaData::ExistsAttribute;
         data.entryFlags &= ~(QFileSystemMetaData::ExistsAttribute);
         return QFileSystemEntry();
     }
@@ -146,8 +139,7 @@ QFileSystemEntry QFileSystemEngine::absoluteName(const QFileSystemEntry &entry)
     return QFileSystemEntry(stringVersion);
 }
 
-//static
-QString QFileSystemEngine::resolveUserName(uint userId)
+Q_CORE_EXPORT QString qt_resolveUserName(uint userId)
 {
 #if !defined(QT_NO_THREAD) && defined(QT_HAVE_GETPWUID_R)
     static int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
@@ -163,6 +155,12 @@ QString QFileSystemEngine::resolveUserName(uint userId)
     if (pw)
         return QFile::decodeName(QByteArray(pw->pw_name));
     return QString();
+}
+
+//static
+QString QFileSystemEngine::resolveUserName(uint userId)
+{
+    return qt_resolveUserName(userId);
 }
 
 //static
@@ -196,71 +194,52 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
     data.entryFlags &= ~what;
 
     const QByteArray &path = entry.nativeFilePath();
-    bool entryExists = true; // innocent until proven otherwise
 
     QT_STATBUF statBuffer;
     bool statBufferValid = false;
     if (what & QFileSystemMetaData::LinkType) {
         if (QT_LSTAT(path.constData(), &statBuffer) == 0) {
-            if (S_ISLNK(statBuffer.st_mode)) {
+            statBufferValid = true;
+            if (S_ISLNK(statBuffer.st_mode))
                 data.entryFlags |= QFileSystemMetaData::LinkType;
-            } else {
-                statBufferValid = true;
-                data.entryFlags &= ~QFileSystemMetaData::PosixStatFlags;
-            }
-        } else {
-            entryExists = false;
         }
-
-        data.knownFlagsMask |= QFileSystemMetaData::LinkType;
     }
 
-    if (statBufferValid || (what & QFileSystemMetaData::PosixStatFlags)) {
-        if (entryExists && !statBufferValid)
-            statBufferValid = (QT_STAT(path.constData(), &statBuffer) == 0);
+    // for compatibility obtain values from the file or link, not the resolved file
+    if (!statBufferValid || (what & QFileSystemMetaData::PosixStatFlags))
+        statBufferValid = (QT_STAT(path.constData(), &statBuffer) == 0);
 
-        if (statBufferValid)
-            data.fillFromStatBuf(statBuffer);
-        else {
-            entryExists = false;
-            data.creationTime_ = 0;
-            data.modificationTime_ = 0;
-            data.accessTime_ = 0;
-            data.size_ = 0;
-            data.userId_ = (uint) -2;
-            data.groupId_ = (uint) -2;
-        }
-
-        // reset the mask
-        data.knownFlagsMask |= QFileSystemMetaData::PosixStatFlags
-            | QFileSystemMetaData::ExistsAttribute;
+    if (statBufferValid) {
+        data.fillFromStatBuf(statBuffer);
+    } else {
+        data.creationTime_ = 0;
+        data.modificationTime_ = 0;
+        data.accessTime_ = 0;
+        data.size_ = 0;
+        data.userId_ = (uint) -2;
+        data.groupId_ = (uint) -2;
     }
 
     if (what & QFileSystemMetaData::UserPermissions) {
         // calculate user permissions
-
-        if (entryExists) {
-            if (what & QFileSystemMetaData::UserReadPermission) {
-                if (QT_ACCESS(path.constData(), R_OK) == 0)
-                    data.entryFlags |= QFileSystemMetaData::UserReadPermission;
-            }
-            if (what & QFileSystemMetaData::UserWritePermission) {
-                if (QT_ACCESS(path.constData(), W_OK) == 0)
-                    data.entryFlags |= QFileSystemMetaData::UserWritePermission;
-            }
-            if (what & QFileSystemMetaData::UserExecutePermission) {
-                if (QT_ACCESS(path.constData(), X_OK) == 0)
-                    data.entryFlags |= QFileSystemMetaData::UserExecutePermission;
-            }
+        if (what & QFileSystemMetaData::UserReadPermission) {
+            if (QT_ACCESS(path.constData(), R_OK) == 0)
+                data.entryFlags |= QFileSystemMetaData::UserReadPermission;
         }
-        data.knownFlagsMask |= (what & QFileSystemMetaData::UserPermissions);
+        if (what & QFileSystemMetaData::UserWritePermission) {
+            if (QT_ACCESS(path.constData(), W_OK) == 0)
+                data.entryFlags |= QFileSystemMetaData::UserWritePermission;
+        }
+        if (what & QFileSystemMetaData::UserExecutePermission) {
+            if (QT_ACCESS(path.constData(), X_OK) == 0)
+                data.entryFlags |= QFileSystemMetaData::UserExecutePermission;
+        }
     }
 
-    if (what & QFileSystemMetaData::HiddenAttribute && !data.isHidden()) {
+    if (what & QFileSystemMetaData::HiddenAttribute) {
         const QString &fileName = entry.fileName();
         if (fileName.size() > 0 && fileName.at(0) == QLatin1Char('.'))
             data.entryFlags |= QFileSystemMetaData::HiddenAttribute;
-        data.knownFlagsMask |= QFileSystemMetaData::HiddenAttribute;
     }
 
     return data.hasFlags(what);
@@ -371,7 +350,11 @@ bool QFileSystemEngine::copyFile(const QFileSystemEntry &source, const QFileSyst
         sendresult = QT_SENDFILE(targetfd, sourcefd, &tocopy, tocopy);
     }
 #undef QT_SENDFILE
-#elif defined(Q_OS_FREEBSD)
+#elif defined(Q_OS_FREEBSD) || defined(Q_OS_DRAGONFLY)
+// DragonFly BSD does not have SF_SYNC defined
+#ifndef SF_SYNC
+#  define SF_SYNC 0
+#endif
     QT_OFF_T totalwrite = 0;
     int sendresult = ::sendfile(sourcefd, targetfd, QT_OFF_T(0), size_t(0), Q_NULLPTR, &totalwrite, SF_SYNC);
     if (QT_OFF_T(sendresult) != totalwrite) {

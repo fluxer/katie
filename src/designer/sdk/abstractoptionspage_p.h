@@ -45,7 +45,7 @@
 #ifndef ABSTRACTOPTIONSPAGE_P_H
 #define ABSTRACTOPTIONSPAGE_P_H
 
-#include <QtDesigner/sdk_global.h>
+#include <QtCore/qglobal.h>
 
 QT_BEGIN_HEADER
 
@@ -54,7 +54,7 @@ QT_BEGIN_NAMESPACE
 class QString;
 class QWidget;
 
-class QDESIGNER_SDK_EXPORT QDesignerOptionsPageInterface
+class Q_DESIGNER_EXPORT QDesignerOptionsPageInterface
 {
 public:
     virtual ~QDesignerOptionsPageInterface() {}

@@ -45,8 +45,6 @@
 #ifndef QDESIGNER_FORMWINDOWCOMMAND_H
 #define QDESIGNER_FORMWINDOWCOMMAND_H
 
-#include "shared_global_p.h"
-
 #include <QtCore/QPointer>
 #include <QtGui/qundostack.h>
 
@@ -58,7 +56,7 @@ class QDesignerPropertySheetExtension;
 
 namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT QDesignerFormWindowCommand: public QUndoCommand
+class Q_DESIGNER_EXPORT QDesignerFormWindowCommand: public QUndoCommand
 {
 
 public:

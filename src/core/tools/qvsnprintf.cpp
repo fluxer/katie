@@ -31,15 +31,11 @@
 **
 ****************************************************************************/
 
-#include "qplatformdefs.h"
-
 #include "qbytearray.h"
 #include "qstring.h"
 
-#include "string.h"
-#ifdef QT_VSNPRINTF
+#include <string.h>
 #include <stdio.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -67,7 +63,9 @@ QT_BEGIN_NAMESPACE
 
 int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap)
 {
-#ifndef QT_VSNPRINTF
+#ifdef QT_HAVE_VSNPRINTF
+    return ::vsnprintf(str, n, fmt, ap);
+#else
     if (!str || !fmt)
         return -1;
 
@@ -83,8 +81,6 @@ int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap)
     }
 
     return ba.length();
-#else
-    return QT_VSNPRINTF(str, n, fmt, ap);
 #endif
 }
 

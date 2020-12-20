@@ -34,7 +34,7 @@
 #include "qwindowsstyle.h"
 #include "qwindowsstyle_p.h"
 
-#if !defined(QT_NO_STYLE_WINDOWS) || defined(QT_PLUGIN)
+#if !defined(QT_NO_STYLE_WINDOWS)
 
 #include "qapplication.h"
 #include "qbitmap.h"
@@ -190,8 +190,6 @@ bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
 
     \ingroup appearance
 
-    This style is Qt's default GUI style on Windows.
-
     \img qwindowsstyle.png
     \sa QPlastiqueStyle, QMotifStyle
 */
@@ -201,6 +199,7 @@ bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
 */
 QWindowsStyle::QWindowsStyle() : QCommonStyle(*new QWindowsStylePrivate)
 {
+    setObjectName(QLatin1String("Windows"));
 }
 
 /*!
@@ -210,12 +209,7 @@ QWindowsStyle::QWindowsStyle() : QCommonStyle(*new QWindowsStylePrivate)
 */
 QWindowsStyle::QWindowsStyle(QWindowsStylePrivate &dd) : QCommonStyle(dd)
 {
-}
-
-
-/*! Destroys the QWindowsStyle object. */
-QWindowsStyle::~QWindowsStyle()
-{
+    setObjectName(QLatin1String("Windows"));
 }
 
 /*! \reimp */

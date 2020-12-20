@@ -52,7 +52,6 @@ public:
 
     QByteArray *buf;
     QByteArray defaultBuf;
-    qint64 ioIndex;
 
     qint64 peek(char *data, qint64 maxSize) final;
     QByteArray peek(qint64 maxSize) final;
@@ -151,14 +150,12 @@ QBuffer::QBuffer()
 {
     Q_D(QBuffer);
     d->buf = &d->defaultBuf;
-    d->ioIndex = 0;
 }
 QBuffer::QBuffer(QByteArray *buf)
     : QIODevice(*new QBufferPrivate)
 {
     Q_D(QBuffer);
     d->buf = buf ? buf : &d->defaultBuf;
-    d->ioIndex = 0;
     d->defaultBuf.clear();
 }
 #else
@@ -174,7 +171,6 @@ QBuffer::QBuffer(QObject *parent)
 {
     Q_D(QBuffer);
     d->buf = &d->defaultBuf;
-    d->ioIndex = 0;
 }
 
 /*!
@@ -200,7 +196,6 @@ QBuffer::QBuffer(QByteArray *byteArray, QObject *parent)
     Q_D(QBuffer);
     d->buf = byteArray ? byteArray : &d->defaultBuf;
     d->defaultBuf.clear();
-    d->ioIndex = 0;
 }
 #endif
 
@@ -247,7 +242,6 @@ void QBuffer::setBuffer(QByteArray *byteArray)
         d->buf = &d->defaultBuf;
     }
     d->defaultBuf.clear();
-    d->ioIndex = 0;
 }
 
 /*!
@@ -306,7 +300,6 @@ void QBuffer::setData(const QByteArray &data)
     }
     Q_D(QBuffer);
     *d->buf = data;
-    d->ioIndex = 0;
 }
 
 /*!
@@ -333,7 +326,6 @@ bool QBuffer::open(OpenMode flags)
     Q_D(QBuffer);
     if ((flags & Truncate) == Truncate)
         d->buf->resize(0);
-    d->ioIndex = (flags & Append) == Append ? d->buf->size() : 0;
 
     return QIODevice::open(flags);
 }
@@ -367,7 +359,6 @@ bool QBuffer::seek(const qint64 pos)
         qWarning("QBuffer::seek: Invalid pos: %lld", pos);
         return false;
     }
-    d->ioIndex = pos;
     return QIODevice::seek(pos);
 }
 
@@ -389,10 +380,9 @@ bool QBuffer::canReadLine() const
 qint64 QBuffer::readData(char *data, qint64 len)
 {
     Q_D(QBuffer);
-    if ((len = qMin(len, d->buf->size() - d->ioIndex)) <= 0)
+    if ((len = qMin(len, d->buf->size() - pos())) <= 0)
         return qint64(0);
-    memcpy(data, d->buf->constData() + d->ioIndex, len);
-    d->ioIndex += len;
+    memcpy(data, d->buf->constData() + pos(), len);
     return len;
 }
 
@@ -402,7 +392,7 @@ qint64 QBuffer::readData(char *data, qint64 len)
 qint64 QBuffer::writeData(const char *data, qint64 len)
 {
     Q_D(QBuffer);
-    const qint64 extraBytes = d->ioIndex + len - d->buf->size();
+    const qint64 extraBytes = pos() + len - d->buf->size();
     if (extraBytes > 0) { // overflow
         const qint64 newSize = d->buf->size() + extraBytes;
         d->buf->resize(newSize);
@@ -412,8 +402,7 @@ qint64 QBuffer::writeData(const char *data, qint64 len)
         }
     }
 
-    memcpy(d->buf->data() + d->ioIndex, data, len);
-    d->ioIndex += len;
+    memcpy(d->buf->data() + pos(), data, len);
 
 #ifndef QT_NO_QOBJECT
     d->writtenSinceLastEmit += len;

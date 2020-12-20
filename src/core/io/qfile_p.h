@@ -45,9 +45,9 @@
 // We mean it.
 //
 
-#include "QtCore/qabstractfileengine.h"
-#include "QtCore/qiodevice_p.h"
-#include "QtCore/qringbuffer_p.h"
+#include "qabstractfileengine.h"
+#include "qiodevice_p.h"
+#include "qringbuffer_p.h"
 
 QT_BEGIN_NAMESPACE
 

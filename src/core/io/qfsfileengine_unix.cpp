@@ -140,9 +140,7 @@ QString QFSFileEngine::tempPath()
 
 bool QFSFileEnginePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) const
 {
-    if (!tried_stat || !metaData.hasFlags(flags)) {
-        tried_stat = true;
-
+    if (!metaData.hasFlags(flags)) {
         if (fd != -1)
             QFileSystemEngine::fillMetaData(fd, metaData);
 
@@ -170,8 +168,8 @@ QAbstractFileEngine::FileFlags QFSFileEngine::fileFlags(FileFlags type) const
 
     QFileSystemMetaData::MetaDataFlags queryFlags =
             QFileSystemMetaData::MetaDataFlags(uint(type))
-            & QFileSystemMetaData::Permissions
-            | QFileSystemMetaData::LinkType;
+            & QFileSystemMetaData::Permissions;
+    queryFlags |= QFileSystemMetaData::LinkType;
 
     if (type & TypesMask)
         queryFlags |= QFileSystemMetaData::LinkType
@@ -351,7 +349,7 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size)
 
     void *mapAddress = QT_MMAP(Q_NULLPTR, realSize,
                    access, MAP_SHARED, fd, realOffset);
-    if (MAP_FAILED != mapAddress) {
+    if (mapAddress != MAP_FAILED) {
         uchar *address = extra + static_cast<uchar*>(mapAddress);
         maps[address] = QPair<int,size_t>(extra, realSize);
         return address;
@@ -384,7 +382,7 @@ bool QFSFileEnginePrivate::unmap(uchar *ptr)
 
     uchar *start = ptr - maps[ptr].first;
     size_t len = maps[ptr].second;
-    if (-1 == munmap(start, len)) {
+    if (::munmap(start, len) == -1) {
         q->setError(QFile::UnspecifiedError, qt_error_string(errno));
         return false;
     }

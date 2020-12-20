@@ -16,16 +16,14 @@ There are several things you should be aware before considering Katie:
     required for building
   - OpenSSL, D-Bus, CUPS and resolv must be linked to during build
   - QtUiTools is build as shared library by default
-  - moc, uic, rcc, lrelease, lupdate, etc. are linked to components
+  - moc, uic, rcc, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
-  - updated bundled FFTW and Valgrind from upstream
   - versioned and extended classes have been merged into the base class,
     e.g. QIconEngineV2 into QIconEngine and QKeyEventEx into QKeyEvent
   - QGuiPlatformPlugin class is public
-  - updated localizations data from Common Locale Data Repository v36.1
+  - updated localizations data from Common Locale Data Repository v38
   - SQLite driver uses UTF-8 encoding instead of UTF-16
   - default text codec for C-strings is UTF-8
-  - Symbian, QWS, QPA, Mac and Windows are no longer supported platforms
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine
   - native graphics system is no more, rasterizer is just as fast as native
@@ -35,16 +33,19 @@ There are several things you should be aware before considering Katie:
   - state machine is no more
   - removed non-open source DB2, OCI, TDS and InterBase database drivers
   - removed 3rd party sources that are very common nowdays
-  - dropped non-open source platforms support
+  - dropped non-open source and discontinued platforms support
   - dropped dnotify filesystem watcher support
   - dropped Glib2 event dispatcher support
   - dropped support for a.out format
   - dropped Motif Drag-And-Drop (DND) support
   - dropped LPR support
+  - dropped static plugins support
+  - dropped MNG image format support
+  - dropped obscure (24-bit) image formats support
+  - dropped Valgrind support
 
  - some additions have been made: 
   - JSON classes and types
-  - command line parser
   - standard directories handler
   - building with OpenSSL v1.1+ is possible
   - building with IODBC instead of unixODBC is possible
@@ -53,12 +54,14 @@ There are several things you should be aware before considering Katie:
   - alternative libc implementations support
   - additional text codecs via ICU converter
   - Unicode v5.0+ characters and partial scripts support
+  - support for AArch64 architecture
+  - support for PostgreSQL v9.1+
   - support for locale aliases
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
   - support for generating CRC-32 checksums via qChecksum32() function
   - verification section for plugins build with Clang
   - faster alternatives to qCompress() and qUncompress()
-  - stack unwinding on assert or crash via libunwind
+  - stack backtrace on assert or crash via execinfo
   - brief manual pages for all command-line tools
   - desktop files, Shell profile and dynamic linker/loader config
   - automatic async D-Bus calls based on return type, no Q_NOREPLY needed
@@ -81,7 +84,7 @@ QTBUG-25114, QTBUG-24672, QTBUG-23524 (WIP), QTBUG-56088, QTBUG-42189,
 QTBUG-39285, QTBUG-18173, QTBUG-28968, QTBUG-34336, QTBUG-40974, QTBUG-44286,
 QTBUG-12564, QTBUG-20028, QTBUG-71967, QTBUG-70956, QTBUG-71446, QTBUG-61307,
 QTBUG-27287, QTBUG-25143, QTBUG-22833, QTBUG-57399, QTBUG-59159, QTBUG-15773,
-QTBUG-70506, QTBUG-46054, QTBUG-11223
+QTBUG-70506, QTBUG-46054, QTBUG-11223, QTBUG-63108
 
 Unless you use QMake and QDoc porting to Katie or even supporting it along with
 Qt4 in the same codebase is trivial and requires only minor changes because

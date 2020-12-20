@@ -54,6 +54,19 @@
 
 #include <errno.h>
 
+#ifndef QT_NO_PLUGIN_CHECK
+#  include <elf.h>
+#  if QT_POINTER_SIZE == 8
+#    define QT_ELF_EHDR_TYPE Elf64_Ehdr
+#    define QT_ELF_SHDR_TYPE Elf64_Shdr
+#    define QT_ELF_CLASS_TYPE ELFCLASS64
+#  else
+#    define QT_ELF_EHDR_TYPE Elf32_Ehdr
+#    define QT_ELF_SHDR_TYPE Elf32_Shdr
+#    define QT_ELF_CLASS_TYPE ELFCLASS32
+#  endif
+#endif
+
 QT_BEGIN_NAMESPACE
 
 Q_GLOBAL_STATIC(QMutex, qt_library_mutex)
@@ -75,11 +88,10 @@ Q_GLOBAL_STATIC(QMutex, qt_library_mutex)
     system-specific library locations (e.g. \c LD_LIBRARY_PATH on
     Unix), unless the file name has an absolute path. If the file
     cannot be found, QLibrary tries the name with different
-    platform-specific file suffixes, like ".so" on Unix, ".dylib" on
-    the Mac, or ".dll" on Windows. This makes it possible
-    to specify shared libraries that are only identified by their
-    basename (i.e. without their suffix), so the same code will work
-    on different operating systems.
+    platform-specific file suffixes, like ".so" on Unix. This makes
+    it possible to specify shared libraries that are only identified
+    by their basename (i.e. without their suffix), so the same code
+    will work on different operating systems.
 
     The most important functions are load() to dynamically load the
     library file, isLoaded() to check whether loading was successful,
@@ -138,157 +150,10 @@ Q_GLOBAL_STATIC(QMutex, qt_library_mutex)
     \sa loadHints
 */
 
-
 #ifndef QT_NO_PLUGIN_CHECK
-struct qt_token_info
-{
-    qt_token_info(const char *f, const ulong fc)
-        : fields(f), field_count(fc), results(fc), lengths(fc)
-    {
-        results.fill(0);
-        lengths.fill(0);
-    }
-
-    const char *fields;
-    const ulong field_count;
-
-    QVector<const char *> results;
-    QVector<ulong> lengths;
-};
-
-/*
-  return values:
-       1 parse ok
-       0 eos
-      -1 parse error
-*/
-static int qt_tokenize(const char *s, ulong s_len, ulong *advance,
-                        qt_token_info &token_info)
-{
-    if (!s)
-        return -1;
-
-    ulong pos = 0, field = 0, fieldlen = 0;
-    char current;
-    int ret = -1;
-    *advance = 0;
-    for (;;) {
-        current = s[pos];
-
-        // next char
-        ++pos;
-        ++fieldlen;
-        ++*advance;
-
-        if (! current || pos == s_len + 1) {
-            // save result
-            token_info.results[(int)field] = s;
-            token_info.lengths[(int)field] = fieldlen - 1;
-
-            // end of string
-            ret = 0;
-            break;
-        }
-
-        if (current == token_info.fields[field]) {
-            // save result
-            token_info.results[(int)field] = s;
-            token_info.lengths[(int)field] = fieldlen - 1;
-
-            // end of field
-            fieldlen = 0;
-            ++field;
-            if (field == token_info.field_count - 1) {
-                // parse ok
-                ret = 1;
-            }
-            if (field == token_info.field_count) {
-                // done parsing
-                break;
-            }
-
-            // reset string and its length
-            s = s + pos;
-            s_len -= pos;
-            pos = 0;
-        }
-    }
-
-    return ret;
-}
-
-/*
-  returns true if the string s was correctly parsed, false otherwise.
-*/
-static bool qt_parse_pattern(const char *s, uint *version)
-{
-    bool ret = true;
-
-    qt_token_info pinfo("=\n", 2);
-    int parse;
-    ulong at = 0, advance, parselen = qstrlen(s);
-    do {
-        parse = qt_tokenize(s + at, parselen, &advance, pinfo);
-        if (parse == -1) {
-            ret = false;
-            break;
-        }
-
-        at += advance;
-        parselen -= advance;
-
-        if (qstrncmp("version", pinfo.results[0], pinfo.lengths[0]) == 0) {
-            QByteArray qv(pinfo.results[1], pinfo.lengths[1]);
-            bool ok;
-            *version = qv.toUInt(&ok, 0);
-        }
-    } while (parse == 1 && parselen > 0);
-
-    return ret;
-}
-
-static long qt_find_pattern(const char *s, ulong s_len)
-{
-    /*
-      we search from the end of the file because on the supported
-      systems, the read-only data/text segments are placed at the end
-      of the file.  HOWEVER, when building with debugging enabled, all
-      the debug symbols are placed AFTER the data/text segments.
-
-      what does this mean?  when building in release mode, the search
-      is fast because the data we are looking for is at the end of the
-      file... when building in debug mode, the search is slower
-      because we have to skip over all the debugging symbols first
-    */
-
-    static const char pattern[] = "pattern=KT_PLUGIN_VERIFICATION_DATA";
-    static const ulong p_len = qstrlen(pattern);
-
-    if (!s || p_len > s_len)
-        return -1;
-    ulong i, hs = 0, hp = 0, delta = s_len - p_len;
-
-    for (i = 0; i < p_len; ++i) {
-        hs += s[delta + i];
-        hp += pattern[i];
-    }
-    i = delta;
-    for (;;) {
-        if (hs == hp && qstrncmp(s + i, pattern, p_len) == 0)
-            return i;
-        if (i == 0)
-            break;
-        --i;
-        hs -= s[i + p_len];
-        hs += s[i];
-    }
-
-    return -1;
-}
-
 /*
   This opens the specified library, mmaps it into memory, and searches
-  for the KT_PLUGIN_VERIFICATION_DATA.  The advantage of this approach is that
+  for the plugin seciton.  The advantage of this approach is that
   we can get the verification data without have to actually load the library.
   This lets us detect mismatches more safely.
 
@@ -308,29 +173,49 @@ static bool qt_unix_query(const QString &library, uint *version, QLibraryPrivate
         return false;
     }
 
-    ulong fdlen = file.size();
-    const char *filedata = reinterpret_cast<char*>(file.map(0, fdlen));
+    qint64 datalen = file.size();
+    const char *filedata = reinterpret_cast<char*>(file.map(0, file.size()));
     if (filedata == 0) {
         // try reading the data into memory instead
         const QByteArray data = file.readAll();
         filedata = data.constData();
-        fdlen = data.size();
+        datalen = data.size();
     }
 
-    /*
-       ELF binaries build with GNU or Clang have .ktplugin sections.
-    */
-    const long pos = qt_find_pattern(filedata, fdlen);
+    // basic ELF checks to avoid crashing
+    if (datalen < (EI_CLASS + 1) || qstrncmp(filedata, ELFMAG, SELFMAG) != 0) {
+        lib->errorString = QLibrary::tr("'%1' is not ELF file").arg(library);
+        return false;
+    } else if (filedata[EI_CLASS] != QT_ELF_CLASS_TYPE) {
+        lib->errorString = QLibrary::tr("ELF class mismatch in '%1'").arg(library);
+        return false;
+    }
+
+    // ELF binaries build with GNU or Clang have .ktplugin section
     bool ret = false;
-    if (pos >= 0)
-        ret = qt_parse_pattern(filedata + pos, version);
+    QT_ELF_EHDR_TYPE *ehdr = (QT_ELF_EHDR_TYPE*)(filedata);
+    QT_ELF_SHDR_TYPE *shdr = (QT_ELF_SHDR_TYPE*)(filedata + ehdr->e_shoff);
+
+    QT_ELF_SHDR_TYPE *sh_strtab = &shdr[ehdr->e_shstrndx];
+    const char *const sh_strtab_p = filedata + sh_strtab->sh_offset;
+
+    for (int i = 0; i < ehdr->e_shnum; ++i) {
+        const char* sectioname = sh_strtab_p + shdr[i].sh_name;
+        if (qstrcmp(sectioname, ".ktplugin") == 0) {
+            ret = true;
+            // compatiblity between releases is not guratneed thus no version matching is done
+            *version = QT_VERSION;
+            break;
+        }
+    }
+
 
     if (!ret)
         lib->errorString = QLibrary::tr("Plugin verification data mismatch in '%1'").arg(library);
     file.close();
+
     return ret;
 }
-
 #endif // QT_NO_PLUGIN_CHECK
 
 typedef QMap<QString, QLibraryPrivate*> LibraryMap;

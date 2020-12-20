@@ -46,8 +46,6 @@
 #ifndef SPACER_WIDGET_H
 #define SPACER_WIDGET_H
 
-#include "shared_global_p.h"
-
 #include <QtGui/QWidget>
 #include <QtGui/QSizePolicy>
 
@@ -55,7 +53,7 @@ QT_BEGIN_NAMESPACE
 
 class QDesignerFormWindowInterface;
 
-class QDESIGNER_SHARED_EXPORT Spacer: public QWidget
+class Q_DESIGNER_EXPORT Spacer: public QWidget
 {
     Q_OBJECT
 

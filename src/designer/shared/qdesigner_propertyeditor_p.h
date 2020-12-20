@@ -46,7 +46,6 @@
 #ifndef DESIGNERPROPERTYEDITOR_H
 #define DESIGNERPROPERTYEDITOR_H
 
-#include "shared_global_p.h"
 #include "shared_enums_p.h"
 #include <QtDesigner/abstractpropertyeditor.h>
 
@@ -57,7 +56,7 @@ namespace qdesigner_internal {
 // Extends the QDesignerPropertyEditorInterface by property comment handling and
 // a signal for resetproperty.
 
-class QDESIGNER_SHARED_EXPORT QDesignerPropertyEditor: public QDesignerPropertyEditorInterface
+class Q_DESIGNER_EXPORT QDesignerPropertyEditor: public QDesignerPropertyEditorInterface
 {
     Q_OBJECT
 public:

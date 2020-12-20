@@ -34,7 +34,6 @@
 #include "RegExpConstructor.h"
 #include "RegExpObject.h"
 #include <wtf/ASCIICType.h>
-#include <wtf/MathExtras.h>
 
 using namespace WTF;
 

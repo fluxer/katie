@@ -1,26 +1,15 @@
-add_definitions(-DQT_PLUGIN)
-
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_BINARY_DIR}/include/QtDBus
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDBus
     ${CMAKE_BINARY_DIR}/include/QtDeclarative
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDeclarative
     ${CMAKE_BINARY_DIR}/include/QtDesigner
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDesigner
     ${CMAKE_BINARY_DIR}/include/QtNetwork
-    ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
     ${CMAKE_BINARY_DIR}/include/QtScript
-    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtSql
-    ${CMAKE_BINARY_DIR}/privateinclude/QtSql
     ${CMAKE_BINARY_DIR}/include/QtSvg
-    ${CMAKE_BINARY_DIR}/privateinclude/QtSvg
 )
 
 # place the plugins in a sub-directory the leading of which can be used as plugin path,
@@ -49,14 +38,10 @@ target_include_directories(sharedbearer PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}/bearer
 )
 
-if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd|hurd)")
-    add_subdirectory(bearer/generic)
-    if(WITH_DBUS AND DBUS_FOUND)
-        add_subdirectory(bearer/connman)
-        add_subdirectory(bearer/networkmanager)
-    endif()
-else()
-    add_subdirectory(bearer/generic)
+add_subdirectory(bearer/generic)
+if(KATIE_PLATFORM STREQUAL "linux" AND WITH_DBUS AND DBUS_FOUND)
+    add_subdirectory(bearer/connman)
+    add_subdirectory(bearer/networkmanager)
 endif()
 
 
@@ -78,6 +63,7 @@ if(WITH_TIFF AND TIFF_FOUND)
     add_subdirectory(imageformats/tiff)
 endif()
 
+
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/script")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/script")
 if(WITH_DBUS AND DBUS_FOUND)
@@ -93,9 +79,10 @@ endif()
 if(WITH_ODBC AND ODBC_FOUND)
     add_subdirectory(sqldrivers/odbc)
 endif()
-if(WITH_PSQL AND PostgreSQL_FOUND)
+if(WITH_POSTGRESQL AND POSTGRESQL_FOUND)
     add_subdirectory(sqldrivers/psql)
 endif()
+
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/designer")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/designer")

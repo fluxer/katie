@@ -34,7 +34,6 @@
 #include "JSZombie.h"
 #include "MarkStack.h"
 #include "Nodes.h"
-#include "Tracing.h"
 #include <wtf/FastMalloc.h>
 #include <wtf/HashCountedSet.h>
 
@@ -42,28 +41,17 @@
 #include <limits.h>
 #include <setjmp.h>
 #include <stdlib.h>
-
-#if OS(HAIKU)
-
-#include <OS.h>
-
-#elif OS(UNIX)
-
-#if !OS(HAIKU)
 #include <sys/mman.h>
-#endif
 #include <unistd.h>
 
-#if OS(SOLARIS)
+#if defined(Q_OS_SOLARIS)
 #include <thread.h>
 #else
 #include <pthread.h>
 #endif
 
-#if HAVE(PTHREAD_NP_H)
+#if defined(QT_HAVE_PTHREAD_STACKSEG_NP) || defined(QT_HAVE_PTHREAD_ATTR_GET_NP)
 #include <pthread_np.h>
-#endif
-
 #endif
 
 #define COLLECT_ON_EVERY_ALLOCATION 0
@@ -116,18 +104,18 @@ void Heap::destroy()
 
 NEVER_INLINE CollectorBlock* Heap::allocateBlock()
 {
-#if HAVE(POSIX_MEMALIGN)
+#if defined(QT_HAVE_POSIX_MEMALIGN)
     void* address;
-    posix_memalign(&address, BLOCK_SIZE, BLOCK_SIZE);
+    ::posix_memalign(&address, BLOCK_SIZE, BLOCK_SIZE);
 #else
 
-    static size_t pagesize = getpagesize();
+    static size_t pagesize = ::getpagesize();
 
     size_t extra = 0;
     if (BLOCK_SIZE > pagesize)
         extra = BLOCK_SIZE - pagesize;
 
-    void* mmapResult = mmap(NULL, BLOCK_SIZE + extra, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+    void* mmapResult = QT_MMAP(NULL, BLOCK_SIZE + extra, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
     uintptr_t address = reinterpret_cast<uintptr_t>(mmapResult);
 
     size_t adjust = 0;
@@ -135,10 +123,10 @@ NEVER_INLINE CollectorBlock* Heap::allocateBlock()
         adjust = BLOCK_SIZE - (address & BLOCK_OFFSET_MASK);
 
     if (adjust > 0)
-        munmap(reinterpret_cast<char*>(address), adjust);
+        ::munmap(reinterpret_cast<char*>(address), adjust);
 
     if (adjust < extra)
-        munmap(reinterpret_cast<char*>(address + adjust + BLOCK_SIZE), extra - adjust);
+        ::munmap(reinterpret_cast<char*>(address + adjust + BLOCK_SIZE), extra - adjust);
 
     address += adjust;
 #endif
@@ -191,10 +179,10 @@ NEVER_INLINE void Heap::freeBlock(size_t block)
 
 NEVER_INLINE void Heap::freeBlockPtr(CollectorBlock* block)
 {
-#if HAVE(POSIX_MEMALIGN)
-    free(block);
+#if defined(QT_HAVE_POSIX_MEMALIGN)
+    ::free(block);
 #else
-    munmap(reinterpret_cast<char*>(block), BLOCK_SIZE);
+    ::munmap(reinterpret_cast<char*>(block), BLOCK_SIZE);
 #endif
 }
 
@@ -343,34 +331,18 @@ void Heap::shrinkBlocks(size_t neededBlocks)
 
 static inline void* currentThreadStackBase()
 {
-#if OS(SOLARIS)
+#if defined(Q_OS_SOLARIS)
     stack_t s;
     thr_stksegment(&s);
     return s.ss_sp;
-#elif OS(AIX)
-    pthread_t thread = pthread_self();
-    struct __pthrdsinfo threadinfo;
-    char regbuf[256];
-    int regbufsize = sizeof regbuf;
-
-    if (pthread_getthrds_np(&thread, PTHRDSINFO_QUERY_ALL,
-                            &threadinfo, sizeof threadinfo,
-                            &regbuf, &regbufsize) == 0)
-        return threadinfo.__pi_stackaddr;
-
-    return 0;
-#elif OS(OPENBSD)
+#elif defined(QT_HAVE_PTHREAD_STACKSEG_NP)
     pthread_t thread = pthread_self();
     stack_t stack;
     pthread_stackseg_np(thread, &stack);
     return stack.ss_sp;
-#elif OS(HAIKU)
-    thread_info threadInfo;
-    get_thread_info(find_thread(NULL), &threadInfo);
-    return threadInfo.stack_end;
-#elif OS(UNIX)
-    AtomicallyInitializedStatic(QMutex*, mutex = new QMutex);
-    QMutexLocker locker(mutex);
+#else
+    static thread_local QMutex currentThreadStackMutex;
+    QMutexLocker locker(&currentThreadStackMutex);
     static void* stackBase = 0;
     static size_t stackSize = 0;
     static pthread_t stackThread;
@@ -378,7 +350,7 @@ static inline void* currentThreadStackBase()
     if (stackBase == 0 || thread != stackThread) {
         pthread_attr_t sattr;
         pthread_attr_init(&sattr);
-#if HAVE(PTHREAD_NP_H) || OS(NETBSD)
+#if defined(QT_HAVE_PTHREAD_ATTR_GET_NP)
         // e.g. on FreeBSD 5.4, neundorf@kde.org
         pthread_attr_get_np(thread, &sattr);
 #else
@@ -392,8 +364,6 @@ static inline void* currentThreadStackBase()
         stackThread = thread;
     }
     return static_cast<char*>(stackBase) + stackSize;
-#else
-#error Need a way to get the stack base on this platform
 #endif
 }
 
@@ -405,19 +375,6 @@ inline bool isPointerAligned(void* p)
 // Cell size needs to be a power of two for isPossibleCell to be valid.
 COMPILE_ASSERT(sizeof(CollectorCell) % 2 == 0, Collector_cell_size_is_power_of_two);
 
-#if USE(JSVALUE32)
-static bool isHalfCellAligned(void *p)
-{
-    return (((intptr_t)(p) & (CELL_MASK >> 1)) == 0);
-}
-
-static inline bool isPossibleCell(void* p)
-{
-    return isHalfCellAligned(p) && p;
-}
-
-#else
-
 static inline bool isCellAligned(void *p)
 {
     return (((intptr_t)(p) & CELL_MASK) == 0);
@@ -427,7 +384,6 @@ static inline bool isPossibleCell(void* p)
 {
     return isCellAligned(p) && p;
 }
-#endif // USE(JSVALUE32)
 
 void Heap::markConservatively(MarkStack& markStack, void* start, void* end)
 {
@@ -477,11 +433,7 @@ void NEVER_INLINE Heap::markCurrentThreadConservativelyInternal(MarkStack& markS
     markConservatively(markStack, stackPointer, stackBase);
 }
 
-#if COMPILER(GCC)
-#define REGISTER_BUFFER_ALIGNMENT __attribute__ ((aligned (sizeof(void*))))
-#else
-#define REGISTER_BUFFER_ALIGNMENT
-#endif
+#define REGISTER_BUFFER_ALIGNMENT Q_DECL_ALIGN(sizeof(void*))
 
 void Heap::markCurrentThreadConservatively(MarkStack& markStack)
 {
@@ -682,10 +634,6 @@ static const char* typeName(JSCell* cell)
 {
     if (cell->isString())
         return "string";
-#if USE(JSVALUE32)
-    if (cell->isNumber())
-        return "number";
-#endif
     if (cell->isGetterSetter())
         return "gettersetter";
     if (cell->isAPIValueWrapper())
@@ -715,11 +663,7 @@ bool Heap::isBusy()
 
 void Heap::reset()
 {
-    JAVASCRIPTCORE_GC_BEGIN();
-
     markRoots();
-
-    JAVASCRIPTCORE_GC_MARKED();
 
     m_heap.nextCell = 0;
     m_heap.nextBlock = 0;
@@ -729,14 +673,10 @@ void Heap::reset()
     sweep();
 #endif
     resizeBlocks();
-
-    JAVASCRIPTCORE_GC_END();
 }
 
 void Heap::collectAllGarbage()
 {
-    JAVASCRIPTCORE_GC_BEGIN();
-
     // If the last iteration through the heap deallocated blocks, we need
     // to clean up remaining garbage before marking. Otherwise, the conservative
     // marking mechanism might follow a pointer to unmapped memory.
@@ -745,16 +685,12 @@ void Heap::collectAllGarbage()
 
     markRoots();
 
-    JAVASCRIPTCORE_GC_MARKED();
-
     m_heap.nextCell = 0;
     m_heap.nextBlock = 0;
     m_heap.nextNumber = 0;
     m_heap.extraCost = 0;
     sweep();
     resizeBlocks();
-
-    JAVASCRIPTCORE_GC_END();
 }
 
 LiveObjectIterator Heap::primaryHeapBegin()

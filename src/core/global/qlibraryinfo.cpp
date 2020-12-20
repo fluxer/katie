@@ -46,18 +46,6 @@ QT_BEGIN_NAMESPACE
     key. This class provides an abstraction for accessing this
     information.
 
-    \table
-    \header \o Function           \o Return value
-    \row    \o buildKey()         \o A string that identifies the Katie version and
-                                     the configuration. This key is used to ensure
-                                     that \l{plugins} link against the same version
-                                     of Katie as the application.
-    \row    \o location()         \o The path to a certain Katie
-                                     component (e.g., documentation, header files).
-    \row    \o licensee(),
-               licensedProducts() \o Licensing information.
-    \endtable
-
     You can also use a \c Katie.conf file to override the hard-coded paths
     that are compiled into the Katie library. For more information, see
     the \l {Using Katie.conf} documentation.
@@ -70,67 +58,17 @@ QT_BEGIN_NAMESPACE
 
     \keyword library location
 
-    This enum type is used to specify a specific location
-    specifier:
+    This enum type is used to specify a specific location specifier:
 
-    \value PrefixPath The default prefix for all paths.
     \value HeadersPath The location for all headers.
     \value LibrariesPath The location of installed libraries.
     \value BinariesPath The location of installed Qt binaries (tools and applications).
     \value PluginsPath The location of installed Qt plugins.
     \value ImportsPath The location of installed QML extensions to import.
-    \value DataPath The location of general Qt data.
     \value TranslationsPath The location of translation information for Qt strings.
 
     \sa location()
 */
-
-/*!
-  Returns the person to whom this build of Qt is licensed.
-
-  \sa licensedProducts()
-*/
-
-QString QLibraryInfo::licensee()
-{
-    return QString::fromLocal8Bit(qt_configure_licensee_str);
-}
-
-/*!
-  Returns the products that the license for this build of Qt has access to.
-
-  \sa licensee()
-*/
-
-QString QLibraryInfo::licensedProducts()
-{
-    return QString::fromLatin1(qt_configure_licensed_products_str);
-}
-
-/*!
-    Returns a unique key identifying this build of Qt and its
-    configurations. This key is not globally unique, rather only useful
-    for establishing of two configurations are compatible.
-
-    \sa location()
-*/
-
-QString QLibraryInfo::buildKey()
-{
-    return QString::fromLatin1(qt_configure_build_key_str);
-}
-
-/*!
-    \since 4.6
-    Returns the installation date for this build of Qt. The install date will
-    usually be the last time that Qt sources were configured.
-*/
-#ifndef QT_NO_DATESTRING
-QDate QLibraryInfo::buildDate()
-{
-    return QDate::fromString(QString::fromLatin1(qt_configure_build_date_str), Qt::ISODate);
-}
-#endif //QT_NO_DATESTRING
 
 /*!
   Returns the location specified by \a loc.
@@ -140,8 +78,6 @@ QDate QLibraryInfo::buildDate()
 QString QLibraryInfo::location(LibraryLocation loc)
 {
     switch (loc) {
-        case PrefixPath:
-            return QString::fromLocal8Bit(qt_configure_prefix_path_str);
         case HeadersPath:
             return QString::fromLocal8Bit(qt_configure_headers_path_str);
         case LibrariesPath:
@@ -150,8 +86,6 @@ QString QLibraryInfo::location(LibraryLocation loc)
             return QString::fromLocal8Bit(qt_configure_binaries_path_str);
         case PluginsPath:
             return QString::fromLocal8Bit(qt_configure_plugins_path_str);
-        case DataPath:
-            return QString::fromLocal8Bit(qt_configure_data_path_str);
         case TranslationsPath:
             return QString::fromLocal8Bit(qt_configure_translations_path_str);
         case ImportsPath:

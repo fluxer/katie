@@ -10,24 +10,20 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 include(FindPkgConfig)
+include(FindPackageHandleStandardArgs)
+
 pkg_check_modules(PC_ZSTD QUIET libzstd)
 
-set(ZSTD_INCLUDES ${PC_ZSTD_INCLUDE_DIRS})
-set(ZSTD_LIBRARIES ${PC_ZSTD_LIBRARIES})
+find_path(ZSTD_INCLUDES
+    NAMES zstd.h
+    HINTS $ENV{ZSTDDIR}/include ${PC_ZSTD_INCLUDEDIR}
+)
 
-if(NOT ZSTD_INCLUDES OR NOT ZSTD_LIBRARIES)
-    find_path(ZSTD_INCLUDES
-        NAMES zstd.h
-        HINTS $ENV{ZSTDDIR}/include
-    )
+find_library(ZSTD_LIBRARIES
+    NAMES zstd
+    HINTS $ENV{ZSTDDIR}/lib ${PC_ZSTD_LIBDIR}
+)
 
-    find_library(ZSTD_LIBRARIES
-        NAMES zstd
-        HINTS $ENV{ZSTDDIR}/lib
-    )
-endif()
-
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ZSTD
     VERSION_VAR PC_ZSTD_VERSION
     REQUIRED_VARS ZSTD_LIBRARIES ZSTD_INCLUDES

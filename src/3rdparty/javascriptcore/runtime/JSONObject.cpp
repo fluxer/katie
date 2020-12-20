@@ -33,7 +33,6 @@
 #include "LiteralParser.h"
 #include "PropertyNameArray.h"
 #include "StringBuilder.h"
-#include <wtf/MathExtras.h>
 
 namespace JSC {
 

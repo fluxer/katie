@@ -1772,9 +1772,9 @@ static inline DomUI *domUIFromClipboard(int *widgetCount, int *actionCount)
 static inline QString pasteCommandDescription(int widgetCount, int actionCount)
 {
     if (widgetCount == 0)
-        return FormWindow::tr("Paste %n action(s)", 0, actionCount);
+        return FormWindow::tr("Paste %1 action(s)").arg(actionCount);
     if (actionCount == 0)
-        return FormWindow::tr("Paste %n widget(s)", 0, widgetCount);
+        return FormWindow::tr("Paste %1 widget(s)").arg(widgetCount);
     return FormWindow::tr("Paste (%1 widgets, %2 actions)").arg(widgetCount).arg(actionCount);
 }
 

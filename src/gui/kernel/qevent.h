@@ -139,7 +139,7 @@ public:
     inline int globalY() const { return qRound(g.y()); }
 
     inline Qt::MouseButtons buttons() const { return mouseState; }
-    Qt::Orientation orientation() const { return o; }
+    inline Qt::Orientation orientation() const { return o; }
 
 protected:
     QPointF p, g;
@@ -187,13 +187,13 @@ protected:
 class Q_GUI_EXPORT QFocusEvent : public QEvent
 {
 public:
-    QFocusEvent(Type type, Qt::FocusReason reason=Qt::OtherFocusReason);
+    QFocusEvent(Type type, Qt::FocusReason reason = Qt::OtherFocusReason);
     ~QFocusEvent();
 
     inline bool gotFocus() const { return type() == FocusIn; }
     inline bool lostFocus() const { return type() == FocusOut; }
 
-    Qt::FocusReason reason() const;
+    inline Qt::FocusReason reason() const { return m_reason; }
 
 private:
     Qt::FocusReason m_reason;
@@ -216,7 +216,6 @@ protected:
     friend class QCoreApplication;
     QRect m_rect;
     QRegion m_region;
-    bool m_erased;
 };
 
 class QUpdateLaterEvent : public QEvent
@@ -381,19 +380,6 @@ public:
 };
 
 
-/* An internal class */
-class Q_GUI_EXPORT QDragResponseEvent : public QEvent
-{
-public:
-    QDragResponseEvent(bool accepted);
-    ~QDragResponseEvent();
-
-    inline bool dragAccepted() const { return a; }
-protected:
-    bool a;
-};
-
-
 class Q_GUI_EXPORT QDragLeaveEvent : public QEvent
 {
 public:
@@ -456,7 +442,7 @@ class Q_GUI_EXPORT QActionEvent : public QEvent
 {
     QAction *act, *bef;
 public:
-    QActionEvent(int type, QAction *action, QAction *before = 0);
+    QActionEvent(QEvent::Type type, QAction *action, QAction *before = 0);
     ~QActionEvent();
 
     inline QAction *action() const { return act; }
@@ -489,7 +475,7 @@ public:
     ~QWindowStateChangeEvent();
 
     inline Qt::WindowStates oldState() const { return ostate; }
-    bool isOverride() const;
+    inline bool isOverride() const { return m_override; };
 
 private:
     bool m_override;

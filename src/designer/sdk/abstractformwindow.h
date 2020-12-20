@@ -34,8 +34,6 @@
 #ifndef ABSTRACTFORMWINDOW_H
 #define ABSTRACTFORMWINDOW_H
 
-#include <QtDesigner/sdk_global.h>
-
 #include <QtGui/QWidget>
 
 QT_BEGIN_HEADER
@@ -49,7 +47,7 @@ class DomUI;
 class QUndoStack;
 class QDir;
 
-class QDESIGNER_SDK_EXPORT QDesignerFormWindowInterface: public QWidget
+class Q_DESIGNER_EXPORT QDesignerFormWindowInterface: public QWidget
 {
     Q_OBJECT
 public:

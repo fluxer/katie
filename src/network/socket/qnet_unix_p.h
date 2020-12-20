@@ -57,58 +57,29 @@
 
 QT_BEGIN_NAMESPACE
 
-// UnixWare 7 redefines socket -> _socket
-static inline int qt_safe_socket(int domain, int type, int protocol, int flags = 0)
+static inline int qt_safe_socket(int domain, int type, int protocol)
 {
-    Q_ASSERT((flags & ~O_NONBLOCK) == 0);
-
-#if defined(SOCK_CLOEXEC) && defined(SOCK_NONBLOCK)
+#if defined(SOCK_CLOEXEC)
     // since Linux 2.6.27
-    int newtype = type | SOCK_CLOEXEC;
-    if (flags & O_NONBLOCK)
-        newtype |= SOCK_NONBLOCK;
-    return ::socket(domain, newtype, protocol);
+    return ::socket(domain, type | SOCK_CLOEXEC, protocol);
 #else
     int fd = ::socket(domain, type, protocol);
-    if (fd == -1)
-        return -1;
-
-    ::fcntl(fd, F_SETFD, FD_CLOEXEC);
-
-    // set non-block too?
-    if (flags & O_NONBLOCK)
-        ::fcntl(fd, F_SETFL, ::fcntl(fd, F_GETFL) | O_NONBLOCK);
-
+    if (fd != -1)
+        ::fcntl(fd, F_SETFD, FD_CLOEXEC);
     return fd;
 #endif
 }
 
-// Tru64 redefines accept -> _accept with _XOPEN_SOURCE_EXTENDED
-static inline int qt_safe_accept(int s, struct sockaddr *addr, QT_SOCKLEN_T *addrlen, int flags = 0)
+static inline int qt_safe_accept(int s, struct sockaddr *addr, QT_SOCKLEN_T *addrlen)
 {
-    Q_ASSERT((flags & ~O_NONBLOCK) == 0);
-
-#if defined(Q_OS_LINUX) && defined(SOCK_CLOEXEC) && defined(SOCK_NONBLOCK)
-    int sockflags = SOCK_CLOEXEC;
-    if (flags & O_NONBLOCK)
-        sockflags |= SOCK_NONBLOCK;
-    return ::accept4(s, addr, addrlen, sockflags);
-#elif defined(Q_OS_NETBSD) && defined(SOCK_CLOEXEC) && defined(SOCK_NONBLOCK)
-    int sockflags = SOCK_CLOEXEC;
-    if (flags & O_NONBLOCK)
-        sockflags |= SOCK_NONBLOCK;
-    return ::paccept(s, addr, addrlen, NULL, sockflags);
+#if defined(QT_HAVE_ACCEPT4) && defined(SOCK_CLOEXEC)
+    return ::accept4(s, addr, addrlen, SOCK_CLOEXEC);
+#elif defined(QT_HAVE_PACCEPT) && defined(SOCK_CLOEXEC)
+    return ::paccept(s, addr, addrlen, NULL, SOCK_CLOEXEC);
 #else
     int fd = ::accept(s, addr, addrlen);
-    if (fd == -1)
-        return -1;
-
-    ::fcntl(fd, F_SETFD, FD_CLOEXEC);
-
-    // set non-block too?
-    if (flags & O_NONBLOCK)
-        ::fcntl(fd, F_SETFL, ::fcntl(fd, F_GETFL) | O_NONBLOCK);
-
+    if (fd != -1)
+        ::fcntl(fd, F_SETFD, FD_CLOEXEC);
     return fd;
 #endif
 }

@@ -281,24 +281,6 @@ const QObject *QMetaObject::cast(const QObject *obj) const
     return Q_NULLPTR;
 }
 
-#ifndef QT_NO_TRANSLATION
-/*!
-    \internal
-*/
-QString QMetaObject::tr(const char *s, const char *c, int n) const
-{
-    return QCoreApplication::translate(d.stringdata, s, c, QCoreApplication::CodecForTr, n);
-}
-
-/*!
-    \internal
-*/
-QString QMetaObject::trUtf8(const char *s, const char *c, int n) const
-{
-    return QCoreApplication::translate(d.stringdata, s, c, QCoreApplication::UnicodeUTF8, n);
-}
-#endif // QT_NO_TRANSLATION
-
 /*!
     Returns the method offset for this class; i.e. the index position
     of this class's first member function.

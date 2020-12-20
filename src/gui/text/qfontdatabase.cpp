@@ -43,9 +43,6 @@
 #include "qfontinfo.h"
 #include "qfontmetrics.h"
 
-#ifdef Q_WS_X11
-#include <locale.h>
-#endif
 #include <stdlib.h>
 #include <limits.h>
 

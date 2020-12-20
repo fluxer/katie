@@ -74,7 +74,7 @@ enum SpecialProperty getSpecialProperty(const QString& propertyName);
 // Can be used for Set commands (setValue(), restoreOldValue()) or
 // Reset Commands     restoreDefaultValue(), restoreOldValue()).
 //
-class QDESIGNER_SHARED_EXPORT PropertyHelper {
+class Q_DESIGNER_EXPORT PropertyHelper {
     Q_DISABLE_COPY(PropertyHelper)
 public:
     // A pair of Value and changed flag
@@ -139,7 +139,7 @@ private:
 
 // Base class for commands that can be applied to several widgets
 
-class QDESIGNER_SHARED_EXPORT PropertyListCommand : public QDesignerFormWindowCommand {
+class Q_DESIGNER_EXPORT PropertyListCommand : public QDesignerFormWindowCommand {
 public:
     typedef QList<QObject *> ObjectList;
 
@@ -209,7 +209,7 @@ private:
     PropertyHelperList m_propertyHelperList;
 };
 
-class QDESIGNER_SHARED_EXPORT SetPropertyCommand: public PropertyListCommand
+class Q_DESIGNER_EXPORT SetPropertyCommand: public PropertyListCommand
 {
 
 public:
@@ -243,7 +243,7 @@ private:
     unsigned m_subPropertyMask;
 };
 
-class QDESIGNER_SHARED_EXPORT ResetPropertyCommand: public PropertyListCommand
+class Q_DESIGNER_EXPORT ResetPropertyCommand: public PropertyListCommand
 {
 
 public:
@@ -265,7 +265,7 @@ private:
 };
 
 
-class QDESIGNER_SHARED_EXPORT AddDynamicPropertyCommand: public QDesignerFormWindowCommand
+class Q_DESIGNER_EXPORT AddDynamicPropertyCommand: public QDesignerFormWindowCommand
 {
 
 public:
@@ -282,7 +282,7 @@ private:
     QVariant m_value;
 };
 
-class QDESIGNER_SHARED_EXPORT RemoveDynamicPropertyCommand: public QDesignerFormWindowCommand
+class Q_DESIGNER_EXPORT RemoveDynamicPropertyCommand: public QDesignerFormWindowCommand
 {
 
 public:

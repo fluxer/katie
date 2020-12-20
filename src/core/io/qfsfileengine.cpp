@@ -78,7 +78,7 @@ QFSFileEnginePrivate::QFSFileEnginePrivate() : QAbstractFileEnginePrivate()
 void QFSFileEnginePrivate::init()
 {
     is_sequential = 0;
-    tried_stat = false;
+    metaData.clear();
     openMode = QIODevice::NotOpen;
     fd = -1;
     closeFileHandle = false;
@@ -159,7 +159,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
         openMode |= QFile::Truncate;
 
     d->openMode = openMode;
-    d->tried_stat = false;
+    d->metaData.clear();
     d->fd = -1;
 
 #ifdef QT_LARGEFILE_SUPPORT
@@ -181,10 +181,6 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
             flags |= QT_OPEN_TRUNC;
     }
 
-    if (d->openMode & QIODevice::Unbuffered) {
-        flags |= O_SYNC;
-    }
-
     // Try to open the file.
     do {
         d->fd = QT_OPEN(d->fileEntry.nativeFilePath().constData(), flags, 0666);
@@ -196,6 +192,8 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
                  qt_error_string(errno));
         return false;
     }
+
+    d->closeFileHandle = true;
 
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
@@ -211,7 +209,6 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
         }
     }
 
-    d->closeFileHandle = true;
     return true;
 }
 
@@ -221,7 +218,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
 */
 bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh)
 {
-    return open(openMode, QT_FILENO(fh), QFile::DontCloseHandle);
+    return QFSFileEngine::open(openMode, QT_FILENO(fh), QFile::DontCloseHandle);
 }
 
 /*!
@@ -234,8 +231,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh)
 */
 bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh, QFile::FileHandleFlags handleFlags)
 {
-    Q_D(QFSFileEngine);
-    return open(openMode, QT_FILENO(fh), handleFlags);
+    return QFSFileEngine::open(openMode, QT_FILENO(fh), handleFlags);
 }
 
 /*!
@@ -244,7 +240,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, FILE *fh, QFile::FileHand
 */
 bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd)
 {
-    return open(openMode, fd, QFile::DontCloseHandle);
+    return QFSFileEngine::open(openMode, fd, QFile::DontCloseHandle);
 }
 
 /*!
@@ -271,7 +267,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::FileHandle
     d->closeFileHandle = (handleFlags & QFile::AutoCloseHandle);
     d->fileEntry.clear();
     d->fd = fd;
-    d->tried_stat = false;
+    d->metaData.clear();
 
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
@@ -305,9 +301,7 @@ bool QFSFileEngine::close()
     if (d->fd == -1)
         return false;
 
-    bool closed = true;
-    d->tried_stat = false;
-
+    d->metaData.clear();
 
     // Close the file if we created the handle.
     if (d->closeFileHandle) {
@@ -319,13 +313,12 @@ bool QFSFileEngine::close()
         // We must reset these guys regardless; calling close again after a
         // failed close causes crashes on some systems.
         d->fd = -1;
-        closed = (ret == 0);
-    }
 
-    // Report errors.
-    if (!closed) {
-        setError(QFile::UnspecifiedError, qt_error_string(errno));
-        return false;
+        // Report errors.
+        if (ret != 0) {
+            setError(QFile::UnspecifiedError, qt_error_string(errno));
+            return false;
+        }
     }
 
     return true;
@@ -347,8 +340,6 @@ qint64 QFSFileEngine::size() const
 {
     Q_D(const QFSFileEngine);
 
-    d->tried_stat = false;
-    d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
     if (!d->doStat(QFileSystemMetaData::SizeAttribute))
         return 0;
     return d->metaData.size();
@@ -450,6 +441,8 @@ qint64 QFSFileEngine::write(const char *data, qint64 len)
         setError(errno == ENOSPC ? QFile::ResourceError : QFile::WriteError, qt_error_string(errno));
     }
 
+    d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
+
     return writtenBytes;
 }
 
@@ -490,8 +483,7 @@ bool QFSFileEngine::extension(Extension extension, const ExtensionOption *option
         MapExtensionReturn *returnValue = static_cast<MapExtensionReturn*>(output);
         returnValue->address = d->map(options->offset, options->size);
         return (returnValue->address != 0);
-    }
-    if (extension == UnMapExtension) {
+    } else if (extension == UnMapExtension) {
         UnMapExtensionOption *options = (UnMapExtensionOption*)option;
         return d->unmap(options->address);
     }
