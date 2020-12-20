@@ -23,14 +23,6 @@ tar -xaf "$cwd/$cmake.$cmakeext"
 rm -rf *
 
 tar -xaf "$cwd/$cmake.$cmakeext"
-"$cmake/bin/cmake" ../ -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON $@
-rm -rf *
-
-tar -xaf "$cwd/$cmake.$cmakeext"
 "$cmake/bin/cmake" ../ -GNinja -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON $@
 ninja -n
 rm -rf *
-
-tar -xaf "$cwd/$cmake.$cmakeext"
-"$cmake/bin/cmake" ../ -GNinja -DKATIE_TESTS=ON -DKATIE_BENCHMARKS=ON -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON $@
-ninja -n

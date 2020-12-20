@@ -203,10 +203,9 @@ function(KATIE_STRING_UNWRAP INSTR OUTLST)
     endif()
 endfunction()
 
-# a macro to instruct katie_setup_target() which sources to exclude from the
-# all-in-one source file
+# a macro to instruct CMake which sources to exclude from the unity source file
 macro(KATIE_ALLINONE_EXCLUDE ARG1)
-    set_source_files_properties(${ARG1} ${ARGN} PROPERTIES ALLINONE_EXCLUDE TRUE)
+    set_source_files_properties(${ARG1} ${ARGN} PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
 endmacro()
 
 # a function to create an array of source files for a target while taking into
@@ -227,6 +226,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
     # this can be simpler if continue() was supported by old CMake versions
     set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
     katie_write_file("${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
+    set(filteredsources)
     set(targetresources)
     set(rscpath "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources")
     include_directories("${rscpath}")
@@ -252,7 +252,8 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 DEPENDS "${KATIE_RCC}"
                 OUTPUT "${rscout}"
             )
-        elseif("${rscext}" MATCHES "(.h|.hpp|.cc|.cpp)")
+        elseif("${rscext}" MATCHES "(.c|.h|.hpp|.cc|.cpp)")
+            set(filteredsources ${filteredsources} "${resource}")
             file(READ "${resource}" rsccontent)
             if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
                 set(rscout "${rscpath}/moc_${rscname}${rscext}")
@@ -268,31 +269,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
     endforeach()
     set_property(SOURCE "${resourcesdep}" APPEND PROPERTY OBJECT_DEPENDS "${targetresources}")
 
-    if(NOT KATIE_ALLINONE)
-        set(filteredsources)
-        foreach(srcstring ${ARGN})
-            get_filename_component(srcext "${srcstring}" EXT)
-            if(NOT "${srcext}" MATCHES "(.qrc|.ui)")
-                set(filteredsources ${filteredsources} "${srcstring}")
-            endif()
-        endforeach()
-        set(${FORTARGET}_SOURCES "${resourcesdep}" ${filteredsources} PARENT_SCOPE)
-    else()
-        set(allinonesource "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_allinone.cpp")
-        set(allinonedata)
-        set(excludesources)
-        foreach(srcstring ${ARGN})
-            get_filename_component(srcext "${srcstring}" EXT)
-            get_source_file_property(skip "${srcstring}" ALLINONE_EXCLUDE)
-            if(skip OR "${srcext}" STREQUAL ".c")
-                set(excludesources ${excludesources} "${srcstring}")
-            elseif(NOT "${srcext}" MATCHES "(.h|.qrc|.ui)")
-                set(allinonedata "${allinonedata}#include \"${srcstring}\"\n")
-            endif()
-        endforeach()
-        katie_write_file("${allinonesource}" "${allinonedata}")
-        set(${FORTARGET}_SOURCES ${resourcesdep} "${allinonesource}" ${excludesources} PARENT_SCOPE)
-    endif()
+    set(${FORTARGET}_SOURCES "${resourcesdep}" ${filteredsources} PARENT_SCOPE)
 endfunction()
 
 # a macro to ensure that object targets are build with PIC if the target they
