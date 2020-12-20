@@ -293,6 +293,7 @@ set_package_properties(DBus PROPERTIES
     TYPE RECOMMENDED
 )
 
+# v3.0+ required for SQLSetEnvAttr() and many other but unixODBC versioning is different
 find_package(ODBC)
 set_package_properties(ODBC PROPERTIES
     PURPOSE "Required for ODBC database support"
