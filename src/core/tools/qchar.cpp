@@ -1263,56 +1263,56 @@ QChar::UnicodeVersion QChar::unicodeVersion(const ushort ucs2)
 */
 QChar::UnicodeVersion QChar::unicodeVersion(const uint ucs4)
 {
+    Q_ASSERT(U_MAX_VERSION_STRING_LENGTH == 4);
+
     UVersionInfo info;
     u_charAge(ucs4, info);
-    QByteArray version(U_MAX_VERSION_STRING_LENGTH, Qt::Uninitialized);
-    u_versionToString(info, version.data());
 
-    if (version == "1.1") {
+    if (info[0] == 1 && info[1] == 1) {
         return QChar::Unicode_1_1;
-    } else if (version == "2.0") {
+    } else if (info[0] == 2 && info[1] == 0) {
         return QChar::Unicode_2_0;
-    } else if (version == "2.1") {
+    } else if (info[0] == 2 && info[1] == 1) {
         return QChar::Unicode_2_1;
-    } else if (version == "3.0") {
+    } else if (info[0] == 3 && info[1] == 0) {
         return QChar::Unicode_3_0;
-    } else if (version == "3.1") {
+    } else if (info[0] == 3 && info[1] == 1) {
         return QChar::Unicode_3_1;
-    } else if (version == "3.2") {
+    } else if (info[0] == 3 && info[1] == 2) {
         return QChar::Unicode_3_2;
-    } else if (version == "4.0") {
+    } else if (info[0] == 4 && info[1] == 0) {
         return QChar::Unicode_4_0;
-    } else if (version == "4.1") {
+    } else if (info[0] == 4 && info[1] == 1) {
         return QChar::Unicode_4_1;
-    } else if (version == "5.0") {
+    } else if (info[0] == 5 && info[1] == 0) {
         return QChar::Unicode_5_0;
-    } else if (version == "5.1") {
+    } else if (info[0] == 5 && info[1] == 1) {
         return QChar::Unicode_5_1;
-    } else if (version == "5.2") {
+    } else if (info[0] == 5 && info[1] == 2) {
         return QChar::Unicode_5_2;
-    } else if (version == "6.0") {
+    } else if (info[0] == 6 && info[1] == 0) {
         return QChar::Unicode_6_0;
-    } else if (version == "6.1") {
+    } else if (info[0] == 6 && info[1] == 1) {
         return QChar::Unicode_6_1;
-    } else if (version == "6.2") {
+    } else if (info[0] == 6 && info[1] == 2) {
         return QChar::Unicode_6_2;
-    } else if (version == "6.3") {
+    } else if (info[0] == 6 && info[1] == 3) {
         return QChar::Unicode_6_3;
-    } else if (version == "7.0") {
+    } else if (info[0] == 7 && info[1] == 0) {
         return QChar::Unicode_7_0;
-    } else if (version == "8.0") {
+    } else if (info[0] == 8 && info[1] == 0) {
         return QChar::Unicode_8_0;
-    } else if (version == "9.0") {
+    } else if (info[0] == 9 && info[1] == 0) {
         return QChar::Unicode_9_0;
-    } else if (version == "10.0") {
+    } else if (info[0] == 10 && info[1] == 0) {
         return QChar::Unicode_10_0;
-    } else if (version == "11.0") {
+    } else if (info[0] == 11 && info[1] == 0) {
         return QChar::Unicode_11_0;
-    } else if (version == "12.0") {
+    } else if (info[0] == 12 && info[1] == 0) {
         return QChar::Unicode_12_0;
-    } else if (version == "12.1") {
+    } else if (info[0] == 12 && info[1] == 1) {
         return QChar::Unicode_12_1;
-    } else if (version == "13.0") {
+    } else if (info[0] == 13 && info[1] == 0) {
         return QChar::Unicode_13_0;
     }
     return QChar::Unicode_Unassigned;
