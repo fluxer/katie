@@ -50,7 +50,6 @@
 #include "qnetworkconfigmanager.h"
 
 #include <QtCore/qobject.h>
-#include <QtCore/qglobal.h>
 #include <QtCore/qlist.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qhash.h>
