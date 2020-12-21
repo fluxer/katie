@@ -1712,7 +1712,7 @@ const char *qFlagLocation(const char *method)
     return method;
 }
 
-static int extract_code(const char *member)
+static inline int extract_code(const char *member)
 {
     // extract code, ensure QMETHOD_CODE <= code <= QSIGNAL_CODE
     return (((int)(*member) - '0') & 0x3);
