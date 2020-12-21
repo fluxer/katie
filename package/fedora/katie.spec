@@ -37,7 +37,7 @@ rm -v %{buildroot}/%{_sysconfdir}/profile.d/katie-*.sh
 %package devel
 Summary: C++ toolkit derived from the Qt 4.8 framework (development package)
 
-Requires: katie
+Requires: katie >= %{version}
 
 %description devel
 Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
