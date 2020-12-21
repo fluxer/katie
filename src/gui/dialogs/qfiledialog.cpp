@@ -834,13 +834,8 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
         char buf[size_max];
         struct passwd pw;
         struct passwd *tmpPw;
-        int err = 0;
-#if defined(Q_OS_SOLARIS) && (_POSIX_C_SOURCE - 0 < 199506L)
-        tmpPw = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max);
-#else
-        err = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max, &tmpPw);
-#endif
-        if (err || !tmpPw)
+        ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max, &tmpPw);
+        if (!tmpPw)
             return ret;
         const QString homePath = QString::fromLocal8Bit(pw.pw_dir);
 #else
