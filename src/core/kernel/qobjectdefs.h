@@ -53,19 +53,15 @@ class QString;
 // They are used, strictly speaking, only by the moc.
 
 #ifndef Q_MOC_RUN
-# if defined(QT_NO_KEYWORDS)
-#  define QT_NO_EMIT
-# else
+# ifndef QT_NO_KEYWORDS
 #   define slots
 #   define signals protected
+#   define emit
 # endif
-# define Q_SLOTS
-# define Q_SIGNALS protected
-# define Q_PRIVATE_SLOT(d, signature)
-# define Q_EMIT
-#ifndef QT_NO_EMIT
-# define emit
-#endif
+#define Q_SLOTS
+#define Q_SIGNALS protected
+#define Q_PRIVATE_SLOT(d, signature)
+#define Q_EMIT
 #define Q_CLASSINFO(name, value)
 #define Q_INTERFACES(x)
 #define Q_PROPERTY(text)
@@ -151,37 +147,16 @@ private:
 #define Q_SLOT Q_SLOT
 #endif //Q_MOC_RUN
 
-// macro for onaming members
-#ifdef METHOD
-#undef METHOD
-#endif
-#ifdef SLOT
-#undef SLOT
-#endif
-#ifdef SIGNAL
-#undef SIGNAL
-#endif
-
-Q_CORE_EXPORT const char *qFlagLocation(const char *method);
-
-#ifndef QT_NO_DEBUG
-# ifndef QT_NO_KEYWORDS
-#  define METHOD(a)   qFlagLocation("0"#a "\0" Q_FUNC_INFO)
-# endif
-# define SLOT(a)     qFlagLocation("1"#a "\0" Q_FUNC_INFO)
-# define SIGNAL(a)   qFlagLocation("2"#a "\0" Q_FUNC_INFO)
-#else
-# ifndef QT_NO_KEYWORDS
-#  define METHOD(a)   "0"#a
-# endif
-# define SLOT(a)     "1"#a
-# define SIGNAL(a)   "2"#a
-#endif
-
-
-#define QMETHOD_CODE  0                        // member type codes
+// definitions and macros for identifying connection types
+#define QMETHOD_CODE  0
 #define QSLOT_CODE    1
 #define QSIGNAL_CODE  2
+
+#ifndef QT_NO_KEYWORDS
+# define METHOD(a)   "0"#a
+#endif
+#define SLOT(a)     "1"#a
+#define SIGNAL(a)   "2"#a
 
 #define Q_ARG(type, data) QArgument<type >(#type, data)
 #define Q_RETURN_ARG(type, data) QReturnArgument<type >(#type, data)

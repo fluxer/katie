@@ -1705,28 +1705,10 @@ QString QObject::trUtf8(const char *sourceText)
   Signals and slots
  *****************************************************************************/
 
-
-const char *qFlagLocation(const char *method)
-{
-    QThreadData::current()->flaggedSignatures.store(method);
-    return method;
-}
-
 static inline int extract_code(const char *member)
 {
     // extract code, ensure QMETHOD_CODE <= code <= QSIGNAL_CODE
     return (((int)(*member) - '0') & 0x3);
-}
-
-static const char * extract_location(const char *member)
-{
-    if (QThreadData::current()->flaggedSignatures.contains(member)) {
-        // signature includes location information after the first null-terminator
-        const char *location = member + qstrlen(member) + 1;
-        if (*location != '\0')
-            return location;
-    }
-    return Q_NULLPTR;
 }
 
 static bool check_signal_macro(const QObject *sender, const char *signal,
@@ -1765,16 +1747,8 @@ static void err_method_notfound(const QObject *object,
         case QSLOT_CODE:   type = "slot";   break;
         case QSIGNAL_CODE: type = "signal"; break;
     }
-    const char *loc = extract_location(method);
-    if (strchr(method,')') == 0) {               // common typing mistake
-        qWarning("Object::%s: Parentheses expected, %s %s::%s%s%s",
-                 func, type, object->metaObject()->className(), method+1,
-                 loc ? " in ": "", loc ? loc : "");
-    } else {
-        qWarning("Object::%s: No such %s %s::%s%s%s",
-                 func, type, object->metaObject()->className(), method+1,
-                 loc ? " in ": "", loc ? loc : "");
-    }
+    qWarning("Object::%s: No such %s %s::%s",
+             func, type, object->metaObject()->className(), method+1);
 }
 
 
@@ -2316,13 +2290,12 @@ bool QObject::disconnect(const QObject *sender, const char *signal,
 
     QByteArray method_name;
     const char *method_arg = method;
-    int membcode = -1;
     bool method_found = false;
     if (method) {
         method_name = QMetaObject::normalizedSignature(method);
         method = method_name.constData();
 
-        membcode = extract_code(method);
+        int membcode = extract_code(method);
         if (!check_method_code(membcode, receiver, method, "disconnect"))
             return false;
         method++; // skip code
