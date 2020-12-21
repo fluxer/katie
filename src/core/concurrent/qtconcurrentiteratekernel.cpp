@@ -51,11 +51,7 @@ enum {
 static qint64 getticks()
 {
 #ifdef QT_HAVE_CLOCK_GETTIME
-#ifdef CLOCK_REALTIME_COARSE // Linux specific
-    clockid_t clockId = CLOCK_REALTIME_COARSE;
-#else
     clockid_t clockId = CLOCK_REALTIME;
-#endif
 
 #if defined(_SC_THREAD_CPUTIME) && defined(CLOCK_THREAD_CPUTIME_ID)
     // detect availablility of CLOCK_THREAD_CPUTIME_ID,

@@ -83,11 +83,7 @@ static inline void do_gettime(qint64 *sec, qint64 *frac)
 #ifdef QT_HAVE_CLOCK_GETTIME
     if (Q_LIKELY(monotonicClockAvailable)) {
         timespec ts;
-#ifdef CLOCK_MONOTONIC_COARSE // Linux specific
-        ::clock_gettime(CLOCK_MONOTONIC_COARSE, &ts);
-#else
         ::clock_gettime(CLOCK_MONOTONIC, &ts);
-#endif
         *sec = ts.tv_sec;
         *frac = ts.tv_nsec;
         return;

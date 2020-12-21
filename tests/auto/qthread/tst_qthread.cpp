@@ -1067,8 +1067,6 @@ public:
 
 void tst_QThread::wait2()
 {
-    QSKIP("Timer rounding", SkipAll);
-
     QElapsedTimer timer;
     Waiting_Thread thread;
     thread.start();
@@ -1100,8 +1098,6 @@ public slots:
 
 void tst_QThread::wait3_slowDestructor()
 {
-    QSKIP("Timer rounding", SkipAll);
-
     SlowSlotObject slow;
     QThread thread;
     QObject::connect(&thread, SIGNAL(finished()), &slow, SLOT(slowSlot()), Qt::DirectConnection);
