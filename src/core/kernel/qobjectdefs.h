@@ -164,15 +164,12 @@ private:
 
 Q_CORE_EXPORT const char *qFlagLocation(const char *method);
 
-#define QTOSTRING_HELPER(s) #s
-#define QTOSTRING(s) QTOSTRING_HELPER(s)
 #ifndef QT_NO_DEBUG
-# define QLOCATION "\0" __FILE__ ":" QTOSTRING(__LINE__)
 # ifndef QT_NO_KEYWORDS
-#  define METHOD(a)   qFlagLocation("0"#a QLOCATION)
+#  define METHOD(a)   qFlagLocation("0"#a "\0" Q_FUNC_INFO)
 # endif
-# define SLOT(a)     qFlagLocation("1"#a QLOCATION)
-# define SIGNAL(a)   qFlagLocation("2"#a QLOCATION)
+# define SLOT(a)     qFlagLocation("1"#a "\0" Q_FUNC_INFO)
+# define SIGNAL(a)   qFlagLocation("2"#a "\0" Q_FUNC_INFO)
 #else
 # ifndef QT_NO_KEYWORDS
 #  define METHOD(a)   "0"#a
