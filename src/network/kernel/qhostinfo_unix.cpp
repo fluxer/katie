@@ -269,7 +269,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 
 QString QHostInfo::localHostName()
 {
-    static int size_max = sysconf(_SC_HOST_NAME_MAX);
+    static long size_max = sysconf(_SC_HOST_NAME_MAX);
     if (size_max == -1)
         size_max = _POSIX_HOST_NAME_MAX;
     char gethostbuffer[size_max];
