@@ -54,8 +54,8 @@ QT_BEGIN_NAMESPACE
 // we use a tighter limit for the variables range.
 const qreal g_offset = (sizeof(qreal) == sizeof(double)) ? QWIDGETSIZE_MAX : QWIDGETSIZE_MAX / 32;
 
-QGraphicsAnchorPrivate::QGraphicsAnchorPrivate(int version)
-    : QObjectPrivate(version), layoutPrivate(0), data(0),
+QGraphicsAnchorPrivate::QGraphicsAnchorPrivate()
+    : QObjectPrivate(), layoutPrivate(0), data(0),
       sizePolicy(QSizePolicy::Fixed), preferredSize(0),
       hasSize(true)
 {

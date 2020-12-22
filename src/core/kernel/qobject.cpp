@@ -121,14 +121,10 @@ void (*QAbstractDeclarativeData::objectNameChanged)(QAbstractDeclarativeData *, 
 
 QObjectData::~QObjectData() {}
 
-QObjectPrivate::QObjectPrivate(int version)
+QObjectPrivate::QObjectPrivate()
     : threadData(Q_NULLPTR), connectionLists(Q_NULLPTR), senders(Q_NULLPTR),
     currentSender(Q_NULLPTR), currentChildBeingDeleted(Q_NULLPTR)
 {
-    if (version != QObjectPrivateVersion)
-        qFatal("Cannot mix incompatible Qt library (version 0x%x) with this library (version 0x%x)",
-                version, QObjectPrivateVersion);
-
     // QObjectData initialization
     q_ptr = Q_NULLPTR;
     parent = Q_NULLPTR;                                 // no parent yet. It is set by setParent()
