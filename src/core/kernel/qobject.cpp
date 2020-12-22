@@ -1162,10 +1162,13 @@ void QObject::moveToThread(QThread *targetThread)
     } else if (Q_UNLIKELY(d->isWidget)) {
         qWarning("QObject::moveToThread: Widgets cannot be moved to a new thread");
         return;
+    } else if (Q_UNLIKELY(!targetThread)) {
+        qWarning("QObject::moveToThread: Invalid new thread");
+        return;
     }
 
     QThreadData *currentData = QThreadData::current();
-    QThreadData *targetData = targetThread ? QThreadData::get2(targetThread) : new QThreadData(0);
+    QThreadData *targetData = QThreadData::get2(targetThread);
     if (!d->threadData->thread && currentData == targetData) {
         // one exception to the rule: we allow moving objects with no thread affinity to the current thread
         currentData = d->threadData;

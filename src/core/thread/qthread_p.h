@@ -173,7 +173,7 @@ public:
 class QThreadData
 {
 public:
-    QThreadData(int initialRefCount = 1);
+    QThreadData();
     ~QThreadData();
 
     static QThreadData *current();
