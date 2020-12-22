@@ -1198,8 +1198,7 @@ void QObjectPrivate::moveToThread_helper()
     Q_Q(QObject);
     QEvent e(QEvent::ThreadChange);
     QCoreApplication::sendEvent(q, &e);
-    for (int i = 0; i < children.size(); ++i) {
-        QObject *child = children.at(i);
+    foreach (QObject *child, children) {;
         child->d_func()->moveToThread_helper();
     }
 }
