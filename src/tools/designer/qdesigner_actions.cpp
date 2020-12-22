@@ -52,6 +52,7 @@
 #include "codedialog_p.h"
 #include "qdesigner_formwindowmanager_p.h"
 #include "qdesigner_integration_p.h"
+#include "qdesigner_components.h"
 
 // sdk
 #include "abstractformeditor.h"
@@ -340,7 +341,8 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
     connect(formWindowManager, SIGNAL(activeFormWindowChanged(QDesignerFormWindowInterface*)),
                 this, SLOT(activeFormWindowChanged(QDesignerFormWindowInterface*)));
 
-    QList<QObject*> builtinPlugins = m_core->pluginManager()->instances();
+    QList<QObject*> builtinPlugins = QDesignerComponents::initializePlugins(m_core);
+    m_core->pluginManager()->ensureInitializedStatic(builtinPlugins);
     foreach (QObject *plugin, builtinPlugins) {
         if (QDesignerFormEditorPluginInterface *formEditorPlugin = qobject_cast<QDesignerFormEditorPluginInterface*>(plugin)) {
             if (QAction *action = formEditorPlugin->action()) {
