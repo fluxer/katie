@@ -1541,7 +1541,7 @@ QString QCoreApplication::applicationFilePath()
 */
 qint64 QCoreApplication::applicationPid()
 {
-    return getpid();
+    return ::getpid();
 }
 
 /*!
