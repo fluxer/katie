@@ -38,157 +38,41 @@ QT_USE_NAMESPACE
 
 static const int N = 1000;
 
-struct MyBase
-{
-    MyBase(int i_)
-        : isCopy(false)
-    {
-        ++liveCount;
-
-        i = i_;
-    }
-
-    MyBase(const MyBase &other)
-        : isCopy(true)
-    {
-        if (isCopy)
-            ++copyCount;
-        ++liveCount;
-
-        i = other.i;
-    }
-
-    MyBase &operator=(const MyBase &other)
-    {
-        if (!isCopy) {
-            isCopy = true;
-            ++copyCount;
-        } else {
-            ++errorCount;
-        }
-
-        i = other.i;
-        return *this;
-    }
-
-    ~MyBase()
-    {
-        if (isCopy) {
-            if (!copyCount)
-                ++errorCount;
-            else
-                --copyCount;
-        }
-        if (!liveCount)
-            ++errorCount;
-        else
-            --liveCount;
-    }
-
-    bool operator==(const MyBase &other) const
-    { return i == other.i; }
-
-protected:
-    ushort i;
-    bool isCopy;
-
-public:
-    static int errorCount;
-    static int liveCount;
-    static int copyCount;
-};
-
-int MyBase::errorCount = 0;
-int MyBase::liveCount = 0;
-int MyBase::copyCount = 0;
-
-struct MyPrimitive : public MyBase
-{
-    MyPrimitive(int i = -1) : MyBase(i)
-    { ++errorCount; }
-    MyPrimitive(const MyPrimitive &other) : MyBase(other)
-    { ++errorCount; }
-    ~MyPrimitive()
-    { ++errorCount; }
-};
-
-struct MyMovable : public MyBase
-{
-    MyMovable(int i = -1) : MyBase(i) {}
-};
-
-struct MyComplex : public MyBase
-{
-    MyComplex(int i = -1) : MyBase(i) {}
-};
-
-QT_BEGIN_NAMESPACE
-
-Q_DECLARE_TYPEINFO(MyPrimitive, Q_PRIMITIVE_TYPE);
-Q_DECLARE_TYPEINFO(MyMovable, Q_MOVABLE_TYPE);
-Q_DECLARE_TYPEINFO(MyComplex, Q_COMPLEX_TYPE);
-
-QT_END_NAMESPACE
-
-
 class tst_QList: public QObject
 {
     Q_OBJECT
 
 private Q_SLOTS:
-    void removeAll_primitive_data();
-    void removeAll_primitive();
-    void removeAll_movable_data();
-    void removeAll_movable();
-    void removeAll_complex_data();
-    void removeAll_complex();
+    void removeAll_data();
+    void removeAll();
 };
 
 template <class T>
 void removeAll_test(const QList<int> &i10, ushort valueToRemove, int itemsToRemove)
 {
-    bool isComplex = QTypeInfo<T>::isComplex;
-
-    MyBase::errorCount = 0;
-    MyBase::liveCount = 0;
-    MyBase::copyCount = 0;
-    {
-        QList<T> list;
-        QCOMPARE(MyBase::liveCount, 0);
-        QCOMPARE(MyBase::copyCount, 0);
-
-        for (int i = 0; i < 10 * N; ++i) {
-            T t(i10.at(i % 10));
-            list.append(t);
-        }
-        QCOMPARE(MyBase::liveCount, isComplex ? list.size() : 0);
-        QCOMPARE(MyBase::copyCount, isComplex ? list.size() : 0);
-
-        T t(valueToRemove);
-        QCOMPARE(MyBase::liveCount, isComplex ? list.size() + 1 : 1);
-        QCOMPARE(MyBase::copyCount, isComplex ? list.size() : 0);
-
-        int removedCount;
-        QList<T> l;
-
-        QBENCHMARK {
-            l = list;
-            removedCount = l.removeAll(t);
-        }
-        QCOMPARE(removedCount, itemsToRemove * N);
-        QCOMPARE(l.size() + removedCount, list.size());
-        QVERIFY(!l.contains(valueToRemove));
-
-        QCOMPARE(MyBase::liveCount, isComplex ? l.isDetached() ? list.size() + l.size() + 1 : list.size() + 1 : 1);
-        QCOMPARE(MyBase::copyCount, isComplex ? l.isDetached() ? list.size() + l.size() : list.size() : 0);
+    QList<T> list;
+    for (int i = 0; i < 10 * N; ++i) {
+        T t(i10.at(i % 10));
+        list.append(t);
     }
-    if (isComplex)
-        QCOMPARE(MyBase::errorCount, 0);
+
+    T t(valueToRemove);
+
+    int removedCount;
+    QList<T> l;
+
+    QBENCHMARK {
+        l = list;
+        removedCount = l.removeAll(t);
+    }
+    QCOMPARE(removedCount, itemsToRemove * N);
+    QCOMPARE(l.size() + removedCount, list.size());
+    QVERIFY(!l.contains(valueToRemove));
 }
 
 Q_DECLARE_METATYPE(QList<int>);
 
-void tst_QList::removeAll_primitive_data()
+void tst_QList::removeAll_data()
 {
     qRegisterMetaType<QList<int> >();
 
@@ -202,41 +86,13 @@ void tst_QList::removeAll_primitive_data()
     QTest::newRow("100%") << (QList<int>() << 5 << 5 << 5 << 5 << 5 << 5 << 5 << 5 << 5 << 5) << 5 << 10;
 }
 
-void tst_QList::removeAll_primitive()
+void tst_QList::removeAll()
 {
     QFETCH(QList<int>, i10);
     QFETCH(int, valueToRemove);
     QFETCH(int, itemsToRemove);
 
-    removeAll_test<MyPrimitive>(i10, valueToRemove, itemsToRemove);
-}
-
-void tst_QList::removeAll_movable_data()
-{
-    removeAll_primitive_data();
-}
-
-void tst_QList::removeAll_movable()
-{
-    QFETCH(QList<int>, i10);
-    QFETCH(int, valueToRemove);
-    QFETCH(int, itemsToRemove);
-
-    removeAll_test<MyMovable>(i10, valueToRemove, itemsToRemove);
-}
-
-void tst_QList::removeAll_complex_data()
-{
-    removeAll_primitive_data();
-}
-
-void tst_QList::removeAll_complex()
-{
-    QFETCH(QList<int>, i10);
-    QFETCH(int, valueToRemove);
-    QFETCH(int, itemsToRemove);
-
-    removeAll_test<MyComplex>(i10, valueToRemove, itemsToRemove);
+    removeAll_test<ushort>(i10, valueToRemove, itemsToRemove);
 }
 
 QTEST_APPLESS_MAIN(tst_QList)

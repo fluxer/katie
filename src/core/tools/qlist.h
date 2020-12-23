@@ -184,11 +184,14 @@ template <typename T>
 int QList<T>::removeAll(const T &t)
 {
     int c = 0;
-    for (size_t i = 0; i < Data::size(); i++) {
-        if (Data::at(i) == t) {
-            Data::erase(Data::begin() + i);
+    typename Data::iterator it = Data::begin();
+    while (it != Data::end()) {
+        if (*it == t) {
+            Data::erase(it);
             c++;
+            continue;
         }
+        it++;
     }
     return c;
 }

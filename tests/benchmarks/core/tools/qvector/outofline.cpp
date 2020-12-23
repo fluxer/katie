@@ -33,6 +33,8 @@
 
 #include <QVector>
 
+static const int N = 1000000;
+
 QVector<double> qvector_fill_and_return_helper()
 {
     QVector<double> v(N);
