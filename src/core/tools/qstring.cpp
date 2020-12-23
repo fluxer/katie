@@ -46,6 +46,7 @@
 #include "qdebug.h"
 #include "qendian.h"
 #include "qmutex.h"
+#include "qbitarray.h"
 #include "qcorecommon_p.h"
 
 #ifndef QT_NO_TEXTCODEC
@@ -6330,26 +6331,29 @@ QString QString::arg(double a, int fieldWidth, char fmt, int prec, const QChar &
 
 static inline int getArgNumber(const QChar uc)
 {
-    if (uc == QLatin1Char('1')) {
-        return 1;
-    } else if (uc == QLatin1Char('2')) {
-        return 2;
-    } else if (uc == QLatin1Char('3')) {
-        return 3;
-    } else if (uc == QLatin1Char('4')) {
-        return 4;
-    } else if (uc == QLatin1Char('5')) {
-        return 5;
-    } else if (uc == QLatin1Char('6')) {
-        return 6;
-    } else if (uc == QLatin1Char('7')) {
-        return 7;
-    } else if (uc == QLatin1Char('8')) {
-        return 8;
-    } else if (uc == QLatin1Char('9')) {
-        return 9;
+    switch (uc.unicode()) {
+        case '1':
+            return 1;
+        case '2':
+            return 2;
+        case '3':
+            return 3;
+        case '4':
+            return 4;
+        case '5':
+            return 5;
+        case '6':
+            return 6;
+        case '7':
+            return 7;
+        case '8':
+            return 8;
+        case '9':
+            return 9;
+        default:
+            return -1;
     }
-    return -1;
+    Q_UNREACHABLE();
 }
 
 QString QString::multiArg(int numArgs, const QString **args) const
@@ -6358,13 +6362,13 @@ QString QString::multiArg(int numArgs, const QString **args) const
     const QChar *uc = reinterpret_cast<const QChar *>(d->data);
 
     // replace %n's with argument
-    int usedArgs = 0;
+    QBitArray notUsedArgs(numArgs, true);
     for (int i = 0; i < d->size; i++) {
-        if (uc[i] == QLatin1Char('%') && i < d->size) {
+        if (uc[i].unicode() == '%' && i < d->size) {
             int number = getArgNumber(uc[i + 1]);
             if (number > 0 && number <= numArgs) {
                 result += *args[number - 1];
-                usedArgs++;
+                notUsedArgs.setBit(number, false);
                 i++;
                 continue;
             }
@@ -6372,9 +6376,9 @@ QString QString::multiArg(int numArgs, const QString **args) const
         result += uc[i];
     }
 
-    // sanity
-    if (Q_UNLIKELY(numArgs != usedArgs)) {
-        qWarning("QString::arg: %d argument(s) missing in %s", numArgs - usedArgs, toLocal8Bit().data());
+    const int unused = notUsedArgs.count(true);
+    if (Q_UNLIKELY(unused != 0)) {
+        qWarning("QString::arg: %d argument(s) missing in %s", unused, toLocal8Bit().data());
     }
 
     return result;
