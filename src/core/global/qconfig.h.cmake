@@ -190,7 +190,6 @@
 #cmakedefine QT_NO_DRAGANDDROP
 #cmakedefine QT_NO_DYNAMIC_CAST
 #cmakedefine QT_NO_EFFECTS
-#cmakedefine QT_NO_EMIT
 #cmakedefine QT_NO_ERRORMESSAGE
 #cmakedefine QT_NO_FILEDIALOG
 #cmakedefine QT_NO_FILEICONPROVIDER

@@ -461,7 +461,7 @@ void QPSPrintEnginePrivate::emitHeader(bool finished)
     QPrinter *printer = static_cast<QPrinter*>(pdev);
 
     if (creator.isEmpty())
-        creator = QLatin1String("Qt " QT_VERSION_STR);
+        creator = QLatin1String("Katie " QT_VERSION_STR);
 
     QByteArray header;
     QPdf::ByteStream s(&header);

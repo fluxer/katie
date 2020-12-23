@@ -1,6 +1,8 @@
 # $Id:
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
+# https://wiki.archlinux.org/index.php/Arch_package_guidelines
+
 pkgname=katie-git
 pkgver=4.9.1.r4681.8f22ea5f
 pkgrel=1

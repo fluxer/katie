@@ -34,7 +34,6 @@
 #ifndef QTREEWIDGETITEMITERATOR_H
 #define QTREEWIDGETITEMITERATOR_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qscopedpointer.h>
 
 QT_BEGIN_HEADER

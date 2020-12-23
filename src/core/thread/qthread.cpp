@@ -50,9 +50,9 @@ QT_BEGIN_NAMESPACE
   QThreadData
 */
 
-QThreadData::QThreadData(int initialRefCount)
+QThreadData::QThreadData()
     : quitNow(false), canWait(true), isAdopted(false), loopLevel(0),
-    threadId(0), thread(Q_NULLPTR), eventDispatcher(Q_NULLPTR), _ref(initialRefCount)
+    threadId(0), thread(Q_NULLPTR), eventDispatcher(Q_NULLPTR), _ref(1)
 {
     // fprintf(stderr, "QThreadData %p created\n", this);
 }
@@ -424,7 +424,7 @@ void QThread::setStackSize(uint stackSize)
     Q_ASSERT_X(!d->running, "QThread::setStackSize",
                "cannot change stack size while the thread is running");
 #ifdef PTHREAD_STACK_MIN
-    static int stack_min = sysconf(_SC_THREAD_STACK_MIN);
+    static long stack_min = sysconf(_SC_THREAD_STACK_MIN);
     if (stack_min == -1)
         stack_min = PTHREAD_STACK_MIN;
     // 0 means default stack size

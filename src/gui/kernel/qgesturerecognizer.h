@@ -34,7 +34,6 @@
 #ifndef QGESTURERECOGNIZER_H
 #define QGESTURERECOGNIZER_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qnamespace.h>
 
 #ifndef QT_NO_GESTURES

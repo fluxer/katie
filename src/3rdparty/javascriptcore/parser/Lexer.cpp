@@ -39,7 +39,7 @@ using namespace Unicode;
 // We can't specify the namespace in yacc's C output, so do it here instead.
 using namespace JSC;
 
-#include "Grammar.h"
+#include "Grammar.hpp"
 #include "Lookup.h"
 #include "Lexer.lut.h"
 

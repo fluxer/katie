@@ -52,20 +52,6 @@ QKeyMapperPrivate::~QKeyMapperPrivate()
 {
 }
 
-QList<int> QKeyMapperPrivate::possibleKeys(QKeyEvent *event)
-{
-    const Qt::KeyboardModifiers modifiers = event->modifiers();
-    const int key = event->key();
-
-    QList<int> result;
-    result << (key | modifiers);
-
-#if 0
-    qDebug() << "possibleKeys()" << key << modifiers << result;
-#endif
-    return result;
-}
-
 void QKeyMapperPrivate::clearMappings()
 {
     // ### cannot get/guess the locale with the core protocol

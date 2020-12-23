@@ -35,8 +35,6 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
-
 #include "qscriptengine.h"
 
 #include "PrototypeFunction.h"

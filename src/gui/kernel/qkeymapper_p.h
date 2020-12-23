@@ -84,7 +84,6 @@ public:
     ~QKeyMapperPrivate();
 
     void clearMappings();
-    QList<int> possibleKeys(QKeyEvent *e);
 
     QLocale keyboardInputLocale;
     Qt::LayoutDirection keyboardInputDirection;

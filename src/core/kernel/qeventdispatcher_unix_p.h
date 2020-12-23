@@ -68,8 +68,8 @@ class QTimerInfoList : public QList<QTimerInfo*>
 {
     timeval previousTime;
     clock_t previousTicks;
-    int ticksPerSecond;
-    int msPerTick;
+    long ticksPerSecond;
+    long msPerTick;
 
     bool timeChanged(timeval *delta);
 
