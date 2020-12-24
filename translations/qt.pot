@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-15 15:47+0000\n"
+"POT-Creation-Date: 2020-12-24 16:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1443,13 +1443,14 @@ msgid ""
 "can comply with the terms and conditions of the GNU LGPL version 3.</"
 "p><p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
 "development of applications provided you can comply with the terms and "
-"conditions of the GNU LGPL version 2.1.</p><p>Copyright (C) %1 The Qt "
-"Company Ltd and other contributors.</p><p>Copyright (C) %2 Ivailo Monev</"
-"p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p><p>See <a "
-"href=\"http://%3/\">%3</a> for more information.</p>"
+"conditions of the GNU LGPL version 2.1.</p><p>Copyright (C) 2015 The Qt "
+"Company Ltd and other contributors.</p><p>Copyright (C) 2016-2020 Ivailo "
+"Monev</p><p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</"
+"p><p>See <a href=\"http://fluxer.github.io/katie/\">fluxer.github.io/katie</"
+"a> for more information.</p>"
 msgstr ""
 
-#: src/gui/dialogs/qmessagebox.cpp:1488
+#: src/gui/dialogs/qmessagebox.cpp:1486
 msgid "About Katie"
 msgstr ""
 
@@ -1500,47 +1501,47 @@ msgstr ""
 msgid "Sample"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1215
+#: src/gui/dialogs/qcolordialog.cpp:1214
 msgid "Hu&e:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1216
+#: src/gui/dialogs/qcolordialog.cpp:1215
 msgid "&Sat:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1217
+#: src/gui/dialogs/qcolordialog.cpp:1216
 msgid "&Val:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1218
+#: src/gui/dialogs/qcolordialog.cpp:1217
 msgid "&Red:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1219
+#: src/gui/dialogs/qcolordialog.cpp:1218
 msgid "&Green:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1220
+#: src/gui/dialogs/qcolordialog.cpp:1219
 msgid "Bl&ue:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1221
+#: src/gui/dialogs/qcolordialog.cpp:1220
 msgid "A&lpha channel:"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1322
+#: src/gui/dialogs/qcolordialog.cpp:1321
 msgid "Select Color"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1449
+#: src/gui/dialogs/qcolordialog.cpp:1448
 msgid "&Basic colors"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1450
+#: src/gui/dialogs/qcolordialog.cpp:1449
 msgid "&Custom colors"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1451
+#: src/gui/dialogs/qcolordialog.cpp:1450
 msgid "&Add to Custom Colors"
 msgstr ""
 
@@ -1779,7 +1780,7 @@ msgstr ""
 msgid "Save As"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:522 src/gui/dialogs/qfiledialog.cpp:1035
+#: src/gui/dialogs/qfiledialog.cpp:522 src/gui/dialogs/qfiledialog.cpp:1030
 msgid "All Files (*)"
 msgstr ""
 
@@ -1803,70 +1804,70 @@ msgstr ""
 msgid "&New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:544 src/gui/dialogs/qfiledialog.cpp:1216
+#: src/gui/dialogs/qfiledialog.cpp:544 src/gui/dialogs/qfiledialog.cpp:1211
 msgid "Directory:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:546 src/gui/dialogs/qfiledialog.cpp:1222
+#: src/gui/dialogs/qfiledialog.cpp:546 src/gui/dialogs/qfiledialog.cpp:1217
 msgid "File &name:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1209 src/gui/dialogs/qfiledialog.cpp:1264
-#: src/gui/dialogs/qfiledialog.cpp:2711
+#: src/gui/dialogs/qfiledialog.cpp:1204 src/gui/dialogs/qfiledialog.cpp:1259
+#: src/gui/dialogs/qfiledialog.cpp:2706
 msgid "&Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1209 src/gui/dialogs/qfiledialog.cpp:1264
+#: src/gui/dialogs/qfiledialog.cpp:1204 src/gui/dialogs/qfiledialog.cpp:1259
 msgid "&Save"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1212
+#: src/gui/dialogs/qfiledialog.cpp:1207
 msgid "Directories"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1219 src/gui/dialogs/qfiledialog.cpp:1262
+#: src/gui/dialogs/qfiledialog.cpp:1214 src/gui/dialogs/qfiledialog.cpp:1257
 msgid "&Choose"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1929 src/gui/dialogs/qfiledialog.cpp:2782
+#: src/gui/dialogs/qfiledialog.cpp:1924 src/gui/dialogs/qfiledialog.cpp:2777
 msgid ""
 "%1\n"
 "Directory not found.\n"
 "Please verify the correct directory name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1963
+#: src/gui/dialogs/qfiledialog.cpp:1958
 msgid ""
 "%1 already exists.\n"
 "Do you want to replace it?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1983
+#: src/gui/dialogs/qfiledialog.cpp:1978
 msgid ""
 "%1\n"
 "File not found.\n"
 "Please verify the correct file name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2432
+#: src/gui/dialogs/qfiledialog.cpp:2427
 msgid "New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2560
+#: src/gui/dialogs/qfiledialog.cpp:2555
 msgid ""
 "'%1' is write protected.\n"
 "Do you want to delete it anyway?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2565
+#: src/gui/dialogs/qfiledialog.cpp:2560
 msgid "Are sure you want to delete '%1'?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2580
+#: src/gui/dialogs/qfiledialog.cpp:2575
 msgid "Could not delete directory."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2978
+#: src/gui/dialogs/qfiledialog.cpp:2973
 msgid "Recent Places"
 msgstr ""
 
@@ -2238,7 +2239,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5121
+#: src/gui/kernel/qwidget.cpp:5118
 msgid "*"
 msgstr ""
 
@@ -4268,7 +4269,7 @@ msgid "Unable to prepare statement"
 msgstr ""
 
 #: src/plugins/sqldrivers/psql/qsql_psql.cpp:829
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1808
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1798
 #: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1176
 msgid "Unable to connect"
 msgstr ""
@@ -4293,77 +4294,77 @@ msgstr ""
 msgid "Unable to unsubscribe"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:909
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1248
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:899
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1238
 msgctxt "QODBCResult"
 msgid ""
 "QODBCResult::reset: Unable to set 'SQL_CURSOR_STATIC' as statement "
 "attribute. Please check your ODBC driver configuration"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:919
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1540
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:909
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1530
 msgctxt "QODBCResult"
 msgid "Unable to execute statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:973
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:963
 msgctxt "QODBCResult"
 msgid "Unable to fetch"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:995
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:985
 msgctxt "QODBCResult"
 msgid "Unable to fetch next"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1017
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1007
 msgctxt "QODBCResult"
 msgid "Unable to fetch first"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1036
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1026
 msgctxt "QODBCResult"
 msgid "Unable to fetch previous"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1067
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1644
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1057
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1634
 msgctxt "QODBCResult"
 msgid "Unable to fetch last"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1259
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1249
 msgctxt "QODBCResult"
 msgid "Unable to prepare statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1532
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1522
 msgctxt "QODBCResult"
 msgid "Unable to bind variable"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1814
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1804
 msgid "Unable to connect - Driver doesn't support all functionality required"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2087
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2077
 msgid "Unable to disable autocommit"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2104
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2094
 #: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1330
 #: src/sql/drivers/qsql_sqlite.cpp:645
 msgid "Unable to commit transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2121
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2111
 #: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1347
 #: src/sql/drivers/qsql_sqlite.cpp:660
 msgid "Unable to rollback transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2136
+#: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:2126
 msgid "Unable to enable autocommit"
 msgstr ""
 
