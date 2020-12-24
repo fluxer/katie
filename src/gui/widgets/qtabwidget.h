@@ -64,6 +64,13 @@ class Q_GUI_EXPORT QTabWidget : public QWidget
     Q_PROPERTY(bool movable READ isMovable WRITE setMovable)
 
 public:
+    enum TabPosition {
+        North,
+        South,
+        West,
+        East
+    };
+
     explicit QTabWidget(QWidget *parent = Q_NULLPTR);
     ~QTabWidget();
 
@@ -100,8 +107,6 @@ public:
     int indexOf(QWidget *widget) const;
     int count() const;
 
-    enum TabPosition { North, South, West, East
-    };
     TabPosition tabPosition() const;
     void setTabPosition(TabPosition);
 
