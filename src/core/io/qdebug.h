@@ -61,7 +61,7 @@ public:
     inline QDebug(QIODevice *device) : stream(new Stream(device)) {}
     inline QDebug(QString *string) : stream(new Stream(string)) {}
     inline QDebug(QtMsgType t) : stream(new Stream(t)) {}
-    inline QDebug(const QDebug &o):stream(o.stream) { ++stream->ref; }
+    inline QDebug(const QDebug &o) : stream(o.stream) { ++stream->ref; }
     inline QDebug &operator=(const QDebug &other);
     inline ~QDebug() {
         if (!--stream->ref) {
