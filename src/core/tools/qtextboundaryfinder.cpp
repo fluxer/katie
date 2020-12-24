@@ -68,6 +68,7 @@ class QTextBoundaryFinderPrivate
 {
 public:
     QTextBoundaryFinderPrivate();
+    QTextBoundaryFinderPrivate(const QTextBoundaryFinder::BoundaryType type, const QString &text);
     QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other);
     ~QTextBoundaryFinderPrivate();
 
@@ -82,6 +83,20 @@ public:
 QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate()
     : type(QTextBoundaryFinder::Grapheme), pos(0), breakiter(Q_NULLPTR)
 {
+}
+
+QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate(const QTextBoundaryFinder::BoundaryType type, const QString &text)
+    : type(type), pos(0), string(text), breakiter(Q_NULLPTR)
+{
+    if (Q_LIKELY(!string.isEmpty())) {
+        UErrorCode error = U_ZERO_ERROR;
+        breakiter = ubrk_open(getBreakType(type), getBreakLocale(),
+            reinterpret_cast<const UChar*>(string.unicode()), string.size(), &error);
+        if (Q_UNLIKELY(U_FAILURE(error))) {
+            qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
+            breakiter = Q_NULLPTR;
+        }
+    }
 }
 
 QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other)
@@ -212,18 +227,8 @@ QTextBoundaryFinder::~QTextBoundaryFinder()
   Creates a QTextBoundaryFinder object of \a type operating on \a string.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &string)
-    : d(new QTextBoundaryFinderPrivate())
+    : d(new QTextBoundaryFinderPrivate(type, string))
 {
-    d->type = type;
-    d->string = string;
-
-    UErrorCode error = U_ZERO_ERROR;
-    d->breakiter = ubrk_open(getBreakType(type), getBreakLocale(),
-        reinterpret_cast<const UChar*>(string.unicode()), string.size(), &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
-        d->breakiter = Q_NULLPTR;
-    }
 }
 
 /*!
@@ -231,18 +236,8 @@ QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &strin
   with \a length.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, const int length)
-    : d(new QTextBoundaryFinderPrivate())
+    : d(new QTextBoundaryFinderPrivate(type, QString::fromRawData(chars, length)))
 {
-    d->type = type;
-    d->string = QString::fromRawData(chars, length);
-
-    UErrorCode error = U_ZERO_ERROR;
-    d->breakiter = ubrk_open(getBreakType(type), getBreakLocale(),
-        reinterpret_cast<const UChar*>(d->string.unicode()), d->string.size(), &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
-        d->breakiter = Q_NULLPTR;
-    }
 }
 
 /*!
