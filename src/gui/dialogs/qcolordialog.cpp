@@ -74,8 +74,8 @@ public:
     int selectedColumn() const { return selCol; }
     int selectedRow() const { return selRow; }
 
-    virtual void setCurrent(int row, int col);
-    virtual void setSelected(int row, int col);
+    void setCurrent(int row, int col);
+    void setSelected(int row, int col);
 
     QSize sizeHint() const;
 
@@ -123,7 +123,7 @@ signals:
     void selected(int row, int col);
 
 protected:
-    virtual void paintCell(QPainter *, int row, int col, const QRect&);
+    void paintCell(QPainter *, int row, int col, const QRect&);
     virtual void paintCellContents(QPainter *, int row, int col, const QRect&);
 
     void mousePressEvent(QMouseEvent*);
