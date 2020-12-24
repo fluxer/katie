@@ -365,7 +365,7 @@ void QHttpNetworkConnectionChannel::_q_receiveReply()
         QHttpNetworkReplyPrivate::ReplyState state = reply->d_func()->state;
         switch (state) {
         case QHttpNetworkReplyPrivate::NothingDoneState: {
-            state = reply->d_func()->state = QHttpNetworkReplyPrivate::ReadingStatusState;
+            reply->d_func()->state = QHttpNetworkReplyPrivate::ReadingStatusState;
             // fallthrough
         }
         case QHttpNetworkReplyPrivate::ReadingStatusState: {

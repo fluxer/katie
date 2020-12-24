@@ -505,9 +505,7 @@ static int qt_xio_errhandler(Display *)
 {
     qWarning("%s: Fatal IO error: client killed", appName);
     QApplicationPrivate::reset_instance_pointer();
-    exit(1);
-    //### give the application a chance for a proper shutdown instead,
-    //### exit(1) doesn't help.
+    QApplication::exit(1);
     return 0;
 }
 
@@ -1160,7 +1158,7 @@ void qt_init(QApplicationPrivate *priv, int,
             qWarning("%s: cannot connect to X server %s", appName,
                      XDisplayName(qt_x11Data->displayName));
             QApplicationPrivate::reset_instance_pointer();
-            exit(1);
+            QApplication::exit(1);
         }
 
         if (appSync)                                // if "-sync" argument

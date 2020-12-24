@@ -391,6 +391,7 @@ katie_check_struct(dirent d_type "dirent.h")
 
 cmake_reset_check_state()
 set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
+katie_check_function(pthread_attr_setstacksize "pthread.h")
 katie_check_function(pthread_setname_np "pthread.h")
 katie_check_function(pthread_stackseg_np  "pthread_np.h")
 katie_check_function(pthread_attr_get_np "pthread_np.h")

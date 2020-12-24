@@ -250,10 +250,10 @@ public:
         CloseWithSpontaneousEvent
     };
 
-    // Functions.
-    explicit QWidgetPrivate(int version = QObjectPrivateVersion);
+    QWidgetPrivate();
     ~QWidgetPrivate();
 
+    // Functions.
     QWExtra *extraData() const;
     QTLWExtra *topData() const;
     QTLWExtra *maybeTopData() const;

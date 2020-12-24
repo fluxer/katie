@@ -46,7 +46,6 @@
 //
 
 
-#include "QtCore/qglobal.h"
 #include "QtCore/qatomic.h"
 #include "qfont_p.h"
 

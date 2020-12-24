@@ -184,8 +184,8 @@ void QWidgetBackingStoreTracker::unregisterWidgetSubtree(QWidget *widget)
             unregisterWidgetSubtree(childWidget);
 }
 
-QWidgetPrivate::QWidgetPrivate(int version)
-    : QObjectPrivate(version)
+QWidgetPrivate::QWidgetPrivate()
+    : QObjectPrivate()
       , extra(0)
       , focus_next(0)
       , focus_prev(0)
@@ -221,13 +221,10 @@ QWidgetPrivate::QWidgetPrivate(int version)
       , picture(0)
 #endif
 {
-    if (!qApp) {
+    if (Q_UNLIKELY(!qApp)) {
         qFatal("QWidget: Must construct a QApplication before a QPaintDevice");
         return;
     }
-
-    if (version != QObjectPrivateVersion)
-        qFatal("Cannot mix incompatible Qt libraries");
 
     isWidget = true;
     widget_attributes = 0;

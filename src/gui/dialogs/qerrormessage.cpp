@@ -248,7 +248,7 @@ void QErrorMessage::done(int a)
     if (!d->nextPending()) {
         QDialog::done(a);
         if (this == qtMessageHandler && metFatal)
-            exit(1);
+            QApplication::exit(1);
     }
 }
 

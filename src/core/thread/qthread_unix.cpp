@@ -386,7 +386,7 @@ void QThread::start(Priority priority)
 
 
     if (d->stackSize > 0) {
-#if defined(_POSIX_THREAD_ATTR_STACKSIZE) && (_POSIX_THREAD_ATTR_STACKSIZE-0 > 0)
+#if defined(QT_HAVE_PTHREAD_ATTR_SETSTACKSIZE)
         int code = pthread_attr_setstacksize(&attr, d->stackSize);
 #else
         int code = ENOSYS; // stack size not supported, automatically fail

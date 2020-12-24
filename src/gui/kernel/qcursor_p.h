@@ -46,7 +46,6 @@
 //
 
 #include "QtCore/qatomic.h"
-#include "QtCore/qglobal.h"
 #include "QtCore/qnamespace.h"
 #include "QtGui/qpixmap.h"
 
