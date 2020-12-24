@@ -66,9 +66,9 @@ private slots:
     void graphemeBoundaries();
     void wordBoundaries();
     void sentenceBoundaries();
+    void lineBoundaries();
     void isAtWordStart();
     void fastConstructor();
-    void isAtBoundaryLine();
     void toNextBoundary_data();
     void toNextBoundary();
     void toPreviousBoundary_data();
@@ -108,28 +108,26 @@ void tst_QTextBoundaryFinder::graphemeBoundaries()
         int hash = test.indexOf('#');
         if (hash > 0)
             test = test.left(hash);
-        test = test.simplified();
-        test = test.replace(QLatin1String(" "), QString());
 
         QList<int> breakPositions;
         QString testString;
-        int pos = 0;
-        int strPos = 0;
-        while (pos < test.length()) {
-            if (test.at(pos).unicode() == 0xf7)
-                breakPositions.append(strPos);
-            else
-                QVERIFY(test.at(pos).unicode() == 0xd7);
-            ++pos;
-            if (pos < test.length()) {
-                QVERIFY(pos < test.length() - 4);
-                QString hex = test.mid(pos, 4);
-                bool ok = true;
-                testString.append(QChar(hex.toInt(&ok, 16)));
-                QVERIFY(ok);
-                pos += 4;
+        foreach (const QString &part, test.simplified().split(QLatin1Char(' '), QString::SkipEmptyParts)) {
+            if (part.size() == 1) {
+                if (part.at(0).unicode() == 0xf7)
+                    breakPositions.append(testString.size());
+                else
+                    QVERIFY(part.at(0).unicode() == 0xd7);
+                continue;
             }
-            ++strPos;
+            bool ok = true;
+            uint ucs4 = part.toInt(&ok, 16);
+            QVERIFY(ok && ucs4 > 0);
+            if (QChar::requiresSurrogates(ucs4)) {
+                testString.append(QChar::highSurrogate(ucs4));
+                testString.append(QChar::lowSurrogate(ucs4));
+            } else {
+                testString.append(QChar(ucs4));
+            }
         }
 
         QTextBoundaryFinder finder(QTextBoundaryFinder::Grapheme, testString);
@@ -161,28 +159,26 @@ void tst_QTextBoundaryFinder::wordBoundaries()
         int hash = test.indexOf('#');
         if (hash > 0)
             test = test.left(hash);
-        test = test.simplified();
-        test = test.replace(QLatin1String(" "), QString());
 
         QList<int> breakPositions;
         QString testString;
-        int pos = 0;
-        int strPos = 0;
-        while (pos < test.length()) {
-            if (test.at(pos).unicode() == 0xf7)
-                breakPositions.append(strPos);
-            else
-                QVERIFY(test.at(pos).unicode() == 0xd7);
-            ++pos;
-            if (pos < test.length()) {
-                QVERIFY(pos < test.length() - 4);
-                QString hex = test.mid(pos, 4);
-                bool ok = true;
-                testString.append(QChar(hex.toInt(&ok, 16)));
-                QVERIFY(ok);
-                pos += 4;
+        foreach (const QString &part, test.simplified().split(QLatin1Char(' '), QString::SkipEmptyParts)) {
+            if (part.size() == 1) {
+                if (part.at(0).unicode() == 0xf7)
+                    breakPositions.append(testString.size());
+                else
+                    QVERIFY(part.at(0).unicode() == 0xd7);
+                continue;
             }
-            ++strPos;
+            bool ok = true;
+            uint ucs4 = part.toInt(&ok, 16);
+            QVERIFY(ok && ucs4 > 0);
+            if (QChar::requiresSurrogates(ucs4)) {
+                testString.append(QChar::highSurrogate(ucs4));
+                testString.append(QChar::lowSurrogate(ucs4));
+            } else {
+                testString.append(QChar(ucs4));
+            }
         }
 
         QTextBoundaryFinder finder(QTextBoundaryFinder::Word, testString);
@@ -202,6 +198,56 @@ void tst_QTextBoundaryFinder::wordBoundaries()
 void tst_QTextBoundaryFinder::sentenceBoundaries()
 {
     QFile file(SRCDIR "/data/SentenceBreakTest.txt");
+    file.open(QFile::ReadOnly);
+
+    while (!file.atEnd()) {
+        QByteArray line = file.readLine();
+        if (line.startsWith('#'))
+            continue;
+
+        QString test = QString::fromUtf8(line);
+        int hash = test.indexOf('#');
+        if (hash > 0)
+            test = test.left(hash);
+
+        QList<int> breakPositions;
+        QString testString;
+        foreach (const QString &part, test.simplified().split(QLatin1Char(' '), QString::SkipEmptyParts)) {
+            if (part.size() == 1) {
+                if (part.at(0).unicode() == 0xf7)
+                    breakPositions.append(testString.size());
+                else
+                    QVERIFY(part.at(0).unicode() == 0xd7);
+                continue;
+            }
+            bool ok = true;
+            uint ucs4 = part.toInt(&ok, 16);
+            QVERIFY(ok && ucs4 > 0);
+            if (QChar::requiresSurrogates(ucs4)) {
+                testString.append(QChar::highSurrogate(ucs4));
+                testString.append(QChar::lowSurrogate(ucs4));
+            } else {
+                testString.append(QChar(ucs4));
+            }
+        }
+
+        QTextBoundaryFinder finder(QTextBoundaryFinder::Sentence, testString);
+        for (int i = 0; i < breakPositions.size(); ++i) {
+            QCOMPARE(finder.position(), breakPositions.at(i));
+            finder.toNextBoundary();
+        }
+        QCOMPARE(finder.toNextBoundary(), -1);
+
+        for (int i = 0; i < testString.length(); ++i) {
+            finder.setPosition(i);
+            QCOMPARE(finder.isAtBoundary(), breakPositions.contains(i) == true);
+        }
+    }
+}
+
+void tst_QTextBoundaryFinder::lineBoundaries()
+{
+    QFile file(SRCDIR "/data/LineBreakTest.txt");
     file.open(QFile::ReadOnly);
 
     while (!file.atEnd()) {
@@ -237,7 +283,7 @@ void tst_QTextBoundaryFinder::sentenceBoundaries()
             ++strPos;
         }
 
-        QTextBoundaryFinder finder(QTextBoundaryFinder::Sentence, testString);
+        QTextBoundaryFinder finder(QTextBoundaryFinder::Line, testString);
         for (int i = 0; i < breakPositions.size(); ++i) {
             QCOMPARE(finder.position(), breakPositions.at(i));
             finder.toNextBoundary();
@@ -288,30 +334,6 @@ void tst_QTextBoundaryFinder::fastConstructor()
     finder.toNextBoundary();
     QVERIFY(finder.boundaryReasons() == QTextBoundaryFinder::NotAtBoundary);
     QCOMPARE(finder.position(), -1);
-}
-
-void tst_QTextBoundaryFinder::isAtBoundaryLine()
-{
-    // idx       0       1       2       3       4       5      6
-    // break?    -       -       -       -       +       -      +
-    QChar s[] = { 0x0061, 0x00AD, 0x0062, 0x0009, 0x0063, 0x0064 };
-    QString text(s, sizeof(s)/sizeof(s[0]));
-//    qDebug() << "text = " << text << ", length = " << text.length();
-    QTextBoundaryFinder finder(QTextBoundaryFinder::Line, text.constData(), text.length());
-    finder.setPosition(0);
-    QVERIFY(finder.isAtBoundary());
-    finder.setPosition(1);
-    QVERIFY(!finder.isAtBoundary());
-    finder.setPosition(2);
-    QVERIFY(!finder.isAtBoundary());
-    finder.setPosition(3);
-    QVERIFY(!finder.isAtBoundary());
-    finder.setPosition(4);
-    QVERIFY(finder.isAtBoundary());
-    finder.setPosition(5);
-    QVERIFY(!finder.isAtBoundary());
-    finder.setPosition(6);
-    QVERIFY(finder.isAtBoundary());
 }
 
 Q_DECLARE_METATYPE(QList<int>)
