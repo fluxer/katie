@@ -128,9 +128,6 @@ add_feature_info(postgresql WITH_POSTGRESQL "build PostgreSQL support")
 option(WITH_MYSQL "Build MySQL database plugin" ON)
 add_feature_info(mysql WITH_MYSQL "build MySQL support")
 
-option(WITH_RESOLV "Build resolv support" ON)
-add_feature_info(resolv WITH_RESOLV "build resolv support")
-
 option(WITH_INTL "Build Intl support" ON)
 add_feature_info(intl WITH_INTL "build Intl support")
 
@@ -240,14 +237,6 @@ set_package_properties(Sqlite PROPERTIES
     DESCRIPTION "Software library that implements SQL database engine"
     URL "https://www.sqlite.org/"
     TYPE REQUIRED
-)
-
-find_package(Resolv)
-set_package_properties(Resolv PROPERTIES
-    PURPOSE "Required for domain resolving support"
-    DESCRIPTION "Standard C library specific resolv implementation"
-    URL ""
-    TYPE RECOMMENDED
 )
 
 find_package(JPEG)
@@ -383,6 +372,7 @@ katie_check_function(kevent "sys/event.h")
 katie_check_function(pipe2 "unistd.h")
 katie_check_function(accept4 "sys/socket.h")
 katie_check_function(paccept "sys/socket.h")
+katie_check_function(getdomainname "unistd.h")
 katie_check_struct(tm tm_gmtoff "time.h")
 katie_check_struct(tm tm_zone "time.h")
 katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
@@ -462,10 +452,6 @@ endif()
 
 if(NOT WITH_CUPS OR NOT CUPS_FOUND)
     katie_definition(-DQT_NO_CUPS)
-endif()
-
-if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)
-    katie_definition(-DQT_NO_RESOLV)
 endif()
 
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)

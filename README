@@ -14,7 +14,7 @@ There are several things you should be aware before considering Katie:
   - QMake build system replaced with CMake
   - zlib, zstd, OpenSSL, PCRE, Freetype, ICU, X11, libpng and SQLite are
     required for building
-  - OpenSSL, D-Bus, CUPS and resolv must be linked to during build
+  - OpenSSL, D-Bus and CUPS must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
@@ -51,7 +51,6 @@ There are several things you should be aware before considering Katie:
   - building with OpenSSL v1.1+ is possible
   - building with IODBC instead of unixODBC is possible
   - building with LTO is possible and supported, if the toolchain can handle it
-  - building without resolv is possible
   - alternative libc implementations support
   - additional text codecs via ICU converter
   - Unicode v5.0+ characters and partial scripts support

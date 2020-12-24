@@ -108,6 +108,7 @@
 #define QT_NO_NAS
 #define QT_NO_IMAGEFORMAT_MNG
 #define QT_NO_TEXTODFWRITER
+#define QT_NO_RESOLV
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
@@ -140,7 +141,6 @@
 #cmakedefine QT_NO_FONTCONFIG
 #cmakedefine QT_NO_IMAGEFORMAT_JPEG
 #cmakedefine QT_NO_IMAGEFORMAT_TIFF
-#cmakedefine QT_NO_RESOLV
 #cmakedefine QT_NO_SESSIONMANAGER
 #cmakedefine QT_NO_TRANSLATION
 #cmakedefine QT_NO_XCURSOR
