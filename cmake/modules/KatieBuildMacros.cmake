@@ -204,13 +204,12 @@ function(KATIE_STRING_UNWRAP INSTR OUTLST)
 endfunction()
 
 # a macro to instruct CMake which sources to exclude from the unity source file
-macro(KATIE_ALLINONE_EXCLUDE ARG1)
+macro(KATIE_UNITY_EXCLUDE ARG1)
     set_source_files_properties(${ARG1} ${ARGN} PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
 endmacro()
 
-# a function to create an array of source files for a target while taking into
-# account all-in-one target build setting up proper dependency for the
-# moc/uic/rcc generated resources
+# a function to create an array of source files for a target setting up proper
+# dependency for the moc/uic/rcc generated resources
 function(KATIE_SETUP_TARGET FORTARGET)
     get_directory_property(dirdefs COMPILE_DEFINITIONS)
     get_directory_property(dirincs INCLUDE_DIRECTORIES)

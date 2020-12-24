@@ -1005,8 +1005,8 @@ if(WITH_ACCESSIBILITY)
     )
 endif()
 
-# anything that includes qt_x11_p.h is known to break all-in-one build
-katie_allinone_exclude(
+# anything that includes qt_x11_p.h is known to break unity build
+katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
