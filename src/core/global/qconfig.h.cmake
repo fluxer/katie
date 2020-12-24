@@ -88,7 +88,6 @@
 #define QT_NO_STYLE_QGTK
 #define QT_NO_STYLE_CDE
 #define QT_NO_STATEMACHINE
-#define QT_NO_XKB
 #define QT_NO_XIM
 #define QT_NO_IM
 #define QT_NO_INPUTMETHOD
@@ -97,18 +96,10 @@
 #define QT_NO_OPENGL
 #define QT_NO_TABLET
 #define QT_NO_TABLETEVENT
-#define QT_NO_GCONF2
 #define QT_NO_RAWFONT
 #define QT_NO_IMAGE_TEXT
-#define QT_NO_GLIB
-#define QT_NO_ICONV
-#define QT_NO_LPR
-#define QT_NO_NIS
-#define QT_NO_NSL
-#define QT_NO_NAS
 #define QT_NO_IMAGEFORMAT_MNG
 #define QT_NO_TEXTODFWRITER
-#define QT_NO_RESOLV
 
 // Not supported, used to bootstrap
 #cmakedefine QT_NO_QOBJECT
