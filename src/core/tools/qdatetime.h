@@ -50,7 +50,7 @@ public:
         DateFormat = 0,
         StandaloneFormat
     };
-public:
+
     QDate() { jd = 0; }
     QDate(int y, int m, int d);
 
@@ -162,6 +162,7 @@ public:
     void start();
     int restart();
     int elapsed() const;
+
 private:
     enum TimeFlag { NullTime = -1 };
     inline int ds() const { return mds == NullTime ? 0 : mds; }
