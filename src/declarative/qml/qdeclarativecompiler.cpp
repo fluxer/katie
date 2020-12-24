@@ -291,11 +291,7 @@ bool QDeclarativeCompiler::testLiteralAssignment(const QMetaProperty &prop,
             break;
         default:
             {
-            int t = prop.userType();
-            QDeclarativeMetaType::StringConverter converter =
-                QDeclarativeMetaType::customStringConverter(t);
-            if (!converter)
-                COMPILE_EXCEPTION(v, tr("Invalid property assignment: unsupported type \"%1\"").arg(QString::fromLatin1(QVariant::typeToName(prop.type()))));
+            COMPILE_EXCEPTION(v, tr("Invalid property assignment: unsupported type \"%1\"").arg(QString::fromLatin1(QVariant::typeToName(prop.type()))));
             }
             break;
     }
@@ -335,30 +331,6 @@ void QDeclarativeCompiler::genLiteralAssignment(const QMetaProperty &prop,
 
     int type = prop.userType();
     switch(type) {
-        case -1:
-            {
-            if (v->value.isNumber()) {
-                double n = v->value.asNumber();
-                if (double(int(n)) == n) {
-                    instr.type = QDeclarativeInstruction::StoreVariantInteger;
-                    instr.storeInteger.propertyIndex = prop.propertyIndex();
-                    instr.storeInteger.value = int(n);
-                } else {
-                    instr.type = QDeclarativeInstruction::StoreVariantDouble;
-                    instr.storeDouble.propertyIndex = prop.propertyIndex();
-                    instr.storeDouble.value = n;
-                }
-            } else if(v->value.isBoolean()) {
-                instr.type = QDeclarativeInstruction::StoreVariantBool;
-                instr.storeBool.propertyIndex = prop.propertyIndex();
-                instr.storeBool.value = v->value.asBoolean();
-            } else {
-                instr.type = QDeclarativeInstruction::StoreVariant;
-                instr.storeString.propertyIndex = prop.propertyIndex();
-                instr.storeString.value = output->indexForString(string);
-            }
-            }
-            break;
         case QVariant::String:
             {
             instr.type = QDeclarativeInstruction::StoreString;
@@ -512,18 +484,29 @@ void QDeclarativeCompiler::genLiteralAssignment(const QMetaProperty &prop,
             instr.storeRealPair.valueIndex = index;
             }
             break;
+        case -1:
         default:
             {
-            int t = prop.userType();
-            int index = output->customTypeData.count();
-            instr.type = QDeclarativeInstruction::AssignCustomType;
-            instr.assignCustomType.propertyIndex = prop.propertyIndex();
-            instr.assignCustomType.valueIndex = index;
-
-            QDeclarativeCompiledData::CustomTypeData data;
-            data.index = output->indexForString(string);
-            data.type = t;
-            output->customTypeData << data;
+            if (v->value.isNumber()) {
+                double n = v->value.asNumber();
+                if (double(int(n)) == n) {
+                    instr.type = QDeclarativeInstruction::StoreVariantInteger;
+                    instr.storeInteger.propertyIndex = prop.propertyIndex();
+                    instr.storeInteger.value = int(n);
+                } else {
+                    instr.type = QDeclarativeInstruction::StoreVariantDouble;
+                    instr.storeDouble.propertyIndex = prop.propertyIndex();
+                    instr.storeDouble.value = n;
+                }
+            } else if(v->value.isBoolean()) {
+                instr.type = QDeclarativeInstruction::StoreVariantBool;
+                instr.storeBool.propertyIndex = prop.propertyIndex();
+                instr.storeBool.value = v->value.asBoolean();
+            } else {
+                instr.type = QDeclarativeInstruction::StoreVariant;
+                instr.storeString.propertyIndex = prop.propertyIndex();
+                instr.storeString.value = output->indexForString(string);
+            }
             }
             break;
     }

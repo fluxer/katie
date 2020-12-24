@@ -1725,10 +1725,6 @@ void QDeclarativePropertyAnimationPrivate::convertVariant(QVariant &variant, int
     default:
         if (QDeclarativeValueTypeFactory::isValueType((uint)type)) {
             variant.convert((QVariant::Type)type);
-        } else {
-            QDeclarativeMetaType::StringConverter converter = QDeclarativeMetaType::customStringConverter(type);
-            if (converter)
-                variant = converter(variant.toString());
         }
         break;
     }

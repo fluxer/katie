@@ -1215,13 +1215,6 @@ bool QDeclarativePropertyPrivate::write(QObject *object, const QDeclarativePrope
             v = value;
             if (v.convert(static_cast<QVariant::Type>(propertyType))) {
                 ok = true;
-            } else if (propertyType >= QVariant::UserType && variantType == QVariant::String) {
-                QDeclarativeMetaType::StringConverter con = QDeclarativeMetaType::customStringConverter(propertyType);
-                if (con) {
-                    v = con(value.toString());
-                    if (v.userType() == propertyType)
-                        ok = true;
-                }
             }
         }
         if (ok) {

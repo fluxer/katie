@@ -159,9 +159,6 @@ void QDeclarativeCompiledData::dump(QDeclarativeInstruction *instr, int idx)
     case QDeclarativeInstruction::AssignSignalObject:
         qWarning().nospace() << idx << "\t\t" << line << "\t" << "ASSIGN_SIGNAL_OBJECT\t" << instr->assignSignalObject.signal << "\t\t\t" << datas.at(instr->assignSignalObject.signal);
         break;
-    case QDeclarativeInstruction::AssignCustomType:
-        qWarning().nospace() << idx << "\t\t" << line << "\t" << "ASSIGN_CUSTOMTYPE\t" << instr->assignCustomType.propertyIndex << "\t" << instr->assignCustomType.valueIndex;
-        break;
 
     case QDeclarativeInstruction::StoreBinding:
         qWarning().nospace() << idx << "\t\t" << line << "\t" << "STORE_BINDING\t" << instr->assignBinding.property << "\t" << instr->assignBinding.value << "\t" << instr->assignBinding.context;

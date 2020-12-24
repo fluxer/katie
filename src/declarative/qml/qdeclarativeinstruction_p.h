@@ -121,7 +121,6 @@ public:
         // Unresolved single assignment
         //
         AssignSignalObject,       /* assignSignalObject */
-        AssignCustomType,         /* assignCustomType */
 
         StoreBinding,             /* assignBinding */
         StoreBindingOnAlias,      /* assignBinding */
@@ -280,10 +279,6 @@ public:
     struct StoreObjectInstruction {
         int propertyIndex;
     };
-    struct AssignCustomTypeInstruction {
-        int propertyIndex;
-        int valueIndex;
-    };
     struct StoreSignalInstruction {
         int signalIndex;
         int value;
@@ -335,7 +330,6 @@ public:
         StoreRectInstruction storeRect;
         StoreVector3DInstruction storeVector3D;
         StoreObjectInstruction storeObject;
-        AssignCustomTypeInstruction assignCustomType;
         StoreSignalInstruction storeSignal;
         AssignSignalObjectInstruction assignSignalObject;
         CreateComponentInstruction createComponent;

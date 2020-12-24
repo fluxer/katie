@@ -94,10 +94,6 @@ public:
     static const char *interfaceIId(int);
     static bool isList(int);
 
-    typedef QVariant (*StringConverter)(const QString &);
-    static void registerCustomStringConverter(int, StringConverter);
-    static StringConverter customStringConverter(int);
-
     static bool isModule(const QByteArray &module, int versionMajor, int versionMinor);
 
     static QList<QDeclarativePrivate::AutoParentFunction> parentFunctions();

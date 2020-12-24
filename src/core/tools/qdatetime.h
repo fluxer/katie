@@ -105,7 +105,6 @@ public:
     static uint gregorianToJulian(int y, int m, int d);
     static void julianToGregorian(uint jd, int &y, int &m, int &d);
 
-
     static inline QDate fromJulianDay(int jd) { QDate d; d.jd = jd; return d; }
     inline int toJulianDay() const { return jd; }
 
@@ -238,7 +237,6 @@ public:
     static QDateTime fromTime_t(uint secsSince1Jan1970UTC);
     static QDateTime fromMSecsSinceEpoch(qint64 msecs);
     static qint64 currentMSecsSinceEpoch();
-
 
 private:
     friend class QDateTimePrivate;

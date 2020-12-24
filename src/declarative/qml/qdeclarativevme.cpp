@@ -635,29 +635,6 @@ QObject *QDeclarativeVME::run(QDeclarativeVMEObjectStack &stack,
             }
             break;
 
-
-        case QDeclarativeInstruction::AssignCustomType:
-            {
-                QObject *target = stack.top();
-                CLEAN_PROPERTY(target, instr.assignCustomType.propertyIndex);
-
-                QDeclarativeCompiledData::CustomTypeData data = customTypeData.at(instr.assignCustomType.valueIndex);
-                const QString &primitive = primitives.at(data.index);
-                QDeclarativeMetaType::StringConverter converter = 
-                    QDeclarativeMetaType::customStringConverter(data.type);
-                QVariant v = (*converter)(primitive);
-
-                QMetaProperty prop = 
-                        target->metaObject()->property(instr.assignCustomType.propertyIndex);
-                if (v.isNull() || ((int)prop.type() != data.type && prop.userType() != data.type)) 
-                    VME_EXCEPTION(QCoreApplication::translate("QDeclarativeVME","Cannot assign value %1 to property %2").arg(primitive).arg(QString::fromUtf8(prop.name())));
-
-                void *a[] = { (void *)v.data(), 0, &status, &flags };
-                QMetaObject::metacall(target, QMetaObject::WriteProperty, 
-                                      instr.assignCustomType.propertyIndex, a);
-            }
-            break;
-
         case QDeclarativeInstruction::AssignSignalObject:
             {
                 // XXX optimize
