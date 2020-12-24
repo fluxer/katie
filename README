@@ -24,6 +24,7 @@ There are several things you should be aware before considering Katie:
   - updated localizations data from Common Locale Data Repository v38
   - SQLite driver uses UTF-8 encoding instead of UTF-16
   - default text codec for C-strings is UTF-8
+  - QTranslator uses gettext for translations
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine
   - native graphics system is no more, rasterizer is just as fast as native
