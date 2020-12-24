@@ -3171,8 +3171,7 @@ QString QString::mid(int position, int n) const
 */
 bool QString::startsWith(const QString& s, Qt::CaseSensitivity cs) const
 {
-    return qt_starts_with(isNull() ? Q_NULLPTR : unicode(), size(),
-                          s.isNull() ? Q_NULLPTR : s.unicode(), s.size(), cs);
+    return qt_starts_with(unicode(), size(), s.unicode(), s.size(), cs);
 }
 
 /*!
@@ -3180,7 +3179,7 @@ bool QString::startsWith(const QString& s, Qt::CaseSensitivity cs) const
  */
 bool QString::startsWith(const QLatin1String& s, Qt::CaseSensitivity cs) const
 {
-    return qt_starts_with(isNull() ? Q_NULLPTR : unicode(), size(), s, cs);
+    return qt_starts_with(unicode(), size(), s, cs);
 }
 
 /*!
@@ -3210,8 +3209,7 @@ bool QString::startsWith(const QChar &c, Qt::CaseSensitivity cs) const
 */
 bool QString::startsWith(const QStringRef &s, Qt::CaseSensitivity cs) const
 {
-    return qt_starts_with(isNull() ? Q_NULLPTR : unicode(), size(),
-                          s.isNull() ? Q_NULLPTR : s.unicode(), s.size(), cs);
+    return qt_starts_with(unicode(), size(), s.unicode(), s.size(), cs);
 }
 
 /*!
@@ -3227,8 +3225,7 @@ bool QString::startsWith(const QStringRef &s, Qt::CaseSensitivity cs) const
 */
 bool QString::endsWith(const QString& s, Qt::CaseSensitivity cs) const
 {
-    return qt_ends_with(isNull() ? Q_NULLPTR : unicode(), size(),
-                        s.isNull() ? Q_NULLPTR : s.unicode(), s.size(), cs);
+    return qt_ends_with(unicode(), size(), s.unicode(), s.size(), cs);
 }
 
 /*!
@@ -3244,8 +3241,7 @@ bool QString::endsWith(const QString& s, Qt::CaseSensitivity cs) const
 */
 bool QString::endsWith(const QStringRef &s, Qt::CaseSensitivity cs) const
 {
-    return qt_ends_with(isNull() ? Q_NULLPTR : unicode(), size(),
-                        s.isNull() ? Q_NULLPTR : s.unicode(), s.size(), cs);
+    return qt_ends_with(unicode(), size(), s.unicode(), s.size(), cs);
 }
 
 
@@ -3254,7 +3250,7 @@ bool QString::endsWith(const QStringRef &s, Qt::CaseSensitivity cs) const
 */
 bool QString::endsWith(const QLatin1String& s, Qt::CaseSensitivity cs) const
 {
-    return qt_ends_with(isNull() ? Q_NULLPTR : unicode(), size(), s, cs);
+    return qt_ends_with(unicode(), size(), s, cs);
 }
 
 /*!
@@ -4312,9 +4308,8 @@ int QString::compare_helper(const QChar *data1, int length1, QLatin1String s2,
             return -*c;
 
         return *uc - *c;
-    } else {
-        return ucstricmp(uc, e, c);
     }
+    return ucstricmp(uc, e, c);
 }
 
 /*!
@@ -7999,8 +7994,7 @@ int QStringRef::count(const QStringRef &str, Qt::CaseSensitivity cs) const
 */
 bool QStringRef::startsWith(const QString &str, Qt::CaseSensitivity cs) const
 {
-    return qt_starts_with(isNull() ? Q_NULLPTR : unicode(), size(),
-                          str.isNull() ? Q_NULLPTR : str.unicode(), str.size(), cs);
+    return qt_starts_with(unicode(), size(), str.unicode(), str.size(), cs);
 }
 
 /*!
@@ -8010,7 +8004,7 @@ bool QStringRef::startsWith(const QString &str, Qt::CaseSensitivity cs) const
 */
 bool QStringRef::startsWith(QLatin1String str, Qt::CaseSensitivity cs) const
 {
-    return qt_starts_with(isNull() ? Q_NULLPTR : unicode(), size(), str, cs);
+    return qt_starts_with(unicode(), size(), str, cs);
 }
 
 /*!
@@ -8020,8 +8014,7 @@ bool QStringRef::startsWith(QLatin1String str, Qt::CaseSensitivity cs) const
 */
 bool QStringRef::startsWith(const QStringRef &str, Qt::CaseSensitivity cs) const
 {
-    return qt_starts_with(isNull() ? Q_NULLPTR : unicode(), size(),
-                          str.isNull() ? Q_NULLPTR : str.unicode(), str.size(), cs);
+    return qt_starts_with(unicode(), size(), str.unicode(), str.size(), cs);
 }
 
 /*!
@@ -8060,8 +8053,7 @@ bool QStringRef::startsWith(QChar ch, Qt::CaseSensitivity cs) const
 */
 bool QStringRef::endsWith(const QString &str, Qt::CaseSensitivity cs) const
 {
-    return qt_ends_with(isNull() ? Q_NULLPTR : unicode(), size(),
-                        str.isNull() ? Q_NULLPTR : str.unicode(), str.size(), cs);
+    return qt_ends_with(unicode(), size(), str.unicode(), str.size(), cs);
 }
 
 /*!
@@ -8096,7 +8088,7 @@ bool QStringRef::endsWith(QChar ch, Qt::CaseSensitivity cs) const
 */
 bool QStringRef::endsWith(QLatin1String str, Qt::CaseSensitivity cs) const
 {
-    return qt_ends_with(isNull() ? Q_NULLPTR : unicode(), size(), str, cs);
+    return qt_ends_with(unicode(), size(), str, cs);
 }
 
 /*!
@@ -8106,8 +8098,7 @@ bool QStringRef::endsWith(QLatin1String str, Qt::CaseSensitivity cs) const
 */
 bool QStringRef::endsWith(const QStringRef &str, Qt::CaseSensitivity cs) const
 {
-    return qt_ends_with(isNull() ? Q_NULLPTR : unicode(), size(),
-                        str.isNull() ? Q_NULLPTR : str.unicode(), str.size(), cs);
+    return qt_ends_with(unicode(), size(), str.unicode(), str.size(), cs);
 }
 
 
@@ -8242,10 +8233,10 @@ static inline int qt_find_latin1_string(const QChar *haystack, int size,
 static inline bool qt_starts_with(const QChar *haystack, int haystackLen,
                                   const QChar *needle, int needleLen, Qt::CaseSensitivity cs)
 {
-    if (!haystack)
-        return !needle;
     if (haystackLen == 0)
         return needleLen == 0;
+    if (needleLen == 0)
+        return haystackLen == 0;
     if (needleLen > haystackLen)
         return false;
 
@@ -8254,21 +8245,13 @@ static inline bool qt_starts_with(const QChar *haystack, int haystackLen,
 
     if (cs == Qt::CaseSensitive) {
         return qMemEquals(h, n, needleLen);
-    } else {
-        uint last = 0;
-        uint olast = 0;
-        for (int i = 0; i < needleLen; ++i)
-            if (foldCase(h[i], last) != foldCase(n[i], olast))
-                return false;
     }
-    return true;
+    return (ucstrnicmp(h, n, needleLen) == 0);
 }
 
 static inline bool qt_starts_with(const QChar *haystack, int haystackLen,
                                   const QLatin1String &needle, Qt::CaseSensitivity cs)
 {
-    if (!haystack)
-        return !needle.latin1();
     if (haystackLen == 0)
         return !needle.latin1() || *needle.latin1() == 0;
     const int slen = qstrlen(needle.latin1());
@@ -8291,8 +8274,6 @@ static inline bool qt_starts_with(const QChar *haystack, int haystackLen,
 static inline bool qt_ends_with(const QChar *haystack, int haystackLen,
                                 const QChar *needle, int needleLen, Qt::CaseSensitivity cs)
 {
-    if (!haystack)
-        return !needle;
     if (haystackLen == 0)
         return needleLen == 0;
     const int pos = haystackLen - needleLen;
@@ -8304,22 +8285,14 @@ static inline bool qt_ends_with(const QChar *haystack, int haystackLen,
 
     if (cs == Qt::CaseSensitive) {
         return qMemEquals(h + pos, n, needleLen);
-    } else {
-        uint last = 0;
-        uint olast = 0;
-        for (int i = 0; i < needleLen; i++)
-            if (foldCase(h[pos+i], last) != foldCase(n[i], olast))
-                return false;
     }
-    return true;
+    return (ucstrnicmp(h + pos, n, needleLen) == 0);
 }
 
 
 static inline bool qt_ends_with(const QChar *haystack, int haystackLen,
                                 const QLatin1String &needle, Qt::CaseSensitivity cs)
 {
-    if (!haystack)
-        return !needle.latin1();
     if (haystackLen == 0)
         return !needle.latin1() || *needle.latin1() == 0;
     const int slen = qstrlen(needle.latin1());
