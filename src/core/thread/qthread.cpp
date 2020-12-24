@@ -521,7 +521,9 @@ void QThread::exit(int returnCode)
     \sa exit() QEventLoop
 */
 void QThread::quit()
-{ exit(); }
+{
+    QThread::exit();
+}
 
 /*!
     The starting point for the thread. After calling start(), the
@@ -536,7 +538,7 @@ void QThread::quit()
 */
 void QThread::run()
 {
-    (void) exec();
+    (void) QThread::exec();
 }
 
 /*!

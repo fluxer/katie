@@ -1280,7 +1280,7 @@ bool QCoreApplication::event(QEvent *e)
 
 void QCoreApplication::quit()
 {
-    exit(0);
+    QCoreApplication::exit(0);
 }
 
 /*!

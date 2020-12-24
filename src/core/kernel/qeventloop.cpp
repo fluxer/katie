@@ -304,7 +304,9 @@ void QEventLoop::wakeUp()
     \sa QCoreApplication::quit(), exit()
 */
 void QEventLoop::quit()
-{ exit(0); }
+{
+    QEventLoop::exit(0);
+}
 
 #include "moc_qeventloop.h"
 
