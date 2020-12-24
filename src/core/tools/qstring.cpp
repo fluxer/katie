@@ -6368,7 +6368,7 @@ QString QString::multiArg(int numArgs, const QString **args) const
             int number = getArgNumber(uc[i + 1]);
             if (number > 0 && number <= numArgs) {
                 result += *args[number - 1];
-                notUsedArgs.setBit(number, false);
+                notUsedArgs.setBit(number - 1, false);
                 i++;
                 continue;
             }
