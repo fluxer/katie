@@ -98,7 +98,6 @@ public:
 
 public:
     static int flagFromChar(const QChar &);
-    static QString flagsToString(int flags);
 };
 
 } // end of namespace Ecma
