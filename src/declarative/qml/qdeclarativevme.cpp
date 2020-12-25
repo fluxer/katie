@@ -168,7 +168,6 @@ QObject *QDeclarativeVME::run(QDeclarativeVMEObjectStack &stack,
     const QList<QDeclarativeCompiledData::TypeReference> &types = comp->types;
     const QList<QString> &primitives = comp->primitives;
     const QList<QByteArray> &datas = comp->datas;
-    const QList<QDeclarativeCompiledData::CustomTypeData> &customTypeData = comp->customTypeData;
     const QList<int> &intData = comp->intData;
     const QList<float> &floatData = comp->floatData;
     const QList<QDeclarativePropertyCache *> &propertyCaches = comp->propertyCaches;

@@ -522,7 +522,6 @@ void QDeclarativeCompiler::reset(QDeclarativeCompiledData *data)
     data->primitives.clear();
     data->floatData.clear();
     data->intData.clear();
-    data->customTypeData.clear();
     data->datas.clear();
     data->bytecode.clear();
 }

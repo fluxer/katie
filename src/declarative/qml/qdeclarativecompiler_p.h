@@ -93,11 +93,6 @@ public:
         QDeclarativePropertyCache *createPropertyCache(QDeclarativeEngine *);
     };
     QList<TypeReference> types;
-    struct CustomTypeData
-    {
-        int index;
-        int type;
-    };
 
     const QMetaObject *root;
     QAbstractDynamicMetaObject rootData;
@@ -105,7 +100,6 @@ public:
     QList<QString> primitives;
     QList<float> floatData;
     QList<int> intData;
-    QList<CustomTypeData> customTypeData;
     QList<QByteArray> datas;
     QList<QDeclarativeParser::Location> locations;
     QList<QDeclarativeInstruction> bytecode;
