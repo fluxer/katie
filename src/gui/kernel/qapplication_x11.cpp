@@ -406,7 +406,7 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
 
     switch (err->error_code) {
     case BadAtom:
-        if (err->request_code == 20 /* X_GetProperty */
+        if (err->request_code == X_GetProperty
             && (err->resourceid == XA_RESOURCE_MANAGER
                 || err->resourceid == XA_RGB_DEFAULT_MAP
                 || err->resourceid == ATOM(_NET_SUPPORTED)
@@ -419,8 +419,8 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
         break;
 
     case BadWindow:
-        if (err->request_code == 2 /* X_ChangeWindowAttributes */
-            || err->request_code == 38 /* X_QueryPointer */) {
+        if (err->request_code == X_ChangeWindowAttributes
+            || err->request_code == X_QueryPointer) {
             for (int i = 0; i < ScreenCount(dpy); ++i) {
                 if (err->resourceid == RootWindow(dpy, i)) {
                     // Perhaps we're running under SECURITY reduction? :/
@@ -429,7 +429,7 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
             }
         }
         qt_x11Data->seen_badwindow = true;
-        if (err->request_code == 25 /* X_SendEvent */) {
+        if (err->request_code == X_SendEvent) {
             for (int i = 0; i < ScreenCount(dpy); ++i) {
                 if (err->resourceid == RootWindow(dpy, i)) {
                     // Perhaps we're running under SECURITY reduction? :/
