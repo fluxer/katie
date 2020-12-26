@@ -2140,9 +2140,7 @@ void QObjectConnectionManager::execute(int slotIndex, void **argv)
     int signalIndex = -1;
     QScript::APIShim shim(engine);
     for (int i = 0; i < connections.size(); ++i) {
-        const QVector<QObjectConnection> &cs = connections.at(i);
-        for (int j = 0; j < cs.size(); ++j) {
-            const QObjectConnection &c = cs.at(j);
+        foreach (const QObjectConnection &c, connections.at(i)) {
             if (c.slotIndex == slotIndex) {
                 receiver = c.receiver;
                 slot = c.slot;
