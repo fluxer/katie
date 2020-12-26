@@ -1322,15 +1322,8 @@ int QX11PixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
     return 0;
 }
 
-struct QXImageWrapper
+bool QX11PixmapData::canTakeQImageFromXImage(const XImage *xi) const
 {
-    XImage *xi;
-};
-
-bool QX11PixmapData::canTakeQImageFromXImage(const QXImageWrapper &xiWrapper) const
-{
-    XImage *xi = xiWrapper.xi;
-
     // ARGB32_Premultiplied
     if (picture && depth() == 32)
         return true;
@@ -1350,10 +1343,8 @@ bool QX11PixmapData::canTakeQImageFromXImage(const QXImageWrapper &xiWrapper) co
     return false;
 }
 
-QImage QX11PixmapData::takeQImageFromXImage(const QXImageWrapper &xiWrapper) const
+QImage QX11PixmapData::takeQImageFromXImage(XImage *xi) const
 {
-    XImage *xi = xiWrapper.xi;
-
     QImage::Format format = QImage::Format_ARGB32_Premultiplied;
     if (depth() == 24)
         format = QImage::Format_RGB32;
@@ -1405,19 +1396,18 @@ QImage QX11PixmapData::takeQImageFromXImage(const QXImageWrapper &xiWrapper) con
 
 QImage QX11PixmapData::toImage(const QRect &rect) const
 {
-    QXImageWrapper xiWrapper;
-    xiWrapper.xi = XGetImage(qt_x11Data->display, hd, rect.x(), rect.y(), rect.width(), rect.height(),
-                             AllPlanes, (depth() == 1) ? XYPixmap : ZPixmap);
+    XImage *xi = XGetImage(qt_x11Data->display, hd, rect.x(), rect.y(), rect.width(), rect.height(),
+                           AllPlanes, (depth() == 1) ? XYPixmap : ZPixmap);
 
-    Q_CHECK_PTR(xiWrapper.xi);
-    if (!xiWrapper.xi)
+    Q_CHECK_PTR(xi);
+    if (!xi)
         return QImage();
 
-    if (!x11_mask && canTakeQImageFromXImage(xiWrapper))
-        return takeQImageFromXImage(xiWrapper);
+    if (!x11_mask && canTakeQImageFromXImage(xi))
+        return takeQImageFromXImage(xi);
 
-    QImage image = toImage(xiWrapper, rect);
-    qSafeXDestroyImage(xiWrapper.xi);
+    QImage image = toImage(xi, rect);
+    qSafeXDestroyImage(xi);
     return image;
 }
 
@@ -1441,10 +1431,8 @@ QImage QX11PixmapData::toImage() const
     return toImage(QRect(0, 0, w, h));
 }
 
-QImage QX11PixmapData::toImage(const QXImageWrapper &xiWrapper, const QRect &rect) const
+QImage QX11PixmapData::toImage(const XImage *xi, const QRect &rect) const
 {
-    XImage *xi = xiWrapper.xi;
-
     int d = depth();
     Visual *visual = (Visual *)xinfo.visual();
     bool trucol = (visual->c_class >= TrueColor) && d > 1;
