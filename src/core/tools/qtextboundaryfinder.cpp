@@ -69,7 +69,6 @@ class QTextBoundaryFinderPrivate
 public:
     QTextBoundaryFinderPrivate();
     QTextBoundaryFinderPrivate(const QTextBoundaryFinder::BoundaryType type, const QString &text);
-    QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other);
     ~QTextBoundaryFinderPrivate();
 
     QTextBoundaryFinder::BoundaryType type;
@@ -77,7 +76,8 @@ public:
     QString string;
     mutable UBreakIterator *breakiter; // ubrk_isBoundary() takes non-const argument
 
-    QTextBoundaryFinderPrivate& operator=(const QTextBoundaryFinderPrivate &other);
+private:
+    Q_DISABLE_COPY(QTextBoundaryFinderPrivate);
 };
 
 QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate()
@@ -97,30 +97,6 @@ QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate(const QTextBoundaryFinder
             breakiter = Q_NULLPTR;
         }
     }
-}
-
-QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other)
-{
-    QTextBoundaryFinderPrivate::operator=(other);
-}
-
-QTextBoundaryFinderPrivate& QTextBoundaryFinderPrivate::operator=(const QTextBoundaryFinderPrivate &other)
-{
-    type = other.type;
-    pos = other.pos;
-    string = other.string;
-
-    if (breakiter) {
-        ubrk_close(breakiter);
-    }
-
-    UErrorCode error = U_ZERO_ERROR;
-    breakiter = ubrk_safeClone(other.breakiter, Q_NULLPTR, Q_NULLPTR, &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextBoundaryFinder: ubrk_safeClone() failed %s", u_errorName(error));
-        breakiter = Q_NULLPTR;
-    }
-    return *this;
 }
 
 QTextBoundaryFinderPrivate::~QTextBoundaryFinderPrivate()
@@ -211,7 +187,20 @@ QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
 */
 QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &other)
 {
-    d = other.d;
+    d->type = other.d->type;
+    d->pos = other.d->pos;
+    d->string = other.d->string;
+
+    if (d->breakiter) {
+        ubrk_close(d->breakiter);
+    }
+
+    UErrorCode error = U_ZERO_ERROR;
+    d->breakiter = ubrk_safeClone(other.d->breakiter, Q_NULLPTR, Q_NULLPTR, &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QTextBoundaryFinder: ubrk_safeClone() failed %s", u_errorName(error));
+        d->breakiter = Q_NULLPTR;
+    }
     return *this;
 }
 
