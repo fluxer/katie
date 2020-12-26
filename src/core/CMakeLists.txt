@@ -337,7 +337,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystementry.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_unix.cpp
