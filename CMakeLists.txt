@@ -532,7 +532,7 @@ if(KATIE_UTILS)
     add_subdirectory(util)
 endif()
 
-# the macro calls bellow are generted via the incfsck script
+# the macro calls bellow are generated via the incfsck script
 katie_generate_obsolete(QAbstractExtensionFactory QtDesigner extension.h)
 katie_generate_obsolete(QAbstractExtensionManager QtDesigner extension.h)
 katie_generate_obsolete(QAbstractFileEngineIterator QtCore qabstractfileengine.h)
