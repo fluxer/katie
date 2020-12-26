@@ -100,10 +100,6 @@
 #include <X11/cursorfont.h>
 #endif // QT_NO_XCURSOR
 
-#ifndef QT_NO_XSHM
-#  include <X11/extensions/XShm.h>
-#endif // QT_NO_XSHM
-
 #ifndef QT_NO_XFIXES
 #  include <X11/extensions/Xfixes.h>
 #endif // QT_NO_XFIXES
@@ -203,10 +199,6 @@ struct QX11Data
     // true if compiled w/ XFIXES support and XFIXES is supported on the connected Display
     bool use_xfixes;
     int xfixes_eventbase;
-
-    // true if compiled w/ MIT-SHM support and MIT-SHM is supported on the connected Display
-    bool use_mitshm;
-    int mitshm_major;
 
     // true if compiled w/ XINERAMA support and XINERAMA is supported on the connected Display
     bool use_xinerama;

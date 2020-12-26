@@ -140,7 +140,6 @@
 #cmakedefine QT_NO_XRANDR
 #cmakedefine QT_NO_XRENDER
 #cmakedefine QT_NO_XSHAPE
-#cmakedefine QT_NO_XSHM
 #cmakedefine QT_NO_XSYNC
 
 // Misc
