@@ -1235,8 +1235,7 @@ void QObjectPrivate::setThreadData_helper(QThreadData *currentData, QThreadData 
     threadData->deref();
     threadData = targetData;
 
-    for (int i = 0; i < children.size(); ++i) {
-        QObject *child = children.at(i);
+    foreach (QObject *child, children) {;
         child->d_func()->setThreadData_helper(currentData, targetData);
     }
 }
