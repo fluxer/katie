@@ -460,8 +460,6 @@ public:
         , enabled(true), imeItem(Q_NULLPTR), item(Q_NULLPTR)
     {}
 
-    bool isConnected(const char *signalName);
-
     QGraphicsItem *finalFocusProxy(QGraphicsItem *item) const
     {
         QGraphicsItem *fp;
