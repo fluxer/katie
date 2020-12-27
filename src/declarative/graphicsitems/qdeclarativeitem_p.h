@@ -457,7 +457,7 @@ class QDeclarativeKeysAttachedPrivate : public QObjectPrivate
 public:
     QDeclarativeKeysAttachedPrivate()
         : QObjectPrivate(), inPress(false), inRelease(false)
-        , enabled(true), imeItem(Q_NULLPTR), item(Q_NULLPTR)
+        , enabled(true), item(Q_NULLPTR)
     {}
 
     QGraphicsItem *finalFocusProxy(QGraphicsItem *item) const
@@ -474,7 +474,6 @@ public:
 
     bool enabled;
 
-    QGraphicsItem *imeItem;
     QList<QDeclarativeItem *> targets;
     QDeclarativeItem *item;
 };
