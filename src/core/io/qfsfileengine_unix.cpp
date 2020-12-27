@@ -79,7 +79,7 @@ bool QFSFileEngine::rename(const QString &newName)
     Q_D(QFSFileEngine);
     int error;
     bool ret = QFileSystemEngine::renameFile(d->fileEntry, QFileSystemEntry(newName), &error);
-
+    d->metaData.clear();
     if (!ret) {
         setError(QFile::RenameError, qt_error_string(error));
     }
