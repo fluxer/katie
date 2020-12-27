@@ -45,14 +45,8 @@ QT_BEGIN_NAMESPACE
 #define DEFINE_BOOL_CONFIG_OPTION(name, var) \
     static bool name() \
     { \
-        static enum { Yes, No, Unknown } status = Unknown; \
-        if (status == Unknown) { \
-            QByteArray v = qgetenv(#var); \
-            bool value = !v.isEmpty() && v != "0" && v != "false"; \
-            if (value) status = Yes; \
-            else status = No; \
-        } \
-        return status == Yes; \
+        static bool var ## __variable__ = qgetenv(#var).toInt(); \
+        return var ## __variable__; \
     }
 
 #define Q_DECLARATIVE_PRIVATE_EXPORT Q_DECLARATIVE_EXPORT
