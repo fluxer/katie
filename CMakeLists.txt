@@ -30,6 +30,7 @@ set(CMAKE_C_VISIBILITY_PRESET "hidden")
 set(CMAKE_CXX_VISIBILITY_PRESET "hidden")
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
+set(CMAKE_UNITY_BUILD_BATCH_SIZE 300)
 
 # enable symbols visibility preset for all targets
 cmake_policy(SET CMP0063 NEW)
