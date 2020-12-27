@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-24 16:52+0000\n"
+"POT-Creation-Date: 2020-12-27 06:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,8 +44,8 @@ msgstr ""
 
 #: src/core/plugin/qlibrary.cpp:809 src/core/plugin/qpluginloader.cpp:291
 #: src/core/io/qiodevice.cpp:1541 src/network/ssl/qsslerror.cpp:261
-#: src/network/kernel/qhostinfo_unix.cpp:128
-#: src/network/kernel/qhostinfo_unix.cpp:247
+#: src/network/kernel/qhostinfo_unix.cpp:119
+#: src/network/kernel/qhostinfo_unix.cpp:238
 #: src/network/socket/qnativesocketengine.cpp:268
 #: src/network/access/qftp.cpp:1439 src/uitools/formscriptrunner.cpp:116
 msgid "Unknown error"
@@ -532,11 +532,11 @@ msgid "Delegate component must be Item type."
 msgstr ""
 
 #: src/declarative/qml/qdeclarativecompiler.cpp:176
-#: src/declarative/qml/qdeclarativecompiler.cpp:1848
-#: src/declarative/qml/qdeclarativecompiler.cpp:2053
-#: src/declarative/qml/qdeclarativecompiler.cpp:2134
-#: src/declarative/qml/qdeclarativecompiler.cpp:2209
-#: src/declarative/qml/qdeclarativecompiler.cpp:2803
+#: src/declarative/qml/qdeclarativecompiler.cpp:1830
+#: src/declarative/qml/qdeclarativecompiler.cpp:2035
+#: src/declarative/qml/qdeclarativecompiler.cpp:2116
+#: src/declarative/qml/qdeclarativecompiler.cpp:2191
+#: src/declarative/qml/qdeclarativecompiler.cpp:2785
 msgid "Invalid property assignment: \"%1\" is a read-only property"
 msgstr ""
 
@@ -601,274 +601,274 @@ msgstr ""
 msgid "Invalid property assignment: 3D vector expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:298
+#: src/declarative/qml/qdeclarativecompiler.cpp:294
 msgid "Invalid property assignment: unsupported type \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:584
+#: src/declarative/qml/qdeclarativecompiler.cpp:566
 msgid "Element is not creatable."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1234
+#: src/declarative/qml/qdeclarativecompiler.cpp:1216
 msgid "Component elements may not contain properties other than id"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1241
+#: src/declarative/qml/qdeclarativecompiler.cpp:1223
 msgid "Invalid component id specification"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1247
-#: src/declarative/qml/qdeclarativecompiler.cpp:1762
+#: src/declarative/qml/qdeclarativecompiler.cpp:1229
+#: src/declarative/qml/qdeclarativecompiler.cpp:1744
 msgid "id is not unique"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1257
+#: src/declarative/qml/qdeclarativecompiler.cpp:1239
 msgid "Invalid component body specification"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1260
+#: src/declarative/qml/qdeclarativecompiler.cpp:1242
 msgid "Component objects cannot declare new properties."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1262
+#: src/declarative/qml/qdeclarativecompiler.cpp:1244
 msgid "Component objects cannot declare new signals."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1264
+#: src/declarative/qml/qdeclarativecompiler.cpp:1246
 msgid "Component objects cannot declare new functions."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1271
+#: src/declarative/qml/qdeclarativecompiler.cpp:1253
 msgid "Cannot create empty component specification"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1359
-#: src/declarative/qml/qdeclarativecompiler.cpp:1480
+#: src/declarative/qml/qdeclarativecompiler.cpp:1341
+#: src/declarative/qml/qdeclarativecompiler.cpp:1462
 msgid "\"%1.%2\" is not available in %3 %4.%5."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1361
-#: src/declarative/qml/qdeclarativecompiler.cpp:1482
+#: src/declarative/qml/qdeclarativecompiler.cpp:1343
+#: src/declarative/qml/qdeclarativecompiler.cpp:1464
 msgid "\"%1.%2\" is not available due to component versioning."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1372
+#: src/declarative/qml/qdeclarativecompiler.cpp:1354
 msgid "Incorrectly specified signal assignment"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1384
+#: src/declarative/qml/qdeclarativecompiler.cpp:1366
 msgid "Cannot assign a value to a signal (expecting a script to be run)"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1388
+#: src/declarative/qml/qdeclarativecompiler.cpp:1370
 msgid "Empty signal assignment"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1426
+#: src/declarative/qml/qdeclarativecompiler.cpp:1408
 msgid "Empty property assignment"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1438
+#: src/declarative/qml/qdeclarativecompiler.cpp:1420
 msgid "Attached properties cannot be used here"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1452
-#: src/declarative/qml/qdeclarativecompiler.cpp:1580
+#: src/declarative/qml/qdeclarativecompiler.cpp:1434
+#: src/declarative/qml/qdeclarativecompiler.cpp:1562
 msgid "Non-existent attached object"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1456
-#: src/declarative/qml/qdeclarativecompiler.cpp:1583
+#: src/declarative/qml/qdeclarativecompiler.cpp:1438
+#: src/declarative/qml/qdeclarativecompiler.cpp:1565
 msgid "Invalid attached object assignment"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1535
+#: src/declarative/qml/qdeclarativecompiler.cpp:1517
 msgid "Cannot assign to non-existent default property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1537
-#: src/declarative/qml/qdeclarativecompiler.cpp:1893
-#: src/declarative/qml/qdeclarativecompiler.cpp:1896
+#: src/declarative/qml/qdeclarativecompiler.cpp:1519
+#: src/declarative/qml/qdeclarativecompiler.cpp:1875
+#: src/declarative/qml/qdeclarativecompiler.cpp:1878
 #: src/declarative/util/qdeclarativeconnections.cpp:199
 #: src/declarative/util/qdeclarativeconnections.cpp:263
 #: src/declarative/util/qdeclarativepropertychanges.cpp:416
 msgid "Cannot assign to non-existent property \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1567
+#: src/declarative/qml/qdeclarativecompiler.cpp:1549
 msgid "Invalid use of namespace"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1572
+#: src/declarative/qml/qdeclarativecompiler.cpp:1554
 msgid "Not an attached property name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1754
+#: src/declarative/qml/qdeclarativecompiler.cpp:1736
 msgid "Invalid use of id property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1841
-#: src/declarative/qml/qdeclarativecompiler.cpp:1843
+#: src/declarative/qml/qdeclarativecompiler.cpp:1823
+#: src/declarative/qml/qdeclarativecompiler.cpp:1825
 msgid "Property has already been assigned a value"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1861
-#: src/declarative/qml/qdeclarativecompiler.cpp:1868
+#: src/declarative/qml/qdeclarativecompiler.cpp:1843
+#: src/declarative/qml/qdeclarativecompiler.cpp:1850
 msgid "Invalid grouped property access"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1871
+#: src/declarative/qml/qdeclarativecompiler.cpp:1853
 msgid "Cannot assign a value directly to a grouped property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1887
+#: src/declarative/qml/qdeclarativecompiler.cpp:1869
 msgid "Invalid property use"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1902
+#: src/declarative/qml/qdeclarativecompiler.cpp:1884
 msgid "Property assignment expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1905
+#: src/declarative/qml/qdeclarativecompiler.cpp:1887
 msgid "Single property assignment expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1910
+#: src/declarative/qml/qdeclarativecompiler.cpp:1892
 msgid "Unexpected object assignment"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1975
+#: src/declarative/qml/qdeclarativecompiler.cpp:1957
 msgid "Cannot assign object to list"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1981
+#: src/declarative/qml/qdeclarativecompiler.cpp:1963
 msgid "Can only assign one binding to lists"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:1987
+#: src/declarative/qml/qdeclarativecompiler.cpp:1969
 msgid "Cannot assign primitives to lists"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2000
+#: src/declarative/qml/qdeclarativecompiler.cpp:1982
 msgid "Cannot assign multiple values to a script property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2003
+#: src/declarative/qml/qdeclarativecompiler.cpp:1985
 msgid "Invalid property assignment: script expected"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2018
+#: src/declarative/qml/qdeclarativecompiler.cpp:2000
 msgid "Cannot assign multiple values to a singular property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2111
+#: src/declarative/qml/qdeclarativecompiler.cpp:2093
 msgid "Cannot assign object to property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2161
+#: src/declarative/qml/qdeclarativecompiler.cpp:2143
 msgid "\"%1\" cannot operate on \"%2\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2337
+#: src/declarative/qml/qdeclarativecompiler.cpp:2319
 msgid "Duplicate default property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2342
+#: src/declarative/qml/qdeclarativecompiler.cpp:2324
 msgid "Duplicate property name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2346
+#: src/declarative/qml/qdeclarativecompiler.cpp:2328
 msgid "Property names cannot begin with an upper case letter"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2349
+#: src/declarative/qml/qdeclarativecompiler.cpp:2331
 msgid "Illegal property name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2357
+#: src/declarative/qml/qdeclarativecompiler.cpp:2339
 msgid "Duplicate signal name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2360
+#: src/declarative/qml/qdeclarativecompiler.cpp:2342
 msgid "Signal names cannot begin with an upper case letter"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2362
+#: src/declarative/qml/qdeclarativecompiler.cpp:2344
 msgid "Illegal signal name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2368
+#: src/declarative/qml/qdeclarativecompiler.cpp:2350
 msgid "Duplicate method name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2371
+#: src/declarative/qml/qdeclarativecompiler.cpp:2353
 msgid "Method names cannot begin with an upper case letter"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2373
+#: src/declarative/qml/qdeclarativecompiler.cpp:2355
 msgid "Illegal method name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2394
+#: src/declarative/qml/qdeclarativecompiler.cpp:2376
 msgid "Property value set multiple times"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2398
+#: src/declarative/qml/qdeclarativecompiler.cpp:2380
 msgid "Invalid property nesting"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2450
+#: src/declarative/qml/qdeclarativecompiler.cpp:2432
 msgid "Cannot override FINAL property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2473
+#: src/declarative/qml/qdeclarativecompiler.cpp:2455
 msgid "Invalid property type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2650
+#: src/declarative/qml/qdeclarativecompiler.cpp:2632
 msgid "Invalid empty ID"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2653
+#: src/declarative/qml/qdeclarativecompiler.cpp:2635
 msgid "IDs cannot start with an uppercase letter"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2659
+#: src/declarative/qml/qdeclarativecompiler.cpp:2641
 msgid "IDs must start with a letter or underscore"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2661
+#: src/declarative/qml/qdeclarativecompiler.cpp:2643
 msgid "IDs must contain only letters, numbers, and underscores"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2667
+#: src/declarative/qml/qdeclarativecompiler.cpp:2649
 msgid "ID illegally masks global JavaScript property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2698
-#: src/declarative/qml/qdeclarativecompiler.cpp:2707
+#: src/declarative/qml/qdeclarativecompiler.cpp:2680
+#: src/declarative/qml/qdeclarativecompiler.cpp:2689
 msgid "No property alias location"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2703
-#: src/declarative/qml/qdeclarativecompiler.cpp:2728
-#: src/declarative/qml/qdeclarativecompiler.cpp:2735
-#: src/declarative/qml/qdeclarativecompiler.cpp:2742
-#: src/declarative/qml/qdeclarativecompiler.cpp:2748
+#: src/declarative/qml/qdeclarativecompiler.cpp:2685
+#: src/declarative/qml/qdeclarativecompiler.cpp:2710
+#: src/declarative/qml/qdeclarativecompiler.cpp:2717
+#: src/declarative/qml/qdeclarativecompiler.cpp:2724
+#: src/declarative/qml/qdeclarativecompiler.cpp:2730
 msgid "Invalid alias location"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2712
+#: src/declarative/qml/qdeclarativecompiler.cpp:2694
 msgid ""
 "Invalid alias reference. An alias reference must be specified as <id>, <id>."
 "<property> or <id>.<value property>.<property>"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2715
+#: src/declarative/qml/qdeclarativecompiler.cpp:2697
 msgid "Invalid alias reference. Unable to find id \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativecompiler.cpp:2730
+#: src/declarative/qml/qdeclarativecompiler.cpp:2712
 msgid "Alias property exceeds alias bounds"
 msgstr ""
 
@@ -927,10 +927,6 @@ msgstr ""
 msgid "is not a type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativeimport.cpp:937
-msgid "File name case mismatch for \"%1\""
-msgstr ""
-
 #: src/declarative/qml/qdeclarativebinding.cpp:419
 msgid "Binding loop detected for property \"%1\""
 msgstr ""
@@ -943,47 +939,42 @@ msgstr ""
 msgid "createObject: value is not an object"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:212
+#: src/declarative/qml/qdeclarativevme.cpp:211
 msgctxt "QDeclarativeVME"
 msgid "Unable to create object of type %1"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:653
-msgctxt "QDeclarativeVME"
-msgid "Cannot assign value %1 to property %2"
-msgstr ""
-
-#: src/declarative/qml/qdeclarativevme.cpp:675
+#: src/declarative/qml/qdeclarativevme.cpp:651
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign object type %1 with no default method"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:678
+#: src/declarative/qml/qdeclarativevme.cpp:654
 msgctxt "QDeclarativeVME"
 msgid "Cannot connect mismatched signal/slot %1 %vs. %2"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:683
+#: src/declarative/qml/qdeclarativevme.cpp:659
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign an object to signal property %1"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:832
+#: src/declarative/qml/qdeclarativevme.cpp:808
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign object to list"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:875
+#: src/declarative/qml/qdeclarativevme.cpp:851
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign object to interface property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:886
+#: src/declarative/qml/qdeclarativevme.cpp:862
 msgctxt "QDeclarativeVME"
 msgid "Unable to create attached object"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:918
+#: src/declarative/qml/qdeclarativevme.cpp:894
 msgctxt "QDeclarativeVME"
 msgid "Cannot set properties on %1 as it is null"
 msgstr ""
@@ -1060,19 +1051,19 @@ msgctxt "QDeclarativeCompiledBindings"
 msgid "Binding loop detected for property \"%1\""
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:921
+#: src/declarative/qml/qdeclarativetypeloader.cpp:914
 msgid "Script %1 unavailable"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:939
+#: src/declarative/qml/qdeclarativetypeloader.cpp:932
 msgid "Type %1 unavailable"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:1125
+#: src/declarative/qml/qdeclarativetypeloader.cpp:1118
 msgid "Namespace %1 cannot be used as a type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativetypeloader.cpp:1127
+#: src/declarative/qml/qdeclarativetypeloader.cpp:1120
 msgid "%1 %2"
 msgstr ""
 
@@ -1172,24 +1163,24 @@ msgid "Cannot animate read-only property \"%1\""
 msgstr ""
 
 #: src/declarative/util/qdeclarativeanimation.cpp:601
-#: src/declarative/util/qdeclarativeanimation.cpp:1839
-#: src/declarative/util/qdeclarativeanimation.cpp:2859
+#: src/declarative/util/qdeclarativeanimation.cpp:1835
+#: src/declarative/util/qdeclarativeanimation.cpp:2855
 msgid "Cannot set a duration of < 0"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:2691
+#: src/declarative/util/qdeclarativeanimation.cpp:2687
 #: src/declarative/util/qdeclarativestateoperations.cpp:95
 msgid "Unable to preserve appearance under complex transform"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:2702
-#: src/declarative/util/qdeclarativeanimation.cpp:2709
+#: src/declarative/util/qdeclarativeanimation.cpp:2698
+#: src/declarative/util/qdeclarativeanimation.cpp:2705
 #: src/declarative/util/qdeclarativestateoperations.cpp:106
 #: src/declarative/util/qdeclarativestateoperations.cpp:113
 msgid "Unable to preserve appearance under non-uniform scale"
 msgstr ""
 
-#: src/declarative/util/qdeclarativeanimation.cpp:2716
+#: src/declarative/util/qdeclarativeanimation.cpp:2712
 #: src/declarative/util/qdeclarativestateoperations.cpp:120
 msgid "Unable to preserve appearance under scale of 0"
 msgstr ""
@@ -3501,10 +3492,10 @@ msgctxt "QHostInfo"
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:113
-#: src/network/kernel/qhostinfo_unix.cpp:125
-#: src/network/kernel/qhostinfo_unix.cpp:213
-#: src/network/kernel/qhostinfo_unix.cpp:244
+#: src/network/kernel/qhostinfo_unix.cpp:104
+#: src/network/kernel/qhostinfo_unix.cpp:116
+#: src/network/kernel/qhostinfo_unix.cpp:204
+#: src/network/kernel/qhostinfo_unix.cpp:235
 #: src/network/socket/qabstractsocket.cpp:886
 #: src/network/socket/qhttpsocketengine.cpp:662
 #: src/network/socket/qsocks5socketengine.cpp:640
@@ -3512,16 +3503,16 @@ msgstr ""
 msgid "Host not found"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:144
+#: src/network/kernel/qhostinfo_unix.cpp:135
 msgid "No host name given"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:146
+#: src/network/kernel/qhostinfo_unix.cpp:137
 msgid "Invalid hostname"
 msgstr ""
 
-#: src/network/kernel/qhostinfo_unix.cpp:201
-#: src/network/kernel/qhostinfo_unix.cpp:239
+#: src/network/kernel/qhostinfo_unix.cpp:192
+#: src/network/kernel/qhostinfo_unix.cpp:230
 msgid "Unknown address type"
 msgstr ""
 
@@ -4268,29 +4259,29 @@ msgctxt "QPSQLResult"
 msgid "Unable to prepare statement"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:829
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:836
 #: src/plugins/sqldrivers/odbc/qsql_odbc.cpp:1798
 #: src/plugins/sqldrivers/mysql/qsql_mysql.cpp:1176
 msgid "Unable to connect"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:878
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:885
 msgid "Could not begin transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:906
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:913
 msgid "Could not commit transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:923
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:930
 msgid "Could not rollback transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1238
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1247
 msgid "Unable to subscribe"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1270
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1279
 msgid "Unable to unsubscribe"
 msgstr ""
 
