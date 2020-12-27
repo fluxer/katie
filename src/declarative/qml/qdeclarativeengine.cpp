@@ -2398,12 +2398,6 @@ const QMetaObject *QDeclarativeEnginePrivate::metaObjectForType(int t) const
     }
 }
 
-bool QDeclarative_isFileCaseCorrect(const QString &fileName)
-{
-    Q_UNUSED(fileName)
-    return true;
-}
-
 QT_END_NAMESPACE
 
 #include "moc_qdeclarativeengine.h"

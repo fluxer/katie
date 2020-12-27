@@ -517,13 +517,6 @@ void QDeclarativeDataLoader::load(QDeclarativeDataBlob *blob)
     QString lf = QDeclarativeEnginePrivate::urlToLocalFileOrQrc(blob->m_url);
 
     if (!lf.isEmpty()) {
-        if (!QDeclarative_isFileCaseCorrect(lf)) {
-            QDeclarativeError error;
-            error.setUrl(blob->m_url);
-            error.setDescription(QLatin1String("File name case mismatch"));
-            blob->setError(error);
-            return;
-        }
         QFile file(lf);
         if (file.open(QFile::ReadOnly)) {
             QByteArray data = file.readAll();
