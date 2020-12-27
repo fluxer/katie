@@ -684,7 +684,14 @@ static QPSQLDriver::Protocol qMakePSQLVersion(int vMaj, int vMin)
     case 12:
         return QPSQLDriver::Version12;
     case 13:
-        return QPSQLDriver::Version13;
+    {
+        switch (vMin) {
+        case 1:
+            return QPSQLDriver::Version131;
+        default:
+            return QPSQLDriver::Version13;
+        }
+    }
     default:
         break;
     }
@@ -998,6 +1005,7 @@ QSqlIndex QPSQLDriver::primaryIndex(const QString& tablename) const
     case QPSQLDriver::Version11:
     case QPSQLDriver::Version12:
     case QPSQLDriver::Version13:
+    case QPSQLDriver::Version131:
         stmt = QLatin1String("SELECT pg_attribute.attname, pg_attribute.atttypid::int, "
                 "pg_class.relname "
                 "FROM pg_attribute, pg_class "
@@ -1064,6 +1072,7 @@ QSqlRecord QPSQLDriver::record(const QString& tablename) const
     case QPSQLDriver::Version11:
     case QPSQLDriver::Version12:
     case QPSQLDriver::Version13:
+    case QPSQLDriver::Version131:
         stmt = QLatin1String("select pg_attribute.attname, pg_attribute.atttypid::int, "
                 "pg_attribute.attnotnull, pg_attribute.attlen, pg_attribute.atttypmod, "
                 "pg_attrdef.adsrc "

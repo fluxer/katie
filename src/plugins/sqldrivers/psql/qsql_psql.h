@@ -101,6 +101,7 @@ public:
         Version11 = 24,
         Version12 = 25,
         Version13 = 26,
+        Version131 = 27
     };
 
     explicit QPSQLDriver(QObject *parent=0);
