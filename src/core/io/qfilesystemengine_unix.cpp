@@ -262,7 +262,7 @@ bool QFileSystemEngine::createDirectory(const QFileSystemEntry &entry, bool crea
                 const QByteArray chunk = QFile::encodeName(dirName.left(slash));
                 QT_STATBUF st;
                 if (QT_STAT(chunk.constData(), &st) == 0) {
-                    if ((st.st_mode & S_IFMT) != S_IFDIR)
+                    if (!S_ISDIR(st.st_mode))
                         return false;
                 } else if (QT_MKDIR(chunk.constData(), 0777) != 0) {
                     return false;
@@ -284,7 +284,7 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
             const QByteArray chunk = QFile::encodeName(dirName.left(slash));
             QT_STATBUF st;
             if (QT_STAT(chunk.constData(), &st) == 0) {
-                if ((st.st_mode & S_IFMT) != S_IFDIR)
+                if (!S_ISDIR(st.st_mode))
                     return false;
                 if (::rmdir(chunk.constData()) != 0)
                     return oldslash != 0;
@@ -538,9 +538,9 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
         entryFlags |= QFileSystemMetaData::OtherExecutePermission;
 
     // Type
-    if ((statBuffer.st_mode & S_IFMT) == S_IFREG)
+    if (S_ISREG(statBuffer.st_mode))
         entryFlags |= QFileSystemMetaData::FileType;
-    else if ((statBuffer.st_mode & S_IFMT) == S_IFDIR)
+    else if (S_ISDIR(statBuffer.st_mode))
         entryFlags |= QFileSystemMetaData::DirectoryType;
     else
         entryFlags |= QFileSystemMetaData::SequentialType;
