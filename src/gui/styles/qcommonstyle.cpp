@@ -685,12 +685,11 @@ static void drawArrow(const QStyle *style, const QStyleOptionToolButton *toolbut
 
 QSize QCommonStylePrivate::viewItemSize(const QStyleOptionViewItemV4 *option, int role) const
 {
-    const QWidget *widget = option->widget;
     switch (role) {
     case Qt::CheckStateRole:
         if (option->features & QStyleOptionViewItemV2::HasCheckIndicator)
-            return QSize(proxyStyle->pixelMetric(QStyle::PM_IndicatorWidth, option, widget),
-                         proxyStyle->pixelMetric(QStyle::PM_IndicatorHeight, option, widget));
+            return QSize(proxyStyle->pixelMetric(QStyle::PM_IndicatorWidth, option, option->widget),
+                         proxyStyle->pixelMetric(QStyle::PM_IndicatorHeight, option, option->widget));
         break;
     case Qt::DisplayRole:
         if (option->features & QStyleOptionViewItemV2::HasDisplay) {
@@ -701,7 +700,7 @@ QSize QCommonStylePrivate::viewItemSize(const QStyleOptionViewItemV4 *option, in
             textLayout.setFont(option->font);
             textLayout.setText(option->text);
             const bool wrapText = option->features & QStyleOptionViewItemV2::WrapText;
-            const int textMargin = proxyStyle->pixelMetric(QStyle::PM_FocusFrameHMargin, option, widget) + 1;
+            const int textMargin = proxyStyle->pixelMetric(QStyle::PM_FocusFrameHMargin, option, option->widget) + 1;
             QRect bounds = option->rect;
             switch (option->decorationPosition) {
             case QStyleOptionViewItem::Left:
@@ -768,8 +767,7 @@ static QSizeF viewItemTextLayout(QTextLayout &textLayout, int lineWidth)
 
 void QCommonStylePrivate::viewItemDrawText(QPainter *p, const QStyleOptionViewItemV4 *option, const QRect &rect) const
 {
-    const QWidget *widget = option->widget;
-    const int textMargin = proxyStyle->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, widget) + 1;
+    const int textMargin = proxyStyle->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, option->widget) + 1;
 
     QRect textRect = rect.adjusted(textMargin, 0, -textMargin, 0); // remove width padding
     const bool wrapText = option->features & QStyleOptionViewItemV2::WrapText;
