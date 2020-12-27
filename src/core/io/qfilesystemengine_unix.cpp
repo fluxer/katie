@@ -52,6 +52,8 @@
 
 QT_BEGIN_NAMESPACE
 
+const uint QFileSystemMetaData::nobodyID = (uint) -2;
+
 //static
 QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, QFileSystemMetaData &data)
 {
@@ -216,8 +218,8 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
         data.modificationTime_ = 0;
         data.accessTime_ = 0;
         data.size_ = 0;
-        data.userId_ = (uint) -2;
-        data.groupId_ = (uint) -2;
+        data.userId_ = QFileSystemMetaData::nobodyID;
+        data.groupId_ = QFileSystemMetaData::nobodyID;
     }
 
     if (what & QFileSystemMetaData::UserPermissions) {

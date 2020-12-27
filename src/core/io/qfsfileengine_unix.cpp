@@ -251,7 +251,6 @@ bool QFSFileEngine::isRelativePath() const
 uint QFSFileEngine::ownerId(FileOwner own) const
 {
     Q_D(const QFSFileEngine);
-    static const uint nobodyID = (uint) -2;
 
     if (d->doStat(QFileSystemMetaData::OwnerIds)) {
         if (own == QAbstractFileEngine::OwnerUser)
@@ -259,7 +258,7 @@ uint QFSFileEngine::ownerId(FileOwner own) const
         return d->metaData.groupId();
     }
 
-    return nobodyID;
+    return QFileSystemMetaData::nobodyID;
 }
 
 QString QFSFileEngine::owner(FileOwner own) const

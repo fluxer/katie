@@ -170,6 +170,8 @@ public:
     void fillFromStatBuf(const QT_STATBUF &statBuffer);
     void fillFromDirEnt(const QT_DIRENT &statBuffer);
 
+    static const uint nobodyID;
+
 private:
     friend class QFileSystemEngine;
 
