@@ -66,17 +66,16 @@ public:
         GenericConfigLocation
     };
 
-    static QString writableLocation(StandardLocation type);
-    static QStringList standardLocations(StandardLocation type);
-
     enum LocateOption {
         LocateFile = 0x0,
         LocateDirectory = 0x1
     };
-    Q_DECLARE_FLAGS(LocateOptions, LocateOption);
 
-    static QString locate(StandardLocation type, const QString &fileName, LocateOptions options = LocateFile);
-    static QStringList locateAll(StandardLocation type, const QString &fileName, LocateOptions options = LocateFile);
+    static QString writableLocation(StandardLocation type);
+    static QStringList standardLocations(StandardLocation type);
+
+    static QString locate(StandardLocation type, const QString &fileName, LocateOption options = LocateFile);
+    static QStringList locateAll(StandardLocation type, const QString &fileName, LocateOption options = LocateFile);
     static QString displayName(StandardLocation type);
 
     static QString findExecutable(const QString &executableName, const QStringList &paths = QStringList());
