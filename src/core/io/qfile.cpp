@@ -437,8 +437,7 @@ QFile::setFileName(const QString &name)
     \sa decodeName()
 */
 
-QByteArray
-QFile::encodeName(const QString &fileName)
+QByteArray QFile::encodeName(const QString &fileName)
 {
     return fileName.toLocal8Bit();
 }
@@ -1380,8 +1379,7 @@ bool QFilePrivate::putCharHelper(char c)
 /*!
   \reimp
 */
-qint64
-QFile::writeData(const char *data, qint64 len)
+qint64 QFile::writeData(const char *data, qint64 len)
 {
     Q_D(QFile);
     unsetError();
