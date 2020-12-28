@@ -326,8 +326,7 @@ QString QStandardPaths::displayName(StandardLocation type)
         case DownloadLocation:
             return QCoreApplication::translate("QStandardPaths", "Download");
     }
-   // not reached
-   return QString();
+    Q_UNREACHABLE();
 }
 
 QT_END_NAMESPACE
