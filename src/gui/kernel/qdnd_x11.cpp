@@ -1804,9 +1804,9 @@ bool QX11Data::dndEnable(QWidget* w, bool on)
 {
     w = w->window();
 
-    if (bool(((QExtraWidget*)w)->topData()->dnd) == on)
+    if (((QExtraWidget*)w)->topData()->dnd == on)
         return true; // been there, done that
-    ((QExtraWidget*)w)->topData()->dnd = on ? true : false;
+    ((QExtraWidget*)w)->topData()->dnd = on;
 
     DNDDEBUG << "dndEnable" << w << on;
     if (on) {
