@@ -9,8 +9,8 @@ bin/qscript-katie
 bin/qtconfig-katie
 bin/rcc-katie
 bin/uic-katie
-etc/ld.so.conf.d/katie-i386.conf
-etc/profile.d/katie-i386.sh
+etc/ld.so.conf.d/katie-${MACHINE_ARCH}.conf
+etc/profile.d/katie-${MACHINE_ARCH}.sh
 include/katie/QtCore/QAbstractEventDispatcher
 include/katie/QtCore/QAbstractFileEngine
 include/katie/QtCore/QAbstractFileEngineIterator
