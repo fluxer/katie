@@ -982,7 +982,7 @@ void QSettings::beginGroup(const QString &group)
 {
     Q_D(QSettings);
 
-    if (!d->group.isEmpty()) {
+    if (Q_UNLIKELY(!d->group.isEmpty())) {
         qWarning("QSettings::beginGroup: sub-groups are not supported");
         return;
     }
@@ -999,7 +999,7 @@ void QSettings::beginGroup(const QString &group)
 void QSettings::endGroup()
 {
     Q_D(QSettings);
-    if (d->group.isEmpty()) {
+    if (Q_UNLIKELY(d->group.isEmpty())) {
         qWarning("QSettings::endGroup: No matching beginGroup()");
         return;
     }
