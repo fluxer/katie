@@ -1431,13 +1431,27 @@ QAbstractFileEngine *QFile::fileEngine() const
     returns false, or a read/write operation returns -1, this function can
     be called to find out the reason why the operation failed.
 
-    \sa unsetError()
+    \sa errorString(), unsetError()
 */
 
 QFile::FileError QFile::error() const
 {
     Q_D(const QFile);
     return d->error;
+}
+
+/*!
+    \since 4.9.1
+
+    Returns the file error string.
+
+    \sa error(), unsetError()
+*/
+
+QString QFile::errorString() const
+{
+    Q_D(const QFile);
+    return d->errorString;
 }
 
 /*!
