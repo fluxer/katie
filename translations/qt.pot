@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-27 06:30+0000\n"
+"POT-Creation-Date: 2020-12-29 18:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,104 +67,104 @@ msgstr ""
 msgid "The plugin was not loaded."
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:311
+#: src/core/io/qstandardpaths.cpp:295
 msgctxt "QStandardPaths"
 msgid "Desktop"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:313
+#: src/core/io/qstandardpaths.cpp:297
 msgctxt "QStandardPaths"
 msgid "Documents"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:315
+#: src/core/io/qstandardpaths.cpp:299
 msgctxt "QStandardPaths"
 msgid "Fonts"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:317
+#: src/core/io/qstandardpaths.cpp:301
 msgctxt "QStandardPaths"
 msgid "Applications"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:319
+#: src/core/io/qstandardpaths.cpp:303
 msgctxt "QStandardPaths"
 msgid "Music"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:321
+#: src/core/io/qstandardpaths.cpp:305
 msgctxt "QStandardPaths"
 msgid "Movies"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:323
+#: src/core/io/qstandardpaths.cpp:307
 msgctxt "QStandardPaths"
 msgid "Pictures"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:325
+#: src/core/io/qstandardpaths.cpp:309
 msgctxt "QStandardPaths"
 msgid "Temporary Directory"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:327
+#: src/core/io/qstandardpaths.cpp:311
 msgctxt "QStandardPaths"
 msgid "Home"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:329
+#: src/core/io/qstandardpaths.cpp:313
 msgctxt "QStandardPaths"
 msgid "Application Data"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:331
+#: src/core/io/qstandardpaths.cpp:315
 msgctxt "QStandardPaths"
 msgid "Cache"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:333
+#: src/core/io/qstandardpaths.cpp:317
 msgctxt "QStandardPaths"
 msgid "Shared Data"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:335
+#: src/core/io/qstandardpaths.cpp:319
 msgctxt "QStandardPaths"
 msgid "Runtime"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:337
+#: src/core/io/qstandardpaths.cpp:321
 msgctxt "QStandardPaths"
 msgid "Configuration"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:339
+#: src/core/io/qstandardpaths.cpp:323
 msgctxt "QStandardPaths"
 msgid "Shared Configuration"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:341
+#: src/core/io/qstandardpaths.cpp:325
 msgctxt "QStandardPaths"
 msgid "Shared Cache"
 msgstr ""
 
-#: src/core/io/qstandardpaths.cpp:343
+#: src/core/io/qstandardpaths.cpp:327
 msgctxt "QStandardPaths"
 msgid "Download"
 msgstr ""
 
-#: src/core/io/qfile.cpp:598
+#: src/core/io/qfile.cpp:597
 msgid "Destination file exists"
 msgstr ""
 
-#: src/core/io/qfile.cpp:613
+#: src/core/io/qfile.cpp:612
 msgid "Will not rename sequential file using block copy"
 msgstr ""
 
-#: src/core/io/qfile.cpp:636
+#: src/core/io/qfile.cpp:635
 msgid "Cannot remove source file"
 msgstr ""
 
-#: src/core/io/qfile.cpp:1035
+#: src/core/io/qfile.cpp:1034
 msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
@@ -432,7 +432,7 @@ msgstr ""
 
 #: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:95
 msgctxt "QDeclarativeAnimatedImage"
-msgid "Qt was built without support for QMovie"
+msgid "Katie was built without support for QMovie"
 msgstr ""
 
 #: src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp:167
@@ -1268,7 +1268,7 @@ msgstr ""
 #: src/declarative/util/qdeclarativeutilmodule.cpp:110
 #: src/declarative/util/qdeclarativeutilmodule.cpp:112
 msgctxt "QDeclarativeXmlListModel"
-msgid "Qt was built without support for xmlpatterns"
+msgid "Katie does not support xmlpatterns"
 msgstr ""
 
 #: src/gui/accessible/qaccessibleobject.cpp:365

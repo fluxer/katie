@@ -92,7 +92,7 @@ void QDeclarativeItemModule::defineModule()
     QDeclarativePrivate::qmlregister(QDeclarativePrivate::AutoParentRegistration, &autoparent);
 #ifdef QT_NO_MOVIE
     qmlRegisterTypeNotAvailable("QtQuick",1,0,"AnimatedImage",
-        qApp->translate("QDeclarativeAnimatedImage","Qt was built without support for QMovie"));
+        qApp->translate("QDeclarativeAnimatedImage","Katie was built without support for QMovie"));
 #else
     qmlRegisterType<QDeclarativeAnimatedImage>("QtQuick",1,0,"AnimatedImage");
 #endif
