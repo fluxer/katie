@@ -166,13 +166,13 @@ static void construct(QVariant::Private *x, const void *copy)
         break;
 #endif
     case QVariant::Int:
-        x->data.ll = copy ? *static_cast<const int *>(copy) : 0;
+        x->data.i = copy ? *static_cast<const int *>(copy) : 0;
         break;
     case QVariant::UInt:
-        x->data.ull = copy ? *static_cast<const uint *>(copy) : 0u;
+        x->data.u = copy ? *static_cast<const uint *>(copy) : 0u;
         break;
     case QVariant::Bool:
-        x->data.ull = copy ? *static_cast<const bool *>(copy) : false;
+        x->data.b = copy ? *static_cast<const bool *>(copy) : false;
         break;
     case QVariant::Double:
         x->data.d = copy ? *static_cast<const double*>(copy) : 0.0;
@@ -459,15 +459,15 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
         return *v_cast<QRegExp>(a) == *v_cast<QRegExp>(b);
 #endif
     case QVariant::Int:
-        return int(a->data.ll) == int(b->data.ll);
+        return a->data.i == b->data.i;
+    case QVariant::UInt:
+        return a->data.u == b->data.u;
     case QVariant::LongLong:
         return a->data.ll == b->data.ll;
-    case QVariant::UInt:
-        return uint(a->data.ull) == uint(b->data.ull);
     case QVariant::ULongLong:
         return a->data.ull == b->data.ull;
     case QVariant::Bool:
-        return bool(a->data.ull) == bool(b->data.ull);
+        return a->data.b == b->data.b;
     case QVariant::Double:
         return a->data.d == b->data.d;
     case QVariant::Float:
@@ -540,7 +540,7 @@ static qlonglong qMetaTypeNumber(const QVariant::Private *d)
 {
     switch (d->type) {
     case QMetaType::Int:
-        return qlonglong(int(d->data.ll));
+        return d->data.i;
     case QMetaType::LongLong:
         return d->data.ll;
     case QMetaType::Char:
@@ -566,7 +566,7 @@ static qulonglong qMetaTypeUNumber(const QVariant::Private *d)
 {
     switch (d->type) {
     case QVariant::UInt:
-        return qulonglong(uint(d->data.ull));
+        return d->data.u;
     case QVariant::ULongLong:
         return d->data.ull;
     case QMetaType::UChar:
@@ -592,7 +592,7 @@ static qlonglong qConvertToNumber(const QVariant::Private *d, bool *ok)
     case QVariant::ByteArray:
         return v_cast<QByteArray>(d)->toLongLong(ok);
     case QVariant::Bool:
-        return qlonglong(d->data.ull);
+        return qlonglong(d->data.b);
 #ifndef QT_BOOTSTRAPPED
     case QVariant::JsonValue:
         if (!v_cast<QJsonValue>(d)->isDouble())
@@ -631,7 +631,7 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
     case QVariant::ByteArray:
         return v_cast<QByteArray>(d)->toULongLong(ok);
     case QVariant::Bool:
-        return qulonglong(bool(d->data.ull));
+        return qulonglong(d->data.b);
 #ifndef QT_BOOTSTRAPPED
     case QVariant::JsonValue:
         if (!v_cast<QJsonValue>(d)->isDouble())
@@ -730,7 +730,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
             return true;
 #endif
         case QVariant::Bool:
-            *str = QLatin1String(bool(d->data.ull) ? "true" : "false");
+            *str = QLatin1String(d->data.b ? "true" : "false");
             return true;
         case QVariant::ByteArray:
             *str = QString::fromAscii(v_cast<QByteArray>(d)->constData());
@@ -905,7 +905,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
             *static_cast<QByteArray *>(result) = QByteArray::number(qMetaTypeUNumber(d));
             return true;
         case QVariant::Bool:
-            *static_cast<QByteArray *>(result) = QByteArray(bool(d->data.ull) ? "true" : "false");
+            *static_cast<QByteArray *>(result) = QByteArray(d->data.b ? "true" : "false");
             return true;
         default:
             return false;
@@ -989,7 +989,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
             *static_cast<double *>(result) = v_cast<QByteArray>(d)->toDouble(ok);
             return *ok;
         case QVariant::Bool:
-            *static_cast<double *>(result) = double(bool(d->data.ull));
+            *static_cast<double *>(result) = double(d->data.b);
             return true;
         case QVariant::Float:
             *static_cast<double *>(result) = double(d->data.f);
@@ -1029,7 +1029,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
             *static_cast<float *>(result) = v_cast<QByteArray>(d)->toFloat(ok);
             return *ok;
         case QVariant::Bool:
-            *static_cast<float *>(result) = float(bool(d->data.ull));
+            *static_cast<float *>(result) = float(d->data.b);
             return true;
         case QVariant::Double:
             *static_cast<float *>(result) = float(d->data.d);
@@ -1799,15 +1799,15 @@ QVariant::QVariant(int typeOrUserType, const void *copy, uint flags)
 }
 
 QVariant::QVariant(int val)
-{ d.is_null = false; d.type = Int; d.data.ll = val; }
+{ d.is_null = false; d.type = Int; d.data.i = val; }
 QVariant::QVariant(uint val)
-{ d.is_null = false; d.type = UInt; d.data.ull = val; }
+{ d.is_null = false; d.type = UInt; d.data.u = val; }
 QVariant::QVariant(qlonglong val)
 { d.is_null = false; d.type = LongLong; d.data.ll = val; }
 QVariant::QVariant(qulonglong val)
 { d.is_null = false; d.type = ULongLong; d.data.ull = val; }
 QVariant::QVariant(bool val)
-{ d.is_null = false; d.type = Bool; d.data.ull = val; }
+{ d.is_null = false; d.type = Bool; d.data.b = val; }
 QVariant::QVariant(double val)
 { d.is_null = false; d.type = Double; d.data.d = val; }
 QVariant::QVariant(float val)
@@ -2546,7 +2546,7 @@ inline T qNumVariantToHelper(const QVariant::Private &d,
 */
 int QVariant::toInt(bool *ok) const
 {
-    return qNumVariantToHelper<int>(d, handler, ok, int(d.data.ll));
+    return qNumVariantToHelper<int>(d, handler, ok, d.data.i);
 }
 
 /*!
@@ -2566,7 +2566,7 @@ int QVariant::toInt(bool *ok) const
 */
 uint QVariant::toUInt(bool *ok) const
 {
-    return qNumVariantToHelper<uint>(d, handler, ok, uint(d.data.ull));
+    return qNumVariantToHelper<uint>(d, handler, ok, d.data.u);
 }
 
 /*!
@@ -2614,7 +2614,7 @@ qulonglong QVariant::toULongLong(bool *ok) const
 bool QVariant::toBool() const
 {
     if (d.type == Bool)
-        return bool(d.data.ull);
+        return d.data.b;
 
     bool res = false;
     handler->convert(&d, Bool, &res, 0);
