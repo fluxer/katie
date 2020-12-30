@@ -1021,7 +1021,7 @@ QImage QImageReader::read()
 */
 bool QImageReader::read(QImage *image)
 {
-    if (!image) {
+    if (Q_UNLIKELY(!image)) {
         qWarning("QImageReader::read: cannot read into null pointer");
         return false;
     }
