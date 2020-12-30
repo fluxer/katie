@@ -206,8 +206,8 @@ static const struct CursorTblData {
     { XC_bottom_right_corner, "size_fdiag", "nesw-resize" }, // Qt::SizeFDiagCursor
     { XC_fleur, "size_all", Q_NULLPTR }, // Qt::SizeAllCursor
     { -1, "blank", Q_NULLPTR }, // Qt::BlankCursor
-    { XC_sb_v_double_arrow, "split_v", "col-resize" }, // Qt::SplitVCursor
-    { XC_sb_h_double_arrow, "split_h", "row-resize" }, // Qt::SplitHCursor
+    { XC_sb_v_double_arrow, "split_v", "row-resize" }, // Qt::SplitVCursor
+    { XC_sb_h_double_arrow, "split_h", "col-resize" }, // Qt::SplitHCursor
     { XC_hand2, "pointing_hand", "pointer" }, // Qt::PointingHandCursor
     { XC_circle, "forbidden", "not-allowed" }, // Qt::ForbiddenCursor
     { XC_question_arrow, "whats_this", "help" }, // Qt::WhatsThisCursor
