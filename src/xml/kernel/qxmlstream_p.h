@@ -952,7 +952,6 @@ public:
 
     QString resolveUndeclaredEntity(const QString &name);
     void parseEntity(const QString &value);
-    QXmlStreamReaderPrivate *entityParser;
 
     bool scanAfterLangleBang();
     bool scanPublicOrSystem();
