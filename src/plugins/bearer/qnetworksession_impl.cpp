@@ -354,7 +354,7 @@ void QNetworkSessionPrivateImpl::networkConfigurationsChanged()
         updateStateFromActiveConfig();
 
     if (!engine) {
-        startTime == Q_UINT64_C(0);
+        startTime = Q_UINT64_C(0);
     } else {
         startTime = engine->startTime(activeConfig.identifier());
     }
