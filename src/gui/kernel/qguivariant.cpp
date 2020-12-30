@@ -494,7 +494,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t,
             *seq = QKeySequence(*v_cast<QString>(d));
             return true;
         case QVariant::Int:
-            *seq = QKeySequence(d->data.i);
+            *seq = QKeySequence(int(d->data.ll));
             return true;
         default:
             break;
