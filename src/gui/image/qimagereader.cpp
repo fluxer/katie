@@ -452,13 +452,14 @@ public:
     \internal
 */
 QImageReaderPrivate::QImageReaderPrivate()
-    : autoDetectImageFormat(true), ignoresFormatAndExtension(false)
+    : autoDetectImageFormat(true),
+    ignoresFormatAndExtension(false),
+    device(Q_NULLPTR),
+    deleteDevice(false),
+    handler(Q_NULLPTR),
+    quality(-1),
+    imageReaderError(QImageReader::UnknownError)
 {
-    device = 0;
-    deleteDevice = false;
-    handler = 0;
-    quality = -1;
-    imageReaderError = QImageReader::UnknownError;
 }
 
 /*!
