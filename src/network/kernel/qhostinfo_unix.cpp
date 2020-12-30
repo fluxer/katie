@@ -278,8 +278,12 @@ QString QHostInfo::localDomainName()
     static long size_max = sysconf(_SC_HOST_NAME_MAX);
     if (size_max == -1)
         size_max = _POSIX_HOST_NAME_MAX;
-    char getdomainbuff[size_max];
-    if (Q_LIKELY(::getdomainname(getdomainbuff, size_max) == 0)) {
+    QByteArray getdomainbuff(size_max, Qt::Uninitialized);
+    if (Q_LIKELY(::getdomainname(getdomainbuff.data(), getdomainbuff.size()) == 0)) {
+        if (getdomainbuff == "(none)") {
+            // not set
+            return QString();
+        }
         return QUrl::fromAce(getdomainbuff);
     }
     return QString();
