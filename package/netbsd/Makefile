@@ -20,6 +20,8 @@ CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 USE_LANGUAGES = c c++11
 USE_TOOLS = pkg-config msgfmt
 
+.include "options.mk"
+
 .include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../archivers/zstd/buildlink3.mk"
 .include "../../textproc/icu/buildlink3.mk"
