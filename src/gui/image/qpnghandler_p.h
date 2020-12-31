@@ -47,8 +47,6 @@
 
 #include "QtGui/qimageiohandler.h"
 
-#ifndef QT_NO_IMAGEFORMAT_PNG
-
 QT_BEGIN_NAMESPACE
 
 class QPngHandlerPrivate;
@@ -76,5 +74,4 @@ private:
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_IMAGEFORMAT_PNG
 #endif // QPNGHANDLER_P_H

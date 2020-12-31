@@ -57,27 +57,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#if !defined(QT_NO_IMAGEFORMAT_PNG)
-#  define QIMAGE_STREAM_FORMAT "png"
-#elif !defined(QT_NO_IMAGEFORMAT_JPEG)
-#  define QIMAGE_STREAM_FORMAT "jpeg"
-#elif !defined(QT_NO_IMAGEFORMAT_BMP)
-#  define QIMAGE_STREAM_FORMAT "bmp"
-#elif !defined(QT_NO_IMAGEFORMAT_TIFF)
-#  define QIMAGE_STREAM_FORMAT "tiff"
-#elif !defined(QT_NO_IMAGEFORMAT_GIF)
-#  define QIMAGE_STREAM_FORMAT "gif"
-#elif !defined(QT_NO_IMAGEFORMAT_TGA)
-#  define QIMAGE_STREAM_FORMAT "tga"
-#elif !defined(QT_NO_IMAGEFORMAT_PPM)
-#  define QIMAGE_STREAM_FORMAT "ppm"
-#elif !defined(QT_NO_IMAGEFORMAT_XBM)
-#  define QIMAGE_STREAM_FORMAT "xbm"
-#elif !defined(QT_NO_IMAGEFORMAT_XPM)
-#  define QIMAGE_STREAM_FORMAT "xpm"
-#else
-#  error No image format available for streaming
-#endif
+#define QIMAGE_STREAM_FORMAT "png"
 
 #define QIMAGE_SANITYCHECK_MEMORY(image) \
     if (Q_UNLIKELY((image).isNull())) { \

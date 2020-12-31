@@ -33,7 +33,6 @@
 
 #include "qpnghandler_p.h"
 
-#ifndef QT_NO_IMAGEFORMAT_PNG
 #include "qcoreapplication.h"
 #include "qiodevice.h"
 #include "qimage.h"
@@ -757,5 +756,3 @@ QByteArray QPngHandler::name() const
 }
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_IMAGEFORMAT_PNG

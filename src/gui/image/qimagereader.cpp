@@ -131,17 +131,15 @@
 #include "qppmhandler_p.h"
 #include "qxbmhandler_p.h"
 #include "qxpmhandler_p.h"
-#ifndef QT_NO_IMAGEFORMAT_PNG
 #include "qpnghandler_p.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
 enum qBuiltInFormatType {
-#ifndef QT_NO_IMAGEFORMAT_PNG
     qPngFormat = 0,
-#endif
+#ifndef QT_NO_IMAGEFORMAT_BMP
     qBmpFormat = 1,
+#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     qPpmFormat = 2,
     qPgmFormat = 3,
@@ -159,10 +157,10 @@ static const struct ImageFormatTblData {
     const qBuiltInFormatType format;
     const char *extension;
 } ImageFormatTbl[] = {
-#ifndef QT_NO_IMAGEFORMAT_PNG
     { qPngFormat, "png" },
-#endif
+#ifndef QT_NO_IMAGEFORMAT_BMP
     { qBmpFormat, "bmp" },
+#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     { qPpmFormat, "ppm" },
     { qPgmFormat, "pgm" },
@@ -283,11 +281,8 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     // if we don't have a handler yet, check if we have built-in support for
     // the format
     if (!handler && !testFormat.isEmpty()) {
-        if (false) {
-#ifndef QT_NO_IMAGEFORMAT_PNG
-        } else if (testFormat == "png") {
+        if (testFormat == "png") {
             handler = new QPngHandler;
-#endif
 #ifndef QT_NO_IMAGEFORMAT_BMP
         } else if (testFormat == "bmp") {
             handler = new QBmpHandler;
@@ -354,13 +349,11 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         for (qint16 i = currentFormat; device && i < ImageFormatTblSize; i++) {
             const qint64 pos = device->pos();
             switch (ImageFormatTbl[i].format) {
-#ifndef QT_NO_IMAGEFORMAT_PNG
                 case qPngFormat: {
                     if (QPngHandler::canRead(device))
                         handler = new QPngHandler;
                     break;
                 }
-#endif
 #ifndef QT_NO_IMAGEFORMAT_BMP
                 case qBmpFormat: {
                     if (QBmpHandler::canRead(device))

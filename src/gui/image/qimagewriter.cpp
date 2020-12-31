@@ -104,9 +104,7 @@
 #include "qppmhandler_p.h"
 #include "qxbmhandler_p.h"
 #include "qxpmhandler_p.h"
-#ifndef QT_NO_IMAGEFORMAT_PNG
 #include "qpnghandler_p.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -153,11 +151,8 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 
     // check if any built-in handlers can write the image
     if (!handler && !testFormat.isEmpty()) {
-        if (false) {
-#ifndef QT_NO_IMAGEFORMAT_PNG
-        } else if (testFormat == "png") {
+        if (testFormat == "png") {
             handler = new QPngHandler;
-#endif
 #ifndef QT_NO_IMAGEFORMAT_BMP
         } else if (testFormat == "bmp") {
             handler = new QBmpHandler;
@@ -579,7 +574,10 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
 QList<QByteArray> QImageWriter::supportedImageFormats()
 {
     QList<QByteArray> formats;
+    formats << "png";
+#ifndef QT_NO_IMAGEFORMAT_BMP
     formats << "bmp";
+#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     formats << "ppm";
 #endif
@@ -588,9 +586,6 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
     formats << "xpm";
-#endif
-#ifndef QT_NO_IMAGEFORMAT_PNG
-    formats << "png";
 #endif
 
 #ifndef QT_NO_LIBRARY
