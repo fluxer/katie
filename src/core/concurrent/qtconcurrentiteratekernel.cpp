@@ -44,7 +44,6 @@
 QT_BEGIN_NAMESPACE
 
 enum {
-    TargetRatio = 100,
     MedianSize = 7
 };
 
@@ -113,7 +112,7 @@ void BlockSizeManager::timeAfterUser()
     if (controlPartElapsed.isMedianValid() == false)
         return;
 
-    if (controlPartElapsed.median() * TargetRatio < userPartElapsed.median())
+    if (controlPartElapsed.median() * 100.0 < userPartElapsed.median())
         return;
 
     m_blockSize = qMin(m_blockSize * 2,  maxBlockSize);
