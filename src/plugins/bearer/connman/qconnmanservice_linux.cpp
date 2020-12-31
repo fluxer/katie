@@ -88,7 +88,7 @@ QConnmanManagerInterface::~QConnmanManagerInterface()
 
 void QConnmanManagerInterface::connectNotify(const char *signal)
 {
-    if (signal == SIGNAL(propertyChanged(QString,QDBusVariant))) {
+    if (strcmp(signal + 1, "propertyChanged(QString,QDBusVariant)") == 0) {
         if(!connection().connect(QLatin1String(CONNMAN_SERVICE),
                                QLatin1String(CONNMAN_MANAGER_PATH),
                                QLatin1String(CONNMAN_MANAGER_INTERFACE),
@@ -98,7 +98,7 @@ void QConnmanManagerInterface::connectNotify(const char *signal)
         }
     }
 
-    if (signal == SIGNAL(stateChanged(QString))) {
+    if (strcmp(signal + 1, "stateChanged(QString)") == 0) {
         if (!connection().connect(QLatin1String(CONNMAN_SERVICE),
                                     QLatin1String(CONNMAN_MANAGER_PATH),
                                     QLatin1String(CONNMAN_MANAGER_INTERFACE),
@@ -108,9 +108,8 @@ void QConnmanManagerInterface::connectNotify(const char *signal)
 
         }
     }
-    if (signal == SIGNAL(propertyChangedContext(QString,QString,QDBusVariant))) {
-        QConnmanDBusHelper *helper;
-        helper = new QConnmanDBusHelper(this);
+    if (strcmp(signal + 1, "propertyChangedContext(QString,QString,QDBusVariant)") == 0) {
+        QConnmanDBusHelper *helper = new QConnmanDBusHelper(this);
 
         connmanConnection.connect(QLatin1String(CONNMAN_SERVICE),
                                  QLatin1String(CONNMAN_MANAGER_PATH),
@@ -121,13 +120,6 @@ void QConnmanManagerInterface::connectNotify(const char *signal)
 
         QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
                 this,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)), Qt::UniqueConnection);
-    }
-}
-
-void QConnmanManagerInterface::disconnectNotify(const char *signal)
-{
-    if (signal == SIGNAL(propertyChanged(QString,QVariant))) {
-
     }
 }
 
@@ -371,19 +363,12 @@ QConnmanProfileInterface::~QConnmanProfileInterface()
 
 void QConnmanProfileInterface::connectNotify(const char *signal)
 {
-    if (signal == SIGNAL(propertyChanged(QString,QDBusVariant))) {
+    if (strcmp(signal + 1, "propertyChanged(QString,QDBusVariant)") == 0) {
         connmanConnection.connect(QLatin1String(CONNMAN_SERVICE),
                                   this->path(),
                                   QLatin1String(CONNMAN_PROFILE_INTERFACE),
                                   QLatin1String("PropertyChanged"),
                                   this,SIGNAL(propertyChanged(QString,QDBusVariant)));
-    }
-}
-
-void QConnmanProfileInterface::disconnectNotify(const char *signal)
-{
-    if (signal == SIGNAL(propertyChanged(QString,QVariant))) {
-
     }
 }
 
@@ -439,14 +424,14 @@ QConnmanServiceInterface::~QConnmanServiceInterface()
 
 void QConnmanServiceInterface::connectNotify(const char *signal)
 {
-    if (signal == SIGNAL(propertyChanged(QString,QDBusVariant))) {
+    if (strcmp(signal + 1, "propertyChanged(QString,QDBusVariant)") == 0) {
         connmanConnection.connect(QLatin1String(CONNMAN_SERVICE),
                                   this->path(),
                                   QLatin1String(CONNMAN_SERVICE_INTERFACE),
                                   QLatin1String("PropertyChanged"),
                                   this,SIGNAL(propertyChanged(QString,QDBusVariant)));
     }
-    if (signal == SIGNAL(propertyChangedContext(QString,QString,QDBusVariant))) {
+    if (strcmp(signal + 1, "propertyChangedContext(QString,QString,QDBusVariant)") == 0) {
         QConnmanDBusHelper *helper;
         helper = new QConnmanDBusHelper(this);
 
@@ -458,13 +443,6 @@ void QConnmanServiceInterface::connectNotify(const char *signal)
 
         QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
                 this,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)), Qt::UniqueConnection);
-    }
-}
-
-void QConnmanServiceInterface::disconnectNotify(const char *signal)
-{
-    if (signal == SIGNAL(propertyChanged(QString,QVariant))) {
-
     }
 }
 
@@ -766,14 +744,14 @@ QConnmanTechnologyInterface::~QConnmanTechnologyInterface()
 
 void QConnmanTechnologyInterface::connectNotify(const char *signal)
 {
-    if (signal == SIGNAL(propertyChanged(QString,QDBusVariant))) {
+    if (strcmp(signal + 1, "propertyChanged(QString,QDBusVariant)") == 0) {
         connmanConnection.connect(QLatin1String(CONNMAN_SERVICE),
                                   this->path(),
                                   QLatin1String(CONNMAN_TECHNOLOGY_INTERFACE),
                                   QLatin1String("PropertyChanged"),
                                   this,SIGNAL(propertyChanged(QString,QDBusVariant)));
     }
-    if (signal == SIGNAL(propertyChangedContext(QString,QString,QDBusVariant))) {
+    if (strcmp(signal + 1, "propertyChangedContext(QString,QString,QDBusVariant)") == 0) {
         QConnmanDBusHelper *helper;
         helper = new QConnmanDBusHelper(this);
 
@@ -785,13 +763,6 @@ void QConnmanTechnologyInterface::connectNotify(const char *signal)
 
         QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
                 this,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)), Qt::UniqueConnection);
-    }
-}
-
-void QConnmanTechnologyInterface::disconnectNotify(const char *signal)
-{
-    if (signal == SIGNAL(propertyChanged(QString,QVariant))) {
-
     }
 }
 
@@ -846,19 +817,12 @@ QConnmanAgentInterface::~QConnmanAgentInterface()
 
 void QConnmanAgentInterface::connectNotify(const char *signal)
 {
-    if (signal == SIGNAL(propertyChanged(QString,QDBusVariant))) {
+    if (strcmp(signal + 1, "propertyChanged(QString,QDBusVariant)") == 0) {
 //        connmanConnection.connect(QLatin1String(CONNMAN_SERVICE),
 //                                  this->path(),
 //                                  QLatin1String(CONNMAN_NETWORK_INTERFACE),
 //                                  QLatin1String("PropertyChanged"),
 //                                  this,SIGNAL(propertyChanged(QString,QVariant&)));
-    }
-}
-
-void QConnmanAgentInterface::disconnectNotify(const char *signal)
-{
-    if (signal == SIGNAL(propertyChanged(QString,QDBusVariant))) {
-
     }
 }
 

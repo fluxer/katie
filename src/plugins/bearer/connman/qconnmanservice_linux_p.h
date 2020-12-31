@@ -150,7 +150,6 @@ Q_SIGNALS:
 
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 };
 
@@ -174,7 +173,6 @@ Q_SIGNALS:
 
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 };
 
@@ -236,7 +234,6 @@ Q_SIGNALS:
 
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 };
 
@@ -260,7 +257,6 @@ Q_SIGNALS:
     void propertyChangedContext(const QString &,const QString &,const QDBusVariant &);
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 
 };
@@ -280,7 +276,6 @@ public:
     void cancel();
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
 };
 
 class QConnmanCounterInterfacePrivate;

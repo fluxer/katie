@@ -964,7 +964,6 @@
 
     int   n;         /* index of contour in outline     */
     int   first;     /* index of first point in contour */
-    int   error;
     char  tag;       /* current point's state           */
 
     first = 0;

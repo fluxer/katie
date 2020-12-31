@@ -1001,6 +1001,8 @@ QSqlIndex QPSQLDriver::primaryIndex(const QString& tablename) const
     case QPSQLDriver::Version92:
     case QPSQLDriver::Version93:
     case QPSQLDriver::Version94:
+    case QPSQLDriver::Version95:
+    case QPSQLDriver::Version96:
     case QPSQLDriver::Version10:
     case QPSQLDriver::Version11:
     case QPSQLDriver::Version12:
@@ -1068,6 +1070,8 @@ QSqlRecord QPSQLDriver::record(const QString& tablename) const
     case QPSQLDriver::Version92:
     case QPSQLDriver::Version93:
     case QPSQLDriver::Version94:
+    case QPSQLDriver::Version95:
+    case QPSQLDriver::Version96:
     case QPSQLDriver::Version10:
     case QPSQLDriver::Version11:
     case QPSQLDriver::Version12:
