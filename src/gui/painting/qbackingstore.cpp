@@ -987,12 +987,6 @@ void QWidgetBackingStore::sync()
 
     BeginPaintInfo beginPaintInfo;
     beginPaint(toClean, windowSurface, &beginPaintInfo);
-    if (beginPaintInfo.nothingToPaint) {
-        for (int i = 0; i < opaqueNonOverlappedWidgets.size(); ++i)
-            resetWidget(opaqueNonOverlappedWidgets[i]);
-        dirty = QRegion();
-        return;
-    }
 
     // Must do this before sending any paint events because
     // the size may change in the paint event.
