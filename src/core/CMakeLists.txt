@@ -1,7 +1,4 @@
-add_definitions(
-    # that conditional is probably going to become default in the future
-    -DQT_POSIX_IPC
-)
+# add_definitions()
 set(EXTRA_CORE_LIBS
     ${ZLIB_LIBRARIES}
     ${ICU_LIBRARIES}
@@ -421,18 +418,14 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
 )
 
-if(KATIE_PLATFORM MATCHES "(linux|hurd)")
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        dl
-        rt
-    )
-elseif(KATIE_PLATFORM STREQUAL "netbsd")
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        rt
-    )
-endif()
+# on some platforms these are not needed as the functionality may be part of
+# standard C library
+foreach(lib dl rt)
+    find_path(libpath NAMES ${lib})
+    if(libpath)
+        set(EXTRA_CORE_LIBS ${EXTRA_CORE_LIBS} ${lib})
+    endif()
+endforeach()
 
 if(WITH_INTL AND INTL_FOUND)
     set(EXTRA_CORE_LIBS

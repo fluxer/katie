@@ -331,6 +331,7 @@ check_type_size(size_t QT_POINTER_SIZE)
 
 # used in components, tests and JavaScriptCore
 katie_check_header("cxxabi.h")
+katie_check_header("semaphore.h")
 katie_check_function(getpwnam_r "pwd.h")
 katie_check_function(getpwuid_r "pwd.h")
 katie_check_function(getgrgid_r "grp.h")
