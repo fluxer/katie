@@ -272,7 +272,7 @@ bool QSystemSemaphore::release(int n)
 {
     if (n == 0)
         return true;
-    if (n < 0) {
+    if (Q_UNLIKELY(n < 0)) {
         qWarning("QSystemSemaphore::release: n is negative.");
         return false;
     }
