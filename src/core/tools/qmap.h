@@ -654,7 +654,7 @@ Q_OUTOFLINE_TEMPLATE typename QMap<Key, T>::iterator QMap<Key, T>::erase(iterato
     while (next != e) {
         cur = next;
         next = cur->forward[0];
-        if (cur == it) {
+        if (iterator(cur) == it) {
             concrete(cur)->key.~Key();
             concrete(cur)->value.~T();
             d->node_delete(update, payload(), cur);
