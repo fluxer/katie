@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-29 18:04+0200\n"
+"POT-Creation-Date: 2020-12-31 23:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1930,6 +1930,31 @@ msgstr ""
 
 #: src/gui/dialogs/qerrormessage.cpp:355
 msgid "&OK"
+msgstr ""
+
+#: src/gui/image/qimagereader.cpp:476
+msgctxt "QImageReader"
+msgid "Invalid device"
+msgstr ""
+
+#: src/gui/image/qimagereader.cpp:503
+msgctxt "QImageReader"
+msgid "File not found"
+msgstr ""
+
+#: src/gui/image/qimagereader.cpp:512
+msgctxt "QImageReader"
+msgid "Unsupported image format"
+msgstr ""
+
+#: src/gui/image/qimagereader.cpp:1044
+msgctxt "QImageReader"
+msgid "Unable to read image data"
+msgstr ""
+
+#: src/gui/image/qimagereader.cpp:1235
+msgctxt "QImageReader"
+msgid "Unknown error"
 msgstr ""
 
 #: src/gui/widgets/qtabbar.cpp:2191
@@ -4277,11 +4302,11 @@ msgstr ""
 msgid "Could not rollback transaction"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1247
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1251
 msgid "Unable to subscribe"
 msgstr ""
 
-#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1279
+#: src/plugins/sqldrivers/psql/qsql_psql.cpp:1283
 msgid "Unable to unsubscribe"
 msgstr ""
 
@@ -4966,140 +4991,140 @@ msgstr ""
 msgid "Recursive entity detected."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1057 src/xml/kernel/qxmlstream.cpp:1400
+#: src/xml/kernel/qxmlstream_p.h:1056 src/xml/kernel/qxmlstream.cpp:1393
 msgid "Encountered incorrectly encoded content."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1269
+#: src/xml/kernel/qxmlstream_p.h:1268
 msgid "Start tag expected."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1460
+#: src/xml/kernel/qxmlstream_p.h:1459
 msgid "NDATA in parameter entity declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1491
+#: src/xml/kernel/qxmlstream_p.h:1490
 msgid "XML declaration not at start of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1494
+#: src/xml/kernel/qxmlstream_p.h:1493
 msgid "%1 is an invalid processing instruction name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1505
+#: src/xml/kernel/qxmlstream_p.h:1504
 msgid "Invalid processing instruction name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1619
+#: src/xml/kernel/qxmlstream_p.h:1618
 msgid "%1 is an invalid PUBLIC identifier."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1669 src/xml/kernel/qxmlstream_p.h:1722
-#: src/xml/kernel/qxmlstream.cpp:1463 src/xml/kernel/qxmlstream.cpp:1475
+#: src/xml/kernel/qxmlstream_p.h:1668 src/xml/kernel/qxmlstream_p.h:1721
+#: src/xml/kernel/qxmlstream.cpp:1456 src/xml/kernel/qxmlstream.cpp:1468
 msgid "Illegal namespace declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1737
+#: src/xml/kernel/qxmlstream_p.h:1736
 msgid "Invalid XML name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1748 src/xml/kernel/qxmlstream.cpp:583
+#: src/xml/kernel/qxmlstream_p.h:1747 src/xml/kernel/qxmlstream.cpp:583
 msgid "Extra content at end of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1760
+#: src/xml/kernel/qxmlstream_p.h:1759
 msgid "Opening and ending tag mismatch."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1765 src/xml/kernel/qxmlstream_p.h:1826
-#: src/xml/kernel/qxmlstream_p.h:1866
+#: src/xml/kernel/qxmlstream_p.h:1764 src/xml/kernel/qxmlstream_p.h:1825
+#: src/xml/kernel/qxmlstream_p.h:1865
 msgid "Entity '%1' not declared."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1778
+#: src/xml/kernel/qxmlstream_p.h:1777
 msgid "Reference to unparsed entity '%1'."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1840
+#: src/xml/kernel/qxmlstream_p.h:1839
 msgid "Reference to external entity '%1' in attribute value."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream_p.h:1880
+#: src/xml/kernel/qxmlstream_p.h:1879
 msgid "Invalid character reference."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:822
+#: src/xml/kernel/qxmlstream.cpp:816
 msgid "Invalid entity value."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:931
+#: src/xml/kernel/qxmlstream.cpp:924
 msgid "Invalid XML character."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1190
+#: src/xml/kernel/qxmlstream.cpp:1183
 msgid "Sequence ']]>' not allowed in content."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1430
+#: src/xml/kernel/qxmlstream.cpp:1423
 msgid "Namespace prefix '%1' not declared"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1507
+#: src/xml/kernel/qxmlstream.cpp:1500
 msgid "Attribute redefined."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1621
+#: src/xml/kernel/qxmlstream.cpp:1614
 msgid "Unexpected character '%1' in public id literal."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1649
+#: src/xml/kernel/qxmlstream.cpp:1642
 msgid "Invalid XML version string."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1651
+#: src/xml/kernel/qxmlstream.cpp:1644
 msgid "Unsupported XML version."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1672
+#: src/xml/kernel/qxmlstream.cpp:1665
 msgid "The standalone pseudo attribute must appear after the encoding."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1674
+#: src/xml/kernel/qxmlstream.cpp:1667
 msgid "%1 is an invalid encoding name."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1681
+#: src/xml/kernel/qxmlstream.cpp:1674
 msgid "Encoding %1 is unsupported"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1697
+#: src/xml/kernel/qxmlstream.cpp:1690
 msgid "Standalone accepts only yes or no."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1699
+#: src/xml/kernel/qxmlstream.cpp:1692
 msgid "Invalid attribute in XML declaration."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1715
+#: src/xml/kernel/qxmlstream.cpp:1708
 msgid "Premature end of document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1717
+#: src/xml/kernel/qxmlstream.cpp:1710
 msgid "Invalid document."
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1757
+#: src/xml/kernel/qxmlstream.cpp:1750
 msgid "Expected "
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1768
+#: src/xml/kernel/qxmlstream.cpp:1761
 msgid ", but got '"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1772
+#: src/xml/kernel/qxmlstream.cpp:1765
 msgid "Unexpected '"
 msgstr ""
 
-#: src/xml/kernel/qxmlstream.cpp:1997
+#: src/xml/kernel/qxmlstream.cpp:1990
 msgid "Expected character data."
 msgstr ""
