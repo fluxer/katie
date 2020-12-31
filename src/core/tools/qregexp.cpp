@@ -2737,25 +2737,6 @@ int QRegExpEngine::getEscape()
         return Tok_Char | '\\';
     }
     yyCh = getChar();
-#ifndef QT_NO_REGEXP_ESCAPE
-    if ((prevCh & ~0xff) == 0) {
-         // no b, as \b means word boundary
-        switch (prevCh) {
-            case 'a':
-                return (Tok_Char | '\a');
-            case 'f':
-                return (Tok_Char | '\f');
-            case 'n':
-                return (Tok_Char | '\n');
-            case 'r':
-                return (Tok_Char | '\r');
-            case 't':
-                return (Tok_Char | '\t');
-            case 'v':
-                return (Tok_Char | '\v');
-        }
-    }
-#endif
 
     switch (prevCh) {
 #ifndef QT_NO_REGEXP_ESCAPE
@@ -2772,10 +2753,36 @@ int QRegExpEngine::getEscape()
                 error(RXERR_OCTAL);
             return Tok_Char | val;
         }
-#endif
-#ifndef QT_NO_REGEXP_ESCAPE
+        case 'a':
+            return (Tok_Char | '\a');
+        case 'f':
+            return (Tok_Char | '\f');
+        case 'n':
+            return (Tok_Char | '\n');
+        case 'r':
+            return (Tok_Char | '\r');
+        case 't':
+            return (Tok_Char | '\t');
+        case 'v':
+            return (Tok_Char | '\v');
         case 'B':
             return Tok_NonWord;
+        case 'b':
+            return Tok_Word;
+        case 'x': {
+            val = 0;
+            for (int i = 0; i < 4; i++) {
+                ushort low = QChar(yyCh).toLower().unicode();
+                if (low >= '0' && low <= '9')
+                    val = (val << 4) | (low - '0');
+                else if (low >= 'a' && low <= 'f')
+                    val = (val << 4) | (low - 'a' + 10);
+                else
+                    break;
+                yyCh = getChar();
+            }
+            return Tok_Char | val;
+        }
 #endif
 #ifndef QT_NO_REGEXP_CCLASS
         case 'D': {
@@ -2818,12 +2825,6 @@ int QRegExpEngine::getEscape()
             yyCharClass->addSingleton(0xff65);
             return Tok_CharClass;
         }
-#endif
-#ifndef QT_NO_REGEXP_ESCAPE
-        case 'b':
-            return Tok_Word;
-#endif
-#ifndef QT_NO_REGEXP_CCLASS
         case 'd': {
             // see QChar::isDigit()
             yyCharClass->addCategories(FLAG(QChar::Number_DecimalDigit));
@@ -2862,22 +2863,6 @@ int QRegExpEngine::getEscape()
         case 'P':
         case 'p':
             return Tok_CharClass;
-#endif
-#ifndef QT_NO_REGEXP_ESCAPE
-        case 'x': {
-            val = 0;
-            for (int i = 0; i < 4; i++) {
-                ushort low = QChar(yyCh).toLower().unicode();
-                if (low >= '0' && low <= '9')
-                    val = (val << 4) | (low - '0');
-                else if (low >= 'a' && low <= 'f')
-                    val = (val << 4) | (low - 'a' + 10);
-                else
-                    break;
-                yyCh = getChar();
-            }
-            return Tok_Char | val;
-        }
 #endif
         default: {
             if (prevCh >= '1' && prevCh <= '9') {
