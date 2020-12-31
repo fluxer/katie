@@ -1,4 +1,4 @@
-add_definitions(-DQT_UITOOLS_LIB)
+# add_definitions()
 set(EXTRA_UITOOLS_LIBS KtCore KtGui KtXml KtScript)
 
 set(UITOOLS_PUBLIC_HEADERS

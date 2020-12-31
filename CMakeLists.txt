@@ -326,17 +326,6 @@ set_package_properties(ExecInfo PROPERTIES
     TYPE RECOMMENDED
 )
 
-add_definitions(
-    # these conditionals are probably going to become default in the future
-    -DQT_POSIX_IPC
-    # -DQT_STRICT_ITERATORS
-    # -DQT_ASCII_CAST_WARNINGS
-    # maybe one day, this forces it onto other projects which (most likely)
-    # means source code adjustments!
-    # -DQT_NO_CAST_FROM_ASCII
-    # -DQT_NO_CAST_TO_ASCII
-)
-
 # for symbols mangling while backtracing in core component
 check_include_file_cxx(cxxabi.h HAVE_CXXABI)
 

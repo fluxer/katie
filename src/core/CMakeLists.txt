@@ -1,4 +1,7 @@
-# add_definitions()
+add_definitions(
+    # that conditional is probably going to become default in the future
+    -DQT_POSIX_IPC
+)
 set(EXTRA_CORE_LIBS
     ${ZLIB_LIBRARIES}
     ${ICU_LIBRARIES}
