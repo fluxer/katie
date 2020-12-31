@@ -326,13 +326,11 @@ set_package_properties(ExecInfo PROPERTIES
     TYPE RECOMMENDED
 )
 
-# for symbols mangling while backtracing in core component
-check_include_file_cxx(cxxabi.h HAVE_CXXABI)
-
 # stored in qconfig.h.cmake
 check_type_size(size_t QT_POINTER_SIZE)
 
 # used in components, tests and JavaScriptCore
+katie_check_header("cxxabi.h")
 katie_check_function(getpwnam_r "pwd.h")
 katie_check_function(getpwuid_r "pwd.h")
 katie_check_function(getgrgid_r "grp.h")

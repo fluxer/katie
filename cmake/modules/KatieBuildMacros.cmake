@@ -5,6 +5,18 @@ set(KATIE_UIC "uic")
 set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
 
+# a function to check for header presence, if header is found a definition is
+# added
+function(KATIE_CHECK_HEADER FORHEADER)
+    string(REPLACE "." "_" underscoreheader "${FORHEADER}")
+    check_include_file_cxx("${FORHEADER}" HAVE_${underscoreheader})
+
+    if(HAVE_${underscoreheader})
+        string(TOUPPER "${underscoreheader}" upperheader)
+        add_definitions(-DQT_HAVE_${upperheader})
+    endif()
+endfunction()
+
 # a function to check for C function/definition, works for external functions
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
     # see comment in top-level CMake file
