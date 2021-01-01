@@ -136,17 +136,10 @@ class Q_CORE_EXPORT QJsonValue
 
    void detach();
 
-   union {
-      quint64 ui;
-      bool b;
-      double dbl;
-      /* Qt 5 Beta 1
-           QStringData *stringData;
-      */
-      // Temporary for QStringData:
-      QString *stringData;
-      QJsonPrivate::Base *base;
-   };
+   bool b;
+   double dbl;
+   QString *stringData;
+   QJsonPrivate::Base *base;
    QJsonPrivate::Data *d; // needed for Objects and Arrays
    Type t;
 };

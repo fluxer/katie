@@ -83,36 +83,34 @@ QT_BEGIN_NAMESPACE
     The default is to create a Null value.
  */
 QJsonValue::QJsonValue(Type type)
-   : ui(0), d(0), t(type)
+   : b(false), dbl(0), stringData(Q_NULLPTR), base(Q_NULLPTR), d(Q_NULLPTR), t(type)
 {
 }
 
 /*!
     \internal
  */
-QJsonValue::QJsonValue(QJsonPrivate::Data *data, QJsonPrivate::Base *base, const QJsonPrivate::Value &v)
-   : d(0)
+QJsonValue::QJsonValue(QJsonPrivate::Data *data, QJsonPrivate::Base *privbase, const QJsonPrivate::Value &v)
+   : b(false), dbl(0), stringData(Q_NULLPTR), base(Q_NULLPTR), d(Q_NULLPTR), t(static_cast<Type>(uint(v.type)))
 {
-   t = (Type)(uint)v.type;
    switch (t) {
       case Undefined:
       case Null:
-         dbl = 0;
          break;
       case Bool:
          b = v.toBoolean();
          break;
       case Double:
-         dbl = v.toDouble(base);
+         dbl = v.toDouble(privbase);
          break;
       case String: {
-         stringData = new QString(v.toString(base));
+         stringData = new QString(v.toString(privbase));
          break;
       }
       case Array:
       case Object:
          d = data;
-         this->base = v.base(base);
+         base = v.base(privbase);
          break;
    }
    if (d) {
@@ -121,21 +119,19 @@ QJsonValue::QJsonValue(QJsonPrivate::Data *data, QJsonPrivate::Base *base, const
 }
 
 /*!
-    Creates a value of type Bool, with value \a b.
+    Creates a value of type Bool, with value \a a.
  */
-QJsonValue::QJsonValue(bool b)
-   : d(0), t(Bool)
+QJsonValue::QJsonValue(bool a)
+   : b(a), dbl(0), stringData(Q_NULLPTR), base(Q_NULLPTR), d(Q_NULLPTR), t(Bool)
 {
-   this->b = b;
 }
 
 /*!
     Creates a value of type Double, with value \a n.
  */
 QJsonValue::QJsonValue(double n)
-   : d(0), t(Double)
+   : b(false), dbl(n), stringData(Q_NULLPTR), base(Q_NULLPTR), d(Q_NULLPTR), t(Double)
 {
-   this->dbl = n;
 }
 
 /*!
@@ -143,9 +139,8 @@ QJsonValue::QJsonValue(double n)
     Creates a value of type Double, with value \a n.
  */
 QJsonValue::QJsonValue(int n)
-   : d(0), t(Double)
+   : b(false), dbl(n), stringData(Q_NULLPTR), base(Q_NULLPTR), d(Q_NULLPTR), t(Double)
 {
-   this->dbl = n;
 }
 
 /*!
@@ -155,36 +150,32 @@ QJsonValue::QJsonValue(int n)
     If you pass in values outside this range expect a loss of precision to occur.
  */
 QJsonValue::QJsonValue(qint64 n)
-   : d(0), t(Double)
+   : b(false), dbl(n), stringData(Q_NULLPTR), base(Q_NULLPTR), d(Q_NULLPTR), t(Double)
 {
-   this->dbl = n;
 }
 
 /*!
     Creates a value of type String, with value \a s.
  */
 QJsonValue::QJsonValue(const QString &s)
-   : d(0), t(String)
+   : b(false), dbl(0), stringData(new QString(s)), base(Q_NULLPTR), d(Q_NULLPTR), t(String)
 {
-   stringData = new QString(s);
 }
 
 /*!
     Creates a value of type String, with value \a s.
  */
 QJsonValue::QJsonValue(QLatin1String s)
-   : d(0), t(String)
+   : b(false), dbl(0), stringData(new QString(s)), base(Q_NULLPTR), d(Q_NULLPTR), t(String)
 {
-   stringData = new QString(s);
 }
 
 /*!
     Creates a value of type Array, with value \a a.
  */
 QJsonValue::QJsonValue(const QJsonArray &a)
-   : d(a.d), t(Array)
+   : b(false), dbl(0), stringData(Q_NULLPTR), base(a.a), d(a.d), t(Array)
 {
-   base = a.a;
    if (d) {
       d->ref.ref();
    }
@@ -194,9 +185,8 @@ QJsonValue::QJsonValue(const QJsonArray &a)
     Creates a value of type Object, with value \a o.
  */
 QJsonValue::QJsonValue(const QJsonObject &o)
-   : d(o.d), t(Object)
+   : b(false), dbl(0), stringData(Q_NULLPTR), base(o.o), d(o.d), t(Object)
 {
-   base = o.o;
    if (d) {
       d->ref.ref();
    }
@@ -221,16 +211,14 @@ QJsonValue::~QJsonValue()
     Creates a copy of \a other.
  */
 QJsonValue::QJsonValue(const QJsonValue &other)
+   : b(other.b), dbl(other.dbl), stringData(Q_NULLPTR), base(Q_NULLPTR), d(other.d), t(other.t)
 {
-   t = other.t;
-   d = other.d;
-   ui = other.ui;
    if (d) {
       d->ref.ref();
    }
 
-   if (t == String && stringData) {
-      stringData = new QString(*stringData);
+   if (t == String && other.stringData) {
+      stringData = new QString(*other.stringData);
    }
 }
 
@@ -241,25 +229,17 @@ QJsonValue &QJsonValue::operator =(const QJsonValue &other)
 {
    if (t == String) {
       delete stringData;
+      stringData = Q_NULLPTR;
    }
 
    t = other.t;
+   b = other.b;
    dbl = other.dbl;
 
-   if (d != other.d) {
+   qAtomicAssign(d, other.d);
 
-      if (d && !d->ref.deref()) {
-         delete d;
-      }
-      d = other.d;
-      if (d) {
-         d->ref.ref();
-      }
-
-   }
-
-   if (t == String && stringData) {
-      stringData = new QString(*stringData);
+   if (t == String && other.stringData) {
+      stringData = new QString(*other.stringData);
    }
 
    return *this;
@@ -621,12 +601,7 @@ void QJsonValue::detach()
       return;
    }
 
-   QJsonPrivate::Data *x = d->clone(base);
-   x->ref.ref();
-   if (!d->ref.deref()) {
-      delete d;
-   }
-   d = x;
+   qAtomicAssign(d, d->clone(base));
    base = static_cast<QJsonPrivate::Object *>(d->header->root());
 }
 

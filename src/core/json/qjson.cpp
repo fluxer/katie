@@ -423,7 +423,7 @@ void Value::copyData(const QJsonValue &v, char *dest, bool compressed)
    switch (v.t) {
       case QJsonValue::Double:
          if (!compressed) {
-            qToLittleEndian(v.ui, (uchar *)dest);
+            qToLittleEndian(v.dbl, (uchar *)dest);
          }
          break;
       case QJsonValue::String: {
