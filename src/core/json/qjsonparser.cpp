@@ -173,7 +173,7 @@ QString QJsonParseError::errorString() const
          break;
    }
 
-   return QLatin1String(sz);
+   return QCoreApplication::translate("QJsonParseError", sz);
 }
 
 using namespace QJsonPrivate;
