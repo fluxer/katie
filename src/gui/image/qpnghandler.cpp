@@ -622,7 +622,6 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in)
         png_set_filler(png_ptr, 0, QFILLER_ORDER);
 
     int height = image.height();
-    int width = image.width();
     switch (image.format()) {
     case QImage::Format_Mono:
     case QImage::Format_MonoLSB:
