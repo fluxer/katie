@@ -1681,9 +1681,9 @@ QImage::Format QImage::systemFormat()
   Internal routines for converting image depth.
  *****************************************************************************/
 
-typedef void (*Image_Converter)(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags);
+typedef void (QT_FASTCALL *Image_Converter)(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags);
 
-static void convert_ARGB_to_ARGB_PM(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_ARGB_to_ARGB_PM(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_ARGB32);
     Q_ASSERT(dest->format == QImage::Format_ARGB32_Premultiplied);
@@ -1707,7 +1707,7 @@ static void convert_ARGB_to_ARGB_PM(QImageData *dest, const QImageData *src, Qt:
     }
 }
 
-static void convert_ARGB_PM_to_ARGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_ARGB_PM_to_ARGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_ARGB32_Premultiplied);
     Q_ASSERT(dest->format == QImage::Format_ARGB32);
@@ -1731,7 +1731,7 @@ static void convert_ARGB_PM_to_ARGB(QImageData *dest, const QImageData *src, Qt:
     }
 }
 
-static void convert_ARGB_PM_to_RGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_ARGB_PM_to_RGB(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_ARGB32_Premultiplied);
     Q_ASSERT(dest->format == QImage::Format_RGB32);
@@ -1755,7 +1755,7 @@ static void convert_ARGB_PM_to_RGB(QImageData *dest, const QImageData *src, Qt::
     }
 }
 
-static void swap_bit_order(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL swap_bit_order(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Mono || src->format == QImage::Format_MonoLSB);
     Q_ASSERT(dest->format == QImage::Format_Mono || dest->format == QImage::Format_MonoLSB);
@@ -1776,7 +1776,7 @@ static void swap_bit_order(QImageData *dest, const QImageData *src, Qt::ImageCon
     }
 }
 
-static void mask_alpha_converter(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL mask_alpha_converter(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->width == dest->width);
     Q_ASSERT(src->height == dest->height);
@@ -2083,12 +2083,12 @@ static void dither_to_Mono(QImageData *dst, const QImageData *src,
     }
 }
 
-static void convert_X_to_Mono(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+static void QT_FASTCALL convert_X_to_Mono(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
 {
     dither_to_Mono(dst, src, flags, false);
 }
 
-static void convert_ARGB_PM_to_Mono(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+static void QT_FASTCALL convert_ARGB_PM_to_Mono(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
 {
     QScopedPointer<QImageData> tmp(QImageData::create(QSize(src->width, src->height), QImage::Format_ARGB32));
     convert_ARGB_PM_to_ARGB(tmp.data(), src, flags);
@@ -2110,7 +2110,7 @@ struct QRgbMap {
     QRgb  rgb;
 };
 
-static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+static void QT_FASTCALL convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
 {
     Q_ASSERT(src->format == QImage::Format_RGB32 || src->format == QImage::Format_ARGB32);
     Q_ASSERT(dst->format == QImage::Format_Indexed8);
@@ -2375,19 +2375,19 @@ static void convert_RGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::
     }
 }
 
-static void convert_ARGB_PM_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+static void QT_FASTCALL convert_ARGB_PM_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
 {
     QScopedPointer<QImageData> tmp(QImageData::create(QSize(src->width, src->height), QImage::Format_ARGB32));
     convert_ARGB_PM_to_ARGB(tmp.data(), src, flags);
     convert_RGB_to_Indexed8(dst, tmp.data(), flags);
 }
 
-static void convert_ARGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
+static void QT_FASTCALL convert_ARGB_to_Indexed8(QImageData *dst, const QImageData *src, Qt::ImageConversionFlags flags)
 {
     convert_RGB_to_Indexed8(dst, src, flags);
 }
 
-static void convert_Indexed8_to_X32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_Indexed8_to_X32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Indexed8);
     Q_ASSERT(dest->format == QImage::Format_RGB32
@@ -2420,7 +2420,7 @@ static void convert_Indexed8_to_X32(QImageData *dest, const QImageData *src, Qt:
     }
 }
 
-static void convert_Mono_to_X32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_Mono_to_X32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Mono || src->format == QImage::Format_MonoLSB);
     Q_ASSERT(dest->format == QImage::Format_RGB32
@@ -2462,7 +2462,7 @@ static void convert_Mono_to_X32(QImageData *dest, const QImageData *src, Qt::Ima
 }
 
 
-static void convert_Mono_to_Indexed8(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+static void QT_FASTCALL convert_Mono_to_Indexed8(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
 {
     Q_ASSERT(src->format == QImage::Format_Mono || src->format == QImage::Format_MonoLSB);
     Q_ASSERT(dest->format == QImage::Format_Indexed8);
@@ -2502,14 +2502,14 @@ static void convert_Mono_to_Indexed8(QImageData *dest, const QImageData *src, Qt
     }
 }
 
-#define CONVERT_DECL(DST, SRC)                                          \
-    static void convert_##SRC##_to_##DST(QImageData *dest,              \
-                                         const QImageData *src,         \
-                                         Qt::ImageConversionFlags)      \
-    {                                                                   \
-        qt_rectconvert<DST, SRC>(reinterpret_cast<DST*>(dest->data),    \
-                                 reinterpret_cast<const SRC*>(src->data), \
-                                 src->width, src->height,               \
+#define CONVERT_DECL(DST, SRC)                                               \
+    static inline void convert_##SRC##_to_##DST(QImageData *dest,            \
+                                         const QImageData *src,              \
+                                         Qt::ImageConversionFlags)           \
+    {                                                                        \
+        qt_rectconvert<DST, SRC>(reinterpret_cast<DST*>(dest->data),         \
+                                 reinterpret_cast<const SRC*>(src->data),    \
+                                 src->width, src->height,                    \
                                  dest->bytes_per_line, src->bytes_per_line); \
     }
 
