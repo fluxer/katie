@@ -398,9 +398,9 @@ template <class DST, class SRC>
 inline void qt_memconvert(DST *dest, const SRC *src, int count)
 {
     // quint32 to quint16 and vise-versa
-    Q_ASSERT(sizeof(DST) != sizeof(SRC))
-    Q_ASSERT(sizeof(DST) == sizeof(quint16) || sizeof(DST) == sizeof(quint32))
-    Q_ASSERT(sizeof(SRC) == sizeof(quint16) || sizeof(SRC) == sizeof(quint32))
+    Q_ASSERT(sizeof(DST) != sizeof(SRC));
+    Q_ASSERT(sizeof(DST) == sizeof(quint16) || sizeof(DST) == sizeof(quint32));
+    Q_ASSERT(sizeof(SRC) == sizeof(quint16) || sizeof(SRC) == sizeof(quint32));
     /* Duff's device */
     int n = (count + 7) / 8;
     switch (count & 0x07)
@@ -423,9 +423,9 @@ inline void qt_rectconvert(DST *dest, const SRC *src,
                            int dstStride, int srcStride)
 {
     // quint32 to quint16 and vise-versa
-    Q_ASSERT(sizeof(DST) != sizeof(SRC))
-    Q_ASSERT(sizeof(DST) == sizeof(quint16) || sizeof(DST) == sizeof(quint32))
-    Q_ASSERT(sizeof(SRC) == sizeof(quint16) || sizeof(SRC) == sizeof(quint32))
+    Q_ASSERT(sizeof(DST) != sizeof(SRC));
+    Q_ASSERT(sizeof(DST) == sizeof(quint16) || sizeof(DST) == sizeof(quint32));
+    Q_ASSERT(sizeof(SRC) == sizeof(quint16) || sizeof(SRC) == sizeof(quint32));
     char *d = (char*)dest;
     const char *s = (const char*)(src);
     for (int i = 0; i < height; ++i) {
