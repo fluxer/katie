@@ -77,7 +77,7 @@ public:
 
     QBspTree();
 
-    void create(int n, int d = -1);
+    void create(int n);
     void destroy();
 
     inline void init(const QRect &area, NodeType type) { init(area, depth, type, 0); }

@@ -37,18 +37,13 @@ QT_BEGIN_NAMESPACE
 
 QBspTree::QBspTree() : depth(6), visited(0) {}
 
-void QBspTree::create(int n, int d)
+void QBspTree::create(int n)
 {
     // simple heuristics to find the best tree depth
-    if (d == -1) {
-        int c;
-        for (c = 0; n; ++c)
-            n = n / 10;
-        depth = c << 1;
-    } else {
-        depth = d;
-    }
-    depth = qMax(depth, uint(1));
+    int c;
+    for (c = 0; n; ++c)
+        n = n / 10;
+    depth = qMax(c << 1, 1);
 
     nodes.resize((1 << depth) - 1); // resize to number of nodes
     leaves.resize(1 << depth); // resize to number of leaves
