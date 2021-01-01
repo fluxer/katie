@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the Katie Designer of the Katie Toolkit.
 **
@@ -161,7 +161,7 @@ VersionDialog::VersionDialog(QWidget *parent)
 
     lbl->setText(tr("%1"
                     "<br/>Copyright (C) 2015 The Qt Company Ltd."
-                    "<br/>Copyright (C) 2016-2020 Ivailo Monev"
+                    "<br/>Copyright (C) 2016-2021 Ivailo Monev"
                     ).arg(version));
 
     lbl->setWordWrap(true);

@@ -1,4 +1,4 @@
-# Copyright (c) 2015-2020, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2015-2021, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 set(KATIE_UIC "uic")

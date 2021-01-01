@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the tools applications of the Katie Toolkit.
 **
@@ -57,7 +57,7 @@
 #define PROGRAMNAME     "qdbusxml2cpp"
 #define PROGRAMVERSION  "0.7"
 #define PROGRAMCOPYRIGHT "Copyright (C) 2015 The Qt Company Ltd."
-#define PROGRAMCOPYRIGHT2 "Copyright (C) 2016-2020 Ivailo Monev"
+#define PROGRAMCOPYRIGHT2 "Copyright (C) 2016-2021 Ivailo Monev"
 
 #define ANNOTATION_NO_WAIT      "org.freedesktop.DBus.Method.NoReply"
 
