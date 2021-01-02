@@ -2502,21 +2502,27 @@ static void QT_FASTCALL convert_Mono_to_Indexed8(QImageData *dest, const QImageD
     }
 }
 
-#define CONVERT_DECL(DST, SRC)                                               \
-    static inline void convert_##SRC##_to_##DST(QImageData *dest,            \
-                                         const QImageData *src,              \
-                                         Qt::ImageConversionFlags)           \
-    {                                                                        \
-        qt_rectconvert<DST, SRC>(reinterpret_cast<DST*>(dest->data),         \
-                                 reinterpret_cast<const SRC*>(src->data),    \
-                                 src->width, src->height,                    \
-                                 dest->bytes_per_line, src->bytes_per_line); \
+static void QT_FASTCALL convert_RGB16_to_RGB32(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+{
+    uchar *d = dest->data;
+    const uchar *s = src->data;
+    for (int i = 0; i < src->height; ++i) {
+        qt_memconvert<quint32,quint16>((quint32*)d, (const quint16*)s, src->width);
+        d += dest->bytes_per_line;
+        s += src->bytes_per_line;
     }
+}
 
-CONVERT_DECL(quint32, quint16)
-CONVERT_DECL(quint16, quint32)
-#undef CONVERT_DECL
-#define CONVERT_PTR(DST, SRC) convert_##SRC##_to_##DST
+static void QT_FASTCALL convert_RGB32_to_RGB16(QImageData *dest, const QImageData *src, Qt::ImageConversionFlags)
+{
+    uchar *d = dest->data;
+    const uchar *s = src->data;
+    for (int i = 0; i < src->height; ++i) {
+        qt_memconvert<quint16,quint32>((quint16*)d, (const quint32*)s, src->width);
+        d += dest->bytes_per_line;
+        s += src->bytes_per_line;
+    }
+}
 
 /*
         Format_Invalid,
@@ -2577,7 +2583,7 @@ static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormat
         0,
         mask_alpha_converter,
         mask_alpha_converter,
-        CONVERT_PTR(quint16, quint32),
+        convert_RGB16_to_RGB32
     }, // Format_RGB32
 
     {
@@ -2588,7 +2594,7 @@ static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormat
         mask_alpha_converter,
         0,
         convert_ARGB_to_ARGB_PM,
-        CONVERT_PTR(quint16, quint32)
+        convert_RGB16_to_RGB32
     }, // Format_ARGB32
 
     {
@@ -2607,9 +2613,9 @@ static Image_Converter converter_map[QImage::NImageFormats][QImage::NImageFormat
         0,
         0,
         0,
-        CONVERT_PTR(quint32, quint16),
-        CONVERT_PTR(quint32, quint16),
-        CONVERT_PTR(quint32, quint16),
+        convert_RGB32_to_RGB16,
+        convert_RGB32_to_RGB16,
+        convert_RGB32_to_RGB16,
         0
     }, // Format_RGB16
 };
