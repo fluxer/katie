@@ -76,15 +76,12 @@ public Q_SLOTS:
     void setWrapping(bool on);
 
 protected:
-    bool event(QEvent *e);
-    void resizeEvent(QResizeEvent *re);
     void paintEvent(QPaintEvent *pe);
 
     void mousePressEvent(QMouseEvent *me);
     void mouseReleaseEvent(QMouseEvent *me);
     void mouseMoveEvent(QMouseEvent *me);
 
-    void sliderChange(SliderChange change);
     void initStyleOption(QStyleOptionSlider *option) const;
 
 
