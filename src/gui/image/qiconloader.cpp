@@ -119,9 +119,8 @@ QStringList QIconLoader::themeSearchPaths() const
 QIconTheme::QIconTheme(const QString &themeName)
         : m_valid(false)
 {
-    QStringList iconDirs = QIcon::themeSearchPaths();
-    for ( int i = 0 ; i < iconDirs.size() ; ++i) {
-        QString themeDir = iconDirs[i] + QLatin1Char('/') + themeName;
+    foreach (const QString &it, QIcon::themeSearchPaths()) {
+        QString themeDir = it + QLatin1Char('/') + themeName;
         if (QFile::exists(themeDir + QLatin1String("/index.theme"))) {
             m_contentDir = themeDir;
             m_valid = true;
