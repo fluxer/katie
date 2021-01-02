@@ -110,7 +110,6 @@ Q_SIGNALS:
     void propertyChangedContext(const QString &,const QString &,const QDBusVariant &);
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 
 };
@@ -154,7 +153,6 @@ public:
 
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 Q_SIGNALS:
     void propertyChanged(const QString &, const QDBusVariant &value);
@@ -185,7 +183,6 @@ public:
 
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 Q_SIGNALS:
     void propertyChanged(const QString &, const QDBusVariant &value);
@@ -213,7 +210,6 @@ public:
 
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 };
 
@@ -240,7 +236,6 @@ public:
 
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 };
 
@@ -266,7 +261,6 @@ public:
 
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 };
 
@@ -296,7 +290,6 @@ public:
 
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
     bool setProp(const QString &, const QVariant &var);
 };
@@ -320,7 +313,6 @@ public:
 
 protected:
     void connectNotify(const char *signal);
-    void disconnectNotify(const char *signal);
     QVariant getProperty(const QString &);
 
 Q_SIGNALS:
