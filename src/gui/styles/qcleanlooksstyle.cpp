@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -573,7 +573,7 @@ static void qt_cleanlooks_draw_mdibutton(QPainter *painter, const QStyleOptionTi
 */
 QCleanlooksStyle::QCleanlooksStyle() : QWindowsStyle(*new QCleanlooksStylePrivate)
 {
-    setObjectName(QLatin1String("CleanLooks"));
+    setObjectName(QLatin1String("Cleanlooks"));
 }
 
 /*!
@@ -583,13 +583,7 @@ QCleanlooksStyle::QCleanlooksStyle() : QWindowsStyle(*new QCleanlooksStylePrivat
 */
 QCleanlooksStyle::QCleanlooksStyle(QCleanlooksStylePrivate &dd) : QWindowsStyle(dd)
 {
-}
-
-/*!
-    Destroys the QCleanlooksStyle object.
-*/
-QCleanlooksStyle::~QCleanlooksStyle()
-{
+    setObjectName(QLatin1String("Cleanlooks"));
 }
 
 /*!

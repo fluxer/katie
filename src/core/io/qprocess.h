@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -170,7 +170,7 @@ public:
     static int execute(const QString &program);
 
     static bool startDetached(const QString &program, const QStringList &arguments, const QString &workingDirectory,
-                              qint64 *pid = 0);
+                              Q_PID *pid = 0);
     static bool startDetached(const QString &program, const QStringList &arguments);
     static bool startDetached(const QString &program);
 

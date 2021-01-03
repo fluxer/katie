@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -44,18 +44,13 @@
 QT_BEGIN_NAMESPACE
 
 enum {
-    TargetRatio = 100,
     MedianSize = 7
 };
 
 static qint64 getticks()
 {
 #ifdef QT_HAVE_CLOCK_GETTIME
-#ifdef CLOCK_REALTIME_COARSE // Linux specific
-    clockid_t clockId = CLOCK_REALTIME_COARSE;
-#else
     clockid_t clockId = CLOCK_REALTIME;
-#endif
 
 #if defined(_SC_THREAD_CPUTIME) && defined(CLOCK_THREAD_CPUTIME_ID)
     // detect availablility of CLOCK_THREAD_CPUTIME_ID,
@@ -117,7 +112,7 @@ void BlockSizeManager::timeAfterUser()
     if (controlPartElapsed.isMedianValid() == false)
         return;
 
-    if (controlPartElapsed.median() * TargetRatio < userPartElapsed.median())
+    if (controlPartElapsed.median() * 100.0 < userPartElapsed.median())
         return;
 
     m_blockSize = qMin(m_blockSize * 2,  maxBlockSize);

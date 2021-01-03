@@ -1,9 +1,21 @@
-# Copyright (c) 2015-2020, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2015-2021, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 set(KATIE_UIC "uic")
 set(KATIE_RCC "rcc")
 set(KATIE_MOC "bootstrap_moc")
+
+# a function to check for header presence, if header is found a definition is
+# added
+function(KATIE_CHECK_HEADER FORHEADER)
+    string(REPLACE "." "_" underscoreheader "${FORHEADER}")
+    check_include_file_cxx("${FORHEADER}" HAVE_${underscoreheader})
+
+    if(HAVE_${underscoreheader})
+        string(TOUPPER "${underscoreheader}" upperheader)
+        add_definitions(-DQT_HAVE_${upperheader})
+    endif()
+endfunction()
 
 # a function to check for C function/definition, works for external functions
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
@@ -203,19 +215,29 @@ function(KATIE_STRING_UNWRAP INSTR OUTLST)
     endif()
 endfunction()
 
-# a macro to instruct katie_setup_target() which sources to exclude from the
-# all-in-one source file
-macro(KATIE_ALLINONE_EXCLUDE ARG1)
-    set_source_files_properties(${ARG1} ${ARGN} PROPERTIES ALLINONE_EXCLUDE TRUE)
+# a macro to instruct CMake which sources to exclude from the unity source file
+macro(KATIE_UNITY_EXCLUDE ARG1)
+    set_source_files_properties(${ARG1} ${ARGN} PROPERTIES SKIP_UNITY_BUILD_INCLUSION TRUE)
 endmacro()
 
-# a function to create an array of source files for a target while taking into
-# account all-in-one target build setting up proper dependency for the
-# moc/uic/rcc generated resources
+# a function to create an array of source files for a target setting up proper
+# dependency for the moc/uic/rcc generated resources
 function(KATIE_SETUP_TARGET FORTARGET)
+    get_directory_property(dirdefs COMPILE_DEFINITIONS)
+    get_directory_property(dirincs INCLUDE_DIRECTORIES)
+    set(mocargs)
+    # COMPILE_DEFINITIONS does not include undefine definitions
+    foreach(ddef ${dirdefs})
+        set(mocargs ${mocargs} -D${ddef})
+    endforeach()
+    foreach(incdir ${dirincs})
+        set(mocargs ${mocargs} -I${incdir})
+    endforeach()
+
     # this can be simpler if continue() was supported by old CMake versions
     set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
     katie_write_file("${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
+    set(filteredsources)
     set(targetresources)
     set(rscpath "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources")
     include_directories("${rscpath}")
@@ -241,21 +263,12 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 DEPENDS "${KATIE_RCC}"
                 OUTPUT "${rscout}"
             )
-        elseif("${rscext}" MATCHES "(.h|.hpp|.cc|.cpp)")
+        elseif("${rscext}" MATCHES "(.c|.h|.hpp|.cc|.cpp)")
+            set(filteredsources ${filteredsources} "${resource}")
             file(READ "${resource}" rsccontent)
             if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
                 set(rscout "${rscpath}/moc_${rscname}${rscext}")
                 set(targetresources ${targetresources} "${rscout}")
-                get_directory_property(dirdefs COMPILE_DEFINITIONS)
-                get_directory_property(dirincs INCLUDE_DIRECTORIES)
-                set(mocargs)
-                # COMPILE_DEFINITIONS does not include undefine definitions
-                foreach(ddef ${dirdefs})
-                    set(mocargs ${mocargs} -D${ddef})
-                endforeach()
-                foreach(incdir ${dirincs})
-                    set(mocargs ${mocargs} -I${incdir})
-                endforeach()
                 make_directory("${rscpath}")
                 add_custom_command(
                     COMMAND "${CMAKE_BINARY_DIR}/exec.sh" "${CMAKE_BINARY_DIR}/bin/${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
@@ -267,31 +280,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
     endforeach()
     set_property(SOURCE "${resourcesdep}" APPEND PROPERTY OBJECT_DEPENDS "${targetresources}")
 
-    if(NOT KATIE_ALLINONE)
-        set(filteredsources)
-        foreach(srcstring ${ARGN})
-            get_filename_component(srcext "${srcstring}" EXT)
-            if(NOT "${srcext}" MATCHES "(.qrc|.ui)")
-                set(filteredsources ${filteredsources} "${srcstring}")
-            endif()
-        endforeach()
-        set(${FORTARGET}_SOURCES "${resourcesdep}" ${filteredsources} PARENT_SCOPE)
-    else()
-        set(allinonesource "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_allinone.cpp")
-        set(allinonedata)
-        set(excludesources)
-        foreach(srcstring ${ARGN})
-            get_filename_component(srcext "${srcstring}" EXT)
-            get_source_file_property(skip "${srcstring}" ALLINONE_EXCLUDE)
-            if(skip OR "${srcext}" STREQUAL ".c")
-                set(excludesources ${excludesources} "${srcstring}")
-            elseif(NOT "${srcext}" MATCHES "(.h|.qrc|.ui)")
-                set(allinonedata "${allinonedata}#include \"${srcstring}\"\n")
-            endif()
-        endforeach()
-        katie_write_file("${allinonesource}" "${allinonedata}")
-        set(${FORTARGET}_SOURCES ${resourcesdep} "${allinonesource}" ${excludesources} PARENT_SCOPE)
-    endif()
+    set(${FORTARGET}_SOURCES "${resourcesdep}" ${filteredsources} PARENT_SCOPE)
 endfunction()
 
 # a macro to ensure that object targets are build with PIC if the target they
@@ -317,6 +306,17 @@ macro(KATIE_SETUP_OBJECT FORTARGET)
         endif()
         target_include_directories(${FORTARGET} PRIVATE ${object_includes})
     endforeach()
+endmacro()
+
+# a macro to setup pre-compiled header for target
+macro(KATIE_SETUP_PCH FORTARGET)
+    if(KATIE_PCH)
+        if (NOT CMAKE_VERSION VERSION_LESS "3.16.0")
+            target_precompile_headers(${FORTARGET} PRIVATE "${CMAKE_SOURCE_DIR}/src/core/qt_pch.h")
+        else()
+            message(FATAL_ERROR "Pre-compiled headers option requires CMake v3.16+")
+        endif()
+    endif()
 endmacro()
 
 # a macro to remove conditional code from headers which is only relevant to the

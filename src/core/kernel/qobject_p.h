@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -70,8 +70,6 @@ void Q_CORE_EXPORT qt_register_signal_spy_callbacks(const QSignalSpyCallbackSet 
 
 extern QSignalSpyCallbackSet Q_CORE_EXPORT qt_signal_spy_callback_set;
 
-enum { QObjectPrivateVersion = QT_VERSION };
-
 class Q_CORE_EXPORT QAbstractDeclarativeData
 {
 public:
@@ -125,7 +123,7 @@ public:
     };
 
 
-    QObjectPrivate(int version = QObjectPrivateVersion);
+    QObjectPrivate();
     virtual ~QObjectPrivate();
     void deleteChildren();
 

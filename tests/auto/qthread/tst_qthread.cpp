@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
@@ -1075,14 +1075,12 @@ void tst_QThread::wait2()
     qint64 elapsed = timer.elapsed();
 
     QVERIFY(elapsed >= Waiting_Thread::WaitTime);
-    //QVERIFY(elapsed < Waiting_Thread::WaitTime * 1.4);
 
     timer.start();
     thread.cond1.wakeOne();
-    QVERIFY(thread.wait(/*Waiting_Thread::WaitTime * 1.4*/));
+    QVERIFY(thread.wait());
     elapsed = timer.elapsed();
     QVERIFY(elapsed >= Waiting_Thread::WaitTime);
-    //QVERIFY(elapsed < Waiting_Thread::WaitTime * 1.4);
 }
 
 
@@ -1116,7 +1114,6 @@ void tst_QThread::wait3_slowDestructor()
     qint64 elapsed = timer.elapsed();
 
     QVERIFY(elapsed >= Waiting_Thread::WaitTime);
-    //QVERIFY(elapsed < Waiting_Thread::WaitTime * 1.4);
 
     slow.cond.wakeOne();
     //now the thread should finish quickly

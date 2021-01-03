@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -77,8 +77,7 @@ QFSFileEnginePrivate::QFSFileEnginePrivate() : QAbstractFileEnginePrivate()
 */
 void QFSFileEnginePrivate::init()
 {
-    is_sequential = 0;
-    tried_stat = false;
+    metaData.clear();
     openMode = QIODevice::NotOpen;
     fd = -1;
     closeFileHandle = false;
@@ -160,7 +159,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
         openMode |= QFile::Truncate;
 
     d->openMode = openMode;
-    d->tried_stat = false;
+    d->metaData.clear();
     d->fd = -1;
 
 #ifdef QT_LARGEFILE_SUPPORT
@@ -194,6 +193,8 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
         return false;
     }
 
+    d->closeFileHandle = true;
+
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
         int ret;
@@ -208,7 +209,6 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode)
         }
     }
 
-    d->closeFileHandle = true;
     return true;
 }
 
@@ -245,7 +245,7 @@ bool QFSFileEngine::open(QIODevice::OpenMode openMode, int fd, QFile::FileHandle
     d->closeFileHandle = (handleFlags & QFile::AutoCloseHandle);
     d->fileEntry.clear();
     d->fd = fd;
-    d->tried_stat = false;
+    d->metaData.clear();
 
     // Seek to the end when in Append mode.
     if (d->openMode & QFile::Append) {
@@ -279,9 +279,7 @@ bool QFSFileEngine::close()
     if (d->fd == -1)
         return false;
 
-    bool closed = true;
-    d->tried_stat = false;
-
+    d->metaData.clear();
 
     // Close the file if we created the handle.
     if (d->closeFileHandle) {
@@ -293,13 +291,12 @@ bool QFSFileEngine::close()
         // We must reset these guys regardless; calling close again after a
         // failed close causes crashes on some systems.
         d->fd = -1;
-        closed = (ret == 0);
-    }
 
-    // Report errors.
-    if (!closed) {
-        setError(QFile::UnspecifiedError, qt_error_string(errno));
-        return false;
+        // Report errors.
+        if (ret != 0) {
+            setError(QFile::UnspecifiedError, qt_error_string(errno));
+            return false;
+        }
     }
 
     return true;
@@ -326,8 +323,6 @@ qint64 QFSFileEngine::size() const
 {
     Q_D(const QFSFileEngine);
 
-    d->tried_stat = false;
-    d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
     if (!d->doStat(QFileSystemMetaData::SizeAttribute))
         return 0;
     return d->metaData.size();
@@ -447,6 +442,8 @@ qint64 QFSFileEngine::write(const char *data, qint64 len)
         d->didwrite = true;
     }
 
+    d->metaData.clearFlags(QFileSystemMetaData::SizeAttribute);
+
     return writtenBytes;
 }
 
@@ -466,13 +463,9 @@ QAbstractFileEngine::Iterator *QFSFileEngine::beginEntryList(QDir::Filters filte
 bool QFSFileEngine::isSequential() const
 {
     Q_D(const QFSFileEngine);
-    if (d->is_sequential == 0) {
-        bool isSequentialFdFh = true;
-        if (d->doStat(QFileSystemMetaData::SequentialType))
-            isSequentialFdFh = d->metaData.isSequential();
-        d->is_sequential = (isSequentialFdFh ? 1 : 2);
-    }
-    return (d->is_sequential == 1);
+    if (d->doStat(QFileSystemMetaData::SequentialType))
+        return d->metaData.isSequential();
+    return true;
 }
 
 /*!

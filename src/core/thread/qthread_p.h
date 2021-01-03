@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -173,7 +173,7 @@ public:
 class QThreadData
 {
 public:
-    QThreadData(int initialRefCount = 1);
+    QThreadData();
     ~QThreadData();
 
     static QThreadData *current();
@@ -190,34 +190,6 @@ public:
         return canWait;
     }
 
-    // This class provides per-thread (by way of being a QThreadData
-    // member) storage for qFlagLocation()
-    class FlaggedDebugSignatures
-    {
-        static const uint Count = 2;
-
-        uint idx;
-        const char* locations[Count];
-
-    public:
-        FlaggedDebugSignatures() : idx(0)
-        {
-            for (uint i = 0; i < Count; ++i)
-                locations[i] = Q_NULLPTR;
-        }
-
-        void store(const char* method)
-        { locations[idx++ % Count] = method; }
-
-        bool contains(const char *method) const
-        {
-            for (uint i = 0; i < Count; ++i)
-                if (locations[i] == method)
-                    return true;
-            return false;
-        }
-    };
-
     bool quitNow;
     bool canWait;
     bool isAdopted;
@@ -228,7 +200,6 @@ public:
     QThread *thread;
     QAbstractEventDispatcher *eventDispatcher;
     QPostEventList postEventList;
-    FlaggedDebugSignatures flaggedSignatures;
 
 private:
     QAtomicInt _ref;

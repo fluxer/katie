@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -248,7 +248,7 @@ void QErrorMessage::done(int a)
     if (!d->nextPending()) {
         QDialog::done(a);
         if (this == qtMessageHandler && metFatal)
-            exit(1);
+            QApplication::exit(1);
     }
 }
 

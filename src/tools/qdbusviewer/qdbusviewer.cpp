@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the tools applications of the Katie Toolkit.
 **
@@ -485,7 +485,7 @@ void QDBusViewer::about()
                 "<h3>%1</h3>"
                 "<p>Version %2</p></center>"
                 "<p>Copyright (C) 2015 The Qt Company Ltd.</p>"
-                "<p>Copyright (C) 2016-2020 Ivailo Monev</p>")
+                "<p>Copyright (C) 2016-2021 Ivailo Monev</p>")
             .arg(tr("D-Bus Viewer")).arg(QLatin1String(QT_VERSION_STR)));
     box.setWindowTitle(tr("D-Bus Viewer"));
     box.exec();

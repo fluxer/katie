@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -627,7 +627,7 @@ void QApplicationPrivate::construct(
     if (qt_is_gui_used)
         initializeMultitouch();
 
-    eventDispatcher->startingUp();
+    threadData->eventDispatcher->startingUp();
 
 #ifndef QT_NO_LIBRARY
     //make sure the plugin is loaded
@@ -770,8 +770,7 @@ QApplication::~QApplication()
     d->toolTipWakeUp.stop();
     d->toolTipFallAsleep.stop();
 
-    d->eventDispatcher->closingDown();
-    d->eventDispatcher = 0;
+    d->threadData->eventDispatcher->closingDown();
     QApplicationPrivate::is_app_closing = true;
     QApplicationPrivate::is_app_running = false;
 

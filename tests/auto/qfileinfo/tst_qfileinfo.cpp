@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
@@ -893,7 +893,7 @@ void tst_QFileInfo::refresh()
 
     QCOMPARE(file.write("JOJOJO"), qint64(6));
     file.flush();
-    QVERIFY(info.lastModified() == lastModified);
+    QCOMPARE(info.lastModified(), lastModified);
 
     QCOMPARE(info.size(), qint64(7));
     info.refresh();

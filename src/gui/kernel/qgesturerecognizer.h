@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -34,7 +34,6 @@
 #ifndef QGESTURERECOGNIZER_H
 #define QGESTURERECOGNIZER_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qnamespace.h>
 
 #ifndef QT_NO_GESTURES

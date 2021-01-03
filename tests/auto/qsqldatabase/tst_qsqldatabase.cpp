@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
@@ -1116,11 +1116,6 @@ void tst_QSqlDatabase::bug_249059()
     QSqlDatabase db = QSqlDatabase::database(dbName);
     CHECK_DATABASE(db);
 
-    QString version=tst_Databases::getPSQLVersion( db );
-    double ver=version.section(QChar::fromLatin1('.'),0,1).toDouble();
-    if (ver < 7.3)
-        QSKIP("Test requires PostgreSQL >= 7.3", SkipSingle);
-
     QSqlQuery q(db);
     const QString tableName(qTableName("bug_249059", __FILE__));
     QVERIFY_SQL(q, exec(QString("CREATE TABLE %1 (dt timestamp, t time)").arg(tableName)));
@@ -1436,11 +1431,6 @@ void tst_QSqlDatabase::mysql_multiselect()
     const QString qtest(qTableName("qtest", __FILE__));
 
     QSqlQuery q(db);
-    QString version=tst_Databases::getMySqlVersion( db );
-    double ver=version.section(QChar::fromLatin1('.'),0,1).toDouble();
-    if (ver < 4.1)
-        QSKIP("Test requires MySQL >= 4.1", SkipSingle);
-
     QVERIFY_SQL(q, exec("SELECT * FROM " + qtest + "; SELECT * FROM " + qtest));
     QVERIFY_SQL(q, next());
     QVERIFY_SQL(q, exec("SELECT * FROM " + qtest + "; SELECT * FROM " + qtest));
@@ -1629,8 +1619,6 @@ void tst_QSqlDatabase::mysql_savepointtest()
     QFETCH(QString, dbName);
     QSqlDatabase db = QSqlDatabase::database(dbName);
     CHECK_DATABASE(db);
-    if ( db.driverName().startsWith( "QMYSQL" ) && tst_Databases::getMySqlVersion( db ).section( QChar('.'), 0, 1 ).toDouble()<4.1 )
-        QSKIP( "Test requires MySQL >= 4.1", SkipSingle );
 
     QSqlQuery q(db);
     QVERIFY_SQL(q, exec("begin"));

@@ -17,12 +17,12 @@ cd "$(dirname "$bin")"
 if [ -z "$DISPLAY" ];then
     Xvfb :123 &
     xvfbpid=$!
-    sleep 3
+    sleep 5
 
-    DISPLAY=:123 @KATIE_CROSS_EXEC@ "./$(basename "$bin")" $@
+    DISPLAY=:123 @CMAKE_CROSSCOMPILING_EMULATOR@ "./$(basename "$bin")" $@
     retval=$?
 
     kill $xvfbpid
     exit $retval
 fi
-exec @KATIE_CROSS_EXEC@ "./$(basename "$bin")" $@
+exec @CMAKE_CROSSCOMPILING_EMULATOR@ "./$(basename "$bin")" $@

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -104,9 +104,7 @@
 #include "qppmhandler_p.h"
 #include "qxbmhandler_p.h"
 #include "qxpmhandler_p.h"
-#ifndef QT_NO_IMAGEFORMAT_PNG
 #include "qpnghandler_p.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -153,11 +151,8 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 
     // check if any built-in handlers can write the image
     if (!handler && !testFormat.isEmpty()) {
-        if (false) {
-#ifndef QT_NO_IMAGEFORMAT_PNG
-        } else if (testFormat == "png") {
+        if (testFormat == "png") {
             handler = new QPngHandler;
-#endif
 #ifndef QT_NO_IMAGEFORMAT_BMP
         } else if (testFormat == "bmp") {
             handler = new QBmpHandler;
@@ -579,7 +574,10 @@ bool QImageWriter::supportsOption(QImageIOHandler::ImageOption option) const
 QList<QByteArray> QImageWriter::supportedImageFormats()
 {
     QList<QByteArray> formats;
+    formats << "png";
+#ifndef QT_NO_IMAGEFORMAT_BMP
     formats << "bmp";
+#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     formats << "ppm";
 #endif
@@ -589,17 +587,13 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
 #ifndef QT_NO_IMAGEFORMAT_XPM
     formats << "xpm";
 #endif
-#ifndef QT_NO_IMAGEFORMAT_PNG
-    formats << "png";
-#endif
 
 #ifndef QT_NO_LIBRARY
     QFactoryLoader *l = imageloader();
-    QStringList keys = l->keys();
-    for (int i = 0; i < keys.count(); ++i) {
-        QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));
-        if (plugin && (plugin->capabilities(0, keys.at(i).toLatin1()) & QImageIOPlugin::CanWrite) != 0)
-            formats << keys.at(i).toLatin1();
+    foreach (const QString &key, l->keys()) {
+        QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(key));
+        if (plugin && (plugin->capabilities(0, key.toLatin1()) & QImageIOPlugin::CanWrite) != 0)
+            formats << key.toLatin1();
     }
 #endif // QT_NO_LIBRARY
 

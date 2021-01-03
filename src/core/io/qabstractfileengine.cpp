@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -44,7 +44,6 @@
 #endif
 
 #include "qfilesystementry_p.h"
-#include "qfilesystemmetadata_p.h"
 #include "qfilesystemengine_p.h"
 
 QT_BEGIN_NAMESPACE

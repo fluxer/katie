@@ -14,4 +14,4 @@ bin="$1"
 shift
 
 cd "$(dirname "$bin")"
-exec @KATIE_CROSS_EXEC@ "./$(basename "$bin")" $@
+exec @CMAKE_CROSSCOMPILING_EMULATOR@ "./$(basename "$bin")" $@

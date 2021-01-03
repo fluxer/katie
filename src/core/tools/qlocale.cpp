@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -385,6 +385,13 @@ static const QSystemLocale *systemLocale()
         return _systemLocale;
     return QSystemLocale_globalSystemLocale();
 }
+
+static int qFreeSystemLP() {
+    if (system_lp)
+        ::free(system_lp);
+    return 0;
+}
+Q_DESTRUCTOR_FUNCTION(qFreeSystemLP);
 
 void QLocalePrivate::updateSystemPrivate()
 {

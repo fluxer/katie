@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtNetwork module of the Katie Toolkit.
 **
@@ -185,14 +185,16 @@ static QNetworkInterfacePrivate *findInterface(int socket, QList<QNetworkInterfa
     iface->index = ifindex;
     interfaces << iface;
 
+#ifdef SIOCGIFNAME // not defined on Solaris
     // Get the canonical name
     QByteArray oldName = req.ifr_name;
     if (::ioctl(socket, SIOCGIFNAME, &req) >= 0) {
         iface->name = QString::fromLatin1(req.ifr_name);
 
         // reset the name:
-        ::memcpy(req.ifr_name, oldName, qMin<int>(oldName.length() + 1, sizeof(req.ifr_name) - 1));
+        ::memcpy(req.ifr_name, oldName.constData(), qMin<int>(oldName.length() + 1, sizeof(req.ifr_name) - 1));
     } else
+#endif
     {
         // use this name anyways
         iface->name = QString::fromLatin1(req.ifr_name);
@@ -223,7 +225,7 @@ static QList<QNetworkInterfacePrivate *> interfaceListing()
     foreach (const QByteArray &it, interfaceNames(socket)) {
         struct ifreq req;
         ::memset(&req, 0, sizeof(ifreq));
-        ::memcpy(req.ifr_name, *it, qMin<int>(it->length() + 1, sizeof(req.ifr_name) - 1));
+        ::memcpy(req.ifr_name, it.constData(), qMin<int>(it.length() + 1, sizeof(req.ifr_name) - 1));
 
         QNetworkInterfacePrivate *iface = findInterface(socket, interfaces, req);
 

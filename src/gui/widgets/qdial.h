@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -76,15 +76,12 @@ public Q_SLOTS:
     void setWrapping(bool on);
 
 protected:
-    bool event(QEvent *e);
-    void resizeEvent(QResizeEvent *re);
     void paintEvent(QPaintEvent *pe);
 
     void mousePressEvent(QMouseEvent *me);
     void mouseReleaseEvent(QMouseEvent *me);
     void mouseMoveEvent(QMouseEvent *me);
 
-    void sliderChange(SliderChange change);
     void initStyleOption(QStyleOptionSlider *option) const;
 
 

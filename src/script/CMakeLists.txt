@@ -244,6 +244,8 @@ set_target_properties(KtScript PROPERTIES
     EXPORT_NAME Script
 )
 
+katie_setup_pch(KtScript)
+
 install(
     TARGETS KtScript
     EXPORT KatieTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

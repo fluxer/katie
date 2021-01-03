@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -61,7 +61,7 @@ public:
         Qt_4_8 = Qt_4_7,
         Qt_4_9 = Qt_4_8,
 #if QT_VERSION >= 0x041000
-#error Add the datastream version for this Qt version
+#error Add the datastream version for this version
         Qt_4_10 = Qt_4_9
 #endif
         Qt_Default = Qt_4_9

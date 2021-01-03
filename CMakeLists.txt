@@ -7,10 +7,10 @@
 #     find -name '*.cmake' -exec grep -E 'TODO|FIXME' {} +
 #     find -name CMakeLists.txt -exec grep -E 'TODO|FIXME' {} +
 
-cmake_minimum_required(VERSION 2.8.12.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
-if(CMAKE_CROSSCOMPILING AND NOT KATIE_CROSS_EXEC)
-    message(FATAL_ERROR "Cross-compiling requires KATIE_CROSS_EXEC to be set to QEMU executable, e.g. qemu-arm-static")
+if(CMAKE_CROSSCOMPILING AND NOT CMAKE_CROSSCOMPILING_EMULATOR)
+    message(FATAL_ERROR "Cross-compiling requires CMAKE_CROSSCOMPILING_EMULATOR to be set to QEMU executable, e.g. qemu-arm-static")
 endif()
 
 project(Katie C CXX)
@@ -30,11 +30,10 @@ set(CMAKE_C_VISIBILITY_PRESET "hidden")
 set(CMAKE_CXX_VISIBILITY_PRESET "hidden")
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
+set(CMAKE_UNITY_BUILD_BATCH_SIZE 300)
 
 # enable symbols visibility preset for all targets
-if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
-    cmake_policy(SET CMP0063 NEW)
-endif()
+cmake_policy(SET CMP0063 NEW)
 
 # LLVM linker does not have a default library search path, add some directories known to contain
 # system wide libraries. the headers search path is also incomplete
@@ -56,8 +55,8 @@ include(mkspecs/mkspecs.cmake)
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
 set(KATIE_MINOR "9")
-set(KATIE_MICRO "0")
-set(KATIE_HEX "0x040900")
+set(KATIE_MICRO "2")
+set(KATIE_HEX "0x040902")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 
 # only for the build process
@@ -130,9 +129,6 @@ add_feature_info(postgresql WITH_POSTGRESQL "build PostgreSQL support")
 option(WITH_MYSQL "Build MySQL database plugin" ON)
 add_feature_info(mysql WITH_MYSQL "build MySQL support")
 
-option(WITH_RESOLV "Build resolv support" ON)
-add_feature_info(resolv WITH_RESOLV "build resolv support")
-
 option(WITH_INTL "Build Intl support" ON)
 add_feature_info(intl WITH_INTL "build Intl support")
 
@@ -149,8 +145,8 @@ add_feature_info(benchmarks KATIE_BENCHMARKS "build automatic benchmarks")
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
-option(KATIE_ALLINONE "Build targets from single source file" OFF)
-add_feature_info(allinone KATIE_ALLINONE "build targets from single source file")
+option(KATIE_PCH "Build components with pre-compiled header" OFF)
+add_feature_info(pch KATIE_PCH "build components with pre-compiled header")
 
 option(WITH_ACCESSIBILITY "Build accessibility support" ON)
 add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
@@ -244,14 +240,6 @@ set_package_properties(Sqlite PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(Resolv)
-set_package_properties(Resolv PROPERTIES
-    PURPOSE "Required for domain resolving support"
-    DESCRIPTION "Standard C library specific resolv implementation"
-    URL ""
-    TYPE RECOMMENDED
-)
-
 find_package(JPEG)
 set_package_properties(JPEG PROPERTIES
     PURPOSE "JPEG format handler"
@@ -295,6 +283,7 @@ set_package_properties(DBus PROPERTIES
     TYPE RECOMMENDED
 )
 
+# v3.0+ required for SQLSetEnvAttr() and many other but unixODBC versioning is different
 find_package(ODBC)
 set_package_properties(ODBC PROPERTIES
     PURPOSE "Required for ODBC database support"
@@ -337,24 +326,12 @@ set_package_properties(ExecInfo PROPERTIES
     TYPE RECOMMENDED
 )
 
-add_definitions(
-    # these conditionals are probably going to become default in the future
-    -DQT_POSIX_IPC
-    # -DQT_STRICT_ITERATORS
-    # -DQT_ASCII_CAST_WARNINGS
-    # maybe one day, this forces it onto other projects which (most likely)
-    # means source code adjustments!
-    # -DQT_NO_CAST_FROM_ASCII
-    # -DQT_NO_CAST_TO_ASCII
-)
-
-# for symbols mangling while backtracing in core component
-check_include_file_cxx(cxxabi.h HAVE_CXXABI)
-
 # stored in qconfig.h.cmake
 check_type_size(size_t QT_POINTER_SIZE)
 
 # used in components, tests and JavaScriptCore
+katie_check_header("cxxabi.h")
+katie_check_header("semaphore.h")
 katie_check_function(getpwnam_r "pwd.h")
 katie_check_function(getpwuid_r "pwd.h")
 katie_check_function(getgrgid_r "grp.h")
@@ -384,6 +361,7 @@ katie_check_function(kevent "sys/event.h")
 katie_check_function(pipe2 "unistd.h")
 katie_check_function(accept4 "sys/socket.h")
 katie_check_function(paccept "sys/socket.h")
+katie_check_function(getdomainname "unistd.h")
 katie_check_struct(tm tm_gmtoff "time.h")
 katie_check_struct(tm tm_zone "time.h")
 katie_check_struct(sockaddr_ll sll_addr "netpacket/packet.h")
@@ -392,9 +370,8 @@ katie_check_struct(dirent d_type "dirent.h")
 
 cmake_reset_check_state()
 set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
+katie_check_function(pthread_attr_setstacksize "pthread.h")
 katie_check_function(pthread_setname_np "pthread.h")
-katie_check_function(pthread_stackseg_np  "pthread_np.h")
-katie_check_function(pthread_attr_get_np "pthread_np.h")
 cmake_reset_check_state()
 
 # 64-bit offset alternatives, if any of the functions is not found it will set
@@ -464,10 +441,6 @@ if(NOT WITH_CUPS OR NOT CUPS_FOUND)
     katie_definition(-DQT_NO_CUPS)
 endif()
 
-if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)
-    katie_definition(-DQT_NO_RESOLV)
-endif()
-
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_JPEG)
 endif()
@@ -480,13 +453,19 @@ if(NOT WITH_INTL OR NOT INTL_FOUND)
     katie_definition(-DQT_NO_TRANSLATION)
 endif()
 
-if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND OR NOT HAVE_CXXABI)
+if(NOT WITH_EXECINFO OR NOT EXECINFO_FOUND)
     katie_definition(-DQT_NO_EXECINFO)
 endif()
 
 # conditional features
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
+endif()
+
+add_library(pic_test ${KATIE_TYPE}  EXCLUDE_FROM_ALL "${CMAKE_SOURCE_DIR}/cmake/pic.cpp")
+get_target_property(HAVE_pic pic_test POSITION_INDEPENDENT_CODE)
+if(NOT HAVE_pic)
+    katie_definition(-DQ_NO_DATA_RELOCATION)
 endif()
 
 # keep in sync with the gui component CMake file, only definitions setup is needed here
@@ -499,7 +478,7 @@ foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor)
 endforeach()
 if(NOT X11_Xext_FOUND)
     message(WARNING "The X11 Xext extension was not found")
-    katie_definition(-DQT_NO_XSYNC -DQT_NO_XSHAPE -DQT_NO_XSHM)
+    katie_definition(-DQT_NO_XSYNC -DQT_NO_XSHAPE)
 endif()
 if(NOT X11_SM_FOUND OR NOT X11_ICE_FOUND)
     message(WARNING "X11 SM/ICE was not found thus disabling session manager support")
@@ -540,7 +519,7 @@ if(KATIE_UTILS)
     add_subdirectory(util)
 endif()
 
-# the macro calls bellow are generted via the incfsck script
+# the macro calls bellow are generated via the incfsck script
 katie_generate_obsolete(QAbstractExtensionFactory QtDesigner extension.h)
 katie_generate_obsolete(QAbstractExtensionManager QtDesigner extension.h)
 katie_generate_obsolete(QAbstractFileEngineIterator QtCore qabstractfileengine.h)

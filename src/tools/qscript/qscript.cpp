@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the examples of the Katie Toolkit.
 **
@@ -39,7 +39,6 @@
 ****************************************************************************/
 
 #include <QtCore/QFile>
-#include <QtCore/QTextStream>
 #include <QtCore/QStringList>
 #include <QtGui/QApplication>
 #include <QtScript/QScriptEngine>
@@ -123,12 +122,12 @@ static QScriptValue loadScripts(QScriptContext *context, QScriptEngine *engine)
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly))
             return context->throwError(QString::fromLatin1("could not open %0 for reading").arg(fileName));
-        QString contents = file.readAll();
+        QByteArray contents = file.readAll();
         file.close();
         QScriptContext *pc = context->parentContext();
         context->setActivationObject(pc->activationObject());
         context->setThisObject(pc->thisObject());
-        QScriptValue ret = engine->evaluate(contents);
+        QScriptValue ret = engine->evaluate(QString::fromLocal8Bit(contents));
         if (engine->hasUncaughtException())
             return ret;
     }
@@ -171,7 +170,7 @@ int main(int argc, char *argv[])
             break;
         }
 
-        QString contents;
+        QByteArray contents;
         int lineNumber = 1;
 
         if (fn == QLatin1String("-")) {
@@ -188,8 +187,8 @@ int main(int argc, char *argv[])
                 file.close();
 
                 // strip off #!/usr/bin/env qscript line
-                if (contents.startsWith(QLatin1String("#!"))) {
-                    contents.remove(0, contents.indexOf(QLatin1String("\n")));
+                if (contents.startsWith("#!")) {
+                    contents.remove(0, contents.indexOf("\n"));
                     ++lineNumber;
                 }
             }
@@ -198,7 +197,7 @@ int main(int argc, char *argv[])
         if (contents.isEmpty())
             continue;
 
-        QScriptValue r = eng->evaluate(contents, fn, lineNumber);
+        QScriptValue r = eng->evaluate(QString::fromLocal8Bit(contents), fn, lineNumber);
         if (!debugger && eng->hasUncaughtException()) {
             QStringList backtrace = eng->uncaughtExceptionBacktrace();
             fprintf (stderr, "    %s\n%s\n\n", qPrintable(r.toString()),

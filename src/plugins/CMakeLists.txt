@@ -39,7 +39,7 @@ target_include_directories(sharedbearer PUBLIC
 )
 
 add_subdirectory(bearer/generic)
-if(KATIE_PLATFORM STREQUAL "linux" AND WITH_DBUS AND DBUS_FOUND)
+if(CMAKE_SYSTEM_NAME MATCHES "Linux" AND WITH_DBUS AND DBUS_FOUND)
     add_subdirectory(bearer/connman)
     add_subdirectory(bearer/networkmanager)
 endif()

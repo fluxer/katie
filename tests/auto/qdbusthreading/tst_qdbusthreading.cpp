@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
@@ -166,8 +166,8 @@ Q_SIGNALS:
 
 #if 0
 typedef void (*qdbusThreadDebugFunc)(int, int, QDBusConnectionPrivate *);
-QDBUS_EXPORT void qdbusDefaultThreadDebug(int, int, QDBusConnectionPrivate *);
-extern QDBUS_EXPORT qdbusThreadDebugFunc qdbusThreadDebug;
+Q_DBUS_EXPORT void qdbusDefaultThreadDebug(int, int, QDBusConnectionPrivate *);
+extern Q_DBUS_EXPORT qdbusThreadDebugFunc qdbusThreadDebug;
 
 static void threadDebug(int action, int condition, QDBusConnectionPrivate *p)
 {

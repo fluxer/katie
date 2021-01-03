@@ -2,6 +2,7 @@
 #############################################################################
 ##
 ## Copyright (C) 2015 The Qt Company Ltd.
+## Copyright (C) 2016-2021 Ivailo Monev
 ##
 ## This file is the build configuration utility of the Katie Toolkit.
 ##

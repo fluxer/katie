@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -50,7 +50,7 @@ public:
         DateFormat = 0,
         StandaloneFormat
     };
-public:
+
     QDate() { jd = 0; }
     QDate(int y, int m, int d);
 
@@ -104,7 +104,6 @@ public:
     // ### Qt 5: remove these two functions
     static uint gregorianToJulian(int y, int m, int d);
     static void julianToGregorian(uint jd, int &y, int &m, int &d);
-
 
     static inline QDate fromJulianDay(int jd) { QDate d; d.jd = jd; return d; }
     inline int toJulianDay() const { return jd; }
@@ -162,6 +161,7 @@ public:
     void start();
     int restart();
     int elapsed() const;
+
 private:
     enum TimeFlag { NullTime = -1 };
     inline int ds() const { return mds == NullTime ? 0 : mds; }
@@ -237,7 +237,6 @@ public:
     static QDateTime fromTime_t(uint secsSince1Jan1970UTC);
     static QDateTime fromMSecsSinceEpoch(qint64 msecs);
     static qint64 currentMSecsSinceEpoch();
-
 
 private:
     friend class QDateTimePrivate;

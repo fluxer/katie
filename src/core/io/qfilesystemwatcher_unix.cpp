@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -103,9 +103,7 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
     QStringList p = paths;
 
 #if defined(QT_HAVE_INOTIFY_INIT1)
-    QMutableListIterator<QString> it(p);
-    while (it.hasNext()) {
-        QString path = it.next();
+    foreach (QString path, p) {
         QFileInfo fi(path);
         bool isDir = fi.isDir();
         if (isDir && directories->contains(path)) {
@@ -136,7 +134,7 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
             continue;
         }
 
-        it.remove();
+        p.removeAll(path);
 
         int id = isDir ? -wd : wd;
         if (id < 0) {
@@ -149,9 +147,7 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
         idToPath.insert(id, path);
     }
 #elif defined(QT_HAVE_KEVENT)
-    QMutableListIterator<QString> it(p);
-    while (it.hasNext()) {
-        QString path = it.next();
+    foreach (QString path, p) {
 #if defined(O_EVTONLY)
         int fd = qt_safe_open(QFile::encodeName(path), O_EVTONLY);
 #else
@@ -203,7 +199,7 @@ QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
             continue;
         }
 
-        it.remove();
+        p.removeAll(path);
         if (id < 0) {
             // qDebug() << "QKqueueFileSystemWatcherEngine: added directory path" << path;
             directories->append(path);
@@ -227,9 +223,7 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
     QStringList p = paths;
 
 #if defined(QT_HAVE_INOTIFY_INIT1)
-    QMutableListIterator<QString> it(p);
-    while (it.hasNext()) {
-        QString path = it.next();
+    foreach (QString path, p) {
         int id = pathToID.take(path);
         QString x = idToPath.take(id);
         if (x.isEmpty() || x != path)
@@ -239,7 +233,7 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
         // qDebug() << "removing watch for path" << path << "wd" << wd;
         ::inotify_rm_watch(sockfd, wd);
 
-        it.remove();
+        p.removeAll(path);
         if (id < 0) {
             directories->removeAll(path);
         } else {
@@ -251,9 +245,7 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
     if (pathToID.isEmpty())
         return p;
 
-    QMutableListIterator<QString> it(p);
-    while (it.hasNext()) {
-        QString path = it.next();
+    foreach (QString path, p) {
         int id = pathToID.take(path);
         QString x = idToPath.take(id);
         if (x.isEmpty() || x != path)
@@ -261,7 +253,7 @@ QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
 
         ::close(id < 0 ? -id : id);
 
-        it.remove();
+        p.removeAll(path);
         if (id < 0)
             directories->removeAll(path);
         else

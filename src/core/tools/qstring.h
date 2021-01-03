@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -976,7 +976,7 @@ public:
     QStringRef appendTo(QString *string) const;
 
     inline const QChar at(int i) const
-        { Q_ASSERT(uint(i) < uint(size())); return m_string->at(i + m_position); }
+        { Q_ASSERT(i < size()); return m_string->at(i + m_position); }
 
     int compare(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
     int compare(const QStringRef &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -982,7 +982,7 @@ void QSettings::beginGroup(const QString &group)
 {
     Q_D(QSettings);
 
-    if (!d->group.isEmpty()) {
+    if (Q_UNLIKELY(!d->group.isEmpty())) {
         qWarning("QSettings::beginGroup: sub-groups are not supported");
         return;
     }
@@ -999,7 +999,7 @@ void QSettings::beginGroup(const QString &group)
 void QSettings::endGroup()
 {
     Q_D(QSettings);
-    if (d->group.isEmpty()) {
+    if (Q_UNLIKELY(d->group.isEmpty())) {
         qWarning("QSettings::endGroup: No matching beginGroup()");
         return;
     }

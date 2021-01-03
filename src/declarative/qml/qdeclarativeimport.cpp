@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -932,11 +932,6 @@ bool QDeclarativeImportDatabase::importPlugin(const QString &filePath, const QSt
     }
 
     if (!engineInitialized || !typesRegistered) {
-        if (!QDeclarative_isFileCaseCorrect(absoluteFilePath)) {
-            if (errorString) 
-                *errorString = tr("File name case mismatch for \"%1\"").arg(absoluteFilePath);
-            return false;
-        }
         QPluginLoader loader(absoluteFilePath);
 
         if (!loader.load()) {

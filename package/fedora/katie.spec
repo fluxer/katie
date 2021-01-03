@@ -1,0 +1,69 @@
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/
+
+Name: katie
+Version: 4.9.2
+Release: 1%{?dist}
+Summary: C++ toolkit derived from the Qt 4.8 framework
+License: BSD and LGPLv2+
+URL: https://github.com/fluxer/katie
+
+BuildRequires: gcc-c++ cmake libicu-devel libzstd-devel zlib-devel libsq3-devel libpng-devel freetype-devel pcre-devel openssl-devel libX11-devel libXinerama-devel libXrandr-devel libXrender-devel libXfixes-devel libXcursor-devel libSM-devel libICE-devel dbus-devel libtiff-devel libjpeg-turbo-devel fontconfig-devel cups-devel libiodbc-devel libpq-devel mariadb-embedded-devel unifdef
+
+%description
+Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+clean it up, fix some bugs and backport some features from Qt5. It is based
+on the latest Git revision of Qt v4.8.
+
+This package includes libraries, tools and their documentation.
+
+%build
+%cmake -DKATIE_TOOLS_SUFFIX="-katie" -DKATIE_PCH=ON
+%cmake_build
+
+%install
+%cmake_install --strip
+rm -v %{buildroot}/%{_sysconfdir}/profile.d/katie-*.sh
+
+%files
+%doc README
+%{_bindir}/*
+%{_libdir}/katie/*
+%{_libdir}/*.so.*
+%{_datadir}/applications/*
+%{_datadir}/pixmaps/*
+%{_mandir}/man1/*
+%{_sysconfdir}/ld.so.conf.d/katie-*.conf
+
+%package devel
+Summary: C++ toolkit derived from the Qt 4.8 framework (development package)
+
+Requires: katie >= %{version}
+
+%description devel
+Katie is continuation of the Qt4 C++ toolkit with the goal to keep it alive,
+clean it up, fix some bugs and backport some features from Qt5. It is based
+on the latest Git revision of Qt v4.8.
+
+This package includes headers, pkg-config and CMake files.
+
+%files devel
+%doc README
+%license LGPL_EXCEPTION.txt
+%{_includedir}/katie/*
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/*
+%{_libdir}/cmake/Katie/*
+
+%changelog
+* Mon Dec 21 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.2-1
+- package update
+
+%changelog
+* Mon Dec 21 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.1-2
+- split package
+
+* Wed Dec 17 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.1-1
+- package update
+
+* Wed Dec 16 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.0-1
+- initial package

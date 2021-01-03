@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -45,14 +45,8 @@ QT_BEGIN_NAMESPACE
 #define DEFINE_BOOL_CONFIG_OPTION(name, var) \
     static bool name() \
     { \
-        static enum { Yes, No, Unknown } status = Unknown; \
-        if (status == Unknown) { \
-            QByteArray v = qgetenv(#var); \
-            bool value = !v.isEmpty() && v != "0" && v != "false"; \
-            if (value) status = Yes; \
-            else status = No; \
-        } \
-        return status == Yes; \
+        static bool var ## __variable__ = qgetenv(#var).toInt(); \
+        return var ## __variable__; \
     }
 
 #define Q_DECLARATIVE_PRIVATE_EXPORT Q_DECLARATIVE_EXPORT
@@ -66,19 +60,6 @@ struct QDeclarativeGraphics_DerivedObject : public QObject
         d_ptr->sendChildEvents = sce;
     }
 };
-
-/*!
-    Returns true if the case of \a fileName is equivalent to the file case of 
-    \a fileName on disk, and false otherwise.
-
-    This is used to ensure that the behavior of QML on a case-insensitive file 
-    system is the same as on a case-sensitive file system.  This function 
-    performs a "best effort" attempt to determine the real case of the file. 
-    It may have false positives (say the case is correct when it isn't), but it
-    should never have a false negative (say the case is incorrect when it is 
-    correct).
-*/
-bool QDeclarative_isFileCaseCorrect(const QString &fileName);
 
 /*!
     Makes the \a object a child of \a parent.  Note that when using this method,

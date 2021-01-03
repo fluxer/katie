@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -828,19 +828,14 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
         QString userName = tokens.first();
         userName.remove(0, 1);
 #if defined(QT_HAVE_GETPWNAM_R)
-        static int size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
+        static long size_max = sysconf(_SC_GETPW_R_SIZE_MAX);
         if (size_max == -1)
             size_max = 1024;
         char buf[size_max];
         struct passwd pw;
         struct passwd *tmpPw;
-        int err = 0;
-#if defined(Q_OS_SOLARIS) && (_POSIX_C_SOURCE - 0 < 199506L)
-        tmpPw = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max);
-#else
-        err = ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max, &tmpPw);
-#endif
-        if (err || !tmpPw)
+        ::getpwnam_r(userName.toLocal8Bit().constData(), &pw, buf, size_max, &tmpPw);
+        if (!tmpPw)
             return ret;
         const QString homePath = QString::fromLocal8Bit(pw.pw_dir);
 #else

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -37,7 +37,6 @@
 #ifndef QT_NO_FILESYSTEMITERATOR
 
 #include <stdlib.h>
-#include <errno.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -45,12 +44,10 @@ QFileSystemIterator::QFileSystemIterator(const QFileSystemEntry &entry)
     : nativePath(entry.nativeFilePath())
     , dir(0)
     , dirEntry(0)
-    , lastError(0)
 {
+    dir = QT_OPENDIR(nativePath.constData());
 
-    if ((dir = QT_OPENDIR(nativePath.constData())) == 0) {
-        lastError = errno;
-    } else if (!nativePath.endsWith('/')) {
+    if (dir && !nativePath.endsWith('/')) {
         nativePath.append('/');
     }
 }
@@ -74,7 +71,6 @@ bool QFileSystemIterator::advance(QFileSystemEntry &fileEntry, QFileSystemMetaDa
         return true;
     }
 
-    lastError = errno;
     return false;
 }
 
