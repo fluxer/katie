@@ -347,7 +347,7 @@ QList<T> QList<T>::mid(int pos, int length) const
     if (pos + length > Data::size())
         length = Data::size() - pos;
     QList<T> copy;
-    // copy.reserve(length);
+    copy.reserve(length);
     for (size_t i = pos; i < pos + length; i++)
         copy.push_back(Data::at(i));
     return copy;
