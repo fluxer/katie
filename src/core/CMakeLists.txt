@@ -337,7 +337,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystementry.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_unix.cpp
@@ -419,18 +418,14 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
 )
 
-if(KATIE_PLATFORM MATCHES "(linux|hurd)")
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        dl
-        rt
-    )
-elseif(KATIE_PLATFORM STREQUAL "netbsd")
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        rt
-    )
-endif()
+# on some platforms these are not needed as the functionality may be part of
+# the standard C library
+foreach(lib dl rt)
+    find_library(libpath NAMES ${lib})
+    if(libpath)
+        set(EXTRA_CORE_LIBS ${EXTRA_CORE_LIBS} ${lib})
+    endif()
+endforeach()
 
 if(WITH_INTL AND INTL_FOUND)
     set(EXTRA_CORE_LIBS
@@ -440,7 +435,7 @@ if(WITH_INTL AND INTL_FOUND)
     include_directories(${INTL_INCLUDES})
 endif()
 
-if(WITH_EXECINFO AND EXECINFO_FOUND AND HAVE_CXXABI)
+if(WITH_EXECINFO AND EXECINFO_FOUND)
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
         ${EXECINFO_LIBRARIES}

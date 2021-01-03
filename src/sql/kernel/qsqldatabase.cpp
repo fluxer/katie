@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtSql module of the Katie Toolkit.
 **
@@ -67,9 +67,9 @@ class QSqlDatabasePrivate
 {
 public:
     QSqlDatabasePrivate(QSqlDriver *dr = Q_NULLPTR):
+        ref(1),
         driver(dr),
         port(-1),
-        ref(1),
         precisionPolicy(QSql::LowPrecisionDouble)
     {
     }
@@ -101,6 +101,7 @@ public:
 
 QSqlDatabasePrivate::QSqlDatabasePrivate(const QSqlDatabasePrivate &other)
     : ref(1),
+    driver(other.driver),
     dbname(other.dbname),
     uname(other.uname),
     pword(other.pword),
@@ -108,7 +109,6 @@ QSqlDatabasePrivate::QSqlDatabasePrivate(const QSqlDatabasePrivate &other)
     drvName(other.drvName),
     port(other.port),
     connOptions(other.connOptions),
-    driver(other.driver),
     precisionPolicy(other.precisionPolicy)
 {
 }

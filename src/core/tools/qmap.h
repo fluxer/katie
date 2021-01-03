@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -654,7 +654,7 @@ Q_OUTOFLINE_TEMPLATE typename QMap<Key, T>::iterator QMap<Key, T>::erase(iterato
     while (next != e) {
         cur = next;
         next = cur->forward[0];
-        if (cur == it) {
+        if (iterator(cur) == it) {
             concrete(cur)->key.~Key();
             concrete(cur)->value.~T();
             d->node_delete(update, payload(), cur);

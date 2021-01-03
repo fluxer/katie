@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -118,45 +118,12 @@ void QWindowsStyle::timerEvent(QTimerEvent *event)
 */
 bool QWindowsStyle::eventFilter(QObject *o, QEvent *e)
 {
-    // Records Alt- and Focus events
     if (!o->isWidgetType())
         return QObject::eventFilter(o, e);
 
     QWidget *widget = qobject_cast<QWidget*>(o);
     Q_D(QWindowsStyle);
     switch(e->type()) {
-    case QEvent::KeyPress:
-        if (static_cast<QKeyEvent *>(e)->key() == Qt::Key_Alt) {
-            widget = widget->window();
-
-            // Alt has been pressed - find all widgets that care
-            QList<QWidget *> l = widget->findChildren<QWidget *>();
-            for (int pos=0 ; pos < l.size() ;) {
-                QWidget *w = l.at(pos);
-                if (w->isWindow() || !w->isVisible() ||
-                    w->style()->styleHint(SH_UnderlineShortcut, 0, w)) {
-                    l.removeAt(pos);
-                    continue;
-                }
-                pos++;
-            }
-            // Repaint all relevant widgets
-            for (int pos = 0; pos < l.size(); ++pos)
-                l.at(pos)->update();
-        }
-        break;
-    case QEvent::KeyRelease:
-        if (static_cast<QKeyEvent*>(e)->key() == Qt::Key_Alt) {
-            widget = widget->window();
-
-            // Repaint the menu bars.
-#ifndef QT_NO_MENUBAR
-            QList<QMenuBar *> l = widget->findChildren<QMenuBar *>();
-            for (int i = 0; i < l.size(); ++i)
-                l.at(i)->update();
-#endif
-        }
-        break;
 #ifndef QT_NO_PROGRESSBAR
     case QEvent::StyleChange:
     case QEvent::Paint:

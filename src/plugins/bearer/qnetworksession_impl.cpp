@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the plugins of the Katie Toolkit.
 **
@@ -354,7 +354,7 @@ void QNetworkSessionPrivateImpl::networkConfigurationsChanged()
         updateStateFromActiveConfig();
 
     if (!engine) {
-        startTime == Q_UINT64_C(0);
+        startTime = Q_UINT64_C(0);
     } else {
         startTime = engine->startTime(activeConfig.identifier());
     }

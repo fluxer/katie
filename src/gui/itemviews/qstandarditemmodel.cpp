@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -206,9 +206,8 @@ void QStandardItemPrivate::setItemData(const QMap<int, QVariant> &roles)
 const QMap<int, QVariant> QStandardItemPrivate::itemData() const
 {
     QMap<int, QVariant> result;
-    QVector<QWidgetItemData>::const_iterator it;
-    for (it = values.begin(); it != values.end(); ++it)
-        result.insert((*it).role, (*it).value);
+    foreach (const QWidgetItemData &it, values)
+        result.insert(it.role, it.value);
     return result;
 }
 
@@ -832,10 +831,9 @@ QVariant QStandardItem::data(int role) const
 {
     Q_D(const QStandardItem);
     role = (role == Qt::EditRole) ? Qt::DisplayRole : role;
-    QVector<QWidgetItemData>::const_iterator it;
-    for (it = d->values.begin(); it != d->values.end(); ++it) {
-        if ((*it).role == role)
-            return (*it).value;
+    foreach (const QWidgetItemData &it, d->values) {
+        if (it.role == role)
+            return it.value;
     }
     return QVariant();
 }
@@ -1691,7 +1689,7 @@ QStandardItem *QStandardItem::child(int row, int column) const
     Q_D(const QStandardItem);
     int index = d->childIndex(row, column);
     if (index == -1)
-        return 0;
+        return Q_NULLPTR;
     return d->children.at(index);
 }
 
@@ -1708,7 +1706,7 @@ QStandardItem *QStandardItem::child(int row, int column) const
 QStandardItem *QStandardItem::takeChild(int row, int column)
 {
     Q_D(QStandardItem);
-    QStandardItem *item = 0;
+    QStandardItem *item = Q_NULLPTR;
     int index = d->childIndex(row, column);
     if (index != -1) {
         item = d->children.at(index);

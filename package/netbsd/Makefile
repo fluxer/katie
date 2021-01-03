@@ -4,7 +4,7 @@
 # https://www.netbsd.org/docs/pkgsrc/
 
 DISTNAME = master
-PKGNAME = katie-4.9.1.d20201217
+PKGNAME = katie-4.9.2.d20201231
 CATEGORIES = devel x11 net www
 MAINTAINER = xakepa10@gmail.com
 COMMENT = C++ toolkit deived from the Qt 4.8 framework
@@ -20,6 +20,9 @@ CMAKE_ARGS = -DKATIE_TOOLS_SUFFIX="-katie"
 USE_LANGUAGES = c c++11
 USE_TOOLS = pkg-config msgfmt
 
+.include "options.mk"
+
+.include "../../sysutils/desktop-file-utils/desktopdb.mk"
 .include "../../archivers/zstd/buildlink3.mk"
 .include "../../textproc/icu/buildlink3.mk"
 .include "../../devel/pcre/buildlink3.mk"

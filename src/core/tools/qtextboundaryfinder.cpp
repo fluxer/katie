@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -68,7 +68,7 @@ class QTextBoundaryFinderPrivate
 {
 public:
     QTextBoundaryFinderPrivate();
-    QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other);
+    QTextBoundaryFinderPrivate(const QTextBoundaryFinder::BoundaryType type, const QString &text);
     ~QTextBoundaryFinderPrivate();
 
     QTextBoundaryFinder::BoundaryType type;
@@ -76,7 +76,8 @@ public:
     QString string;
     mutable UBreakIterator *breakiter; // ubrk_isBoundary() takes non-const argument
 
-    QTextBoundaryFinderPrivate& operator=(const QTextBoundaryFinderPrivate &other);
+private:
+    Q_DISABLE_COPY(QTextBoundaryFinderPrivate);
 };
 
 QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate()
@@ -84,28 +85,18 @@ QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate()
 {
 }
 
-QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate(const QTextBoundaryFinderPrivate &other)
+QTextBoundaryFinderPrivate::QTextBoundaryFinderPrivate(const QTextBoundaryFinder::BoundaryType type, const QString &text)
+    : type(type), pos(0), string(text), breakiter(Q_NULLPTR)
 {
-    QTextBoundaryFinderPrivate::operator=(other);
-}
-
-QTextBoundaryFinderPrivate& QTextBoundaryFinderPrivate::operator=(const QTextBoundaryFinderPrivate &other)
-{
-    type = other.type;
-    pos = other.pos;
-    string = other.string;
-
-    if (breakiter) {
-        ubrk_close(breakiter);
+    if (Q_LIKELY(!string.isEmpty())) {
+        UErrorCode error = U_ZERO_ERROR;
+        breakiter = ubrk_open(getBreakType(type), getBreakLocale(),
+            reinterpret_cast<const UChar*>(string.unicode()), string.size(), &error);
+        if (Q_UNLIKELY(U_FAILURE(error))) {
+            qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
+            breakiter = Q_NULLPTR;
+        }
     }
-
-    UErrorCode error = U_ZERO_ERROR;
-    breakiter = ubrk_safeClone(other.breakiter, Q_NULLPTR, Q_NULLPTR, &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextBoundaryFinder: ubrk_safeClone() failed %s", u_errorName(error));
-        breakiter = Q_NULLPTR;
-    }
-    return *this;
 }
 
 QTextBoundaryFinderPrivate::~QTextBoundaryFinderPrivate()
@@ -196,7 +187,20 @@ QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
 */
 QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &other)
 {
-    d = other.d;
+    d->type = other.d->type;
+    d->pos = other.d->pos;
+    d->string = other.d->string;
+
+    if (d->breakiter) {
+        ubrk_close(d->breakiter);
+    }
+
+    UErrorCode error = U_ZERO_ERROR;
+    d->breakiter = ubrk_safeClone(other.d->breakiter, Q_NULLPTR, Q_NULLPTR, &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QTextBoundaryFinder: ubrk_safeClone() failed %s", u_errorName(error));
+        d->breakiter = Q_NULLPTR;
+    }
     return *this;
 }
 
@@ -212,18 +216,8 @@ QTextBoundaryFinder::~QTextBoundaryFinder()
   Creates a QTextBoundaryFinder object of \a type operating on \a string.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &string)
-    : d(new QTextBoundaryFinderPrivate())
+    : d(new QTextBoundaryFinderPrivate(type, string))
 {
-    d->type = type;
-    d->string = string;
-
-    UErrorCode error = U_ZERO_ERROR;
-    d->breakiter = ubrk_open(getBreakType(type), getBreakLocale(),
-        reinterpret_cast<const UChar*>(string.unicode()), string.size(), &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
-        d->breakiter = Q_NULLPTR;
-    }
 }
 
 /*!
@@ -231,18 +225,8 @@ QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &strin
   with \a length.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, const int length)
-    : d(new QTextBoundaryFinderPrivate())
+    : d(new QTextBoundaryFinderPrivate(type, QString::fromRawData(chars, length)))
 {
-    d->type = type;
-    d->string = QString::fromRawData(chars, length);
-
-    UErrorCode error = U_ZERO_ERROR;
-    d->breakiter = ubrk_open(getBreakType(type), getBreakLocale(),
-        reinterpret_cast<const UChar*>(d->string.unicode()), d->string.size(), &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QTextBoundaryFinder::QTextBoundaryFinder: ubrk_open() failed %s", u_errorName(error));
-        d->breakiter = Q_NULLPTR;
-    }
 }
 
 /*!

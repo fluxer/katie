@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -52,7 +52,7 @@
 #include "qsharedmemory_p.h"
 
 #include <sys/types.h>
-#ifdef QT_POSIX_IPC
+#ifdef QT_HAVE_SEMAPHORE_H
 #  include <semaphore.h>
 #endif
 
@@ -69,7 +69,7 @@ public:
         return QSharedMemoryPrivate::makePlatformSafeKey(key, QLatin1String("qipc_systemsem_"));
     }
 
-#if defined(QT_POSIX_IPC)
+#if defined(QT_HAVE_SEMAPHORE_H)
     bool handle(QSystemSemaphore::AccessMode mode = QSystemSemaphore::Open);
     void setErrorString(const QString &function);
 #else
@@ -82,7 +82,7 @@ public:
     QString key;
     QString fileName;
     int initialValue;
-#if defined(QT_POSIX_IPC)
+#if defined(QT_HAVE_SEMAPHORE_H)
     sem_t *semaphore;
     bool createdSemaphore;
 #else

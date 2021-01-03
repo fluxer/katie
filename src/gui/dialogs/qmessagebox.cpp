@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -1476,13 +1476,11 @@ void QMessageBox::aboutQt(QWidget *parent, const QString &title)
         "<p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
         "development of applications provided you can comply with the terms "
         "and conditions of the GNU LGPL version 2.1.</p>"
-        "<p>Copyright (C) %1 The Qt Company Ltd and other contributors.</p>"
-        "<p>Copyright (C) %2 Ivailo Monev</p>"
+        "<p>Copyright (C) 2015 The Qt Company Ltd and other contributors.</p>"
+        "<p>Copyright (C) 2016-2021 Ivailo Monev</p>"
         "<p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p>"
-        "<p>See <a href=\"http://%3/\">%3</a> for more information.</p>"
-        ).arg(QLatin1String("2015"),
-              QLatin1String("2016-2020"),
-              QLatin1String("fluxer.github.io/katie"));
+        "<p>See <a href=\"http://fluxer.github.io/katie/\">fluxer.github.io/katie</a> for more information.</p>"
+        );
     QMessageBox *msgBox = new QMessageBox(parent);
     msgBox->setAttribute(Qt::WA_DeleteOnClose);
     msgBox->setWindowTitle(title.isEmpty() ? tr("About Katie") : title);

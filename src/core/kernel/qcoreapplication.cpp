@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -1280,7 +1280,7 @@ bool QCoreApplication::event(QEvent *e)
 
 void QCoreApplication::quit()
 {
-    exit(0);
+    QCoreApplication::exit(0);
 }
 
 /*!
@@ -1541,7 +1541,7 @@ QString QCoreApplication::applicationFilePath()
 */
 qint64 QCoreApplication::applicationPid()
 {
-    return getpid();
+    return ::getpid();
 }
 
 /*!
@@ -1562,20 +1562,6 @@ qint64 QCoreApplication::applicationPid()
     pass, for example, Japanese command line arguments on a system that runs in a
     Latin1 locale. Most modern Unix systems do not have this limitation, as they are
     Unicode-based.
-
-    On NT-based Windows, this limitation does not apply either.
-    On Windows, the arguments() are not built from the contents of argv/argc, as
-    the content does not support Unicode. Instead, the arguments() are constructed
-    from the return value of
-    \l{http://msdn2.microsoft.com/en-us/library/ms683156(VS.85).aspx}{GetCommandLine()}.
-    As a result of this, the string given by arguments().at(0) might not be
-    the program name on Windows, depending on how the application was started.
-
-    For Symbian applications started with \c RApaLsSession::StartApp one can specify
-    arguments using \c CApaCommandLine::SetTailEndL function. Such arguments are only
-    available via this method; they will not be passed to \c main function. Also note
-    that only 8-bit string data set with \c CApaCommandLine::SetTailEndL is supported
-    by this function.
 
     \sa applicationFilePath()
 */

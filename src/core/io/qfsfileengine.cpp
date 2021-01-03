@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -77,7 +77,6 @@ QFSFileEnginePrivate::QFSFileEnginePrivate() : QAbstractFileEnginePrivate()
 */
 void QFSFileEnginePrivate::init()
 {
-    is_sequential = 0;
     metaData.clear();
     openMode = QIODevice::NotOpen;
     fd = -1;
@@ -462,13 +461,9 @@ QAbstractFileEngine::Iterator *QFSFileEngine::beginEntryList(QDir::Filters filte
 bool QFSFileEngine::isSequential() const
 {
     Q_D(const QFSFileEngine);
-    if (d->is_sequential == 0) {
-        bool isSequentialFdFh = true;
-        if (d->doStat(QFileSystemMetaData::SequentialType))
-            isSequentialFdFh = d->metaData.isSequential();
-        d->is_sequential = (isSequentialFdFh ? 1 : 2);
-    }
-    return (d->is_sequential == 1);
+    if (d->doStat(QFileSystemMetaData::SequentialType))
+        return d->metaData.isSequential();
+    return true;
 }
 
 /*!

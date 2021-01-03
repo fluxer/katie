@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -77,7 +77,7 @@ public:
 
     QBspTree();
 
-    void create(int n, int d = -1);
+    void create(int n);
     void destroy();
 
     inline void init(const QRect &area, NodeType type) { init(area, depth, type, 0); }

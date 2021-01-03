@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -2396,12 +2396,6 @@ const QMetaObject *QDeclarativeEnginePrivate::metaObjectForType(int t) const
         QDeclarativeType *type = QDeclarativeMetaType::qmlType(t);
         return type?type->metaObject():0;
     }
-}
-
-bool QDeclarative_isFileCaseCorrect(const QString &fileName)
-{
-    Q_UNUSED(fileName)
-    return true;
 }
 
 QT_END_NAMESPACE

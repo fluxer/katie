@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -1235,8 +1235,7 @@ void QObjectPrivate::setThreadData_helper(QThreadData *currentData, QThreadData 
     threadData->deref();
     threadData = targetData;
 
-    for (int i = 0; i < children.size(); ++i) {
-        QObject *child = children.at(i);
+    foreach (QObject *child, children) {;
         child->d_func()->setThreadData_helper(currentData, targetData);
     }
 }

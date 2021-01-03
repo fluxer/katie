@@ -4,7 +4,7 @@
 ** Copyright (c) 2012-2015 Ansel Sermersheim
 ** Copyright (c) 2012-2014 Digia Plc and/or its subsidiary(-ies).
 ** Copyright (c) 2008-2012 Nokia Corporation and/or its subsidiary(-ies).
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -136,17 +136,10 @@ class Q_CORE_EXPORT QJsonValue
 
    void detach();
 
-   union {
-      quint64 ui;
-      bool b;
-      double dbl;
-      /* Qt 5 Beta 1
-           QStringData *stringData;
-      */
-      // Temporary for QStringData:
-      QString *stringData;
-      QJsonPrivate::Base *base;
-   };
+   bool b;
+   double dbl;
+   QString *stringData;
+   QJsonPrivate::Base *base;
    QJsonPrivate::Data *d; // needed for Objects and Arrays
    Type t;
 };
