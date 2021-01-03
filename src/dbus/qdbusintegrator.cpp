@@ -869,14 +869,15 @@ void QDBusConnectionPrivate::deliverCall(QObject *object, int /*flags*/, const Q
     params.append(0);
 
     // add the input parameters
-    int i;
-    int pCount = qMin(msg.arguments().count(), metaTypes.count() - 1);
+    int i = 0;
+    QList<QVariant> msgargs = msg.arguments();
+    int pCount = qMin(msgargs.count(), metaTypes.count() - 1);
     for (i = 1; i <= pCount; ++i) {
         int id = metaTypes[i];
         if (id == QDBusMetaTypeId::message)
             break;
 
-        const QVariant &arg = msg.arguments().at(i - 1);
+        const QVariant &arg = msgargs.at(i - 1);
         if (arg.userType() == id)
             // no conversion needed
             params.append(const_cast<void *>(arg.constData()));
