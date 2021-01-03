@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -42,7 +42,7 @@
 
 #include <sys/types.h>
 #include <sys/ipc.h>
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
 #include <sys/sem.h>
 #endif
 #include <fcntl.h>
@@ -69,7 +69,7 @@
 QT_BEGIN_NAMESPACE
 
 QSystemSemaphorePrivate::QSystemSemaphorePrivate() :
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
     unix_key(-1), semaphore(-1), createdFile(false),
 #else
     semaphore(QT_SEM_FAILED),
@@ -123,7 +123,7 @@ void QSystemSemaphorePrivate::setErrorString(const QString &function)
 
     Initialise the semaphore
 */
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
 key_t QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
 {
     if (-1 != unix_key)
@@ -232,7 +232,7 @@ bool QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
     createdSemaphore = (oflag & O_EXCL) != 0;
     return true;
 }
-#endif // QT_POSIX_IPC
+#endif // QT_HAVE_SEMAPHORE_H
 
 /*!
     \internal
@@ -241,7 +241,7 @@ bool QSystemSemaphorePrivate::handle(QSystemSemaphore::AccessMode mode)
 */
 void QSystemSemaphorePrivate::cleanHandle()
 {
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
     unix_key = -1;
 
     // remove the file if we made it
@@ -282,7 +282,7 @@ void QSystemSemaphorePrivate::cleanHandle()
         }
         createdSemaphore = false;
     }
-#endif // QT_POSIX_IPC
+#endif // QT_HAVE_SEMAPHORE_H
 }
 
 /*!
@@ -290,7 +290,7 @@ void QSystemSemaphorePrivate::cleanHandle()
 */
 bool QSystemSemaphorePrivate::modifySemaphore(int count)
 {
-#ifndef QT_POSIX_IPC
+#ifndef QT_HAVE_SEMAPHORE_H
     if (-1 == handle())
         return false;
 
@@ -352,7 +352,7 @@ bool QSystemSemaphorePrivate::modifySemaphore(int count)
             return false;
         }
     }
-#endif // QT_POSIX_IPC
+#endif // QT_HAVE_SEMAPHORE_H
 
     return true;
 }

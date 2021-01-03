@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -952,7 +952,6 @@ public:
 
     QString resolveUndeclaredEntity(const QString &name);
     void parseEntity(const QString &value);
-    QXmlStreamReaderPrivate *entityParser;
 
     bool scanAfterLangleBang();
     bool scanPublicOrSystem();
@@ -1220,7 +1219,7 @@ bool QXmlStreamReaderPrivate::parse()
             state_stack[tos] = 0;
             return true;
         } else if (act > 0) {
-            if (++tos == stack_size-1)
+            if (++tos >= stack_size-1)
                 reallocateStack();
 
             Value &val = sym_stack[tos];

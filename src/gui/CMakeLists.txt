@@ -1013,8 +1013,10 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsview.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/qbitmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qitemeditorfactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication_x11.cpp
@@ -1024,11 +1026,17 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion_x11.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp

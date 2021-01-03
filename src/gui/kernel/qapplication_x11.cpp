@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -406,7 +406,7 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
 
     switch (err->error_code) {
     case BadAtom:
-        if (err->request_code == 20 /* X_GetProperty */
+        if (err->request_code == X_GetProperty
             && (err->resourceid == XA_RESOURCE_MANAGER
                 || err->resourceid == XA_RGB_DEFAULT_MAP
                 || err->resourceid == ATOM(_NET_SUPPORTED)
@@ -419,8 +419,8 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
         break;
 
     case BadWindow:
-        if (err->request_code == 2 /* X_ChangeWindowAttributes */
-            || err->request_code == 38 /* X_QueryPointer */) {
+        if (err->request_code == X_ChangeWindowAttributes
+            || err->request_code == X_QueryPointer) {
             for (int i = 0; i < ScreenCount(dpy); ++i) {
                 if (err->resourceid == RootWindow(dpy, i)) {
                     // Perhaps we're running under SECURITY reduction? :/
@@ -429,7 +429,7 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
             }
         }
         qt_x11Data->seen_badwindow = true;
-        if (err->request_code == 25 /* X_SendEvent */) {
+        if (err->request_code == X_SendEvent) {
             for (int i = 0; i < ScreenCount(dpy); ++i) {
                 if (err->resourceid == RootWindow(dpy, i)) {
                     // Perhaps we're running under SECURITY reduction? :/
@@ -471,8 +471,6 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
             extensionName = "RENDER";
         else if (err->request_code == qt_x11Data->xrandr_major)
             extensionName = "RANDR";
-        else if (err->request_code == qt_x11Data->mitshm_major)
-            extensionName = "MIT-SHM";
 
         char minor_str[256];
         if (extensionName) {
@@ -995,10 +993,6 @@ void qt_init(QApplicationPrivate *priv, int,
     qt_x11Data->use_xfixes = false;
     qt_x11Data->xfixes_eventbase = 0;
 
-    // MIT-SHM
-    qt_x11Data->use_mitshm = false;
-    qt_x11Data->mitshm_major = 0;
-
     // XINERAMA
     qt_x11Data->use_xinerama = false;
 
@@ -1223,36 +1217,6 @@ void qt_init(QApplicationPrivate *priv, int,
             qt_x11Data->xrender_minor = xrender_minor;
         }
 #endif // QT_NO_XRENDER
-
-#ifndef QT_NO_XSHM
-        int mitshm_minor;
-        int mitshm_major;
-        int mitshm_eventbase;
-        int mitshm_errorbase;
-        int mitshm_pixmaps;
-        if (qgetenv("QT_X11_NO_MITSHM").isNull()
-            && XQueryExtension(qt_x11Data->display, "MIT-SHM", &qt_x11Data->mitshm_major,
-                               &mitshm_eventbase, &mitshm_errorbase)
-            && XShmQueryVersion(qt_x11Data->display, &mitshm_major, &mitshm_minor,
-                                &mitshm_pixmaps))
-        {
-            QString displayName = QLatin1String(XDisplayName(NULL));
-
-            // MITSHM only works for local displays, so do a quick check here
-            // to determine whether the display is local or not (not 100 % accurate).
-            // BGR server layouts are not supported either, since it requires the raster
-            // engine to work on a QImage with BGR layout.
-            if (displayName.isEmpty() || displayName.lastIndexOf(QLatin1Char(':')) == 0) {
-                Visual *defaultVisual = DefaultVisual(qt_x11Data->display, DefaultScreen(qt_x11Data->display));
-                qt_x11Data->use_mitshm = ((defaultVisual->red_mask == 0xff0000
-                                    || defaultVisual->red_mask == 0xf800)
-                                   && (defaultVisual->green_mask == 0xff00
-                                       || defaultVisual->green_mask == 0x7e0)
-                                   && (defaultVisual->blue_mask == 0xff
-                                       || defaultVisual->blue_mask == 0x1f));
-            }
-        }
-#endif // QT_NO_XSHM
 
 #ifndef QT_NO_XINERAMA
         int xinerama_eventbase;

@@ -1,8 +1,8 @@
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/
 
 Name: katie
-Version: 4.9.1
-Release: 2%{?dist}
+Version: 4.9.2
+Release: 1%{?dist}
 Summary: C++ toolkit derived from the Qt 4.8 framework
 License: BSD and LGPLv2+
 URL: https://github.com/fluxer/katie
@@ -53,6 +53,10 @@ This package includes headers, pkg-config and CMake files.
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*
 %{_libdir}/cmake/Katie/*
+
+%changelog
+* Mon Dec 21 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.2-1
+- package update
 
 %changelog
 * Mon Dec 21 2020 Ivailo Monev <xakepa10@gmail.com> - 4.9.1-2

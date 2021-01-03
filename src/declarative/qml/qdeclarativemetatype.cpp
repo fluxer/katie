@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -85,8 +85,6 @@ struct QDeclarativeMetaTypeData
     Names nameToType;
     typedef QHash<const QMetaObject *, QDeclarativeType *> MetaObjects;
     MetaObjects metaObjectToType;
-    typedef QHash<int, QDeclarativeMetaType::StringConverter> StringConverters;
-    StringConverters stringConverters;
 
     struct ModuleInfo {
         ModuleInfo(int major, int minor)
@@ -904,43 +902,6 @@ bool QDeclarativeMetaType::isList(int userType)
     QReadLocker lock(metaTypeDataLock());
     QDeclarativeMetaTypeData *data = metaTypeData();
     return userType >= 0 && userType < data->lists.size() && data->lists.testBit(userType);
-}
-
-/*!
-    A custom string convertor allows you to specify a function pointer that
-    returns a variant of \a type. For example, if you have written your own icon
-    class that you want to support as an object property assignable in QML:
-
-    \code
-    int type = qRegisterMetaType<SuperIcon>("SuperIcon");
-    QML::addCustomStringConvertor(type, &SuperIcon::pixmapFromString);
-    \endcode
-
-    The function pointer must be of the form:
-    \code
-    QVariant (*StringConverter)(const QString &);
-    \endcode
- */
-void QDeclarativeMetaType::registerCustomStringConverter(int type, StringConverter converter)
-{
-    QWriteLocker lock(metaTypeDataLock());
-
-    QDeclarativeMetaTypeData *data = metaTypeData();
-    if (data->stringConverters.contains(type))
-        return;
-    data->stringConverters.insert(type, converter);
-}
-
-/*!
-    Return the custom string converter for \a type, previously installed through
-    registerCustomStringConverter()
- */
-QDeclarativeMetaType::StringConverter QDeclarativeMetaType::customStringConverter(int type)
-{
-    QReadLocker lock(metaTypeDataLock());
-
-    QDeclarativeMetaTypeData *data = metaTypeData();
-    return data->stringConverters.value(type);
 }
 
 /*!

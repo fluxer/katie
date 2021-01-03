@@ -53,7 +53,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/io/qfile.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfileinfo.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystementry.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemengine.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine_iterator.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qiodevice.cpp

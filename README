@@ -14,7 +14,7 @@ There are several things you should be aware before considering Katie:
   - QMake build system replaced with CMake
   - zlib, zstd, OpenSSL, PCRE, Freetype, ICU, X11, libpng and SQLite are
     required for building
-  - OpenSSL, D-Bus, CUPS and resolv must be linked to during build
+  - OpenSSL, D-Bus and CUPS must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
@@ -24,6 +24,7 @@ There are several things you should be aware before considering Katie:
   - updated localizations data from Common Locale Data Repository v38
   - SQLite driver uses UTF-8 encoding instead of UTF-16
   - default text codec for C-strings is UTF-8
+  - QTranslator uses gettext for translations
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine
   - native graphics system is no more, rasterizer is just as fast as native
@@ -50,7 +51,6 @@ There are several things you should be aware before considering Katie:
   - building with OpenSSL v1.1+ is possible
   - building with IODBC instead of unixODBC is possible
   - building with LTO is possible and supported, if the toolchain can handle it
-  - building without resolv is possible
   - alternative libc implementations support
   - additional text codecs via ICU converter
   - Unicode v5.0+ characters and partial scripts support
@@ -84,7 +84,7 @@ QTBUG-25114, QTBUG-24672, QTBUG-23524 (WIP), QTBUG-56088, QTBUG-42189,
 QTBUG-39285, QTBUG-18173, QTBUG-28968, QTBUG-34336, QTBUG-40974, QTBUG-44286,
 QTBUG-12564, QTBUG-20028, QTBUG-71967, QTBUG-70956, QTBUG-71446, QTBUG-61307,
 QTBUG-27287, QTBUG-25143, QTBUG-22833, QTBUG-57399, QTBUG-59159, QTBUG-15773,
-QTBUG-70506, QTBUG-46054, QTBUG-11223, QTBUG-63108
+QTBUG-70506, QTBUG-46054, QTBUG-11223, QTBUG-63108, QTBUG-6932
 
 Unless you use QMake and QDoc porting to Katie or even supporting it along with
 Qt4 in the same codebase is trivial and requires only minor changes because

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -437,8 +437,7 @@ QFile::setFileName(const QString &name)
     \sa decodeName()
 */
 
-QByteArray
-QFile::encodeName(const QString &fileName)
+QByteArray QFile::encodeName(const QString &fileName)
 {
     return fileName.toLocal8Bit();
 }
@@ -1380,8 +1379,7 @@ bool QFilePrivate::putCharHelper(char c)
 /*!
   \reimp
 */
-qint64
-QFile::writeData(const char *data, qint64 len)
+qint64 QFile::writeData(const char *data, qint64 len)
 {
     Q_D(QFile);
     unsetError();
@@ -1431,13 +1429,27 @@ QAbstractFileEngine *QFile::fileEngine() const
     returns false, or a read/write operation returns -1, this function can
     be called to find out the reason why the operation failed.
 
-    \sa unsetError()
+    \sa errorString(), unsetError()
 */
 
 QFile::FileError QFile::error() const
 {
     Q_D(const QFile);
     return d->error;
+}
+
+/*!
+    \since 4.9.1
+
+    Returns the file error string.
+
+    \sa error(), unsetError()
+*/
+
+QString QFile::errorString() const
+{
+    Q_D(const QFile);
+    return d->errorString;
 }
 
 /*!

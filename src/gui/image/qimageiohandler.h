@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -36,7 +36,6 @@
 
 #include <QtCore/qplugin.h>
 #include <QtCore/qfactoryinterface.h>
-#include <QtCore/qscopedpointer.h>
 
 QT_BEGIN_HEADER
 
@@ -98,11 +97,10 @@ public:
     virtual int currentImageNumber() const;
     virtual QRect currentImageRect() const;
 
-protected:
-    QImageIOHandler(QImageIOHandlerPrivate &dd);
-    QScopedPointer<QImageIOHandlerPrivate> d_ptr;
 private:
     Q_DISABLE_COPY(QImageIOHandler)
+
+    QImageIOHandlerPrivate *d_ptr;
 };
 
 struct Q_GUI_EXPORT QImageIOHandlerFactoryInterface : public QFactoryInterface

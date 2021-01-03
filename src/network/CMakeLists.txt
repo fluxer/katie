@@ -202,17 +202,6 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket_openssl.cpp
 )
 
-if(WITH_RESOLV AND RESOLV_FOUND)
-    set(EXTRA_NETWORK_LIBS
-        ${EXTRA_NETWORK_LIBS}
-        ${RESOLV_LIBRARIES}
-    )
-    include_directories(${RESOLV_INCLUDES})
-    if(RESOLV_THREAD_SAFE)
-        add_definitions(-DQT_HAVE_RES_NINIT)
-    endif()
-endif()
-
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)
 katie_generate_public("${NETWORK_PUBLIC_HEADERS}" QtNetwork)
 katie_generate_package(KtNetwork "KtCore")

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -429,7 +429,7 @@ void QThread::setStackSize(uint stackSize)
         stack_min = PTHREAD_STACK_MIN;
     // 0 means default stack size
     if (Q_UNLIKELY(stackSize != 0 && stackSize < stack_min)) {
-        qWarning("QThread::setStackSize: %u is less than the minimum %u", stackSize, stack_min);
+        qWarning("QThread::setStackSize: %u is less than the minimum %ld", stackSize, stack_min);
         stackSize = stack_min;
     }
 #endif

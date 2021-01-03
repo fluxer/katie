@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtSql module of the Katie Toolkit.
 **
@@ -101,6 +101,7 @@ public:
         Version11 = 24,
         Version12 = 25,
         Version13 = 26,
+        Version131 = 27
     };
 
     explicit QPSQLDriver(QObject *parent=0);

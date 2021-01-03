@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -201,7 +201,7 @@ void QSystemSemaphore::setKey(const QString &key, int initialValue, AccessMode m
         return;
     d->error = NoError;
     d->errorString = QString();
-#if !defined(QT_POSIX_IPC)
+#if !defined(QT_HAVE_SEMAPHORE_H)
     // optimization to not destroy/create the file & semaphore
     if (key == d->key && mode == Create && d->createdSemaphore && d->createdFile) {
         d->initialValue = initialValue;
@@ -272,7 +272,7 @@ bool QSystemSemaphore::release(int n)
 {
     if (n == 0)
         return true;
-    if (n < 0) {
+    if (Q_UNLIKELY(n < 0)) {
         qWarning("QSystemSemaphore::release: n is negative.");
         return false;
     }

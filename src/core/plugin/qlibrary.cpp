@@ -2,7 +2,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -273,13 +273,13 @@ QLibraryPrivate *QLibraryPrivate::findOrCreate(const QString &fileName, const QS
         suffixes << QLatin1String(".so");
     }
 
-    for(int prefix = 0; prefix < prefixes.size(); prefix++) {
-        for(int suffix = 0; suffix < suffixes.size(); suffix++) {
-            if (!prefixes.at(prefix).isEmpty() && name.startsWith(prefixes.at(prefix)))
+    foreach (const QString &prefix, prefixes) {
+        foreach (const QString &suffix, suffixes) {
+            if (!prefix.isEmpty() && name.startsWith(prefix))
                 continue;
-            if (!suffixes.at(suffix).isEmpty() && name.endsWith(suffixes.at(suffix)))
+            if (!suffix.isEmpty() && name.endsWith(suffix))
                 continue;
-            const QString attempt = path + prefixes.at(prefix) + name + suffixes.at(suffix);
+            const QString attempt = path + prefix + name + suffix;
             if (QFile::exists(attempt)) {
                 return new QLibraryPrivate(attempt, version);
             }

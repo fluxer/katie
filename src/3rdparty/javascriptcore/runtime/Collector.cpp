@@ -44,15 +44,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#if defined(Q_OS_SOLARIS)
-#include <thread.h>
-#else
 #include <pthread.h>
-#endif
-
-#if defined(QT_HAVE_PTHREAD_STACKSEG_NP) || defined(QT_HAVE_PTHREAD_ATTR_GET_NP)
-#include <pthread_np.h>
-#endif
 
 #define COLLECT_ON_EVERY_ALLOCATION 0
 
@@ -329,44 +321,6 @@ void Heap::shrinkBlocks(size_t neededBlocks)
         m_heap.blocks[i]->marked.set(HeapConstants::cellsPerBlock - 1);
 }
 
-static inline void* currentThreadStackBase()
-{
-#if defined(Q_OS_SOLARIS)
-    stack_t s;
-    thr_stksegment(&s);
-    return s.ss_sp;
-#elif defined(QT_HAVE_PTHREAD_STACKSEG_NP)
-    pthread_t thread = pthread_self();
-    stack_t stack;
-    pthread_stackseg_np(thread, &stack);
-    return stack.ss_sp;
-#else
-    static thread_local QMutex currentThreadStackMutex;
-    QMutexLocker locker(&currentThreadStackMutex);
-    static void* stackBase = 0;
-    static size_t stackSize = 0;
-    static pthread_t stackThread;
-    pthread_t thread = pthread_self();
-    if (stackBase == 0 || thread != stackThread) {
-        pthread_attr_t sattr;
-        pthread_attr_init(&sattr);
-#if defined(QT_HAVE_PTHREAD_ATTR_GET_NP)
-        // e.g. on FreeBSD 5.4, neundorf@kde.org
-        pthread_attr_get_np(thread, &sattr);
-#else
-        // FIXME: this function is non-portable; other POSIX systems may have different np alternatives
-        pthread_getattr_np(thread, &sattr);
-#endif
-        int rc = pthread_attr_getstack(&sattr, &stackBase, &stackSize);
-        (void)rc; // FIXME: Deal with error code somehow? Seems fatal.
-        Q_ASSERT(stackBase);
-        pthread_attr_destroy(&sattr);
-        stackThread = thread;
-    }
-    return static_cast<char*>(stackBase) + stackSize;
-#endif
-}
-
 inline bool isPointerAligned(void* p)
 {
     return (((intptr_t)(p) & (sizeof(char*) - 1)) == 0);
@@ -427,9 +381,19 @@ void Heap::markConservatively(MarkStack& markStack, void* start, void* end)
 
 void NEVER_INLINE Heap::markCurrentThreadConservativelyInternal(MarkStack& markStack)
 {
-    void* dummy;
-    void* stackPointer = &dummy;
-    void* stackBase = currentThreadStackBase();
+    // pointer size must be pointer aligned
+#if defined(PTHREAD_STACK_MIN) && defined(_SC_THREAD_ATTR_STACKSIZE)
+    static long stackPointerSize = sysconf(_SC_THREAD_ATTR_STACKSIZE) * QT_POINTER_SIZE;
+    if (stackPointerSize == -1)
+        stackPointerSize = PTHREAD_STACK_MIN * QT_POINTER_SIZE;
+
+    char stackPointer[stackPointerSize];
+    char* stackBase = stackPointer + stackPointerSize;
+#else
+    enum { stackPointerSize = USHRT_MAX * QT_POINTER_SIZE};
+    static thread_local char stackPointer[stackPointerSize];
+    static thread_local char* stackBase = stackPointer + stackPointerSize;
+#endif
     markConservatively(markStack, stackPointer, stackBase);
 }
 

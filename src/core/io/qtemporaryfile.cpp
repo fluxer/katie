@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -499,7 +499,7 @@ QTemporaryFile *QTemporaryFile::createLocalFile(QFile &file)
 {
     if (QAbstractFileEngine *engine = file.fileEngine()) {
         if(engine->fileFlags(QAbstractFileEngine::FlagsMask) & QAbstractFileEngine::LocalDiskFlag)
-            return 0; //local already
+            return Q_NULLPTR; //local already
         //cache
         bool wasOpen = file.isOpen();
         qint64 old_off = 0;
@@ -508,15 +508,15 @@ QTemporaryFile *QTemporaryFile::createLocalFile(QFile &file)
         else
             file.open(QIODevice::ReadOnly);
         //dump data
-        QTemporaryFile *ret = new QTemporaryFile;
+        QTemporaryFile *ret = new QTemporaryFile();
         ret->open();
         file.seek(0);
-        char buffer[1024];
+        char readbuff[QT_BUFFSIZE];
         while(true) {
-            qint64 len = file.read(buffer, 1024);
+            qint64 len = file.read(readbuff, sizeof(readbuff));
             if(len < 1)
                 break;
-            ret->write(buffer, len);
+            ret->write(readbuff, len);
         }
         ret->seek(0);
         //restore

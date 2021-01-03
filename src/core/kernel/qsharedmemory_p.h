@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -118,7 +118,7 @@ public:
     static int createUnixKeyFile(const QString &fileName);
     static QString makePlatformSafeKey(const QString &key,
             const QString &prefix = QLatin1String("qipc_sharedmemory_"));
-#if defined(QT_POSIX_IPC)
+#if defined(QT_HAVE_SEMAPHORE_H)
     int handle();
 #else
     key_t handle();
@@ -143,7 +143,7 @@ public:
 #endif // QT_NO_SYSTEMSEMAPHORE
 
 private:
-#if defined(QT_POSIX_IPC)
+#if defined(QT_HAVE_SEMAPHORE_H)
     int hand;
 #else
     key_t unix_key;
