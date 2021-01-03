@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -461,7 +461,7 @@ void QPSPrintEnginePrivate::emitHeader(bool finished)
     QPrinter *printer = static_cast<QPrinter*>(pdev);
 
     if (creator.isEmpty())
-        creator = QLatin1String("Qt " QT_VERSION_STR);
+        creator = QLatin1String("Katie " QT_VERSION_STR);
 
     QByteArray header;
     QPdf::ByteStream s(&header);
@@ -530,7 +530,7 @@ void QPSPrintEnginePrivate::emitHeader(bool finished)
 
         "%%BeginProlog\n"
         "% Prolog copyright (C) 2015 The Qt Company Ltd.\n"
-        "% Prolog copyright (C) 2016-2020 Ivailo Monev.\n"
+        "% Prolog copyright (C) 2016-2021 Ivailo Monev.\n"
         "% You may copy this prolog in any way that is directly related to this document.\n"
         "% For other use of this prolog, see your licensing agreement for Katie.\n"
       << ps_header << '\n';

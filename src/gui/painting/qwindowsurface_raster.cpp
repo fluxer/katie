@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -146,10 +146,10 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
         Q_ASSERT(src->depth() >= 16);
         const QImage sub_src(src->scanLine(br.y()) + br.x() * (uint(src->depth()) / 8),
                                 br.width(), br.height(), src->bytesPerLine(), src->format());
-        QX11PixmapData *data = new QX11PixmapData(QPixmapData::PixmapType);
-        data->xinfo = widget->x11Info();
-        data->fromImage(sub_src, Qt::NoOpaqueDetection);
-        XCopyArea(qt_x11Data->display, data->handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
+        QX11PixmapData data(QPixmapData::PixmapType);
+        data.xinfo = widget->x11Info();
+        data.fromImage(sub_src, Qt::NoOpaqueDetection);
+        XCopyArea(qt_x11Data->display, data.handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
     } else {
         // qpaintengine_x11.cpp
         extern void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage *image, Drawable hd, GC gc, Display *dpy, Visual *visual, int depth);

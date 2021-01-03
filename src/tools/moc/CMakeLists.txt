@@ -53,7 +53,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/io/qfile.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfileinfo.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystementry.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemengine.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine_iterator.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qiodevice.cpp
@@ -63,6 +62,7 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemiterator_unix.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine_unix.cpp
     ${CMAKE_SOURCE_DIR}/src/core/kernel/qmetatype.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/tools/qbitarray.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qbytearray.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qbytearraymatcher.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qchar.cpp

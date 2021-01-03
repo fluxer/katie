@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -67,15 +67,13 @@ QList<int> QKeyMapper::possibleKeys(QKeyEvent *e)
 {
     QList<int> result;
 
-    if (!e->nativeScanCode()) {
-        if (e->key() && (e->key() != Qt::Key_unknown))
-            result << int(e->key() + e->modifiers());
-        else if (!e->text().isEmpty())
-            result << int(e->text().at(0).unicode() + e->modifiers());
-        return result;
+    if (e->key() != Qt::Key_unknown) {
+        result << int(e->key() + e->modifiers());
+    } else if (!e->text().isEmpty()) {
+        result << int(e->text().at(0).unicode() + e->modifiers());
     }
 
-    return instance()->d_func()->possibleKeys(e);
+    return result;
 }
 
 extern bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event); // in qapplication_*.cpp
@@ -85,9 +83,7 @@ void QKeyMapper::changeKeyboard()
 
     // inform all toplevel widgets of the change
     QEvent e(QEvent::KeyboardLayoutChange);
-    QWidgetList list = QApplication::topLevelWidgets();
-    for (int i = 0; i < list.size(); ++i) {
-        QWidget *w = list.at(i);
+    foreach (QWidget *w, QApplication::topLevelWidgets()) {
         qt_sendSpontaneousEvent(w, &e);
     }
 }

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -1215,13 +1215,6 @@ bool QDeclarativePropertyPrivate::write(QObject *object, const QDeclarativePrope
             v = value;
             if (v.convert(static_cast<QVariant::Type>(propertyType))) {
                 ok = true;
-            } else if (propertyType >= QVariant::UserType && variantType == QVariant::String) {
-                QDeclarativeMetaType::StringConverter con = QDeclarativeMetaType::customStringConverter(propertyType);
-                if (con) {
-                    v = con(value.toString());
-                    if (v.userType() == propertyType)
-                        ok = true;
-                }
             }
         }
         if (ok) {

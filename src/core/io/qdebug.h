@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -61,7 +61,7 @@ public:
     inline QDebug(QIODevice *device) : stream(new Stream(device)) {}
     inline QDebug(QString *string) : stream(new Stream(string)) {}
     inline QDebug(QtMsgType t) : stream(new Stream(t)) {}
-    inline QDebug(const QDebug &o):stream(o.stream) { ++stream->ref; }
+    inline QDebug(const QDebug &o) : stream(o.stream) { ++stream->ref; }
     inline QDebug &operator=(const QDebug &other);
     inline ~QDebug() {
         if (!--stream->ref) {

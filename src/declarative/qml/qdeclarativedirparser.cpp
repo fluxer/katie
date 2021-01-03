@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -98,12 +98,7 @@ bool QDeclarativeDirParser::parse()
 
     if (_source.isEmpty() && !_filePathSouce.isEmpty()) {
         QFile file(_filePathSouce);
-        if (!QDeclarative_isFileCaseCorrect(_filePathSouce)) {
-            QDeclarativeError error;
-            error.setDescription(QString::fromUtf8("cannot load module \"$$URI$$\": File name case mismatch for \"%1\"").arg(_filePathSouce));
-            _errors.prepend(error);
-            return false;
-        } else if (file.open(QFile::ReadOnly)) {
+        if (file.open(QFile::ReadOnly)) {
             _source = QString::fromUtf8(file.readAll());
         } else {
             QDeclarativeError error;

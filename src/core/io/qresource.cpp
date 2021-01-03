@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -44,8 +44,9 @@
 #include "qbytearray.h"
 #include "qstringlist.h"
 #include "qshareddata.h"
-#include <qplatformdefs.h>
+#include "qplatformdefs.h"
 #include "qabstractfileengine_p.h"
+#include "qfilesystemmetadata_p.h"
 #include "qcore_unix_p.h"
 
 //#define DEBUG_RESOURCE_MATCH
@@ -1208,8 +1209,7 @@ bool QResourceFileEngine::isRelativePath() const
 
 uint QResourceFileEngine::ownerId(FileOwner) const
 {
-    static const uint nobodyID = (uint) -2;
-    return nobodyID;
+    return QFileSystemMetaData::nobodyID;
 }
 
 QString QResourceFileEngine::owner(FileOwner) const

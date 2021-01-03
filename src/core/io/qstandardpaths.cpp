@@ -4,7 +4,7 @@
 ** Copyright (c) 2012-2015 Ansel Sermersheim
 ** Copyright (c) 2012-2014 Digia Plc and/or its subsidiary(-ies).
 ** Copyright (c) 2008-2012 Nokia Corporation and/or its subsidiary(-ies).
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -101,55 +101,40 @@ QT_BEGIN_NAMESPACE
     \table
     \header \li Path type \li Linux (including Android)
     \row \li DesktopLocation
-         \li "<APPROOT>/data"
          \li "~/Desktop"
     \row \li DocumentsLocation
-         \li "<APPROOT>/shared/documents"
          \li "~/Documents"
     \row \li FontsLocation
-         \li "/base/usr/fonts" (not writable)
          \li "~/.fonts"
     \row \li ApplicationsLocation
-         \li not supported (directory not readable)
          \li "~/.local/share/applications", "/usr/local/share/applications", "/usr/share/applications"
     \row \li MusicLocation
-         \li "<APPROOT>/shared/music"
          \li "~/Music"
     \row \li MoviesLocation
-         \li "<APPROOT>/shared/videos"
          \li "~/Videos"
     \row \li PicturesLocation
-         \li "<APPROOT>/shared/photos"
          \li "~/Pictures"
     \row \li TempLocation
          \li "/var/tmp"
          \li "/tmp"
     \row \li HomeLocation
-         \li "<APPROOT>/data"
          \li "~"
     \row \li DataLocation
-         \li "<APPROOT>/data", "<APPROOT>/app/native/assets"
          \li "~/.local/share/<APPNAME>", "/usr/local/share/<APPNAME>", "/usr/share/<APPNAME>"
     \row \li CacheLocation
-         \li "<APPROOT>/data/Cache"
          \li "~/.cache/<APPNAME>"
     \row \li GenericDataLocation
-         \li "<APPROOT>/shared/misc"
          \li "~/.local/share", "/usr/local/share", "/usr/share"
     \row \li RuntimeLocation
          \li "/var/tmp"
          \li "/run/user/<USER>"
     \row \li ConfigLocation
-         \li "<APPROOT>/data/Settings"
          \li "~/.config", "/etc/xdg"
     \row \li GenericConfigLocation
-         \li "<APPROOT>/data/Settings"
          \li "~/.config", "/etc/xdg"
     \row \li DownloadLocation
-         \li "<APPROOT>/shared/downloads"
          \li "~/Downloads"
     \row \li GenericCacheLocation
-         \li "<APPROOT>/data/Cache" (there is no shared cache)
          \li "~/.cache"
     \endtable
 
@@ -175,7 +160,6 @@ QT_BEGIN_NAMESPACE
     may need to be created by the system or the user.
 */
 
-
 /*!
     \fn QStringList QStandardPaths::standardLocations(StandardLocation type)
 
@@ -199,53 +183,15 @@ QT_BEGIN_NAMESPACE
     \value LocateDirectory return only directories
 */
 
-static bool existsAsSpecified(const QString &path, QStandardPaths::LocateOptions options)
+static inline bool existsAsSpecified(const QString &path, QStandardPaths::LocateOption options)
 {
-    if (options & QStandardPaths::LocateDirectory) {
+    if (options == QStandardPaths::LocateDirectory) {
         return QDir(path).exists();
     }
     return QFileInfo(path).isFile();
 }
 
-/*!
-    Tries to find a file or directory called \a fileName in the standard locations
-    for \a type.
-
-    The full path to the first file or directory (depending on \a options) found is returned.
-    If no such file or directory can be found, an empty string is returned.
- */
-QString QStandardPaths::locate(StandardLocation type, const QString &fileName, LocateOptions options)
-{
-    foreach (const QString &dir, standardLocations(type)) {
-        const QString path = dir + QLatin1Char('/') + fileName;
-        if (existsAsSpecified(path, options)) {
-            return path;
-        }
-    }
-    return QString();
-}
-
-/*!
-    Tries to find all files or directories called \a fileName in the standard locations
-    for \a type.
-
-    The \a options flag allows to specify whether to look for files or directories.
-
-    Returns the list of all the files that were found.
- */
-QStringList QStandardPaths::locateAll(StandardLocation type, const QString &fileName, LocateOptions options)
-{
-    QStringList result;
-    foreach (const QString &dir, standardLocations(type)) {
-        const QString path = dir + QLatin1Char('/') + fileName;
-        if (existsAsSpecified(path, options)) {
-            result.append(path);
-        }
-    }
-    return result;
-}
-
-static QString checkExecutable(const QString &path)
+static inline QString checkExecutable(const QString &path)
 {
     const QFileInfo info(path);
     if (info.isFile() && info.isExecutable()) {
@@ -266,6 +212,44 @@ static inline QString searchExecutable(const QStringList &searchPaths,
         }
     }
     return QString();
+}
+
+/*!
+    Tries to find a file or directory called \a fileName in the standard locations
+    for \a type.
+
+    The full path to the first file or directory (depending on \a options) found is returned.
+    If no such file or directory can be found, an empty string is returned.
+ */
+QString QStandardPaths::locate(StandardLocation type, const QString &fileName, LocateOption options)
+{
+    foreach (const QString &dir, standardLocations(type)) {
+        const QString path = dir + QLatin1Char('/') + fileName;
+        if (existsAsSpecified(path, options)) {
+            return path;
+        }
+    }
+    return QString();
+}
+
+/*!
+    Tries to find all files or directories called \a fileName in the standard locations
+    for \a type.
+
+    The \a options flag allows to specify whether to look for files or directories.
+
+    Returns the list of all the files that were found.
+ */
+QStringList QStandardPaths::locateAll(StandardLocation type, const QString &fileName, LocateOption options)
+{
+    QStringList result;
+    foreach (const QString &dir, standardLocations(type)) {
+        const QString path = dir + QLatin1Char('/') + fileName;
+        if (existsAsSpecified(path, options)) {
+            result.append(path);
+        }
+    }
+    return result;
 }
 
 /*!
@@ -342,8 +326,7 @@ QString QStandardPaths::displayName(StandardLocation type)
         case DownloadLocation:
             return QCoreApplication::translate("QStandardPaths", "Download");
     }
-   // not reached
-   return QString();
+    Q_UNREACHABLE();
 }
 
 QT_END_NAMESPACE

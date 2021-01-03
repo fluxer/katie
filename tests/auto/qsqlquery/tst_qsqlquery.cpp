@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
@@ -1067,8 +1067,6 @@ void tst_QSqlQuery::isNull()
 
 
 // test whether we can fetch values with more than DOUBLE precision
-// note that MySQL's 3.x highest precision is that of a double, although
-// you can define field with higher precision
 void tst_QSqlQuery::precision()
 {
     QFETCH( QString, dbName );
@@ -2562,8 +2560,6 @@ void tst_QSqlQuery::QTBUG_5765()
     QFETCH( QString, dbName );
     QSqlDatabase db = QSqlDatabase::database( dbName );
     CHECK_DATABASE( db );
-    if ( tst_Databases::getMySqlVersion( db ).section( QChar('.'), 0, 1 ).toFloat()<4.1 )
-        QSKIP( "Test requires MySQL >= 4.1", SkipSingle );
 
     QSqlQuery q(db);
     const QString tableName(qTableName("bug5765", __FILE__));

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -386,7 +386,7 @@ void QThread::start(Priority priority)
 
 
     if (d->stackSize > 0) {
-#if defined(_POSIX_THREAD_ATTR_STACKSIZE) && (_POSIX_THREAD_ATTR_STACKSIZE-0 > 0)
+#if defined(QT_HAVE_PTHREAD_ATTR_SETSTACKSIZE)
         int code = pthread_attr_setstacksize(&attr, d->stackSize);
 #else
         int code = ENOSYS; // stack size not supported, automatically fail

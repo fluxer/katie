@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -107,9 +107,9 @@ void QDeclarativeUtilModule::defineModule()
     qmlRegisterType<QDeclarativeStateChangeScript>("QtQuick",1,0,"StateChangeScript");
     qmlRegisterType<QDeclarativeListElement>("QtQuick",1,0,"ListElement");
     qmlRegisterTypeNotAvailable("QtQuick",1,0,"XmlListModel",
-        qApp->translate("QDeclarativeXmlListModel","Qt was built without support for xmlpatterns"));
+        qApp->translate("QDeclarativeXmlListModel","Katie does not support xmlpatterns"));
     qmlRegisterTypeNotAvailable("QtQuick",1,0,"XmlRole",
-        qApp->translate("QDeclarativeXmlListModel","Qt was built without support for xmlpatterns"));
+        qApp->translate("QDeclarativeXmlListModel","Katie does not support xmlpatterns"));
     qmlRegisterCustomType<QDeclarativeConnections>("QtQuick",1,0,"Connections", new QDeclarativeConnectionsParser);
     qmlRegisterCustomType<QDeclarativePropertyChanges>("QtQuick",1,0,"PropertyChanges", new QDeclarativePropertyChangesParser);
     qmlRegisterCustomType<QDeclarativeListModel>("QtQuick",1,0,"ListModel", new QDeclarativeListModelParser);

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDeclarative module of the Katie Toolkit.
 **
@@ -93,10 +93,6 @@ public:
     static bool isInterface(int);
     static const char *interfaceIId(int);
     static bool isList(int);
-
-    typedef QVariant (*StringConverter)(const QString &);
-    static void registerCustomStringConverter(int, StringConverter);
-    static StringConverter customStringConverter(int);
 
     static bool isModule(const QByteArray &module, int versionMajor, int versionMinor);
 

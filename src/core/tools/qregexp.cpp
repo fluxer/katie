@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -1791,8 +1791,6 @@ static bool isBetterCapture(int ncap, const int *begin1, const int *end1, const 
 */
 bool QRegExpMatchState::testAnchor(int i, int a, const int *capBegin)
 {
-    int j;
-
 #ifndef QT_NO_REGEXP_ANCHOR_ALT
     if ((a & QRegExpEngine::Anchor_Alternation) != 0)
         return testAnchor(i, eng->aa.at(a ^ QRegExpEngine::Anchor_Alternation).a, capBegin)
@@ -1824,7 +1822,7 @@ bool QRegExpMatchState::testAnchor(int i, int a, const int *capBegin)
 #ifndef QT_NO_REGEXP_LOOKAHEAD
     if ((a & QRegExpEngine::Anchor_LookaheadMask) != 0) {
         const QVector<QRegExpLookahead *> &ahead = eng->ahead;
-        for (j = 0; j < ahead.size(); j++) {
+        for (int j = 0; j < ahead.size(); j++) {
             if ((a & (QRegExpEngine::Anchor_FirstLookahead << j)) != 0) {
                 QRegExpMatchState matchState;
                 matchState.prepareForMatch(ahead[j]->eng);
@@ -1838,7 +1836,7 @@ bool QRegExpMatchState::testAnchor(int i, int a, const int *capBegin)
 #endif
 #ifndef QT_NO_REGEXP_CAPTURE
 #ifndef QT_NO_REGEXP_BACKREF
-    for (j = 0; j < eng->nbrefs; j++) {
+    for (int j = 0; j < eng->nbrefs; j++) {
         if ((a & (QRegExpEngine::Anchor_BackRef1Empty << j)) != 0) {
             int i = eng->captureForOfficialCapture.at(j);
             if (capBegin[i] != EmptyCapture)
@@ -2731,12 +2729,6 @@ int QRegExpEngine::getChar()
 
 int QRegExpEngine::getEscape()
 {
-#ifndef QT_NO_REGEXP_ESCAPE
-    const char tab[] = "afnrtv"; // no b, as \b means word boundary
-    const char backTab[] = "\a\f\n\r\t\v";
-    ushort low;
-    int i;
-#endif
     ushort val;
     int prevCh = yyCh;
 
@@ -2745,19 +2737,12 @@ int QRegExpEngine::getEscape()
         return Tok_Char | '\\';
     }
     yyCh = getChar();
-#ifndef QT_NO_REGEXP_ESCAPE
-    if ((prevCh & ~0xff) == 0) {
-        const char *p = strchr(tab, prevCh);
-        if (p)
-            return Tok_Char | backTab[p - tab];
-    }
-#endif
 
     switch (prevCh) {
 #ifndef QT_NO_REGEXP_ESCAPE
         case '0': {
             val = 0;
-            for (i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++) {
                 if (yyCh >= '0' && yyCh <= '7')
                     val = (val << 3) | (yyCh - '0');
                 else
@@ -2768,10 +2753,36 @@ int QRegExpEngine::getEscape()
                 error(RXERR_OCTAL);
             return Tok_Char | val;
         }
-#endif
-#ifndef QT_NO_REGEXP_ESCAPE
+        case 'a':
+            return (Tok_Char | '\a');
+        case 'f':
+            return (Tok_Char | '\f');
+        case 'n':
+            return (Tok_Char | '\n');
+        case 'r':
+            return (Tok_Char | '\r');
+        case 't':
+            return (Tok_Char | '\t');
+        case 'v':
+            return (Tok_Char | '\v');
         case 'B':
             return Tok_NonWord;
+        case 'b':
+            return Tok_Word;
+        case 'x': {
+            val = 0;
+            for (int i = 0; i < 4; i++) {
+                ushort low = QChar(yyCh).toLower().unicode();
+                if (low >= '0' && low <= '9')
+                    val = (val << 4) | (low - '0');
+                else if (low >= 'a' && low <= 'f')
+                    val = (val << 4) | (low - 'a' + 10);
+                else
+                    break;
+                yyCh = getChar();
+            }
+            return Tok_Char | val;
+        }
 #endif
 #ifndef QT_NO_REGEXP_CCLASS
         case 'D': {
@@ -2814,12 +2825,6 @@ int QRegExpEngine::getEscape()
             yyCharClass->addSingleton(0xff65);
             return Tok_CharClass;
         }
-#endif
-#ifndef QT_NO_REGEXP_ESCAPE
-        case 'b':
-            return Tok_Word;
-#endif
-#ifndef QT_NO_REGEXP_CCLASS
         case 'd': {
             // see QChar::isDigit()
             yyCharClass->addCategories(FLAG(QChar::Number_DecimalDigit));
@@ -2858,22 +2863,6 @@ int QRegExpEngine::getEscape()
         case 'P':
         case 'p':
             return Tok_CharClass;
-#endif
-#ifndef QT_NO_REGEXP_ESCAPE
-        case 'x': {
-            val = 0;
-            for (i = 0; i < 4; i++) {
-                low = QChar(yyCh).toLower().unicode();
-                if (low >= '0' && low <= '9')
-                    val = (val << 4) | (low - '0');
-                else if (low >= 'a' && low <= 'f')
-                    val = (val << 4) | (low - 'a' + 10);
-                else
-                    break;
-                yyCh = getChar();
-            }
-            return Tok_Char | val;
-        }
 #endif
         default: {
             if (prevCh >= '1' && prevCh <= '9') {
@@ -2944,12 +2933,6 @@ void QRegExpEngine::startTokenizer(const QChar *rx, int len)
 
 int QRegExpEngine::getToken()
 {
-#ifndef QT_NO_REGEXP_CCLASS
-    ushort pendingCh = 0;
-    bool charPending;
-    bool rangePending;
-    int tok;
-#endif
     int prevCh = yyCh;
 
     yyPos0 = yyPos - 1;
@@ -3019,8 +3002,10 @@ int QRegExpEngine::getToken()
                 yyCharClass->setNegative(true);
                 yyCh = getChar();
             }
-            charPending = false;
-            rangePending = false;
+            ushort pendingCh = 0;
+            bool charPending = false;
+            bool rangePending = false;
+            int tok;
             do {
                 if (yyCh == '-' && charPending && !rangePending) {
                     rangePending = true;
@@ -3201,8 +3186,7 @@ int QRegExpEngine::parse(const QChar *pattern, int len)
 #endif
 
     // cleanup anchors
-    int numStates = s.count();
-    for (int i = 0; i < numStates; ++i) {
+    for (int i = 0; i < s.count(); ++i) {
         QRegExpAutomatonState &state = s[i];
         if (!state.anchors.isEmpty()) {
             QMap<int, int>::iterator a = state.anchors.begin();
@@ -3220,12 +3204,6 @@ int QRegExpEngine::parse(const QChar *pattern, int len)
 
 void QRegExpEngine::parseAtom(Box *box)
 {
-#ifndef QT_NO_REGEXP_LOOKAHEAD
-    QRegExpEngine *eng = Q_NULLPTR;
-    bool neg;
-    int len;
-#endif
-
     if ((yyTok & Tok_Char) != 0) {
         box->set(QChar(yyTok ^ Tok_Char));
     } else {
@@ -3244,9 +3222,9 @@ void QRegExpEngine::parseAtom(Box *box)
 #ifndef QT_NO_REGEXP_LOOKAHEAD
             case Tok_PosLookahead:
             case Tok_NegLookahead: {
-                neg = (yyTok == Tok_NegLookahead);
-                eng = new QRegExpEngine(cs, greedyQuantifiers);
-                len = eng->parse(yyIn + yyPos - 1, yyLen - yyPos + 1);
+                bool neg = (yyTok == Tok_NegLookahead);
+                QRegExpEngine *eng = new QRegExpEngine(cs, greedyQuantifiers);
+                int len = eng->parse(yyIn + yyPos - 1, yyLen - yyPos + 1);
                 if (len >= 0)
                     skipChars(len);
                 else

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
@@ -51,6 +51,98 @@
 
 QT_BEGIN_NAMESPACE
 
+bool QFSFileEnginePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) const
+{
+    if (!metaData.hasFlags(flags)) {
+        if (fd != -1)
+            QFileSystemEngine::fillMetaData(fd, metaData);
+
+        if (metaData.missingFlags(flags) && !fileEntry.isEmpty())
+            QFileSystemEngine::fillMetaData(fileEntry, metaData, metaData.missingFlags(flags));
+    }
+
+    return metaData.exists();
+}
+
+uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size)
+{
+    Q_Q(QFSFileEngine);
+    if (openMode == QIODevice::NotOpen) {
+        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
+        return 0;
+    }
+
+    if (offset < 0 || offset != qint64(QT_OFF_T(offset))
+            || size < 0 || quint64(size) > quint64(size_t(-1))) {
+        q->setError(QFile::UnspecifiedError, qt_error_string(EINVAL));
+        return 0;
+    }
+
+    // If we know the mapping will extend beyond EOF, fail early to avoid
+    // undefined behavior. Otherwise, let mmap have its say.
+    if (doStat(QFileSystemMetaData::SizeAttribute)
+            && (QT_OFF_T(size) > metaData.size() - QT_OFF_T(offset)))
+        qWarning("QFSFileEngine::map: Mapping a file beyond its size is not portable");
+
+    int access = 0;
+    if (openMode & QIODevice::ReadOnly) access |= PROT_READ;
+    if (openMode & QIODevice::WriteOnly) access |= PROT_WRITE;
+
+    static const int pageSize = ::getpagesize();
+    const int extra = offset % pageSize;
+
+    if (quint64(size + extra) > quint64((size_t)-1)) {
+        q->setError(QFile::UnspecifiedError, qt_error_string(EINVAL));
+        return 0;
+    }
+
+    size_t realSize = (size_t)size + extra;
+    QT_OFF_T realOffset = QT_OFF_T(offset);
+    realOffset &= ~(QT_OFF_T(pageSize - 1));
+
+    void *mapAddress = QT_MMAP(Q_NULLPTR, realSize,
+                   access, MAP_SHARED, fd, realOffset);
+    if (mapAddress != MAP_FAILED) {
+        uchar *address = extra + static_cast<uchar*>(mapAddress);
+        maps[address] = QPair<int,size_t>(extra, realSize);
+        return address;
+    }
+
+    switch(errno) {
+    case EBADF:
+        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
+        break;
+    case ENFILE:
+    case ENOMEM:
+        q->setError(QFile::ResourceError, qt_error_string(errno));
+        break;
+    case EINVAL:
+        // size are out of bounds
+    default:
+        q->setError(QFile::UnspecifiedError, qt_error_string(errno));
+        break;
+    }
+    return 0;
+}
+
+bool QFSFileEnginePrivate::unmap(uchar *ptr)
+{
+    Q_Q(QFSFileEngine);
+    if (!maps.contains(ptr)) {
+        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
+        return false;
+    }
+
+    uchar *start = ptr - maps[ptr].first;
+    size_t len = maps[ptr].second;
+    if (::munmap(start, len) == -1) {
+        q->setError(QFile::UnspecifiedError, qt_error_string(errno));
+        return false;
+    }
+    maps.remove(ptr);
+    return true;
+}
+
 bool QFSFileEngine::remove()
 {
     Q_D(QFSFileEngine);
@@ -79,7 +171,7 @@ bool QFSFileEngine::rename(const QString &newName)
     Q_D(QFSFileEngine);
     int error;
     bool ret = QFileSystemEngine::renameFile(d->fileEntry, QFileSystemEntry(newName), &error);
-
+    d->metaData.clear();
     if (!ret) {
         setError(QFile::RenameError, qt_error_string(error));
     }
@@ -136,19 +228,6 @@ QString QFSFileEngine::rootPath()
 QString QFSFileEngine::tempPath()
 {
     return QFileSystemEngine::tempPath();
-}
-
-bool QFSFileEnginePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) const
-{
-    if (!metaData.hasFlags(flags)) {
-        if (fd != -1)
-            QFileSystemEngine::fillMetaData(fd, metaData);
-
-        if (metaData.missingFlags(flags) && !fileEntry.isEmpty())
-            QFileSystemEngine::fillMetaData(fileEntry, metaData, metaData.missingFlags(flags));
-    }
-
-    return metaData.exists();
 }
 
 /*!
@@ -251,7 +330,6 @@ bool QFSFileEngine::isRelativePath() const
 uint QFSFileEngine::ownerId(FileOwner own) const
 {
     Q_D(const QFSFileEngine);
-    static const uint nobodyID = (uint) -2;
 
     if (d->doStat(QFileSystemMetaData::OwnerIds)) {
         if (own == QAbstractFileEngine::OwnerUser)
@@ -259,7 +337,7 @@ uint QFSFileEngine::ownerId(FileOwner own) const
         return d->metaData.groupId();
     }
 
-    return nobodyID;
+    return QFileSystemMetaData::nobodyID;
 }
 
 QString QFSFileEngine::owner(FileOwner own) const
@@ -309,85 +387,6 @@ QDateTime QFSFileEngine::fileTime(FileTime time) const
     }
 
     return QDateTime();
-}
-
-uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size)
-{
-    Q_Q(QFSFileEngine);
-    if (openMode == QIODevice::NotOpen) {
-        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
-        return 0;
-    }
-
-    if (offset < 0 || offset != qint64(QT_OFF_T(offset))
-            || size < 0 || quint64(size) > quint64(size_t(-1))) {
-        q->setError(QFile::UnspecifiedError, qt_error_string(EINVAL));
-        return 0;
-    }
-
-    // If we know the mapping will extend beyond EOF, fail early to avoid
-    // undefined behavior. Otherwise, let mmap have its say.
-    if (doStat(QFileSystemMetaData::SizeAttribute)
-            && (QT_OFF_T(size) > metaData.size() - QT_OFF_T(offset)))
-        qWarning("QFSFileEngine::map: Mapping a file beyond its size is not portable");
-
-    int access = 0;
-    if (openMode & QIODevice::ReadOnly) access |= PROT_READ;
-    if (openMode & QIODevice::WriteOnly) access |= PROT_WRITE;
-
-    static const int pageSize = ::getpagesize();
-    const int extra = offset % pageSize;
-
-    if (quint64(size + extra) > quint64((size_t)-1)) {
-        q->setError(QFile::UnspecifiedError, qt_error_string(EINVAL));
-        return 0;
-    }
-
-    size_t realSize = (size_t)size + extra;
-    QT_OFF_T realOffset = QT_OFF_T(offset);
-    realOffset &= ~(QT_OFF_T(pageSize - 1));
-
-    void *mapAddress = QT_MMAP(Q_NULLPTR, realSize,
-                   access, MAP_SHARED, fd, realOffset);
-    if (mapAddress != MAP_FAILED) {
-        uchar *address = extra + static_cast<uchar*>(mapAddress);
-        maps[address] = QPair<int,size_t>(extra, realSize);
-        return address;
-    }
-
-    switch(errno) {
-    case EBADF:
-        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
-        break;
-    case ENFILE:
-    case ENOMEM:
-        q->setError(QFile::ResourceError, qt_error_string(errno));
-        break;
-    case EINVAL:
-        // size are out of bounds
-    default:
-        q->setError(QFile::UnspecifiedError, qt_error_string(errno));
-        break;
-    }
-    return 0;
-}
-
-bool QFSFileEnginePrivate::unmap(uchar *ptr)
-{
-    Q_Q(QFSFileEngine);
-    if (!maps.contains(ptr)) {
-        q->setError(QFile::PermissionsError, qt_error_string(EACCES));
-        return false;
-    }
-
-    uchar *start = ptr - maps[ptr].first;
-    size_t len = maps[ptr].second;
-    if (::munmap(start, len) == -1) {
-        q->setError(QFile::UnspecifiedError, qt_error_string(errno));
-        return false;
-    }
-    maps.remove(ptr);
-    return true;
 }
 
 QT_END_NAMESPACE

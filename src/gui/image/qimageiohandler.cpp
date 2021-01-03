@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -222,18 +222,13 @@ class QImageIOHandlerPrivate
 {
 public:
     QImageIOHandlerPrivate();
-    virtual ~QImageIOHandlerPrivate();
 
     QIODevice *device;
     mutable QByteArray format;
 };
 
 QImageIOHandlerPrivate::QImageIOHandlerPrivate()
-{
-    device = 0;
-}
-
-QImageIOHandlerPrivate::~QImageIOHandlerPrivate()
+    : device(Q_NULLPTR)
 {
 }
 
@@ -245,21 +240,12 @@ QImageIOHandler::QImageIOHandler()
 {
 }
 
-/*! \internal
-
-    Constructs a QImageIOHandler object, using the private member \a
-    dd.
-*/
-QImageIOHandler::QImageIOHandler(QImageIOHandlerPrivate &dd)
-    : d_ptr(&dd)
-{
-}
-
 /*!
     Destructs the QImageIOHandler object.
 */
 QImageIOHandler::~QImageIOHandler()
 {
+    delete d_ptr;
 }
 
 /*!

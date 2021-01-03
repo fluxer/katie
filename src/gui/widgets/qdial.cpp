@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -253,12 +253,6 @@ QDial::~QDial()
 {
 }
 
-/*! \reimp */
-void QDial::resizeEvent(QResizeEvent *e)
-{
-    QWidget::resizeEvent(e);
-}
-
 /*!
   \reimp
 */
@@ -327,16 +321,6 @@ void QDial::mouseMoveEvent(QMouseEvent * e)
     d->doNotEmit = true;
     setSliderPosition(d->valueFromPoint(e->pos()));
     d->doNotEmit = false;
-}
-
-
-/*!
-    \reimp
-*/
-
-void QDial::sliderChange(SliderChange change)
-{
-    QAbstractSlider::sliderChange(change);
 }
 
 void QDial::setWrapping(bool enable)
@@ -470,14 +454,6 @@ QSize QDial::minimumSizeHint() const
 QSize QDial::sizeHint() const
 {
     return QSize(100, 100).expandedTo(QApplication::globalStrut());
-}
-
-/*!
-  \reimp
-*/
-bool QDial::event(QEvent *e)
-{
-    return QAbstractSlider::event(e);
 }
 
 /*!

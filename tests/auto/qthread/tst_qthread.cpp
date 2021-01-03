@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the test suite of the Katie Toolkit.
 **
@@ -1067,8 +1067,6 @@ public:
 
 void tst_QThread::wait2()
 {
-    QSKIP("Timer rounding", SkipAll);
-
     QElapsedTimer timer;
     Waiting_Thread thread;
     thread.start();
@@ -1100,8 +1098,6 @@ public slots:
 
 void tst_QThread::wait3_slowDestructor()
 {
-    QSKIP("Timer rounding", SkipAll);
-
     SlowSlotObject slow;
     QThread thread;
     QObject::connect(&thread, SIGNAL(finished()), &slow, SLOT(slowSlot()), Qt::DirectConnection);

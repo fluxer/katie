@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -131,17 +131,15 @@
 #include "qppmhandler_p.h"
 #include "qxbmhandler_p.h"
 #include "qxpmhandler_p.h"
-#ifndef QT_NO_IMAGEFORMAT_PNG
 #include "qpnghandler_p.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
 enum qBuiltInFormatType {
-#ifndef QT_NO_IMAGEFORMAT_PNG
     qPngFormat = 0,
-#endif
+#ifndef QT_NO_IMAGEFORMAT_BMP
     qBmpFormat = 1,
+#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     qPpmFormat = 2,
     qPgmFormat = 3,
@@ -159,10 +157,10 @@ static const struct ImageFormatTblData {
     const qBuiltInFormatType format;
     const char *extension;
 } ImageFormatTbl[] = {
-#ifndef QT_NO_IMAGEFORMAT_PNG
     { qPngFormat, "png" },
-#endif
+#ifndef QT_NO_IMAGEFORMAT_BMP
     { qBmpFormat, "bmp" },
+#endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
     { qPpmFormat, "ppm" },
     { qPgmFormat, "pgm" },
@@ -283,11 +281,8 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
     // if we don't have a handler yet, check if we have built-in support for
     // the format
     if (!handler && !testFormat.isEmpty()) {
-        if (false) {
-#ifndef QT_NO_IMAGEFORMAT_PNG
-        } else if (testFormat == "png") {
+        if (testFormat == "png") {
             handler = new QPngHandler;
-#endif
 #ifndef QT_NO_IMAGEFORMAT_BMP
         } else if (testFormat == "bmp") {
             handler = new QBmpHandler;
@@ -354,13 +349,11 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
         for (qint16 i = currentFormat; device && i < ImageFormatTblSize; i++) {
             const qint64 pos = device->pos();
             switch (ImageFormatTbl[i].format) {
-#ifndef QT_NO_IMAGEFORMAT_PNG
                 case qPngFormat: {
                     if (QPngHandler::canRead(device))
                         handler = new QPngHandler;
                     break;
                 }
-#endif
 #ifndef QT_NO_IMAGEFORMAT_BMP
                 case qBmpFormat: {
                     if (QBmpHandler::canRead(device))
@@ -452,13 +445,14 @@ public:
     \internal
 */
 QImageReaderPrivate::QImageReaderPrivate()
-    : autoDetectImageFormat(true), ignoresFormatAndExtension(false)
+    : autoDetectImageFormat(true),
+    ignoresFormatAndExtension(false),
+    device(Q_NULLPTR),
+    deleteDevice(false),
+    handler(Q_NULLPTR),
+    quality(-1),
+    imageReaderError(QImageReader::UnknownError)
 {
-    device = 0;
-    deleteDevice = false;
-    handler = 0;
-    quality = -1;
-    imageReaderError = QImageReader::UnknownError;
 }
 
 /*!
@@ -479,7 +473,7 @@ bool QImageReaderPrivate::initHandler()
     // check some preconditions
     if (!device || (!deleteDevice && !device->isOpen() && !device->open(QIODevice::ReadOnly))) {
         imageReaderError = QImageReader::DeviceError;
-        errorString = QLatin1String(QT_TRANSLATE_NOOP(QImageReader, "Invalid device"));
+        errorString = QCoreApplication::translate("QImageReader", "Invalid device");
         return false;
     }
 
@@ -506,7 +500,7 @@ bool QImageReaderPrivate::initHandler()
 
         if (!device->isOpen()) {
             imageReaderError = QImageReader::FileNotFoundError;
-            errorString = QLatin1String(QT_TRANSLATE_NOOP(QImageReader, "File not found"));
+            errorString = QCoreApplication::translate("QImageReader", "File not found");
             file->setFileName(fileName); // restore the old file name
             return false;
         }
@@ -515,7 +509,7 @@ bool QImageReaderPrivate::initHandler()
     // assign a handler
     if (!handler && (handler = createReadHandlerHelper(device, format, autoDetectImageFormat, ignoresFormatAndExtension)) == 0) {
         imageReaderError = QImageReader::UnsupportedFormatError;
-        errorString = QLatin1String(QT_TRANSLATE_NOOP(QImageReader, "Unsupported image format"));
+        errorString = QCoreApplication::translate("QImageReader", "Unsupported image format");
         return false;
     }
     return true;
@@ -1020,7 +1014,7 @@ QImage QImageReader::read()
 */
 bool QImageReader::read(QImage *image)
 {
-    if (!image) {
+    if (Q_UNLIKELY(!image)) {
         qWarning("QImageReader::read: cannot read into null pointer");
         return false;
     }
@@ -1047,7 +1041,7 @@ bool QImageReader::read(QImage *image)
     // read the image
     if (!d->handler->read(image)) {
         d->imageReaderError = InvalidDataError;
-        d->errorString = QLatin1String(QT_TRANSLATE_NOOP(QImageReader, "Unable to read image data"));
+        d->errorString = QCoreApplication::translate("QImageReader", "Unable to read image data");
         return false;
     }
 
@@ -1238,7 +1232,7 @@ QImageReader::ImageReaderError QImageReader::error() const
 QString QImageReader::errorString() const
 {
     if (d->errorString.isEmpty())
-        return QLatin1String(QT_TRANSLATE_NOOP(QImageReader, "Unknown error"));
+        return QCoreApplication::translate("QImageReader", "Unknown error");
     return d->errorString;
 }
 

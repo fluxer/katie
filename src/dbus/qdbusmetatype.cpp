@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016-2020 Ivailo Monev
+** Copyright (C) 2016-2021 Ivailo Monev
 **
 ** This file is part of the QtDBus module of the Katie Toolkit.
 **
@@ -197,11 +197,11 @@ Q_GLOBAL_STATIC(QReadWriteLock, customTypesLock)
 void QDBusMetaType::registerMarshallOperators(int id, MarshallFunction mf,
                                               DemarshallFunction df)
 {
+    QWriteLocker locker(customTypesLock());
     QVector<QDBusCustomTypeInfo> *ct = customTypes();
     if (id < 0 || !mf || !df || !ct)
         return;                 // error!
 
-    QWriteLocker locker(customTypesLock());
     if (id >= ct->size())
         ct->resize(id + 1);
     QDBusCustomTypeInfo &info = (*ct)[id];
@@ -226,7 +226,7 @@ bool QDBusMetaType::marshall(QDBusArgument &arg, int id, const void *data)
         if (id >= ct->size())
             return false;       // non-existent
 
-        const QDBusCustomTypeInfo &info = (*ct).at(id);
+        const QDBusCustomTypeInfo &info = ct->at(id);
         if (!info.marshall) {
             mf = 0;             // make gcc happy
             return false;
@@ -255,7 +255,7 @@ bool QDBusMetaType::demarshall(const QDBusArgument &arg, int id, void *data)
         if (id >= ct->size())
             return false;       // non-existent
 
-        const QDBusCustomTypeInfo &info = (*ct).at(id);
+        const QDBusCustomTypeInfo &info = ct->at(id);
         if (!info.demarshall) {
             df = 0;             // make gcc happy
             return false;
@@ -419,13 +419,13 @@ const char *QDBusMetaType::typeToSignature(int type)
         return DBUS_TYPE_UNIX_FD_AS_STRING;
 
     // try the database
-    QVector<QDBusCustomTypeInfo> *ct = customTypes();
     {
         QReadLocker locker(customTypesLock());
+        QVector<QDBusCustomTypeInfo> *ct = customTypes();
         if (type >= ct->size())
             return Q_NULLPTR;           // type not registered with us
 
-        const QDBusCustomTypeInfo &info = (*ct).at(type);
+        const QDBusCustomTypeInfo &info = ct->at(type);
 
         if (!info.signature.isNull())
             return info.signature;
@@ -441,6 +441,7 @@ const char *QDBusMetaType::typeToSignature(int type)
 
     // re-acquire lock
     QWriteLocker locker(customTypesLock());
+    QVector<QDBusCustomTypeInfo> *ct = customTypes();
     QDBusCustomTypeInfo *info = &(*ct)[type];
     info->signature = signature;
 
